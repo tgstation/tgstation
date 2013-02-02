@@ -118,7 +118,7 @@
 		return
 
 	var/dat = "<HTML><BODY><TT><B>[title]</B>"
-	user.machine = src
+	user.set_machine(src)
 	if(connected)
 		var/d2
 		if(timing)	//door controls do not need timers.
@@ -146,7 +146,8 @@
 
 
 /obj/machinery/computer/pod/process()
-	..()
+	if(!..())
+		return
 	if(timing)
 		if(time > 0)
 			time = round(time) - 1
@@ -162,7 +163,7 @@
 	if(..())
 		return
 	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["power"])
 			var/t = text2num(href_list["power"])
 			t = min(max(0.25, t), 16)
@@ -199,8 +200,14 @@
 	name = "ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
+	req_access = list(access_syndicate)
 
-
+/obj/machinery/computer/pod/old/syndicate/attack_hand(var/mob/user as mob)
+	if(!allowed(user))
+		user << "\red Access Denied"
+		return
+	else
+		..()
 
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"

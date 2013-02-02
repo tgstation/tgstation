@@ -8,7 +8,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+/mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/used_weapon = null)
 	if(!damage || (blocked >= 2))	return 0
 	switch(damagetype)
 		if(BRUTE)
@@ -24,7 +24,6 @@
 			adjustCloneLoss(damage/(blocked+1))
 		if(HALLOSS)
 			adjustHalLoss(damage/(blocked+1))
-	UpdateDamageIcon()
 	updatehealth()
 	return 1
 

@@ -12,7 +12,7 @@
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
-	nodamage = 1
+	status_flags = GODMODE|CANPUSH
 
 
 
@@ -97,18 +97,13 @@
 	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
 		nums += G
 		iconL.Remove(G.icon_state)
-		if(nums.len >= 3)
-			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
-			D.blood_DNA[dna.unique_enzymes] = dna.b_type
-			return
 
-	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-	this.icon_state = pick(iconL)
-	this.blood_DNA = list()
-	this.blood_DNA[dna.unique_enzymes] = dna.b_type
-
-	// replace many drips with something larger
-	if(nums.len > 3)
+	if (nums.len < 5)
+		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
+		this.icon_state = pick(iconL)
+		this.blood_DNA = list()
+		this.blood_DNA[dna.unique_enzymes] = dna.b_type
+	else
 		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
 			del G
 		T.add_blood(src)
@@ -149,9 +144,9 @@
 			loc = tmob.loc
 			tmob.loc = oldloc
 			now_pushing = 0
-			for(var/mob/living/carbon/metroid/Metroid in view(1,tmob))
-				if(Metroid.Victim == tmob)
-					Metroid.UpdateFeed()
+			for(var/mob/living/carbon/slime/slime in view(1,tmob))
+				if(slime.Victim == tmob)
+					slime.UpdateFeed()
 			return
 
 		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
@@ -167,7 +162,7 @@
 			if(prob(99))
 				now_pushing = 0
 				return
-		if(tmob.nopush)
+		if(!(tmob.status_flags & CANPUSH))
 			now_pushing = 0
 			return
 
@@ -250,17 +245,19 @@
 
 			f_loss += 60
 
-			if (!prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
+			if (prob(70) && !shielded)
+				Paralyse(10)
 
 		if(3.0)
 			b_loss += 30
-			if (!prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
@@ -329,110 +326,6 @@
 		updatehealth()
 	return
 
-/mob/living/carbon/human/Move(a, b, flag)
-
-	if (buckled)
-		return
-
-	if (restrained())
-		stop_pulling()
-
-
-	var/t7 = 1
-	if (restrained())
-		for(var/mob/living/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
-				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
-		var/turf/T = loc
-		. = ..()
-
-		if (pulling && pulling.loc)
-			if(!( isturf(pulling.loc) ))
-				stop_pulling()
-				return
-			else
-				if(Debug)
-					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
-					diary <<"REPORT THIS"
-
-		/////
-		if(pulling && pulling.anchored)
-			stop_pulling()
-			return
-
-		if (!restrained())
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
-					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
-								//G = null
-								del(G)
-						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
-
-						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
-								if(ishuman(M))
-									var/mob/living/carbon/H = M
-									var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
-									if(blood_volume > 0)
-										H:vessel.remove_reagent("blood",1)
-							if(prob(5))
-								M.adjustBruteLoss(1)
-								visible_message("\red \The [M]'s wounds open more from being dragged!")
-						if(M.pull_damage())
-							if(prob(25))
-								M.adjustBruteLoss(2)
-								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
-								var/turf/location = M.loc
-								if (istype(location, /turf/simulated))
-									location.add_blood(M)
-									if(ishuman(M))
-										var/mob/living/carbon/H = M
-										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
-										if(blood_volume > 0)
-											H:vessel.remove_reagent("blood",1)
-
-
-						step(pulling, get_dir(pulling.loc, T))
-						M.start_pulling(t)
-				else
-					if (pulling)
-						if (istype(pulling, /obj/structure/window))
-							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									stop_pulling()
-					if (pulling)
-						step(pulling, get_dir(pulling.loc, T))
-	else
-		stop_pulling()
-		. = ..()
-	if ((s_active && !( s_active in contents ) ))
-		s_active.close(src)
-
-	for(var/mob/living/carbon/metroid/M in view(1,src))
-		M.UpdateFeed(src)
-	return
-
 
 /mob/living/carbon/human/hand_p(mob/M as mob)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -469,18 +362,18 @@
 		if(armor >= 2)	return
 
 
-/mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
+/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 
-		if(istype(M, /mob/living/carbon/metroid/adult))
+		if(istype(M, /mob/living/carbon/slime/adult))
 			damage = rand(10, 35)
 		else
 			damage = rand(5, 25)
@@ -547,7 +440,7 @@
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
@@ -671,7 +564,7 @@
 
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
@@ -691,32 +584,46 @@
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				var/perpname = "wot"
+
+				/* // Uncomment if you want sechuds to need security access
+				var/allowed_access = 0
+				if(H.wear_id)
+					var/list/access = H.wear_id.GetAccess()
+					if(access_security in access)
+						allowed_access = 1
+						return
+
+				if(!allowed_access)
+					H << "<span class='warning'>ERROR: Invalid Access</span>"
+					return
+				*/
+
 				var/modified = 0
-
+				var/perpname = "wot"
 				if(wear_id)
-					if(istype(wear_id,/obj/item/weapon/card/id))
-						perpname = wear_id:registered_name
-					else if(istype(wear_id,/obj/item/device/pda))
-						var/obj/item/device/pda/tempPda = wear_id
-						perpname = tempPda.owner
+					var/obj/item/weapon/card/id/I = wear_id.GetID()
+					if(I)
+						perpname = I.registered_name
+					else
+						perpname = name
 				else
-					perpname = src.name
+					perpname = name
 
-				for (var/datum/data/record/E in data_core.general)
-					if (E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if (R.fields["id"] == E.fields["id"])
+				if(perpname)
+					for (var/datum/data/record/E in data_core.general)
+						if (E.fields["name"] == perpname)
+							for (var/datum/data/record/R in data_core.security)
+								if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
 
-								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-									if(setcriminal != "Cancel")
-										R.fields["criminal"] = setcriminal
-										modified = 1
+									if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+										if(setcriminal != "Cancel")
+											R.fields["criminal"] = setcriminal
+											modified = 1
 
-										spawn()
-											H.handle_regular_hud_updates()
+											spawn()
+												H.handle_regular_hud_updates()
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."

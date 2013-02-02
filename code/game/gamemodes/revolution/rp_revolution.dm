@@ -3,7 +3,8 @@
 /datum/game_mode/revolution/rp_revolution
 	name = "rp-revolution"
 	config_tag = "rp-revolution"
-	required_players = 12
+	required_players = 4
+	required_players_secret = 12
 	required_enemies = 3
 	recommended_enemies = 3
 
@@ -103,7 +104,8 @@
 			// TODO: add a similar check that also checks whether they're without ID in the brig..
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
-			if(!rev_mind.current.handcuffed && T && T.z == 1)
+			//assume that only carbon mobs can become rev heads for now
+			if(!rev_mind.current:handcuffed && T && T.z == 1)
 				return 0
 	return 1
 

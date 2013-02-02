@@ -225,16 +225,16 @@
 				apply_material_decorations = 0
 				var/list/possible_spawns = list()
 				possible_spawns += /obj/item/stack/sheet/metal
-				possible_spawns += /obj/item/stack/sheet/plasma
 				possible_spawns += /obj/item/stack/sheet/plasteel
-				possible_spawns += /obj/item/stack/sheet/mythril
-				possible_spawns += /obj/item/stack/sheet/gold
-				possible_spawns += /obj/item/stack/sheet/silver
 				possible_spawns += /obj/item/stack/sheet/glass
 				possible_spawns += /obj/item/stack/sheet/rglass
-				possible_spawns += /obj/item/stack/sheet/enruranium
-				possible_spawns += /obj/item/stack/sheet/sandstone
-				possible_spawns += /obj/item/stack/sheet/silver
+				possible_spawns += /obj/item/stack/sheet/mineral/plasma
+				possible_spawns += /obj/item/stack/sheet/mineral/mythril
+				possible_spawns += /obj/item/stack/sheet/mineral/gold
+				possible_spawns += /obj/item/stack/sheet/mineral/silver
+				possible_spawns += /obj/item/stack/sheet/mineral/enruranium
+				possible_spawns += /obj/item/stack/sheet/mineral/sandstone
+				possible_spawns += /obj/item/stack/sheet/mineral/silver
 
 				var/new_type = pick(possible_spawns)
 				new_item = new new_type(src.loc)

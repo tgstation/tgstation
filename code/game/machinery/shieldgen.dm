@@ -331,7 +331,7 @@
 		icon_state = "Shield_Gen"
 		anchored = 0
 		density = 1
-		req_access = list(access_security)
+		req_access = list(access_teleporter)
 		var/active = 0
 		var/power = 0
 		var/state = 0
@@ -549,7 +549,7 @@
 	return
 
 
-//////////////Contaiment Field START
+//////////////Containment Field START
 /obj/machinery/shieldwall
 		name = "Shield"
 		desc = "An energy shield."
@@ -578,6 +578,7 @@
 /obj/machinery/shieldwall/attack_hand(mob/user as mob)
 	return
 
+
 /obj/machinery/shieldwall/process()
 	if(needs_power)
 		if(isnull(gen_primary)||isnull(gen_secondary))
@@ -605,6 +606,32 @@
 	..()
 	return
 
+
+/obj/machinery/shieldwall/ex_act(severity)
+	if(needs_power)
+		var/obj/machinery/shieldwallgen/G
+		switch(severity)
+			if(1.0) //big boom
+				if(prob(50))
+					G = gen_primary
+				else
+					G = gen_secondary
+				G.storedpower -= 200
+
+			if(2.0) //medium boom
+				if(prob(50))
+					G = gen_primary
+				else
+					G = gen_secondary
+				G.storedpower -= 50
+
+			if(3.0) //lil boom
+				if(prob(50))
+					G = gen_primary
+				else
+					G = gen_secondary
+				G.storedpower -= 20
+	return
 
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

@@ -188,7 +188,9 @@
 	return result
 
 /proc/setblock(istring, blocknumber, replacement, blocksize)
-	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
+	if(!blocknumber)
+		return istring
+	if(!istring || !replacement || !blocksize)	return 0
 	var/result = getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 	return result
 
@@ -678,6 +680,19 @@
 
 
 /////////////////////////// DNA MACHINES
+/obj/machinery/dna_scannernew
+	name = "\improper DNA modifier"
+	desc = "It scans DNA structures."
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "scanner_0"
+	density = 1
+	var/locked = 0.0
+	var/mob/occupant = null
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 50
+	active_power_usage = 300
+
 /obj/machinery/dna_scannernew/New()
 	..()
 	component_parts = list()
@@ -836,6 +851,7 @@
 			A.loc = src.loc
 		del(src)
 
+
 /obj/machinery/computer/scan_consolenew/ex_act(severity)
 
 	switch(severity)
@@ -981,7 +997,7 @@
 	if(!src || !src.connected)
 		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["locked"])
 			if ((src.connected && src.connected.occupant))
 				src.connected.locked = !( src.connected.locked )
@@ -991,31 +1007,32 @@
 				src.temphtml = text("No viable occupant detected.")//More than anything, this just acts as a sanity check in case the option DOES appear for whatever reason
 				usr << browse(temphtml, "window=scannernew;size=550x650")
 				onclose(usr, "scannernew")
-			src.delete = 1
-			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
-			usr << browse(temphtml, "window=scannernew;size=550x650")
-			onclose(usr, "scannernew")
-			var/lock_state = src.connected.locked
-			src.connected.locked = 1//lock it
-			sleep(10*src.radduration)
-			if (!src.connected.occupant)
+			else
+				src.delete = 1
+				src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
+				var/lock_state = src.connected.locked
+				src.connected.locked = 1//lock it
+				sleep(10*src.radduration)
+				if (!src.connected.occupant)
+					temphtml = null
+					delete = 0
+					return null
+				if (prob(95))
+					if(prob(75))
+						randmutb(src.connected.occupant)
+					else
+						randmuti(src.connected.occupant)
+				else
+					if(prob(95))
+						randmutg(src.connected.occupant)
+					else
+						randmuti(src.connected.occupant)
+				src.connected.occupant.radiation += ((src.radstrength*3)+src.radduration*3)
+				src.connected.locked = lock_state
 				temphtml = null
 				delete = 0
-				return null
-			if (prob(95))
-				if(prob(75))
-					randmutb(src.connected.occupant)
-				else
-					randmuti(src.connected.occupant)
-			else
-				if(prob(95))
-					randmutg(src.connected.occupant)
-				else
-					randmuti(src.connected.occupant)
-			src.connected.occupant.radiation += ((src.radstrength*3)+src.radduration*3)
-			src.connected.locked = lock_state
-			temphtml = null
-			delete = 0
 		if (href_list["radset"])
 			src.temphtml = text("Radiation Duration: <B><font color='green'>[]</B></FONT><BR>", src.radduration)
 			src.temphtml += text("Radiation Intensity: <font color='green'><B>[]</B></FONT><BR><BR>", src.radstrength)
@@ -1054,21 +1071,22 @@
 				src.temphtml = text("No viable occupant detected.")
 				usr << browse(temphtml, "window=scannernew;size=550x650")
 				onclose(usr, "scannernew")
-			//src.temphtml = text("Unique Identifier: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.uni_identity)
-			//src.temphtml = text("Unique Identifier: <font color='blue'>[getleftblocks(src.connected.occupant.dna.uni_identity,uniblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)][getrightblocks(src.connected.occupant.dna.uni_identity,uniblock,3)]</FONT><BR><BR>")
+			else
+				//src.temphtml = text("Unique Identifier: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.uni_identity)
+				//src.temphtml = text("Unique Identifier: <font color='blue'>[getleftblocks(src.connected.occupant.dna.uni_identity,uniblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)][getrightblocks(src.connected.occupant.dna.uni_identity,uniblock,3)]</FONT><BR><BR>")
 
-			// New way of displaying DNA blocks
-			src.temphtml = text("Unique Identifier: <font color='blue'>[getblockstring(src.connected.occupant.dna.uni_identity,uniblock,subblock,3, src,1)]</FONT><br><br>")
+				// New way of displaying DNA blocks
+				src.temphtml = text("Unique Identifier: <font color='blue'>[getblockstring(src.connected.occupant.dna.uni_identity,uniblock,subblock,3, src,1)]</FONT><br><br>")
 
-			src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.uniblock)
-			src.temphtml += text("<A href='?src=\ref[];unimenuminus=1'><-</A> Block <A href='?src=\ref[];unimenuplus=1'>-></A><BR><BR>", src, src)
-			src.temphtml += text("Selected Sub-Block: <font color='blue'><B>[]</B></FONT><BR>", src.subblock)
-			src.temphtml += text("<A href='?src=\ref[];unimenusubminus=1'><-</A> Sub-Block <A href='?src=\ref[];unimenusubplus=1'>-></A><BR><BR>", src, src)
-			src.temphtml += text("Selected Target: <font color='blue'><B>[]</B></FONT><BR>", src.unitargethex)
-			src.temphtml += text("<A href='?src=\ref[];unimenutargetminus=1'><-</A> Target <A href='?src=\ref[];unimenutargetplus=1'>-></A><BR><BR>", src, src)
-			src.temphtml += "<B>Modify Block:</B><BR>"
-			src.temphtml += text("<A href='?src=\ref[];unipulse=1'>Irradiate</A><BR>", src)
-			src.delete = 0
+				src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.uniblock)
+				src.temphtml += text("<A href='?src=\ref[];unimenuminus=1'><-</A> Block <A href='?src=\ref[];unimenuplus=1'>-></A><BR><BR>", src, src)
+				src.temphtml += text("Selected Sub-Block: <font color='blue'><B>[]</B></FONT><BR>", src.subblock)
+				src.temphtml += text("<A href='?src=\ref[];unimenusubminus=1'><-</A> Sub-Block <A href='?src=\ref[];unimenusubplus=1'>-></A><BR><BR>", src, src)
+				src.temphtml += text("Selected Target: <font color='blue'><B>[]</B></FONT><BR>", src.unitargethex)
+				src.temphtml += text("<A href='?src=\ref[];unimenutargetminus=1'><-</A> Target <A href='?src=\ref[];unimenutargetplus=1'>-></A><BR><BR>", src, src)
+				src.temphtml += "<B>Modify Block:</B><BR>"
+				src.temphtml += text("<A href='?src=\ref[];unipulse=1'>Irradiate</A><BR>", src)
+				src.delete = 0
 		if (href_list["unimenuplus"])
 			if (src.uniblock < 13)
 				src.uniblock++
@@ -1186,15 +1204,20 @@
 				src.temphtml = text("No viable occupant detected.")
 				usr << browse(temphtml, "window=scannernew;size=550x650")
 				onclose(usr, "scannernew")
-			var/mob/living/carbon/human/H = src.connected.occupant
-			if(H)
-				if (H.reagents.get_reagent_amount("inaprovaline") < 60)
-					H.reagents.add_reagent("inaprovaline", 30)
-				usr << text("Occupant now has [] units of rejuvenation in his/her bloodstream.", H.reagents.get_reagent_amount("inaprovaline"))
-				src.delete = 0
+			else
+				var/mob/living/carbon/human/H = src.connected.occupant
+				if(H)
+					if (H.reagents.get_reagent_amount("inaprovaline") < 60)
+						H.reagents.add_reagent("inaprovaline", 30)
+					usr << text("Occupant now has [] units of rejuvenation in his/her bloodstream.", H.reagents.get_reagent_amount("inaprovaline"))
+					src.delete = 0
 		////////////////////////////////////////////////////////
 		if (href_list["strucmenu"])
-			if(src.connected.occupant)
+			if(!src.connected.occupant || !src.connected.occupant.dna)
+				src.temphtml = text("No viable occupant detected.")
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
+			else
 				// Get this shit outta here it sucks
 				//src.temphtml = text("Structural Enzymes: <font color='blue'>[getleftblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)][getrightblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)]</FONT><BR><BR>")
 				//src.temphtml = text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.struc_enzymes)

@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/parrot
 	name = "\improper Parrot"
-	desc = "The parrot squacks, \"It's a Parrot! BAWWK!\""
+	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
@@ -39,7 +39,7 @@
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
 
-	speak_chance = 8//4% (1 in 25) chance every tick
+	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 
@@ -53,7 +53,7 @@
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
 	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
 
-	var/parrot_speed = 5 //"Delay in world ticks between movement." Yeah, that's BS but it does directly affect movement. Higher number = slower.
+	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_been_shot = 0 //Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.
 
 	var/list/speech_buffer = list()
@@ -69,48 +69,52 @@
 	//Parrots will generally sit on their pertch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/computerframe, 	/obj/structure/displaycase, \
-									/obj/structure/closet, 			/obj/structure/filingcabinet, \
-									/obj/machinery/computer,		/obj/machinery/clonepod, \
-									/obj/machinery/dna_scanner,		/obj/machinery/dna_scannernew, \
-									/obj/machinery/nuclearbomb,		/obj/machinery/particle_accelerator, \
+	var/obj/desired_perches = list(/obj/structure/computerframe, 		/obj/structure/displaycase, \
+									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
+									/obj/machinery/computer,			/obj/machinery/clonepod, \
+									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
+									/obj/machinery/nuclearbomb,			/obj/machinery/particle_accelerator, \
 									/obj/machinery/recharge_station,	/obj/machinery/smartfridge, \
-									/obj/machinery/suit_storage_unit,	/obj/machinery/telecomms, \
-									/obj/machinery/teleport)
+									/obj/machinery/suit_storage_unit)
 
-	//Parrots are kleptomaniacs. These vars a used for just that.. holding items and storing a list of items the parrot wants to steal.
+	//Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
-	var/list/desired_items = list(/obj/item/weapon/reagent_containers/food/snacks/cracker/, \
-									/obj/item/smallDelivery, 	/obj/item/weapon/gift, \
-									/obj/item/weapon/soap, 		/obj/item/toy, \
-									/obj/item/weapon/coin,		/obj/item/weapon/stamp, \
-									/obj/item/weapon/grenade,	/obj/item/device/radio/headset, \
-									/obj/item/device/flash,		/obj/item/device/soulstone, \
-									/obj/item/device/assembly,	/obj/item/weapon/bananapeel, \
-									/obj/item/weapon/book,		/obj/item/weapon/caution, \
-									/obj/item/weapon/cigpacket,	/obj/item/weapon/handcuffs,\
-									/obj/item/weapon/pen,		/obj/item/weapon/pinpointer)
 
 
 /mob/living/simple_animal/parrot/New()
 	..()
+	if(!ears)
+		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
+						/obj/item/device/radio/headset/headset_eng, \
+						/obj/item/device/radio/headset/headset_med, \
+						/obj/item/device/radio/headset/headset_sci, \
+						/obj/item/device/radio/headset/headset_cargo)
+		ears = new headset(src)
+
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
+
 	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player)
 
+
 /mob/living/simple_animal/parrot/Die()
 	if(held_item)
 		held_item.loc = src.loc
 		held_item = null
+	walk(src,0)
 	..()
+
+/mob/living/simple_animal/parrot/Stat()
+	..()
+	stat("Held Item", held_item)
 
 /*
  * Inventory
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	if(user.stat) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
@@ -307,10 +311,9 @@
 		clearlist(speech_buffer)
 
 
-
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
-		if(parrot_perch.loc != src.loc) //Make sure someone hasnt moved our perch on us
+		if(parrot_perch && parrot_perch.loc != src.loc) //Make sure someone hasnt moved our perch on us
 			if(parrot_perch in view(src))
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
 				icon_state = "parrot_fly"
@@ -412,10 +415,15 @@
 			return
 
 		if(in_range(src, parrot_interest))
+
 			if(isliving(parrot_interest))
 				steal_from_mob()
-			else
-				steal_from_ground()
+
+			else //This should ensure that we only grab the item we want, and make sure it's not already collected on our perch
+				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
+					held_item = parrot_interest
+					parrot_interest.loc = src
+					visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -512,23 +520,25 @@
  */
 
 /mob/living/simple_animal/parrot/movement_delay()
-	if(client && parrot_state != "parrot_fly")
+	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
 	..()
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	for(var/atom/movable/AM in view(src))
-		for(var/path in desired_items)
-			if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src) //Skip items we already stole or are wearing
-				continue
+		//Skip items we already stole or are wearing or are too big
+		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
+			continue
 
-			if(istype(AM, path))
-				return AM
+		if(istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if(I.w_class < 2)
+				return I
 
-			if(iscarbon(AM))
-				var/mob/living/carbon/C = AM
-				if(istype(C.l_hand, path) || istype(C.r_hand, path))
-					return C
+		if(iscarbon(AM))
+			var/mob/living/carbon/C = AM
+			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
+				return C
 	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
@@ -545,17 +555,19 @@
 			if(istype(AM, perch_path))
 				return AM
 
-		for(var/item_path in desired_items)
-			if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src) //Skip items we already stole or are wearing
-				continue
+		//Skip items we already stole or are wearing or are too big
+		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
+			continue
 
-			if(istype(AM, item_path))
-				return AM
+		if(istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if(I.w_class <= 2)
+				return I
 
-			if(iscarbon(AM))
-				var/mob/living/carbon/C = AM
-				if(istype(C.l_hand, item_path) || istype(C.r_hand, item_path))
-					return AM
+		if(iscarbon(AM))
+			var/mob/living/carbon/C = AM
+			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
+				return C
 	return null
 
 
@@ -575,18 +587,17 @@
 		return 1
 
 	for(var/obj/item/I in view(1,src))
-		for(var/path in desired_items)
-			//Make sure it's the proper item and we're not holding it
-			if(istype(I, path) && I.loc != src)
+		//Make sure we're not already holding it and it's small enough
+		if(I.loc != src && I.w_class <= 2)
 
-				//If we have a perch and the item is sitting on it, continue
-				if(!client && parrot_perch && I.loc == parrot_perch)
-					continue
+			//If we have a perch and the item is sitting on it, continue
+			if(!client && parrot_perch && I.loc == parrot_perch.loc)
+				continue
 
-				held_item = I
-				I.loc = src
-				visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
-				return held_item
+			held_item = I
+			I.loc = src
+			visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
+			return held_item
 
 	src << "\red There is nothing of interest to take."
 	return 0
@@ -606,19 +617,18 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		for(var/path in desired_items)
-			if(istype(C.l_hand, path))
-				stolen_item = C.l_hand
+		if(C.l_hand && C.l_hand.w_class <= 2)
+			stolen_item = C.l_hand
 
-			if(istype(C.r_hand, path))
-				stolen_item = C.r_hand
+		if(C.r_hand && C.r_hand.w_class <= 2)
+			stolen_item = C.r_hand
 
-			if(stolen_item)
-				C.u_equip(stolen_item)
-				held_item = stolen_item
-				stolen_item.loc = src
-				visible_message("[src] grabs the [held_item] out of [C]'s hand!", "\blue You snag the [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
-				return held_item
+		if(stolen_item)
+			C.u_equip(stolen_item)
+			held_item = stolen_item
+			stolen_item.loc = src
+			visible_message("[src] grabs the [held_item] out of [C]'s hand!", "\blue You snag the [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
+			return held_item
 
 	src << "\red There is nothing of interest to take."
 	return 0

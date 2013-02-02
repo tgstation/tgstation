@@ -1,7 +1,8 @@
 /obj/item/weapon/gun/energy/gun
-	icon_state = "energystun100"
 	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
+	icon_state = "energystun100"
+	item_state = null	//so the human update icon uses the icon_state instead.
 	fire_sound = 'sound/weapons/Taser.ogg'
 
 	charge_cost = 100 //How much energy is needed to fire.
@@ -29,16 +30,15 @@
 				projectile_type = "/obj/item/projectile/energy/electrode"
 				modifystate = "energystun"
 		update_icon()
-		return
 
 
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
+	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/lightfail = 0
-	icon_state = "nucgun"
 	var/charge_tick = 0
 
 	New()
@@ -93,7 +93,7 @@
 				return
 			var/ratio = power_supply.charge / power_supply.maxcharge
 			ratio = round(ratio, 0.25) * 100
-			overlays += text("nucgun-[]", ratio)
+			overlays += "nucgun-[ratio]"
 
 
 		update_reactor()
@@ -121,7 +121,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		update_charge()
 		update_reactor()
 		update_mode()

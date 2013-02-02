@@ -3,9 +3,7 @@
 	icon = 'icons/obj/items.dmi'
 	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
-	var/force = 0
 	var/item_state = null
-	var/damtype = "brute"
 	var/r_speed = 1.0
 	var/health = null
 	var/burn_point = null
@@ -15,7 +13,7 @@
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 50
+	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
@@ -63,6 +61,16 @@
 /obj/item/blob_act()
 	return
 
+//user: The mob that is suiciding
+//damagetype: The type of damage the item will inflict on the user
+//BRUTELOSS = 1
+//FIRELOSS = 2
+//TOXLOSS = 4
+//OXYLOSS = 8
+//Output a creative message and then return the damagetype done
+/obj/item/proc/suicide_act(mob/user)
+	return
+
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
 	set category = "Object"
@@ -80,21 +88,21 @@
 /obj/item/examine()
 	set src in view()
 
-	var/t
+	var/size
 	switch(src.w_class)
 		if(1.0)
-			t = "tiny"
+			size = "tiny"
 		if(2.0)
-			t = "small"
+			size = "small"
 		if(3.0)
-			t = "normal-sized"
+			size = "normal-sized"
 		if(4.0)
-			t = "bulky"
+			size = "bulky"
 		if(5.0)
-			t = "huge"
+			size = "huge"
 		else
-	if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
+	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
 	return
@@ -122,9 +130,9 @@
 	else
 		if(isliving(src.loc))
 			return
-		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
+	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return
@@ -163,22 +171,36 @@
 	user.put_in_active_hand(src)
 	return
 
+// Due to storage type consolidation this should get used more now.
+// I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(!S.can_be_inserted(src))
-				return
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
-					for(var/obj/item/I in src.loc)
-						if(I != src) //We'll do the one we clicked on last.
-							if(!S.can_be_inserted(I))
-								continue
-							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-			S.handle_item_insertion(src)
+					var/list/rejections = list()
+					var/success = 0
+					var/failure = 0
 
+					for(var/obj/item/I in src.loc)
+						if(I.type in rejections) // To limit bag spamming: any given type only complains once
+							continue
+						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+							rejections += I.type	// therefore full bags are still a little spammy
+							failure = 1
+							continue
+						success = 1
+						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+					if(success && !failure)
+						user << "<span class='notice'>You put everything in [S].</span>"
+					else if(success)
+						user << "<span class='notice'>You put some things in [S].</span>"
+					else
+						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+
+			else if(S.can_be_inserted(src))
+				S.handle_item_insertion(src)
 
 	return
 
@@ -186,21 +208,9 @@
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return
+
 	if (can_operate(M))	//Checks if mob is lying down on table for surgery
-		if(istype(M,/mob/living/carbon))
-			if (user.a_intent != "harm")
-				if(surgery_steps == null) build_surgery_steps_list()
-				for(var/datum/surgery_step/S in surgery_steps)
-					//check if tool is right or close enough
-					if(istype(src, S.required_tool) || (S.allowed_tools && src.type in S.allowed_tools ))
-						if(S.can_use(user, M, user.zone_sel.selecting, src))	//is this step possible?
-							S.begin_step(user, M, user.zone_sel.selecting, src)
-							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
-								S.end_step(user, M, user.zone_sel.selecting, src)
-							else
-								S.fail_step(user, M, user.zone_sel.selecting, src)
-							return		  //don't want to do weapony things after surgery
-		if (is_surgery_tool(src))
+		if (do_surgery(M,user,src))
 			return
 
 	var/messagesource = M
@@ -217,88 +227,84 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])") //BS12 EDIT ALG
-
-
 	//spawn(1800)			// this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
 	var/power = src.force
-	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if(HULK in user.mutations)
 		power *= 2
 
 	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/metroid))
-			var/mob/living/carbon/metroid/Metroid = M
+		if(istype(M, /mob/living/carbon/slime))
+			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
 				user << "\red [src] passes right through [M]!"
 				return
 
 			if(power > 0)
-				Metroid.attacked += 10
+				slime.attacked += 10
 
-			if(Metroid.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
-				Metroid.Discipline = 0
+			if(slime.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(Metroid, /mob/living/carbon/metroid/adult))
+				if(istype(slime, /mob/living/carbon/slime/adult))
 					if(prob(5 + round(power/2)))
 
-						if(Metroid.Victim)
-							if(prob(80) && !Metroid.client)
-								Metroid.Discipline++
-						Metroid.Victim = null
-						Metroid.anchored = 0
+						if(slime.Victim)
+							if(prob(80) && !slime.client)
+								slime.Discipline++
+						slime.Victim = null
+						slime.anchored = 0
 
 						spawn()
-							if(Metroid)
-								Metroid.SStun = 1
+							if(slime)
+								slime.SStun = 1
 								sleep(rand(5,20))
-								if(Metroid)
-									Metroid.SStun = 0
+								if(slime)
+									slime.SStun = 0
 
 						spawn(0)
-							if(Metroid)
-								Metroid.canmove = 0
-								step_away(Metroid, user)
+							if(slime)
+								slime.canmove = 0
+								step_away(slime, user)
 								if(prob(25 + power))
 									sleep(2)
-									if(Metroid && user)
-										step_away(Metroid, user)
-								Metroid.canmove = 1
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
 
 				else
 					if(prob(10 + power*2))
-						if(Metroid)
-							if(Metroid.Victim)
-								if(prob(80) && !Metroid.client)
-									Metroid.Discipline++
+						if(slime)
+							if(slime.Victim)
+								if(prob(80) && !slime.client)
+									slime.Discipline++
 
-									if(Metroid.Discipline == 1)
-										Metroid.attacked = 0
+									if(slime.Discipline == 1)
+										slime.attacked = 0
 
 								spawn()
-									if(Metroid)
-										Metroid.SStun = 1
+									if(slime)
+										slime.SStun = 1
 										sleep(rand(5,20))
-										if(Metroid)
-											Metroid.SStun = 0
+										if(slime)
+											slime.SStun = 0
 
-							Metroid.Victim = null
-							Metroid.anchored = 0
+							slime.Victim = null
+							slime.anchored = 0
 
 
 						spawn(0)
-							if(Metroid && user)
-								step_away(Metroid, user)
-								Metroid.canmove = 0
+							if(slime && user)
+								step_away(slime, user)
+								slime.canmove = 0
 								if(prob(25 + power*4))
 									sleep(2)
-									if(Metroid && user)
-										step_away(Metroid, user)
-								Metroid.canmove = 1
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
 
 
 		var/showname = "."
@@ -324,7 +330,7 @@
 	else
 		switch(src.damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/metroid))
+				if(istype(src, /mob/living/carbon/slime))
 					M.adjustBrainLoss(power)
 
 				else
@@ -367,6 +373,10 @@
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+	return
+
+// called when "found" in pockets and storage items. Returns 1 if the search should end.
+/obj/item/proc/on_found(mob/finder as mob)
 	return
 
 // called after an item is placed in an equipment slot
@@ -505,6 +515,10 @@
 					if(!disable_warning)
 						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
 					return 0
+				if(src.w_class > 3)
+					if(!disable_warning)
+						usr << "The [name] is too big to attach."
+					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
 					return 1
 				return 0
@@ -624,7 +638,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N	 Metroids also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 
@@ -632,9 +646,6 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 
 	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))

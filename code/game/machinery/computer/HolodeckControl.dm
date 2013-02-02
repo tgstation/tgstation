@@ -20,7 +20,7 @@
 
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat
 
 
@@ -63,7 +63,7 @@
 		if(..())
 			return
 		if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-			usr.machine = src
+			usr.set_machine(src)
 
 			if(href_list["emptycourt"])
 				target = locate(/area/holodeck/source_emptycourt)
@@ -198,6 +198,8 @@
 
 /obj/machinery/computer/HolodeckControl/process()
 
+	if(!..())
+		return
 	if(active)
 
 		if(!checkInteg(linkedholodeck))
@@ -228,6 +230,9 @@
 /obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 	holographic_items.Remove(obj)
 
+	if(obj == null)
+		return
+
 	if(isobj(obj))
 		var/mob/M = obj.loc
 		if(ismob(M))
@@ -236,8 +241,7 @@
 
 	if(!silent)
 		var/obj/oldobj = obj
-		for(var/mob/M in viewers(world.view,get_turf(obj)))
-			M << "The [oldobj.name] fades away!"
+		visible_message("The [oldobj.name] fades away!")
 	del(obj)
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
@@ -402,9 +406,7 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		for(var/mob/O in viewers(world.view, src))
-			if (O.client)
-				O << text("\red [] puts [] on the table.", G.assailant, G.affecting)
+		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
 		del(W)
 		return
 
@@ -515,14 +517,12 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		for(var/mob/M in viewers(src))
-			M.show_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
+		visible_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
 		del(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
-		for(var/mob/M in viewers(src))
-			M.show_message("\blue [user] dunks [W] into the [src]!", 3)
+		visible_message("\blue [user] dunks [W] into the [src]!", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -532,11 +532,9 @@
 			return
 		if(prob(50))
 			I.loc = src.loc
-			for(var/mob/M in viewers(src))
-				M.show_message("\blue Swish! \the [I] lands in \the [src].", 3)
+			visible_message("\blue Swish! \the [I] lands in \the [src].", 3)
 		else
-			for(var/mob/M in viewers(src))
-				M.show_message("\red \the [I] bounces off of \the [src]'s rim!", 3)
+			visible_message("\red \the [I] bounces off of \the [src]'s rim!", 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)

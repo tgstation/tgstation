@@ -1,6 +1,6 @@
 /obj/item/weapon/plastique/attack_self(mob/user as mob)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
-	if(newtime < 1)
+	if(newtime < 10)
 		newtime = 10
 	timer = newtime
 	user << "Timer set for [timer] seconds."
@@ -16,8 +16,7 @@
 		log_attack("<font color='red'> [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])</font>")
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 
-		log_admin("ATTACK: [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])")
-		msg_admin_attack("ATTACK: [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])") //BS12 EDIT ALG
+		log_attack("ATTACK: [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])")
 
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()

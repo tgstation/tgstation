@@ -89,11 +89,11 @@
 
 
 	afterattack(var/obj/target as obj, mob/user as mob)
-		if(!(istype(target, /obj)))	//this really shouldn't be necessary (but it is).	-Pete
+		if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
 		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/gift))
+		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
 			return
 		if(target.anchored)
 			return
@@ -102,24 +102,19 @@
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
-		if (istype(target, /obj/item))
+
+		if (istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
 			var/obj/item/O = target
 			if (src.amount > 1)
 				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
 				if(!istype(O.loc, /turf))
 					if(user.client)
 						user.client.screen -= O
-				P.w_class = O.w_class
-				if(P.w_class <= 1.0)
-					P.icon_state = "deliverycrate1"
-				else if (P.w_class <= 2.0)
-					P.icon_state = "deliverycrate2"
-				else if (P.w_class <= 3.0)
-					P.icon_state = "deliverycrate3"
-				else
-					P.icon_state = "deliverycrate4"
 				P.wrapped = O
 				O.loc = P
+				var/i = round(O.w_class)
+				if(i in list(1,2,3,4,5))
+					P.icon_state = "deliverycrate[i]"
 				P.add_fingerprint(usr)
 				O.add_fingerprint(usr)
 				src.add_fingerprint(usr)
@@ -204,7 +199,7 @@
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"
 	desc = "A chute for big and small packages alike!"
-	density = 0
+	density = 1
 	icon_state = "intake"
 
 	var/c_mode = 0
@@ -222,8 +217,17 @@
 	update()
 		return
 
-	HasEntered(AM as mob|obj) //Go straight into the chute
+	Bumped(var/atom/movable/AM) //Go straight into the chute
 		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
+		switch(dir)
+			if(NORTH)
+				if(AM.loc.y != src.loc.y+1) return
+			if(EAST)
+				if(AM.loc.x != src.loc.x+1) return
+			if(SOUTH)
+				if(AM.loc.y != src.loc.y-1) return
+			if(WEST)
+				if(AM.loc.x != src.loc.x-1) return
 
 		if(istype(AM, /obj))
 			var/obj/O = AM
@@ -250,15 +254,13 @@
 		if(deliveryCheck == 0)
 			H.destinationTag = 1
 
-
-		H.init(src)	// copy the contents of disposer to holder
-
 		air_contents = new()		// new empty gas resv.
 
 		sleep(10)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(5) // wait for animation to finish
 
+		H.init(src)	// copy the contents of disposer to holder
 
 		H.start(src) // start the holder processing movement
 		flushing = 0

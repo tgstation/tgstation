@@ -14,8 +14,7 @@
 		src.name = text("alien drone ([rand(1, 1000)])")
 	src.real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
-	//verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers	//<-- pointless
-	add_to_mob_list(src)
+	..()
 //Drones use the same base as generic humanoids.
 //Drone verbs
 
@@ -38,7 +37,6 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
 			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
-			new_xeno.UI = UI
 			mind.transfer_to(new_xeno)
 			del(src)
 		else

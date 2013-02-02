@@ -7,21 +7,22 @@
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	autolinkers = list("s_relay", "s_receiverA", "s_broadcasterA", "s_receiverB", "s_broadcasterB")
+	listening_level = 1
+	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
-	autolinkers = list("relay", "receiverA", "receiverB", "broadcasterA", "broadcasterB")
+	autolinkers = list("relay")
 
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
-	autolinkers = list("m_relay", "m_receiverB", "m_broadcasterB")
+	autolinkers = list("m_relay")
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1
 	toggled = 0
-	autolinkers = list("r_relay", "r_receiverB", "r_broadcasterB")
+	autolinkers = list("r_relay")
 
 //HUB
 
@@ -29,7 +30,8 @@
 	id = "Hub"
 	network = "tcommsat"
 	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "science", "medical",
-	"cargo", "mining", "common", "command", "engineering", "security")
+	"supply", "common", "command", "engineering", "security",
+	"receiverA", "receiverB", "broadcasterA", "broadcasterB")
 
 //Receivers
 
@@ -39,12 +41,8 @@
 	id = "Receiver A"
 	network = "tcommsat"
 	autolinkers = list("receiverA") // link to relay
-	freq_listening = list(1351, 1355, 1347, 1349) // science, medical, cargo, mining
+	freq_listening = list(1351, 1355, 1347) // science, medical, supply
 
-/obj/machinery/telecomms/receiver/preset_left/station
-	id = "Station Receiver A"
-	autolinkers = list("s_receiverA") // link to relay
-	listening_level = 1
 
 //--PRESET RIGHT--//
 
@@ -60,46 +58,37 @@
 			freq_listening |= i
 		..()
 
-/obj/machinery/telecomms/receiver/preset_right/station
-	id = "Station Receiver B"
-	autolinkers = list("s_receiverB")
-	listening_level = 1 // Listen to the station remotely
-
-/obj/machinery/telecomms/receiver/preset_right/mining
-	id = "Mining Receiver B"
-	autolinkers = list("m_receiverB")
-	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359)
-
-/obj/machinery/telecomms/receiver/preset_right/ruskie
-	id = "Ruskie Receiver B"
-	autolinkers = list("r_receiverB")
-	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359) // science, medical, cargo, mining, command, engineering, security
-	toggled = 0
-	hide = 1
-
 
 //Buses
 
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
+	freq_listening = list(1351, 1355)
 	autolinkers = list("processor1", "science", "medical")
 
 /obj/machinery/telecomms/bus/preset_two
 	id = "Bus 2"
 	network = "tcommsat"
-	autolinkers = list("processor2", "cargo", "mining")
+	freq_listening = list(1347)
+	autolinkers = list("processor2", "supply")
 
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
+	freq_listening = list(1359, 1353)
 	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
+	freq_listening = list(1357)
 	autolinkers = list("processor4", "engineering", "common")
 
+/obj/machinery/telecomms/bus/preset_four/New()
+	for(var/i = 1441, i < 1489, i += 2)
+		freq_listening |= i
+	..()
 
 //Processors
 
@@ -139,16 +128,16 @@
 	freq_listening = list(1355)
 	autolinkers = list("medical")
 
-/obj/machinery/telecomms/server/presets/cargo
-	id = "Cargo Server"
+/obj/machinery/telecomms/server/presets/supply
+	id = "Supply Server"
 	freq_listening = list(1347)
-	autolinkers = list("cargo")
-
+	autolinkers = list("supply")
+/*
 /obj/machinery/telecomms/server/presets/mining
 	id = "Mining Server"
 	freq_listening = list(1349)
 	autolinkers = list("mining")
-
+*/
 /obj/machinery/telecomms/server/presets/common
 	id = "Common Server"
 	freq_listening = list()
@@ -186,30 +175,9 @@
 	network = "tcommsat"
 	autolinkers = list("broadcasterA")
 
-/obj/machinery/telecomms/broadcaster/preset_left/station
-	id = "Station Broadcaster A"
-	autolinkers = list("s_broadcasterA")
-	listening_level = 1 // Station
-
 //--PRESET RIGHT--//
 
 /obj/machinery/telecomms/broadcaster/preset_right
 	id = "Broadcaster B"
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
-
-
-/obj/machinery/telecomms/broadcaster/preset_right/station
-	id = "Station Broadcaster B"
-	autolinkers = list("s_broadcasterB")
-	listening_level = 1 // Station
-
-/obj/machinery/telecomms/broadcaster/preset_right/mining
-	id = "Mining Broadcaster B"
-	autolinkers = list("m_broadcasterB")
-
-/obj/machinery/telecomms/broadcaster/preset_right/ruskie
-	id = "Ruskie Broadcaster B"
-	autolinkers = list("r_broadcasterB")
-	toggled = 0
-	hide = 1

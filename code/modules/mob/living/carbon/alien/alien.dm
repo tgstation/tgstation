@@ -9,6 +9,7 @@
 	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
+	dna = null
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -20,7 +21,7 @@
 
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE
+	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1
 	var/plasma_rate = 5
 
@@ -36,7 +37,7 @@
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
-		..(amount * 1.5)
+		..(amount * 2)
 	else
 		..(amount)
 	return
@@ -48,7 +49,7 @@
 	return 2
 
 /mob/living/carbon/alien/updatehealth()
-	if(nodamage)
+	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
 	else
@@ -60,7 +61,7 @@
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/effect/alien/weeds) in loc)
-		if(health >= maxHealth)
+		if(health >= maxHealth - getCloneLoss())
 			adjustToxLoss(plasma_rate)
 		else
 			adjustBruteLoss(-heal_rate)
@@ -172,6 +173,11 @@
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
+/mob/living/carbon/alien/getDNA()
+	return null
+
+/mob/living/carbon/alien/setDNA()
+	return
 
 /*----------------------------------------
 Proc: AddInfectionImages()
@@ -179,9 +185,10 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/carbon/C in mob_list)
+		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected")
+				var/obj/item/alien_embryo/A = locate() in C
+				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return
 
@@ -193,7 +200,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(I.icon_state == "infected")
+			if(dd_hasprefix_case(I.icon_state, "infected"))
 				del(I)
 	return
 

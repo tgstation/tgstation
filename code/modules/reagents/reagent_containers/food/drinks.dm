@@ -48,9 +48,6 @@
 
 			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
-			log_admin("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-			msg_admin_attack("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
-
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -93,15 +90,27 @@
 				user << "\red [target] is full."
 				return
 
+
+
+			var/datum/reagent/refill
+			var/datum/reagent/refillName
+			if(isrobot(user))
+				refill = reagents.get_master_reagent_id()
+				refillName = reagents.get_master_reagent_name()
+
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
 			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 				var/mob/living/silicon/robot/bro = user
-				bro.cell.use(30)
-				var/refill = reagents.get_master_reagent_id()
-				spawn(600)
+				var/chargeAmount = max(30,4*trans)
+				bro.cell.use(chargeAmount)
+				user << "Now synthesizing [trans] units of [refillName]..."
+
+
+				spawn(300)
 					reagents.add_reagent(refill, trans)
+					user << "Cyborg [src] refilled."
 
 		return
 
@@ -111,11 +120,11 @@
 		if (!(usr in range(0)) && usr!=src.loc) return
 		if(!reagents || reagents.total_volume==0)
 			usr << "\blue \The [src] is empty!"
-		else if (reagents.total_volume<src.volume/4)
+		else if (reagents.total_volume<=src.volume/4)
 			usr << "\blue \The [src] is almost empty!"
-		else if (reagents.total_volume<src.volume/2)
+		else if (reagents.total_volume<=src.volume*0.66)
 			usr << "\blue \The [src] is half full!"
-		else if (reagents.total_volume<src.volume/0.90)
+		else if (reagents.total_volume<=src.volume*0.90)
 			usr << "\blue \The [src] is almost full!"
 		else
 			usr << "\blue \The [src] is full!"

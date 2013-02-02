@@ -1,4 +1,4 @@
-/mob/living/carbon/metroid/examine()
+/mob/living/carbon/slime/examine()
 	set src in oview()
 
 	if(!usr || !src)	return

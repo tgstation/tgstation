@@ -17,7 +17,7 @@
 				new /obj/item/clothing/suit/apron(src)
 			if(2)
 				new /obj/item/clothing/suit/apron/overalls(src)
-		new /obj/item/weapon/plantbag(src)
+		new /obj/item/weapon/storage/bag/plants(src)
 		new /obj/item/clothing/under/rank/hydroponics(src)
 		new /obj/item/device/analyzer/plant_analyzer(src)
 		new /obj/item/clothing/head/greenbandana(src)

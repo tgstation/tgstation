@@ -11,7 +11,6 @@
 	var/obj/item/weapon/toppaper	//The topmost piece of paper.
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	pressure_resistance = 10
 
 /obj/item/weapon/clipboard/New()
 	update_icon()
@@ -35,7 +34,7 @@
 			return
 
 /obj/item/weapon/clipboard/update_icon()
-	overlays = null
+	overlays.Cut()
 	if(toppaper)
 		overlays += toppaper.icon_state
 		overlays += toppaper.overlays

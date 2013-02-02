@@ -1,3 +1,15 @@
+/obj/machinery/igniter
+	name = "igniter"
+	desc = "It's useful for igniting plasma."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "igniter1"
+	var/id = null
+	var/on = 1.0
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 4
+
 /obj/machinery/igniter/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -100,6 +112,12 @@
 		location.hotspot_expose(1000,500,1)
 	return 1
 
+/obj/machinery/sparker/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+	ignite()
+	..(severity)
 
 /obj/machinery/ignition_switch/attack_ai(mob/user as mob)
 	return src.attack_hand(user)

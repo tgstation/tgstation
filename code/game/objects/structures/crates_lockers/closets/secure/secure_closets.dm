@@ -63,6 +63,8 @@
 				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(isrobot(user))
+			return
 		user.drop_item()
 		if(W)
 			W.loc = src.loc
@@ -151,7 +153,7 @@
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
 /obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
-	overlays = null
+	overlays.Cut()
 	if(!opened)
 		if(locked)
 			icon_state = icon_locked

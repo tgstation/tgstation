@@ -11,6 +11,14 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
+	for(var/datum/organ/external/E in src.organs)
+		if(istype(E, /datum/organ/external/chest))
+			continue
+		// Only make the limb drop if it's not too damaged
+		if(prob(100 - E.get_damage()))
+			// Override the current limb status and don't cause an explosion
+			E.droplimb(1,1)
+
 	flick("gibbed-h", animation)
 	hgibs(loc, viruses, dna)
 
@@ -63,8 +71,10 @@
 
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
-	sql_report_death(src)
-	ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(ticker && ticker.mode)
+//		world.log << "k"
+		sql_report_death(src)
+		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()

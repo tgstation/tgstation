@@ -101,6 +101,8 @@
 //SUBCLASSES.  Spawn a bunch of items and disappear likewise
 /obj/effect/landmark/costume/chicken/New()
 	new /obj/item/clothing/suit/chickensuit(src.loc)
+	new /obj/item/clothing/head/chicken(src.loc)
+	new /obj/item/weapon/reagent_containers/food/snacks/egg(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/gladiator/New()
@@ -111,7 +113,7 @@
 /obj/effect/landmark/costume/madscientist/New()
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/suit/labcoat/mad(src.loc)
+	new /obj/item/clothing/suit/storage/labcoat/mad(src.loc)
 	new /obj/item/clothing/glasses/gglasses(src.loc)
 	del(src)
 
@@ -171,7 +173,7 @@
 
 /obj/effect/landmark/costume/nightowl/New()
 	new /obj/item/clothing/under/owl(src.loc)
-	new /obj/item/clothing/mask/owl_mask(src.loc)
+	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/waiter/New()
@@ -212,11 +214,13 @@
 /obj/effect/landmark/costume/cutewitch/New()
 	new /obj/item/clothing/under/sundress(src.loc)
 	new /obj/item/clothing/head/witchwig(src.loc)
+	new /obj/item/weapon/staff/broom(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/fakewizard/New()
 	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
 	new /obj/item/clothing/head/wizard/fake(src.loc)
+	new /obj/item/weapon/staff/(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/sexyclown/New()

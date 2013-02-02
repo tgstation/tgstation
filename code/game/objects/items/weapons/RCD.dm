@@ -92,7 +92,7 @@ RCD
 					if(useResource(1, user))
 						user << "Building Floor..."
 						activate()
-						A:ReplaceWithPlating()
+						A:ChangeTurf(/turf/simulated/floor/plating)
 						return 1
 					return 0
 
@@ -103,7 +103,7 @@ RCD
 						if(do_after(user, 20))
 							if(!useResource(3, user)) return 0
 							activate()
-							A:ReplaceWithWall()
+							A:ChangeTurf(/turf/simulated/wall)
 							return 1
 					return 0
 
@@ -131,7 +131,7 @@ RCD
 						if(do_after(user, 40))
 							if(!useResource(5, user)) return 0
 							activate()
-							A:ReplaceWithPlating()
+							A:ChangeTurf(/turf/simulated/floor/plating)
 							return 1
 					return 0
 
@@ -142,7 +142,7 @@ RCD
 						if(do_after(user, 50))
 							if(!useResource(5, user)) return 0
 							activate()
-							A:ReplaceWithSpace()
+							A:ChangeTurf(/turf/space)
 							return 1
 					return 0
 
@@ -184,3 +184,16 @@ RCD
 	..()
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
+
+/obj/item/weapon/rcd_ammo
+	name = "compressed matter cartridge"
+	desc = "Highly compressed matter for the RCD."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "rcd"
+	item_state = "rcdammo"
+	opacity = 0
+	density = 0
+	anchored = 0.0
+	origin_tech = "materials=2"
+	m_amt = 30000
+	g_amt = 15000

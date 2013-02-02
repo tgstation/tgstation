@@ -5,6 +5,7 @@
 	icon_state = "spaceworm"
 	icon_living = "spaceworm"
 	icon_dead = "spacewormdead"
+	status_flags = 0
 
 	speak_emote = list("transmits") //not supposed to be used under AI control
 	emote_hear = list("transmits")  //I'm just adding it so it doesn't runtime if controlled by player who speaks
@@ -29,7 +30,6 @@
 
 	a_intent = "harm" //so they don't get pushed around
 
-	nopush = 1
 	wall_smash = 1
 
 	speed = -1
@@ -137,7 +137,7 @@
 		if(istype(target,/turf/simulated/wall))
 			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 				var/turf/simulated/wall/wall = target
-				wall.ReplaceWithFloor()
+				wall.ChangeTurf(/turf/simulated/floor)
 				new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
 				return 1
 		else if(istype(target,/atom/movable))
@@ -174,18 +174,18 @@
 		for(var/atom/movable/stomachContent in contents)
 			if(prob(digestionProbability))
 				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
-					if(!istype(stomachContent,/obj/item/stack/sheet/plasma))
+					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/oldStack = stomachContent
-						new /obj/item/stack/sheet/plasma(src, oldStack.amount)
+						new /obj/item/stack/sheet/mineral/plasma(src, oldStack.amount)
 						del(oldStack)
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent
-					new /obj/item/stack/sheet/plasma(src, oldItem.w_class)
+					new /obj/item/stack/sheet/mineral/plasma(src, oldItem.w_class)
 					del(oldItem)
 					continue
 				else
-					new /obj/item/stack/sheet/plasma(src, flatPlasmaValue) //just flat amount
+					new /obj/item/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
 					del(stomachContent)
 					continue
 

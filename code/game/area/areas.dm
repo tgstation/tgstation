@@ -10,7 +10,7 @@
 /area/New()
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
+	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
 	uid = ++global_uid
 	related = list(src)
 
@@ -62,44 +62,44 @@
 	return
 
 /area/proc/atmosalert(danger_level)
-//	if(src.type==/area) //No atmos alarms in space
+//	if(type==/area) //No atmos alarms in space
 //		return 0 //redudant
-	if(danger_level != src.atmosalm)
-		//src.updateicon()
-		//src.mouse_opacity = 0
+	if(danger_level != atmosalm)
+		//updateicon()
+		//mouse_opacity = 0
 		if (danger_level==2)
 			var/list/cameras = list()
-			for(var/area/RA in src.related)
-				//src.updateicon()
+			for(var/area/RA in related)
+				//updateicon()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
-		else if (src.atmosalm == 2)
+		else if (atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.cancelAlarm("Atmosphere", src, src)
-		src.atmosalm = danger_level
+		atmosalm = danger_level
 		return 1
 	return 0
 
 /area/proc/firealert()
-	if(src.name == "Space") //no fire alarms in space
+	if(name == "Space") //no fire alarms in space
 		return
-	if (!( src.fire ))
-		src.fire = 1
-		src.updateicon()
-		src.mouse_opacity = 0
-		for(var/obj/machinery/door/firedoor/D in src)
+	if( !fire )
+		fire = 1
+		updateicon()
+		mouse_opacity = 0
+		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
 					D.nextstate = CLOSED
 				else if(!D.density)
-					spawn(0)
-					D.close()
+					spawn()
+						D.close()
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
@@ -107,14 +107,13 @@
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
 			a.triggerAlarm("Fire", src, cameras, src)
-	return
 
 /area/proc/firereset()
-	if (src.fire)
-		src.fire = 0
-		src.mouse_opacity = 0
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
+	if (fire)
+		fire = 0
+		mouse_opacity = 0
+		updateicon()
+		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
 					D.nextstate = OPEN
@@ -125,7 +124,6 @@
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
 			a.cancelAlarm("Fire", src, src)
-	return
 
 /area/proc/readyalert()
 	if(name == "Space")
@@ -142,19 +140,19 @@
 	return
 
 /area/proc/partyalert()
-	if(src.name == "Space") //no parties in space!!!
+	if(name == "Space") //no parties in space!!!
 		return
-	if (!( src.party ))
-		src.party = 1
-		src.updateicon()
-		src.mouse_opacity = 0
+	if (!( party ))
+		party = 1
+		updateicon()
+		mouse_opacity = 0
 	return
 
 /area/proc/partyreset()
-	if (src.party)
-		src.party = 0
-		src.mouse_opacity = 0
-		src.updateicon()
+	if (party)
+		party = 0
+		mouse_opacity = 0
+		updateicon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)
 				if(D.operating)
@@ -244,68 +242,56 @@
 
 
 /area/Entered(A)
-
-	var/sound = null
 	var/musVolume = 25
-	sound = 'sound/ambience/ambigen1.ogg'
+	var/sound = 'sound/ambience/ambigen1.ogg'
 
+	if(!istype(A,/mob/living))	return
 
-	if (ismob(A))
+	var/mob/living/L = A
+	if(!L.ckey)	return
 
-		if (istype(A, /mob/dead/observer)) return
-		if (!A:ckey)
-			return
+	if(!L.lastarea)
+		L.lastarea = get_area(L.loc)
+	var/area/newarea = get_area(L.loc)
+	var/area/oldarea = L.lastarea
+	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
+		thunk(L)
 
-		if(istype(A,/mob/living))
-			if(!A:lastarea)
-				A:lastarea = get_area(A:loc)
-			//world << "Entered new area [get_area(A:loc)]"
-			var/area/newarea = get_area(A:loc)
-			var/area/oldarea = A:lastarea
-			if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (A:m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
-				thunk(A)
+	L.lastarea = newarea
 
-			A:lastarea = newarea
+	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 
-		//if (A:ear_deaf) return
+	if(!L.client.ambience_playing)
+		L.client.ambience_playing = 1
+		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-			A:client:ambience_playing = 1
-			A << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+	if(prob(35))
 
-		switch(src.name)
-			if ("Chapel") sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
-			if ("Morgue") sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/title2.ogg')
-			if ("Space") sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg',)
-			if ("Engine Control", "Engineering", "Engineering SMES") sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-			if ("AI Satellite Teleporter Room") sound = pick('sound/ambience/ambimalf.ogg')
-			if ("AI Upload Foyer") sound = pick('sound/ambience/ambimalf.ogg')
-			if ("AI Upload Chamber") sound = pick('sound/ambience/ambimalf.ogg')
-			if ("Mine")
-				sound = pick('sound/ambience/ambimine.ogg')
-				musVolume = 25
+		if(istype(src, /area/chapel))
+			sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+		else if(istype(src, /area/medical/morgue))
+			sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/title2.ogg')
+		else if(type == /area)
+			sound = pick('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+		else if(istype(src, /area/engine))
+			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
+			sound = pick('sound/ambience/ambimalf.ogg')
+		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
+			sound = pick('sound/ambience/ambimine.ogg')
+			musVolume = 25
+		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
+			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+		else
+			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
-			if("Telecoms Teleporter") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Central Compartment") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Satellite") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Foyer") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecommunications Satellite West Wing") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecommunications Satellite East Wing") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Control Room") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecommunications Satellite Lounge") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-
-			else
-				sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
-
-
-		if (prob(35))
-			if(A && A:client && !A:client:played && !A:client:no_ambi)
-				A << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
-				A:client:played = 1
-				spawn(600)
-					if(A && A:client)
-						A:client:played = 0
-
+		if(!L.client.played)
+			L << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
+			L.client.played = 1
+			spawn(600)			//ewww - this is very very bad
+				if(L.&& L.client)
+					L.client.played = 0
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
 

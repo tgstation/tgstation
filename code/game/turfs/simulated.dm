@@ -14,19 +14,23 @@
 	levelupdate()
 
 /turf/simulated/Entered(atom/A, atom/OL)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
+
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
 				if(H.m_intent == "run")
-					if(H.footstep >= 2)
-						H.footstep = 0
-					else
-						H.footstep++
-					if(H.footstep == 0)
+					if(O.footstep >= 2)
+						O.footstep = 0
 						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+					else
+						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
 
@@ -43,7 +47,7 @@
 					else
 						M.inertia_dir = 0
 						return
-				else if(!istype(M, /mob/living/carbon/metroid))
+				else if(!istype(M, /mob/living/carbon/slime))
 					if (M.m_intent == "run")
 						M.stop_pulling()
 						step(M, M.dir)
@@ -55,8 +59,8 @@
 						M.inertia_dir = 0
 						return
 
-			if(2) //lube
-				if(!istype(M, /mob/living/carbon/metroid))
+			if(2) //lube		//can cause infinite loops - needs work
+				if(!istype(M, /mob/living/carbon/slime))
 					M.stop_pulling()
 					step(M, M.dir)
 					spawn(1) step(M, M.dir)

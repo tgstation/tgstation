@@ -25,20 +25,25 @@
 		for(var/i=0,i<summon_amt,i++)
 			if(!targets.len)
 				break
-			var/summoned_object_type = text2path(pick(summon_type))
+			var/summoned_object_type = pick(summon_type)
 			var/spawn_place = pick(targets)
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
-			var/atom/summoned_object = new summoned_object_type(spawn_place)
+			if(ispath(summoned_object_type,/turf))
+				var/turf/O = spawn_place
+				var/turf/N = summoned_object_type
+				O.ChangeTurf(N)
+			else
+				var/atom/summoned_object = new summoned_object_type(spawn_place)
 
-			for(var/varName in newVars)
-				if(varName in summoned_object.vars)
-					summoned_object.vars[varName] = newVars[varName]
+				for(var/varName in newVars)
+					if(varName in summoned_object.vars)
+						summoned_object.vars[varName] = newVars[varName]
 
-			if(summon_lifespan)
-				spawn(summon_lifespan)
-					if(summoned_object)
-						del(summoned_object)
+				if(summon_lifespan)
+					spawn(summon_lifespan)
+						if(summoned_object)
+							del(summoned_object)
 	else
 		switch(charge_type)
 			if("recharge")
@@ -53,7 +58,7 @@
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 
-	summon_type = list("/obj/machinery/bot/ed209")
+	summon_type = list(/obj/machinery/bot/ed209)
 	summon_amt = 10
 	range = 3
 	newVars = list("emagged" = 1,"name" = "Wizard's Justicebot")

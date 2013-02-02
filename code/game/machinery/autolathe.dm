@@ -15,6 +15,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		new /obj/item/weapon/airlock_electronics(), \
+		new /obj/item/weapon/airalarm_electronics(), \
+		new /obj/item/weapon/firealarm_electronics(), \
 		new /obj/item/stack/sheet/metal(), \
 		new /obj/item/stack/sheet/glass(), \
 		new /obj/item/stack/sheet/rglass(), \
@@ -33,7 +35,6 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ammo_magazine/c38(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/device/assembly/igniter(), \
-		new /obj/item/device/infra_sensor(), \
 		new /obj/item/device/assembly/signaler(), \
 		new /obj/item/device/radio/headset(), \
 		new /obj/item/device/radio(), \
@@ -58,9 +59,33 @@ var/global/list/autolathe_recipes_hidden = list( \
 	)
 
 /obj/machinery/autolathe
-	var/busy = 0
+	name = "\improper Autolathe"
+	desc = "It produces items using metal and glass."
+	icon_state = "autolathe"
+	density = 1
+
+	var/m_amount = 0.0
 	var/max_m_amount = 150000.0
+
+	var/g_amount = 0.0
 	var/max_g_amount = 75000.0
+
+	var/operating = 0.0
+	var/opened = 0.0
+	anchored = 1.0
+	var/list/L = list()
+	var/list/LL = list()
+	var/hacked = 0
+	var/disabled = 0
+	var/shocked = 0
+	var/list/wires = list()
+	var/hack_wire
+	var/disable_wire
+	var/shock_wire
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
+	var/busy = 0
 
 	proc
 		wires_win(mob/user as mob)
@@ -103,20 +128,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 			user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
 			onclose(user, "autolathe_regular")
 
-		interact(mob/user as mob)
-			if(..())
-				return
-			if (src.shocked)
-				src.shock(user,50)
-			if (src.opened)
-				wires_win(user,50)
-				return
-			if (src.disabled)
-				user << "\red You press the button, but nothing happens."
-				return
-			regular_win(user)
-			return
-
 		shock(mob/user, prb)
 			if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 				return 0
@@ -129,6 +140,20 @@ var/global/list/autolathe_recipes_hidden = list( \
 				return 1
 			else
 				return 0
+
+	interact(mob/user as mob)
+		if(..())
+			return
+		if (src.shocked)
+			src.shock(user,50)
+		if (src.opened)
+			wires_win(user,50)
+			return
+		if (src.disabled)
+			user << "\red You press the button, but nothing happens."
+			return
+		regular_win(user)
+		return
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (stat)
@@ -165,7 +190,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				del(src)
 				return 1
 			else
-				user.machine = src
+				user.set_machine(src)
 				interact(user)
 				return 1
 
@@ -219,14 +244,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		interact(user)
 
 
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		src.add_fingerprint(usr)
 		if (!busy)
 			if(href_list["make"])

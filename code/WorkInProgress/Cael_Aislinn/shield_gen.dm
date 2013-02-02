@@ -148,11 +148,6 @@
 	//
 	updateDialog()
 
-/obj/machinery/shield_gen/attack_hand(mob/user as mob)
-
-	interact(user)
-	src.add_fingerprint(user)
-
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -241,7 +236,7 @@
 	//
 	updateDialog()
 
-/obj/machinery/shield_gen/proc/interact(mob/user)
+/obj/machinery/shield_gen/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
 			user.machine = null

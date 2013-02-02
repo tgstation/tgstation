@@ -7,8 +7,25 @@
 /*
  * Locator
  */
+/obj/item/weapon/locator
+	name = "locator"
+	desc = "Used to track those with locater implants."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "locator"
+	var/temp = null
+	var/frequency = 1451
+	var/broadcasting = null
+	var/listening = 1.0
+	flags = FPRINT | TABLEPASS| CONDUCT
+	w_class = 2.0
+	item_state = "electronic"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 400
+	origin_tech = "magnets=1"
+
 /obj/item/weapon/locator/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -35,7 +52,7 @@ Frequency:
 		usr << "The [src] is malfunctioning."
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)
@@ -105,6 +122,19 @@ Frequency:
 /*
  * Hand-tele
  */
+/obj/item/weapon/hand_tele
+	name = "hand tele"
+	desc = "A portable item using blue-space technology."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "hand_tele"
+	item_state = "electronic"
+	throwforce = 5
+	w_class = 2.0
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 10000
+	origin_tech = "magnets=1;bluespace=3"
+
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.

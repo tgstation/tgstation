@@ -24,12 +24,29 @@ datum
 					var/datum/reagent/D = new path()
 					chemical_reagents_list[D.id] = D
 			if(!chemical_reactions_list)
-				//Chemical Reactions - Initialises all /datum/chemical_reaction into a list (without an index)
+				//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
+				// It is filtered into multiple lists within a list.
+				// For example:
+				// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
+
 				var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
 				chemical_reactions_list = list()
+
 				for(var/path in paths)
+
 					var/datum/chemical_reaction/D = new path()
-					chemical_reactions_list += D
+					var/list/reaction_ids = list()
+
+					if(D.required_reagents && D.required_reagents.len)
+						for(var/reaction in D.required_reagents)
+							reaction_ids += reaction
+
+					// Create filters based on each reagent id in the required reagents list
+					for(var/id in reaction_ids)
+						if(!chemical_reactions_list[id])
+							chemical_reactions_list[id] = list()
+						chemical_reactions_list[id] += D
+						break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 		proc
 
@@ -85,17 +102,20 @@ datum
 				var/part = amount / src.total_volume
 				var/trans_data = null
 				for (var/datum/reagent/current_reagent in src.reagent_list)
+					if (!current_reagent)
+						continue
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
 						trans_data = current_reagent.data
-					if((current_reagent.id == "blood" && !ishuman(target)) || current_reagent.id != "blood")
-						R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
-						src.remove_reagent(current_reagent.id, current_reagent_transfer)
-					else if(current_reagent.id == "blood" && ishuman(target)) // can never be sure
+					if(current_reagent.id == "blood" && ishuman(target)) // can never be sure
 						var/mob/living/carbon/human/H = target
 						H.vessel.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
 						src.remove_reagent(current_reagent.id, current_reagent_transfer)
 						H.vessel.update_total()
+					else
+						R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
+
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
@@ -203,90 +223,90 @@ datum
 				var/reaction_occured = 0
 				do
 					reaction_occured = 0
-					for(var/datum/chemical_reaction/C in chemical_reactions_list)
-						//check if this recipe needs to be heated to mix
-						if(C.requires_heating)
-							if(istype(my_atom.loc, /obj/machinery/bunsen_burner))
-								if(!my_atom.loc:heated)
-									continue
-							else
+					for(var/datum/reagent/R in reagent_list) // Usually a small list
+						for(var/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+
+							if(!reaction)
 								continue
 
-						var/total_required_reagents = C.required_reagents.len
-						var/total_matching_reagents = 0
-						var/total_required_catalysts = C.required_catalysts.len
-						var/total_matching_catalysts= 0
-						var/matching_container = 0
-						var/matching_other = 0
-						var/list/multipliers = new/list()
+							var/datum/chemical_reaction/C = reaction
+							var/total_required_reagents = C.required_reagents.len
+							var/total_matching_reagents = 0
+							var/total_required_catalysts = C.required_catalysts.len
+							var/total_matching_catalysts= 0
+							var/matching_container = 0
+							var/matching_other = 0
+							var/list/multipliers = new/list()
 
-						for(var/B in C.required_reagents)
-							if(!has_reagent(B, C.required_reagents[B]))	break
-							total_matching_reagents++
-							multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
-						for(var/B in C.required_catalysts)
-							if(!has_reagent(B, C.required_catalysts[B]))	break
-							total_matching_catalysts++
+							for(var/B in C.required_reagents)
+								if(!has_reagent(B, C.required_reagents[B]))	break
+								total_matching_reagents++
+								multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
+							for(var/B in C.required_catalysts)
+								if(!has_reagent(B, C.required_catalysts[B]))	break
+								total_matching_catalysts++
 
-						if(!C.required_container)
-							matching_container = 1
-
-						else
-							if(my_atom.type == C.required_container)
+							if(!C.required_container)
 								matching_container = 1
 
-						if(!C.required_other)
-							matching_other = 1
+							else
+								if(my_atom.type == C.required_container)
+									matching_container = 1
 
-						else
-							if(istype(my_atom, /obj/item/metroid_core))
-								var/obj/item/metroid_core/M = my_atom
+							if(!C.required_other)
+								matching_other = 1
 
-								if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to metroid cores -- Muskets requested this
-									matching_other = 1
+							else
+								/*if(istype(my_atom, /obj/item/slime_core))
+									var/obj/item/slime_core/M = my_atom
+
+									if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+										matching_other = 1*/
+								if(istype(my_atom, /obj/item/slime_extract))
+									var/obj/item/slime_extract/M = my_atom
+
+									if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+										matching_other = 1
 
 
 
 
-						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
-							var/multiplier = min(multipliers)
-							//try and grab any data so we can preserve it across reactions
-							//added for xenoarchaeology, might be used for other things but this is a bit dodge
-							var/preserved_data = null
-							for(var/B in C.required_reagents)
-								if(!preserved_data)
-									var/temp_data = get_data(B)
-									if(temp_data)
-										preserved_data = temp_data
-								remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
+							if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+								var/multiplier = min(multipliers)
+								for(var/B in C.required_reagents)
+									remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
-							var/created_volume = C.result_amount*multiplier
-							if(C.result)
-								feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
-								multiplier = max(multiplier, 1) //this shouldnt happen ...
-								add_reagent(C.result, C.result_amount*multiplier)
-								set_data(C.result, preserved_data)
+								var/created_volume = C.result_amount*multiplier
+								if(C.result)
+									feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
+									multiplier = max(multiplier, 1) //this shouldnt happen ...
+									add_reagent(C.result, C.result_amount*multiplier)
 
-								//add secondary products
-								for(var/S in C.secondary_results)
-									add_reagent(S, C.result_amount * C.secondary_results[S] * multiplier)
-
-							if(!isliving(my_atom))
-								for(var/mob/M in viewers(4, get_turf(my_atom)) )
+								var/list/seen = viewers(4, get_turf(my_atom))
+								for(var/mob/M in seen)
 									M << "\blue \icon[my_atom] The solution begins to bubble."
 
-							if(istype(my_atom, /obj/item/metroid_core))
-								var/obj/item/metroid_core/ME = my_atom
-								ME.Uses--
-								if(ME.Uses <= 0) // give the notification that the metroid core is dead
-									for(var/mob/M in viewers(4, get_turf(my_atom)) )
-										M << "\blue \icon[my_atom] The innards begin to boil!"
+							/*	if(istype(my_atom, /obj/item/slime_core))
+									var/obj/item/slime_core/ME = my_atom
+									ME.Uses--
+									if(ME.Uses <= 0) // give the notification that the slime core is dead
+										for(var/mob/M in viewers(4, get_turf(my_atom)) )
+											M << "\blue \icon[my_atom] The innards begin to boil!"
+								*/
+								if(istype(my_atom, /obj/item/slime_extract))
+									var/obj/item/slime_extract/ME2 = my_atom
+									ME2.Uses--
+									if(ME2.Uses <= 0) // give the notification that the slime core is dead
+										for(var/mob/M in seen)
+											M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+											ME2.name = "used slime extract"
+											ME2.desc = "This extract has been used up."
 
-							playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
+								playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
-							C.on_reaction(src, created_volume)
-							reaction_occured = 1
-							break
+								C.on_reaction(src, created_volume)
+								reaction_occured = 1
+								break
 
 				while(reaction_occured)
 				update_total()
@@ -360,12 +380,13 @@ datum
 									else R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
-			add_reagent(var/reagent, var/amount, var/data=null)
+			add_reagent(var/reagent, var/amount, var/list/data=null)
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 				for(var/A in reagent_list)
+
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						R.volume += amount
@@ -375,28 +396,40 @@ datum
 						// mix dem viruses
 						if(R.id == "blood" && reagent == "blood")
 							if(R.data && data)
-								if(R.data && R.data["viruses"] || data && data["viruses"])
-									var/list/this = R.data["viruses"]
-									var/list/that = data["viruses"]
-									this += that // combine the two
 
-									/* -- Turns out this code was buggy and unnecessary ---- Doohl
-									for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
-										for(var/datum/disease/d in this)//Something in here can cause an inf loop and I am tired so someone else will have to fix it.
-											if(d != D)
-												D.cure(0)
-									*/
+								if(R.data["viruses"] || data["viruses"])
+
+									var/list/mix1 = R.data["viruses"]
+									var/list/mix2 = data["viruses"]
+
+									// Stop issues with the list changing during mixing.
+									var/list/to_mix = list()
+
+									for(var/datum/disease/advance/AD in mix1)
+										to_mix += AD
+									for(var/datum/disease/advance/AD in mix2)
+										to_mix += AD
+
+									var/datum/disease/advance/AD = Advance_Mix(to_mix)
+									if(AD)
+										var/list/preserve = list(AD)
+										for(var/D in R.data["viruses"])
+											if(!istype(D, /datum/disease/advance))
+												preserve += D
+										R.data["viruses"] = preserve
 
 						handle_reactions()
 						return 0
 
 				var/datum/reagent/D = chemical_reagents_list[reagent]
 				if(D)
+
 					var/datum/reagent/R = new D.type()
 					reagent_list += R
 					R.holder = src
 					R.volume = amount
-					R.data = data
+					SetViruses(R, data) // Includes setting data
+
 					//debug
 					//world << "Adding data"
 					//for(var/D in R.data)
@@ -406,6 +439,8 @@ datum
 					my_atom.on_reagent_change()
 					handle_reactions()
 					return 0
+				else
+					warning("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 
 				handle_reactions()
 
@@ -417,17 +452,13 @@ datum
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					var/datum/compare = chemical_reagents_list[reagent]
-					if(istype(R,compare))
-						var/amt = max(0,min(R.volume,amount))
-						R.volume -= amt
-						amount -= amt
-						if(amount<=0)
-							update_total()
-							if(!safety)//So it does not handle reactions when it need not to
-								handle_reactions()
-							my_atom.on_reagent_change()
-							return 0
+					if (R.id == reagent)
+						R.volume -= amount
+						update_total()
+						if(!safety)//So it does not handle reactions when it need not to
+							handle_reactions()
+						my_atom.on_reagent_change()
+						return 0
 
 				return 1
 
@@ -435,8 +466,7 @@ datum
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					var/datum/compare = chemical_reagents_list[reagent]
-					if(istype(R,compare))
+					if (R.id == reagent)
 						if(!amount) return R
 						else
 							if(R.volume >= amount) return R
@@ -445,14 +475,12 @@ datum
 				return 0
 
 			get_reagent_amount(var/reagent)
-				var/amnt = 0
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					var/datum/compare = chemical_reagents_list[reagent]
-					if(istype(R,compare))
-						amnt += R.volume
+					if (R.id == reagent)
+						return R.volume
 
-				return amnt
+				return 0
 
 			get_reagents()
 				var/res = ""
@@ -461,17 +489,6 @@ datum
 					res += A.name
 
 				return res
-
-			//two slightly dodge helper functions to preserve data across reactions (needed for xenoarch)
-			get_data(var/reagent_id)
-				for(var/datum/reagent/R in reagent_list)
-					if(R.id == reagent_id)
-						return R.data
-
-			set_data(var/reagent_id, var/new_data)
-				for(var/datum/reagent/R in reagent_list)
-					if(R.id == reagent_id)
-						R.data = new_data
 
 
 ///////////////////////////////////////////////////////////////////////////////////

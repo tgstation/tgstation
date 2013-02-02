@@ -9,6 +9,7 @@
 	var/backup_body =""
 	var/backup_author =""
 	var/is_admin_message = 0
+	var/icon/img = null
 
 /datum/feed_channel
 	var/channel_name=""
@@ -26,6 +27,7 @@
 	src.body = ""
 	src.backup_body = ""
 	src.backup_author = ""
+	src.img = null
 
 /datum/feed_channel/proc/clear()
 	src.channel_name = ""
@@ -83,6 +85,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
 	var/msg = "";                //Feed message
+	var/obj/item/weapon/photo/photo = null
 	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
 	var/c_locked=0;        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
@@ -111,11 +114,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
 		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
-			src.overlays = null
+			src.overlays.Cut()
 			src.overlays += image(src.icon, "crack3")
 		return
 
-	src.overlays = null //reset overlays
+	src.overlays.Cut() //reset overlays
 
 	if(news_network.wanted_issue) //wanted icon state, there can be no overlays on it as it's a priority message
 		icon_state = "newscaster_wanted"
@@ -229,6 +232,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MARK
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
 				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>"
+				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
 			if(4)
 				dat+="Feed story successfully submitted to [src.channel_name].<BR><BR>"
@@ -292,8 +296,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
+						var/i = 0
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
-							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+							i++
+							dat+="-[MESSAGE.body] <BR>"
+							if(MESSAGE.img)
+								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -358,6 +368,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<HR>"
 				dat+="<A href='?src=\ref[src];set_wanted_name=1'>Criminal Name</A>: [src.channel_name] <BR>"
 				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Description</A>: [src.msg] <BR>"
+				dat+="<A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>: [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
 				if(wanted_already)
 					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 				else
@@ -385,7 +396,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 				dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
 				dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
+				dat+="<B>Photo:</B>: "
+				if(news_network.wanted_issue.img)
+					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+					dat+="<BR><img src='tmp_photow.png' width = '180'>"
+				else
+					dat+="None"
+				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
 			if(19)
 				dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] successfully edited.</FONT><BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
@@ -414,7 +431,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(..())
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["set_channel_name"])
 			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
@@ -473,6 +490,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 			src.updateUsrDialog()
 
+		else if(href_list["set_attachment"])
+			AttachPhoto(usr)
+			src.updateUsrDialog()
+
 		else if(href_list["submit_new_message"])
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
@@ -480,6 +501,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				var/datum/feed_message/newMsg = new /datum/feed_message
 				newMsg.author = src.scanned_user
 				newMsg.body = src.msg
+				if(photo)
+					newMsg.img = photo.img
 				feedback_inc("newscaster_stories",1)
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == src.channel_name)
@@ -553,6 +576,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						WANTED.author = src.channel_name
 						WANTED.body = src.msg
 						WANTED.backup_author = src.scanned_user //I know, a bit wacky
+						if(photo)
+							WANTED.img = photo.img
 						news_network.wanted_issue = WANTED
 						for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 							NEWSCASTER.newsAlert()
@@ -565,6 +590,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						news_network.wanted_issue.author = src.channel_name
 						news_network.wanted_issue.body = src.msg
 						news_network.wanted_issue.backup_author = src.scanned_user
+						if(photo)
+							news_network.wanted_issue.img = photo.img
 						src.screen = 19
 
 			src.updateUsrDialog()
@@ -712,6 +739,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	user << "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>"
 	return
 
+/obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
+	if(photo)
+		photo.loc = src.loc
+		user.put_in_inactive_hand(photo)
+		photo = null
+	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
+		photo = user.get_active_hand()
+		user.drop_item()
+		photo.loc = src
+
 
 
 
@@ -723,6 +760,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/item/weapon/newspaper
 	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
 	w_class = 2	//Let's make it fit in trashbags!
 	attack_verb = list("bapped")
@@ -778,8 +816,14 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 						dat+="No Feed stories stem from this channel..."
 					else
 						dat+="<ul>"
+						var/i = 0
 						for(var/datum/feed_message/MESSAGE in C.messages)
-							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+							i++
+							dat+="-[MESSAGE.body] <BR>"
+							if(MESSAGE.img)
+								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
@@ -790,7 +834,13 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				if(src.important_message!=null)
 					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
 					dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>"
-					dat+="<B>Description</B>: [important_message.body]"
+					dat+="<B>Description</B>: [important_message.body]<BR>"
+					dat+="<B>Photo:</B>: "
+					if(important_message.img)
+						user << browse_rsc(important_message.img, "tmp_photow.png")
+						dat+="<BR><img src='tmp_photow.png' width = '180'>"
+					else
+						dat+="None"
 				else
 					dat+="<I>Apart from some uninteresting Classified ads, there's nothing on this page...</I>"
 				if(scribble_page==curr_page)
@@ -810,7 +860,7 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
-		U.machine = src
+		U.set_machine(src)
 		if(href_list["next_page"])
 			if(curr_page==src.pages+1)
 				return //Don't need that at all, but anyway.

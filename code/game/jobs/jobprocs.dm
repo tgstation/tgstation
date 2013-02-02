@@ -23,13 +23,30 @@
 		if(V!=usr)
 			V.show_message("[H] looks as if a wall is in front of them.", 3, "", 2)
 	usr << "You form a wall in front of yourself."
-	var/obj/effect/forcefield/F =  new /obj/effect/forcefield(locate(usr.x,usr.y,usr.z))
-	F.icon_state = "empty"
-	F.name = "invisible wall"
-	F.desc = "You have a bad feeling about this."
-	spawn (300)
-		del (F)
+	new /obj/effect/forcefield/mime(locate(usr.x,usr.y,usr.z))
 	return
+
+///////////Mimewalls///////////
+
+/obj/effect/forcefield/mime
+	icon_state = "empty"
+	name = "invisible wall"
+	desc = "You have a bad feeling about this."
+	var/timeleft = 300
+	var/last_process = 0
+
+/obj/effect/forcefield/mime/New()
+	..()
+	last_process = world.time
+	processing_objects.Add(src)
+
+/obj/effect/forcefield/mime/process()
+	timeleft -= (world.time - last_process)
+	if(timeleft <= 0)
+		processing_objects.Remove(src)
+		del(src)
+
+///////////////////////////////
 
 /client/proc/mimespeak()
 	set category = "Mime"

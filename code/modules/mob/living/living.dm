@@ -1,18 +1,3 @@
-/mob/living/Life()
-
-	..()
-
-	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
-
-	if(!src.storedpreferences)
-		src.storedpreferences = new
-		storedpreferences.savefile_load(src, 0)
-
-
-
-
-	return
-
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -23,11 +8,11 @@
 
 
 /mob/living/proc/updatehealth()
-	if(nodamage)
-		src.health = 100
-		src.stat = 0
+	if(status_flags & GODMODE)
+		health = 100
+		stat = CONSCIOUS
 	else
-		src.health = src.maxHealth - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() - src.halloss
+		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -92,69 +77,69 @@
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setOxyLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	oxyloss = amount
 
 /mob/living/proc/getToxLoss()
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setToxLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	toxloss = amount
 
 /mob/living/proc/getFireLoss()
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setCloneLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	cloneloss = amount
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setBrainLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	brainloss = amount
 
 /mob/living/proc/getHalLoss()
 	return halloss
 
 /mob/living/proc/adjustHalLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	halloss = min(max(halloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setHalLoss(var/amount)
-	if(src.nodamage)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	//godmode
 	halloss = amount
 
 /mob/living/proc/getMaxHealth()
@@ -262,6 +247,8 @@
 /mob/living/proc/revive()
 	setToxLoss(0)
 	setOxyLoss(0)
+	setCloneLoss(0)
+	setBrainLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
@@ -277,7 +264,11 @@
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
 	buckled = initial(src.buckled)
-	handcuffed = initial(src.handcuffed)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.handcuffed = initial(C.handcuffed)
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
 	if(stat == 2)
 		dead_mob_list -= src
 		living_mob_list += src
@@ -287,11 +278,8 @@
 	return
 
 /mob/living/proc/UpdateDamageIcon()
-		return
+	return
 
-/*CARN: Deprecated. Please use update_canmove()
-/mob/living/proc/check_if_buckled()
-*/
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -299,15 +287,94 @@
 	set src in view()
 
 	if(config.allow_Metadata)
-		usr << "[src]'s Metainfo:"
-
-		if(src.storedpreferences)
-			usr << "[src]'s OOC Notes:  [src.storedpreferences.metadata]"
-
+		if(client)
+			usr << "[src]'s Metainfo:<br>[client.prefs.metadata]"
 		else
 			usr << "[src] does not have any stored infomation!"
-
 	else
 		usr << "OOC Metadata is not supported by this server!"
 
 	return
+
+/mob/living/Move(a, b, flag)
+	if (buckled)
+		return
+
+	if (restrained())
+		stop_pulling()
+
+
+	var/t7 = 1
+	if (restrained())
+		for(var/mob/living/M in range(src, 1))
+			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
+				t7 = null
+	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+		var/turf/T = loc
+		. = ..()
+
+		if (pulling && pulling.loc)
+			if(!( isturf(pulling.loc) ))
+				stop_pulling()
+				return
+			else
+				if(Debug)
+					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
+					diary <<"REPORT THIS"
+
+		/////
+		if(pulling && pulling.anchored)
+			stop_pulling()
+			return
+
+		if (!restrained())
+			var/diag = get_dir(src, pulling)
+			if ((diag - 1) & diag)
+			else
+				diag = null
+			if ((get_dist(src, pulling) > 1 || diag))
+				if (isliving(pulling))
+					var/mob/living/M = pulling
+					var/ok = 1
+					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+						if (prob(75))
+							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
+							if (istype(G, /obj/item/weapon/grab))
+								for(var/mob/O in viewers(M, null))
+									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+								//G = null
+								del(G)
+						else
+							ok = 0
+						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+							ok = 0
+					if (ok)
+						var/atom/movable/t = M.pulling
+						M.stop_pulling()
+
+						//this is the gay blood on floor shit -- Added back -- Skie
+						if (M.lying && (prob(M.getBruteLoss() / 6)))
+							var/turf/location = M.loc
+							if (istype(location, /turf/simulated))
+								location.add_blood(M)
+
+
+						step(pulling, get_dir(pulling.loc, T))
+						M.start_pulling(t)
+				else
+					if (pulling)
+						if (istype(pulling, /obj/structure/window))
+							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
+								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+									stop_pulling()
+					if (pulling)
+						step(pulling, get_dir(pulling.loc, T))
+	else
+		stop_pulling()
+		. = ..()
+	if ((s_active && !( s_active in contents ) ))
+		s_active.close(src)
+
+	if(update_slimes)
+		for(var/mob/living/carbon/slime/M in view(1,src))
+			M.UpdateFeed(src)

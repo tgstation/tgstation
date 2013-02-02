@@ -54,4 +54,5 @@ h1.alert, h2.alert		{color: #000000;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 .species				{color: #803B56;}
 
+.interface				{color: #330033;}
 </style>"}

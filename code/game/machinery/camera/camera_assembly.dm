@@ -10,7 +10,7 @@
 	g_amt = 300
 
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/plasma, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
+	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
 	var/list/upgrades = list()
 	var/state = 0
 	var/busy = 0
@@ -76,6 +76,17 @@
 			// State 3
 			if(isscrewdriver(W))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+
+				var/input = strip_html(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"))
+				if(!input)
+					usr << "No input found please hang up and try your call again."
+					return
+
+				var/list/tempnetwork = text2list(input, ",")
+				if(tempnetwork.len < 1)
+					usr << "No network found please hang up and try your call again."
+					return
+
 				state = 4
 				var/obj/machinery/camera/C = new(src.loc)
 				src.loc = C
@@ -83,8 +94,9 @@
 
 				C.auto_turn()
 
-				C.network = "SS13"
-				C.network = input(usr, "Which network would you like to connect this camera to?", "Set Network", "SS13")
+				C.network = tempnetwork
+
+				C.c_tag = "[get_area_name(src)] ([rand(1, 999)]"
 
 				for(var/i = 5; i >= 0; i -= 1)
 					var/direct = input(user, "Direction?", "Assembling Camera", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )

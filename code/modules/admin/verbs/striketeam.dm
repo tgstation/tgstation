@@ -3,22 +3,16 @@
 var/const/commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_strike_team = 0
 /client/proc/strike_team()
-	set category = "Fun"
-	set name = "Spawn Death Squad"
-	set desc = "Spawns a squad of commandos in CentCom if you want to run an admin event."
-	if(!src.holder)
-		src << "Only administrators may use this command."
-		return
 	if(!ticker)
-		alert("The game hasn't started yet!")
+		usr << "<font color='red'>The game hasn't started yet!</font>"
 		return
 	if(world.time < 6000)
-		alert("Not so fast, buddy. Wait a few minutes until the game gets going. There are [(6000-world.time)/10] seconds remaining.")
+		usr << "<font color='red'>There are [(6000-world.time)/10] seconds remaining before it may be called.</font>"
 		return
 	if(sent_strike_team == 1)
-		alert("CentCom is already sending a team, Mr. Dumbass.")
+		usr << "<font color='red'>CentCom is already sending a team.</font>"
 		return
-	if(alert("Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No")=="No")
+	if(alert("Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No")!="Yes")
 		return
 	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
 
@@ -30,7 +24,7 @@ var/global/sent_strike_team = 0
 				return
 
 	if(sent_strike_team)
-		src << "Looks like someone beat you to it."
+		usr << "Looks like someone beat you to it."
 		return
 
 	sent_strike_team = 1
@@ -54,7 +48,7 @@ var/global/sent_strike_team = 0
 	var/list/candidates = list()	//candidates for being a commando out of all the active ghosts in world.
 	var/list/commandos = list()			//actual commando ghosts as picked by the user.
 	for(var/mob/dead/observer/G	 in player_list)
-		if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)	//Whoever called/has the proc won't be added to the list.
+		if(!G.client.holder && !G.client.is_afk())	//Whoever called/has the proc won't be added to the list.
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 				candidates += G.key
 	for(var/i=commandos_possible,(i>0&&candidates.len),i--)//Decrease with every commando selected.
@@ -100,7 +94,7 @@ var/global/sent_strike_team = 0
 
 	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.", 1)
 	log_admin("[key_name(usr)] used Spawn Death Squad.")
-	feedback_add_details("admin_verb","DTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return 1
 
 /client/proc/create_death_commando(obj/spawn_location, leader_selected = 0)
 	var/mob/living/carbon/human/new_commando = new(spawn_location.loc)
@@ -127,9 +121,6 @@ var/global/sent_strike_team = 0
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
-	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
-	camera.network = "CREED"
-	camera.c_tag = real_name
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	R.set_frequency(1441)
@@ -150,7 +141,7 @@ var/global/sent_strike_team = 0
 
 	equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)
 	if (!leader_selected)
 		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
@@ -181,5 +172,4 @@ var/global/sent_strike_team = 0
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)
 
-	resistances += "alien_embryo"
 	return 1

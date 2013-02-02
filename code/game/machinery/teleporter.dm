@@ -131,6 +131,23 @@
 		if(!T || istype(T, /area))	return null
 	return T
 
+/obj/machinery/teleport
+	name = "teleport"
+	icon = 'icons/obj/stationobjs.dmi'
+	density = 1
+	anchored = 1.0
+	var/lockeddown = 0
+
+
+/obj/machinery/teleport/hub
+	name = "teleporter hub"
+	desc = "It's the hub of a teleporting machine."
+	icon_state = "tele0"
+	var/accurate = 0
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 2000
+
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
 		if (src.icon_state == "tele1")
@@ -249,6 +266,17 @@
 	s.start()
 	return
 */
+
+/obj/machinery/teleport/station
+	name = "station"
+	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
+	icon_state = "controller"
+	var/active = 0
+	var/engaged = 0
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 2000
+
 /obj/machinery/teleport/station/attackby(var/obj/item/weapon/W)
 	src.attack_hand()
 

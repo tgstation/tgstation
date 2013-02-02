@@ -16,6 +16,9 @@ zone
 		last_update = 0
 		progress = "nothing"
 
+		// To make sure you're not spammed to death by airflow sound effects
+		tmp/playsound_cooldown = 0
+
 //CREATION AND DELETION
 	New(turf/start)
 		. = ..()
@@ -33,7 +36,7 @@ zone
 			if(!istype(T,/turf/simulated))
 				AddTurf(T)
 
-		//Generate the gas_mixture for use in this zone by using the average of the gases
+		//Generate the gas_mixture for use in txhis zone by using the average of the gases
 		//defined at startup.
 		air = new
 		var/members = contents.len
@@ -148,8 +151,10 @@ zone/proc/process()
 	//Sometimes explosions will cause the air to be deleted for some reason.
 	if(!air)
 		air = new()
-		air.adjust(MOLES_O2STANDARD, 0, MOLES_N2STANDARD, 0, list())
+		air.oxygen = MOLES_O2STANDARD
+		air.nitrogen = MOLES_N2STANDARD
 		air.temperature = T0C
+		air.total_moles()
 		world.log << "Air object lost in zone. Regenerating."
 
 	progress = "problem with: ShareSpace()"
@@ -161,6 +166,16 @@ zone/proc/process()
 				RemoveTurf(T)
 		if(unsimulated_tiles)
 			var/moved_air = ShareSpace(air,unsimulated_tiles)
+
+			// Only play a sound effect every once in a while
+			if(playsound_cooldown <= world.time)
+				// Play a nice sound effect at one of the bordering turfs
+
+				playsound_cooldown = world.time + rand(30, 70)
+
+				var/turf/random_border = pick(contents)
+				play_wind_sound(random_border, abs(moved_air))
+
 			if(moved_air > vsc.airflow_lightest_pressure)
 				AirflowSpace(src)
 
@@ -239,7 +254,17 @@ zone/proc/process()
 		for(var/zone/Z in connected_zones)
 			if(air && Z.air)
 				//Ensure we're not doing pointless calculations on equilibrium zones.
-				if(abs(air.total_moles() - Z.air.total_moles()) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+				var/moles_delta = abs(air.total_moles() - Z.air.total_moles())
+				if(moles_delta > 0.1)
+					// Only play a sound effect every once in a while
+					if(playsound_cooldown <= world.time)
+						// Play a nice sound effect at one of the bordering turfs
+
+						playsound_cooldown = world.time + rand(30, 70)
+
+						var/turf/random_border = pick(contents)
+						play_wind_sound(random_border, abs(moles_delta))
+				if(moles_delta > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 						Airflow(src,Z)
 					ShareRatio( air , Z.air , connected_zones[Z] )
@@ -255,7 +280,7 @@ var/list/sharing_lookup_table = list(0.06, 0.11, 0.15, 0.18, 0.20, 0.21)
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
-		ratio = 0.21
+		ratio = 0.50
 
 		size = max(1,A.group_multiplier)
 		share_size = max(1,B.group_multiplier)
@@ -280,9 +305,6 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 		plasma_avg = (full_plasma + s_full_plasma) / (size + share_size)
 
 		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
-
-	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[connecting_tiles]
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
@@ -338,37 +360,34 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		unsim_temperature += T.temperature/unsimulated_tiles.len
 
 	var
-		ratio = 0.21
+		// Depressurize very, very fast(it's fine since many rooms are internally multiple zones)
+		ratio = 0.50
 
 		old_pressure = A.return_pressure()
 
 		size = max(1,A.group_multiplier)
 		share_size = max(1,unsimulated_tiles.len)
 
-		full_oxy = A.oxygen * size
-		full_nitro = A.nitrogen * size
-		full_co2 = A.carbon_dioxide * size
-		full_plasma = A.toxins * size
+		//full_oxy = A.oxygen * size
+		//full_nitro = A.nitrogen * size
+		//full_co2 = A.carbon_dioxide * size
+		//full_plasma = A.toxins * size
 
-		full_heat_capacity = A.heat_capacity() * size
+		//full_heat_capacity = A.heat_capacity() * size
 
-		oxy_avg = (full_oxy + unsim_oxygen) / (size + share_size)
-		nit_avg = (full_nitro + unsim_nitrogen) / (size + share_size)
-		co2_avg = (full_co2 + unsim_co2) / (size + share_size)
-		plasma_avg = (full_plasma + unsim_plasma) / (size + share_size)
+		oxy_avg = unsim_oxygen//(full_oxy + unsim_oxygen) / (size + share_size)
+		nit_avg = unsim_nitrogen//(full_nitro + unsim_nitrogen) / (size + share_size)
+		co2_avg = unsim_co2//(full_co2 + unsim_co2) / (size + share_size)
+		plasma_avg = unsim_plasma//(full_plasma + unsim_plasma) / (size + share_size)
 
-		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
-
-	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[unsimulated_tiles.len]
-	ratio *= 2
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
 	A.toxins = max(0, (A.toxins - plasma_avg) * (1-ratio) + plasma_avg )
 
-	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
+	// EXPERIMENTAL: Disable space being cold
+	//A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/G_avg = (G.moles*size + 0) / (size+share_size)
@@ -457,6 +476,21 @@ zone/proc/Rebuild()
 				var/turf/simulated/T = get_step(S,direction)
 				if(istype(T) && T.zone && S.CanPass(null, T, 0, 0))
 					T.zone.AddTurf(S)
+
+proc/play_wind_sound(var/turf/random_border, var/n)
+	if(random_border)
+		var/windsound = 'sound/effects/wind/wind_2_1.ogg'
+		switch(n)
+			if(0 to 30)
+				windsound = pick('sound/effects/wind/wind_2_1.ogg', 'sound/effects/wind/wind_2_2.ogg')
+			if(31 to 40)
+				windsound = pick('sound/effects/wind/wind_3_1.ogg')
+			if(41 to 60)
+				windsound = pick('sound/effects/wind/wind_4_1.ogg', 'sound/effects/wind/wind_4_2.ogg')
+			if(61 to 1000000)
+				windsound = pick('sound/effects/wind/wind_5_1.ogg')
+
+		playsound(random_border, windsound, 50, 1, 1)
 
 //UNUSED
 /*

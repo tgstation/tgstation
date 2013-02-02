@@ -6,6 +6,9 @@
 		var/t1 = findtext(act, "-", 1, null)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
+
 	if(src.stat == DEAD)
 		return
 	switch(act)
@@ -50,7 +53,7 @@
 		for(var/mob/M in dead_mob_list)
 			if (!M.client || istype(M, /mob/new_player))
 				continue //skip monkeys, leavers, and new_players
-			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
+			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 

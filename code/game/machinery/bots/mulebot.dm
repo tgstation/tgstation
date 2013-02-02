@@ -28,7 +28,7 @@
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo, access_cargo_bot) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -73,8 +73,9 @@
 /obj/machinery/bot/mulebot/New()
 	..()
 	botcard = new(src)
-	botcard.access = get_access("Quartermaster")
-	botcard.access += access_robotics
+	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	botcard.access = J.get_access()
+//	botcard.access += access_robotics //Why --Ikki
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -192,17 +193,17 @@
 
 
 /obj/machinery/bot/mulebot/attack_ai(var/mob/user)
-	user.machine = src
+	user.set_machine(src)
 	interact(user, 1)
 
 /obj/machinery/bot/mulebot/attack_hand(var/mob/user)
 	. = ..()
 	if (.)
 		return
-	user.machine = src
+	user.set_machine(src)
 	interact(user, 0)
 
-/obj/machinery/bot/mulebot/proc/interact(var/mob/user, var/ai=0)
+/obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
 	var/dat
 	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 	dat += "ID: [suffix]<BR>"
@@ -290,7 +291,7 @@
 	if (usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 
 		switch(href_list["op"])
 			if("lock", "unlock")
@@ -309,10 +310,7 @@
 						return
 				else
 					return
-				usr << "You switch [on ? "on" : "off"] [src]."
-				for(var/mob/M in viewers(src))
-					if(M==usr) continue
-					M << "[usr] switches [on ? "on" : "off"] [src]."
+				visible_message("[usr] switches [on ? "on" : "off"] [src].")
 				updateDialog()
 
 
@@ -393,7 +391,7 @@
 				auto_pickup = !auto_pickup
 
 			if("close")
-				usr.machine = null
+				usr.unset_machine()
 				usr << browse(null,"window=mulebot")
 
 
@@ -432,7 +430,7 @@
 		//src.updateUsrDialog()
 	else
 		usr << browse(null, "window=mulebot")
-		usr.machine = null
+		usr.unset_machine()
 	return
 
 
@@ -513,7 +511,7 @@
 		return
 
 	mode = 1
-	overlays = null
+	overlays.Cut()
 
 	load.loc = src.loc
 	load.pixel_y -= 9

@@ -24,6 +24,7 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be tratiors because
 	var/required_players = 0
+	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/uplink_welcome = "Syndicate Uplink Console:"
@@ -34,7 +35,7 @@
 /obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
 /obj/item/weapon/melee/energy/sword:4:Energy Sword;
 /obj/item/weapon/storage/box/syndicate:10:Syndicate Bundle;
-/obj/item/weapon/storage/emp_kit:3:5 EMP Grenades;
+/obj/item/weapon/storage/box/emps:3:5 EMP Grenades;
 Whitespace:Seperator;
 Stealthy and Inconspicuous Weapons;
 /obj/item/weapon/pen/paralysis:3:Paralysis Pen;
@@ -51,7 +52,7 @@ Whitespace:Seperator;
 Devices and Tools;
 /obj/item/weapon/card/emag:3:Cryptographic Sequencer;
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
-/obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
+/obj/item/weapon/storage/box/syndie_kit/space:3:Space Suit;
 /obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
@@ -61,9 +62,10 @@ Devices and Tools;
 /obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
 Whitespace:Seperator;
 Implants;
-/obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
-/obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
-Whitespace:Seperator;
+/obj/item/weapon/storage/box/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
+/obj/item/weapon/implant/explosive:6:Explosive Implant (DANGER!);
+/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;Whitespace:Seperator;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
@@ -83,8 +85,13 @@ Whitespace:Seperator;
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(playerC >= required_players)
-		return 1
+
+	if(master_mode=="secret")
+		if(playerC >= required_players_secret)
+			return 1
+	else
+		if(playerC >= required_players)
+			return 1
 	return 0
 
 
@@ -97,6 +104,9 @@ Whitespace:Seperator;
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
+	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
+		display_roundstart_logout_report()
+
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
@@ -228,7 +238,9 @@ Whitespace:Seperator;
 	world << sound('commandreport.ogg')
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	world << sound('sound/AI/intercept.ogg')
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
@@ -260,7 +272,7 @@ Whitespace:Seperator;
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(player.preferences.be_special & role)
+			if(player.client.prefs.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -272,8 +284,8 @@ Whitespace:Seperator;
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
-			if (player.client && player.ready)
-				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+			if(player.client && player.ready)
+				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
@@ -315,6 +327,7 @@ Whitespace:Seperator;
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
+				message_admins("[applicant.key] drafted into antagonist role against their preferences.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
@@ -323,14 +336,14 @@ Whitespace:Seperator;
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-
+/*
 /datum/game_mode/proc/latespawn(var/mob)
 
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
 	return 0
-
+*/
 
 /datum/game_mode/proc/num_players()
 	. = 0
@@ -359,3 +372,59 @@ Whitespace:Seperator;
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
+
+//////////////////////////
+//Reports player logouts//
+//////////////////////////
+proc/display_roundstart_logout_report()
+	var/msg = "\blue <b>Roundstart logout report\n\n"
+	for(var/mob/living/L in mob_list)
+
+		if(L.ckey)
+			var/found = 0
+			for(var/client/C in clients)
+				if(C.ckey == L.ckey)
+					found = 1
+					break
+			if(!found)
+				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
+
+
+		if(L.ckey && L.client)
+			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
+				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
+				continue //AFK client
+			if(L.stat)
+				if(L.suiciding)	//Suicider
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
+					continue //Disconnected client
+				if(L.stat == UNCONSCIOUS)
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dying)\n"
+					continue //Unconscious
+				if(L.stat == DEAD)
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dead)\n"
+					continue //Dead
+
+			continue //Happy connected client
+		for(var/mob/dead/observer/D in mob_list)
+			if(D.mind && (D.mind.original == L || D.mind.current == L))
+				if(L.stat == DEAD)
+					if(L.suiciding)	//Suicider
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
+						continue //Disconnected client
+					else
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
+						continue //Dead mob, ghost abandoned
+				else
+					if(D.can_reenter_corpse)
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>This shouldn't appear.</b></font>)\n"
+						continue //Lolwhat
+					else
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Ghosted</b></font>)\n"
+						continue //Ghosted while alive
+
+
+
+	for(var/mob/M in mob_list)
+		if(M.client && M.client.holder)
+			M << msg

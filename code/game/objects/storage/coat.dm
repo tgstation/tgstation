@@ -22,17 +22,6 @@
 	return L
 
 /obj/item/clothing/suit/storage/proc/show_to(mob/user as mob)
-	for(var/obj/item/weapon/mousetrap/MT in src)
-		if(MT.armed)
-			for(var/mob/O in viewers(user, null))
-				if(O == user)
-					user.show_message(text("\red <B>You reach into the [src.name], but there was a live mousetrap in there!</B>"), 1)
-				else
-					user.show_message(text("\red <B>[user] reaches into the [src.name] and sets off a hidden mousetrap!</B>"), 1)
-			MT.loc = user.loc
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-			MT.layer = OBJ_LAYER
-			return
 	user.client.screen -= src.boxes
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents
@@ -148,13 +137,14 @@
 			return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)
+	playsound(src.loc, "rustle", 50, 1, -5)
 	W.loc = src
 	if ((user.client && user.s_active != src))
 		user.client.screen -= W
 	src.orient2hud(user)
 	W.dropped(user)
 	add_fingerprint(user)
-
+	show_to(user)
 
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
@@ -168,15 +158,18 @@
 		playsound(src.loc, "rustle", 50, 1, -5)
 		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
 			if (over_object.name == "r_hand")
-				if (!( M.r_hand ))
-					M.u_equip(src)
-					M.r_hand = src
-			else
-				if (over_object.name == "l_hand")
-					if (!( M.l_hand ))
-						M.u_equip(src)
-						M.l_hand = src
-			M.update_clothing()
+				M.u_equip(src)
+				M.put_in_r_hand(src)
+			//	if (!( M.r_hand ))
+			//		M.u_equip(src)
+			//		M.r_hand = src
+			else if (over_object.name == "l_hand")
+				M.u_equip(src)
+				M.put_in_l_hand(src)
+				//	if (!( M.l_hand ))
+				//		M.u_equip(src)
+				//		M.l_hand = src
+			M.update_inv_wear_suit()
 			src.add_fingerprint(usr)
 			return
 		if( (over_object == usr && in_range(src, usr) || usr.contents.Find(src)) && usr.s_active)

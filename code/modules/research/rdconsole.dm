@@ -195,7 +195,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	add_fingerprint(usr)
 
-	usr.machine = src
+	usr.set_machine(src)
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
 		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
@@ -266,7 +266,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "\red The destructive analyzer is busy at the moment."
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
-				if(choice == "Cancel") return
+				if(choice == "Cancel" || !linked_destroy) return
 				linked_destroy.busy = 1
 				screen = 0.1
 				updateUsrDialog()
@@ -355,53 +355,54 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D.id == href_list["build"])
 					being_built = D
 					break
-			var/power = 2000
-			for(var/M in being_built.materials)
-				power += round(being_built.materials[M] / 5)
-			power = max(2000, power)
-			screen = 0.3
-			linked_lathe.busy = 1
-			flick("protolathe_n",linked_lathe)
-			var/key = usr.key	//so we don't lose the info during the spawn delay
-			spawn(16)
-				use_power(power)
+			if(being_built)
+				var/power = 2000
+				for(var/M in being_built.materials)
+					power += round(being_built.materials[M] / 5)
+				power = max(2000, power)
+				screen = 0.3
+				linked_lathe.busy = 1
+				flick("protolathe_n",linked_lathe)
+				var/key = usr.key	//so we don't lose the info during the spawn delay
 				spawn(16)
-					for(var/M in being_built.materials)
-						switch(M)
-							if("$metal")
-								linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]))
-							if("$glass")
-								linked_lathe.g_amount = max(0, (linked_lathe.g_amount-being_built.materials[M]))
-							if("$gold")
-								linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]))
-							if("$silver")
-								linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
-							if("$plasma")
-								linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
-							if("$uranium")
-								linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
-							if("$diamond")
-								linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
-							if("$clown")
-								linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
-							else
-								linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
+					use_power(power)
+					spawn(16)
+						for(var/M in being_built.materials)
+							switch(M)
+								if("$metal")
+									linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]))
+								if("$glass")
+									linked_lathe.g_amount = max(0, (linked_lathe.g_amount-being_built.materials[M]))
+								if("$gold")
+									linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]))
+								if("$silver")
+									linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
+								if("$plasma")
+									linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
+								if("$uranium")
+									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
+								if("$diamond")
+									linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
+								if("$clown")
+									linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
+								else
+									linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
 
-					if(being_built.build_path)
-						var/obj/new_item = new being_built.build_path(src)
-						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-							new_item.investigate_log("built by [key]","singulo")
-						new_item.reliability = being_built.reliability
-						if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
-						if(being_built.locked)
-							var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
-							new_item.loc = L
-							L.name += " ([new_item.name])"
-						else
-							new_item.loc = linked_lathe.loc
-						linked_lathe.busy = 0
-						screen = 3.1
-						updateUsrDialog()
+						if(being_built.build_path)
+							var/obj/new_item = new being_built.build_path(src)
+							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+								new_item.investigate_log("built by [key]","singulo")
+							new_item.reliability = being_built.reliability
+							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
+							if(being_built.locked)
+								var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
+								new_item.loc = L
+								L.name += " ([new_item.name])"
+							else
+								new_item.loc = linked_lathe.loc
+							linked_lathe.busy = 0
+							screen = 3.1
+							updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter)
@@ -410,32 +411,33 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D.id == href_list["imprint"])
 					being_built = D
 					break
-			var/power = 2000
-			for(var/M in being_built.materials)
-				power += round(being_built.materials[M] / 5)
-			power = max(2000, power)
-			screen = 0.4
-			linked_imprinter.busy = 1
-			flick("circuit_imprinter_ani",linked_imprinter)
-			spawn(16)
-				use_power(power)
+			if(being_built)
+				var/power = 2000
 				for(var/M in being_built.materials)
-					switch(M)
-						if("$glass")
-							linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
-						if("$gold")
-							linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
-						if("$diamond")
-							linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
-						else
-							linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
-				var/obj/new_item = new being_built.build_path(src)
-				new_item.reliability = being_built.reliability
-				if(linked_imprinter.hacked) being_built.reliability = max((reliability / 2), 0)
-				new_item.loc = linked_imprinter.loc
-				linked_imprinter.busy = 0
-				screen = 4.1
-				updateUsrDialog()
+					power += round(being_built.materials[M] / 5)
+				power = max(2000, power)
+				screen = 0.4
+				linked_imprinter.busy = 1
+				flick("circuit_imprinter_ani",linked_imprinter)
+				spawn(16)
+					use_power(power)
+					for(var/M in being_built.materials)
+						switch(M)
+							if("$glass")
+								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
+							if("$gold")
+								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
+							if("$diamond")
+								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
+							else
+								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
+					var/obj/new_item = new being_built.build_path(src)
+					new_item.reliability = being_built.reliability
+					if(linked_imprinter.hacked) being_built.reliability = max((reliability / 2), 0)
+					new_item.loc = linked_imprinter.loc
+					linked_imprinter.busy = 0
+					screen = 4.1
+					updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
@@ -460,22 +462,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				type = /obj/item/stack/sheet/glass
 				res_amount = "g_amount"
 			if("gold")
-				type = /obj/item/stack/sheet/gold
+				type = /obj/item/stack/sheet/mineral/gold
 				res_amount = "gold_amount"
 			if("silver")
-				type = /obj/item/stack/sheet/silver
+				type = /obj/item/stack/sheet/mineral/silver
 				res_amount = "silver_amount"
 			if("plasma")
-				type = /obj/item/stack/sheet/plasma
+				type = /obj/item/stack/sheet/mineral/plasma
 				res_amount = "plasma_amount"
 			if("uranium")
-				type = /obj/item/stack/sheet/uranium
+				type = /obj/item/stack/sheet/mineral/uranium
 				res_amount = "uranium_amount"
 			if("diamond")
-				type = /obj/item/stack/sheet/diamond
+				type = /obj/item/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 			if("clown")
-				type = /obj/item/stack/sheet/clown
+				type = /obj/item/stack/sheet/mineral/clown
 				res_amount = "clown_amount"
 		if(ispath(type) && hasvar(linked_lathe, res_amount))
 			var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
@@ -493,10 +495,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				type = /obj/item/stack/sheet/glass
 				res_amount = "g_amount"
 			if("gold")
-				type = /obj/item/stack/sheet/gold
+				type = /obj/item/stack/sheet/mineral/gold
 				res_amount = "gold_amount"
 			if("diamond")
-				type = /obj/item/stack/sheet/diamond
+				type = /obj/item/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 		if(ispath(type) && hasvar(linked_imprinter, res_amount))
 			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
@@ -548,7 +550,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("RESEARCH",src,user:wear_suit)
 			return
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = ""
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.

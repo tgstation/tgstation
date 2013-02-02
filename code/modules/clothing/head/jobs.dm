@@ -53,3 +53,22 @@
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
 	flags = FPRINT | TABLEPASS
+
+//Medical
+/obj/item/clothing/head/surgery
+	name = "surgical cap"
+	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs."
+	icon_state = "surgcap_blue"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/head/surgery/purple
+	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is deep purple."
+	icon_state = "surgcap_purple"
+
+/obj/item/clothing/head/surgery/blue
+	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is baby blue"
+	icon_state = "surgcap_blue"
+
+/obj/item/clothing/head/surgery/green
+	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is dark green"
+	icon_state = "surgcap_green"

@@ -6,9 +6,6 @@
 		usr << "This option is currently only usable during pregame. This may change at a later date."
 		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
-
 	if(job_master && ticker)
 		var/datum/job/job = job_master.GetJob("AI")
 		if(!job)
@@ -22,5 +19,4 @@
 			ticker.triai = 1
 			usr << "There will be an AI Triumvirate at round start."
 			message_admins("\blue [key_name_admin(usr)] has toggled on triple AIs at round start.", 1)
-	feedback_add_details("admin_verb","CAIT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

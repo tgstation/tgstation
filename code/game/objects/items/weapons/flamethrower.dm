@@ -4,7 +4,7 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY // USEDELAY flag needed in order to use afterattack() for things that are not in reach. I.E: Shooting flames.
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -48,7 +48,7 @@
 
 
 /obj/item/weapon/flamethrower/update_icon()
-	overlays = null
+	overlays.Cut()
 	if(igniter)
 		overlays += "+igniter[status]"
 	if(ptank)
@@ -60,6 +60,13 @@
 		item_state = "flamethrower_0"
 	return
 
+/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
+	// Make sure our user is still holding us
+	if(user && user.get_active_hand() == src)
+		var/turf/target_turf = get_turf(target)
+		if(target_turf)
+			var/turflist = getline(user, target_turf)
+			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)	return
@@ -136,7 +143,7 @@
 
 /obj/item/weapon/flamethrower/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)	return
-	user.machine = src
+	user.set_machine(src)
 	if(!ptank)
 		user << "<span class='notice'>Attach a plasma tank first!</span>"
 		return
@@ -148,11 +155,11 @@
 
 /obj/item/weapon/flamethrower/Topic(href,href_list[])
 	if(href_list["close"])
-		usr.machine = null
+		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
 		return
 	if(usr.stat || usr.restrained() || usr.lying)	return
-	usr.machine = src
+	usr.set_machine(src)
 	if(href_list["light"])
 		if(!ptank)	return
 		if(ptank.air_contents.toxins < 1)	return
@@ -168,7 +175,7 @@
 		usr.put_in_hands(ptank)
 		ptank = null
 		lit = 0
-		usr.machine = null
+		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
 	for(var/mob/M in viewers(1, loc))
 		if((M.client && M.machine == src))

@@ -193,6 +193,8 @@
 	spreadChance = 0
 	spread = 0
 
+/*
+commented out in r5061, I left it because of the shroom thingies
 
 /turf/simulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
@@ -219,7 +221,7 @@
 	W.fullUpdateMineralOverlays()
 	W.levelupdate()
 	return W
-
+*/
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -291,9 +293,11 @@
 				O.geological_data = src.geological_data
 
 	if (prob(src.artifactChance))
-		//spawn a rare, xeno-archaelogical artifact here
+		//spawn a rare artifact here
 		new /obj/machinery/artifact(src)
-	ReplaceWithFloor()
+	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
+	N.fullUpdateMineralOverlays()
+
 	if(destroyed)  //Display message about being a terrible miner
 		usr << "\red You destroy some of the rocks!"
 	return
@@ -426,8 +430,8 @@
 			user << "\blue You dug a hole."
 			gets_dug()
 
-	if(istype(W,/obj/item/weapon/storage/satchel))
-		var/obj/item/weapon/storage/satchel/S = W
+	if(istype(W,/obj/item/weapon/storage/bag/ore))
+		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
@@ -452,7 +456,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
 
-	src.overlays = null
+	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
@@ -497,11 +501,11 @@
 	if(istype(M,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = M
 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/satchel))
+			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
 				src.attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/satchel))
+			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
 				src.attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/satchel))
+			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
 				src.attackby(R.module_state_3,R)
 			else
 				return

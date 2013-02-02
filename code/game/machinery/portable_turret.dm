@@ -234,7 +234,7 @@ Status: []<BR>"},
 /obj/machinery/porta_turret/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if(anchored) // you can't turn a turret on/off if it's not anchored/secured
@@ -449,9 +449,6 @@ Status: []<BR>"},
 	var/list/secondarytargets = list() // targets that are least important
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"(And simple_animals)
-		for (var/obj/effect/critter/L in view(7,src))
-			if(L.alive)
-				targets += L
 		for(var/mob/living/simple_animal/C in view(7,src))
 			if(!C.stat)
 				targets += C
@@ -506,15 +503,6 @@ Status: []<BR>"},
 				spawn() popUp() // pop the turret up if it's not already up.
 				dir=get_dir(src,M) // even if you can't shoot, follow the target
 				spawn() shootAt(M) // shoot the target, finally
-		else
-
-			if (istype(t, /obj/effect/critter)) // shoot other things, same process as above
-				var/obj/effect/critter/L = t
-				if (L.alive==1)
-					spawn() popUp()
-					dir=get_dir(src,L)
-					spawn() shootAt(L)
-
 
 	else
 		if(secondarytargets.len>0) // if there are no primary targets, go for secondary targets
@@ -570,7 +558,7 @@ Status: []<BR>"},
 			return 10
 
 	if(auth_weapons) // check for weapon authorization
-		if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)))
+		if((isnull(perp.wear_id)) || (istype(perp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate)))
 
 			if((src.allowed(perp)) && !(src.lasercolor)) // if the perp has security access, return 0
 				return 0
@@ -581,40 +569,36 @@ Status: []<BR>"},
 			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
-			if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee/baton))
+			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
 				threatcount += 2
 
 	if((src.lasercolor) == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 		threatcount = 0//But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
-		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
 			threatcount += 4
-		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
 
 	if((src.lasercolor) == "r")
 		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
-		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
 			threatcount += 4
-		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2
 
 	if (src.check_records) // if the turret can check the records, check if they are set to *Arrest* on records
 		for (var/datum/data/record/E in data_core.general)
+
 			var/perpname = perp.name
-			if (perp:wear_id)
-				var/obj/item/weapon/card/id/id = perp:wear_id
-				if(istype(perp:wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/pda = perp:wear_id
-					id = pda.id
+			if (perp.wear_id)
+				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
 				if (id)
 					perpname = id.registered_name
-				else
-					var/obj/item/device/pda/pda = perp:wear_id
-					perpname = pda.owner
+
 			if (E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
 					if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
@@ -987,7 +971,7 @@ Status: []<BR>"},
 /obj/machinery/porta_turret_cover/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	Parent_Turret.add_fingerprint(usr)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (Parent_Turret.allowed(usr)))

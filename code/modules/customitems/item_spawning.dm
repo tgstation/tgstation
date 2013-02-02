@@ -7,11 +7,11 @@
 /proc/EquipCustomItems(mob/living/carbon/human/M)
 	// load lines
 	var/file = file2text("config/custom_items.txt")
-	var/lines = dd_text2list(file, "\n")
+	var/lines = text2list(file, "\n")
 
 	for(var/line in lines)
 		// split & clean up
-		var/list/Entry = dd_text2list(line, ":")
+		var/list/Entry = text2list(line, ":")
 		for(var/i = 1 to Entry.len)
 			Entry[i] = trim(Entry[i])
 
@@ -19,7 +19,7 @@
 			continue;
 
 		if(Entry[1] == M.ckey && Entry[2] == M.real_name)
-			var/list/Paths = dd_text2list(Entry[3], ",")
+			var/list/Paths = text2list(Entry[3], ",")
 			for(var/P in Paths)
 				var/ok = 0  // 1 if the item was placed successfully
 				P = trim(P)
@@ -42,7 +42,7 @@
 						I.blood_type = C.blood_type
 						I.dna_hash = C.dna_hash
 						I.fingerprint_hash = C.fingerprint_hash
-						I.pin = C.pin
+						//I.pin = C.pin
 
 						//custom stuff
 						if(M.ckey == "fastler" && M.real_name == "Fastler Greay") //This is a Lifetime ID

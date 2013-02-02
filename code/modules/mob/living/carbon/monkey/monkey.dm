@@ -66,7 +66,7 @@
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 
@@ -93,7 +93,7 @@
 	..()
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
@@ -309,7 +309,7 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
-				Weaken(rand(10,15))
+				Weaken(15)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down [name]!</B>", M), 1)
@@ -337,7 +337,7 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_metroid(mob/living/carbon/metroid/M as mob)
+/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -348,11 +348,11 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/slime/adult))
 			damage = rand(20, 40)
 		else
 			damage = rand(5, 35)
@@ -409,57 +409,6 @@
 				stat("Genetic Damage Time", mind.changeling.geneticdamage)
 	return
 
-
-
-/mob/living/carbon/monkey/Move()
-	if ((!( buckled ) || buckled.loc != loc))
-		buckled = null
-	if (buckled)
-		return
-	if (restrained())
-		stop_pulling()
-	var/t7 = 1
-	if (restrained())
-		for(var/mob/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
-				t7 = null
-	if (t7 && (pulling && get_dist(src, pulling) <= 1))
-		if (pulling.anchored)
-			stop_pulling()
-		var/T = loc
-		. = ..()
-		if (!( isturf(pulling.loc) ))
-			stop_pulling()
-			return
-		if (!buckled)
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((ismob(pulling) && (get_dist(src, pulling) > 1 || diag)))
-				if (istype(pulling, type))
-					var/mob/M = pulling
-					var/atom/movable/t = M.pulling
-					M.stop_pulling()
-					step(pulling, get_dir(pulling.loc, T))
-					M.start_pulling(t)
-			else
-				if (pulling)
-					if (istype(pulling, /obj/structure/window))
-						if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-							for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-								stop_pulling()
-				if (pulling)
-					step(pulling, get_dir(pulling.loc, T))
-	else
-		stop_pulling()
-		. = ..()
-	if ((s_active && !( contents.Find(s_active) )))
-		s_active.close(src)
-
-	for(var/mob/living/carbon/metroid/M in view(1,src))
-		M.UpdateFeed(src)
-	return
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"

@@ -1,5 +1,5 @@
 /turf/simulated/wall/r_wall
-	name = "r wall"
+	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon_state = "r_wall"
 	opacity = 1
@@ -10,9 +10,10 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
-	if ((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if (HULK in user.mutations)
 		if (prob(10))
 			usr << text("\blue You smash through the wall.")
+			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
@@ -251,6 +252,15 @@
 	else if( istype(W,/obj/item/apc_frame) )
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
+
+	else if( istype(W,/obj/item/alarm_frame) )
+		var/obj/item/alarm_frame/AH = W
+		AH.try_build(src)
+
+	else if(istype(W,/obj/item/firealarm_frame))
+		var/obj/item/firealarm_frame/AH = W
+		AH.try_build(src)
+		return
 
 	else if(istype(W,/obj/item/light_fixture_frame))
 		var/obj/item/light_fixture_frame/AH = W

@@ -81,3 +81,8 @@
 	name = "cyborg visor"
 	desc = "Beep boop"
 	icon_state = "death"
+
+/obj/item/clothing/mask/gas/owl_mask
+	name = "owl mask"
+	desc = "Twoooo!"
+	icon_state = "owl"

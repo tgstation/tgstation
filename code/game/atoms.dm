@@ -24,13 +24,9 @@
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.visible_message("\red [hit_atom] has been hit by [src].")
-		if(isobj(src))//Hate typecheckin for a child object but this is just fixing crap another guy broke so if someone wants to put the time in and make this proper feel free.
-			M.take_organ_damage(src:throwforce)
+		M.hitby(src)
 
-			log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
-			log_admin("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
-			msg_admin_attack("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
+		log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -62,7 +58,7 @@
 		return null
 
 /atom/proc/check_eye(user as mob)
-	if (istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
 
@@ -240,6 +236,9 @@ its easier to just keep the beam vertical.
 /atom/proc/blob_act()
 	return
 
+/atom/proc/fire_act()
+	return
+
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
@@ -274,8 +273,8 @@ its easier to just keep the beam vertical.
 /atom/proc/attack_larva(mob/user as mob)
 	return
 
-// for metroids
-/atom/proc/attack_metroid(mob/user as mob)
+// for slimes
+/atom/proc/attack_slime(mob/user as mob)
 	return
 
 /atom/proc/hand_h(mob/user as mob)			//human (hand) - restrained
@@ -295,7 +294,7 @@ its easier to just keep the beam vertical.
 	src.hand_p(user)
 	return
 
-/atom/proc/hand_m(mob/user as mob)			//metroid - restrained
+/atom/proc/hand_m(mob/user as mob)			//slime - restrained
 	return
 
 
@@ -344,15 +343,16 @@ its easier to just keep the beam vertical.
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
+
 		//Fibers~
 		add_fibers(M)
+
 		//He has no prints!
 		if (mFingerprints in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
-			return 0
-		//Now, lets get to the dirty work.
+			return 0		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
@@ -360,55 +360,43 @@ its easier to just keep the beam vertical.
 				H.dna = new /datum/dna(null)
 				H.dna.real_name = H.real_name
 		H.check_dna()
+
 		//Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
+
 		//Deal with gloves the pass finger/palm prints.
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
 			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
+
 		//More adminstuffz
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 			fingerprintslast = H.key
+
 		//Make the list if it does not exist.
 		if(!fingerprints)
 			fingerprints = list()
+
 		//Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			if(P == full_print)
-				continue
-			var/test_print = stars(fingerprints[P], rand(85,95))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
-		var/print = fingerprints[full_print] //Find if the print is already there.
-		//It is not!  We need to add it!
-		if(!print)
-			fingerprints[full_print] = stars(full_print, H.gloves ? rand(10,20) : rand(25,40))
-		//It's there, lets merge this shit!
-		else
-			fingerprints[full_print] = stringmerge(print, stars(full_print, (H.gloves ? rand(10,20) : rand(25,40))))
+
+		// Add the fingerprints
+		fingerprints[full_print] = full_print
+
 		return 1
 	else
 		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			var/test_print = stars(fingerprints[P], rand(85,95))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
+
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
 		del(fingerprints)
@@ -420,9 +408,14 @@ its easier to just keep the beam vertical.
 		A.fingerprints = list()
 	if(!istype(A.fingerprintshidden,/list))
 		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints			//detective
-	A.fingerprintshidden |= fingerprintshidden	//admin
-	A.fingerprintslast = fingerprintslast
+
+	//skytodo
+	//A.fingerprints |= fingerprints            //detective
+	//A.fingerprintshidden |= fingerprintshidden    //admin
+	if(fingerprints)
+		A.fingerprints |= fingerprints.Copy()            //detective
+	if(fingerprintshidden)
+		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
 
 
 //returns 1 if made bloody, returns 0 otherwise
@@ -472,19 +465,19 @@ its easier to just keep the beam vertical.
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
+			/*for(var/datum/disease/D in M.viruses)
+				var/datum/disease/newDisease = D.Copy(1)
 				B.viruses += newDisease
-				newDisease.holder = B
+				newDisease.holder = B*/
 			return 1 //we bloodied the floor
 
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = new D.type
+		/*for(var/datum/disease/D in M.viruses)
+			var/datum/disease/newDisease = D.Copy(1)
 			newblood.viruses += newDisease
-			newDisease.holder = newblood
+			newDisease.holder = newblood*/
 		return 1 //we bloodied the floor
 
 	//adding blood to humans
@@ -506,56 +499,39 @@ its easier to just keep the beam vertical.
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
 
-		for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = new D.type
+		/*for(var/datum/disease/D in M.viruses)
+			var/datum/disease/newDisease = D.Copy(1)
 			this.viruses += newDisease
-			newDisease.holder = this
+			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
-	if( istype(M, /mob/living/carbon/monkey) )
+	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
 			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
+			/*for(var/datum/disease/D in M.viruses)
+				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
-				newDisease.holder = this
+				newDisease.holder = this*/
 
 	else if( istype(M, /mob/living/carbon/alien ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
 			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
-			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
+			/*for(var/datum/disease/D in M.viruses)
+				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
-				newDisease.holder = this
+				newDisease.holder = this*/
 
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
-			var/obj/effect/decal/cleanable/oil/this = new /obj/effect/decal/cleanable/oil(source2)
-			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
-				this.viruses += newDisease
-				newDisease.holder = this
-
-/atom/proc/clean_prints()
-	if(istype(fingerprints, /list))
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			var/test_print = stars(fingerprints[P], rand(10,20))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
-		if(!fingerprints.len)
-			del(fingerprints)
+			new /obj/effect/decal/cleanable/oil(source2)
 
 /atom/proc/clean_blood()
-	clean_prints()
 	src.germ_level = 0
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
@@ -616,8 +592,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				src.attack_paw(usr)
 			else if(isalienadult(usr))
 				src.attack_alien(usr)
-			else if(ismetroid(usr))
-				src.attack_metroid(usr)
+			else if(isslime(usr))
+				src.attack_slime(usr)
 			else if(isanimal(usr))
 				src.attack_animal(usr)
 			else
@@ -635,7 +611,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				src.hand_p(usr, usr.hand)
 			else if(isalienadult(usr))
 				src.hand_al(usr, usr.hand)
-			else if(ismetroid(usr))
+			else if(isslime(usr))
 				return
 			else if(isanimal(usr))
 				return
@@ -846,28 +822,28 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !alien.restrained() )
 				attack_larva(alien)
 
-	else if(ismetroid(usr))
-		var/mob/living/carbon/metroid/metroid = usr
-		//-metroid stuff-
+	else if(isslime(usr))
+		var/mob/living/carbon/slime/slime = usr
+		//-slime stuff-
 
-		if(metroid.stat)
+		if(slime.stat)
 			return
 
-		var/in_range = in_range(src, metroid) || src.loc == metroid
+		var/in_range = in_range(src, slime) || src.loc == slime
 
 		if (in_range)
-			if ( !metroid.restrained() )
+			if ( !slime.restrained() )
 				if (W)
-					attackby(W,metroid)
+					attackby(W,slime)
 					if (W)
-						W.afterattack(src, metroid)
+						W.afterattack(src, slime)
 				else
-					attack_metroid(metroid)
+					attack_slime(slime)
 			else
-				hand_m(metroid, metroid.hand)
+				hand_m(slime, slime.hand)
 		else
-			if ( (W) && !metroid.restrained() )
-				W.afterattack(src, metroid)
+			if ( (W) && !slime.restrained() )
+				W.afterattack(src, slime)
 
 
 	else if(isanimal(usr))
@@ -1028,7 +1004,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //	world << "according to dblclick(), t5 is [t5]"
 
 	// ------- ACTUALLY DETERMINING STUFF -------
-	if (((t5 || (W && (W.flags & 16))) && !( istype(src, /obj/screen) )))
+	if (((t5 || (W && (W.flags & USEDELAY))) && !( istype(src, /obj/screen) )))
 
 		// ------- ( CAN USE ITEM OR HAS 1 SECOND USE DELAY ) AND NOT CLICKING ON SCREEN -------
 
@@ -1179,8 +1155,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 						src.attack_larva(usr)
 					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)
-					else if(istype(usr, /mob/living/carbon/metroid))
-						src.attack_metroid(usr)
+					else if(istype(usr, /mob/living/carbon/slime))
+						src.attack_slime(usr)
 					else if(istype(usr, /mob/living/simple_animal))
 						src.attack_animal(usr)
 		else
@@ -1235,12 +1211,10 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
 			if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				// ------- YOU HAVE THE LASER MUTATION, YOUR INTENT SET TO HURT AND IT'S BEEN MORE THAN A DECISECOND SINCE YOU LAS TATTACKED -------
-				var/turf/oloc
+
 				var/turf/T = get_turf(usr)
 				var/turf/U = get_turf(src)
-				if(istype(src, /turf)) oloc = src
-				else
-					oloc = loc
+
 
 				if(istype(usr, /mob/living/carbon/human))
 					usr:nutrition -= rand(1,5)
@@ -1253,7 +1227,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				A.firer = usr
 				A.def_zone = usr:get_organ_target()
-				A.original = oloc
+				A.original = src
 				A.current = T
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x

@@ -16,7 +16,7 @@
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
-		M.overlays = null
+		M.overlays.Cut()
 		M.invisibility = 101
 
 		if(istype(M, /mob/living/silicon/robot))
@@ -33,7 +33,7 @@
 
 		var/mob/living/new_mob
 
-		var/randomize = pick("monkey","robot","metroid","xeno","human")
+		var/randomize = pick("monkey","robot","slime","xeno","human")
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -46,9 +46,9 @@
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-			if("metroid")
-				if(prob(50))		new_mob = new /mob/living/carbon/metroid/adult(M.loc)
-				else				new_mob = new /mob/living/carbon/metroid(M.loc)
+			if("slime")
+				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
+				else				new_mob = new /mob/living/carbon/slime(M.loc)
 				new_mob.universal_speak = 1
 			if("xeno")
 				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
@@ -74,7 +74,7 @@
 
 				var/mob/living/carbon/human/H = new_mob
 				if(H.dna)
-					H.dna.mutantrace = pick("skrell","tajaran","lizard","golem","metroid","plant",4;"")
+					H.dna.mutantrace = pick("lizard","tajaran","skrell","golem","slime","plant",4;"")
 			else
 				return
 

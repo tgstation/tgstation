@@ -40,8 +40,8 @@
 		M.name = src.name
 		M.real_name = src.real_name
 
-	M.dna = src.dna
-	M.UI = src.UI
+	if(src.dna)
+		M.dna = src.dna
 
 	if(mind)
 		mind.transfer_to(M)

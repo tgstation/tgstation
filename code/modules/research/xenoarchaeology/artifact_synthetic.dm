@@ -35,7 +35,7 @@
 	var/s = round(p,25)
 	icon_state = "anodev[s]"
 
-/obj/item/weapon/anodevice/proc/interact(var/mob/user)
+/obj/item/weapon/anodevice/interact(var/mob/user)
 	user.machine = src
 	var/dat = "<b>Anomalous Materials Energy Utiliser</b><br>"
 	if(activated)
@@ -74,17 +74,8 @@
 	else
 		return ..()
 
-/obj/item/weapon/anodevice/attack_ai(var/mob/user as mob)
-	return src.interact(user)
-
-/*/obj/item/weapon/anodevice/attack_paw(var/mob/user as mob)
-	return src.interact(user)*/
-
 /obj/item/weapon/anodevice/attack_self(var/mob/user as mob)
 	return src.interact(user)
-
-/*obj/item/weapon/anodevice/attack_hand(var/mob/user as mob)
-	return src.interact(user)*/
 
 /obj/item/weapon/anodevice/proc/pulse()
 	if(activated)

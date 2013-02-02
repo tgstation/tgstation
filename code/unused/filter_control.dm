@@ -112,7 +112,7 @@
 		return
 
 /obj/machinery/filter_control/proc/updateicon()
-	overlays = null
+	overlays.Cut()
 	if(stat & NOPOWER)
 		icon_state = "filter_control-nopower"
 		return

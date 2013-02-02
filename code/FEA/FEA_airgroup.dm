@@ -62,6 +62,9 @@ datum/air_group
 	proc/check_regroup()
 		//Purpose: Checks to see if group processing should be turned back on
 		//Returns: group_processing
+		if(prevent_airgroup_regroup)
+			return 0
+
 		if(group_processing) return 1
 
 		var/turf/simulated/sample = pick(members)
@@ -90,7 +93,8 @@ datum/air_group
 		if (next_check > 0)
 			next_check--
 			return 1
-		next_check += check_delay + rand(max(check_delay, 1)/2,check_delay)
+		var/player_count = max(player_list.len, 3) / 3
+		next_check += check_delay + rand(player_count, player_count * 1.5)
 		check_delay++
 
 		var/turf/simulated/list/border_individual = list()

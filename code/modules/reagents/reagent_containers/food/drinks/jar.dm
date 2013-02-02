@@ -9,15 +9,15 @@
 	item_state = "beaker"
 	New()
 		..()
-		reagents.add_reagent("metroid", 50)
+		reagents.add_reagent("slime", 50)
 
 	on_reagent_change()
 		if (reagents.reagent_list.len > 0)
 			switch(reagents.get_master_reagent_id())
-				if("metroid")
-					icon_state = "jar_metroid"
-					name = "metroid jam"
-					desc = "A jar of metroid jam. Delicious!"
+				if("slime")
+					icon_state = "jar_slime"
+					name = "slime jam"
+					desc = "A jar of slime jam. Delicious!"
 				else
 					icon_state ="jar_what"
 					name = "jar of something"

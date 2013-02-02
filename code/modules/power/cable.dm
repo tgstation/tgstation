@@ -17,38 +17,7 @@
 		if(!directwired)		// only for attaching to directwired machines
 			return
 
-		var/dirn = get_dir(user, src)
-
-		for(var/obj/structure/cable/LC in T)
-			if( (LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0) )
-				user << "There's already a cable at that position."
-				return
-
-		var/obj/structure/cable/NC = new(T)
-
-		NC.cableColor(coil.color)
-
-		NC.d1 = 0
-		NC.d2 = dirn
-		NC.add_fingerprint()
-		NC.updateicon()
-
-		NC.mergeConnectedNetworks(NC.d2)
-		NC.mergeConnectedNetworksOnTurf()
-		if(powernet == null)
-			if(NC.powernet == null)
-				NC.powernet = new()
-				powernets += NC.powernet
-				NC.powernet.cables += NC
-			powernet = NC.powernet
-			NC.powernet.nodes += src
-		NC.mergeConnectedNetworksOnTurf()
-
-		coil.use(1)
-		if (NC.shock(user, 50))
-			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
-				del(NC)
+		coil.turf_place(T, user)
 		return
 	else
 		..()
@@ -184,19 +153,35 @@
 
 // the cable coil object, used for laying cable
 
+#define MAXCOIL 30
+/obj/item/weapon/cable_coil
+	name = "cable coil"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "coil_red"
+	var/amount = MAXCOIL
+	color = "red"
+	desc = "A coil of power cable."
+	throwforce = 10
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 5
+	m_amt = 50
+	g_amt = 20
+	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
+	slot_flags = SLOT_BELT
+	item_state = "coil_red"
+	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
+
+
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
 	..()
 	src.amount = length
 	if (param_color)
 		color = param_color
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	updateicon()
-
-
-/obj/item/weapon/cable_coil/cut/New(loc)
-	..()
-	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	updateicon()
@@ -489,7 +474,7 @@
 				merge_powernets(powernet, N.terminal.powernet)
 			else
 				N.terminal.powernet = powernet
-				powernet.nodes += N.terminal
+				powernet.nodes[N.terminal] = N.terminal
 
 		else if(istype(AM,/obj/machinery/power))
 			var/obj/machinery/power/M = AM
@@ -498,7 +483,7 @@
 				merge_powernets(powernet, M.powernet)
 			else
 				M.powernet = powernet
-				powernet.nodes += M
+				powernet.nodes[M] = M
 
 
 obj/structure/cable/proc/cableColor(var/colorC)
@@ -524,23 +509,45 @@ obj/structure/cable/proc/cableColor(var/colorC)
 		if("white")
 			icon = 'icons/obj/power_cond_white.dmi'
 
+/obj/item/weapon/cable_coil/cut
+	item_state = "coil_red2"
 
-/obj/item/weapon/cable_coil/attack(mob/M as mob, mob/user as mob)
-	if(hasorgans(M))
-		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
-			return ..()
-		if(S.burn_dam > 0)
-			S.heal_damage(0,15,0,1)
-			if(user != M)
-				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"\red You repair some burn damage on your [S.display_name]",\
-				"You hear wires being cut.")
-			else
-				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"\red You repair some burn damage on your [S.display_name]",\
-				"You hear wires being cut.")
-		else
-			user << "Nothing to fix!"
-	else
-		return ..()
+/obj/item/weapon/cable_coil/cut/New(loc)
+	..()
+	src.amount = rand(1,2)
+	pixel_x = rand(-2,2)
+	pixel_y = rand(-2,2)
+	updateicon()
+
+/obj/item/weapon/cable_coil/yellow
+	color = "yellow"
+	icon_state = "coil_yellow"
+
+/obj/item/weapon/cable_coil/blue
+	color = "blue"
+	icon_state = "coil_blue"
+
+/obj/item/weapon/cable_coil/green
+	color = "green"
+	icon_state = "coil_green"
+
+/obj/item/weapon/cable_coil/pink
+	color = "pink"
+	icon_state = "coil_pink"
+
+/obj/item/weapon/cable_coil/orange
+	color = "orange"
+	icon_state = "coil_orange"
+
+/obj/item/weapon/cable_coil/cyan
+	color = "cyan"
+	icon_state = "coil_cyan"
+
+/obj/item/weapon/cable_coil/white
+	color = "white"
+	icon_state = "coil_white"
+
+/obj/item/weapon/cable_coil/random/New()
+	color = pick("red","yellow","green","blue","pink")
+	icon_state = "coil_[color]"
+	..()

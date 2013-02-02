@@ -540,7 +540,7 @@ ________________________________________________________________________________
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, P.loc))
 					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays = null
+			P.overlays.Cut()
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
 		if("Inject")
@@ -593,7 +593,7 @@ ________________________________________________________________________________
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("\blue [U.key] used KAMIKAZE mode.", 1)//Let the admins know.
+									message_admins("\blue [key_name_admin(U)] used KAMIKAZE mode.")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)
@@ -844,16 +844,16 @@ ________________________________________________________________________________
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			var/obj/item/weapon/disk/tech_disk/tdisk = I
-			if(tdisk.stored)//If it has something on it.
+			var/obj/item/weapon/disk/tech_disk/TD = I
+			if(TD.stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==tdisk.stored.id)
-							if(current_data.level<tdisk.stored.level)
-								current_data.level=tdisk.stored.level
+						if(current_data.id==TD.stored.id)
+							if(current_data.level<TD.stored.level)
+								current_data.level=TD.stored.level
 							break
-					tdisk.stored = null
+					TD.stored = null
 					U << "\blue Data analyzed and updated. Disk erased."
 				else
 					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
@@ -976,7 +976,7 @@ ________________________________________________________________________________
 					flick("apc-spark", src)
 					A.emagged = 1
 					A.locked = 0
-					A.updateicon()
+					A.update_icon()
 			else
 				U << "\red This APC has run dry of power. You must find another source."
 
@@ -1428,7 +1428,7 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	attack_hand()
-		if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+		if (HULK in usr.mutations)
 			usr << text("\blue You easily destroy the energy net.")
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)

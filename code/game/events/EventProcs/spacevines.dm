@@ -17,6 +17,9 @@
 		if(master)
 			master.vines -= src
 			master.growth_queue -= src
+		for(var/mob/M in src.loc)
+			if(M.buckled == src)
+				M.buckled = null
 		..()
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)

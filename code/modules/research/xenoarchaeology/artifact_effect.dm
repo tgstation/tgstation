@@ -221,11 +221,12 @@
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
-						B.charge -= 10
-				for (var/obj/machinery/power/smes/S in range (src.aurarange,originator)) S.charge -= 20
+						B.charge = max(B.charge-10,0)
+				for (var/obj/machinery/power/smes/S in range (src.aurarange,originator))
+					S.charge = max(S.charge-20,0)
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
-						D.charge -= 10
+						D.charge = max(D.charge-10,0)
 						if(prob(10)) M << "\red SYSTEM ALERT: Energy draining field detected!"
 				return 1
 			if("planthelper")
@@ -317,11 +318,12 @@
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
-						B.charge -= 500
-				for (var/obj/machinery/power/smes/S in range (src.aurarange,originator)) S.charge -= 400
+						B.charge = max(B.charge-500,0)
+				for (var/obj/machinery/power/smes/S in range (src.aurarange,originator))
+					S.charge = max(S.charge-400,0)
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
-						D.charge -= min(D.charge, 500)
+						D.charge = max(D.charge-500,0)
 						M << "\red SYSTEM ALERT: Severe energy drain detected!"
 				return 1
 			if("planthelper")
@@ -445,11 +447,12 @@
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(200, originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
-						B.charge -= min(B.charge,250)
-				for (var/obj/machinery/power/smes/S in range (src.aurarange,src)) S.charge -= 250
+						B.charge = max(B.charge-250,0)
+				for (var/obj/machinery/power/smes/S in range (src.aurarange,src))
+					S.charge = max(S.charge-250,0)
 				for (var/mob/living/silicon/robot/M in world)
 					for (var/obj/item/weapon/cell/D in M.contents)
-						D.charge -= min(D.charge,250)
+						D.charge = max(D.charge-250,0)
 						M << "\red SYSTEM ALERT: Energy drain detected!"
 				return 1
 			if("teleport")

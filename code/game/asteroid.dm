@@ -72,8 +72,6 @@ proc/admin_spawn_room_at_pos()
 			wall=/turf/simulated/wall/r_wall
 		if("Regular wall")
 			wall=/turf/simulated/wall
-		if("Asteroid wall")
-			wall=/turf/simulated/wall/asteroid
 		if("Resin wall")
 			wall=/obj/effect/alien/resin
 	switch(alert("Floor type",null,"Regular floor","Reinforced floor"))
