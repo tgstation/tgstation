@@ -547,7 +547,7 @@ datum/design/telecomms_processor
 	build_path = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 datum/design/telecomms_server
-	name = "Circuit Design (Telecommunication Server)"
+	name = "Circuit Design (Server Mainframe)"
 	desc = "Allows for the construction of Telecommunications Servers."
 	id = "s-server"
 	req_tech = list("programming" = 4, "engineering" = 4)
@@ -582,10 +582,20 @@ datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
 	desc = "Allows for the construction of a pAI Card"
 	id = "paicard"
-	req_tech = list("programming" = 3)
+	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
 	materials = list("$glass" = 500, "$metal" = 500)
 	build_path = "/obj/item/device/paicard"
+
+datum/design/paicard
+	name = "Positronic Brain"
+	desc = "Allows for the construction of a positronic brain"
+	id = "posibrain"
+	req_tech = list("engineering" = 4, "materials" = 4, "bluespace" = 2, "programming" = 6)
+
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
+	build_path = "/obj/item/device/posibrain"
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////
@@ -748,6 +758,15 @@ datum/design/mech_grenade_launcher
 	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang"
 	category = "Exosuit Equipment"
 
+datum/design/clusterbang_launcher
+	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
+	desc = "A weapon that violates the Geneva Convention at 6 rounds per minute"
+	id = "clusterbang_launcher"
+	build_type = MECHFAB
+	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
+	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited"
+	category = "Exosuit Equipment"
+
 datum/design/mech_wormhole_gen
 	name = "Exosuit Module Design (Localized Wormhole Generator)"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
@@ -807,7 +826,7 @@ datum/design/mech_energy_relay
 	desc = "Tesla Energy Relay"
 	id = "mech_energy_relay"
 	build_type = MECHFAB
-	req_tech = list("magnets" = 4, "syndicate" = 3)
+	req_tech = list("magnets" = 4, "powerstorage" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay"
 	category = "Exosuit Equipment"
 
@@ -1054,16 +1073,16 @@ datum/design/subspace_amplifier
 datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
-	id = "s-amplifier"
+	id = "s-treatment"
 	req_tech = list("programming" = 3, "magnets" = 2, "materials" = 4, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10, "$silver" = 20)
 	build_path = "/obj/item/weapon/stock_parts/subspace/treatment"
 
 datum/design/subspace_analyzer
-	name = "Subspace Treatment Disk"
+	name = "Subspace Analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-	id = "s-amplifier"
+	id = "s-analyzer"
 	req_tech = list("programming" = 3, "magnets" = 4, "materials" = 4, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10, "$gold" = 15)
@@ -1072,7 +1091,7 @@ datum/design/subspace_analyzer
 datum/design/subspace_crystal
 	name = "Ansible Crystal"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-	id = "s-amplifier"
+	id = "s-crystal"
 	req_tech = list("magnets" = 4, "materials" = 4, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list("$glass" = 1000, "$silver" = 20, "$gold" = 20)
@@ -1081,7 +1100,7 @@ datum/design/subspace_crystal
 datum/design/subspace_transmitter
 	name = "Subspace Transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
-	id = "s-amplifier"
+	id = "s-transmitter"
 	req_tech = list("magnets" = 5, "materials" = 5, "bluespace" = 3)
 	build_type = PROTOLATHE
 	materials = list("$glass" = 100, "$silver" = 10, "$uranium" = 15)
@@ -1571,3 +1590,14 @@ datum/design/security_hud
 	src.pixel_y = rand(-5.0, 5)
 
 
+/////////////////////////////////////////
+//////////////Borg Upgrades//////////////
+/////////////////////////////////////////
+datum/design/borg_syndicate_module
+	name = "Borg Illegal Weapons Upgrade"
+	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	id = "borg_syndicate_module"
+	build_type = MECHFAB
+	req_tech = list("combat" = 4, "syndicate" = 3)
+	build_path = "/obj/item/borg/upgrade/syndicate"
+	category = "Cyborg Upgrade Modules"

@@ -27,6 +27,22 @@
 
 	return
 
+/obj/machinery/portable_atmospherics/pump/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+
+	if(prob(50/severity))
+		on = !on
+
+	if(prob(100/severity))
+		direction_out = !direction_out
+
+	target_pressure = rand(0,1300)
+	update_icon()
+
+	..(severity)
+
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
 	if(on)
@@ -82,7 +98,7 @@
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 	var/holding_text
 
 	if(holding)
@@ -112,7 +128,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		usr.set_machine(src)
 
 		if(href_list["power"])
 			on = !on

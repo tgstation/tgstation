@@ -79,6 +79,8 @@
 				R.source_rock = src.source_rock
 				R.geological_data = src.geological_data
 			user << "\blue You take a core sample of the [src]."
+	else
+		..()
 
 /*Code does not work, likely due to removal/change of acid_act proc
 //Strange rocks currently melt to gooey grey w/ acid application (see reactions)
@@ -261,8 +263,8 @@
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))
 			continue
-		if(M.stat == 2 && M.client.ghost_ears)
-			listening|=M
+		if(M.stat == 2 && M.client.prefs.toggles & CHAT_GHOSTEARS)
+			listening |= M
 
 	for(var/mob/M in listening)
 		M << "<b>The crystal</b> reverberates, \blue\"[msg]\""

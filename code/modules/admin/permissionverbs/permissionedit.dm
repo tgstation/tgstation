@@ -2,97 +2,60 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-
-	if(!holder)
-		return
-	holder.edit_admin_permissions()
+	if(!check_rights(R_PERMISSIONS))	return
+	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	if(!usr.client)
-		return
+	if(!check_rights(R_PERMISSIONS))	return
 
-	if(!usr.client.holder || !(usr.client.holder.sql_permissions & PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
-		return
+	var/output = {"<!DOCTYPE html>
+<html>
+<head>
+<title>Permissions Panel</title>
+<script type='text/javascript' src='search.js'></script>
+<link rel='stylesheet' type='text/css' href='panels.css'>
+</head>
+<body onload='selectTextField();updateSearch();'>
+<div id='main'><table id='searchable' cellspacing='0'>
+<tr class='title'>
+<th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
+<th style='width:125px;'>RANK</th><th style='width:100%;'>PERMISSIONS</th>
+</tr>
+"}
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
+	for(var/adm_ckey in admin_datums)
+		var/datum/admins/D = admin_datums[adm_ckey]
+		if(!D)	continue
+		var/rank = D.rank ? D.rank : "*none*"
+		var/rights = rights2text(D.rights," ")
+		if(!rights)	rights = "*none*"
 
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
-		return
-
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin ORDER BY rank, ckey")
-	select_query.Execute()
-
-	var/output = "<div align='center'><h1>Current admins</h1>"
-
-	output += "<a href=\"byond://?src=\ref[src];editadminpermissions=add;editadminckey=none\">Add new admin</a>"
-
-	output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0'>"
-	output += "<tr>"
-	output += "<th width='125'><b>CKEY</b></th>"
-	output += "<th width='125'><b>RANK</b></th>"
-	output += "<th width='25'><b>LEVEL</b></th>"
-	output += "<th width='75'><b>PERMISSIONS</b></th>"
-	output += "<th width='150'><b>OPTIONS</b></th>"
-	output += "</tr>"
-
-	var/color1 = "#f4f4f4"
-	var/color2 = "#e7e7e7"
-	var/i = 1	//Used to determine the color of each row
-
-	while(select_query.NextRow())
-		i = !i
-		var/adm_ckey = select_query.item[1]
-		var/adm_rank = select_query.item[2]
-		var/adm_level = select_query.item[3]
-		var/adm_flags = text2num(select_query.item[4])
-		output += "<tr bgcolor='[(i % 2) ? color1 : color2]'>"
-		output += "<td align='center'><b>[adm_ckey]</b></td>"
-		output += "<td align='center'><b>[adm_rank]</b></td>"
-		output += "<td align='center'>[adm_level]</td>"
-		var/list/permissionlist = bitfield2list(adm_flags, permissionwords_sql)
-		output += "<td align='center'>"
-		for(var/word in permissionlist)
-			output += "[word]<BR>"
-		output += "</td>"
-		output += "<td align='center'><font size='2'>"
-
-		//Options
-		output += "<a href=\"byond://?src=\ref[src];editadminpermissions=permissions;editadminckey=[adm_ckey]\">PERMISSIONS</a><br>"
-		output += "<a href=\"byond://?src=\ref[src];editadminpermissions=rank;editadminckey=[adm_ckey]\">RANK</a><br>"
-		output += "<a href=\"byond://?src=\ref[src];editadminpermissions=remove;editadminckey=[adm_ckey]\">REMOVE</a>"
-
-		output += "</font></td>"
+		output += "<tr>"
+		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=\ref[src];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
+		output += "<td><a href='?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>"
+		output += "<td><a class='small' href='?src=\ref[src];editrights=permissions;ckey=[adm_ckey]'>[rights]</a></font></td>"
 		output += "</tr>"
 
-	output += "</table></div>"
+	output += {"
+</table></div>
+<div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div>
+</body>
+</html>"}
 
-	usr << browse(output,"window=editadminpermissions;size=600x500")
-
+	usr << browse(output,"window=editrights;size=600x500")
 
 /datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
+	if(config.admin_legacy_system)	return
+
 	if(!usr.client)
 		return
 
-	if(!usr.client.holder || !(usr.client.holder.sql_permissions & PERMISSIONS))
+	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
 		usr << "\red You do not have permission to do this!"
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
+	establish_db_connection()
 
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	if(!dbcon.IsConnected())
 		usr << "\red Failed to establish database connection"
 		return
@@ -130,3 +93,57 @@
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			log_query.Execute()
 			usr << "\blue Admin rank changed."
+
+/datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission)
+	if(config.admin_legacy_system)	return
+
+	if(!usr.client)
+		return
+
+	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
+		usr << "\red You do not have permission to do this!"
+		return
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		usr << "\red Failed to establish database connection"
+		return
+
+	if(!adm_ckey || !new_permission)
+		return
+
+	adm_ckey = ckey(adm_ckey)
+
+	if(!adm_ckey)
+		return
+
+	if(istext(new_permission))
+		new_permission = text2num(new_permission)
+
+	if(!istext(adm_ckey) || !isnum(new_permission))
+		return
+
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT id, flags FROM erro_admin WHERE ckey = '[adm_ckey]'")
+	select_query.Execute()
+
+	var/admin_id
+	var/admin_rights
+	while(select_query.NextRow())
+		admin_id = text2num(select_query.item[1])
+		admin_rights = text2num(select_query.item[2])
+
+	if(!admin_id)
+		return
+
+	if(admin_rights & new_permission) //This admin already has this permission, so we are removing it.
+		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = [admin_rights & ~new_permission] WHERE id = [admin_id]")
+		insert_query.Execute()
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
+		log_query.Execute()
+		usr << "\blue Permission removed."
+	else //This admin doesn't have this permission, so we are adding it.
+		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = '[admin_rights | new_permission]' WHERE id = [admin_id]")
+		insert_query.Execute()
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]')")
+		log_query.Execute()
+		usr << "\blue Permission added."

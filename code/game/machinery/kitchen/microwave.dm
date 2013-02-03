@@ -139,14 +139,14 @@
 	return 0
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
 /*******************
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/proc/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
 	var/dat = ""
 	if(src.broken > 0)
 		dat = {"<TT>Bzzzzttttt</TT>"}
@@ -357,7 +357,7 @@
 	if(..())
 		return
 
-	usr.machine = src
+	usr.set_machine(src)
 	if(src.operating)
 		src.updateUsrDialog()
 		return

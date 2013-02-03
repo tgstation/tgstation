@@ -49,22 +49,42 @@
 		usr << msg
 		return
 
-	if (istype(O, /obj/item/weapon/plantbag))
+	/*if (istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/plantbag/S = O
 		if (S.mode == 1)
-			for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(src.x,src.y,src.z))
-				if (S.contents.len < S.capacity)
-					S.contents += G;
-				else
-					user << "\blue The plant bag is full."
-					return
-			user << "\blue You pick up all the plants."
+			for(var/obj/item/G in get_turf(src))
+				if(istype(G, /obj/item/seeds) || istype(G, /obj/item/weapon/reagent_containers/food/snacks/grown))
+					if (S.contents.len < S.capacity)
+						S.contents += G
+					else
+						user << "\blue The plant bag is full."
+						return
+			user << "\blue You pick up all the plants and seeds."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The plant bag is full."*/
+	return
+
+/*/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/weapon/storage/bag/plants))
+		var/obj/item/weapon/plantbag/S = O
+		if (S.mode == 1)
+			for(var/obj/item/G in get_turf(src))
+				if(istype(G, /obj/item/seeds) || istype(G, /obj/item/weapon/reagent_containers/food/snacks/grown))
+					if (S.contents.len < S.capacity)
+						S.contents += G
+					else
+						user << "\blue The plant bag is full."
+						return
+			user << "\blue You pick up all the plants and seeds."
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
 				user << "\blue The plant bag is full."
-	return
+	return*/
 
 /obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
@@ -216,14 +236,14 @@
 	seed = "/obj/item/seeds/glowberryseed"
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
-	light_on = 1
-	brightness_on = 2 //luminosity when on
+	var/light_on = 1
+	var/brightness_on = 2 //luminosity when on
 	icon_state = "glowberrypile"
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", round((potency / 10), 1))
-			reagents.add_reagent("radium", 3+round(potency / 5, 1))
+			reagents.add_reagent("uranium", 3+round(potency / 5, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
@@ -333,8 +353,22 @@
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.maximum_volume = 20
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
-			bitesize = 1+round(reagents.total_volume / 2, 1)
+			bitesize = reagents.maximum_volume // Always eat the apple in one
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
+	seed = "/obj/item/seeds/poisonedappleseed"
+	name = "apple"
+	desc = "It's a little piece of Eden."
+	icon_state = "apple"
+	potency = 15
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.maximum_volume = 20
+			reagents.add_reagent("cyanide", 1+round((potency / 5), 1))
+			bitesize = reagents.maximum_volume // Always eat the apple in one
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
 	seed = "/obj/item/seeds/goldappleseed"
@@ -361,6 +395,8 @@
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
 	potency = 10
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
+	slices_num = 5
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -612,6 +648,18 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
+	seed = "/obj/item/seeds/kudzuseed"
+	name = "kudzu pod"
+	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
+	icon_state = "kudzupod"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment",1+round((potency / 50), 1))
+			reagents.add_reagent("anti_toxin",1+round((potency / 25), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = "/obj/item/seeds/icepepperseed"
 	name = "ice-pepper"
@@ -818,11 +866,13 @@
 	user.SetLuminosity(round(user.luminosity + (potency/10),1))
 	SetLuminosity(round(potency/10,1))
 
+
 // *************************************
 // Complex Grown Object Defines -
 // Putting these at the bottom so they don't clutter the list up. -Cheridan
 // *************************************
 
+/*
 //This object is just a transition object. All it does is make a grass tile and delete itself.
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	seed = "/obj/item/seeds/grassseed"
@@ -834,6 +884,7 @@
 		new/obj/item/stack/tile/grass(src.loc)
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
+*/
 
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
 /obj/item/weapon/reagent_containers/food/snacks/grown/money
@@ -926,14 +977,3 @@
 		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
 		del(src)
 		return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
-	name = "Watermelon"
-	icon_state = "A juicy watermelon"
-	icon_state = "watermelon"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
-	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 10)
-		bitesize = 2

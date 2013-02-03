@@ -34,6 +34,7 @@
 	var/open = 0
 	var/stage = 0
 
+	var/list/implants = list()
 	// INTERNAL germs inside the organ, this is BAD if it's greater 0
 	var/germ_level = 0
 
@@ -174,7 +175,7 @@
 			else if(W.damage_type == BURN)
 				burn_dam += W.damage
 
-			if(W.bleeding())
+			if(!(status & ORGAN_ROBOT) && W.bleeding())
 				status |= ORGAN_BLEEDING
 
 			number_wounds += W.amount
@@ -223,6 +224,7 @@
 
 	proc/clamp()
 		var/rval = 0
+		src.status &= ~ORGAN_BLEEDING
 		for(var/datum/wound/W in wounds)
 			if(W.internal) continue
 			rval |= !W.clamped
@@ -271,6 +273,7 @@
 		if(germ_level > 0)
 			for(var/datum/wound/W in wounds) if(!W.bandaged && !W.salved)
 				W.germ_level = max(W.germ_level, germ_level)
+		update_icon()
 		return
 
 	proc/fracture()
@@ -441,7 +444,7 @@
 			if(H)
 				var/lol = pick(cardinal)
 				step(H,lol)
-				
+
 			destspawn = 1
 			if(status & ORGAN_ROBOT)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
@@ -488,7 +491,8 @@
 
 			switch(type)
 				if(CUT)
-					src.status |= ORGAN_BLEEDING
+					if(!(status & ORGAN_ROBOT))
+						src.status |= ORGAN_BLEEDING
 					var/list/size_names = list(/datum/wound/cut, /datum/wound/deep_cut, /datum/wound/flesh_wound, /datum/wound/gaping_wound, /datum/wound/big_gaping_wound, /datum/wound/massive_wound)
 					wound_type = size_names[size]
 
@@ -507,7 +511,7 @@
 
 			// Possibly trigger an internal wound, too.
 			var/local_damage = brute_dam + burn_dam + damage
-			if(damage > 10 && type != BURN && local_damage > 20 && prob(damage))
+			if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && !(status & ORGAN_ROBOT))
 				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
 				owner.custom_pain("You feel something rip in your [display_name]!", 1)
@@ -607,6 +611,28 @@
 	body_part = HEAD
 	var/disfigured = 0
 
+	take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
+		..(brute, burn, sharp, used_weapon, forbidden_limbs)
+		if (!disfigured)
+			if (brute_dam > 40)
+				if (prob(50))
+					disfigure("brute")
+			if (burn_dam > 40)
+				disfigure("burn")
+
+	proc/disfigure(var/type = "brute")
+		if (disfigured)
+			return
+		if(type == "brute")
+			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
+			"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
+			"\red You hear a sickening crack.")
+		else
+			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
+			"\red <b>Your face melts off!</b>",	\
+			"\red You hear a sickening sizzle.")
+		disfigured = 1
+
 /datum/organ/external/l_arm
 	name = "l_arm"
 	display_name = "left arm"
@@ -681,6 +707,18 @@
 
 obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
+
+/*
+//Damage will not exceed max_damage using this proc
+//Cannot apply negative damage
+/datum/organ/external/proc/take_damage(brute, burn)
+	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
+	brute	= max(brute,0)
+	burn	= max(burn,0)
+
+	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	if(!can_inflict)	return 0
+*/
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)

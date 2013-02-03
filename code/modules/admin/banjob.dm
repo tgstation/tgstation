@@ -16,15 +16,16 @@ var/jobban_keylist[0]		//to store the keys & ranks
 //returns a reason if M is banned from rank, returns 0 otherwise
 /proc/jobban_isbanned(mob/M, rank)
 	if(M && rank)
+		/*
 		if(_jobban_isbanned(M, rank)) return "Reason Unspecified"	//for old jobban
 		if (guest_jobbans(rank))
 			if(config.guest_jobban && IsGuestKey(M.key))
 				return "Guest Job-ban"
 			if(config.usewhitelist && !check_whitelist(M))
 				return "Whitelisted Job"
-
+		*/
 		for (var/s in jobban_keylist)
-			if( findtext(s,"[M.ckey] - [rank]") )
+			if( findtext(s,"[M.ckey] - [rank]") == 1 )
 				var/startpos = findtext(s, "## ")+3
 				if(startpos && startpos<length(s))
 					var/text = copytext(s, startpos, 0)
@@ -48,24 +49,42 @@ DEBUG
 */
 
 /proc/jobban_loadbanfile()
-	var/savefile/S=new("data/job_full.ban")
-	S["keys[0]"] >> jobban_keylist
-	log_admin("Loading jobban_rank")
-	S["runonce"] >> jobban_runonce
+	if(config.ban_legacy_system)
+		var/savefile/S=new("data/job_full.ban")
+		S["keys[0]"] >> jobban_keylist
+		log_admin("Loading jobban_rank")
+		S["runonce"] >> jobban_runonce
 
-	/*
-	for(var/i = 1; i <= length(jobban_keylist); i++)
-		if( findtext(jobban_keylist[i],"##") )
-			var/index = findtext(jobban_keylist[i],"##")
-			var/s = jobban_keylist[i]
-			s = copytext( s , 1 , index ) //Removes the reason for the ban from this list
-			jobban_keylist[i] = s
-			world << "DEBUG: index: [index] - s: [s] - jobban_keylist\[[i]\] = [jobban_keylist[i]]"*/
+		if (!length(jobban_keylist))
+			jobban_keylist=list()
+			log_admin("jobban_keylist was empty")
+	else
+		if(!establish_db_connection())
+			world.log << "Database connection failed. Reverting to the legacy ban system."
+			diary << "Database connection failed. Reverting to the legacy ban system."
+			config.ban_legacy_system = 1
+			jobban_loadbanfile()
+			return
 
-	if (!length(jobban_keylist))
-		jobban_keylist=list()
-		log_admin("jobban_keylist was empty")
+		//Job permabans
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)")
+		query.Execute()
 
+		while(query.NextRow())
+			var/ckey = query.item[1]
+			var/job = query.item[2]
+
+			jobban_keylist.Add("[ckey] - [job]")
+
+		//Job tempbans
+		var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_TEMPBAN' AND isnull(unbanned) AND expiration_time > Now()")
+		query1.Execute()
+
+		while(query1.NextRow())
+			var/ckey = query1.item[1]
+			var/job = query1.item[2]
+
+			jobban_keylist.Add("[ckey] - [job]")
 
 /proc/jobban_savebanfile()
 	var/savefile/S=new("data/job_full.ban")

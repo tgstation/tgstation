@@ -36,17 +36,10 @@ var/global/datum/controller/gameticker/ticker
 
 	var/triai = 0//Global holder for Triumvirate
 
-	//automated spawning of mice and roaches
-	var/spawn_vermin = 1
-	var/vermin_min_spawntime = 3000		//between 5 (3000) and 15 (9000) minutes interval
-	var/vermin_max_spawntime = 9000
-	var/spawning_vermin = 0
-	var/max_vermin = 30
-	var/list/vermin_spawn_turfs
-
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/music/title1.ogg','sound/music/title2.ogg') // choose title music!
-
+	login_music = pick('sound/ambience/title2.ogg','sound/ambience/title1.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
+	for(var/mob/new_player/M in mob_list)
+		if(M.client)	M.client.playtitlemusic()
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -130,7 +123,8 @@ var/global/datum/controller/gameticker/ticker
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
-	start_events() //handles random events and space dust.
+//	start_events() //handles random events and space dust.
+//new random event system is handled from the MC.
 
 	var/admins_number = 0
 	for(var/client/C)
@@ -242,7 +236,9 @@ var/global/datum/controller/gameticker/ticker
 						flick("station_explode_fade_red", cinematic)
 						world << sound('sound/effects/explosionfar.ogg')
 						cinematic.icon_state = "summary_selfdes"
-
+				for(var/mob/living/M in living_mob_list)
+					if(M.loc.z == 1)
+						M.death()//No mercy
 		//If its actually the end of the round, wait for it to end.
 		//Otherwise if its a verb it will continue on afterwards.
 		sleep(300)
@@ -279,7 +275,9 @@ var/global/datum/controller/gameticker/ticker
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
 					EquipCustomItems(player)
 		if(captainless)
-			world << "Captainship not forced on anyone."
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << "Captainship not forced on anyone."
 
 
 	proc/process()

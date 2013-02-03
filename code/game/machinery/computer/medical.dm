@@ -4,7 +4,7 @@
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
-	req_access = list(access_medical)
+	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -85,6 +85,8 @@
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
 						var/datum/disease/Dis = new Dt(0)
+						if(istype(Dis, /datum/disease/advance))
+							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
 						if(!Dis.desc)
 							continue
 						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
@@ -95,16 +97,15 @@
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in world)
-						if(!M)
-							continue
+
+						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
-						if(bl)
+						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 							if((!isnull(M.reagent_glass)) && M.use_beaker)
 								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
 							else
 								bdat += "Using Internal Synthesizer.<br>"
-
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else
@@ -125,7 +126,7 @@
 	if (!( data_core.medical.Find(src.active2) ))
 		src.active2 = null
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["temp"])
 			src.temp = null
 		if (href_list["scan"])
@@ -308,7 +309,7 @@
 						if("watch")
 							src.active1.fields["m_stat"] = "*Watch*"
 						if("stable")
-							src.active2.fields["m_stat"] = "Stable"
+							src.active1.fields["m_stat"] = "Stable"
 
 
 			if (href_list["b_type"])
@@ -440,6 +441,34 @@
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/med_data/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+
+	for(var/datum/data/record/R in data_core.medical)
+		if(prob(10/severity))
+			switch(rand(1,6))
+				if(1)
+					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+				if(2)
+					R.fields["sex"]	= pick("Male", "Female")
+				if(3)
+					R.fields["age"] = rand(5, 85)
+				if(4)
+					R.fields["b_type"] = pick("A-", "B-", "AB-", "O-", "A+", "B+", "AB+", "O+")
+				if(5)
+					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+				if(6)
+					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
+			continue
+
+		else if(prob(1))
+			del(R)
+			continue
+
+	..(severity)
 
 
 /obj/machinery/computer/med_data/laptop

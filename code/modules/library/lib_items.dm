@@ -121,7 +121,7 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	flags = FPRINT | TABLEPASS
 	attack_verb = list("bashed", "whacked", "educated")
 	var/dat			 // Actual page content
@@ -129,8 +129,19 @@
 	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title		 // The real name of the book.
+	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
+	var/obj/item/store	//What's in the book?
 
 /obj/item/weapon/book/attack_self(var/mob/user as mob)
+	if(carved)
+		if(store)
+			user << "<span class='notice'>[store] falls out of [title]!</span>"
+			store.loc = get_turf(src.loc)
+			store = null
+			return
+		else
+			user << "<span class='notice'>The pages of [title] have been cut out!</span>"
+			return
 	if(src.dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
@@ -139,6 +150,20 @@
 		user << "This book is completely blank!"
 
 /obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(carved)
+		if(!store)
+			if(W.w_class < 3)
+				user.drop_item()
+				W.loc = src
+				store = W
+				user << "<span class='notice'>You put [W] in [title].</span>"
+				return
+			else
+				user << "<span class='notice'>[W] won't fit in [title].</span>"
+				return
+		else
+			user << "<span class='notice'>There's already something in [title]!</span>"
+			return
 	if(istype(W, /obj/item/weapon/pen))
 		if(unique)
 			user << "These pages don't seem to take the ink well. Looks like you can't modify it."
@@ -198,6 +223,13 @@
 							return
 					scanner.computer.inventory.Add(src)
 					user << "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
+	else if(istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
+		if(carved)	return
+		user << "<span class='notice'>You begin to carve out [title].</span>"
+		if(do_after(user, 30))
+			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
+			carved = 1
+			return
 	else
 		..()
 

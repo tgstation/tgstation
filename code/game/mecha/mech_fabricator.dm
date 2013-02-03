@@ -84,7 +84,7 @@
 						/obj/item/mecha_parts/part/durand_right_leg,
 						/obj/item/mecha_parts/part/durand_armour
 					),
-/*	"H.O.N.K"=list(
+	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
 						/obj/item/mecha_parts/part/honker_torso,
 						/obj/item/mecha_parts/part/honker_head,
@@ -92,7 +92,7 @@
 						/obj/item/mecha_parts/part/honker_right_arm,
 						/obj/item/mecha_parts/part/honker_left_leg,
 						/obj/item/mecha_parts/part/honker_right_leg
-						),												*/
+						),
 	"Exosuit Equipment"=list(
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
@@ -106,13 +106,14 @@
 						///obj/item/mecha_parts/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
 						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
-			/*			/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
+						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/honker*/
+						/obj/item/mecha_parts/mecha_equipment/weapon/honker
 						),
 
 	"Cyborg Upgrade Modules" = list(
 						/obj/item/borg/upgrade/reset,
+						/obj/item/borg/upgrade/rename,
 						/obj/item/borg/upgrade/restart,
 						/obj/item/borg/upgrade/vtec,
 						/obj/item/borg/upgrade/tasercooler,
@@ -400,17 +401,14 @@
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
 	var/obj/item/part = listgetindex(src.queue, 1)
 	if(!part)
-		if(remove_from_queue(1))
+		remove_from_queue(1)
+		if(src.queue.len)
 			return process_queue()
 		else
-			// Most likely means we have an empty queue, so stop processing
-			return 0
+			return
 	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
-		if(remove_from_queue(1))//Take it out of the quene
-			return process_queue()//Then reprocess it
-		else
-			// Most likely means we have an empty queue, so stop processing
-			return 0
+		remove_from_queue(1)//Take it out of the quene
+		return process_queue()//Then reprocess it
 	temp = null
 	while(part)
 		if(stat&(NOPOWER|BROKEN))
@@ -538,7 +536,7 @@
 		return
 	if(!operation_allowed(user))
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/turf/exit = get_step(src,SOUTH)
 	if(exit.density)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
@@ -679,17 +677,17 @@
 		if("glass")
 			type = /obj/item/stack/sheet/glass
 		if("gold")
-			type = /obj/item/stack/sheet/gold
+			type = /obj/item/stack/sheet/mineral/gold
 		if("silver")
-			type = /obj/item/stack/sheet/silver
+			type = /obj/item/stack/sheet/mineral/silver
 		if("diamond")
-			type = /obj/item/stack/sheet/diamond
+			type = /obj/item/stack/sheet/mineral/diamond
 		if("plasma")
-			type = /obj/item/stack/sheet/plasma
+			type = /obj/item/stack/sheet/mineral/plasma
 		if("uranium")
-			type = /obj/item/stack/sheet/uranium
+			type = /obj/item/stack/sheet/mineral/uranium
 		if("bananium")
-			type = /obj/item/stack/sheet/clown
+			type = /obj/item/stack/sheet/mineral/clown
 		else
 			return 0
 	var/result = 0
@@ -733,22 +731,22 @@
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 				G.amount = round(src.resources["glass"] / G.perunit)
 			if(src.resources["plasma"] >= 2000)
-				var/obj/item/stack/sheet/plasma/G = new /obj/item/stack/sheet/plasma(src.loc)
+				var/obj/item/stack/sheet/mineral/plasma/G = new /obj/item/stack/sheet/mineral/plasma(src.loc)
 				G.amount = round(src.resources["plasma"] / G.perunit)
 			if(src.resources["silver"] >= 2000)
-				var/obj/item/stack/sheet/silver/G = new /obj/item/stack/sheet/silver(src.loc)
+				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
 				G.amount = round(src.resources["silver"] / G.perunit)
 			if(src.resources["gold"] >= 2000)
-				var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold(src.loc)
+				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
 				G.amount = round(src.resources["gold"] / G.perunit)
 			if(src.resources["uranium"] >= 2000)
-				var/obj/item/stack/sheet/uranium/G = new /obj/item/stack/sheet/uranium(src.loc)
+				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
 				G.amount = round(src.resources["uranium"] / G.perunit)
 			if(src.resources["diamond"] >= 2000)
-				var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond(src.loc)
+				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
 				G.amount = round(src.resources["diamond"] / G.perunit)
 			if(src.resources["bananium"] >= 2000)
-				var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown(src.loc)
+				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
 			del(src)
 			return 1
@@ -761,21 +759,21 @@
 		return
 	var/material
 	switch(W.type)
-		if(/obj/item/stack/sheet/gold)
+		if(/obj/item/stack/sheet/mineral/gold)
 			material = "gold"
-		if(/obj/item/stack/sheet/silver)
+		if(/obj/item/stack/sheet/mineral/silver)
 			material = "silver"
-		if(/obj/item/stack/sheet/diamond)
+		if(/obj/item/stack/sheet/mineral/diamond)
 			material = "diamond"
-		if(/obj/item/stack/sheet/plasma)
+		if(/obj/item/stack/sheet/mineral/plasma)
 			material = "plasma"
 		if(/obj/item/stack/sheet/metal)
 			material = "metal"
 		if(/obj/item/stack/sheet/glass)
 			material = "glass"
-		if(/obj/item/stack/sheet/clown)
+		if(/obj/item/stack/sheet/mineral/clown)
 			material = "bananium"
-		if(/obj/item/stack/sheet/uranium)
+		if(/obj/item/stack/sheet/mineral/uranium)
 			material = "uranium"
 		else
 			return ..()

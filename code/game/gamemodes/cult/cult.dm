@@ -160,36 +160,11 @@
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-	if(!wordtravel)
+	if(!cultwords["travel"])
 		runerandom()
 	if (!word)
 		word=pick(allwords)
-	var/wordexp
-	switch(word)
-		if("travel")
-			wordexp = "[wordtravel] is travel..."
-		if("blood")
-			wordexp = "[wordblood] is blood..."
-		if("join")
-			wordexp = "[wordjoin] is join..."
-		if("hell")
-			wordexp = "[wordhell] is Hell..."
-		if("self")
-			wordexp = "[wordself] is self..."
-		if("see")
-			wordexp = "[wordsee] is see..."
-		if("tech")
-			wordexp = "[wordtech] is technology..."
-		if("destroy")
-			wordexp = "[worddestr] is destroy..."
-		if("other")
-			wordexp = "[wordother] is other..."
-//		if("hear")
-//			wordexp = "[wordhear] is hear..."
-//		if("free")
-//			wordexp = "[wordfree] is free..."
-		if("hide")
-			wordexp = "[wordhide] is hide..."
+	var/wordexp = "[cultwords[word]] is [word]..."
 	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
@@ -281,7 +256,7 @@
 	if(objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(objectives.Find("sacrifice"))
-		if(!sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 
 	return cult_fail //if any objectives aren't met, failure

@@ -4,7 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
-	layer = 5
+	layer = 2.8
 
 	var/on = 0
 	var/temperature_archived
@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/beaker_text = ""
 	var/health_text = ""
 	var/temp_text = ""
@@ -90,7 +90,7 @@
 		[beaker_text]<BR><BR>
 		<B>Current occupant:</B> [occupant ? "<BR>Name: [occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(occupant.getFireLoss(),0.1)]<BR>Toxin damage: [round(occupant.getToxLoss(),0.1)]<BR>Body temperature: [occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
 		"}
-	user.machine = src
+	user.set_machine(src)
 	user << browse(dat, "window=cryo")
 	onclose(user, "cryo")
 
@@ -100,8 +100,10 @@
 			on = !on
 			update_icon()
 		if(href_list["eject"])
-			beaker:loc = loc
-			beaker = null
+			if (beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				B.loc = get_step(loc, SOUTH)
+				beaker = null
 
 		updateUsrDialog()
 		add_fingerprint(usr)
@@ -120,9 +122,9 @@
 	else if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return
-		for(var/mob/living/carbon/metroid/M in range(1,G:affecting))
+		for(var/mob/living/carbon/slime/M in range(1,G:affecting))
 			if(M.Victim == G:affecting)
-				usr << "[G:affecting:name] will not fit into the cryo because they have a Metroid latched onto their head."
+				usr << "[G:affecting:name] will not fit into the cryo because they have a slime latched onto their head."
 				return
 		var/mob/M = G:affecting
 		if(put_mob(M))
@@ -253,7 +255,7 @@
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	for(var/mob/living/carbon/metroid/M in range(1,usr))
+	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return

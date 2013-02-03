@@ -9,7 +9,7 @@ var/global/list/rad_collectors = list()
 	anchored = 0
 	density = 1
 	directwired = 1
-	req_access = list(access_engine)
+	req_access = list(access_engine_equip)
 //	use_power = 0
 	var/obj/item/weapon/tank/plasma/P = null
 	var/last_power = 0
@@ -129,7 +129,7 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays = null
+	overlays.Cut()
 	if(P)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))

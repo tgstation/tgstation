@@ -55,6 +55,15 @@ BLIND     // can't see anything
 	..()
 	return
 
+/obj/item/clothing/gloves/emp_act(severity)
+	if(cell)
+		cell.charge -= 1000 / severity
+		if (cell.charge < 0)
+			cell.charge = 0
+		if(cell.reliability != 100 && prob(50/severity))
+			cell.reliability -= 10 / severity
+	..()
+
 
 //Head
 /obj/item/clothing/head
@@ -70,7 +79,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
-	flags = MASKINTERNALS
 
 //Shoes
 /obj/item/clothing/shoes
@@ -78,6 +86,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
+	var/chained = 0
 
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
@@ -94,6 +103,7 @@ BLIND     // can't see anything
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
+	var/blood_overlay_type = "suit"
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.

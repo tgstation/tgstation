@@ -8,7 +8,11 @@ client/verb/tcssave()
 
 			if(Machine.SelectedServer)
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
-				Server.setcode( winget(src, "tcscode", "text") ) // this actually saves the code from input to the server
+				var/tcscode=winget(src, "tcscode", "text")
+				var/msg="[mob.name] is adding script to server [Server]: [tcscode]"
+				diary << msg
+				message_admins("[mob.name] has uploaded a NTLS script to [Machine.SelectedServer] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
+				Server.setcode( tcscode ) // this actually saves the code from input to the server
 				src << output(null, "tcserror") // clear the errors
 			else
 				src << output(null, "tcserror")
@@ -162,8 +166,8 @@ client/verb/tcsrevert()
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
 
 				// Replace quotation marks with quotation macros for proper winset() compatibility
-				var/showcode = dd_replacetext(Server.rawcode, "\\\"", "\\\\\"")
-				showcode = dd_replacetext(showcode, "\"", "\\\"")
+				var/showcode = replacetext(Server.rawcode, "\\\"", "\\\\\"")
+				showcode = replacetext(showcode, "\"", "\\\"")
 
 				winset(mob, "tcscode", "text=\"[showcode]\"")
 
@@ -179,4 +183,29 @@ client/verb/tcsrevert()
 		src << output("<font color = red>Failed to revert: Unable to locate machine.</font color>", "tcserror")
 
 
+client/verb/tcsclearmem()
+	set hidden = 1
+	if(mob.machine || issilicon(mob))
+		if((istype(mob.machine, /obj/machinery/computer/telecomms/traffic) && mob.machine in view(1, mob)) || (issilicon(mob) && istype(mob.machine, /obj/machinery/computer/telecomms/traffic) ))
+			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
+			if(Machine.editingcode != mob)
+				return
 
+			if(Machine.SelectedServer)
+				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
+				Server.memory = list() // clear the memory
+				// Show results
+				src << output(null, "tcserror")
+				src << output("<font color = blue>Server memory cleared!</font color>", "tcserror")
+				for(var/mob/M in Machine.viewingcode)
+					if(M.client)
+						M << output("<font color = blue>Server memory cleared!</font color>", "tcserror")
+			else
+				src << output(null, "tcserror")
+				src << output("<font color = red>Failed to clear memory: Unable to locate server machine.</font color>", "tcserror")
+		else
+			src << output(null, "tcserror")
+			src << output("<font color = red>Failed to clear memory: Unable to locate machine.</font color>", "tcserror")
+	else
+		src << output(null, "tcserror")
+		src << output("<font color = red>Failed to clear memory: Unable to locate machine.</font color>", "tcserror")

@@ -13,5 +13,3 @@
 	response_disarm = "pushes aside the"
 	response_harm   = "smacks the"
 	harm_intent_damage = 5
-
-/mob/living/simple_animal/tomato

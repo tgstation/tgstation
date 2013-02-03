@@ -191,7 +191,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	if(suiciding)
-		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
+		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(mSmallsize in mutations)
 		msg += "[t_He] [t_is] small halfling!\n"
@@ -396,26 +396,29 @@
 			var/criminal = "None"
 
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
-					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
-					var/obj/item/device/pda/tempPda = wear_id
-					perpname = tempPda.owner
+				var/obj/item/weapon/card/id/I = wear_id.GetID()
+				if(I)
+					perpname = I.registered_name
+				else
+					perpname = name
 			else
 				perpname = name
 
-			for (var/datum/data/record/E in data_core.general)
-				if(E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if(R.fields["id"] == E.fields["id"])
-							criminal = R.fields["criminal"]
+			if(perpname)
+				for (var/datum/data/record/E in data_core.general)
+					if(E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.security)
+							if(R.fields["id"] == E.fields["id"])
+								criminal = R.fields["criminal"]
 
 
-			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-			//msg += "\[Set Hostile Identification\]\n"
+				msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+				//msg += "\[Set Hostile Identification\]\n"
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
+	if (pose)
+		msg += "\n[t_He] is [pose]."
 
 	usr << msg

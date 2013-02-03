@@ -5,6 +5,11 @@
 	opacity = 1
 	density = 1
 
+/turf/unsimulated/wall/fakeglass
+	name = "window"
+	icon_state = "fakewindows"
+	opacity = 0
+
 turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'

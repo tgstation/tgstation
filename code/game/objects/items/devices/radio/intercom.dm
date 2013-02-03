@@ -4,7 +4,7 @@
 	icon_state = "intercom"
 	anchored = 1
 	w_class = 4.0
-	canhear_range = 4
+	canhear_range = 2
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
@@ -33,9 +33,9 @@
 		return -1
 	if (!(src.wires & WIRE_RECEIVE))
 		return -1
-	if(level != 0)
+	if(!(0 in level))
 		var/turf/position = get_turf(src)
-		if(isnull(position) || position.z != level)
+		if(isnull(position) || !(position.z in level))
 			return -1
 	if (!src.listening)
 		return -1

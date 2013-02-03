@@ -16,7 +16,7 @@
 /obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
 	if(..())
 		return
-	user.machine = src
+	user.set_machine(src)
 	if(allowed(user))
 		overridden = 1
 	else if(!emagged)
@@ -139,6 +139,12 @@
 				src.updateUsrDialog()
 			return
 
+		if(href_list["atmos_unlock"])
+			switch(href_list["atmos_unlock"])
+				if("0")
+					current.air_doors_close(1)
+				if("1")
+					current.air_doors_open(1)
 
 		if(href_list["atmos_alarm"])
 			if (current.alarm_area.atmosalert(2))
@@ -187,6 +193,8 @@
 				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
+
+			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 		if (AALARM_SCREEN_VENT)
 			var/sensor_data = ""
 			if(current.alarm_area.air_vent_names.len)

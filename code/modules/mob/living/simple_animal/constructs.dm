@@ -12,7 +12,7 @@
 	speed = -1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	status_flags = CANPARALYSE
+	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
 	min_oxy = 0
 	max_oxy = 0
@@ -23,6 +23,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	faction = "cult"
 
 
 /mob/living/simple_animal/construct/Life()
@@ -64,7 +65,7 @@
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 
@@ -142,8 +143,8 @@
 	attacktext = "smashes their armoured gauntlet into"
 	speed = 3
 	wall_smash = 1
-	nopush = 1
 	attack_sound = 'sound/weapons/punch3.ogg'
+	status_flags = 0
 
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
@@ -205,14 +206,13 @@
 	icon_living = "artificer"
 	maxHealth = 50
 	health = 50
-	response_harm   = "viciously beats"
+	response_harm = "viciously beats"
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "rams"
 	speed = 0
 	wall_smash = 1
-	nopush = 1
 	attack_sound = 'sound/weapons/punch2.ogg'
 
 
@@ -236,7 +236,6 @@
 	attacktext = "brutally crushes"
 	speed = 5
 	wall_smash = 1
-	nopush = 1
 	attack_sound = 'sound/weapons/punch4.ogg'
 	var/energy = 0
 	var/max_energy = 1000

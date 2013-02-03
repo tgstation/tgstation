@@ -54,7 +54,7 @@ var/global/sent_syndicate_strike_team = 0
 	var/list/candidates = list()	//candidates for being a commando out of all the active ghosts in world.
 	var/list/commandos = list()			//actual commando ghosts as picked by the user.
 	for(var/mob/dead/observer/G	 in player_list)
-		if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)	//Whoever called/has the proc won't be added to the list.
+		if(!G.client.holder && !G.client.is_afk())	//Whoever called/has the proc won't be added to the list.
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 				candidates += G.key
 	for(var/i=commandos_possible,(i>0&&candidates.len),i--)//Decrease with every commando selected.
@@ -128,9 +128,6 @@ var/global/sent_syndicate_strike_team = 0
 	return new_syndicate_commando
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader_selected = 0)
-	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
-	camera.network = "Syndicate"
-	camera.c_tag = real_name
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
@@ -178,5 +175,4 @@ var/global/sent_syndicate_strike_team = 0
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)
 
-	resistances += "alien_embryo"
 	return 1

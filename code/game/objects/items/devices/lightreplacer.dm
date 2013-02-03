@@ -53,7 +53,6 @@
 
 	var/max_uses = 20
 	var/uses = 0
-	var/inuse = 0
 	var/emagged = 0
 	var/failmsg = ""
 	// How much to increase per each glass?
@@ -123,16 +122,9 @@
 
 /obj/item/device/lightreplacer/proc/Use(var/mob/user)
 
-	if(inuse) return
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	var/pass = 0
-	inuse = 1
-	if(do_after(user, 30))
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		AddUses(-1)
-		pass = 1
-	inuse = 0
-	return pass
+	AddUses(-1)
+	return 1
 
 // Negative numbers will subtract
 /obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)

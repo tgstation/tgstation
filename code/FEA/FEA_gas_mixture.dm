@@ -23,11 +23,10 @@ What are the archived variables for?
 	volatile_fuel
 		specific_heat = 30
 
-	var
-		moles = 0
-		specific_heat = 0
+	var/moles = 0
+	var/specific_heat = 0
 
-		moles_archived = 0
+	var/moles_archived = 0
 
 
 /datum/gas_mixture

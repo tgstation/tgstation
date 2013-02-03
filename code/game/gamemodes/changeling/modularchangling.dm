@@ -81,7 +81,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/mimicvoice
 	name = "Mimic Voice"
 	desc = "We shape our vocal glands to sound like a desired voice."
-	helptext = "Will turn your voice into the name that you enter."
+	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this"
 	genomecost = 3
 	verbpath = /mob/proc/changeling_mimicvoice
 
@@ -494,7 +494,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	purchasedpowers += Thepower
 
 	if(!Thepower.isVerb && Thepower.verbpath)
-		call(Thepower.verbpath)()
+		call(M.current, Thepower.verbpath)()
 	else if(remake_verbs)
 		M.current.make_changeling()
 

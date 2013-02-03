@@ -4,10 +4,11 @@
  * Note: Multitools are /obj/item/device
  *
  * Contains:
- * Wrench
- * Screwdriver
- * Wirecutters
- * Welding Tool
+ * 		Wrench
+ * 		Screwdriver
+ * 		Wirecutters
+ * 		Welding Tool
+ * 		Crowbar
  */
 
 /*
@@ -31,6 +32,27 @@
 /*
  * Screwdriver
  */
+/obj/item/weapon/screwdriver
+	name = "screwdriver"
+	desc = "You can be totally screwwy with this."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "screwdriver"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	force = 5.0
+	w_class = 1.0
+	throwforce = 5.0
+	throw_speed = 3
+	throw_range = 5
+	g_amt = 0
+	m_amt = 75
+	attack_verb = list("stabbed")
+
+	suicide_act(mob/user)
+		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		return(BRUTELOSS)
+
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
 		if ("red")
@@ -90,13 +112,13 @@
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
-/obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
-	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [M]'s restraints with \the [src]!",\
-		"You cut \the [M]'s restraints with \the [src]!",\
+/obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
+	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
+		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
+		"You cut \the [C]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
-		M.handcuffed = null
-		M.update_inv_handcuffed()
+		C.handcuffed = null
+		C.update_inv_handcuffed()
 		return
 	else
 		..()
@@ -394,23 +416,26 @@
 	if(reagents > max_fuel)
 		reagents = max_fuel
 
-/obj/item/weapon/weldingtool/attack(mob/M as mob, mob/user as mob)
-	if(hasorgans(M))
-		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
-		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
-			return ..()
-		if(S.brute_dam)
-			S.heal_damage(15,0,0,1)
-			if(user != M)
-				user.visible_message("\red You patch some dents on \the [M]'s [S.display_name]",\
-				"\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
-				"You hear a welder.")
-			else
-				user.visible_message("\red You patch some dents on your [S.display_name]",\
-				"\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
-				"You hear a welder.")
-		else
-			user << "Nothing to fix!"
-	else
-		return ..()
+/*
+ * Crowbar
+ */
+
+/obj/item/weapon/crowbar
+	name = "crowbar"
+	desc = "Used to hit floors"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "crowbar"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	force = 5.0
+	throwforce = 7.0
+	item_state = "crowbar"
+	w_class = 2.0
+	m_amt = 50
+	origin_tech = "engineering=1"
+	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/crowbar/red
+	icon = 'icons/obj/items.dmi'
+	icon_state = "red_crowbar"
+	item_state = "crowbar_red"

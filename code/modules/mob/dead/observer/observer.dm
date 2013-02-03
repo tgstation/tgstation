@@ -17,7 +17,7 @@
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	universal_speak = 1
-
+	var/atom/movable/following = null
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -25,10 +25,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
 
-	dead_mob_list += src
-	add_to_mob_list(src)
 	var/turf/T
-
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
@@ -53,7 +50,7 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	return
+	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -145,7 +142,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
 		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
-		if(!(R && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
+		if(!(R && R.word1 == cultwords["hell"] && R.word2 == cultwords["travel"] && R.word3 == cultwords["self"]))	//astral journeying rune
 			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
 	mind.current.ajourn=0
@@ -170,6 +167,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
+
+	if(!L || !L.len)
+		usr << "No area available."
+
 	usr.loc = pick(L)
 
 /mob/dead/observer/verb/follow()
@@ -182,17 +183,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 		var/mob/target = mobs[input]
 		if(target && target != usr)
+			following = target
 			spawn(0)
 				var/turf/pos = get_turf(src)
 				while(src.loc == pos)
+
 					var/turf/T = get_turf(target)
 					if(!T)
+						break
+					if(following != target)
 						break
 					if(!client)
 						break
 					src.loc = T
 					pos = src.loc
 					sleep(15)
+				following = null
 
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
@@ -235,38 +241,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
 */
-/mob/dead/observer/verb/toggle_alien_candidate()
-	set name = "Toggle Be Alien Candidate"
-	set category = "Ghost"
-	set desc = "Determines whether you will or will not be an alien candidate when someone bursts."
-	if(client.be_alien)
-		client.be_alien = 0
-		src << "You are now excluded from alien candidate lists until end of round."
-	else if(!client.be_alien)
-		client.be_alien = 1
-		src << "You are now included in alien candidate lists until end of round."
-
-/mob/dead/observer/verb/toggle_pai_candidate()
-	set name = "Toggle Be pAI Candidate"
-	set category = "Ghost"
-	set desc = "Receive a pop-up request when a pAI device requests a new personality. (toggle)"
-	if(client.be_pai)
-		client.be_pai = 0
-		src << "You will no longer receive pAI recruitment pop-ups this round."
-	else
-		client.be_pai = 1
-		src << "You will now be considered a viable candidate when a pAI device requests a new personality, effective until the end of this round."
-
-/mob/dead/observer/verb/toggle_spaceninja_candidate()
-	set name = "Toggle Be Space Ninja Candidate"
-	set category = "Ghost"
-	set desc = "Determines whether you will be a candidate for when a new space ninja spawns. (toggle)"
-	if(client.be_spaceninja)
-		client.be_spaceninja = 0
-		src << "You are now excluded from space ninja candidate lists until end of round."
-	else
-		client.be_spaceninja = 1
-		src << "You are now included in space ninja candidate lists until end of round."
 
 /mob/dead/observer/memory()
 	set hidden = 1
@@ -284,3 +258,31 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+
+/mob/dead/observer/verb/become_mouse()
+	set name = "Become mouse"
+	set category = "Ghost"
+
+	//find a viable mouse candidate
+	var/mob/living/simple_animal/mouse/host
+	var/list/mouse_candidates = list()
+	for(var/mob/living/simple_animal/mouse/M in world)
+		if(!M.ckey && !M.stat)
+			mouse_candidates.Add(M)
+	if(mouse_candidates.len)
+		host = pick(mouse_candidates)
+	else
+		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+		var/list/found_vents = list()
+		for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
+			if(!v.welded && v.z == src.z)
+				found_vents.Add(v)
+		if(found_vents.len)
+			vent_found = pick(found_vents)
+			host = new /mob/living/simple_animal/mouse(vent_found.loc)
+		else
+			src << "<span class='warning'>Unable to find any live mice, or unwelded vents to spawn one at.</span>"
+
+	if(host)
+		host.ckey = src.ckey
+		host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"

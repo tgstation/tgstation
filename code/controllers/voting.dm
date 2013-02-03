@@ -64,7 +64,7 @@ datum/controller/vote
 				greatest_votes = votes
 		//default-vote for everyone who didn't vote
 		if(!config.vote_no_default && choices.len)
-			var/non_voters = (client_list.len - total_votes)
+			var/non_voters = (clients.len - total_votes)
 			if(non_voters > 0)
 				if(mode == "restart")
 					choices["Continue Playing"] += non_voters
@@ -174,6 +174,8 @@ datum/controller/vote
 			initiator = initiator_key
 			started_time = world.time
 			var/text = "[capitalize(mode)] vote started by [initiator]."
+			if(mode == "custom")
+				text += "\n[question]"
 			log_vote(text)
 			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 			time_remaining = round(config.vote_period/10)
@@ -186,7 +188,7 @@ datum/controller/vote
 		var/trialmin = 0
 		if(C.holder)
 			admin = 1
-			if (C.holder.level >= 3)
+			if(C.holder.rights & R_ADMIN)
 				trialmin = 1
 		voting |= C
 

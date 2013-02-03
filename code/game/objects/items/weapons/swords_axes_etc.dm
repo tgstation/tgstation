@@ -23,9 +23,6 @@
 		return 1
 	return 0
 
-/obj/item/weapon/melee/energy/sword/attack(target as mob, mob/user as mob)
-	..()
-
 /obj/item/weapon/melee/energy/sword/New()
 	color = pick("red","blue","green","purple")
 
@@ -84,9 +81,6 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 
 	if (user.a_intent == "hurt")
 		if(!..()) return

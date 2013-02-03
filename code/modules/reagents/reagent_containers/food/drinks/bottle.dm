@@ -101,10 +101,6 @@
 	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] with a bottle. ([target.ckey])</font>")
 
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [target.name] with a bottle. ([target.ckey])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [target.name] with a bottle. ([target.ckey])") //BS12 EDIT ALG
-
-
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
@@ -128,7 +124,6 @@
 	throw_speed = 3
 	throw_range = 5
 	item_state = "beer"
-	//item_state - Need to find a bottle sprite
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
@@ -243,7 +238,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Jailbreaker Verte"
-	desc = "Twenty-fourth century Green Fairy, one sip of this and you just know you're gonna have a good time."
+	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
 	New()
 		..()

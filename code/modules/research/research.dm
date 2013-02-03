@@ -231,7 +231,7 @@ datum/tech/syndicate
 /*
 datum/tech/arcane
 	name = "Arcane Research"
-	desc = "Research into the acult and arcane field for use in practical science"
+	desc = "Research into the occult and arcane field for use in practical science"
 	id = "arcane"
 	level = 0 //It didn't become "secret" as advertised.
 

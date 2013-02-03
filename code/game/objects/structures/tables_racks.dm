@@ -19,6 +19,7 @@
 	anchored = 1.0
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
+	var/parts = /obj/item/weapon/table_parts
 
 /obj/structure/table/New()
 	..()
@@ -37,6 +38,12 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 	..()
+
+/obj/structure/table/proc/destroy()
+	new parts(loc)
+	density = 0
+	del(src)
+
 
 /obj/structure/table/update_icon()
 	spawn(2) //So it properly updates when deleting
@@ -219,92 +226,42 @@
 				return
 		if(3.0)
 			if (prob(25))
-				src.density = 0
+				destroy()
 		else
 	return
 
 
 /obj/structure/table/blob_act()
 	if(prob(75))
-		if(istype(src, /obj/structure/table/woodentable))
-			new /obj/item/weapon/table_parts/wood( src.loc )
-			del(src)
-			return
-		new /obj/item/weapon/table_parts( src.loc )
-		del(src)
-		return
+		destroy()
 
 
 /obj/structure/table/hand_p(mob/user as mob)
 	return src.attack_paw(user)
-	return
 
 
-/obj/structure/table/attack_paw(mob/user as mob)
-	if ((HULK in usr.mutations))
-		usr << "\blue You destroy the table."
-		visible_message("\red [user] smashes the table apart!")
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
-		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood( src.loc )
-		else
-			new /obj/item/weapon/table_parts( src.loc )
-		src.density = 0
-		del(src)
-	if (!( locate(/obj/structure/table, user.loc) ))
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			visible_message("[user] hides under the table!")
-				//Foreach goto(69)
-	return
+/obj/structure/table/attack_paw(mob/user)
+	if(HULK in user.mutations)
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
+		destroy()
 
 
-/obj/structure/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
-	usr << "\green You destroy the table."
-	visible_message("\red [user] slices the table apart!")
-	if(istype(src, /obj/structure/table/reinforced))
-		new /obj/item/weapon/table_parts/reinforced( src.loc )
-	else if(istype(src, /obj/structure/table/woodentable))
-		new/obj/item/weapon/table_parts/wood( src.loc )
-	else
-		new /obj/item/weapon/table_parts( src.loc )
-	src.density = 0
-	del(src)
-	return
+/obj/structure/table/attack_alien(mob/user)
+	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 
-
-/obj/structure/table/attack_animal(mob/living/simple_animal/user as mob)
+/obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.wall_smash)
-		usr << "\red You destroy the table."
-		visible_message("\red [user] smahes the table apart!")
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
-		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood( src.loc )
-		else
-			new /obj/item/weapon/table_parts( src.loc )
-		src.density = 0
-		del(src)
-	return
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		destroy()
 
 
 
-
-/obj/structure/table/attack_hand(mob/user as mob)
-	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
-		usr << "\blue You destroy the table."
-		visible_message("\red [user] smahes the table apart!")
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
-		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood( src.loc )
-		else
-			new /obj/item/weapon/table_parts( src.loc )
-		src.density = 0
-		del(src)
-	return
+/obj/structure/table/attack_hand(mob/user)
+	if(HULK in user.mutations)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		destroy()
 
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -331,23 +288,29 @@
 /obj/structure/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+		if (istype(G.affecting, /mob/living))
+			var/mob/living/M = G.affecting
+			if (G.state < 2)
+				if(user.a_intent == "hurt")
+					if (prob(15))	M.Weaken(5)
+					M.apply_damage(8,def_zone = "head")
+					visible_message("\red [G.assailant] slams [G.affecting]'s face against \the [src]!")
+					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				else
+					user << "\red You need a better grip to do that!"
+					return
+			else
+				G.affecting.loc = src.loc
+				G.affecting.Weaken(5)
+				visible_message("\red [G.assailant] puts [G.affecting] on \the [src].")
+			del(W)
 			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
-		return
 
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling table"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
-			new /obj/item/weapon/table_parts( src.loc )
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			//SN src = null
-			del(src)
+			destroy()
 		return
 
 	if(isrobot(user))
@@ -360,13 +323,10 @@
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-		new /obj/item/weapon/table_parts( src.loc )
-		del(src)
-		return
+			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+		destroy()
 
 	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc // Unnecessary -  see: mob/proc/drop_item(atom)    - Doohl
 	return
 
 
@@ -377,46 +337,7 @@
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "wood_table"
-
-
-/obj/structure/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
-		return
-	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling the wooden table"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		sleep(50)
-		new /obj/item/weapon/table_parts/wood( src.loc )
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		del(src)
-		return
-	if(isrobot(user))
-		return
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
-		new /obj/item/weapon/table_parts/wood( src.loc )
-		del(src)
-		return
-
-	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc
-	return
-
+	parts = /obj/item/weapon/table_parts/wood
 
 /*
  * Reinforced tables
@@ -426,21 +347,10 @@
 	desc = "A version of the four legged table. It is stronger."
 	icon_state = "reinf_table"
 	var/status = 2
+	parts = /obj/item/weapon/table_parts/reinforced
 
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
-		return
-
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -459,40 +369,13 @@
 					user << "\blue Table strengthened"
 					src.status = 2
 			return
-		if(isrobot(user))
-			return
-		user.drop_item(src)
-		//if(W && W.loc)	W.loc = src.loc
 		return
 
 	if (istype(W, /obj/item/weapon/wrench))
-		if(src.status == 1)
-			user << "\blue Now disassembling the reinforced table"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new /obj/item/weapon/table_parts/reinforced( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				del(src)
+		if(src.status == 2)
 			return
-	if(isrobot(user))
-		return
 
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The reinforced table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-		new /obj/item/weapon/table_parts/reinforced( src.loc )
-		del(src)
-		return
-
-	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc
-	return
-
+	..()
 
 /*
  * Racks
@@ -552,7 +435,6 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		//SN src = null
 		del(src)
 		return
 	if(isrobot(user))
@@ -563,3 +445,36 @@
 
 /obj/structure/rack/meteorhit(obj/O as obj)
 	del(src)
+
+
+/obj/structure/table/attack_hand(mob/user)
+	if(HULK in user.mutations)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		new /obj/item/weapon/rack_parts(loc)
+		density = 0
+		del(src)
+
+
+/obj/structure/rack/attack_paw(mob/user)
+	if(HULK in user.mutations)
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		new /obj/item/weapon/rack_parts(loc)
+		density = 0
+		del(src)
+
+
+/obj/structure/rack/attack_alien(mob/user)
+	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	new /obj/item/weapon/rack_parts(loc)
+	density = 0
+	del(src)
+
+
+/obj/structure/rack/attack_animal(mob/living/simple_animal/user)
+	if(user.wall_smash)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		new /obj/item/weapon/rack_parts(loc)
+		density = 0
+		del(src)

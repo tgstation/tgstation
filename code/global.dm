@@ -1,3 +1,4 @@
+//#define TESTING
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/obj/effect/datacore/data_core = null
@@ -8,6 +9,7 @@ var/global/obj/effect/overlay/slmaster = null
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
+var/global/list/events = list()
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
@@ -68,8 +70,9 @@ var/blobevent = 0
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
-var/station_name = "NSV Exodus"
+var/station_name = "NSS Exodus"
 var/game_version = "Baystation12"
+var/changelog_hash = ""
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
@@ -96,7 +99,6 @@ var/list/bombers = list(  )
 var/list/admin_log = list (  )
 var/list/lastsignalers = list(	)	//keeps last 100 signals here in format: "[src] used \ref[src] @ location [src.loc]: [freq]/[code]"
 var/list/lawchanges = list(  ) //Stores who uploaded laws to which silicon-based lifeform, and what the law was
-var/list/admins = list(  )
 var/list/shuttles = list(  )
 var/list/reg_dna = list(  )
 //	list/traitobj = list(  )
@@ -148,6 +150,7 @@ var/datum/debug/debugobj
 var/datum/moduletypes/mods = new()
 
 var/wavesecret = 0
+var/gravity_is_on = 1
 
 var/shuttlecoming = 0
 
@@ -191,8 +194,6 @@ var/list/AAlarmWireColorToIndex
 
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
-var/returndestination				//the location immediately south of the station gateway
-var/calibrateddestination //If you actually arrive at the away gate
 
 	// MySQL configuration
 
@@ -216,9 +217,6 @@ var/sqllogging = 0 // Should we log deaths, population stats, etc?
 	// These are all default values that will load should the forumdbconfig.txt
 	// file fail to read for whatever reason.
 
-	//cael - i think i disabled all the db stuff, but some might have slipped through
-	//todo: we should look at using this functionality, one major use here is ingame player polling
-
 var/forumsqladdress = "localhost"
 var/forumsqlport = "3306"
 var/forumsqldb = "tgstation"
@@ -229,32 +227,10 @@ var/forum_authenticated_group = "10"
 
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
-var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
+var/fileaccess_timer = 0
 var/custom_event_msg = null
 
-#define BUILDMODE	1
-#define ADMIN		2
-#define BAN			4
-#define FUN			8
-#define SERVER		16
-#define ADMDEBUG	32
-#define POSSESS		64
-#define PERMISSIONS	128
-//Keep this list synced with the #defines above
-var/global/list/permissionwords = list("BUILDMODE", "ADMIN", "BAN", "FUN", "SERVER", "DEBUG", "POSSESS", "EDITPERMISSIONS")
-
-
-
-//Please do not edit these values. The database assigning proper rights relies on this. You can add new values, just don't change existing ones.
-//This list is separate from the list used ingame, so that one can be edited with little consequence. This one is tied to the database
-//The database admins should be consulted before any edits to this list.
-#define SQL_BUILDMODE	1
-#define SQL_ADMIN		2
-#define SQL_BAN			4
-#define SQL_FUN			8
-#define SQL_SERVER		16
-#define SQL_DEBUG		32
-#define SQL_POSSESS		64
-#define SQL_PERMISSIONS	128
-//Same rules apply to this list as to the values above. You can only add stuff to it.
-var/global/list/permissionwords_sql = list("BUILDMODE", "ADMIN", "BAN", "FUN", "SERVER", "DEBUG", "POSSESS", "EDITPERMISSIONS")
+//Database connections
+//A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
+var/DBConnection/dbcon = new()	//Feedback database (New database)
+var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.

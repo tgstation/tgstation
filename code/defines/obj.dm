@@ -39,6 +39,10 @@
 	anchored = 1.0
 	unacidable = 1
 
+/*
+ * This item is completely unused, but removing it will break something in R&D and Radio code causing PDA and Ninja code to fail on compile
+ */
+
 /obj/effect/datacore
 	name = "datacore"
 	var/medical[] = list()
@@ -57,7 +61,6 @@
 		var/list/bot = new()
 		var/list/misc = new()
 		var/list/isactive = new()
-
 		var/dat = {"
 		<head><style>
 			.manifest {border-collapse:collapse;}
@@ -160,20 +163,9 @@
 
 
 		dat += "</table>"
-		dat = dd_replacetext(dat, "\n", "") // so it can be placed on paper correctly
-		dat = dd_replacetext(dat, "\t", "")
+		dat = replacetext(dat, "\n", "") // so it can be placed on paper correctly
+		dat = replacetext(dat, "\t", "")
 		return dat
-
-/obj/item/device/infra_sensor
-	name = "Infrared Sensor"
-	desc = "Scans for infrared beams in the vicinity."
-	icon_state = "infra_sensor"
-	var/passive = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	m_amt = 150
-	origin_tech = "magnets=2"
-
 
 /obj/effect/laser
 	name = "laser"
@@ -246,7 +238,7 @@
 	var/moving = null
 	var/list/parts = list(  )
 
-/obj/effect/showcase
+/obj/structure/showcase
 	name = "Showcase"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
@@ -255,31 +247,7 @@
 	anchored = 1
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
-/obj/effect/deskclutter
-	name = "desk clutter"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "deskclutter"
-	desc = "Some clutter the detective has accumalated over the years..."
-	anchored = 1
-
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-
-// TODO: robust mixology system! (and merge with beakers, maybe)
-/obj/item/weapon/glass
-	name = "empty glass"
-	desc = "Emptysville."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "glass_empty"
-	item_state = "beaker"
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	var/datum/substance/inside = null
-	throwforce = 5
-	g_amt = 100
-	New()
-		..()
-		src.pixel_x = rand(-5, 5)
-		src.pixel_y = rand(-5, 5)
-
 
 /obj/item/weapon/beach_ball
 	icon = 'icons/misc/beach.dmi'

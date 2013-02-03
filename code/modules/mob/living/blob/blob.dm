@@ -8,6 +8,7 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
+	faction = "blob"
 
 
 	New()
@@ -251,3 +252,7 @@
 	B << "Check your Blob verbs and hit Create Node to build a node."
 	spawn(10)
 		del(G_found)
+
+
+
+

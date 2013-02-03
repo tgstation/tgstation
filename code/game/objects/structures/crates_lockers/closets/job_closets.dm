@@ -50,8 +50,9 @@
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/caution(src)
-	new /obj/item/weapon/trashbag(src)
+	new /obj/item/weapon/storage/bag/trash(src)
 	new /obj/item/device/lightreplacer(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 
 /*
@@ -68,8 +69,8 @@
 	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
 	new /obj/item/clothing/under/lawyer/bluesuit(src)
-	new /obj/item/clothing/suit/lawyer/bluejacket(src)
+	new /obj/item/clothing/suit/storage/lawyer/bluejacket(src)
 	new /obj/item/clothing/under/lawyer/purpsuit(src)
-	new /obj/item/clothing/suit/lawyer/purpjacket(src)
+	new /obj/item/clothing/suit/storage/lawyer/purpjacket(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/black(src)

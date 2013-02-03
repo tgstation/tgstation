@@ -13,7 +13,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
@@ -33,6 +33,9 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	var/stance_step = 0
+
+	faction = "russian"
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson

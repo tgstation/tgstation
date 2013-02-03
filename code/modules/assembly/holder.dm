@@ -64,13 +64,13 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		if(a_left)
-			overlays += "[initial(a_left.icon_state)]_left"	//the initial() is probably unnecessary, but you just know
-			for(var/O in a_left.attached_overlays)		//someone is gonna fuck around with the icon_state in the future
+			overlays += "[a_left.icon_state]_left"
+			for(var/O in a_left.attached_overlays)
 				overlays += "[O]_l"
 		if(a_right)
-			src.overlays += "[initial(a_right.icon_state)]_right"
+			src.overlays += "[a_right.icon_state]_right"
 			for(var/O in a_right.attached_overlays)
 				overlays += "[O]_r"
 		if(master)
@@ -102,7 +102,26 @@
 			a_right.HasProximity(AM)
 		if(special_assembly)
 			special_assembly.HasProximity(AM)
-		return
+
+
+	HasEntered(atom/movable/AM as mob|obj)
+		if(a_left)
+			a_left.HasEntered(AM)
+		if(a_right)
+			a_right.HasEntered(AM)
+		if(special_assembly)
+			special_assembly.HasEntered(AM)
+
+
+	on_found(mob/finder as mob)
+		if(a_left)
+			a_left.on_found(finder)
+		if(a_right)
+			a_right.on_found(finder)
+		if(special_assembly)
+			if(istype(special_assembly, /obj/item))
+				var/obj/item/S = special_assembly
+				S.on_found(finder)
 
 
 	Move()

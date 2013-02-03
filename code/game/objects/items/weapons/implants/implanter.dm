@@ -35,14 +35,16 @@
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
 				log_attack("<font color='red'>[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
-				log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-				msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
-
 				user.show_message("\red You implanted the implant into [M].")
 				if(src.imp.implanted(M))
 					src.imp.loc = M
 					src.imp.imp_in = M
 					src.imp.implanted = 1
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						var/datum/organ/external/affected = H.get_organ(user.zone_sel.selecting)
+						affected.implants += src.imp
+						imp.part = affected
 
 				src.imp = null
 				update()
@@ -110,6 +112,10 @@
 
 /obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
 	if(istype(A,/obj/item) && imp)
+		var/obj/item/weapon/implant/compressed/c = imp
+		if (c.scanned)
+			user << "\red Something is already scanned inside the implant!"
+			return
 		imp:scanned = A
 		A.loc.contents.Remove(A)
 		update()

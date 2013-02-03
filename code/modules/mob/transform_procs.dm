@@ -24,7 +24,6 @@
 	del(animation)
 
 	O.name = "monkey"
-	O.UI = UI
 	O.dna = dna
 	dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
@@ -124,7 +123,6 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
 	O.job = "AI"
-	O.UI = UI
 
 	O.rename_self("ai",1)
 	. = O
@@ -156,7 +154,6 @@
 	O.gender = gender
 	O.invisibility = 0
 
-	O.UI = UI
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
@@ -203,7 +200,6 @@
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
 	new_xeno.a_intent = "hurt"
-	new_xeno.UI = UI
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
@@ -211,7 +207,7 @@
 		del(src)
 	return
 
-/mob/living/carbon/human/proc/Metroidize(adult as num, reproduce as num)
+/mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -224,26 +220,25 @@
 	for(var/t in organs)
 		del(t)
 
-	var/mob/living/carbon/metroid/new_metroid
+	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
 		var/number = pick(14;2,3,4)	//reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
-			var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
+			var/mob/living/carbon/slime/M = new/mob/living/carbon/slime(loc)
 			M.nutrition = round(nutrition/number)
 			step_away(M,src)
 			babies += M
-		new_metroid = pick(babies)
+		new_slime = pick(babies)
 	else
 		if(adult)
-			new_metroid = new /mob/living/carbon/metroid/adult(loc)
+			new_slime = new /mob/living/carbon/slime/adult(loc)
 		else
-			new_metroid = new /mob/living/carbon/metroid(loc)
-	new_metroid.a_intent = "hurt"
-	new_metroid.UI = UI
-	new_metroid.key = key
+			new_slime = new /mob/living/carbon/slime(loc)
+	new_slime.a_intent = "hurt"
+	new_slime.key = key
 
-	new_metroid << "<B>You are now a Metroid. Skreee!</B>"
+	new_slime << "<B>You are now a slime. Skreee!</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return
@@ -263,7 +258,6 @@
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "hurt"
-	new_corgi.UI = UI
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
@@ -298,7 +292,6 @@
 
 	new_mob.key = key
 	new_mob.a_intent = "hurt"
-	new_mob.UI = UI
 
 
 	new_mob << "You suddenly feel more... animalistic."
@@ -319,7 +312,6 @@
 
 	new_mob.key = key
 	new_mob.a_intent = "hurt"
-	new_mob.UI = UI
 	new_mob << "You feel more... animalistic"
 
 	del(src)

@@ -34,12 +34,7 @@
 			src.add_fingerprint(user)
 			update()
 		else
-			if (user.contents.Find(src))
-				spawn( 0 )
-					src.attack_self(user)
-					return
-			else
-				return ..()
+			return ..()
 		return
 
 
@@ -57,7 +52,7 @@
 
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<B>Implant Mini-Computer:</B><HR>"
 		if (src.case)
 			if(src.case.imp)
@@ -83,7 +78,7 @@
 		if (usr.stat)
 			return
 		if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
-			usr.machine = src
+			usr.set_machine(src)
 			if (href_list["tracking_id"])
 				var/obj/item/weapon/implant/tracking/T = src.case.imp
 				T.id += text2num(href_list["tracking_id"])

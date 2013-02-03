@@ -34,12 +34,10 @@ var/datum/controller/failsafe/Failsafe
 							if(0 to 3)
 								MC_defcon++
 							if(4)
-								for(var/client/C in admin_list)
-									C << "<font color='red' size='2'><b>Warning. The Master Controller has not fired in the last [MC_defcon*processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
+								admins << "<font color='red' size='2'><b>Warning. The Master Controller has not fired in the last [MC_defcon*processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
 								MC_defcon = 5
 							if(5)
-								for(var/client/C in admin_list)
-									C << "<font color='red' size='2'><b>Warning. The Master Controller has still not fired within the last [MC_defcon*processing_interval] ticks. Killing and restarting...</b></font>"
+								admins << "<font color='red' size='2'><b>Warning. The Master Controller has still not fired within the last [MC_defcon*processing_interval] ticks. Killing and restarting...</b></font>"
 								new /datum/controller/game_controller()	//replace the old master_controller (hence killing the old one's process)
 								master_controller.process()				//Start it rolling again
 								MC_defcon = 0
@@ -53,12 +51,10 @@ var/datum/controller/failsafe/Failsafe
 							if(0 to 3)
 								lighting_defcon++
 							if(4)
-								for(var/client/C in admin_list)
-									C << "<font color='red' size='2'><b>Warning. The Lighting Controller has not fired in the last [lighting_defcon*processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
+								admins << "<font color='red' size='2'><b>Warning. The Lighting Controller has not fired in the last [lighting_defcon*processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
 								lighting_defcon = 5
 							if(5)
-								for(var/client/C in admin_list)
-									C << "<font color='red' size='2'><b>Warning. The Lighting Controller has still not fired within the last [lighting_defcon*processing_interval] ticks. Killing and restarting...</b></font>"
+								admins << "<font color='red' size='2'><b>Warning. The Lighting Controller has still not fired within the last [lighting_defcon*processing_interval] ticks. Killing and restarting...</b></font>"
 								new /datum/controller/lighting()	//replace the old lighting_controller (hence killing the old one's process)
 								lighting_controller.process()		//Start it rolling again
 								lighting_defcon = 0

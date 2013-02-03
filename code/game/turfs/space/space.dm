@@ -61,6 +61,9 @@
 // Ported from unstable r355
 
 /turf/space/Entered(atom/movable/A as mob|obj)
+	if(movement_disabled)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	..()
 	if ((!(A) || src != A.loc))	return
 
@@ -80,16 +83,37 @@
 				del(A) //The disk's Del() proc ensures a new one is created
 				return
 
-			if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
+			if(!isemptylist(disk_search))
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
-					if(MM.client)
+					if(MM.client && !MM.stat)
 						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+						if(MM.x <= TRANSITIONEDGE)
+							MM.inertia_dir = 4
+						else if(MM.x >= world.maxx -TRANSITIONEDGE)
+							MM.inertia_dir = 8
+						else if(MM.y <= TRANSITIONEDGE)
+							MM.inertia_dir = 1
+						else if(MM.y >= world.maxy -TRANSITIONEDGE)
+							MM.inertia_dir = 2
+					else
+						for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+							del(N)//Make the disk respawn it is on a clientless mob or corpse
+				else
+					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+						del(N)//Make the disk respawn if it is floating on its own
 				return
 
-			var/move_to_z_str = pickweight(accessable_z_levels)
+			var/move_to_z = src.z
+			var/safety = 1
 
-			var/move_to_z = text2num(move_to_z_str)
+			while(move_to_z == src.z)
+				var/move_to_z_str = pickweight(accessable_z_levels)
+				move_to_z = text2num(move_to_z_str)
+				safety++
+				if(safety > 10)
+					break
 
 			if(!move_to_z)
 				return

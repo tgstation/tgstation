@@ -7,9 +7,15 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
-				"burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "carpet", "carpetcorner", "carpetside", "carpet")
+				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "carpet",
+				"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
+				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
+				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 
-var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug")
+var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
+				"ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
+				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
+				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
 
 /turf/simulated/floor
@@ -27,6 +33,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
+	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
 
@@ -47,14 +54,14 @@ var/list/wood_icons = list("wood","wood-broken")
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ReplaceWithSpace()
+			src.ChangeTurf(/turf/space)
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ReplaceWithSpace()
+					src.ChangeTurf(/turf/space)
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -106,7 +113,7 @@ turf/simulated/floor/proc/update_icon()
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
 		if(!broken && !burnt)
-			if(icon_state != "carpetsymbol")
+			if(icon_state == "carpet")
 				var/connectdir = 0
 				for(var/direction in cardinal)
 					if(istype(get_step(src,direction),/turf/simulated/floor))
@@ -152,10 +159,10 @@ turf/simulated/floor/proc/update_icon()
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
-	spawn(1)
+	/*spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
-				update_visuals(air)
+				update_visuals(air)*/
 
 /turf/simulated/floor/return_siding_icon_state()
 	..()
@@ -178,7 +185,7 @@ turf/simulated/floor/proc/update_icon()
 	if (is_light_floor())
 		var/obj/item/stack/tile/light/T = floor_tile
 		T.on = !T.on
-	update_icon()
+		update_icon()
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
@@ -246,7 +253,7 @@ turf/simulated/floor/proc/update_icon()
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
-		src.ReplaceWithPlating()
+		src.ChangeTurf(/turf/simulated/floor/plating)
 	if(broken) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
@@ -471,7 +478,7 @@ turf/simulated/floor/proc/update_icon()
 			if (R.amount >= 2)
 				user << "\blue Reinforcing the floor..."
 				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
-					ReplaceWithEngineFloor()
+					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					return

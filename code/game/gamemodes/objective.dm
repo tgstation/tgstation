@@ -5,13 +5,14 @@ datum/objective
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = 0					//currently only used for custom objectives.
 
 	New(var/text)
 		if(text)
 			explanation_text = text
 
 	proc/check_completion()
-		return 1
+		return completed
 
 	proc/find_target()
 		var/list/possible_targets = list()
@@ -51,7 +52,7 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
 		return 1
@@ -78,7 +79,7 @@ datum/objective/mutiny
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || !ishuman(target.current))
+			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 				return 1
 			var/turf/T = get_turf(target.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
@@ -108,7 +109,8 @@ datum/objective/mutiny/rp
 	check_completion()
 		var/rval = 1
 		if(target && target.current)
-			if(target.current.stat == DEAD || target.current.handcuffed || !ishuman(target.current))
+			//assume that only carbon mobs can become rev heads for now
+			if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
 				return 1
 			// Check if they're converted
 			if(istype(ticker.mode, /datum/game_mode/revolution))
@@ -293,7 +295,7 @@ datum/objective/hijack
 
 
 datum/objective/block
-	explanation_text = "Do not allow any humans to escape on the shuttle alive."
+	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
 
 	check_completion()
@@ -472,23 +474,33 @@ datum/objective/steal
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
-		"a captains jumpsuit" = /obj/item/clothing/under/rank/captain,
+		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
+		"a sample of slime extract" = /obj/item/slime_extract,
+		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
+		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
+		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
+		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
+		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
+		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
+		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
 
 	var/global/possible_items_special[] = list(
-		"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
+		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
 		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
-		"10 diamonds" = /obj/item/stack/sheet/diamond,
-		"50 gold bars" = /obj/item/stack/sheet/gold,
-		"25 refined uranium bars" = /obj/item/stack/sheet/uranium,
+		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
+		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
+		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
 

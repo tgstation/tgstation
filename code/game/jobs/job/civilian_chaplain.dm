@@ -8,6 +8,9 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
+	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
+	alt_titles = list("Counselor")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -15,8 +18,8 @@
 
 		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
 		H.equip_to_slot_or_del(B, slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		if(H.backbag == 1)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
@@ -24,7 +27,7 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		spawn(0)
 			var/religion_name = "Christianity"
-			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
+			var/new_religion = copytext(sanitize(input(H, "You are the crew services officer. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
 
 			if (!new_religion)
 				new_religion = religion_name

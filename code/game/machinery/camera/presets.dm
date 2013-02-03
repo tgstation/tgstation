@@ -53,7 +53,7 @@
 // CHECKS
 
 /obj/machinery/camera/proc/isEmpProof()
-	var/O = locate(/obj/item/stack/sheet/plasma) in assembly.upgrades
+	var/O = locate(/obj/item/stack/sheet/mineral/plasma) in assembly.upgrades
 	return O
 
 /obj/machinery/camera/proc/isXRay()
@@ -67,7 +67,7 @@
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/upgradeEmpProof()
-	assembly.upgrades.Add(new /obj/item/stack/sheet/plasma(assembly))
+	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/plasma(assembly))
 
 /obj/machinery/camera/proc/upgradeXRay()
 	assembly.upgrades.Add(new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(assembly))

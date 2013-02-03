@@ -35,16 +35,6 @@
 		return move_camera_by_click()
 	if(usr.stat || usr.restrained() || usr.lying)
 		return ..()
-
-	if(usr.hand && istype(usr.l_hand, /obj/item/weapon/flamethrower))
-		var/turflist = getline(usr,src)
-		var/obj/item/weapon/flamethrower/F = usr.l_hand
-		F.flame_turf(turflist)
-	else if(!usr.hand && istype(usr.r_hand, /obj/item/weapon/flamethrower))
-		var/turflist = getline(usr,src)
-		var/obj/item/weapon/flamethrower/F = usr.r_hand
-		F.flame_turf(turflist)
-
 	return ..()
 
 /turf/Click()
@@ -68,13 +58,16 @@
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	if (!mover || !isturf(mover.loc))
 		return 1
 
 
 	//First, check objects to block exit that are not on the border
 	for(var/obj/obstacle in mover.loc)
-		if((obstacle.flags & ~ON_BORDER) && (mover != obstacle) && (forget != obstacle))
+		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
 			if(!obstacle.CheckExit(mover, src))
 				mover.Bump(obstacle, 1)
 				return 0
@@ -108,6 +101,9 @@
 
 
 /turf/Entered(atom/atom as mob|obj)
+	if(movement_disabled)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	..()
 //vvvvv Infared beam stuff vvvvv
 
@@ -210,25 +206,66 @@
 	if(L)
 		del L
 
-/turf/proc/ReplaceWithFloor(explode=0)
-	var/prior_icon = icon_old
-	var/old_dir = dir
-	/*var/aoxy = 0//Holders to assimilate air from nearby turfs
+//Creates a new turf
+/turf/proc/ChangeTurf(var/turf/N)
+	if (!N)
+		return
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+
+	if(ispath(N, /turf/simulated/floor))
+		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
+		W.Assimilate_Air()
+
+		W.lighting_lumcount += old_lumcount
+		if(old_lumcount != W.lighting_lumcount)
+			W.lighting_changed = 1
+			lighting_controller.changed_turfs += W
+
+		if (istype(W,/turf/simulated/floor))
+			W.RemoveLattice()
+
+		//if the old turf had a zone, connect the new turf to it as well - Cael
+		if(src.zone)
+			src.zone.RemoveTurf(src)
+			W.zone = src.zone
+			W.zone.AddTurf(W)
+
+		for(var/turf/simulated/T in orange(src,1))
+			air_master.tiles_to_update.Add(T)
+
+		W.levelupdate()
+		return W
+	else
+		/*if(istype(src, /turf/simulated) && src.zone)
+			src.zone.rebuild = 1*/
+
+		var/turf/W = new N( locate(src.x, src.y, src.z) )
+		W.lighting_lumcount += old_lumcount
+		if(old_lumcount != W.lighting_lumcount)
+			W.lighting_changed = 1
+			lighting_controller.changed_turfs += W
+
+		if(src.zone)
+			src.zone.RemoveTurf(src)
+			W.zone = src.zone
+			W.zone.AddTurf(W)
+
+		for(var/turf/simulated/T in orange(src,1))
+			air_master.tiles_to_update.Add(T)
+
+		W.levelupdate()
+		return W
+
+//////Assimilate Air//////
+/turf/simulated/proc/Assimilate_Air()
+	var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
 	var/aco = 0
 	var/atox = 0
 	var/atemp = 0
-	var/turf_count = 0*/
+	var/turf_count = 0
 
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
-	W.lighting_lumcount += old_lumcount
-	if(old_lumcount != W.lighting_lumcount)
-		W.lighting_changed = 1
-		lighting_controller.changed_turfs += W
-
-//////Assimilate Air//////
-	/*
 	for(var/direction in cardinal)//Only use cardinals to cut down on lag
 		var/turf/T = get_step(src,direction)
 		if(istype(T,/turf/space))//Counted as no air
@@ -243,169 +280,31 @@
 				atox += S.air.toxins
 				atemp += S.air.temperature
 			turf_count ++
-	W.air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-	W.air.nitrogen = (anitro/max(turf_count,1))
-	W.air.carbon_dioxide = (aco/max(turf_count,1))
-	W.air.toxins = (atox/max(turf_count,1))
-	W.air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-	*/
+	air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
+	air.nitrogen = (anitro/max(turf_count,1))
+	air.carbon_dioxide = (aco/max(turf_count,1))
+	air.toxins = (atox/max(turf_count,1))
+	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+	air.update_values()
 
-	W.RemoveLattice()
-	W.dir = old_dir
-	if(prior_icon) W.icon_state = prior_icon
-	else W.icon_state = "floor"
-
-	W.levelupdate()
-	return W
-
-/turf/proc/ReplaceWithPlating()
-	var/prior_icon = icon_old
-	var/old_dir = dir
-	/*var/aoxy = 0//Holders to assimilate air from nearby turfs
-	var/anitro = 0
-	var/aco = 0
-	var/atox = 0
-	var/atemp = 0
-	var/turf_count = 0*/
-
-//////Assimilate Air//////
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
-	W.lighting_lumcount += old_lumcount
-	if(old_lumcount != W.lighting_lumcount)
-		W.lighting_changed = 1
-		lighting_controller.changed_turfs += W
-
-	/*
-	for(var/direction in cardinal)
+	//cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
+	for(var/direction in cardinal)//Only use cardinals to cut down on lag
 		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))
-			turf_count++
+		if(istype(T,/turf/space))//Counted as no air
 			continue
 		else if(istype(T,/turf/simulated/floor))
 			var/turf/simulated/S = T
-			if(S.air)
-				aoxy += S.air.oxygen
-				anitro += S.air.nitrogen
-				aco += S.air.carbon_dioxide
-				atox += S.air.toxins
-				atemp += S.air.temperature
-			turf_count++
-	W.air.oxygen = (aoxy/max(turf_count,1))
-	W.air.nitrogen = (anitro/max(turf_count,1))
-	W.air.carbon_dioxide = (aco/max(turf_count,1))
-	W.air.toxins = (atox/max(turf_count,1))
-	W.air.temperature = (atemp/max(turf_count,1))
-	*/
-
-	W.RemoveLattice()
-	W.dir = old_dir
-	if(prior_icon) W.icon_state = prior_icon
-	else W.icon_state = "plating"
-
-	W.levelupdate()
-	return W
-
-/turf/proc/ReplaceWithEngineFloor()
-	var/old_dir = dir
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/floor/engine/E = new /turf/simulated/floor/engine( locate(src.x, src.y, src.z) )
-	E.lighting_lumcount += old_lumcount
-	if(old_lumcount != E.lighting_lumcount)
-		E.lighting_changed = 1
-		lighting_controller.changed_turfs += E
-
-	E.dir = old_dir
-	E.icon_state = "engine"
-	E.levelupdate()
-
-
-
-/turf/proc/ReplaceWithSpace()
-	var/old_dir = dir
-
-	var/zone/Z
-	if(src.zone)
-		Z = src.zone
-		Z.RemoveTurf(src)
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
-	S.lighting_lumcount += old_lumcount
-	if(old_lumcount != S.lighting_lumcount)
-		S.lighting_changed = 1
-		lighting_controller.changed_turfs += S
-
-	if(Z)
-		//Z.AddTurf(S)
-		for(var/turf/simulated/T in orange(src,1))
-			air_master.tiles_to_update.Add(T)
-
-	S.dir = old_dir
-	S.levelupdate()
-	return S
+			if(S.air)//Add the air's contents to the holders
+				S.air.oxygen = air.oxygen
+				S.air.nitrogen = air.nitrogen
+				S.air.carbon_dioxide = air.carbon_dioxide
+				S.air.toxins = air.toxins
+				S.air.temperature = air.temperature
+				S.air.update_values()
 
 /turf/proc/ReplaceWithLattice()
-	var/old_dir = dir
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
-	S.lighting_lumcount += old_lumcount
-	if(old_lumcount != S.lighting_lumcount)
-		S.lighting_changed = 1
-		lighting_controller.changed_turfs += S
-
-	S.dir = old_dir
+	src.ChangeTurf(/turf/space)
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
-	S.levelupdate()
-	return S
-
-/turf/proc/ReplaceWithWall()
-	var/old_icon = icon_state
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/wall/S = new /turf/simulated/wall( locate(src.x, src.y, src.z) )
-	S.lighting_lumcount += old_lumcount
-	if(old_lumcount != S.lighting_lumcount)
-		S.lighting_changed = 1
-		lighting_controller.changed_turfs += S
-
-	S.icon_old = old_icon
-	S.levelupdate()
-	return S
-
-/turf/proc/ReplaceWithRWall()
-	var/old_icon = icon_state
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/wall/r_wall/S = new /turf/simulated/wall/r_wall( locate(src.x, src.y, src.z) )
-	S.lighting_lumcount += old_lumcount
-	if(old_lumcount != S.lighting_lumcount)
-		S.lighting_changed = 1
-		lighting_controller.changed_turfs += S
-
-	S.icon_old = old_icon
-	S.levelupdate()
-	return S
-
-/turf/proc/ReplaceWithMineralWall(var/ore)
-	var/old_icon = icon_state
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/wall/mineral/S = new /turf/simulated/wall/mineral( locate(src.x, src.y, src.z) )
-	S.lighting_lumcount += old_lumcount
-	if(old_lumcount != S.lighting_lumcount)
-		S.lighting_changed = 1
-		lighting_controller.changed_turfs += S
-
-	S.icon_old = old_icon
-	S.mineral = ore
-	S.New()//Hackish as fuck, but what can you do? -Sieve	//build it into the goddamn new() call up there ^ ~Carn
-															//e.g. new(turf/loc, mineral)
-	S.levelupdate()
-	return S
-
 
 /turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
 //Useful to batch-add creatures to the list.
@@ -416,9 +315,6 @@
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-	for(var/obj/effect/critter/M in src)
-		spawn(0)
-			M.Die()
 
 /turf/proc/Bless()
 	if(flags & NOJAUNT)

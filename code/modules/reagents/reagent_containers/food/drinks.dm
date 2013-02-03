@@ -48,9 +48,6 @@
 
 			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
-			log_admin("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-			msg_admin_attack("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
-
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -123,11 +120,11 @@
 		if (!(usr in range(0)) && usr!=src.loc) return
 		if(!reagents || reagents.total_volume==0)
 			usr << "\blue \The [src] is empty!"
-		else if (reagents.total_volume<src.volume/4)
+		else if (reagents.total_volume<=src.volume/4)
 			usr << "\blue \The [src] is almost empty!"
-		else if (reagents.total_volume<src.volume/2)
+		else if (reagents.total_volume<=src.volume*0.66)
 			usr << "\blue \The [src] is half full!"
-		else if (reagents.total_volume<src.volume/0.90)
+		else if (reagents.total_volume<=src.volume*0.90)
 			usr << "\blue \The [src] is almost full!"
 		else
 			usr << "\blue \The [src] is full!"

@@ -6,6 +6,7 @@
 	var/base_state = "left"
 	var/health = 150.0 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = 0.0
+	use_power = 0
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
@@ -122,19 +123,8 @@
 	src.operating = 0
 	return 1
 
-//When an object is thrown at the window
-/obj/machinery/door/window/hitby(AM as mob|obj)
-
-	..()
-	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>The glass door was hit by [AM].</B>", 1)
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		tforce = AM:throwforce
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
-	src.health = max(0, src.health - tforce)
+/obj/machinery/door/window/proc/take_damage(var/damage)
+	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		new /obj/item/weapon/shard(src.loc)
 		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
@@ -142,6 +132,24 @@
 		src.density = 0
 		del(src)
 		return
+
+/obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.damage)
+		take_damage(round(Proj.damage / 2))
+	..()
+
+//When an object is thrown at the window
+/obj/machinery/door/window/hitby(AM as mob|obj)
+
+	..()
+	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 40
+	else
+		tforce = AM:throwforce
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	take_damage(tforce)
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
@@ -150,13 +158,12 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/attack_paw(mob/user as mob)
-	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/metroid/adult))
+	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
 		if(src.operating)
 			return
 		src.health = max(0, src.health - 25)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
@@ -185,9 +192,8 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The glass door was sliced open by []!", user), 1, text("\red You hear glass being sliced and sparks flying."), 2)
-		flick(text("[]spark", src.base_state), src)
+			visible_message("\blue The glass door was sliced open by [user]!")
+		flick("[src.base_state]spark", src)
 		sleep(6)
 		open()
 		return 1
@@ -198,8 +204,7 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[src] was hit by [I].</B>", 1)
+		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)

@@ -68,6 +68,7 @@ datum/mind
 		if(current)					//remove ourself from our old body's mind variable
 			if(changeling)
 				current.remove_changeling_powers()
+				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
 		if(new_character.mind)		//remove any mind currently in our new body's mind variable
 			new_character.mind.current = null
@@ -312,7 +313,7 @@ datum/mind
 				crystals = suplink.uses
 			if (suplink)
 				text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
-				if (usr.client.holder.level >= 3)
+				if (usr.client.holder.rights & R_FUN)
 					text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
 				else
 					text += ", [crystals] crystals"
@@ -330,7 +331,7 @@ datum/mind
 		else
 			var/obj_count = 1
 			for(var/datum/objective/objective in objectives)
-				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a><br>"
+				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
 				obj_count++
 		out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 
@@ -339,17 +340,7 @@ datum/mind
 		usr << browse(out, "window=edit_memory[src]")
 
 	Topic(href, href_list)
-		if(!usr || !usr.client)
-			return
-
-		if(!usr.client.holder)
-			message_admins("\red [key_name(usr)] tried to access [current]'s mind without authorization.")
-			log_admin("[key_name(usr)] tried to access [current]'s mind without authorization.")
-			return
-
-		if (!(usr.client.holder.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
-			alert("You cannot perform this action. You must be of a higher administrative rank!")
-			return
+		if(!check_rights(R_ADMIN))	return
 
 		if (href_list["role_edit"])
 			var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
@@ -377,7 +368,7 @@ datum/mind
 				if(!def_value)//If it's a custom objective, it will be an empty string.
 					def_value = "custom"
 
-			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "prevent", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 			if (!new_obj_type) return
 
 			var/datum/objective/new_objective = null
@@ -414,6 +405,10 @@ datum/mind
 						new_objective:target = new_target:mind
 						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
+
+				if ("prevent")
+					new_objective = new /datum/objective/block
+					new_objective.owner = src
 
 				if ("hijack")
 					new_objective = new /datum/objective/hijack
@@ -480,8 +475,13 @@ datum/mind
 
 		else if (href_list["obj_delete"])
 			var/datum/objective/objective = locate(href_list["obj_delete"])
-			if (!objective) return
+			if(!istype(objective))	return
 			objectives -= objective
+
+		else if(href_list["obj_completed"])
+			var/datum/objective/objective = locate(href_list["obj_completed"])
+			if(!istype(objective))	return
+			objective.completed = !objective.completed
 
 		else if (href_list["revolution"])
 			switch(href_list["revolution"])
@@ -651,6 +651,7 @@ datum/mind
 						ticker.mode.changelings -= src
 						special_role = null
 						current.remove_changeling_powers()
+						current.verbs -= /datum/changeling/proc/EvolutionMenu
 						if(changeling)	del(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
@@ -761,12 +762,12 @@ datum/mind
 				return
 			switch(href_list["monkey"])
 				if("healthy")
-					if (usr.client.holder.level >= 3)
+					if (usr.client.holder.rights & R_ADMIN)
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
 							log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]", 1)
+							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
 							src = null
 							M = H.monkeyize()
 							src = M.mind
@@ -776,7 +777,7 @@ datum/mind
 								D.cure(0)
 							sleep(0) //because deleting of virus is done through spawn(0)
 				if("infected")
-					if (usr.client.holder.level >= 3)
+					if (usr.client.holder.rights & R_ADMIN)
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -796,7 +797,7 @@ datum/mind
 								D.cure(0)
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]", 1)
+						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
 						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null
@@ -880,7 +881,7 @@ datum/mind
 					take_uplink()
 					memory = null//Remove any memory they may have had.
 				if("crystals")
-					if (usr.client.holder.level >= 3)
+					if (usr.client.holder.rights & R_FUN)
 						var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
 						var/crystals
 						if (suplink)
@@ -1143,10 +1144,10 @@ datum/mind
 /mob/living/carbon/monkey/mind_initialize()
 	..()
 
-//METROID
-/mob/living/carbon/metroid/mind_initialize()
+//slime
+/mob/living/carbon/slime/mind_initialize()
 	..()
-	mind.assigned_role = "Metroid"
+	mind.assigned_role = "slime"
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

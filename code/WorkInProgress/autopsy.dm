@@ -1,3 +1,20 @@
+
+//moved these here from code/defines/obj/weapon.dm
+//please preference put stuff where it's easy to find - C
+
+/obj/item/weapon/autopsy_scanner
+	name = "autopsy scanner"
+	desc = "Extracts information on wounds."
+	icon = 'icons/obj/autopsy_scanner.dmi'
+	icon_state = ""
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+	var/list/datum/autopsy_data_scanner/wdata = list()
+	var/list/datum/autopsy_data_scanner/chemtraces = list()
+	var/target_name = null
+	var/timeofdeath = null
+
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
 	var/list/organs_scanned = list() // this maps a number of scanned organs to
@@ -63,10 +80,6 @@
 	set name = "Print Data"
 	if(usr.stat)
 		usr << "No."
-		return
-
-	if(wdata.len == 0 && chemtraces.len == 0)
-		usr << "<b>* There is no data about any wounds in the scanner's database. You may have to scan more bodyparts, or otherwise this wound type may not be in the scanner's database."
 		return
 
 	var/scan_data = ""
@@ -170,6 +183,8 @@
 	if(target_name != M.name)
 		target_name = M.name
 		src.wdata = list()
+		src.chemtraces = list()
+		src.timeofdeath = null
 		user << "\red A new patient has been registered.. Purging data for previous patient."
 
 	src.timeofdeath = M.timeofdeath

@@ -1,3 +1,15 @@
+/obj/item/weapon/storage/briefcase
+	name = "briefcase"
+	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
+	icon_state = "briefcase"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 8.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = 4.0
+	max_w_class = 3
+	max_combined_w_class = 16
+
 /obj/item/weapon/storage/briefcase/New()
 	..()
 
@@ -15,9 +27,6 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 
 	if (M.stat < 2 && M.health < 50 && prob(90))
 		var/mob/H = M

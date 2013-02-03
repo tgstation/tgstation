@@ -10,6 +10,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
+	use_power = 0
 	var/output = 50000
 	var/lastout = 0
 	var/loaddemand = 0
@@ -43,7 +44,7 @@
 
 
 /obj/machinery/power/smes/proc/updateicon()
-	overlays = null
+	overlays.Cut()
 	if(stat & BROKEN)	return
 
 	overlays += image('icons/obj/power.dmi', "smes-op[online]")
@@ -118,10 +119,7 @@
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		updateicon()
 
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	AutoUpdateAI(src)
+	updateDialog()
 	return
 
 // called after all power processes are finished
@@ -178,13 +176,13 @@
 	interact(user)
 
 
-/obj/machinery/power/smes/proc/interact(mob/user)
+/obj/machinery/power/smes/interact(mob/user)
 	if(get_dist(src, user) > 1 && !istype(user, /mob/living/silicon/ai))
-		user.machine = null
+		user.unset_machine()
 		user << browse(null, "window=smes")
 		return
 
-	user.machine = src
+	user.set_machine(src)
 
 	var/t = "<TT><B>SMES Power Storage Unit</B> [n_tag? "([n_tag])" : null]<HR><PRE>"
 
@@ -228,7 +226,7 @@
 
 		if( href_list["close"] )
 			usr << browse(null, "window=smes")
-			usr.machine = null
+			usr.unset_machine()
 			return
 
 		else if( href_list["cmode"] )
@@ -299,7 +297,7 @@
 
 	else
 		usr << browse(null, "window=smes")
-		usr.machine = null
+		usr.unset_machine()
 	return
 
 
@@ -366,3 +364,4 @@
 	return rate
 
 
+#undef SMESRATE
