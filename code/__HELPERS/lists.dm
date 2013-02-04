@@ -146,11 +146,11 @@ proc/listclearnulls(list/list)
  * Sorting
  */
 
-//Reverses the order of items in the list (Turning a stack into a queue)
-/proc/reverselist(var/list/input)
-	var/list/output = new/list()
-	for(var/A in input)
-		output += A
+//Reverses the order of items in the list
+/proc/reverselist(list/L)
+	var/list/output = list()
+	for(var/i = L.len; i >= 1; i--)
+		output += L[i]
 	return output
 
 //Randomize: Return the list in a random order
@@ -321,3 +321,27 @@ proc/listclearnulls(list/list)
 		if(istype(T, type))
 			i++
 	return i
+
+//Don't use this on lists larger than half a dozen or so
+/proc/insertion_sort_numeric_list_ascending(var/list/L)
+	//world.log << "ascending len input: [L.len]"
+	var/list/out = list(pop(L))
+	for(var/entry in L)
+		if(isnum(entry))
+			var/success = 0
+			for(var/i=1, i<=out.len, i++)
+				if(entry <= out[i])
+					success = 1
+					out.Insert(i, entry)
+					break
+			if(!success)
+				out.Add(entry)
+
+	//world.log << "	output: [out.len]"
+	return out
+
+/proc/insertion_sort_numeric_list_descending(var/list/L)
+	//world.log << "descending len input: [L.len]"
+	var/list/out = insertion_sort_numeric_list_ascending(L)
+	//world.log << "	output: [out.len]"
+	return reverselist(out)
