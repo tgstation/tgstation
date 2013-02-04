@@ -31,7 +31,7 @@
 				targets -= spawn_place
 			if(ispath(summoned_object_type,/turf))
 				var/turf/O = spawn_place
-				var/turf/N = summoned_object_type
+				var/N = summoned_object_type
 				O.ChangeTurf(N)
 			else
 				var/atom/summoned_object = new summoned_object_type(spawn_place)

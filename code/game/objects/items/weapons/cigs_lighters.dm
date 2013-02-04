@@ -359,7 +359,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.adjustFireLoss(5)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
-			user.SetLuminosity(user.luminosity + 2)
+			user.SetLuminosity(user.luminosity + 1)
 			processing_objects.Add(src)
 		else
 			lit = 0
@@ -370,7 +370,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
 
-			user.SetLuminosity(user.luminosity - 2)
+			user.SetLuminosity(user.luminosity - 1)
 			processing_objects.Remove(src)
 	else
 		return ..()
@@ -403,12 +403,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/pickup(mob/user)
 	if(lit)
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity+2)
+		user.SetLuminosity(user.luminosity+1)
 	return
 
 
 /obj/item/weapon/lighter/dropped(mob/user)
 	if(lit)
-		user.SetLuminosity(user.luminosity-2)
-		SetLuminosity(2)
+		user.SetLuminosity(user.luminosity-1)
+		SetLuminosity(1)
 	return

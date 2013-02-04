@@ -56,7 +56,7 @@
 	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
 	var/dy = abs(Ay - By)
 	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k1*dx) + (k2*dy)
+	else		return (k2*dx) + (k1*dy)
 #undef k1
 #undef k2
 

@@ -93,7 +93,7 @@
 		if(attached)
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
-				SetLuminosity(12)
+				SetLuminosity(5)
 
 				// found a powernet, so drain up to max power from it
 

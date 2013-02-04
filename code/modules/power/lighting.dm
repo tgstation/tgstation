@@ -220,11 +220,9 @@
 	light_type = /obj/item/weapon/light/bulb
 
 
-/obj/machinery/light/spot
-	name = "spotlight"
-	fitting = "large tube"
-	light_type = /obj/item/weapon/light/tube/large
-	brightness = 12
+/obj/machinery/light/Move()
+	if(status != LIGHT_BROKEN)	broken(1)
+	return ..()
 
 /obj/machinery/light/built/New()
 	status = LIGHT_EMPTY
@@ -236,10 +234,10 @@
 	update(0)
 	..()
 
+
 // create a new lighting fixture
 /obj/machinery/light/New()
 	..()
-
 	spawn(2)
 		switch(fitting)
 			if("tube")
