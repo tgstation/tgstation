@@ -93,6 +93,9 @@ obj/machinery/computer/general_air_control
 		user.set_machine(src)
 		onclose(user, "computer")
 
+	interact(mob/user)
+		attack_hand(user)
+
 	process()
 		..()
 		src.updateDialog()

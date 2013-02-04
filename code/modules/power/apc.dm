@@ -92,6 +92,14 @@
 		return
 	..()
 
+/obj/machinery/power/apc/connect_to_network()
+	//Override because the APC does not directly connect to the network; it goes through a terminal.
+	//The terminal is what the power computer looks for anyway.
+	if(!terminal)
+		make_terminal()
+	if(terminal)
+		terminal.connect_to_network()
+
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
 

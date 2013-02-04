@@ -98,8 +98,7 @@
 		C.powernet.cables += C
 
 	for(var/obj/machinery/power/M in machines)
-		if(!M.powernet)	continue	// APCs have powernet=0 so they don't count as network nodes directly
-		M.powernet.nodes[M] = M
+		M.connect_to_network()
 
 
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
@@ -396,6 +395,7 @@
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
+	if(!T || !istype(T)) return 0
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(!C || !C.powernet)	return 0
 //	makepowernets() //TODO: find fast way	//EWWWW what are you doing!?

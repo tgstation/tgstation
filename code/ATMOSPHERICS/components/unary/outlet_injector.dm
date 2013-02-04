@@ -105,6 +105,8 @@
 		..()
 
 		set_frequency(frequency)
+		spawn(rand(25,50))
+			broadcast_status()
 
 	receive_signal(datum/signal/signal)
 		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
