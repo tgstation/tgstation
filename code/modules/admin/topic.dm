@@ -1979,6 +1979,11 @@
 				feedback_add_details("admin_secrets_fun_used","SL")
 				new /datum/event/spider_infestation
 				message_admins("[key_name_admin(usr)] has spawned spiders", 1)
+			if("bluespaceanomaly")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BA")
+				new /datum/event/bluespace_anomaly
+				message_admins("[key_name_admin(usr)] has triggered a bluespace anomaly", 1)
 			if("comms_blackout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","CB")
