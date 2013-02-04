@@ -3,7 +3,7 @@
 /obj/item/weapon/ore
 	name = "Rock"
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "ore"
+	icon_state = "ore2"
 	var/datum/geosample/geological_data
 
 
@@ -59,16 +59,6 @@
 	name = "Slag"
 	desc = "Completely useless"
 	icon_state = "slag"
-
-/obj/item/weapon/ore/strangerock		//see artifact_archaeo.dm in modules/research for more info
-	name = "Strange rock"
-	desc = "Seems to have some unusal strata evident throughout it."
-	icon_state = "strange"
-	var/obj/inside
-	var/method // 0 = fire, 1+ = acid
-	origin_tech = "materials=5"
-	//unacidable = 1	//This can prevent acid from gooey grey massing
-						//you should override the acid_act proc anyway
 
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8

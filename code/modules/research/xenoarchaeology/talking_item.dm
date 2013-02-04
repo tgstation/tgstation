@@ -10,11 +10,12 @@
 	var/listening_to_players = 0
 	var/speaking_to_players = 0
 
-/obj/item/weapon/proc/process_talking(var/word = null)
-	if(prob(25) && world.timeofday >= lastsaid && heard_words.len >= 1)
-		SaySomething(word)
-	spawn(100)
-		process_talking()
+/obj/item/weapon/process()
+	if(!speaking_to_players)
+		processing_objects.Remove(src)
+		return
+	if(prob(10) && world.timeofday >= lastsaid && heard_words.len >= 1)
+		SaySomething()
 
 /obj/item/weapon/proc/catchMessage(var/msg, var/mob/source)
 	if(speaking_to_players)

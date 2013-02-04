@@ -1,5 +1,8 @@
 /**********************Mineral deposits**************************/
 
+#define XENOARCH_SPAWN_CHANCE 0.5
+#define XENOARCH_SPREAD_CHANCE 15
+
 /turf/simulated/mineral //wall piece
 	name = "Rock"
 	icon = 'icons/turf/walls.dmi'
@@ -16,7 +19,16 @@
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/artifactChance = 0.3	//percent chance to spawn a xenoarchaelogical artifact
 	var/last_act = 0
+
 	var/datum/geosample/geological_data
+	var/excavation_level = 0
+	var/list/finds = list()
+	var/list/excavation_minerals = list()
+	var/list/excavation_minerals_ascending = list()
+	var/list/exca_first = list("A","B","C","D","E")
+	var/list/exca_second = list()
+	var/next_rock = 0
+	var/overlay_num = 0
 
 /turf/simulated/mineral/Del()
 	return
@@ -56,27 +68,82 @@
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
 
 	if (mineralName && mineralAmt && spread && spreadChance)
-		if(prob(spreadChance))
-			if(istype(get_step(src, SOUTH), /turf/simulated/mineral/random))
-				new src.type(get_step(src, SOUTH))
-		if(prob(spreadChance))
-			if(istype(get_step(src, NORTH), /turf/simulated/mineral/random))
-				new src.type(get_step(src, NORTH))
-		if(prob(spreadChance))
-			if(istype(get_step(src, WEST), /turf/simulated/mineral/random))
-				new src.type(get_step(src, WEST))
-		if(prob(spreadChance))
-			if(istype(get_step(src, EAST), /turf/simulated/mineral/random))
-				new src.type(get_step(src, EAST))
+		for(var/trydir in list(1,2,4,8))
+			if(prob(spreadChance))
+				if(istype(get_step(src, trydir), /turf/simulated/mineral/random))
+					var/turf/simulated/mineral/T = get_step(src, trydir)
+					var/turf/simulated/mineral/M = new src.type(T)
+					//keep any digsite data as constant as possible
+					if(T.finds.len && !M.finds.len)
+						M.finds = T.finds
+						M.overlays += "overlay_archaeo1"
 
-	src.geological_data = new /datum/geosample(src)
+	//---- Xenoarchaeology BEGIN
+
+	if(mineralAmt > 0 && !excavation_minerals.len)
+		for(var/i=0, i<mineralAmt, i++)
+			excavation_minerals.Add(rand(5,95))
+		excavation_minerals = insertion_sort_numeric_list_ascending(excavation_minerals)
+		excavation_minerals_ascending = reverselist(excavation_minerals)
+
+		exca_second = reverselist(exca_first)
+
+	if(!finds.len && prob(XENOARCH_SPAWN_CHANCE))
+		//create a new archaeological deposit
+		var/digsite = get_random_digsite_type()
+
+		var/list/turfs_to_process = list(src)
+		var/list/processed_turfs = list()
+		while(turfs_to_process.len)
+			var/turf/simulated/mineral/M = turfs_to_process[1]
+			for(var/turf/simulated/mineral/T in orange(1, M))
+				if(T.finds.len)
+					continue
+				if(T in processed_turfs)
+					continue
+				if(prob(XENOARCH_SPREAD_CHANCE))
+					turfs_to_process.Add(T)
+
+			turfs_to_process.Remove(M)
+			processed_turfs.Add(M)
+			if(!M.finds.len)
+				//M.desc = "There is some strange strata evident throughout it."
+				if(prob(50))
+					M.finds.Add(new/datum/find(digsite, rand(5,95)))
+				else if(prob(75))
+					M.finds.Add(new/datum/find(digsite, rand(5,45)))
+					M.finds.Add(new/datum/find(digsite, rand(55,95)))
+				else
+					M.finds.Add(new/datum/find(digsite, rand(5,30)))
+					M.finds.Add(new/datum/find(digsite, rand(35,75)))
+					M.finds.Add(new/datum/find(digsite, rand(75,95)))
+
+				//give it a test overlay for debugging
+				//M.overlays += image('icons/obj/xenoarchaeology.dmi', "sdsdsd")
+				M.overlays += "overlay_archaeo1"
+
+	if(!src.geological_data)
+		src.geological_data = new/datum/geosample(src)
+	src.geological_data.UpdateTurf(src)
+
+	//for excavated turfs placeable in the map editor
+	/*if(excavation_level > 0)
+		if(excavation_level < 25)
+			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv1_[rand(1,3)]")
+		else if(excavation_level < 50)
+			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv2_[rand(1,3)]")
+		else if(excavation_level < 75)
+			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv3_[rand(1,3)]")
+		else
+			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv4_[rand(1,3)]")
+		desc = "It appears to be partially excavated."*/
 
 	return
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Archaeo" = 3/*, "Adamantine" = 5*/)
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 5/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5/*, "Adamantine" = 5*/)
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -99,19 +166,14 @@
 					M = new/turf/simulated/mineral/silver(src)
 				if("Plasma")
 					M = new/turf/simulated/mineral/plasma(src)
-				if("Archaeo")
-					M = new/turf/simulated/mineral/archaeo(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
 				src = M
 				M.levelupdate()
-				if(!geological_data)
-					src.geological_data = new /datum/geosample
-				src.geological_data.UpdateTurf(src)
-	else if (prob(artifactChance))
-		//spawn a rare, xeno-arch artifact here
-		new/obj/machinery/artifact(src)
+
+	/*else if (prob(artifactChance))
+		new/obj/machinery/artifact(src)*/
 	return
 
 /turf/simulated/mineral/random/high_chance
@@ -176,15 +238,6 @@
 	spread = 1
 
 
-/turf/simulated/mineral/archaeo
-	name = "Strange rock formation"
-	icon_state = "rock_Archaeo"
-	mineralName = "Archaeo"
-	mineralAmt = 3
-	spreadChance = 25
-	spread = 1
-
-
 /turf/simulated/mineral/clown
 	name = "Bananium deposit"
 	icon_state = "rock_Clown"
@@ -245,61 +298,105 @@ commented out in r5061, I left it because of the shroom thingies
 			return
 */
 //Watch your tabbing, microwave. --NEO
-		if(last_act+W:digspeed > world.time)//prevents message spam
+
+		var/obj/item/weapon/pickaxe/P = W
+		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "\red You start picking."
-		playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
 
-		if(do_after(user,W:digspeed))
-			user << "\blue You finish cutting into the rock."
-			gets_drilled()
+		playsound(user, P.drill_sound, 20, 1)
+
+		//Chance to destroy any archaeological finds if we carelessly pick away at the rock
+		var/fail_message = ""
+		if(src.finds.len)
+			var/datum/find/F = src.finds[1]
+			if(src.excavation_level + P.excavation_amount >= F.excavation_required + F.destruct_range)
+				fail_message = ", <b>[pick("there is a crunching noise","[W] hits something","part of the rock face crumbles away","something breaks under [W]")]</b>"
+				if(prob(50))
+					src.finds.Remove(F)
+		user << "\red You start [P.drill_verb][fail_message]."
+
+		if(do_after(user,P.digspeed))
+			user << "\blue You finish [P.drill_verb] the rock."
+			if(src.excavation_level + P.excavation_amount >= 100)
+				gets_drilled()
+			else
+				src.excavation_level += P.excavation_amount
+
+				//handle any archaeological finds we might uncover
+
+				//extract pesky minerals while we're excavating
+				while(excavation_minerals.len && src.excavation_level > excavation_minerals[excavation_minerals.len])
+					drop_mineral()
+					//have a 50% chance to extract bonus minerals this way
+					//if(prob(50))
+					pop(excavation_minerals)
+					mineralAmt--
+
+				//drop some rocks
+				next_rock += P.excavation_amount * 10
+				while(next_rock > 100)
+					next_rock -= 100
+					var/obj/item/weapon/ore/O = new(src)
+					O.geological_data = src.geological_data
 
 	else
 		return attack_hand(user)
 	return
 
-/turf/simulated/mineral/proc/gets_drilled()
-	var/destroyed = 0 //used for breaking strange rocks
-	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
-		var/i
-		for (i=0;i<mineralAmt;i++)
-			var/obj/item/weapon/ore/O
-			if (src.mineralName == "Uranium")
-				O = new /obj/item/weapon/ore/uranium(src)
-			if (src.mineralName == "Iron")
-				O = new /obj/item/weapon/ore/iron(src)
-			if (src.mineralName == "Gold")
-				O = new /obj/item/weapon/ore/gold(src)
-			if (src.mineralName == "Silver")
-				O = new /obj/item/weapon/ore/silver(src)
-			if (src.mineralName == "Plasma")
-				O = new /obj/item/weapon/ore/plasma(src)
-			if (src.mineralName == "Diamond")
-				O = new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Archaeo")
-				//spawn strange rocks here
-				new /obj/item/weapon/archaeological_find(src)
-				//if(prob(10) || delicate)
-				/*if(prob(50)) //Don't have delicate tools (hand pick/excavation tool) yet, temporarily change to 50% instead of 10% -Mij
-					O = new /obj/item/weapon/ore/strangerock(src)
-				else
-					destroyed = 1*/
-			if (src.mineralName == "Clown")
-				O = new /obj/item/weapon/ore/clown(src)
-			if(O)
-				if(!src.geological_data)
-					src.geological_data = new /datum/geosample(src)
-				O.geological_data = src.geological_data
+/turf/simulated/mineral/proc/drop_mineral()
+	var/obj/item/weapon/ore/O
+	if (src.mineralName == "Uranium")
+		O = new /obj/item/weapon/ore/uranium(src)
+	if (src.mineralName == "Iron")
+		O = new /obj/item/weapon/ore/iron(src)
+	if (src.mineralName == "Gold")
+		O = new /obj/item/weapon/ore/gold(src)
+	if (src.mineralName == "Silver")
+		O = new /obj/item/weapon/ore/silver(src)
+	if (src.mineralName == "Plasma")
+		O = new /obj/item/weapon/ore/plasma(src)
+	if (src.mineralName == "Diamond")
+		O = new /obj/item/weapon/ore/diamond(src)
+	/*if (src.mineralName == "Archaeo")
+		//new /obj/item/weapon/archaeological_find(src)
+		//if(prob(10) || delicate)
+		if(prob(50)) //Don't have delicate tools (hand pick/excavation tool) yet, temporarily change to 50% instead of 10% -Mij
+			O = new /obj/item/weapon/ore/strangerock(src)
+		else
+			destroyed = 1*/
+	if (src.mineralName == "Clown")
+		O = new /obj/item/weapon/ore/clown(src)
+	if(O)
+		O.geological_data = src.geological_data
+	return O
 
-	if (prob(src.artifactChance))
+/turf/simulated/mineral/proc/gets_drilled()
+	//var/destroyed = 0 //used for breaking strange rocks
+	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+
+		//if the turf has already been excavated, some of it's ore has been removed
+		for (var/i=0;i<mineralAmt;i++)
+			drop_mineral()
+
+	//leave a bit of cleared away rock
+	var/amount_leftover = rand(0,5)
+	for (var/i=0;i<amount_leftover;i++)
+		new /obj/item/weapon/ore(src)
+
+	/*if (prob(src.artifactChance))
 		//spawn a rare artifact here
-		new /obj/machinery/artifact(src)
+		new /obj/machinery/artifact(src)*/
 	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
 	N.fullUpdateMineralOverlays()
 
-	if(destroyed)  //Display message about being a terrible miner
-		usr << "\red You destroy some of the rocks!"
+	/*if(src.contents)
+		[src.contents ? pick(" There is a crunching noise."," [W] hits something."," Part of the rock face crumbles away.","Something breaks under [W].") : ""]"
+		var/atom/A = pick(src.contents)
+		del(A)*/
+
+	/*if(destroyed)  //Display message about being a terrible miner
+		usr << "\red You destroy some of the rocks!"*/
 	return
 
 /*
@@ -466,7 +563,6 @@ commented out in r5061, I left it because of the shroom thingies
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
 	if(istype(get_step(src, WEST), /turf/simulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
-
 
 /turf/simulated/floor/plating/airless/asteroid/proc/fullUpdateMineralOverlays()
 	var/turf/simulated/floor/plating/airless/asteroid/A
