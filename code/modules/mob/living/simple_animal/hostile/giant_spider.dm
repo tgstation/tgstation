@@ -104,7 +104,7 @@
 			if(!busy && prob(30))
 				//first, check for potential food nearby to cocoon
 				for(var/mob/living/C in can_see)
-					if(C.stat)
+					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/giant_spider))
 						cocoon_target = C
 						busy = MOVING_TO_TARGET
 						walk_to(src, C, 1, move_to_delay)

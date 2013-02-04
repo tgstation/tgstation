@@ -4,26 +4,29 @@
 	icon_state = "magboots0"
 	var/magpulse = 0
 //	flags = NOSLIP //disabled by default
+	icon_action_button = "action_magboots"
 
 
 	verb/toggle()
 		set name = "Toggle Magboots"
 		set category = "Object"
 		set src in usr
+		attack_self(usr)
+
+	attack_self(mob/user)
 		if(src.magpulse)
 			src.flags &= ~NOSLIP
 			src.slowdown = SHOES_SLOWDOWN
 			src.magpulse = 0
 			icon_state = "magboots0"
-			usr << "You disable the mag-pulse traction system."
+			user << "You disable the mag-pulse traction system."
 		else
 			src.flags |= NOSLIP
 			src.slowdown = 2
 			src.magpulse = 1
 			icon_state = "magboots1"
-			usr << "You enable the mag-pulse traction system."
-		usr.update_inv_shoes()	//so our mob-overlays update
-
+			user << "You enable the mag-pulse traction system."
+		user.update_inv_shoes()	//so our mob-overlays update
 
 	examine()
 		set src in view()
