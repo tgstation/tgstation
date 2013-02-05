@@ -92,11 +92,12 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	//send this msg to all admins
 	var/admin_number_afk = 0
 	for(var/client/X in admins)
-		if(X.is_afk())
-			admin_number_afk++
-		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << 'sound/effects/adminhelp.ogg'
-		X << msg
+		if((R_ADMIN|R_MOD) & X.holder.rights)
+			if(X.is_afk())
+				admin_number_afk++
+			if(X.prefs.toggles & SOUND_ADMINHELP)
+				X << 'sound/effects/adminhelp.ogg'
+			X << msg
 
 	//show it to the person adminhelping too
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
