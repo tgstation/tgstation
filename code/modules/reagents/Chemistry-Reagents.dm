@@ -714,7 +714,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
-								if(affecting.take_damage(5, 10))
+								if(affecting.take_damage(10, 5))
 									H.UpdateDamageIcon()
 								if(prob(15))
 									H.emote("scream")
@@ -777,7 +777,7 @@ datum
 
 						if(!H.unacidable)
 							var/datum/organ/external/affecting = H.get_organ("head")
-							if(affecting.take_damage(rand(5,15), rand(5,15)))
+							if(affecting.take_damage(rand(10,20), rand(0,10)))
 								H.UpdateDamageIcon()
 							if(prob(25))
 								H.emote("scream")
@@ -805,7 +805,7 @@ datum
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
-							if(affecting.take_damage(rand(5,15), rand(5,15)))
+							if(affecting.take_damage(rand(10,20), rand(0,10)))
 								H.UpdateDamageIcon()
 							if(prob(25))
 								H.emote("scream")
