@@ -48,6 +48,7 @@
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains white gloves."
+	icon_state = "latex"
 	New()
 		..()
 		new /obj/item/clothing/gloves/latex(src)
@@ -342,7 +343,7 @@
 /obj/item/weapon/storage/box/pillbottles
 	name = "box of pill bottles"
 	desc = "It has pictures of pill bottles on its front."
-
+	icon_state = "pillbox"
 	New()
 		..()
 		new /obj/item/weapon/storage/pill_bottle( src )
