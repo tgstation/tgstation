@@ -1254,7 +1254,7 @@
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_MOD,0) && !check_rights(R_ADMIN))	return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
