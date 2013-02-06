@@ -311,10 +311,7 @@ var/global/datum/controller/gameticker/ticker
 
 				if(!delay_end)
 					sleep(restart_timeout)
-					if(!delay_end)
-						world.Reboot()
-					else
-						world << "\blue <B>An admin has delayed the round end</B>"
+					world.Reboot()
 				else
 					world << "\blue <B>An admin has delayed the round end</B>"
 

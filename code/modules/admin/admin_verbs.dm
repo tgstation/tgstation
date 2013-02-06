@@ -7,7 +7,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/check_antagonists,		/*shows all antags*/
-	/client/proc/deadchat				/*toggles deadchat on/off*/
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
@@ -47,6 +46,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/check_words,			/*displays cult-words*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
+	/client/proc/deadchat,				/*toggles deadchat on/off*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 //	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
@@ -62,15 +62,13 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			/*frees slot for chosen job*/
 	/client/proc/cmd_admin_change_custom_event,
-	/client/proc/cmd_admin_rejuvenate,
-	/client/proc/toggleattacklogs,
-	/datum/admins/proc/show_skills
+	/client/proc/cmd_admin_rejuvenate
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/jobbans,
 	/client/proc/unjobban_panel,
-	// /client/proc/DB_ban_panel
+	/client/proc/DB_ban_panel
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -90,8 +88,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
-	/client/proc/editappear
+	/client/proc/set_ooc
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -225,7 +222,6 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
-	/datum/admins/proc/show_skills
 )
 /client/proc/add_admin_verbs()
 	if(holder)
@@ -636,9 +632,12 @@ var/list/admin_verbs_mod = list(
 	set name = "Edit Appearance"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	usr << "\red This proc has been temporarily disabled."
+	return
 
-	if(!istype(M, /mob/living/carbon/human))
+	//some random errors here, cbb fixing them right now
+	//todo
+	/*if(!istype(M, /mob/living/carbon/human))
 		usr << "\red You can only do this to humans!"
 		return
 	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Soghun and Tajaran can result in unintended consequences.",,"Yes","No"))
@@ -669,14 +668,49 @@ var/list/admin_verbs_mod = list(
 		M.s_tone =  -M.s_tone + 35
 
 	// hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.h_style = new_hstyle
+	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/hairs = list()
+
+	// loop through potential hairs
+	for(var/x in all_hairs)
+		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+		hairs.Add(H.name) // add hair name to hairs
+		del(H) // delete the hair after it's all done
+
+	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+
+	// if new style selected (not cancel)
+	if (new_style)
+		M.h_style = new_style
+
+		for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
+			var/datum/sprite_accessory/hair/H = new x // create new hair datum
+			if(H.name == new_style)
+				M.hair_style = H // assign the hair_style variable a new hair datum
+				break
+			else
+				del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
 	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.f_style = new_fstyle
+	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/fhairs = list()
+
+	for(var/x in all_fhairs)
+		var/datum/sprite_accessory/facial_hair/H = new x
+		fhairs.Add(H.name)
+		del(H)
+
+	new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
+
+	if(new_style)
+		M.f_style = new_style
+		for(var/x in all_fhairs)
+			var/datum/sprite_accessory/facial_hair/H = new x
+			if(H.name == new_style)
+				M.facial_hair_style = H
+				break
+			else
+				del(H)
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
@@ -684,10 +718,10 @@ var/list/admin_verbs_mod = list(
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.update_hair()
+	M.rebuild_appearance()
 	M.update_body()
 	M.check_dna(M)
-
+	*/
 /client/proc/playernotes()
 	set name = "Show Player Info"
 	set category = "Admin"
@@ -710,13 +744,3 @@ var/list/admin_verbs_mod = list(
 		if (job)
 			job_master.FreeRole(job)
 	return
-
-/client/proc/toggleattacklogs()
-	set name = "Toggle Attack Log Messages"
-	set category = "Preferences"
-
-	prefs.toggles ^= CHAT_ATTACKLOGS
-	if (prefs.toggles & CHAT_ATTACKLOGS)
-		usr << "You now will get attack log messages"
-	else
-		usr << "You now won't get attack log messages"

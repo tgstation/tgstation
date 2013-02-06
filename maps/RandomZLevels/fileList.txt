@@ -4,7 +4,7 @@
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
 
 maps/RandomZLevels/example.dmm
-###maps/RandomZLevels/blackmarketpackers.dmm
+maps/RandomZLevels/blackmarketpackers.dmm
 #maps/RandomZLevels/stationCollision.dmm
 #maps/RandomZLevels/spacebattle.dmm
 maps/RandomZLevels/beach.dmm
@@ -13,5 +13,5 @@ maps/RandomZLevels/beach.dmm
 #maps/RandomZLevels/challenge.dmm
 maps/RandomZLevels/listeningpost.dmm
 #maps/RandomZLevels/zresearchlabs.dmm
-###maps/RandomZLevels/jungle.dmm
-###maps/RandomZLevels/arcticwaste.dmm
+maps/RandomZLevels/jungle.dmm
+maps/RandomZLevels/arcticwaste.dmm

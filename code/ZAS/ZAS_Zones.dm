@@ -411,7 +411,7 @@ zone/proc/Rebuild()
 	//
 	var/list/turfs_to_consider = contents.Copy()
 
-	while(!sample || !sample.CanPass(null, sample, 1.5, 1))
+	while(!sample.CanPass(null, sample, 1.5, 1))
 		if(sample)
 			turfs_to_consider.Remove(sample)
 		sample = locate() in turfs_to_consider
