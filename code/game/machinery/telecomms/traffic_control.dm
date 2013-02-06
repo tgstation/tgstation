@@ -192,7 +192,7 @@
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
-			if(newnet && ((usr in range(1, src) || issilicon(usr))))
+			if(newnet && canAccess(usr))
 				if(length(newnet) > 15)
 					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
@@ -239,3 +239,8 @@
 			user << "\blue You you disable the security protocols"
 		src.updateUsrDialog()
 		return
+
+	proc/canAccess(var/mob/user)
+		if(issilicon(user) || in_range(user, src))
+			return 1
+		return 0
