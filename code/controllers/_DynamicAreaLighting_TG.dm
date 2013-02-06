@@ -301,7 +301,6 @@ area
 				SetLightLevel(4)
 
 
-
 #undef LIGHTING_MAX_LUMINOSITY
 #undef LIGHTING_MAX_LUMINOSITY_MOB
 #undef LIGHTING_LAYER

@@ -32,7 +32,7 @@ Moderator		+MOD
 Admin Candidate	+ADMIN
 Trial Admin		+@ +SPAWN +REJUV +VAREDIT +BAN
 Badmin			+@ +POSSESS +BUILDMODE +SERVER +FUN
-Game Admin		+@ +STEALTH +SOUNDS +DEBUG +PERMISSIONS
+Game Admin		+@ +STEALTH +SOUNDS +DEBUG
 Game Master		+EVERYTHING
 
 Host			+EVERYTHING

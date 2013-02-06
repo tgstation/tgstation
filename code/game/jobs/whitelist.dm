@@ -22,8 +22,6 @@ proc/load_alienwhitelist()
 
 //todo: admin aliens
 /proc/is_alien_whitelisted(mob/M, var/species)
-	if(!config.usealienwhitelist)
-		return 1
 	if(species == "human" || species == "Human")
 		return 1
 	if(check_rights(R_ADMIN, 0))

@@ -9,6 +9,7 @@
 	layer = 5
 
 	var/list/network = list("SS13")
+	var/network_multi = "" //This is for when you want to place a camera on the map. Input them as a string seperated by commas "SS13,RD,SomeOtherNetwork"
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1.0
@@ -44,27 +45,24 @@
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
-	if(!src.network || src.network.len < 1)
-		if(loc)
-			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
-		else
-			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
-		ASSERT(src.network)
-		ASSERT(src.network.len > 0)
 	..()
+
+/obj/machinery/camera/initialize() //Lists dont work in the map editor so we have to translate a string into a list when the map initializes
+	if(network_multi)
+		network = text2list(network_multi,",")
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
 			icon_state = "[initial(icon_state)]emp"
-			var/list/previous_network = network
-			network = list()
+			for(var/i in network)
+				network.Remove(i)                  //Not the best way but it will do. I think.
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
 			triggerCameraAlarm()
 			spawn(900)
-				network = previous_network
+				network = initial(network)
 				icon_state = initial(icon_state)
 				stat &= ~EMPED
 				cancelCameraAlarm()
