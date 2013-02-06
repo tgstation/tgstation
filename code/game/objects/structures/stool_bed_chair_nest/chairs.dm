@@ -3,9 +3,6 @@
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
 
-/obj/structure/stool/MouseDrop(atom/over_object)
-	return
-
 /obj/structure/stool/bed/chair/New()
 	if(anchored)
 		src.verbs -= /atom/movable/verb/pull

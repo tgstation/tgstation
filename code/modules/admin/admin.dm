@@ -7,18 +7,19 @@ var/global/floorIsLava = 0
 /proc/message_admins(var/msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
-	admins << msg
+	for(var/client/C in admins)
+		if(R_ADMIN & C.holder.rights)
+			C << msg
 
-/*
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
 	for(var/client/C in admins)
-		if (C.holder.level >= 1)
-			if(!C.STFU_atklog)
+		if(R_ADMIN & C.holder.rights)
+			if(C.prefs.toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
 				C << msg
-*/
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
