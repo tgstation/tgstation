@@ -325,10 +325,10 @@ var/global/datum/controller/occupations/job_master
 				H.loc = S.loc
 
 
-
 		if(H.mind)
 			H.mind.assigned_role = rank
-			H.mind.role_alt_title = null
+			if (H.mind.role_alt_title)
+				rank = H.mind.role_alt_title
 
 			switch(rank)
 				if("Cyborg")
