@@ -420,7 +420,7 @@
 
 	taj_ears
 		name = "Tajaran Ears"
-		icon_state = "tajears"
+		icon_state = "ears_plain"
 		species_allowed = list("Tajaran")
 
 	taj_ears_clean
@@ -459,8 +459,8 @@
 		species_allowed = list("Tajaran")
 
 	taj_ears_spiky
-		name = "Spiky"
-		icon_state = "hair_spiky"
+		name = "Tajaran Spiky"
+		icon_state = "hair_tajspiky"
 		species_allowed = list("Tajaran")
 
 	taj_ears_messy
@@ -499,7 +499,6 @@
 		name = "Smallsatche"
 		icon_state = "facial_smallstache"
 		species_allowed = list("Tajaran")
-
 //skin styles - WIP
 //going to have to re-integrate this with surgery
 //let the icon_state hold an icon preview for now

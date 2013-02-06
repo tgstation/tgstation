@@ -525,9 +525,6 @@ datum
 						var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 						if(D)
 							D.Devolve()
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor
