@@ -63,7 +63,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/free_slot,			/*frees slot for chosen job*/
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/cmd_admin_rejuvenate,
-	/client/proc/toggleattacklogs
+	/client/proc/toggleattacklogs,
+	/datum/admins/proc/show_skills
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -224,6 +225,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
+	/datum/admins/proc/show_skills
 )
 /client/proc/add_admin_verbs()
 	if(holder)
