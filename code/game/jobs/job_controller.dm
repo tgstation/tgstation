@@ -324,11 +324,10 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
-
+		var/alt_title = null
 		if(H.mind)
 			H.mind.assigned_role = rank
-			if (H.mind.role_alt_title)
-				rank = H.mind.role_alt_title
+			alt_title = H.mind.role_alt_title
 
 			switch(rank)
 				if("Cyborg")
@@ -352,12 +351,12 @@ var/global/datum/controller/occupations/job_master
 							new /obj/item/weapon/storage/box(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 
-		H << "<B>You are the [rank].</B>"
-		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+		H << "<B>You are the [alt_title ? alt_title : rank].</B>"
+		H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
-		spawnId(H, rank, H.mind.role_alt_title)
+		spawnId(H, rank, alt_title)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 //		H.update_icons()
 		return 1
