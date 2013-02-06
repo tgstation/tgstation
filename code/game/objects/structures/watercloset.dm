@@ -336,6 +336,8 @@
 	if(M.loc != location) return		//Person has moved away from the sink
 
 	M.clean_blood()
+	if(ishuman(M))
+		M:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [M] washes their hands using \the [src].")
 
