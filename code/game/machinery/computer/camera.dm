@@ -45,10 +45,6 @@
 		var/list/D = list()
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
-			if(!C.network || C.network.len < 1)
-				error("[C.name] in [get_area(C)] (x:[C.x] y:[C.y] z:[C.z] has errored. [C.network?"Empty network list":"Null network list"]")
-				ASSERT(C.network)
-				ASSERT(C.network.len > 0)
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)
 				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C

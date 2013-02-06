@@ -44,13 +44,6 @@
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
-	if(!src.network || src.network.len < 1)
-		if(loc)
-			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
-		else
-			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
-		ASSERT(src.network)
-		ASSERT(src.network.len > 0)
 	..()
 
 /obj/machinery/camera/emp_act(severity)

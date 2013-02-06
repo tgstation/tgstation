@@ -231,7 +231,6 @@ Class Procs:
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
-	return 0
 
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
