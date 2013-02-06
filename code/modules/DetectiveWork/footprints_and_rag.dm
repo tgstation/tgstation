@@ -1,4 +1,3 @@
-
 /mob
 
 	var/bloody_hands = 0
@@ -11,8 +10,6 @@
 	var/transfer_blood = 0
 	var/mob/living/carbon/human/bloody_hands_mob
 
-
-
 proc/blood_incompatible(donor,receiver)
 	if(!donor || !receiver) return 0
 	var
@@ -20,7 +17,7 @@ proc/blood_incompatible(donor,receiver)
 		receiver_antigen = copytext(receiver,1,lentext(receiver))
 		donor_rh = (findtext(donor,"+")>0)
 		receiver_rh = (findtext(receiver,"+")>0)
-	if(donor_rh!=receiver_rh) return 1
+	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)
 		if("A")
 			if(donor_antigen != "A" && donor_antigen != "O") return 1
