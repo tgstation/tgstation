@@ -62,7 +62,8 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			/*frees slot for chosen job*/
 	/client/proc/cmd_admin_change_custom_event,
-	/client/proc/cmd_admin_rejuvenate
+	/client/proc/cmd_admin_rejuvenate,
+	/client/proc/toggleattacklogs
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -707,3 +708,13 @@ var/list/admin_verbs_mod = list(
 		if (job)
 			job_master.FreeRole(job)
 	return
+
+/client/proc/toggleattacklogs()
+	set name = "Toggle Attack Log Messages"
+	set category = "Preferences"
+
+	prefs.toggles ^= CHAT_ATTACKLOGS
+	if (prefs.toggles & CHAT_ATTACKLOGS)
+		usr << "You now will get attack log messages"
+	else
+		usr << "You now won't get attack log messages"
