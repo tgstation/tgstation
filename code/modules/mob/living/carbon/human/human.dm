@@ -438,7 +438,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/datum/organ/external/O = get_organ("head")
-	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || !real_name )	//disfigured. use id-name if possible
+	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
