@@ -101,7 +101,8 @@
 			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro
 
 	if (src.slurring)
-		message = slur(message)
+		if(copytext(message, 1, 2) != "*")
+			message = slur(message)
 	..(message)
 
 /mob/living/carbon/human/say_understands(var/other)
