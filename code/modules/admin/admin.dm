@@ -7,18 +7,19 @@ var/global/floorIsLava = 0
 /proc/message_admins(var/msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
-	admins << msg
+	for(var/client/C in admins)
+		if(R_ADMIN & C.holder.rights)
+			C << msg
 
-/*
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
 	for(var/client/C in admins)
-		if (C.holder.level >= 1)
-			if(!C.STFU_atklog)
+		if(R_ADMIN & C.holder.rights)
+			if(C.prefs.toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
 				C << msg
-*/
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -756,10 +757,15 @@ var/global/floorIsLava = 0
 
 /datum/admins/proc/delay()
 	set category = "Server"
-	set desc="Delay the game start"
+	set desc="Delay the game start/end"
 	set name="Delay"
+
+	if(!check_rights(R_ADMIN))	return
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
+		ticker.delay_end = !ticker.delay_end
+		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		return //alert("Round end delayed", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))
 		world << "<b>The game start has been delayed.</b>"
