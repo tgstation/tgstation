@@ -25,3 +25,8 @@
 	else
 		health = 100 - getBruteLoss() - getFireLoss()
 
+/mob/living/silicon/pai/proc/follow_pai()
+	while(card)
+		loc = get_turf(card)
+		sleep(5)
+	del(src) //if there's no pAI we shouldn't exist

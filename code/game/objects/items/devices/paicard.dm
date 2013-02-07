@@ -61,43 +61,45 @@
 	if(!usr || usr.stat)
 		return
 
-	if(href_list["setdna"])
-		if(pai.master_dna)
-			return
-		var/mob/M = usr
-		if(!istype(M, /mob/living/carbon))
-			usr << "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>"
-		else
-			var/datum/dna/dna = usr.dna
-			pai.master = M.real_name
-			pai.master_dna = dna.unique_enzymes
-			pai << "<font color = red><h3>You have been bound to a new master.</h3></font>"
 	if(href_list["request"])
 		src.looking_for_personality = 1
 		paiController.findPAI(src, usr)
-	if(href_list["wipe"])
-		var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
-		if(confirm == "Yes")
-			for(var/mob/M in src)
-				M << "<font color = #ff0000><h2>You feel yourself slipping away from reality.</h2></font>"
-				M << "<font color = #ff4d4d><h3>Byte by byte you lose your sense of self.</h3></font>"
-				M << "<font color = #ff8787><h4>Your mental faculties leave you.</h4></font>"
-				M << "<font color = #ffc4c4><h5>oblivion... </h5></font>"
-				M.death(0)
-			removePersonality()
-	if(href_list["wires"])
-		var/t1 = text2num(href_list["wires"])
-		if (radio.wires & t1)
-			radio.wires &= ~t1
-		else
-			radio.wires |= t1
-	if(href_list["setlaws"])
-		var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message),1,MAX_MESSAGE_LEN)
-		if(newlaws)
-			pai.pai_laws = newlaws
-			pai << "Your supplemental directives have been updated. Your new directives are:"
-			pai << "Prime Directive : <br>[pai.pai_law0]"
-			pai << "Supplemental Directives: <br>[pai.pai_laws]"
+
+	if(pai)
+		if(href_list["setdna"])
+			if(pai.master_dna)
+				return
+			var/mob/M = usr
+			if(!istype(M, /mob/living/carbon))
+				usr << "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>"
+			else
+				var/datum/dna/dna = usr.dna
+				pai.master = M.real_name
+				pai.master_dna = dna.unique_enzymes
+				pai << "<font color = red><h3>You have been bound to a new master.</h3></font>"
+		if(href_list["wipe"])
+			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
+			if(confirm == "Yes")
+				if(pai)
+					pai << "<font color = #ff0000><h2>You feel yourself slipping away from reality.</h2></font>"
+					pai << "<font color = #ff4d4d><h3>Byte by byte you lose your sense of self.</h3></font>"
+					pai << "<font color = #ff8787><h4>Your mental faculties leave you.</h4></font>"
+					pai << "<font color = #ffc4c4><h5>oblivion... </h5></font>"
+					pai.death(0)
+				removePersonality()
+		if(href_list["wires"])
+			var/t1 = text2num(href_list["wires"])
+			if (radio.wires & t1)
+				radio.wires &= ~t1
+			else
+				radio.wires |= t1
+		if(href_list["setlaws"])
+			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message),1,MAX_MESSAGE_LEN)
+			if(newlaws && pai)
+				pai.pai_laws = newlaws
+				pai << "Your supplemental directives have been updated. Your new directives are:"
+				pai << "Prime Directive : <br>[pai.pai_law0]"
+				pai << "Supplemental Directives: <br>[pai.pai_laws]"
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1
@@ -133,7 +135,7 @@
 		M.show_message("\blue [src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.", 2)
 
 /obj/item/device/paicard/emp_act(severity)
-	for(var/mob/M in src)
-		M.emp_act(severity)
+	if(pai)
+		pai.emp_act(severity)
 	..()
 
