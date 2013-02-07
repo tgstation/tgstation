@@ -162,5 +162,5 @@
 	else
 		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
 
-/obj/item/device/detective_scanner/proc/get_timestamp()
+/proc/get_timestamp()
 	return time2text(world.time + 432000, "hh:mm:ss")

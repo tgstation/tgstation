@@ -8,6 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 
+	var/datum/wires/camera/wires = null // Wires datum
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -17,13 +18,6 @@
 	var/invuln = null
 	var/bugged = 0
 	var/obj/item/weapon/camera_assembly/assembly = null
-
-	// WIRES
-	var/wires = 63 // 0b111111
-	var/list/IndexToFlag = list()
-	var/list/IndexToWireColor = list()
-	var/list/WireColorToIndex = list()
-	var/list/WireColorToFlag = list()
 
 	//OTHER
 
@@ -35,9 +29,13 @@
 	var/busy = 0
 
 /obj/machinery/camera/New()
-	WireColorToFlag = randomCameraWires()
+	wires = new(src)
+
 	assembly = new(src)
 	assembly.state = 4
+	assembly.anchored = 1
+	assembly.update_icon()
+
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
@@ -114,9 +112,9 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
-		interact(user)
+		wires.Interact(user)
 
-	else if(iswelder(W) && canDeconstruct())
+	else if(iswelder(W) && wires.CanDeconstruct())
 		if(weld(W, user))
 			if(assembly)
 				assembly.loc = src.loc
@@ -179,15 +177,23 @@
 	if(choice==1)
 		status = !( src.status )
 		if (!(src.status))
-			visible_message("\red [user] has deactivated [src]!")
+			if(user)
+				visible_message("\red [user] has deactivated [src]!")
+				add_hiddenprint(user)
+			else
+				visible_message("\red \The [src] deactivates!")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
-			add_hiddenprint(user)
+
 		else
-			visible_message("\red [user] has reactivated [src]!")
+			if(user)
+				visible_message("\red [user] has reactivated [src]!")
+				add_hiddenprint(user)
+			else
+				visible_message("\red \the [src] reactivates!")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
-			add_hiddenprint(user)
+
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?

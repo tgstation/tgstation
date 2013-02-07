@@ -28,6 +28,7 @@
 	var/obj/machinery/camera/camera = null
 
 	var/obj/item/device/mmi/mmi = null
+	var/datum/wires/robot/wires = null
 
 	var/opened = 0
 	var/emagged = 0
@@ -44,7 +45,7 @@
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
-	var/borgwires = 31 // 0b11111
+
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
@@ -60,6 +61,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	wires = new(src)
 
 	ident = rand(1, 999)
 	updatename("Default")
@@ -95,7 +97,7 @@
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.network = list("SS13")
-		if(isWireCut(5)) // 5 = BORG CAMERA
+		if(wires.IsCameraCut()) // 5 = BORG CAMERA
 			camera.status = 0
 	..()
 
@@ -445,9 +447,9 @@
 //			chargecount = 0
 		updateicon()
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
+	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
 		if (wiresexposed)
-			interact(user)
+			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."
 
@@ -983,3 +985,9 @@
 		W.attack_self(src)
 
 	return
+
+/mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
+	if(wires.LockedCut())
+		state = 1
+	lockcharge = state
+	update_canmove()
