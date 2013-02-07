@@ -170,7 +170,7 @@
 
 
 /proc/powernet_nextlink(var/obj/O, var/datum/powernet/PN)
-	var/list/P
+	var/list/P = list()
 
 	while(1)
 		if( istype(O,/obj/structure/cable) )
