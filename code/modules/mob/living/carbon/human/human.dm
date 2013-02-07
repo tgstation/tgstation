@@ -899,7 +899,12 @@
 					H.brainmob.mind.transfer_to(src)
 					del(H)
 
+	var/datum/organ/external/chest/E = get_organ("chest")
+	if(E.ruptured_lungs == 1)
+		E.ruptured_lungs = 0
 
+	for (var/datum/disease/virus in viruses)
+		virus.cure()
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
