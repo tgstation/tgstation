@@ -339,7 +339,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	selection_color = "#dddddd"
 	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
-	alt_titles = list("Attourney", "IA Consultant")
+	alt_titles = list("Attorney", "IA Consultant")
 
 
 	equip(var/mob/living/carbon/human/H)
