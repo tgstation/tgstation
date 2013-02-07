@@ -297,6 +297,13 @@ datum
 				..()
 				return
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			description = "A simple, yet effective painkiller."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+
 		toxin
 			name = "Toxin"
 			id = "toxin"
