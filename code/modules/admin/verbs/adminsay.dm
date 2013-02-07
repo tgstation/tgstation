@@ -43,8 +43,8 @@
 	for (var/mob/M in world)
 		if (M.client && M.client.holder)
 			if (src.holder.rank == "Admin Observer")
-				M << "<span class='adminobserver'><span class='prefix'>MOD:</span> <EM>[key_name(usr, M)]:</EM> <span class='message'>[msg]</span></span>"
+				M << "<span class='adminobserver'><span class='prefix'>MOD:</span> <EM>[key_name(usr, M,1)]:</EM> <span class='message'>[msg]</span></span>"
 			else if (src.holder.rank == "Moderator")
-				M << "<span class='mod'><span class='prefix'>MOD:</span> <EM>[key_name(usr, M)]</EM> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
+				M << "<span class='mod'><span class='prefix'>MOD:</span> <EM>[key_name(usr, M,1)]</EM> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 			else
-				M << "<span class='adminmod'><span class='prefix'>MOD:</span> <EM>[key_name(usr, M)]</EM> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
+				M << "<span class='adminmod'><span class='prefix'>MOD:</span> <EM>[key_name(usr, M,1)]</EM> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
