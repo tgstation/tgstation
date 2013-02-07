@@ -402,7 +402,6 @@ client
 		return html
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	testing("[href]")
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return
