@@ -69,6 +69,8 @@
 /obj/machinery/iv_drip/process()
 	set background = 1
 
+	..()
+
 	if(src.attached)
 		if(!(get_dist(src, src.attached) <= 1))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
@@ -99,12 +101,7 @@
 			var/mob/living/carbon/human/T = attached
 
 			if(!istype(T)) return
-			var/datum/reagent/B
-			for(var/datum/reagent/blood/Blood in beaker.reagents.reagent_list)
-				if(Blood.data && Blood.data["blood_type"]==T.dna.b_type)
-					B = Blood
-					break
-			if(!B) B = new /datum/reagent/blood
+			var/datum/reagent/B = new /datum/reagent/blood
 			if(!T.dna)
 				return
 			if(NOCLONE in T.mutations)
@@ -115,7 +112,7 @@
 			if(T.vessel.get_reagent_amount("blood") < amount)
 				return
 			B.holder = beaker
-			B.volume += amount
+			B.volume = amount
 			//set reagent data
 			B.data["donor"] = T
 
@@ -124,10 +121,7 @@
 
 			B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 			if(T.resistances && T.resistances.len)
-				if(B.data["resistances"])
-					B.data["resistances"] |= T.resistances.Copy()
-				else
-					B.data["resistances"] = T.resistances.Copy()
+				B.data["resistances"] = T.resistances.Copy()
 
 			B.data["blood_type"] = copytext(T.dna.b_type,1,0)
 
@@ -136,15 +130,14 @@
 				temp_chem += R.name
 				temp_chem[R.name] = R.volume
 			B.data["trace_chem"] = list2params(temp_chem)
-			B.data["antibodies"] |= T.antibodies
+			B.data["antibodies"] = T.antibodies
 
 			T.vessel.remove_reagent("blood",amount) // Removes blood if human
 
-			beaker.reagents.reagent_list |= B
+			beaker.reagents.reagent_list += B
 			beaker.reagents.update_total()
 			beaker.on_reagent_change()
 			beaker.reagents.handle_reactions()
-			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
 	if(src.beaker)
@@ -174,11 +167,6 @@
 	set src in view()
 	..()
 	if (!(usr in view(2)) && usr!=src.loc) return
-
-	if(mode == "take")
-		usr << "The IV drip is taking blood."
-	else if(mode == "give")
-		usr << "The IV drip is injecting."
 
 	if(beaker)
 		usr << "\blue Attached is \a [beaker] with:"
