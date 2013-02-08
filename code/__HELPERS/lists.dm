@@ -149,8 +149,9 @@ proc/listclearnulls(list/list)
 //Reverses the order of items in the list
 /proc/reverselist(list/L)
 	var/list/output = list()
-	for(var/i = L.len; i >= 1; i--)
-		output += L[i]
+	if(L)
+		for(var/i = L.len; i >= 1; i--)
+			output += L[i]
 	return output
 
 //Randomize: Return the list in a random order

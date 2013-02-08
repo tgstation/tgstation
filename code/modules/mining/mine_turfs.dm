@@ -24,11 +24,10 @@
 	var/excavation_level = 0
 	var/list/finds = list()
 	var/list/excavation_minerals = list()
-	var/list/excavation_minerals_ascending = list()
-	var/list/exca_first = list("A","B","C","D","E")
-	var/list/exca_second = list()
 	var/next_rock = 0
-	var/overlay_num = 0
+	var/archaeo_overlay = ""
+	var/excav_overlay = ""
+	var/obj/item/weapon/last_find
 
 /turf/simulated/mineral/Del()
 	return
@@ -76,17 +75,16 @@
 					//keep any digsite data as constant as possible
 					if(T.finds.len && !M.finds.len)
 						M.finds = T.finds
-						M.overlays += "overlay_archaeo1"
+						if(T.archaeo_overlay)
+							M.overlays += archaeo_overlay
+
 
 	//---- Xenoarchaeology BEGIN
 
 	if(mineralAmt > 0 && !excavation_minerals.len)
 		for(var/i=0, i<mineralAmt, i++)
 			excavation_minerals.Add(rand(5,95))
-		excavation_minerals = insertion_sort_numeric_list_ascending(excavation_minerals)
-		excavation_minerals_ascending = reverselist(excavation_minerals)
-
-		exca_second = reverselist(exca_first)
+		excavation_minerals = insertion_sort_numeric_list_descending(excavation_minerals)
 
 	if(!finds.len && prob(XENOARCH_SPAWN_CHANCE))
 		//create a new archaeological deposit
@@ -107,7 +105,6 @@
 			turfs_to_process.Remove(M)
 			processed_turfs.Add(M)
 			if(!M.finds.len)
-				//M.desc = "There is some strange strata evident throughout it."
 				if(prob(50))
 					M.finds.Add(new/datum/find(digsite, rand(5,95)))
 				else if(prob(75))
@@ -118,9 +115,11 @@
 					M.finds.Add(new/datum/find(digsite, rand(35,75)))
 					M.finds.Add(new/datum/find(digsite, rand(75,95)))
 
-				//give it a test overlay for debugging
-				//M.overlays += image('icons/obj/xenoarchaeology.dmi', "sdsdsd")
-				M.overlays += "overlay_archaeo1"
+				//sometimes a find will be close enough to the surface to show
+				var/datum/find/F = M.finds[1]
+				if(F.excavation_required <= F.view_range)
+					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+					M.overlays += archaeo_overlay
 
 	if(!src.geological_data)
 		src.geological_data = new/datum/geosample(src)
@@ -287,6 +286,18 @@ commented out in r5061, I left it because of the shroom thingies
 		C.sample_item(src, user)
 		return
 
+	if (istype(W, /obj/item/device/depth_scanner))
+		var/obj/item/device/depth_scanner/C = W
+		C.scan_turf(user, src)
+		return
+
+	if (istype(W, /obj/item/device/measuring_tape))
+		var/obj/item/device/measuring_tape/P = W
+		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
+		if(do_after(user,40))
+			user << "\blue \icon[P] [src] has been excavated to a depth of [src.excavation_level]cm."
+		return
+
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -306,39 +317,85 @@ commented out in r5061, I left it because of the shroom thingies
 
 		playsound(user, P.drill_sound, 20, 1)
 
-		//Chance to destroy any archaeological finds if we carelessly pick away at the rock
-		var/fail_message = ""
+		//handle any archaeological finds we might uncover
+		var/fail_message
 		if(src.finds.len)
 			var/datum/find/F = src.finds[1]
-			if(src.excavation_level + P.excavation_amount >= F.excavation_required + F.destruct_range)
-				fail_message = ", <b>[pick("there is a crunching noise","[W] hits something","part of the rock face crumbles away","something breaks under [W]")]</b>"
-				if(prob(50))
-					src.finds.Remove(F)
-		user << "\red You start [P.drill_verb][fail_message]."
+			if(src.excavation_level + P.excavation_amount > F.excavation_required)
+				//Chance to destroy / extract any finds here
+				fail_message = ", <b>[pick("there is a crunching noise","[W] collides with some different rock","part of the rock face crumbles away","something breaks under [W]")]</b>"
+
+		user << "\red You start [P.drill_verb][fail_message ? fail_message : ""]."
+
+		if(fail_message)
+			if(prob(50))
+				if(prob(25))
+					excavate_find(5, src.finds[1])
+				else if(prob(50))
+					src.finds.Remove(src.finds[1])
 
 		if(do_after(user,P.digspeed))
 			user << "\blue You finish [P.drill_verb] the rock."
+
+			if(finds.len)
+				var/datum/find/F = src.finds[1]
+				if(round(src.excavation_level + P.excavation_amount) == F.excavation_required)
+					//Chance to extract any items here perfectly, otherwise just pull them out along with the rock surrounding them
+					if(src.excavation_level + P.excavation_amount > F.excavation_required)
+						//if you can get slightly over, perfect extraction
+						excavate_find(100, F)
+					else
+						excavate_find(80, F)
+
+				else if(src.excavation_level + P.excavation_amount > F.excavation_required - F.clearance_range)
+					//just pull the surrounding rock out
+					excavate_find(5, F)
+
 			if(src.excavation_level + P.excavation_amount >= 100)
 				gets_drilled()
+				return
 			else
 				src.excavation_level += P.excavation_amount
 
-				//handle any archaeological finds we might uncover
+				//archaeo overlays
+				if(!archaeo_overlay && finds.len)
+					var/datum/find/F = src.finds[1]
+					if(F.excavation_required <= src.excavation_level + F.view_range)
+						archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+						overlays += archaeo_overlay
 
-				//extract pesky minerals while we're excavating
-				while(excavation_minerals.len && src.excavation_level > excavation_minerals[excavation_minerals.len])
-					drop_mineral()
-					//have a 50% chance to extract bonus minerals this way
-					//if(prob(50))
-					pop(excavation_minerals)
-					mineralAmt--
+			//there's got to be a better way to do this
+			var/update_excav_overlay = 0
+			if(src.excavation_level >= 75)
+				if(src.excavation_level - P.excavation_amount < 75)
+					update_excav_overlay = 1
+			else if(src.excavation_level >= 50)
+				if(src.excavation_level - P.excavation_amount < 50)
+					update_excav_overlay = 1
+			else if(src.excavation_level >= 25)
+				if(src.excavation_level - P.excavation_amount < 25)
+					update_excav_overlay = 1
 
-				//drop some rocks
-				next_rock += P.excavation_amount * 10
-				while(next_rock > 100)
-					next_rock -= 100
-					var/obj/item/weapon/ore/O = new(src)
-					O.geological_data = src.geological_data
+			//update overlays displaying excavation level
+			if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
+				var/excav_quadrant = round(excavation_level / 25) + 1
+				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
+				overlays += excav_overlay
+
+			//extract pesky minerals while we're excavating
+			while(excavation_minerals.len && src.excavation_level > excavation_minerals[excavation_minerals.len])
+				drop_mineral()
+				//have a 50% chance to extract bonus minerals this way
+				//if(prob(50))
+				pop(excavation_minerals)
+				mineralAmt--
+
+			//drop some rocks
+			next_rock += P.excavation_amount * 10
+			while(next_rock > 100)
+				next_rock -= 100
+				var/obj/item/weapon/ore/O = new(src)
+				O.geological_data = src.geological_data
 
 	else
 		return attack_hand(user)
@@ -398,6 +455,31 @@ commented out in r5061, I left it because of the shroom thingies
 	/*if(destroyed)  //Display message about being a terrible miner
 		usr << "\red You destroy some of the rocks!"*/
 	return
+
+/turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
+	//with skill and luck, players can cleanly extract finds
+	//otherwise, they come out inside a chunk of rock
+	var/obj/item/weapon/X
+	if(prob_clean)
+		X = new/obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
+	else
+		X = new/obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
+
+	//some find types delete the /obj/item/weapon/archaeological_find and replace it with something else, this handles when that happens
+	//yuck
+	if(!X)
+		X = last_find
+	if(!X)
+		X = "something"
+
+	//many finds are ancient and thus very delicate - luckily there is a specialised energy suspension field which protects them when they're being extracted
+	if(prob(F.prob_delicate))
+		var/obj/effect/suspension_field/S = locate() in src
+		if(!S || S.field_type != get_responsive_reagent(F.find_type))
+			src.visible_message("\red<b>[pick("[X] crumbles away into dust","[X] breaks apart","[X] collapses onto itself")].</b>")
+			del(X)
+
+	src.finds.Remove(F)
 
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
