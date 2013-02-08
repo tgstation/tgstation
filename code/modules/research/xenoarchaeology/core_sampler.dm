@@ -27,6 +27,7 @@
 	var/obj/item/weapon/evidencebag/filled_bag
 
 /obj/item/device/core_sampler/examine()
+	set src in orange(1)
 	if (!( usr ))
 		return
 	if(get_dist(src, usr) < 2)
