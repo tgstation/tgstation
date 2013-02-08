@@ -22,15 +22,24 @@ obj/machinery/anomaly/ion_mobility/ScanResults()
 
 	if(num_reagents == 2 && scanned_sample && carrier)
 		//all necessary components are present
-		results = "Kinetic analysis on sample's ionic residue in carrier ([carrier]) indicates the following composition:<br><br>"
+		results = "Kinetic analysis on sample's ionic residue in carrier ([carrier]) indicates the dissonance spread:<br><br>"
 		var/found = 0
+		if(scanned_sample.find_presence.Find(carrier))
+			var/dis_ratio = scanned_sample.find_presence[carrier]
+			var/desc_index = responsive_carriers.Find(carrier)
+			results += " - [finds_as_strings[desc_index]]: [dis_ratio]<br>"
+			found++
+		/*
 		for(var/index=1,index <= scanned_sample.find_presence.len, index++)
 			var/find = scanned_sample.find_presence[index]
 			//world << "index: [index], find: [find], response: [responsive_carriers[index]], carrier: [carrier]"
 			if(find && responsive_carriers[index] == carrier)
 				results += " - [finds_as_strings[index]] [find * 100]%<br>"
 				found++
+				*/
 		if(!found)
-			results = "Kinetic analysis on sample's ionic residue in carrier ([carrier]) to determine composition were inconclusive."
+			results = "Kinetic analysis on sample's ionic residue in carrier ([carrier]) to determine composition were inconclusive.<br>"
+		if(carrier == scanned_sample.source_mineral)
+			results += "Warning, analysis may be contaminated by high quantities of molecular carrier present throughout sample."
 
 	return results

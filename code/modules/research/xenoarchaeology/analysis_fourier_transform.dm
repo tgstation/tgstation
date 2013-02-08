@@ -33,9 +33,9 @@ obj/machinery/anomaly/fourier_transform/ScanResults()
 				distance += distance * rand(-100 * offset, 100 * offset) / 100
 				accuracy = specifity
 			results = "Fourier transform analysis on anomalous energy absorption through carrier ([carrier]) indicates source located inside emission radius ([100 * accuracy]% accuracy): [distance]."
-			if(carrier == scanned_sample.source_mineral)
-				results += "<br>Warning, analysis may be contaminated by high quantities of molecular carrier present throughout sample."
 		else
-			results = "Standard energy dispersion detected throughout sample."
+			results = "Energy dispersion detected throughout sample consistent with background readings.<br>"
+		if(carrier == scanned_sample.source_mineral)
+			results += "Warning, analysis may be contaminated by high quantities of molecular carrier present throughout sample."
 
 	return results

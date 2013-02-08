@@ -6,66 +6,58 @@
 	icon_state = "flood00"
 	density = 1
 	var/on = 0
-	var/obj/item/weapon/cell/cell = null
-	var/use = 1
+	var/obj/item/weapon/cell/high/cell = null
+	var/use = 5
 	var/unlocked = 0
 	var/open = 0
+	var/brightness_on = 999		//can't remember what the maxed out value is
+
+/obj/machinery/floodlight/New()
+	src.cell = new(src)
+	..()
 
 /obj/machinery/floodlight/proc/updateicon()
 	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"
 
 /obj/machinery/floodlight/process()
-	if (!on)
-		if (luminosity)
+	if(on)
+		cell.charge -= use
+		if(cell.charge <= 0)
+			on = 0
 			updateicon()
-			//sd_SetLuminosity(0)
-		return
-
-	if(!luminosity && cell && cell.charge > 0)
-		//sd_SetLuminosity(10)
-		updateicon()
-
-	if(!cell && luminosity)
-		on = 0
-		updateicon()
-		//sd_SetLuminosity(0)
-		return
-
-	cell.charge -= use
-
-	if(cell.charge <= 0 && luminosity)
-		on = 0
-		updateicon()
-		//sd_SetLuminosity(0)
-		return
+			SetLuminosity(0)
+			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
+			return
 
 /obj/machinery/floodlight/attack_hand(mob/user as mob)
 	if(open && cell)
-		cell.loc = usr
-		cell.layer = 20
-		if (user.hand )
-			user.l_hand = cell
+		if(ishuman(user))
+			if(!user.get_active_hand())
+				user.put_in_hands(cell)
+				cell.loc = user.loc
 		else
-			user.r_hand = cell
+			cell.loc = loc
 
 		cell.add_fingerprint(user)
-		updateicon()
 		cell.updateicon()
 
 		src.cell = null
 		user << "You remove the power cell"
+		updateicon()
 		return
 
 	if(on)
 		on = 0
-		user << "You turn off the light"
+		user << "\blue You turn off the light"
+		SetLuminosity(0)
 	else
 		if(!cell)
 			return
 		if(cell.charge <= 0)
 			return
 		on = 1
-		user << "You turn on the light"
+		user << "\blue You turn on the light"
+		SetLuminosity(brightness_on)
 
 	updateicon()
 
@@ -101,10 +93,3 @@
 				cell = W
 				user << "You insert the power cell."
 	updateicon()
-
-/obj/machinery/floodlight/New()
-	src.cell = new/obj/item/weapon/cell(src)
-	cell.maxcharge = 1000
-	cell.charge = 1000
-	..()
-
