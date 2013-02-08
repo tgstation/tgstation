@@ -9,12 +9,14 @@
 	desc = "It's a fossil."
 
 /obj/item/weapon/fossil/base/New()
-	spawn(0)
-		var/list/l = list("/obj/item/weapon/fossil/bone"=9,"/obj/item/weapon/fossil/skull"=3,
-		"/obj/item/weapon/fossil/skull/horned"=2)
-		var/t = pickweight(l)
-		new t(src.loc)
-		del src
+	var/list/l = list("/obj/item/weapon/fossil/bone"=9,"/obj/item/weapon/fossil/skull"=3,
+	"/obj/item/weapon/fossil/skull/horned"=2)
+	var/t = pickweight(l)
+	var/obj/item/weapon/W = new t(src.loc)
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/simulated/mineral))
+		T:last_find = W
+	del src
 
 /obj/item/weapon/fossil/bone
 	name = "Fossilised bone"

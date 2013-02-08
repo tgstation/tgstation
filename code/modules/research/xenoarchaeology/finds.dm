@@ -31,8 +31,9 @@
 #define ARCHAEO_FOSSIL 29
 #define ARCHAEO_SHELL 30
 #define ARCHAEO_PLANT 31
-//alien remains
-//plant remains
+#define ARCHAEO_REMAINS_HUMANOID 32
+#define ARCHAEO_REMAINS_ROBOT 33
+#define ARCHAEO_REMAINS_XENO 34
 //eggs
 //droppings
 //footprints
@@ -48,9 +49,77 @@
 #define DIGSITE_TEMPLE 5
 #define DIGSITE_WAR 6
 
+/proc/get_responsive_reagent(var/find_type)
+	switch(find_type)
+		if(ARCHAEO_BOWL)
+			return "aluminium"
+		if(ARCHAEO_URN)
+			return "aluminium"
+		if(ARCHAEO_CUTLERY)
+			return "aluminium"
+		if(ARCHAEO_STATUETTE)
+			return "aluminium"
+		if(ARCHAEO_INSTRUMENT)
+			return "aluminium"
+		if(ARCHAEO_COIN)
+			return "silicon"
+		if(ARCHAEO_HANDCUFFS)
+			return "aluminium"
+		if(ARCHAEO_BEARTRAP)
+			return "aluminium"
+		if(ARCHAEO_LIGHTER)
+			return "aluminium"
+		if(ARCHAEO_BOX)
+			return "aluminium"
+		if(ARCHAEO_GASTANK)
+			return "aluminium"
+		if(ARCHAEO_TOOL)
+			return "silicon"
+		if(ARCHAEO_METAL)
+			return "silicon"
+		if(ARCHAEO_PEN)
+			return "aluminium"
+		if(ARCHAEO_CRYSTAL)
+			return "helium"
+		if(ARCHAEO_CULTBLADE)
+			return "neon"
+		if(ARCHAEO_TELEBEACON)
+			return "neon"
+		if(ARCHAEO_CLAYMORE)
+			return "silicon"
+		if(ARCHAEO_CULTROBES)
+			return "neon"
+		if(ARCHAEO_SOULSTONE)
+			return "helium"
+		if(ARCHAEO_SHARD)
+			return "helium"
+		if(ARCHAEO_RODS)
+			return "silicon"
+		if(ARCHAEO_STOCKPARTS)
+			return "neon"
+		if(ARCHAEO_KATANA)
+			return "silicon"
+		if(ARCHAEO_LASER)
+			return "silicon"
+		if(ARCHAEO_GUN)
+			return "silicon"
+		if(ARCHAEO_UNKNOWN)
+			return "beryllium"
+		if(ARCHAEO_FOSSIL)
+			return "carbon"
+		if(ARCHAEO_PLANT)
+			return "carbon"
+		if(ARCHAEO_REMAINS_HUMANOID)
+			return "carbon"
+		if(ARCHAEO_REMAINS_ROBOT)
+			return "carbon"
+		if(ARCHAEO_REMAINS_XENO)
+			return "carbon"
+	return "chlorine"
+
 //see /turf/simulated/mineral/New() in code/modules/mining/mine_turfs.dm
 /proc/get_random_digsite_type()
-	return pick(100;DIGSITE_GARDEN,90;DIGSITE_ANIMAL,80;DIGSITE_HOUSE,70;DIGSITE_TECHNICAL,60;DIGSITE_TEMPLE,50;DIGSITE_WAR)
+	return pick(100;DIGSITE_GARDEN,95;DIGSITE_ANIMAL,90;DIGSITE_HOUSE,85;DIGSITE_TECHNICAL,80;DIGSITE_TEMPLE,75;DIGSITE_WAR)
 
 /proc/get_random_find_type(var/digsite)
 
@@ -61,18 +130,19 @@
 			100;ARCHAEO_PLANT,\
 			25;ARCHAEO_SHELL,\
 			25;ARCHAEO_FOSSIL,\
+			10;ARCHAEO_REMAINS_XENO,\
 			5;ARCHAEO_BEARTRAP\
 			)
 		if(DIGSITE_ANIMAL)
 			find_type = pick(\
 			100;ARCHAEO_FOSSIL,\
-			25;ARCHAEO_SHELL,\
-			25;ARCHAEO_PLANT,\
+			50;ARCHAEO_SHELL,\
+			50;ARCHAEO_PLANT,\
+			50;ARCHAEO_REMAINS_XENO,\
 			25;ARCHAEO_BEARTRAP\
 			)
 		if(DIGSITE_HOUSE)
 			find_type = pick(\
-			100;ARCHAEO_UNKNOWN,\
 			100;ARCHAEO_BOWL,\
 			100;ARCHAEO_URN,\
 			100;ARCHAEO_CUTLERY,\
@@ -82,33 +152,42 @@
 			100;ARCHAEO_LIGHTER,\
 			100;ARCHAEO_BOX,\
 			75;ARCHAEO_COIN,\
+			75;ARCHAEO_UNKNOWN,\
+			75;ARCHAEO_REMAINS_HUMANOID,\
+			75;ARCHAEO_REMAINS_ROBOT,\
+			75;ARCHAEO_REMAINS_XENO,\
 			50;ARCHAEO_SHARD,\
 			50;ARCHAEO_RODS,\
 			25;ARCHAEO_METAL\
 			)
 		if(DIGSITE_TECHNICAL)
 			find_type = pick(\
-			100;ARCHAEO_UNKNOWN,\
 			100;ARCHAEO_METAL,\
 			100;ARCHAEO_GASTANK,\
 			100;ARCHAEO_TELEBEACON,\
 			100;ARCHAEO_TOOL,\
 			100;ARCHAEO_STOCKPARTS,\
+			100;ARCHAEO_REMAINS_ROBOT,\
 			75;ARCHAEO_SHARD,\
 			75;ARCHAEO_RODS,\
+			75;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_HANDCUFFS,\
-			50;ARCHAEO_BEARTRAP\
+			50;ARCHAEO_BEARTRAP,\
+			25;ARCHAEO_REMAINS_HUMANOID,\
+			25;ARCHAEO_REMAINS_XENO\
 			)
 		if(DIGSITE_TEMPLE)
 			find_type = pick(\
 			200;ARCHAEO_CULTROBES,\
-			100;ARCHAEO_UNKNOWN,\
 			100;ARCHAEO_URN,\
 			100;ARCHAEO_BOWL,\
 			100;ARCHAEO_KNIFE,\
 			100;ARCHAEO_CRYSTAL,\
 			75;ARCHAEO_CULTBLADE,\
+			75;ARCHAEO_REMAINS_HUMANOID,\
+			75;ARCHAEO_REMAINS_XENO,\
 			50;ARCHAEO_SOULSTONE,\
+			50;ARCHAEO_UNKNOWN,\
 			25;ARCHAEO_HANDCUFFS,\
 			25;ARCHAEO_BEARTRAP,\
 			10;ARCHAEO_KATANA,\
@@ -119,14 +198,17 @@
 			)
 		if(DIGSITE_WAR)
 			find_type = pick(\
-			100;ARCHAEO_UNKNOWN,\
 			100;ARCHAEO_GUN,\
 			100;ARCHAEO_KNIFE,\
 			75;ARCHAEO_LASER,\
 			75;ARCHAEO_KATANA,\
 			75;ARCHAEO_CLAYMORE,\
+			75;ARCHAEO_REMAINS_HUMANOID,\
+			75;ARCHAEO_REMAINS_XENO,\
+			50;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_CULTROBES,\
 			50;ARCHAEO_CULTBLADE,\
+			50;ARCHAEO_REMAINS_ROBOT,\
 			25;ARCHAEO_HANDCUFFS,\
 			25;ARCHAEO_BEARTRAP,\
 			25;ARCHAEO_TOOL\
@@ -137,16 +219,20 @@
 // Xenoarchaeological finds
 
 datum/find
-	var/find_type = 0
-	var/excavation_required = 0
-	var/view_range = 15			//how close excavation has to come to show an overlay on the turf
-	var/destruct_range = 2		//how much excavation has to overshoot by to destroy the item
-	var/clearance_range= 2		//how close excavation has to come to extract the whole ore instead of just the item inside
-								//if excavation hits var/excavation_required exactly, it's contained find is extracted cleanly without the ore
+	var/find_type = 0				//random according to the digsite type
+	var/excavation_required = 0		//random 5-95%
+	var/view_range = 20				//how close excavation has to come to show an overlay on the turf
+	var/clearance_range = 3			//how close excavation has to come to extract the item
+									//if excavation hits var/excavation_required exactly, it's contained find is extracted cleanly without the ore
+	var/prob_delicate = 75			//probability it requires an active suspension field to not insta-crumble
+	var/dissonance_spread = 1		//proportion of the tile that is affected by this find
+									//used in conjunction with analysis machines to determine correct suspension field type
 
 datum/find/New(var/digsite, var/exc_req)
 	excavation_required = exc_req
 	find_type = get_random_find_type(digsite)
+	clearance_range = rand(2,6)
+	dissonance_spread = rand(1500,2500) / 100
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Rock sliver
@@ -178,11 +264,13 @@ datum/find/New(var/digsite, var/exc_req)
 	var/method = 0// 0 = fire, 1 = brush, 2 = pick
 	origin_tech = "materials=5"
 
-/obj/item/weapon/ore/strangerock/New(var/item_type = 0)
-	..()
+/obj/item/weapon/ore/strangerock/New(loc, var/inside_item_type = 0)
+	..(loc)
 	method = rand(0,2)
-	if(item_type)
-		inside = new/obj/item/weapon/archaeological_find(src, item_type)
+	if(inside_item_type)
+		inside = new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		if(!inside)
+			inside = locate() in contents
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
 	if(severity && prob(30))
@@ -224,8 +312,7 @@ datum/find/New(var/digsite, var/exc_req)
 	icon_state = "ano01"
 	var/find_type = 0
 
-/obj/item/weapon/archaeological_find/New(var/new_item_type)
-
+/obj/item/weapon/archaeological_find/New(loc, var/new_item_type)
 	if(new_item_type)
 		find_type = new_item_type
 	else
@@ -373,8 +460,6 @@ datum/find/New(var/digsite, var/exc_req)
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
 			new_item:amount = rand(5,45)
-			del(src)
-			return	//nothing fancy here
 		if(15)
 			if(prob(75))
 				new_item = new /obj/item/weapon/pen(src.loc)
@@ -408,8 +493,6 @@ datum/find/New(var/digsite, var/exc_req)
 		if(19)
 			new_item = new /obj/item/weapon/claymore(src.loc)
 			name = new_item.name
-			desc = new_item.desc
-			apply_material_decorations = 0
 		if(20)
 			//arcane clothing
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
@@ -419,21 +502,18 @@ datum/find/New(var/digsite, var/exc_req)
 
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
-			del(src)
-			return
 		if(21)
 			//soulstone
 			new_item = new /obj/item/device/soulstone(src.loc)
-			del(src)
-			return
+			apply_material_decorations = 0
 		if(22)
 			new_item = new /obj/item/weapon/shard(src.loc)
-			del(src)
-			return
+			apply_image_decorations = 0
+			apply_material_decorations = 0
 		if(23)
 			new_item = new /obj/item/stack/rods(src.loc)
-			del(src)
-			return
+			apply_image_decorations = 0
+			apply_material_decorations = 0
 		if(24)
 			var/list/possible_spawns = typesof(/obj/item/weapon/stock_parts)
 			possible_spawns -= /obj/item/weapon/stock_parts
@@ -441,13 +521,10 @@ datum/find/New(var/digsite, var/exc_req)
 
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
-			del(src)
-			return
+			apply_material_decorations = 0
 		if(25)
 			new_item = new /obj/item/weapon/katana(src.loc)
 			name = new_item.name
-			desc = new_item.desc
-			apply_material_decorations = 0
 		if(26)
 			//energy gun
 			var/spawn_type = pick(\
@@ -472,8 +549,7 @@ datum/find/New(var/digsite, var/exc_req)
 			else
 				new_gun.power_supply.charge = 0
 
-			name = new_item.name
-			desc = new_item.desc
+			name = "unknown weapon"
 		if(27)
 			//revolver
 			var/obj/item/weapon/gun/projectile/new_gun = new (src.loc)
@@ -505,27 +581,79 @@ datum/find/New(var/digsite, var/exc_req)
 						new_gun.loaded.Remove(I)
 						I.loc = null
 
-			name = new_item.name
-			desc = new_item.desc
+			name = "unknown weapon"
 		if(28)
 			//completely unknown alien device
-			if(prob(40))
+			if(prob(50))
 				apply_image_decorations = 0
 		if(29)
 			//fossil bone/skull
 			new/obj/item/weapon/fossil/base(src.loc)
+
+			//this item replaces itself on spawn with another, doing anything else will cause runtimes
 			del(src)
 			return
 		if(30)
 			//fossil shell
-			new/obj/item/weapon/fossil/base(src.loc)
-			del(src)
-			return
-		if(30)
+			new/obj/item/weapon/fossil/shell(src.loc)
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+			if(prob(10))
+				apply_image_decorations = 1
+		if(31)
 			//fossil plant
-			new/obj/item/weapon/fossil/base(src.loc)
-			del(src)
-			return
+			new/obj/item/weapon/fossil/plant(src.loc)
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(32)
+			//humanoid remains
+			name = "humanoid remains"
+			icon = 'blood.dmi'
+			icon_state = "remains"
+			apply_material_decorations = 0
+			apply_image_decorations = 0
+			additional_desc = pick("They appear almost human.",\
+			"They are contorted in a most gruesome way.",\
+			"They look almost peaceful.",\
+			"The bones are yellowing and old, but remarkably well preserved.",\
+			"The bones are scored by numerous burns and partially melted.",\
+			"The are battered and broken, in some cases less than splinters are left.",\
+			"The mouth is wide open in a death rictus, the victim would appear to have died screaming.")
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(33)
+			//robot remains
+			name = "robotic remains"
+			icon = 'blood.dmi'
+			icon_state = "remainsrobot"
+			apply_material_decorations = 0
+			apply_image_decorations = 0
+			additional_desc = pick("Almost mistakeable for the remains of a modern cyborg.",\
+			"They are barely recognisable as anything other than a pile of waste metals.",\
+			"It looks like the battered remains of an ancient robot chassis.",\
+			"The chassis is rusting and old, but remarkably well preserved.",\
+			"The chassis is scored by numerous burns and partially melted.",\
+			"The chassis is battered and broken, in some cases only chunks of metal are left.",\
+			"A pile of wires and crap metal that looks vaguely robotic.")
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(34)
+			//xenos remains
+			name = "alien remains"
+			icon = 'blood.dmi'
+			icon_state = "remainsxeno"
+			apply_material_decorations = 0
+			apply_image_decorations = 0
+			additional_desc = pick("It looks vaguely reptilian, but with more teeth.",\
+			"They are faintly unsettling.",\
+			"There is a faint aura of unease about them.",\
+			"The bones are yellowing and old, but remarkably well preserved.",\
+			"The bones are scored by numerous burns and partially melted.",\
+			"The are battered and broken, in some cases less than splinters are left.",\
+			"This creature would have been twisted and monstrous when it was alive.",\
+			"It doesn't look human.")
+			apply_image_decorations = 0
+			apply_material_decorations = 0
 
 	var/decorations = ""
 	if(apply_material_decorations)
@@ -577,7 +705,7 @@ datum/find/New(var/digsite, var/exc_req)
 
 	//icon and icon_state should have already been set
 	if(new_item)
-		new_item.name = src.name
+		new_item.name = "[pick("strange","ancient","alien","")] [new_item.name]"
 		new_item.desc = src.desc
 
 		if(talkative)
@@ -585,6 +713,9 @@ datum/find/New(var/digsite, var/exc_req)
 			if(prob(25))
 				new_item.speaking_to_players = 1
 				processing_objects.Add(src)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/mineral))
+			T:last_find = new_item
 		del(src)
 
 	else if(talkative)
