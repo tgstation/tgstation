@@ -52,8 +52,7 @@
 
 	process()
 		if(stat & NOPOWER)
-			if(overlays.len)
-				overlays.Cut()
+			remove_display()
 			return
 		update()
 
@@ -73,9 +72,7 @@
 
 		switch(mode)
 			if(0)				//blank
-				maptext = ""
-				if(overlays.len)
-					overlays.Cut()
+				remove_display()
 			if(1)				//emergency shuttle timer
 				if(emergency_shuttle.online)
 					var/line1
@@ -88,8 +85,7 @@
 						line2 = "Error!"
 					update_display(line1, line2)
 				else
-					if(overlays.len)
-						overlays.Cut()
+					remove_display()
 			if(2)				//custom messages
 				var/line1
 				var/line2
@@ -150,10 +146,8 @@
 			index2 = 0
 
 	proc/set_picture(state)
-		if(maptext)	maptext = ""
 		picture_state = state
-		if(overlays.len)
-			overlays.Cut()
+		remove_display()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 	proc/update_display(line1, line2)
@@ -172,6 +166,12 @@
 			var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 		return ""
+
+	proc/remove_display()
+		if(overlays)
+			overlays.Cut()
+		if(maptext)
+			maptext = ""
 
 
 	receive_signal(datum/signal/signal)

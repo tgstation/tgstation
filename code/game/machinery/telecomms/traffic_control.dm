@@ -168,6 +168,7 @@
 
 	if(href_list["print"])
 		usr << browse(print_logs(), "window=traffic_logs")
+		return
 
 	if(!auth && !issilicon(usr) && !emagged)
 		usr << "\red ACCESS DENIED."
