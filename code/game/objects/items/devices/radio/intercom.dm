@@ -31,7 +31,7 @@
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if (!on)
 		return -1
-	if (!(src.wires & WIRE_RECEIVE))
+	if (isWireCut(WIRE_RECEIVE))
 		return -1
 	if(!(0 in level))
 		var/turf/position = get_turf(src)

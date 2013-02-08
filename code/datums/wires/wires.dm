@@ -264,3 +264,12 @@ var/const/POWER = 8
 /datum/wires/proc/RandomCut()
 	var/r = rand(1, wires.len)
 	CutWireIndex(wires[r])
+
+/datum/wires/proc/CutAll()
+	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
+		CutWireIndex(i)
+
+/datum/wires/proc/IsAllCut()
+	if(wires_status == (1 << wire_count) - 1)
+		return 1
+	return 0
