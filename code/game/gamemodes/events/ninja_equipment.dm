@@ -342,9 +342,7 @@ ________________________________________________________________________________
 			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
 			dat += "<ul>"
 			var/count = 0
-			for (var/obj/item/device/pda/P in world)
-				if (!P.owner||P.toff)
-					continue
+			for (var/obj/item/device/pda/P in get_viewable_pdas())
 				dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 				dat += "</li>"
 				count++

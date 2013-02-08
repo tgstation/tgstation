@@ -375,8 +375,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/count = 0
 
 				if (!toff)
-					for (var/obj/item/device/pda/P in sortAtom(PDAs))
-						if (!P.owner||P.toff||P == src||P.hidden)	continue
+					for (var/obj/item/device/pda/P in sortAtom(get_viewable_pdas()))
+						if (P == src)	continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
@@ -1087,14 +1087,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "Turn on your receiver in order to send messages."
 		return
 
-	for (var/obj/item/device/pda/P in PDAs)
-		if (!P.owner)
-			continue
-		else if(P.hidden)
-			continue
-		else if (P == src)
-			continue
-		else if (P.toff)
+	for (var/obj/item/device/pda/P in get_viewable_pdas())
+		if (P == src)
 			continue
 		else if (P == src.aiPDA)
 			continue
@@ -1181,3 +1175,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
 		A.emp_act(severity)
+
+/proc/get_viewable_pdas()
+	. = list()
+	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
+	for(var/obj/item/device/pda/P in PDAs)
+		if(!P.owner || P.toff || P.hidden) continue
+		. += P
+	return .
