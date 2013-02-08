@@ -47,8 +47,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/radio/New()
-	..()
 	wires = new(src)
+	..()
 	if(radio_controller)
 		initialize()
 
