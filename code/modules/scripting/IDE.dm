@@ -9,9 +9,6 @@ client/verb/tcssave()
 			if(Machine.SelectedServer)
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
 				var/tcscode=winget(src, "tcscode", "text")
-				var/msg="[mob.name] is adding script to server [Server]: [tcscode]"
-				diary << msg
-				message_admins("[mob.name] has uploaded a NTLS script to [Machine.SelectedServer] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
 				Server.setcode( tcscode ) // this actually saves the code from input to the server
 				src << output(null, "tcserror") // clear the errors
 			else
@@ -36,7 +33,7 @@ client/verb/tcscompile()
 			if(Machine.SelectedServer)
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
 				Server.setcode( winget(src, "tcscode", "text") ) // save code first
-				var/list/compileerrors = Server.compile() // then compile the code!
+				var/list/compileerrors = Server.compile(mob) // then compile the code!
 
 				// Output all the compile-time errors
 				src << output(null, "tcserror")
@@ -87,7 +84,7 @@ client/verb/tcsrun()
 			if(Machine.SelectedServer)
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
 				Server.setcode( winget(src, "tcscode", "text") ) // save code first
-				var/list/compileerrors = Server.compile() // then compile the code!
+				var/list/compileerrors = Server.compile(mob) // then compile the code!
 
 				// Output all the compile-time errors
 				src << output(null, "tcserror")

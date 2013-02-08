@@ -726,7 +726,7 @@ window "Telecomms IDE"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Apply"
+		text = "Save"
 		image = ""
 		command = "tcssave"
 		is-flat = false
