@@ -195,6 +195,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 /datum/disease/proc/Copy(var/process = 0)
 	return new type(process, src)
 
+/datum/disease/proc/GetDiseaseID()
+	return src.type
 /*
 /datum/disease/Del()
 	active_diseases.Remove(src)

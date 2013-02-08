@@ -16,7 +16,7 @@ var/list/advance_cures = 	list(
 									"nutriment", "sugar", "orangejuice",
 									"spaceacillin", "kelotane", "ethanol",
 									"leporazine", "synaptizine", "lipozine",
-									"silver", "gold", "plasma"
+									"silver", "gold"
 								)
 
 /*
@@ -291,7 +291,7 @@ var/list/advance_cures = 	list(
 	return
 
 // Return a unique ID of the disease.
-/datum/disease/advance/proc/GetDiseaseID()
+/datum/disease/advance/GetDiseaseID()
 
 	var/list/L = list()
 	for(var/datum/symptom/S in symptoms)
