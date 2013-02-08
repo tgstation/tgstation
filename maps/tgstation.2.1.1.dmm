@@ -3325,7 +3325,7 @@
 "blW" = (/obj/machinery/door/poddoor{density = 0; icon_state = "pdoor0"; id = "Biohazard"; name = "Biohazard Shutter"; opacity = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/firedoor/border_only{dir = 1; name = "hazard door north"},/turf/simulated/floor{icon_state = "bot"},/area/medical/research{name = "Research Division"})
 "blX" = (/turf/simulated/wall,/area/toxins/lab)
 "blY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/toxins/lab)
-"blZ" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/machinery/door/firedoor/border_only{dir = 1; name = "hazard door north"},/obj/machinery/door/airlock/research{name = "Research Division Access"; req_access_txt = "7"},/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
+"blZ" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/machinery/door/firedoor/border_only{dir = 1; name = "hazard door north"},/obj/machinery/door/airlock/research{name = "Research and Development Lab"; req_access_txt = "7"},/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bma" = (/obj/structure/closet/crate,/obj/item/weapon/coin/silver,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bmb" = (/obj/machinery/door/airlock/external{name = "Supply Dock Airlock"; req_access_txt = "31"},/turf/simulated/floor/plating,/area/quartermaster/storage)
 "bmc" = (/turf/simulated/floor/plating,/area/quartermaster/storage)
