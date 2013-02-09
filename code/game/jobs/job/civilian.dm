@@ -170,7 +170,6 @@
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	alt_titles = list("Deep space miner")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -340,7 +339,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	selection_color = "#dddddd"
 	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
-	alt_titles = list("Attourney", "IA Consultant")
+	alt_titles = list("Attorney", "IA Consultant")
 
 
 	equip(var/mob/living/carbon/human/H)

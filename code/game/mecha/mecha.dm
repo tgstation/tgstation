@@ -18,7 +18,7 @@
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
-	var/initial_icon = "" //Mech type for resetting icon.
+	var/initial_icon = null //Mech type for resetting icon. Only used for reskinning kits (see custom items)
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -1655,7 +1655,10 @@
 	return 0
 
 /obj/mecha/proc/reset_icon()
-	icon_state = initial_icon
+	if (initial_icon)
+		icon_state = initial_icon
+	else
+		icon_state = initial(icon_state)
 	return icon_state
 
 //////////////////////////////////////////

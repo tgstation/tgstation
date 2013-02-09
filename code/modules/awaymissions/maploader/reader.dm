@@ -1,3 +1,4 @@
+//
 dmm_suite{
 	load_map(var/dmm_file as file, var/z_offset as num){
 		if(!z_offset){
@@ -20,6 +21,7 @@ dmm_suite{
 		var/ycrd=0
 		var/xcrd=0
 		for(var/zpos=findtext(tfile,"\n(1,1,");TRUE;zpos=findtext(tfile,"\n(1,1,",zpos+1,0)){
+			if(zpos==0) break
 			zcrd++
 			world.maxz = max(world.maxz, zcrd+z_offset)
 			ycrd=0
@@ -43,7 +45,7 @@ dmm_suite{
 				if(gpos+length(grid_line)+1>length(zgrid)){break}
 				sleep(-1)
 				}
-			if(findtext(tfile,quote+"}",zpos,0)+2==tfile_len){break}
+			if(findtext(tfile,quote+"}",zpos,0)+2>=tfile_len){break}
 			sleep(-1)
 			}
 		}
