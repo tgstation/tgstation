@@ -13,7 +13,7 @@
 
 /datum/event/prison_break/announce()
 	if(prisonAreas && prisonAreas.len > 0)
-		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+		command_alert("[pick("Gr3y.T1d3 virus","Malignant trojan","Syndicate malware")] detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
 	else
 		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 		kill()
@@ -28,14 +28,6 @@
 		for(var/area/A in prisonAreas)
 			for(var/obj/machinery/light/L in A)
 				L.flicker(10)
-
-
-/datum/event/prison_break/announce()
-	if(prisonAreas && prisonAreas.len > 0)
-		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
-	else
-		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
-
 
 /datum/event/prison_break/tick()
 	if(activeFor == releaseWhen)
