@@ -1,4 +1,4 @@
-
+/*
 #define FIND_PLANT 1
 #define FIND_BIO 2
 #define FIND_METEORIC 3
@@ -9,6 +9,25 @@
 #define FIND_METAMORPHIC 8
 #define FIND_SEDIMENTARY 9
 #define FIND_NOTHING 10
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Rock sliver
+
+/obj/item/weapon/rocksliver
+	name = "rock sliver"
+	desc = "It looks extremely delicate."
+	icon = 'xenoarchaeology.dmi'
+	icon_state = "sliver1"	//0-4
+	w_class = 1
+	//item_state = "electronic"
+	var/source_rock = "/turf/simulated/mineral/"
+	var/datum/geosample/geological_data
+
+/obj/item/weapon/rocksliver/New()
+	icon_state = "sliver[rand(1,3)]"
+	pixel_x = rand(0,16)-8
+	pixel_y = rand(0,8)-8
 
 var/list/responsive_carriers = list( \
 	"carbon", \
@@ -34,7 +53,12 @@ var/list/finds_as_strings = list( \
 	"Sedimentary/generic rock", \
 	"Anomalous material" )
 
-datum/geosample
+var/list/artifact_spawning_turfs = list()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Geosample datum
+
+/datum/geosample
 	var/age = 0								//age can correspond to different archaeological finds
 	var/age_thousand = 0
 	var/age_million = 0
@@ -48,12 +72,15 @@ datum/geosample
 	//all potential finds are initialised to null, so nullcheck before you access them
 	var/list/find_presence = list()
 
-datum/geosample/New(var/turf/simulated/mineral/container)
+/datum/geosample/New(var/turf/simulated/mineral/container)
 
 	UpdateTurf(container)
 
 //this should only need to be called once
-datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
+/datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
+	if(!container || !istype(container))
+		return
+
 	//source_mineral = container.mineralName
 	age = rand(1,999)
 
@@ -128,3 +155,25 @@ datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
 	for(var/entry in find_presence)
 		total_spread += find_presence[entry]
 
+//have this separate from UpdateTurf() so that we dont have a billion turfs being updated (redundantly) every time an artifact spawns
+/datum/geosample/proc/UpdateNearbyArtifactInfo(var/turf/simulated/mineral/container)
+	if(!container || !istype(container))
+		return
+
+	for(var/turf/simulated/mineral/holder in artifact_spawning_turfs)
+		var/dist = get_dist(container, holder)
+		if(dist < artifact_distance)
+			artifact_distance = dist
+			//artifact_id = A.display_id
+/*
+#undef FIND_PLANT
+#undef FIND_BIO
+#undef FIND_METEORIC
+#undef FIND_ICE
+#undef FIND_CRYSTALLINE
+#undef FIND_METALLIC
+#undef FIND_IGNEOUS
+#undef FIND_METAMORPHIC
+#undef FIND_SEDIMENTARY
+#undef FIND_NOTHING
+*/

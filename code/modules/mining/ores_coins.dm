@@ -6,7 +6,6 @@
 	icon_state = "ore2"
 	var/datum/geosample/geological_data
 
-
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
 	icon_state = "Uranium ore"

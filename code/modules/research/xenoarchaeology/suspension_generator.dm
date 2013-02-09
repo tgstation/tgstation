@@ -1,5 +1,3 @@
-//these are probably broken
-
 /obj/machinery/suspension_gen
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
@@ -32,14 +30,14 @@
 			for(var/mob/living/carbon/M in T)
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
-				if(prob(10))
+				if(prob(5))
 					M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
 
 		if(field_type == "silicon")
 			for(var/mob/living/silicon/M in T)
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
-				if(prob(10))
+				if(prob(5))
 					M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
 
 		for(var/obj/item/I in T)
@@ -51,7 +49,7 @@
 		for(var/mob/living/simple_animal/M in T)
 			M.weakened = max(M.weakened, 3)
 			cell.charge -= power_use
-			if(prob(10))
+			if(prob(5))
 				M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
 
 		if(cell.charge <= 0)

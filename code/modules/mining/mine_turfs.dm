@@ -28,6 +28,7 @@
 	var/archaeo_overlay = ""
 	var/excav_overlay = ""
 	var/obj/item/weapon/last_find
+	var/datum/find/artifact_find
 
 /turf/simulated/mineral/Del()
 	return
@@ -282,6 +283,7 @@ commented out in r5061, I left it because of the shroom thingies
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
+		src.geological_data.UpdateNearbyArtifactInfo(src)
 		var/obj/item/device/core_sampler/C = W
 		C.sample_item(src, user)
 		return
@@ -395,6 +397,7 @@ commented out in r5061, I left it because of the shroom thingies
 			while(next_rock > 100)
 				next_rock -= 100
 				var/obj/item/weapon/ore/O = new(src)
+				src.geological_data.UpdateNearbyArtifactInfo(src)
 				O.geological_data = src.geological_data
 
 	else
@@ -425,6 +428,7 @@ commented out in r5061, I left it because of the shroom thingies
 	if (src.mineralName == "Clown")
 		O = new /obj/item/weapon/ore/clown(src)
 	if(O)
+		src.geological_data.UpdateNearbyArtifactInfo(src)
 		O.geological_data = src.geological_data
 	return O
 
@@ -464,6 +468,8 @@ commented out in r5061, I left it because of the shroom thingies
 		X = new/obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
 	else
 		X = new/obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
+		src.geological_data.UpdateNearbyArtifactInfo(src)
+		X:geological_data = src.geological_data
 
 	//some find types delete the /obj/item/weapon/archaeological_find and replace it with something else, this handles when that happens
 	//yuck
