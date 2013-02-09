@@ -3205,12 +3205,12 @@ datum
 					M.dizziness +=5
 					return
 
-		erikasurprise
-			name = "Erika Surprise"
-			id = "erikasurprise"
-			description = "The surprise is, it's green!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
+			erikasurprise
+				name = "Erika Surprise"
+				id = "erikasurprise"
+				description = "The surprise is, it's green!"
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
 
 			irishcarbomb
 				name = "Irish Car Bomb"
