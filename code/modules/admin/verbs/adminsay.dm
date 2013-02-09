@@ -32,7 +32,6 @@
 	var/color = "mod"
 	if (check_rights(R_ADMIN,0))
 		color = "adminmod"
-	msg = "<span class='[color]'><span class='prefix'>MOD:</span> <EM>[key_name(src)]</EM> (<A HREF='?src=\ref[holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 	for(var/client/C in admins)
 		if((R_ADMIN|R_MOD) & C.holder.rights)
-			C << msg
+			C << "<span class='[color]'><span class='prefix'>MOD:</span> <EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
