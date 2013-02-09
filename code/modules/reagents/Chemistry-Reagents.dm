@@ -1651,7 +1651,7 @@ datum
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
-
+/*
 		ethanol
 			name = "Ethanol"
 			id = "ethanol"
@@ -1685,7 +1685,7 @@ datum
 					else
 						usr << "It wasn't enough..."
 				return
-
+*/
 		ammonia
 			name = "Ammonia"
 			id = "ammonia"
@@ -1905,21 +1905,21 @@ datum
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
 							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 15)
-							victim.eye_blind = max(M.eye_blind, 5)
+							victim.eye_blurry = max(M.eye_blurry, 3)
+							victim.eye_blind = max(M.eye_blind, 1)
 							victim.Paralyse(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
 							victim.emote("scream")
-							victim.eye_blurry = max(M.eye_blurry, 5)
+							victim.eye_blurry = max(M.eye_blurry, 1)
 							return
 						else // Oh dear :D
 							victim.emote("scream")
 							victim << "\red You're sprayed directly in the eyes with pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 25)
-							victim.eye_blind = max(M.eye_blind, 10)
+							victim.eye_blurry = max(M.eye_blurry, 5)
+							victim.eye_blind = max(M.eye_blind, 2)
 							victim.Paralyse(1)
 							victim.drop_item()
 
@@ -2593,7 +2593,7 @@ datum
 					if(A.data) d += A.data
 
 				M.dizziness +=dizzy_adj.
-				if(d >= slur_start && d < confused_start)
+				if(d >= slur_start && d < pass_out)
 					if (!M:slurring) M:slurring = 1
 					M:slurring += slurr_adj
 				if(d >= confused_start && prob(33))
