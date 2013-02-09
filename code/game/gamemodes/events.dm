@@ -83,10 +83,10 @@
 				if(!istype(M,/mob/new_player))
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
-				meteor_wave()
+				meteor_wave(10)
 				spawn_meteors()
 			spawn(700)
-				meteor_wave()
+				meteor_wave(10)
 				spawn_meteors()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
