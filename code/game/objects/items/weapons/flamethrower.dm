@@ -162,7 +162,6 @@
 	usr.set_machine(src)
 	if(href_list["light"])
 		if(!ptank)	return
-		if(ptank.air_contents.toxins < 1)	return
 		if(!status)	return
 		lit = !lit
 		if(lit)
