@@ -15,6 +15,7 @@
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo"
 	icon_state = "deagle"
+	w_class = 3.0
 	force = 14.0
 	max_shells = 7
 	caliber = ".50"
@@ -54,6 +55,7 @@
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds"
 	icon_state = "gyropistol"
+	w_class = 3.0
 	max_shells = 8
 	caliber = "75"
 	fire_sound = 'sound/effects/Explosion1.ogg'
@@ -88,7 +90,7 @@
 	name = "\improper Stechtkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
-	w_class = 2
+	w_class = 2.0
 	max_shells = 8
 	caliber = "9mm"
 	silenced = 0
@@ -117,7 +119,7 @@
 			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
 			user.put_in_hands(silenced)
 			silenced = 0
-			w_class = 2
+			w_class = 2.0
 			update_icon()
 			return
 	..()
@@ -131,7 +133,7 @@
 		user.drop_item()
 		user << "<span class='notice'>You screw [I] onto [src].</span>"
 		silenced = I	//dodgy?
-		w_class = 3
+		w_class = 3.0
 		I.loc = src		//put the silencer into the gun
 		update_icon()
 		return
@@ -149,4 +151,4 @@
 	desc = "a silencer"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silencer"
-	w_class = 2
+	w_class = 2.0
