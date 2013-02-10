@@ -83,10 +83,10 @@
 				if(!istype(M,/mob/new_player))
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
-				meteor_wave()
+				meteor_wave(10)
 				spawn_meteors()
 			spawn(700)
-				meteor_wave()
+				meteor_wave(10)
 				spawn_meteors()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
@@ -231,69 +231,16 @@
 		break
 
 /proc/viral_outbreak(var/virus = null)
-//	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-//	world << sound('sound/AI/outbreak7.ogg')
-	var/virus_type
-	if(!virus)
-		virus_type = pick(/datum/disease/dnaspread,/datum/disease/advance/flu,/datum/disease/advance/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
-	else
-		switch(virus)
-			if("fake gbs")
-				virus_type = /datum/disease/fake_gbs
-			if("gbs")
-				virus_type = /datum/disease/gbs
-			if("magnitis")
-				virus_type = /datum/disease/magnitis
-			if("rhumba beat")
-				virus_type = /datum/disease/rhumba_beat
-			if("brain rot")
-				virus_type = /datum/disease/brainrot
-			if("cold")
-				virus_type = /datum/disease/advance/cold
-			if("retrovirus")
-				virus_type = /datum/disease/dnaspread
-			if("flu")
-				virus_type = /datum/disease/advance/flu
-//			if("t-virus")
-//				virus_type = /datum/disease/t_virus
-			if("pierrot's throat")
-				virus_type = /datum/disease/pierrot_throat
-	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
-
-		var/foundAlready = 0 // don't infect someone that already has the virus
-		var/turf/T = get_turf(H)
-		if(!T)
-			continue
-		if(T.z != 1)
-			continue
-		for(var/datum/disease/D in H.viruses)
-			foundAlready = 1
-		if(H.stat == 2 || foundAlready)
+	for(var/mob/living/carbon/human/H in world)
+		if((H.virus2) || (H.stat == 2) || prob(30))
 			continue
 
-		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
-			if((!H.dna) || (H.sdisabilities & BLIND)) //A blindness disease would be the worst.
-				continue
-			var/datum/disease/dnaspread/D = new
-			D.strain_data["name"] = H.real_name
-			D.strain_data["UI"] = H.dna.uni_identity
-			D.strain_data["SE"] = H.dna.struc_enzymes
-			D.carrier = 1
-			D.holder = H
-			D.affected_mob = H
-			H.viruses += D
-			break
-		else
-			var/datum/disease/D = new virus_type
-			D.carrier = 1
-			D.holder = H
-			D.affected_mob = H
-			H.viruses += D
-			break
-	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
+		infect_mob_random_lesser(H)
+		break
+
+	spawn(rand(0, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		for(var/mob/M in player_list)
-			M << sound('sound/AI/outbreak7.ogg')
+		world << sound('sound/AI/outbreak7.ogg')
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")

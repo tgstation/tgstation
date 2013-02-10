@@ -10,6 +10,7 @@
 	var/casingtype
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
+	var/break_stuff_probability = 10
 	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
@@ -170,7 +171,8 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
-	for(var/dir in cardinal) // North, South, East, West
-		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
-			obstacle.attack_animal(src)
+	if(prob(break_stuff_probability))
+		for(var/dir in cardinal) // North, South, East, West
+			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+				obstacle.attack_animal(src)
