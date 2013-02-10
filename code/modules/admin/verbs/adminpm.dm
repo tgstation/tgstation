@@ -178,5 +178,5 @@
 	for(var/client/X in admins)
 		//check client/X is an admin and isn't the sender or recipient
 		//only admins can see PMs
-		if(X.key!=key && X.key!=C.key && X.holder.rights & R_ADMIN)
+		if(X.key!=key && X.key!=C.key && (X.holder.rights & R_ADMIN) || (X.holder.rights & R_MOD) )
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
