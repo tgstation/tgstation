@@ -223,6 +223,38 @@
 						M.take_organ_damage(15)
 				M:eye_op_stage = 3.0
 
+	if(user.zone_sel.selecting == "head")
+		if(M.brain_op_stage != 0.0 && M.brain_op_stage != 1.0)
+			for(var/obj/item/weapon/implant/I in M)//Checking that there is an implant in the contents
+				if(I.imp_in == M)//Checking that it's actually implanted
+
+					if(M != user)
+						user.visible_message( \
+							"\red [user] carefully destroys [I] implant embedded in [M]'s head with [src]!", \
+							"\red You destroy [I] implant embedded in [M]'s head with [src]!" \
+						)
+					else
+						user.visible_message( \
+							"\red [user] begins to remove [I] implant embedded in his head with [src]!", \
+							"\red You destroy [I] implant embedded in your head with [src]!" \
+						)
+					if(M == user && prob(25))
+						user << "\red You nick an artery!"
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/affecting = M:get_organ("head")
+							if(affecting.take_damage(75))
+								M:UpdateDamageIcon()
+						else
+							M.take_organ_damage(75)
+
+					if(istype(I, /obj/item/weapon/implant/loyalty)) //Checking if the implant we found is a loyality implant.
+						M << "<span class='notice'> You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
+
+					del(I)
+					M.updatehealth()
+					break
+		return
+
 	else if(user.zone_sel.selecting == "chest")
 		if(M:alien_op_stage == 2.0 || M:alien_op_stage == 3.0)
 			var/mob/living/carbon/human/H = M

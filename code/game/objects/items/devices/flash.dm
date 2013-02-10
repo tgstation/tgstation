@@ -80,8 +80,8 @@
 									revsafe = 1
 									break
 							M.mind_initialize()		//give them a mind datum if they don't have one.
-							if(M.mind.has_been_rev)
-								revsafe = 2
+//							if(M.mind.has_been_rev)
+//								revsafe = 2
 							if(!revsafe)
 								M.mind.has_been_rev = 1
 								ticker.mode.add_revolutionary(M.mind)
