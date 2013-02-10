@@ -654,12 +654,47 @@
 	lifespan = 25
 	endurance = 20
 	maturation = 6
-	production = 1
+	production = 2
 	yield = 2
-	potency = 1
+	potency = 10
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 1
+	plant_type = 0
+	mutatelist = list(/obj/item/seeds/moonflowerseed,/obj/item/seeds/novaflowerseed)
+
+/obj/item/seeds/moonflowerseed
+	name = "pack of moonflower seeds"
+	desc = "These seeds grow into moonflowers."
+	icon_state = "seed-moonflower"
+	species = "moonflower"
+	plantname = "Moonflowers"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
+
+/obj/item/seeds/novaflowerseed
+	name = "pack of novaflower seeds"
+	desc = "These seeds grow into novaflowers."
+	icon_state = "seed-novaflower"
+	species = "novaflower"
+	plantname = "Novaflowers"
+	product = /obj/item/weapon/grown/novaflower
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 20
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
 
 /obj/item/seeds/brownmold
 	name = "pack of brown mold"
@@ -1079,6 +1114,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		..()
 		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 			user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
 			for(var/i=0,i<2,i++)
@@ -1106,8 +1142,24 @@
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
-	plant_type = 1
+	plant_type = 0
 	seed = "/obj/item/seeds/sunflower"
+
+/obj/item/weapon/grown/novaflower
+	name = "novaflower"
+	desc = "It's beautiful! A certain person might beat you to death if you trample these."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "novaflower"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 0
+	seed = "/obj/item/seeds/novaflower"
+	attack_verb = list("seared", "heated", "whacked", "steamed")
 /*
 /obj/item/weapon/grown/gibtomato
 	desc = "A plump tomato."
@@ -1156,7 +1208,7 @@
 			force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
-	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"

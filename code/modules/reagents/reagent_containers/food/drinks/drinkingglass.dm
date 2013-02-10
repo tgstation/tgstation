@@ -181,7 +181,7 @@
 				if("b52")
 					icon_state = "b52glass"
 					name = "B-52"
-					desc = "Kahlua, Irish Cream, and congac. You will get bombed."
+					desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
 				if("atomicbomb")
 					icon_state = "atomicbombglass"
 					name = "Atomic Bomb"

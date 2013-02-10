@@ -1,20 +1,32 @@
 /* Hydroponic stuff
  * Contains:
- *		Sunflowers
+ *		Sunflowers/Novaflowers
  *		Nettle
  *		Deathnettle
- *		Corbcob
+ *		Corncob
  */
 
 
 /*
- * Sunflower
+ * Sun/Novaflower
  */
 
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
+/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(!..()) return
+	if(istype(M, /mob/living))
+		M << "\red You are heated by the warmth of the of the [name]!"
+		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT
+
+/obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob)
+	if(endurance > 0)
+		endurance -= rand(1,(endurance/3)+1)
+	else
+		usr << "All the petals have fallen off the [name] from violent whacking."
+		del(src)
 
 /*
  * Nettle
