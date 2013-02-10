@@ -168,7 +168,7 @@
 		return ""
 
 	proc/remove_display()
-		if(overlays)
+		if(overlays.len)
 			overlays.Cut()
 		if(maptext)
 			maptext = ""

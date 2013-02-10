@@ -597,6 +597,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/msg="[mob.name] has compiled a script to server [src]:"
 	diary << msg
 	diary << rawcode
+	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
 	message_admins("[mob.real_name] ([mob.key]) has compiled and uploaded a NTLS script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
 
 /obj/machinery/telecomms/server/proc/compile(var/mob/user)

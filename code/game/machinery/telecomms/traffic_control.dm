@@ -21,54 +21,68 @@
 	var/storedcode = ""			// code stored
 	var/obj/item/weapon/card/id/auth = null
 	var/list/access_log = list()
+	var/process = 0
 
 	req_access = list(access_tcomsat)
 
+/obj/machinery/computer/telecomms/traffic/proc/stop_editing()
+	if(editingcode)
+		if(editingcode.client)
+			winshow(editingcode, "Telecomms IDE", 0) // hide the window!
+		editingcode.unset_machine()
+		editingcode = null
 
-/obj/machinery/computer/telecomms/traffic/proc/update_ide()
+/obj/machinery/computer/telecomms/traffic/process()
+
+	if(stat & (NOPOWER|BROKEN))
+		stop_editing()
+		return
+
+	if(editingcode && editingcode.machine != src)
+		stop_editing()
+		return
+
+	if(!editingcode)
+		if(length(viewingcode) > 0)
+			editingcode = pick(viewingcode)
+			viewingcode.Remove(editingcode)
+		return
+
+	process = !process
+	if(!process)
+		return
 
 	// loop if there's someone manning the keyboard
-	while(editingcode)
-		if(!editingcode.client)
-			editingcode = null
-			break
+	if(!editingcode.client)
+		stop_editing()
+		return
 
-		// For the typer, the input is enabled. Buffer the typed text
-		if(editingcode)
-			storedcode = "[winget(editingcode, "tcscode", "text")]"
-		if(editingcode) // double if's to work around a runtime error
-			winset(editingcode, "tcscode", "is-disabled=false")
+	// For the typer, the input is enabled. Buffer the typed text
+	storedcode = "[winget(editingcode, "tcscode", "text")]"
+	winset(editingcode, "tcscode", "is-disabled=false")
 
-		// If the player's not manning the keyboard anymore, adjust everything
-		if( (!(editingcode in range(1, src)) && !issilicon(editingcode)) || (editingcode.machine != src && !issilicon(editingcode)))
-			if(editingcode)
-				winshow(editingcode, "Telecomms IDE", 0) // hide the window!
-			editingcode = null
-			break
+	// If the player's not manning the keyboard anymore, adjust everything
+	if(!in_range(editingcode, src) && !issilicon(editingcode) || editingcode.machine != src)
+		winshow(editingcode, "Telecomms IDE", 0) // hide the window!
+		editingcode = null
+		return
 
-		// For other people viewing the typer type code, the input is disabled and they can only view the code
-		// (this is put in place so that there's not any magical shenanigans with 50 people inputting different code all at once)
+	// For other people viewing the typer type code, the input is disabled and they can only view the code
+	// (this is put in place so that there's not any magical shenanigans with 50 people inputting different code all at once)
 
-		if(length(viewingcode))
-			// This piece of code is very important - it escapes quotation marks so string aren't cut off by the input element
-			var/showcode = replacetext(storedcode, "\\\"", "\\\\\"")
-			showcode = replacetext(storedcode, "\"", "\\\"")
+	if(length(viewingcode))
+		// This piece of code is very important - it escapes quotation marks so string aren't cut off by the input element
+		var/showcode = replacetext(storedcode, "\\\"", "\\\\\"")
+		showcode = replacetext(storedcode, "\"", "\\\"")
 
-			for(var/mob/M in viewingcode)
+		for(var/mob/M in viewingcode)
 
-				if( (M.machine == src && M in view(1, src) ) || issilicon(M))
-					winset(M, "tcscode", "is-disabled=true")
-					winset(M, "tcscode", "text=\"[showcode]\"")
-				else
-					viewingcode.Remove(M)
-					winshow(M, "Telecomms IDE", 0) // hide the window!
-
-		sleep(5)
-
-	if(length(viewingcode) > 0)
-		editingcode = pick(viewingcode)
-		viewingcode.Remove(editingcode)
-		update_ide()
+			if( (M.machine == src && in_range(M, src) ) || issilicon(M))
+				winset(M, "tcscode", "is-disabled=true")
+				winset(M, "tcscode", "text=\"[showcode]\"")
+			else
+				viewingcode.Remove(M)
+				winshow(M, "Telecomms IDE", 0) // hide the windows
 
 
 /obj/machinery/computer/telecomms/traffic/attack_hand(mob/user as mob)
@@ -223,8 +237,6 @@
 					var/showcode = replacetext(storedcode, "\\\"", "\\\\\"")
 					showcode = replacetext(storedcode, "\"", "\\\"")
 					winset(editingcode, "tcscode", "text=\"[showcode]\"")
-					spawn()
-						update_ide()
 
 				else
 					viewingcode.Add(usr)
