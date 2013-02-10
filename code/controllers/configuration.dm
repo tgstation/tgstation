@@ -109,6 +109,8 @@
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 
+	var/simultaneous_pm_warning_timeout = 100
+
 	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
 
 	var/assistant_maint = 0 //Do assistants get maint access?
@@ -392,6 +394,9 @@
 
 				if("ghost_interaction")
 					config.ghost_interaction = 1
+
+				if("simultaneous_pm_warning_timeout")
+					simultaneous_pm_warning_timeout = text2num(value) * 10
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
