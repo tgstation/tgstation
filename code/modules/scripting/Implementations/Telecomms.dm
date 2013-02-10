@@ -175,6 +175,7 @@
 		interpreter.SetProc("round", /proc/n_round)
 		interpreter.SetProc("clamp", /proc/n_clamp)
 		interpreter.SetProc("inrange", /proc/n_inrange)
+		interpreter.SetProc("rand", /proc/rand_chance)
 		// End of Donkie~
 
 		// Time

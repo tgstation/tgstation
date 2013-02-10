@@ -94,6 +94,10 @@
 /proc/delay(var/time)
 	sleep(time)
 
+// Clone of rand()
+/proc/rand_chance(var/low = 0, var/high)
+	return rand(low, high)
+
 // Clone of prob()
 /proc/prob_chance(var/chance)
 	return prob(chance)
@@ -135,7 +139,7 @@
 		return uppertext(string)
 
 /proc/time()
-	return world.realtime
+	return world.timeofday
 
 /proc/timestamp(var/format = "hh:mm:ss") // Get the game time in text
 	return time2text(world.time + 432000, format)
