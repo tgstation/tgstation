@@ -921,6 +921,20 @@ datum
 				..()
 				return
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			description = "A simple, yet effective painkiller."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			description = "An effective and very addictive painkiller."
+			reagent_state = LIQUID
+			color = "#C805DC"
+
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -3205,12 +3219,12 @@ datum
 					M.dizziness +=5
 					return
 
-		erikasurprise
-			name = "Erika Surprise"
-			id = "erikasurprise"
-			description = "The surprise is, it's green!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
+			erikasurprise
+				name = "Erika Surprise"
+				id = "erikasurprise"
+				description = "The surprise is, it's green!"
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
 
 			irishcarbomb
 				name = "Irish Car Bomb"
