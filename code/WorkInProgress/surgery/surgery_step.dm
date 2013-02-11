@@ -12,6 +12,8 @@
 
 
 /datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	surgery.step_in_progress = 1
+
 	preop(user, target, target_zone, tool)
 	if(do_after(user, time))
 		var/prob_chance = implements[tool.type]
@@ -22,6 +24,8 @@
 				surgery.complete(target)
 		else
 			failure(user, target, target_zone, tool, surgery)
+
+	surgery.step_in_progress = 0
 
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

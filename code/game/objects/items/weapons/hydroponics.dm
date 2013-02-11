@@ -36,7 +36,7 @@
 		user << "\red The nettle burns your bare hand!"
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
+			var/datum/limb/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
 				user.UpdateDamageIcon()
 		else
@@ -62,7 +62,7 @@
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
+			var/datum/limb/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
 				user.UpdateDamageIcon()
 		else

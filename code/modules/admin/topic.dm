@@ -1755,7 +1755,7 @@
 					if(!security)
 						//strip their stuff before they teleport into a cell :downs:
 						for(var/obj/item/weapon/W in H)
-							if(istype(W, /datum/organ/external))
+							if(istype(W, /datum/limb))
 								continue
 								//don't strip organs
 							H.u_equip(W)

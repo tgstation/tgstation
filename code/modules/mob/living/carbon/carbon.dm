@@ -20,8 +20,8 @@
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
 					var/organ = H.get_organ("chest")
-					if (istype(organ, /datum/organ/external))
-						var/datum/organ/external/temp = organ
+					if (istype(organ, /datum/limb))
+						var/datum/limb/temp = organ
 						if(temp.take_damage(d, 0))
 							H.UpdateDamageIcon()
 					H.updatehealth()
@@ -144,7 +144,7 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/datum/organ/external/org in H.organs)
+			for(var/datum/limb/org in H.organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam

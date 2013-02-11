@@ -492,7 +492,7 @@
 
 			if(ishuman(parrot_interest))
 				var/mob/living/carbon/human/H = parrot_interest
-				var/datum/organ/external/affecting = H.get_organ(ran_zone(pick(parrot_dam_zone)))
+				var/datum/limb/affecting = H.get_organ(ran_zone(pick(parrot_dam_zone)))
 
 				H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
 				emote(pick("pecks [H]'s [affecting]", "cuts [H]'s [affecting] with its talons"))

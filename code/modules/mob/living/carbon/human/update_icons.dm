@@ -166,7 +166,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/UpdateDamageIcon(var/update_icons=1)
 	var/image/standing	= image("icon" = 'icons/mob/dam_human.dmi', "icon_state" = "blank")
 	var/image/lying		= image("icon" = 'icons/mob/dam_human.dmi', "icon_state" = "blank2")
-	for(var/datum/organ/external/O in organs)
+	for(var/datum/limb/O in organs)
 		if(O.brutestate)
 			standing.overlays	+= "[O.icon_name]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
 			lying.overlays		+= "[O.icon_name]2_[O.brutestate]0"

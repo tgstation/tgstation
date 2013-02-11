@@ -21,10 +21,9 @@
 		dna = new /datum/dna(null)
 
 	//initialise organs
-	organs = newlist(/datum/organ/external/chest, /datum/organ/external/head, /datum/organ/external/l_arm,
-					 /datum/organ/external/r_arm, /datum/organ/external/r_leg, /datum/organ/external/l_leg,
-					 /datum/organ/internal/skeleton, /datum/organ/internal/skin)
-	for(var/datum/organ/external/O in organs)
+	organs = newlist(/datum/limb/chest, /datum/limb/head, /datum/limb/l_arm,
+					 /datum/limb/r_arm, /datum/limb/r_leg, /datum/limb/l_leg)
+	for(var/datum/limb/O in organs)
 		O.owner = src
 
 	..()
@@ -198,7 +197,7 @@
 				Paralyse(10)
 
 	var/update = 0
-	for(var/datum/organ/external/temp in organs)
+	for(var/datum/limb/temp in organs)
 		switch(temp.name)
 			if("head")
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
@@ -219,7 +218,7 @@
 	if(stat == 2)	return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+	var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
@@ -228,7 +227,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
+		var/datum/limb/affecting = get_organ(pick("chest", "chest", "chest", "head"))
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
@@ -242,7 +241,7 @@
 
 /mob/living/carbon/human/hand_p(mob/M as mob)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+	var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
 	var/armor = run_armor_check(affecting, "melee")
 	apply_damage(rand(1,2), BRUTE, affecting, armor)
 	if(armor >= 2)	return
@@ -269,7 +268,7 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+		var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
 		if(armor >= 2)	return
@@ -294,7 +293,7 @@
 
 		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+		var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
@@ -437,7 +436,7 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/O = get_organ("head")
+	var/datum/limb/O = get_organ("head")
 	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name

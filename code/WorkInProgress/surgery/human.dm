@@ -1,8 +1,13 @@
 //WORK IN PROGRESS
 
-/mob/living/carbon/human
+/mob/living/carbon
 	var/list/surgeries = list()
-//	var/list/organs = list()
+	var/list/internal_organs = list()
+
+/mob/living/carbon/New()
+	..()
+	internal_organs += new /obj/item/organ/appendix
+	internal_organs += new /obj/item/organ/heart
 
 /mob/living/carbon/human/attackby(obj/item/I, mob/user)
 	if(lying)	//if they're prone
