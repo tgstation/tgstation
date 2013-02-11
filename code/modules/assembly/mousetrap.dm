@@ -13,6 +13,22 @@
 		if(armed)
 			usr << "It looks like it's armed."
 
+	activate()
+		if(..())
+			armed = !armed
+			if(!armed)
+				if(ishuman(usr))
+					var/mob/living/carbon/human/user = usr
+					if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+						user << "Your hand slips, setting off the trigger."
+						pulse(0)
+			update_icon()
+			if(usr)
+				playsound(usr.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+
+	describe()
+		return "The pressure switch is [armed?"primed":"safe"]."
+
 	update_icon()
 		if(armed)
 			icon_state = "mousetraparmed"
@@ -81,7 +97,7 @@
 		..()
 
 
-	HasEntered(AM as mob|obj)
+	HasEntered(var/atom/movable/AM as mob|obj)
 		if(armed)
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
@@ -89,7 +105,9 @@
 					triggered(H)
 					H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 									  "<span class='warning'>You accidentally step on [src]</span>")
-			if(ismouse(AM))
+			else if(ismouse(AM))
+				triggered(AM)
+			else if(AM.density) // For mousetrap grenades, set off by anything heavy
 				triggered(AM)
 		..()
 

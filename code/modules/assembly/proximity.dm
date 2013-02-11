@@ -17,6 +17,10 @@
 		toggle_scan()
 		sense()
 
+	describe()
+		if(timing)
+			return "\blue The proximity sensor is arming."
+		return "The proximity sensor is [scanning?"armed":"disarmed"]."
 
 	activate()
 		if(!..())	return 0//Cooldown check

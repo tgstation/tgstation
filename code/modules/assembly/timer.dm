@@ -10,11 +10,15 @@
 	secured = 0
 
 	var/timing = 0
-	var/time = 10
+	var/time = 5
 
 	proc
 		timer_end()
 
+	describe()
+		if(timing)
+			return "The timer is counting down from [time]!"
+		return "The timer is set for [time] seconds."
 
 	activate()
 		if(!..())	return 0//Cooldown check
@@ -50,7 +54,7 @@
 		if(timing && time <= 0)
 			timing = 0
 			timer_end()
-			time = 10
+			time = initial(time)
 		return
 
 
@@ -93,7 +97,7 @@
 		if(href_list["tp"])
 			var/tp = text2num(href_list["tp"])
 			time += tp
-			time = min(max(round(time), 0), 600)
+			time = min(max(round(time), 1), 600)
 
 		if(href_list["close"])
 			usr << browse(null, "window=timer")

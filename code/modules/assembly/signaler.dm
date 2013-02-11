@@ -126,9 +126,8 @@
 	pulse(var/radio = 0)
 		if(src.connected && src.wires)
 			connected.Pulse(src)
-		else if(holder)
-			holder.process_activation(src, 1, 0)
-		return 1
+		else
+			return ..(radio)
 
 
 	receive_signal(datum/signal/signal)
@@ -151,3 +150,23 @@
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 		return
+
+// Embedded signaller used in grenade construction.
+// It's necessary because the signaler doens't have an off state.
+// Generated during grenade construction.  -Sayu
+/obj/item/device/assembly/signaler/reciever
+	var/on = 0
+
+	proc/toggle_safety()
+		on = !on
+
+	activate()
+		toggle_safety()
+		return 1
+
+	describe()
+		return "The radio reciever is [on?"on":"off"]."
+
+	receive_signal(datum/signal/signal)
+		if(!on) return
+		return ..(signal)
