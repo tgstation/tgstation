@@ -144,7 +144,9 @@ var/const/MAX_ACTIVE_TIME = 400
 
 			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
 
+		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask)
+		target.update_inv_wear_mask() // Equip to slot doesn't seem to always update :/
 
 		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
