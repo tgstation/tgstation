@@ -6,7 +6,6 @@
 	caliber = "38"
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/c38"
-	w_class = 3.0
 
 
 	special_check(var/mob/living/carbon/human/M)
@@ -78,7 +77,6 @@
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
-	w_class = 3.0
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
@@ -86,10 +84,8 @@
 /obj/item/weapon/gun/projectile/russian
 	name = "Russian Revolver"
 	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in it's chamber for a bullet."
-	icon_state = "revolver"
 	max_shells = 6
 	origin_tech = "combat=2;materials=2"
-	w_class = 3.0
 
 /obj/item/weapon/gun/projectile/russian/New()
 	Spin()

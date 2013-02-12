@@ -1,10 +1,10 @@
 /obj/item/weapon/gun/projectile
-	desc = "A pocket-sized snubnosed revolver. Uses 357 ammo"
+	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"
-	icon_state = "revolver_snub"
+	icon_state = "revolver"
 	caliber = "357"
 	origin_tech = "combat=2;materials=2"
-	w_class = 2.0
+	w_class = 3.0
 	m_amt = 1000
 
 	var/ammo_type = "/obj/item/ammo_casing/a357"
