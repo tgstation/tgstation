@@ -249,21 +249,7 @@
 		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
-		t = sanitize_simple(t, list("&#"="."))
-		var/p = findtext(t,"<",1)
-		while (p)	//going through all the tags
-			var/start = p++
-			tag = copytext(t,p, p+1)
-			world << "2 [copytext(t,p, p+1)]"
-			if (tag != "/")
-				while (reject_bad_text(copytext(t, p, p+1), 1))
-					tag = copytext(t,start, p)
-					p++
-				tag = copytext(t,start+1, p)
-				world << "Tag is [tag] at [start]"
-				if (!(tag in paper_tag_whitelist))	//if it's unkown tag, disarming it
-					t = copytext(t,1,start-1) + "&lt;" + copytext(t,start+1)
-			p = findtext(t,"<",p)
+		t = checkhtml(t)
 
 		// check for exploits
 		for(var/bad in paper_blacklist)
