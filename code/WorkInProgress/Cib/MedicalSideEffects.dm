@@ -18,7 +18,7 @@
 	var/list/L = typesof(/datum/medical_effect)-/datum/medical_effect
 
 	for(var/T in L)
-		var/datum/medical_effect/M = new L
+		var/datum/medical_effect/M = new T
 		if(M.name == name)
 			M.strength = strength
 			side_effects += M
