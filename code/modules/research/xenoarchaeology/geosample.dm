@@ -64,7 +64,7 @@ var/list/artifact_spawning_turfs = list()
 	var/age_million = 0
 	var/age_billion = 0
 	var/artifact_id = ""					//id of a nearby artifact, if there is one
-	var/artifact_distance = -1				//proportional to distance
+	var/artifact_distance = 9999				//proportional to distance
 	var/source_mineral = "calcium"
 	var/total_spread = 0
 	//
@@ -134,14 +134,14 @@ var/list/artifact_spawning_turfs = list()
 		if("Clown")
 			age = rand(-1,-999)				//thats_the_joke.mp4
 			age_thousand = rand(-1,-999)
-			find_presence["beryllium"] = rand(1,1000) / 100
-			source_mineral = "beryllium"
+			find_presence["plasma"] = rand(1,1000) / 100
+			source_mineral = "plasma"
 			//find_presence[FIND_IGNEOUS] = comp_remaining * (rand(25, 75) / 100)
 			//comp_remaining -= find_presence[FIND_IGNEOUS]
 
 	find_presence["neon"] = rand(1,500) / 100
-	if(prob(20))
-		find_presence["carbon"] = rand(1,10) / 100
+	/*if(prob(20))
+		find_presence["carbon"] = rand(1,10) / 100*/
 
 	//find_presence[FIND_METAMORPHIC] = comp_remaining
 	//allocate the rest to ordinary rock
@@ -160,11 +160,19 @@ var/list/artifact_spawning_turfs = list()
 	if(!container || !istype(container))
 		return
 
-	for(var/turf/simulated/mineral/holder in artifact_spawning_turfs)
-		var/dist = get_dist(container, holder)
-		if(dist < artifact_distance)
-			artifact_distance = dist
-			//artifact_id = A.display_id
+	if(container.artifact_find)
+		artifact_distance = rand(-100,100) / 100
+		artifact_id = container.artifact_find.artifact_id
+	else
+		for(var/turf/simulated/mineral/holder in artifact_spawning_turfs)
+			if(holder.artifact_find)
+				var/dist = get_dist(container, holder)
+				if(dist < holder.artifact_find.artifact_detect_range && dist < src.artifact_distance)
+					src.artifact_distance = dist
+					src.artifact_id = holder.artifact_find
+			else
+				artifact_spawning_turfs.Remove(holder)
+
 /*
 #undef FIND_PLANT
 #undef FIND_BIO

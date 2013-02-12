@@ -2,6 +2,7 @@
 
 #define XENOARCH_SPAWN_CHANCE 0.5
 #define XENOARCH_SPREAD_CHANCE 15
+#define ARTIFACT_SPAWN_CHANCE 20
 
 /turf/simulated/mineral //wall piece
 	name = "Rock"
@@ -28,7 +29,7 @@
 	var/archaeo_overlay = ""
 	var/excav_overlay = ""
 	var/obj/item/weapon/last_find
-	var/datum/find/artifact_find
+	var/datum/artifact_find/artifact_find
 
 /turf/simulated/mineral/Del()
 	return
@@ -82,61 +83,68 @@
 
 	//---- Xenoarchaeology BEGIN
 
-	if(mineralAmt > 0 && !excavation_minerals.len)
-		for(var/i=0, i<mineralAmt, i++)
-			excavation_minerals.Add(rand(5,95))
-		excavation_minerals = insertion_sort_numeric_list_descending(excavation_minerals)
+	//put into spawn so that digsite data can be preserved over the turf replacements via spreading mineral veins
+	spawn(0)
+		if(mineralAmt > 0 && !excavation_minerals.len)
+			for(var/i=0, i<mineralAmt, i++)
+				excavation_minerals.Add(rand(5,95))
+			excavation_minerals = insertion_sort_numeric_list_descending(excavation_minerals)
 
-	if(!finds.len && prob(XENOARCH_SPAWN_CHANCE))
-		//create a new archaeological deposit
-		var/digsite = get_random_digsite_type()
+		if(!finds.len && prob(XENOARCH_SPAWN_CHANCE))
+			//create a new archaeological deposit
+			var/digsite = get_random_digsite_type()
 
-		var/list/turfs_to_process = list(src)
-		var/list/processed_turfs = list()
-		while(turfs_to_process.len)
-			var/turf/simulated/mineral/M = turfs_to_process[1]
-			for(var/turf/simulated/mineral/T in orange(1, M))
-				if(T.finds.len)
-					continue
-				if(T in processed_turfs)
-					continue
-				if(prob(XENOARCH_SPREAD_CHANCE))
-					turfs_to_process.Add(T)
+			var/list/turfs_to_process = list(src)
+			var/list/processed_turfs = list()
+			while(turfs_to_process.len)
+				var/turf/simulated/mineral/M = turfs_to_process[1]
+				for(var/turf/simulated/mineral/T in orange(1, M))
+					if(T.finds.len)
+						continue
+					if(T in processed_turfs)
+						continue
+					if(prob(XENOARCH_SPREAD_CHANCE))
+						turfs_to_process.Add(T)
 
-			turfs_to_process.Remove(M)
-			processed_turfs.Add(M)
-			if(!M.finds.len)
-				if(prob(50))
-					M.finds.Add(new/datum/find(digsite, rand(5,95)))
-				else if(prob(75))
-					M.finds.Add(new/datum/find(digsite, rand(5,45)))
-					M.finds.Add(new/datum/find(digsite, rand(55,95)))
-				else
-					M.finds.Add(new/datum/find(digsite, rand(5,30)))
-					M.finds.Add(new/datum/find(digsite, rand(35,75)))
-					M.finds.Add(new/datum/find(digsite, rand(75,95)))
+				turfs_to_process.Remove(M)
+				processed_turfs.Add(M)
+				if(!M.finds.len)
+					if(prob(50))
+						M.finds.Add(new/datum/find(digsite, rand(5,95)))
+					else if(prob(75))
+						M.finds.Add(new/datum/find(digsite, rand(5,45)))
+						M.finds.Add(new/datum/find(digsite, rand(55,95)))
+					else
+						M.finds.Add(new/datum/find(digsite, rand(5,30)))
+						M.finds.Add(new/datum/find(digsite, rand(35,75)))
+						M.finds.Add(new/datum/find(digsite, rand(75,95)))
 
-				//sometimes a find will be close enough to the surface to show
-				var/datum/find/F = M.finds[1]
-				if(F.excavation_required <= F.view_range)
-					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-					M.overlays += archaeo_overlay
+					//sometimes a find will be close enough to the surface to show
+					var/datum/find/F = M.finds[1]
+					if(F.excavation_required <= F.view_range)
+						archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+						M.overlays += archaeo_overlay
 
-	if(!src.geological_data)
-		src.geological_data = new/datum/geosample(src)
-	src.geological_data.UpdateTurf(src)
+			//dont create artifact machinery in animal or plant digsites, or if we already have one
+			if(!artifact_find && digsite != 1 && digsite != 2 && prob(ARTIFACT_SPAWN_CHANCE))
+				artifact_find = new()
+				world << artifact_find.artifact_find_type
 
-	//for excavated turfs placeable in the map editor
-	/*if(excavation_level > 0)
-		if(excavation_level < 25)
-			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv1_[rand(1,3)]")
-		else if(excavation_level < 50)
-			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv2_[rand(1,3)]")
-		else if(excavation_level < 75)
-			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv3_[rand(1,3)]")
-		else
-			src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv4_[rand(1,3)]")
-		desc = "It appears to be partially excavated."*/
+		if(!src.geological_data)
+			src.geological_data = new/datum/geosample(src)
+		src.geological_data.UpdateTurf(src)
+
+		//for excavated turfs placeable in the map editor
+		/*if(excavation_level > 0)
+			if(excavation_level < 25)
+				src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv1_[rand(1,3)]")
+			else if(excavation_level < 50)
+				src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv2_[rand(1,3)]")
+			else if(excavation_level < 75)
+				src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv3_[rand(1,3)]")
+			else
+				src.overlays += image('icons/obj/xenoarchaeology.dmi', "overlay_excv4_[rand(1,3)]")
+			desc = "It appears to be partially excavated."*/
 
 	return
 
@@ -171,6 +179,14 @@
 			if(M)
 				src = M
 				M.levelupdate()
+
+				//preserve archaeo data
+				M.geological_data = src.geological_data
+				M.excavation_minerals = src.excavation_minerals
+				M.overlays = src.overlays
+				M.artifact_find = src.artifact_find
+				M.archaeo_overlay = src.archaeo_overlay
+				M.excav_overlay = src.excav_overlay
 
 	/*else if (prob(artifactChance))
 		new/obj/machinery/artifact(src)*/
@@ -290,14 +306,14 @@ commented out in r5061, I left it because of the shroom thingies
 
 	if (istype(W, /obj/item/device/depth_scanner))
 		var/obj/item/device/depth_scanner/C = W
-		C.scan_turf(user, src)
+		C.scan_atom(user, src)
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
 		if(do_after(user,40))
-			user << "\blue \icon[P] [src] has been excavated to a depth of [src.excavation_level]cm."
+			user << "\blue \icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm."
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -354,6 +370,23 @@ commented out in r5061, I left it because of the shroom thingies
 					excavate_find(5, F)
 
 			if(src.excavation_level + P.excavation_amount >= 100)
+				//if players have been excavating this turf, have a chance to leave some rocky debris behind
+				var/boulder_prob = 0
+				if(src.excavation_level > 15)
+					boulder_prob = 50
+				if(artifact_find)
+					boulder_prob += 10
+					if(src.excavation_level == 100)
+						boulder_prob += 40
+					else if(src.excavation_level > 95)
+						boulder_prob += 25
+					else if(src.excavation_level > 90)
+						boulder_prob += 10
+				if(prob(boulder_prob))
+					var/obj/structure/boulder/B = new(src)
+					if(artifact_find)
+						B.artifact_find = artifact_find
+
 				gets_drilled()
 				return
 			else
@@ -473,17 +506,19 @@ commented out in r5061, I left it because of the shroom thingies
 
 	//some find types delete the /obj/item/weapon/archaeological_find and replace it with something else, this handles when that happens
 	//yuck
+	var/display_name = "something"
 	if(!X)
 		X = last_find
-	if(!X)
-		X = "something"
+	if(X)
+		display_name = X.name
 
 	//many finds are ancient and thus very delicate - luckily there is a specialised energy suspension field which protects them when they're being extracted
 	if(prob(F.prob_delicate))
 		var/obj/effect/suspension_field/S = locate() in src
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
-			src.visible_message("\red<b>[pick("[X] crumbles away into dust","[X] breaks apart","[X] collapses onto itself")].</b>")
-			del(X)
+			if(X)
+				src.visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart","[display_name] collapses onto itself")].</b>")
+				del(X)
 
 	src.finds.Remove(F)
 

@@ -8,7 +8,7 @@
 	icon_state = "shieldsparkles"
 	anchored = 1
 	layer = 2.1
-	density = 0
+	density = 1
 	invisibility = 2
 	var/strength = 0
 	var/obj/machinery/shield_gen/parent
@@ -31,7 +31,7 @@
 
 	//if we take too much damage, drop out - the generator will bring us back up if we have enough power
 	if(strength < 1)
-		invisibility = 2
+		invisibility = 101
 		density = 0
 
 /obj/effect/energy_field/proc/Strengthen(var/severity)
@@ -41,7 +41,7 @@
 	if(strength > 1)
 		invisibility = 0
 		density = 1
-
+/*
 /obj/effect/energy_field/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	//Purpose: Determines if the object (or airflow) can pass this atom.
 	//Called by: Movement, airflow.
@@ -49,4 +49,5 @@
 	//Outputs: Boolean if can pass.
 
 	//return (!density || !height || air_group)
-	return density
+	return !density
+*/
