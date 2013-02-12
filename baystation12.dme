@@ -274,11 +274,9 @@
 #define FILE_DIR "tools"
 #define FILE_DIR "tools/Redirector"
 // END_FILE_DIR
-
 // BEGIN_PREFERENCES
 #define DEBUG
 // END_PREFERENCES
-
 // BEGIN_INCLUDE
 #include "code\global.dm"
 #include "code\hub.dm"
