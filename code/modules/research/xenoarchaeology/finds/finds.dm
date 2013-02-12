@@ -255,9 +255,9 @@
 				apply_image_decorations = 1
 		if(17)
 			//cultblade
-			new /obj/item/weapon/melee/cultblade(src.loc)
-			del(src)
-			return
+			new_item = new /obj/item/weapon/melee/cultblade(src.loc)
+			apply_material_decorations = 0
+			apply_image_decorations = 0
 		if(18)
 			new_item = new /obj/item/device/radio/beacon(src.loc)
 			talkative = 0
@@ -283,6 +283,7 @@
 		if(22)
 			if(prob(50))
 				new_item = new /obj/item/weapon/shard(src.loc)
+			else
 				new_item = new /obj/item/weapon/shard/plasma(src.loc)
 			apply_image_decorations = 0
 			apply_material_decorations = 0
@@ -328,7 +329,7 @@
 			name = "unknown weapon"
 		if(27)
 			//revolver
-			var/obj/item/weapon/gun/projectile/new_gun = new (src.loc)
+			var/obj/item/weapon/gun/projectile/new_gun = new /obj/item/weapon/gun/projectile(src.loc)
 			new_item = new_gun
 			new_item.icon_state = "gun[rand(1,4)]"
 
@@ -364,30 +365,24 @@
 				apply_image_decorations = 0
 		if(29)
 			//fossil bone/skull
-			new/obj/item/weapon/fossil/base(src.loc)
-
-			//this item replaces itself on spawn with another, doing anything else will cause runtimes
-			del(src)
-			return
+			new_item = new /obj/item/weapon/fossil/base(src.loc)
 		if(30)
 			//fossil shell
-			new/obj/item/weapon/fossil/shell(src.loc)
+			new_item = new /obj/item/weapon/fossil/shell(src.loc)
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 			if(prob(10))
 				apply_image_decorations = 1
 		if(31)
 			//fossil plant
-			new/obj/item/weapon/fossil/plant(src.loc)
+			new_item = new /obj/item/weapon/fossil/plant(src.loc)
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(32)
 			//humanoid remains
-			name = "humanoid remains"
+			name = "humanoid [pick("remains","skeleton")]"
 			icon = 'blood.dmi'
 			icon_state = "remains"
-			apply_material_decorations = 0
-			apply_image_decorations = 0
 			additional_desc = pick("They appear almost human.",\
 			"They are contorted in a most gruesome way.",\
 			"They look almost peaceful.",\
@@ -399,11 +394,9 @@
 			apply_material_decorations = 0
 		if(33)
 			//robot remains
-			name = "robotic remains"
+			name = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
 			icon = 'blood.dmi'
 			icon_state = "remainsrobot"
-			apply_material_decorations = 0
-			apply_image_decorations = 0
 			additional_desc = pick("Almost mistakeable for the remains of a modern cyborg.",\
 			"They are barely recognisable as anything other than a pile of waste metals.",\
 			"It looks like the battered remains of an ancient robot chassis.",\
@@ -415,11 +408,9 @@
 			apply_material_decorations = 0
 		if(34)
 			//xenos remains
-			name = "alien remains"
+			name = "alien [pick("remains","skeleton")]"
 			icon = 'blood.dmi'
 			icon_state = "remainsxeno"
-			apply_material_decorations = 0
-			apply_image_decorations = 0
 			additional_desc = pick("It looks vaguely reptilian, but with more teeth.",\
 			"They are faintly unsettling.",\
 			"There is a faint aura of unease about them.",\
@@ -481,7 +472,7 @@
 
 	//icon and icon_state should have already been set
 	if(new_item)
-		new_item.name = "[pick("strange","ancient","alien","")] [new_item.name]"
+		new_item.name = "[pick("Strange","Ancient","Alien","")] [new_item.name]"
 		new_item.desc = src.desc
 
 		if(talkative)

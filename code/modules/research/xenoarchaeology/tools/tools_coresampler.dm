@@ -52,6 +52,7 @@
 	if(istype(item_to_sample, /turf/simulated/mineral))
 		var/turf/simulated/mineral/T = item_to_sample
 		geo_data = T.geological_data
+		geo_data.UpdateNearbyArtifactInfo(T)
 	else if(istype(item_to_sample, /obj/item/weapon/ore))
 		var/obj/item/weapon/ore/O = item_to_sample
 		geo_data = O.geological_data

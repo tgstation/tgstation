@@ -41,8 +41,6 @@
 
 		//heat up as we go, but if the air is freezing then heat up much slower
 		var/new_heat = heat_accumulation_rate + heat_accumulation_rate * rand(-5,5) / 10
-		if(environmental_temp < temperature)
-			new_heat *= 0.75
 		temperature += new_heat
 		if(temperature > 350 && prob(10))
 			src.visible_message("\blue \icon[src] bleets plaintively.", 2)
@@ -53,7 +51,7 @@
 		if(prob(10))
 			src.visible_message("\blue \icon[src] [pick("whirrs","chuffs","clicks")][pick(" quietly"," softly"," sadly"," excitedly"," energetically"," angrily"," plaintively")].", 2)
 
-	else if(temperature > environmental_temp)
+	if(temperature > environmental_temp)
 		//cool down to match the air
 		temperature -= heat_accumulation_rate + heat_accumulation_rate * rand(-5,5) / 10
 		if(temperature < environmental_temp)
@@ -82,7 +80,7 @@
 	var/dat = "<B>[src.name]</B><BR>"
 	dat += "[owned_scanner ? "Scanner connected." : "Scanner disconnected."]<br>"
 	dat += "Module heat level: [temperature] kelvin<br>"
-	dat += "Safeties set at 600k, shielding failure at 1200k. Failure to maintain safe heat levels may result in equipment damage.<br>"
+	dat += "Safeties set at 300k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>"
 	dat += "<hr>"
 	if(scan_process)
 		dat += "Scan in progress<br><br><br>"
@@ -154,8 +152,8 @@ obj/machinery/anomaly/Topic(href, href_list)
 		fuel_container = null
 	if(href_list["begin"])
 		if(temperature >= 300)
-			var/proceed = input("Unsafe internal temperature detected, do you wish to continue?","Warning")
-			if(proceed && get_dist(src, usr) <= 1)
+			var/proceed = input("Unsafe internal temperature detected, enter YES below to continue.","Warning")
+			if(proceed == "YES" && get_dist(src, usr) <= 1)
 				scan_process = 1
 		else
 			scan_process = 1
@@ -164,12 +162,12 @@ obj/machinery/anomaly/Topic(href, href_list)
 
 //whether the carrier sample matches the possible finds
 //results greater than a threshold of 0.6 means a positive result
-obj/machinery/anomaly/proc/GetResultSpecifity(var/datum/geosample/scanned_sample, var/carrier)
+obj/machinery/anomaly/proc/GetResultSpecifity(var/datum/geosample/scanned_sample, var/carrier_name)
 	var/specifity = 0
-	if(scanned_sample && carrier)
+	if(scanned_sample && carrier_name)
 
-		if(scanned_sample.find_presence.Find(carrier))
-			specifity = 0.7 * (scanned_sample.find_presence[carrier] / scanned_sample.total_spread) + 0.3
+		if(scanned_sample.find_presence.Find(carrier_name))
+			specifity = 0.7 * (scanned_sample.find_presence[carrier_name] / scanned_sample.total_spread) + 0.3
 		else
 			specifity = rand(0, 0.5)
 

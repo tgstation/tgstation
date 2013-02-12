@@ -8,7 +8,7 @@
 	var/harvesting = 0
 	var/obj/item/weapon/anobattery/inserted_battery
 	var/obj/machinery/artifact/cur_artifact
-	var/obj/machinery/analyser_pad/owned_pad = null
+	var/obj/machinery/anomaly/scanner/owned_pad = null
 
 /obj/machinery/artifact_harvester/New()
 	..()
@@ -85,7 +85,7 @@
 
 		var/mundane = 0
 		for(var/obj/O in get_turf(owned_pad))
-			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/analyser_pad))
+			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/anomaly/scanner))
 				mundane++
 				break
 		for(var/mob/O in get_turf(owned_pad))

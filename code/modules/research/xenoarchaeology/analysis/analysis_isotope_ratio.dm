@@ -9,7 +9,7 @@ obj/machinery/anomaly/isotope_ratio/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample
-	var/carrier
+	var/carrier_name
 	var/num_reagents = 0
 
 	for(var/datum/reagent/A in held_container.reagents.reagent_list)
@@ -17,17 +17,15 @@ obj/machinery/anomaly/isotope_ratio/ScanResults()
 		if(istype(R, /datum/reagent/analysis_sample))
 			scanned_sample = R.data
 		else
-			carrier = R.id
+			carrier_name = R.id
 		num_reagents++
 
-	if(num_reagents == 2 && scanned_sample && carrier)
-		var/specifity = GetResultSpecifity(scanned_sample, carrier)
-		var/accuracy = 0
-		if(specifity)
-			accuracy = (specifity / (specifity + 0.2))
-		else
-			accuracy = rand(0.01, 0.75)
-		results = "Isotope decay analysis in carrier ([carrier]) indicates age ([100 * accuracy]% accuracy): <br><br>"
+	if(num_reagents == 2 && scanned_sample && carrier_name)
+		var/accuracy = GetResultSpecifity(scanned_sample, carrier_name)
+		accuracy += 0.5 * (1 - accuracy) / scanned_sample.total_spread
+		if(!accuracy)
+			accuracy = rand(0.01, 0.5)
+		results = "Isotope decay analysis in carrier ([carrier_name]) indicates age ([100 * accuracy]% accuracy): <br><br>"
 
 		if(scanned_sample.age_billion)
 			//scramble the results

@@ -85,7 +85,7 @@
 			var/turf/T = get_turf(src)
 			T.visible_message("\icon[src]\blue The utiliser device buzzes.", "\icon[src]\blue You hear something buzz.")
 		else
-			inserted_battery.battery_effect.DoEffect(src)
+			inserted_battery.battery_effect.DoEffectPulse(src)
 		time -= 10
 		inserted_battery.stored_charge -= 10 + rand(-1,1)
 		cooldown += 10

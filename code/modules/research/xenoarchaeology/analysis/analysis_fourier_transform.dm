@@ -22,16 +22,14 @@ obj/machinery/anomaly/fourier_transform/ScanResults()
 
 	if(num_reagents == 2 && scanned_sample && carrier)
 		//all necessary components are present
-		var/specifity = GetResultSpecifity(scanned_sample, carrier)
+		var/accuracy = GetResultSpecifity(scanned_sample, carrier)
 		var/distance = scanned_sample.artifact_distance
 		if(distance > 0)
-			var/accuracy = 0.9
-			if(specifity > 0.6)
-				distance += (0.2 * rand() - 0.1) * distance
+			if(accuracy > 0.6)
+				distance += (2 * rand() - 1) * distance * 0.01
 			else
-				var/offset = 1 - specifity
-				distance += distance * rand(-100 * offset, 100 * offset) / 100
-				accuracy = specifity
+				var/offset = 1 - accuracy
+				distance += (2 * rand() - 1) * distance * offset
 			results = "Fourier transform analysis on anomalous energy absorption through carrier ([carrier]) indicates source located inside emission radius ([100 * accuracy]% accuracy): [distance]."
 		else
 			results = "Energy dispersion detected throughout sample consistent with background readings.<br>"

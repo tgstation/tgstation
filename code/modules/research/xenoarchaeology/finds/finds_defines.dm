@@ -57,8 +57,8 @@
 #define ARTIFACT_ROBOHURT 13
 #define ARTIFACT_ROBOHEAL 14
 #define ARTIFACT_DNASWITCH 15
-#define ARTIFACT_
-#define ARTIFACT_
+//#define ARTIFACT_
+//#define ARTIFACT_
 
 //descending order of likeliness to spawn
 #define DIGSITE_GARDEN 1

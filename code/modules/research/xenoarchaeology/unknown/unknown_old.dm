@@ -87,9 +87,11 @@
 		my_effect.effectmode = "worldpulse"
 		src.recharge = rand(40,120)
 
+	/*
 	display_id += pick("kappa","sigma","antaeres","beta","lorard","omicron","iota","upsilon","omega","gamma","delta")
 	display_id += "-"
 	display_id += num2text(rand(100,999))
+	*/
 
 /obj/machinery/artifact/Del()
 	..()
