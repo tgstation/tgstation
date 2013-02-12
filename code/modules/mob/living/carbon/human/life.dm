@@ -211,7 +211,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					continue
 				for(var/datum/wound/W in temp.wounds) if(W.bleeding())
 					blood_max += W.damage / 4
-				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED) && !temp.amputated)
 					blood_max += 20 //Yer missing a fucking limb.
 			drip(blood_max)
 
