@@ -11,6 +11,7 @@
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
 	stop_automated_movement_when_pulled = 0
+	var/destroy_surroundings = 1
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 
@@ -116,11 +117,13 @@
 				target_mob = FindTarget()
 
 			if(HOSTILE_STANCE_ATTACK)
-				DestroySurroundings()
+				if(destroy_surroundings)
+					DestroySurroundings()
 				MoveToTarget()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				DestroySurroundings()
+				if(destroy_surroundings)
+					DestroySurroundings()
 				AttackTarget()
 
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)

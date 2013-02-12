@@ -16,6 +16,7 @@
 	speed = -1
 	maxHealth = 25
 	health = 25
+	destroy_surroundings = 0
 
 	harm_intent_damage = 8
 	melee_damage_lower = 15
