@@ -768,6 +768,7 @@
 #include "code\modules\events\energetic_flux.dm"
 #include "code\modules\events\event.dm"
 #include "code\modules\events\event_manager.dm"
+#include "code\modules\events\ion_storm.dm"
 #include "code\modules\events\mass_hallucination.dm"
 #include "code\modules\events\meteor_wave.dm"
 #include "code\modules\events\prison_break.dm"
