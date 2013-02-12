@@ -24,21 +24,20 @@
 			side_effects += M
 
 /mob/living/carbon/human/proc/handle_medical_side_effects()
-	// Only process every 30 ticks
-	if(life_tick % 30 == 0)
-		// One full cycle(in terms of strength) every 10 minutes
-		var/strength_percent = sin(life_tick / 600)
+	// One full cycle(in terms of strength) every 10 minutes
+	var/strength_percent = sin(life_tick / 300)
 
-		// Only do anything if the effect is currently strong enough
-		if(strength_percent >= 0.7)
-			for (var/datum/medical_effect/M in side_effects)
-				if (M.cure())
-					side_effects -= M
-					del(M)
-				else
-					M.on_life(src, 0.7*M.strength)
-					// Effect slowly growing stronger
-					M.strength++
+	// Only do anything if the effect is currently strong enough
+	if(strength_percent >= 0.4)
+		for (var/datum/medical_effect/M in side_effects)
+			if (M.cure())
+				side_effects -= M
+				del(M)
+			else
+				if(life_tick % 30 == 0)
+					M.on_life(src, strength_percent*M.strength)
+				// Effect slowly growing stronger
+				M.strength+=0.2
 
 // HEADACHE
 // ========
