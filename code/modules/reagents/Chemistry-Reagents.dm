@@ -1501,6 +1501,7 @@ datum
 					return
 				if(!M) M = holder.my_atom
 				M.heal_organ_damage(2*REM,0)
+				M.add_side_effect("Headache")
 				..()
 				return
 

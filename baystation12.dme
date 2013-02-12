@@ -1431,6 +1431,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\SuperMatter.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\ZeroPointLaser.dm"
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
+#include "code\WorkInProgress\Cib\MedicalSideEffects.dm"
 #include "code\WorkInProgress\Mini\ATM.dm"
 #include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
