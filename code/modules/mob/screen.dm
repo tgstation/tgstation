@@ -6,6 +6,14 @@
 	var/id = 0.0
 	var/obj/master
 
+/obj/screen/text
+	icon = null
+	icon_state = null
+	mouse_opacity = 0
+	screen_loc = "CENTER-7,CENTER-7"
+	maptext_height = 480
+	maptext_width = 480
+
 /obj/screen/inventory
 	var/slot_id
 
@@ -210,7 +218,7 @@
 	else
 		return
 
-	overlays = null
+	overlays.Cut()
 	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
 
 	return
@@ -452,12 +460,6 @@
 					usr:inv3.icon_state = "inv3"
 					usr:module_active = null
 
-		if("radar")
-			usr:close_radar()
-
-		if("radar closed")
-			usr:start_radar()
-
 		else
 			DblClick()
 	return
@@ -638,7 +640,7 @@
 		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
+			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				usr << "\red You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
@@ -676,7 +678,7 @@
 		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
+			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				usr << "\red You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)"
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)

@@ -76,7 +76,5 @@
 
 
 /obj/machinery/computer/operating/process()
-	if(!(stat & (NOPOWER|BROKEN)) )
-		use_power(500)
-
-	src.updateDialog()
+	if(..())
+		src.updateDialog()

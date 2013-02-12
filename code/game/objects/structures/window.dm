@@ -98,7 +98,7 @@
 
 
 /obj/structure/window/attack_hand(mob/user as mob)
-	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)
@@ -113,7 +113,7 @@
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_metroid
+/obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
@@ -136,8 +136,8 @@
 	attack_generic(M, M.melee_damage_upper)
 
 
-/obj/structure/window/attack_metroid(mob/user as mob)
-	if(!ismetroidadult(user)) return
+/obj/structure/window/attack_slime(mob/user as mob)
+	if(!isslimeadult(user)) return
 	attack_generic(user, rand(10, 15))
 
 
@@ -152,17 +152,18 @@
 			del(W)	//gotta delete it here because if window breaks, it won't get deleted
 			switch (state)
 				if(1)
-					M.apply_damage(10)
+					M.apply_damage(7)
 					hit(10)
 					visible_message("\red [user] slams [M] against \the [src]!")
 				if(2)
-					M.Weaken(2)
-					M.apply_damage(15)
+					if (prob(50))
+						M.Weaken(1)
+					M.apply_damage(10)
 					hit(25)
 					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
 				if(3)
-					M.Weaken(10)
-					M.apply_damage(25)
+					M.Weaken(5)
+					M.apply_damage(20)
 					hit(50)
 					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
 			return

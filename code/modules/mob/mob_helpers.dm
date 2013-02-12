@@ -30,13 +30,13 @@
 		return 1
 	return 0
 
-/proc/ismetroid(A)
-	if(istype(A, /mob/living/carbon/metroid))
+/proc/isslime(A)
+	if(istype(A, /mob/living/carbon/slime))
 		return 1
 	return 0
 
-/proc/ismetroidadult(A)
-	if(istype(A, /mob/living/carbon/metroid/adult))
+/proc/isslimeadult(A)
+	if(istype(A, /mob/living/carbon/slime/adult))
 		return 1
 	return 0
 
@@ -81,7 +81,7 @@
 	return 0
 
 /proc/isclown(A)
-	if(istype(A, /mob/living/simple_animal/clown))
+	if(istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 		return 1
 	return 0
 
@@ -121,7 +121,7 @@ proc/isorgan(A)
 	return 0
 
 proc/hasorgans(A)
-	return (ishuman(A) || ismonkey(A))
+	return ishuman(A)
 
 /proc/hsl2rgb(h, s, l)
 	return
@@ -170,7 +170,7 @@ proc/hasorgans(A)
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
-	if(!target.buckled && !target.lying) 
+	if(!target.buckled && !target.lying)
 		var/miss_chance = max(10 + miss_chance_mod, 0)
 		switch(zone)
 			if("head")

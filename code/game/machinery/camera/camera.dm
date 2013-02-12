@@ -8,7 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 
-	var/network = "SS13"
+	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1.0
@@ -40,23 +40,31 @@
 	assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
-		if(C != src && C.c_tag == src.c_tag && C.network == src.network)
+		var/list/tempnetwork = C.network&src.network
+		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
+	if(!src.network || src.network.len < 1)
+		if(loc)
+			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
+		else
+			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
+		ASSERT(src.network)
+		ASSERT(src.network.len > 0)
 	..()
-
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
 			icon_state = "[initial(icon_state)]emp"
-			network = null                   //Not the best way but it will do. I think.
+			var/list/previous_network = network
+			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
 			triggerCameraAlarm()
 			spawn(900)
-				network = initial(network)
+				network = previous_network
 				icon_state = initial(icon_state)
 				stat &= ~EMPED
 				cancelCameraAlarm()

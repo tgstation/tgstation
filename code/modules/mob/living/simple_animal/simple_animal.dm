@@ -20,6 +20,7 @@
 	var/meat_amount = 0
 	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
+	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
 
 	//Interaction
@@ -95,7 +96,7 @@
 		AdjustParalysis(-1)
 
 	//Movement
-	if(!client && !stop_automated_movement)
+	if(!client && !stop_automated_movement && wander)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -186,12 +187,12 @@
 
 	//Atmos effect
 	if(bodytemperature < minbodytemp)
-		health -= cold_damage_per_tick
+		adjustBruteLoss(cold_damage_per_tick)
 	else if(bodytemperature > maxbodytemp)
-		health -= heat_damage_per_tick
+		adjustBruteLoss(heat_damage_per_tick)
 
 	if(!atmos_suitable)
-		health -= unsuitable_atoms_damage
+		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
 
 /mob/living/simple_animal/Bumped(AM as mob|obj)
@@ -241,11 +242,11 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		health -= damage
+		adjustBruteLoss(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	src.health -= Proj.damage
+	adjustBruteLoss(Proj.damage)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -264,6 +265,7 @@
 				return
 			if (!(status_flags & CANPUSH))
 				return
+
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
@@ -277,16 +279,11 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt")
-			health -= harm_intent_damage
+		if("hurt", "disarm")
+			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message("\red [M] [response_harm] [src]")
-
-		if("disarm")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("\blue [M] [response_disarm] [src]")
 
 	return
 
@@ -295,6 +292,7 @@
 	switch(M.a_intent)
 
 		if ("help")
+
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
@@ -303,6 +301,7 @@
 				return
 			if(!(status_flags & CANPUSH))
 				return
+
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
@@ -316,16 +315,10 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt")
+		if("hurt", "disarm")
 			var/damage = rand(15, 30)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
-			src.health -= damage
-
-
-		if("disarm")
-			var/damage = rand(15, 30)
-			visible_message("\red <B>[M] has slashed at [src]!</B>")
-			src.health -= damage
+			adjustBruteLoss(damage)
 
 	return
 
@@ -335,23 +328,47 @@
 		if("help")
 			visible_message("\blue [L] rubs it's head against [src]")
 
+
 		else
 
 			var/damage = rand(5, 10)
 			visible_message("\red <B>[L] bites [src]!</B>")
 
 			if(stat != DEAD)
-				src.health -= damage
+				adjustBruteLoss(damage)
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+
+
+/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if(M.Victim) return // can't attack while eating!
+
+	visible_message("\red <B>The [M.name] glomps [src]!</B>")
+
+	var/damage = rand(1, 3)
+
+	if(istype(src, /mob/living/carbon/slime/adult))
+		damage = rand(20, 40)
+	else
+		damage = rand(5, 35)
+
+	adjustBruteLoss(damage)
+
+
+	return
 
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
+
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
-					health = min(maxHealth, health + MED.heal_brute)
+					adjustBruteLoss(-MED.heal_brute)
 					MED.amount -= 1
 					if(MED.amount <= 0)
 						del(MED)
@@ -372,7 +389,7 @@
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
-			health -= damage
+			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
@@ -381,6 +398,7 @@
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
+
 
 
 /mob/living/simple_animal/movement_delay()
@@ -409,19 +427,19 @@
 		flick("flash", flash)
 	switch (severity)
 		if (1.0)
-			health -= 500
+			adjustBruteLoss(500)
 			gib()
 			return
 
 		if (2.0)
-			health -= 60
+			adjustBruteLoss(60)
 
 
 		if(3.0)
-			health -= 30
+			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
-	health -= damage
+	health = Clamp(health - damage, 0, maxHealth)
 
 /mob/living/simple_animal/proc/SA_attackable(target_mob)
 	if (isliving(target_mob))

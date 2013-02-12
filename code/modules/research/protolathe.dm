@@ -134,6 +134,8 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/obj/item/stack/sheet/stack = O
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+	if(!O)
+		return
 	if(amount < 0)//No negative numbers
 		amount = 0
 	if(amount == 0)

@@ -31,7 +31,7 @@
 	var/delete = 0
 	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
 	var/temphtml = null
-	var/obj/machinery/dna_scanner/connected = null
+	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
 	anchored = 1.0
 	use_power = 1
@@ -289,11 +289,15 @@
 
 	else if (href_list["view_rec"])
 		src.active_record = locate(href_list["view_rec"])
-		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
-			del(src.active_record)
-			src.temp = "ERROR: Record Corrupt"
+		if(istype(src.active_record,/datum/data/record))
+			if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
+				del(src.active_record)
+				src.temp = "ERROR: Record Corrupt"
+			else
+				src.menu = 3
 		else
-			src.menu = 3
+			src.active_record = null
+			src.temp = "Record missing."
 
 	else if (href_list["del_rec"])
 		if ((!src.active_record) || (src.menu < 3))
@@ -416,9 +420,9 @@
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
-//	if ((!subject.ckey) || (!subject.client))
-//		scantemp = "Error: Mental interface failure."
-//		return
+	if ((!subject.ckey) || (!subject.client))
+		scantemp = "Error: Mental interface failure."
+		return
 	if (NOCLONE in subject.mutations)
 		scantemp = "Error: Mental interface failure."
 		return
@@ -464,15 +468,14 @@
 			break
 	return selected_record
 
-/obj/machinery/computer/cloning/power_change()
+/obj/machinery/computer/cloning/update_icon()
 
 	if(stat & BROKEN)
 		icon_state = "commb"
 	else
-		if( powered() )
+		if(stat & NOPOWER)
+			src.icon_state = "c_unpowered"
+			stat |= NOPOWER
+		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				stat |= NOPOWER

@@ -30,6 +30,9 @@
 	manual_unbuckle(user)
 	return
 
+/obj/structure/stool/bed/MouseDrop(atom/over_object)
+	return
+
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
@@ -65,6 +68,10 @@
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+		return
+
+	if (istype(M, /mob/living/carbon/slime))
+		user << "The [M] is too squishy to buckle in."
 		return
 
 	unbuckle()

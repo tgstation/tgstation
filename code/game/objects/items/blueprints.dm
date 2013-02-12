@@ -64,7 +64,7 @@ move an amendment</a> to the drawing.</p>
 "}
 		if (AREA_SPECIAL)
 			text += {"
-<p>This place doesn't noted on these blueprints.</p>
+<p>This place isn't noted on these blueprints.</p>
 "}
 		else
 			return
@@ -114,7 +114,7 @@ move an amendment</a> to the drawing.</p>
 				usr << "\red Error! Please notify administration!"
 				return
 	var/list/turf/turfs = res
-	var/str = sanitize(trim(input(usr,"New area title","Blueprints editing")))
+	var/str = trim(stripped_input(usr,"New area title","Blueprints editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
@@ -129,7 +129,14 @@ move an amendment</a> to the drawing.</p>
 	A.power_equip = 0
 	A.power_light = 0
 	A.power_environ = 0
+	A.always_unpowered = 0
 	move_turfs_to_area(turfs, A)
+
+	A.always_unpowered = 0
+	for(var/turf/T in A.contents)
+		T.lighting_changed = 1
+		lighting_controller.changed_turfs += T
+
 	spawn(5)
 		//ma = A.master ? "[A.master]" : "(null)"
 		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
@@ -147,7 +154,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = get_area()
 	//world << "DEBUG: edit_area"
 	var/prevname = A.name
-	var/str = sanitize(trim(input(usr,"New area title","Blueprints editing",prevname)))
+	var/str = trim(stripped_input(usr,"New area title","Blueprints editing", prevname, MAX_NAME_LEN))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)

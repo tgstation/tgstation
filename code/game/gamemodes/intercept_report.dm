@@ -1,5 +1,6 @@
 /datum/intercept_text
 	var/text
+	/*
 	var/prob_correct_person_lower = 20
 	var/prob_correct_person_higher = 80
 	var/prob_correct_job_lower = 20
@@ -8,6 +9,7 @@
 	var/prob_correct_print_higher = 80
 	var/prob_correct_objective_lower = 20
 	var/prob_correct_objective_higher = 80
+	*/
 	var/list/org_names_1 = list(
 		"Blighted",
 		"Defiled",
@@ -48,7 +50,8 @@
 		"Booga",
 		"The Goatee of Wrath",
 		"Tam Lin",
-		"Species 3157"
+		"Species 3157",
+		"Small Prick"
 	)
 
 
@@ -85,7 +88,9 @@
 		else
 			return null
 
+// NOTE: Commentted out was the code which showed the chance of someone being an antag. If you want to re-add it, just uncomment the code.
 
+/*
 /datum/intercept_text/proc/pick_mob()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list)
@@ -104,11 +109,13 @@
 		return num2text(md5(dude.dna.uni_identity))
 	else
 		return num2text(md5(num2text(rand(1,10000))))
-
+*/
 
 /datum/intercept_text/proc/build_traitor(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
+
+	/*
 	var/fingerprints
 	var/traitor_name
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
@@ -121,8 +128,11 @@
 		traitor_name = pick_mob()
 	else
 		fingerprints = pick_fingerprints()
+	*/
 
-	src.text += "<BR><BR>The <B>[name_1] [name_2]</B> implied an undercover operative was acting on their behalf on the station currently.<BR>"
+	src.text += "<BR><BR>The <B>[name_1] [name_2]</B> implied an undercover operative was acting on their behalf on the station currently."
+	src.text += "It would be in your best interests to suspect everybody, as these undercover operatives could have implants which trigger them to have their memories removed until they are needed. He, or she, could even be a high ranking officer."
+	/*
 	src.text += "After some investigation, we "
 	if(traitor_name)
 		src.text += "are [prob_right_dude]% sure that [traitor_name] may have been involved, and should be closely observed."
@@ -130,11 +140,13 @@
 	else
 		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
+	*/
 
 
 /datum/intercept_text/proc/build_cult(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
+	/*
 	var/traitor_name
 	var/traitor_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
@@ -156,19 +168,23 @@
 			traitor_name = correct_person:current
 	else
 		traitor_name = pick_mob()
-
-	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge on as many stations as they can.<BR>"
+	*/
+	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge onto as many stations as they can."
+	src.text += "Watch out for the following: praying to an unfamilar god, preaching the word of \[REDACTED\], sacrifices, magical dark power, living constructs of evil and a portal to the dimension of the underworld."
+	/*
 	src.text += "Based on our intelligence, we are [prob_right_job]% sure that if true, someone doing the job of [traitor_job] on your station may have been converted "
 	src.text += "and instilled with the idea of the flimsiness of the real world, seeking to destroy it. "
 	if(prob(prob_right_dude))
 		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
 		src.text += "organisation."
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
+	*/
 
 
 /datum/intercept_text/proc/build_rev(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
+	/*
 	var/traitor_name
 	var/traitor_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
@@ -192,14 +208,17 @@
 			traitor_name = correct_person.current
 	else
 		traitor_name = src.pick_mob()
-
-	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] are attempting to stir unrest on one of our stations in your sector. <BR>"
+	*/
+	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] are attempting to stir unrest on one of our stations in your sector."
+	src.text += "Watch out for suspicious activity among the crew and make sure that all heads of staff report in periodically."
+	/*
 	src.text += "Based on our intelligence, we are [prob_right_job]% sure that if true, someone doing the job of [traitor_job] on your station may have been brainwashed "
 	src.text += "at a recent conference, and their department should be closely monitored for signs of mutiny. "
 	if(prob(prob_right_dude))
 		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
 		src.text += "organisation."
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
+	*/
 
 
 /datum/intercept_text/proc/build_wizard(datum/mind/correct_person)
@@ -211,7 +230,7 @@
 	src.text += "Known attributes include: Brown sandals, a large blue hat, a voluptous white beard, and an inclination to cast spells."
 
 /datum/intercept_text/proc/build_nuke(datum/mind/correct_person)
-	src.text += "<BR><BR>Cent. Com recently recieved a report of a plot to destory one of our stations in your area. We believe the Nuclear Authentication Disc "
+	src.text += "<BR><BR>Cent. Com recently recieved a report of a plot to destroy one of our stations in your area. We believe the Nuclear Authentication Disc "
 	src.text += "that is standard issue aboard your vessel may be a target. We recommend removal of this object, and it's storage in a safe "
 	src.text += "environment. As this may cause panic among the crew, all efforts should be made to keep this information a secret from all but "
 	src.text += "the most trusted crew-members."
@@ -226,6 +245,7 @@
 	var/cname = pick(src.changeling_names)
 	var/orgname1 = pick(src.org_names_1)
 	var/orgname2 = pick(src.org_names_2)
+	/*
 	var/changeling_name
 	var/changeling_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
@@ -245,9 +265,12 @@
 			changeling_name = src.pick_mob()
 	else
 		changeling_name = src.pick_mob()
+	*/
 
 	src.text += "<BR><BR>We have received a report that a dangerous alien lifeform known only as \"[cname]\" may have infiltrated your crew.  "
+	/*
 	src.text += "Our intelligence suggests a [prob_right_job]% chance that a [changeling_job] on board your station has been replaced by the alien.  "
 	src.text += "Additionally, the report indicates a [prob_right_dude]% chance that [changeling_name] may have been in contact with the lifeform at a recent social gathering.  "
+	*/
 	src.text += "These lifeforms are assosciated with the [orgname1] [orgname2] and may be attempting to acquire sensitive materials on their behalf.  "
-	src.text += "Please take care not to alarm the crew, as [cname] may take advantage of a panic situation."
+	src.text += "Please take care not to alarm the crew, as [cname] may take advantage of a panic situation. Remember, they can be anybody, suspect everybody!"

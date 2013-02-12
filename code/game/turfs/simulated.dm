@@ -14,6 +14,10 @@
 	levelupdate()
 
 /turf/simulated/Entered(atom/A, atom/OL)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
+
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
@@ -43,7 +47,7 @@
 					else
 						M.inertia_dir = 0
 						return
-				else if(!istype(M, /mob/living/carbon/metroid))
+				else if(!istype(M, /mob/living/carbon/slime))
 					if (M.m_intent == "run")
 						M.stop_pulling()
 						step(M, M.dir)
@@ -56,7 +60,7 @@
 						return
 
 			if(2) //lube		//can cause infinite loops - needs work
-				if(!istype(M, /mob/living/carbon/metroid))
+				if(!istype(M, /mob/living/carbon/slime))
 					M.stop_pulling()
 					step(M, M.dir)
 					spawn(1) step(M, M.dir)

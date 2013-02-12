@@ -89,6 +89,10 @@
 					usr << "Not enough parameters (Requires ckey, reason and job)"
 					return
 				banduration = null
+			if(BANTYPE_JOB_TEMP)
+				if(!banckey || !banreason || !banjob || !banduration)
+					usr << "Not enough parameters (Requires ckey, reason and job)"
+					return
 
 		var/mob/playermob
 
@@ -144,26 +148,32 @@
 				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer","*New Rank*")
 
 			var/rights = 0
+			if(D)
+				rights = D.rights
 			switch(new_rank)
 				if(null,"") return
 				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
+					new_rank = input("Please input a new rank", "New custom rank", null, null) as null|text
+					if(config.admin_legacy_system)
+						new_rank = ckeyEx(new_rank)
 					if(!new_rank)
 						usr << "<font color='red'>Error: Topic 'editrights': Invalid rank</font>"
 						return
-					if(admin_ranks.len)
-						if(new_rank in admin_ranks)
-							rights |= admin_ranks[new_rank]			//we typed a rank which already exists, use its rights
-						else
-							admin_ranks[new_rank] = 0				//add the new rank to admin_ranks
+					if(config.admin_legacy_system)
+						if(admin_ranks.len)
+							if(new_rank in admin_ranks)
+								rights = admin_ranks[new_rank]		//we typed a rank which already exists, use its rights
+							else
+								admin_ranks[new_rank] = 0			//add the new rank to admin_ranks
 				else
-					new_rank = ckeyEx(new_rank)
-					rights |= admin_ranks[new_rank]					//we input an existing rank, use its rights
+					if(config.admin_legacy_system)
+						new_rank = ckeyEx(new_rank)
+						rights = admin_ranks[new_rank]				//we input an existing rank, use its rights
 
 			if(D)
-				D.disassociate()									//remove adminverbs and unlink from client
-				D.rank = new_rank									//update the rank
-				D.rights = rights									//update the rights based on admin_ranks (default: 0)
+				D.disassociate()								//remove adminverbs and unlink from client
+				D.rank = new_rank								//update the rank
+				D.rights = rights								//update the rights based on admin_ranks (default: 0)
 			else
 				D = new /datum/admins(new_rank, rights, adm_ckey)
 
@@ -262,8 +272,8 @@
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("metroid")			M.change_mob_type( /mob/living/carbon/metroid , null, null, delmob )
-			if("adultmetroid")		M.change_mob_type( /mob/living/carbon/metroid/adult , null, null, delmob )
+			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
@@ -671,25 +681,59 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			var/reason = input(usr,"Reason?","Please State Reason","") as text|null
-			if(reason)
-				var/msg
-				for(var/job in notbannedlist)
-					ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]. reason: [reason]")
-					log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
-					feedback_inc("ban_job",1)
-					DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
-					feedback_add_details("ban_job","- [job]")
-					jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
-					if(!msg)	msg = job
-					else		msg += ", [job]"
-				notes_add(M.ckey, "Banned  from [msg] - [reason]")
-				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
-				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
-				M << "\red <B>The reason is: [reason]</B>"
-				M << "\red Jobban can be lifted only upon request."
-				href_list["jobban2"] = 1 // lets it fall through and refresh
-				return 1
+			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+				if("Yes")
+					if(config.ban_legacy_system)
+						usr << "\red Your server is using the legacy banning system, which does not support temporary job bans. Consider upgrading. Aborting ban."
+						return
+					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+					if(!mins)
+						return
+					var/reason = input(usr,"Reason?","Please State Reason","") as text|null
+					if(!reason)
+						return
+
+					var/msg
+					for(var/job in notbannedlist)
+						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
+						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
+						feedback_inc("ban_job_tmp",1)
+						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						feedback_add_details("ban_job_tmp","- [job]")
+						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]") //Legacy banning does not support temporary jobbans.
+						if(!msg)
+							msg = job
+						else
+							msg += ", [job]"
+					notes_add(M.ckey, "Banned  from [msg] - [reason]")
+					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes", 1)
+					M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
+					M << "\red <B>The reason is: [reason]</B>"
+					M << "\red This jobban will be lifted in [mins] minutes."
+					href_list["jobban2"] = 1 // lets it fall through and refresh
+					return 1
+				if("No")
+					var/reason = input(usr,"Reason?","Please State Reason","") as text|null
+					if(reason)
+						var/msg
+						for(var/job in notbannedlist)
+							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
+							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
+							feedback_inc("ban_job",1)
+							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							feedback_add_details("ban_job","- [job]")
+							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
+							if(!msg)	msg = job
+							else		msg += ", [job]"
+						notes_add(M.ckey, "Banned  from [msg] - [reason]")
+						message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
+						M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
+						M << "\red <B>The reason is: [reason]</B>"
+						M << "\red Jobban can be lifted only upon request."
+						href_list["jobban2"] = 1 // lets it fall through and refresh
+						return 1
+				if("Cancel")
+					return
 
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
@@ -1137,15 +1181,15 @@
 
 		usr.client.cmd_admin_alienize(H)
 
-	else if(href_list["makemetroid"])
+	else if(href_list["makeslime"])
 		if(!check_rights(R_SPAWN))	return
 
-		var/mob/living/carbon/human/H = locate(href_list["makemetroid"])
+		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_metroidize(H)
+		usr.client.cmd_admin_slimeize(H)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
@@ -1210,7 +1254,7 @@
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_MOD,0) && !check_rights(R_ADMIN))	return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
@@ -1218,6 +1262,9 @@
 		if(!isobserver(usr))	C.admin_ghost()
 		sleep(2)
 		C.jumptomob(M)
+
+	else if(href_list["check_antagonist"])
+		check_antagonists()
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return
@@ -1416,7 +1463,7 @@
 		usr.client.cmd_admin_subtle_message(M)
 
 	else if(href_list["traitor"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN|R_MOD))	return
 
 		if(!ticker || !ticker.mode)
 			alert("The game hasn't started yet!")
@@ -1877,73 +1924,6 @@
 					spawn(0)
 						sleep(rand(30,400))
 						Wall.ex_act(rand(2,1)) */
-			if("wave")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","MW")
-				meteor_wave()
-				message_admins("[key_name_admin(usr)] has spawned meteors", 1)
-				command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-				world << sound('sound/AI/meteors.ogg')
-			if("gravanomalies")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","GA")
-				command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-				world << sound('sound/AI/granomalies.ogg')
-				var/turf/T = pick(blobstart)
-				var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
-				spawn(rand(100, 600))
-					del(bh)
-
-			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","STA")
-				//moved to its own dm so I could split it up and prevent the spawns copying variables over and over
-				//can be found in code\game\game_modes\events\wormholes.dm
-				wormhole_event()
-
-			if("goblob")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","BL")
-				mini_blob_event()
-				message_admins("[key_name_admin(usr)] has spawned blob", 1)
-			if("aliens")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","AL")
-				if(aliens_allowed)
-					alien_infestation()
-					message_admins("[key_name_admin(usr)] has spawned aliens", 1)
-			if("alien_silent")								//replaces the spawn_xeno verb
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","ALS")
-				if(aliens_allowed)
-					create_xeno()
-			if("comms_blackout")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","CB")
-				var/answer = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No")
-				if(answer == "Yes")
-					communications_blackout(0)
-				else
-					communications_blackout(1)
-				message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
-			if("spaceninja")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","SN")
-				if(toggle_space_ninja)
-					if(space_ninja_arrival())//If the ninja is actually spawned. They may not be depending on a few factors.
-						message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
-			if("carp")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","C")
-				var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
-				if(choice == "Badmin")
-					message_admins("[key_name_admin(usr)] has spawned carp.", 1)
-					carp_migration()
-			if("radiation")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","R")
-				message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
-				high_radiation_event()
 			if("immovable")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","IR")
@@ -2033,7 +2013,7 @@
 						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
-							F.overlays = null
+							F.overlays.Cut()
 							F.lava = 0
 							F.update_icon()
 					floorIsLava = 0
@@ -2078,6 +2058,15 @@
 					W.color = "schoolgirl"
 				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 				world << sound('sound/AI/animes.ogg')
+			if("eagles")//SCRAW
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","EgL")
+				for(var/obj/machinery/door/airlock/W in world)
+					if(W.z == 1 && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+						W.req_access = list()
+				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
+				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
+				world << sound('sound/AI/commandreport.ogg')
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
@@ -2097,7 +2086,7 @@
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")
-				spacevine_infestation()
+				//new /datum/event/spacevine
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
 			if("onlyone")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2141,8 +2130,6 @@
 						if(!job)	continue
 						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 					usr << browse(dat, "window=jobdebug;size=600x500")
-			if("check_antagonist")
-				check_antagonists()
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")
@@ -2159,6 +2146,8 @@
 						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 				dat += "</table>"
 				usr << browse(dat, "window=manifest;size=440x410")
+			if("check_antagonist")
+				check_antagonists()
 			if("DNA")
 				var/dat = "<B>Showing DNA from blood.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"

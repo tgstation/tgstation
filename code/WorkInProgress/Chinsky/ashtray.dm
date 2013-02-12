@@ -29,7 +29,7 @@
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if (cig.lit == 1)
 				src.visible_message("[user] crushes [cig] in [src], putting it out.")
-				cig.put_out()
+				cig.smoketime = 0
 			else if (cig.lit == 0)
 				if(istype(cig, /obj/item/weapon/match))
 					user << "You place [cig] in [src] without even lighting it. Why would you do that?"

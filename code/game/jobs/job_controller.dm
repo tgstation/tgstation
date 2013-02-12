@@ -38,8 +38,8 @@ var/global/datum/controller/occupations/job_master
 			if(J.title == rank)	return J
 		return null
 
-	proc/GetAltTitle(mob/new_player/player, rank)
-		return player.client.prefs.GetAltTitle(GetJob(rank))
+	proc/GetPlayerAltTitle(mob/new_player/player, rank)
+		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
@@ -47,13 +47,14 @@ var/global/datum/controller/occupations/job_master
 			var/datum/job/job = GetJob(rank)
 			if(!job)	return 0
 			if(jobban_isbanned(player, rank))	return 0
+			if(!job.player_old_enough(player.client)) return 0
 			var/position_limit = job.total_positions
 			if(!latejoin)
 				position_limit = job.spawn_positions
 			if((job.current_positions < position_limit) || position_limit == -1)
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
-				player.mind.role_alt_title = GetAltTitle(player, rank)
+				player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 				unassigned -= player
 				job.current_positions++
 				return 1
@@ -74,6 +75,9 @@ var/global/datum/controller/occupations/job_master
 			if(jobban_isbanned(player, job.title))
 				Debug("FOC isbanned failed, Player: [player]")
 				continue
+			if(!job.player_old_enough(player.client))
+				Debug("FOC player not old enough, Player: [player]")
+				continue
 			if(flag && (!player.client.prefs.be_special & flag))
 				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
@@ -83,7 +87,7 @@ var/global/datum/controller/occupations/job_master
 		return candidates
 
 	proc/GiveRandomJob(var/mob/new_player/player)
-		Debug("FOC Giving random job, Player: [player]")
+		Debug("GRJ Giving random job, Player: [player]")
 		for(var/datum/job/job in shuffle(occupations))
 			if(!job)
 				continue
@@ -95,11 +99,15 @@ var/global/datum/controller/occupations/job_master
 				continue
 
 			if(jobban_isbanned(player, job.title))
-				Debug("FOC isbanned failed, Player: [player], Job: [job.title]")
+				Debug("GRJ isbanned failed, Player: [player], Job: [job.title]")
+				continue
+
+			if(!job.player_old_enough(player.client))
+				Debug("GRJ player not old enough, Player: [player]")
 				continue
 
 			if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-				Debug("FOC Random job given, Player: [player], Job: [job]")
+				Debug("GRJ Random job given, Player: [player], Job: [job]")
 				AssignRole(player, job.title)
 				unassigned -= player
 				break
@@ -242,7 +250,11 @@ var/global/datum/controller/occupations/job_master
 						continue
 
 					if(jobban_isbanned(player, job.title))
-						Debug("FOC isbanned failed, Player: [player], Job:[job.title]")
+						Debug("DO isbanned failed, Player: [player], Job:[job.title]")
+						continue
+
+					if(!job.player_old_enough(player.client))
+						Debug("DO player not old enough, Player: [player], Job:[job.title]")
 						continue
 
 					// If the player wants that job on this level, then try give it to him.
@@ -250,7 +262,7 @@ var/global/datum/controller/occupations/job_master
 
 						// If the job isn't filled
 						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-							Debug("FOC pass, Player: [player], Level:[level], Job:[job.title]")
+							Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 							AssignRole(player, job.title)
 							unassigned -= player
 							break
@@ -299,9 +311,6 @@ var/global/datum/controller/occupations/job_master
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
 		H.job = rank
-		if(H.mind && H.mind.assigned_role != rank)
-			H.mind.assigned_role = rank
-			H.mind.role_alt_title = null
 
 		if(!joined_late)
 			var/obj/S = null
@@ -315,10 +324,10 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
-
-
+		var/alt_title = null
 		if(H.mind)
 			H.mind.assigned_role = rank
+			alt_title = H.mind.role_alt_title
 
 			switch(rank)
 				if("Cyborg")
@@ -342,16 +351,12 @@ var/global/datum/controller/occupations/job_master
 							new /obj/item/weapon/storage/box(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 
-		H << "<B>You are the [rank].</B>"
-		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+		H << "<B>You are the [alt_title ? alt_title : rank].</B>"
+		H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
-		spawnId(H,rank)
 
-		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
-			spawnId(H, rank, H.mind.role_alt_title)
-		else
-			spawnId(H,rank)
+		spawnId(H, rank, alt_title)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 //		H.update_icons()
 		return 1
@@ -359,7 +364,6 @@ var/global/datum/controller/occupations/job_master
 
 	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
 		if(!H)	return 0
-		if(!title) title = rank
 		var/obj/item/weapon/card/id/C = null
 
 		var/datum/job/job = null
@@ -373,23 +377,20 @@ var/global/datum/controller/occupations/job_master
 				return
 			else
 				C = new job.idtype(H)
+				C.access = job.get_access()
 		else
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
-			C.assignment = title
+			C.rank = rank
+			C.assignment = title ? title : rank
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-			C.access = get_access(rank)
 			H.equip_to_slot_or_del(C, slot_wear_id)
-	/*	if(prob(50))
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
-		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
-		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
+		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
-			pda.ownjob = H.wear_id.assignment
+			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 		return 1
 
@@ -438,11 +439,15 @@ var/global/datum/controller/occupations/job_master
 			var/level3 = 0 //low
 			var/level4 = 0 //never
 			var/level5 = 0 //banned
+			var/level6 = 0 //account too young
 			for(var/mob/new_player/player in player_list)
 				if(!(player.ready && player.mind && !player.mind.assigned_role))
 					continue //This player is not ready
 				if(jobban_isbanned(player, job.title))
 					level5++
+					continue
+				if(!job.player_old_enough(player.client))
+					level6++
 					continue
 				if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
 					level1++
@@ -452,5 +457,5 @@ var/global/datum/controller/occupations/job_master
 					level3++
 				else level4++ //not selected
 
-			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|-"
+			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|-|YOUNG=[level6]|-"
 			feedback_add_details("job_preferences",tmp_str)

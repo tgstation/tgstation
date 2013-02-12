@@ -137,13 +137,12 @@ Doesn't work on other aliens/AI.*/
 		if(!istype(T, /turf))
 			return
 		if (U == T)
-			usr.bullet_act(new /obj/item/projectile/neurotoxin(usr.loc), get_organ_target())
+			usr.bullet_act(new /obj/item/projectile/energy/neurotoxin(usr.loc), get_organ_target())
 			return
 		if(!istype(U, /turf))
 			return
 
-		var/obj/item/projectile/neurotoxin/A = new /obj/item/projectile/neurotoxin(usr.loc)
-
+		var/obj/item/projectile/energy/neurotoxin/A = new /obj/item/projectile/energy/neurotoxin(usr.loc)
 		A.current = U
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x

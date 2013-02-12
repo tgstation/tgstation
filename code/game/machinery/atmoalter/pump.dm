@@ -27,6 +27,22 @@
 
 	return
 
+/obj/machinery/portable_atmospherics/pump/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+
+	if(prob(50/severity))
+		on = !on
+
+	if(prob(100/severity))
+		direction_out = !direction_out
+
+	target_pressure = rand(0,1300)
+	update_icon()
+
+	..(severity)
+
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
 	if(on)

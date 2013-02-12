@@ -57,7 +57,7 @@
 		P.on_hit(src,2)
 		return 2
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
+		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, used_weapon = "Projectile([P.name])")
 	P.on_hit(src, absorb)
 	return absorb
 
@@ -76,7 +76,7 @@
 		if(!O.fingerprintslast)
 			return
 		var/client/assailant = directory[ckey(O.fingerprintslast)]
-		if(assailant.mob && istype(assailant.mob,/mob))
+		if(assailant && assailant.mob && istype(assailant.mob,/mob))
 			var/mob/M = assailant.mob
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with [O], last touched by [M.name] ([assailant.ckey])</font>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with [O]</font>")

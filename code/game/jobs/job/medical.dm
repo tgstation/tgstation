@@ -9,7 +9,13 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-
+	access = list(access_medical, access_morgue, access_genetics, access_heads,
+			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+			access_keycard_auth, access_sec_doors)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
+			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+			access_keycard_auth, access_sec_doors)
+	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -41,8 +47,9 @@
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	alt_titles = list("Surgeon", "Emergency Physician", "Virologist")
-
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	minimal_access = list(access_medical, access_morgue, access_surgery)
+	alt_titles = list("Surgeon","Emergency Physician","Nurse","Orderly")
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -67,6 +74,11 @@
 				if("Medical Doctor")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+				if("Orderly")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
+				if("Nurse")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/nursesuit(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/nursehat(H), slot_head)
 		else
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
@@ -82,7 +94,7 @@
 
 
 
-//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete
+//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST
@@ -92,6 +104,9 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	minimal_access = list(access_medical, access_chemistry)
+	alt_titles = list("Pharmacist")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -118,6 +133,8 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -134,8 +151,6 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
-/*
-
 /datum/job/virologist
 	title = "Virologist"
 	flag = VIROLOGIST
@@ -145,6 +160,9 @@
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	minimal_access = list(access_medical, access_virology)
+	alt_titles = list("Pathologist","Microbiologist")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -165,5 +183,3 @@
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
-*/
-

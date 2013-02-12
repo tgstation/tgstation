@@ -35,16 +35,6 @@
 		return move_camera_by_click()
 	if(usr.stat || usr.restrained() || usr.lying)
 		return ..()
-
-	if(usr.hand && istype(usr.l_hand, /obj/item/weapon/flamethrower))
-		var/turflist = getline(usr,src)
-		var/obj/item/weapon/flamethrower/F = usr.l_hand
-		F.flame_turf(turflist)
-	else if(!usr.hand && istype(usr.r_hand, /obj/item/weapon/flamethrower))
-		var/turflist = getline(usr,src)
-		var/obj/item/weapon/flamethrower/F = usr.r_hand
-		F.flame_turf(turflist)
-
 	return ..()
 
 /turf/Click()
@@ -68,13 +58,16 @@
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	if (!mover || !isturf(mover.loc))
 		return 1
 
 
 	//First, check objects to block exit that are not on the border
 	for(var/obj/obstacle in mover.loc)
-		if((obstacle.flags & ~ON_BORDER) && (mover != obstacle) && (forget != obstacle))
+		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
 			if(!obstacle.CheckExit(mover, src))
 				mover.Bump(obstacle, 1)
 				return 0
@@ -108,6 +101,9 @@
 
 
 /turf/Entered(atom/atom as mob|obj)
+	if(movement_disabled)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	..()
 //vvvvv Infared beam stuff vvvvv
 
@@ -229,14 +225,34 @@
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
+		//if the old turf had a zone, connect the new turf to it as well - Cael
+		if(src.zone)
+			src.zone.RemoveTurf(src)
+			W.zone = src.zone
+			W.zone.AddTurf(W)
+
+		for(var/turf/simulated/T in orange(src,1))
+			air_master.tiles_to_update.Add(T)
+
 		W.levelupdate()
 		return W
 	else
+		/*if(istype(src, /turf/simulated) && src.zone)
+			src.zone.rebuild = 1*/
+
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
 		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
+
+		if(src.zone)
+			src.zone.RemoveTurf(src)
+			W.zone = src.zone
+			W.zone.AddTurf(W)
+
+		for(var/turf/simulated/T in orange(src,1))
+			air_master.tiles_to_update.Add(T)
 
 		W.levelupdate()
 		return W
@@ -269,6 +285,22 @@
 	air.carbon_dioxide = (aco/max(turf_count,1))
 	air.toxins = (atox/max(turf_count,1))
 	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+	air.update_values()
+
+	//cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
+	for(var/direction in cardinal)//Only use cardinals to cut down on lag
+		var/turf/T = get_step(src,direction)
+		if(istype(T,/turf/space))//Counted as no air
+			continue
+		else if(istype(T,/turf/simulated/floor))
+			var/turf/simulated/S = T
+			if(S.air)//Add the air's contents to the holders
+				S.air.oxygen = air.oxygen
+				S.air.nitrogen = air.nitrogen
+				S.air.carbon_dioxide = air.carbon_dioxide
+				S.air.toxins = air.toxins
+				S.air.temperature = air.temperature
+				S.air.update_values()
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
@@ -283,9 +315,6 @@
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-	for(var/obj/effect/critter/M in src)
-		spawn(0)
-			M.Die()
 
 /turf/proc/Bless()
 	if(flags & NOJAUNT)

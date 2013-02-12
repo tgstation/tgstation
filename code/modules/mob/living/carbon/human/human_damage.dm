@@ -171,16 +171,15 @@
 	if(blocked)
 		damage = (damage/(blocked+1))
 
-	if(DERMALARMOR in augmentations)
-		damage = damage - (round(damage*0.35)) // reduce damage by 35%
-
 	switch(damagetype)
 		if(BRUTE)
 			damageoverlaytemp = 20
-			if(organ.take_damage(damage, 0, sharp, used_weapon))				UpdateDamageIcon()
+			if(organ.take_damage(damage, 0, sharp, used_weapon))
+				UpdateDamageIcon()
 		if(BURN)
 			damageoverlaytemp = 20
-			if(organ.take_damage(damage, 0, sharp, used_weapon))				UpdateDamageIcon()
+			if(organ.take_damage(0, damage, sharp, used_weapon))
+				UpdateDamageIcon()
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 

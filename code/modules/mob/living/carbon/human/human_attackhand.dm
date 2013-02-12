@@ -41,7 +41,6 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
-			if(SUPRSTR in M.augmentations)	damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 
@@ -57,8 +56,7 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health > config.health_threshold_crit)
-				diary << "\[[time2text(world.timeofday, "hh:mm.ss")]\] CPR BUGHINTING: [M] shakes [src]: health - [health], threshold - [config.health_threshold_crit]. Health details: OX [getOxyLoss()] TX [getToxLoss()] BU [getFireLoss()] BR [getBruteLoss()]  Blood: [round(vessel.get_reagent_amount("blood"))] out of 560"
+			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return 1
 //			if(M.health < -75)	return 0
@@ -98,24 +96,6 @@
 
 		if("hurt")
 
-			if(ELECTRICHANDS in M.augmentations)
-				var/gendertxt = "their"
-				if(M.gender == MALE)
-					gendertxt = "his"
-				if(M.gender == FEMALE)
-					gendertxt = "her"
-
-				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")
-				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Used Electric Hands nanoaug power on [src.name] ([src.ckey])</font>")
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been shocked by [M.name] with the Electric Hands nanoaug ([M.ckey])</font>")
-
-				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name]([src.ckey]), shocking them </font>")
-
-				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-				apply_effects(5,5,0,0,5,0,0,armorblock)
-
-				return
-
 			var/attack_verb
 			if(M.dna)
 				switch(M.dna.mutantrace)
@@ -151,7 +131,6 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
-			if(SUPRSTR in M.augmentations) 	damage += 5
 
 
 			switch(attack_verb)
@@ -163,7 +142,7 @@
 					playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
-//Rearranged, so claws don't increase weaken chance.
+			//Rearranged, so claws don't increase weaken chance.
 			if(damage >= 5 && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)

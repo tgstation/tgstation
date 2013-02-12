@@ -246,12 +246,15 @@ client
 		if(ismob(D))
 			body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 			body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
-			body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
-			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
+
+			body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
+
+			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 			body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
+
 			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
@@ -260,7 +263,7 @@ client
 				body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 				body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-				body += "<option value='?_src_=vars;makemetroid=\ref[D]'>Make metroid</option>"
+				body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 		if(isobj(D))
@@ -407,7 +410,7 @@ client
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/mob/M = locate(href_list["rename"])
 		if(!istype(M))
@@ -422,7 +425,7 @@ client
 		href_list["datumrefresh"] = href_list["rename"]
 
 	else if(href_list["varnameedit"] && href_list["datumedit"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/D = locate(href_list["datumedit"])
 		if(!istype(D,/datum) && !istype(D,/client))
@@ -432,7 +435,7 @@ client
 		modify_variables(D, href_list["varnameedit"], 1)
 
 	else if(href_list["varnamechange"] && href_list["datumchange"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/D = locate(href_list["datumchange"])
 		if(!istype(D,/datum) && !istype(D,/client))
@@ -442,7 +445,7 @@ client
 		modify_variables(D, href_list["varnamechange"], 0)
 
 	else if(href_list["varnamemass"] && href_list["datummass"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/atom/A = locate(href_list["datummass"])
 		if(!istype(A))
@@ -463,7 +466,7 @@ client
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["give_spell"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_ADMIN|R_FUN))	return
 
 		var/mob/M = locate(href_list["give_spell"])
 		if(!istype(M))
@@ -474,7 +477,7 @@ client
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_disease"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_ADMIN|R_FUN))	return
 
 		var/mob/M = locate(href_list["give_disease"])
 		if(!istype(M))
@@ -485,7 +488,7 @@ client
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["ninja"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/M = locate(href_list["ninja"])
 		if(!istype(M))
@@ -528,7 +531,7 @@ client
 		href_list["datumrefresh"] = href_list["build_mode"]
 
 	else if(href_list["drop_everything"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_DEBUG|R_ADMIN))	return
 
 		var/mob/M = locate(href_list["drop_everything"])
 		if(!istype(M))
@@ -550,7 +553,7 @@ client
 			usr.client.cmd_assume_direct_control(M)
 
 	else if(href_list["make_skeleton"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_FUN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
 		if(!istype(H))
@@ -604,7 +607,7 @@ client
 				message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
 
 	else if(href_list["explode"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_DEBUG|R_FUN))	return
 
 		var/atom/A = locate(href_list["explode"])
 		if(!isobj(A) && !ismob(A) && !isturf(A))
@@ -615,7 +618,7 @@ client
 		href_list["datumrefresh"] = href_list["explode"]
 
 	else if(href_list["emp"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_DEBUG|R_FUN))	return
 
 		var/atom/A = locate(href_list["emp"])
 		if(!isobj(A) && !ismob(A) && !isturf(A))
@@ -650,7 +653,7 @@ client
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
 	else if(href_list["makemonkey"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
 		if(!istype(H))
@@ -664,7 +667,7 @@ client
 		holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
 
 	else if(href_list["makerobot"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
 		if(!istype(H))
@@ -678,7 +681,7 @@ client
 		holder.Topic(href, list("makerobot"=href_list["makerobot"]))
 
 	else if(href_list["makealien"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makealien"])
 		if(!istype(H))
@@ -691,10 +694,10 @@ client
 			return
 		holder.Topic(href, list("makealien"=href_list["makealien"]))
 
-	else if(href_list["makemetroid"])
-		if(!check_rights(0))	return
+	else if(href_list["makeslime"])
+		if(!check_rights(R_SPAWN))	return
 
-		var/mob/living/carbon/human/H = locate(href_list["makemetroid"])
+		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
@@ -703,10 +706,10 @@ client
 		if(!H)
 			usr << "Mob doesn't exist anymore"
 			return
-		holder.Topic(href, list("makemetroid"=href_list["makemetroid"]))
+		holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
 	else if(href_list["makeai"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
 		if(!istype(H))
@@ -720,17 +723,19 @@ client
 		holder.Topic(href, list("makeai"=href_list["makeai"]))
 
 	else if(href_list["setmutantrace"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
 		if(!istype(H))
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant","shadow","tajaran","skrell")
+		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow","tajaran","skrell")
 		switch(new_mutantrace)
-			if(null)		return
-			if("NONE")		new_mutantrace = ""
+			if(null)
+				return
+			if("NONE")
+				new_mutantrace = ""
 		if(!H)
 			usr << "Mob doesn't exist anymore"
 			return
@@ -748,7 +753,7 @@ client
 		M.regenerate_icons()
 
 	else if(href_list["adjustDamage"] && href_list["mobToDamage"])
-		if(!check_rights(0))	return
+		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))	return
 
 		var/mob/living/L = locate(href_list["mobToDamage"])
 		if(!istype(L)) return

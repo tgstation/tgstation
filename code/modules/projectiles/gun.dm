@@ -25,17 +25,9 @@
 
 
 	proc/load_into_chamber()
-		return
-
-	proc/special_check(var/mob/M)
-		return
-
-
-	load_into_chamber()
 		return 0
 
-
-	special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
+	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 		return 1
 
 
@@ -49,11 +41,11 @@
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 
 		//Exclude lasertag guns from the CLUMSY check.
-		if(src.clumsy_check)
+		if(clumsy_check)
 			if(istype(user, /mob/living))
 				var/mob/living/M = user
 				if ((CLUMSY in M.mutations) && prob(50))
-					M << "\red The [src.name] blows up in your face."
+					M << "<span class='danger'>[src] blows up in your face.</span>"
 					M.take_organ_damage(0,20)
 					M.drop_item()
 					del(src)
@@ -67,6 +59,10 @@
 			if (HULK in M.mutations)
 				M << "\red Your meaty finger is much too large for the trigger guard!"
 				return
+		if(ishuman(user))
+			if(user.dna && user.dna.mutantrace == "adamantine")
+				user << "\red Your metal fingers don't fit in the trigger guard!"
+				return
 
 		add_fingerprint(user)
 
@@ -79,6 +75,7 @@
 			return
 		if(!load_into_chamber())
 			user << "\red *click*";
+			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 			return
 
 		if(!in_chamber)
@@ -102,11 +99,12 @@
 			playsound(user, fire_sound, 10, 1)
 		else
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("\red [user.name] fires the [src.name]!", "\red You fire the [src.name]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			user.visible_message("<span class='warning'>[user] fires [src]!</span>", "<span class='warning'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 		in_chamber.original = target
 		in_chamber.loc = get_turf(user)
 		in_chamber.starting = get_turf(user)
+		in_chamber.shot_from = src
 		user.next_move = world.time + 4
 		in_chamber.silenced = silenced
 		in_chamber.current = curloc
@@ -127,7 +125,11 @@
 		in_chamber = null
 
 		update_icon()
-		return
+
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 
 
 /obj/item/weapon/gun/proc/isHandgun()

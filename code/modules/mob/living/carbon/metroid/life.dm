@@ -1,4 +1,4 @@
-/mob/living/carbon/metroid/Life()
+/mob/living/carbon/slime/Life()
 	set invisibility = 0
 	set background = 1
 
@@ -41,21 +41,21 @@
 
 
 
-/mob/living/carbon/metroid
+/mob/living/carbon/slime
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
 	var/Tempstun = 0 // temporary temperature stuns
-	var/Discipline = 0 // if a metroid has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
+	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
-/mob/living/carbon/metroid/proc/AIprocess()  // the master AI process
+/mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
 	//world << "AI proc started."
 	if(AIproc || stat == DEAD || client) return
 
 	var/hungry = 0
 	var/starving = 0
-	if(istype(src, /mob/living/carbon/metroid/adult))
+	if(istype(src, /mob/living/carbon/slime/adult))
 		switch(nutrition)
 			if(400 to 1100) hungry = 1
 			if(0 to 399)
@@ -84,7 +84,7 @@
 
 		if(Target)
 			//world << "[Target] Target Found"
-			for(var/mob/living/carbon/metroid/M in view(1,Target))
+			for(var/mob/living/carbon/slime/M in view(1,Target))
 				if(M.Victim == Target)
 					Target = null
 					AIproc = 0
@@ -104,7 +104,7 @@
 							Atkcool = 0
 
 						if(get_obstacle_ok(Target))
-							Target.attack_metroid(src)
+							Target.attack_slime(src)
 					//world << "retrun 1"
 					return
 				if(!Target.lying && prob(80))
@@ -117,7 +117,7 @@
 								Atkcool = 0
 
 							if(get_obstacle_ok(Target))
-								Target.attack_metroid(src)
+								Target.attack_slime(src)
 
 
 						if(prob(30))
@@ -145,12 +145,12 @@
 		var/sleeptime = movement_delay()
 		if(sleeptime <= 0) sleeptime = 1
 
-		sleep(sleeptime + 2) // this is about as fast as a player Metroid can go
+		sleep(sleeptime + 2) // this is about as fast as a player slime can go
 
 	AIproc = 0
 	//world << "AI proc ended."
 
-/mob/living/carbon/metroid/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
@@ -208,7 +208,7 @@
 	return //TODO: DEFERRED
 
 
-/mob/living/carbon/metroid/proc/adjust_body_temperature(current, loc_temp, boost)
+/mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
 	var/increments// = difference/10			//find how many increments apart they are
@@ -225,7 +225,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/metroid/proc/handle_chemicals_in_body()
+/mob/living/carbon/slime/proc/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -235,9 +235,9 @@
 	return //TODO: DEFERRED
 
 
-/mob/living/carbon/metroid/proc/handle_regular_status_updates()
+/mob/living/carbon/slime/proc/handle_regular_status_updates()
 
-	if(istype(src, /mob/living/carbon/metroid/adult))
+	if(istype(src, /mob/living/carbon/slime/adult))
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -315,10 +315,10 @@
 	return 1
 
 
-/mob/living/carbon/metroid/proc/handle_nutrition()
+/mob/living/carbon/slime/proc/handle_nutrition()
 
 	if(prob(20))
-		if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,6)
+		if(istype(src, /mob/living/carbon/slime/adult)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
 
 	if(nutrition <= 0)
@@ -328,7 +328,7 @@
 			adjustToxLoss(rand(0,5))
 
 	else
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/slime/adult))
 			if(nutrition >= 1000)
 				if(prob(40)) amount_grown++
 
@@ -336,29 +336,69 @@
 			if(nutrition >= 800)
 				if(prob(40)) amount_grown++
 
-	//lay eggs or grow
 	if(amount_grown >= 10 && !Victim && !Target)
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			if(!client && nutrition >= 1000)
-				var/number = pick(1,1,1,1,1,1,2,2,2,3) //number of eggs laid
-				var/obj/item/weapon/reagent_containers/food/snacks/egg/roro/E
-				for(var/i=1,i<=number,i++)
-					E = new(loc)
-					src.nutrition -= 200
-				step_away(E,src)
+		if(istype(src, /mob/living/carbon/slime/adult))
+			if(!client)
+				for(var/i=1,i<=4,i++)
+					if(prob(70))
+						var/mob/living/carbon/slime/M = new primarytype(loc)
+						M.powerlevel = round(powerlevel/4)
+						M.Friends = Friends
+						M.tame = tame
+						M.rabid = rabid
+						M.Discipline = Discipline
+						if(i != 1) step_away(M,src)
+					else
+						var/mutations = pick("one","two","three","four")
+						switch(mutations)
+							if("one")
+								var/mob/living/carbon/slime/M = new mutationone(loc)
+								M.powerlevel = round(powerlevel/4)
+								M.Friends = Friends
+								M.tame = tame
+								M.rabid = rabid
+								M.Discipline = Discipline
+								if(i != 1) step_away(M,src)
+							if("two")
+								var/mob/living/carbon/slime/M = new mutationtwo(loc)
+								M.powerlevel = round(powerlevel/4)
+								M.Friends = Friends
+								M.tame = tame
+								M.rabid = rabid
+								M.Discipline = Discipline
+								if(i != 1) step_away(M,src)
+							if("three")
+								var/mob/living/carbon/slime/M = new mutationthree(loc)
+								M.powerlevel = round(powerlevel/4)
+								M.Friends = Friends
+								M.tame = tame
+								M.rabid = rabid
+								M.Discipline = Discipline
+								if(i != 1) step_away(M,src)
+							if("four")
+								var/mob/living/carbon/slime/M = new mutationfour(loc)
+								M.powerlevel = round(powerlevel/4)
+								M.Friends = Friends
+								M.tame = tame
+								M.rabid = rabid
+								M.Discipline = Discipline
+								if(i != 1) step_away(M,src)
+
+				del(src)
 
 		else
 			if(!client)
-				var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
+				var/mob/living/carbon/slime/adult/A = new adulttype(src.loc)
 				A.nutrition = nutrition
-				A.nutrition += 100
+//				A.nutrition += 100
 				A.powerlevel = max(0, powerlevel-1)
 				A.Friends = Friends
 				A.tame = tame
 				A.rabid = rabid
 				del(src)
 
-/mob/living/carbon/metroid/proc/handle_targets()
+
+/mob/living/carbon/slime/proc/handle_targets()
 	if(Tempstun)
 		if(!Victim) // not while they're eating!
 			canmove = 0
@@ -393,15 +433,15 @@
 		if(Victim) return // if it's eating someone already, continue eating!
 
 
-		if(prob(5))
-			emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
+		if(prob(1))
+			emote(pick("bounce","sway","light","vibrate","jiggle"))
 
 		if(AIproc && SStun) return
 
 
-		var/hungry = 0 // determines if the metroid is hungry
-		var/starving = 0 // determines if the metroid is starving-hungry
-		if(istype(src, /mob/living/carbon/metroid/adult)) // 1200 max nutrition
+		var/hungry = 0 // determines if the slime is hungry
+		var/starving = 0 // determines if the slime is starving-hungry
+		if(istype(src, /mob/living/carbon/slime/adult)) // 1200 max nutrition
 			switch(nutrition)
 				if(601 to 900)
 					if(prob(25)) hungry = 1//Ensures they continue eating, but aren't as aggressive at the same time
@@ -417,7 +457,7 @@
 				if(0 to 200) starving = 1
 
 
-		if(starving && !client) // if a metroid is starving, it starts losing its friends
+		if(starving && !client) // if a slime is starving, it starts losing its friends
 			if(Friends.len > 0 && prob(1))
 				var/mob/nofriend = pick(Friends)
 				Friends -= nofriend
@@ -428,42 +468,42 @@
 			if(hungry || starving) //Only add to the list if we need to
 				for(var/mob/living/L in view(7,src))
 
-					//Ignore other metroids, dead mobs and simple_animals
-					if(ismetroid(L) || L.stat != CONSCIOUS || isanimal(L))
+					//Ignore other slimes, dead mobs and simple_animals
+					if(isslime(L) || L.stat != CONSCIOUS || isanimal(L))
 						continue
 
 					if(issilicon(L))
-						if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
+						if(!istype(src, /mob/living/carbon/slime/adult)) //Non-starving diciplined adult slimes wont eat things
 							if(!starving && Discipline > 0)
 								continue
 
-						if(tame) //Tame metroids ignore electronic life
+						if(tame) //Tame slimes ignore electronic life
 							continue
 
 						targets += L //Possible target found!
 
 					else if(iscarbon(L))
 
-						if(istype(L, /mob/living/carbon/human)) //Ignore metroid(wo)men
+						if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
 							var/mob/living/carbon/human/H = L
 							if(H.dna)
-								if(H.dna.mutantrace == "metroid")
+								if(H.dna.mutantrace == "slime")
 									continue
 
-						if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
+						if(!istype(src, /mob/living/carbon/slime/adult)) //Non-starving diciplined adult slimes wont eat things
 							if(!starving && Discipline > 0)
 								continue
 
 						if(L in Friends) //No eating friends!
 							continue
 
-						if(tame && ishuman(L)) //Tame metroids dont eat people.
+						if(tame && ishuman(L)) //Tame slimes dont eat people.
 							continue
 
-						if(!L.canmove) //Only one metroid can latch on at a time.
+						if(!L.canmove) //Only one slime can latch on at a time.
 
 							var/notarget = 0
-							for(var/mob/living/carbon/metroid/M in view(1,L))
+							for(var/mob/living/carbon/slime/M in view(1,L))
 								if(M.Victim == L)
 									notarget = 1
 							if(notarget)
@@ -474,7 +514,7 @@
 
 
 			if((hungry || starving) && targets.len > 0)
-				if(!istype(src, /mob/living/carbon/metroid/adult))
+				if(!istype(src, /mob/living/carbon/slime/adult))
 					if(!starving)
 						for(var/mob/living/carbon/C in targets)
 							if(!Discipline && prob(5))

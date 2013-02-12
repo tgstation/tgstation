@@ -231,7 +231,7 @@
 						usr << "The option ID difference is too big. Please contact administration or the database admin."
 						return
 
-					for(var/optionid = id_min; optionid<= id_max; optionid++)
+					for(var/optionid = id_min; optionid <= id_max; optionid++)
 						if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
 							var/rating
 							if(href_list["o[optionid]"] == "abstain")
@@ -242,12 +242,24 @@
 									return
 
 							vote_on_numval_poll(pollid, optionid, rating)
+				if("MULTICHOICE")
+					var/id_min = text2num(href_list["minoptionid"])
+					var/id_max = text2num(href_list["maxoptionid"])
+
+					if( (id_max - id_min) > 100 )	//Basic exploit prevention
+						usr << "The option ID difference is too big. Please contact administration or the database admin."
+						return
+
+					for(var/optionid = id_min; optionid <= id_max; optionid++)
+						if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
+							vote_on_poll(pollid, optionid, 1)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
 		if(!job)	return 0
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
 		if(jobban_isbanned(src,rank))	return 0
+		if(!job.player_old_enough(src.client))	return 0
 		return 1
 
 
@@ -278,15 +290,14 @@
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
-			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
+
+			//unlikely for this to be an issue, but just in case
+			if(istype(character.wear_id, /obj/item/weapon/card/id))
+				var/obj/item/weapon/card/id/I = character.wear_id
+				a.autosay("\"[character.real_name],[I.assignment ? " [I.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
+			else
+				a.autosay("\"[character.real_name], visitor, has arrived on the station.\"", "Arrivals Announcement Computer")
 			del(a)
-			/*
-			var/mob/living/silicon/ai/announcer = new (null)
-			announcer.name = "Arrivals Announcement Computer"
-			announcer.real_name = "Arrivals Announcement Computer"
-			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", announcer)
-			del(announcer)
-			*/
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
@@ -308,7 +319,7 @@
 			if(job && IsJobAvailable(job.title))
 				var/active = 0
 				// Only players with the job assigned and AFK for less than 10 minutes count as active
-				for(var/mob/M in player_list) if(M.mind && M.client && M.mind.assigned_job == job && M.client.inactivity <= 10 * 60 * 10)
+				for(var/mob/M in player_list) if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 					active++
 				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
 

@@ -26,6 +26,7 @@
 	var/yo = null
 	var/xo = null
 	var/current = null
+	var/obj/shot_from = null // the object which shot us
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
@@ -61,9 +62,9 @@
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
-			return //cannot shoot yourself
+			return 0 //cannot shoot yourself
 
-		if(bumped)	return
+		if(bumped)	return 0
 		var/forcedodge = 0 // force the projectile to pass
 
 		bumped = 1
@@ -71,19 +72,17 @@
 			var/mob/M = A
 			if(!istype(A, /mob/living))
 				loc = A.loc
-				return // nope.avi
+				return 0// nope.avi
 
-			// check for dodge (i can't place in bullet_act because then things get wonky)
-			if(!M.stat && !M.lying && (REFLEXES in M.augmentations) && prob(85))
-				var/message = pick("[M] skillfully dodges the [name]!", "[M] ducks, dodging the [name]!", "[M] effortlessly jumps out of the way of the [name]!", "[M] dodges the [name] in one graceful movement!", "[M] leans back, dodging the [name] narrowly!", "[M] sidesteps, avoiding the [name] narrowly.", "[M] barely weaves out of the way of the [name].")
-				M.visible_message("\red <B>[message]</B>")
-				forcedodge = 1
+			var/distance = get_dist(original,loc)
+			//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
+			// close distance, actually RAISE the chance to hit.
+			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
+
+			if(silenced)
+				if(def_zone)
+					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
 			else
-				var/distance = get_dist(original,loc)
-				//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
-				// close distance, actually RAISE the chance to hit.
-				def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
-
 				if(!def_zone)
 					visible_message("\The [src] misses [M] narrowly.")
 					del(src)
@@ -92,15 +91,15 @@
 					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
 				else
 					visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src.type]</font>")
-
+				msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
 			else
 				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src.type]</font>")
+				msg_admin_attack("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
 
 		spawn(0)
 			if(A)
@@ -112,7 +111,7 @@
 					else
 						loc = A.loc
 					permutated.Add(A)
-					return
+					return 0
 
 				if(istype(A,/turf))
 					for(var/obj/O in A)
@@ -123,7 +122,7 @@
 				density = 0
 				invisibility = 101
 				del(src)
-		return
+		return 1
 
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

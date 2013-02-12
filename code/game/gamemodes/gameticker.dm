@@ -37,9 +37,9 @@ var/global/datum/controller/gameticker/ticker
 	var/triai = 0//Global holder for Triumvirate
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/ambience/title1.ogg','sound/ambience/title2.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
-/*	for(var/mob/new_player/M in mob_list)
-		if(M.client)	M.client.playtitlemusic()*/
+	login_music = pick('sound/ambience/title2.ogg','sound/ambience/title1.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
+	for(var/mob/new_player/M in mob_list)
+		if(M.client)	M.client.playtitlemusic()
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -124,6 +124,7 @@ var/global/datum/controller/gameticker/ticker
 		Holiday_Game_Start()
 
 	start_events() //handles random events and space dust.
+//new random event system is handled from the MC.
 
 	var/admins_number = 0
 	for(var/client/C)
@@ -274,7 +275,9 @@ var/global/datum/controller/gameticker/ticker
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
 					EquipCustomItems(player)
 		if(captainless)
-			world << "Captainship not forced on anyone."
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << "Captainship not forced on anyone."
 
 
 	proc/process()
@@ -308,7 +311,10 @@ var/global/datum/controller/gameticker/ticker
 
 				if(!delay_end)
 					sleep(restart_timeout)
-					world.Reboot()
+					if(!delay_end)
+						world.Reboot()
+					else
+						world << "\blue <B>An admin has delayed the round end</B>"
 				else
 					world << "\blue <B>An admin has delayed the round end</B>"
 

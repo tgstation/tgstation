@@ -13,6 +13,9 @@
 	var/sharp = 0 // whether this object cuts
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
+	var/damtype = "brute"
+	var/force = 0
+
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0
@@ -45,7 +48,7 @@
 	else
 		return null
 
-/obj/proc/initialize()
+/atom/movable/proc/initialize()
 	return
 
 /obj/proc/updateUsrDialog()

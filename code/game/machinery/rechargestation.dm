@@ -34,6 +34,15 @@
 		src.go_out()
 		return
 
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			..(severity)
+			return
+		if(occupant)
+			occupant.emp_act(severity)
+			go_out()
+		..(severity)
+
 	proc
 		build_icon()
 			if(NOPOWER|BROKEN)

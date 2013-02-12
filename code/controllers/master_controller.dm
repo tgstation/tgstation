@@ -8,6 +8,9 @@ var/global/controller_iteration = 0
 var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
+var/global/air_processing_killed = 0
+var/global/pipe_processing_killed = 0
+
 datum/controller/game_controller
 	var/processing = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
@@ -21,6 +24,7 @@ datum/controller/game_controller
 	var/objects_cost	= 0
 	var/networks_cost	= 0
 	var/powernets_cost	= 0
+	var/events_cost		= 0
 	var/ticker_cost		= 0
 	var/total_cost		= 0
 
@@ -69,7 +73,7 @@ datum/controller/game_controller/proc/setup()
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
 	sleep(-1)
-	for(var/obj/object in world)
+	for(var/atom/movable/object in world)
 		object.initialize()
 
 	world << "\red \b Initializing pipe networks"
@@ -110,15 +114,14 @@ datum/controller/game_controller/proc/process()
 				vote.process()
 
 				//AIR
-				/*timer = world.timeofday
-				last_thing_processed = air_master.type
-				air_master.process()
-				air_cost = (world.timeofday - timer) / 10*/
 
-				// this might make atmos slower
+				if(!air_processing_killed)
+					timer = world.timeofday
+					last_thing_processed = air_master.type
+					air_master.tick()
+					air_cost = (world.timeofday - timer) / 10				// this might make atmos slower
 				//  1. atmos won't process if the game is generally lagged out(no deadlocks)
-				//  2. if the server frequently crashes during atmos processing we will know
-				if(!kill_air)
+				//  2. if the server frequently crashes during atmos processing we will knowif(!kill_air)
 					//src.set_debug_state("Air Master")
 
 					air_master.current_cycle++
@@ -130,10 +133,7 @@ datum/controller/game_controller/proc/process()
 							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
 							kill_air = 1
 							air_master.failed_ticks = 0
-					/*else if (air_master.failed_ticks > 10)
-						air_master.failed_ticks = 0*/
-				//air_master_ready = 1
-
+				air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
@@ -147,96 +147,50 @@ datum/controller/game_controller/proc/process()
 
 				//MOBS
 				timer = world.timeofday
-				var/i = 1
-				while(i<=mob_list.len)
-					var/mob/M = mob_list[i]
-					if(M)
-						last_thing_processed = M.type
-						M.Life()
-						i++
-						continue
-					mob_list.Cut(i,i+1)
+				process_mobs()
 				mobs_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//DISEASES
 				timer = world.timeofday
-				i = 1
-				while(i<=active_diseases.len)
-					var/datum/disease/Disease = active_diseases[i]
-					if(Disease)
-						last_thing_processed = Disease.type
-						Disease.process()
-						i++
-						continue
-					active_diseases.Cut(i,i+1)
+				process_diseases()
 				diseases_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//MACHINES
 				timer = world.timeofday
-				i = 1
-				while(i<=machines.len)
-					var/obj/machinery/Machine = machines[i]
-					if(Machine)
-						last_thing_processed = Machine.type
-						if(Machine.process() != PROCESS_KILL)
-							if(Machine)
-								if(Machine.use_power)
-									Machine.auto_use_power()
-								i++
-								continue
-					machines.Cut(i,i+1)
+				process_machines()
 				machines_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//OBJECTS
 				timer = world.timeofday
-				i = 1
-				while(i<=processing_objects.len)
-					var/obj/Object = processing_objects[i]
-					if(Object)
-						last_thing_processed = Object.type
-						Object.process()
-						i++
-						continue
-					processing_objects.Cut(i,i+1)
+				process_objects()
 				objects_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//PIPENETS
-				timer = world.timeofday
-				last_thing_processed = /datum/pipe_network
-				i = 1
-				while(i<=pipe_networks.len)
-					var/datum/pipe_network/Network = pipe_networks[i]
-					if(Network)
-						Network.process()
-						i++
-						continue
-					pipe_networks.Cut(i,i+1)
-				networks_cost = (world.timeofday - timer) / 10
+				if(!pipe_processing_killed)
+					timer = world.timeofday
+					process_pipenets()
+					networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//POWERNETS
 				timer = world.timeofday
-				last_thing_processed = /datum/powernet
-				i = 1
-				while(i<=powernets.len)
-					var/datum/powernet/Powernet = powernets[i]
-					if(Powernet)
-						Powernet.reset()
-						i++
-						continue
-					powernets.Cut(i,i+1)
+				process_powernets()
 				powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
+
+				//EVENTS
+				timer = world.timeofday
+				events_cost = (world.timeofday - timer) / 10
 
 				//TICKER
 				timer = world.timeofday
@@ -245,7 +199,7 @@ datum/controller/game_controller/proc/process()
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + ticker_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -253,6 +207,75 @@ datum/controller/game_controller/proc/process()
 				sleep( round(minimum_ticks - (end_time - start_time),1) )
 			else
 				sleep(10)
+
+datum/controller/game_controller/proc/process_mobs()
+	var/i = 1
+	while(i<=mob_list.len)
+		var/mob/M = mob_list[i]
+		if(M)
+			last_thing_processed = M.type
+			M.Life()
+			i++
+			continue
+		mob_list.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_diseases()
+	var/i = 1
+	while(i<=active_diseases.len)
+		var/datum/disease/Disease = active_diseases[i]
+		if(Disease)
+			last_thing_processed = Disease.type
+			Disease.process()
+			i++
+			continue
+		active_diseases.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_machines()
+	var/i = 1
+	while(i<=machines.len)
+		var/obj/machinery/Machine = machines[i]
+		if(Machine)
+			last_thing_processed = Machine.type
+			if(Machine.process() != PROCESS_KILL)
+				if(Machine)
+					if(Machine.use_power)
+						Machine.auto_use_power()
+					i++
+					continue
+		machines.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_objects()
+	var/i = 1
+	while(i<=processing_objects.len)
+		var/obj/Object = processing_objects[i]
+		if(Object)
+			last_thing_processed = Object.type
+			Object.process()
+			i++
+			continue
+		processing_objects.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_pipenets()
+	last_thing_processed = /datum/pipe_network
+	var/i = 1
+	while(i<=pipe_networks.len)
+		var/datum/pipe_network/Network = pipe_networks[i]
+		if(Network)
+			Network.process()
+			i++
+			continue
+		pipe_networks.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_powernets()
+	last_thing_processed = /datum/powernet
+	var/i = 1
+	while(i<=powernets.len)
+		var/datum/powernet/Powernet = powernets[i]
+		if(Powernet)
+			Powernet.reset()
+			i++
+			continue
+		powernets.Cut(i,i+1)
 
 datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

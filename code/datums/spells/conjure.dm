@@ -25,7 +25,7 @@
 		for(var/i=0,i<summon_amt,i++)
 			if(!targets.len)
 				break
-			var/summoned_object_type = text2path(pick(summon_type))
+			var/summoned_object_type = pick(summon_type)
 			var/spawn_place = pick(targets)
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
@@ -58,7 +58,7 @@
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 
-	summon_type = list("/obj/machinery/bot/ed209")
+	summon_type = list(/obj/machinery/bot/ed209)
 	summon_amt = 10
 	range = 3
 	newVars = list("emagged" = 1,"name" = "Wizard's Justicebot")

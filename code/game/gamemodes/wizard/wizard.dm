@@ -5,7 +5,8 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
-	required_players = 20
+	required_players = 2
+	required_players_secret = 10
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -183,6 +184,10 @@
 
 
 /datum/game_mode/wizard/check_finished()
+
+	if(config.continous_rounds)
+		return ..()
+
 	var/wizards_alive = 0
 	for(var/datum/mind/wizard in wizards)
 		if(!istype(wizard.current,/mob/living/carbon))
@@ -196,6 +201,7 @@
 	else
 		finished = 1
 		return 1
+
 
 
 /datum/game_mode/wizard/declare_completion()

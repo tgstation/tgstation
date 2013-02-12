@@ -382,6 +382,12 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "chal_appara_1"
 
+/obj/item/clothing/gloves/fluff/ashley_rifler_1 //Vinceluk: Ashley Rifler
+	name = "Purple Glove"
+	desc = "A single, purple glove. Initials A.R. are written on the inside of it."
+	icon = 'custom_items.dmi'
+	icon_state = "ashley_rifler_1"
+
 //////////// Eye Wear ////////////
 
 /obj/item/clothing/glasses/meson/fluff/book_berner_1 //asanadas: Book Berner

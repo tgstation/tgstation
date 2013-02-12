@@ -39,16 +39,21 @@ Filter types:
 		..()
 
 	update_icon()
-		if(node2 && node3 && node1)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node2 && node3 && node1)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
-			icon_state = "hintact_off"
+			icon_state = "intact_off"
 			on = 0
 
 		return
 
-	New()
+	power_change()
+		var/old_stat = stat
 		..()
+		if(old_stat != stat)
+			update_icon()
 
 	process()
 		..()

@@ -35,7 +35,7 @@
 	var/obj/item/glasses = null
 	var/obj/item/head = null
 	var/obj/item/ears = null
-	var/obj/item/weapon/card/id/wear_id = null
+	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null

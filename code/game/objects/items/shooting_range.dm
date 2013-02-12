@@ -36,7 +36,7 @@
 		if (istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
-				overlays = null
+				overlays.Cut()
 				usr << "You slice off [src]'s uneven chunks of aluminum and scorch marks."
 				return
 

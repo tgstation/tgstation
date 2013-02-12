@@ -91,7 +91,7 @@ datum/preferences
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
 
-	var/list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
+	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
 	var/med_record = ""
@@ -247,7 +247,7 @@ datum/preferences
 		dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 		dat += "<br>"
 		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-		dat += "Blood Type: [b_type]<br>"
+		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
 		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
@@ -357,8 +357,9 @@ datum/preferences
 
 		user << browse(dat, "window=preferences;size=560x580")
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 600, height = 550)
-		if(!job_master)	return
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 550)
+		if(!job_master)
+			return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 		//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
@@ -369,7 +370,7 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
-		HTML += "<a align='center' href='?_src_=prefs;preference=job;task=close'>\[Done\]</a><br><br>" // Easier to press up here.
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -394,6 +395,10 @@ datum/preferences
 			lastJob = job
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
+				continue
+			if(!job.player_old_enough(user.client))
+				var/available_in_days = job.available_in_days(user.client)
+				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS]</font></td></tr>"
 				continue
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
@@ -424,15 +429,15 @@ datum/preferences
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
 			if(job.alt_titles)
-				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center>"
-
+		HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center><br>"
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
 		HTML += "</tt>"
 
 		user << browse(null, "window=preferences")
@@ -486,18 +491,18 @@ datum/preferences
 		user << browse(HTML, "window=records;size=350x300")
 		return
 
-	proc/GetAltTitle(datum/job/job)
-		return job_alt_titles.Find(job.title) > 0 \
-			? job_alt_titles[job.title] \
+	proc/GetPlayerAltTitle(datum/job/job)
+		return player_alt_titles.Find(job.title) > 0 \
+			? player_alt_titles[job.title] \
 			: job.title
 
-	proc/SetAltTitle(datum/job/job, new_title)
+	proc/SetPlayerAltTitle(datum/job/job, new_title)
 		// remove existing entry
-		if(job_alt_titles.Find(job.title))
-			job_alt_titles -= job.title
+		if(player_alt_titles.Find(job.title))
+			player_alt_titles -= job.title
 		// add one if it's not default
 		if(job.title != new_title)
-			job_alt_titles[job.title] = new_title
+			player_alt_titles[job.title] = new_title
 
 	proc/SetJob(mob/user, role)
 		var/datum/job/job = job_master.GetJob(role)
@@ -525,6 +530,20 @@ datum/preferences
 
 		SetChoices(user)
 		return 1
+
+	proc/ResetJobs()
+		job_civilian_high = 0
+		job_civilian_med = 0
+		job_civilian_low = 0
+
+		job_medsci_high = 0
+		job_medsci_med = 0
+		job_medsci_low = 0
+
+		job_engsec_high = 0
+		job_engsec_med = 0
+		job_engsec_low = 0
+
 
 	proc/GetJobDepartment(var/datum/job/job, var/level)
 		if(!job || !level)	return 0
@@ -613,6 +632,9 @@ datum/preferences
 				if("close")
 					user << browse(null, "window=mob_occupation")
 					ShowChoices(user)
+				if("reset")
+					ResetJobs()
+					SetChoices(user)
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
@@ -620,9 +642,9 @@ datum/preferences
 					var/datum/job/job = locate(href_list["job"])
 					if (job)
 						var/choices = list(job.title) + job.alt_titles
-						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltTitle(job)) as anything in choices | null
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 						if(choice)
-							SetAltTitle(job, choice)
+							SetPlayerAltTitle(job, choice)
 							SetChoices(user)
 				if("input")
 					SetJob(user, href_list["text"])
@@ -723,24 +745,7 @@ datum/preferences
 					/*if("skin_style")
 						h_style = random_skin_style(gender)*/
 					if("all")
-						gender = pick(MALE,FEMALE)
-						real_name = random_name(gender)
-						age = rand(AGE_MIN,AGE_MAX)
-						underwear = rand(1,12)
-						backbag = rand(1,4)
-						r_hair = rand(0,255)
-						g_hair = rand(0,255)
-						b_hair = rand(0,255)
-						r_facial = r_hair
-						g_facial = g_hair
-						b_facial = b_hair
-						r_eyes = rand(0,255)
-						g_eyes = rand(0,255)
-						b_eyes = rand(0,255)
-						h_style = random_hair_style(gender)
-						f_style = random_facial_hair_style(gender)
-						s_tone = random_skin_tone()
-
+						randomize_appearance_for()	//no params needed
 			if("input")
 				switch(href_list["preference"])
 					if("name")
@@ -827,6 +832,11 @@ datum/preferences
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
 						if(new_metadata)
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
+
+					if("b_type")
+						var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+						if(new_b_type)
+							b_type = new_b_type
 
 					if("hair")
 						if(species == "Human" || species == "Soghun")

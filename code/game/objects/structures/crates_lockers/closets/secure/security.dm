@@ -23,7 +23,6 @@
 		new /obj/item/clothing/head/helmet/swat(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/heads/captain(src)
-		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/clothing/suit/armor/captain(src)
@@ -50,8 +49,8 @@
 		new /obj/item/weapon/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
 		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/weapon/storage/id_kit(src)
-		new /obj/item/weapon/storage/id_kit( src )
+		new /obj/item/weapon/storage/box/ids(src)
+		new /obj/item/weapon/storage/box/ids( src )
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
@@ -77,7 +76,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/under/jensen(src)
+		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
@@ -85,7 +84,7 @@
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/weapon/shield/riot(src)
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
-		new /obj/item/weapon/storage/flashbang_kit(src)
+		new /obj/item/weapon/storage/box/flashbangs(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/melee/baton(src)
@@ -120,7 +119,7 @@
 //		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/weapon/storage/flashbang_kit(src)
+		new /obj/item/weapon/storage/box/flashbangs(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton(src)
@@ -161,6 +160,38 @@
 		return
 
 
+/obj/structure/closet/secure_closet/security/cargo
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/cargo(src)
+		new /obj/item/device/encryptionkey/headset_cargo(src)
+		return
+
+/obj/structure/closet/secure_closet/security/engine
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/engine(src)
+		new /obj/item/device/encryptionkey/headset_eng(src)
+		return
+
+/obj/structure/closet/secure_closet/security/science
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/science(src)
+		new /obj/item/device/encryptionkey/headset_sci(src)
+		return
+
+/obj/structure/closet/secure_closet/security/med
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/medgreen(src)
+		new /obj/item/device/encryptionkey/headset_med(src)
+		return
+
 
 /obj/structure/closet/secure_closet/detective
 	name = "Detective's Cabinet"
@@ -176,18 +207,19 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/under/det(src)
-		new /obj/item/clothing/suit/armor/det_suit(src)
 		new /obj/item/clothing/suit/storage/det_suit(src)
 		new /obj/item/clothing/suit/storage/forensics/blue(src)
 		new /obj/item/clothing/suit/storage/forensics/red(src)
 		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/weapon/cartridge/detective(src)
-		new /obj/item/weapon/clipboard(src)
-		new /obj/item/device/detective_scanner(src)
 		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
+		new /obj/item/device/detective_scanner(src)
+		new /obj/item/clothing/suit/armor/det_suit(src)
+		new /obj/item/ammo_magazine/c38(src)
+		new /obj/item/ammo_magazine/c38(src)
+		new /obj/item/weapon/gun/projectile/detective(src)
 		new /obj/item/clothing/tie/holster/armpit(src)
 		return
 
@@ -205,7 +237,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "Lethal Injections"
-	req_access = list(access_hos)
+	req_access = list(access_captain)
 
 
 	New()

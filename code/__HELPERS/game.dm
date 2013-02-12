@@ -188,24 +188,29 @@
 
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
-	. = list()
 
+	set background = 1
+
+	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
-	for(var/obj/item/device/radio/R in radios)
+	for(var/i = 1; i <= radios.len; i++)
+		var/obj/item/device/radio/R = radios[i]
+		if(R)
+			var/turf/speaker = get_turf(R)
+			if(speaker)
+				for(var/turf/T in hear(R.canhear_range,speaker))
+					speaker_coverage[T] = T
 
-		var/turf/speaker = get_turf(R)
-		if(speaker)
-			for(var/turf/T in hear(R.canhear_range,speaker))
-				speaker_coverage[T] = T
 
 	// Try to find all the players who can hear the message
-	for(var/mob/M in player_list)
-		var/turf/ear = get_turf(M)
-		if(ear)
-			if(speaker_coverage[ear])
-				. |= M
-
+	for(var/i = 1; i <= player_list.len; i++)
+		var/mob/M = player_list[i]
+		if(M)
+			var/turf/ear = get_turf(M)
+			if(ear)
+				if(speaker_coverage[ear])
+					. |= M
 	return .
 
 #define SIGN(X) ((X<0)?-1:1)
@@ -275,6 +280,8 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
+
+//i think this is used soley by verb/give(), cael
 proc/check_can_reach(atom/user, atom/target)
 	if(!in_range(user,target))
 		return 0
@@ -316,7 +323,6 @@ var/list/DummyCache = list()
 	return 1
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-
 /proc/get_active_candidates(var/buffer = 1)
 
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
@@ -344,3 +350,20 @@ var/list/DummyCache = list()
 		i++
 	return candidates
 
+/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
+	if(!isobj(O))	O = new /obj/screen/text()
+	O.maptext = maptext
+	O.maptext_height = maptext_height
+	O.maptext_width = maptext_width
+	O.screen_loc = screen_loc
+	return O
+
+/proc/Show2Group4Delay(obj/O, list/group, delay=0)
+	if(!isobj(O))	return
+	if(!group)	group = clients
+	for(var/client/C in group)
+		C.screen += O
+	if(delay)
+		spawn(delay)
+			for(var/client/C in group)
+				C.screen -= O

@@ -20,7 +20,7 @@
 				if (istype(zvent_conn))
 					//both floors have simulated turfs, share()
 					var/turf/simulated/myturf = loc
-					var/datum/gas_mixture/conn_air = zturf_conn.air //TODO: pop culture reference
+					var/datum/gas_mixture/conn_air = zturf_conn.zone.air //TODO: pop culture reference
 					var/datum/gas_mixture/my_air = myturf.air
 					if (istype(conn_air) && istype(my_air))
 //						if (!my_air.compare(conn_air))

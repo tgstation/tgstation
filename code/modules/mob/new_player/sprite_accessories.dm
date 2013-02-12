@@ -420,10 +420,85 @@
 
 	taj_ears
 		name = "Tajaran Ears"
-		icon_state = "tajears"
+		icon_state = "ears_plain"
 		species_allowed = list("Tajaran")
 
+	taj_ears_clean
+		name = "Clean"
+		icon_state = "hair_clean"
+		species_allowed = list("Tajaran")
 
+	taj_ears_shaggy
+		name = "Shaggy"
+		icon_state = "hair_shaggy"
+		species_allowed = list("Tajaran")
+
+	taj_ears_mohawk
+		name = "Tajaran Mohawk"
+		icon_state = "hair_mohawk"
+		species_allowed = list("Tajaran")
+
+	taj_ears_plait
+		name = "Plait"
+		icon_state = "hair_plait"
+		species_allowed = list("Tajaran")
+
+	taj_ears_straight
+		name = "Straight"
+		icon_state = "hair_straight"
+		species_allowed = list("Tajaran")
+
+	taj_ears_long
+		name = "Long"
+		icon_state = "hair_long"
+		species_allowed = list("Tajaran")
+
+	taj_ears_rattail
+		name = "Rat Tail"
+		icon_state = "hair_rattail"
+		species_allowed = list("Tajaran")
+
+	taj_ears_spiky
+		name = "Tajaran Spiky"
+		icon_state = "hair_tajspiky"
+		species_allowed = list("Tajaran")
+
+	taj_ears_messy
+		name = "Messy"
+		icon_state = "hair_messy"
+		species_allowed = list("Tajaran")
+
+/datum/sprite_accessory/facial_hair
+
+	taj_sideburns
+		name = "Sideburns"
+		icon_state = "facial_mutton"
+		species_allowed = list("Tajaran")
+
+	taj_mutton
+		name = "Mutton"
+		icon_state = "facial_mutton"
+		species_allowed = list("Tajaran")
+
+	taj_pencilstache
+		name = "Pencilstache"
+		icon_state = "facial_pencilstache"
+		species_allowed = list("Tajaran")
+
+	taj_moustache
+		name = "Moustache"
+		icon_state = "facial_moustache"
+		species_allowed = list("Tajaran")
+
+	taj_goatee
+		name = "Goatee"
+		icon_state = "facial_goatee"
+		species_allowed = list("Tajaran")
+
+	taj_smallstache
+		name = "Smallsatche"
+		icon_state = "facial_smallstache"
+		species_allowed = list("Tajaran")
 //skin styles - WIP
 //going to have to re-integrate this with surgery
 //let the icon_state hold an icon preview for now

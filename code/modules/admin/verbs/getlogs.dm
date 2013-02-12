@@ -13,14 +13,6 @@
 	codebase for the entire /TG/station commuity a TONNE easier :3 Thanks for your help!
 */
 
-#define FTPDELAY	600	//600 tick delay to discourage spam
-/*
-	These procs have failsafes built in to prevent spamming of file requests. As such it can only be used once every
-	[FTPDELAY] ticks. This can be changed by modifying FTPDELAY's value above.
-
-	PLEASE USE RESPONSIBLY, only download from the server if the log isn't already available elsewhere!
-	Bandwidth is expensive and lags are lame. Some log files canr each sizes of 4MB!
-*/
 
 //This proc allows Game Masters to grant a client access to the .getruntimelog verb
 //Permissions expire at the end of each round.
@@ -31,18 +23,19 @@
 	set desc = "Give somebody access to any session logfiles saved to the /log/runtime/ folder."
 	set category = null
 
-	if( !src.holder )
-		src << "<font color='red'>Only Game Masters may use this command.</font>"
+	if(!src.holder)
+		src << "<font color='red'>Only Admins may use this command.</font>"
 		return
 
 	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
-	if( !target || !istype(target,/client) )
+	if(!istype(target,/client))
 		src << "<font color='red'>Error: giveruntimelog(): Client not found.</font>"
 		return
 
 	target.verbs |= /client/proc/getruntimelog
 	target << "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>"
 	return
+
 
 //This proc allows download of runtime logs saved within the data/logs/ folder by dreamdeamon.
 //It works similarly to show-server-log.
@@ -51,57 +44,36 @@
 	set desc = "Retrieve any session logfiles saved by dreamdeamon."
 	set category = null
 
-	var/time_to_wait = fileaccess_timer - world.time
-	if(time_to_wait > 0)
-		src << "<font color='red'>Error: getruntimelog(): spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
-		return
-	fileaccess_timer = world.time + FTPDELAY
-
-	var/path = "data/logs/runtime/"
-
-	var/list/path_list = flist(path)
-	var/choice = input(src,"Choose a runtime-log to download:","Download",null) as null|anything in path_list
-	if(!choice)				return
-
-	path += "[choice]"
-	if(!fexists(path))
-		src << "<font color='red'>Error: getruntimelog(): Files not found/Invalid file([path]).</font>"
+	var/path = browse_files("data/logs/runtime/")
+	if(!path)
 		return
 
-	message_admins("[src] accessed runtime log: [path]")
+	if(file_spam_check())
+		return
+
+	message_admins("[key_name_admin(src)] accessed file: [path]")
 	src << run( file(path) )
+	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
+
 
 //This proc allows download of past server logs saved within the data/logs/ folder.
 //It works similarly to show-server-log.
 /client/proc/getserverlog()
 	set name = ".getserverlog"
-	set desc = "Like 'Show Server Log' but it fetches old logs if there are any."
+	set desc = "Fetch logfiles from data/logs"
 	set category = null
 
-	var/time_to_wait = fileaccess_timer - world.time
-	if(time_to_wait > 0)
-		src << "<font color='red'>Error: getserverlog(): spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
+	var/path = browse_files("data/logs/")
+	if(!path)
 		return
-	fileaccess_timer = world.time + FTPDELAY
 
-	var/path = "data/logs/"
-	for(var/i=0, i<4, i++)	//only bother searching up to 4 sub-directories. If we don't find it by then: give up.
-		var/list/path_list = flist(path)
-		if(path_list.len)	path_list -= "runtime/"
-		else				break
+	if(file_spam_check())
+		return
 
-		var/choice = input(src,"Choose a directory to access:","Download",null) as null|anything in path_list
-		if(!choice)			return
-
-		path += "[choice]"
-
-		if( text2ascii(choice,length(choice)) != 47 )	//not a directory, finish up
-			if(!fexists(path))
-				src << "<font color='red'>Error: getserverlog(): File not found/Invalid file([path]).</font>"
-				return
-			src << run( file(path) )
-			return
+	message_admins("[key_name_admin(src)] accessed file: [path]")
+	src << run( file(path) )
+	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
 

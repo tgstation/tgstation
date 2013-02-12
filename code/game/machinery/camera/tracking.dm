@@ -12,7 +12,8 @@
 	var/list/T = list()
 	T["Cancel"] = "Cancel"
 	for (var/obj/machinery/camera/C in L)
-		if (C.network == src.network)
+		var/list/tempnetwork = C.network&src.network
+		if (tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	track = new()
@@ -74,7 +75,7 @@
 			human = 1
 			var/mob/living/carbon/human/H = M
 			//Cameras can't track people wearing an agent card or a ninja hood.
-			if(istype(H.wear_id, /obj/item/weapon/card/id/syndicate))
+			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
 		 	if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
 		 		var/obj/item/clothing/head/helmet/space/space_ninja/hood = H.head
@@ -131,15 +132,16 @@
 			if (U.cameraFollow == null)
 				return
 			if (istype(target, /mob/living/carbon/human))
-				if(istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
+				var/mob/living/carbon/human/H = target
+				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
-		 		if(istype(target:head, /obj/item/clothing/head/helmet/space/space_ninja) && !target:head:canremove)
+		 		if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && !H.head.canremove)
 		 			U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
-				if(target.digitalcamo)
+				if(H.digitalcamo)
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return

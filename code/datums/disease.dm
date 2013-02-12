@@ -44,7 +44,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/permeability_mod = 1//permeability modifier coefficient.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
 	var/severity = null//severity descr
-	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
+	var/longevity = 150//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 	var/list/hidden = list(0, 0)
 	var/can_carry = 1 // If the disease allows "carriers".
 	var/age = 0 // age of the disease in the current mob
@@ -62,19 +62,17 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return
 
 	spread = (cure_present?"Remissive":initial_spread)
-
 	if(stage > max_stages)
 		stage = max_stages
 
-	if(stage < max_stages && prob(stage_prob) && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
-		stage++
-		//world << "up"
-	if(stage > 0 && (cure_present && prob(cure_chance)))
-		stage--
-		//world << "down"
+	if(!cure_present && prob(stage_prob) && age > stage_minimum_age) //now the disease shouldn't get back up to stage 4 in no time
+		stage = min(stage + 1, max_stages)
+		age = 0
+
+	else if(cure_present && prob(cure_chance))
+		stage = max(stage - 1, 1)
 
 	if(stage <= 1 && ((prob(1) && curable) || (cure_present && prob(cure_chance))))
-//		world << "Cured as stage act"
 		cure()
 		return
 	return
@@ -178,8 +176,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(resistance && !(type in affected_mob.resistances))
 			var/saved_type = "[type]"
 			affected_mob.resistances += text2path(saved_type)
-		if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
-			affected_mob.status_flags &= ~(XENO_HOST)
+		/*if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
+			affected_mob.status_flags &= ~(XENO_HOST)*/
 		affected_mob.viruses -= src		//remove the datum from the list
 	del(src)	//delete the datum to stop it processing
 	return
@@ -187,7 +185,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
-	if(process)					 // Viruses in list are considered active.
+	if(process)				 // Viruses in list are considered active.
 		active_diseases += src
 	initial_spread = spread
 

@@ -232,18 +232,34 @@
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
-					if(temp_t)
-						t1 = temp_t
+					//let custom jobs function as an impromptu alt title, mainly for sechuds
+					if(temp_t && modify)
+						modify.assignment = temp_t
 				else
-					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : get_access(t1) )
-				if (modify)
-					modify.assignment = t1
+					var/datum/job/jobdatum
+					for(var/jobtype in typesof(/datum/job))
+						var/datum/job/J = new jobtype
+						if(ckey(J.title) == ckey(t1))
+							jobdatum = J
+							break
+					if(!jobdatum)
+						usr << "\red No log exists for this job."
+						return
+
+					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					if (modify)
+						modify.assignment = t1
+						modify.rank = t1
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered_name = href_list["reg"]
+					var/temp_name = reject_bad_name(href_list["reg"])
+					if(temp_name)
+						modify.registered_name = temp_name
+					else
+						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")

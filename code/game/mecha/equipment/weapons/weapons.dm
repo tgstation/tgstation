@@ -27,7 +27,7 @@
 		set_ready_state(0)
 		playsound(chassis, fire_sound, 50, 1)
 		var/obj/item/projectile/A = new projectile(curloc)
-		A.original = targloc
+		A.original = target
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -209,7 +209,7 @@
 			playsound(chassis, fire_sound, 80, 1)
 			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
-			A.original = targloc
+			A.original = target
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -251,7 +251,7 @@
 			playsound(chassis, fire_sound, 50, 1)
 			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
-			A.original = targloc
+			A.original = target
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -288,7 +288,7 @@
 
 /obj/item/missile
 	icon = 'icons/obj/grenade.dmi'
-	icon_state = "flashbang"
+	icon_state = "missile"
 	var/primed = null
 	throwforce = 15
 

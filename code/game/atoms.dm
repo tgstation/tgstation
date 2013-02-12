@@ -236,6 +236,9 @@ its easier to just keep the beam vertical.
 /atom/proc/blob_act()
 	return
 
+/atom/proc/fire_act()
+	return
+
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
@@ -270,8 +273,8 @@ its easier to just keep the beam vertical.
 /atom/proc/attack_larva(mob/user as mob)
 	return
 
-// for metroids
-/atom/proc/attack_metroid(mob/user as mob)
+// for slimes
+/atom/proc/attack_slime(mob/user as mob)
 	return
 
 /atom/proc/hand_h(mob/user as mob)			//human (hand) - restrained
@@ -291,7 +294,7 @@ its easier to just keep the beam vertical.
 	src.hand_p(user)
 	return
 
-/atom/proc/hand_m(mob/user as mob)			//metroid - restrained
+/atom/proc/hand_m(mob/user as mob)			//slime - restrained
 	return
 
 
@@ -462,19 +465,19 @@ its easier to just keep the beam vertical.
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			for(var/datum/disease/D in M.viruses)
+			/*for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = D.Copy(1)
 				B.viruses += newDisease
-				newDisease.holder = B
+				newDisease.holder = B*/
 			return 1 //we bloodied the floor
 
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		for(var/datum/disease/D in M.viruses)
+		/*for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = D.Copy(1)
 			newblood.viruses += newDisease
-			newDisease.holder = newblood
+			newDisease.holder = newblood*/
 		return 1 //we bloodied the floor
 
 	//adding blood to humans
@@ -496,10 +499,10 @@ its easier to just keep the beam vertical.
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
 
-		for(var/datum/disease/D in M.viruses)
+		/*for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = D.Copy(1)
 			this.viruses += newDisease
-			newDisease.holder = this
+			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
@@ -508,40 +511,27 @@ its easier to just keep the beam vertical.
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
 			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			for(var/datum/disease/D in M.viruses)
+			/*for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
-				newDisease.holder = this
+				newDisease.holder = this*/
 
 	else if( istype(M, /mob/living/carbon/alien ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
 			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
-			for(var/datum/disease/D in M.viruses)
+			/*for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
-				newDisease.holder = this
+				newDisease.holder = this*/
 
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			new /obj/effect/decal/cleanable/oil(source2)
 
-/atom/proc/clean_prints()
-	if(istype(fingerprints, /list))
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			var/test_print = stars(fingerprints[P], rand(10,20))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
-		if(!fingerprints.len)
-			del(fingerprints)
-
 /atom/proc/clean_blood()
-	clean_prints()
 	src.germ_level = 0
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
@@ -602,8 +592,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				src.attack_paw(usr)
 			else if(isalienadult(usr))
 				src.attack_alien(usr)
-			else if(ismetroid(usr))
-				src.attack_metroid(usr)
+			else if(isslime(usr))
+				src.attack_slime(usr)
 			else if(isanimal(usr))
 				src.attack_animal(usr)
 			else
@@ -621,7 +611,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				src.hand_p(usr, usr.hand)
 			else if(isalienadult(usr))
 				src.hand_al(usr, usr.hand)
-			else if(ismetroid(usr))
+			else if(isslime(usr))
 				return
 			else if(isanimal(usr))
 				return
@@ -832,28 +822,28 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !alien.restrained() )
 				attack_larva(alien)
 
-	else if(ismetroid(usr))
-		var/mob/living/carbon/metroid/metroid = usr
-		//-metroid stuff-
+	else if(isslime(usr))
+		var/mob/living/carbon/slime/slime = usr
+		//-slime stuff-
 
-		if(metroid.stat)
+		if(slime.stat)
 			return
 
-		var/in_range = in_range(src, metroid) || src.loc == metroid
+		var/in_range = in_range(src, slime) || src.loc == slime
 
 		if (in_range)
-			if ( !metroid.restrained() )
+			if ( !slime.restrained() )
 				if (W)
-					attackby(W,metroid)
+					attackby(W,slime)
 					if (W)
-						W.afterattack(src, metroid)
+						W.afterattack(src, slime)
 				else
-					attack_metroid(metroid)
+					attack_slime(slime)
 			else
-				hand_m(metroid, metroid.hand)
+				hand_m(slime, slime.hand)
 		else
-			if ( (W) && !metroid.restrained() )
-				W.afterattack(src, metroid)
+			if ( (W) && !slime.restrained() )
+				W.afterattack(src, slime)
 
 
 	else if(isanimal(usr))
@@ -1014,7 +1004,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //	world << "according to dblclick(), t5 is [t5]"
 
 	// ------- ACTUALLY DETERMINING STUFF -------
-	if (((t5 || (W && (W.flags & 16))) && !( istype(src, /obj/screen) )))
+	if (((t5 || (W && (W.flags & USEDELAY))) && !( istype(src, /obj/screen) )))
 
 		// ------- ( CAN USE ITEM OR HAS 1 SECOND USE DELAY ) AND NOT CLICKING ON SCREEN -------
 
@@ -1165,8 +1155,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 						src.attack_larva(usr)
 					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)
-					else if(istype(usr, /mob/living/carbon/metroid))
-						src.attack_metroid(usr)
+					else if(istype(usr, /mob/living/carbon/slime))
+						src.attack_slime(usr)
 					else if(istype(usr, /mob/living/simple_animal))
 						src.attack_animal(usr)
 		else

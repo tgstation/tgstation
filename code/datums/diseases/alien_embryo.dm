@@ -1,5 +1,7 @@
 //affected_mob.contract_disease(new /datum/disease/alien_embryo)
 
+//cael - retained this file for legacy reference, see code\modules\mob\living\carbon\alien\special\alien_embryo.dm for replacement
+
 //Our own special process so that dead hosts still chestburst
 /datum/disease/alien_embryo/process()
 	if(!holder) return
@@ -98,6 +100,9 @@
 				gibbed = 1
 				return
 
+/datum/disease/alien_embryo/stage_change(var/old_stage)
+	RefreshInfectionImage()
+
 /*----------------------------------------
 Proc: RefreshInfectionImage()
 Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
@@ -107,7 +112,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
 				for(var/image/I in alien.client.images)
-					if(I.icon_state == "infected")
+					if(dd_hasprefix_case(I.icon_state, "infected"))
 						del(I)
 
 		for (var/mob/living/carbon/alien/alien in player_list)
@@ -115,7 +120,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 				for (var/mob/living/carbon/C in mob_list)
 					if(C)
 						if (C.status_flags & XENO_HOST)
-							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected")
+							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
 							alien.client.images += I
 		return
 
@@ -128,7 +133,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
 				if (C.status_flags & XENO_HOST)
-					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected")
+					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
 					alien.client.images += I
 	return
 
@@ -143,6 +148,6 @@ Des: Removes the alien infection image from all aliens in the world located in p
 			if (alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)
-						if(I.icon_state == "infected")
+						if(dd_hasprefix_case(I.icon_state, "infected"))
 							del(I)
 	return

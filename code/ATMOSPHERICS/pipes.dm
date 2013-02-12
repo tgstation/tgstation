@@ -4,9 +4,10 @@ obj/machinery/atmospherics/pipe
 	var/datum/pipeline/parent
 
 	var/volume = 0
-	var/force = 20
+	force = 20
 
 	layer = 2.4 //under wires with their 2.44
+	use_power = 0
 
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called

@@ -497,10 +497,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					freq_text = "Engineering"
 				if(1359)
 					freq_text = "Security"
-				if(1349)
-					freq_text = "Mining"
+//				if(1349)
+//					freq_text = "Mining"
 				if(1347)
-					freq_text = "Cargo"
+					freq_text = "Supply"
 			//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 			if(!freq_text)
@@ -595,7 +595,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/hear_talk(mob/M as mob, msg)
 
 	if (broadcasting)
-		talk_into(M, msg)
+		if(get_dist(src, M) <= canhear_range)
+			talk_into(M, msg)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

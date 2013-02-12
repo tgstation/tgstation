@@ -122,6 +122,7 @@
 	icon_state = "shower"
 	density = 0
 	anchored = 1
+	use_power = 0
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -164,7 +165,7 @@
 			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays = null					//once it's been on for a while, in addition to handling the water overlay.
+	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		del(mymist)
 
@@ -335,6 +336,8 @@
 	if(M.loc != location) return		//Person has moved away from the sink
 
 	M.clean_blood()
+	if(ishuman(M))
+		M:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [M] washes their hands using \the [src].")
 

@@ -236,18 +236,24 @@ turf/proc/update_lumcount(amount)
 
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
-
 	var/area/Area = loc
+
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
 
 	// change the turf's area depending on its brightness
 	// restrict light to valid levels
 	var/light = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
-	var/new_tag = "[Area.type]sd_L[light]"
+
+	var/find = findtextEx(Area.tag, "sd_L")
+	var/new_tag = copytext(Area.tag, 1, find)
+	new_tag += "sd_L[light]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
+
 		var/area/A = locate(new_tag)	// find an appropriate area
+
 		if(!A)
+
 			A = new Area.type()    // create area if it wasn't found
 			// replicate vars
 			for(var/V in Area.vars)
@@ -294,73 +300,6 @@ area
 			//show the dark overlay so areas, not yet in a lighting subarea, won't be bright as day and look silly.
 				SetLightLevel(4)
 
-atom
-	var/light_on = 0 //Am I emitting light?
-	var/brightness_on = 0 //Luminosity when the above: light_on = 1
-
-	//Called when turning off or dropping a flashlight for ex.
-	//It checks the users slots for another source of light, and return the appropriate brightness. 0 if no other source is found
-	proc/search_light(mob/M, obj/item/W as obj)
-		var/list/slots
-		var/obj/item/I
-		var brightness = 0 //the new brightness to be returned
-
-		if (istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			slots = list (
-				"l_hand",
-				"r_hand",
-				"belt",
-				"head",
-				"l_pocket",
-				"r_pocket",
-				"s_store")
-
-			for (var/slot in slots)
-				switch(slot)
-					if("belt")
-						I = H.belt
-					if("head")
-						I = H.head
-					if("l_hand")
-						I = H.l_hand
-					if("r_hand")
-						I = H.r_hand
-					if("l_pocket")
-						I = H.l_store
-					if("r_pocket")
-						I = H.r_store
-					if("s_store")
-						I = H.s_store
-				if (I)
-					if ((I.light_on) && (I != W)) //an item emitting light other than itself
-						if (I.brightness_on > brightness)
-							brightness = I.brightness_on
-
-		else if (istype(M, /mob/living/carbon/monkey))
-			slots = list (
-				"l_hand",
-				"r_hand")
-
-			for (var/slot in slots)
-				switch(slot)
-					if("l_hand")
-						I = M.l_hand
-					if("r_hand")
-						I = M.r_hand
-				if (I)
-					if ((I.light_on) && (I != W)) //an item emitting light other than itself
-						if (I.brightness_on > brightness)
-							brightness = I.brightness_on
-
-		else
-			for (I in M.contents) //Justin Case
-				if (I)
-					if ((I.light_on) && (I != W)) //an item emitting light other than itself
-						if (I.brightness_on > brightness)
-							brightness = I.brightness_on
-
-		return brightness
 
 #undef LIGHTING_MAX_LUMINOSITY
 #undef LIGHTING_MAX_LUMINOSITY_MOB

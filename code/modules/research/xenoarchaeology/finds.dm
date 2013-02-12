@@ -79,6 +79,8 @@
 				R.source_rock = src.source_rock
 				R.geological_data = src.geological_data
 			user << "\blue You take a core sample of the [src]."
+	else
+		..()
 
 /*Code does not work, likely due to removal/change of acid_act proc
 //Strange rocks currently melt to gooey grey w/ acid application (see reactions)

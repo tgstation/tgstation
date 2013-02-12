@@ -223,7 +223,7 @@ for (var/client/C)
 	if(!load)
 		return
 
-	overlays = null
+	overlays.Cut()
 
 	load.loc = src.loc
 	load.pixel_y -= 9

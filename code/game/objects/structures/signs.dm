@@ -92,6 +92,11 @@
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
 	icon_state = "redcross"
 
+/obj/structure/sign/greencross
+	name = "medbay"
+	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
+	icon_state = "greencross"
+
 /obj/structure/sign/goldenplaque
 	name = "The Most Robust Men Award for Robustness"
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
@@ -131,16 +136,3 @@
 	name = "\improper HYDROPONICS"
 	desc = "A warning sign which reads 'HYDROPONICS'"
 	icon_state = "hydro1"
-
-/obj/structure/sign/barsign
-	icon = 'barsigns.dmi'
-	icon_state = "empty"
-	anchored = 1
-	New()
-		ChangeSign(pick("pinkflamingo", "magmasea", "limbo", "rustyaxe", "armokbar", "brokendrum", "meadbay", "thedamnwall", "thecavern", "cindikate", "theorchard", "thesaucyclown", "theclownshead"))
-		return
-	proc/ChangeSign(var/Text)
-		src.icon_state = "[Text]"
-		//on = 0
-		//brightness_on = 4 //uncomment these when the lighting fixes get in
-		return
