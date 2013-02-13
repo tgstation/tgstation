@@ -69,6 +69,8 @@ obj/item/weapon/gun/energy/staff
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
 	projectile_type = "/obj/item/projectile/animate"
 	charge_cost = 100
+	icon_state = "staffofanimation"
+	item_state = "staffofanimation"
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"

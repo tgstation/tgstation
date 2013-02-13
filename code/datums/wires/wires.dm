@@ -67,7 +67,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 /datum/wires/proc/Interact(var/mob/living/user)
 
 	var/html = null
-	if(CanUse())
+	if(holder && CanUse())
 		html = GetInteractWindow()
 	user << browse(html, "window=wires")
 	onclose(user, "wires")
