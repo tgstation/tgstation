@@ -281,7 +281,8 @@
 			for()
 				loops++
 				if(loops>=1000)
-					CRASH("Something TERRIBLE has gone wrong in ParseFunctionExpression ;__;")
+					break
+					//CRASH("Something TERRIBLE has gone wrong in ParseFunctionExpression ;__;")
 
 				if(istype(curToken, /token/symbol) && curToken.value==")")
 					return exp

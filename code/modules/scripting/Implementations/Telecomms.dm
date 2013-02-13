@@ -93,6 +93,15 @@
 		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job"))
 
 		/*
+			-> Send a code signal.
+					@format: signal(frequency, code)
+
+					@param frequency:		Frequency to send the signal to
+					@param code:			Encryption code to send the signal with
+		*/
+		interpreter.SetProc("signal", "signaler", signal, list("freq", "code"))
+
+		/*
 			-> Store a value permanently to the server machine (not the actual game hosting machine, the ingame machine)
 					@format: mem(address, value)
 
@@ -210,6 +219,8 @@
 
 /*  -- Actual language proc code --  */
 
+var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
+
 datum/signal
 
 	proc/mem(var/address, var/value)
@@ -222,6 +233,33 @@ datum/signal
 
 			else
 				S.memory[address] = value
+
+
+	proc/signaler(var/freq = 1459, var/code = 30)
+		if(isnum(freq) && isnum(code))
+
+			var/obj/machinery/telecomms/server/S = data["server"]
+
+			if(S.last_signal + SIGNAL_COOLDOWN > world.timeofday && S.last_signal < MIDNIGHT_ROLLOVER)
+				return
+			S.last_signal = world.timeofday
+
+			var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
+
+			if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
+				freq *= 10 // shift the decimal one place
+
+			freq = sanitize_frequency(freq)
+
+			var/datum/signal/signal = new
+			signal.source = S
+			signal.encryption = code
+			signal.data["message"] = "ACTIVATE"
+
+			connection.post_signal(S, signal)
+
+			var/time = time2text(world.realtime,"hh:mm:ss")
+			lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
 
 	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
@@ -239,7 +277,7 @@ datum/signal
 		if(!source)
 			source = "[html_encode(uppertext(S.id))]"
 			hradio = new // sets the hradio as a radio intercom
-		if(!freq)
+		if(!freq || (!isnum(freq) && text2num(freq) == null))
 			freq = 1459
 		if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
 			freq *= 10 // shift the decimal one place
@@ -250,13 +288,13 @@ datum/signal
 		newsign.data["mob"] = null
 		newsign.data["mobtype"] = /mob/living/carbon/human
 		if(source in S.stored_names)
-			newsign.data["name"] = source
+			newsign.data["name"] = "[source]"
 		else
 			newsign.data["name"] = "<i>[html_encode(uppertext(source))]<i>"
 		newsign.data["realname"] = newsign.data["name"]
-		newsign.data["job"] = job
+		newsign.data["job"] = "[job]"
 		newsign.data["compression"] = 0
-		newsign.data["message"] = message
+		newsign.data["message"] = "[message]"
 		newsign.data["type"] = 2 // artificial broadcast
 		if(!isnum(freq))
 			freq = text2num(freq)

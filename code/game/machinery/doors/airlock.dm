@@ -51,7 +51,6 @@
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
-	var/list/signalers[12]
 	var/lockdownbyai = 0
 	autoclose = 1
 	var/doortype = 0

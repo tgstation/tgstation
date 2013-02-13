@@ -519,6 +519,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 							// would add up to md5("password123comsat")
 	var/language = "human"
 	var/obj/item/device/radio/headset/server_radio = null
+	var/last_signal = 0 	// Last time it sent a signal
 
 /obj/machinery/telecomms/server/New()
 	..()

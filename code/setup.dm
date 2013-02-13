@@ -3,6 +3,7 @@
 #define DEBUG
 
 #define PI 3.1415
+#define MIDNIGHT_ROLLOVER 864000
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
