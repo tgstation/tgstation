@@ -213,7 +213,3 @@ ALIEN_PLAYER_RATIO 0.2
 
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
-
-#Seconds after a player recieves a PM that other admins will recieve warnings for trying to message
-SIMULTANEOUS_PM_WARNING_TIMEOUT 10
-

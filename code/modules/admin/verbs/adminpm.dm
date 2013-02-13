@@ -45,13 +45,13 @@
 		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return
 
-	if(C && C.last_pm_recieved + config.simultaneous_pm_warning_timeout > world.time && holder)
+	/*if(C && C.last_pm_recieved + config.simultaneous_pm_warning_timeout > world.time && holder)
 		//send a warning to admins, but have a delay popup for mods
 		if(holder.rights & R_ADMIN)
 			src << "\red <b>Simultaneous PMs warning:</b> that player has been PM'd in the last [config.simultaneous_pm_warning_timeout / 10] seconds by: [C.ckey_last_pm]"
 		else
 			if(alert("That player has been PM'd in the last [config.simultaneous_pm_warning_timeout / 10] seconds by: [C.ckey_last_pm]","Simultaneous PMs warning","Continue","Cancel") == "Cancel")
-				return
+				return*/
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
@@ -112,9 +112,9 @@
 	C << recieve_message
 	src << "<font color='blue'>[send_pm_type] PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
 
-	if(holder && !C.holder)
+	/*if(holder && !C.holder)
 		C.last_pm_recieved = world.time
-		C.ckey_last_pm = ckey
+		C.ckey_last_pm = ckey*/
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this

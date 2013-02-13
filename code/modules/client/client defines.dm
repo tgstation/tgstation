@@ -8,9 +8,6 @@
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 
-	var/last_pm_recieved = 0	//world.time of the last PM this mob recieved, so that mods/admins recieve warnings if a player is getting spammed
-	var/ckey_last_pm = ""
-
 		/////////
 		//OTHER//
 		/////////

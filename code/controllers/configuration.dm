@@ -395,9 +395,6 @@
 				if("ghost_interaction")
 					config.ghost_interaction = 1
 
-				if("simultaneous_pm_warning_timeout")
-					simultaneous_pm_warning_timeout = text2num(value) * 10
-
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
