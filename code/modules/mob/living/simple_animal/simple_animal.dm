@@ -227,8 +227,10 @@
 /mob/living/simple_animal/emote(var/act)
 	if(act)
 		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
+		if( findtext(act,".",lentext(act)) == 0 && findtext(act,"!",lentext(act)) == 0 && findtext(act,"?",lentext(act)) == 0 )
+			act = addtext(act,".") //Makes sure all emotes end with a period.
 		for (var/mob/O in viewers(src, null))
-			O.show_message("<B>[src]</B> [act].")
+			O.show_message("<B>[src]</B> [act]")
 
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
