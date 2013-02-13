@@ -10,6 +10,7 @@
 	var/backup_author =""
 	var/is_admin_message = 0
 	var/icon/img = null
+	var/icon/backup_img
 
 /datum/feed_channel
 	var/channel_name=""
@@ -28,6 +29,7 @@
 	src.backup_body = ""
 	src.backup_author = ""
 	src.img = null
+	src.backup_img = null
 
 /datum/feed_channel/proc/clear()
 	src.channel_name = ""
@@ -640,6 +642,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
 				return
+			if(MSG.img != null)
+				MSG.backup_img = MSG.img
+				MSG.img = null
+			else
+				MSG.img = MSG.backup_img
 			if(MSG.body != "<B>\[REDACTED\]</B>")
 				MSG.backup_body = MSG.body
 				MSG.body = "<B>\[REDACTED\]</B>"
