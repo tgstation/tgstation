@@ -3,8 +3,8 @@
 Excessive Shedding
 
 	Noticable.
-	Slight Resistance.
-	Increases stage speed slightly.
+	Decreases resistance slightly.
+	Reduces stage speed slightly.
 	Transmittable.
 	Moderate Level.
 
@@ -18,10 +18,10 @@ BONUS
 
 	name = "Excessive Shedding"
 	stealth = -1
-	resistance = 1
-	stage_speed = 1
+	resistance = -1
+	stage_speed = -1
 	transmittable = 2
-	level = 3
+	level = 4
 
 /datum/symptom/shedding/Activate(var/datum/disease/advance/A)
 	..()
