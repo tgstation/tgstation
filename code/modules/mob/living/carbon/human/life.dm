@@ -99,6 +99,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	handle_pain()
 
+	handle_medical_side_effects()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
 	update_canmove()

@@ -6,11 +6,9 @@
 // BEGIN_FILE_DIR
 #define FILE_DIR .
 // END_FILE_DIR
-
 // BEGIN_PREFERENCES
 #define DEBUG
 // END_PREFERENCES
-
 // BEGIN_INCLUDE
 #include "code\global.dm"
 #include "code\hub.dm"
@@ -705,6 +703,7 @@
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
+#include "code\modules\clothing\spacesuits\alien.dm"
 #include "code\modules\clothing\spacesuits\captain.dm"
 #include "code\modules\clothing\spacesuits\ert.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
@@ -732,11 +731,10 @@
 #include "code\modules\customitems\item_defines.dm"
 #include "code\modules\customitems\item_spawning.dm"
 #include "code\modules\destilery\main.dm"
-#include "code\modules\detectivework\detective_work.dm"
-#include "code\modules\detectivework\evidence.dm"
-#include "code\modules\detectivework\footprints_and_rag.dm"
-#include "code\modules\detectivework\scanner.dm"
-#include "code\modules\events\alien_infestation.dm"
+#include "code\modules\DetectiveWork\detective_work.dm"
+#include "code\modules\DetectiveWork\evidence.dm"
+#include "code\modules\DetectiveWork\footprints_and_rag.dm"
+#include "code\modules\DetectiveWork\scanner.dm"#include "code\modules\events\alien_infestation.dm"
 #include "code\modules\events\blob.dm"
 #include "code\modules\events\brand_intelligence.dm"
 #include "code\modules\events\carp_migration.dm"
@@ -756,8 +754,7 @@
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
 #include "code\modules\events\viral_infection.dm"
-#include "code\modules\events\viral_outbreak.dm"
-#include "code\modules\flufftext\Dreaming.dm"
+#include "code\modules\events\viral_outbreak.dm"#include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"
 #include "code\modules\food\recipes_microwave.dm"
@@ -1169,8 +1166,8 @@
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\SuperMatter.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\ZeroPointLaser.dm"
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
-#include "code\WorkInProgress\Mini\ATM.dm"
-#include "code\WorkInProgress\Ported\policetape.dm"
+#include "code\WorkInProgress\Cib\MedicalSideEffects.dm"
+#include "code\WorkInProgress\Mini\ATM.dm"#include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
 #include "code\WorkInProgress\Susan\susan_desert_turfs.dm"
 #include "code\WorkInProgress\virus2\analyser.dm"

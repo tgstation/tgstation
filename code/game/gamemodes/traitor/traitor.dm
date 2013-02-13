@@ -291,3 +291,9 @@
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.
+
+	// Tell them about people they might want to contact.
+	var/mob/living/carbon/human/M = get_nt_opposed()
+	if(M != traitor_mob)
+		traitor_mob << "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them."
+		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")

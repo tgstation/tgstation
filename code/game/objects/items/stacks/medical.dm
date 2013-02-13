@@ -53,6 +53,7 @@
 				user.visible_message( 	"\blue [user] salves wounds on [M]'s [affecting.display_name].", \
 										"\blue You salve wounds on [M]'s [affecting.display_name]." )
 
+		H.add_side_effect("Cramps")
 		H.UpdateDamageIcon()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
