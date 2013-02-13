@@ -27,8 +27,9 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1.0
-	var/icon/img	//Big photo image
-	var/scribble	//Scribble on the back.
+	var/icon/img		//Big photo image
+	var/scribble		//Scribble on the back.
+	var/blueprints = 0	//Does it include the blueprints?
 
 /obj/item/weapon/photo/attack_self(mob/user as mob)
 	examine()
@@ -124,6 +125,7 @@
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
+	var/blueprints = 0	//are blueprints visible in the current photo being created?
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
@@ -178,6 +180,8 @@
 			var/icon/img = getFlatIcon(A, A.dir)//build_composite_icon(A)
 			if(istype(img, /icon))
 				res.Blend(new/icon(img, "", A.dir), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
+		if(!blueprints && istype(A, /obj/item/blueprints))
+			blueprints = 1
 	return res
 
 
@@ -242,6 +246,11 @@
 	P.desc = mobs
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
+
+	if(blueprints)
+		P.blueprints = 1
+	blueprints = 0
+
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--

@@ -363,8 +363,13 @@ datum/objective/steal
 					for(var/mob/living/silicon/ai/M in C)
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
-			else
 
+			if("the station blueprints")
+				for(var/obj/item/weapon/photo/P in all_items)
+					if(P.blueprints)	//if it has the blueprints in it
+						return 1
+
+			else
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
 						return 1
