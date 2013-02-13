@@ -91,7 +91,7 @@ Bonus
 
 Longevity
 
-	Large hidden boost.
+	Medium hidden boost.
 	Large resistance boost.
 	Large stage speed boost.
 	Large transmittablity boost.
@@ -106,7 +106,7 @@ Bonus
 /datum/symptom/heal/longevity
 
 	name = "Longevity"
-	stealth = 4
+	stealth = 3
 	resistance = 4
 	stage_speed = 4
 	transmittable = 4
