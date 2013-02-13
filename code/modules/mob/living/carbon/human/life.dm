@@ -1106,7 +1106,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				handle_dreams()
 				adjustHalLoss(-5)
 				if (mind)
-					if(mind.active || immune_to_ssd)
+					if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 						sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
