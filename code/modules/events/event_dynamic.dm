@@ -41,26 +41,26 @@
 	// Check for additional possible events
 	possibleEvents[/datum/event/economic_event] = 100	//see Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
 	possibleEvents[/datum/event/carp_migration] = 50 + 50 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/brand_intelligence] = 50 + 25 * active_with_role["Janitor"]
+
+	possibleEvents[/datum/event/rogue_drone] = 50 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
+	possibleEvents[/datum/event/infestation] = 50 + 25 * active_with_role["Janitor"]
+
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
+	possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
+	possibleEvents[/datum/event/grid_check] = 10 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/electrical_storm] = 75 + 25 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
 
-	if(active_with_role["AI"] > 0 || active_with_role["Cyborg"] > 0)
-		possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
-
-	if(active_with_role["Janitor"] > 0)
-		possibleEvents[/datum/event/brand_intelligence] = 50 + 25 * active_with_role["Janitor"]
-
+	if(!spacevines_spawned)
+		possibleEvents[/datum/event/spacevine] = 5 + 10 * active_with_role["Engineer"]
 	if(active_with_role["Engineer"] > 0 && minutes_passed >= 30) // Give engineers time to set up engine
 		possibleEvents[/datum/event/meteor_wave] = 20 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
-		if(!spacevines_spawned)
-			possibleEvents[/datum/event/spacevine] = 10 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/grid_check] = 10 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/electrical_storm] = 75 + 25 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
 
+	possibleEvents[/datum/event/viral_infection] = active_with_role["Medical"] * 50
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 100
-		possibleEvents[/datum/event/viral_infection] = active_with_role["Medical"] * 50
 		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 25
 		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 50
 
