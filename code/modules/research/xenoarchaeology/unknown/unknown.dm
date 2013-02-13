@@ -222,7 +222,7 @@ var/list/valid_secondary_effect_types = list(\
 	if (get_dist(user, src) > 1)
 		user << "\red You can't reach [src] from here."
 		return
-	if(ishuman(user) && istype(user:gloves,/obj/item/clothing/gloves))
+	if(ishuman(user) && user:gloves)
 		return ..()
 
 	src.add_fingerprint(user)
@@ -231,7 +231,7 @@ var/list/valid_secondary_effect_types = list(\
 		user << "<b>You touch [src].<b>"
 		my_effect.ToggleActivate()
 	else
-		user << "<b>You touch [src],</b> [pick("and nothing of note happens","but nothing happens","and nothing interesting happens","you notice nothing different","nothing seems to have happened")]."
+		user << "<b>You touch [src],</b> [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")]."
 
 	if(prob(25) && secondary_effect && secondary_effect.trigger == my_effect.trigger)
 		secondary_effect.ToggleActivate(0)

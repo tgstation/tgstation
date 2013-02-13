@@ -66,3 +66,30 @@
 		else if(effect == EFFECT_PULSE && chargelevel >= chargelevelmax)
 			chargelevel = 0
 			DoEffectPulse()
+
+//returns 0..1, with 1 being no protection and 0 being fully protected
+proc/GetAnomalySusceptibility(var/mob/living/carbon/human/H)
+	if(!H || !istype(H))
+		return 1
+
+	var/protected = 0
+
+	//anomaly suits give best protection, but excavation suits are almost as good
+	if(istype(H.wear_suit,/obj/item/clothing/suit/bio_suit/anomaly))
+		protected += 0.6
+	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/anomaly))
+		protected += 0.5
+
+	if(istype(H.head,/obj/item/clothing/head/bio_hood/anomaly))
+		protected += 0.3
+	else if(istype(H.head,/obj/item/clothing/head/helmet/space/anomaly))
+		protected += 0.2
+
+	//latex gloves and science goggles also give a bit of bonus protection
+	if(istype(H.gloves,/obj/item/clothing/gloves/latex))
+		protected += 0.1
+
+	if(istype(H.glasses,/obj/item/clothing/glasses/science))
+		protected += 0.1
+
+	return 1 - protected
