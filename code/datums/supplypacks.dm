@@ -353,6 +353,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
+	cost = 25
+	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Virus crate"
 	access = access_cmo
 	group = "Medical / Science"
