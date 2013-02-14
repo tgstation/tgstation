@@ -29,7 +29,7 @@
 		D = M
 		break
 	S.reagents.add_reagent("analysis_sample", 1, D.geological_data)
-	S.reagents.add_reagent("chlorine", 1, D.geological_data)
+	S.reagents.add_reagent("calcium", 1, D.geological_data)
 
 /obj/machinery/anomaly/process()
 	//not sure if everything needs to heat up, or just the GLPC

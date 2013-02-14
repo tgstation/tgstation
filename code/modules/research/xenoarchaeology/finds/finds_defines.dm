@@ -63,6 +63,8 @@
 			return "aluminium"
 		if(ARCHAEO_COIN)
 			return "silicon"
+		if(ARCHAEO_KNIFE)
+			return "silicon"
 		if(ARCHAEO_HANDCUFFS)
 			return "aluminium"
 		if(ARCHAEO_BEARTRAP)

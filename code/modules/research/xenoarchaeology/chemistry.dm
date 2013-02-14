@@ -51,9 +51,9 @@ datum
 								//todo: make this brown
 
 		density_separated_sample
-			name = "Analysis liquid"
+			name = "Density separated sample"
 			id = "density_separated_sample"
-			description = "A watery paste used in chemical analysis."
+			description = "A watery paste used in chemical analysis, this one has some chunks floating in it."
 			reagent_state = LIQUID
 			color = "#C81040" 	//rgb: 200, 16, 64
 								//todo: make this browny-white

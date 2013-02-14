@@ -31,7 +31,7 @@
 
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
-			D.coords = "[10 * M.x + rand(0,9)]:[10 * M.y + rand(0,9)]:[10 * M.z + rand(0,9)]"
+			D.coords = "[M.x].[rand(0,9)]:[M.y].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 

@@ -368,7 +368,7 @@ commented out in r5061, I left it because of the shroom thingies
 
 				else if(src.excavation_level + P.excavation_amount > F.excavation_required - F.clearance_range)
 					//just pull the surrounding rock out
-					excavate_find(5, F)
+					excavate_find(0, F)
 
 			if(src.excavation_level + P.excavation_amount >= 100)
 				//if players have been excavating this turf, have a chance to leave some rocky debris behind

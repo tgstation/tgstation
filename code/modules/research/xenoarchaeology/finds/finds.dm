@@ -382,12 +382,14 @@
 			//fossil bone/skull
 			new_item = new /obj/item/weapon/fossil/base(src.loc)
 			apply_prefix = 0
+			additional_desc = "A fossilised part of an alien, long dead."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(30)
 			//fossil shell
 			new_item = new /obj/item/weapon/fossil/shell(src.loc)
 			apply_prefix = 0
+			additional_desc = "A fossilised, pre-Stygian alien crustacean."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 			if(prob(10))
@@ -395,6 +397,8 @@
 		if(31)
 			//fossil plant
 			new_item = new /obj/item/weapon/fossil/plant(src.loc)
+			item_type = new_item.name
+			additional_desc = "A fossilised shred of alien plant matter."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 			apply_prefix = 0
