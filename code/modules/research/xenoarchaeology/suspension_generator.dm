@@ -89,6 +89,7 @@
 		dat += "[field_type=="aluminium"?"<b>":""	]<A href='?src=\ref[src];select_field=aluminium'>Aluminium transmitted field</A></b><br>"
 		dat += "[field_type=="silicon"?"<b>":""		]<A href='?src=\ref[src];select_field=silicon'>Silicon wafer conduction</A></b><br>"
 		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
+		dat += "[field_type=="chlorine"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine alkalising field</A></b><br>"
 	else
 		dat += "<br>"
 		dat += "<br>"
@@ -255,6 +256,9 @@
 			success = 1
 			//
 		if("aluminium")
+			success = 1
+			//
+		if("chlorine")
 			success = 1
 			//
 		if("silicon")

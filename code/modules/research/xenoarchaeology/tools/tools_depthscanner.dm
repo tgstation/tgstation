@@ -56,7 +56,7 @@
 		if(B.artifact_find)
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
-			D.coords = "[10 * B.x + rand(0,9)]:[10 * B.y + rand(0,9)]:[10 * B.z + rand(0,9)]"
+			D.coords = "[10 * B.x].[rand(0,9)]:[10 * B.y].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 

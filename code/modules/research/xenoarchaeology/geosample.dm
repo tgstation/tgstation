@@ -161,7 +161,7 @@ var/list/artifact_spawning_turfs = list()
 		return
 
 	if(container.artifact_find)
-		artifact_distance = rand(-100,100) / 100
+		artifact_distance = rand()
 		artifact_id = container.artifact_find.artifact_id
 	else
 		for(var/turf/simulated/mineral/holder in artifact_spawning_turfs)
@@ -169,7 +169,7 @@ var/list/artifact_spawning_turfs = list()
 				var/dist = get_dist(container, holder)
 				if(dist < holder.artifact_find.artifact_detect_range && dist < src.artifact_distance)
 					src.artifact_distance = dist
-					src.artifact_id = holder.artifact_find
+					src.artifact_id = holder.artifact_find.artifact_id
 			else
 				artifact_spawning_turfs.Remove(holder)
 

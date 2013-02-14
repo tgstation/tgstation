@@ -30,35 +30,16 @@
 #define ARCHAEO_FOSSIL 29
 #define ARCHAEO_SHELL 30
 #define ARCHAEO_PLANT 31
+#define ARCHAEO_REMAINS_HUMANOID 32
+#define ARCHAEO_REMAINS_ROBOT 33
+#define ARCHAEO_REMAINS_XENO 34
+#define MAX_ARCHAEO 34
 //eggs
 //droppings
 //footprints
 //alien clothing
 
 //DNA sampling from fossils, or a new archaeo type specifically for it?
-
-#define ARTIFACT_REMAINS_HUMANOID 1
-#define ARTIFACT_REMAINS_ROBOT 2
-#define ARTIFACT_REMAINS_XENO 3
-#define ARTIFACT_MACHINERY 4
-#define ARTIFACT_OCCULT 5
-#define ARTIFACT_SYNDBEACON 6
-
-//?
-#define ARTIFACT_HEAL 4
-#define ARTIFACT_BIODAM 5
-#define ARTIFACT_POWERCHARGE 6
-#define ARTIFACT_POWERDRAIN 7
-#define ARTIFACT_EMP 8
-#define ARTIFACT_PLANTGROW 9
-#define ARTIFACT_WEAKEN 10
-#define ARTIFACT_SLEEPY 11
-#define ARTIFACT_TELEPORT 12
-#define ARTIFACT_ROBOHURT 13
-#define ARTIFACT_ROBOHEAL 14
-#define ARTIFACT_DNASWITCH 15
-//#define ARTIFACT_
-//#define ARTIFACT_
 
 //descending order of likeliness to spawn
 #define DIGSITE_GARDEN 1
@@ -126,7 +107,15 @@
 			return "beryllium"
 		if(ARCHAEO_FOSSIL)
 			return "carbon"
+		if(ARCHAEO_SHELL)
+			return "carbon"
 		if(ARCHAEO_PLANT)
+			return "carbon"
+		if(ARCHAEO_REMAINS_HUMANOID)
+			return "carbon"
+		if(ARCHAEO_REMAINS_ROBOT)
+			return "carbon"
+		if(ARCHAEO_REMAINS_XENO)
 			return "carbon"
 	return "chlorine"
 

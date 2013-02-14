@@ -128,6 +128,8 @@
 			//dont create artifact machinery in animal or plant digsites, or if we already have one
 			if(!artifact_find && digsite != 1 && digsite != 2 && prob(ARTIFACT_SPAWN_CHANCE))
 				artifact_find = new()
+				//world << "<b>[artifact_find.artifact_find_type]</b> [src.x], [src.y], [src.z]"
+				artifact_spawning_turfs.Add(src)
 
 		if(!src.geological_data)
 			src.geological_data = new/datum/geosample(src)
