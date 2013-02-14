@@ -157,6 +157,9 @@ var/global/next_account_number = 0
 					for(var/datum/money_account/M in src.accounts)
 						if(!A.accounts.Find(M))
 							A.accounts.Add(M)
+					for(var/datum/money_account/M in A.accounts)
+						if(!src.accounts.Find(M))
+							src.accounts.Add(M)
 				usr << "\icon[src] <span class='info'>Accounts synched across all databases in range.</span>"
 
 			if("create_account")

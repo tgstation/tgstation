@@ -10,6 +10,7 @@
 	var/backup_author =""
 	var/is_admin_message = 0
 	var/icon/img = null
+	var/icon/backup_img
 
 /datum/feed_channel
 	var/channel_name=""
@@ -28,6 +29,7 @@
 	src.backup_body = ""
 	src.backup_author = ""
 	src.img = null
+	src.backup_img = null
 
 /datum/feed_channel/proc/clear()
 	src.channel_name = ""
@@ -481,7 +483,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			for(var/datum/feed_channel/F in news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			src.channel_name = strip_html(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+			src.channel_name = strip_html_simple(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
@@ -640,6 +642,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
 				return
+			if(MSG.img != null)
+				MSG.backup_img = MSG.img
+				MSG.img = null
+			else
+				MSG.img = MSG.backup_img
 			if(MSG.body != "<B>\[REDACTED\]</B>")
 				MSG.backup_body = MSG.body
 				MSG.body = "<B>\[REDACTED\]</B>"

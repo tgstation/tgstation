@@ -102,11 +102,35 @@ datum
 				var/part = amount / src.total_volume
 				var/trans_data = null
 				for (var/datum/reagent/current_reagent in src.reagent_list)
+					if (!current_reagent)
+						continue
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
 						trans_data = current_reagent.data
-					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
-					src.remove_reagent(current_reagent.id, current_reagent_transfer)
+					if(current_reagent.id == "blood" && ishuman(target)) // can never be sure
+						var/mob/living/carbon/human/H = target
+
+						var/datum/reagent/blood/HisBlood = locate() in H.vessel.reagent_list //Grab some blood
+						if(HisBlood) // Make sure there's some blood at all
+							if(HisBlood.data["donor"] != H) //If it's not theirs, then we look for theirs
+								for(var/datum/reagent/blood/D in H.vessel.reagent_list)
+									if(D.data["donor"] == H)
+										HisBlood = D
+										break
+						if(HisBlood && HisBlood.data && trans_data)
+							if(blood_incompatible(trans_data["blood_type"],HisBlood.data["blood_type"]))
+								H.reagents.add_reagent("toxin",(current_reagent_transfer * multiplier * 0.5))
+								H.reagents.update_total()
+							else
+								H.vessel.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+								H.vessel.update_total()
+						else
+							H.vessel.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+							H.vessel.update_total()
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
+					else
+						R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
 				src.update_total()
 				R.update_total()

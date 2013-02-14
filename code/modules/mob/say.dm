@@ -75,11 +75,11 @@
 		//tcomms code is still runtiming somewhere here
 	var/ending = copytext(text, length(text))
 	if (is_speaking_soghun)
-		return "hisses, \"<span class='species'>[text]</span>\"";
+		return "hisses, \"<span class='soghun'>[text]</span>\"";
 	if (is_speaking_skrell)
-		return "warbles, \"<span class='species'>[text]</span>\"";
+		return "warbles, \"<span class='skrell'>[text]</span>\"";
 	if (is_speaking_tajaran)
-		return "mrowls, \"<span class='species'>[text]</span>\"";
+		return "mrowls, \"<span class='tajaran'>[text]</span>\"";
 //Needs Virus2
 //	if (src.disease_symptoms & DISEASE_HOARSE)
 //		return "rasps, \"[text]\"";

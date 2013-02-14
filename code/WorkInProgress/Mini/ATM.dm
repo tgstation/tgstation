@@ -91,7 +91,8 @@ log transactions
 			user << "<span class='info'>You insert [I] into [src].</span>"
 			src.attack_hand(user)
 			del I
-	else ..()
+	else
+		..()
 
 /obj/machinery/atm/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon))
@@ -324,6 +325,8 @@ log transactions
 						held_card = I
 			if("logout")
 				authenticated_account = null
+				usr << browse(null,"window=atm")
+				return
 	src.attack_hand(usr)
 
 //create the most effective combination of notes to make up the requested amount

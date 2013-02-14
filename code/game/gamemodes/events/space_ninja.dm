@@ -90,7 +90,7 @@ I decided to scrap round-specific objectives since keeping track of them would r
 When I already created about 4 new objectives, this doesn't seem terribly important or needed.
 */
 
-/var/global/toggle_space_ninja = 1//If ninjas can spawn or not.
+/var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
 /var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
 
 var/ninja_selection_id = 1
@@ -165,8 +165,15 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		if(!candidates.len)	return
 		candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
 
-		candidate_mob = pick(candidates)
-		ninja_key = candidate_mob.ckey
+		while(!ninja_key && candidates.len)
+			candidate_mob = pick(candidates)
+			if(sd_Alert(candidate_mob, "Would you like to spawn as a space ninja?", buttons = list("Yes","No"), duration = 150) == "Yes")
+				ninja_key = candidate_mob.ckey
+			else
+				candidates.Remove(candidate_mob)
+
+		if(!ninja_key)
+			return
 
 
 	if(!candidate_mob)

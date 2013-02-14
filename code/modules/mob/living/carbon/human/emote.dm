@@ -591,8 +591,8 @@
 
 
 /mob/living/carbon/human/verb/pose()
-	set name = "Set pose"
-	set desc = "Sets description which will be shown when someone examines you"
+	set name = "Set Pose"
+	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
 	pose =  copytext(sanitize(input(usr, "This is [src]. \He is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)

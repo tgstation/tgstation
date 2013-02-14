@@ -6,8 +6,8 @@
 
 
 /datum/event/blob/announce()
-	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak5.ogg')
+	command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+	world << sound('sound/AI/outbreak7.ogg')
 
 
 /datum/event/blob/start()

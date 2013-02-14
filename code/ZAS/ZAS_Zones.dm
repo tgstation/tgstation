@@ -411,7 +411,7 @@ zone/proc/Rebuild()
 	//
 	var/list/turfs_to_consider = contents.Copy()
 
-	while(!sample.CanPass(null, sample, 1.5, 1))
+	while(!sample || !sample.CanPass(null, sample, 1.5, 1))
 		if(sample)
 			turfs_to_consider.Remove(sample)
 		sample = locate() in turfs_to_consider
@@ -481,11 +481,11 @@ proc/play_wind_sound(var/turf/random_border, var/n)
 	if(random_border)
 		var/windsound = 'sound/effects/wind/wind_2_1.ogg'
 		switch(n)
-			if(0 to 30)
-				windsound = pick('sound/effects/wind/wind_2_1.ogg', 'sound/effects/wind/wind_2_2.ogg')
 			if(31 to 40)
+				windsound = pick('sound/effects/wind/wind_2_1.ogg', 'sound/effects/wind/wind_2_2.ogg')
+			if(41 to 50)
 				windsound = pick('sound/effects/wind/wind_3_1.ogg')
-			if(41 to 60)
+			if(51 to 60)
 				windsound = pick('sound/effects/wind/wind_4_1.ogg', 'sound/effects/wind/wind_4_2.ogg')
 			if(61 to 1000000)
 				windsound = pick('sound/effects/wind/wind_5_1.ogg')

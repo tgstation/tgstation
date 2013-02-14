@@ -478,7 +478,6 @@ datum
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/stack/sheet/mineral/plasma(location)
 				return
-
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -524,8 +523,13 @@ datum
 						if(D)
 							D.Devolve()
 
-
-
+		condensedcapsaicin
+			name = "Condensed Capsaicin"
+			id = "condensedcapsaicin"
+			result = "condensedcapsaicin"
+			required_reagents = list("capsaicin" = 2)
+			required_catalysts = list("plasma" = 5)
+			result_amount = 1
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor

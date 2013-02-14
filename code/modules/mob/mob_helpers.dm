@@ -121,7 +121,7 @@ proc/isorgan(A)
 	return 0
 
 proc/hasorgans(A)
-	return (ishuman(A) || ismonkey(A))
+	return ishuman(A)
 
 /proc/hsl2rgb(h, s, l)
 	return
@@ -170,7 +170,7 @@ proc/hasorgans(A)
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
-	if(!target.buckled && !target.lying) 
+	if(!target.buckled && !target.lying)
 		var/miss_chance = max(10 + miss_chance_mod, 0)
 		switch(zone)
 			if("head")
