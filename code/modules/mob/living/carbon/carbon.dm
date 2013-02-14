@@ -444,3 +444,14 @@
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
+
+/mob/living/carbon/attackby(obj/item/I, mob/user)
+	if(surgeries.len)
+		var/success = 0
+		for(var/datum/surgery/S in surgeries)
+			if(S.next_step(user, src))
+				success = 1
+		if(success)
+			return
+
+	..()

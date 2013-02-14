@@ -16,6 +16,10 @@
 	reagents = R
 	R.my_atom = src
 
+	internal_organs += new /obj/item/organ/appendix
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
+
 	if(name == "monkey")
 		name = text("monkey ([rand(1, 1000)])")
 	real_name = name

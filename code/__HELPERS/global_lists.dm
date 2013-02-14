@@ -14,6 +14,7 @@ var/global/list/cable_list = list()					//Index for all cables, so that powernet
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/landmarks_list = list()				//list of all landmarks created
+var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 
 //Preferences stuff
 	//Hairstyles
@@ -46,6 +47,7 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 			else
 				hair_styles_male_list += H.name
 				hair_styles_female_list += H.name
+
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	paths = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 	for(var/path in paths)
@@ -57,6 +59,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 			else
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
+
+	//Surgeries
+	paths = typesof(/datum/surgery) - /datum/surgery
+	for(var/path in paths)
+		var/datum/surgery/S = new path()
+		surgeries_list[S.name] = S
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

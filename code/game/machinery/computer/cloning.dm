@@ -404,7 +404,7 @@
 	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if (subject.brain_op_stage == 4.0)
+	if (!getbrain(subject))
 		scantemp = "Error: No signs of intelligence detected."
 		return
 	if (subject.suiciding == 1)

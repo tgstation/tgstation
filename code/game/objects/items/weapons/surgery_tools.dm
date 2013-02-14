@@ -21,7 +21,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
-
+/*
 /obj/item/weapon/retractor/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -130,7 +130,7 @@
 		return ..()
 
 	return
-
+*/
 /*
  * Hemostat
  */
@@ -145,7 +145,7 @@
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
-
+/*
 /obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -295,7 +295,7 @@
 		return ..()
 
 	return
-
+*/
 /*
  * Cautery
  */
@@ -310,7 +310,7 @@
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
-
+/*
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -383,7 +383,7 @@
 		return ..()
 
 	return
-
+*/
 /*
  * Surgical Drill
  */
@@ -429,7 +429,7 @@
 							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
 		return (BRUTELOSS)
-
+/*
 /obj/item/weapon/scalpel/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -654,7 +654,7 @@
 		return ..()
 */
 	return
-
+*/
 
 /*
  * Circular Saw
@@ -663,7 +663,7 @@
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw3"
+	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
@@ -675,7 +675,7 @@
 	g_amt = 10000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-
+/*
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -781,7 +781,7 @@
 				log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 
-				var/obj/item/brain/B = new(M.loc)
+				var/obj/item/organ/brain/B = new(M.loc)
 				B.transfer_identity(M)
 
 				M:brain_op_stage = 4.0
@@ -824,3 +824,4 @@
 		return ..()
 */
 	return
+*/

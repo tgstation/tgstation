@@ -16,7 +16,10 @@
 
 	preop(user, target, target_zone, tool)
 	if(do_after(user, time))
+
 		var/prob_chance = implements[tool.type]
+		prob_chance *= get_location_modifier(target)
+
 		if(prob(prob_chance))
 			success(user, target, target_zone, tool, surgery)
 			surgery.status++

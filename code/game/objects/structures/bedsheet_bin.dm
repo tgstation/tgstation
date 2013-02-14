@@ -18,6 +18,10 @@ LINEN BINS
 	color = "white"
 
 
+/obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
+	if(!attempt_initiate_surgery(src, M, user))
+		..()
+
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
 	user.drop_item()
 	if(layer == initial(layer))

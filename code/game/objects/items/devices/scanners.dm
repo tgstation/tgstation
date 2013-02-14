@@ -124,7 +124,7 @@ MASS SPECTROMETER
 			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message(text("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals."), 1)
-	if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	if (M.getBrainLoss() >= 100 || !getbrain(M))
 		user.show_message(text("\red Subject is brain dead."), 1)
 	else if (M.getBrainLoss() >= 60)
 		user.show_message(text("\red Severe brain damage detected. Subject likely to have mental retardation."), 1)

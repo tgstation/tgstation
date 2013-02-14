@@ -1,11 +1,7 @@
 /mob/living/carbon/
 	gender = MALE
-	var/list/stomach_contents = list()
-
-	var/brain_op_stage = 0.0
-	var/eye_op_stage = 0.0
-	var/appendix_op_stage = 0.0
-	var/alien_op_stage = 0.0
+	var/list/stomach_contents	= list()
+	var/list/internal_organs	= list()	//List of /obj/item/organ in the mob. they don't go in the contents.
 
 	var/antibodies = 0
 

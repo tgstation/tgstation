@@ -118,7 +118,7 @@ I said no!
 /datum/recipe/brainburger
 	reagents = list("flour" = 5)
 	items = list(
-		/obj/item/brain
+		/obj/item/organ/brain
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/brainburger
 
@@ -1016,7 +1016,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/brain
+		/obj/item/organ/brain
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
 

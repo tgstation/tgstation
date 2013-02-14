@@ -24,6 +24,7 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
 
+	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
 	var/t_plasma = null
 	var/t_oxygen = null

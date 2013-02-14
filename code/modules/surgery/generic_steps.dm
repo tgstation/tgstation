@@ -32,3 +32,12 @@
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to mend the incision in [target]'s [target_zone].</span>")
+
+
+//saw bone
+/datum/surgery_step/saw
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/butch = 25)
+	time = 64
+
+/datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("<span class='notice'>[user] begins to saw through the bone in [target]'s [target_zone].</span>")

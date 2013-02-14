@@ -194,7 +194,7 @@
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(stat == DEAD || (status_flags & FAKEDEATH))
-		if(brain_op_stage != 4)//Only perform these checks if there is no brain
+		if(getbrain(src))//Only perform these checks if there is no brain
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
 			if(!key)
@@ -251,9 +251,9 @@
 	else if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && brain_op_stage != 4 && stat != DEAD)
+	if(!key && getbrain(src) && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
+	else if(!client && getbrain(src) && stat != DEAD)
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	if(digitalcamo)
