@@ -322,6 +322,8 @@
 		if(G.state<2)
 			user << "\red You need a better grip to do that!"
 			return
+		if(!G.update())
+			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] puts [G.affecting] on the table.")

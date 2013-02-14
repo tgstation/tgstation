@@ -54,19 +54,8 @@
 
 
 /obj/item/weapon/grab/process()
-	if(!assailant || (!affecting && !structure))
-		del(src)
-		return
 
-	if(affecting && !structure)
-		if ((!( isturf(assailant.loc) ) || (!( isturf(affecting.loc) ) || (assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1))))
-			//SN src = null
-			del(src)
-			return
-	else if(!affecting && structure)
-		if (!isturf(structure.loc) || !isturf(structure.loc) || (assailant.loc != structure.loc && get_dist(assailant, structure) > 1))
-			del(src)
-			return
+	update()
 
 	if (assailant.client)
 		assailant.client.screen -= hud1
@@ -250,6 +239,22 @@
 	hud1.id = 1
 	hud1.master = src
 	return
+
+/obj/item/weapon/grab/proc/update()
+	if(!assailant || (!affecting && !structure))
+		del(src)
+		return
+
+	if(affecting && !structure)
+		if ((!( isturf(assailant.loc) ) || (!( isturf(affecting.loc) ) || (assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1))))
+			//SN src = null
+			del(src)
+			return
+	else if(!affecting && structure)
+		if (!isturf(structure.loc) || !isturf(structure.loc) || (assailant.loc != structure.loc && get_dist(assailant, structure) > 1))
+			del(src)
+			return
+	return 1
 
 
 /obj/item/weapon/grab/attack(mob/M as mob, mob/user as mob)
