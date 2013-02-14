@@ -2190,8 +2190,12 @@
 
 		var/ok = 0
 		switch(href_list["secretsadmin"])
-			if("clear_bombs")
-				//I do nothing
+			if("clear_virus")
+				var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+				if(choice == "Yes")
+					message_admins("[key_name_admin(usr)] has cured all diseases.", 1)
+					for(var/datum/disease/D in active_diseases)
+						D.cure(D)
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)
