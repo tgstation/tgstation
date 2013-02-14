@@ -753,7 +753,6 @@
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
 #include "code\modules\events\rogue_drones.dm"
-#include "code\modules\events\rogue_viscerators.dm"
 #include "code\modules\events\space_ninja.dm"
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
