@@ -58,17 +58,17 @@
 		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
 
-	possibleEvents[/datum/event/viral_infection] = active_with_role["Medical"] * 50
+	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 25
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 100
-		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 25
-		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 50
+		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 75
+		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 5
 
 	if(active_with_role["Security"] > 0)
 		possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 		if(!sent_spiders_to_station)
 			possibleEvents[/datum/event/spider_infestation] = max(active_with_role["Security"], 5) + 5
-		if(!sent_aliens_to_station)
+		if(aliens_allowed && !sent_aliens_to_station)
 			possibleEvents[/datum/event/alien_infestation] = max(active_with_role["Security"], 5) + 2.5
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
