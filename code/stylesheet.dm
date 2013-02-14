@@ -52,7 +52,9 @@ h1.alert, h2.alert		{color: #000000;}
 .mod					{color: #735638;	font-weight: bold;}
 .modooc					{color: #184880;	font-weight: bold;}
 .adminmod				{color: #402A14;	font-weight: bold;}
-.species				{color: #803B56;}
+.tajaran				{color: #803B56;}
+.skrell					{color: #00CED1;}
+.soghun					{color: #228B22;}
 
 .interface				{color: #330033;}
 </style>"}
