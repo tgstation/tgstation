@@ -265,23 +265,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
-	var/list/mouse_candidates = list()
-	for(var/mob/living/simple_animal/mouse/M in world)
-		if(!M.ckey && !M.stat)
-			mouse_candidates.Add(M)
-	if(mouse_candidates.len)
-		host = pick(mouse_candidates)
+	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+	var/list/found_vents = list()
+	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
+		if(!v.welded && v.z == src.z)
+			found_vents.Add(v)
+	if(found_vents.len)
+		vent_found = pick(found_vents)
+		host = new /mob/living/simple_animal/mouse(vent_found.loc)
 	else
-		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
-		var/list/found_vents = list()
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
-			if(!v.welded && v.z == src.z)
-				found_vents.Add(v)
-		if(found_vents.len)
-			vent_found = pick(found_vents)
-			host = new /mob/living/simple_animal/mouse(vent_found.loc)
-		else
-			src << "<span class='warning'>Unable to find any live mice, or unwelded vents to spawn one at.</span>"
+		src << "<span class='warning'>Unable to find any unwelded vents to spawn mice at.</span>"
 
 	if(host)
 		host.ckey = src.ckey
