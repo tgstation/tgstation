@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	w_class = 3
-	origin_tech = "engineering=4;materials=4;bluespace=2;programming=6"
+	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/list/construction_cost = list("metal"=500,"glass"=500,"silver"=200,"gold"=200,"plasma"=100,"diamond"=10)
 	var/construction_time = 75
@@ -68,7 +68,8 @@
 
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
 		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
-		src.brainmob << "Use say :b to speak to other artificial intelligences on the station."
+		src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
+		src.brainmob << "Use say :b to speak to other artificial intelligences."
 		src.brainmob.mind.assigned_role = "Positronic Brain"
 
 		var/turf/T = get_turf_or_move(src.loc)

@@ -439,3 +439,24 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+
+/obj/item/weapon/weldingtool/attack(mob/M as mob, mob/user as mob)
+	if(hasorgans(M))
+		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
+		if (!S) return
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+			return ..()
+		if(S.brute_dam)
+			S.heal_damage(15,0,0,1)
+			if(user != M)
+				user.visible_message("\red You patch some dents on \the [M]'s [S.display_name]",\
+				"\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
+				"You hear a welder.")
+			else
+				user.visible_message("\red You patch some dents on your [S.display_name]",\
+				"\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
+				"You hear a welder.")
+		else
+			user << "Nothing to fix!"
+	else
+		return ..()

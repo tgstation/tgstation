@@ -123,7 +123,7 @@ var/global/datum/controller/gameticker/ticker
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
-//	start_events() //handles random events and space dust.
+	start_events() //handles random events and space dust.
 //new random event system is handled from the MC.
 
 	var/admins_number = 0
@@ -311,7 +311,10 @@ var/global/datum/controller/gameticker/ticker
 
 				if(!delay_end)
 					sleep(restart_timeout)
-					world.Reboot()
+					if(!delay_end)
+						world.Reboot()
+					else
+						world << "\blue <B>An admin has delayed the round end</B>"
 				else
 					world << "\blue <B>An admin has delayed the round end</B>"
 

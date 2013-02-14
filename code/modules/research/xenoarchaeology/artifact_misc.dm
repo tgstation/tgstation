@@ -4,7 +4,7 @@
 	desc = "A sealed bio suit capable of resisting exotic alien energies and low pressure environments."
 	icon_state = "engspace_suit"
 	item_state = "engspace_suit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/pickaxe/hand_pick)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/head/bio_hood/anomaly
 	name = "Anomaly Hood"
