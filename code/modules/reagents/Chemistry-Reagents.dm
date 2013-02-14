@@ -113,6 +113,12 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
+				if(self.data && self.data["virus2"])
+					if(method == TOUCH)
+						infect_virus2(M,self.data["virus2"])
+					else
+						infect_virus2(M,self.data["virus2"],1)
+
 
 
 
