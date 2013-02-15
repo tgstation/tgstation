@@ -72,6 +72,7 @@
 					return
 				for(var/i = 1, i <= C, i++)
 					new S.coretype(loc)
+					feedback_add_details("slime_core_harvested","[S.colour]")
 				..()
 			input = /mob/living/carbon/slime
 			output = null

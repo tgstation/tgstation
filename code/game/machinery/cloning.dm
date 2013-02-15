@@ -371,7 +371,6 @@
 					ex_act(severity)
 				del(src)
 				return
-		else
 	return
 
 /*

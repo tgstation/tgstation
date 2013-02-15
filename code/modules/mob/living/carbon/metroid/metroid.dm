@@ -45,12 +45,9 @@
 
 	var/colour = "grey"
 	var/primarytype = /mob/living/carbon/slime
-	var/mutationone = /mob/living/carbon/slime/orange
-	var/mutationtwo = /mob/living/carbon/slime/metal
-	var/mutationthree = /mob/living/carbon/slime/blue
-	var/mutationfour = /mob/living/carbon/slime/purple
 	var/adulttype = /mob/living/carbon/slime/adult
 	var/coretype = /obj/item/slime_extract/grey
+	var/list/slime_mutation[4]
 
 /mob/living/carbon/slime/adult
 	name = "adult slime"
@@ -68,10 +65,7 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "baby slime")
-		name = text("[colour] baby slime ([rand(1, 1000)])")
-	else
-		name = text("[colour] adult slime ([rand(1,1000)])")
+	name = text("[colour] baby slime ([rand(1, 1000)])")
 	real_name = name
 	spawn (1)
 		regenerate_icons()
@@ -81,6 +75,11 @@
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
+	name = text("[colour] adult slime ([rand(1,1000)])")
+	slime_mutation[1] = /mob/living/carbon/slime/orange
+	slime_mutation[2] = /mob/living/carbon/slime/metal
+	slime_mutation[3] = /mob/living/carbon/slime/blue
+	slime_mutation[4] = /mob/living/carbon/slime/purple
 
 /mob/living/carbon/slime/movement_delay()
 	var/tally = 0
