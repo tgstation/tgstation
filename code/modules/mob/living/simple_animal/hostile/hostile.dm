@@ -20,6 +20,9 @@
 	stop_automated_movement = 0
 	for(var/atom/A in ListTargets())
 
+		if(A == src)
+			continue
+
 		var/atom/F = Found(A)
 		if(F)
 			T = F

@@ -9,6 +9,7 @@
 	speak_emote = list("squeeks","squeeks","squiks")
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
+	pass_flags = PASSTABLE
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -17,10 +18,10 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
-	response_harm   = "splats the"
+	response_harm   = "stamps on the"
 	density = 0
 	var/color //brown, gray and white, leave blank for random
-	layer = 2.5		//so they can hide under objects
+	layer = MOB_LAYER
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
@@ -136,8 +137,12 @@
 			open += O
 			*/
 
-mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing things with MouseDrop
-	return 1
+///mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing things with MouseDrop
+//	return 1
+
+/mob/living/simple_animal/mouse/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
+	src << "<span class='warning'>You are too small to pull anything.</span>"
+	return
 
 /mob/living/simple_animal/mouse/HasEntered(AM as mob|obj)
 	if( ishuman(AM) )
