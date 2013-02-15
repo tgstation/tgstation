@@ -107,6 +107,10 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=contract'>Contract of Apprenticeship</A><BR>"
 		dat += "<I>A magical contract binding an apprentice wizard to your service, using it will summon them to your side.</I><BR>"
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>"
+		dat += "<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x=ray vision.</I><BR>"
 
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
@@ -244,6 +248,17 @@
 							feedback_add_details("wizard_spell_learned","CT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/contract(get_turf(H))
 							temp = "You have purchased a contract of apprenticeship."
+							max_uses--
+						if("scrying")
+							feedback_add_details("wizard_spell_learned","SO") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/weapon/scrying(get_turf(H))
+							if (!(XRAY in H.mutations))
+								H.mutations.Add(XRAY)
+								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+								H.see_in_dark = 8
+								H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+								H << "\blue The walls suddenly disappear."
+							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--
 		else
 			if(href_list["temp"])
