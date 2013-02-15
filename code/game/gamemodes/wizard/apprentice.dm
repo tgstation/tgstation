@@ -86,17 +86,6 @@
 				M.mind.name = newname
 				M.real_name = newname
 				M.name = newname
-				/*if(M.mind)
-					M.mind.name = newname
-				var/datum/objective/protect/protect = new
-				ticker.mode.traitors += M.mind
-				M.mind.special_role = "apprentice"
-				protect.owner = M.mind
-				M.mind.objectives += protect
-				protect.target = H
-				protect.target.current = H
-				protect.explanation_text = "Protect [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."*/
-
 				var/datum/objective/protect/new_objective = new /datum/objective/protect
 				new_objective.owner = M:mind
 				new_objective:target = H:mind

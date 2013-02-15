@@ -123,6 +123,10 @@
 	if(!istype(H, /mob/living/carbon/human))
 		return 1
 
+	if(H.mind.special_role == "apprentice")
+		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
+		return
+
 	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
 		H.set_machine(src)
 		if(href_list["spell_choice"])
