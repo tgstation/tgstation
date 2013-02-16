@@ -74,7 +74,7 @@
 				loc = A.loc
 				return 0// nope.avi
 
-			var/distance = get_dist(original,loc)
+			var/distance = get_dist(starting,loc)
 			//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
 			// close distance, actually RAISE the chance to hit.
 			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
