@@ -2,9 +2,11 @@
 
 /obj/item/device/analyzer/plant_analyzer
 	name = "plant analyzer"
+	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
+	origin_tech = "magnets=1;biotech=1"
 
 	attack_self(mob/user as mob)
 		return 0

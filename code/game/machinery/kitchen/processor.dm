@@ -1,6 +1,7 @@
 
 /obj/machinery/processor
 	name = "Food Processor"
+	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
 	layer = 2.9

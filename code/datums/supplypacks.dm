@@ -534,7 +534,7 @@
 	access = access_security
 
 /datum/supply_packs/eweapons
-	name = "Experimental weapons crate"
+	name = "Incendiary weapons crate"
 	contains = list(/obj/item/weapon/flamethrower/full,
 					/obj/item/weapon/tank/plasma,
 					/obj/item/weapon/tank/plasma,
@@ -544,7 +544,7 @@
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "experimental weapons crate"
+	containername = "incendiary weapons crate"
 	access = access_heads
 
 /datum/supply_packs/armor
