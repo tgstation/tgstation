@@ -376,6 +376,7 @@ Alien plants should do something if theres a lot of poison
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 
 	New()
+		new /obj/item/clothing/mask/facehugger(src)
 		if(aliens_allowed)
 			..()
 			spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
@@ -410,25 +411,26 @@ Alien plants should do something if theres a lot of poison
 	proc/Grow()
 		icon_state = "egg"
 		status = GROWN
-		new /obj/item/clothing/mask/facehugger(src)
 		return
 
 	proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
 		if(status == GROWN || status == GROWING)
-			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
+
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING
 			spawn(15)
 				status = BURST
-				loc.contents += child//need to write the code for giving it to the alien later
-				if(kill && istype(child))
-					child.Die()
-				else
-					for(var/mob/M in range(1,src))
-						if(CanHug(M))
-							child.Attach(M)
-							break
+				var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
+				if(child)
+					child.loc = get_turf(src)
+					if(kill && istype(child))
+						child.Die()
+					else
+						for(var/mob/M in range(1,src))
+							if(CanHug(M))
+								child.Attach(M)
+								break
 
 
 /obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
@@ -439,8 +441,7 @@ Alien plants should do something if theres a lot of poison
 
 
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
-	if(health <= 0)
-		return
+
 	if(W.attack_verb.len)
 		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -460,7 +461,10 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/egg/proc/healthcheck()
 	if(health <= 0)
-		Burst()
+		if(status != BURST && status != BURSTING)
+			Burst()
+		else if(status == BURST && prob(50))
+			del(src) // Remove the egg after it has been hit after bursting.
 
 /obj/effect/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)

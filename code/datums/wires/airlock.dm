@@ -3,6 +3,7 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	wire_count = 12
+	window_y = 540
 
 var/const/AIRLOCK_WIRE_IDSCAN = 1
 var/const/AIRLOCK_WIRE_MAIN_POWER1 = 2
@@ -19,6 +20,10 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 
 /datum/wires/airlock/CanUse(var/mob/living/L)
 	var/obj/machinery/door/airlock/A = holder
+	if(!istype(L, /mob/living/silicon))
+		if(A.isElectrified())
+			if(A.shock(L, 100))
+				return 0
 	if(A.p_open)
 		return 1
 	return 0
@@ -36,6 +41,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 
 
 /datum/wires/airlock/UpdateCut(var/index, var/mended)
+
 	var/obj/machinery/door/airlock/A = holder
 	switch(index)
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
@@ -44,19 +50,16 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 				A.loseMainPower()
 				A.shock(usr, 50)
-				A.updateUsrDialog()
 			else
 				if((!IsIndexCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!IsIndexCut(AIRLOCK_WIRE_MAIN_POWER2)))
 					A.regainMainPower()
 					A.shock(usr, 50)
-					A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			if(mended)
 				if((!IsIndexCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!IsIndexCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 					A.regainBackupPower()
 					A.shock(usr, 50)
-					A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_DOOR_BOLTS)
 
@@ -65,7 +68,6 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				if(A.locked!=1)
 					A.locked = 1
 				A.update_icon()
-			A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 
@@ -73,7 +75,6 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 				A.loseBackupPower()
 				A.shock(usr, 50)
-			A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_AI_CONTROL)
 
@@ -90,8 +91,6 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				else if(A.aiControlDisabled == 2)
 					A.aiControlDisabled = -1
 
-			A.updateUsrDialog()
-
 		if(AIRLOCK_WIRE_ELECTRIFY)
 
 			if(!mended)
@@ -99,29 +98,28 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				if(A.secondsElectrified != -1)
 					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>")
-				A.secondsElectrified = -1
+					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)
 					A.secondsElectrified = 0
+			return // Don't update the dialog.
 
 		if (AIRLOCK_WIRE_SAFETY)
 			A.safe = mended
-			A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_SPEED)
 			A.autoclose = mended
 			if(mended)
 				if(!A.density)
 					A.close()
-			A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = mended
 			A.update_icon()
-			A.updateUsrDialog()
 
 
 /datum/wires/airlock/UpdatePulsed(var/index)
+
 	var/obj/machinery/door/airlock/A = holder
 	switch(index)
 		if(AIRLOCK_WIRE_IDSCAN)
@@ -138,13 +136,11 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				A.locked = 1
 				for(var/mob/M in range(1, A))
 					M << "You hear a click from the bottom of the door."
-				A.updateUsrDialog()
 			else
 				if(A.arePowerSystemsOn()) //only can raise bolts if power's on
 					A.locked = 0
 					for(var/mob/M in range(1, A))
 						M << "You hear a click from the bottom of the door."
-					A.updateUsrDialog()
 			A.update_icon()
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
@@ -155,13 +151,14 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				A.aiControlDisabled = 1
 			else if(A.aiControlDisabled == -1)
 				A.aiControlDisabled = 2
-			A.updateDialog()
+
 			spawn(10)
-				if(A.aiControlDisabled == 1)
-					A.aiControlDisabled = 0
-				else if(A.aiControlDisabled == 2)
-					A.aiControlDisabled = -1
-				A.updateDialog()
+				if(A)
+					if(A.aiControlDisabled == 1)
+						A.aiControlDisabled = 0
+					else if(A.aiControlDisabled == 2)
+						A.aiControlDisabled = -1
+
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
 			if(A.secondsElectrified==0)
@@ -169,13 +166,14 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>")
 				A.secondsElectrified = 30
 				spawn(10)
-					//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
-					while (A.secondsElectrified>0)
-						A.secondsElectrified-=1
-						if(A.secondsElectrified<0)
-							A.secondsElectrified = 0
-//						A.updateUsrDialog()  //Commented this line out to keep the airlock from clusterfucking you with electricity. --NeoFite
-						sleep(10)
+					if(A)
+						//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
+						while (A.secondsElectrified>0)
+							A.secondsElectrified-=1
+							if(A.secondsElectrified<0)
+								A.secondsElectrified = 0
+							sleep(10)
+				return
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			//tries to open the door without ID
 			//will succeed only if the ID wire is cut or the door requires no access
@@ -186,12 +184,9 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 			A.safe = !A.safe
 			if(!A.density)
 				A.close()
-			A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_SPEED)
 			A.normalspeed = !A.normalspeed
-			A.updateUsrDialog()
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
-			A.updateUsrDialog()

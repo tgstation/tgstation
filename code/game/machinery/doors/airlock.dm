@@ -421,8 +421,8 @@ About the new airlock wires panel:
 	s.start() //sparks always.
 	if(electrocute_mob(user, get_area(src), src))
 		hasShocked = 1
-		sleep(10)
-		hasShocked = 0
+		spawn(10)
+			hasShocked = 0
 		return 1
 	else
 		return 0
@@ -631,7 +631,7 @@ About the new airlock wires panel:
 	return src.attack_hand(user)
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
-	if(!istype(usr, /mob/living/silicon))
+	if(!istype(user, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return

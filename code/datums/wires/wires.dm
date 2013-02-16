@@ -23,8 +23,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	var/table_options = " align='center'"
 	var/row_options1 = " width='90px'"
 	var/row_options2 = " width='200px'"
-	var/window_x = 200
-	var/window_y = 500
+	var/window_x = 350
+	var/window_y = 450
 
 /datum/wires/New(var/atom/holder)
 	..()
@@ -64,12 +64,15 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		src.wires[colour] = index
 		//wires = shuffle(wires)
 
+
 /datum/wires/proc/Interact(var/mob/living/user)
 
 	var/html = null
-	if(holder && CanUse())
+	if(holder && CanUse(user))
 		html = GetInteractWindow()
-	user << browse(html, "window=wires")
+	if(html)
+		user.set_machine(holder)
+	user << browse(html, "window=wires;size=[window_x]x[window_y]")
 	onclose(user, "wires")
 
 /datum/wires/proc/GetInteractWindow(var/get_title = 1, var/allow_close = 1)
@@ -137,6 +140,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 	if(href_list["close"])
 		usr << browse(null, "window=wires")
+		usr.unset_machine(holder)
 
 //
 // Overridable Procs
