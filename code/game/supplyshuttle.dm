@@ -620,11 +620,10 @@ var/list/mechtoys = list(
 					supply_shuttle.points -= P.cost
 					supply_shuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
-					temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 				else
 					temp = "Not enough supply points.<BR>"
-					temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 				break
+		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
