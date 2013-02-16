@@ -134,7 +134,7 @@ proc/hasorgans(A)
 			zone = "head"
 		if("mouth")
 			zone = "head"
-		if("l_hand")
+/*		if("l_hand")
 			zone = "l_arm"
 		if("r_hand")
 			zone = "r_arm"
@@ -144,6 +144,7 @@ proc/hasorgans(A)
 			zone = "r_leg"
 		if("groin")
 			zone = "chest"
+*/
 	return zone
 
 
