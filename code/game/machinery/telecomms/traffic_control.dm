@@ -117,16 +117,20 @@
 		  // --- Viewing Server ---
 
 			if(1)
-				dat += "<br>[temp]<br>"
-				dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
-				dat += "<br>Current Network: [network]"
-				dat += "<br>Selected Server: [SelectedServer.id]<br><br>"
-				dat += "<br><a href='?src=\ref[src];operation=editcode'>\[Edit Code\]</a>"
-				dat += "<br>Signal Execution: "
-				if(SelectedServer.autoruncode)
-					dat += "<a href='?src=\ref[src];operation=togglerun'>ALWAYS</a>"
+				if(SelectedServer)
+					dat += "<br>[temp]<br>"
+					dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
+					dat += "<br>Current Network: [network]"
+					dat += "<br>Selected Server: [SelectedServer.id]<br><br>"
+					dat += "<br><a href='?src=\ref[src];operation=editcode'>\[Edit Code\]</a>"
+					dat += "<br>Signal Execution: "
+					if(SelectedServer.autoruncode)
+						dat += "<a href='?src=\ref[src];operation=togglerun'>ALWAYS</a>"
+					else
+						dat += "<a href='?src=\ref[src];operation=togglerun'>NEVER</a>"
 				else
-					dat += "<a href='?src=\ref[src];operation=togglerun'>NEVER</a>"
+					screen = 0
+					return
 
 
 	user << browse(dat, "window=traffic_control;size=575x400")

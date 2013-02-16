@@ -10,10 +10,25 @@
 	HandleError(runtimeError/e)
 		Compiler.Holder.add_entry(e.ToString(), "Execution Error")
 
+	GC()
+		..()
+		Compiler = null
+
+
 /datum/TCS_Compiler
+
 	var/n_Interpreter/TCS_Interpreter/interpreter
 	var/obj/machinery/telecomms/server/Holder	// the server that is running the code
 	var/ready = 1 // 1 if ready to run code
+
+	/* -- Set ourselves to Garbage Collect -- */
+
+	proc/GC()
+
+		Holder = null
+		if(interpreter)
+			interpreter.GC()
+
 
 	/* -- Compile a raw block of text -- */
 

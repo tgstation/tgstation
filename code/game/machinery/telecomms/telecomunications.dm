@@ -527,6 +527,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	Compiler.Holder = src
 	server_radio = new()
 
+/obj/machinery/telecomms/server/Del()
+	// Garbage collects all the NTSL datums.
+	if(Compiler)
+		Compiler.GC()
+		Compiler = null
+	..()
+
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(signal.data["message"])

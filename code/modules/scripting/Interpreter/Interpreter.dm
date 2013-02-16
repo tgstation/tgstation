@@ -55,6 +55,14 @@
 		if(program)Load(program)
 
 	proc
+
+/*
+	Set ourselves to Garbage Collect
+*/
+		GC()
+			..()
+			container = null
+
 /*
 	Proc: RaiseError
 	Raises a runtime error.

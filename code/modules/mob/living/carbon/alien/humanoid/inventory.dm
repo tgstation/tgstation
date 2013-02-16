@@ -22,7 +22,7 @@
 /mob/living/carbon/alien/humanoid/attack_ui(slot_id)
 	var/obj/item/W = get_active_hand()
 	if(W)
-		if(!istype(W))	return
+		if(!istype(W))	return 0
 		switch(slot_id)
 //			if("o_clothing")
 //			if("head")
@@ -52,3 +52,4 @@
 				if(l_store)		l_store.attack_alien(src)
 			if(slot_r_store)
 				if(r_store)		r_store.attack_alien(src)
+	return 1

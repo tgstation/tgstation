@@ -135,6 +135,8 @@
 
 	if(selhand != src.hand)
 		swap_hand()
+	else
+		mode() // Activate held item
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(health >= 0)

@@ -63,8 +63,11 @@
 	name = "storage"
 	master = null
 
-/obj/screen/storage/attackby(W, mob/user as mob)
-	src.master.attackby(W, user)
+/obj/screen/storage/attack_hand(mob/user as mob)
+	if(src.master)
+		var/obj/item/I = user.get_active_hand()
+		if(I)
+			src.master.attackby(I, user)
 	return
 
 /obj/screen/zone_sel
@@ -463,15 +466,15 @@
 	return
 
 /obj/screen/inventory/attack_hand(mob/user as mob)
-	user.attack_ui(slot_id)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand()
+	if(user.attack_ui(slot_id))
+		user.update_inv_l_hand(0)
+		user.update_inv_r_hand()
 	return
 
 /obj/screen/inventory/attack_paw(mob/user as mob)
-	user.attack_ui(slot_id)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand()
+	if(user.attack_ui(slot_id))
+		user.update_inv_l_hand(0)
+		user.update_inv_r_hand()
 	return
 
 
