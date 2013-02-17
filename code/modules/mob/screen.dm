@@ -334,46 +334,47 @@
 		if("Reset Machine")
 			usr.unset_machine()
 		if("internal")
-			if (( !usr.stat && !usr.stunned && !usr.paralysis && !usr.restrained() ))
-				if (usr.internal)
-					usr.internal = null
-					usr << "\blue No longer running on internals."
-					if (usr.internals)
-						usr.internals.icon_state = "internal0"
-				else
-					if(ishuman(usr))
-						if (!( istype(usr.wear_mask, /obj/item/clothing/mask) ))
-							usr << "\red You are not wearing a mask"
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+					if(C.internal)
+						C.internal = null
+						C << "<span class='notice'>No longer running on internals.</span>"
+						if(C.internals)
+							C.internals.icon_state = "internal0"
+					else
+						if(!istype(C.wear_mask, /obj/item/clothing/mask))
+							C << "<span class='notice'>You are not wearing a mask.</span>"
 							return
 						else
-							if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr:s_store] on your [usr:wear_suit]."
-								usr.internal = usr:s_store
-							else if (ishuman(usr) && istype(usr:belt, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr:belt] on your belt."
-								usr.internal = usr:belt
-							else if (istype(usr:l_store, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr:l_store] in your left pocket."
-								usr.internal = usr:l_store
-							else if (istype(usr:r_store, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr:r_store] in your right pocket."
-								usr.internal = usr:r_store
-							else if (istype(usr.back, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr.back] on your back."
-								usr.internal = usr.back
-							else if (istype(usr.l_hand, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr.l_hand] on your left hand."
-								usr.internal = usr.l_hand
-							else if (istype(usr.r_hand, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr.r_hand] on your right hand."
-								usr.internal = usr.r_hand
-							if (usr.internal)
-								//for(var/mob/M in viewers(usr, 1))
-								//	M.show_message(text("[] is now running on internals.", usr), 1)
-								if (usr.internals)
-									usr.internals.icon_state = "internal1"
+							if(istype(C.back, /obj/item/weapon/tank))
+								C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
+								C.internal = C.back
+							else if(istype(C.l_hand, /obj/item/weapon/tank))
+								C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
+								C.internal = C.l_hand
+							else if(istype(C.r_hand, /obj/item/weapon/tank))
+								C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
+								C.internal = C.r_hand
+							else if(ishuman(C))
+								var/mob/living/carbon/human/H = C
+								if(istype(H.s_store, /obj/item/weapon/tank))
+									H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
+									H.internal = H.s_store
+								else if(istype(H.belt, /obj/item/weapon/tank))
+									H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
+									H.internal = H.belt
+								else if(istype(H.l_store, /obj/item/weapon/tank))
+									H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
+									H.internal = H.l_store
+								else if(istype(H.r_store, /obj/item/weapon/tank))
+									H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
+									H.internal = H.r_store
+							if(C.internal)
+								if(C.internals)
+									C.internals.icon_state = "internal1"
 							else
-								usr << "\blue You don't have an oxygen tank."
+								C << "<span class='notice'>You don't have an oxygen tank.</span>"
 		if("act_intent")
 			usr.a_intent_change("right")
 /*		if("help")

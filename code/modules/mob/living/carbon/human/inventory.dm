@@ -361,7 +361,7 @@
 					message = "\red <B>[source] fails to take off \a [target.wear_mask] from [target]'s head!</B>"
 					return
 				else
-					message = "\red <B>[source] is trying to take off \a [source.wear_mask] from [target]'s head!</B>"
+					message = "\red <B>[source] is trying to take off \a [target.wear_mask] from [target]'s head!</B>"
 			if("l_hand")
 				message = "\red <B>[source] is trying to take off \a [target.l_hand] from [target]'s left hand!</B>"
 			if("r_hand")

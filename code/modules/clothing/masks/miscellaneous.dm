@@ -7,13 +7,13 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-//Monkeys can not take the muzzle off of themself! Call PETA!
-/obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)
-	if (src == user.wear_mask)
-		return
-	else
-		..()
-	return
+/obj/item/clothing/mask/muzzle/attack_paw(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.wear_mask)
+			user << "<span class='notice'>You need help taking this off!</span>"
+			return
+	..()
 
 
 /obj/item/clothing/mask/surgical

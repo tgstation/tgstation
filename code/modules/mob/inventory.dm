@@ -159,12 +159,6 @@
 	else if (W == l_hand)
 		l_hand = null
 		update_inv_l_hand(0)
-	else if (W == back)
-		back = null
-		update_inv_back(0)
-	else if (W == wear_mask)
-		wear_mask = null
-		update_inv_wear_mask(0)
 	return
 
 

@@ -97,9 +97,6 @@ var/list/department_radio_keys = list(
 	if (sdisabilities & MUTE)
 		return
 
-	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
-		return
-
 	// emotes
 	if (copytext(message, 1, 2) == "*" && !stat)
 		return emote(copytext(message, 2))

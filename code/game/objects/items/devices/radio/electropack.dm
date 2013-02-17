@@ -11,10 +11,12 @@
 	m_amt = 10000
 	var/code = 2
 
-/obj/item/device/radio/electropack/attack_hand(mob/user as mob)
-	if(src == user.back)
-		user << "<span class='notice'>You need help taking this off!</span>"
-		return
+/obj/item/device/radio/electropack/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.back)
+			user << "<span class='notice'>You need help taking this off!</span>"
+			return
 	..()
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)

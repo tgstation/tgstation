@@ -79,35 +79,33 @@
 * photo album *
 **************/
 /obj/item/weapon/storage/photo_album
-	name = "Photo album"
+	name = "photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list("/obj/item/weapon/photo",)
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+	var/mob/M = usr
+	if(!istype(over_object, /obj/screen))
+		return ..()
 
-	if((istype(usr, /mob/living/carbon/human) || (ticker && ticker.mode.name == "monkey")))
-		var/mob/M = usr
-		if(!( istype(over_object, /obj/screen) ))
-			return ..()
-		playsound(loc, "rustle", 50, 1, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
-			return
-	return
+	playsound(loc, "rustle", 50, 1, -5)
+	if(!M.restrained() && M.stat == CONSCIOUS)
+		switch(over_object.name)
+			if("r_hand")
+				M.u_equip(src)
+				M.put_in_r_hand(src)
+			if("l_hand")
+				M.u_equip(src)
+				M.put_in_l_hand(src)
+		add_fingerprint(usr)
+		return
+	if(over_object == M && in_range(src, M) || M.contents.Find(src))
+		if(M.s_active)
+			M.s_active.close(usr)
+		show_to(M)
+
 
 /*********
 * camera *

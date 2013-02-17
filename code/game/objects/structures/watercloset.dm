@@ -67,7 +67,11 @@
 					swirlie = GM
 					if(do_after(user, 30, 5, 0))
 						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
-						if(!GM.internal)
+						if(iscarbon(GM))
+							var/mob/living/carbon/C = GM
+							if(!C.internal)
+								C.adjustOxyLoss(5)
+						else
 							GM.adjustOxyLoss(5)
 					swirlie = null
 				else

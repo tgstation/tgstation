@@ -145,10 +145,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
 		var/mob/living/simple_animal/corgi/C = M
-		src.loc = C
+		loc = C
 		C.facehugger = src
-		C.wear_mask = src
-		//C.regenerate_icons()
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
@@ -158,8 +156,13 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target as mob)
-	if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
+	if(!target || target.stat == DEAD) //was taken off or something
 		return
+
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(C.wear_mask != src)
+			return
 
 	if(!sterile)
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance

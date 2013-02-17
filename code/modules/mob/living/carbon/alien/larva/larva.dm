@@ -149,26 +149,14 @@
 	return
 
 
-/mob/living/carbon/alien/larva/hand_p(mob/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (M.a_intent == "hurt")
-		if (istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
+/mob/living/carbon/alien/larva/hand_p(mob/living/carbon/user)
+	if(user.a_intent == "hurt")
+		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 			return
-		if (health > 0)
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 3)
-
-			adjustBruteLoss(damage)
-
+		if(health > 0)
+			visible_message("<span class='danger'>[user] has bit [src]!</span>")
+			adjustBruteLoss(rand(1, 3))
 			updatehealth()
-
-	return
 
 
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)

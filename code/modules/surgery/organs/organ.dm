@@ -25,3 +25,7 @@
 		icon_state = "appendixinflamed"
 	else
 		icon_state = "appendix"
+
+
+//Looking for brains?
+//Try code/modules/mob/living/carbon/brain/brain_item.dm

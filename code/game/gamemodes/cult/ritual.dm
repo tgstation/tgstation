@@ -125,11 +125,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/tome) && iscultist(user))
-			user << "You retrace your steps, carefully undoing the lines of the rune."
+			user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
 			del(src)
 			return
 		else if(istype(I, /obj/item/weapon/nullrod))
-			user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
+			user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
 			del(src)
 			return
 		return
@@ -137,11 +137,13 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	attack_hand(mob/living/user as mob)
 		if(!iscultist(user))
-			user << "You can't mouth the arcane scratchings without fumbling over them."
+			user << "<span class='notice'>You can't mouth the arcane scratchings without fumbling over them.</span>"
 			return
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			user << "You are unable to speak the words of the rune."
-			return
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+				H << "<span class='notice'>You are unable to speak the words of the rune.</span>"
+				return
 		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 			return fizzle()
 //		if(!src.visibility)
