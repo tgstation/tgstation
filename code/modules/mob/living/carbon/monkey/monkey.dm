@@ -40,8 +40,8 @@
 		dna.uni_identity += gendervar
 		dna.uni_identity += "12C"
 		dna.uni_identity += "4E2"
+
 	..()
-	return
 
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0

@@ -31,6 +31,12 @@
 
 	var/heat_protection = 0.5
 
+
+/mob/living/carbon/alien/New()
+	internal_organs += new /obj/item/organ/brain
+
+	..()
+
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	return

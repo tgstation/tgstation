@@ -416,17 +416,25 @@
 /mob/living/carbon/u_equip(obj/item/W as obj)
 	if(!W)	return 0
 
-	else if (W == handcuffed)
+	else if(W == back)
+		back = null
+		update_inv_back(0)
+
+	else if(W == wear_mask)
+		wear_mask = null
+		update_inv_wear_mask(0)
+
+	else if(W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
 
-	else if (W == legcuffed)
+	else if(W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
-	else
-	 ..()
 
-	return
+	else
+		..()
+
 
 /mob/living/carbon/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)
@@ -457,3 +465,10 @@
 			return
 
 	..()
+
+
+/mob/living/carbon/say(var/message)
+	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
+		return
+
+	..(message)
