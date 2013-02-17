@@ -357,23 +357,10 @@
 					owner << "\red You are now sterile."
 				if(HEAD)
 					H = new /obj/item/weapon/organ/head(owner.loc, owner)
-					if(ishuman(owner))
-						if(owner.gender == FEMALE)
-							H.icon_state = "head_f"
-						H.overlays += owner.generate_head_icon()
-					H:transfer_identity(owner)
-					H.pixel_x = -10
-					H.pixel_y = 6
-					H.name = "[owner.real_name]'s head"
-
 					owner.u_equip(owner.glasses)
 					owner.u_equip(owner.head)
 					owner.u_equip(owner.ears)
 					owner.u_equip(owner.wear_mask)
-
-					owner.regenerate_icons()
-
-					owner.death()
 				if(ARM_RIGHT)
 					H = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
 					if(ismonkey(owner))
@@ -446,18 +433,17 @@
 				step(H,lol)
 
 			destspawn = 1
-			if(status & ORGAN_ROBOT)
+			if(status & ORGAN_ROBOT && !no_explode)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
 				"\red <b>Your [display_name] explodes!</b>",\
 				"You hear an explosion followed by a scream!")
-				if(!no_explode)
-					explosion(get_turf(owner),-1,-1,2,3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						del(spark_system)
+				explosion(get_turf(owner),-1,-1,2,3)
+				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+				spark_system.set_up(5, 0, owner)
+				spark_system.attach(owner)
+				spark_system.start()
+				spawn(10)
+					del(spark_system)
 			else
 				owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
 				"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
@@ -541,27 +527,6 @@
 			droplimb(1)
 		else
 			take_damage(damage, 0, 1, used_weapon = "EMP")
-
-	proc/getDisplayName()
-		switch(name)
-			if("l_leg")
-				return "left leg"
-			if("r_leg")
-				return "right leg"
-			if("l_arm")
-				return "left arm"
-			if("r_arm")
-				return "right arm"
-			if("l_foot")
-				return "left foot"
-			if("r_foot")
-				return "right foot"
-			if("l_hand")
-				return "left hand"
-			if("r_hand")
-				return "right hand"
-			else
-				return name
 
 	proc/robotize()
 		src.status &= ~ORGAN_BROKEN
@@ -743,11 +708,23 @@ obj/item/weapon/organ/head
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
 
-obj/item/weapon/organ/head/New()
+obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	..()
 	spawn(5)
 	if(brainmob && brainmob.client)
 		brainmob.client.screen.len = null //clear the hud
+	if(ishuman(H))
+		if(H.gender == FEMALE)
+			H.icon_state = "head_f"
+		H.overlays += H.generate_head_icon()
+	transfer_identity(H)
+	pixel_x = -10
+	pixel_y = 6
+	name = "[H.real_name]'s head"
+
+	H.regenerate_icons()
+
+	H.death()
 
 obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
