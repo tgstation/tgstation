@@ -54,8 +54,9 @@
 		src.brainmob = B
 		src.brainmob.mind = candidate.mind
 
-		src.brainmob.name = "PBU-[rand(100, 999)]"
-		src.brainmob.real_name = "PBU-[rand(100, 999)]"
+		src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+		src.brainmob.real_name = src.brainmob.name
+		src.name = "positronic brain ([src.brainmob.name])"
 		src.brainmob.loc = src
 		src.brainmob.container = src
 		src.brainmob.robot_talk_understand = 1
@@ -69,7 +70,7 @@
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
 		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 		src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
-		src.brainmob << "Use say :b to speak to other artificial intelligences."
+		src.brainmob << "<b>Use say :b to speak to other artificial intelligences.</b>"
 		src.brainmob.mind.assigned_role = "Positronic Brain"
 
 		var/turf/T = get_turf_or_move(src.loc)
@@ -106,6 +107,8 @@
 				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
 			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+	else
+		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
 	usr << msg
 	return

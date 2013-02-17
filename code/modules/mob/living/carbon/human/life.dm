@@ -99,6 +99,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	handle_pain()
 
+	handle_medical_side_effects()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
 	update_canmove()
@@ -209,7 +211,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					continue
 				for(var/datum/wound/W in temp.wounds) if(W.bleeding())
 					blood_max += W.damage / 4
-				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED) && !temp.amputated)
 					blood_max += 20 //Yer missing a fucking limb.
 			drip(blood_max)
 
@@ -615,7 +617,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						sleeping = max(sleeping+2, 10)
-				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+				else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
 				SA.moles = 0
@@ -1106,7 +1108,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				handle_dreams()
 				adjustHalLoss(-5)
 				if (mind)
-					if(mind.active || immune_to_ssd)
+					if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 						sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS

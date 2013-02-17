@@ -1,3 +1,5 @@
+/var/global/sent_spiders_to_station = 0
+
 /datum/event/spider_infestation
 	announceWhen	= 400
 	oneShot			= 1
@@ -7,7 +9,8 @@
 
 /datum/event/spider_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
-	spawncount = rand(5, 8)
+	spawncount = rand(8, 12)	//spiderlings only have a 50% chance to grow big and strong
+	sent_spiders_to_station = 0
 
 /datum/event/spider_infestation/announce()
 	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
