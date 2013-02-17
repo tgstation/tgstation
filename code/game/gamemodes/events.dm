@@ -1,220 +1,107 @@
-
+//this file left in for legacy support
+/*
 /proc/start_events()
 	//changed to a while(1) loop since they are more efficient.
 	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
 	//and also to stop spawn copying variables from the game ticker
 	spawn(3000)
 		while(1)
-			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
+			if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
 				spawn(1)
-					dust_swarm("weak")*/
+					dust_swarm("weak")
 			if(!event)
 				//CARN: checks to see if random events are enabled.
 				if(config.allow_random_events)
-					hadevent = event()
-				else
-					Holiday_Random_Event()
+					if(prob(eventchance))
+						event()
+						hadevent = 1
+					else
+						Holiday_Random_Event()
 			else
 				event = 0
-			sleep(2400)
+			sleep(1200)
 
-// Doesn't necessarily trigger an event, but might. Returns 1 if it did.
 /proc/event()
 	event = 1
 
-	var/minutes_passed = world.time/600
+	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
 
-	var/engineer_count = number_active_with_role("Engineer")
-	var/security_count = number_active_with_role("Security")
-	var/medical_count = number_active_with_role("Medical")
-	var/AI_count = number_active_with_role("AI")
-
-	// Maps event names to event chances
-	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
-	var/list/possibleEvents = list()
-
-	// Check for additional possible events
-	possibleEvents["Carp"] = 50 + 50 * engineer_count
-	possibleEvents["Lights"] = 100
-	possibleEvents["Communications"] = 50 + 50 * AI_count
-	possibleEvents["Alien"] = 10
-	if(AI_count >= 1)
-		possibleEvents["Ion Storm"] = AI_count * 50 + engineer_count * 10
-	if(engineer_count >= 1 && minutes_passed >= 30) // Give engineers time to set up engine
-		possibleEvents["Meteor"] = 80 * engineer_count
-		possibleEvents["Blob"] = 30 * engineer_count
-		possibleEvents["Spacevine"] = 30 * engineer_count
-		possibleEvents["Grid Check"] = 10 * engineer_count
-	if(medical_count >= 1)
-		possibleEvents["Radiation"] = medical_count * 100
-		possibleEvents["Virus"] = medical_count * 50
-		possibleEvents["Appendicitis"] = medical_count * 50
-	if(security_count >= 1)
-		possibleEvents["Prison Break"] = security_count * 50
-		/*if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)
-			possibleEvents["Space Ninja"] = security_count * 10*/
-
-	var/picked_event = pick(possibleEvents)
-	var/chance = possibleEvents[picked_event]
-
-	var/base_chance = 0.4
-	switch(player_list.len)
-		if(5 to 10)
-			base_chance = 0.6
-		if(11 to 15)
-			base_chance = 0.7
-		if(16 to 20)
-			base_chance = 0.8
-		if(21 to 25)
-			base_chance = 0.9
-		if(26 to 30)
-			base_chance = 1.0
-		if(30 to 100000)
-			base_chance = 1.1
-
-	// Trigger the event based on how likely it currently is.
-	if(!prob(chance * eventchance * base_chance / 100))
-		return 0
-
-	switch(picked_event)
-		if("Meteor")
+	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
+		eventNumbersToPickFrom += 3
+	switch(pick(eventNumbersToPickFrom))
+		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			for(var/mob/M in player_list)
 				if(!istype(M,/mob/new_player))
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
-				meteor_wave(10)
+				meteor_wave()
 				spawn_meteors()
 			spawn(700)
-				meteor_wave(10)
+				meteor_wave()
 				spawn_meteors()
-		if("Space Ninja")
-			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
-			space_ninja_arrival()
-		if("Radiation")
+
+		if(2)
+			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << sound('sound/AI/granomalies.ogg')
+			var/turf/T = pick(blobstart)
+			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
+			spawn(rand(50, 300))
+				del(bh)
+		/*
+		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
+			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+			world << sound('sound/AI/spanomalies.ogg')
+			var/list/turfs = new
+			var/turf/picked
+			for(var/turf/simulated/floor/T in world)
+				if(T.z == 1)
+					turfs += T
+			for(var/turf/simulated/floor/T in turfs)
+				if(prob(20))
+					spawn(50+rand(0,3000))
+						picked = pick(turfs)
+						var/obj/effect/portal/P = new /obj/effect/portal( T )
+						P.target = picked
+						P.creator = null
+						P.icon = 'icons/obj/objects.dmi'
+						P.failchance = 0
+						P.icon_state = "anom"
+						P.name = "wormhole"
+						spawn(rand(300,600))
+							del(P)
+		*/
+		if(3)
+			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
+				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+		if(4)
+			mini_blob_event()
+
+		if(5)
 			high_radiation_event()
-		if("Virus")
+		if(6)
 			viral_outbreak()
-		if("Alien")
+		if(7)
 			alien_infestation()
-		if("Prison Break")
+		if(8)
 			prison_break()
-		if("Carp")
+		if(9)
 			carp_migration()
-		if("Lights")
+		if(10)
+			immovablerod()
+		if(11)
 			lightsout(1,2)
-		if("Appendicitis")
+		if(12)
 			appendicitis()
-		if("Ion Storm")
+		if(13)
 			IonStorm()
-		if("Spacevine")
+		if(14)
 			spacevine_infestation()
-		if("Communications")
+		if(15)
 			communications_blackout()
-		if("Grid Check")
-			grid_check()
-		if("Meteor")
-			meteor_shower()
-
-	return 1
-
-/proc/communications_blackout(var/silent = 1)
-
-	if(!silent)
-		command_alert("Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT")
-	else // AIs will always know if there's a comm blackout, rogue AIs could then lie about comm blackouts in the future while they shutdown comms
-		for(var/mob/living/silicon/ai/A in player_list)
-			A << "<br>"
-			A << "<span class='warning'><b>Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT<b></span>"
-			A << "<br>"
-	for(var/obj/machinery/telecomms/T in telecomms_list)
-		T.emp_act(1)
-
-/proc/power_failure(var/is_grid_check = 0)
-	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", is_grid_check ? "Automated Grid Check" : "Critical Power Failure")
-
-	for(var/mob/M in player_list)
-		M << sound('sound/AI/poweroff.ogg')
-	for(var/obj/machinery/power/smes/S in world)
-		if(istype(get_area(S), /area/turret_protected) || S.z != 1)
-			continue
-		S.charge = 0
-		S.output = 0
-		S.online = 0
-		S.updateicon()
-		S.power_change()
-
-	var/list/skipped_areas = list(/area/engine/engineering, /area/turret_protected/ai)
-
-	for(var/area/A in world)
-		if( !A.requires_power || A.always_unpowered )
-			continue
-
-		var/skip = 0
-		for(var/area_type in skipped_areas)
-			if(istype(A,area_type))
-				skip = 1
-				break
-		if(A.contents)
-			for(var/atom/AT in A.contents)
-				if(AT.z != 1) //Only check one, it's enough.
-					skip = 1
-				break
-		if(skip) continue
-		A.power_light = 0
-		A.power_equip = 0
-		A.power_environ = 0
-		A.power_change()
-
-	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z == 1)
-			var/area/A = get_area(C)
-
-			var/skip = 0
-			for(var/area_type in skipped_areas)
-				if(istype(A,area_type))
-					skip = 1
-					break
-			if(skip) continue
-
-			C.cell.charge = 0
-
-/proc/power_restore()
-
-	command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
-	for(var/mob/M in player_list)
-		M << sound('sound/AI/poweron.ogg')
-	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z == 1)
-			C.cell.charge = C.cell.maxcharge
-	for(var/obj/machinery/power/smes/S in world)
-		if(S.z != 1)
-			continue
-		S.charge = S.capacity
-		S.output = 200000
-		S.online = 1
-		S.updateicon()
-		S.power_change()
-	for(var/area/A in world)
-		if(A.name != "Space" && A.name != "Engine Walls" && A.name != "Chemical Lab Test Chamber" && A.name != "space" && A.name != "Escape Shuttle" && A.name != "Arrival Area" && A.name != "Arrival Shuttle" && A.name != "start area" && A.name != "Engine Combustion Chamber")
-			A.power_light = 1
-			A.power_equip = 1
-			A.power_environ = 1
-			A.power_change()
-
-/proc/power_restore_quick()
-
-	command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
-	for(var/mob/M in player_list)
-		M << sound('sound/AI/poweron.ogg')
-	for(var/obj/machinery/power/smes/S in world)
-		if(S.z != 1)
-			continue
-		S.charge = S.capacity
-		S.output = 200000
-		S.online = 1
-		S.updateicon()
-		S.power_change()
+*/
 
 /proc/appendicitis()
 	for(var/mob/living/carbon/human/H in living_mob_list)
@@ -231,16 +118,69 @@
 		break
 
 /proc/viral_outbreak(var/virus = null)
-	for(var/mob/living/carbon/human/H in world)
-		if((H.virus2) || (H.stat == 2) || prob(30))
+//	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+//	world << sound('sound/AI/outbreak7.ogg')
+	var/virus_type
+	if(!virus)
+		virus_type = pick(/datum/disease/dnaspread,/datum/disease/advance/flu,/datum/disease/advance/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
+	else
+		switch(virus)
+			if("fake gbs")
+				virus_type = /datum/disease/fake_gbs
+			if("gbs")
+				virus_type = /datum/disease/gbs
+			if("magnitis")
+				virus_type = /datum/disease/magnitis
+			if("rhumba beat")
+				virus_type = /datum/disease/rhumba_beat
+			if("brain rot")
+				virus_type = /datum/disease/brainrot
+			if("cold")
+				virus_type = /datum/disease/advance/cold
+			if("retrovirus")
+				virus_type = /datum/disease/dnaspread
+			if("flu")
+				virus_type = /datum/disease/advance/flu
+//			if("t-virus")
+//				virus_type = /datum/disease/t_virus
+			if("pierrot's throat")
+				virus_type = /datum/disease/pierrot_throat
+	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+
+		var/foundAlready = 0 // don't infect someone that already has the virus
+		var/turf/T = get_turf(H)
+		if(!T)
+			continue
+		if(T.z != 1)
+			continue
+		for(var/datum/disease/D in H.viruses)
+			foundAlready = 1
+		if(H.stat == 2 || foundAlready)
 			continue
 
-		infect_mob_random_lesser(H)
-		break
-
-	spawn(rand(0, 3000)) //Delayed announcements to keep the crew on their toes.
+		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
+			if((!H.dna) || (H.sdisabilities & BLIND)) //A blindness disease would be the worst.
+				continue
+			var/datum/disease/dnaspread/D = new
+			D.strain_data["name"] = H.real_name
+			D.strain_data["UI"] = H.dna.uni_identity
+			D.strain_data["SE"] = H.dna.struc_enzymes
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
+			break
+		else
+			var/datum/disease/D = new virus_type
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
+			break
+	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		world << sound('sound/AI/outbreak7.ogg')
+		for(var/mob/M in player_list)
+			M << sound('sound/AI/outbreak7.ogg')
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
@@ -253,7 +193,7 @@
 
 	var/list/candidates = get_alien_candidates()
 
-	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
+	if(prob(40)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
 
 		var/obj/vent = pick(vents)
@@ -280,8 +220,6 @@
 
 	sleep(100)
 */
-	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
-	sleep(600)
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/turf/T = get_turf(H)
 		if(!T)
@@ -292,6 +230,13 @@
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
 			if (prob(5))
 				H.apply_effect((rand(90,150)),IRRADIATE,0)
+			if (prob(25))
+				if (prob(75))
+					randmutb(H)
+					domutcheck(H,null,1)
+				else
+					randmutg(H)
+					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		var/turf/T = get_turf(M)
 		if(!T)
@@ -300,7 +245,7 @@
 			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
-	command_alert("Radiation levels are within standard parameters again.", "Anomaly Alert")
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	for(var/mob/M in player_list)
 		M << sound('sound/AI/radiation.ogg')
 
@@ -537,57 +482,5 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
 
 	world << "Ion Storm Main Done"
+
 	*/
-
-/proc/meteor_shower()
-	command_alert("The station is now in a meteor shower", "Meteor Alert")
-
-	spawn(0)
-		var/waves = rand(1,4)
-		while(waves > 0)
-			sleep(rand(20,100))
-			spawn_meteors(rand(1,3))
-			waves--
-
-		command_alert("The station has cleared the meteor shower", "Meteor Alert")
-
-/proc/grid_check()
-	spawn(0)
-		power_failure(1)
-		sleep(rand(100,600))
-		power_restore()
-
-// Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
-// with a specific role.
-// Note that this isn't sorted by department, because e.g. having a roboticist shouldn't make meteors spawn.
-/proc/number_active_with_role(role)
-	var/count = 0
-	for(var/mob/M in player_list)
-		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
-			continue
-		switch(role)
-			if("Engineer")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
-					count++
-				if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
-					count++
-			if("Medical")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
-					count++
-				if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
-					count++
-			if("Security")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
-					count++
-				if(M.mind.assigned_role in security_positions)
-					count++
-			if("Scientist")
-				if(M.mind.assigned_role in list("Research Director", "Scientist"))
-					count++
-			if("AI")
-				if(M.mind.assigned_role == "AI")
-					count++
-			if("Cyborg")
-				if(M.mind.assigned_role == "Cyborg")
-					count++
-	return count

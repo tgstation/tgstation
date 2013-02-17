@@ -341,6 +341,10 @@
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,30)
+
+				var/bottle_num = min(max(input("Enter bottle design number","Bottle number"), 0), 20) as num
+				P.icon_state = "bottle[bottle_num]"
+				desc = "A small bottle, design number #[bottle_num]."
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)

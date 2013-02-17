@@ -196,6 +196,10 @@
 				if(sattisfaction_text)
 					M.emote("[sattisfaction_text]")
 				del(src)
+		if(ismouse(M))
+			var/mob/living/simple_animal/mouse/N = M
+			N.emote("nibbles away at the [src]")
+			N.health = min(N.health + 1, N.maxHealth)
 
 
 ////////////////////////////////////////////////////////////////////////////////

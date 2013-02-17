@@ -143,6 +143,8 @@
 	S["skills"]				>> skills
 	S["skill_specialization"] >> skill_specialization
 	S["organ_data"]			>> organ_data
+
+	S["nanotrasen_relation"] >> nanotrasen_relation
 	//S["skin_style"]			>> skin_style
 
 	//Sanitize
@@ -238,6 +240,8 @@
 	S["skills"]				<< skills
 	S["skill_specialization"] << skill_specialization
 	S["organ_data"]			<< organ_data
+
+	S["nanotrasen_relation"] << nanotrasen_relation
 	//S["skin_style"]			<< skin_style
 
 	return 1
