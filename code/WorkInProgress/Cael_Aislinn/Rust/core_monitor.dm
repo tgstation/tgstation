@@ -1,8 +1,9 @@
 
-/obj/machinery/computer/rust/radiation_monitor
-	name = "Core Radiation Monitor"
+/obj/machinery/computer/rust_radiation_monitor
+	name = "Radiation Monitor"
+	icon_state = "power"
 
-/obj/machinery/computer/rust/energy_monitor
+/obj/machinery/computer/rust_energy_monitor
 	name = "Core Primary Monitor"
 	icon_state = "power"
 	var/obj/machinery/rust/core/core_generator = null

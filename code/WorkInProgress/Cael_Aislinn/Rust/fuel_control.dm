@@ -1,5 +1,5 @@
 
-/obj/machinery/computer/rust/fuel_control
+/obj/machinery/computer/rust_fuel_control
 	name = "Fuel Injection Control"
 	icon_state = "power"
 	var/list/fuel_injectors
