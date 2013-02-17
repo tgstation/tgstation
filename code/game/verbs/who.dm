@@ -76,7 +76,7 @@
 			else
 				num_mods_online++
 
-	msg += "<b>There are [num_mods_online] moderators online</b>\n"
+	msg += "<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'\n"
 	src << msg
 
 /client/verb/modwho()
@@ -109,5 +109,5 @@
 			else
 				num_admins_online++
 
-	msg += "<b>There are [num_admins_online] admins online</b>\n"
+	msg += "<b>There are also [num_admins_online] admins online.</b> To view online admins, type 'adminwho'\n"
 	src << msg
