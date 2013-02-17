@@ -19,5 +19,5 @@
 /datum/event/carp_migration/end()
 	for(var/mob/living/simple_animal/hostile/carp/C in spawned_carp)
 		var/turf/T = get_turf(C)
-		if(istype(T, /turf/space)
+		if(istype(T, /turf/space))
 			del(C)
