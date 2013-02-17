@@ -156,6 +156,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	icon_state = "dualsaber[wielded]"
+	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)

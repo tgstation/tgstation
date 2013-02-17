@@ -603,15 +603,15 @@
 			reagents.add_reagent("blood", 1+round((potency / 5), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/blood/splatter(src.loc)
-		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-		src.reagents.reaction(get_turf(hit_atom))
-		for(var/atom/A in get_turf(hit_atom))
-			src.reagents.reaction(A)
-		del(src)
-		return
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
+	..()
+	new/obj/effect/decal/cleanable/blood/splatter(src.loc)
+	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	src.reagents.reaction(get_turf(hit_atom))
+	for(var/atom/A in get_turf(hit_atom))
+		src.reagents.reaction(A)
+	del(src)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	seed = "/obj/item/seeds/bluetomatoseed"
@@ -626,15 +626,15 @@
 			reagents.add_reagent("lube", 1+round((potency / 5), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/oil(src.loc)
-		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-		src.reagents.reaction(get_turf(hit_atom))
-		for(var/atom/A in get_turf(hit_atom))
-			src.reagents.reaction(A)
-		del(src)
-		return
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
+	..()
+	new/obj/effect/decal/cleanable/oil(src.loc)
+	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	src.reagents.reaction(get_turf(hit_atom))
+	for(var/atom/A in get_turf(hit_atom))
+		src.reagents.reaction(A)
+	del(src)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/HasEntered(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
@@ -894,12 +894,6 @@
 	user.SetLuminosity(round(user.luminosity + (potency/10),1))
 	SetLuminosity(round(potency/10,1))
 
-
-// *************************************
-// Complex Grown Object Defines -
-// Putting these at the bottom so they don't clutter the list up. -Cheridan
-// *************************************
-
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
 /obj/item/weapon/reagent_containers/food/snacks/grown/money
 	seed = "/obj/item/seeds/cashseed"
@@ -941,53 +935,3 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 			reagents.add_reagent("singulo", 1+round((potency / 5), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
-
-	throw_impact(atom/hit_atom)
-		..()
-		var/mob/M = usr
-		var/outer_teleport_radius = potency/10 //Plant potency determines radius of teleport.
-		var/inner_teleport_radius = potency/15
-		var/list/turfs = new/list()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
-			new/obj/effect/decal/cleanable/oil(src.loc)
-			src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-			del(src)
-			return
-		for(var/turf/T in orange(M,outer_teleport_radius))
-			if(T in orange(M,inner_teleport_radius)) continue
-			if(istype(T,/turf/space)) continue
-			if(T.density) continue
-			if(T.x>world.maxx-outer_teleport_radius || T.x<outer_teleport_radius)	continue
-			if(T.y>world.maxy-outer_teleport_radius || T.y<outer_teleport_radius)	continue
-			turfs += T
-		if(!turfs.len)
-			var/list/turfs_to_pick_from = list()
-			for(var/turf/T in orange(M,outer_teleport_radius))
-				if(!(T in orange(M,inner_teleport_radius)))
-					turfs_to_pick_from += T
-			turfs += pick(/turf in turfs_to_pick_from)
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked)) return
-		switch(rand(1,2))//Decides randomly to teleport the thrower or the throwee.
-			if(1) // Teleports the person who threw the tomato.
-				s.set_up(3, 1, M)
-				s.start()
-				new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
-				M.loc = picked //
-				sleep(1)
-				s.set_up(3, 1, M)
-				s.start() //Two set of sparks, one before the teleport and one after.
-			if(2) //Teleports mob the tomato hit instead.
-				for(var/mob/A in get_turf(hit_atom))//For the mobs in the tile that was hit...
-					s.set_up(3, 1, A)
-					s.start()
-					new/obj/effect/decal/cleanable/molten_item(A.loc) //Leave a pile of goo behind for dramatic effect...
-					A.loc = picked//And teleport them to the chosen location.
-					sleep(1)
-					s.set_up(3, 1, A)
-					s.start()
-		new/obj/effect/decal/cleanable/oil(src.loc)
-		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
-		del(src)
-		return

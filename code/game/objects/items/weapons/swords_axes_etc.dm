@@ -52,6 +52,14 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/melee/energy/sword))
+		user << "\blue You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool."
+		new /obj/item/weapon/twohanded/dualsaber(user.loc)
+		del(W)
+		del(src)
+
 /*
  * Classic Baton
  */
