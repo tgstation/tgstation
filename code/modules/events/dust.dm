@@ -1,32 +1,19 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+/datum/event_control/dust
+	name = "Minor Space Dust"
+	typepath = /datum/event/dust
+	weight = 600
+	max_occurrences = 10000
+	earliest_start = 0
 
-/*
-Space dust
-Commonish random event that causes small clumps of "space dust" to hit the station at high speeds.
-No command report on the common version of this event.
-The "dust" will damage the hull of the station causin minor hull breaches.
-*/
+/datum/event/dust
+	var/qnty = 1
 
-/proc/dust_swarm(var/strength = "weak")
-	var/numbers = 1
-	switch(strength)
-		if("weak")
-		 numbers = rand(2,4)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust/weak()
-		if("norm")
-		 numbers = rand(5,10)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust()
-		if("strong")
-		 numbers = rand(10,15)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust/strong()
-		if("super")
-		 numbers = rand(15,25)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust/super()
-	return
+/datum/event/dust/setup()
+	qnty = rand(1,5)
+
+/datum/event/dust/start()
+	while(qnty-- > 0)
+		new /obj/effect/space_dust/weak()
 
 
 /obj/effect/space_dust

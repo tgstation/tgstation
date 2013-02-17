@@ -39,10 +39,10 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/pregame()
 
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
-	if(Holiday == "April Fool's Day")
+	if(events.holiday == "April Fool's Day")
 		login_music = 'sound/ambience/clown.ogg'
-	for(var/mob/new_player/M in mob_list)
-		if(M.client)	M.client.playtitlemusic()
+	for(var/client/C in clients)
+		C.playtitlemusic()
 
 	do
 		pregame_timeleft = 90
@@ -107,6 +107,12 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
+	master_controller.process()		//Start master_controller.process()
+	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+
+	sleep(10)
+
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -123,26 +129,16 @@ var/global/datum/controller/gameticker/ticker
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
-		Holiday_Game_Start()
+		if(events.holiday)
+			world << "<font color='blue'>and...</font>"
+			world << "<h4>Happy [events.holiday] Everybody!</h4>"
 
-//	start_events() //handles random events and space dust.
-//new random event system is handled from the MC.
-
-	var/admins_number = 0
-	for(var/client/C)
-		if(C.holder)
-			admins_number++
-	if(admins_number == 0)
+	if(!admins.len)
 		send2irc("Server", "Round just started with no admins online!")
-
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
-	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
-
 
 	if(config.sql_enabled)
 		spawn(3000)
-		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
+			statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
 	return 1
 
 /datum/controller/gameticker

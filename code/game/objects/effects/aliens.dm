@@ -377,12 +377,9 @@ Alien plants should do something if theres a lot of poison
 
 	New()
 		new /obj/item/clothing/mask/facehugger(src)
-		if(aliens_allowed)
-			..()
-			spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
-				Grow()
-		else
-			del(src)
+		..()
+		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+			Grow()
 
 	attack_paw(user as mob)
 		if(isalien(user))

@@ -34,15 +34,11 @@
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
+	investigate_reset()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
-
-	investigate_reset()
-	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
-
-	src.update_status()
 
 	makepowernets()
 
@@ -73,12 +69,12 @@
 	slmaster.layer = FLY_LAYER
 	slmaster.mouse_opacity = 0
 
-	src.update_status()
-
 	master_controller = new /datum/controller/game_controller()
 	spawn(-1)
 		master_controller.setup()
 		lighting_controller.Initialize()
+
+	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.

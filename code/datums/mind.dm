@@ -57,19 +57,27 @@ datum/mind
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
-			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
+			error("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
+
 		if(current)					//remove ourself from our old body's mind variable
 			if(changeling)
 				current.remove_changeling_powers()
 				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
-		if(new_character.mind)		//remove any mind currently in our new body's mind variable
+
+		if(key)
+			if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
+				new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
+		else
+			key = new_character.key
+
+		if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 			new_character.mind.current = null
 
-		current = new_character		//link ourself to our new body
-		new_character.mind = src	//and link our new body to ourself
+		current = new_character								//associate ourself with our new body
+		new_character.mind = src							//and associate our new body with ourself
 
-		if(changeling)
+		if(changeling)										//if we are a changeling mind, re-add any powers
 			new_character.make_changeling()
 
 		if(active)
@@ -78,19 +86,20 @@ datum/mind
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
 
-	proc/show_memory(mob/recipient)
-		var/output = "<B>[current.real_name]'s Memory</B><HR>"
+	proc/show_memory(mob/recipient, window=1)
+		if(!recipient)
+			recipient = current
+		var/output = "<B>[current.real_name]'s Memories:</B><br>"
 		output += memory
 
-		if(objectives.len>0)
-			output += "<HR><B>Objectives:</B>"
-
+		if(objectives.len)
+			output += "<B>Objectives:</B>"
 			var/obj_count = 1
 			for(var/datum/objective/objective in objectives)
-				output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-				obj_count++
+				output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
 
-		recipient << browse(output,"window=memory")
+		if(window)	recipient << browse(output,"window=memory")
+		else		recipient << "<i>[output]</i>"
 
 	proc/edit_memory()
 		if(!ticker || !ticker.mode)
@@ -1087,13 +1096,14 @@ datum/mind
 /mob/living/proc/mind_initialize()
 	if(mind)
 		mind.key = key
+
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
 		if(ticker)
 			ticker.minds += mind
 		else
-			world.log << "## DEBUG: mind_initialize(): No ticker ready yet! Please inform Carn"
+			error("mind_initialize(): No ticker ready yet! Please inform Carn")
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 

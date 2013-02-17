@@ -306,11 +306,11 @@ client/proc/one_click_antag()
 
 
 /datum/admins/proc/makeAliens()
-	alien_infestation(3)
+	new /datum/event/alien_infestation(list("spawncount"=3))
 	return 1
 
 /datum/admins/proc/makeSpaceNinja()
-	space_ninja_arrival()
+	new /datum/event/ninja()
 	return 1
 
 /datum/admins/proc/makeDeathsquad()

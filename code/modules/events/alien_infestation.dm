@@ -1,6 +1,11 @@
+/datum/event_control/alien_infestation
+	name = "Alien Infestation"
+	typepath = /datum/event/alien_infestation
+	weight = 5
+	max_occurrences = 1
+
 /datum/event/alien_infestation
 	announceWhen	= 400
-	oneShot			= 1
 
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
@@ -9,6 +14,11 @@
 /datum/event/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
 	spawncount = rand(1, 2)
+
+/datum/event/alien_infestation/kill()
+	if(!successSpawn && control)
+		control.occurrences--
+	return ..()
 
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
@@ -23,16 +33,14 @@
 			if(temp_vent.network.normal_members.len > 50)	//Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_candidates(BE_ALIEN)
 
 	while(spawncount > 0 && vents.len && candidates.len)
-		var/obj/vent = pick(vents)
-		var/candidate = pick(candidates)
+		var/obj/vent = pick_n_take(vents)
+		var/client/C = pick_n_take(candidates)
 
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.key = candidate
+		new_xeno.key = C.key
 
-		candidates -= candidate
-		vents -= vent
 		spawncount--
 		successSpawn = 1

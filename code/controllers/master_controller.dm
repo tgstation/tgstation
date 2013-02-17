@@ -38,7 +38,10 @@ datum/controller/game_controller/New()
 			del(master_controller)
 		master_controller = src
 
-	createRandomZlevel()
+	createRandomZlevel()			//probably shouldn't be here!
+
+	if(!events)
+		new /datum/controller/event()
 
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
@@ -173,7 +176,8 @@ datum/controller/game_controller/proc/process()
 
 				//EVENTS
 				timer = world.timeofday
-				process_events()
+				last_thing_processed = /datum/event
+				events.process()
 				events_cost = (world.timeofday - timer) / 10
 
 				//TICKER
@@ -273,18 +277,6 @@ datum/controller/game_controller/proc/process_powernets()
 			i++
 			continue
 		powernets.Cut(i,i+1)
-
-datum/controller/game_controller/proc/process_events()
-	last_thing_processed = /datum/event
-	var/i = 1
-	while(i<=events.len)
-		var/datum/event/Event = events[i]
-		if(Event)
-			Event.process()
-			i++
-			continue
-		events.Cut(i,i+1)
-	checkEvent()
 
 datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

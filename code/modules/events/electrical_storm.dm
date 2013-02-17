@@ -1,3 +1,9 @@
+/datum/event_control/electrical_storm
+	name = "Electrical Storm"
+	typepath = /datum/event/electrical_storm
+	earliest_start = 6000
+	weight = 40
+
 /datum/event/electrical_storm
 	var/lightsoutAmount	= 1
 	var/lightsoutRange	= 25

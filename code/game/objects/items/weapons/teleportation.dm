@@ -134,6 +134,7 @@ Frequency:
 	throw_range = 5
 	m_amt = 10000
 	origin_tech = "magnets=1;bluespace=3"
+	var/active_portals = 0
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
@@ -158,18 +159,14 @@ Frequency:
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
-	var/count = 0	//num of portals from this teleport in world
-	for(var/obj/effect/portal/PO in world)
-		if(PO.creator == src)	count++
-	if(count >= 3)
+	if(active_portals >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
 	for(var/mob/O in hearers(user, null))
 		O.show_message("<span class='notice'>Locked In.</span>", 2)
-	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
-	P.target = T
-	P.creator = src
+	new /obj/effect/portal( get_turf(src), T, src )
+	active_portals++
 	src.add_fingerprint(user)
 	return
 

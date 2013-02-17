@@ -127,12 +127,11 @@ proc/listclearnulls(list/list)
 	return null
 
 //Pick a random element from the list and remove it from the list.
-/proc/pick_n_take(list/listfrom)
-	if (listfrom.len > 0)
-		var/picked = pick(listfrom)
-		listfrom -= picked
-		return picked
-	return null
+/proc/pick_n_take(list/L)
+	if(L.len)
+		var/picked = rand(1,L.len)
+		. = L[picked]
+		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/listfrom)

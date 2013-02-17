@@ -1,7 +1,12 @@
+/datum/event_control/brand_intelligence
+	name = "Brand Intelligence"
+	typepath = /datum/event/brand_intelligence
+	weight = 5
+	max_occurrences = 1
+
 /datum/event/brand_intelligence
 	announceWhen	= 21
 	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
-	oneShot			= 1
 
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/obj/machinery/vending/originMachine

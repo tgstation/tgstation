@@ -1,6 +1,1335 @@
-//For the love of god,space out your code! This is a nightmare to read.
+//Note to future generations: I didn't write this god-awful code I just ported it to the event system and tried to make it less moon-speaky.
+//Don't judge me D; ~Carn
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+/datum/event_control/ninja
+	name = "Space Ninja"
+	typepath = /datum/event/ninja
+	max_occurrences = 1
+
+/datum/event/ninja
+	var/success_spawn = 0
+
+	var/helping_station
+	var/key
+	var/turf/spawnturf
+	var/mission
+
+	var/mob/living/carbon/human/Ninja
+
+/datum/event/ninja/setup()
+	helping_station = rand(0,1)
+
+/datum/event/ninja/kill()
+	if(!success_spawn && control)
+		control.occurrences--
+	return ..()
+
+/datum/event/ninja/start()
+	//selecting a spawnturf
+	if(!spawnturf)
+		var/list/spawn_locs = list()
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(isturf(L.loc))
+				switch(L.name)
+					if("ninjaspawn","carpspawn")
+						spawn_locs += L.loc
+		if(!spawn_locs.len)
+			return kill()
+		spawnturf = pick(spawn_locs)
+	if(!spawnturf)
+		return kill()
+
+	//selecting a candidate player
+	if(!key)
+		var/list/candidates = get_candidates(BE_NINJA)
+		if(!candidates.len)
+			return kill()
+		var/client/C = pick(candidates)
+		key = C.key
+	if(!key)
+		return kill()
+
+	//We prepare the mind before we spawn the ninja mob, so we cannot simply do mob.key = key then modify the mind.
+	//instead we make the mind and modify it, then make sure it is active and mind.transfer_to(mob)
+	//alternatively we could do mob.mind = mind;mob.key=key
+	var/datum/mind/Mind = create_ninja_mind(key)
+	Mind.active = 1
+
+	//generate objectives - You'll generally get 6 objectives (Ninja is meant to be hardmode!)
+	if(mission)
+		var/datum/objective/O = new /datum/objective(mission)
+		O.owner = Mind
+		Mind.objectives += O
+	else
+		if(helping_station)	//DS are the highest priority (if we're a helpful ninja)
+			for(var/datum/mind/M in ticker.minds)
+				if(M.current && M.current.stat != DEAD)
+					if(M.special_role == "Death Commando")
+						var/datum/objective/assassinate/O = new /datum/objective/assassinate()
+						O.owner = Mind
+						O.target = M
+						Mind.objectives += O
+
+		else				//Xenos are the highest priority (if we're not so helpful) Although this makes zero sense at all...
+			for(var/mob/living/carbon/alien/humanoid/queen/Q in player_list)
+				if(Q.mind && Q.stat != DEAD)
+					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
+					O.owner = Mind
+					O.target = Q.mind
+					O.explanation_text = "Slay \the [Q]."
+					Mind.objectives += O
+
+		if(Mind.objectives.len < 4)	//not enough objectives still!
+			var/list/possible_targets = list()
+			for(var/datum/mind/M in ticker.minds)
+				if(M.current && M.current.stat != DEAD)
+					if(istype(M.current,/mob/living/carbon/human))
+						if(M.special_role)
+							possible_targets[M] = 0						//bad-guy
+						else if(M.assigned_role in command_positions)
+							possible_targets[M] = 1						//good-guy
+
+			var/list/objectives = list(1,2,3,4)
+			while(Mind.objectives.len < 4)	//still not enough objectives!
+				switch(pick_n_take(objectives))
+					if(1)	//research
+						var/datum/objective/download/O = new /datum/objective/download()
+						O.owner = Mind
+						O.gen_amount_goal()
+						Mind.objectives += O
+
+					if(2)	//steal
+						var/datum/objective/steal/O = new /datum/objective/steal()
+						O.set_target(pick(O.possible_items_special))
+						Mind.objectives += O
+
+					if(3)	//protect/kill
+						if(!possible_targets.len)	continue
+						var/selected = rand(1,possible_targets.len)
+						var/datum/mind/M = possible_targets[selected]
+						var/is_bad_guy = possible_targets[M]
+						possible_targets.Cut(selected,selected+1)
+
+						if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
+							var/datum/objective/assassinate/O = new /datum/objective/assassinate()
+							O.owner = Mind
+							O.target = M
+							Mind.objectives += O
+						else										//protect
+							var/datum/objective/protect/O = new /datum/objective/protect()
+							O.owner = Mind
+							O.target = M
+							Mind.objectives += O
+					if(4)	//debrain/capture
+						if(!possible_targets.len)	continue
+						var/selected = rand(1,possible_targets.len)
+						var/datum/mind/M = possible_targets[selected]
+						var/is_bad_guy = possible_targets[M]
+						possible_targets.Cut(selected,selected+1)
+
+						if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
+							var/datum/objective/debrain/O = new /datum/objective/debrain()
+							O.owner = Mind
+							O.target = M
+							Mind.objectives += O
+						else										//capture
+							var/datum/objective/capture/O = new /datum/objective/capture()
+							O.owner = Mind
+							O.gen_amount_goal()
+							Mind.objectives += O
+					else
+						break
+
+	//Add a survival objective since it's usually broad enough for any round type.
+	var/datum/objective/O = new /datum/objective/survive()
+	O.owner = Mind
+	Mind.objectives += O
+
+	//Finally, add their RP-directive
+	var/directive = generate_ninja_directive()
+	O = new /datum/objective(directive)		//making it an objective so admins can reward the for completion
+	O.owner = Mind
+	Mind.objectives += O
+
+	//add some RP-fluff
+	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
+	Mind.store_memory("Suprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
+
+	//spawn the ninja and assign the candidate
+	Ninja = create_space_ninja(spawnturf)
+	Mind.transfer_to(Ninja)
+
+	//initialise equipment
+	Ninja.wear_suit:randomize_param()
+	Ninja.internal = Ninja.s_store
+	if(Ninja.internals)
+		Ninja.internals.icon_state = "internal1"
+
+	if(Ninja.mind != Mind)			//something has gone wrong!
+		error("The ninja wasn't assigned the right mind. ;(")
+
+	success_spawn = 1
+
+/*
+This proc will give the ninja a directive to follow. They are not obligated to do so but it's a fun roleplay reminder.
+Making this random or semi-random will probably not work without it also being incredibly silly.
+As such, it's hard-coded for now. No reason for it not to be, really.
+*/
+/datum/event/ninja/proc/generate_ninja_directive()
+	switch(rand(1,13))
+		if(1)	return "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
+		if(2)	return "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as possible."
+		if(3)	return "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
+		if(4)	return "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses using most extreme prejudice."
+		if(5)	return "We are currently negotiating with Nanotrasen command. Prioritize saving human lives over ending them."
+		if(6)	return "We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter."
+		if(7)	return "A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation."
+		if(8)	return "Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter."
+		if(9)	return "A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation."
+		if(10)	return "Our reputation is on the line. Harm as few civilians or innocents as possible."
+		if(11)	return "Our honor is on the line. Utilize only honorable tactics when dealing with opponents."
+		if(12)	return "We are currently negotiating with a Syndicate leader. Disguise assassinations as suicide or another natural cause."
+		else	return "There are no special supplemental instructions at this time."
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++++++++++++++++++++++++++++++++++++++//                //++++++++++++++++++++++++++++++++++
+======================================SPACE NINJA SETUP====================================
+___________________________________________________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+/*
+	README:
+
+	Data:
+
+	>> space_ninja.dm << is this file. It contains a variety of procs related to either spawning space ninjas,
+	modifying their verbs, various help procs, testing debug-related content, or storing unused procs for later.
+	Similar functions should go into this file, along with anything else that may not have an explicit category.
+	IMPORTANT: actual ninja suit, gloves, etc, are stored under the appropriate clothing files. If you need to change
+	variables or look them up, look there. Easiest way is through the map file browser.
+
+	>> ninja_abilities.dm << contains all the ninja-related powers. Spawning energy swords, teleporting, and the like.
+	If more powers are added, or perhaps something related to powers, it should go there. Make sure to describe
+	what an ability/power does so it's easier to reference later without looking at the code.
+	IMPORTANT: verbs are still somewhat funky to work with. If an argument is specified but is not referenced in a way
+	BYOND likes, in the code content, the verb will fail to trigger. Nothing will happen, literally, when clicked.
+	This can be bypassed by either referencing the argument properly, or linking to another proc with the argument
+	attached. The latter is what I like to do for certain cases--sometimes it's necessary to do that regardless.
+
+	>> ninja_equipment.dm << deals with all the equipment-related procs for a ninja. Primarily it has the suit, gloves,
+	and mask. The suit is by far the largest section of code out of the three and includes a lot of code that ties in
+	to other functions. This file has gotten kind of large so breaking it up may be in order. I use section hearders.
+	IMPORTANT: not much to say here. Follow along with the comments and adding new functions should be a breeze. Also
+	know that certain equipment pieces are linked in other files. The energy blade, for example, has special
+	functions defined in the appropriate files (airlock, securestorage, etc).
+
+	General Notes:
+
+	I created space ninjas with the expressed purpose of spicing up boring rounds. That is, ninjas are to xenos as marauders are to
+	death squads. Ninjas are stealthy, tech-savvy, and powerful. Not to say marauders are all of those things, but a clever ninja
+	should have little problem murderampaging their way through just about anything. Short of admin wizards maybe.
+	HOWEVER!
+	Ninjas also have a fairly great weakness as they require energy to use abilities. If, theoretically, there is a game
+	mode based around space ninjas, make sure to account for their energy needs.
+
+	Admin Notes:
+
+	Ninjas are not admin PCs--please do not use them for that purpose. They are another way to participate in the game post-death,
+	like pais, xenos, death squads, and cyborgs.
+	I'm currently looking for feedback from regular players since beta testing is largely done. I would appreciate if
+	you spawned regular players as ninjas when rounds are boring. Or exciting, it's all good as long as there is feedback.
+	You can also spawn ninja gear manually if you want to.
+
+	How to do that:
+	Make sure your character has a mind.
+	Change their assigned_role to "MODE", no quotes. Otherwise, the suit won't initialize.
+	Change their special_role to "Space Ninja", no quotes. Otherwise, the character will be gibbed.
+	Spawn ninja gear, put it on, hit initialize. Let the suit do the rest. You are now a space ninja.
+	I don't recommend messing with suit variables unless you really know what you're doing.
+
+	Miscellaneous Notes:
+
+	Potential Upgrade Tree:
+		Energy Shield:
+			Extra Ability
+			Syndicate Shield device?
+				Works like the force wall spell, except can be kept indefinitely as long as energy remains. Toggled on or off.
+				Would block bullets and the like.
+		Phase Shift
+			Extra Ability
+			Advanced Sensors?
+				Instead of being unlocked at the start, Phase Shieft would become available once requirements are met.
+		Uranium-based Recharger:
+			Suit Upgrade
+			Unsure
+				Instead of losing energy each second, the suit would regain the same amount of energy.
+				This would not count in activating stealth and similar.
+		Extended Battery Life:
+			Suit Upgrade
+			Battery of higher capacity
+				Already implemented. Replace current battery with one of higher capacity.
+		Advanced Cloak-Tech device.
+			Suit Upgrade
+			Syndicate Cloaking Device?
+				Remove cloak failure rate.
+*/
+
+
+//=======//CURRENT PLAYER VERB//=======//
+
+/client/proc/cmd_admin_ninjafy(var/mob/living/carbon/human/H in player_list)
+	set category = null
+	set name = "Make Space Ninja"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+
+	if(!istype(H))
+		return
+
+	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+		return
+
+	log_admin("[key_name(src)] turned [H.key] into a Space Ninja.")
+	H.mind = create_ninja_mind(H.key)
+	H.mind_initialize()
+	H.equip_space_ninja(1)
+	if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+		H.wear_suit:randomize_param()
+		spawn(0)
+			H.wear_suit:ninitialize(10,H)
+
+//=======//CURRENT GHOST VERB//=======//
+
+/client/proc/send_space_ninja()
+	set category = "Fun"
+	set name = "Spawn Space Ninja"
+	set desc = "Spawns a space ninja for when you need a teenager with attitude."
+	set popup_menu = 0
+
+	if(!holder)
+		src << "Only administrators may use this command."
+		return
+	if(!ticker.mode)
+		alert("The game hasn't started yet!")
+		return
+	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
+		return
+
+	var/mission = copytext(sanitize(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", null) as text|null),1,MAX_MESSAGE_LEN)
+
+	var/client/C = input("Pick character to spawn as the Space Ninja", "Key", "") as null|anything in clients
+	if(!C)
+		return
+
+	new /datum/event/ninja(list("key"=C.key,"mission"=mission))
+
+	message_admins("\blue [key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Space Ninja.")
+	log_admin("[key] used Spawn Space Ninja.")
+
+	return
+
+//=======//NINJA CREATION PROCS//=======//
+
+/proc/create_space_ninja(turf/spawnturf)
+	var/mob/living/carbon/human/new_ninja = new(spawnturf)
+	var/ninja_title = pick(ninja_titles)
+	var/ninja_name = pick(ninja_names)
+	new_ninja.gender = pick(MALE, FEMALE)
+
+	var/datum/preferences/A = new()//Randomize appearance for the ninja.
+	A.randomize_appearance_for(new_ninja)
+	new_ninja.real_name = "[ninja_title] [ninja_name]"
+	new_ninja.dna.ready_dna(new_ninja)
+	new_ninja.equip_space_ninja()
+	return new_ninja
+
+/mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
+	if(safety)
+		del(w_uniform)
+		del(wear_suit)
+		del(wear_mask)
+		del(head)
+		del(shoes)
+		del(gloves)
+
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
+	equip_to_slot_or_del(R, slot_ears)
+	if(gender==FEMALE)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
+	else
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
+	return 1
+
+//=======//HELPER PROCS//=======//
+
+//Randomizes suit parameters.
+/obj/item/clothing/suit/space/space_ninja/proc/randomize_param()
+	s_cost = rand(1,20)
+	s_acost = rand(20,100)
+	k_cost = rand(100,500)
+	k_damage = rand(1,20)
+	s_delay = rand(10,100)
+	s_bombs = rand(5,20)
+	a_boost = rand(1,7)
+
+//This proc prevents the suit from being taken off.
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
+	if(X)//If you want to check for icons.
+		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		U:gloves.icon_state = "s-ninjan"
+		U:gloves.item_state = "s-ninjan"
+	else
+		if(U.mind.special_role!="Space Ninja")
+			U << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR..."
+			U.gib()
+			return 0
+		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
+			U << "\red <B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			return 0
+		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
+			U << "\red <B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			return 0
+		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
+			U << "\red <B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			return 0
+
+		affecting = U
+		canremove = 0
+		slowdown = 0
+		n_hood = U:head
+		n_hood.canremove=0
+		n_shoes = U:shoes
+		n_shoes.canremove=0
+		n_shoes.slowdown--
+		n_gloves = U:gloves
+		n_gloves.canremove=0
+
+	return 1
+
+//This proc allows the suit to be taken off.
+/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
+	affecting = null
+	canremove = 1
+	slowdown = 1
+	icon_state = "s-ninja"
+	if(n_hood)//Should be attached, might not be attached.
+		n_hood.canremove=1
+	if(n_shoes)
+		n_shoes.canremove=1
+		n_shoes.slowdown++
+	if(n_gloves)
+		n_gloves.icon_state = "s-ninja"
+		n_gloves.item_state = "s-ninja"
+		n_gloves.canremove=1
+		n_gloves.candrain=0
+		n_gloves.draining=0
+
+//Allows the mob to grab a stealth icon.
+/mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.
+	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to 2.
+	var/icon/opacity_icon = new(A.icon, A.icon_state)
+	var/icon/alpha_mask = getIconMask(src)
+	var/icon/alpha_mask_2 = new('icons/effects/effects.dmi', "at_shield1")
+	alpha_mask.AddAlphaMask(alpha_mask_2)
+	opacity_icon.AddAlphaMask(alpha_mask)
+	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
+		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
+		switch(i)//Now to determine offset so the result is somewhat blurred.
+			if(1)
+				I.pixel_x -= 1
+			if(2)
+				I.pixel_x += 1
+			if(3)
+				I.pixel_y -= 1
+			if(4)
+				I.pixel_y += 1
+
+		overlays += I//And finally add the overlay.
+	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+
+//When ninja steal malfunctions.
+/mob/proc/NinjaStealthMalf()
+	invisibility = 0//Set ninja invis to 0.
+	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+	playsound(loc, 'sound/effects/stealthoff.ogg', 75, 1)
+
+//=======//GENERIC VERB MODIFIERS//=======//
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_equip_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
+	n_gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
+
+	s_initialized = 1
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_equip_verbs()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
+	if(n_gloves)
+		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+
+	s_initialized = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_ninja_verbs()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjablade
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+	s_initialized=1
+	slowdown=0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_ninja_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjablade
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+//=======//KAMIKAZE VERBS//=======//
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_kamikaze(mob/living/carbon/U)
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
+
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
+
+	kamikaze = 1
+
+	icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+	if(n_gloves)
+		n_gloves.icon_state = "s-ninjak"
+		n_gloves.item_state = "s-ninjak"
+		n_gloves.candrain = 0
+		n_gloves.draining = 0
+		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+
+	cancel_stealth()
+
+	U << browse(null, "window=spideros")
+	U << "\red Do or Die, <b>LET'S ROCK!!</b>"
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze(mob/living/carbon/U)
+	if(kamikaze)
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer
+		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk
+		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
+
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
+		if(n_gloves)
+			n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+
+		U.incorporeal_move = 0
+		kamikaze = 0
+		k_unlock = 0
+		U << "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
+
+//=======//AI VERBS//=======//
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
+
+	s_busy = 0
+	s_control = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
+
+	s_control = 1
+
+//=======//OLD & UNUSED//=======//
+
+/*
+
+Deprecated. get_dir() does the same thing. Still a nice proc.
+Returns direction that the mob or whomever should be facing in relation to the target.
+This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
+I personally used it with getline() to great effect.
+/proc/get_dir_to(turf/start,turf/end)//N
+	var/xdiff = start.x - end.x//The sign is important.
+	var/ydiff = start.y - end.y
+
+	var/direction_x = xdiff<1 ? 4:8//East - west
+	var/direction_y = ydiff<1 ? 1:2//North - south
+	var/direction_xy = xdiff==0 ? -4:0//If x is the same, subtract 4.
+	var/direction_yx = ydiff==0 ? -1:0//If y is the same, subtract 1.
+	var/direction_f = direction_x+direction_y+direction_xy+direction_yx//Finally direction tally.
+	direction_f = direction_f==0 ? 1:direction_f//If direction is 0(same spot), return north. Otherwise, direction.
+
+	return direction_f
+
+Alternative and inferior method of calculating spideros.
+var/temp = num2text(spideros)
+var/return_to = copytext(temp, 1, (length(temp)))//length has to be to the length of the thing because by default it's length+1
+spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
+
+//Old way of draining from wire.
+/obj/item/clothing/gloves/space_ninja/proc/drain_wire()
+	set name = "Drain From Wire"
+	set desc = "Drain energy directly from an exposed wire."
+	set category = "Ninja Equip"
+
+	var/obj/structure/cable/attached
+	var/mob/living/carbon/human/U = loc
+	if(candrain&&!draining)
+		var/turf/T = U.loc
+		if(isturf(T) && T.is_plating())
+			attached = locate() in T
+			if(!attached)
+				U << "\red Warning: no exposed cable available."
+			else
+				U << "\blue Connecting to wire, stand still..."
+				if(do_after(U,50)&&!isnull(attached))
+					drain("WIRE",attached,U:wear_suit,src)
+				else
+					U << "\red Procedure interrupted. Protocol terminated."
+	return
+
+I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
+This was the best work-around I could come up with at the time. Uses objects to then display to panel, based on the object spell system.
+Can be added on to pretty easily.
+
+BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
+	var/obj/effect/proc_holder/ai_return_control/A_C = new(AI)
+	var/obj/effect/proc_holder/ai_hack_ninja/B_C = new(AI)
+	var/obj/effect/proc_holder/ai_instruction/C_C = new(AI)
+	new/obj/effect/proc_holder/ai_holo_clear(AI)
+	AI.proc_holder_list += A_C
+	AI.proc_holder_list += B_C
+	AI.proc_holder_list += C_C
+
+	s_control = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
+	var/obj/effect/proc_holder/ai_return_control/A_C = locate() in AI
+	var/obj/effect/proc_holder/ai_hack_ninja/B_C = locate() in AI
+	var/obj/effect/proc_holder/ai_instruction/C_C = locate() in AI
+	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in AI
+	del(A_C)
+	del(B_C)
+	del(C_C)
+	del(D_C)
+	AI.proc_holder_list = list()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
+
+	s_control = 1
+
+//Workaround
+/obj/effect/proc_holder/ai_holo_clear
+	name = "Clear Hologram"
+	desc = "Stops projecting the current holographic image."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+
+/obj/effect/proc_holder/ai_holo_clear/Click()
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
+	del(S.hologram.i_attached)
+	del(S.hologram)
+	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in S.AI
+	S.AI.proc_holder_list -= D_C
+	return
+
+/obj/effect/proc_holder/ai_instruction//Let's the AI know what they can do.
+	name = "Instructions"
+	desc = "Displays a list of helpful information."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+/obj/effect/proc_holder/ai_instruction/Click()
+	loc << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
+
+/obj/effect/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
+	name = "Hack SpiderOS"
+	desc = "Hack directly into the Black Widow(tm) neuro-interface."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+/obj/effect/proc_holder/ai_hack_ninja/Click()//When you click on it.
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc
+	S.hack_spideros()
+	return
+
+/obj/effect/proc_holder/ai_return_control
+	name = "Relinquish Control"
+	desc = "Return control to the user."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+/obj/effect/proc_holder/ai_return_control/Click()
+	var/mob/living/silicon/ai/A = loc
+	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
+	A << browse(null, "window=hack spideros")//Close window
+	A << "You have seized your hacking attempt. [S.affecting] has regained control."
+	S.affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
+	S.remove_AI_verbs()
+	return
+*/
+
+//=======//DEBUG//=======//
+/*
+/obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs()
+//DEBUG
+//Does nothing at the moment. I am trying to see if it's possible to mess around with verbs as variables.
+	//for(var/P in verbs)
+//		if(P.set.name)
+//			usr << "[P.set.name], path: [P]"
+	return
+
+
+Most of these are at various points of incomplete.
+
+/mob/verb/grant_object_panel()
+	set name = "Grant AI Ninja Verbs Debug"
+	set category = "Ninja Debug"
+	var/obj/effect/proc_holder/ai_return_control/A_C = new(src)
+	var/obj/effect/proc_holder/ai_hack_ninja/B_C = new(src)
+	usr:proc_holder_list += A_C
+	usr:proc_holder_list += B_C
+
+mob/verb/remove_object_panel()
+	set name = "Remove AI Ninja Verbs Debug"
+	set category = "Ninja Debug"
+	var/obj/effect/proc_holder/ai_return_control/A = locate() in src
+	var/obj/effect/proc_holder/ai_hack_ninja/B = locate() in src
+	usr:proc_holder_list -= A
+	usr:proc_holder_list -= B
+	del(A)//First.
+	del(B)//Second, to keep the proc going.
+	return
+
+/client/verb/grant_verb_ninja_debug1(var/mob/M in view())
+	set name = "Grant AI Ninja Verbs Debug"
+	set category = "Ninja Debug"
+
+	M.verbs += /mob/living/silicon/ai/verb/ninja_return_control
+	M.verbs += /mob/living/silicon/ai/verb/ninja_spideros
+	return
+
+/client/verb/grant_verb_ninja_debug2(var/mob/living/carbon/human/M in view())
+	set name = "Grant Back Ninja Verbs"
+	set category = "Ninja Debug"
+
+	M.wear_suit.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	M.wear_suit.verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	return
+
+/obj/proc/grant_verb_ninja_debug3(var/mob/living/silicon/ai/A as mob)
+	set name = "Grant AI Ninja Verbs"
+	set category = "null"
+	set hidden = 1
+	A.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	A.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	return
+
+/mob/verb/get_dir_to_target(var/mob/M in oview())
+	set name = "Get Direction to Target"
+	set category = "Ninja Debug"
+
+	world << "DIR: [get_dir_to(src.loc,M.loc)]"
+	return
+//
+/mob/verb/kill_self_debug()
+	set name = "DEBUG Kill Self"
+	set category = "Ninja Debug"
+
+	src:death()
+
+/client/verb/switch_client_debug()
+	set name = "DEBUG Switch Client"
+	set category = "Ninja Debug"
+
+	mob = mob:loc:loc
+
+/mob/verb/possess_mob(var/mob/M in oview())
+	set name = "DEBUG Possess Mob"
+	set category = "Ninja Debug"
+
+	client.mob = M
+
+/client/verb/switcharoo(var/mob/M in oview())
+	set name = "DEBUG Switch to AI"
+	set category = "Ninja Debug"
+
+	var/mob/last_mob = mob
+	mob = M
+	last_mob:wear_suit:AI:key = key
+//
+/client/verb/ninjaget(var/mob/M in oview())
+	set name = "DEBUG Ninja GET"
+	set category = "Ninja Debug"
+
+	mob = M
+	M.gib()
+	space_ninja()
+
+/mob/verb/set_debug_ninja_target()
+	set name = "Set Debug Target"
+	set category = "Ninja Debug"
+
+	ninja_debug_target = src//The target is you, brohime.
+	world << "Target: [src]"
+
+/mob/verb/hack_spideros_debug()
+	set name = "Debug Hack Spider OS"
+	set category = "Ninja Debug"
+
+	var/mob/living/silicon/ai/A = loc:AI
+	if(A)
+		if(!A.key)
+			A.client.mob = loc:affecting
+		else
+			loc:affecting:client:mob = A
+	return
+
+//Tests the net and what it does.
+/mob/verb/ninjanet_debug()
+	set name = "Energy Net Debug"
+	set category = "Ninja Debug"
+
+	var/obj/effect/energy_net/E = new /obj/effect/energy_net(loc)
+	E.layer = layer+1//To have it appear one layer above the mob.
+	stunned = 10//So they are stunned initially but conscious.
+	anchored = 1//Anchors them so they can't move.
+	E.affecting = src
+	spawn(0)//Parallel processing.
+		E.process(src)
+	return
+
+I made this as a test for a possible ninja ability (or perhaps more) for a certain mob to see hallucinations.
+The thing here is that these guys have to be coded to do stuff as they are simply images that you can't even click on.
+That is why you attached them to objects.
+/mob/verb/TestNinjaShadow()
+	set name = "Test Ninja Ability"
+	set category = "Ninja Debug"
+
+	if(client)
+		var/safety = 4
+		for(var/turf/T in oview(5))
+			if(prob(20))
+				var/current_clone = image('icons/mob/mob.dmi',T,"s-ninja")
+				safety--
+				spawn(0)
+					src << current_clone
+					spawn(300)
+						del(current_clone)
+					spawn while(!isnull(current_clone))
+						step_to(current_clone,src,1)
+						sleep(5)
+			if(safety<=0)	break
+	return */
+
+//Alternate ninja speech replacement.
+/*This text is hilarious but also absolutely retarded.
+message = replacetext(message, "l", "r")
+message = replacetext(message, "rr", "ru")
+message = replacetext(message, "v", "b")
+message = replacetext(message, "f", "hu")
+message = replacetext(message, "'t", "")
+message = replacetext(message, "t ", "to ")
+message = replacetext(message, " I ", " ai ")
+message = replacetext(message, "th", "z")
+message = replacetext(message, "ish", "isu")
+message = replacetext(message, "is", "izu")
+message = replacetext(message, "ziz", "zis")
+message = replacetext(message, "se", "su")
+message = replacetext(message, "br", "bur")
+message = replacetext(message, "ry", "ri")
+message = replacetext(message, "you", "yuu")
+message = replacetext(message, "ck", "cku")
+message = replacetext(message, "eu", "uu")
+message = replacetext(message, "ow", "au")
+message = replacetext(message, "are", "aa")
+message = replacetext(message, "ay", "ayu")
+message = replacetext(message, "ea", "ii")
+message = replacetext(message, "ch", "chi")
+message = replacetext(message, "than", "sen")
+message = replacetext(message, ".", "")
+message = lowertext(message)
+*/
+
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
+==================================SPACE NINJA ABILITIES====================================
+___________________________________________________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//=======//SAFETY CHECK//=======//
+/*
+X is optional, tells the proc to check for specific stuff. C is also optional.
+All the procs here assume that the character is wearing the ninja suit if they are using the procs.
+They should, as I have made every effort for that to be the case.
+In the case that they are not, I imagine the game will run-time error like crazy.
+s_cooldown ticks off each second based on the suit recharge proc, in seconds. Default of 1 seconds. Some abilities have no cool down.
+*/
+/obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
+	var/mob/living/carbon/human/U = affecting
+	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
+		U << "\red You must be conscious and solid to do this."//It's not a problem of stat==2 since the ninja will explode anyway if they die.
+		return 1
+	else if(C&&cell.charge<C*10)
+		U << "\red Not enough energy."
+		return 1
+	switch(X)
+		if(1)
+			cancel_stealth()//Get rid of it.
+		if(2)
+			if(s_bombs<=0)
+				U << "\red There are no more smoke bombs remaining."
+				return 1
+		if(3)
+			if(a_boost<=0)
+				U << "\red You do not have any more adrenaline boosters."
+				return 1
+	return (s_coold)//Returns the value of the variable which counts down to zero.
+
+//=======//TELEPORT GRAB CHECK//=======//
+/obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/U)
+	if(istype(U.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
+		var/obj/item/weapon/grab/G = U.get_active_hand()
+		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+	if(istype(U.get_inactive_hand(),/obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = U.get_inactive_hand()
+		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+	return
+
+//=======//SMOKE//=======//
+/*Summons smoke in radius of user.
+Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.*/
+/obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke()
+	set name = "Smoke Bomb"
+	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
+	set category = "Ninja Ability"
+	set popup_menu = 0//Will not see it when right clicking.
+
+	if(!ninjacost(,2))
+		var/mob/living/carbon/human/U = affecting
+		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
+		var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
+		smoke.set_up(10, 0, U.loc)
+		smoke.start()
+		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
+		s_bombs--
+		s_coold = 1
+	return
+
+//=======//9-8 TILE TELEPORT//=======//
+//Click to to teleport 9-10 tiles in direction facing.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt()
+	set name = "Phase Jaunt (10E)"
+	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	var/C = 100
+	if(!ninjacost(C,1))
+		var/mob/living/carbon/human/U = affecting
+		var/turf/destination = get_teleport_loc(U.loc,U,9,1,3,1,0,1)
+		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
+		if(destination&&istype(mobloc, /turf))//The turf check prevents unusual behavior. Like teleporting out of cryo pods, cloners, mechs, etc.
+			spawn(0)
+				playsound(U.loc, "sparks", 50, 1)
+				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+
+			handle_teleport_grab(destination, U)
+			U.loc = destination
+
+			spawn(0)
+				spark_system.start()
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(U.loc, "sparks", 50, 1)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+
+			spawn(0)
+				destination.kill_creatures(U)//Any living mobs in teleport area are gibbed. Check turf procs for how it does it.
+			s_coold = 1
+			cell.charge-=(C*10)
+		else
+			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+	return
+
+//=======//RIGHT CLICK TELEPORT//=======//
+//Right click to teleport somewhere, almost exactly like admin jump to turf.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjashift(turf/T in oview())
+	set name = "Phase Shift (20E)"
+	set desc = "Utilizes the internal VOID-shift device to rapidly transit to a destination in view."
+	set category = null//So it does not show up on the panel but can still be right-clicked.
+	set src = usr.contents//Fixes verbs not attaching properly for objects. Praise the DM reference guide!
+
+	var/C = 200
+	if(!ninjacost(C,1))
+		var/mob/living/carbon/human/U = affecting
+		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
+		if((!T.density)&&istype(mobloc, /turf))
+			spawn(0)
+				playsound(U.loc, 'sound/effects/sparks4.ogg', 50, 1)
+				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+
+			handle_teleport_grab(T, U)
+			U.loc = T
+
+			spawn(0)
+				spark_system.start()
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/sparks2.ogg', 50, 1)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+
+			spawn(0)//Any living mobs in teleport area are gibbed.
+				T.kill_creatures(U)
+			s_coold = 1
+			cell.charge-=(C*10)
+		else
+			U << "\red You cannot teleport into solid walls or from solid matter"
+	return
+
+//=======//EM PULSE//=======//
+//Disables nearby tech equipment.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjapulse()
+	set name = "EM Burst (25E)"
+	set desc = "Disable any nearby technology with a electro-magnetic pulse."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	var/C = 250
+	if(!ninjacost(C,1))
+		var/mob/living/carbon/human/U = affecting
+		playsound(U.loc, 'sound/effects/EMPulse.ogg', 60, 2)
+		empulse(U, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
+		s_coold = 2
+		cell.charge-=(C*10)
+	return
+
+//=======//ENERGY BLADE//=======//
+//Summons a blade of energy in active hand.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjablade()
+	set name = "Energy Blade (5E)"
+	set desc = "Create a focused beam of energy in your active hand."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	var/C = 50
+	if(!ninjacost(C))
+		var/mob/living/carbon/human/U = affecting
+		if(!kamikaze)
+			if(!U.get_active_hand()&&!istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
+				var/obj/item/weapon/melee/energy/blade/W = new()
+				spark_system.start()
+				playsound(U.loc, "sparks", 50, 1)
+				U.put_in_hands(W)
+				cell.charge-=(C*10)
+			else
+				U << "\red You can only summon one blade. Try dropping an item first."
+		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
+			if(!U.get_active_hand())
+				var/obj/item/weapon/melee/energy/blade/W = new()
+				U.put_in_hands(W)
+			if(!U.get_inactive_hand())
+				var/obj/item/weapon/melee/energy/blade/W = new()
+				U.put_in_inactive_hand(W)
+			spark_system.start()
+			playsound(U.loc, "sparks", 50, 1)
+			s_coold = 1
+	return
+
+//=======//NINJA STARS//=======//
+/*Shoots ninja stars at random people.
+This could be a lot better but I'm too tired atm.*/
+/obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
+	set name = "Energy Star (5E)"
+	set desc = "Launches an energy star at a random living target."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	var/C = 50
+	if(!ninjacost(C))
+		var/mob/living/carbon/human/U = affecting
+		var/targets[] = list()//So yo can shoot while yo throw dawg
+		for(var/mob/living/M in oview(loc))
+			if(M.stat)	continue//Doesn't target corpses or paralyzed persons.
+			targets.Add(M)
+		if(targets.len)
+			var/mob/living/target=pick(targets)//The point here is to pick a random, living mob in oview to shoot stuff at.
+
+			var/turf/curloc = U.loc
+			var/atom/targloc = get_turf(target)
+			if (!targloc || !istype(targloc, /turf) || !curloc)
+				return
+			if (targloc == curloc)
+				return
+			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
+			A.current = curloc
+			A.yo = targloc.y - curloc.y
+			A.xo = targloc.x - curloc.x
+			cell.charge-=(C*10)
+			A.process()
+		else
+			U << "\red There are no targets in view."
+	return
+
+//=======//ENERGY NET//=======//
+/*Allows the ninja to capture people, I guess.
+Must right click on a mob to activate.*/
+/obj/item/clothing/suit/space/space_ninja/proc/ninjanet(mob/living/carbon/M in oview())//Only living carbon mobs.
+	set name = "Energy Net (20E)"
+	set desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
+	set category = null
+	set src = usr.contents
+
+	var/C = 200
+	if(!ninjacost(C,1)&&iscarbon(M))
+		var/mob/living/carbon/human/U = affecting
+		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+		//if(M)//DEBUG
+			if(!locate(/obj/effect/energy_net) in M.loc)//Check if they are already being affected by an energy net.
+				for(var/turf/T in getline(U.loc, M.loc))
+					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
+						U << "You may not use an energy net through solid obstacles!"
+						return
+				spawn(0)
+					U.Beam(M,"n_beam",,15)
+				M.anchored = 1//Anchors them so they can't move.
+				U.say("Get over here!")
+				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
+				E.layer = M.layer+1//To have it appear one layer above the mob.
+				for(var/mob/O in viewers(U, 3))
+					O.show_message(text("\red [] caught [] with an energy net!", U, M), 1)
+				E.affecting = M
+				E.master = U
+				spawn(0)//Parallel processing.
+					E.process(M)
+				cell.charge-=(C*10)
+			else
+				U << "They are already trapped inside an energy net."
+		else
+			U << "They will bring no honor to your Clan!"
+	return
+
+//=======//ADRENALINE BOOST//=======//
+/*Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
+Movement impairing would indicate drugs and the like.*/
+/obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
+	set name = "Adrenaline Boost"
+	set desc = "Inject a secret chemical that will counteract all movement-impairing effect."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	if(!ninjacost(,3))//Have to make sure stat is not counted for this ability.
+		var/mob/living/carbon/human/U = affecting
+		//Wouldn't need to track adrenaline boosters if there was a miracle injection to get rid of paralysis and the like instantly.
+		//For now, adrenaline boosters ARE the miracle injection. Well, radium, really.
+		U.SetParalysis(0)
+		U.SetStunned(0)
+		U.SetWeakened(0)
+	/*
+	Due to lag, it was possible to adrenaline boost but remain helpless while life.dm resets player stat.
+	This lead to me and others spamming adrenaline boosters because they failed to kick in on time.
+	It's technically possible to come back from crit with this but it is very temporary.
+	Life.dm will kick the player back into unconsciosness the next process loop.
+	*/
+		U.stat = 0//At least now you should be able to teleport away or shoot ninja stars.
+		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
+			U.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
+		spawn(70)
+			reagents.reaction(U, 2)
+			reagents.trans_id_to(U, "radium", a_transfer)
+			U << "\red You are beginning to feel the after-effect of the injection."
+		a_boost--
+		s_coold = 3
+	return
+
+/*
+===================================================================================
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<KAMIKAZE MODE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+===================================================================================
+Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
+*/
+
+//=======//NINJA MOVEMENT//=======//
+//Also makes you move like you're on crack.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjawalk()
+	set name = "Shadow Walk"
+	set desc = "Combines the VOID-shift and CLOAK-tech devices to freely move between solid matter. Toggle on or off."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	var/mob/living/carbon/human/U = affecting
+	if(!U.incorporeal_move)
+		U.incorporeal_move = 2
+		U << "\blue You will now phase through solid matter."
+	else
+		U.incorporeal_move = 0
+		U << "\blue You will no-longer phase through solid matter."
+	return
+
+//=======//5 TILE TELEPORT/GIB//=======//
+//Allows to gib up to five squares in a straight line. Seriously.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer()
+	set name = "Phase Slayer"
+	set desc = "Utilizes the internal VOID-shift device to mutilate creatures in a straight line."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	if(!ninjacost())
+		var/mob/living/carbon/human/U = affecting
+		var/turf/destination = get_teleport_loc(U.loc,U,5)
+		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
+		if(destination&&istype(mobloc, /turf))
+			U.say("Ai Satsugai!")
+			spawn(0)
+				playsound(U.loc, "sparks", 50, 1)
+				anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+
+			spawn(0)
+				for(var/turf/T in getline(mobloc, destination))
+					spawn(0)
+						T.kill_creatures(U)
+					if(T==mobloc||T==destination)	continue
+					spawn(0)
+						anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+
+			handle_teleport_grab(destination, U)
+			U.loc = destination
+
+			spawn(0)
+				spark_system.start()
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(U.loc, "sparks", 50, 1)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+			s_coold = 1
+		else
+			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+	return
+
+//=======//TELEPORT BEHIND MOB//=======//
+/*Appear behind a randomly chosen mob while a few decoy teleports appear.
+This is so anime it hurts. But that's the point.*/
+/obj/item/clothing/suit/space/space_ninja/proc/ninjamirage()
+	set name = "Spider Mirage"
+	set desc = "Utilizes the internal VOID-shift device to create decoys and teleport behind a random target."
+	set category = "Ninja Ability"
+	set popup_menu = 0
+
+	if(!ninjacost())//Simply checks for stat.
+		var/mob/living/carbon/human/U = affecting
+		var/targets[]
+		targets = new()
+		for(var/mob/living/M in oview(6))
+			if(M.stat)	continue//Doesn't target corpses or paralyzed people.
+			targets.Add(M)
+		if(targets.len)
+			var/mob/living/target=pick(targets)
+			var/locx
+			var/locy
+			var/turf/mobloc = get_turf(target.loc)
+			var/safety = 0
+			switch(target.dir)
+				if(NORTH)
+					locx = mobloc.x
+					locy = (mobloc.y-1)
+					if(locy<1)
+						safety = 1
+				if(SOUTH)
+					locx = mobloc.x
+					locy = (mobloc.y+1)
+					if(locy>world.maxy)
+						safety = 1
+				if(EAST)
+					locy = mobloc.y
+					locx = (mobloc.x-1)
+					if(locx<1)
+						safety = 1
+				if(WEST)
+					locy = mobloc.y
+					locx = (mobloc.x+1)
+					if(locx>world.maxx)
+						safety = 1
+				else	safety=1
+			if(!safety&&istype(mobloc, /turf))
+				U.say("Kumo no Shinkiro!")
+				var/turf/picked = locate(locx,locy,mobloc.z)
+				spawn(0)
+					playsound(U.loc, "sparks", 50, 1)
+					anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+
+				spawn(0)
+					var/limit = 4
+					for(var/turf/T in oview(5))
+						if(prob(20))
+							spawn(0)
+								anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+							limit--
+						if(limit<=0)	break
+
+				handle_teleport_grab(picked, U)
+				U.loc = picked
+				U.dir = target.dir
+
+				spawn(0)
+					spark_system.start()
+					playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
+					playsound(U.loc, "sparks", 50, 1)
+					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+				s_coold = 1
+			else
+				U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+		else
+			U << "\red There are no targets in view."
+	return
+
+
+//For the love of god,space out your code! This is a nightmare to read.
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1458,3 +2787,10 @@ It is possible to destroy the net by the occupant or someone else.
 		healthcheck()
 		..()
 		return
+
+proc/create_ninja_mind(key)
+	var/datum/mind/Mind = new /datum/mind(key)
+	Mind.assigned_role = "MODE"
+	Mind.special_role = "Space Ninja"
+	ticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
+	return Mind

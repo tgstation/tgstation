@@ -406,7 +406,7 @@ datum/objective/download
 datum/objective/capture
 	proc/gen_amount_goal()
 		target_amount = rand(5,10)
-		explanation_text = "Accumulate [target_amount] capture points."
+		explanation_text = "Accumulate [target_amount] capture points. It is better if they remain relatively unharmed."
 		return target_amount
 
 

@@ -1,4 +1,5 @@
 //#define TESTING
+#define KILL 26
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/obj/effect/datacore/data_core = null
@@ -9,7 +10,6 @@ var/global/obj/effect/overlay/slmaster = null
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
-var/global/list/events = list()
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
@@ -61,7 +61,6 @@ var/secret_force_mode = "secret" // if this is anything but "secret", the secret
 
 var/datum/engine_eject/engine_eject_control = null
 var/host = null
-var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/dooc_allowed = 1
 var/traitor_scaling = 1

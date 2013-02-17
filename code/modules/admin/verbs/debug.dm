@@ -362,15 +362,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_debug_tog_aliens()
-	set category = "Server"
-	set name = "Toggle Aliens"
-
-	aliens_allowed = !aliens_allowed
-	log_admin("[key_name(src)] has turned aliens [aliens_allowed ? "on" : "off"].")
-	message_admins("[key_name_admin(src)] has turned aliens [aliens_allowed ? "on" : "off"].", 0)
-	feedback_add_details("admin_verb","TAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"

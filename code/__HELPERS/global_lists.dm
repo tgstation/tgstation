@@ -16,6 +16,8 @@ var/global/list/chemical_reagents_list				//list of all /datum/reagent datums in
 var/global/list/landmarks_list = list()				//list of all landmarks created
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 
+var/global/list/portals = list()					//for use by portals
+
 //Preferences stuff
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name

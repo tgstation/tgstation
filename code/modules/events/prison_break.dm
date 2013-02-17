@@ -1,6 +1,10 @@
+/datum/event_control/prison_break
+	name = "Prison Break"
+	typepath = /datum/event/prison_break
+	max_occurrences = 2
+
 /datum/event/prison_break
 	announceWhen	= 50
-	oneShot			= 1
 
 	var/releaseWhen = 25
 	var/list/area/prisonAreas = list()
@@ -34,25 +38,27 @@
 	if(prisonAreas && prisonAreas.len > 0)
 		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
 	else
-		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
+		error("Could not initate grey-tide. Unable find prison or brig area.")
 
 
 /datum/event/prison_break/tick()
 	if(activeFor == releaseWhen)
 		if(prisonAreas && prisonAreas.len > 0)
 			for(var/area/A in prisonAreas)
-				for(var/obj/machinery/power/apc/temp_apc in A)
-					temp_apc.overload_lighting()
-
-				for(var/obj/structure/closet/secure_closet/brig/temp_closet in A)
-					temp_closet.locked = 0
-					temp_closet.icon_state = temp_closet.icon_closed
-
-				for(var/obj/machinery/door/airlock/security/temp_airlock in A)
-					temp_airlock.prison_open()
-
-				for(var/obj/machinery/door/airlock/glass_security/temp_glassairlock in A)
-					temp_glassairlock.prison_open()
-
-				for(var/obj/machinery/door_timer/temp_timer in A)
-					temp_timer.releasetime = 1
+				for(var/obj/O in A)
+					if(istype(O,/obj/machinery/power/apc))
+						var/obj/machinery/power/apc/temp = O
+						temp.overload_lighting()
+					else if(istype(O,/obj/structure/closet/secure_closet/brig))
+						var/obj/structure/closet/secure_closet/brig/temp = O
+						temp.locked = 0
+						temp.icon_state = temp.icon_closed
+					else if(istype(O,/obj/machinery/door/airlock/security))
+						var/obj/machinery/door/airlock/security/temp = O
+						temp.prison_open()
+					else if(istype(O,/obj/machinery/door/airlock/glass_security))
+						var/obj/machinery/door/airlock/glass_security/temp = O
+						temp.prison_open()
+					else if(istype(O,/obj/machinery/door_timer))
+						var/obj/machinery/door_timer/temp = O
+						temp.releasetime = 1

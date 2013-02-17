@@ -1,3 +1,9 @@
+/datum/event_control/blob
+	name = "Blob"
+	typepath = /datum/event/blob
+	weight = 5
+	max_occurrences = 1
+
 /datum/event/blob
 	announceWhen	= 12
 	endWhen			= 120
@@ -13,8 +19,7 @@
 /datum/event/blob/start()
 	var/turf/T = pick(blobstart)
 	if(!T)
-		kill()
-		return
+		return kill()
 	Blob = new /obj/effect/blob/core(T, 200)
 	for(var/i = 1; i < rand(3, 6), i++)
 		Blob.process()

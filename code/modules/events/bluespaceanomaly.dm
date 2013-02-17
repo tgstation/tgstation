@@ -1,6 +1,11 @@
+/datum/event_control/bluespace_anomaly
+	name = "Bluespace Anomaly"
+	typepath = /datum/event/bluespace_anomaly
+	weight = 5
+	max_occurrences = 1
+
 /datum/event/bluespace_anomaly
 	announceWhen	= 20
-	oneShot		= 1
 
 	var/area/impact_area
 

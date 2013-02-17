@@ -19,10 +19,7 @@
 	..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	if(w_class > 0)
-		icon_state = "gift[w_class]"
-	else
-		icon_state = "giftcrate[pick(1, 2, 3, 4, 5)]"
+	icon_state = "giftcrate[rand(1,5)]"
 
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)

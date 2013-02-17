@@ -135,7 +135,7 @@ var/prison_shuttle_timeleft = 0
 		if(prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return 0
 		else return 1
 
-
+/*
 	proc/prison_break()
 		switch(prison_break)
 			if (0)
@@ -151,7 +151,7 @@ var/prison_shuttle_timeleft = 0
 				prison_break = 1
 			if(1)
 				prison_break = 0
-
+*/
 
 	proc/post_signal(var/command)
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency(1311)

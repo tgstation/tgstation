@@ -1,3 +1,8 @@
+/datum/event_control/communications_blackout
+	name = "Communications Blackout"
+	typepath = /datum/event/communications_blackout
+	weight = 30
+
 /datum/event/communications_blackout/announce()
 	var/alert = pick(	"Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you*%fj00)`5vc-BZZT", \
 						"Ionospheric anomalies detected. Temporary telecommunication failu*3mga;b4;'1v¬-BZZZT", \

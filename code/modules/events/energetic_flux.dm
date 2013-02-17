@@ -1,6 +1,11 @@
+/datum/event_control/energetic_flux
+	name = "Energetic Flux"
+	typepath = /datum/event/energetic_flux
+	max_occurrences = 2
+	weight = 15
+
 /datum/event/energetic_flux
 	startWhen	= 30
-	oneShot		= 1
 
 	var/area/impact_area
 

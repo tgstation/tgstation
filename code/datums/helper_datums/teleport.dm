@@ -135,7 +135,7 @@
 /datum/teleport/instant/science
 
 	setEffects(datum/effect/effect/system/aeffectin,datum/effect/effect/system/aeffectout)
-		if(!aeffectin || !aeffectout)
+		if(aeffectin==null || aeffectout==null)
 			var/datum/effect/effect/system/spark_spread/aeffect = new
 			aeffect.set_up(5, 1, teleatom)
 			effectin = effectin || aeffect

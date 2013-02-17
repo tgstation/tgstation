@@ -22,18 +22,29 @@
 		return
 	return
 
-/obj/effect/portal/New()
-	spawn(300)
-		del(src)
-		return
+/obj/effect/portal/New(loc, turf/target, creator, lifespan=300)
+	portals += src
+	src.loc = loc
+	src.target = target
+	src.creator = creator
+	if(lifespan > 0)
+		spawn(lifespan)
+			del(src)
 	return
+
+/obj/effect/portal/Del()
+	portals -= src
+	if(istype(creator, /obj/item/weapon/hand_tele))
+		var/obj/item/weapon/hand_tele/O = creator
+		O.active_portals--
+	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
-	if (M.anchored&&istype(M, /obj/mecha))
+	if(M.anchored&&istype(M, /obj/mecha))
 		return
-	if (icon_state == "portal1")
+	if(icon_state == "portal1")
 		return
 	if (!( target ))
 		del(src)

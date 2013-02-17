@@ -1,4 +1,29 @@
-/proc/Christmas_Game_Start()
+/datum/event_control/treevenge
+	name = "Treevenge"
+	holidayID = "Xmas"
+	typepath = /datum/event/treevenge
+	max_occurrences = 1
+	weight = 20
+
+/datum/event/treevenge/start()
+	for(var/obj/structure/flora/tree/pine/xmas in world)
+		var/mob/living/simple_animal/hostile/tree/evil_tree = new /mob/living/simple_animal/hostile/tree(xmas.loc)
+		evil_tree.icon_state = xmas.icon_state
+		evil_tree.icon_living = evil_tree.icon_state
+		evil_tree.icon_dead = evil_tree.icon_state
+		evil_tree.icon_gib = evil_tree.icon_state
+		del(xmas)
+
+//this is an example of a possible round-start event
+/datum/event_control/presents
+	name = "Presents under Trees"
+	holidayID = "Xmas"
+	typepath = /datum/event/presents
+	weight = -1							//forces it to be called, regardless of weight
+	max_occurrences = 1
+	earliest_start = 0
+
+/datum/event/presents/start()
 	for(var/obj/structure/flora/tree/pine/xmas in world)
 		if(xmas.z != 1)	continue
 		for(var/turf/simulated/floor/T in orange(1,xmas))
@@ -7,14 +32,9 @@
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
-/proc/ChristmasEvent()
-	for(var/obj/structure/flora/tree/pine/xmas in world)
-		var/mob/living/simple_animal/hostile/tree/evil_tree = new /mob/living/simple_animal/hostile/tree(xmas.loc)
-		evil_tree.icon_state = xmas.icon_state
-		evil_tree.icon_living = evil_tree.icon_state
-		evil_tree.icon_dead = evil_tree.icon_state
-		evil_tree.icon_gib = evil_tree.icon_state
-		del(xmas)
+/datum/event/presents/announce()
+	command_alert("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
+
 
 /obj/item/weapon/toy/xmas_cracker
 	name = "xmas cracker"
@@ -60,4 +80,3 @@
 	flags_inv = 0
 	flags = FPRINT|TABLEPASS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-

@@ -1,6 +1,10 @@
+/datum/event_control/radiation_storm
+	name = "Radiation Storm"
+	typepath = /datum/event/radiation_storm
+	max_occurrences = 1
+
 /datum/event/radiation_storm
 	announceWhen	= 5
-	oneShot			= 1
 
 
 /datum/event/radiation_storm/announce()
