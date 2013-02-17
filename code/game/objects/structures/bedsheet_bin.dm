@@ -105,7 +105,7 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	var/amount = 20
+	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
 
@@ -123,9 +123,9 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/update_icon()
 	switch(amount)
-		if(0)				icon_state = "linenbin-empty"
-		if(1 to amount / 2)	icon_state = "linenbin-half"
-		else				icon_state = "linenbin-full"
+		if(0)		icon_state = "linenbin-empty"
+		if(1 to 5)	icon_state = "linenbin-half"
+		else		icon_state = "linenbin-full"
 
 
 /obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob)
@@ -135,6 +135,7 @@ LINEN BINS
 		sheets.Add(I)
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
+		update_icon()
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		user.drop_item()
 		I.loc = src
@@ -162,6 +163,7 @@ LINEN BINS
 		B.loc = user.loc
 		user.put_in_hands(B)
 		user << "<span class='notice'>You take [B] out of [src].</span>"
+		update_icon()
 
 		if(hidden)
 			hidden.loc = user.loc
