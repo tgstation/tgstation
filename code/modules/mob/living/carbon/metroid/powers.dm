@@ -179,7 +179,10 @@
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
 			new_slime.a_intent = "hurt"
-			new_slime.key = key
+			if(src.mind)
+				src.mind.transfer_to(new_slime)
+			else
+				new_slime.key = src.key
 			new_slime.universal_speak = universal_speak
 			new_slime << "<B>You are now an adult slime.</B>"
 			del(src)
@@ -208,7 +211,7 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
 				var/newslime
-				if(prob(80))
+				if(prob(70))
 					newslime = primarytype
 				else
 					newslime = slime_mutation[rand(1,4)]
@@ -223,7 +226,10 @@
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "hurt"
 			new_slime.universal_speak = universal_speak
-			new_slime.key = key
+			if(src.mind)
+				src.mind.transfer_to(new_slime)
+			else
+				new_slime.key = src.key
 
 			new_slime << "<B>You are now a slime!</B>"
 			del(src)

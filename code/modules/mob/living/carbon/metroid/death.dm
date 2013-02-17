@@ -8,6 +8,10 @@
 			ghostize()
 			var/mob/living/carbon/slime/M1 = new primarytype(loc)
 			M1.rabid = 1
+			if(src.mind)
+				src.mind.transfer_to(M1)
+			else
+				M1.key = src.key
 			var/mob/living/carbon/slime/M2 = new primarytype(loc)
 			M2.rabid = 1
 			if(src)	del(src)

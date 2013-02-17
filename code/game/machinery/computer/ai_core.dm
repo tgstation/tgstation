@@ -118,6 +118,10 @@
 					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 					return
 
+				if((config) && (!config.allow_ai))
+					user << "\red This MMI does not seem to fit."
+					return
+
 				if(jobban_isbanned(P:brainmob, "AI"))
 					user << "\red This MMI does not seem to fit."
 					return
