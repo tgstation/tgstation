@@ -47,7 +47,7 @@
 	set name = "Adminwho"
 
 	var/msg = "<b>Current Admins:</b>\n"
-	var/num_mods_online = 0
+	var/num_admins_online = 0
 	if(holder)
 		for(var/client/C in admins)
 			if(C.holder.rank != "Moderator")
@@ -66,17 +66,15 @@
 				if(C.is_afk())
 					msg += " (AFK)"
 				msg += "\n"
-			else
-				num_mods_online++
+				num_admins_online++
 	else
 		for(var/client/C in admins)
 			if(C.holder.rank != "Moderator")
 				if(!C.holder.fakekey)
 					msg += "\t[C] is a [C.holder.rank]\n"
-			else
-				num_mods_online++
+					num_admins_online++
 
-	msg += "<b>There are [num_mods_online] moderators online</b>\n"
+	msg += "<b>There are [num_admins_online] administrators online</b>\n"
 	src << msg
 
 /client/verb/modwho()
@@ -84,7 +82,7 @@
 	set name = "Modwho"
 
 	var/msg = "<b>Current Moderators:</b>\n"
-	var/num_admins_online = 0
+	var/num_mods_online = 0
 	if(holder)
 		for(var/client/C in admins)
 			if(C.holder.rank == "Moderator")
@@ -100,14 +98,12 @@
 				if(C.is_afk())
 					msg += " (AFK)"
 				msg += "\n"
-			else
-				num_admins_online++
+				num_mods_online++
 	else
 		for(var/client/C in admins)
 			if(C.holder.rank == "Moderator")
 				msg += "\t[C] is a [C.holder.rank]\n"
-			else
-				num_admins_online++
+				num_mods_online++
 
-	msg += "<b>There are [num_admins_online] admins online</b>\n"
+	msg += "<b>There are [num_mods_online] moderators online</b>\n"
 	src << msg
