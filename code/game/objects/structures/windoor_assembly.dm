@@ -178,6 +178,9 @@ obj/structure/windoor_assembly/Del()
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver))
+				if(!electronics)
+					return
+
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
 
@@ -186,7 +189,7 @@ obj/structure/windoor_assembly/Del()
 					user << "\blue You've removed the airlock electronics!"
 					src.name = "Wired Windoor Assembly"
 					var/obj/item/weapon/airlock_electronics/ae
-					if (!electronics)
+					if (!electronics) //This shouldnt happen, but if it does, lets not crash and runtime.
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )
 					else
 						ae = electronics
@@ -224,6 +227,7 @@ obj/structure/windoor_assembly/Del()
 						windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
 						src.electronics.loc = windoor
+						windoor.close()
 					else
 						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
 						if(src.facing == "l")
@@ -238,7 +242,7 @@ obj/structure/windoor_assembly/Del()
 						windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
 						src.electronics.loc = windoor
-
+						windoor.close()
 
 					del(src)
 
