@@ -337,120 +337,81 @@
 			if(body_part == UPPER_TORSO)
 				return
 
-			if(status & ORGAN_SPLINTED)
-				status &= ~ORGAN_SPLINTED
+			src.status &= ~ORGAN_BROKEN
+			src.status &= ~ORGAN_BLEEDING
+			src.status &= ~ORGAN_SPLINTED
 			if(implant)
 				for(var/implants in implant)
 					del(implants)
-			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
 
 			// If any organs are attached to this, destroy them
 			for(var/datum/organ/external/O in owner.organs)
 				if(O.parent == src)
 					O.droplimb(1)
 
-			var/obj/item/weapon/organ/H
+			var/obj/organ
 			switch(body_part)
-//				if(UPPER_TORSO)
-//					owner.gib()
 				if(LOWER_TORSO)
 					owner << "\red You are now sterile."
 				if(HEAD)
-					H = new /obj/item/weapon/organ/head(owner.loc, owner)
+					organ= new /obj/item/weapon/organ/head(owner.loc, owner)
 					owner.u_equip(owner.glasses)
 					owner.u_equip(owner.head)
 					owner.u_equip(owner.ears)
 					owner.u_equip(owner.wear_mask)
 				if(ARM_RIGHT)
-					H = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "r_arm_l"
+					if(status & ORGAN_ROBOT)
+						organ = new /obj/item/robot_parts/r_arm(owner.loc)
+					else
+						organ= new /obj/item/weapon/organ/r_arm(owner.loc, owner)
 				if(ARM_LEFT)
-					H = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "l_arm_l"
+					if(status & ORGAN_ROBOT)
+						organ= new /obj/item/robot_parts/l_arm(owner.loc)
+					else
+						organ= new /obj/item/weapon/organ/l_arm(owner.loc, owner)
 				if(LEG_RIGHT)
-					H = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "r_leg_l"
+					if(status & ORGAN_ROBOT)
+						organ = new /obj/item/robot_parts/l_leg(owner.loc)
+					else
+						organ= new /obj/item/weapon/organ/r_leg(owner.loc, owner)
 				if(LEG_LEFT)
-					H = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "l_leg_l"
+					if(status & ORGAN_ROBOT)
+						organ = new /obj/item/robot_parts/r_leg(owner.loc)
+					else
+						organ= new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 				if(HAND_RIGHT)
-					H = new /obj/item/weapon/organ/r_hand(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "r_hand_l"
+					organ= new /obj/item/weapon/organ/r_hand(owner.loc, owner)
 					owner.u_equip(owner.gloves)
 				if(HAND_LEFT)
-					H = new /obj/item/weapon/organ/l_hand(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "l_hand_l"
+					organ= new /obj/item/weapon/organ/l_hand(owner.loc, owner)
 					owner.u_equip(owner.gloves)
 				if(FOOT_RIGHT)
-					H = new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "r_foot_l"
+					organ= new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
 					owner.u_equip(owner.shoes)
 				if(FOOT_LEFT)
-					H = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
-					if(ismonkey(owner))
-						H.icon_state = "l_foot_l"
+					organ = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
 					owner.u_equip(owner.shoes)
-			if(H)
-				if(ismonkey(owner))
-					H.icon = 'monkey.dmi'
-				else if(ishuman(owner) && owner.dna)
-					var/icon/I
-					switch(owner.dna.mutantrace)
-						if("tajaran")
-							I = new('icons/mob/human_races/r_tajaran.dmi')
-						if("lizard")
-							I = new('icons/mob/human_races/r_lizard.dmi')
-						if("skrell")
-							I = new('icons/mob/human_races/r_skrell.dmi')
-						else
-							I = new('icons/mob/human_races/r_human.dmi')
-					if(I)
-						H.icon = I.MakeLying()
+			if(organ)
+				destspawn = 1
+				if(status & ORGAN_ROBOT && !no_explode)
+					owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
+					"\red <b>Your [display_name] explodes!</b>",\
+					"You hear an explosion followed by a scream!")
+					explosion(get_turf(owner),-1,-1,2,3)
+					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+					spark_system.set_up(5, 0, owner)
+					spark_system.attach(owner)
+					spark_system.start()
+					spawn(10)
+						del(spark_system)
 				else
-					H.icon_state = initial(H.icon_state)+"_l"
-
-			if(status & ORGAN_ROBOT)
-				del H
-				switch(body_part)
-					if(LEG_RIGHT)
-						H = new /obj/item/robot_parts/r_leg(owner.loc)
-					if(LEG_LEFT)
-						H = new /obj/item/robot_parts/l_leg(owner.loc)
-					if(ARM_RIGHT)
-						H = new /obj/item/robot_parts/r_arm(owner.loc)
-					if(ARM_LEFT)
-						H = new /obj/item/robot_parts/l_arm(owner.loc)
-
-			if(H)
+					owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
+					"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
+					"You hear a terrible sound of ripping tendons and flesh.")
 				var/lol = pick(cardinal)
-				step(H,lol)
-
-			destspawn = 1
-			if(status & ORGAN_ROBOT && !no_explode)
-				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
-				"\red <b>Your [display_name] explodes!</b>",\
-				"You hear an explosion followed by a scream!")
-				explosion(get_turf(owner),-1,-1,2,3)
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, owner)
-				spark_system.attach(owner)
-				spark_system.start()
-				spawn(10)
-					del(spark_system)
-			else
-				owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
-				"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
-				"You hear a terrible sound of ripping tendons and flesh.")
-
-			// force the icon to rebuild
-			owner.regenerate_icons()
+				step(organ,lol)
+				// force the icon to rebuild
+				owner.regenerate_icons()
 
 	proc/createwound(var/type = CUT, var/damage)
 		if(hasorgans(owner))
@@ -673,18 +634,6 @@
 obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 
-/*
-//Damage will not exceed max_damage using this proc
-//Cannot apply negative damage
-/datum/organ/external/proc/take_damage(brute, burn)
-	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
-	brute	= max(brute,0)
-	burn	= max(burn,0)
-
-	var/can_inflict = max_damage - (brute_dam + burn_dam)
-	if(!can_inflict)	return 0
-*/
-
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
 	if(!istype(H))
@@ -694,14 +643,59 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			blood_DNA = list()
 		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
+	//Forming icon for the limb
+
+	//Setting base icon for this mob's race
+	if(ishuman(H) && owner.dna)
+		var/icon/base
+		switch(H.dna.mutantrace)
+			if("tajaran")
+				base = new('icons/mob/human_races/r_tajaran.dmi')
+			if("lizard")
+				base = new('icons/mob/human_races/r_lizard.dmi')
+			if("skrell")
+				base = new('icons/mob/human_races/r_skrell.dmi')
+			else
+				base = new('icons/mob/human_races/r_human.dmi')
+		if(I)
+			icon = I.MakeLying()
+	else
+		icon_state = initial(icon_state)+"_l"
+
 	var/icon/I = new /icon(icon, icon_state)
 
+	//Changing limb's skin tone to match owner
 	if (H.s_tone >= 0)
 		I.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
 	else
 		I.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
 	icon = I
 
+
+obj/item/weapon/organ/l_arm
+	name = "left arm"
+	icon_state = "l_arm"
+obj/item/weapon/organ/l_foot
+	name = "left foot"
+	icon_state = "l_foot"
+obj/item/weapon/organ/l_hand
+	name = "left hand"
+	icon_state = "l_hand"
+obj/item/weapon/organ/l_leg
+	name = "left leg"
+	icon_state = "l_leg"
+obj/item/weapon/organ/r_arm
+	name = "right arm"
+	icon_state = "r_arm"
+obj/item/weapon/organ/r_foot
+	name = "right foot"
+	icon_state = "r_foot"
+obj/item/weapon/organ/r_hand
+	name = "right hand"
+	icon_state = "r_hand"
+obj/item/weapon/organ/r_leg
+	name = "right leg"
+	icon_state = "r_leg"
 obj/item/weapon/organ/head
 	name = "head"
 	icon_state = "head_m"
@@ -783,28 +777,3 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				..()
 	else
 		..()
-
-obj/item/weapon/organ/l_arm
-	name = "left arm"
-	icon_state = "l_arm"
-obj/item/weapon/organ/l_foot
-	name = "left foot"
-	icon_state = "l_foot"
-obj/item/weapon/organ/l_hand
-	name = "left hand"
-	icon_state = "l_hand"
-obj/item/weapon/organ/l_leg
-	name = "left leg"
-	icon_state = "l_leg"
-obj/item/weapon/organ/r_arm
-	name = "right arm"
-	icon_state = "r_arm"
-obj/item/weapon/organ/r_foot
-	name = "right foot"
-	icon_state = "r_foot"
-obj/item/weapon/organ/r_hand
-	name = "right hand"
-	icon_state = "r_hand"
-obj/item/weapon/organ/r_leg
-	name = "right leg"
-	icon_state = "r_leg"
