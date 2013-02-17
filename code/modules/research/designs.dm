@@ -587,11 +587,11 @@ datum/design/paicard
 	materials = list("$glass" = 500, "$metal" = 500)
 	build_path = "/obj/item/device/paicard"
 
-datum/design/paicard
+datum/design/posibrain
 	name = "Positronic Brain"
 	desc = "Allows for the construction of a positronic brain"
 	id = "posibrain"
-	req_tech = list("engineering" = 4, "materials" = 4, "bluespace" = 2, "programming" = 6)
+	req_tech = list("engineering" = 4, "materials" = 6, "bluespace" = 2, "programming" = 4)
 
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
