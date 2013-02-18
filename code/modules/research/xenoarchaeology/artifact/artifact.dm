@@ -10,7 +10,7 @@
 /datum/artifact_find/New()
 	artifact_detect_range = rand(5,300)
 
-	artifact_id = "[pick("kappa","sigma","antaeres","beta","omicron","iota","upsilon","omega","gamma","delta","tau","alpha")]-[rand(100,999)]"
+	artifact_id = "[pick("kappa","sigma","antaeres","beta","omicron","iota","epsilon","omega","gamma","delta","tau","alpha")]-[rand(100,999)]"
 
 	artifact_find_type = pick(\
 	5;/obj/machinery/power/supermatter,\
@@ -23,7 +23,7 @@
 	100;/obj/mecha/working/hoverpod,\
 	100;/obj/machinery/replicator,\
 	150;/obj/structure/crystal,\
-	500;/obj/machinery/artifact)
+	1000;/obj/machinery/artifact)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Boulders - sometimes turn up after excavating turf - excavate further to try and find large xenoarch finds

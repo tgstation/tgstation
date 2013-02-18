@@ -25,8 +25,9 @@ obj/machinery/anomaly/fourier_transform/ScanResults()
 		var/accuracy = GetResultSpecifity(scanned_sample, carrier)
 		var/distance = scanned_sample.artifact_distance
 		if(distance > 0)
-			if(accuracy > 0.6)
-				distance += (2 * rand() - 1) * distance * 0.01
+			if(prob(accuracy))
+				distance += (2 * rand() - 1) * distance * 0.05
+				accuracy = 0.95 + 0.05 * (2 * rand() - 1)
 			else
 				var/offset = 1 - accuracy
 				distance += (2 * rand() - 1) * distance * offset

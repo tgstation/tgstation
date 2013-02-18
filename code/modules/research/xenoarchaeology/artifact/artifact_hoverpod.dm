@@ -1,9 +1,9 @@
 
 /obj/mecha/working/hoverpod
 	name = "hover pod"
-	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "engineering_pod"
 	desc = "Stubby and round, it has a human sized access hatch on the top."
+	wreckage = /obj/effect/decal/mecha_wreckage/hoverpod
 
 //duplicate of parent proc, but without space drifting
 /obj/mecha/working/hoverpod/dyndomove(direction)
@@ -50,3 +50,18 @@
 	if(result)
 		playsound(src,'sound/machines/hiss.ogg',40,1)
 	return result
+
+/obj/effect/decal/mecha_wreckage/hoverpod
+	name = "Hover pod wreckage"
+	icon_state = "engineering_pod-broken"
+
+	/*New()
+		..()
+		var/list/parts = list(
+
+		for(var/i=0;i<2;i++)
+			if(!isemptylist(parts) && prob(40))
+				var/part = pick(parts)
+				welder_salvage += part
+				parts -= part
+		return*/

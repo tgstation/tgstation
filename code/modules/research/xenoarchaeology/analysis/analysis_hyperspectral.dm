@@ -2,8 +2,8 @@
 obj/machinery/anomaly/hyperspectral
 	name = "Hyperspectral Imager"
 	desc = "A specialised, complex analysis machine."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "rdcomp"
+	//icon = 'icons/obj/computer.dmi'
+	//icon_state = "rdcomp"
 
 obj/machinery/anomaly/hyperspectral/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
@@ -32,7 +32,13 @@ obj/machinery/anomaly/hyperspectral/ScanResults()
 			results += "<img src=\"http://i.imgur.com/1qCae.jpg\"></img><br>"
 		else
 			results += "<img src=\"http://i.imgur.com/9T9nc.jpg\"></img><br>"
-		if(scanned_sample.artifact_id && prob(specifity * 100))
-			results += "Anomalous exotic energy signature detected: [scanned_sample.artifact_id]."
+
+		results += "<br>"
+		if(scanned_sample.artifact_id)
+			results += "Detected energy signatures [100 * (1 - specifity)]% consistent with standard background readings.<br>"
+			if(prob( (specifity + 0.5 * (1 - specifity)) * 100))
+				results += "Anomalous exotic energy signature isolated: <font color='red'><b>[scanned_sample.artifact_id].</b></font>"
+		else
+			results += "Detected energy signatures [95 + 5 * (2 * rand() - 1) * (1 - specifity)]% consistent with standard background readings."
 
 	return results

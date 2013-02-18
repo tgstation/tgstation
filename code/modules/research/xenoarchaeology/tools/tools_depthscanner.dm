@@ -27,7 +27,7 @@
 	user.visible_message("\blue [user] scans [A], the air around them humming gently.")
 	if(istype(A,/turf/simulated/mineral))
 		var/turf/simulated/mineral/M = A
-		if(M.excavation_minerals.len || M.finds.len)
+		if(M.excavation_minerals.len || M.finds.len || M.artifact_find)
 
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
@@ -79,8 +79,8 @@
 	if(current)
 		dat += "Time: [current.time]<br>"
 		dat += "Coords: [current.coords]<br>"
-		dat += "Anomaly depth: [current.depth]<br>"
-		dat += "Clearance: [current.clearance]<br>"
+		dat += "Anomaly depth: [current.depth] cm<br>"
+		dat += "Clearance above anomaly depth: [current.clearance] cm<br>"
 		dat += "Dissonance spread: [current.dissonance_spread]<br>"
 		dat += "<A href='?src=\ref[src];clear=[current.record_index]'>clear entry</a><br>"
 	else

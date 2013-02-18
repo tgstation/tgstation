@@ -18,7 +18,7 @@
 #define TRIGGER_CO2 11
 #define TRIGGER_NITRO 12
 #define MAX_TRIGGER 12
-
+/*
 //sleeping gas appears to be bugged, currently
 var/list/valid_primary_effect_types = list(\
 	/datum/artifact_effect/cellcharge,\
@@ -55,6 +55,7 @@ var/list/valid_secondary_effect_types = list(\
 	/datum/artifact_effect/sleepy,\
 	/datum/artifact_effect/stun,\
 	/datum/artifact_effect/teleport)
+	*/
 
 /obj/machinery/artifact
 	name = "alien artifact"
@@ -71,12 +72,12 @@ var/list/valid_secondary_effect_types = list(\
 	..()
 
 	//setup primary effect - these are the main ones (mixed)
-	var/effecttype = pick(valid_primary_effect_types)
+	var/effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
 	my_effect = new effecttype(src)
 
 	//75% chance to have a secondary stealthy (and mostly bad) effect
 	if(prob(75))
-		effecttype = pick(valid_secondary_effect_types)
+		effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
 		secondary_effect = new effecttype(src)
 		if(prob(75))
 			secondary_effect.ToggleActivate(0)

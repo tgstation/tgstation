@@ -18,7 +18,6 @@
 	var/mineralAmt = 0
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
-	var/artifactChance = 0.3	//percent chance to spawn a xenoarchaelogical artifact
 	var/last_act = 0
 
 	var/datum/geosample/geological_data
@@ -128,7 +127,6 @@
 			//dont create artifact machinery in animal or plant digsites, or if we already have one
 			if(!artifact_find && digsite != 1 && digsite != 2 && prob(ARTIFACT_SPAWN_CHANCE))
 				artifact_find = new()
-				//world << "<b>[artifact_find.artifact_find_type]</b> [src.x], [src.y], [src.z]"
 				artifact_spawning_turfs.Add(src)
 
 		if(!src.geological_data)
@@ -370,25 +368,30 @@ commented out in r5061, I left it because of the shroom thingies
 					//just pull the surrounding rock out
 					excavate_find(0, F)
 
-			if(src.excavation_level + P.excavation_amount >= 100)
+			if( src.excavation_level + P.excavation_amount >= 100 || (!finds.len && !excavation_minerals.len) )
 				//if players have been excavating this turf, have a chance to leave some rocky debris behind
 				var/boulder_prob = 0
+				var/obj/structure/boulder/B
+
 				if(src.excavation_level > 15)
-					boulder_prob = 50
+					boulder_prob = 10
 				if(artifact_find)
-					boulder_prob += 10
-					if(src.excavation_level == 100)
+					boulder_prob += 25
+					if(src.excavation_level >= 100)
 						boulder_prob += 40
 					else if(src.excavation_level > 95)
 						boulder_prob += 25
 					else if(src.excavation_level > 90)
 						boulder_prob += 10
 				if(prob(boulder_prob))
-					var/obj/structure/boulder/B = new(src)
+					B = new(src)
 					if(artifact_find)
 						B.artifact_find = artifact_find
+				else if(src.excavation_level + P.excavation_amount >= 100)
+					spawn(0)
+						artifact_debris()
 
-				gets_drilled()
+				gets_drilled(B ? 0 : 1)
 				return
 			else
 				src.excavation_level += P.excavation_amount
@@ -466,7 +469,7 @@ commented out in r5061, I left it because of the shroom thingies
 		O.geological_data = src.geological_data
 	return O
 
-/turf/simulated/mineral/proc/gets_drilled()
+/turf/simulated/mineral/proc/gets_drilled(var/artifact_fail = 0)
 	//var/destroyed = 0 //used for breaking strange rocks
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 
@@ -485,10 +488,22 @@ commented out in r5061, I left it because of the shroom thingies
 	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
 	N.fullUpdateMineralOverlays()
 
-	/*if(src.contents)
-		[src.contents ? pick(" There is a crunching noise."," [W] hits something."," Part of the rock face crumbles away.","Something breaks under [W].") : ""]"
-		var/atom/A = pick(src.contents)
-		del(A)*/
+	//destroyed artifacts have weird, unpleasant effects
+	if(artifact_find && artifact_fail)
+		var/pain = 0
+		if(prob(50))
+			pain = 1
+		for(var/mob/living/M in range(src, 200))
+			M << "<font color='red'><b>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fadaing away!</b></font>"
+			if(pain)
+				flick("pain",M.pain)
+				if(prob(50))
+					M.adjustBruteLoss(5)
+			else
+				flick("flash",M.flash)
+				if(prob(50))
+					M.Stun(5)
+			M.apply_effect(25, IRRADIATE)
 
 	/*if(destroyed)  //Display message about being a terrible miner
 		usr << "\red You destroy some of the rocks!"*/
@@ -522,6 +537,69 @@ commented out in r5061, I left it because of the shroom thingies
 				del(X)
 
 	src.finds.Remove(F)
+
+/turf/simulated/mineral/proc/artifact_debris()
+	//cael's patented random limited drop componentized loot system!
+	var/materials = 0
+	var/list/viable_materials = list(1,2,4,8,16,32,64,128,256)
+
+	var/num_materials = rand(1,5)
+	for(var/i=0, i<num_materials, i++)
+		var/chosen = pick(viable_materials)
+		materials |= chosen
+		viable_materials.Remove(chosen)
+
+	if(materials & 1)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/rods/R = new(src)
+			R.amount = rand(5,25)
+
+	if(materials & 2)
+		var/quantity = pick(0, 0, 1)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/tile/R = new(src)
+			R.amount = rand(1,5)
+
+	if(materials & 4)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/sheet/metal/R = new(src)
+			R.amount = rand(5,25)
+
+	if(materials & 8)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/sheet/plasteel/R = new(src)
+			R.amount = rand(5,25)
+
+	if(materials & 16)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			new /obj/item/weapon/shard(src)
+
+	if(materials & 32)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			new /obj/item/weapon/shard/plasma(src)
+
+	if(materials & 64)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/sheet/mineral/uranium/R = new(src)
+			R.amount = rand(5,25)
+
+	if(materials & 128)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/sheet/mineral/mythril/R = new(src)
+			R.amount = rand(5,25)
+
+	if(materials & 256)
+		var/quantity = rand(0,3)
+		for(var/i=0, i<quantity, i++)
+			var/obj/item/stack/sheet/mineral/adamantine/R = new(src)
+			R.amount = rand(5,25)
 
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
