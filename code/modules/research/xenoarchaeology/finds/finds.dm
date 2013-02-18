@@ -382,7 +382,14 @@
 				apply_image_decorations = 0
 		if(29)
 			//fossil bone/skull
-			new_item = new /obj/item/weapon/fossil/base(src.loc)
+			//new_item = new /obj/item/weapon/fossil/base(src.loc)
+
+			//the replacement item propogation isn't working, and it's messy code anyway so just do it here
+			var/list/candidates = list("/obj/item/weapon/fossil/bone"=9,"/obj/item/weapon/fossil/skull"=3,
+			"/obj/item/weapon/fossil/skull/horned"=2)
+			var/spawn_type = pickweight(candidates)
+			new_item = new spawn_type(src.loc)
+
 			apply_prefix = 0
 			additional_desc = "A fossilised part of an alien, long dead."
 			apply_image_decorations = 0
