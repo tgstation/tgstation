@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
@@ -373,7 +371,7 @@ datum/objective/steal
 						if(P.blueprints)	//if the blueprints are in frame
 							return 1
 
-			if("a sample of slime extract")
+			if("an unused sample of slime extract")
 				for(var/obj/item/slime_extract/E in all_items)
 					if(E.Uses > 0)
 						return 1
