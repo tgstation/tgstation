@@ -26,8 +26,6 @@
 	else
 		user << "\red You can't put the [W] onto the [src]."
 
-
-
 /obj/machinery/bunsen_burner/attack_hand(mob/user as mob)
 	if(held_container)
 		underlays = null
@@ -48,7 +46,7 @@
 			try_heating()
 
 /obj/machinery/bunsen_burner/verb/toggle()
-	set src in oview(1)
+	set src in view(1)
 	set name = "Toggle bunsen burner"
 	set category = "IC"
 

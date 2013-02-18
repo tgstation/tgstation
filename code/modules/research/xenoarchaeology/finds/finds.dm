@@ -22,6 +22,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Strange rocks
 
+//have all strange rocks be cleared away using welders for now
 /obj/item/weapon/ore/strangerock
 	name = "Strange rock"
 	desc = "Seems to have some unusal strata evident throughout it."
@@ -34,7 +35,7 @@
 /obj/item/weapon/ore/strangerock/New(loc, var/inside_item_type = 0)
 	..(loc)
 
-	method = rand(0,2)
+	//method = rand(0,2)
 	if(inside_item_type)
 		inside = new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
 		if(!inside)
@@ -275,7 +276,7 @@
 		if(19)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/claymore(src.loc)
-			name = new_item.name
+			item_type = new_item.name
 		if(20)
 			//arcane clothing
 			apply_prefix = 0
@@ -312,11 +313,12 @@
 
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
+			item_type = new_item.name
 			apply_material_decorations = 0
 		if(25)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/katana(src.loc)
-			name = new_item.name
+			item_type = new_item.name
 		if(26)
 			//energy gun
 			var/spawn_type = pick(\
@@ -341,7 +343,7 @@
 			else
 				new_gun.power_supply.charge = 0
 
-			name = "gun"
+			item_type = "gun"
 		if(27)
 			//revolver
 			var/obj/item/weapon/gun/projectile/new_gun = new /obj/item/weapon/gun/projectile(src.loc)
@@ -373,7 +375,7 @@
 						new_gun.loaded.Remove(I)
 						I.loc = null
 
-			name = "gun"
+			item_type = "gun"
 		if(28)
 			//completely unknown alien device
 			if(prob(50))
@@ -405,7 +407,7 @@
 		if(32)
 			//humanoid remains
 			apply_prefix = 0
-			name = "humanoid [pick("remains","skeleton")]"
+			item_type = "humanoid [pick("remains","skeleton")]"
 			icon = 'blood.dmi'
 			icon_state = "remains"
 			additional_desc = pick("They appear almost human.",\
@@ -420,7 +422,7 @@
 		if(33)
 			//robot remains
 			apply_prefix = 0
-			name = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
+			item_type = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
 			icon = 'blood.dmi'
 			icon_state = "remainsrobot"
 			additional_desc = pick("Almost mistakeable for the remains of a modern cyborg.",\
@@ -435,7 +437,7 @@
 		if(34)
 			//xenos remains
 			apply_prefix = 0
-			name = "alien [pick("remains","skeleton")]"
+			item_type = "alien [pick("remains","skeleton")]"
 			icon = 'blood.dmi'
 			icon_state = "remainsxeno"
 			additional_desc = pick("It looks vaguely reptilian, but with more teeth.",\

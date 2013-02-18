@@ -23,13 +23,14 @@
 	if(!owned_scanner)
 		owned_scanner = locate(/obj/machinery/anomaly/scanner) in orange(1)
 
+	//for analysis debugging
 	var/obj/item/weapon/reagent_containers/glass/solution_tray/S = new(src.loc)
 	var/turf/simulated/mineral/diamond/D
 	for(var/turf/simulated/mineral/diamond/M in world)
 		D = M
 		break
 	S.reagents.add_reagent("analysis_sample", 1, D.geological_data)
-	S.reagents.add_reagent("calcium", 1, D.geological_data)
+	S.reagents.add_reagent("chlorine", 1, null)
 
 /obj/machinery/anomaly/process()
 	//not sure if everything needs to heat up, or just the GLPC
@@ -48,15 +49,15 @@
 				scan_process = 0
 
 		//show we're busy
-		if(prob(10))
+		if(prob(5))
 			src.visible_message("\blue \icon[src] [pick("whirrs","chuffs","clicks")][pick(" quietly"," softly"," sadly"," excitedly"," energetically"," angrily"," plaintively")].", 2)
 
-	if(temperature > environmental_temp)
+	else if(temperature > environmental_temp)
 		//cool down to match the air
 		temperature -= heat_accumulation_rate + heat_accumulation_rate * rand(-5,5) / 10
 		if(temperature < environmental_temp)
 			temperature = environmental_temp
-		if(prob(10))
+		if(prob(5))
 			src.visible_message("\blue \icon[src] hisses softly.", 2)
 
 	else if(temperature < environmental_temp)
@@ -65,7 +66,7 @@
 		if(temperature > environmental_temp)
 			temperature = environmental_temp
 		else
-			if(prob(10))
+			if(prob(5))
 				src.visible_message("\blue \icon[src] plinks quietly.", 2)
 
 	//warm up the lab slightly
@@ -167,7 +168,7 @@ obj/machinery/anomaly/proc/GetResultSpecifity(var/datum/geosample/scanned_sample
 	if(scanned_sample && carrier_name)
 
 		if(scanned_sample.find_presence.Find(carrier_name))
-			specifity = 0.7 * (scanned_sample.find_presence[carrier_name] / scanned_sample.total_spread) + 0.3
+			specifity = 0.75 * (scanned_sample.find_presence[carrier_name] / scanned_sample.total_spread) + 0.25
 		else
 			specifity = rand(0, 0.5)
 
