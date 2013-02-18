@@ -278,7 +278,7 @@ datum/objective/steal
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
-		"a sample of slime extract" = /obj/item/slime_extract,
+		"an unused sample of slime extract" = /obj/item/slime_extract,
 		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
 		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
 		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
@@ -365,8 +365,17 @@ datum/objective/steal
 							return 1
 
 			if("the station blueprints")
-				for(var/obj/item/weapon/photo/P in all_items)
-					if(P.blueprints)	//if it has the blueprints in it
+				for(var/obj/item/I in all_items)	//the actual blueprints are good too!
+					if(istype(I, /obj/item/blueprints))
+						return 1
+					if(istype(I, /obj/item/weapon/photo))
+						var/obj/item/weapon/photo/P = I
+						if(P.blueprints)	//if the blueprints are in frame
+							return 1
+
+			if("a sample of slime extract")
+				for(var/obj/item/slime_extract/E in all_items)
+					if(E.Uses > 0)
 						return 1
 
 			else
