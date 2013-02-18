@@ -313,6 +313,16 @@
 	deactivate()
 	..()
 
+/obj/machinery/suspension_gen/verb/toggle()
+	set src in view(1)
+	set name = "Rotate suspension gen (clockwise)"
+	set category = "IC"
+
+	if(anchored)
+		usr << "\red You cannot rotate [src], it has been firmly fixed to the floor."
+	else
+		dir = turn(dir, 90)
+
 /obj/effect/suspension_field
 	name = "energy field"
 	icon = 'icons/effects/effects.dmi'
