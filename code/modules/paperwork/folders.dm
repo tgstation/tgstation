@@ -22,25 +22,26 @@
 	desc = "A white folder."
 	icon_state = "folder_white"
 
+
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()
 	if(contents.len)
 		overlays += "folder_paper"
-	return
 
-/obj/item/weapon/folder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+/obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
 		user.drop_item()
 		W.loc = src
-		user << "<span class='notice'>You put the [W] into \the [src].</span>"
+		user << "<span class='notice'>You put [W] into [src].</span>"
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text), 1, MAX_NAME_LEN)
 		if((loc == usr && usr.stat == 0))
-			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
-	return
+			name = "folder[(n_name ? "- '[n_name]'" : null)]"
 
-/obj/item/weapon/folder/attack_self(mob/user as mob)
+
+/obj/item/weapon/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/weapon/paper/P in src)
@@ -50,11 +51,11 @@
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
-	return
+
 
 /obj/item/weapon/folder/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(usr.stat || usr.restrained())
 		return
 
 	if(usr.contents.Find(src))
@@ -73,4 +74,3 @@
 		//Update everything
 		attack_self(usr)
 		update_icon()
-	return

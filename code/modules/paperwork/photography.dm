@@ -6,9 +6,9 @@
  *		Photo Albums
  */
 
-/*******
-* film *
-*******/
+/*
+ * Film
+ */
 /obj/item/device/camera_film
 	name = "film cartridge"
 	icon = 'icons/obj/items.dmi'
@@ -18,9 +18,9 @@
 	w_class = 1.0
 
 
-/********
-* photo *
-********/
+/*
+ * Photo
+ */
 /obj/item/weapon/photo
 	name = "photo"
 	icon = 'icons/obj/items.dmi'
@@ -31,10 +31,12 @@
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
 
-/obj/item/weapon/photo/attack_self(mob/user as mob)
+
+/obj/item/weapon/photo/attack_self(mob/user)
 	examine()
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P as obj, mob/user as mob)
+
+/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
@@ -42,17 +44,19 @@
 			scribble = txt
 	..()
 
+
 /obj/item/weapon/photo/examine()
 	set src in oview(1)
-	if(is_blind(usr))
-		return
+	if(is_blind(usr))	return
+
 	if(in_range(usr, src))
 		show(usr)
 		usr << desc
 	else
 		usr << "<span class='notice'>It is too far away.</span>"
 
-/obj/item/weapon/photo/proc/show(mob/user as mob)
+
+/obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden'>" \
@@ -60,7 +64,7 @@
 		+ "[scribble ? "<div> Written on the back:<br><i>[scribble]</i>" : ]"\
 		+ "</body></html>", "window=book;size=200x[scribble ? 400 : 200]")
 	onclose(user, "[name]")
-	return
+
 
 /obj/item/weapon/photo/verb/rename()
 	set name = "Rename photo"
@@ -69,15 +73,14 @@
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == 0))
+	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0)
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
-	return
 
 
-/**************
-* photo album *
-**************/
+/*
+ * Photo album
+ */
 /obj/item/weapon/storage/photo_album
 	name = "photo album"
 	icon = 'icons/obj/items.dmi'
@@ -85,31 +88,10 @@
 	item_state = "briefcase"
 	can_hold = list("/obj/item/weapon/photo",)
 
-/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
-	var/mob/M = usr
-	if(!istype(over_object, /obj/screen))
-		return ..()
 
-	playsound(loc, "rustle", 50, 1, -5)
-	if(!M.restrained() && M.stat == CONSCIOUS)
-		switch(over_object.name)
-			if("r_hand")
-				M.u_equip(src)
-				M.put_in_r_hand(src)
-			if("l_hand")
-				M.u_equip(src)
-				M.put_in_l_hand(src)
-		add_fingerprint(usr)
-		return
-	if(over_object == M && in_range(src, M) || M.contents.Find(src))
-		if(M.s_active)
-			M.s_active.close(usr)
-		show_to(M)
-
-
-/*********
-* camera *
-*********/
+/*
+ * Camera
+ */
 /obj/item/device/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
@@ -126,11 +108,11 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 
-/obj/item/device/camera/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
@@ -143,7 +125,7 @@
 	..()
 
 
-/obj/item/device/camera/proc/get_icon(turf/the_turf as turf)
+/obj/item/device/camera/proc/get_icon(turf/the_turf)
 	//Bigger icon base to capture those icons that were shifted to the next tile
 	//i.e. pretty much all wall-mounted machinery
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
@@ -183,7 +165,7 @@
 	return res
 
 
-/obj/item/device/camera/proc/get_mobs(turf/the_turf as turf)
+/obj/item/device/camera/proc/get_mobs(turf/the_turf)
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
@@ -203,7 +185,7 @@
 	return mob_detail
 
 
-/obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc)) return
 
 	var/x_c = target.x - 1

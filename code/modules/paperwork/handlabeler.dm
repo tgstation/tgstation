@@ -5,9 +5,10 @@
 	item_state = "flight"
 	var/label = null
 	var/labels_left = 30
-	var/mode = 0	//off or on.
+	var/mode = 0
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob)
+
+/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user)
 	if(!mode)	//if it's off, give up.
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
@@ -33,11 +34,12 @@
 						 "<span class='notice'>You label [A] as [label].</span>")
 	A.name = "[A.name] ([label])"
 
-/obj/item/weapon/hand_labeler/attack_self(mob/user as mob)
+
+/obj/item/weapon/hand_labeler/attack_self(mob/user)
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		user << "<span class='notice'>You turn on \the [src].</span>"
+		user << "<span class='notice'>You turn on [src].</span>"
 		//Now let them chose the text.
 		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
@@ -46,4 +48,4 @@
 		label = str
 		user << "<span class='notice'>You set the text to '[str]'.</span>"
 	else
-		user << "<span class='notice'>You turn off \the [src].</span>"
+		user << "<span class='notice'>You turn off [src].</span>"

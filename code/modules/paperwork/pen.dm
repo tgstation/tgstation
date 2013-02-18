@@ -1,5 +1,5 @@
-/* Pens!
- * Contains:
+/*	Pens!
+ *	Contains:
  *		Pens
  *		Sleepy Pens
  *		Parapens
@@ -22,8 +22,8 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
 	pressure_resistance = 2
+	var/colour = "black"	//what colour the ink is!
 
 
 /obj/item/weapon/pen/blue
@@ -42,16 +42,16 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/pen/attack(mob/M, mob/user)
 	if(!ismob(M))
 		return
+
 	user << "<span class='warning'>You stab [M] with the pen.</span>"
 	M << "\red You feel a tiny prick!"
+
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
-
 	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey])</font>")
-	return
 
 
 /*
@@ -65,21 +65,20 @@
 
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
+	var/datum/reagents/R = new /datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
+	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin	//30 Chloral seems to be fatal, reducing it to 22.
 	..()
-	return
 
 
-/obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
-	if(!(istype(M,/mob)))
-		return
+/obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
+	if(!istype(M))	return
+
 	..()
 	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
-	return
+		if(M.reagents)
+			reagents.trans_to(M, 30) //used to be 150
 
 
 /*
@@ -91,13 +90,13 @@
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/M as mob, mob/user as mob)
-	if(!(istype(M,/mob)))
-		return
+/obj/item/weapon/pen/paralysis/attack(mob/M, mob/user)
+	if(!istype(M))	return
+
 	..()
 	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 50)
-	return
+		if(M.reagents)
+			reagents.trans_to(M, 50)
 
 
 /obj/item/weapon/pen/paralysis/New()
@@ -108,4 +107,3 @@
 	R.add_reagent("impedrezene", 25)
 	R.add_reagent("cryptobiolin", 15)
 	..()
-	return

@@ -12,24 +12,34 @@
 	var/list/papers = new/list()	//List of papers put in the bin for reference.
 
 
-/obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
-	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
-			if( !usr.get_active_hand() )		//if active hand is empty
-				attack_hand(usr, 1, 1)
+/obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
+	var/mob/M = usr
+	if(M.restrained() || M.stat)
+		return
 
-	return
+	if(over_object == M)
+		M.put_in_hands(src)
+
+	else if(istype(over_object, /obj/screen))
+		switch(over_object.name)
+			if("r_hand")
+				M.u_equip(src)
+				M.put_in_r_hand(src)
+			if("l_hand")
+				M.u_equip(src)
+				M.put_in_l_hand(src)
+
+	add_fingerprint(M)
 
 
-/obj/item/weapon/paper_bin/attack_paw(mob/user as mob)
+/obj/item/weapon/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user as mob)
+/obj/item/weapon/paper_bin/attack_hand(mob/user)
 	if(amount >= 1)
 		amount--
-		if(amount==0)
-			update_icon()
+		update_icon()
 
 		var/obj/item/weapon/paper/P
 		if(papers.len > 0)	//If there's any custom paper on the stack, use that instead of creating a new paper.
@@ -50,18 +60,18 @@
 		user << "<span class='notice'>[src] is empty!</span>"
 
 	add_fingerprint(user)
-	return
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i as obj, mob/user as mob)
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
 	if(!istype(i))
-		return
+		return ..()
 
 	user.drop_item()
 	i.loc = src
 	user << "<span class='notice'>You put [i] in [src].</span>"
 	papers.Add(i)
 	amount++
+	update_icon()
 
 
 /obj/item/weapon/paper_bin/examine()
@@ -71,7 +81,6 @@
 		usr << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
 	else
 		usr << "<span class='notice'>There are no papers in the bin.</span>"
-	return
 
 
 /obj/item/weapon/paper_bin/update_icon()

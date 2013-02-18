@@ -17,11 +17,9 @@
 	density = 1
 	anchored = 1
 
-
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
 	icon_state = "chestdrawer"
-
 
 /obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
@@ -33,7 +31,7 @@
 			I.loc = src
 
 
-/obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo))
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		user.drop_item()
@@ -45,14 +43,14 @@
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
 	else
 		user << "<span class='notice'>You can't put [P] in [src]!</span>"
 
 
-/obj/structure/filingcabinet/attack_hand(mob/user as mob)
+/obj/structure/filingcabinet/attack_hand(mob/user)
 	if(contents.len <= 0)
-		user << "<span class='notice'>\The [src] is empty.</span>"
+		user << "<span class='notice'>[src] is empty.</span>"
 		return
 
 	user.set_machine(src)
@@ -63,8 +61,6 @@
 		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
 	dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
-
-	return
 
 
 /obj/structure/filingcabinet/Topic(href, href_list)
@@ -87,8 +83,7 @@
 /obj/structure/filingcabinet/security
 	var/virgin = 1
 
-
-/obj/structure/filingcabinet/security/attack_hand(mob/user as mob)
+/obj/structure/filingcabinet/security/attack_hand(mob/user)
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/S
@@ -117,7 +112,7 @@
 /obj/structure/filingcabinet/medical
 	var/virgin = 1
 
-/obj/structure/filingcabinet/medical/attack_hand(mob/user as mob)
+/obj/structure/filingcabinet/medical/attack_hand(mob/user)
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/M
