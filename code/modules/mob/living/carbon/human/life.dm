@@ -1260,10 +1260,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					if("lizard","slime")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-					if("tajaran")
-						see_in_dark = 4
-					if("shadow")
+					if("shadow","tajaran")
 						see_in_dark = 8
+						see_invisible = SEE_INVISIBLE_LEVEL_ONE
 					else
 						see_in_dark = 2
 
