@@ -1445,7 +1445,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "tcomsatentrance"
 
 /area/tcommsat/chamber
-	name = "\improper Telecoms Central Compartment"
+	name = "\improper Abandoned Satellite"
 	icon_state = "tcomsatcham"
 
 /area/turret_protected/tcomsat
@@ -1467,6 +1467,10 @@ proc/process_ghost_teleport_locs()
 /area/tcommsat/computer
 	name = "\improper Telecoms Control Room"
 	icon_state = "tcomsatcomp"
+
+/area/tcommsat/server
+	name = "\improper Telecoms Server Room"
+	icon_state = "tcomsatcham"
 
 /area/tcommsat/lounge
 	name = "\improper Telecommunications Satellite Lounge"

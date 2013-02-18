@@ -245,7 +245,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Subspace Receiver)"
 	build_path = "/obj/machinery/telecomms/receiver"
 	board_type = "machine"
-	origin_tech = "programming=4;engineering=3;bluespace=2"
+	origin_tech = "programming=2;engineering=2;bluespace=1"
 	frame_desc = "Requires 1 Subspace Ansible, 1 Hyperwave Filter, 2 Manipulators, and 1 Micro-Laser."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/subspace/ansible" = 1,
@@ -257,7 +257,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Hub Mainframe)"
 	build_path = "/obj/machinery/telecomms/hub"
 	board_type = "machine"
-	origin_tech = "programming=4;engineering=4"
+	origin_tech = "programming=2;engineering=2"
 	frame_desc = "Requires 2 Manipulators, 2 Cable Coil and 2 Hyperwave Filter."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -268,7 +268,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Relay Mainframe)"
 	build_path = "/obj/machinery/telecomms/relay"
 	board_type = "machine"
-	origin_tech = "programming=3;engineering=4;bluespace=3"
+	origin_tech = "programming=2;engineering=2;bluespace=2"
 	frame_desc = "Requires 2 Manipulators, 2 Cable Coil and 2 Hyperwave Filters."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -279,7 +279,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Bus Mainframe)"
 	build_path = "/obj/machinery/telecomms/bus"
 	board_type = "machine"
-	origin_tech = "programming=4;engineering=4"
+	origin_tech = "programming=2;engineering=2"
 	frame_desc = "Requires 2 Manipulators, 1 Cable Coil and 1 Hyperwave Filter."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -290,7 +290,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Processor Unit)"
 	build_path = "/obj/machinery/telecomms/processor"
 	board_type = "machine"
-	origin_tech = "programming=4;engineering=4"
+	origin_tech = "programming=2;engineering=2"
 	frame_desc = "Requires 3 Manipulators, 1 Hyperwave Filter, 2 Treatment Disks, 1 Wavelength Analyzer, 2 Cable Coils and 1 Subspace Amplifier."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 3,
@@ -304,7 +304,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Telecommunication Server)"
 	build_path = "/obj/machinery/telecomms/server"
 	board_type = "machine"
-	origin_tech = "programming=4;engineering=4"
+	origin_tech = "programming=2;engineering=2"
 	frame_desc = "Requires 2 Manipulators, 1 Cable Coil and 1 Hyperwave Filter."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -315,7 +315,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Subspace Broadcaster)"
 	build_path = "/obj/machinery/telecomms/broadcaster"
 	board_type = "machine"
-	origin_tech = "programming=4;engineering=4;bluespace=2"
+	origin_tech = "programming=2;engineering=2;bluespace=1"
 	frame_desc = "Requires 2 Manipulators, 1 Cable Coil, 1 Hyperwave Filter, 1 Ansible Crystal and 2 High-Powered Micro-Lasers. "
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,

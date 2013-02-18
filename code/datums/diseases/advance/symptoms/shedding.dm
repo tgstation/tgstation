@@ -6,7 +6,7 @@ Excessive Shedding
 	Decreases resistance slightly.
 	Reduces stage speed slightly.
 	Transmittable.
-	Moderate Level.
+	Intense Level.
 
 BONUS
 	Makes the mob bald.
