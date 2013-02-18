@@ -70,7 +70,7 @@
 			.manifest td:first-child {text-align:right}
 			.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
 		</style></head>
-		<table class="manifest">
+		<table class="manifest" width='350px'>
 		<tr class='head'><th>Name</th><th>Rank</th><th>Activity</th></tr>
 		"}
 		var/even = 0
@@ -94,28 +94,31 @@
 
 			//world << "[name]: [rank]"
 
+			//cael - to prevent multiple appearances of a player/job combination, add a continue after each line
+			var/department = 0
 			if(real_rank in command_positions)
 				heads[name] = rank
+				department = 1
 			if(real_rank in security_positions)
 				sec[name] = rank
-				continue
+				department = 1
 			if(real_rank in engineering_positions)
 				eng[name] = rank
-				continue
+				department = 1
 			if(real_rank in medical_positions)
 				med[name] = rank
-				continue
+				department = 1
 			if(real_rank in science_positions)
 				sci[name] = rank
-				continue
+				department = 1
 			if(real_rank in civilian_positions)
 				civ[name] = rank
-				continue
+				department = 1
 			if(real_rank in nonhuman_positions)
 				bot[name] = rank
-				continue
+				department = 1
 
-			if(!(name in heads))
+			if(!department && !(name in heads))
 				misc[name] = rank
 
 		if(heads.len > 0)
