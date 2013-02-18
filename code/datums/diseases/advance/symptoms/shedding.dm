@@ -1,6 +1,6 @@
 /*
 //////////////////////////////////////
-Excessive Shedding
+Alopecia
 
 	Noticable.
 	Decreases resistance slightly.
@@ -9,14 +9,14 @@ Excessive Shedding
 	Intense Level.
 
 BONUS
-	Makes the mob bald.
+	Makes the mob lose hair.
 
 //////////////////////////////////////
 */
 
 /datum/symptom/shedding
 
-	name = "Excessive Shedding"
+	name = "Alopecia"
 	stealth = -1
 	resistance = -1
 	stage_speed = -1
@@ -27,18 +27,21 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You notice you're covered in dandruff.", "Your skin feels flakey.")]</span>"
-			else
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
+		M << "<span class='notice'>[pick("You notice you're covered in dandruff.", "Your skin feels flakey.")]</span>"
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			switch(A.stage)
+				if(3, 4)
+					if(!(H.f_style == "Bald"))
+						H << "<span class='notice'>Your hair starts to fall out in clumps...</span>"
+						spawn(50)
+							H.f_style = "Balding Hair"
+							H.update_hair()
+				if(5)
 					if(!(H.f_style == "Shaved") || !(H.h_style == "Bald"))
 						H << "<span class='notice'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
 							H.f_style = "Shaved"
 							H.h_style = "Bald"
 							H.update_hair()
-				else
-					M << "<span class='notice'>[pick("You notice you're covered in dandruff.", "Your skin feels flakey.")]</span>"
 	return
