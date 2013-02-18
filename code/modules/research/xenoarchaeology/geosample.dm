@@ -31,26 +31,24 @@
 
 var/list/responsive_carriers = list( \
 	"carbon", \
-	"carbon", \
-	"neon", \
-	"beryllium", \
-	"helium", \
-	"silicon", \
-	"calcium", \
+	"potassium", \
+	"hydrogen", \
+	"nitrogen", \
+	"mercury", \
+	"iron", \
 	"chlorine", \
-	"aluminium", \
-	"plasma" )
+	"phosphorus", \
+	"plasma")
 
 var/list/finds_as_strings = list( \
-	"Dead plant cells", \
-	"Dead organism cells", \
+	"Trace organic cells", \
 	"Long exposure particles", \
 	"Trace water particles", \
 	"Crystalline structures", \
-	"Metallics", \
-	"Metamorphic/generic rock", \
-	"Igneous/generic rock", \
-	"Sedimentary/generic rock", \
+	"Metallic derivative", \
+	"Metallic composite", \
+	"Metamorphic/igneous rock composite", \
+	"Metamorphic/sedimentary rock composite", \
 	"Anomalous material" )
 
 var/list/artifact_spawning_turfs = list()
@@ -64,8 +62,8 @@ var/list/artifact_spawning_turfs = list()
 	var/age_million = 0
 	var/age_billion = 0
 	var/artifact_id = ""					//id of a nearby artifact, if there is one
-	var/artifact_distance = 9999				//proportional to distance
-	var/source_mineral = "calcium"
+	var/artifact_distance = -1				//proportional to distance
+	var/source_mineral = "chlorine"			//machines will pop up a warning telling players that the sample may be confused
 	var/total_spread = 0
 	//
 	//var/source_mineral
@@ -81,71 +79,53 @@ var/list/artifact_spawning_turfs = list()
 	if(!container || !istype(container))
 		return
 
-	//source_mineral = container.mineralName
 	age = rand(1,999)
+	total_spread = 0
 
-	//find_presence[FIND_METEORIC] = rand(1,10) / 10
-	//var/comp_remaining = 1 - find_presence[FIND_METEORIC]
 	switch(container.mineralName)
 		if("Uranium")
 			age_million = rand(1, 704)
 			age_thousand = rand(1,999)
-			//find_presence[FIND_METALLIC] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_METALLIC]
-			find_presence["silicon"] = rand(1,1000) / 100
-			source_mineral = "silicon"
+			find_presence["potassium"] = rand(1,1000) / 100
+			source_mineral = "potassium"
 		if("Iron")
 			age_thousand = rand(1, 999)
 			age_million = rand(1, 999)
-			//find_presence[FIND_METALLIC] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_METALLIC]
-			find_presence["silicon"] = rand(1,1000) / 100
-			source_mineral = "silicon"
+			find_presence["iron"] = rand(1,1000) / 100
+			source_mineral = "iron"
 		if("Diamond")
 			age_thousand = rand(1,999)
 			age_million = rand(1,999)
-			//find_presence[FIND_CRYSTALLINE] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_CRYSTALLINE]
-			find_presence["helium"] = rand(1,1000) / 100
-			source_mineral = "helium"
+			find_presence["nitrogen"] = rand(1,1000) / 100
+			source_mineral = "nitrogen"
 		if("Gold")
 			age_thousand = rand(1,999)
 			age_million = rand(1,999)
 			age_billion = rand(3,4)
-			//find_presence[FIND_METALLIC] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_METALLIC]
-			find_presence["silicon"] = rand(1,1000) / 100
-			source_mineral = "silicon"
+			find_presence["iron"] = rand(1,1000) / 100
+			source_mineral = "iron"
 		if("Silver")
 			age_thousand = rand(1,999)
 			age_million = rand(1,999)
-			//find_presence[FIND_METALLIC] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_METALLIC]
-			find_presence["silicon"] = rand(1,1000) / 100
-			source_mineral = "silicon"
+			find_presence["iron"] = rand(1,1000) / 100
+			source_mineral = "iron"
 		if("Plasma")
 			age_thousand = rand(1,999)
 			age_million = rand(1,999)
 			age_billion = rand(10, 13)
-			//find_presence[FIND_METALLIC] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_METALLIC]
-			find_presence["silicon"] = rand(1,1000) / 100
-			source_mineral = "silicon"
+			find_presence["plasma"] = rand(1,1000) / 100
+			source_mineral = "plasma"
 		if("Clown")
-			age = rand(-1,-999)				//thats_the_joke.mp4
+			age = rand(-1,-999)				//thats the joke
 			age_thousand = rand(-1,-999)
 			find_presence["plasma"] = rand(1,1000) / 100
 			source_mineral = "plasma"
-			//find_presence[FIND_IGNEOUS] = comp_remaining * (rand(25, 75) / 100)
-			//comp_remaining -= find_presence[FIND_IGNEOUS]
 
-	find_presence["neon"] = rand(1,500) / 100
-	/*if(prob(20))
-		find_presence["carbon"] = rand(1,10) / 100*/
-
-	//find_presence[FIND_METAMORPHIC] = comp_remaining
-	//allocate the rest to ordinary rock
-	find_presence["calcium"] = rand(500,2500) / 100
+	if(prob(75))
+		find_presence["phosphorus"] = rand(1,500) / 100
+	if(prob(25))
+		find_presence["mercury"] = rand(1,500) / 100
+	find_presence["chlorine"] = rand(500,2500) / 100
 
 	//loop over finds, grab any relevant stuff
 	for(var/datum/find/F in container.finds)

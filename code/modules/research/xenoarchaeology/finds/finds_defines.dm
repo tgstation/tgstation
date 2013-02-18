@@ -52,61 +52,61 @@
 /proc/get_responsive_reagent(var/find_type)
 	switch(find_type)
 		if(ARCHAEO_BOWL)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_URN)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_CUTLERY)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_STATUETTE)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_INSTRUMENT)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_COIN)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_KNIFE)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_HANDCUFFS)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_BEARTRAP)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_LIGHTER)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_BOX)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_GASTANK)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_TOOL)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_METAL)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_PEN)
-			return "aluminium"
+			return "mercury"
 		if(ARCHAEO_CRYSTAL)
-			return "helium"
+			return "nitrogen"
 		if(ARCHAEO_CULTBLADE)
-			return "neon"
+			return "potassium"
 		if(ARCHAEO_TELEBEACON)
-			return "neon"
+			return "potassium"
 		if(ARCHAEO_CLAYMORE)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_CULTROBES)
-			return "neon"
+			return "potassium"
 		if(ARCHAEO_SOULSTONE)
-			return "helium"
+			return "nitrogen"
 		if(ARCHAEO_SHARD)
-			return "helium"
+			return "nitrogen"
 		if(ARCHAEO_RODS)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_STOCKPARTS)
-			return "neon"
+			return "potassium"
 		if(ARCHAEO_KATANA)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_LASER)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_GUN)
-			return "silicon"
+			return "iron"
 		if(ARCHAEO_UNKNOWN)
-			return "beryllium"
+			return "mercury"
 		if(ARCHAEO_FOSSIL)
 			return "carbon"
 		if(ARCHAEO_SHELL)
@@ -119,7 +119,7 @@
 			return "carbon"
 		if(ARCHAEO_REMAINS_XENO)
 			return "carbon"
-	return "chlorine"
+	return "plasma"
 
 //see /turf/simulated/mineral/New() in code/modules/mining/mine_turfs.dm
 /proc/get_random_digsite_type()

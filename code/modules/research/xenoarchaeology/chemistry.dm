@@ -2,37 +2,13 @@
 //chemistry stuff here so that it can be easily viewed/modified
 datum
 	reagent
-		tungsten	//purely used to make lith-sodi-tungs
+		tungsten
 			name = "Tungsten"
 			id = "tungsten"
 			description = "A chemical element, and a strong oxidising agent."
 			reagent_state = SOLID
 			color = "#808080"	// rgb: 128, 128, 128
 								//todo: make this silvery grey
-
-		neon		//purely used as a carrier
-			name = "Neon"
-			id = "neon"
-			description = "A chemical element, commonly used in lighting."
-			reagent_state = LIQUID
-			color = "#808080"	// rgb: 128, 128, 128,
-								//todo: make this fluro/bright purple
-
-		beryllium	//purely used as a carrier
-			name = "Beryllium"
-			id = "beryllium"
-			description = "A chemical element, prized for it's rigidity, thermal stability and low density when used in alloys."
-			reagent_state = LIQUID
-			color = "#808080"	// rgb: 128, 128, 128,
-								//todo: make this dark grey
-
-		calcium		//purely used as a carrier
-			name = "Calcium"
-			id = "calcium"
-			description = "An extremely common chemical element found throughout living organisms."
-			reagent_state = LIQUID
-			color = "#808080"	// rgb: 128, 128, 128,
-								//todo: make this bone-white colour
 
 		lithiumsodiumtungstate
 			name = "Lithium Sodium Tungstate"
@@ -53,7 +29,7 @@ datum
 		density_separated_sample
 			name = "Density separated sample"
 			id = "density_separated_sample"
-			description = "A watery paste used in chemical analysis, this one has some chunks floating in it."
+			description = "A watery paste used in chemical analysis, there are some chunks floating in it."
 			reagent_state = LIQUID
 			color = "#C81040" 	//rgb: 200, 16, 64
 								//todo: make this browny-white

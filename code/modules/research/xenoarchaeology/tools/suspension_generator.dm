@@ -33,7 +33,7 @@
 				if(prob(5))
 					M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
 
-		if(field_type == "silicon")
+		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
@@ -83,13 +83,12 @@
 	if(!locked)
 		dat += "<b>Select field mode</b><br>"
 		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted CO2 laser</A></b><br>"
-		dat += "[field_type=="helium"?"<b>":""		]<A href='?src=\ref[src];select_field=helium'>Helium tracer field</A></b><br>"
-		dat += "[field_type=="beryllium"?"<b>":""	]<A href='?src=\ref[src];select_field=beryllium'>Beryllium dispersion wave</A></b><br>"
-		dat += "[field_type=="neon"?"<b>":""		]<A href='?src=\ref[src];select_field=neon'>Neon refrigerant cloud</A></b><br>"
-		dat += "[field_type=="aluminium"?"<b>":""	]<A href='?src=\ref[src];select_field=aluminium'>Aluminium transmitted field</A></b><br>"
-		dat += "[field_type=="silicon"?"<b>":""		]<A href='?src=\ref[src];select_field=silicon'>Silicon wafer conduction</A></b><br>"
+		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
+		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
+		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
+		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
 		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
-		dat += "[field_type=="chlorine"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine alkalising field</A></b><br>"
+		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Plasma saturated field</A></b><br>"
 	else
 		dat += "<br>"
 		dat += "<br>"
@@ -246,28 +245,26 @@
 			for(var/mob/living/carbon/C in T)
 				C.weakened += 5
 				C.visible_message("\blue \icon[C] [C] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
-		if("helium")
+		if("nitrogen")
 			success = 1
 			//
-		if("beryllium")
-			success = 1
-			//
-		if("neon")
-			success = 1
-			//
-		if("aluminium")
+		if("mercury")
 			success = 1
 			//
 		if("chlorine")
 			success = 1
 			//
-		if("silicon")
+		if("potassium")
+			success = 1
+			//
+		if("plasma")
+			success = 1
+			//
+		if("iron")
 			success = 1
 			for(var/mob/living/silicon/R in T)
 				R.weakened += 5
 				R.visible_message("\blue \icon[R] [R] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
-		if("calcium")
-			success = 1
 			//
 	//in case we have a bad field type
 	if(!success)
@@ -328,7 +325,7 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	density = 1
-	var/field_type = "calcium"
+	var/field_type = "chlorine"
 
 /obj/effect/suspension_field/Del()
 	for(var/obj/I in src)
