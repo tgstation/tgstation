@@ -6,6 +6,7 @@
 	var/list/species = list(/mob/living/carbon/human)
 	var/location = "chest"
 	var/target_must_be_dead = 0
+	var/target_must_be_fat = 0
 
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)

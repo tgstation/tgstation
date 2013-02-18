@@ -193,6 +193,12 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
+	if(gender_ambiguous) //someone fucked up a gender reassignment surgery
+		if (gender == MALE)
+			msg += "[t_He] has a strange feminine quality to [t_him].\n"
+		else
+			msg += "[t_He] has a strange masculine quality to [t_him].\n"
+
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		if(getbrain(src))//Only perform these checks if there is no brain
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"

@@ -16,7 +16,7 @@
 	if(B)
 		user.visible_message("<span class='notice'>[user] begins to extract [target]'s brain.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] looks for an brain in [target].</span>")
+		user.visible_message("<span class='notice'>[user] looks for a brain in [target].</span>")
 
 /datum/surgery_step/extract_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(B)
@@ -28,4 +28,4 @@
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
 	else
-		user.visible_message("<span class='notice'>[user] can't find an brain in [target]!</span>")
+		user.visible_message("<span class='notice'>[user] can't find a brain in [target]!</span>")
