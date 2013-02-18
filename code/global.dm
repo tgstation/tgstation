@@ -1,5 +1,16 @@
 //#define TESTING
 #define KILL 26
+
+//#define dellogging		//Uncomment to compile with dellogging code (will slow down the game slightly)
+#ifdef dellogging
+#warn compiling del logging
+var/list/del_counter = list()
+/proc/log_del(datum/X)
+	if(istype(X)){del_counter[X.type]++;}
+	del(X)
+#define del(X) log_del(X)
+#endif
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/obj/effect/datacore/data_core = null

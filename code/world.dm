@@ -146,6 +146,15 @@
 
 
 /world/Reboot(var/reason)
+#ifdef dellogging
+	var/log = file("data/logs/del.log")
+	log << time2text(world.realtime)
+	//mergeSort(del_counter, /proc/cmp_descending_associative)	//still testing the sorting procs. Use notepad++ to sort the resultant logfile for now.
+	for(var/index in del_counter)
+		var/count = del_counter[index]
+		if(count > 10)
+			log << "#[count]\t[index]"
+#endif
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 
