@@ -94,7 +94,7 @@
 			var/spawn_type = pick(spawn_types)
 			new spawn_type(T)
 			num--
-			world << "[vermstring] spawned in [spawn_area_type]"
+			//world << "[vermstring] spawned in [spawn_area_type]"
 
 /datum/event/infestation/announce()
 	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
