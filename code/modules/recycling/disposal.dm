@@ -136,6 +136,7 @@
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
 			return
+		if(ismouse(user) && target != user) return //mice cannot put mobs other than themselves into disposal
 		src.add_fingerprint(user)
 		var/target_loc = target.loc
 		var/msg

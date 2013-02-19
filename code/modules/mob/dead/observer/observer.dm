@@ -263,6 +263,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Become mouse"
 	set category = "Ghost"
 
+	if(client.can_spawn_as_mouse == 0)
+		src << "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death.</span>"
+		return
+
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found

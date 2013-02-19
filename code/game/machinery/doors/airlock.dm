@@ -910,7 +910,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	if(!nowindow)
 		..()
-	if(usr.stat || usr.restrained())
+	if(usr.stat || usr.restrained()|| ismouse(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])

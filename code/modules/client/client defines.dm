@@ -16,6 +16,7 @@
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null
+	var/can_spawn_as_mouse = 1
 
 
 		///////////////

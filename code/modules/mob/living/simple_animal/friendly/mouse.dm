@@ -84,9 +84,11 @@
 			if(loc==startloc)
 				var/obj/target_vent = vents[selection_position]
 				if(target_vent)
+					/*
 					for(var/mob/O in oviewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
+					*/
 					loc = target_vent.loc
 			else
 				src << "\blue You need to remain still while entering a vent."
@@ -107,15 +109,19 @@
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		src << text("\blue You are now hiding.")
+		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << text("<B>[] scurries to the ground!</B>", src)
+		*/
 	else
 		layer = MOB_LAYER
 		src << text("\blue You have stopped hiding.")
+		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << text("[] slowly peaks up from the ground...", src)
+		*/
 
 //make mice fit under tables etc? this was hacky, and not working
 /*
@@ -151,6 +157,17 @@
 			M << "\blue \icon[src] Squeek!"
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
+
+/mob/living/simple_animal/mouse/Die()
+	if(client)
+		client.mouse_respawn_timer()
+	..()
+
+/client/proc/mouse_respawn_timer()
+	can_spawn_as_mouse = 0
+	spawn(mouse_respawn_time * 600)
+		can_spawn_as_mouse = 1
+	return
 
 /*
  * Mouse types
