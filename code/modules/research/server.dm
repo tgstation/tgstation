@@ -60,11 +60,14 @@
 	if(health <= 0)
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
+		var/updateRD = 0
 		files.known_designs = list()
 		for(var/datum/tech/T in files.known_tech)
 			if(prob(1))
+				updateRD++
 				T.level--
-		files.RefreshResearch()
+		if(updateRD)
+			files.RefreshResearch()
 	if(delay)
 		delay--
 	else
