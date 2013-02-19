@@ -172,23 +172,24 @@ datum/wound/cut/massive
 /datum/wound/bruise/monumental
 
 // implement sub-paths by starting at a later stage
-/datum/wound/bruise/huge
-	current_stage = 1
 
-/datum/wound/bruise/large
-	current_stage = 2
-
-/datum/wound/bruise/moderate
-	current_stage = 3
+/datum/wound/bruise/tiny
+	current_stage = 5
 	needs_treatment = 0
 
 /datum/wound/bruise/small
 	current_stage = 4
 	needs_treatment = 0
 
-/datum/wound/bruise/tiny
-	current_stage = 5
+/datum/wound/bruise/moderate
+	current_stage = 3
 	needs_treatment = 0
+
+/datum/wound/bruise/large
+	current_stage = 2
+
+/datum/wound/bruise/huge
+	current_stage = 1
 
 /** BURNS **/
 /datum/wound/burn/moderate
