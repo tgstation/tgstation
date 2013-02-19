@@ -198,7 +198,10 @@
 				del(src)
 		if(ismouse(M))
 			var/mob/living/simple_animal/mouse/N = M
-			N.emote("nibbles away at the [src]")
+			N << text("\blue You nibble away at [src].")
+			if(prob(50))
+				N.visible_message("[N] nibbles away at [src].", "")
+			//N.emote("nibbles away at the [src]")
 			N.health = min(N.health + 1, N.maxHealth)
 
 
