@@ -48,6 +48,8 @@
 	src.stat = DEAD
 	src.icon_dead = "mouse_[color]_splat"
 	src.icon_state = "mouse_[color]_splat"
+	if(client)
+		client.time_died_as_mouse = world.time
 
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/mouse/verb/ventcrawl()
@@ -160,14 +162,8 @@
 
 /mob/living/simple_animal/mouse/Die()
 	if(client)
-		client.mouse_respawn_timer()
+		client.time_died_as_mouse = world.time
 	..()
-
-/client/proc/mouse_respawn_timer()
-	can_spawn_as_mouse = 0
-	spawn(mouse_respawn_time * 600)
-		can_spawn_as_mouse = 1
-	return
 
 /*
  * Mouse types

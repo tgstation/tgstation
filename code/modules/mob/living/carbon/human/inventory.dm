@@ -461,7 +461,7 @@ It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
 	target.cpr_time = 1
-	if(ismouse(source)) return //mice cannot strip people
+	if(isanimal(source)) return //animals cannot strip people
 	if(!source || !target) return		//Target or source no longer exist
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved

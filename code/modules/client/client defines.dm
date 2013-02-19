@@ -16,7 +16,7 @@
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null
-	var/can_spawn_as_mouse = 1
+	var/time_died_as_mouse = null //when the client last died as a mouse
 
 
 		///////////////
