@@ -39,7 +39,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio
 	var/datum/radio_frequency/radio_connection
-	var/list/datum/radio_frequency/secure_radio_connections = new
+	var/list/datum/radio_frequency/secure_radio_connections
 
 	proc/set_frequency(new_frequency)
 		radio_controller.remove_object(src, frequency)
@@ -48,6 +48,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/New()
 	wires = new(src)
+	secure_radio_connections = new
 	..()
 	if(radio_controller)
 		initialize()
