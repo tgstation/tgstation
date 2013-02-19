@@ -15,6 +15,9 @@ var/list/department_radio_keys = list(
 	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
+	  ":k" = "skrell",		"#k" = "skrell",		".k" = "skrell",
+	  ":j" = "tajaran",		"#j" = "tajaran",		".j" = "tajaran",
+	  ":o" = "soghun",		"#o" = "soghun",		".o" = "soghun",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -31,6 +34,9 @@ var/list/department_radio_keys = list(
 	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
+	  ":K" = "skrell",		"#K" = "skrell",		".K" = "skrell",
+	  ":J" = "tajaran",		"#J" = "tajaran",		".J" = "tajaran",
+	  ":O" = "soghun",		"#O" = "soghun",		".O" = "soghun",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -139,27 +145,6 @@ var/list/department_radio_keys = list(
 	if (!message)
 		return
 
-	//work out if we're speaking skrell or not
-	var/is_speaking_skrell = 0
-	if(copytext(message, 1, 3) == ":k" || copytext(message, 1, 3) == ":K")
-		message = copytext(message, 3)
-		if(skrell_talk_understand || universal_speak)
-			is_speaking_skrell = 1
-
-	//work out if we're speaking soghun or not
-	var/is_speaking_soghun = 0
-	if(copytext(message, 1, 3) == ":o" || copytext(message, 1, 3) == ":O")
-		message = copytext(message, 3)
-		if(soghun_talk_understand || universal_speak)
-			is_speaking_soghun = 1
-
-	//work out if we're speaking soghun or not
-	var/is_speaking_taj = 0
-	if(copytext(message, 1, 3) == ":j" || copytext(message, 1, 3) == ":J")
-		message = copytext(message, 3)
-		if(tajaran_talk_understand || universal_speak)
-			is_speaking_taj = 1
-
 	// :downs:
 	if (getBrainLoss() >= 60)
 		message = replacetext(message, " am ", " ")
@@ -190,6 +175,10 @@ var/list/department_radio_keys = list(
 					message += "Z"
 */
 	var/list/obj/item/used_radios = new
+
+	var/is_speaking_skrell = 0
+	var/is_speaking_soghun = 0
+	var/is_speaking_taj = 0
 
 	switch (message_mode)
 		if ("headset")
@@ -268,6 +257,18 @@ var/list/department_radio_keys = list(
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
+
+		if ("tajaran")
+			if(tajaran_talk_understand || universal_speak)
+				is_speaking_taj = 1
+
+		if ("soghun")
+			if(soghun_talk_understand || universal_speak)
+				is_speaking_soghun = 1
+
+		if ("skrell")
+			if(skrell_talk_understand || universal_speak)
+				is_speaking_skrell = 1
 
 		if("changeling")
 			if(mind && mind.changeling)
