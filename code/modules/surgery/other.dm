@@ -132,6 +132,8 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (affected.name in list("chest","groin","head"))
 			max_size = 3
+		else
+			max_size = 2
 		return affected.open == 2 && !(affected.status & ORGAN_BLEEDING) && tool.w_class <= max_size && !affected.hidden
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
