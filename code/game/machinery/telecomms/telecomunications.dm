@@ -28,10 +28,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
 	var/toggled = 1 	// Is it toggled on
 	var/on = 1
-	var/integrity = 100 // basically HP, loses integrity by heat
+	/*var/integrity = 100 // basically HP, loses integrity by heat
 	var/heatgen = 20 // how much heat to transfer to the environment
 	var/delay = 10 // how many process() ticks to delay per heat
-	var/heating_power = 40000
+	var/heating_power = 40000*/
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/circuitboard = null // string pointing to a circuitboard type
 	var/hide = 0				// Is it a hidden machine?
@@ -46,7 +46,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	//world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
-	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
+	//signal.data["slow"] == 0 // apply some lag based on integrity
 
 	// Apply some lag based on traffic rates
 	var/netlag = round(traffic / 50)
@@ -181,7 +181,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/proc/update_power()
 
 	if(toggled)
-		if(stat & (BROKEN|NOPOWER|EMPED) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
+		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
 			on = 0
 		else
 			on = 1
@@ -192,7 +192,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	update_power()
 
 	// Check heat and generate some
-	checkheat()
+	//checkheat()
 
 	// Update the icon
 	update_icon()
@@ -209,7 +209,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				stat &= ~EMPED
 	..()
 
-/obj/machinery/telecomms/proc/checkheat()
+/*/obj/machinery/telecomms/proc/checkheat()
 	// Checks heat from the environment and applies any integrity damage
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
@@ -247,6 +247,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
 
 				env.merge(removed)
+*/
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
 	primarily headsets. They then just relay this information to all linked devices,
@@ -265,7 +266,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 1
-	heatgen = 0
+	//heatgen = 0
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
@@ -322,7 +323,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 80
 	machinetype = 7
-	heatgen = 40
+	//heatgen = 40
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/hub"
 	long_range_link = 1
 	netspeed = 40
@@ -357,7 +358,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 8
-	heatgen = 0
+	//heatgen = 0
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/relay"
 	netspeed = 5
 	long_range_link = 1
@@ -409,7 +410,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 50
 	machinetype = 2
-	heatgen = 20
+	//heatgen = 20
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
 	netspeed = 40
 	var/change_frequency = 0
@@ -462,8 +463,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 3
-	heatgen = 100
-	delay = 5
+	//heatgen = 100
+	//delay = 5
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
@@ -501,7 +502,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 15
 	machinetype = 4
-	heatgen = 50
+	//heatgen = 50
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
 	var/list/log_entries = list()
 	var/list/stored_names = list()
