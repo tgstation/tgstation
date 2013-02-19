@@ -3,7 +3,7 @@
 	turf = /turf/space
 	area = /area
 	view = "15x15"
-	cache_lifespan = 30
+	cache_lifespan = 1
 
 
 

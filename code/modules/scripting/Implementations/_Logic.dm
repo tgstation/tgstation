@@ -257,6 +257,7 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 
 // Non-recursive
 // Imported from Mono string.ReplaceUnchecked
+/*
 /proc/string_replacetext(var/haystack,var/a,var/b)
 	if(istext(haystack)&&istext(a)&&istext(b))
 		var/i = 1
@@ -299,3 +300,25 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 			diary<<"[buf]"
 		buf+=copytext(haystack,lastReadPos, 0)
 		return buf
+*/
+
+/proc/string_replacetext(text, find, replacement)
+	if(istext(text) && istext(find) && istext(replacement))
+		var/find_len = length(find)
+		if(find_len < 1)	return text
+		. = ""
+		var/last_found = 1
+		var/count = 0
+		while(1)
+			count += 1
+			if(count >  SCRIPT_MAX_REPLACEMENTS_ALLOWED)
+				break
+			var/found = findtext(text, find, last_found, 0)
+			. += copytext(text, last_found, found)
+			if(found)
+				. += replacement
+				last_found = found + find_len
+				continue
+			return
+
+#undef SCRIPT_MAX_REPLACEMENTS_ALLOWED
