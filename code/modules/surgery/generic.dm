@@ -85,7 +85,7 @@
 
 /datum/surgery_step/generic/retract_skin
 	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(/obj/item/weapon/crowbar,/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 30
 	max_duration = 40
