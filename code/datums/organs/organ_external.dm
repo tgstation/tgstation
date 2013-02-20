@@ -209,6 +209,7 @@
 		if(BURN)
 			size_names = typesof(/datum/wound/burn/) - /datum/wound/burn/
 
+	size = min(size,size_names.len)
 	var/wound_type = size_names[size]
 	W = new wound_type(damage)
 
