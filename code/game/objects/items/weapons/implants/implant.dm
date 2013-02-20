@@ -440,7 +440,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	activate()
 		var/turf/t = get_turf(src)
-		src.scanned.loc = t
+		put_in_hands(t)
 		del src
 
 	implanted(mob/source as mob)
