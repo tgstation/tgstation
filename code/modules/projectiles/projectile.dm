@@ -50,6 +50,10 @@
 	var/drowsy = 0
 
 
+	proc/delete()
+		// Garbage collect the projectiles
+		loc = null
+
 	proc/on_hit(var/atom/target, var/blocked = 0)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
@@ -109,7 +113,8 @@
 
 				density = 0
 				invisibility = 101
-				del(src)
+				delete()
+				return 0
 		return 1
 
 
@@ -124,13 +129,14 @@
 
 	process()
 		if(kill_count < 1)
-			del(src)
+			delete()
+			return
 		kill_count--
-		spawn while(src)
+		spawn while(src && src.loc)
 			if((!( current ) || loc == current))
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				del(src)
+				delete()
 				return
 			step_towards(src, current)
 			sleep(1)
