@@ -48,7 +48,7 @@
 		name = "Bald"
 		icon_state = "bald"
 		gender = MALE
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	short
 		name = "Short Hair"	  // try to capatilize the names please~
@@ -119,7 +119,7 @@
 		name = "Pompadour"
 		icon_state = "hair_pompadour"
 		gender = MALE
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	quiff
 		name = "Quiff"
@@ -142,19 +142,19 @@
 		name = "Beehive"
 		icon_state = "hair_beehive"
 		gender = FEMALE
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	bobcurl
 		name = "Bobcurl"
 		icon_state = "hair_bobcurl"
 		gender = FEMALE
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	bob
 		name = "Bob"
 		icon_state = "hair_bobcut"
 		gender = FEMALE
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	bowl
 		name = "Bowl"
@@ -165,7 +165,7 @@
 		name = "Buzzcut"
 		icon_state = "hair_buzzcut"
 		gender = MALE
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	crew
 		name = "Crewcut"
@@ -227,7 +227,7 @@
 	mohawk
 		name = "Mohawk"
 		icon_state = "hair_d"
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
@@ -241,7 +241,7 @@
 	spiky
 		name = "Spiky"
 		icon_state = "hair_spikey"
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 	kusangi
 		name = "Kusanagi Hair"
 		icon_state = "hair_kusanagi"
@@ -306,7 +306,7 @@
 		name = "Shaved"
 		icon_state = "bald"
 		gender = NEUTER
-		species_allowed = list("Human","Soghun","Tajaran","Skrell")
+		species_allowed = list("Human","Unathi","Tajaran","Skrell")
 
 	watson
 		name = "Watson Mustache"
@@ -347,7 +347,7 @@
 	elvis
 		name = "Elvis Sideburns"
 		icon_state = "facial_elvis"
-		species_allowed = list("Human","Soghun")
+		species_allowed = list("Human","Unathi")
 
 	abe
 		name = "Abraham Lincoln Beard"
@@ -521,11 +521,11 @@
 		icon = 'icons/mob/human_races/r_tajaran.dmi'
 		species_allowed = list("Tajaran")
 
-	soghun
-		name = "Default soghun skin"
+	unathi
+		name = "Default Unathi skin"
 		icon_state = "default"
 		icon = 'icons/mob/human_races/r_lizard.dmi'
-		species_allowed = list("Soghun")
+		species_allowed = list("Unathi")
 
 	skrell
 		name = "Default skrell skin"
