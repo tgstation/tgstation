@@ -47,13 +47,13 @@
 	possibleEvents[/datum/event/infestation] = 50 + 25 * active_with_role["Janitor"]
 
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
-	possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
-	possibleEvents[/datum/event/grid_check] = 10 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/ionstorm] = 25 + active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
+	possibleEvents[/datum/event/grid_check] = 25 + 10 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/electrical_storm] = 75 + 25 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
 
 	if(!spacevines_spawned)
 		possibleEvents[/datum/event/spacevine] = 5 + 10 * active_with_role["Engineer"]
-	if(active_with_role["Engineer"] > 0 && minutes_passed >= 30) // Give engineers time to set up engine
+	if(minutes_passed >= 30) // Give engineers time to set up engine
 		possibleEvents[/datum/event/meteor_wave] = 20 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
@@ -64,8 +64,8 @@
 		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 75
 		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 5
 
+	possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 	if(active_with_role["Security"] > 0)
-		possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 		if(!sent_spiders_to_station)
 			possibleEvents[/datum/event/spider_infestation] = max(active_with_role["Security"], 5) + 5
 		if(aliens_allowed && !sent_aliens_to_station)

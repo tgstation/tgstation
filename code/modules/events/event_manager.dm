@@ -2,8 +2,8 @@ var/list/allEvents = typesof(/datum/event) - /datum/event
 var/list/potentialRandomEvents = typesof(/datum/event) - /datum/event
 //var/list/potentialRandomEvents = typesof(/datum/event) - /datum/event - /datum/event/spider_infestation - /datum/event/alien_infestation
 
-var/eventTimeLower = 15000	//15 minutes
-var/eventTimeUpper = 30000	//45 minutes
+var/eventTimeLower = 20000	//20 minutes
+var/eventTimeUpper = 45000	//45 minutes
 
 var/scheduledEvent = null
 
@@ -25,11 +25,11 @@ var/scheduledEvent = null
 				playercount_modifier = 1.2
 			if(11 to 15)
 				playercount_modifier = 1.1
-			if(16 to 20)
+			if(16 to 25)
 				playercount_modifier = 1
-			if(21 to 25)
+			if(26 to 35)
 				playercount_modifier = 0.9
-			if(26 to 100000)
+			if(36 to 100000)
 				playercount_modifier = 0.8
 		scheduledEvent = world.timeofday + rand(eventTimeLower, eventTimeUpper) * playercount_modifier
 
