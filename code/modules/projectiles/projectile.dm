@@ -81,7 +81,7 @@
 
 			if(!def_zone)
 				visible_message("\blue \The [src] misses [M] narrowly!")
-				forcedodge = 1
+				forcedodge = -1
 			else
 				if(silenced)
 					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
@@ -99,8 +99,9 @@
 
 		spawn(0)
 			if(A)
-				var/permutation = A.bullet_act(src, def_zone) // searches for return value
-				if(permutation == -1 || forcedodge) // the bullet passes through a dense object!
+				if (!forcedodge)
+					forcedodge = A.bullet_act(src, def_zone) // searches for return value
+				if(forcedodge == -1) // the bullet passes through a dense object!
 					bumped = 0 // reset bumped variable!
 					if(istype(A, /turf))
 						loc = A
@@ -114,7 +115,6 @@
 						O.bullet_act(src)
 					for(var/mob/M in A)
 						M.bullet_act(src, def_zone)
-
 				density = 0
 				invisibility = 101
 				del(src)
