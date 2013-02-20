@@ -186,6 +186,9 @@
 	var/mode = 0
 	var/condi = 0
 	var/useramount = 30 // Last used amount
+	var/bottlesprite = "1" //yes, strings
+	var/pillsprite = "1"
+	var/client/has_sprites = list()
 
 /obj/machinery/chem_master/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -267,7 +270,18 @@
 		if (href_list["analyze"])
 			var/dat = ""
 			if(!condi)
-				dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+				if(href_list["name"] == "Blood")
+					var/datum/reagent/blood/G
+					for(var/datum/reagent/F in R.reagent_list)
+						if(F.name == href_list["name"])
+							G = F
+							break
+					var/A = G.name
+					var/B = G.data["blood_type"]
+					var/C = G.data["blood_DNA"]
+					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[A]<BR><BR>Description:<BR>Blood Type: [B]<br>DNA: [C]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+				else
+					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			else
 				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr << browse(dat, "window=chem_master;size=575x400")
@@ -319,19 +333,13 @@
 				icon_state = "mixer0"
 		else if (href_list["createpill"])
 			var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
-			var/obj/item/weapon/reagent_containers/pill/P
-
-			if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
-				P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
-			else
-				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-
+			var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 			if(!name) name = reagents.get_master_reagent_name()
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
+			P.icon_state = "pill"+pillsprite
 			reagents.trans_to(P,50)
-
 		else if (href_list["createbottle"])
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
@@ -340,10 +348,31 @@
 				P.name = "[name] bottle"
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
+				P.icon_state = "bottle"+bottlesprite
 				reagents.trans_to(P,30)
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
+		else if(href_list["change_pill"])
+			#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
+			var/dat = "<table>"
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				dat += "<tr><td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td></tr>"
+			dat += "</table>"
+			usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["change_bottle"])
+			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
+			var/dat = "<table>"
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				dat += "<tr><td><a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a></td></tr>"
+			dat += "</table>"
+			usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["pill_sprite"])
+			pillsprite = href_list["pill_sprite"]
+		else if(href_list["bottle_sprite"])
+			bottlesprite = href_list["bottle_sprite"]
 
 	src.updateUsrDialog()
 	return
@@ -358,6 +387,13 @@
 	if(stat & BROKEN)
 		return
 	user.set_machine(src)
+	if(!(user.client in has_sprites))
+		spawn()
+			has_sprites += user.client
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				usr << browse_rsc(icon('chemical.dmi', "pill" + num2text(i)), "pill[i].png")
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				usr << browse_rsc(icon('chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert beaker.<BR>"
@@ -399,8 +435,8 @@
 		else
 			dat += "Empty<BR>"
 		if(!condi)
-			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><BR>"
-			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
+			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)<a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></A>"
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	if(!condi)

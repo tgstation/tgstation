@@ -111,8 +111,8 @@
 	force = 5
 	w_class = 4.0
 	slot_flags = SLOT_BACK
-	force_unwielded = 5
-	force_wielded = 18
+	force_unwielded = 10
+	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.

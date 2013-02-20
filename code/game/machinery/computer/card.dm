@@ -51,14 +51,24 @@
 	if (!( ticker ))
 		return
 	if (mode) // accessing crew manifest
-		var/crew = ""
+
+		dat += "<h4>Crew Manifest</h4>"
+		dat += "Entries cannot be modified from this terminal.<br><br>"
+		if(data_core)
+			dat += data_core.get_manifest(0) // make it monochrome
+		dat += "<br>"
+		dat += "<a href='?src=\ref[src];choice=print'>Print</a><br>"
+		dat += "<br>"
+		dat += "<a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br>"
+
+		/*var/crew = ""
 		var/list/L = list()
 		for (var/datum/data/record/t in data_core.general)
 			var/R = t.fields["name"] + " - " + t.fields["rank"]
 			L += R
 		for(var/R in sortList(L))
-			crew += "[R]<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+			crew += "[R]<br>"*/
+		//dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<div align='center'><b>Identification Card Modifier</b></div>"
 
@@ -267,13 +277,19 @@
 				printing = 1
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				var/t1 = "<B>Crew Manifest:</B><BR>"
+				/*var/t1 = "<B>Crew Manifest:</B><BR>"
 				var/list/L = list()
 				for (var/datum/data/record/t in data_core.general)
 					var/R = t.fields["name"] + " - " + t.fields["rank"]
 					L += R
 				for(var/R in sortList(L))
-					t1 += "[R]<br>"
+					t1 += "[R]<br>"*/
+
+				var/t1 = "<h4>Crew Manifest</h4>"
+				t1 += "<br>"
+				if(data_core)
+					t1 += data_core.get_manifest(0) // make it monochrome
+
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null

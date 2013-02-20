@@ -80,15 +80,23 @@
 				find_prob +=40
 			if (isright(tool))
 				find_prob +=20
-
-		if (prob(find_prob))
+			if (prob(find_prob))
+				user.visible_message("\blue [user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].", \
+				"\blue You take something out of incision on [target]'s [affected.display_name]s with \the [tool]." )
+				affected.implants -= imp
+				imp.loc = get_turf(target)
+				imp.imp_in = null
+				imp.implanted = 0
+		else if (affected.hidden)
 			user.visible_message("\blue [user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].", \
 			"\blue You take something out of incision on [target]'s [affected.display_name]s with \the [tool]." )
-			var/obj/item/weapon/implant/imp = affected.implants[1]
-			affected.implants -= imp
-			imp.loc = get_turf(target)
-			imp.imp_in = null
-			imp.implanted = 0
+			affected.hidden.loc = get_turf(target)
+			if(!affected.hidden.blood_DNA)
+				affected.hidden.blood_DNA = list()
+			affected.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type
+			affected.hidden.update_icon()
+			affected.hidden = null
+
 		else
 			user.visible_message("\blue [user] could not find anything inside [target]'s [affected.display_name], and pulls \the [tool] out.", \
 			"\blue You could not find anything inside [target]'s [affected.display_name]." )
@@ -108,3 +116,49 @@
 				playsound(imp.loc, 'sound/items/countdown.ogg', 75, 1, -3)
 				spawn(25)
 					imp.activate()
+
+//////////////////////////////////////////////////////////////////
+//					ITEM PLACEMENT SURGERY						//
+//////////////////////////////////////////////////////////////////
+
+/datum/surgery_step/item_place
+	required_tool = /obj/item
+
+	min_duration = 80
+	max_duration = 100
+	var/max_size = 2	//maximum w_class of item that fits.
+
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		if (affected.name in list("chest","groin","head"))
+			max_size = 3
+		else
+			max_size = 2
+		return affected.open == 2 && !(affected.status & ORGAN_BLEEDING) && tool.w_class <= max_size && !affected.hidden
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("[user] starts putting [tool] inside the incision on [target]'s [affected.display_name].", \
+		"You start putting [tool] inside the incision on [target]'s [affected.display_name]." )
+		target.custom_pain("The pain in your chest is living hell!",1)
+		..()
+
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
+
+		user.visible_message("\blue [user] puts [tool] inside [target]'s [affected.display_name].", \
+		"\blue You put [tool] inside [target]'s [affected.display_name]." )
+		if (tool.w_class > max_size/2 && prob(50))
+			user << "\red You tear some vessels trying to fit such big object in this cavity."
+			var/datum/wound/internal_bleeding/I = new (15)
+			affected.wounds += I
+			affected.owner.custom_pain("You feel something rip in your [affected.display_name]!", 1)
+		user.drop_item()
+		affected.hidden = tool
+		tool.loc = target
+
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.display_name] with \the [tool]!", \
+		"\red Your hand slips, scraping tissue inside [target]'s [affected.display_name] with \the [tool]!")
+		affected.createwound(CUT, 20)

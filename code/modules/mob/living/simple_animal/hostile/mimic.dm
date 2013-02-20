@@ -13,7 +13,7 @@
 	response_help = "touches the"
 	response_disarm = "pushes the"
 	response_harm = "hits the"
-	speed = -1
+	speed = 4
 	maxHealth = 250
 	health = 250
 
