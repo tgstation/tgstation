@@ -73,6 +73,15 @@
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
 
+	// Debug code below here, very useful for testing so don't delete please.
+	/*var/debug_message = "Firing random event. "
+	for(var/V in active_with_role)
+		debug_message += "#[V]:[active_with_role[V]] "
+	debug_message += "||| "
+	for(var/V in possibleEvents)
+		debug_message += "[V]:[possibleEvents[V]]"
+	message_admins(debug_message)*/
+
 	var/picked_event = pickweight(possibleEvents)
 	if(!picked_event)
 		return
@@ -160,32 +169,32 @@
 	for(var/mob/M in player_list)
 		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
-		switch(role)
-			if("Engineer")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
-					active_with_role["Engineer"]++
-				if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
-					active_with_role["Engineer"]++
-			if("Medical")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
-					active_with_role["Medical"]++
-				if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
-					active_with_role["Medical"]++
-			if("Security")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
-					active_with_role["Security"]++
-				if(M.mind.assigned_role in security_positions)
-					active_with_role["Security"]++
-			if("Scientist")
-				if(M.mind.assigned_role in list("Research Director", "Scientist"))
-					active_with_role["Scientist"]++
-			if("AI")
-				if(M.mind.assigned_role == "AI")
-					active_with_role["AI"]++
-			if("Cyborg")
-				if(M.mind.assigned_role == "Cyborg")
-					active_with_role["Cyborg"]++
-			if("Janitor")
-				if(M.mind.assigned_role == "Janitor")
-					active_with_role["Janitor"]++
+
+		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
+			active_with_role["Engineer"]++
+		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
+			active_with_role["Engineer"]++
+
+		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
+			active_with_role["Medical"]++
+		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
+			active_with_role["Medical"]++
+
+		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
+			active_with_role["Security"]++
+		if(M.mind.assigned_role in security_positions)
+			active_with_role["Security"]++
+
+		if(M.mind.assigned_role in list("Research Director", "Scientist"))
+			active_with_role["Scientist"]++
+
+		if(M.mind.assigned_role == "AI")
+			active_with_role["AI"]++
+
+		if(M.mind.assigned_role == "Cyborg")
+			active_with_role["Cyborg"]++
+
+		if(M.mind.assigned_role == "Janitor")
+			active_with_role["Janitor"]++
+
 	return active_with_role
