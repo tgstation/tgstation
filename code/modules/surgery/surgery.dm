@@ -27,7 +27,7 @@
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses.
-//As of Feb 14 2013 it's in code/modules/mob/living/carbon/carbon.dm, line 448.
+//As of Feb 19 2013 it's in code/modules/mob/living/carbon/carbon.dm, line 459.
 //Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon).
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
 
@@ -40,7 +40,6 @@
 //more interesting failure options
 //randomised complications
 //more surgeries!
-//add a generic proc to check if target location is unclothed
 //add a probability modifier for the state of the surgeon- health, twitching, etc. blindness, god forbid.
 //helper for converting a zone_sel.selecting to body part (for damage)
 //combine hands/feet into the arms

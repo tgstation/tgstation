@@ -155,7 +155,7 @@
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/machinery/optable) in src.loc) && \
+			!(locate(/obj/structure/optable) in src.loc) && \
 			!(locate(/obj/item/weapon/tray) in src.loc) \
 		)
 		user << "\red You cannot slice [src] here! You need a table or at least a tray to do it."
