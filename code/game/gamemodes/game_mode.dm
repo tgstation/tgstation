@@ -64,8 +64,8 @@ Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom:3:Freedom Implant;
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
-/obj/item/weapon/implant/explosive:6:Explosive Implant (DANGER!);
-/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;Whitespace:Seperator;
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive:6:Explosive Implant (DANGER!);
+/obj/item/weapon/storage/box/syndie_kit/imp_compress:4:Compressed Matter Implant;Whitespace:Seperator;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 

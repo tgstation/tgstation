@@ -83,7 +83,7 @@
 
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
-	icon_state = "cimplanter0"
+	icon_state = "cimplanter1"
 
 /obj/item/weapon/implanter/compressed/New()
 	imp = new /obj/item/weapon/implant/compressed( src )
@@ -95,11 +95,11 @@
 	if (imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if(!c.scanned)
-			icon_state = "cimplanter0"
-		else
 			icon_state = "cimplanter1"
+		else
+			icon_state = "cimplanter2"
 	else
-		icon_state = "cimplanter2"
+		icon_state = "cimplanter0"
 	return
 
 /obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
