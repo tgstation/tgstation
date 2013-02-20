@@ -118,11 +118,11 @@
 	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
 		"oxygen"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1.0, -1.0, -1.0, -1.0), /* kpa */
-		"temperature"    = new/datum/tlv(40, 60, 120, 140), // K
+		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), /* kpa */
+		"temperature"    = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // K
 	)
 
 /obj/machinery/alarm/kitchen_cold_room

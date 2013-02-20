@@ -1,3 +1,9 @@
+/mob/living/Life()
+	..()
+	var/area/cur_area = get_area(loc)
+	if(cur_area)
+		cur_area.mob_activate(src)
+
 
 /mob/living/verb/succumb()
 	set hidden = 1

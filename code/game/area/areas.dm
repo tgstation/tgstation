@@ -305,6 +305,9 @@
 			for(var/mob/living/carbon/human/M in SubA)
 				thunk(M)
 
+/area/proc/mob_activate(var/mob/living/L)
+	return
+
 /area/proc/thunk(mob)
 	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
 		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))

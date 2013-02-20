@@ -126,6 +126,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = 0
+	var/push_dir = SOUTH
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -152,6 +153,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Emergency Shuttle Transit"
 	icon_state = "shuttle"
 
+	mob_activate(var/mob/living/L)
+		push_mob_back(L, push_dir)
+
+
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
 	music = "music/escape.ogg"
@@ -164,6 +169,9 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
+
+	mob_activate(var/mob/living/L)
+		push_mob_back(L, push_dir)
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
@@ -178,9 +186,13 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
 
+	mob_activate(var/mob/living/L)
+		push_mob_back(L, push_dir)
+
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
 	music = "music/escape.ogg"
+	push_dir = WEST
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
@@ -191,9 +203,13 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
 
+	mob_activate(var/mob/living/L)
+		push_mob_back(L, push_dir)
+
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
 	music = "music/escape.ogg"
+	push_dir = WEST
 
 /area/shuttle/escape_pod5/station
 	icon_state = "shuttle2"
@@ -203,6 +219,9 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
+
+	mob_activate(var/mob/living/L)
+		push_mob_back(L, push_dir)
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"

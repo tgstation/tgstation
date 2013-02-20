@@ -23,8 +23,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	var/table_options = " align='center'"
 	var/row_options1 = " width='90px'"
 	var/row_options2 = " width='200px'"
-	var/window_x = 350
-	var/window_y = 450
+	var/window_x = 370
+	var/window_y = 470
 
 /datum/wires/New(var/atom/holder)
 	..()

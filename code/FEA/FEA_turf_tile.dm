@@ -199,6 +199,14 @@ turf/simulated
 	proc/mimic_air_with_tile(turf/T)
 		return air.mimic(T)
 
+	proc/copy_air_with_tile(turf/simulated/T)
+		if(istype(T) && T.air && air)
+			air.copy_from(T.air)
+
+	proc/copy_air(datum/gas_mixture/copy)
+		if(air && copy)
+			air.copy_from(copy)
+
 	return_air()
 		if(air)
 			if(parent&&parent.group_processing)

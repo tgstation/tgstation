@@ -439,3 +439,7 @@ datum/shuttle_controller
 				S.startmove()
 
 
+/proc/push_mob_back(var/mob/living/L, var/dir)
+	if(iscarbon(L))
+		if(prob(88))
+			step(L, dir)
