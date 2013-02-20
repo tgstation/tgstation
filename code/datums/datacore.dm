@@ -118,7 +118,7 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 	switch(H.get_species())
 		if("Tajaran")
 			icobase = 'icons/mob/human_races/r_tajaran.dmi'
-		if( "Soghun")
+		if("Unathi")
 			icobase = 'icons/mob/human_races/r_lizard.dmi'
 		if("Skrell")
 			icobase = 'icons/mob/human_races/r_skrell.dmi'
