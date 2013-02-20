@@ -186,6 +186,9 @@
 			M.powernet = PN
 			P = M.get_connections()
 
+		else
+			return
+
 		if(P.len == 0)	return
 
 		O = P[1]
