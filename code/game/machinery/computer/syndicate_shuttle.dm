@@ -61,7 +61,6 @@
 	<a href='?src=\ref[src];station_sw=1'>South West of SS13</a> |
 	<a href='?src=\ref[src];station_s=1'>South of SS13</a> |
 	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
-	<a href='?src=\ref[src];commssat=1'>South of the Communication Satellite</a> |
 	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>
 	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
@@ -91,8 +90,8 @@
 		syndicate_move_to(/area/syndicate_station/south)
 	else if(href_list["station_se"])
 		syndicate_move_to(/area/syndicate_station/southeast)
-	else if(href_list["commssat"])
-		syndicate_move_to(/area/syndicate_station/commssat)
+//	else if(href_list["commssat"])
+//		syndicate_move_to(/area/syndicate_station/commssat)
 	else if(href_list["mining"])
 		syndicate_move_to(/area/syndicate_station/mining)
 

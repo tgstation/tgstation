@@ -46,7 +46,7 @@
 //NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
-	desc = "A high tech, NASA Centcom branch designed, dark red space suit helmet. Used for server maintenance."
+	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	item_state = "void"
 
@@ -54,7 +54,7 @@
 	name = "NASA Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "A high tech, NASA Centcom branch designed, dark red Space suit. Used for server maintenance."
+	desc = "An old, NASA Centcom branch designed, dark red Space suit."
 	slowdown = 2
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/multitool)
 
