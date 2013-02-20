@@ -20,49 +20,55 @@ var/list/beam_master = list()
 	process()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
+		spawn while(src) //Move until we hit something
 
-		spawn(0)
-			while(!bumped) //Move until we hit something
-				step_towards(src, current) //Move~
+			if((!( current ) || loc == current)) //If we pass our target
+				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				del(src) //Delete if it passes the world edge
+				return
+			step_towards(src, current) //Move~
 
-				for(var/mob/living/M in loc)
-					Bump(M) //Bump anyone we touch
+			if(kill_count < 1)
+				del(src)
+			kill_count--
 
-				if((!( current ) || loc == current)) //If we pass our target
-					current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
 
-				if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-					del(src) //Delete if it passes the world edge
-					return
+			if(!first) //Add the overlay as we pass over tiles
+				var/target_dir = get_dir(src, current) //So we don't call this too much
 
-				if(!first) //Add the overlay as we pass over tiles
-					var/target_dir = get_dir(src, current) //So we don't call this too much
+				//If the icon has not been added yet
+				if( !("[icon_state][target_dir]" in beam_master) )
+					var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
+					beam_master["[icon_state][target_dir]"] = I //And cache it!
 
-					//If the icon has not been added yet
-					if( !("[icon_state][target_dir]" in beam_master) )
-						var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
-						beam_master["[icon_state][target_dir]"] = I //And cache it!
+				//Finally add the overlay
+				src.loc.overlays += beam_master["[icon_state][target_dir]"]
 
-					//Finally add the overlay
-					src.loc.overlays += beam_master["[icon_state][target_dir]"]
-
-					//Add the turf to a list in the beam master so they can be cleaned up easily.
-					if(reference in beam_master)
-						var/list/turf_master = beam_master[reference]
-						if("[icon_state][target_dir]" in turf_master)
-							var/list/turfs = turf_master["[icon_state][target_dir]"]
-							turfs += loc
-						else
-							turf_master["[icon_state][target_dir]"] = list(loc)
+				//Add the turf to a list in the beam master so they can be cleaned up easily.
+				if(reference in beam_master)
+					var/list/turf_master = beam_master[reference]
+					if("[icon_state][target_dir]" in turf_master)
+						var/list/turfs = turf_master["[icon_state][target_dir]"]
+						turfs += loc
 					else
-						var/list/turfs = list()
-						turfs["[icon_state][target_dir]"] = list(loc)
-						beam_master[reference] = turfs
+						turf_master["[icon_state][target_dir]"] = list(loc)
 				else
-					first = 0
-
+					var/list/turfs = list()
+					turfs["[icon_state][target_dir]"] = list(loc)
+					beam_master[reference] = turfs
+			else
+				first = 0
 		cleanup(reference)
 		return
+
+	Del()
+		cleanup("\ref[src]")
+		..()
 
 	proc/cleanup(reference) //Waits .3 seconds then removes the overlay.
 		src = null
