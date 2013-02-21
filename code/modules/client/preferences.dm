@@ -768,8 +768,8 @@ datum/preferences
 						var/prev_species = species
 						var/whitelisted = 0
 						if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-							if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
-								new_species += "Soghun"
+							if(is_alien_whitelisted(user, "Soghun")) //Check for Unathi and admins
+								new_species += "Unathi"
 								whitelisted = 1
 							if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran and admins
 								new_species += "Tajaran"
@@ -782,7 +782,7 @@ datum/preferences
 								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
 						else //Not using the whitelist? Aliens for everyone!
 							new_species += "Tajaran"
-							new_species += "Soghun"
+							new_species += "Unathi"
 							new_species += "Skrell"
 						species = input("Please select a species", "Character Generation", null) in new_species
 
@@ -843,7 +843,7 @@ datum/preferences
 							b_type = new_b_type
 
 					if("hair")
-						if(species == "Human" || species == "Soghun")
+						if(species == "Human" || species == "Unathi")
 							var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 							if(new_hair)
 								r_hair = hex2num(copytext(new_hair, 2, 4))

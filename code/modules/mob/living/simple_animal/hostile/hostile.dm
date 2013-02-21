@@ -8,7 +8,7 @@
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
-	var/move_to_delay = 2 //delay for the automated movement.
+	var/move_to_delay = 4 //delay for the automated movement.
 	var/list/friends = list()
 	var/break_stuff_probability = 10
 	stop_automated_movement_when_pulled = 0
@@ -45,6 +45,13 @@
 			if (M.occupant)
 				stance = HOSTILE_STANCE_ATTACK
 				T = M
+				break
+
+		if(istype(A, /obj/machinery/bot))
+			var/obj/machinery/bot/B = A
+			if (B.health > 0)
+				stance = HOSTILE_STANCE_ATTACK
+				T = B
 				break
 	return T
 
@@ -88,6 +95,9 @@
 		var/obj/mecha/M = target_mob
 		M.attack_animal(src)
 		return M
+	if(istype(target_mob,/obj/machinery/bot))
+		var/obj/machinery/bot/B = target_mob
+		B.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	stance = HOSTILE_STANCE_IDLE

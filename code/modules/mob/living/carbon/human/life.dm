@@ -1260,10 +1260,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					if("lizard","slime")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-					if("tajaran")
-						see_in_dark = 4
-					if("shadow")
+					if("shadow","tajaran")
 						see_in_dark = 8
+						see_invisible = SEE_INVISIBLE_LEVEL_ONE
 					else
 						see_in_dark = 2
 
@@ -1403,7 +1402,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 			var/masked = 0
 
-			if( istype(head, /obj/item/clothing/head/welding) )
+			if( istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 				var/obj/item/clothing/head/welding/O = head
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask

@@ -1,5 +1,5 @@
 
-/obj/machinery/computer/rust/gyrotron_controller
+/obj/machinery/computer/rust_gyrotron_controller
 	name = "Gyrotron Remote Controller"
 	icon_state = "power"
 	var/updating = 1
