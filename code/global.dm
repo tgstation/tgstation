@@ -169,6 +169,7 @@ var/list/AAlarmWireColorToIndex
 	//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
 #define MAX_NAME_LEN 26
+#define MAX_BROADCAST_LEN 512
 
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive

@@ -251,6 +251,7 @@ datum/signal
 
 
 	proc/signaler(var/freq = 1459, var/code = 30)
+
 		if(isnum(freq) && isnum(code))
 
 			var/obj/machinery/telecomms/server/S = data["server"]
@@ -265,6 +266,9 @@ datum/signal
 				freq *= 10 // shift the decimal one place
 
 			freq = sanitize_frequency(freq)
+
+			code = round(code)
+			code = Clamp(code, 0, 100)
 
 			var/datum/signal/signal = new
 			signal.source = S

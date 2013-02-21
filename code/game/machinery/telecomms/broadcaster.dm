@@ -31,6 +31,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	if(signal.data["message"])
 
+
 		// Prevents massive radio spam
 		signal.data["done"] = 1 // mark the signal as being broadcasted
 		// Search for the original signal and mark it as done as well
@@ -225,6 +226,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/display_freq = freq
 
 	var/list/obj/item/device/radio/radios = list()
+
+	// Cut down on the message sizes.
+
+	message = copytext(message, 1, MAX_BROADCAST_LEN)
+	vmessage = copytext(vmessage, 1, MAX_BROADCAST_LEN)
+
 
 	// --- Broadcast only to intercom devices ---
 

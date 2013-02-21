@@ -19,6 +19,7 @@ var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 		return 1
 	return 0
 
+// So the wires do not open a new window, handle the interaction ourselves.
 /datum/wires/mulebot/Interact(var/mob/living/user)
 	if(CanUse(user))
 		var/obj/machinery/bot/mulebot/M = holder
