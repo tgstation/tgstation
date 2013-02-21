@@ -372,7 +372,11 @@ var/list/advance_cures = 	list(
 		if(preserve.len)
 			R.data["viruses"] = preserve
 
-/proc/AdminCreateVirus(var/mob/user)
+/proc/AdminCreateVirus(var/client/user)
+
+	if(!user)
+		return
+
 	var/i = 5
 
 	var/datum/disease/advance/D = new(0, null)
@@ -382,19 +386,24 @@ var/list/advance_cures = 	list(
 	symptoms += "Done"
 	symptoms += list_symptoms.Copy()
 	do
-		var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
-		if(istext(symptom))
-			i = 0
-		else if(ispath(symptom))
-			var/datum/symptom/S = new symptom
-			if(!D.HasSymptom(S))
-				D.symptoms += S
-				i -= 1
+		if(user)
+			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+			if(isnull(symptom))
+				return
+			else if(istext(symptom))
+				i = 0
+			else if(ispath(symptom))
+				var/datum/symptom/S = new symptom
+				if(!D.HasSymptom(S))
+					D.symptoms += S
+					i -= 1
 	while(i > 0)
 
 	if(D.symptoms.len > 0)
 
 		var/new_name = input(user, "Name your new disease.", "New Name")
+		if(!new_name)
+			return
 		D.AssignName(new_name)
 		D.Refresh()
 

@@ -2089,7 +2089,7 @@
 				feedback_add_details("admin_secrets_fun_used","V")
 				switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
 					if("Make Your Own")
-						AdminCreateVirus()
+						AdminCreateVirus(usr.client)
 					if("Random")
 						new /datum/event/disease_outbreak(overrides)
 					if("Choose")
