@@ -33,6 +33,24 @@
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to mend the incision in [target]'s [target_zone].</span>")
 
+/datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
+	if(istype(tool, /obj/item/weapon/cautery))
+		return 1
+
+	if(istype(tool, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = tool
+		if(WT.isOn())	return 1
+
+	else if(istype(tool, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = tool
+		if(L.lit)	return 1
+
+	else if(istype(tool, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = tool
+		if(M.lit)	return 1
+
+	return 0
+
 
 //saw bone
 /datum/surgery_step/saw
