@@ -150,6 +150,7 @@
 #include "code\datums\wires\particle_accelerator.dm"
 #include "code\datums\wires\radio.dm"
 #include "code\datums\wires\robot.dm"
+#include "code\datums\wires\vending.dm"
 #include "code\datums\wires\wires.dm"
 #include "code\defines\obj.dm"
 #include "code\defines\obj\weapon.dm"

@@ -1,6 +1,6 @@
 /datum/surgery/brain_removal
 	name = "brain removal"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/extract_brain, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/extract_brain)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	location = "head"
 
