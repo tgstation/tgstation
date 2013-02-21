@@ -13,7 +13,7 @@
 	name = "chest"
 	icon_name = "chest"
 	max_damage = 150
-	body_part = UPPER_TORSO
+	body_part = CHEST
 
 /datum/limb/head
 	name = "head"
@@ -69,7 +69,7 @@
 /datum/limb/groin
 	name = "groin"
 	icon_name = "groin"
-	body_part = LOWER_TORSO
+	body_part = GROIN
 */
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.

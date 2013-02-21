@@ -249,30 +249,30 @@ var/MAX_EX_FLASH_RANGE = 14
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
-#define HEAD			1
-#define UPPER_TORSO		2
-#define LOWER_TORSO		4
-#define LEG_LEFT		8
-#define LEG_RIGHT		16
-#define LEGS			24
-#define FOOT_LEFT		32
-#define FOOT_RIGHT		64
-#define FEET			96
-#define ARM_LEFT		128
-#define ARM_RIGHT		256
-#define ARMS			384
-#define HAND_LEFT		512
-#define HAND_RIGHT		1024
-#define HANDS			1536
-#define FULL_BODY		2047
+#define HEAD		1
+#define CHEST		2
+#define GROIN		4
+#define LEG_LEFT	8
+#define LEG_RIGHT	16
+#define LEGS		24
+#define FOOT_LEFT	32
+#define FOOT_RIGHT	64
+#define FEET		96
+#define ARM_LEFT	128
+#define ARM_RIGHT	256
+#define ARMS		384
+#define HAND_LEFT	512
+#define HAND_RIGHT	1024
+#define HANDS		1536
+#define FULL_BODY	2047
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
 // Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
 #define THERMAL_PROTECTION_HEAD			0.3
-#define THERMAL_PROTECTION_UPPER_TORSO	0.15
-#define THERMAL_PROTECTION_LOWER_TORSO	0.15
+#define THERMAL_PROTECTION_CHEST	0.15
+#define THERMAL_PROTECTION_GROIN	0.15
 #define THERMAL_PROTECTION_LEG_LEFT		0.075
 #define THERMAL_PROTECTION_LEG_RIGHT	0.075
 #define THERMAL_PROTECTION_FOOT_LEFT	0.025

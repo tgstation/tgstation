@@ -227,7 +227,7 @@
 		//Handle normal clothing
 		if(head && (head.body_parts_covered & HEAD))
 			thermal_protection += 0.5
-		if(wear_suit && (wear_suit.body_parts_covered & UPPER_TORSO))
+		if(wear_suit && (wear_suit.body_parts_covered & CHEST))
 			thermal_protection += 0.5
 		if(wear_suit && (wear_suit.body_parts_covered & LEGS))
 			thermal_protection += 0.2

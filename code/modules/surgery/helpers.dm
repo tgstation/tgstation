@@ -49,9 +49,9 @@ proc/get_location_modifier(mob/M)
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations	//based on body_parts_covered
-	var/face_covered		//based on flags_inv
-	var/eyesmouth_covered	//based on flags
+	var/covered_locations	= 0	//based on body_parts_covered
+	var/face_covered		= 0	//based on flags_inv
+	var/eyesmouth_covered	= 0	//based on flags
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask))
@@ -60,13 +60,10 @@ proc/get_location_modifier(mob/M)
 			eyesmouth_covered |= I.flags
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			for(var/obj/item/clothing/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.head, H.ears))
+			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.head, H.ears))
 				covered_locations |= I.body_parts_covered
 				face_covered |= I.flags_inv
 				eyesmouth_covered |= I.flags
-
-	if(covered_locations & FULL_BODY)
-		return 0
 
 	switch(location)
 		if("head")
@@ -79,31 +76,34 @@ proc/get_location_modifier(mob/M)
 			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH)
 				return 0
 		if("chest")
-			if(covered_locations & (UPPER_TORSO || LOWER_TORSO))
+			if(covered_locations & CHEST)
+				return 0
+		if("groin")
+			if(covered_locations & GROIN)
 				return 0
 		if("l_arm")
-			if(covered_locations & (ARM_LEFT || ARMS))
+			if(covered_locations & ARM_LEFT)
 				return 0
 		if("r_arm")
-			if(covered_locations & (ARM_RIGHT || ARMS))
+			if(covered_locations & ARM_RIGHT)
 				return 0
 		if("l_leg")
-			if(covered_locations & (LEG_LEFT || LEGS))
+			if(covered_locations & LEG_LEFT)
 				return 0
 		if("r_leg")
-			if(covered_locations & (LEG_RIGHT || LEGS))
+			if(covered_locations & LEG_RIGHT)
 				return 0
 		if("l_hand")
-			if(covered_locations & (HAND_LEFT || HANDS))
+			if(covered_locations & HAND_LEFT)
 				return 0
 		if("r_hand")
-			if(covered_locations & (HAND_RIGHT || HANDS))
+			if(covered_locations & HAND_RIGHT)
 				return 0
 		if("l_foot")
-			if(covered_locations & (FOOT_LEFT || FEET))
+			if(covered_locations & FOOT_LEFT)
 				return 0
 		if("r_foot")
-			if(covered_locations & (FOOT_RIGHT || FEET))
+			if(covered_locations & FOOT_RIGHT)
 				return 0
 
 	return 1

@@ -63,7 +63,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 /*
 	var/list/clothing_areas	= list()
-	var/list/covers = list(UPPER_TORSO,LOWER_TORSO,LEGS,FEET,ARMS,HANDS)
+	var/list/covers = list(CHEST,GROIN,LEGS,FEET,ARMS,HANDS)
 	for(var/Covers in covers)
 		clothing_areas[Covers] = list()
 

@@ -79,8 +79,8 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = FPRINT | TABLEPASS
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST | GROIN | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/under/acj
@@ -92,9 +92,9 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT | TABLEPASS
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/under/owl
@@ -170,7 +170,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	color = "blackskirt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -178,7 +178,7 @@
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	color = "schoolgirl"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -214,7 +214,7 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 	color = "kilt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
+	body_parts_covered = CHEST|GROIN|FEET
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -222,7 +222,7 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	color = "sexymime"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -230,7 +230,7 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	color = "gladiator"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -238,4 +238,4 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	color = "sundress"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = CHEST|GROIN
