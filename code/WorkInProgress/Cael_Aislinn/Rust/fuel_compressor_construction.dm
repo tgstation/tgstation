@@ -43,7 +43,6 @@
 	else
 		has_electronics = 3
 		opened = 1
-		coverlocked = 1
 		locked = 0
 		icon_state = "port0"
 
@@ -65,21 +64,19 @@
 						"\red [user.name] has removed the circuitboard from [src.name]!",\
 						"\blue You remove the circuitboard board.")
 					has_electronics = 0
-					new /obj/item/weapon/circuitboard/rust_fuel_compressor(loc)
+					new /obj/item/weapon/module/rust_fuel_compressor(loc)
 					has_electronics &= ~1
 			else
 				opened = 0
 				icon_state = "fuel_compressor0"
 				user << "\blue You close the maintenance cover."
-		else if(!coverlocked)
+		else
 			if(compressed_matter > 0)
 				user << "\red You cannot open the cover while there is compressed matter inside."
 			else
 				opened = 1
 				user << "\blue You open the maintenance cover."
 				icon_state = "fuel_compressor1"
-		else
-			user << "\red The cover is locked and cannot be opened."
 		return
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
@@ -134,7 +131,7 @@
 			has_electronics &= ~2
 		return
 
-	else if (istype(W, /obj/item/weapon/circuitboard/rust_fuel_compressor) && opened && !(has_electronics & 1))
+	else if (istype(W, /obj/item/weapon/module/rust_fuel_compressor) && opened && !(has_electronics & 1))
 		user << "You trying to insert the circuitboard into the frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))

@@ -43,8 +43,6 @@
 	else
 		has_electronics = 3
 		opened = 1
-		coverlocked = 1
-		locked = 0
 		icon_state = "port0"
 
 	//20% easier to read than apc code
@@ -65,47 +63,19 @@
 						"\red [user.name] has removed the circuitboard from [src.name]!",\
 						"\blue You remove the circuitboard.")
 					has_electronics = 0
-					new /obj/item/weapon/circuitboard/rust_fuel_port(loc)
+					new /obj/item/weapon/module/rust_fuel_port(loc)
 					has_electronics &= ~1
 			else
 				opened = 0
 				icon_state = "port0"
 				user << "\blue You close the maintenance cover."
-		else if(!coverlocked)
+		else
 			if(cur_assembly)
 				user << "\red You cannot open the cover while there is a fuel assembly inside."
 			else
 				opened = 1
 				user << "\blue You open the maintenance cover."
 				icon_state = "port2"
-		else
-			user << "\red The cover is locked and cannot be opened."
-		return
-
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
-		if(opened)
-			user << "You must close the cover to swipe an ID card."
-		else
-			if(src.allowed(usr))
-				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] the port interface."
-				update_icon()
-			else
-				user << "\red Access denied."
-		return
-
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)		// trying to unlock with an emag card
-		if(opened)
-			user << "You must close the cover to swipe an ID card."
-		else
-			flick("apc-spark", src)
-			if (do_after(user,6))
-				if(prob(50))
-					emagged = 1
-					locked = 0
-					user << "You emag the port interface."
-				else
-					user << "You fail to [ locked ? "unlock" : "lock"] the port interface."
 		return
 
 	else if (istype(W, /obj/item/weapon/cable_coil) && opened && !(has_electronics & 2))
@@ -134,7 +104,7 @@
 			has_electronics &= ~2
 		return
 
-	else if (istype(W, /obj/item/weapon/circuitboard/rust_fuel_port) && opened && !(has_electronics & 1))
+	else if (istype(W, /obj/item/weapon/module/rust_fuel_port) && opened && !(has_electronics & 1))
 		user << "You trying to insert the port control board into the frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))

@@ -258,7 +258,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	switch(newsize)
 		if(1)
 			size = 1
-			icon = 'emfield.dmi'
+			icon = 'rust.dmi'
 			icon_state = "emfield_s1"
 			pixel_x = 0
 			pixel_y = 0

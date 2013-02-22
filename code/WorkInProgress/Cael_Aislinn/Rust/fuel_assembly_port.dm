@@ -11,8 +11,6 @@
 	anchored = 1
 
 	var/opened = 1 //0=closed, 1=opened
-	var/coverlocked = 0
-	var/locked = 0
 	var/has_electronics = 0 // 0 - none, bit 1 - circuitboard, bit 2 - wires
 
 /obj/machinery/rust_fuel_assembly_port/attackby(var/obj/item/I, var/mob/user)

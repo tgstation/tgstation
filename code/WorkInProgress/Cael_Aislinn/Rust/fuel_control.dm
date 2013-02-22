@@ -62,14 +62,14 @@
 		return
 
 	var/dat = "<B>Reactor Core Fuel Control</B><BR>"
-	dat += "<b>Fuel depletion announcement:</b> "
+	/*dat += "<b>Fuel depletion announcement:</b> "
 	dat += "[announce_fueldepletion == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_fueldepletion=0'>\[Disable\]</a>"] "
 	dat += "[announce_fueldepletion == 1 ? 	"Announcing"	: "<a href='?src=\ref[src];announce_fueldepletion=1'>\[Announce\]</a>"] "
 	dat += "[announce_fueldepletion == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_fueldepletion=2'>\[Broadcast\]</a>"]<br>"
 	dat += "<b>Stage progression announcement:</b> "
 	dat += "[announce_stageprogression == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_stageprogression=0'>\[Disable\]</a>"] "
 	dat += "[announce_stageprogression == 1 ? 	"Announcing"	: "<a href='?src=\ref[src];announce_stageprogression=1'>\[Announce\]</a>"] "
-	dat += "[announce_stageprogression == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_stageprogression=2'>\[Broadcast\]</a>"]<br>"
+	dat += "[announce_stageprogression == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_stageprogression=2'>\[Broadcast\]</a>"]<br>"*/
 	dat += "<hr>"
 
 	dat += "<b>Detected devices</b> <a href='?src=\ref[src];scan=1'>\[Refresh list\]</a>"
