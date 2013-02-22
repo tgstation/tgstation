@@ -24,11 +24,17 @@
 			side_effects += M
 
 /mob/living/carbon/human/proc/handle_medical_side_effects()
-	if(src.reagents.has_reagent("cryoxadone"))
+	if(src.reagents.has_reagent("cryoxadone") || src.get_reagent_amount("bicaridine") >= 15 || src.get_reagent_amount("tricordrazine") >= 15)
 		src.add_side_effect("Headache")
 
-	/*if(src.reagents.has_reagent("kelotane") && prob(20) || src.reagents.has_reagent("dermaline"))
-		src.add_side_effect("Bad Stomach")*/
+	(src.get_reagent_amount("kelotane") >= 30 || src.reagents.has_reagent("dermaline") >= 15)
+		src.add_side_effect("Bad Stomach")
+
+	(src.get_reagent_amount("tramadol") >= 16 || src.reagents.has_reagent("anti_toxin") >= 30)
+		src.add_side_effect("Cramps")
+
+	(src.get_reagent_amount("space_drugs") >= 10)
+		src.add_side_effect("Itch")
 
 	// One full cycle(in terms of strength) every 10 minutes
 	var/strength_percent = sin(life_tick / 2)

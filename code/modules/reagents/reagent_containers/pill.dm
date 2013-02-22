@@ -84,7 +84,7 @@
 	icon_state = "pill17"
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 50)
+		reagents.add_reagent("anti_toxin", 25)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "Toxins pill"
