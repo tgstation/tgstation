@@ -24,12 +24,11 @@
 			side_effects += M
 
 /mob/living/carbon/human/proc/handle_medical_side_effects()
-	if(src.reagents.has_reagent("bicaridine") && prob(40) || src.reagents.has_reagent("tricordrazine") && prob(10) || src.reagents.has_reagent("cryoxadone") && prob(20))
+	if(src.reagents.has_reagent("cryoxadone"))
 		src.add_side_effect("Headache")
 
-
-	if(src.reagents.has_reagent("kelotane") && prob(20) || src.reagents.has_reagent("dermaline") && prob(40))
-		src.add_side_effect("Bad Stomach")
+	/*if(src.reagents.has_reagent("kelotane") && prob(20) || src.reagents.has_reagent("dermaline"))
+		src.add_side_effect("Bad Stomach")*/
 
 	// One full cycle(in terms of strength) every 10 minutes
 	var/strength_percent = sin(life_tick / 2)
