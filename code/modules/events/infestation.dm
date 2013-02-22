@@ -80,7 +80,6 @@
 			vermstring = "lizards"
 		if(VERM_SPIDERS)
 			spawn_types = list(/obj/effect/spider/spiderling)
-			max_number = 6
 			vermstring = "spiders"
 	spawn(0)
 		var/num = rand(1, 3)
