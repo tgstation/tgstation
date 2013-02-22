@@ -849,3 +849,19 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/closet
 	containername = "Formalwear for the best occasions."
 	group = "Operations"
+
+/datum/supply_packs/rust_core
+	contains = list(/obj/machinery/power/rust_core)
+	name = "RUST Tokamak Core"
+	cost = 75
+	containertype = /obj/structure/largecrate
+	containername = "RUST tokamak crate."
+	group = "Engineering"
+
+/datum/supply_packs/rust_injector
+	contains = list(/obj/machinery/power/rust_fuel_injector)
+	name = "RUST fuel injector"
+	cost = 40
+	containertype = /obj/structure/largecrate
+	containername = "RUST injector crate."
+	group = "Engineering"
