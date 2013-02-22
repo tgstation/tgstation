@@ -48,7 +48,7 @@
 					if (W.current_stage <= W.max_bleeding_stage)
 						user.visible_message( 	"\blue [user] bandages [W.desc] on [M]'s [affecting.display_name].", \
 										"\blue You bandage [W.desc] on [M]'s [affecting.display_name]." )
-						H.add_side_effect("Itch")
+						//H.add_side_effect("Itch")
 					else if (istype(W,/datum/wound/bruise))
 						user.visible_message( 	"\blue [user] places bruise patch over [W.desc] on [M]'s [affecting.display_name].", \
 										"\blue You place bruise patch over [W.desc] on [M]'s [affecting.display_name]." )

@@ -134,7 +134,7 @@ proc/hasorgans(A)
 			zone = "head"
 		if("mouth")
 			zone = "head"
-		if("l_hand")
+/*		if("l_hand")
 			zone = "l_arm"
 		if("r_hand")
 			zone = "r_arm"
@@ -144,6 +144,7 @@ proc/hasorgans(A)
 			zone = "r_leg"
 		if("groin")
 			zone = "chest"
+*/
 	return zone
 
 
@@ -171,7 +172,7 @@ proc/hasorgans(A)
 
 	// you can only miss if your target is standing and not restrained
 	if(!target.buckled && !target.lying)
-		var/miss_chance = max(10 + miss_chance_mod, 0)
+		var/miss_chance = 10
 		switch(zone)
 			if("head")
 				miss_chance = 40
@@ -191,6 +192,7 @@ proc/hasorgans(A)
 				miss_chance = 50
 			if("r_foot")
 				miss_chance = 50
+		miss_chance = max(miss_chance + miss_chance_mod, 0)
 		if(prob(miss_chance))
 			if(prob(70))
 				return null

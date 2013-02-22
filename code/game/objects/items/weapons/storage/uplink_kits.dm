@@ -83,24 +83,21 @@
 	O.update()
 	return
 
-/*/obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "Compressed Matter Implant (with injector)"
+/obj/item/weapon/storage/box/syndie_kit/imp_compress
+	name = "box (C)"
 
-/obj/item/weapon/storage/syndie_kit/imp_compress/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
 	..()
 	return
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive
-	name = "Explosive Implant (with injector)"
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive
+	name = "box (E)"
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive/New()
-	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-	O.imp = new /obj/item/weapon/implant/explosive(O)
-	O.name = "(BIO-HAZARD) BIO-detpack"
-	O.update()
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive/New()
+	new /obj/item/weapon/implanter/explosive(src)
 	..()
-	return*/
+	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "Uplink Implant (with injector)"

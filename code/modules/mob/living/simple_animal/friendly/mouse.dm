@@ -10,6 +10,7 @@
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE
+	small = 1
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -48,6 +49,8 @@
 	src.stat = DEAD
 	src.icon_dead = "mouse_[color]_splat"
 	src.icon_state = "mouse_[color]_splat"
+	if(client)
+		client.time_died_as_mouse = world.time
 
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/mouse/verb/ventcrawl()
@@ -84,9 +87,11 @@
 			if(loc==startloc)
 				var/obj/target_vent = vents[selection_position]
 				if(target_vent)
+					/*
 					for(var/mob/O in oviewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
+					*/
 					loc = target_vent.loc
 			else
 				src << "\blue You need to remain still while entering a vent."
@@ -107,15 +112,19 @@
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		src << text("\blue You are now hiding.")
+		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << text("<B>[] scurries to the ground!</B>", src)
+		*/
 	else
 		layer = MOB_LAYER
 		src << text("\blue You have stopped hiding.")
+		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << text("[] slowly peaks up from the ground...", src)
+		*/
 
 //make mice fit under tables etc? this was hacky, and not working
 /*
@@ -150,6 +159,11 @@
 			var/mob/M = AM
 			M << "\blue \icon[src] Squeek!"
 			M << 'sound/effects/mousesqueek.ogg'
+	..()
+
+/mob/living/simple_animal/mouse/Die()
+	if(client)
+		client.time_died_as_mouse = world.time
 	..()
 
 /*
