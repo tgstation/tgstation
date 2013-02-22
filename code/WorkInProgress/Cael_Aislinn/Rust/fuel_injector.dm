@@ -1,210 +1,290 @@
 
-/obj/machinery/rust/fuel_injector
+/obj/machinery/power/rust_fuel_injector
 	name = "Fuel Injector"
 	icon = 'fuel_injector.dmi'
 	icon_state = "injector0"
-	anchored = 1
+	anchored = 0
 	density = 1
-	var/obj/machinery/rust/fuel_assembly_port/owned_assembly_port
-	//var/list/stageone_assemblyports
-	//var/list/stagetwo_assemblyports
-	//var/list/scram_assemblyports
-	var/obj/machinery/rust/reactor_vessel/Vessel = null
-	var/rate = 10									//microseconds between each cycle
-	var/fuel_usage = 0.0001							//percentage of available fuel to use per cycle
-	var/on = 1
-	var/remote_enabled = 1
+	var/state = 0
+	var/locked = 0
+	var/obj/item/weapon/fuel_assembly/cur_assembly
+	var/fuel_usage = 0.0001			//percentage of available fuel to use per cycle
+	var/id_tag = "One"
 	var/injecting = 0
-	var/stage = "One"
-	var/targetting_field = 0
-	layer = 4
+	var/trying_to_swap_fuel = 0
 	//
 	req_access = list(access_engine)
 	//
 	use_power = 1
 	idle_power_usage = 10
-	active_power_usage = 300
+	active_power_usage = 500
+	var/remote_access_enabled = 1
+	var/cached_power_avail = 0
+	var/emergency_insert_ready = 0
 
-	//fuel assembly should be embedded into the wall behind the injector
-	New()
-		..()
-		name = "Stage [stage] Fuel Injector"
-		//pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		//pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
-		/*
-		stageone_assemblyports = new/list()
-		stagetwo_assemblyports = new/list()
-		scram_assemblyports = new/list()
-		spawn(1)
-			Vessel = locate() in range(6,src)
-			for(var/obj/machinery/rust/fuel_assembly_port/S in range(6,src))
-				switch(S.stage)
-					if("One")
-						stageone_assemblyports.Add(S)
-					if("Two")
-						stagetwo_assemblyports.Add(S)
-					if("SCRAM")
-						scram_assemblyports.Add(S)
-		*/
-		spawn(1)
-			var/rev_dir = reverse_direction(dir)
-			var/turf/mid = get_step(src, rev_dir)
-			for(var/obj/machinery/rust/fuel_assembly_port/port in get_step(mid, rev_dir))
-				owned_assembly_port = port
-		//
-
-	Topic(href, href_list)
-		..()
-		if( href_list["close"] )
-			usr << browse(null, "window=fuel_injector")
-			usr.machine = null
-			return
-		if( href_list["begin_injecting"] )
-			BeginInjecting()
-			updateDialog()
-			return
-		if( href_list["end_injecting"] )
+/obj/machinery/power/rust_fuel_injector/process()
+	if(injecting)
+		if(stat & BROKEN || !powernet)
 			StopInjecting()
-			updateDialog()
-			return
-		if( href_list["cyclerate"] )
-			var/new_rate = text2num(input("Enter new injection rate (0.1 - 10 sec)", "Modifying injection rate", rate/10))
-			if(!new_rate)
-				usr << "\red That's not a valid number."
-				return
-			new_rate = min(new_rate,0.1)
-			new_rate = max(new_rate,10)
-			rate = new_rate * 10
-			updateDialog()
-			return
-		if( href_list["fuel_usage"] )
-			var/new_rate = text2num(input("Enter new fuel usage (1 - 100%)", "Modifying fuel usage", rate/10))
-			if(!new_rate)
-				usr << "\red That's not a valid number."
-				return
-			new_rate = min(new_rate,0.1)
-			new_rate = max(new_rate,10)
-			rate = new_rate * 10
-			updateDialog()
-			return
-
-	attack_ai(mob/user)
-		attack_hand(user)
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		/*if(stat & (BROKEN|NOPOWER))
-			return*/
-		interact(user)
-
-	interact(mob/user)
-		if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-			if (!istype(user, /mob/living/silicon))
-				user.machine = null
-				user << browse(null, "window=fuel_injector")
-				return
-		var/t = "<B>Reactor Core Fuel Injector</B><hr>"
-		t += "<b>Stage:</b> <font color=blue>[stage]</font><br>"
-		t += "<b>Status:</b> [injecting ? "<font color=green>Active</font> <a href='?src=\ref[src];end_injecting=1'>\[Disable\]</a>" : "<font color=blue>Standby</font> <a href='?src=\ref[src];begin_injecting=1'>\[Enable\]</a>"]<br>"
-		t += "<b>Interval (sec):</b> <font color=blue>[rate/10]</font> <a href='?src=\ref[src];cyclerate=1'>\[Modify\]</a><br>"
-		t += "<b>Fuel usage:</b> [fuel_usage*100]% <a href='?src=\ref[src];fuel_usage=1'>\[Modify\]</a><br>"
-		/*
-		var/t = "<B>Reactor Core Fuel Control</B><BR>"
-		t += "Current fuel injection stage: [active_stage]<br>"
-		if(active_stage == "Cooling")
-			//t += "<a href='?src=\ref[src];restart=1;'>Restart injection cycle</a><br>"
-			t += "----<br>"
 		else
-			t += "<a href='?src=\ref[src];cooldown=1;'>Enter cooldown phase</a><br>"
-		t += "Fuel depletion announcement: "
-		t += "[announce_fueldepletion ? 		"<a href='?src=\ref[src];disable_fueldepletion=1'>Disable</a>" : "<b>Disabled</b>"] "
-		t += "[announce_fueldepletion == 1 ? 	"<b>Announcing</b>" : "<a href='?src=\ref[src];announce_fueldepletion=1'>Announce</a>"] "
-		t += "[announce_fueldepletion == 2 ? 	"<b>Broadcasting</b>" : "<a href='?src=\ref[src];broadcast_fueldepletion=1'>Broadcast</a>"]<br>"
-		t += "Stage progression announcement: "
-		t += "[announce_stageprogression ? 		"<a href='?src=\ref[src];disable_stageprogression=1'>Disable</a>" : "<b>Disabled</b>"] "
-		t += "[announce_stageprogression == 1 ? 	"<b>Announcing</b>" : "<a href='?src=\ref[src];announce_stageprogression=1'>Announce</a>"] "
-		t += "[announce_stageprogression == 2 ? 	"<b>Broadcasting</b>" : "<a href='?src=\ref[src];broadcast_stageprogression=1'>Broadcast</a>"] "
-		t += "<hr>"
-		t += "<table border=1><tr>"
-		t += "<td><b>Injector Status</b></td>"
-		t += "<td><b>Injection interval (sec)</b></td>"
-		t += "<td><b>Assembly consumption per injection</b></td>"
-		t += "<td><b>Fuel Assembly Port</b></td>"
-		t += "<td><b>Assembly depletion percentage</b></td>"
-		t += "</tr>"
-		for(var/stage in fuel_injectors)
-			var/list/cur_stage = fuel_injectors[stage]
-			t += "<tr><td colspan=5><b>Fuel Injection Stage:</b> <font color=blue>[stage]</font> [active_stage == stage ? "<font color=green> (Currently active)</font>" : "<a href='?src=\ref[src];beginstage=[stage]'>Activate</a>"]</td></tr>"
-			for(var/obj/machinery/rust/fuel_injector/Injector in cur_stage)
-				t += "<tr>"
-				t += "<td>[Injector.on && Injector.remote_enabled ? "<font color=green>Operational</font>" : "<font color=red>Unresponsive</font>"]</td>"
-				t += "<td>[Injector.rate/10] <a href='?src=\ref[Injector];cyclerate=1'>Modify</a></td>"
-				t += "<td>[Injector.fuel_usage*100]% <a href='?src=\ref[Injector];fuel_usage=1'>Modify</a></td>"
-				t += "<td>[Injector.owned_assembly_port ? "[Injector.owned_assembly_port.cur_assembly ? "<font color=green>Loaded</font>": "<font color=blue>Empty</font>"]" : "<font color=red>Disconnected</font>" ]</td>"
-				t += "<td>[Injector.owned_assembly_port && Injector.owned_assembly_port.cur_assembly ? "[100 - Injector.owned_assembly_port.cur_assembly.amount_depleted*100]%" : ""]</td>"
-				t += "</tr>"
-		t += "</table>"
-		*/
-		t += "<hr>"
-		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-		user << browse(t, "window=fuel_injector;size=500x800")
-		user.machine = src
+			Inject()
 
-	proc/BeginInjecting()
-		if(!injecting && owned_assembly_port && owned_assembly_port.cur_assembly)
-			icon_state = "injector1"
-			injecting = 1
-			spawn(rate)
-				Inject()
-			return 1
-		return 0
+	cached_power_avail = avail()
 
-	proc/StopInjecting()
+/obj/machinery/power/rust_fuel_injector/attackby(obj/item/W, mob/user)
+
+	if(istype(W, /obj/item/weapon/wrench))
 		if(injecting)
-			injecting = 0
-			icon_state = "injector0"
-			return 1
-		return 0
-
-	proc/Inject()
-		if(!injecting)
+			user << "Turn off the [src] first."
 			return
-		if(owned_assembly_port.cur_assembly)
-			var/obj/machinery/rust/em_field/target_field
-			if(targetting_field)
-				for(var/obj/machinery/rust/em_field/field in range(15))
-					target_field = field
-			var/amount_left = 0
-			for(var/reagent in owned_assembly_port.cur_assembly.rod_quantities)
-				//world << "checking [reagent]"
-				if(owned_assembly_port.cur_assembly.rod_quantities[reagent] > 0)
-					//world << "	rods left: [owned_assembly_port.cur_assembly.rod_quantities[reagent]]"
-					var/amount = owned_assembly_port.cur_assembly.rod_quantities[reagent] * fuel_usage
-					var/numparticles = round(amount * 1000)
-					if(numparticles < 1)
-						numparticles = 1
-					//world << "	amount: [amount]"
-					//world << "	numparticles: [numparticles]"
-					//
-					var/obj/effect/accelerated_particle/particle = new/obj/effect/accelerated_particle(src.loc, src.dir)
-					particle.particle_type = reagent
-					particle.energy = 0
-					particle.icon_state = "particle"
-					particle.additional_particles = numparticles - 1
-					particle.target = target_field
-					//
-					owned_assembly_port.cur_assembly.rod_quantities[reagent] -= amount
-					amount_left += owned_assembly_port.cur_assembly.rod_quantities[reagent]
-			owned_assembly_port.cur_assembly.percent_depleted = amount_left / 300
-			flick("injector-emitting",src)
-			use_power(fuel_usage * 10000 + 100)		//0.0001
-			if(injecting)
-				spawn(rate)
-					Inject()
-		else
-			injecting = 0
+		switch(state)
+			if(0)
+				state = 1
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				user.visible_message("[user.name] secures [src.name] to the floor.", \
+					"You secure the external reinforcing bolts to the floor.", \
+					"You hear a ratchet")
+				src.anchored = 1
+			if(1)
+				state = 0
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
+					"You undo the external reinforcing bolts.", \
+					"You hear a ratchet")
+				src.anchored = 0
+			if(2)
+				user << "\red The [src.name] needs to be unwelded from the floor."
+		return
 
-	process()
-		..()
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(injecting)
+			user << "Turn off the [src] first."
+			return
+		switch(state)
+			if(0)
+				user << "\red The [src.name] needs to be wrenched to the floor."
+			if(1)
+				if (WT.remove_fuel(0,user))
+					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
+						"You start to weld the [src] to the floor.", \
+						"You hear welding")
+					if (do_after(user,20))
+						if(!src || !WT.isOn()) return
+						state = 2
+						user << "You weld the [src] to the floor."
+						connect_to_network()
+						src.directwired = 1
+				else
+					user << "\red You need more welding fuel to complete this task."
+			if(2)
+				if (WT.remove_fuel(0,user))
+					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
+						"You start to cut the [src] free from the floor.", \
+						"You hear welding")
+					if (do_after(user,20))
+						if(!src || !WT.isOn()) return
+						state = 1
+						user << "You cut the [src] free from the floor."
+						disconnect_from_network()
+						src.directwired = 0
+				else
+					user << "\red You need more welding fuel to complete this task."
+		return
+
+	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+		if(emagged)
+			user << "\red The lock seems to be broken"
+			return
+		if(src.allowed(user))
+			src.locked = !src.locked
+			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+		else
+			user << "\red Access denied."
+		return
+
+	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		return
+
+	if(istype(W, /obj/item/weapon/fuel_assembly) && !cur_assembly)
+		if(emergency_insert_ready)
+			cur_assembly = W
+			user.drop_item()
+			W.loc = src
+			emergency_insert_ready = 0
+			return
+
+	..()
+	return
+
+/obj/machinery/power/rust_fuel_injector/attack_ai(mob/user)
+	attack_hand(user)
+
+/obj/machinery/power/rust_fuel_injector/attack_hand(mob/user)
+	add_fingerprint(user)
+	interact(user)
+
+/obj/machinery/power/rust_fuel_injector/interact(mob/user)
+	if(stat & BROKEN)
+		user.unset_machine()
+		user << browse(null, "window=fuel_injector")
+		return
+	if(get_dist(src, user) > 1 )
+		if (!istype(user, /mob/living/silicon))
+			user.unset_machine()
+			user << browse(null, "window=fuel_injector")
+			return
+
+	var/dat = ""
+	if (!powernet || locked || state != 2)
+		dat += "<i>The console is dark and nonresponsive.</i>"
+	else
+		dat += "<B>Reactor Core Fuel Injector</B><hr>"
+		dat += "<b>Device ID tag:</b> [id_tag] <a href='?src=\ref[src];modify_tag=1'>\[Modify\]</a><br>"
+		dat += "<b>Status:</b> [injecting ? "<font color=green>Active</font> <a href='?src=\ref[src];toggle_injecting=1'>\[Disable\]</a>" : "<font color=blue>Standby</font> <a href='?src=\ref[src];toggle_injecting=1'>\[Enable\]</a>"]<br>"
+		dat += "<b>Fuel usage:</b> [fuel_usage*100]% <a href='?src=\ref[src];fuel_usage=1'>\[Modify\]</a><br>"
+		dat += "<b>Fuel assembly port:</b> "
+		dat += "<a href='?src=\ref[src];fuel_assembly=1'>\[[cur_assembly ? "Eject assembly to port" : "Draw assembly from port"]\]</a> "
+		if(cur_assembly)
+			dat += "<a href='?src=\ref[src];emergency_fuel_assembly=1'>\[Emergency eject\]</a><br>"
+		else
+			dat += "<a href='?src=\ref[src];emergency_fuel_assembly=1'>\[[emergency_insert_ready ? "Cancel emergency insertion" : "Emergency insert"]\]</a><br>"
+		var/font_colour = "green"
+		if(cached_power_avail < active_power_usage)
+			font_colour = "red"
+		else if(cached_power_avail < active_power_usage * 2)
+			font_colour = "orange"
+		dat += "<b>Power status:</b> <font color=[font_colour]>[active_power_usage]/[cached_power_avail] W</font><br>"
+		dat += "<a href='?src=\ref[src];toggle_remote=1'>\[[remote_access_enabled ? "Disable remote access" : "Enable remote access"]\]</a><br>"
+
+		dat += "<hr>"
+		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> "
+		dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+
+	user << browse(dat, "window=fuel_injector;size=500x300")
+	onclose(user, "fuel_injector")
+	user.set_machine(src)
+
+/obj/machinery/power/rust_fuel_injector/Topic(href, href_list)
+	..()
+
+	if( href_list["modify_tag"] )
+		id_tag = input("Enter new ID tag", "Modifying ID tag") as text|null
+
+	if( href_list["fuel_assembly"] )
+		if(!trying_to_swap_fuel)
+			trying_to_swap_fuel = 1
+			spawn(50)
+				attempt_fuel_swap()
+				trying_to_swap_fuel = 0
+
+	if( href_list["emergency_fuel_assembly"] )
+		if(cur_assembly)
+			cur_assembly.loc = src.loc
+			cur_assembly = null
+			//irradiate!
+		else
+			emergency_insert_ready = !emergency_insert_ready
+
+	if( href_list["toggle_injecting"] )
+		if(injecting)
+			StopInjecting()
+		else
+			BeginInjecting()
+
+	if( href_list["toggle_remote"] )
+		remote_access_enabled = !remote_access_enabled
+
+	if( href_list["fuel_usage"] )
+		var/new_usage = text2num(input("Enter new fuel usage (0.01% - 100%)", "Modifying fuel usage", fuel_usage * 100))
+		if(!new_usage)
+			usr << "\red That's not a valid number."
+			return
+		new_usage = max(new_usage, 0.01)
+		new_usage = min(new_usage, 100)
+		fuel_usage = new_usage / 100
+		active_power_usage = 500 + 1000 * fuel_usage
+
+	if( href_list["update_extern"] )
+		var/obj/machinery/computer/rust_fuel_control/C = locate(href_list["update_extern"])
+		if(C)
+			C.updateDialog()
+
+	if( href_list["close"] )
+		usr << browse(null, "window=fuel_injector")
+		usr.unset_machine()
+
+	updateDialog()
+
+/obj/machinery/power/rust_fuel_injector/proc/BeginInjecting()
+	if(!injecting && cur_assembly)
+		icon_state = "injector1"
+		injecting = 1
+		use_power = 1
+
+/obj/machinery/power/rust_fuel_injector/proc/StopInjecting()
+	if(injecting)
+		injecting = 0
+		icon_state = "injector0"
+		use_power = 0
+
+/obj/machinery/power/rust_fuel_injector/proc/Inject()
+	if(!injecting)
+		return
+	if(cur_assembly)
+		var/amount_left = 0
+		for(var/reagent in cur_assembly.rod_quantities)
+			//world << "checking [reagent]"
+			if(cur_assembly.rod_quantities[reagent] > 0)
+				//world << "	rods left: [cur_assembly.rod_quantities[reagent]]"
+				var/amount = cur_assembly.rod_quantities[reagent] * fuel_usage
+				var/numparticles = round(amount * 1000)
+				if(numparticles < 1)
+					numparticles = 1
+				//world << "	amount: [amount]"
+				//world << "	numparticles: [numparticles]"
+				//
+
+				var/obj/effect/accelerated_particle/A = new/obj/effect/accelerated_particle(get_turf(src), dir)
+				A.particle_type = reagent
+				A.additional_particles = numparticles - 1
+				//A.target = target_field
+				//
+				cur_assembly.rod_quantities[reagent] -= amount
+				amount_left += cur_assembly.rod_quantities[reagent]
+		cur_assembly.percent_depleted = amount_left / 300
+		flick("injector-emitting",src)
+	else
+		StopInjecting()
+
+/obj/machinery/power/rust_fuel_injector/proc/attempt_fuel_swap()
+	var/rev_dir = reverse_direction(dir)
+	var/turf/mid = get_step(src, rev_dir)
+	var/success = 0
+	for(var/obj/machinery/rust_fuel_assembly_port/check_port in get_step(mid, rev_dir))
+		if(cur_assembly)
+			if(!check_port.cur_assembly)
+				check_port.cur_assembly = cur_assembly
+				cur_assembly.loc = check_port
+				cur_assembly = null
+				check_port.icon_state = "port1"
+				success = 1
+		else
+			if(check_port.cur_assembly)
+				cur_assembly = check_port.cur_assembly
+				cur_assembly.loc = src
+				check_port.cur_assembly = null
+				check_port.icon_state = "port0"
+				success = 1
+
+		break
+	if(success)
+		src.visible_message("\blue \icon[src] a green light flashes on [src].")
 		updateDialog()
-		//
+	else
+		src.visible_message("\red \icon[src] a red light flashes on [src].")
