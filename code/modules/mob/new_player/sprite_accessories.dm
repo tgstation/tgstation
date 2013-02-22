@@ -382,11 +382,30 @@
 */
 
 /datum/sprite_accessory/hair
-	tentacle_m
-		name = "Skrell Male Tentacles"
-		icon_state = "skrell_hair_m"
-		species_allowed = list("Skrell")
-		gender = MALE
+	spines_long
+		name = "Long Unathi Spines"
+		icon_state = "soghun_longspines"
+		species_allowed = list("Unathi")
+
+	spines_short
+		name = "Short Unathi Spines"
+		icon_state = "soghun_shortspines"
+		species_allowed = list("Unathi")
+
+	frills_long
+		name = "Long Unathi Frills"
+		icon_state = "soghun_longfrills"
+		species_allowed = list("Unathi")
+
+	frills_short
+		name = "Short Unathi Frills"
+		icon_state = "soghun_shortfrill"
+		species_allowed = list("Unathi")
+
+	horns
+		name = "Unathi Horns"
+		icon_state = "soghun_horns"
+		species_allowed = list("Unathi")
 
 	tentacle_f
 		name = "Skrell Female Tentacles"
@@ -499,6 +518,7 @@
 		name = "Smallsatche"
 		icon_state = "facial_smallstache"
 		species_allowed = list("Tajaran")
+
 //skin styles - WIP
 //going to have to re-integrate this with surgery
 //let the icon_state hold an icon preview for now
