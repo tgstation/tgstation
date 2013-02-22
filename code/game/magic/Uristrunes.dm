@@ -126,6 +126,6 @@ var/list/uristrune_cache = list()
 		result.Insert(I3, "", frame = 7, delay = 2)
 		result.Insert(I2, "", frame = 8, delay = 2)
 
-		uristrune_cache[lookup] = result
+	uristrune_cache[lookup] = result
 
 	return result

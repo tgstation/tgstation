@@ -849,3 +849,48 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/closet
 	containername = "Formalwear for the best occasions."
 	group = "Operations"
+
+/datum/supply_packs/rust_injector
+	contains = list(/obj/machinery/power/rust_fuel_injector)
+	name = "RUST fuel injector"
+	cost = 50
+	containertype = /obj/structure/largecrate
+	containername = "RUST injector crate"
+	group = "Engineering"
+	access = access_engine
+
+/datum/supply_packs/rust_compressor
+	contains = list(/obj/item/weapon/module/rust_fuel_compressor)
+	name = "RUST fuel compressor circuitry"
+	cost = 60
+	containertype = /obj/structure/closet/crate/secure
+	containername = "RUST fuel compressor circuitry"
+	group = "Engineering"
+	access = access_engine
+
+/datum/supply_packs/rust_core
+	contains = list(/obj/machinery/power/rust_core)
+	name = "RUST Tokamak Core"
+	cost = 75
+	containertype = /obj/structure/largecrate
+	containername = "RUST tokamak crate"
+	group = "Engineering"
+	access = access_engine
+
+/datum/supply_packs/shield_gen
+	contains = list(/obj/item/weapon/circuitboard/shield_gen)
+	name = "Experimental shield generator circuitry"
+	cost = 50
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Experimental shield generator"
+	group = "Engineering"
+	access = access_ce
+
+/datum/supply_packs/shield_cap
+	contains = list(/obj/item/weapon/circuitboard/shield_cap)
+	name = "Experimental shield capacitor circuitry"
+	cost = 50
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Experimental shield capacitor"
+	group = "Engineering"
+	access = access_ce
