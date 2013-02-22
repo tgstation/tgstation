@@ -264,8 +264,8 @@
 
 //Updating germ levels. Handles organ germ levels and necrosis.
 #define GANGREN_LEVEL_ONE		100
-#define GANGREN_LEVEL_TWO		105
-#define GANGREN_LEVEL_TERMINAL	110
+#define GANGREN_LEVEL_TWO		1000
+#define GANGREN_LEVEL_TERMINAL	2500
 #define GERM_TRANSFER_AMOUNT	germ_level/500
 /datum/organ/external/proc/update_germs()
 	if(germ_level > 0 && owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
@@ -283,7 +283,7 @@
 		if(germ_level > GANGREN_LEVEL_TWO)
 			germ_level++
 			owner.adjustToxLoss(1)
-
+/*
 		if(germ_level > GANGREN_LEVEL_TERMINAL)
 			if (!(status & ORGAN_DEAD))
 				status |= ORGAN_DEAD
@@ -297,6 +297,7 @@
 				if (parent)
 					if (!(parent.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT)))
 						parent.germ_level += round(GERM_TRANSFER_AMOUNT)
+*/
 
 //Updating wounds. Handles wound natural healing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
