@@ -96,6 +96,23 @@
 		else if(damage_type == BURN)
 			return salved
 
+	// checks if wound is considered open for external infections
+	// untreated cuts (and bleeding bruises) and burns are possibly infectable, chance higher if wound is bigger
+	proc/can_infect()
+		if (is_treated() && damage < 10)
+			return 0
+		if (disinfected)
+			return 0
+		var/dam_coef = round(damage/10)
+		switch (damage_type)
+			if (BRUISE)
+				return prob(dam_coef*5) && bleeding() //bruises only infectable if bleeding
+			if (BURN)
+				return prob(dam_coef*10)
+			if (CUT)
+				return prob(dam_coef*20)
+
+		return 0
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
 	// set @heals_internal to also heal internal organ damage
