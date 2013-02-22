@@ -580,6 +580,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define ORGAN_ROBOT 128
 #define ORGAN_SPLINTED 256
 #define SALVED 512
+#define ORGAN_DEAD 1024
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
