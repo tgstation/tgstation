@@ -17,3 +17,4 @@
 	target.real_name = random_name(target.gender)
 	var/newname = target.real_name	//something about how the code handles names required that I use this instead of target.real_name
 	user.visible_message("<span class='notice'>[user] alters [oldname]'s appearance completely, they are now [newname]!</span>")
+	return 1

@@ -26,8 +26,8 @@
 
 
 //INFO
-//Check /mob/living/carbon/attackby for how surgery progresses.
-//As of Feb 19 2013 it's in code/modules/mob/living/carbon/carbon.dm, line 459.
+//Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
+//As of Feb 21 2013 they are in code/modules/mob/living/carbon/carbon.dm, lines 459 and 51 respectively.
 //Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon).
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
 

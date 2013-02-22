@@ -176,6 +176,9 @@
 		M << "No attacking people at spawn, you jackass."
 		return
 
+	if(..())	//To allow surgery to return properly.
+		return
+
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)

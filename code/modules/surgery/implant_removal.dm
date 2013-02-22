@@ -29,3 +29,4 @@
 		del(I)
 	else
 		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s [target_zone].</span>")
+	return 1

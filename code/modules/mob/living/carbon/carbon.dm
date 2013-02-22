@@ -40,30 +40,30 @@
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
-		if(M in src.stomach_contents)
-			src.stomach_contents.Remove(M)
-		M.loc = src.loc
-		for(var/mob/N in viewers(src, null))
-			if(N.client)
-				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
+		if(M in stomach_contents)
+			stomach_contents.Remove(M)
+		M.loc = loc
+		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
-/mob/living/carbon/attack_hand(mob/M as mob)
-	if(!istype(M, /mob/living/carbon)) return
+/mob/living/carbon/attack_hand(mob/user)
+	if(!iscarbon(user)) return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
+			user.contract_disease(D, 0, 1, CONTACT_HANDS)
 
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
+	for(var/datum/disease/D in user.viruses)
 		if(D.spread_by_touch())
-
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-	return
+	if(lying || isslime(src))
+		if(user.a_intent == "help")
+			if(surgeries.len)
+				for(var/datum/surgery/S in surgeries)
+					if(S.next_step(user, src))
+						return 1
+	return 0
 
 
 /mob/living/carbon/attack_paw(mob/M as mob)
@@ -459,9 +459,10 @@
 /mob/living/carbon/attackby(obj/item/I, mob/user)
 	if(lying || isslime(src))
 		if(surgeries.len)
-			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, src))
-					return
+			if(user.a_intent == "help")
+				for(var/datum/surgery/S in surgeries)
+					if(S.next_step(user, src))
+						return
 
 	..()
 

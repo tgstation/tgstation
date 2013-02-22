@@ -15,6 +15,7 @@
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] cuts [target]'s excess fat loose!</span>")
+	return 1
 
 //remove fat
 /datum/surgery_step/remove_fat
@@ -36,3 +37,4 @@
 	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment
 	var/obj/item/meatslab = newmeat
 	meatslab.loc = target.loc
+	return 1

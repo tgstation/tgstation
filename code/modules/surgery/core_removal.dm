@@ -24,5 +24,9 @@
 
 		if(slime.cores <= 0)
 			slime.icon_state = "[slime.colour] baby slime dead-nocore"
+			return 1
+		else
+			return 0
 	else
 		user.visible_message("<span class='notice'>There aren't any cores left in [target].</span>")
+		return 1

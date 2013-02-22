@@ -28,6 +28,7 @@
 		user.visible_message("<span class='notice'>[user] successfully extracts the xenomorph from [target]!</span>")
 	else
 		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s chest!</span>")
+	return 1
 
 /datum/surgery_step/xenomorph_removal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/alien_embryo/A = locate() in target.contents
@@ -38,3 +39,4 @@
 	else
 		target.adjustOxyLoss(30)
 		user.visible_message("<span class='warning'>[user] accidentally pokes [target] in the lungs!</span>")
+	return 0

@@ -29,3 +29,4 @@
 		log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
 	else
 		user.visible_message("<span class='notice'>[user] can't find a brain in [target]!</span>")
+	return 1

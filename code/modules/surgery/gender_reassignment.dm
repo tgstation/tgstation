@@ -8,7 +8,6 @@
 /datum/surgery_step/reshape_genitals
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/hatchet = 50, /obj/item/weapon/wirecutters = 35)
 	time = 64
-	always_advance = 1
 
 /datum/surgery_step/reshape_genitals/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.gender == FEMALE)
@@ -26,6 +25,7 @@
 		user.visible_message("<span class='notice'>[user] has made a woman of [target]!</span>")
 		target.gender = FEMALE
 	target.regenerate_icons()
+	return 1
 
 /datum/surgery_step/reshape_genitals/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/H = target
@@ -33,3 +33,4 @@
 	user.visible_message("<span class='warning'>[user] mutilates [target]'s genitals beyond the point of recogniton!</span>")
 	target.gender = pick(MALE, FEMALE)
 	target.regenerate_icons()
+	return 1

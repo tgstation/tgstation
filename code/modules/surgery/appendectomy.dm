@@ -7,7 +7,7 @@
 
 //extract appendix
 /datum/surgery_step/extract_appendix
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
+	accept_hand = 1
 	time = 64
 	var/obj/item/organ/appendix/A = null
 
@@ -27,3 +27,4 @@
 			appendicitis.cure()
 	else
 		user.visible_message("<span class='notice'>[user] can't find an appendix in [target]!</span>")
+	return 1

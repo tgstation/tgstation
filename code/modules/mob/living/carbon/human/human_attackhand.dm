@@ -1,5 +1,6 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
-	..()
+	if(..())	//to allow surgery to return properly.
+		return
 
 	if((M != src) && check_shields(0, M.name))
 		visible_message("<span class='warning'>[M] attempted to touch [src]!</span>")
