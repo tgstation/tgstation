@@ -182,10 +182,14 @@ Implant Specifics:<BR>"}
 				if (prob(50))
 					small_boom()
 			if (1.0)	//strong EMP will melt implant either making it go off, or disarming it
-				if (prob(50))
-					activate()		//50% chance of bye bye
-				else
-					meltdown()		//50% chance of implant disarming
+				if (prob(70))
+					if (prob(50))
+						small_boom()
+					else
+						if (prob(50))
+							activate()		//50% chance of bye bye
+						else
+							meltdown()		//50% chance of implant disarming
 		spawn (20)
 			malfunction--
 
