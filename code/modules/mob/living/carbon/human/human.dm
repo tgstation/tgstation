@@ -919,7 +919,7 @@
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
 
 	E.ruptured_lungs = 1
-
+/*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
 	set background = 1
@@ -948,3 +948,4 @@
 		if (germs == 2500)
 			world << "Reached stage 3 in [ticks] ticks"
 	world << "Mob took [tdamage] tox damage"
+*/
