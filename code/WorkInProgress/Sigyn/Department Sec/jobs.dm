@@ -88,7 +88,9 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		return 1
 
 /obj/item/device/radio/headset/headset_sec/department/New()
-	..()
+	wires = new(src)
+	secure_radio_connections = new
+
 	if(radio_controller)
 		initialize()
 	recalculateChannels()
