@@ -32,10 +32,10 @@ BONUS
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(3, 4)
-					if(!(H.f_style == "Bald"))
+					if(!(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
 						H << "<span class='notice'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
-							H.f_style = "Balding Hair"
+							H.h_style = "Balding Hair"
 							H.update_hair()
 				if(5)
 					if(!(H.f_style == "Shaved") || !(H.h_style == "Bald"))

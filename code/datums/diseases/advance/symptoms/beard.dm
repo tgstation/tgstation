@@ -35,7 +35,7 @@ BONUS
 						H.f_style = "Adam Jensen Beard"
 						H.update_hair()
 				if(3, 4)
-					if(!(H.f_style == "Dwarf Beard") && !(H.h_style == "Very Long Beard"))
+					if(!(H.f_style == "Dwarf Beard") && !(H.h_style == "Very Long Beard") && !(H.h_style == "Full Beard"))
 						H.f_style = "Full Beard"
 						H.update_hair()
 				else
