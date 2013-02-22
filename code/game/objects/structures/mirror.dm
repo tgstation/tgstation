@@ -26,6 +26,8 @@
 			if(userloc != H.loc) return	//no tele-grooming
 			if(new_style)
 				H.f_style = new_style
+		else
+			H.f_style = "Shaved"
 
 		//handle normal hair
 		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list

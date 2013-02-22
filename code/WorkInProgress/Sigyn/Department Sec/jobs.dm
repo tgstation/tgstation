@@ -88,6 +88,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		return 1
 
 /obj/item/device/radio/headset/headset_sec/department/New()
+	..()
 	if(radio_controller)
 		initialize()
 	recalculateChannels()
