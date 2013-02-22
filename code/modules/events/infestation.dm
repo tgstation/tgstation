@@ -11,7 +11,7 @@
 
 #define VERM_MICE 0
 #define VERM_LIZARDS 1
-#define VERM_SLIMES 2
+#define VERM_SPIDERS 2
 
 /datum/event/infestation
 	announceWhen = 10
@@ -78,20 +78,22 @@
 		if(VERM_LIZARDS)
 			spawn_types = list(/mob/living/simple_animal/lizard)
 			vermstring = "lizards"
-		if(VERM_SLIMES)
-			spawn_types = list(/mob/living/carbon/slime)
-			vermstring = "slimes"
-
+		if(VERM_SPIDERS)
+			spawn_types = list(/obj/effect/spider/spiderling)
+			max_number = 6
+			vermstring = "spiders"
 	spawn(0)
 		var/num = rand(1, 3)
 		while(turfs.len > 0 && num > 0)
 			var/turf/simulated/floor/T = pick(turfs)
 			turfs.Remove(T)
-			var/spawn_type = pick(spawn_types)
-			new spawn_type(T)
 			num--
-			//world << "[vermstring] spawned in [spawn_area_type]"
-
+			if(vermin == VERM_SPIDERS)
+				var/obj/effect/spider/spiderling/S = new(T)
+				S.amount_grown = -1
+			else
+				var/spawn_type = pick(spawn_types)
+				new spawn_type(T)
 /datum/event/infestation/announce()
 	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
 
@@ -107,4 +109,4 @@
 
 #undef VERM_MICE
 #undef VERM_LIZARDS
-#undef VERM_SLIMES
+#undef VERM_SPIDERS
