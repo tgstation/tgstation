@@ -9,7 +9,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 /obj/effect/rust_em_field
 	name = "EM Field"
 	desc = "A coruscating, barely visible field of energy. It is shaped like a slightly flattened torus."
-	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/emfield.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "emfield_s1"
 	//
 	var/major_radius = 0	//longer radius in meters = field_strength * 0.21875, max = 8.75

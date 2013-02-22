@@ -1,9 +1,8 @@
 
 /obj/machinery/power/rust_fuel_injector
 	name = "Fuel Injector"
-	icon = 'fuel_injector.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "injector0"
-	anchored = 0
 	density = 1
 	var/state = 0
 	var/locked = 0

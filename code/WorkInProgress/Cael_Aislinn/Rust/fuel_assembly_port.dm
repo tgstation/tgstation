@@ -1,16 +1,22 @@
 
+
 /obj/machinery/rust_fuel_assembly_port
 	name = "Fuel Assembly Port"
-	icon = 'fuel_assembly_port.dmi'
-	icon_state = "port0"
+	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
+	icon_state = "port2"
 	density = 0
 	var/obj/item/weapon/fuel_assembly/cur_assembly
 	layer = 4
 	var/busy = 0
 	anchored = 1
 
+	var/opened = 1 //0=closed, 1=opened
+	var/coverlocked = 0
+	var/locked = 0
+	var/has_electronics = 0 // 0 - none, bit 1 - circuitboard, bit 2 - wires
+
 /obj/machinery/rust_fuel_assembly_port/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I,/obj/item/weapon/fuel_assembly))
+	if(istype(I,/obj/item/weapon/fuel_assembly) && !opened)
 		if(cur_assembly)
 			user << "\red There is already a fuel rod assembly in there!"
 		else
@@ -21,7 +27,7 @@
 
 /obj/machinery/rust_fuel_assembly_port/attack_hand(mob/user)
 	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & (BROKEN|NOPOWER) || opened)
 		return
 
 	if(!busy)

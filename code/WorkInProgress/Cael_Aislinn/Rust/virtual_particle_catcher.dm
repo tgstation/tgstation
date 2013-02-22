@@ -5,7 +5,7 @@
 	icon_state = "energynet"
 	density = 0
 	anchored = 1
-	//invisibility = 101
+	invisibility = 101
 	layer = 4
 	var/obj/effect/rust_em_field/parent
 	var/mysize = 0

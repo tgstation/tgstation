@@ -1,11 +1,17 @@
 var/const/max_assembly_amount = 300
 
 /obj/machinery/rust_fuel_compressor
-	icon = 'fuel_compressor.dmi'
-	icon_state = "fuel_compressor"
+	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
+	icon_state = "fuel_compressor0"
 	name = "Fuel Compressor"
 	var/list/new_assembly_quantities
+	var/compressed_matter = 100
 	anchored = 1
+
+	var/opened = 1 //0=closed, 1=opened
+	var/coverlocked = 0
+	var/locked = 0
+	var/has_electronics = 0 // 0 - none, bit 1 - circuitboard, bit 2 - wires
 
 /obj/machinery/rust_fuel_compressor/New()
 	new_assembly_quantities = new/list
