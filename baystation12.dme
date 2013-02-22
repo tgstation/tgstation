@@ -1175,6 +1175,7 @@
 #include "code\modules\surgery\eye.dm"
 #include "code\modules\surgery\face.dm"
 #include "code\modules\surgery\generic.dm"
+#include "code\modules\surgery\implant.dm"
 #include "code\modules\surgery\other.dm"
 #include "code\modules\surgery\ribcage.dm"
 #include "code\modules\surgery\robolimbs.dm"
