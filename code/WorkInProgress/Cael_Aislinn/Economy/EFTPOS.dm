@@ -1,8 +1,8 @@
 /obj/item/weapon/eftpos
 	name = "EFTPOS scanner"
 	desc = "Swipe your ID card to pay electronically."
-	icon = 'icons/obj/library.dmi'
-	icon_state = "scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "eftpos"
 	var/machine_id = ""
 	var/eftpos_name = "Default EFTPOS scanner"
 	var/transaction_locked = 0
@@ -18,14 +18,15 @@
 	machine_id = "[station_name()] EFTPOS #[num_financial_terminals++]"
 	access_code = rand(1111,111111)
 	reconnect_database()
-	print_reference()
+	spawn(0)
+		print_reference()
 
 	//by default, connect to the station account
 	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
 	linked_account = station_account
 
 /obj/item/weapon/eftpos/proc/print_reference()
-	var/obj/item/weapon/paper/R = new(get_turf(src))
+	var/obj/item/weapon/paper/R = new(src.loc)
 	R.name = "Reference: [eftpos_name]"
 	R.info = "<b>[eftpos_name] reference</b><br><br>"
 	R.info += "Access code: [access_code]<br><br>"
@@ -39,6 +40,11 @@
 	R.stamped += /obj/item/weapon/stamp
 	R.overlays += stampoverlay
 	R.stamps += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
+
+	var/obj/item/smallDelivery/D = new(R.loc)
+	R.loc = D
+	D.wrapped = R
+	D.name = "small parcel - 'EFTPOS access code'"
 
 /obj/item/weapon/eftpos/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
@@ -67,7 +73,9 @@
 			dat += "Transaction purpose: <a href='?src=\ref[src];choice=trans_purpose'>[transaction_purpose]</a><br>"
 			dat += "Value: <a href='?src=\ref[src];choice=trans_value'>$[transaction_amount]</a><br>"
 			dat += "Linked account: <a href='?src=\ref[src];choice=link_account'>[linked_account ? linked_account.owner_name : "None"]</a><hr>"
-			dat += "<a href='?src=\ref[src];choice=change_code'>Change access code</a>"
+			dat += "<a href='?src=\ref[src];choice=change_code'>Change access code</a><br>"
+			dat += "<a href='?src=\ref[src];choice=change_id'>Change EFTPOS ID</a><br>"
+			dat += "Scan card to reset access code <a href='?src=\ref[src];choice=reset'>\[------\]</a>"
 		user << browse(dat,"window=eftpos")
 	else
 		user << browse(null,"window=eftpos")
@@ -77,9 +85,12 @@
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
 			reconnect_database()
-		if(linked_db && linked_account)
-			var/obj/item/weapon/card/I = O
-			scan_card(I)
+		if(linked_db)
+			if(linked_account)
+				var/obj/item/weapon/card/I = O
+				scan_card(I)
+			else
+				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
 		else
 			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
 	else
@@ -95,13 +106,22 @@
 					print_reference()
 				else
 					usr << "\icon[src]<span class='warning'>Incorrect code entered.</span>"
+			if("change_id")
+				var/attempt_code = text2num(input("Re-enter the current EFTPOS access code", "Confirm EFTPOS code"))
+				if(attempt_code == access_code)
+					eftpos_name = input("Enter a new terminal ID for this device", "Enter new EFTPOS ID") + " EFTPOS scanner"
+					print_reference()
+				else
+					usr << "\icon[src]<span class='warning'>Incorrect code entered.</span>"
 			if("link_account")
+				if(!linked_db)
+					reconnect_database()
 				if(linked_db)
 					var/attempt_account_num = text2num(input("Enter account number to pay EFTPOS charges into", "New account number"))
 					var/attempt_pin = text2num(input("Enter pin code", "Account pin"))
 					linked_account = linked_db.attempt_account_access(attempt_account_num, attempt_pin, 1)
 				else
-					usr << "<span class='warning'>Unable to connect to accounts database.</span>"
+					usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
 			if("trans_purpose")
 				transaction_purpose = input("Enter reason for EFTPOS transaction", "Transaction purpose")
 			if("trans_value")
@@ -126,6 +146,14 @@
 						scan_card(I)
 				else
 					usr << "\icon[src]<span class='warning'>Unable to link accounts.</span>"
+			if("reset")
+				//reset the access code - requires HoP/captain access
+				var/obj/item/I = usr.get_active_hand()
+				if (istype(I, /obj/item/weapon/card))
+					var/obj/item/weapon/card/C = I
+					if(access_cent_captain in C.access || access_hop in C.access || access_captain in C.access)
+						access_code = 0
+						usr << "\icon[src]<span class='info'>Access code reset to 0.</span>"
 
 	src.attack_self(usr)
 
@@ -149,7 +177,7 @@
 
 						//create entries in the two account transaction logs
 						var/datum/transaction/T = new()
-						T.target_name = "[linked_account.owner_name] ([eftpos_name])"
+						T.target_name = "[linked_account.owner_name] (via [eftpos_name])"
 						T.purpose = transaction_purpose
 						T.amount = "([transaction_amount])"
 						T.source_terminal = machine_id
