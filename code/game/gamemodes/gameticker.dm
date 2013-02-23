@@ -112,6 +112,13 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	//setup the money accounts
+	if(!centcomm_account_db)
+		for(var/obj/machinery/account_database/check_db in world)
+			if(check_db.z == 2)
+				centcomm_account_db = check_db
+				break
+
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()

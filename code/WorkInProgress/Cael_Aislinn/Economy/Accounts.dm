@@ -2,6 +2,7 @@ var/global/current_date_string
 var/global/num_financial_terminals = 1
 var/global/datum/money_account/station_account
 var/global/next_account_number = 0
+var/global/obj/machinery/account_database/centcomm_account_db
 
 /proc/create_station_account()
 	if(!station_account)
@@ -266,10 +267,11 @@ var/global/next_account_number = 0
 		R.overlays += stampoverlay
 		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
 
-
 	//add the account
 	M.transaction_log.Add(T)
 	accounts.Add(M)
+
+	return M
 
 /obj/machinery/account_database/proc/charge_to_account(var/attempt_account_number, var/source_name, var/purpose, var/terminal_id, var/amount)
 	for(var/datum/money_account/D in accounts)

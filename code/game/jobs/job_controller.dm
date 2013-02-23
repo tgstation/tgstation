@@ -385,13 +385,20 @@ var/global/datum/controller/occupations/job_master
 			C.rank = rank
 			C.assignment = title ? title : rank
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+
+			//put the player's account number onto the ID
+			if(H.mind && H.mind.initial_account)
+				C.associated_account_number = H.mind.initial_account.account_number
+
 			H.equip_to_slot_or_del(C, slot_wear_id)
+
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
 		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+
 		return 1
 
 

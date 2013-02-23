@@ -370,6 +370,21 @@
 
 		new_character.key = key		//Manually transfer the key to log them in
 
+		//give them an account in the station database
+		if(centcomm_account_db)
+			var/datum/money_account/M = centcomm_account_db.add_account(new_character.name, pre_existing = 1)
+			if(mind)
+				var/remembered_info = "<b>Your account pin is:</b> [M.remote_access_pin]<br>"
+				remembered_info += "<b>Your account number is:</b> [M.account_number]<br>"
+				remembered_info += "<b>Your account funds are:</b> [M.money]<br>"
+
+				if(M.transaction_log.len)
+					var/datum/transaction/T = M.transaction_log[1]
+					remembered_info += "<b>Your account was created on:</b> [T.time], [T.date] <b>at</b> [T.source_terminal]<br>"
+				mind.store_memory(remembered_info)
+
+				mind.initial_account = M
+
 		return new_character
 
 	proc/ViewManifest()
