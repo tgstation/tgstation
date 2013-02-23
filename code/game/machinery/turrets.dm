@@ -191,7 +191,7 @@
 						target()
 						targeting_active = 0
 
-		if(prob(5))
+		if(prob(15))
 			if(prob(50))
 				playsound(src.loc, 'sound/effects/turret/move1.wav', 60, 1)
 			else
