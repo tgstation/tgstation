@@ -32,5 +32,6 @@ Bonus
 			if(1, 2, 3, 4)
 				M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
 			else
-				M.reagents.add_reagent("hyperzine", 10)
+				if (M.reagents.get_reagent_amount("hyperzine") < 30)
+					M.reagents.add_reagent("hyperzine", 10)
 	return

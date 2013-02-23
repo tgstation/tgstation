@@ -35,7 +35,7 @@ Bonus
 				M.adjustOxyLoss(5)
 				M.emote("gasp")
 			else
-				M << "<span class='notice'>[pick("You're choking!", "You can't breathe!")]</span>"
+				M << "<span class='danger'>[pick("You're choking!", "You can't breathe!")]</span>"
 				M.adjustOxyLoss(20)
 				M.emote("gasp")
 //				if(istype(M, /mob/living/carbon/human))

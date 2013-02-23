@@ -4,7 +4,7 @@
 Hyphema (Eye bleeding)
 
 	Slightly noticable.
-	Lowers resistance.
+	Lowers resistance tremendously.
 	Decreases stage speed tremendously.
 	Decreases transmittablity.
 	Critical Level.
@@ -19,7 +19,7 @@ Bonus
 
 	name = "Hyphema"
 	stealth = -1
-	resistance = -2
+	resistance = -4
 	stage_speed = -4
 	transmittable = -3
 	level = 5
@@ -38,12 +38,10 @@ Bonus
 			else
 				M << "<span class='danger'>Your eyes burn horrificly!</span>"
 				M.eye_blurry = 20
-//				if(istype(M, /mob/living/carbon/human))
-//					var/mob/living/carbon/human/H = M
 				M.eye_stat += 5
 				if (M.eye_stat >= 10)
 					M.disabilities |= NEARSIGHTED
-					if (prob(M.eye_stat - 10 + 1))
+					if (prob(M.eye_stat - 10 + 1) && !(M.sdisabilities & BLIND))
 						M << "<span class='danger'>You go blind!</span>"
 						M.sdisabilities |= BLIND
 	return

@@ -207,7 +207,7 @@
 							emote("collapse")
 						if(prob(15))
 							if(!(f_style == "Shaved") || !(h_style == "Bald"))
-								src << "<span class='notice'>Your hair starts to fall out in clumps...<span>"
+								src << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
 									f_style = "Shaved"
 									h_style = "Bald"
