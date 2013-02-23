@@ -33,7 +33,6 @@
 
 
 //TODO
-//empty hand surgery steps, surgery steps with any item
 //specific steps for some surgeries (fluff text)
 //R&D researching new surgeries (especially for non-humans)
 //surgeries (not steps) that can be initiated on any body part (corresponding with damage locations)
