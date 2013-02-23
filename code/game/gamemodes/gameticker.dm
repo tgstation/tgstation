@@ -44,9 +44,9 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/clouds.s3m',\
 	'sound/music/space.ogg',\
 	'sound/music/THUNDERDOME.ogg',\
+	'sound/music/main.ogg',\
+	'sound/music/traitor.ogg',\
 	'sound/music/b12_combined_start.ogg')
-	for(var/mob/new_player/M in mob_list)
-		if(M.client)	M.client.playtitlemusic()
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
