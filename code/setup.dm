@@ -74,7 +74,7 @@
 #define	HUNGER_FACTOR 0.05
 
 // How many units of reagent are consumed per tick, by default.
-#define  REAGENTS_METABOLISM 0.4
+#define  REAGENTS_METABOLISM 0.2
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
@@ -580,6 +580,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define ORGAN_ROBOT 128
 #define ORGAN_SPLINTED 256
 #define SALVED 512
+#define ORGAN_DEAD 1024
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
