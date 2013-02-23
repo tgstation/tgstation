@@ -324,6 +324,25 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
+		//give them an account in the station database
+		if(centcomm_account_db)
+			var/datum/money_account/M = centcomm_account_db.add_account(H.real_name, starting_funds = rand(50,500)*10, pre_existing = 1)
+			if(H.mind)
+				var/remembered_info = ""
+				remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
+				remembered_info += "<b>Your account pin is:</b> [M.remote_access_pin]<br>"
+				remembered_info += "<b>Your account funds are:</b> $[M.money]<br>"
+
+				if(M.transaction_log.len)
+					var/datum/transaction/T = M.transaction_log[1]
+					remembered_info += "<b>Your account was created:</b> [T.time], [T.date] at [T.source_terminal]<br>"
+				H.mind.store_memory(remembered_info)
+
+				H.mind.initial_account = M
+
+			spawn(0)
+				H << "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>"
+
 		var/alt_title = null
 		if(H.mind)
 			H.mind.assigned_role = rank
