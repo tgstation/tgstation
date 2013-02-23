@@ -37,7 +37,14 @@ var/global/datum/controller/gameticker/ticker
 	var/triai = 0//Global holder for Triumvirate
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/ambience/title2.ogg','sound/ambience/title1.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
+	login_music = pick(\
+	'sound/music/title1.ogg',\
+	'sound/music/title2.ogg',\
+	'sound/music/1.ogg',\
+	'sound/music/clouds.s3m',\
+	'sound/music/space.ogg',\
+	'sound/music/THUNDERDOME.ogg',\
+	'sound/music/b12_combined_start.ogg')
 	for(var/mob/new_player/M in mob_list)
 		if(M.client)	M.client.playtitlemusic()
 	do
