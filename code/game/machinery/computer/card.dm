@@ -124,6 +124,14 @@
 									var nameField = document.getElementById('namefield');
 									nameField.style.backgroundColor = "#DDFFDD";
 								}
+								function markAccountGreen(){
+									var nameField = document.getElementById('accountfield');
+									nameField.style.backgroundColor = "#DDFFDD";
+								}
+								function markAccountRed(){
+									var nameField = document.getElementById('accountfield');
+									nameField.style.backgroundColor = "#FFDDDD";
+								}
 								function showAll(){
 									var allJobsSlot = document.getElementById('alljobsslot');
 									allJobsSlot.innerHTML = "<a href='#' onclick='hideAll()'>hide</a><br>"+ "[jobs_all]";
@@ -139,10 +147,16 @@
 			carddesc += "<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
 			carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
 			carddesc += "</form>"
+
+			carddesc += "<form name='accountnum' action='?src=\ref[src]' method='get'>"
+			carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
+			carddesc += "<input type='hidden' name='choice' value='account'>"
+			carddesc += "<b>Stored account number:</b> <input type='text' id='accountfield' name='account' value='[modify.associated_account_number]' style='width:250px; background-color:white;' onchange='markAccountRed()'>"
+			carddesc += "<input type='submit' value='Rename' onclick='markAccountGreen()'>"
+			carddesc += "</form>"
+
 			carddesc += "<b>Assignment:</b> "
-
 			var/jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
-
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
 				accesses += "<h5>Central Command:</h5>"
@@ -270,6 +284,13 @@
 						modify.registered_name = temp_name
 					else
 						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+		if ("account")
+			if (authenticated)
+				var/t2 = modify
+				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
+				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+					var/account_num = text2num(href_list["account"])
+					modify.associated_account_number = account_num
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")
