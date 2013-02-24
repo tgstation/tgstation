@@ -161,6 +161,10 @@
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
+	for(var/image/hud in client.images)
+		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
+			client.images.Remove(hud)
+
 	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 	if(hud && hud.hud)	hud.hud.process_hud(src)
 
