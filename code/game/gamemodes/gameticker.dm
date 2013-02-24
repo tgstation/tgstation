@@ -37,9 +37,9 @@ var/global/datum/controller/gameticker/ticker
 	var/triai = 0//Global holder for Triumvirate
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/ambience/title2.ogg','sound/ambience/title1.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
-	for(var/mob/new_player/M in mob_list)
-		if(M.client)	M.client.playtitlemusic()
+	login_music = pick(\
+	'sound/music/title1.ogg',\
+	'sound/music/b12_combined_start.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -104,6 +104,13 @@ var/global/datum/controller/gameticker/ticker
 		world << "<B>Possibilities:</B> [english_list(modes)]"
 	else
 		src.mode.announce()
+
+	//setup the money accounts
+	if(!centcomm_account_db)
+		for(var/obj/machinery/account_database/check_db in world)
+			if(check_db.z == 2)
+				centcomm_account_db = check_db
+				break
 
 	create_characters() //Create player characters and transfer them
 	collect_minds()
