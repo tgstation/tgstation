@@ -138,7 +138,7 @@ datum/preferences
 		if(species == "Tajaran")
 			preview_icon = new /icon('icons/effects/species.dmi', "tajaran_[g]_s")
 			preview_icon.Blend(new /icon('icons/effects/species.dmi', "tajtail_s"), ICON_OVERLAY)
-		else if(species == "Soghun")
+		else if(species == "Unathi")
 			preview_icon = new /icon('icons/effects/species.dmi', "lizard_[g]_s")
 			preview_icon.Blend(new /icon('icons/effects/species.dmi', "sogtail_s"), ICON_OVERLAY)
 		else if(species == "Skrell")

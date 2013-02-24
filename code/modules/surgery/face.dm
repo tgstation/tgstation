@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/face
+	priority = 2
 	can_infect = 0
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
@@ -11,7 +12,7 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (!affected)
 			return 0
-		return target_zone == "mouth" && affected.open == 2 && !(affected.status & ORGAN_BLEEDING)
+		return target_zone == "mouth"
 
 /datum/surgery_step/generic/cut_face
 	required_tool = /obj/item/weapon/scalpel

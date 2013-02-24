@@ -61,6 +61,8 @@ datum/mind
 	New(var/key)
 		src.key = key
 
+	//put this here for easier tracking ingame
+	var/datum/money_account/initial_account
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))

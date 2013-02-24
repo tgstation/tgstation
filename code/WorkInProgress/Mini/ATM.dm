@@ -114,11 +114,11 @@ log transactions
 			switch(view_screen)
 				if(CHANGE_SECURITY_LEVEL)
 					dat += "Select a new security level for this account:<br><hr>"
-					var/text = "Zero - Only account number or card is required to access this account. EFTPOS transactions will require a card and ask for a pin, but not verify the pin is correct."
+					var/text = "Zero - Either the account number or card is required to access this account. EFTPOS transactions will require a card and ask for a pin, but not verify the pin is correct."
 					if(authenticated_account.security_level != 0)
 						text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=0'>[text]</a>"
 					dat += "[text]<hr>"
-					text = "One - Both an account number and pin is required to access this account and process transactions."
+					text = "One - An account number and pin must be manually entered to access this account and process transactions."
 					if(authenticated_account.security_level != 1)
 						text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=1'>[text]</a>"
 					dat += "[text]<hr>"
@@ -185,7 +185,7 @@ log transactions
 			dat += "<span class='warning'>Unable to connect to accounts database, please retry and if the issue persists contact NanoTrasen IT support.</span>"
 			reconnect_database()
 
-		user << browse(dat,"window=atm;size=500x650")
+		user << browse(dat,"window=atm;size=550x650")
 	else
 		user << browse(null,"window=atm")
 

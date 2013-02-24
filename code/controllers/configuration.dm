@@ -63,8 +63,8 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl
-	var/forumurl
+	var/wikiurl = "http://baystation12.net/wiki/index.php?title=Main_Page"
+	var/forumurl = "http://baystation12.net/forums/"
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."

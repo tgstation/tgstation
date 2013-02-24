@@ -74,7 +74,7 @@
 	var/recieve_color = "purple"
 	var/send_pm_type = ""
 	var/recieve_pm_type = "Player"
-	//usr.client.holder.rights
+
 
 	if(holder)
 		//mod PMs are maroon
@@ -91,17 +91,17 @@
 		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 		return
 
-	var/recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
+	var/recieve_message = ""
 
 	if(holder && !C.holder)
-		recieve_message = "<font color='[recieve_color]' size='4'><b>-- Administrator private message --</b></font>\n" + recieve_message
+		recieve_message = "<font color='[recieve_color]' size='4'><b>-- Administrator private message --</b></font>\n"
 
 		//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 		if(config.popup_admin_pm)
 			spawn(0)	//so we don't hold the caller proc up
 				var/sender = src
 				var/sendername = key
-				var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+				var/reply = input(C, msg,"[recieve_pm_type] PM from-[sendername]", "") as text|null		//show message and await a reply
 				if(C && reply)
 					if(sender)
 						C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
@@ -109,8 +109,9 @@
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
+	recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[key_name(src, C, C.holder ? 1 : 0)]</b>: [msg]</font>"
 	C << recieve_message
-	src << "<font color='blue'>[send_pm_type] PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+	src << "<font color='blue'>[send_pm_type] PM to-<b>[key_name(C, src, holder ? 1 : 0)]</b>: [msg]</font>"
 
 	/*if(holder && !C.holder)
 		C.last_pm_recieved = world.time
@@ -177,6 +178,7 @@
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)
 		//check client/X is an admin and isn't the sender or recipient
-		//only admins can see PMs
+		if(X == C || X == src)
+			continue
 		if(X.key!=key && X.key!=C.key && (X.holder.rights & R_ADMIN) || (X.holder.rights & R_MOD) )
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X

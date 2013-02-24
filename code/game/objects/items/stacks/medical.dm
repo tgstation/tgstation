@@ -42,8 +42,19 @@
 				user << "\red The wounds on [M]'s [affecting.display_name] have already been bandaged."
 				return 1
 			else
-				user.visible_message( 	"\blue [user] bandages wounds on [M]'s [affecting.display_name].", \
-										"\blue You bandage wounds on [M]'s [affecting.display_name]." )
+				for (var/datum/wound/W in affecting.wounds)
+					if (W.internal)
+						continue
+					if (W.current_stage <= W.max_bleeding_stage)
+						user.visible_message( 	"\blue [user] bandages [W.desc] on [M]'s [affecting.display_name].", \
+										"\blue You bandage [W.desc] on [M]'s [affecting.display_name]." )
+						//H.add_side_effect("Itch")
+					else if (istype(W,/datum/wound/bruise))
+						user.visible_message( 	"\blue [user] places bruise patch over [W.desc] on [M]'s [affecting.display_name].", \
+										"\blue You place bruise patch over [W.desc] on [M]'s [affecting.display_name]." )
+					else
+						user.visible_message( 	"\blue [user] places bandaid over [W.desc] on [M]'s [affecting.display_name].", \
+										"\blue You place bandaid over [W.desc] on [M]'s [affecting.display_name]." )
 
 		else if(src.heal_burn)
 			if(!affecting.salve())
@@ -53,7 +64,6 @@
 				user.visible_message( 	"\blue [user] salves wounds on [M]'s [affecting.display_name].", \
 										"\blue You salve wounds on [M]'s [affecting.display_name]." )
 
-		H.add_side_effect("Itch")
 		H.UpdateDamageIcon()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))

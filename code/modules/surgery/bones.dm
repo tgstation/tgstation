@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/glue_bone
+	priority = 2
 	required_tool = /obj/item/weapon/bonegel
 	allowed_tools = list(/obj/item/weapon/screwdriver)
 	can_infect = 1

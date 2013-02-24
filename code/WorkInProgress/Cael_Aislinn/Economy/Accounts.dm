@@ -2,6 +2,7 @@ var/global/current_date_string
 var/global/num_financial_terminals = 1
 var/global/datum/money_account/station_account
 var/global/next_account_number = 0
+var/global/obj/machinery/account_database/centcomm_account_db
 
 /proc/create_station_account()
 	if(!station_account)
@@ -11,13 +12,13 @@ var/global/next_account_number = 0
 		station_account.owner_name = "[station_name()] Station Account"
 		station_account.account_number = rand(111111, 999999)
 		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.money = 10000
+		station_account.money = 75000
 
 		//create an entry in the account transaction log for when it was created
 		var/datum/transaction/T = new()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
-		T.amount = 10000
+		T.amount = 75000
 		T.date = "2nd April, 2555"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
@@ -266,10 +267,11 @@ var/global/next_account_number = 0
 		R.overlays += stampoverlay
 		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
 
-
 	//add the account
 	M.transaction_log.Add(T)
 	accounts.Add(M)
+
+	return M
 
 /obj/machinery/account_database/proc/charge_to_account(var/attempt_account_number, var/source_name, var/purpose, var/terminal_id, var/amount)
 	for(var/datum/money_account/D in accounts)

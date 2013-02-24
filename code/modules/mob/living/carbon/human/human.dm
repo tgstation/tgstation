@@ -919,4 +919,33 @@
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
 
 	E.ruptured_lungs = 1
+/*
+/mob/living/carbon/human/verb/simulate()
+	set name = "sim"
+	set background = 1
 
+	var/damage = input("Wound damage","Wound damage") as num
+
+	var/germs = 0
+	var/tdamage = 0
+	var/ticks = 0
+	while (germs < 2501 && ticks < 100000 && round(damage/10)*20)
+		diary << "VIRUS TESTING: [ticks] : germs [germs] tdamage [tdamage] prob [round(damage/10)*20]"
+		ticks++
+		if (prob(round(damage/10)*20))
+			germs++
+		if (germs == 100)
+			world << "Reached stage 1 in [ticks] ticks"
+		if (germs > 100)
+			if (prob(10))
+				damage++
+				germs++
+		if (germs == 1000)
+			world << "Reached stage 2 in [ticks] ticks"
+		if (germs > 1000)
+			damage++
+			germs++
+		if (germs == 2500)
+			world << "Reached stage 3 in [ticks] ticks"
+	world << "Mob took [tdamage] tox damage"
+*/

@@ -95,15 +95,16 @@
 	anchored = 0
 	layer = 2.7
 	health = 3
-	var/amount_grown = 0
+	var/amount_grown = -1
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	New()
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
+		processing_objects.Add(src)
 		//50% chance to grow up
 		if(prob(50))
-			processing_objects.Add(src)
+			amount_grown = 1
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -134,8 +135,8 @@
 					entry_vent = null
 					return
 				var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
-				if(prob(50))
-					src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")
+				/*if(prob(50))
+					src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
 
 				spawn(rand(20,60))
 					loc = exit_vent
@@ -164,21 +165,24 @@
 				entry_vent = null
 	//=================
 
-	else if(prob(33))
-		var/list/nearby = oview(10, src)
+	else if(prob(25))
+		var/list/nearby = oview(5, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
-			walk_to(src, target_atom)
-			if(prob(40))
+			walk_to(src, target_atom, 5)
+			if(prob(25))
 				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
-	else if(prob(10))
+	else if(prob(5))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
-				walk_to(src, entry_vent, 1)
+				walk_to(src, entry_vent, 5)
 				break
-	if(isturf(loc))
+
+	if(prob(1))
+		src.visible_message("\blue \the [src] chitters.")
+	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
