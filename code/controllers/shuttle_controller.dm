@@ -440,11 +440,11 @@ datum/shuttle_controller
 
 
 /proc/push_mob_back(var/mob/living/L, var/dir)
-	if(iscarbon(L))
+	if(iscarbon(L) && isturf(L.loc))
 		if(prob(88))
 			var/turf/T = get_step(L, dir)
 			if(T)
 				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
 					if(!O.CanPass(L, L.loc, 1, 0))
 						return
-				step(L, dir)
+				L.Move(get_step(L, dir), dir)

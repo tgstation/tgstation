@@ -153,10 +153,6 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Emergency Shuttle Transit"
 	icon_state = "shuttle"
 
-	mob_activate(var/mob/living/L)
-		push_mob_back(L, push_dir)
-
-
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
 	music = "music/escape.ogg"
