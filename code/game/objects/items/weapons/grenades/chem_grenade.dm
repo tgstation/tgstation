@@ -227,7 +227,7 @@
 	desc = "An oversized grenade that affects a larger area."
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass,/obj/item/weapon/reagent_containers/food/condiment,
-								/obj/item/weapon/reagent_containers/food/drinks, /obj/item/slime_extract)
+								/obj/item/weapon/reagent_containers/food/drinks)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 	prime()
@@ -280,6 +280,18 @@
 		invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
 		spawn(50)		   //To make sure all reagents can work
 			del(src)	   //correctly before deleting the grenade.
+
+	//I tried to just put it in the allowed_containers list but
+	//if you do that it must have reagents.  If you're going to
+	//make a special case you might as well do it explicitly. -Sayu
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/slime_extract) && stage == 1 && path != 2)
+			user << "\blue You add \the [W] to the assembly."
+			user.drop_item()
+			W.loc = src
+			beakers += W
+		else
+			return ..(W,user)
 
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "Metal-Foam Grenade"
