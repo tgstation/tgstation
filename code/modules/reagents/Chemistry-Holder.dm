@@ -482,6 +482,12 @@ datum
 
 				return res
 
+			delete()
+				for(var/datum/reagent/R in reagent_list)
+					R.holder = null
+				if(my_atom)
+					my_atom.reagents = null
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

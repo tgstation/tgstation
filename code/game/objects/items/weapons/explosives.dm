@@ -49,16 +49,15 @@
 		user.drop_item()
 		src.target = target
 		loc = null
-		var/location
-		if (isturf(target)) location = target
-		if (isobj(target)) location = target.loc
+
 		if (ismob(target))
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
-			explode(location)
+			explode(get_turf(target))
 
 /obj/item/weapon/plastique/proc/explode(var/location)
 
@@ -67,16 +66,16 @@
 	if(!target)
 		target = src
 	if(location)
-		explosion(location, -1, 1, 3, 4)
+		explosion(location, -1, -1, 4, 4)
 
-
-	if (istype(target, /turf/simulated/wall))
-		target:dismantle_wall(1)
-	else
-		target.ex_act(1)
-	if (isobj(target))
-		if (target)
-			del(target)
+	if(target)
+		if (istype(target, /turf/simulated/wall))
+			target:dismantle_wall(1)
+		else
+			target.ex_act(1)
+		if (isobj(target))
+			if (target)
+				del(target)
 	del(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
