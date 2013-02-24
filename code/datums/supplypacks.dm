@@ -894,3 +894,11 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Experimental shield capacitor"
 	group = "Engineering"
 	access = access_ce
+
+/datum/supply_packs/eftpos
+	contains = list(/obj/item/device/eftpos)
+	name = "EFTPOS scanner"
+	cost = 10
+	containertype = /obj/structure/closet/crate
+	containername = "EFTPOS crate"
+	group = "Operations"
