@@ -896,7 +896,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_ce
 
 /datum/supply_packs/eftpos
-	contains = list(/obj/item/weapon/eftpos)
+	contains = list(/obj/item/device/eftpos)
 	name = "EFTPOS scanner"
 	cost = 10
 	containertype = /obj/structure/closet/crate

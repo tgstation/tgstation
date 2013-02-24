@@ -1,8 +1,9 @@
 /obj/item/device/eftpos
 	name = "EFTPOS scanner"
-	desc = "Swipe your ID card to pay electronically."
+	desc = "Swipe your ID card to make purchases electronically."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "eftpos"	var/machine_id = ""
+	icon_state = "eftpos"
+	var/machine_id = ""
 	var/eftpos_name = "Default EFTPOS scanner"
 	var/transaction_locked = 0
 	var/transaction_paid = 0
@@ -29,7 +30,7 @@
 	R.name = "Reference: [eftpos_name]"
 	R.info = "<b>[eftpos_name] reference</b><br><br>"
 	R.info += "Access code: [access_code]<br><br>"
-	R.info += "<b>Do not lose this code, or the device will have to be replaced.</b><br>"
+	R.info += "<b>Do not lose or misplace this code.</b><br>"
 
 	//stamp the paper
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
@@ -44,7 +45,8 @@
 	D.wrapped = R
 	D.name = "small parcel - 'EFTPOS access code'"
 
-/obj/item/weapon/eftpos/proc/reconnect_database()	for(var/obj/machinery/account_database/DB in world)
+/obj/item/device/eftpos/proc/reconnect_database()
+	for(var/obj/machinery/account_database/DB in world)
 		if(DB.z == src.z)
 			linked_db = DB
 			break
@@ -122,7 +124,7 @@
 			if("trans_purpose")
 				transaction_purpose = input("Enter reason for EFTPOS transaction", "Transaction purpose")
 			if("trans_value")
-				transaction_amount = input("Enter amount for EFTPOS transaction", "Transaction amount") as num)
+				transaction_amount = input("Enter amount for EFTPOS transaction", "Transaction amount") as num
 			if("toggle_lock")
 				if(transaction_locked)
 					var/attempt_code = input("Enter EFTPOS access code", "Reset Transaction") as num
@@ -147,10 +149,13 @@
 				//reset the access code - requires HoP/captain access
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card))
-					var/obj/item/weapon/card/C = I
+					var/obj/item/weapon/card/id/C = I
 					if(access_cent_captain in C.access || access_hop in C.access || access_captain in C.access)
 						access_code = 0
 						usr << "\icon[src]<span class='info'>Access code reset to 0.</span>"
+				else if (istype(I, /obj/item/weapon/card/emag))
+					access_code = 0
+					usr << "\icon[src]<span class='info'>Access code reset to 0.</span>"
 
 	src.attack_self(usr)
 
