@@ -11,54 +11,6 @@
 		return 0
 
 // *************************************
-// Pestkiller defines for hydroponics
-// *************************************
-
-/obj/item/pestkiller
-	name = "bottle of pestkiller"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
-	var/toxicity = 0
-	var/PestKillStr = 0
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/pestkiller/carbaryl
-	name = "bottle of carbaryl"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
-	toxicity = 4
-	PestKillStr = 2
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/pestkiller/lindane
-	name = "bottle of lindane"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
-	toxicity = 6
-	PestKillStr = 4
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/pestkiller/phosmet
-	name = "bottle of phosmet"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
-	toxicity = 8
-	PestKillStr = 7
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-// *************************************
 // Hydroponics Tools
 // *************************************
 
@@ -114,42 +66,6 @@
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************
-// Weedkiller defines for hydroponics
-// *************************************
-
-/obj/item/weedkiller
-	name = "bottle of weedkiller"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
-	var/toxicity = 0
-	var/WeedKillStr = 0
-
-/obj/item/weedkiller/glyphosate
-	name = "bottle of glyphosate"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
-	toxicity = 4
-	WeedKillStr = 2
-
-/obj/item/weedkiller/triclopyr
-	name = "bottle of triclopyr"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
-	toxicity = 6
-	WeedKillStr = 4
-
-/obj/item/weedkiller/D24
-	name = "bottle of 2,4-D"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
-	toxicity = 8
-	WeedKillStr = 7
-
-// *************************************
 // Nutrient defines for hydroponics
 // *************************************
 
@@ -198,4 +114,86 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
+// *************************************
+// Pestkiller defines for hydroponics
+// *************************************
 
+/obj/item/pestkiller
+	name = "bottle of pestkiller"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	flags = FPRINT |  TABLEPASS
+	var/toxicity = 0
+	var/PestKillStr = 0
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/pestkiller/carbaryl
+	name = "bottle of carbaryl"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	flags = FPRINT |  TABLEPASS
+	toxicity = 4
+	PestKillStr = 2
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/pestkiller/lindane
+	name = "bottle of lindane"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle18"
+	flags = FPRINT |  TABLEPASS
+	toxicity = 6
+	PestKillStr = 4
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/pestkiller/phosmet
+	name = "bottle of phosmet"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle15"
+	flags = FPRINT |  TABLEPASS
+	toxicity = 8
+	PestKillStr = 7
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+// *************************************
+// Weedkiller defines for hydroponics
+// *************************************
+
+/obj/item/weedkiller
+	name = "bottle of weedkiller"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	flags = FPRINT |  TABLEPASS
+	var/toxicity = 0
+	var/WeedKillStr = 0
+
+/obj/item/weedkiller/glyphosate
+	name = "bottle of glyphosate"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	flags = FPRINT |  TABLEPASS
+	toxicity = 4
+	WeedKillStr = 2
+
+/obj/item/weedkiller/triclopyr
+	name = "bottle of triclopyr"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle18"
+	flags = FPRINT |  TABLEPASS
+	toxicity = 6
+	WeedKillStr = 4
+
+/obj/item/weedkiller/D24
+	name = "bottle of 2,4-D"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle15"
+	flags = FPRINT |  TABLEPASS
+	toxicity = 8
+	WeedKillStr = 7

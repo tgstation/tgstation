@@ -487,8 +487,6 @@
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("banana", 1+round((potency / 10), 1))
 			bitesize = 5
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"

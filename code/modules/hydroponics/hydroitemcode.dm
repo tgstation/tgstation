@@ -21,6 +21,10 @@
 		usr << "All the petals have fallen off the [name] from violent whacking."
 		del(src)
 
+/obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
+	if(!user.gloves)
+		user << "\red The [name] burns your bare hand!"
+		user.adjustFireLoss(rand(1,5))
 
 //Nettle
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)

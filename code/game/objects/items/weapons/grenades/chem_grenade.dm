@@ -377,3 +377,25 @@
 		icon_state = "grenade"
 
 		CreateDefaultTrigger(/obj/item/device/assembly/timer)
+
+/obj/item/weapon/grenade/chem_grenade/teargas
+	name = "teargas grenade"
+	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
+	path = 1
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+		B1.reagents.add_reagent("condensedcapsaicin", 25)
+		B1.reagents.add_reagent("potassium", 25)
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("sugar", 25)
+
+		beakers += B1
+		beakers += B2
+		icon_state = "grenade"
+
+		CreateDefaultTrigger(/obj/item/device/assembly/timer)
