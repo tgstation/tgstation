@@ -1,15 +1,3 @@
-proc/get_location_modifier(mob/M)
-	var/turf/T = get_turf(M)
-	if(locate(/obj/structure/optable, T))
-		return 1
-	else if(locate(/obj/structure/table, T))
-		return 0.8
-	else if(locate(/obj/structure/stool/bed, T))
-		return 0.7
-	else
-		return 0.5
-
-
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
 	if(istype(M))
 		if(M.lying || isslime(M))	//if they're prone or a slime
@@ -48,6 +36,18 @@ proc/get_location_modifier(mob/M)
 			else
 				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
 	return 0
+
+
+proc/get_location_modifier(mob/M)
+	var/turf/T = get_turf(M)
+	if(locate(/obj/structure/optable, T))
+		return 1
+	else if(locate(/obj/structure/table, T))
+		return 0.8
+	else if(locate(/obj/structure/stool/bed, T))
+		return 0.7
+	else
+		return 0.5
 
 
 /proc/get_location_accessible(mob/M, location)

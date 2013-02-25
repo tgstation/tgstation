@@ -30,3 +30,10 @@
 	else
 		user.visible_message("<span class='notice'>[user] can't find a brain in [target]!</span>")
 	return 1
+
+
+//brain removal for aliens
+/datum/surgery/brain_removal/alien
+	name = "alien brain removal"
+	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/extract_brain)
+	species = list(/mob/living/carbon/alien/humanoid)

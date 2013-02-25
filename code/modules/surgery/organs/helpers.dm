@@ -1,9 +1,12 @@
 proc/getbrain(mob/living/carbon/M)
 	if(istype(M))
-		var/obj/item/organ/brain/B = locate() in M.internal_organs
-		return B
+		for(var/obj/item/I in M.internal_organs)
+			if(istype(I, /obj/item/organ/brain))
+				return I
+
 
 proc/getappendix(mob/living/carbon/M)
 	if(istype(M))
-		var/obj/item/organ/appendix/A = locate() in M.internal_organs
-		return A
+		for(var/obj/item/I in M.internal_organs)
+			if(istype(I, /obj/item/organ/appendix))
+				return I

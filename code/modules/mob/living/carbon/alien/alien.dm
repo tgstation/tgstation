@@ -33,7 +33,7 @@
 
 
 /mob/living/carbon/alien/New()
-	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/brain/alien
 
 	..()
 
