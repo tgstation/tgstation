@@ -184,8 +184,8 @@
 			field_radius = 0
 	else if( href_list["strengthen_rate"] )
 		strengthen_rate += text2num(href_list["strengthen_rate"])
-		if(strengthen_rate > 0.2)
-			strengthen_rate = 0.2
+		if(strengthen_rate > 1)
+			strengthen_rate = 1
 		else if(strengthen_rate < 0)
 			strengthen_rate = 0
 	else if( href_list["max_field_strength"] )
