@@ -101,6 +101,23 @@
 
 
 
+// SINGULO BEACON SPAWNER
+/obj/item/device/sbeacondrop
+	name = "suspicious beacon"
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "beacon"
+	desc = "A label on it reads: <i>Activate to have a singularity beacon teleported to your location</i>."
+	origin_tech = "bluespace=1;syndicate=7"
+	w_class = 2
+
+/obj/item/device/sbeacondrop/attack_self(mob/user as mob)
+	if(user)
+		user << "\blue Locked In"
+		new /obj/machinery/singularity_beacon/syndicate( user.loc )
+		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+		del(src)
+	return
+
 #define SCREWED 32
 
 /obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist

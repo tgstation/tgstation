@@ -95,7 +95,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 	if(uses > 6)
 		randomItems.Add("/obj/item/weapon/aiModule/syndicate") //Hacked AI Upload Module
-		randomItems.Add("/obj/item/device/radio/beacon/syndicate") //Singularity Beacon
+		randomItems.Add("/obj/item/device/sbeacondrop") //Singularity Beacon
 
 	if(uses > 5)
 		randomItems.Add("/obj/item/weapon/gun/projectile") //Revolver
@@ -150,7 +150,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				uses -= 20
 			if("/obj/item/toy/syndicateballoon" , "/obj/item/weapon/storage/box/syndie_kit/imp_uplink" , "/obj/item/weapon/storage/box/syndicate")
 				uses -= 10
-			if("/obj/item/weapon/aiModule/syndicate" , "/obj/item/device/radio/beacon/syndicate")
+			if("/obj/item/weapon/aiModule/syndicate" , "/obj/item/device/sbeacondrop")
 				uses -= 7
 			if("/obj/item/weapon/gun/projectile")
 				uses -= 6
@@ -184,7 +184,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			feedback_add_details("traitor_uplink_items_bought","BU")
 		if("/obj/item/weapon/aiModule/syndicate")
 			feedback_add_details("traitor_uplink_items_bought","AI")
-		if("/obj/item/device/radio/beacon/syndicate")
+		if("/obj/item/device/sbeacondrop")
 			feedback_add_details("traitor_uplink_items_bought","SB")
 		if("/obj/item/weapon/gun/projectile")
 			feedback_add_details("traitor_uplink_items_bought","RE")
