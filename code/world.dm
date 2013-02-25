@@ -47,15 +47,16 @@
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 
-	if(!setup_database_connection())
-		world.log << "Your server failed to establish a connection with the feedback database."
-	else
-		world.log << "Feedback database connection established."
+	if(config.sql_enabled)
+		if(!setup_database_connection())
+			world.log << "Your server failed to establish a connection with the feedback database."
+		else
+			world.log << "Feedback database connection established."
 
-	if(!setup_old_database_connection())
-		world.log << "Your server failed to establish a connection with the tgstation database."
-	else
-		world.log << "Tgstation database connection established."
+		if(!setup_old_database_connection())
+			world.log << "Your server failed to establish a connection with the tgstation database."
+		else
+			world.log << "Tgstation database connection established."
 
 	plmaster = new /obj/effect/overlay()
 	plmaster.icon = 'icons/effects/tile_effects.dmi'

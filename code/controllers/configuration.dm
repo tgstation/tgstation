@@ -17,7 +17,7 @@
 	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
-	var/sql_enabled = 1					// for sql switching
+	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
@@ -28,7 +28,6 @@
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
-//	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
@@ -174,7 +173,7 @@
 					config.log_access = 1
 
 				if ("sql_enabled")
-					config.sql_enabled = text2num(value)
+					config.sql_enabled = 1
 
 				if ("log_say")
 					config.log_say = 1
@@ -247,9 +246,6 @@
 
 				if ("allow_ai")
 					config.allow_ai = 1
-
-//				if ("authentication")
-//					config.enable_authentication = 1
 
 				if ("norespawn")
 					config.respawn = 0
