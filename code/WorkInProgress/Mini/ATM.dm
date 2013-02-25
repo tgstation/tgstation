@@ -40,6 +40,15 @@ log transactions
 	machine_id = "[station_name()] RT #[num_financial_terminals++]"
 
 /obj/machinery/atm/process()
+	if(stat & NOPOWER)
+		return
+
+	if(linked_db && linked_db.stat & NOPOWER)
+		linked_db = null
+		authenticated_account = null
+		src.visible_message("\red \icon[src] [src] buzzes rudely, \"Connection to remote database lost.\"")
+		updateDialog()
+
 	if(ticks_left_timeout > 0)
 		ticks_left_timeout--
 		if(ticks_left_timeout <= 0)
@@ -59,7 +68,7 @@ log transactions
 
 /obj/machinery/atm/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
-		if(DB.z == src.z)
+		if(DB.z == src.z && !DB.stat & NOPOWER)
 			linked_db = DB
 			break
 
