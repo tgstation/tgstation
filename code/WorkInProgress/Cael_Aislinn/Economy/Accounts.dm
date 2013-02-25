@@ -161,7 +161,7 @@ var/global/obj/machinery/account_database/centcomm_account_db
 					for(var/datum/money_account/M in A.accounts)
 						if(!src.accounts.Find(M))
 							src.accounts.Add(M)
-				usr << "\icon[src] <span class='info'>Accounts synched across all databases in range.</span>"
+				usr << "\icon[src] <span class='info'>Accounts synched across all NanoTrasen financial databases.</span>"
 
 			if("create_account")
 				creating_new_account = 1
@@ -214,6 +214,15 @@ var/global/obj/machinery/account_database/centcomm_account_db
 				creating_new_account = 0
 
 	src.attack_hand(usr)
+
+/obj/machinery/account_database/proc/add_account_across_all(var/new_owner_name = "Default user", var/starting_funds = 0, var/pre_existing = 0)
+	var/datum/money_account/M = add_account(new_owner_name, starting_funds, pre_existing)
+	for(var/obj/machinery/account_database/D in world)
+		if(D == src)
+			continue
+		D.accounts.Add(M)
+
+	return M
 
 /obj/machinery/account_database/proc/add_account(var/new_owner_name = "Default user", var/starting_funds = 0, var/pre_existing = 0)
 
