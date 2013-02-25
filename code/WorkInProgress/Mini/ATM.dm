@@ -70,7 +70,8 @@ log transactions
 			usr.drop_item()
 			idcard.loc = src
 			held_card = idcard
-			authenticated_account = null
+			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
+				authenticated_account = null
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
 			//consume the money
