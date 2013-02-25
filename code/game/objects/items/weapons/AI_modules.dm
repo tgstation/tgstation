@@ -62,18 +62,18 @@ AI MODULES
 			usr << "The upload computer is broken!"
 			return
 		if (!comp.current)
-			usr << "You haven't selected a cyborg to transmit laws to!"
+			usr << "You haven't selected a robot to transmit laws to!"
 			return
 
 		if (comp.current.stat == 2 || comp.current.emagged)
-			usr << "Upload failed. No signal is being detected from the cyborg."
+			usr << "Upload failed. No signal is being detected from the robot."
 		else if (comp.current.connected_ai)
-			usr << "Upload failed. The cyborg is slaved to an AI."
+			usr << "Upload failed. The robot is slaved to an AI."
 		else
 			src.transmitInstructions(comp.current, usr)
 			comp.current << "These are your laws now:"
 			comp.current.show_laws()
-			usr << "Upload complete. The cyborg's laws have been modified."
+			usr << "Upload complete. The robot's laws have been modified."
 
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)

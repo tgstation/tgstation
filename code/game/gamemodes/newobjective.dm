@@ -1012,7 +1012,7 @@ datum
 			*/
 			cyborg
 				steal_target = /obj/item/robot_parts/robot_suit
-				explanation_text = "Steal a completed cyborg shell (no brain)"
+				explanation_text = "Steal a completed robot shell (no brain)"
 				weight = 30
 
 				get_points(var/job)

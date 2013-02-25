@@ -14,14 +14,14 @@
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "/red The [src] will not function on a deceased cyborg."
+		usr << "/red The [src] will not function on a deceased robot."
 		return 1
 	return 0
 
 
 /obj/item/borg/upgrade/reset
-	name = "cyborg module reset board"
-	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the cyborg."
+	name = "robotic module reset board"
+	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the robot."
 	icon_state = "cyborg_upgrade1"
 	require_module = 1
 
@@ -40,14 +40,14 @@
 	return 1
 
 /obj/item/borg/upgrade/rename
-	name = "cyborg reclassification board"
+	name = "robot reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
 	construction_cost = list("metal"=35000)
 	var/heldname = "default name"
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user as mob)
-	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
+	heldname = stripped_input(user, "Enter new robot name", "Robot Reclassification", heldname, MAX_NAME_LEN)
 
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
@@ -57,15 +57,15 @@
 	return 1
 
 /obj/item/borg/upgrade/restart
-	name = "cyborg emergency restart module"
-	desc = "Used to force a restart of a disabled-but-repaired cyborg, bringing it back online."
+	name = "robot emergency restart module"
+	desc = "Used to force a restart of a disabled-but-repaired robot, bringing it back online."
 	construction_cost = list("metal"=60000 , "glass"=5000)
 	icon_state = "cyborg_upgrade1"
 
 
 /obj/item/borg/upgrade/restart/action(var/mob/living/silicon/robot/R)
 	if(R.health < 0)
-		usr << "You have to repair the cyborg before using this module!"
+		usr << "You have to repair the robot before using this module!"
 		return 0
 
 	if(!R.key)
@@ -78,8 +78,8 @@
 
 
 /obj/item/borg/upgrade/vtec
-	name = "cyborg VTEC Module"
-	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
+	name = "robotic VTEC Module"
+	desc = "Used to kick in a robot's VTEC systems, increasing their speed."
 	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 5000)
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
@@ -95,7 +95,7 @@
 
 
 /obj/item/borg/upgrade/tasercooler
-	name = "cyborg Rapid Taser Cooling Module"
+	name = "robotic Rapid Taser Cooling Module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
 	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 2000, "diamond" = 500)
 	icon_state = "cyborg_upgrade3"
@@ -116,7 +116,7 @@
 	if(!T)
 		T = locate() in R.module.modules
 	if(!T)
-		usr << "This cyborg has had its taser removed!"
+		usr << "This robot has had its taser removed!"
 		return 0
 
 	if(T.recharge_time <= 2)
@@ -130,7 +130,7 @@
 	return 1
 
 /obj/item/borg/upgrade/jetpack
-	name = "mining cyborg jetpack"
+	name = "mining robot jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
 	construction_cost = list("metal"=10000,"plasma"=15000,"uranium" = 20000)
 	icon_state = "cyborg_upgrade3"
@@ -153,7 +153,7 @@
 
 /obj/item/borg/upgrade/syndicate/
 	name = "Illegal Equipment Module"
-	desc = "Unlocks the hidden, deadlier functions of a cyborg"
+	desc = "Unlocks the hidden, deadlier functions of a robot"
 	construction_cost = list("metal"=10000,"glass"=15000,"diamond" = 10000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1

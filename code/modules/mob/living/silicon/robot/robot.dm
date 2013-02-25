@@ -54,12 +54,12 @@
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/braintype = "Cyborg"
+	var/pose
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-
 
 	ident = rand(1, 999)
 	updatename("Default")
@@ -100,7 +100,6 @@
 	..()
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
-
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
@@ -207,6 +206,18 @@
 		changed_name = "[(prefix ? "[prefix] " : "")][braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
+
+/mob/living/silicon/robot/verb/Namepick()
+	if(custom_name)
+		return 0
+
+	var/newname
+	newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
+	if (newname != "")
+		custom_name = newname
+
+	updatename("Default")
+	updateicon()
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -424,9 +435,23 @@
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
-			user << "You close the cover."
-			opened = 0
-			updateicon()
+			if(cell)
+				user << "You close the cover."
+				opened = 0
+				updateicon()
+			else if(mmi && wiresexposed && isWireCut(1) && isWireCut(2) && isWireCut(3) && isWireCut(4) && isWireCut(5))
+				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
+				user << "You jam the crowbar into the robot and begin levering [mmi]."
+				sleep(30)
+				user << "You damage some parts of the chassis, but eventually manage to rip out [mmi]!"
+				var/obj/item/robot_parts/robot_suit/C = new/obj/item/robot_parts/robot_suit(loc)
+				C.l_leg = new/obj/item/robot_parts/l_leg(C)
+				C.r_leg = new/obj/item/robot_parts/r_leg(C)
+				C.l_arm = new/obj/item/robot_parts/l_arm(C)
+				C.r_arm = new/obj/item/robot_parts/r_arm(C)
+				C.updateicon()
+				new/obj/item/robot_parts/chest(loc)
+				src.Del()
 		else
 			if(locked)
 				user << "The cover is locked and cannot be opened."
@@ -767,24 +792,8 @@
 	overlays.Cut()
 	if(stat == 0)
 		overlays += "eyes"
-		if(icon_state == "robot")
-			overlays.Cut()
-			overlays += "eyes-standard"
-		if(icon_state == "toiletbot")
-			overlays.Cut()
-			overlays += "eyes-toiletbot"
-		if(icon_state == "bloodhound")
-			overlays.Cut()
-			overlays += "eyes-bloodhound"
-		if(icon_state =="landmate")
-			overlays.Cut()
-			overlays += "eyes-landmate"
-		if(icon_state =="mopgearrex")
-			overlays.Cut()
-			overlays += "eyes-mopgearrex"
-		if(icon_state =="Miner" || icon_state =="Miner+j")
-			overlays.Cut()
-			overlays += "eyes-Miner"
+		overlays.Cut()
+		overlays += "eyes-[icon_state]"
 	else
 		overlays -= "eyes"
 
@@ -987,3 +996,16 @@
 
 	return
 
+/mob/living/silicon/robot/verb/pose()
+	set name = "Set Pose"
+	set desc = "Sets a description which will be shown when someone examines you."
+	set category = "IC"
+
+	pose =  copytext(sanitize(input(usr, "This is [src]. It is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)
+
+/mob/living/silicon/robot/verb/set_flavor()
+	set name = "Set Flavour Text"
+	set desc = "Sets an extended description of your character's features."
+	set category = "IC"
+
+	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
