@@ -72,7 +72,7 @@
 		if(!msg)	return
 
 	var/recieve_color = "purple"
-	var/send_pm_type = ""
+	var/send_pm_type = " "
 	var/recieve_pm_type = "Player"
 
 
@@ -84,7 +84,7 @@
 				recieve_color = "maroon"
 			else
 				recieve_color = "red"
-			send_pm_type = holder.rank
+			send_pm_type = holder.rank + " "
 			recieve_pm_type = holder.rank
 
 	else if(!C.holder)
@@ -111,7 +111,7 @@
 
 	recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[key_name(src, C, C.holder ? 1 : 0)]</b>: [msg]</font>"
 	C << recieve_message
-	src << "<font color='blue'>[send_pm_type] PM to-<b>[key_name(C, src, holder ? 1 : 0)]</b>: [msg]</font>"
+	src << "<font color='blue'>[send_pm_type]PM to-<b>[key_name(C, src, holder ? 1 : 0)]</b>: [msg]</font>"
 
 	/*if(holder && !C.holder)
 		C.last_pm_recieved = world.time
