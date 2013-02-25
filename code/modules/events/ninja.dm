@@ -68,6 +68,7 @@
 						var/datum/objective/assassinate/O = new /datum/objective/assassinate()
 						O.owner = Mind
 						O.target = M
+						O.explanation_text = "Slay \the [M.current.real_name], the Death Commando."
 						Mind.objectives += O
 
 		else				//Xenos are the highest priority (if we're not so helpful) Although this makes zero sense at all...
@@ -76,7 +77,7 @@
 					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
 					O.owner = Mind
 					O.target = Q.mind
-					O.explanation_text = "Slay \the [Q]."
+					O.explanation_text = "Slay \the [Q.real_name]."
 					Mind.objectives += O
 
 		if(Mind.objectives.len < 4)	//not enough objectives still!
@@ -114,11 +115,13 @@
 							var/datum/objective/assassinate/O = new /datum/objective/assassinate()
 							O.owner = Mind
 							O.target = M
+							O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
 							Mind.objectives += O
 						else										//protect
 							var/datum/objective/protect/O = new /datum/objective/protect()
 							O.owner = Mind
 							O.target = M
+							O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
 							Mind.objectives += O
 					if(4)	//debrain/capture
 						if(!possible_targets.len)	continue
@@ -131,6 +134,7 @@
 							var/datum/objective/debrain/O = new /datum/objective/debrain()
 							O.owner = Mind
 							O.target = M
+							O.explanation_text = "Steal the brain of [M.current.real_name]."
 							Mind.objectives += O
 						else										//capture
 							var/datum/objective/capture/O = new /datum/objective/capture()

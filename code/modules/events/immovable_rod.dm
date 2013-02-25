@@ -75,10 +75,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return ..()
 
 	Bump(atom/clong)
-		if(istype(clong, /turf/simulated/shuttle)) //Skip shuttles without actually deleting the rod
-			return
-
-		else if (istype(clong, /turf) && !istype(clong, /turf/unsimulated))
+		if (istype(clong, /turf) && !istype(clong, /turf/unsimulated))
 			if(clong.density)
 				clong.ex_act(2)
 				for (var/mob/O in hearers(src, null))

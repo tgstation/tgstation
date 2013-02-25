@@ -294,16 +294,13 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/area/proc/gravitychange(var/gravitystate = 0, var/area/A)
+/area/proc/gravitychange(var/gravitystate = 0)
 
-	A.has_gravity = gravitystate
+	has_gravity = gravitystate
 
-	for(var/area/SubA in A.related)
-		SubA.has_gravity = gravitystate
-
-		if(gravitystate)
-			for(var/mob/living/carbon/human/M in SubA)
-				thunk(M)
+	if(gravitystate)
+		for(var/mob/living/carbon/human/M in contents)
+			thunk(M)
 
 /area/proc/mob_activate(var/mob/living/L)
 	return

@@ -6,7 +6,7 @@
 #warn compiling del logging
 var/list/del_counter = list()
 /proc/log_del(datum/X)
-	if(istype(X)){del_counter[X.type]++;}
+	if(istmostype(X)){del_counter[X.type]++;}
 	del(X)
 #define del(X) log_del(X)
 #endif
@@ -140,7 +140,6 @@ var/datum/debug/debugobj
 var/datum/moduletypes/mods = new()
 
 var/wavesecret = 0
-var/gravity_is_on = 1
 
 var/shuttlecoming = 0
 
