@@ -8,15 +8,20 @@
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
-	var/move_to_delay = 2 //delay for the automated movement.
+	var/move_to_delay = 4 //delay for the automated movement.
 	var/list/friends = list()
+	var/break_stuff_probability = 10
 	stop_automated_movement_when_pulled = 0
+	var/destroy_surroundings = 1
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 
 	var/atom/T = null
 	stop_automated_movement = 0
 	for(var/atom/A in ListTargets())
+
+		if(A == src)
+			continue
 
 		var/atom/F = Found(A)
 		if(F)
@@ -116,11 +121,13 @@
 				target_mob = FindTarget()
 
 			if(HOSTILE_STANCE_ATTACK)
-				DestroySurroundings()
+				if(destroy_surroundings)
+					DestroySurroundings()
 				MoveToTarget()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				DestroySurroundings()
+				if(destroy_surroundings)
+					DestroySurroundings()
 				AttackTarget()
 
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
@@ -170,7 +177,8 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
-	for(var/dir in cardinal) // North, South, East, West
-		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
-			obstacle.attack_animal(src)
+	if(prob(break_stuff_probability))
+		for(var/dir in cardinal) // North, South, East, West
+			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+				obstacle.attack_animal(src)

@@ -113,6 +113,12 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
+				if(self.data && self.data["virus2"])
+					if(method == TOUCH)
+						infect_virus2(M,self.data["virus2"])
+					else
+						infect_virus2(M,self.data["virus2"],1)
+
 
 
 
@@ -921,6 +927,20 @@ datum
 				..()
 				return
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			description = "A simple, yet effective painkiller."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			description = "An effective and very addictive painkiller."
+			reagent_state = LIQUID
+			color = "#C805DC"
+
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -1651,7 +1671,7 @@ datum
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
-
+/*
 		ethanol
 			name = "Ethanol"
 			id = "ethanol"
@@ -1685,7 +1705,7 @@ datum
 					else
 						usr << "It wasn't enough..."
 				return
-
+*/
 		ammonia
 			name = "Ammonia"
 			id = "ammonia"
@@ -2593,7 +2613,7 @@ datum
 					if(A.data) d += A.data
 
 				M.dizziness +=dizzy_adj.
-				if(d >= slur_start && d < confused_start)
+				if(d >= slur_start && d < pass_out)
 					if (!M:slurring) M:slurring = 1
 					M:slurring += slurr_adj
 				if(d >= confused_start && prob(33))
@@ -3205,12 +3225,12 @@ datum
 					M.dizziness +=5
 					return
 
-		erikasurprise
-			name = "Erika Surprise"
-			id = "erikasurprise"
-			description = "The surprise is, it's green!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
+			erikasurprise
+				name = "Erika Surprise"
+				id = "erikasurprise"
+				description = "The surprise is, it's green!"
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
 
 			irishcarbomb
 				name = "Irish Car Bomb"

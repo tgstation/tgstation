@@ -5,12 +5,11 @@
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
-// END_FILE_DIR
 
+// END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
 // END_PREFERENCES
-
 // BEGIN_INCLUDE
 #include "code\global.dm"
 #include "code\hub.dm"
@@ -197,6 +196,7 @@
 #include "code\game\gamemodes\events\miniblob.dm"
 #include "code\game\gamemodes\events\ninja_abilities.dm"
 #include "code\game\gamemodes\events\ninja_equipment.dm"
+#include "code\game\gamemodes\events\power_failure.dm"
 #include "code\game\gamemodes\events\space_ninja.dm"
 #include "code\game\gamemodes\events\spacevines.dm"
 #include "code\game\gamemodes\events\wormholes.dm"
@@ -393,6 +393,7 @@
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\closets\walllocker.dm"
 #include "code\game\objects\effects\aliens.dm"
+#include "code\game\objects\effects\barsign.dm"
 #include "code\game\objects\effects\bump_teleporter.dm"
 #include "code\game\objects\effects\effect_system.dm"
 #include "code\game\objects\effects\gibs.dm"
@@ -703,6 +704,7 @@
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
+#include "code\modules\clothing\spacesuits\alien.dm"
 #include "code\modules\clothing\spacesuits\captain.dm"
 #include "code\modules\clothing\spacesuits\ert.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
@@ -738,17 +740,26 @@
 #include "code\modules\events\blob.dm"
 #include "code\modules\events\brand_intelligence.dm"
 #include "code\modules\events\carp_migration.dm"
+#include "code\modules\events\comms_blackout.dm"
 #include "code\modules\events\communications_blackout.dm"
 #include "code\modules\events\disease_outbreak.dm"
 #include "code\modules\events\electrical_storm.dm"
 #include "code\modules\events\event.dm"
+#include "code\modules\events\event_dynamic.dm"
 #include "code\modules\events\event_manager.dm"
-#include "code\modules\events\meteor_wave.dm"
+#include "code\modules\events\grid_check.dm"
+#include "code\modules\events\infestation.dm"
+#include "code\modules\events\ion_storm.dm"
+#include "code\modules\events\meteors.dm"
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
+#include "code\modules\events\rogue_drones.dm"
+#include "code\modules\events\space_ninja.dm"
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
+#include "code\modules\events\viral_infection.dm"
+#include "code\modules\events\viral_outbreak.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"
@@ -952,6 +963,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\syndicate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\tree.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\clown.dm"
+#include "code\modules\mob\living\simple_animal\hostile\retaliate\drone.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\retaliate.dm"
 #include "code\modules\mob\new_player\hud.dm"
 #include "code\modules\mob\new_player\login.dm"
@@ -1204,6 +1216,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\SuperMatter.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\ZeroPointLaser.dm"
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
+#include "code\WorkInProgress\Cib\MedicalSideEffects.dm"
 #include "code\WorkInProgress\Mini\ATM.dm"
 #include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
