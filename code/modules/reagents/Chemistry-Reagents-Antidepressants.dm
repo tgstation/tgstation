@@ -31,8 +31,8 @@ Methylphenidate
 	result_amount = 3
 
 /datum/reagent/antidepressant/citalopram
-	name = "citalopram"
-	id = "Citalopram"
+	name = "Citalopram"
+	id = "citalopram"
 	description = "Stabilizes the mind a little."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -60,8 +60,8 @@ Methylphenidate
 
 
 /datum/reagent/antidepressant/paroxetine
-	name = "paroxetine"
-	id = "Paroxetine"
+	name = "Paroxetine"
+	id = "paroxetine"
 	description = "Stabilizes the mind greatly, but has a chance of adverse effects."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
