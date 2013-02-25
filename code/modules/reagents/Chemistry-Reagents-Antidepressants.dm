@@ -60,8 +60,8 @@ Methylphenidate
 
 
 /datum/reagent/antidepressant/paroxetine
-	name = "paroxetine"
-	id = "Paroxetine"
+	name = "Paroxetine"
+	id = "paroxetine"
 	description = "Stabilizes the mind greatly, but has a chance of adverse effects."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
