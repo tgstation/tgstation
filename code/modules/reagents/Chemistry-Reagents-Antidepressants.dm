@@ -31,8 +31,8 @@ Methylphenidate
 	result_amount = 3
 
 /datum/reagent/antidepressant/citalopram
-	name = "citalopram"
-	id = "Citalopram"
+	name = "Citalopram"
+	id = "citalopram"
 	description = "Stabilizes the mind a little."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
