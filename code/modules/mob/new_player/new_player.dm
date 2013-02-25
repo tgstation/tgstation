@@ -338,7 +338,7 @@
 			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
 				new_character.dna.mutantrace = "tajaran"
 				new_character.tajaran_talk_understand = 1
-		if(client.prefs.species == "Soghun")
+		if(client.prefs.species == "Unathi")
 			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
 				new_character.dna.mutantrace = "lizard"
 				new_character.soghun_talk_understand = 1

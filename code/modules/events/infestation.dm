@@ -83,7 +83,6 @@
 			vermstring = "lizards"
 		if(VERM_SPIDERS)
 			spawn_types = list(/obj/effect/spider/spiderling)
-			max_number = 6
 			vermstring = "spiders"
 
 	spawn(0)
@@ -92,12 +91,15 @@
 			var/turf/simulated/floor/T = pick(turfs)
 			turfs.Remove(T)
 			num--
+
+			
 			if(vermin == VERM_SPIDERS)
 				var/obj/effect/spider/spiderling/S = new(T)
 				S.amount_grown = -1
 			else
 				var/spawn_type = pick(spawn_types)
 				new spawn_type(T)
+
 
 /datum/event/infestation/announce()
 	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")

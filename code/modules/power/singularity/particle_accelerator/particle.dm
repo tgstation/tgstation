@@ -43,14 +43,14 @@
 			toxmob(A)
 		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/machinery/singularity/)))
 			A:energy += energy
-		else if( istype(A,/obj/machinery/rust/particle_catcher) )
-			var/obj/machinery/rust/particle_catcher/collided_catcher = A
+		else if( istype(A,/obj/effect/rust_particle_catcher) )
+			var/obj/effect/rust_particle_catcher/collided_catcher = A
 			if(particle_type && particle_type != "neutron")
 				if(collided_catcher.AddParticles(particle_type, 1 + additional_particles))
 					collided_catcher.parent.AddEnergy(energy,mega_energy)
 					del (src)
-		else if( istype(A,/obj/machinery/rust/core) )
-			var/obj/machinery/rust/core/collided_core = A
+		else if( istype(A,/obj/machinery/power/rust_core) )
+			var/obj/machinery/power/rust_core/collided_core = A
 			if(particle_type && particle_type != "neutron")
 				if(collided_core.AddParticles(particle_type, 1 + additional_particles))
 					var/energy_loss_ratio = abs(collided_core.owned_field.frequency - frequency) / 1e9

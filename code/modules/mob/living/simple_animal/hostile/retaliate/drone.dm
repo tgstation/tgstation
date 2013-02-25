@@ -157,7 +157,7 @@
 	hostile_drone = 0
 	walk(src,0)
 
-/mob/living/simple_animal/Die()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Die()
 	src.visible_message("\blue \icon[src] [src] suddenly breaks apart.")
 	..()
 	del(src)

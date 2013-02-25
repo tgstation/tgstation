@@ -12,7 +12,7 @@
 	brute_dam_coeff = 0.5
 //	weight = 1.0E7
 	req_one_access = list(access_security, access_forensics_lockers)
-	var/mob/living/carbon/target
+	var/mob/target
 	var/oldtarget_name
 	var/threatlevel = 0
 	var/target_lastloc //Loc of target when arrested.
@@ -22,6 +22,7 @@
 	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
+	var/next_harm_time = 0
 
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -219,30 +220,47 @@ Auto Patrol: []"},
 
 			if(target)		// make sure target exists
 				if(get_dist(src, src.target) <= 1)		// if right next to perp
-					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-					src.icon_state = "secbot-c"
-					spawn(2)
-						src.icon_state = "secbot[src.on]"
-					var/mob/living/carbon/M = src.target
-					var/maxstuns = 4
-					if(istype(M, /mob/living/carbon/human))
-						if(M.stuttering < 10 && (!(HULK in M.mutations)))
+					if(istype(src.target,/mob/living/carbon))
+						playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+						src.icon_state = "secbot-c"
+						spawn(2)
+							src.icon_state = "secbot[src.on]"
+						var/mob/living/carbon/M = src.target
+						var/maxstuns = 4
+						if(istype(M, /mob/living/carbon/human))
+							if(M.stuttering < 10 && (!(HULK in M.mutations)))
+								M.stuttering = 10
+							M.Stun(10)
+							M.Weaken(10)
+						else
+							M.Weaken(10)
 							M.stuttering = 10
-						M.Stun(10)
-						M.Weaken(10)
-					else
-						M.Weaken(10)
-						M.stuttering = 10
-						M.Stun(10)
-					maxstuns--
-					if(maxstuns <= 0)
-						target = null
-					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+							M.Stun(10)
+						maxstuns--
+						if(maxstuns <= 0)
+							target = null
+						visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
-					mode = SECBOT_PREP_ARREST
-					src.anchored = 1
-					src.target_lastloc = M.loc
-					return
+						mode = SECBOT_PREP_ARREST
+						src.anchored = 1
+						src.target_lastloc = M.loc
+						return
+					else if(istype(src.target,/mob/living/simple_animal))
+						//just harmbaton them until dead
+						if(world.time > next_harm_time)
+							next_harm_time = world.time + 15
+							playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+							visible_message("\red <B>[src] beats [src.target] with the stun baton!</B>")
+							src.icon_state = "secbot-c"
+							spawn(2)
+								src.icon_state = "secbot[src.on]"
+
+							var/mob/living/simple_animal/S = src.target
+							S.AdjustStunned(10)
+							S.adjustBruteLoss(15)
+							if(S.stat)
+								src.frustration = 8
+								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, src.target)
@@ -251,6 +269,8 @@ Auto Patrol: []"},
 						src.frustration++
 					else
 						src.frustration = 0
+			else
+				src.frustration = 8
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
@@ -261,19 +281,22 @@ Auto Patrol: []"},
 				return
 
 			if(istype(src.target,/mob/living/carbon))
-				if(!src.target.handcuffed && !src.arrest_type)
+				var/mob/living/carbon/C = target
+				if(!C.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
 					spawn(60)
 						if(get_dist(src, src.target) <= 1)
-							if(src.target.handcuffed)
-								return
+							/*if(src.target.handcuffed)
+								return*/
 
 							if(istype(src.target,/mob/living/carbon))
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
-								target.update_inv_handcuffed()	//update the handcuffs overlay
+								C = target
+								if(!C.handcuffed)
+									C.handcuffed = new /obj/item/weapon/handcuffs(target)
+									C.update_inv_handcuffed()	//update the handcuffs overlay
 
 							mode = SECBOT_IDLE
 							src.target = null
@@ -284,6 +307,7 @@ Auto Patrol: []"},
 							playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
 		//					src.speak(arrest_message)
+
 			else
 				mode = SECBOT_IDLE
 				src.target = null
@@ -293,10 +317,16 @@ Auto Patrol: []"},
 
 		if(SECBOT_ARREST)		// arresting
 
-			if(!target || target.handcuffed)
+			if(!target || !istype(target, /mob/living/carbon))
 				src.anchored = 0
 				mode = SECBOT_IDLE
 				return
+			else
+				var/mob/living/carbon/C = target
+				if(!C.handcuffed)
+					src.anchored = 0
+					mode = SECBOT_IDLE
+					return
 
 
 		if(SECBOT_START_PATROL)	// start a patrol
@@ -560,27 +590,35 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/proc/look_for_perp()
 	src.anchored = 0
-	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
-		if((C.stat) || (C.handcuffed))
-			continue
+	for (var/mob/living/M in view(7,src)) //Let's find us a criminal
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			if((C.stat) || (C.handcuffed))
+				continue
 
-		if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
-			continue
+			if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
+				continue
 
-		if(istype(C, /mob/living/carbon/human))
-			src.threatlevel = src.assess_perp(C)
-		else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
-			src.threatlevel = 4
+			if(istype(C, /mob/living/carbon/human))
+				src.threatlevel = src.assess_perp(C)
+			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
+				src.threatlevel = 4
+
+		else if(istype(M, /mob/living/simple_animal/hostile))
+			if(M.stat == DEAD)
+				continue
+			else
+				src.threatlevel = 4
 
 		if(!src.threatlevel)
 			continue
 
 		else if(src.threatlevel >= 4)
-			src.target = C
-			src.oldtarget_name = C.name
+			src.target = M
+			src.oldtarget_name = M.name
 			src.speak("Level [src.threatlevel] infraction alert!")
 			playsound(src.loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
-			src.visible_message("<b>[src]</b> points at [C.name]!")
+			src.visible_message("<b>[src]</b> points at [M.name]!")
 			mode = SECBOT_HUNT
 			spawn(0)
 				process()	// ensure bot quickly responds to a perp
