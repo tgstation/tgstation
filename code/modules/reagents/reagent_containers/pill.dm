@@ -134,6 +134,24 @@
 		..()
 		reagents.add_reagent("tramadol", 15)
 
+
+/obj/item/weapon/reagent_containers/pill/methylphenidate
+	name = "Methylphenidate pill"
+	desc = "Improves the ability to concentrate."
+	icon_state = "pill8"
+	New()
+		..()
+		reagents.add_reagent("methylphenidate", 15)
+
+/obj/item/weapon/reagent_containers/pill/citalopram
+	name = "Citalopram pill"
+	desc = "Mild anti-depressant."
+	icon_state = "pill8"
+	New()
+		..()
+		reagents.add_reagent("citalopram", 15)
+
+
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"
 	desc = "Used to stabilize patients."
