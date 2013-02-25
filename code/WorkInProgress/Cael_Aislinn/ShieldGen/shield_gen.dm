@@ -25,7 +25,6 @@
 	var/max_field_strength = 10
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
-	var/flicker_shield_glitch = 1		//shield is slightly faulty and flickers - don't think this is working as intended
 	//
 	use_power = 1			//0 use nothing
 							//1 use idle power
@@ -38,14 +37,191 @@
 		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
 			if(get_dir(possible_cap, src) == possible_cap.dir)
 				owned_capacitor = possible_cap
-				possible_cap.target_generator = src
 				break
 	field = new/list()
 	..()
 
-//copied from a copypaste. DRY, right?
+/obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = W
+		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+			src.locked = !src.locked
+			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			updateDialog()
+		else
+			user << "\red Access denied."
+	else if(istype(W, /obj/item/weapon/card/emag))
+		if(prob(75))
+			src.locked = !src.locked
+			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			updateDialog()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+
+	else if(istype(W, /obj/item/weapon/wrench))
+		src.anchored = !src.anchored
+		src.visible_message("\blue \icon[src] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
+
+		spawn(0)
+			for(var/obj/machinery/shield_gen/gen in range(1, src))
+				if(get_dir(src, gen) == src.dir)
+					if(!src.anchored && gen.owned_capacitor == src)
+						gen.owned_capacitor = null
+						break
+					else if(src.anchored && !gen.owned_capacitor)
+						gen.owned_capacitor = src
+						break
+					gen.updateDialog()
+					updateDialog()
+	else
+		..()
+
+/obj/machinery/shield_gen/attack_paw(user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/shield_gen/attack_ai(user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/shield_gen/attack_hand(mob/user)
+	if(stat & (NOPOWER|BROKEN))
+		return
+	interact(user)
+
+/obj/machinery/shield_gen/interact(mob/user)
+	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if (!istype(user, /mob/living/silicon))
+			user.unset_machine()
+			user << browse(null, "window=shield_generator")
+			return
+	var/t = "<B>Shield Generator Control Console</B><BR><br>"
+	if(locked)
+		t += "<i>Swipe your ID card to begin.</i>"
+	else
+		t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
+		t += "This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
+		t += "[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>"
+		t += "Coverage radius (restart required): \
+		<a href='?src=\ref[src];change_radius=-5'>--</a> \
+		<a href='?src=\ref[src];change_radius=-1'>-</a> \
+		[field_radius * 2]m \
+		<a href='?src=\ref[src];change_radius=1'>+</a> \
+		<a href='?src=\ref[src];change_radius=5'>++</a><br>"
+		t += "Overall field strength: [average_field_strength] Renwicks ([max_field_strength ? 100 * average_field_strength / max_field_strength : "NA"]%)<br>"
+		t += "Charge rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a> \
+		<a href='?src=\ref[src];strengthen_rate=-0.01'>-</a> \
+		[strengthen_rate] Renwicks/sec \
+		<a href='?src=\ref[src];strengthen_rate=0.01'>+</a> \
+		<a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>"
+		t += "Upkeep energy: [field.len * average_field_strength / energy_conversion_rate] Watts/sec<br>"
+		t += "Additional energy required to charge: [field.len * strengthen_rate / energy_conversion_rate] Watts/sec<br>"
+		t += "Maximum field strength: \
+		<a href='?src=\ref[src];max_field_strength=-100'>\[min\]</a> \
+		<a href='?src=\ref[src];max_field_strength=-10'>--</a> \
+		<a href='?src=\ref[src];max_field_strength=-1'>-</a> \
+		[max_field_strength] Renwicks \
+		<a href='?src=\ref[src];max_field_strength=1'>+</a> \
+		<a href='?src=\ref[src];max_field_strength=10'>++</a> \
+		<a href='?src=\ref[src];max_field_strength=100'>\[max\]</a><br>"
+	t += "<hr>"
+	t += "<A href='?src=\ref[src]'>Refresh</A> "
+	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	user << browse(t, "window=shield_generator;size=500x800")
+	user.set_machine(src)
+
+/obj/machinery/shield_gen/process()
+
+	if(active && field.len)
+		var/stored_renwicks = 0
+		var/target_field_strength = min(strengthen_rate + max(average_field_strength, 0), max_field_strength)
+		if(owned_capacitor)
+			var/required_energy = field.len * target_field_strength / energy_conversion_rate
+			var/assumed_charge = min(owned_capacitor.stored_charge, required_energy)
+			stored_renwicks = assumed_charge * energy_conversion_rate
+			owned_capacitor.stored_charge -= assumed_charge
+
+		time_since_fail++
+
+		average_field_strength = 0
+		target_field_strength = stored_renwicks / field.len
+
+		for(var/obj/effect/energy_field/E in field)
+			if(stored_renwicks)
+				var/strength_change = target_field_strength - E.strength
+				if(strength_change > stored_renwicks)
+					strength_change = stored_renwicks
+				if(E.strength >= 1)
+					E.Strengthen(strength_change)
+				else if(E.strength < 0)
+					E.strength = 0
+					E.Strengthen(0.1)
+
+				stored_renwicks -= strength_change
+
+				average_field_strength += E.strength
+			else
+				E.Strengthen(-E.strength)
+
+		average_field_strength /= field.len
+		if(average_field_strength < 0)
+			time_since_fail = 0
+	else
+		average_field_strength = 0
+
+/obj/machinery/shield_gen/Topic(href, href_list[])
+	..()
+	if( href_list["close"] )
+		usr << browse(null, "window=shield_generator")
+		usr.unset_machine()
+		return
+	else if( href_list["toggle"] )
+		toggle()
+	else if( href_list["change_radius"] )
+		field_radius += text2num(href_list["change_radius"])
+		if(field_radius > 200)
+			field_radius = 200
+		else if(field_radius < 0)
+			field_radius = 0
+	else if( href_list["strengthen_rate"] )
+		strengthen_rate += text2num(href_list["strengthen_rate"])
+		if(strengthen_rate > 0.2)
+			strengthen_rate = 0.2
+		else if(strengthen_rate < 0)
+			strengthen_rate = 0
+	else if( href_list["max_field_strength"] )
+		max_field_strength += text2num(href_list["max_field_strength"])
+		if(max_field_strength > 1000)
+			max_field_strength = 1000
+		else if(max_field_strength < 0)
+			max_field_strength = 0
+	//
+	updateDialog()
+
+/obj/machinery/shield_gen/power_change()
+	if(stat & BROKEN)
+		icon_state = "broke"
+	else
+		if( powered() )
+			if (src.active)
+				icon_state = "generator1"
+			else
+				icon_state = "generator0"
+			stat &= ~NOPOWER
+		else
+			spawn(rand(0, 15))
+				src.icon_state = "generator0"
+				stat |= NOPOWER
+			if (src.active)
+				toggle()
+
+/obj/machinery/shield_gen/ex_act(var/severity)
+
+	if(active)
+		toggle()
+	return ..()
+
+/*
 /obj/machinery/shield_gen/proc/check_powered()
-	/*
 	check_powered = 1
 	if(!anchored)
 		powered = 0
@@ -76,122 +252,14 @@
 			PN.newload += shieldload //uses powernet power.
 			*/
 
-/obj/machinery/shield_gen/process()
-
-	if(active && field.len)
-		var/stored_renwicks = 0
-		var/target_field_strength = min(average_field_strength + strengthen_rate, max_field_strength)
-		if(owned_capacitor)
-			var/assumed_charge = min(owned_capacitor.stored_charge, (target_field_strength / energy_conversion_rate) * field.len)
-			stored_renwicks = assumed_charge * energy_conversion_rate
-			owned_capacitor.stored_charge -= assumed_charge
-
-		time_since_fail++
-
-		average_field_strength = 0
-		target_field_strength = stored_renwicks / field.len
-
-		if(!flicker_shield_glitch)
-			for(var/obj/effect/energy_field/E in field)
-				//check to see if the shield is strengthening or failing
-				if(E.strength > target_field_strength)
-					E.strength = target_field_strength
-				else if(E.strength + strengthen_rate > target_field_strength)
-					E.strength = target_field_strength
-				else
-					E.strength += strengthen_rate
-
-				if(stored_renwicks - E.strength < 0)
-					E.strength = stored_renwicks
-				stored_renwicks -= E.strength
-
-				average_field_strength += E.strength
-				//check if the current shield tile has enough energy to maintain itself
-				if(E.strength >= 1)
-					E.density = 1
-					E.invisibility = 0
-				else
-					E.density = 0
-					E.invisibility = 2
-		else
-			//the flicker shield glitch is an intersting quirk in 'older' and/or faulty shielding models
-			//basically, it strengthens the shields continuously until it can no longer sustain them... then it drops out for a few seconds and starts again
-			//this makes the shield 'flicker' every now and then until it stabilises
-			//when this glitch is fixed, shields will only be charged as much as is sustainable
-			for(var/obj/effect/energy_field/E in field)
-				//check to see if the shield is strengthening or failing
-				if(E.strength < target_field_strength)
-					E.strength += strengthen_rate
-
-				if(stored_renwicks - E.strength < 0)
-					E.strength = stored_renwicks
-				stored_renwicks -= E.strength
-
-				average_field_strength += E.strength
-				//check if the current shield tile has enough energy to maintain itself
-				if(E.strength >= 1)
-					E.density = 1
-					E.invisibility = 0
-				else
-					E.density = 0
-					E.invisibility = 2
-
-		//add any leftover charge back to the capacitor
-		if(owned_capacitor && stored_renwicks >= 0)
-			owned_capacitor.stored_charge += stored_renwicks / energy_conversion_rate
-
-		average_field_strength /= field.len
-		if(average_field_strength < 0)
-			time_since_fail = 0
-	else
-		average_field_strength = 0
-	//
-	updateDialog()
-
-/obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
-
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
-			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
-		else
-			user << "\red Access denied."
-
-	else if(istype(W, /obj/item/weapon/wrench))
-		src.anchored = !src.anchored
-		src.visible_message("\blue \icon[src] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
-
-	else
-		src.add_fingerprint(user)
-		user << "\red You hit the [src.name] with your [W.name]!"
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
-
-/obj/machinery/shield_gen/power_change()
-	if(stat & BROKEN)
-		icon_state = "broke"
-	else
-		if( powered() )
-			if (src.active)
-				icon_state = "generator1"
-			else
-				icon_state = "generator0"
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "generator0"
-				stat |= NOPOWER
-			if (src.active)
-				toggle()
-
 /obj/machinery/shield_gen/proc/toggle()
 	active = !active
 	power_change()
 	if(active)
 		var/list/covered_turfs = get_shielded_turfs()
-		if(get_turf(src) in covered_turfs)
-			covered_turfs.Remove(get_turf(src))
+		var/turf/T = get_turf(src)
+		if(T in covered_turfs)
+			covered_turfs.Remove(T)
 		for(var/turf/O in covered_turfs)
 			var/obj/effect/energy_field/E = new(O)
 			field.Add(E)
@@ -207,60 +275,10 @@
 		for(var/mob/M in view(5,src))
 			M << "\icon[src] You hear heavy droning fade out."
 
-/obj/machinery/shield_gen/Topic(href, href_list[])
-	..()
-	if( href_list["close"] )
-		usr << browse(null, "window=shield_generator")
-		usr.machine = null
-		return
-	else if( href_list["toggle"] )
-		toggle()
-	else if( href_list["change_radius"] )
-		field_radius += text2num(href_list["change_radius"])
-		if(field_radius > 200)
-			field_radius = 200
-		else if(field_radius < 0)
-			field_radius = 0
-	else if( href_list["strengthen_rate"] )
-		strengthen_rate += text2num(href_list["strengthen_rate"])
-		if(strengthen_rate > 0.2)
-			strengthen_rate = 0.2
-		else if(strengthen_rate < 0)
-			strengthen_rate = 0
-	else if( href_list["max_field_strength"] )
-		max_field_strength += text2num(href_list["max_field_strength"])
-		if(max_field_strength > 1000)
-			max_field_strength = 1000
-		else if(max_field_strength < 0)
-			max_field_strength = 0
-	//
-	updateDialog()
-
-/obj/machinery/shield_gen/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=shield_generator")
-			return
-	var/t = "<B>Shield Generator Control Console</B><BR>"
-	t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
-	t += "This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
-	t += "[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>"
-	t += "Coverage radius (generator will need a restart to take effect): <a href='?src=\ref[src];change_radius=-5'>--</a> <a href='?src=\ref[src];change_radius=-1'>-</a> [field_radius * 2]m <a href='?src=\ref[src];change_radius=1'>+</a> <a href='?src=\ref[src];change_radius=5'>++</a><br>"
-	t += "Overall field strength: [average_field_strength] Renwicks ([100 * average_field_strength / max_field_strength]%)<br>"
-	t += "Charge consumption: [( (min(average_field_strength + strengthen_rate, max_field_strength)) / energy_conversion_rate) * field.len] Watts/sec<br>"
-	t += "Field charge rate (approx): <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a> <a href='?src=\ref[src];strengthen_rate=-0.01'>-</a>[strengthen_rate] Renwicks/sec <a href='?src=\ref[src];strengthen_rate=0.01'>+</a> <a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>"
-	t += "Maximum field strength (avg across field): <a href='?src=\ref[src];max_field_strength=-100'>\[min\]</a> <a href='?src=\ref[src];max_field_strength=-10'>--</a> <a href='?src=\ref[src];max_field_strength=-1'>-</a>[max_field_strength] Renwicks <a href='?src=\ref[src];max_field_strength=1'>+</a> <a href='?src=\ref[src];max_field_strength=10'>++</a> <a href='?src=\ref[src];max_field_strength=100'>\[max\]</a><br>"
-	t += "<hr>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(t, "window=shield_generator;size=500x800")
-	user.machine = src
-
+//grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()
-	return list()
-
-/obj/machinery/shield_gen/ex_act(var/severity)
-
-	if(active)
-		toggle()
-	return ..()
+	var/list/out = list()
+	for(var/turf/T in range(field_radius, src))
+		if(get_dist(src,T) == field_radius)
+			out.Add(T)
+	return out

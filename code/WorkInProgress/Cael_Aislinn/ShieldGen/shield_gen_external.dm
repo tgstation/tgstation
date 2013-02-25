@@ -21,12 +21,18 @@
 					for(var/turf/simulated/G in orange(1, O))
 						add_this_turf = 1
 						break
-					for(var/obj/structure/S in orange(1, O))
-						add_this_turf = 1
-						break
-					for(var/obj/structure/S in O)
-						add_this_turf = 0
-						break
+
+					//uncomment this for structures (but not lattices) to be surrounded by shield as well
+					/*if(!add_this_turf)
+						for(var/obj/structure/S in orange(1, O))
+							if(!istype(S, /obj/structure/lattice))
+								add_this_turf = 1
+								break
+					if(add_this_turf)
+						for(var/obj/structure/S in O)
+							if(!istype(S, /obj/structure/lattice))
+								add_this_turf = 0
+								break*/
 
 					if(add_this_turf && !(O in open) && !(O in closed))
 						open += O
