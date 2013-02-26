@@ -68,3 +68,7 @@
 		//
 		return particle
 */
+
+/obj/machinery/computer/rust_radiation_monitor
+	name = "Radiation Monitor"
+	icon_state = "power"

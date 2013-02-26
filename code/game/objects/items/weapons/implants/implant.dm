@@ -180,32 +180,38 @@ Implant Specifics:<BR>"}
 		switch (severity)
 			if (2.0)	//Weak EMP will make implant tear limbs off.
 				if (prob(50))
-					if (ishuman(imp_in) && part)
-						imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
-						playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
-						spawn(25)
-							if (ishuman(imp_in) && part)
-								//No tearing off these parts since it's pretty much killing
-								//and you can't replace groins
-								if (istype(part,/datum/organ/external/chest) ||	\
-									istype(part,/datum/organ/external/groin) ||	\
-									istype(part,/datum/organ/external/head))
-									part.createwound(BRUISE, 60)	//mangle them instead
-								else
-									part.droplimb(1)
-							explosion(get_turf(imp_in), -1, -1, 2, 3, 3)
-							del(src)
-
+					small_boom()
 			if (1.0)	//strong EMP will melt implant either making it go off, or disarming it
-				if (prob(50))
-					activate()		//50% chance of bye bye
-				else
-					meltdown()		//50% chance of implant disarming
+				if (prob(70))
+					if (prob(50))
+						small_boom()
+					else
+						if (prob(50))
+							activate()		//50% chance of bye bye
+						else
+							meltdown()		//50% chance of implant disarming
 		spawn (20)
 			malfunction--
 
 	islegal()
 		return 0
+
+	proc/small_boom()
+		if (ishuman(imp_in) && part)
+			imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+			playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
+			spawn(25)
+				if (ishuman(imp_in) && part)
+					//No tearing off these parts since it's pretty much killing
+					//and you can't replace groins
+					if (istype(part,/datum/organ/external/chest) ||	\
+						istype(part,/datum/organ/external/groin) ||	\
+						istype(part,/datum/organ/external/head))
+						part.createwound(BRUISE, 60)	//mangle them instead
+					else
+						part.droplimb(1)
+				explosion(get_turf(imp_in), -1, -1, 2, 3, 3)
+				del(src)
 
 /obj/item/weapon/implant/chem
 	name = "chem"
@@ -440,7 +446,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	activate()
 		var/turf/t = get_turf(src)
-		src.scanned.loc = t
+		if (imp_in)
+			imp_in.put_in_hands(scanned)
+		else
+			scanned.loc = t
 		del src
 
 	implanted(mob/source as mob)

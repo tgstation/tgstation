@@ -63,6 +63,7 @@
 /var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
+/var/const/access_psychiatrist = 64 // Psychiatrist's office
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -205,7 +206,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway)
@@ -223,7 +224,7 @@
 		if(1) //security
 			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(2) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
+			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo)
 		if(3) //research
 			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
@@ -335,6 +336,8 @@
 			return "Robotics"
 		if(access_virology)
 			return "Virology"
+		if(access_psychiatrist)
+			return "Psychiatrist's Office"
 		if(access_cmo)
 			return "Chief Medical Officer"
 		if(access_qm)

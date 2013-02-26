@@ -36,14 +36,25 @@
 
 	// Maps event names to event chances
 	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
+	// Events have to be manually added to this proc to happen
 	var/list/possibleEvents = list()
 
-	// Check for additional possible events
-	possibleEvents[/datum/event/economic_event] = 100	//see Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
+	//see:
+	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
+	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events_Mundane.dm
+	possibleEvents[/datum/event/economic_event] = 200
+	possibleEvents[/datum/event/trivial_news] = 300
+	possibleEvents[/datum/event/mundane_news] = 200
+
+	possibleEvents[/datum/event/pda_spam] = max(min(25, player_list.len) * 4, 200)
+	possibleEvents[/datum/event/money_lotto] = max(min(5, player_list.len), 50)
+	if(account_hack_attempted)
+		possibleEvents[/datum/event/money_hacker] = max(min(25, player_list.len) * 4, 200)
+
 	possibleEvents[/datum/event/carp_migration] = 50 + 50 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/brand_intelligence] = 50 + 25 * active_with_role["Janitor"]
 
-	possibleEvents[/datum/event/rogue_drone] = 50 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
+	possibleEvents[/datum/event/rogue_drone] = 25 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
 	possibleEvents[/datum/event/infestation] = 50 + 25 * active_with_role["Janitor"]
 
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
@@ -167,7 +178,7 @@
 	active_with_role["Janitor"] = 0
 
 	for(var/mob/M in player_list)
-		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
+		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
 
 		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")

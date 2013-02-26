@@ -40,12 +40,23 @@ log transactions
 	machine_id = "[station_name()] RT #[num_financial_terminals++]"
 
 /obj/machinery/atm/process()
+	if(stat & NOPOWER)
+		return
+
+	if(linked_db && linked_db.stat & NOPOWER)
+		linked_db = null
+		authenticated_account = null
+		src.visible_message("\red \icon[src] [src] buzzes rudely, \"Connection to remote database lost.\"")
+		updateDialog()
+
 	if(ticks_left_timeout > 0)
 		ticks_left_timeout--
 		if(ticks_left_timeout <= 0)
 			authenticated_account = null
 	if(ticks_left_locked_down > 0)
 		ticks_left_locked_down--
+		if(ticks_left_locked_down <= 0)
+			number_incorrect_tries = 0
 
 	for(var/obj/item/weapon/spacecash/S in src)
 		S.loc = src.loc
@@ -57,7 +68,7 @@ log transactions
 
 /obj/machinery/atm/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
-		if(DB.z == src.z)
+		if(DB.z == src.z && !DB.stat & NOPOWER)
 			linked_db = DB
 			break
 
@@ -68,7 +79,8 @@ log transactions
 			usr.drop_item()
 			idcard.loc = src
 			held_card = idcard
-			authenticated_account = null
+			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
+				authenticated_account = null
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
 			//consume the money
@@ -114,11 +126,11 @@ log transactions
 			switch(view_screen)
 				if(CHANGE_SECURITY_LEVEL)
 					dat += "Select a new security level for this account:<br><hr>"
-					var/text = "Zero - Only account number or card is required to access this account. EFTPOS transactions will require a card and ask for a pin, but not verify the pin is correct."
+					var/text = "Zero - Either the account number or card is required to access this account. EFTPOS transactions will require a card and ask for a pin, but not verify the pin is correct."
 					if(authenticated_account.security_level != 0)
 						text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=0'>[text]</a>"
 					dat += "[text]<hr>"
-					text = "One - Both an account number and pin is required to access this account and process transactions."
+					text = "One - An account number and pin must be manually entered to access this account and process transactions."
 					if(authenticated_account.security_level != 1)
 						text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=1'>[text]</a>"
 					dat += "[text]<hr>"
@@ -185,7 +197,7 @@ log transactions
 			dat += "<span class='warning'>Unable to connect to accounts database, please retry and if the issue persists contact NanoTrasen IT support.</span>"
 			reconnect_database()
 
-		user << browse(dat,"window=atm;size=500x650")
+		user << browse(dat,"window=atm;size=550x650")
 	else
 		user << browse(null,"window=atm")
 
@@ -223,7 +235,7 @@ log transactions
 					var/new_sec_level = max( min(text2num(href_list["new_security_level"]), 2), 0)
 					authenticated_account.security_level = new_sec_level
 			if("attempt_auth")
-				if(linked_db)
+				if(linked_db && !ticks_left_locked_down)
 					var/tried_account_num = text2num(href_list["account_num"])
 					if(!tried_account_num)
 						tried_account_num = held_card.associated_account_number
@@ -231,11 +243,11 @@ log transactions
 
 					authenticated_account = linked_db.attempt_account_access(tried_account_num, tried_pin, held_card && held_card.associated_account_number == tried_account_num ? 2 : 1)
 					if(!authenticated_account)
+						number_incorrect_tries++
 						if(previous_account_number == tried_account_num)
-							if(++number_incorrect_tries > max_pin_attempts)
+							if(number_incorrect_tries > max_pin_attempts)
 								//lock down the atm
-								number_incorrect_tries = 0
-								ticks_left_locked_down = 10
+								ticks_left_locked_down = 30
 								playsound(src, 'buzz-two.ogg', 50, 1)
 
 								//create an entry in the account transaction log
@@ -247,9 +259,12 @@ log transactions
 								T.time = worldtime2text()
 								authenticated_account.transaction_log.Add(T)
 							else
+								usr << "\red \icon[src] incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining."
 								previous_account_number = tried_account_num
-								number_incorrect_tries = 1
 								playsound(src, 'buzz-sigh.ogg', 50, 1)
+						else
+							usr << "\red \icon[src] incorrect pin/account combination entered."
+							number_incorrect_tries = 0
 					else
 						playsound(src, 'twobeep.ogg', 50, 1)
 						ticks_left_timeout = 120
@@ -263,6 +278,8 @@ log transactions
 						T.date = current_date_string
 						T.time = worldtime2text()
 						authenticated_account.transaction_log.Add(T)
+
+					previous_account_number = tried_account_num
 			if("withdrawal")
 				var/amount = max(text2num(href_list["funds_amount"]),0)
 				if(authenticated_account && amount > 0)

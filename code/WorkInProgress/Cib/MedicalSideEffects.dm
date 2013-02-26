@@ -24,12 +24,17 @@
 			side_effects += M
 
 /mob/living/carbon/human/proc/handle_medical_side_effects()
-	if(src.reagents.has_reagent("bicaridine") || src.reagents.has_reagent("tricordrazine") || src.reagents.has_reagent("cryoxadone"))
+	if(src.reagents.has_reagent("cryoxadone") || src.reagents.get_reagent_amount("bicaridine") >= 15 || src.reagents.get_reagent_amount("tricordrazine") >= 15)
 		src.add_side_effect("Headache")
 
-
-	if(src.reagents.has_reagent("kelotane") || src.reagents.has_reagent("dermaline"))
+	if(src.reagents.get_reagent_amount("kelotane") >= 30 || src.reagents.get_reagent_amount("dermaline") >= 15)
 		src.add_side_effect("Bad Stomach")
+
+	if(src.reagents.get_reagent_amount("tramadol") >= 16 || src.reagents.get_reagent_amount("anti_toxin") >= 30)
+		src.add_side_effect("Cramps")
+
+	if(src.reagents.get_reagent_amount("space_drugs") >= 10)
+		src.add_side_effect("Itch")
 
 	// One full cycle(in terms of strength) every 10 minutes
 	var/strength_percent = sin(life_tick / 2)
@@ -45,29 +50,6 @@
 					M.on_life(src, strength_percent*M.strength)
 				// Effect slowly growing stronger
 				M.strength+=0.08
-
-// HEADACHE
-// ========
-/datum/medical_effect/headache/name = "Headache"
-/datum/medical_effect/headache/on_life(mob/living/carbon/human/H, strength)
-	switch(strength)
-		if(1 to 10)
-			H.custom_pain("You feel a light pain in your head.",0)
-		if(11 to 30)
-			H.custom_pain("You feel a throbbing pain in your head!",1)
-		if(31 to 99)
-			H.custom_pain("You feel an excrutiating pain in your head!",1)
-			H.adjustBrainLoss(1)
-		if(99 to INFINITY)
-			H.custom_pain("It feels like your head is about to split open!",1)
-			H.adjustBrainLoss(3)
-			var/datum/organ/external/O = H.organs_by_name["head"]
-			O.take_damage(0, 1, 0, "Headache")
-
-/datum/medical_effect/headache/cure(mob/living/carbon/human/H)
-	if(H.reagents.has_reagent("alkysine"))
-		return 1
-	return 0
 
 // HEADACHE
 // ========
