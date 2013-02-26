@@ -37,7 +37,7 @@
 	var/opened = 0
 	var/temp
 	var/list/part_sets = list( //set names must be unique
-	"Cyborg"=list(
+	"Robot"=list(
 						/obj/item/robot_parts/robot_suit,
 						/obj/item/robot_parts/chest,
 						/obj/item/robot_parts/head,
@@ -111,7 +111,7 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/honker
 						),
 
-	"Cyborg Upgrade Modules" = list(
+	"Robotic Upgrade Modules" = list(
 						/obj/item/borg/upgrade/reset,
 						/obj/item/borg/upgrade/rename,
 						/obj/item/borg/upgrade/restart,
