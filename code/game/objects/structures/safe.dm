@@ -23,11 +23,11 @@ FLOOR SAFES
 
 
 /obj/structure/safe/New()
-	tumbler_1_pos = rand(0, 72)
-	tumbler_1_open = rand(0, 72)
+	tumbler_1_pos = rand(0, 71)
+	tumbler_1_open = rand(0, 71)
 
-	tumbler_2_pos = rand(0, 72)
-	tumbler_2_open = rand(0, 72)
+	tumbler_2_pos = rand(0, 71)
+	tumbler_2_open = rand(0, 71)
 
 
 /obj/structure/safe/initialize()
