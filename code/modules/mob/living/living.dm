@@ -271,6 +271,9 @@
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		C.handcuffed = initial(C.handcuffed)
+		if(C.reagents)
+			for(var/datum/reagent/R in C.reagents.reagent_list)
+				C.reagents.clear_reagents()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	if(stat == 2)
