@@ -265,6 +265,28 @@
 		del(src)
 	return
 
+/mob/living/carbon/human/proc/blobize() // Oh boy, this is for you Int - Summoner
+	if (monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_inventory(W)
+	regenerate_icons()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		del(t)
+
+	var/mob/living/blob/new_blob = new /mob/living/blob (loc)
+	new_blob.a_intent = "hurt"
+	new_blob.key = key
+
+	new_blob << "<B>You are now a Blob Fragment. You can now sacrifice yourself to spawn blobs!</B>"
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
+	return
+
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)

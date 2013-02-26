@@ -36,7 +36,7 @@
 			if (!muzzled)
 				message = "<B>The [src.name]</B> roars."
 				m_type = 2
-		if("hiss")
+		if("his")
 			if(!muzzled)
 				message = "<B>The [src.name]</B> hisses."
 				m_type = 2
