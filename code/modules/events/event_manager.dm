@@ -2,9 +2,8 @@ var/list/allEvents = typesof(/datum/event) - /datum/event
 var/list/potentialRandomEvents = typesof(/datum/event) - /datum/event
 //var/list/potentialRandomEvents = typesof(/datum/event) - /datum/event - /datum/event/spider_infestation - /datum/event/alien_infestation
 
-var/eventTimeLower = 15000	//15 minutes
-var/eventTimeUpper = 30000	//30 minutes
-
+var/eventTimeLower = 10000	//15 minutes
+var/eventTimeUpper = 25000	//30 minutes
 var/scheduledEvent = null
 
 
@@ -19,7 +18,7 @@ var/scheduledEvent = null
 /proc/checkEvent()
 	if(!scheduledEvent)
 		//more players = more time between events, less players = less time between events
-		var/playercount_modifier = 0.5
+		var/playercount_modifier = 1
 		switch(player_list.len)
 			if(0 to 10)
 				playercount_modifier = 1.2

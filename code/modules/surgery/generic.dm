@@ -85,7 +85,7 @@
 
 /datum/surgery_step/generic/retract_skin
 	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(/obj/item/weapon/crowbar,/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 30
 	max_duration = 40
@@ -186,7 +186,7 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] cuts off [target]'s [affected.display_name] with \the [tool].", \
 		"\blue You cut off [target]'s [affected.display_name] with \the [tool].")
-		affected.droplimb(1)
+		affected.droplimb(1,1)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)

@@ -1,3 +1,7 @@
+#define SPEEDLOADER 0
+#define FROM_BOX 1
+#define MAGAZINE 2
+
 /obj/item/weapon/gun/projectile
 	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"
@@ -10,7 +14,7 @@
 	var/ammo_type = "/obj/item/ammo_casing/a357"
 	var/list/loaded = list()
 	var/max_shells = 7
-	var/load_method = 0 //0 = Single shells or quick loader, 1 = box, 2 = magazine
+	var/load_method = SPEEDLOADER //0 = Single shells or quick loader, 1 = box, 2 = magazine
 	var/obj/item/ammo_magazine/empty_mag = null
 
 
@@ -45,7 +49,7 @@
 
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_magazine))
-		if((load_method == 2) && loaded.len)	return
+		if((load_method == MAGAZINE) && loaded.len)	return
 		var/obj/item/ammo_magazine/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			if(loaded.len >= max_shells)
@@ -55,11 +59,11 @@
 				AM.stored_ammo -= AC
 				loaded += AC
 				num_loaded++
-		if(load_method == 2)
+		if(load_method == MAGAZINE)
 			user.remove_from_mob(AM)
 			empty_mag = AM
 			empty_mag.loc = src
-	if(istype(A, /obj/item/ammo_casing) && !load_method)
+	if(istype(A, /obj/item/ammo_casing) && load_method == SPEEDLOADER)
 		var/obj/item/ammo_casing/AC = A
 		if(AC.caliber == caliber && loaded.len < max_shells)
 			user.drop_item()
@@ -71,6 +75,25 @@
 	A.update_icon()
 	update_icon()
 	return
+
+/obj/item/weapon/gun/projectile/attack_self(mob/user as mob)
+	if (loaded.len)
+		if (load_method == SPEEDLOADER)
+			var/obj/item/ammo_casing/AC = loaded[1]
+			loaded -= AC
+			AC.loc = get_turf(src) //Eject casing onto ground.
+			user << "\blue You unload shell from \the [src]!"
+		if (load_method == MAGAZINE)
+			var/obj/item/ammo_magazine/AM = empty_mag
+			for (var/obj/item/ammo_casing/AC in loaded)
+				AM.stored_ammo += AC
+				loaded -= AC
+			AM.loc = get_turf(src)
+			empty_mag = null
+			user << "\blue You unload magazine from \the [src]!"
+	else
+		user << "\red Nothing loaded in \the [src]!"
+
 
 
 /obj/item/weapon/gun/projectile/examine()

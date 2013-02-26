@@ -96,6 +96,23 @@
 		else if(damage_type == BURN)
 			return salved
 
+	// checks if wound is considered open for external infections
+	// untreated cuts (and bleeding bruises) and burns are possibly infectable, chance higher if wound is bigger
+	proc/can_infect()
+		if (is_treated() && damage < 10)
+			return 0
+		if (disinfected)
+			return 0
+		var/dam_coef = round(damage/10)
+		switch (damage_type)
+			if (BRUISE)
+				return prob(dam_coef*5) && bleeding() //bruises only infectable if bleeding
+			if (BURN)
+				return prob(dam_coef*10)
+			if (CUT)
+				return prob(dam_coef*20)
+
+		return 0
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
 	// set @heals_internal to also heal internal organ damage
@@ -131,31 +148,31 @@
 		return (!(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
 
 /** CUTS **/
-/datum/wound/cut
+/datum/wound/cut/small
 	// link wound descriptions to amounts of damage
 	max_bleeding_stage = 2
 	stages = list("ugly ripped cut" = 20, "ripped cut" = 10, "cut" = 5, "healing cut" = 2, "small scab" = 0)
 
-/datum/wound/deep_cut
+/datum/wound/cut/deep
 	max_bleeding_stage = 3
 	stages = list("ugly deep ripped cut" = 25, "deep ripped cut" = 20, "deep cut" = 15, "clotted cut" = 8, "scab" = 2, "fresh skin" = 0)
 
-/datum/wound/flesh_wound
+/datum/wound/cut/flesh
 	max_bleeding_stage = 3
 	stages = list("ugly ripped flesh wound" = 35, "ugly flesh wound" = 30, "flesh wound" = 25, "blood soaked clot" = 15, "large scab" = 5, "fresh skin" = 0)
 
-/datum/wound/gaping_wound
+/datum/wound/cut/gaping
 	max_bleeding_stage = 2
 	stages = list("gaping wound" = 50, "large blood soaked clot" = 25, "large clot" = 15, "small angry scar" = 5, \
 				   "small straight scar" = 0)
 
-/datum/wound/big_gaping_wound
+/datum/wound/cut/gaping_big
 	max_bleeding_stage = 2
 	stages = list("big gaping wound" = 60, "healing gaping wound" = 40, "large angry scar" = 10, "large straight scar" = 0)
 
 	needs_treatment = 1 // this only heals when bandaged
 
-/datum/wound/massive_wound
+datum/wound/cut/massive
 	max_bleeding_stage = 2
 	stages = list("massive wound" = 70, "massive healing wound" = 50, "massive angry scar" = 10,  "massive jagged scar" = 0)
 
@@ -169,50 +186,51 @@
 	needs_treatment = 1 // this only heals when bandaged
 	damage_type = BRUISE
 
-/datum/wound/bruise/monumental_bruise
+/datum/wound/bruise/monumental
 
 // implement sub-paths by starting at a later stage
-/datum/wound/bruise/huge_bruise
-	current_stage = 1
 
-/datum/wound/bruise/large_bruise
-	current_stage = 2
-
-/datum/wound/bruise/moderate_bruise
-	current_stage = 3
-	needs_treatment = 0
-
-/datum/wound/bruise/small_bruise
-	current_stage = 4
-	needs_treatment = 0
-
-/datum/wound/bruise/tiny_bruise
+/datum/wound/bruise/tiny
 	current_stage = 5
 	needs_treatment = 0
 
+/datum/wound/bruise/small
+	current_stage = 4
+	needs_treatment = 0
+
+/datum/wound/bruise/moderate
+	current_stage = 3
+	needs_treatment = 0
+
+/datum/wound/bruise/large
+	current_stage = 2
+
+/datum/wound/bruise/huge
+	current_stage = 1
+
 /** BURNS **/
-/datum/wound/moderate_burn
+/datum/wound/burn/moderate
 	stages = list("ripped burn" = 10, "moderate burn" = 5, "moderate salved burn" = 2, "fresh skin" = 0)
 
 	needs_treatment = 1 // this only heals when bandaged
 
 	damage_type = BURN
 
-/datum/wound/large_burn
+/datum/wound/burn/large
 	stages = list("ripped large burn" = 20, "large burn" = 15, "large salved burn" = 5, "fresh skin" = 0)
 
 	needs_treatment = 1 // this only heals when bandaged
 
 	damage_type = BURN
 
-/datum/wound/severe_burn
+/datum/wound/burn/severe
 	stages = list("ripped severe burn" = 35, "severe burn" = 30, "severe salved burn" = 10, "burn scar" = 0)
 
 	needs_treatment = 1 // this only heals when bandaged
 
 	damage_type = BURN
 
-/datum/wound/deep_burn
+/datum/wound/burn/deep
 	stages = list("ripped deep burn" = 45, "deep burn" = 40, "deep salved burn" = 15,  "large burn scar" = 0)
 
 	needs_treatment = 1 // this only heals when bandaged
@@ -220,7 +238,7 @@
 	damage_type = BURN
 
 
-/datum/wound/carbonised_area
+/datum/wound/burn/carbonised
 	stages = list("carbonised area" = 50, "treated carbonised area" = 20, "massive burn scar" = 0)
 
 	needs_treatment = 1 // this only heals when bandaged

@@ -34,6 +34,20 @@
 		for(var/mob/M in view())
 			M << 'sound/effects/mousesqueek.ogg'
 
+	if(!ckey && stat == CONSCIOUS && prob(0.5))
+		stat = UNCONSCIOUS
+		icon_state = "mouse_[color]_sleep"
+		wander = 0
+		speak_chance = 0
+		//snuffles
+	else if(stat == UNCONSCIOUS)
+		if(ckey || prob(1))
+			stat = CONSCIOUS
+			icon_state = "mouse_[color]"
+			wander = 1
+		else if(prob(5))
+			emote("snuffles")
+
 /mob/living/simple_animal/mouse/New()
 	..()
 	if(!color)

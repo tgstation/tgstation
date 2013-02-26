@@ -46,6 +46,13 @@
 				stance = HOSTILE_STANCE_ATTACK
 				T = M
 				break
+
+		if(istype(A, /obj/machinery/bot))
+			var/obj/machinery/bot/B = A
+			if (B.health > 0)
+				stance = HOSTILE_STANCE_ATTACK
+				T = B
+				break
 	return T
 
 
@@ -88,6 +95,9 @@
 		var/obj/mecha/M = target_mob
 		M.attack_animal(src)
 		return M
+	if(istype(target_mob,/obj/machinery/bot))
+		var/obj/machinery/bot/B = target_mob
+		B.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	stance = HOSTILE_STANCE_IDLE

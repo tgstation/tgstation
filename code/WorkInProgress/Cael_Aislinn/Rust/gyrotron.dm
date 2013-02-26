@@ -3,7 +3,7 @@
 /obj/item/projectile/beam/ehf_beam
 
 /obj/machinery/rust/gyrotron
-	icon = 'gyrotron.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "emitter-off"
 	name = "Gyrotron"
 	anchored = 1
@@ -41,7 +41,7 @@
 			new_val = min(new_val,0.01)
 			new_val = max(new_val,0.001)
 			mega_energy = new_val
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 		if( href_list["modifyrate"] )
@@ -52,7 +52,7 @@
 			new_val = min(new_val,1)
 			new_val = max(new_val,10)
 			rate = new_val
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 		if( href_list["modifyfreq"] )
@@ -63,29 +63,29 @@
 			new_val = min(new_val,1)
 			new_val = max(new_val,50000)
 			frequency = new_val
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 		if( href_list["activate"] )
 			emitting = 1
 			spawn(rate)
 				Emit()
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 		if( href_list["deactivate"] )
 			emitting = 0
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 		if( href_list["enableremote"] )
 			remoteenabled = 1
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 		if( href_list["disableremote"] )
 			remoteenabled = 0
-			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
+			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
 /*
