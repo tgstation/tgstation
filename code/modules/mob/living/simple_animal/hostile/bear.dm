@@ -45,15 +45,18 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "pokes"
 
+/mob/living/simple_animal/hostile/bear/Move()
+	..()
+	if(stat != DEAD)
+		if(loc && istype(loc,/turf/space))
+			icon_state = "bear"
+		else
+			icon_state = "bearfloor"
+
 /mob/living/simple_animal/hostile/bear/Life()
 	. =..()
 	if(!.)
 		return
-
-	if(loc && istype(loc,/turf/space))
-		icon_state = "bear"
-	else
-		icon_state = "bearfloor"
 
 	switch(stance)
 
@@ -113,7 +116,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(var/check_drift = 0)
-	return	//No drifting in space for space bears!
+	return 1	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()

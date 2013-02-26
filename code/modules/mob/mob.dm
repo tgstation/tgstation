@@ -306,7 +306,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/memory()
 	set name = "Notes"
-	set category = "OOC"
+	set category = "IC"
 	if(mind)
 		mind.show_memory(src)
 	else
@@ -314,7 +314,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
-	set category = "OOC"
+	set category = "IC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
