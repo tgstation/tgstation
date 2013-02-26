@@ -20,6 +20,9 @@
 	if (vary)
 		S.frequency = rand(32000, 55000)
 
+	if(isarea(source))
+		error("[source] is an area and is trying to make the sound: [soundin]")
+
 	for (var/A in range(world.view+extrarange, source))       // Plays for people in range.
 
 		if(ismob(A))

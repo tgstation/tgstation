@@ -41,7 +41,7 @@
 						M.stop_pulling()
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
-						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(8)
 						M.Weaken(5)
 					else
@@ -52,7 +52,7 @@
 						M.stop_pulling()
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
-						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(8)
 						M.Weaken(5)
 					else
@@ -69,7 +69,7 @@
 					spawn(4) step(M, M.dir)
 					M.take_organ_damage(2) // Was 5 -- TLE
 					M << "\blue You slipped on the floor!"
-					playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+					playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)
 
 	..()
