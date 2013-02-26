@@ -6,7 +6,7 @@
 #warn compiling del logging
 var/list/del_counter = list()
 /proc/log_del(datum/X)
-	if(istmostype(X)){del_counter[X.type]++;}
+	if(istype(X)){del_counter[X.type]++;}
 	del(X)
 #define del(X) log_del(X)
 #endif

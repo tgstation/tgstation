@@ -316,8 +316,13 @@ turf/simulated/floor/proc/update_icon()
 						FF.update_icon() //so siding get updated properly
 
 	if(!floor_tile) return
+	if (icon_plating)
+		icon_state = icon_plating
+	else
+		icon_state = "plating" //Nothing is defined, so just make it plating
+		icon_plating = "plating"
 	del(floor_tile)
-	icon_plating = "plating"
+
 	SetLuminosity(0)
 	floor_tile = null
 	intact = 0
@@ -342,14 +347,14 @@ turf/simulated/floor/proc/update_icon()
 				icon_state = icon_regular_floor
 			else
 				icon_state = "floor"
-				icon_regular_floor = icon_state
+				icon_regular_floor = "floor"
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
+	//if you gave a valid parameter, it won't get this far.
 	floor_tile = new/obj/item/stack/tile/plasteel
 	icon_state = "floor"
-	icon_regular_floor = icon_state
+	icon_regular_floor = "floor"
 
 	update_icon()
 	levelupdate()
@@ -540,7 +545,7 @@ turf/simulated/floor/proc/update_icon()
 				if(welder.remove_fuel(0,user))
 					user << "\red You fix some dents on the broken plating."
 					playsound(src.loc, 'sound/items/Welder.ogg', 80, 1)
-					icon_state = "plating"
+					icon_state = icon_plating
 					burnt = 0
 					broken = 0
 				else
