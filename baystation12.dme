@@ -1446,6 +1446,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\ShieldGen\energy_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_capacitor.dm"
 #include "code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen.dm"
+#include "code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen_external.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\LaserComputer.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\SuperMatter.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Supermatter\ZeroPointLaser.dm"
