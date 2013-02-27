@@ -82,7 +82,7 @@ var/global/obj/machinery/account_database/centcomm_account_db
 		dat += "Confirm identity: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card : "-----"]</a><br>"
 
 		if(access_level > 0)
-			dat += "<a href='?src=\ref[src];toggle_activated=1'>Toggle remote access to this database (warning!)</a>"
+			dat += "<a href='?src=\ref[src];toggle_activated=1'>[activated ? "Disable" : "Enable"] remote access</a><br>"
 			dat += "You may not edit accounts at this terminal, only create and view them.<br>"
 			if(creating_new_account)
 				dat += "<br>"
