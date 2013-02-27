@@ -325,6 +325,13 @@
 		..()
 		block = TELEBLOCK
 
+/obj/item/weapon/dnainjector/telemut/darkbundle
+	name = "DNA-Injector"
+	desc = "Good. Let the hate flow through you."
+/obj/item/weapon/dnainjector/telemut/darkbundle/attack(mob/M as mob, mob/user as mob)
+	..()
+	domutcheck(M,null) //guarantees that it works instead of getting a dud injector.
+
 /obj/item/weapon/dnainjector/deafmut
 	name = "DNA-Injector (Deaf)"
 	desc = "Sorry, what did you say?"

@@ -33,6 +33,7 @@
 	active = !active
 	if (active)
 		force = 30
+		throwforce = 20
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
@@ -42,6 +43,7 @@
 		user << "\blue [src] is now active."
 	else
 		force = 3
+		throwforce = 5.0
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else
