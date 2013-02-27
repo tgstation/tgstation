@@ -439,7 +439,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
-	var/temphtml = ""
+	var/temp_html = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
@@ -500,7 +500,7 @@
 					spawn(res.len*200)
 						src.wait = null
 		else
-			src.temphtml = "The replicator is not ready yet."
+			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
 	else if (href_list["create_virus_culture"])
@@ -527,7 +527,7 @@
 			spawn(1000)
 				src.wait = null
 		else
-			src.temphtml = "The replicator is not ready yet."
+			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
 	else if (href_list["empty_beaker"])
@@ -541,7 +541,7 @@
 		src.updateUsrDialog()
 		return
 	else if(href_list["clear"])
-		src.temphtml = ""
+		src.temp_html = ""
 		src.updateUsrDialog()
 		return
 	else if(href_list["name_disease"])
@@ -576,8 +576,8 @@
 		return
 	user.set_machine(src)
 	var/dat = ""
-	if(src.temphtml)
-		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
+	if(src.temp_html)
+		dat = "[src.temp_html]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
 	else if(!beaker)
 		dat += "Please insert beaker.<BR>"
 		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"

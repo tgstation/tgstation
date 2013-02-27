@@ -150,7 +150,7 @@ datum/design/comconsole
 	build_path = "/obj/item/weapon/circuitboard/communications"
 
 datum/design/idcardconsole
-	name = "Circuit Design (ID Computer)"
+	name = "Circuit Design (ID Console)"
 	desc = "Allows for the construction of circuit boards used to build an ID computer."
 	id = "idcardconsole"
 	req_tech = list("programming" = 2)

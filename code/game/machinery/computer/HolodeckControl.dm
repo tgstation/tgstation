@@ -1,5 +1,5 @@
 /obj/machinery/computer/HolodeckControl
-	name = "Holodeck Control Computer"
+	name = "Holodeck Control Console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_state = "holocontrol"
 	var/area/linkedholodeck = null
@@ -21,12 +21,8 @@
 		if(..())
 			return
 		user.set_machine(src)
-		var/dat
 
-
-		dat += "<B>Holodeck Control System</B><BR>"
-		dat += "<HR>Current Loaded Programs:<BR>"
-
+		var/dat = "<h3>Current Loaded Programs</h3>"
 		dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Boxing Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
@@ -34,7 +30,7 @@
 		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
 //		dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
 
-		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
+		dat += "<span class='notice'>Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.</span><BR>"
 
 		if(emagged)
 			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
@@ -45,17 +41,19 @@
 			dat += "<BR>"
 			if(issilicon(user))
 				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
-			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
+			dat += "Safety Protocols are <font class='bad'>DISABLED</font><BR>"
 		else
 			if(issilicon(user))
 				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
-			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
+			dat += "Safety Protocols are <font class='good'>ENABLED</font><BR>"
 
-		user << browse(dat, "window=computer;size=400x500")
-		onclose(user, "computer")
-
-
+		//user << browse(dat, "window=computer;size=400x500")
+		//onclose(user, "computer")
+		var/datum/browser/popup = new(user, "computer", name, 400, 500)
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 		return
 
 
@@ -159,7 +157,7 @@
 		emagged = 1
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
-		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
+		log_game("[key_name(usr)] emagged the Holodeck Control Console")
 	src.updateUsrDialog()
 	return
 

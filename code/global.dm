@@ -150,10 +150,6 @@ var/forceblob = 0
 	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
 	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
 
-var/list/APCWireColorToFlag = RandomAPCWires()
-var/list/APCIndexToFlag
-var/list/APCIndexToWireColor
-var/list/APCWireColorToIndex
 var/list/AAlarmWireColorToFlag = RandomAAlarmWires()
 var/list/AAlarmIndexToFlag
 var/list/AAlarmIndexToWireColor

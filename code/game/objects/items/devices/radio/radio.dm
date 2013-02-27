@@ -81,14 +81,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(active_uplink_check(user))
 		return
 
-	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	var/dat = ""
 
 	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
-		dat += "Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
+		dat += "<b>Microphone:</b> [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
 
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
+				<b>Speaker:</b> [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+				<b>Frequency:</b>
 				<A href='byond://?src=\ref[src];freq=-10'>-</A>
 				<A href='byond://?src=\ref[src];freq=-2'>-</A>
 				[format_frequency(frequency)]
@@ -98,14 +98,18 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
-	dat+={"[text_wires()]</TT></body></html>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
+	dat+= text_wires()
+	//user << browse(dat, "window=radio")
+	//onclose(user, "radio")
+	var/datum/browser/popup = new(user, "radio", "[src]")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /obj/item/device/radio/proc/text_wires()
 	if (b_stat)
-		return "<BR>" + wires.GetInteractWindow(0, 0)
+		return wires.GetInteractWindow()
 	return
 
 

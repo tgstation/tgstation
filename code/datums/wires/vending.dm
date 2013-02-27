@@ -24,8 +24,7 @@ var/const/VENDING_WIRE_IDSCAN = 8
 
 /datum/wires/vending/GetInteractWindow()
 	var/obj/machinery/vending/V = holder
-	. += "<HR>"
-	. += ..(0, 0)
+	. += ..()
 	. += "<BR>The orange light is [V.seconds_electrified ? "on" : "off"].<BR>"
 	. += "The red light is [V.shoot_inventory ? "off" : "blinking"].<BR>"
 	. += "The green light is [V.extended_inventory ? "on" : "off"].<BR>"

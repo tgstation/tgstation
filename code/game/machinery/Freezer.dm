@@ -45,21 +45,25 @@
 		user.set_machine(src)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
-			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+			temp_text = "<span class='bad'>[air_contents.temperature]</span>"
 		else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
-			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+			temp_text = "<span class='average'>[air_contents.temperature]</span>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+			temp_text = "<span class='good'>[air_contents.temperature]</span>"
 
-		var/dat = {"<B>Cryo gas cooling system</B><BR>
-		Current status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		Current gas temperature: [temp_text]<BR>
-		Current air pressure: [air_contents.return_pressure()]<BR>
-		Target gas temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
+		var/dat = {"
+		Current Status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
+		Current Gas Temperature: [temp_text]<BR>
+		Current Air Pressure: [air_contents.return_pressure()]<BR>
+		Target Gas Temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
 		"}
 
-		user << browse(dat, "window=freezer;size=400x500")
-		onclose(user, "freezer")
+		//user << browse(dat, "window=freezer;size=400x500")
+		//onclose(user, "freezer")
+		var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_content(dat)
+		popup.open()
 
 	Topic(href, href_list)
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))

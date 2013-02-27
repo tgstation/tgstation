@@ -49,35 +49,64 @@
 		return
 	if (src.connected)
 		var/mob/living/occupant = src.connected.occupant
-		var/dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
-		if (occupant)
-			var/t1
-			switch(occupant.stat)
-				if(0)
-					t1 = "Conscious"
-				if(1)
-					t1 = "<font color='blue'>Unconscious</font>"
-				if(2)
-					t1 = "<font color='red'>*dead*</font>"
-				else
-			dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
-			dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
-			dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
-			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
-			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
-			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
-			if(occupant.reagents)
-				dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
-				dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
-				dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
-				dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
-				dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
-			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src, src, src)
+		var/dat = "<h3>Sleeper Status</h3>"
+
+		dat += "<div class='statusDisplay'>"
+		if(!occupant)
+			dat += "Sleeper Unoccupied"
 		else
-			dat += "The sleeper is empty."
-		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
-		user << browse(dat, "window=sleeper;size=400x500")
-		onclose(user, "sleeper")
+			dat += "[occupant.name] => "
+			switch(occupant.stat) // obvious, see what their status is
+				if(0)
+					dat += "<span class='good'>Conscious</span>"
+				if(1)
+					dat += "<span class='average'>Unconscious</span>"
+				else
+					dat += "<span class='bad'>DEAD</span>"
+
+			dat += "<br />"
+
+			dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
+			dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
+			dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
+			dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
+			dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
+
+			//dat += text("[]\tHealth %: []</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health)
+			//dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
+			//dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
+			//dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
+			//dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
+			dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
+			if(occupant.reagents)
+				dat += text("<div class='line'><div class='statusLabel'>Inaprovaline:</div><div class='statusValue'>[] units</div></div>", occupant.reagents.get_reagent_amount("inaprovaline"))
+				dat += text("<div class='line'><div class='statusLabel'>Soporific:</div><div class='statusValue'>[] units</div></div>", occupant.reagents.get_reagent_amount("stoxin"))
+				dat += text("<div class='line'><div class='statusLabel'>Dermaline:</div><div class='statusValue'>[] units</div></div>", occupant.reagents.get_reagent_amount("dermaline"))
+				dat += text("<div class='line'><div class='statusLabel'>Bicaridine:</div><div class='statusValue'>[] units</div></div>", occupant.reagents.get_reagent_amount("bicaridine"))
+				dat += text("<div class='line'><div class='statusLabel'>Dexalin:</div><div class='statusValue'>[] units</div></div>", occupant.reagents.get_reagent_amount("dexalin"))
+		dat += "</div>"
+
+		dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
+
+		dat += "<h3>Injector</h3>"
+		if (occupant)
+			dat += "<A href='?src=\ref[src];inap=1'>Inject Inaprovaline</A>"
+		else
+			dat += "<span class='linkOff'>Inject Inaprovaline</span>"
+		if (occupant && occupant.health > 0)
+			dat += text("<BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src)
+		else
+			dat += text("<BR><span class='linkOff'>Inject Soporific</span><BR><span class='linkOff'>Inject Dermaline</span><BR><span class='linkOff'>Inject Bicaridine</span><BR><span class='linkOff'>Inject Dexalin</span>")
+		//dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
+
+		//user << browse(dat, "window=sleeper;size=400x500")
+		//onclose(user, "sleeper")
+
+		var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540) // Set up the popup browser window
+		popup.add_stylesheet("sleeper", 'html/browser/sleeper.css')
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_content(dat)
+		popup.open()
 	return
 
 /obj/machinery/sleep_console/Topic(href, href_list)

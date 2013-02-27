@@ -202,7 +202,7 @@
 			return
 
 	if(wiresexposed && (!istype(user, /mob/living/silicon)))
-		var/t1 = text("<html><head><title>[alarm_area.name] Air Alarm Wires</title></head><body><B>Access Panel</B><br>\n")
+		var/t1 = text("<B>Access Panel</B><br />\n")
 		var/list/AAlarmwires = list(
 			"Orange" = 1,
 			"Dark red" = 2,
@@ -220,15 +220,19 @@
 				t1 += "<a href='?src=\ref[src];AAlarmwires=[AAlarmwires[wiredesc]]'>Cut</a> "
 				t1 += "<a href='?src=\ref[src];pulse=[AAlarmwires[wiredesc]]'>Pulse</a> "
 
-			t1 += "<br>"
-		t1 += text("<br>\n[(src.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked.")]<br>\n[((src.shorted || (stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!")]<br>\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
-		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p></body></html>")
+			t1 += "<br />"
+		t1 += text("<br />\n[(src.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked.")]<br />\n[((src.shorted || (stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!")]<br />\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
+		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p>")
 		user << browse(t1, "window=AAlarmwires")
 		onclose(user, "AAlarmwires")
 
 	if(!shorted)
-		user << browse(return_text(),"window=air_alarm")
-		onclose(user, "air_alarm")
+		//user << browse(return_text(),"window=air_alarm")
+		//onclose(user, "air_alarm")
+		var/datum/browser/popup = new(user, "air_alarm", "[alarm_area.name] Air Alarm", 500, 400)
+		popup.set_content(return_text())
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 		refresh_all()
 
 	return
@@ -409,16 +413,20 @@
 	return 1
 
 /obj/machinery/alarm/proc/return_text()
+	var/dat = ""
 	if(!(istype(usr, /mob/living/silicon)) && locked)
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+		dat += "<div class='notice icon'><img src='[usr.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to unlock interface' /> Swipe ID card to unlock interface</div>"
+		dat += "[return_status()]"
 	else
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
+		dat += "<div class='notice icon'><img src='[usr.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to lock interface' /> Swipe ID card to lock interface</div>"
+		dat += "[return_status()]<hr>[return_controls()]"
+	return dat
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = src.loc
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
-	var/output = "<b>Air Status:</b><br>"
+	var/output = "<h3>Air Status:</h3>"
 
 	if(total == 0)
 		output +={"<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"}
@@ -460,18 +468,18 @@
 	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
 
 	output += {"
-Pressure: <span class='dl[pressure_dangerlevel]'>[environment_pressure]</span>kPa<br>
-Oxygen: <span class='dl[oxygen_dangerlevel]'>[oxygen_percent]</span>%<br>
-Carbon dioxide: <span class='dl[co2_dangerlevel]'>[co2_percent]</span>%<br>
-Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
+Pressure: <span class='dl[pressure_dangerlevel]'>[environment_pressure]</span>kPa<br />
+Oxygen: <span class='dl[oxygen_dangerlevel]'>[oxygen_percent]</span>%<br />
+Carbon dioxide: <span class='dl[co2_dangerlevel]'>[co2_percent]</span>%<br />
+Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br />
 "}
 	if (other_dangerlevel==2)
-		output += {"Notice: <span class='dl2'>High Concentration of Unknown Particles Detected</span><br>"}
+		output += {"Notice: <span class='dl2'>High Concentration of Unknown Particles Detected</span><br />"}
 	else if (other_dangerlevel==1)
-		output += {"Notice: <span class='dl1'>Low Concentration of Unknown Particles Detected</span><br>"}
+		output += {"Notice: <span class='dl1'>Low Concentration of Unknown Particles Detected</span><br />"}
 
 	output += {"
-Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]</span>K<br>
+Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]</span>K<br />
 "}
 
 	var/display_danger_level = max(
@@ -507,14 +515,14 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 				output += {"<a href='?src=\ref[src];atmos_alarm=1'>Activate - Atmospheric Alarm</a><hr>"}
 
 			output += {"
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_SCRUB]'>Scrubbers Control</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_VENT]'>Vents Control</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MODE]'>Set environmentals mode</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_SENSORS]'>Sensor Settings</a><br>
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_SCRUB]'>Scrubbers Control</a><br />
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_VENT]'>Vents Control</a><br />
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_MODE]'>Set Environmentals Mode</a><br />
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_SENSORS]'>Sensor Settings</a><br />
 <HR>
 "}
 			if (mode==AALARM_MODE_PANIC)
-				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];mode=[AALARM_MODE_SCRUBBING]'>Turn syphoning off</A>"
+				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br /><A href='?src=\ref[src];mode=[AALARM_MODE_SCRUBBING]'>Turn syphoning off</A>"
 			else
 				output += "<A href='?src=\ref[src];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 		if (AALARM_SCREEN_VENT)
@@ -528,14 +536,15 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 					var/state = ""
 
 					sensor_data += {"
-<B>[long_name]</B>[state]<BR>
+<h3>[long_name]</h3>
+[state]<br />
 <B>Operating:</B>
 <A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A>
-<BR>
+<br />
 <B>Pressure checks:</B>
 <A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data["checks"]^1]' [(data["checks"]&1)?"style='font-weight:bold;'":""]>external</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data["checks"]^2]' [(data["checks"]&2)?"style='font-weight:bold;'":""]>internal</A>
-<BR>
+<br />
 <B>External pressure bound:</B>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-1000'>-</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-100'>-</A>
@@ -546,19 +555,19 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+10'>+</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+100'>+</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+1000'>+</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=set_external_pressure;val=[ONE_ATMOSPHERE]'> (reset) </A>
-<BR>
+<A href='?src=\ref[src];id_tag=[id_tag];command=set_external_pressure;val=[ONE_ATMOSPHERE]'>reset</A>
+<br />
 "}
 					if (data["direction"] == "siphon")
 						sensor_data += {"
 <B>Direction:</B>
 siphoning
-<BR>
+<br />
 "}
 					sensor_data += {"<HR>"}
 			else
-				sensor_data = "No vents connected.<BR>"
-			output = {"<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
+				sensor_data = "No vents connected.<br />"
+			output = {"<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'><< Main Menu</a><hr><br />[sensor_data]"}
 		if (AALARM_SCREEN_SCRUB)
 			var/sensor_data = ""
 			if(alarm_area.air_scrub_names.len)
@@ -570,11 +579,11 @@ siphoning
 					var/state = ""
 
 					sensor_data += {"
-<B>[long_name]</B>[state]<BR>
+<B>[long_name]</B>[state]<br />
 <B>Operating:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A><BR>
+<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A><br />
 <B>Type:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=scrubbing;val=[!data["scrubbing"]]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><BR>
+<A href='?src=\ref[src];id_tag=[id_tag];command=scrubbing;val=[!data["scrubbing"]]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><br />
 "}
 
 					if(data["scrubbing"])
@@ -586,20 +595,20 @@ Toxins
 <A href='?src=\ref[src];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_toxins"]]'>[data["filter_toxins"]?"on":"off"]</A>;
 Nitrous Oxide
 <A href='?src=\ref[src];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
-<BR>
+<br />
 "}
 					sensor_data += {"
 <B>Panic syphon:</B> [data["panic"]?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":""]
-<A href='?src=\ref[src];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
+<A href='?src=\ref[src];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><br />
 <HR>
 "}
 			else
-				sensor_data = "No scrubbers connected.<BR>"
-			output = {"<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
+				sensor_data = "No scrubbers connected.<br />"
+			output = {"<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'><< Main Menu</a><hr><br />[sensor_data]"}
 
 		if (AALARM_SCREEN_MODE)
 			output += {"
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'><< Main Menu</a><hr><br />
 <b>Air machinery mode for the area:</b><ul>"}
 			var/list/modes = list(
 				AALARM_MODE_SCRUBBING   = "Filtering",
@@ -616,8 +625,8 @@ Nitrous Oxide
 			output += "</ul>"
 		if (AALARM_SCREEN_SENSORS)
 			output += {"
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
-<b>Alarm thresholds:</b><br>
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'><< Main Menu</a><hr><hr><br />
+<b>Alarm thresholds:</b><br />
 Partial pressure for gases
 <style>/* some CSS woodoo here. Does not work perfect in ie6 but who cares? */
 table td { border-left: 1px solid black; border-top: 1px solid black;}
@@ -1264,6 +1273,7 @@ FIRE ALARM
 	var/area/A = src.loc
 	var/d1
 	var/d2
+	var/dat = ""
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
 		A = A.loc
 
@@ -1277,9 +1287,9 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(src.time) % 60
 		var/minute = (round(src.time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(dat, "window=firealarm")
-		onclose(user, "firealarm")
+		dat = "[d1]<br /><b>The current alert level is: [get_security_level()]</b><br /><br />Timer System: [d2]<br />Time Left: <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
+		//user << browse(dat, "window=firealarm")
+		//onclose(user, "firealarm")
 	else
 		A = A.loc
 		if (A.fire)
@@ -1292,9 +1302,13 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(src.time) % 60
 		var/minute = (round(src.time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(dat, "window=firealarm")
-		onclose(user, "firealarm")
+		dat = "[d1]<br /><b>The current alert level is: [stars(get_security_level())]</b><br /><br />Timer System: [d2]<br />Time Left: <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
+		//user << browse(dat, "window=firealarm")
+		//onclose(user, "firealarm")
+	var/datum/browser/popup = new(user, "firealarm", "Fire Alarm")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
@@ -1477,7 +1491,7 @@ Code shamelessly copied from apc_frame
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
+		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []\n<HR>\nTimer System: []<br />\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
 		user << browse(dat, "window=partyalarm")
 		onclose(user, "partyalarm")
 	else
@@ -1492,7 +1506,7 @@ Code shamelessly copied from apc_frame
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
+		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<br />\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
 		user << browse(dat, "window=partyalarm")
 		onclose(user, "partyalarm")
 	return

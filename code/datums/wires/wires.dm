@@ -21,8 +21,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	var/list/signallers = list()
 
 	var/table_options = " align='center'"
-	var/row_options1 = " width='90px'"
-	var/row_options2 = " width='200px'"
+	var/row_options1 = " width='80px'"
+	var/row_options2 = " width='260px'"
 	var/window_x = 370
 	var/window_y = 470
 
@@ -72,14 +72,16 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		html = GetInteractWindow()
 	if(html)
 		user.set_machine(holder)
-	user << browse(html, "window=wires;size=[window_x]x[window_y]")
-	onclose(user, "wires")
+	//user << browse(html, "window=wires;size=[window_x]x[window_y]")
+	//onclose(user, "wires")
+	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
+	popup.set_content(html)
+	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
+	popup.open()
 
-/datum/wires/proc/GetInteractWindow(var/get_title = 1, var/allow_close = 1)
-
-	var/html = ""
-	if(get_title)
-		html += "<center><h2>[uppertext(holder.name)]</h2></center><HR>"
+/datum/wires/proc/GetInteractWindow()
+	var/html = "<div class='block'>"
+	html += "<h3>Exposed Wires</h3>"
 	html += "<table[table_options]>"
 
 	for(var/colour in wires)
@@ -87,11 +89,11 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font></td>"
 		html += "<td[row_options2]>"
 		html += "<A href='?src=\ref[src];action=1;cut=[colour]'>[IsColourCut(colour) ? "Mend" :  "Cut"]</A>"
-		html += " - <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"
-		html += " - <A href='?src=\ref[src];action=1;attach=[colour]'>[IsAttached(colour) ? "Detach" : "Attach"] Signaller</A></td></tr>"
+		html += " <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"
+		html += " <A href='?src=\ref[src];action=1;attach=[colour]'>[IsAttached(colour) ? "Detach" : "Attach"] Signaller</A></td></tr>"
 	html += "</table>"
-	if(allow_close)
-		html += "<BR><center><A href='?src=\ref[src];close=1'>Close</A></center>"
+	html += "</div>"
+
 	return html
 
 /datum/wires/Topic(href, href_list)

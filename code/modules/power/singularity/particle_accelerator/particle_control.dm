@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/particle_accelerator/control_box
-	name = "Particle Accelerator Control Computer"
+	name = "Particle Accelerator Control Console"
 	desc = "This controls the density of the particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_box"
@@ -236,9 +236,8 @@
 	user.set_machine(src)
 
 	var/dat = ""
-	dat += "Particle Accelerator Control Panel<BR>"
 	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
-	dat += "Status:<BR>"
+	dat += "<h3>Status</h3>"
 	if(!assembled)
 		dat += "Unable to detect all parts!<BR>"
 		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
@@ -253,6 +252,10 @@
 		dat += "Particle Strength: [src.strength] "
 		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-	user << browse(dat, "window=pacontrol;size=420x500")
-	onclose(user, "pacontrol")
+	//user << browse(dat, "window=pacontrol;size=420x500")
+	//onclose(user, "pacontrol")
+	var/datum/browser/popup = new(user, "pacontrol", name, 420, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return

@@ -21,7 +21,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
  * Library Public Computer
  */
 /obj/machinery/librarypubliccomp
-	name = "visitor computer"
+	name = "Library Visitor Console"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "computer"
 	anchored = 1
@@ -34,7 +34,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
 	usr.set_machine(src)
-	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
 			dat += "<h2>Search Settings</h2><br>"
@@ -63,8 +63,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
-	user << browse(dat, "window=publiclibrary")
-	onclose(user, "publiclibrary")
+	//user << browse(dat, "window=publiclibrary")
+	//onclose(user, "publiclibrary")
+	var/datum/browser/popup = new(user, "publiclibrary", name)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/librarypubliccomp/Topic(href, href_list)
 	if(..())
@@ -115,7 +119,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 // TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
 // It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
 /obj/machinery/librarycomp
-	name = "Check-In/Out Computer"
+	name = "Book Inventory Management Console"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "computer"
 	anchored = 1
@@ -134,7 +138,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
 	usr.set_machine(src)
-	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
 			// Main Menu
@@ -234,8 +238,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"
 
 	//dat += "<A HREF='?src=\ref[user];mach_close=library'>Close</A><br><br>"
-	user << browse(dat, "window=library")
-	onclose(user, "library")
+	//user << browse(dat, "window=library")
+	//onclose(user, "library")
+	var/datum/browser/popup = new(user, "library", name)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/librarycomp/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.density && istype(W, /obj/item/weapon/card/emag))
@@ -391,7 +399,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
  * Library Scanner
  */
 /obj/machinery/libraryscanner
-	name = "scanner"
+	name = "Scanner Control Interface"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	anchored = 1
@@ -405,7 +413,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
 	usr.set_machine(src)
-	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
 		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
 	else
@@ -415,8 +423,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
-	user << browse(dat, "window=scanner")
-	onclose(user, "scanner")
+	//user << browse(dat, "window=scanner")
+	//onclose(user, "scanner")
+	var/datum/browser/popup = new(user, "scanner", name)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
 	if(..())

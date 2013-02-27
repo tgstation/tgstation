@@ -1,6 +1,6 @@
 
 /obj/machinery/computer/station_alert
-	name = "Station Alert Computer"
+	name = "Station Alert Console"
 	desc = "Used to access the station's automated alert system."
 	icon_state = "alert:0"
 	circuit = "/obj/item/weapon/circuitboard/stationalert"
@@ -25,10 +25,9 @@
 
 	interact(mob/user)
 		usr.set_machine(src)
-		var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-		dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
+		var/dat = ""
 		for (var/cat in src.alarms)
-			dat += text("<B>[]</B><BR>\n", cat)
+			dat += text("<h2>[]</h2>", cat)
 			var/list/L = src.alarms[cat]
 			if (L.len)
 				for (var/alarm in L)
@@ -37,15 +36,20 @@
 					var/list/sources = alm[3]
 					dat += "<NOBR>"
 					dat += "&bull; "
-					dat += "[A.name]"
+					dat += "[format_text(A.name)]"
 					if (sources.len > 1)
 						dat += text(" - [] sources", sources.len)
 					dat += "</NOBR><BR>\n"
 			else
 				dat += "-- All Systems Nominal<BR>\n"
 			dat += "<BR>\n"
-		user << browse(dat, "window=alerts")
-		onclose(user, "alerts")
+		//user << browse(dat, "window=alerts")
+		//onclose(user, "alerts")
+		var/datum/browser/popup = new(user, "alerts", "Current Station Alerts")
+		popup.add_head_content("<META HTTP-EQUIV='Refresh' CONTENT='10'>")
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 
 
 	Topic(href, href_list)

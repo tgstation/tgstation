@@ -30,8 +30,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 
 /datum/wires/airlock/GetInteractWindow()
 	var/obj/machinery/door/airlock/A = holder
-	. += "<center><h2>AIRLOCK</h2></center><HR>"
-	. += ..(0, 1)
+	. += ..()
 	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
 	(A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"),
 	((A.arePowerSystemsOn() && !(A.stat & NOPOWER)) ? "The test light is on." : "The test light is off!"),

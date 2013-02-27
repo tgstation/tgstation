@@ -106,52 +106,60 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				req_console_information += department
 
 
-/obj/machinery/requests_console/attack_hand(user as mob)
+/obj/machinery/requests_console/attack_hand(var/mob/user)
 	if(..(user))
 		return
-	var/dat
-	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
+	var/dat = ""
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
 				dat += text("Which department do you need assistance from?<BR><BR>")
+				dat += "<table width='100%'>"
 				for(var/dpt in req_console_assistance)
 					if (dpt != department)
-						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
-						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
+						dat += text("<tr>")
+						dat += text("<td width='55%'>[dpt]</td>")
+						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A></td>")
+						dat += text("</tr>")
 //						if (hackState == 1)
 //							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
-						dat += text(")<BR>")
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += "</table>"
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
 			if(2)	//req. supplies
 				dat += text("Which department do you need supplies from?<BR><BR>")
+				dat += "<table width='100%'>"
 				for(var/dpt in req_console_supplies)
 					if (dpt != department)
-						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
-						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
+						dat += text("<tr>")
+						dat += text("<td width='55%'>[dpt]</td>")
+						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A></td>")
+						dat += text("</tr>")
 //						if (hackState == 1)
 //							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
-						dat += text(")<BR>")
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += "</table>"
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
 			if(3)	//relay information
 				dat += text("Which department would you like to send information to?<BR><BR>")
+				dat += "<table width='100%'>"
 				for(var/dpt in req_console_information)
 					if (dpt != department)
-						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
-						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
+						dat += text("<tr>")
+						dat += text("<td width='55%'>[dpt]</td>")
+						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A></td>")
+						dat += text("</tr>")
 //						if (hackState == 1)
 //							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
-						dat += text(")<BR>")
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += "</table>"
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
 			if(6)	//sent successfully
-				dat += text("<FONT COLOR='GREEN'>Message sent</FONT><BR><BR>")
+				dat += text("<span class='good'>Message sent.</span><BR><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
 
 			if(7)	//unsuccessful; not sent
-				dat += text("<FONT COLOR='RED'>An error occurred. </FONT><BR><BR>")
+				dat += text("<span class='bad'>An error occurred.</span><BR><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
 
 			if(8)	//view messages
@@ -163,50 +171,57 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				newmessagepriority = 0
 				icon_state = "req_comp0"
 				for(var/msg in messages)
-					dat += text("[msg]<BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Back to main menu</A><BR>")
+					dat += text("<div class='block'>[msg]</div>")
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back to Main Menu</A><BR>")
 
 			if(9)	//authentication before sending
 				dat += text("<B>Message Authentication</B><BR><BR>")
 				dat += text("<b>Message for [dpt]: </b>[message]<BR><BR>")
-				dat += text("You may authenticate your message now by scanning your ID or your stamp<BR><BR>")
-				dat += text("Validated by: [msgVerified]<br>");
-				dat += text("Stamped by: [msgStamped]<br>");
-				dat += text("<A href='?src=\ref[src];department=[dpt]'>Send</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += text("<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>")
+				dat += text("<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>");
+				dat += text("<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>");
+				dat += text("<A href='?src=\ref[src];department=[dpt]'>Send Message</A><BR>");
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Discard Message</A><BR>")
 
 			if(10)	//send announcement
-				dat += text("<B>Station wide announcement</B><BR><BR>")
+				dat += text("<h3>Station-wide Announcement</h3>")
 				if(announceAuth)
-					dat += text("<b>Authentication accepted</b><BR><BR>")
+					dat += text("<div class='notice'>Authentication accepted</div><BR>")
 				else
-					dat += text("Swipe your card to authenticate yourself.<BR><BR>")
-				dat += text("<b>Message: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
+					dat += text("<div class='notice'>Swipe your card to authenticate yourself</div><BR>")
+				dat += text("<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>")
+				dat += text("<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>")
 				if (announceAuth && message)
-					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>");
+				else
+					dat += text("<span class='linkOff'>Announce Message</span><BR>");
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
 			else	//main menu
 				screen = 0
 				announceAuth = 0
 				if (newmessagepriority == 1)
-					dat += text("<FONT COLOR='RED'>There are new messages</FONT><BR>")
+					dat += text("<div class='notice'>There are new messages</div><BR>")
 				if (newmessagepriority == 2)
-					dat += text("<FONT COLOR='RED'><B>NEW PRIORITY MESSAGES</B></FONT><BR>")
+					dat += text("<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>")
 
 				dat += text("<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>")
 				if(announcementConsole)
-					dat += text("<A href='?src=\ref[src];setScreen=10'>Send station-wide announcement</A><BR><BR>")
+					dat += text("<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>")
 				if (silent)
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>")
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
 
-		user << browse("[dat]", "window=request_console")
-		onclose(user, "req_console")
+		//user << browse("[dat]", "window=request_console")
+		//onclose(user, "req_console")
+		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 400, 440)
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
@@ -221,9 +236,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(new_message)
 			message = new_message
 			screen = 9
-			switch(href_list["priority"])
-				if("2")	priority = 2
-				else	priority = -1
+			if (text2num(href_list["priority"]) < 2)
+				priority = -1
+			else
+				priority = text2num(href_list["priority"])
 		else
 			dpt = "";
 			msgVerified = ""
@@ -235,9 +251,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
-			switch(href_list["priority"])
-				if("2")	priority = 2
-				else	priority = -1
+			if (text2num(href_list["priority"]) < 2)
+				priority = -1
+			else
+				priority = text2num(href_list["priority"])
 		else
 			message = ""
 			announceAuth = 0
@@ -274,9 +291,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
-
 						switch(priority)
-							if("2")		//High priority
+							if(2)		//High priority
 								if(Console.newmessagepriority < 2)
 									Console.newmessagepriority = 2
 									Console.icon_state = "req_comp2"
@@ -284,9 +300,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(5, Console.loc))
 										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
-								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
+								Console.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 
-		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
+		//					if(3)		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
 		//						if(Console.newmessagepriority < 3)
 		//							Console.newmessagepriority = 3
 		//							Console.icon_state = "req_comp3"
@@ -304,11 +320,16 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
-								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
+								Console.messages += "<b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 
 						screen = 6
 						Console.luminosity = 2
-				messages += "<B>Message sent to [dpt]</B><BR>[message]"
+
+				switch(priority)
+					if(2)
+						messages += "<span class='bad'>High Priority</span><BR><b>To:</b> [dpt]<BR>[sending]"
+					else
+						messages += "<b>To: [dpt]</b><BR>[sending]"
 			else
 				for (var/mob/O in hearers(4, src.loc))
 					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))

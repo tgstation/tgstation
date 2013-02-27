@@ -1,5 +1,5 @@
 /obj/machinery/computer/crew
-	name = "Crew monitoring computer"
+	name = "Crew Monitoring Console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
 	icon_state = "crew"
 	use_power = 1
@@ -62,10 +62,10 @@
 		return
 	user.set_machine(src)
 	src.scan()
-	var/t = "<TT><B>Crew Monitoring</B><HR>"
+	var/t = ""
 	t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A> "
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	t += "<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"
+	t += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
 	for(var/obj/item/clothing/under/C in src.tracked)
 		var/log = ""
@@ -80,7 +80,7 @@
 				var/dam3 = round(H.getFireLoss(),1)
 				var/dam4 = round(H.getBruteLoss(),1)
 
-				var/life_status = "[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"]"
+				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
 				var/damage_report = "(<font color='blue'>[dam1]</font>/<font color='green'>[dam2]</font>/<font color='orange'>[dam3]</font>/<font color='red'>[dam4]</font>)"
 
 				if(H.wear_id)
@@ -90,20 +90,23 @@
 
 				switch(C.sensor_mode)
 					if(1)
-						log += "<td width='15%'>[life_status]</td><td width='40%'>Not Available</td></tr>"
+						log += "<td width='30%'>[life_status]</td><td width='30%'>Not Available</td></tr>"
 					if(2)
-						log += "<td width='20%'>[life_status] [damage_report]</td><td width='40%'>Not Available</td></tr>"
+						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>Not Available</td></tr>"
 					if(3)
 						var/area/player_area = get_area(H)
-						log += "<td width='20%'>[life_status] [damage_report]</td><td width='40%'>[player_area.name] ([pos.x], [pos.y])</td></tr>"
+						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>[format_text(player_area.name)] ([pos.x], [pos.y])</td></tr>"
 		logs += log
 	logs = sortList(logs)
 	for(var/log in logs)
 		t += log
 	t += "</table>"
-	t += "</FONT></PRE></TT>"
-	user << browse(t, "window=crewcomp;size=900x600")
-	onclose(user, "crewcomp")
+	//user << browse(t, "window=crewcomp;size=900x600")
+	//onclose(user, "crewcomp")
+	var/datum/browser/popup = new(user, "crewcomp", name, 900, 600)
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 
 /obj/machinery/computer/crew/proc/scan()

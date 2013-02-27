@@ -107,7 +107,7 @@ proc/move_mining_shuttle()
 	return
 
 /obj/machinery/computer/mining_shuttle
-	name = "mining shuttle console"
+	name = "Mining Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
@@ -120,8 +120,12 @@ proc/move_mining_shuttle()
 		return
 	src.add_fingerprint(usr)
 	var/dat
-	dat = text("<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")
-	user << browse("[dat]", "window=miningshuttle;size=200x100")
+	dat = text("<center><A href='?src=\ref[src];move=[1]'>Send Mining Shuttle</A></center>")
+	//user << browse("[dat]", "window=miningshuttle;size=200x100")
+	var/datum/browser/popup = new(user, "miningshuttle", name, 200, 140)
+	popup.set_content(dat)
+	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	if(..())

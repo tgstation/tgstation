@@ -2,7 +2,7 @@
 
 
 /obj/machinery/computer/atmos_alert
-	name = "Atmospheric Alert Computer"
+	name = "Atmospheric Alert Console"
 	desc = "Used to access the station's atmospheric sensors."
 	circuit = "/obj/item/weapon/circuitboard/atmos_alert"
 	icon_state = "alert:0"
@@ -43,9 +43,13 @@
 /obj/machinery/computer/atmos_alert/attack_hand(mob/user)
 	if(..(user))
 		return
-	user << browse(return_text(),"window=computer")
 	user.set_machine(src)
-	onclose(user, "computer")
+	//user << browse(return_text(),"window=computer")
+	//onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", name)
+	popup.set_content(return_text())
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/computer/atmos_alert/process()
 	if(..())
@@ -72,22 +76,21 @@
 
 	if(priority_alarms.len)
 		for(var/zone in priority_alarms)
-			priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
+			priority_text += "<FONT color='red'><B>[format_text(zone)]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
 	else
 		priority_text = "No priority alerts detected.<BR>"
 
 	if(minor_alarms.len)
 		for(var/zone in minor_alarms)
-			minor_text += "<B>[zone]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
+			minor_text += "<B>[format_text(zone)]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
 	else
 		minor_text = "No minor alerts detected.<BR>"
 
-	var/output = {"<B>[name]</B><HR>
-<B>Priority Alerts:</B><BR>
+	var/output = {"<h2>Priority Alerts:</h2>
 [priority_text]
 <BR>
 <HR>
-<B>Minor Alerts:</B><BR>
+<h2>Minor Alerts:</h2>
 [minor_text]
 <BR>"}
 
@@ -102,12 +105,14 @@
 		var/removing_zone = href_list["priority_clear"]
 		for(var/zone in priority_alarms)
 			if(ckey(zone) == removing_zone)
+				usr << "\green Priority Alert for area [] cleared."
 				priority_alarms -= zone
 
 	if(href_list["minor_clear"])
 		var/removing_zone = href_list["minor_clear"]
 		for(var/zone in minor_alarms)
 			if(ckey(zone) == removing_zone)
+				usr << "\green Minor Alert for area [] cleared."
 				minor_alarms -= zone
 	update_icon()
 	return

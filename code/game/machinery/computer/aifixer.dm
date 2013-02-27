@@ -69,42 +69,47 @@
 			return
 
 	user.set_machine(src)
-	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
+	var/dat = ""
 
 	if (src.occupant)
 		var/laws
-		dat += "Stored AI: [src.occupant.name]<br>System integrity: [(src.occupant.health+100)/2]%<br>"
+		dat += "<h3>Stored AI: [src.occupant.name]</h3>"
+		dat += "<b>System integrity:</b> [(src.occupant.health+100)/2]%<br>"
 
 		if (src.occupant.laws.zeroth)
-			laws += "0: [src.occupant.laws.zeroth]<BR>"
+			laws += "<b>0:</b> [src.occupant.laws.zeroth]<BR>"
 
 		var/number = 1
 		for (var/index = 1, index <= src.occupant.laws.inherent.len, index++)
 			var/law = src.occupant.laws.inherent[index]
 			if (length(law) > 0)
-				laws += "[number]: [law]<BR>"
+				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
 		for (var/index = 1, index <= src.occupant.laws.supplied.len, index++)
 			var/law = src.occupant.laws.supplied[index]
 			if (length(law) > 0)
-				laws += "[number]: [law]<BR>"
+				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
-		dat += "Laws:<br>[laws]<br>"
+		dat += "<b>Laws:</b><br>[laws]<br>"
 
 		if (src.occupant.stat == 2)
-			dat += "<b>AI nonfunctional</b>"
+			dat += "<span class='bad'>AI non-functional</span>"
 		else
-			dat += "<b>AI functional</b>"
+			dat += "<span class='good'>AI functional</span>"
 		if (!src.active)
 			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
+	//user << browse(dat, "window=computer;size=400x500")
+	//onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /obj/machinery/computer/aifixer/process()

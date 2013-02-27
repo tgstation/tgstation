@@ -78,13 +78,16 @@ var/prison_shuttle_timeleft = 0
 		if (src.temp)
 			dat = src.temp
 		else
-			dat += {"<BR><B>Prison Shuttle</B><HR>
-			\nLocation: [prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison ? "Moving to station ([prison_shuttle_timeleft] Secs.)":prison_shuttle_at_station ? "Station":"Dock"]<BR>
-			[prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison ? "\n*Shuttle already called*<BR>\n<BR>":prison_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Send to Dock</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Send to station</A><BR>\n<BR>"]
+			dat += {"<b>Location:</b> [prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison ? "Moving to station ([prison_shuttle_timeleft] Secs.)":prison_shuttle_at_station ? "Station":"Dock"]<BR>
+			[prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison ? "\n*Shuttle already called*<BR>\n<BR>":prison_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Send to Dock</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Send to Station</A><BR>\n<BR>"]
 			\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-		user << browse(dat, "window=computer;size=575x450")
-		onclose(user, "computer")
+		//user << browse(dat, "window=computer;size=575x450")
+		//onclose(user, "computer")
+		var/datum/browser/popup = new(user, "computer", name, 575, 450)
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 		return
 
 

@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/prisoner
-	name = "Prisoner Management"
+	name = "Prisoner Management Comsole"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_armory)
@@ -26,8 +26,7 @@
 		if(..())
 			return
 		user.set_machine(src)
-		var/dat
-		dat += "<B>Prisoner Implant Manager System</B><BR>"
+		var/dat = ""
 		if(screen == 0)
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 		else if(screen == 1)
@@ -38,9 +37,9 @@
 				if((Tr) && (Tr.z != src.z))	continue//Out of range
 				if(!C.implanted) continue
 				dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
-				dat += "<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>"
-				dat += "<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>"
-				dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font color=red>(10)</font>)</A><BR>"
+				dat += "<A href='?src=\ref[src];inject1=\ref[C]'>(<font class='bad'>(1)</font>)</A>"
+				dat += "<A href='?src=\ref[src];inject5=\ref[C]'>(<font class='bad'>(5)</font>)</A>"
+				dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font class='bad'>(10)</font>)</A><BR>"
 				dat += "********************************<BR>"
 			dat += "<HR>Tracking Implants<BR>"
 			for(var/obj/item/weapon/implant/tracking/T in world)
@@ -53,12 +52,16 @@
 					var/turf/mob_loc = get_turf_loc(M)
 					loc_display = mob_loc.loc
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
-				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
+				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 				dat += "********************************<BR>"
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
-		user << browse(dat, "window=computer;size=400x500")
-		onclose(user, "computer")
+		//user << browse(dat, "window=computer;size=400x500")
+		//onclose(user, "computer")
+		var/datum/browser/popup = new(user, "computer", "Prisoner Implant Management System", 400, 500)
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 		return
 
 

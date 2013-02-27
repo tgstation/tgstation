@@ -179,38 +179,39 @@
 
 /obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
 	var/dat
-	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
-	dat += "ID: [suffix]<BR>"
-	dat += "Power: [on ? "On" : "Off"]<BR>"
+	dat += "<h3>Multiple Utility Load Effector Mk. III</h3>"
+	dat += "<b>ID:</b> [suffix]<BR>"
+	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
 
 	if(!open)
 
-		dat += "Status: "
+		dat += "<h3>Status</h3>"
+		dat += "<div class='statusDisplay'>"
 		switch(mode)
 			if(0)
 				dat += "Ready"
 			if(1)
-				dat += "Loading/Unloading"
+				dat += "<span class='good'>Loading/Unloading</span>"
 			if(2)
-				dat += "Navigating to Delivery Location"
+				dat += "<span class='good'>Navigating to Delivery Location</span>"
 			if(3)
-				dat += "Navigating to Home"
+				dat += "<span class='good'>Navigating to Home</span>"
 			if(4)
-				dat += "Waiting for clear path"
+				dat += "<span class='average'>Waiting for clear path</span>"
 			if(5,6)
-				dat += "Calculating navigation path"
+				dat += "<span class='average'>Calculating navigation path</span>"
 			if(7)
-				dat += "Unable to locate destination"
+				dat += "<span class='bad'>Unable to locate destination</span>"
+		dat += "</div>"
 
-
-		dat += "<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>"
-		dat += "Destination: [!destination ? "<i>none</i>" : destination]<BR>"
-		dat += "Power level: [cell ? cell.percent() : 0]%<BR>"
+		dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
+		dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
+		dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
 		if(locked && !ai)
-			dat += "<HR>Controls are locked <A href='byond://?src=\ref[src];op=unlock'><I>(unlock)</I></A>"
+			dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
 		else
-			dat += "<HR>Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><BR><BR>"
+			dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
 
 			dat += "<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>"
 			dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
@@ -224,12 +225,12 @@
 
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
-			dat += "<HR>The maintenance hatch is closed.<BR>"
+			dat += "<div class='notice'>The maintenance hatch is closed</div>"
 
 	else
 		if(!ai)
-			dat += "The maintenance hatch is open.<BR><BR>"
-			dat += "Power cell: "
+			dat += "<div class='notice'>The maintenance hatch is open.</div><BR>"
+			dat += "<b>Power cell:</b> "
 			if(cell)
 				dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
 			else
@@ -237,15 +238,19 @@
 
 			dat += wires()
 		else
-			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
+			dat += "<div class='notice'>The bot is in maintenance mode and cannot be controlled.</div><BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
-	onclose(user, "mulebot")
+	//user << browse("<HEAD><TITLE>M.U.L.E. Mk. III [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
+	//onclose(user, "mulebot")
+	var/datum/browser/popup = new(user, "mulebot", "M.U.L.E. Mk. III [suffix ? "([suffix])" : ""]", 350, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 // returns the wire panel text
 /obj/machinery/bot/mulebot/proc/wires()
-	return "<BR>" + wires.GetInteractWindow(0, 0)
+	return wires.GetInteractWindow()
 
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)

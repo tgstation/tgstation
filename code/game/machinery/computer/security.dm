@@ -172,8 +172,12 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
-	onclose(user, "secure_rec")
+	//user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
+	//onclose(user, "secure_rec")
+	var/datum/browser/popup = new(user, "secure_rec", "Security Records", 600, 400)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /*Revised /N

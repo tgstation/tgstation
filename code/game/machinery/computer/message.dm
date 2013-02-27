@@ -89,9 +89,7 @@
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
-	var/dat = "<head><title>Message Monitor Console</title></head><body>"
-	dat += "<center><h2>Message Monitor Console</h2></center><hr>"
-	dat += "<center><h4><font color='blue'[message]</h5></center>"
+	var/dat = "<center><font color='blue'[message]</font>/</center>"
 
 	if(auth)
 		dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
@@ -240,11 +238,13 @@
 				<td width='15%'>[rc.rec_dpt]</td><td width='300px'>[rc.message]</td><td width='15%'>[rc.stamp]</td><td width='15%'>[rc.id_auth]</td><td width='15%'>[rc.priority]</td></tr>"}
 			dat += "</table>"
 
-
-	dat += "</body>"
 	message = defaultmsg
-	user << browse(dat, "window=message;size=700x700")
-	onclose(user, "message")
+	//user << browse(dat, "window=message;size=700x700")
+	//onclose(user, "message")
+	var/datum/browser/popup = new(user, "hologram_console", name, 700, 700)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /obj/machinery/computer/message_monitor/attack_ai(mob/user as mob)

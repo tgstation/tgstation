@@ -61,26 +61,6 @@
 	var/datum/wires/apc/wires = null
 	//var/debug = 0
 
-/proc/RandomAPCWires()
-	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/apcwires = list(0, 0, 0, 0)
-	APCIndexToFlag = list(0, 0, 0, 0)
-	APCIndexToWireColor = list(0, 0, 0, 0)
-	APCWireColorToIndex = list(0, 0, 0, 0)
-	var/flagIndex = 1
-	for (var/flag=1, flag<16, flag+=flag)
-		var/valid = 0
-		while (!valid)
-			var/colorIndex = rand(1, 4)
-			if (apcwires[colorIndex]==0)
-				valid = 1
-				apcwires[colorIndex] = flag
-				APCIndexToFlag[flagIndex] = flag
-				APCIndexToWireColor[flagIndex] = colorIndex
-				APCWireColorToIndex[colorIndex] = flagIndex
-		flagIndex+=1
-	return apcwires
-
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
 		return
@@ -512,7 +492,7 @@
 		wires.Interact(user)
 
 	user.set_machine(src)
-	var/t = "<html><head><title>[area.name] APC</title></head><body><TT><B>Area Power Controller</B> ([area.name])<HR>"
+	var/t = "" //"<B>Area Power Controller</B> ([area.name])"
 
 	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
 	if ( (get_dist(src, user) > 1 ))
@@ -534,104 +514,109 @@
 
 
 	if(locked && (!istype(user, /mob/living/silicon)))
-		t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
-		t += "Main breaker : <B>[operating ? "On" : "Off"]</B><BR>"
-		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
-		t += "Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"
+		t += "<div class='notice icon'><img src='[user.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to unlock interface' /> Swipe ID card to unlock interface</div>"
+		t += "<h3>Status</h3>"
+		t += "Main Breaker: <B>[operating ? "<font class='good'>On</font>" : "<font class='bad'>Off</font>"]</B><br />"
+		t += "External Power: <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
+		t += "Power Cell: <B>[cell ? "[round(cell.percent())]%" : "<font COLOR=red>Not connected.</font>"]</B>"
 		if(cell)
+			t += "<BR/>Charge Mode: [chargemode ? "Auto" : "Off"]"
 			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
-			t += " ([chargemode ? "Auto" : "Off"])"
 
-		t += "<BR><HR>Power channels<BR><PRE>"
+		t += "<h3>Power Channels</h3><PRE>"
 
 		var/list/L = list ("Off","Off (Auto)", "On", "On (Auto)")
 
-		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><BR>"
-		t += "Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B><BR>"
-		t += "Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B><BR>"
+		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><br />"
+		t += "Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B><br />"
+		t += "Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B><br />"
 
-		t += "<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
-		t += "<HR>Cover lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"
+		t += "<br />Total Load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
+		t += "<br />Cover Lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"
 
 	else
 		if (!istype(user, /mob/living/silicon))
-			t += "<I>(Swipe ID card to lock interface.)</I><BR>"
-		t += "Main breaker: [operating ? "<B>On</B> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <B>Off</B>" ]<BR>"
-		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
+			t += "<div class='notice icon'><img src='[user.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to lock interface' /> Swipe ID card to lock interface</div>"
+		t += "<h3>Status</h3>"
+		t += "Main breaker: [operating ? "<span class='linkOn'>On</span> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <span class='linkOn'>Off</span>" ]<br />"
+		t += "External power : <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
 		if(cell)
 			t += "Power cell: <B>[round(cell.percent())]%</B>"
+			t += "<BR/>Charge mode: [chargemode ? "<A href='?src=\ref[src];cmode=1'>Off</A> <span class='linkOn'>Auto</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];cmode=1'>Auto</A>"]"
 			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
-			t += " ([chargemode ? "<A href='?src=\ref[src];cmode=1'>Off</A> <B>Auto</B>" : "<B>Off</B> <A href='?src=\ref[src];cmode=1'>Auto</A>"])"
-
 		else
-			t += "Power cell: <B><FONT COLOR=red>Not connected.</FONT></B>"
+			t += "Power cell: <B><font COLOR=red>Not connected.</font></B>"
 
-		t += "<BR><HR>Power channels<BR><PRE>"
-
+		t += "<br /><h3>Power channels</h3><PRE>"
 
 		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : "
+		var/key = "eqp"
 		switch(equipment)
 			if(0)
-				t += "<B>Off</B> <A href='?src=\ref[src];eqp=2'>On</A> <A href='?src=\ref[src];eqp=3'>Auto</A>"
+				t += "<span class='linkOn'>Off</span> <A href='?src=\ref[src];[key]=2'>On</A> <A href='?src=\ref[src];[key]=3'>Auto</A>"
 			if(1)
-				t += "<A href='?src=\ref[src];eqp=1'>Off</A> <A href='?src=\ref[src];eqp=2'>On</A> <B>Auto (Off)</B>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (Off)</span>"
 			if(2)
-				t += "<A href='?src=\ref[src];eqp=1'>Off</A> <B>On</B> <A href='?src=\ref[src];eqp=3'>Auto</A>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <span class='linkOn'>On</span> <A href='?src=\ref[src];[key]=3'>Auto</A>"
 			if(3)
-				t += "<A href='?src=\ref[src];eqp=1'>Off</A> <A href='?src=\ref[src];eqp=2'>On</A> <B>Auto (On)</B>"
-		t +="<BR>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (On)</span>"
+		t +="<br />"
 
 		t += "Lighting:     [add_lspace(lastused_light, 6)] W : "
-
+		key = "lgt"
 		switch(lighting)
 			if(0)
-				t += "<B>Off</B> <A href='?src=\ref[src];lgt=2'>On</A> <A href='?src=\ref[src];lgt=3'>Auto</A>"
+				t += "<span class='linkOn'>Off</span> <A href='?src=\ref[src];[key]=2'>On</A> <A href='?src=\ref[src];[key]=3'>Auto</A>"
 			if(1)
-				t += "<A href='?src=\ref[src];lgt=1'>Off</A> <A href='?src=\ref[src];lgt=2'>On</A> <B>Auto (Off)</B>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (Off)</span>"
 			if(2)
-				t += "<A href='?src=\ref[src];lgt=1'>Off</A> <B>On</B> <A href='?src=\ref[src];lgt=3'>Auto</A>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <span class='linkOn'>On</span> <A href='?src=\ref[src];[key]=3'>Auto</A>"
 			if(3)
-				t += "<A href='?src=\ref[src];lgt=1'>Off</A> <A href='?src=\ref[src];lgt=2'>On</A> <B>Auto (On)</B>"
-		t +="<BR>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (On)</span>"
+		t +="<br />"
 
 
 		t += "Environmental:[add_lspace(lastused_environ, 6)] W : "
+		key = "env"
 		switch(environ)
 			if(0)
-				t += "<B>Off</B> <A href='?src=\ref[src];env=2'>On</A> <A href='?src=\ref[src];env=3'>Auto</A>"
+				t += "<span class='linkOn'>Off</span> <A href='?src=\ref[src];[key]=2'>On</A> <A href='?src=\ref[src];[key]=3'>Auto</A>"
 			if(1)
-				t += "<A href='?src=\ref[src];env=1'>Off</A> <A href='?src=\ref[src];env=2'>On</A> <B>Auto (Off)</B>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (Off)</span>"
 			if(2)
-				t += "<A href='?src=\ref[src];env=1'>Off</A> <B>On</B> <A href='?src=\ref[src];env=3'>Auto</A>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <span class='linkOn'>On</span> <A href='?src=\ref[src];[key]=3'>Auto</A>"
 			if(3)
-				t += "<A href='?src=\ref[src];env=1'>Off</A> <A href='?src=\ref[src];env=2'>On</A> <B>Auto (On)</B>"
+				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (On)</span>"
 
 
 
-		t += "<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
-		t += "<HR>Cover lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"
+		t += "<br />Total Load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
+		t += "<br />Cover Lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"
 
 
 		if (istype(user, /mob/living/silicon))
-			t += "<BR><HR><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><BR>"
+			t += "<br /><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><br />"
 		if (ticker && ticker.mode)
 //		 world << "there's a ticker"
 			if(user.mind in ticker.mode.malf_ai)
 //				world << "ticker says its malf"
 				if (!src.malfai)
-					t += "<BR><HR><A href='?src=\ref[src];malfhack=1'><I>Override Programming</I></A><BR>"
+					t += "<br /><A href='?src=\ref[src];malfhack=1'><I>Override Programming</I></A><br />"
 				else
-					t += "<BR><HR><I>APC Hacked</I><BR>"
+					t += "<br /><I>APC Hacked</I><br />"
 					if(!src.occupant)
-						t += "<A href='?src=\ref[src];occupyapc=1'><I>Shunt Core Processes</I></A><BR>"
+						t += "<A href='?src=\ref[src];occupyapc=1'><I>Shunt Core Processes</I></A><br />"
 					else
-						t += "<I>Core Processes Uploaded</I><BR>"
+						t += "<I>Core Processes Uploaded</I><br />"
 
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
+	//t += "<br /><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
-	t += "</TT></body></html>"
-	user << browse(t, "window=apc")
-	onclose(user, "apc")
+	//user << browse(t, "window=apc")
+	//onclose(user, "apc")
+	var/datum/browser/popup = new(user, "apc", "[area.name] APC")
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /obj/machinery/power/apc/proc/report()

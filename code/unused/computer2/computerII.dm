@@ -59,7 +59,7 @@
 		src.root.add_file( new /datum/computer/file/computer_program/progman(src))
 
 /obj/machinery/computer2/medical
-	name = "Medical computer"
+	name = "Medical Console"
 	icon_state = "dna"
 	setup_has_radio = 1
 	setup_starting_program = /datum/computer/file/computer_program/med_data

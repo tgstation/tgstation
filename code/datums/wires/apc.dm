@@ -9,8 +9,7 @@ var/const/APC_WIRE_AI_CONTROL = 8
 
 /datum/wires/apc/GetInteractWindow()
 	var/obj/machinery/power/apc/A = holder
-	. += "<center><h2>Area Power Control</h2></center><HR>"
-	. += ..(0, 1)
+	. += ..()
 	. += text("<br>\n[(A.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
 
 

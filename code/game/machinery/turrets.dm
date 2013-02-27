@@ -386,16 +386,22 @@
 		user << text("Turret badly positioned - loc.loc is [].", loc)
 		return
 	var/area/area = loc
-	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
+	var/t = ""
 
 	if(src.locked && (!istype(user, /mob/living/silicon)))
-		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
+		t += "<div class='notice icon'><img src='[user.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to unlock interface' /> Swipe ID card to unlock interface</div>"
 	else
+		if (!istype(user, /mob/living/silicon))
+			t += "<div class='notice icon'><img src='[user.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to lock interface' /> Swipe ID card to lock interface</div>"
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
 
-	user << browse(t, "window=turretid")
-	onclose(user, "turretid")
+	//user << browse(t, "window=turretid")
+	//onclose(user, "turretid")
+	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 
 /obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)

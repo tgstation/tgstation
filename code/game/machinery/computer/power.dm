@@ -1,7 +1,7 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 /obj/machinery/power/monitor
-	name = "power monitoring computer"
+	name = "Power Monitoring Console"
 	desc = "It monitors power levels across the station."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
@@ -78,10 +78,9 @@
 
 
 	user.set_machine(src)
-	var/t = "<TT><B>Power Monitoring</B><HR>"
+	var/t = ""
 
-	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
+	t += "<A href='?src=\ref[src];update=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><br /><br />"
 
 	if(!powernet)
 		t += "\red No connection"
@@ -109,11 +108,14 @@
 				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
 				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
-		t += "</FONT></PRE></TT>"
+		t += "</FONT></PRE>"
 
-	user << browse(t, "window=powcomp;size=420x900")
-	onclose(user, "powcomp")
-
+	//user << browse(t, "window=powcomp;size=420x900")
+	//onclose(user, "powcomp")
+	var/datum/browser/popup = new(user, "powcomp", name, 420, 900)
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/power/monitor/Topic(href, href_list)
 	..()

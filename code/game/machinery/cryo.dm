@@ -64,35 +64,69 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user as mob)
 	user.set_machine(src)
-	var/beaker_text = ""
-	var/health_text = ""
+
+	var/dat = "<h3>Cryo Cell Status</h3>"
+
+
+
+	dat += "<div class='statusDisplay'>"
+
+	if(!occupant)
+		dat += "Cell Unoccupied"
+	else
+		dat += "[occupant.name] => "
+		switch(occupant.stat) // obvious, see what their status is
+			if(0)
+				dat += "<span class='good'>Conscious</span>"
+			if(1)
+				dat += "<span class='average'>Unconscious</span>"
+			else
+				dat += "<span class='bad'>DEAD</span>"
+
+		dat += "<br />"
+
+		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>Body Temperature:</div><div class='statusValue'>[occupant.bodytemperature]</div></div>"
+
 	var/temp_text = ""
-	if(occupant)
-		if(occupant.health <= -100)
-			health_text = "<FONT color=red>Dead</FONT>"
-		else if(occupant.health < 0)
-			health_text = "<FONT color=red>[round(occupant.health,0.1)]</FONT>"
-		else
-			health_text = "[round(occupant.health,0.1)]"
 	if(air_contents.temperature > T0C)
-		temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
 	else if(air_contents.temperature > 225)
-		temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+		temp_text = "<span class='average'>[air_contents.temperature]</span>"
 	else
-		temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+		temp_text = "<span class='good'>[air_contents.temperature]</span>"
+
+	dat += "<hr>"
+	dat +=  "<div class='line'><div class='statusLabel'>Cell Temperature:</div><div class='statusValue'>[temp_text]</div></div>"
+
+	dat += "</div>" // close statusDisplay div
+
+	dat += "<BR><B>Cryo Status:</B> [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR><BR>"
+
+	dat += "<B>Beaker:</B> "
 	if(beaker)
-		beaker_text = "<B>Beaker:</B> <A href='?src=\ref[src];eject=1'>Eject</A>"
+		if(beaker:reagents && beaker:reagents.reagent_list.len)
+			for(var/datum/reagent/R in beaker:reagents.reagent_list)
+				dat += "<br><span class='highlight'>[R.volume] units of [R.name]</span>"
+		else
+			dat += "<br><span class='highlight'>Beaker empty</span>"
+		dat += "<br><A href='?src=\ref[src];eject=1'>Eject</A>"
 	else
-		beaker_text = "<B>Beaker:</B> <FONT color=red>No beaker loaded</FONT>"
-	var/dat = {"<B>Cryo cell control system</B><BR>
-		<B>Current cell temperature:</B> [temp_text]K<BR>
-		<B>Cryo status:</B> [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		[beaker_text]<BR><BR>
-		<B>Current occupant:</B> [occupant ? "<BR>Name: [occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(occupant.getFireLoss(),0.1)]<BR>Toxin damage: [round(occupant.getToxLoss(),0.1)]<BR>Body temperature: [occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
-		"}
+		dat += "<br><span class='highlight'><i>No beaker loaded</i></span>"
+		dat += "<br><span class='linkOff'>Eject</span>"
+
 	user.set_machine(src)
-	user << browse(dat, "window=cryo")
-	onclose(user, "cryo")
+	//user << browse(dat, "window=cryo")
+	//onclose(user, "cryo")
+	var/datum/browser/popup = new(user, "cryo", "Cryo Cell Control System", 520, 400) // Set up the popup browser window
+	popup.add_stylesheet("sleeper", 'html/browser/cryo.css')
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
 	if ((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))

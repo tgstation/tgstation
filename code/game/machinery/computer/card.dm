@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/card
-	name = "Identification Computer"
+	name = "Identification Console"
 	desc = "You can use this to change ID's."
 	icon_state = "id"
 	req_access = list(access_change_ids)
@@ -60,7 +60,7 @@
 			crew += "[R]<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 	else
-		var/header = "<div align='center'><b>Identification Card Modifier</b></div>"
+		var/header = ""
 
 		var/target_name
 		var/target_owner
@@ -163,8 +163,13 @@
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
 		dat = "<tt>[header][body]<hr><br></tt>"
-	user << browse(dat, "window=id_com;size=900x520")
-	onclose(user, "id_com")
+	//user << browse(dat, "window=id_com;size=900x520")
+	//onclose(user, "id_com")
+
+	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 520)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 
@@ -279,7 +284,7 @@
 
 
 /obj/machinery/computer/card/centcom
-	name = "CentCom Identification Computer"
+	name = "CentCom Identification Console"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
 	req_access = list(access_cent_captain)
 

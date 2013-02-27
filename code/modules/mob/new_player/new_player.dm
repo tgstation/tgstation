@@ -24,13 +24,11 @@
 
 	proc/new_player_panel_proc()
 
-		var/output = "<div align='center'><B>New Player Options</B>"
-		output +="<hr>"
-		output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+		var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 			if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
-			else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
+			else	output += "<p><b>You are ready</b> <a href='byond://?src=\ref[src];ready=2'>Cancel</A></p>"
 
 		else
 			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
@@ -56,9 +54,13 @@
 				else
 					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 
-		output += "</div>"
+		output += "</center>"
 
-		src << browse(output,"window=playersetup;size=210x240;can_close=0")
+		//src << browse(output,"window=playersetup;size=210x240;can_close=0")
+		var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 210, 220)
+		popup.set_window_options("can_close=0")
+		popup.set_content(output)
+		popup.open(0)
 		return
 
 	Stat()
@@ -337,5 +339,9 @@
 
 
 	proc/close_spawn_windows()
+
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
+		src << browse(null, "window=preferences") //closes job selection
+		src << browse(null, "window=mob_occupation")
+		src << browse(null, "window=latechoices") //closes late job selection

@@ -89,9 +89,14 @@ obj/machinery/computer/general_air_control
 	attack_hand(mob/user)
 		if(..(user))
 			return
-		user << browse(return_text(),"window=computer")
-		user.set_machine(src)
-		onclose(user, "computer")
+		//user << browse(return_text(),"window=computer")
+		//user.set_machine(src)
+		//onclose(user, "computer")
+
+		var/datum/browser/popup = new(user, "computer", name, 450, 380)
+		popup.set_content(return_text())
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 
 	interact(mob/user)
 		attack_hand(user)
@@ -147,7 +152,7 @@ obj/machinery/computer/general_air_control
 			for(var/id_tag in sensors)
 				var/long_name = sensors[id_tag]
 				var/list/data = sensor_information[id_tag]
-				var/sensor_part = "<B>[long_name]</B>:<BR>"
+				var/sensor_part = "<h2>[long_name]</h2>"
 
 				if(data)
 					if(data["pressure"])
@@ -164,18 +169,17 @@ obj/machinery/computer/general_air_control
 							sensor_part += "[data["carbon_dioxide"]]% CO2; "
 						if(data["toxins"])
 							sensor_part += "[data["toxins"]]% TX; "
-					sensor_part += "<HR>"
 
 				else
-					sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR>"
+					sensor_part = "<FONT class='bad'>[long_name] can not be found!</FONT><BR>"
 
 				sensor_data += sensor_part
 
 		else
 			sensor_data = "No sensors connected."
 
-		var/output = {"<B>[name]</B><HR>
-<B>Sensor Data:</B><HR><HR>[sensor_data]"}
+		var/output = {"
+<h1>Sensor Data</h1>[sensor_data]"}
 
 		return output
 
@@ -206,13 +210,13 @@ obj/machinery/computer/general_air_control
 			//if(signal.data)
 			//	input_info = signal.data // Attempting to fix intake control -- TLE
 
-			output += "<B>Tank Control System</B><BR>"
+			output += "<h1>Tank Control System</h1>"
 			if(input_info)
 				var/power = (input_info["power"])
 				var/volume_rate = input_info["volume_rate"]
 				output += {"<B>Input</B>: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];in_refresh_status=1'>Refresh</A><BR>
 Rate: [volume_rate] L/sec<BR>"}
-				output += "Command: <A href='?src=\ref[src];in_toggle_injector=1'>Toggle Power</A><BR>"
+				output += "<B>Command:</B> <A href='?src=\ref[src];in_toggle_injector=1'>Toggle Power</A><BR>"
 
 			else
 				output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
@@ -223,13 +227,13 @@ Rate: [volume_rate] L/sec<BR>"}
 				var/power = (output_info["power"])
 				var/output_pressure = output_info["internal"]
 				output += {"<B>Output</B>: [power?("Open"):("On Hold")] <A href='?src=\ref[src];out_refresh_status=1'>Refresh</A><BR>
-Max Output Pressure: [output_pressure] kPa<BR>"}
-				output += "Command: <A href='?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
+<B>Max Output Pressure:</B> [output_pressure] kPa<BR>"}
+				output += "<B>Command:</B> <A href='?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
 
 			else
 				output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
 
-			output += "Max Output Pressure Set: <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
+			output += "<B>Max Output Pressure Set:</B> <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
 
 			return output
 

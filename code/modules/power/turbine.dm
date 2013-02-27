@@ -27,7 +27,7 @@
 	var/lastgen
 
 /obj/machinery/computer/turbine_computer
-	name = "Gas turbine control computer"
+	name = "Gas Turbine Control Console"
 	desc = "A computer to remotely control a gas turbine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "airtunnel0e"

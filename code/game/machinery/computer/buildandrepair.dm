@@ -64,10 +64,10 @@
 	build_path = "/obj/machinery/computer/communications"
 	origin_tech = "programming=2;magnets=2"
 /obj/item/weapon/circuitboard/card
-	name = "Circuit board (ID Computer)"
+	name = "Circuit board (ID Console)"
 	build_path = "/obj/machinery/computer/card"
 /obj/item/weapon/circuitboard/card/centcom
-	name = "Circuit board (CentCom ID Computer)"
+	name = "Circuit board (CentCom ID Console)"
 	build_path = "/obj/machinery/computer/card/centcom"
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"

@@ -37,7 +37,7 @@
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
 	else
 		if(screen == 0)
-			dat += "<h3>Cyborg Control Console</h3><BR>"
+			//dat += "<h3>Cyborg Control Console</h3><BR>"
 			dat += "<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>"
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
@@ -96,8 +96,12 @@
 				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
+	//user << browse(dat, "window=computer;size=400x500")
+	//onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)

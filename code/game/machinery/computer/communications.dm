@@ -282,17 +282,24 @@
 		return
 
 	user.set_machine(src)
-	var/dat = "<head><title>Communications Console</title></head><body>"
+	var/dat = ""
 	if (emergency_shuttle.online && emergency_shuttle.location==0)
 		var/timeleft = emergency_shuttle.timeleft()
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
+
+
+	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 
 	if (istype(user, /mob/living/silicon))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
-			user << browse(dat, "window=communications;size=400x500")
-			onclose(user, "communications")
+			//user << browse(dat, "window=communications;size=400x500")
+			//onclose(user, "communications")
+
+			popup.set_content(dat)
+			popup.open()
 		return
 
 	switch(src.state)
@@ -366,8 +373,10 @@
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(dat, "window=communications;size=400x500")
-	onclose(user, "communications")
+	//user << browse(dat, "window=communications;size=400x500")
+	//onclose(user, "communications")
+	popup.set_content(dat)
+	popup.open()
 
 
 

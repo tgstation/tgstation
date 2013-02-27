@@ -149,13 +149,17 @@
 		if(shock(user, 100))
 			return
 
-	var/vendorname = (name)  //import the machine's name
-	var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
-	dat += "<b>Select an item: </b><br><br>" //the rest is just general spacing and bolding
+	var/dat = ""
 
 	if(premium.len > 0)
-		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
+		dat += "<b>Coin slot:</b> "
+		if (coin)
+			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>"
+		else
+			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 
+	dat += "<h3>Select an Item</h3>"
+	dat += "<div class='statusDisplay'>"
 	if(product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
@@ -166,17 +170,18 @@
 			display_records = product_records + coin_records
 		if(coin && extended_inventory)
 			display_records = product_records + hidden_records + coin_records
-
+		dat += "<ul>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " <b>[R.amount]</b> </font>"
+			dat += "<li>"
 			if(R.amount > 0)
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
+				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
 			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<br>"
-
-		dat += "</TT>"
+				dat += "<span class='linkOff'>Sold Out</span> "
+			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
+			dat += " <b>[R.amount]</b>"
+			dat += "</li>"
+		dat += "</ul>"
+	dat += "</div>"
 
 	if(panel_open)
 		dat += wires()
@@ -184,13 +189,17 @@
 		if(product_slogans != "")
 			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
-	user << browse(dat, "window=vending")
-	onclose(user, "")
+	//user << browse(dat, "window=vending")
+	//onclose(user, "")
+	var/datum/browser/popup = new(user, "vending", (name))
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 
 // returns the wire panel text
 /obj/machinery/vending/proc/wires()
-	return "<BR>" + wires.GetInteractWindow(0, 0)
+	return wires.GetInteractWindow()
 
 
 /obj/machinery/vending/Topic(href, href_list)

@@ -298,7 +298,7 @@
 		if(access_emergency_storage)
 			return "Emergency Storage"
 		if(access_change_ids)
-			return "ID Computer"
+			return "ID Console"
 		if(access_ai_upload)
 			return "AI Upload"
 		if(access_teleporter)

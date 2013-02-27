@@ -8,7 +8,7 @@
 	return t
 
 /obj/machinery/computer/dna
-	name = "DNA operations computer"
+	name = "DNA Operations Console"
 	desc = "A Computer used to advanced DNA stuff."
 	icon_state = "dna"
 	var/obj/item/weapon/card/data/scan = null
