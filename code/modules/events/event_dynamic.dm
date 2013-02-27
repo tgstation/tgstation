@@ -36,14 +36,25 @@
 
 	// Maps event names to event chances
 	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
+	// Events have to be manually added to this proc to happen
 	var/list/possibleEvents = list()
 
-	// Check for additional possible events
-	possibleEvents[/datum/event/economic_event] = 100	//see Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
+	//see:
+	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
+	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events_Mundane.dm
+	possibleEvents[/datum/event/economic_event] = 200
+	possibleEvents[/datum/event/trivial_news] = 300
+	possibleEvents[/datum/event/mundane_news] = 200
+
+	possibleEvents[/datum/event/pda_spam] = max(min(25, player_list.len) * 4, 200)
+	possibleEvents[/datum/event/money_lotto] = max(min(5, player_list.len), 50)
+	if(account_hack_attempted)
+		possibleEvents[/datum/event/money_hacker] = max(min(25, player_list.len) * 4, 200)
+
 	possibleEvents[/datum/event/carp_migration] = 50 + 50 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/brand_intelligence] = 50 + 25 * active_with_role["Janitor"]
 
-	possibleEvents[/datum/event/rogue_drone] = 50 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
+	possibleEvents[/datum/event/rogue_drone] = 25 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
 	possibleEvents[/datum/event/infestation] = 50 + 25 * active_with_role["Janitor"]
 
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
@@ -72,6 +83,15 @@
 			possibleEvents[/datum/event/alien_infestation] = max(active_with_role["Security"], 5) + 2.5
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
+
+	// Debug code below here, very useful for testing so don't delete please.
+	/*var/debug_message = "Firing random event. "
+	for(var/V in active_with_role)
+		debug_message += "#[V]:[active_with_role[V]] "
+	debug_message += "||| "
+	for(var/V in possibleEvents)
+		debug_message += "[V]:[possibleEvents[V]]"
+	message_admins(debug_message)*/
 
 	var/picked_event = pickweight(possibleEvents)
 	if(!picked_event)
@@ -158,34 +178,34 @@
 	active_with_role["Janitor"] = 0
 
 	for(var/mob/M in player_list)
-		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
+		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
-		switch(role)
-			if("Engineer")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
-					active_with_role["Engineer"]++
-				if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
-					active_with_role["Engineer"]++
-			if("Medical")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
-					active_with_role["Medical"]++
-				if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
-					active_with_role["Medical"]++
-			if("Security")
-				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
-					active_with_role["Security"]++
-				if(M.mind.assigned_role in security_positions)
-					active_with_role["Security"]++
-			if("Scientist")
-				if(M.mind.assigned_role in list("Research Director", "Scientist"))
-					active_with_role["Scientist"]++
-			if("AI")
-				if(M.mind.assigned_role == "AI")
-					active_with_role["AI"]++
-			if("Cyborg")
-				if(M.mind.assigned_role == "Cyborg")
-					active_with_role["Cyborg"]++
-			if("Janitor")
-				if(M.mind.assigned_role == "Janitor")
-					active_with_role["Janitor"]++
+
+		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
+			active_with_role["Engineer"]++
+		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
+			active_with_role["Engineer"]++
+
+		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
+			active_with_role["Medical"]++
+		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
+			active_with_role["Medical"]++
+
+		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
+			active_with_role["Security"]++
+		if(M.mind.assigned_role in security_positions)
+			active_with_role["Security"]++
+
+		if(M.mind.assigned_role in list("Research Director", "Scientist"))
+			active_with_role["Scientist"]++
+
+		if(M.mind.assigned_role == "AI")
+			active_with_role["AI"]++
+
+		if(M.mind.assigned_role == "Cyborg")
+			active_with_role["Cyborg"]++
+
+		if(M.mind.assigned_role == "Janitor")
+			active_with_role["Janitor"]++
+
 	return active_with_role

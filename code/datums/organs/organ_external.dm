@@ -31,6 +31,7 @@
 	var/status = 0
 	var/open = 0
 	var/stage = 0
+	var/cavity = 0
 
 	var/obj/item/hidden = null
 	var/list/implants = list()
@@ -239,24 +240,64 @@
 	// process wounds, doing healing etc., only do this every 4 ticks to save processing power
 	if(owner.life_tick % wound_update_accuracy == 0)
 		update_wounds()
+
+	//Dismemberment
 	if(status & ORGAN_DESTROYED)
 		if(!destspawn && config.limbs_can_break)
 			droplimb()
 		return
-	if(!(status & ORGAN_BROKEN))
-		perma_injury = 0
 	if(parent)
 		if(parent.status & ORGAN_DESTROYED)
 			status |= ORGAN_DESTROYED
 			owner.update_body(1)
 			return
+
+	//Bone fracurtes
 	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 		src.fracture()
-	if(germ_level > 0)
-		for(var/datum/wound/W in wounds) if(!W.bandaged && !W.salved)
-			W.germ_level = max(W.germ_level, germ_level)
+	if(!(status & ORGAN_BROKEN))
+		perma_injury = 0
+
+	update_germs()
 	update_icon()
 	return
+
+//Updating germ levels. Handles organ germ levels and necrosis.
+#define GANGREN_LEVEL_ONE		100
+#define GANGREN_LEVEL_TWO		1000
+#define GANGREN_LEVEL_TERMINAL	2500
+#define GERM_TRANSFER_AMOUNT	germ_level/500
+/datum/organ/external/proc/update_germs()
+	if(germ_level > 0 && owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
+		//Syncing germ levels with external wounds
+		for(var/datum/wound/W in wounds)
+			if(!W.bandaged && !W.salved)
+				W.germ_level = max(W.germ_level, germ_level)	//Wounds get all the germs
+				if (W.germ_level > germ_level)	//Badly infected wounds raise internal germ levels
+					germ_level++
+
+		if(germ_level > GANGREN_LEVEL_ONE && prob(round(germ_level/100)))
+			germ_level++
+			owner.adjustToxLoss(1)
+
+		if(germ_level > GANGREN_LEVEL_TWO)
+			germ_level++
+			owner.adjustToxLoss(1)
+/*
+		if(germ_level > GANGREN_LEVEL_TERMINAL)
+			if (!(status & ORGAN_DEAD))
+				status |= ORGAN_DEAD
+				owner << "<span class='notice'>You can't feel your [display_name] anymore...</span>"
+				owner.update_body(1)
+			if (prob(10))	//Spreading the fun
+				if (children)	//To child organs
+					for (var/datum/organ/external/child in children)
+						if (!(child.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT)))
+							child.germ_level += round(GERM_TRANSFER_AMOUNT)
+				if (parent)
+					if (!(parent.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT)))
+						parent.germ_level += round(GERM_TRANSFER_AMOUNT)
+*/
 
 //Updating wounds. Handles wound natural healing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
@@ -281,14 +322,12 @@
 			// amount of healing is spread over all the wounds
 			W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
 
-		if(W.germ_level > 100 && prob(10))
-			owner.adjustToxLoss(1 * wound_update_accuracy)
-		if(W.germ_level > 1000)
-			owner.adjustToxLoss(1 * wound_update_accuracy)
-
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))
 			W.germ_level = 0
+			W.disinfected = 1
+
+
 
 	// sync the organ's damage with its wounds
 	src.update_damages()

@@ -41,22 +41,26 @@ var/global/normal_ooc_colour = "#002eb8"
 
 	log_ooc("[mob.name]/[key] : [msg]")
 
+	var/display_colour = normal_ooc_colour
+	if(holder && !holder.fakekey)
+		display_colour = "#0099cc"	//light blue
+		if(holder.rights & R_MOD && !(holder.rights & R_ADMIN))
+			display_colour = "#184880"	//dark blue
+		else if(holder.rights & R_ADMIN)
+			if(config.allow_admin_ooccolor)
+				display_colour = src.prefs.ooccolor
+			else
+				display_colour = "#b82e00"	//orange
+
 	for(var/client/C in clients)
 		if(C.prefs.toggles & CHAT_OOC)
 			var/display_name = src.key
-			var/display_colour = normal_ooc_colour
-
 			if(holder)
 				if(holder.fakekey)
 					if(C.holder)
 						display_name = "[holder.fakekey]/([src.key])"
 					else
 						display_name = holder.fakekey
-				else if(config.allow_admin_ooccolor)
-					display_colour = src.prefs.ooccolor
-				else
-					display_colour = "#b82e00"
-
 			C << "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 
 			/*

@@ -190,6 +190,12 @@
 						targeting_active = 1
 						target()
 						targeting_active = 0
+
+		if(prob(15))
+			if(prob(50))
+				playsound(src.loc, 'sound/effects/turret/move1.wav', 60, 1)
+			else
+				playsound(src.loc, 'sound/effects/turret/move2.wav', 60, 1)
 	else if(!isPopping())//else, pop down
 		if(!isDown())
 			popDown()
@@ -244,6 +250,7 @@
 	if ((!isPopping()) || src.popping==-1)
 		invisibility = 0
 		popping = 1
+		playsound(src.loc, 'sound/effects/turret/open.wav', 60, 1)
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
@@ -253,6 +260,7 @@
 /obj/machinery/turret/proc/popDown()
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
+		playsound(src.loc, 'sound/effects/turret/open.wav', 60, 1)
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"

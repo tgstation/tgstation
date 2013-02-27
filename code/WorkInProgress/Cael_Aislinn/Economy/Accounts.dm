@@ -2,6 +2,7 @@ var/global/current_date_string
 var/global/num_financial_terminals = 1
 var/global/datum/money_account/station_account
 var/global/next_account_number = 0
+var/global/obj/machinery/account_database/centcomm_account_db
 
 /proc/create_station_account()
 	if(!station_account)
@@ -11,13 +12,13 @@ var/global/next_account_number = 0
 		station_account.owner_name = "[station_name()] Station Account"
 		station_account.account_number = rand(111111, 999999)
 		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.money = 10000
+		station_account.money = 75000
 
 		//create an entry in the account transaction log for when it was created
 		var/datum/transaction/T = new()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
-		T.amount = 10000
+		T.amount = 75000
 		T.date = "2nd April, 2555"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
@@ -62,6 +63,7 @@ var/global/next_account_number = 0
 	var/access_level = 0
 	var/datum/money_account/detailed_account_view
 	var/creating_new_account = 0
+	var/activated = 1
 
 /obj/machinery/account_database/New()
 	..()
@@ -80,6 +82,7 @@ var/global/next_account_number = 0
 		dat += "Confirm identity: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card : "-----"]</a><br>"
 
 		if(access_level > 0)
+			dat += "<a href='?src=\ref[src];toggle_activated=1'>Toggle remote access to this database (warning!)</a>"
 			dat += "You may not edit accounts at this terminal, only create and view them.<br>"
 			if(creating_new_account)
 				dat += "<br>"
@@ -150,6 +153,10 @@ var/global/next_account_number = 0
 		..()
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)
+
+	if(href_list["toggle_activated"])
+		activated = !activated
+
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("sync_accounts")
@@ -160,7 +167,7 @@ var/global/next_account_number = 0
 					for(var/datum/money_account/M in A.accounts)
 						if(!src.accounts.Find(M))
 							src.accounts.Add(M)
-				usr << "\icon[src] <span class='info'>Accounts synched across all databases in range.</span>"
+				usr << "\icon[src] <span class='info'>Accounts synched across all NanoTrasen financial databases.</span>"
 
 			if("create_account")
 				creating_new_account = 1
@@ -214,6 +221,15 @@ var/global/next_account_number = 0
 
 	src.attack_hand(usr)
 
+/obj/machinery/account_database/proc/add_account_across_all(var/new_owner_name = "Default user", var/starting_funds = 0, var/pre_existing = 0)
+	var/datum/money_account/M = add_account(new_owner_name, starting_funds, pre_existing)
+	for(var/obj/machinery/account_database/D in world)
+		if(D == src)
+			continue
+		D.accounts.Add(M)
+
+	return M
+
 /obj/machinery/account_database/proc/add_account(var/new_owner_name = "Default user", var/starting_funds = 0, var/pre_existing = 0)
 
 	//create a new account
@@ -266,12 +282,15 @@ var/global/next_account_number = 0
 		R.overlays += stampoverlay
 		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
 
-
 	//add the account
 	M.transaction_log.Add(T)
 	accounts.Add(M)
 
+	return M
+
 /obj/machinery/account_database/proc/charge_to_account(var/attempt_account_number, var/source_name, var/purpose, var/terminal_id, var/amount)
+	if(!activated)
+		return 0
 	for(var/datum/money_account/D in accounts)
 		if(D.account_number == attempt_account_number)
 			D.money += amount
@@ -295,6 +314,8 @@ var/global/next_account_number = 0
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
 /obj/machinery/account_database/proc/attempt_account_access(var/attempt_account_number, var/attempt_pin_number, var/security_level_passed = 0)
+	if(!activated)
+		return 0
 	for(var/datum/money_account/D in accounts)
 		if(D.account_number == attempt_account_number)
 			if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number) )

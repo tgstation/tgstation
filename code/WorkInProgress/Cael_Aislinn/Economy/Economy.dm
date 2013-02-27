@@ -14,6 +14,17 @@
 #define ANIMAL_RIGHTS_RAID 13
 #define FESTIVAL 14
 
+#define RESEARCH_BREAKTHROUGH 15
+#define BARGAINS 16
+#define SONG_DEBUT 17
+#define MOVIE_RELEASE 18
+#define BIG_GAME_HUNTERS 19
+#define ELECTION 20
+#define GOSSIP 21
+#define TOURISM 22
+#define CELEBRITY_DEATH 23
+#define RESIGNATION 24
+
 #define DEFAULT 1
 
 #define ADMINISTRATIVE 2
@@ -54,10 +65,25 @@
 
 var/setup_economy = 0
 /proc/setup_economy()
+	if(setup_economy)
+		return
 	var/datum/feed_channel/newChannel = new /datum/feed_channel
 	newChannel.channel_name = "Tau Ceti Daily"
 	newChannel.author = "CentComm Minister of Information"
 	newChannel.locked = 1
 	newChannel.is_admin_channel = 1
 	news_network.network_channels += newChannel
+
+	newChannel = new /datum/feed_channel
+	newChannel.channel_name = "The Gibson Gazette"
+	newChannel.author = "Editor Mike Hammers"
+	newChannel.locked = 1
+	newChannel.is_admin_channel = 1
+	news_network.network_channels += newChannel
+
+	for(var/loc_type in typesof(/datum/trade_destination) - /datum/trade_destination)
+		var/datum/trade_destination/D = new loc_type
+		weighted_randomevent_locations[D] = D.viable_random_events.len
+		weighted_mundaneevent_locations[D] = D.viable_mundane_events.len
+
 	setup_economy = 1
