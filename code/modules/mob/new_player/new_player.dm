@@ -196,15 +196,11 @@
 			new_player_panel()
 
 		if(href_list["showpoll"])
-			usr << "\red DB usage has been disabled and that option should not have been available."
-			return
 
 			handle_player_polling()
 			return
 
 		if(href_list["pollid"])
-			usr << "\red DB usage has been disabled and that option should not have been available."
-			return
 
 			var/pollid = href_list["pollid"]
 			if(istext(pollid))
