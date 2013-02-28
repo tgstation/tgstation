@@ -1,6 +1,7 @@
 var/global/current_date_string
 var/global/num_financial_terminals = 1
 var/global/datum/money_account/station_account
+var/global/list/datum/money_account/department_accounts = list()
 var/global/next_account_number = 0
 var/global/obj/machinery/account_database/centcomm_account_db
 
@@ -27,6 +28,31 @@ var/global/obj/machinery/account_database/centcomm_account_db
 		station_account.transaction_log.Add(T)
 		for(var/obj/machinery/account_database/A in world)
 			A.accounts.Add(station_account)
+
+/proc/create_department_account(department)
+	next_account_number = rand(111111, 999999)
+
+	var/datum/money_account/department_account = new()
+	department_account.owner_name = "[department] Account"
+	department_account.account_number = rand(111111, 999999)
+	department_account.remote_access_pin = rand(1111, 111111)
+	department_account.money = 5000
+
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = department_account.owner_name
+	T.purpose = "Account creation"
+	T.amount = department_account.money
+	T.date = "2nd April, 2555"
+	T.time = "11:24"
+	T.source_terminal = "Biesel GalaxyNet Terminal #277"
+
+	//add the account
+	department_account.transaction_log.Add(T)
+	for(var/obj/machinery/account_database/A in world)
+		A.accounts.Add(department_account)
+
+	department_accounts[department] = department_account
 
 //the current ingame time (hh:mm) can be obtained by calling:
 //worldtime2text()
@@ -69,6 +95,10 @@ var/global/obj/machinery/account_database/centcomm_account_db
 	..()
 	if(!station_account)
 		create_station_account()
+
+	if(department_accounts.len == 0)
+		for(var/department in station_departments)
+			create_department_account(department)
 
 	if(!current_date_string)
 		current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 2557"
