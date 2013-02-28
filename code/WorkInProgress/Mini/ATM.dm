@@ -43,7 +43,7 @@ log transactions
 	if(stat & NOPOWER)
 		return
 
-	if(linked_db && ( !(linked_db.stat & NOPOWER) || !linked_db.activated) )
+	if(linked_db && ( (linked_db.stat & NOPOWER) || !linked_db.activated ) )
 		linked_db = null
 		authenticated_account = null
 		src.visible_message("\red \icon[src] [src] buzzes rudely, \"Connection to remote database lost.\"")
