@@ -68,7 +68,7 @@ log transactions
 
 /obj/machinery/atm/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
-		if(DB.z == src.z && ( !(DB.stat & NOPOWER) || !linked_db.activated) )
+		if( DB.z == src.z && !(DB.stat & NOPOWER) && DB.activated )
 			linked_db = DB
 			break
 
