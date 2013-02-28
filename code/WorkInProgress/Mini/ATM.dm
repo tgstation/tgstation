@@ -259,7 +259,7 @@ log transactions
 								T.time = worldtime2text()
 								authenticated_account.transaction_log.Add(T)
 							else
-								usr << "\red \icon[src] incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining."
+								usr << "\red \icon[src] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining."
 								previous_account_number = tried_account_num
 								playsound(src, 'buzz-sigh.ogg', 50, 1)
 						else
@@ -278,6 +278,8 @@ log transactions
 						T.date = current_date_string
 						T.time = worldtime2text()
 						authenticated_account.transaction_log.Add(T)
+
+						usr << "\blue \icon[src] Access granted. Welcome user '[authenticated_account.owner_name].'"
 
 					previous_account_number = tried_account_num
 			if("withdrawal")
@@ -342,8 +344,8 @@ log transactions
 						held_card = I
 			if("logout")
 				authenticated_account = null
-				usr << browse(null,"window=atm")
-				return
+				//usr << browse(null,"window=atm")
+
 	src.attack_hand(usr)
 
 //create the most effective combination of notes to make up the requested amount
@@ -385,3 +387,14 @@ log transactions
 				I = P.id
 			if(I)
 				authenticated_account = linked_db.attempt_account_access(I.associated_account_number)
+				if(authenticated_account)
+					human_user << "\blue \icon[src] Access granted. Welcome user '[authenticated_account.owner_name].'"
+
+					//create a transaction log entry
+					var/datum/transaction/T = new()
+					T.target_name = authenticated_account.owner_name
+					T.purpose = "Remote terminal access"
+					T.source_terminal = machine_id
+					T.date = current_date_string
+					T.time = worldtime2text()
+					authenticated_account.transaction_log.Add(T)
