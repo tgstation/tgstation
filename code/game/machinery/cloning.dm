@@ -313,7 +313,6 @@
 
 	if (!(src.occupant))
 		return
-
 	/*
 	for(var/obj/O in src)
 		O.loc = src.loc
@@ -322,7 +321,8 @@
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
+	if(occupant.loc == src)
+		src.occupant.loc = src.loc
 	src.icon_state = "pod_0"
 	src.eject_wait = 0 //If it's still set somehow.
 	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.

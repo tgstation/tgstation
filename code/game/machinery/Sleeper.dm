@@ -281,20 +281,19 @@
 		M.Paralyse(1)
 		M.Weaken(1)
 		M.Stun(1)
-		if (M:reagents.get_reagent_amount("inaprovaline") < 5)
-			M:reagents.add_reagent("inaprovaline", 5)
+		if (M.reagents.get_reagent_amount("inaprovaline") < 5)
+			M.reagents.add_reagent("inaprovaline", 5)
 		return
 
 
 	proc/go_out()
 		if(!src.occupant)
 			return
-		for(var/obj/O in src)
+		for(var/atom/movable/O in src)
 			O.loc = src.loc
 		if(src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
 			src.occupant.client.perspective = MOB_PERSPECTIVE
-		src.occupant.loc = src.loc
 		src.occupant = null
 		if(orient == "RIGHT")
 			icon_state = "sleeper_0-r"

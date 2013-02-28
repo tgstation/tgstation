@@ -21,7 +21,7 @@
 	attacktext = "kicks"
 	health = 40
 	melee_damage_lower = 1
-	melee_damage_upper = 5
+	melee_damage_upper = 2
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()

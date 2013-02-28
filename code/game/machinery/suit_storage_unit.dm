@@ -410,7 +410,8 @@
 
 		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
 		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
-	src.OCCUPANT.loc = src.loc
+	if(src.OCCUPANT.loc == src)
+		src.OCCUPANT.loc = src.loc
 	src.OCCUPANT = null
 	if(!src.isopen)
 		src.isopen = 1

@@ -1,5 +1,8 @@
 // Wires for airlocks
 
+/datum/wires/airlock/secure
+	random = 1
+
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	wire_count = 12

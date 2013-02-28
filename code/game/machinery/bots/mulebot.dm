@@ -4,6 +4,7 @@
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
 
+var/global/mulebot_count = 0
 
 /obj/machinery/bot/mulebot
 	name = "\improper MULEbot"
@@ -79,12 +80,11 @@
 			radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
 			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
-		var/count = 0
-		for(var/obj/machinery/bot/mulebot/other in world)
-			count++
+		mulebot_count += 1
 		if(!suffix)
-			suffix = "#[count]"
+			suffix = "#[mulebot_count]"
 		name = "Mulebot ([suffix])"
+
 
 	verbs -= /atom/movable/verb/pull
 

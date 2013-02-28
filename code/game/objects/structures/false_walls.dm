@@ -82,6 +82,16 @@
 	else
 		icon_state = "[mineral]fwall_open"
 
+/obj/structure/falsewall/proc/ChangeToWall(var/delete = 1)
+	var/turf/T = get_turf(src)
+	if(!mineral || mineral == "metal")
+		T.ChangeTurf(/turf/simulated/wall)
+	else
+		T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+	if(delete)
+		del(src)
+	return T
+
 /obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opening)
 		user << "\red You must wait until the door has stopped moving."
@@ -94,19 +104,12 @@
 			return
 		if(istype(W, /obj/item/weapon/screwdriver))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
-			if(!mineral || mineral == "metal")
-				T.ChangeTurf(/turf/simulated/wall)
-			else
-				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-			del(src)
+			ChangeToWall()
 
 		if( istype(W, /obj/item/weapon/weldingtool) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT:welding )
-				if(!mineral)
-					T.ChangeTurf(/turf/simulated/wall)
-				else
-					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+				ChangeToWall(0)
 				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
 					T = get_turf(src)
 					T.attackby(W,user)
@@ -114,38 +117,13 @@
 	else
 		user << "\blue You can't reach, close it first!"
 
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/pickaxe/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
+		ChangeToWall(0)
 		if(mineral != "plasma")
-			T = get_turf(src)
+			var/turf/T = get_turf(src)
 			T.attackby(W,user)
 		del(src)
 
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		T = get_turf(src)
-		T.attackby(W,user)
-		del(src)
-
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "plasma")
-			T = get_turf(src)
-			T.attackby(W,user)
-		del(src)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
