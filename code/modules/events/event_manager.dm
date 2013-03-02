@@ -46,7 +46,7 @@ var/datum/controller/event/events
 
 //decides which world.time we should select another random event at.
 /datum/controller/event/proc/reschedule()
-	scheduled = world.time + rand(frequency_lower, min(frequency_lower,frequency_upper))
+	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/controller/event/proc/spawnEvent()

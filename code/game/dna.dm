@@ -1570,7 +1570,7 @@
 			if (!src.buffer3) src.temp_html += "<br />"
 	src.temp_html += temp_footer_html
 
-	if(viable_occupant && !src.scanner_status_html) //is there REALLY someone in there?
+	if(viable_occupant && !src.scanner_status_html && occupant) //is there REALLY someone in there?
 		src.scanner_status_html = "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
 		src.scanner_status_html += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.radiation]%</div></div>"
 		if(human_occupant)

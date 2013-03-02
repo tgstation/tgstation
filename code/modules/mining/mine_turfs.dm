@@ -367,7 +367,7 @@
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(40)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -384,7 +384,7 @@
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(30)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -401,7 +401,7 @@
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(0)
 		if ((user.loc == T && user.get_active_hand() == W))
