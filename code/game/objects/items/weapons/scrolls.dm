@@ -42,7 +42,8 @@
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
 				teleportscroll(H)
-	attack_self(H)
+	if(H)
+		attack_self(H)
 	return
 
 /obj/item/weapon/teleportation_scroll/proc/teleportscroll(var/mob/user)
@@ -52,7 +53,7 @@
 	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
 
-	if (user.stat || user.restrained())
+	if (!user || user.stat || user.restrained())
 		return
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return
