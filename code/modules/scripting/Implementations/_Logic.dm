@@ -175,8 +175,10 @@ proc/string_explode(var/string, var/separator)
 
 Just found out there was already a string explode function, did some benchmarking, and that function were a bit faster, sticking to that.
 */
-proc/string_explode(var/string, var/separator)
-	if(istext(string) && istext(separator))
+
+
+proc/string_explode(var/string, var/separator = "")
+	if(istext(string) && (istext(separator) || isnull(separator)))
 		return text2list(string, separator)
 
 proc/n_repeat(var/string, var/amount)
