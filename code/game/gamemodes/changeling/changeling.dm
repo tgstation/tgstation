@@ -10,7 +10,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 2
-	required_players_secret = 5
+	required_players_secret = 10
 	required_enemies = 1
 	recommended_enemies = 4
 
@@ -37,7 +37,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/const/changeling_amount = 4
+	var/changeling_amount = 4
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
@@ -54,6 +54,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
 				possible_changelings -= player
+
+	changeling_amount = 1 + round(num_players() / 10)
 
 	if(possible_changelings.len>0)
 		for(var/i = 0, i < changeling_amount, i++)
