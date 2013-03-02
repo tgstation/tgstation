@@ -20,7 +20,7 @@
 		toggle()
 
 	afterattack(atom/target, mob/user , flag)
-		if(istype(target,/obj/item))
+		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			user << "\blue Scanned [target]."
 			saved_item = target.type
