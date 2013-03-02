@@ -11,9 +11,10 @@
 	var/obj/item/weapon/cell/cell = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/device/mmi/mmi = null
+	var/list/req_access = list(access_robotics)
 
 	name = "spider-bot"
-	desc = "A skittering robotic chassis!"
+	desc = "A skittering robotic friend!"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
@@ -69,6 +70,55 @@
 
 		O.loc = src
 		src.update_icon()
+		return 1
+
+	if (istype(O, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = O
+		if (WT.remove_fuel(0))
+			if(health < maxHealth)
+				health += pick(1,1,1,2,2,3)
+				if(health > maxHealth)
+					health = maxHealth
+				add_fingerprint(user)
+				for(var/mob/W in viewers(user, null))
+					W.show_message(text("\red [user] has spot-welded some of the damage to [src]!"), 1)
+			else
+				user << "\blue [src] is undamaged!"
+		else
+			user << "Need more welding fuel!"
+			return
+	else if(istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda))
+		if (!mmi)
+			user << "\red There's no reason to swipe your ID - the spiderbot has no brain to remove."
+			return 0
+
+		var/obj/item/weapon/card/id/id_card
+
+		if(istype(O, /obj/item/weapon/card/id))
+			id_card = O
+		else
+			var/obj/item/device/pda/pda = O
+			id_card = pda.id
+
+		if(check_access(id_card))
+			user << "\blue You swipe your access card and pop the brain out of [src]."
+			eject_brain()
+			return 1
+		else
+			user << "\red You swipe your card, with no effect."
+			return 0
+	else if (istype(O, /obj/item/weapon/card/emag))
+		if (!mmi)
+			user << "\red What exactly would that accomplish? The spiderbot has no brain to remove."
+			return 0
+		user << "\blue You short out the security protocols and overload [src]'s cell."
+
+		for(var/mob/M in viewers(src, null))
+			if ((M.client && !( M.blinded )))
+				M.show_message("\red [src] makes an odd warbling noise, fizzles, and explodes.")
+
+		eject_brain()
+		Die()
 
 	else
 		if(O.force)
@@ -103,20 +153,25 @@
 		icon_state = "spiderbot-chassis"
 		icon_living = "spiderbot-chassis"
 
-/mob/living/simple_animal/spiderbot/Del()
+/mob/living/simple_animal/spiderbot/proc/eject_brain()
 	if(mmi)
 		var/turf/T = get_turf(loc)
 		if(T)
 			mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
+		src.name = "spider-bot"
+		update_icon()
+
+/mob/living/simple_animal/spiderbot/Del()
+	eject_brain()
 	..()
 
 /mob/living/simple_animal/spiderbot/New()
 
 	radio = new /obj/item/device/radio/borg(src)
 	camera = new /obj/machinery/camera(src)
-	camera.c_tag = real_name
+	camera.c_tag = "Spiderbot-[real_name]"
 	camera.network = list("SS13")
 
 	..()
@@ -126,16 +181,24 @@
 	living_mob_list -= src
 	dead_mob_list += src
 
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("\red Damaged beyond repair, [src] explodes in a spray of scrap metal.")
-
 	if(camera)
 		camera.status = 0
 
 	robogibs(src.loc, viruses)
 	src.Del()
 	return
+
+/mob/living/simple_animal/spiderbot/proc/check_access(obj/item/weapon/card/id/I)
+
+	var/list/L = req_access
+	if(!L.len) //no access requirements.
+		return 1
+	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+		return 0
+	for(var/req in req_access)
+		if(!(req in I.access)) //doesn't have this access
+			return 0
+	return 1
 
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/spiderbot/verb/ventcrawl()
