@@ -90,10 +90,10 @@ obj/machinery/computer/general_air_control
 		if(..(user))
 			return
 		//user << browse(return_text(),"window=computer")
-		//user.set_machine(src)
+		user.set_machine(src)
 		//onclose(user, "computer")
 
-		var/datum/browser/popup = new(user, "computer", name, 450, 380)
+		var/datum/browser/popup = new(user, "computer", name, 465, 390)
 		popup.set_content(return_text())
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
