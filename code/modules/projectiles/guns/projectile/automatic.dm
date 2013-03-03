@@ -68,7 +68,7 @@
 	desc = "A rather traditionally made light machine gun with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
-	w_class = 4
+	w_class = 5
 	slot_flags = 0
 	max_shells = 50
 	caliber = "a762"

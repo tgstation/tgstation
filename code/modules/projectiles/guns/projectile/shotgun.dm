@@ -54,6 +54,7 @@
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun"
+	w_class = 5
 
 //this is largely hacky and bad :(	-Pete
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel

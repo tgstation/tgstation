@@ -4,7 +4,7 @@
 	icon_state = "ionrifle"
 	fire_sound = 'sound/weapons/Laser.ogg'
 	origin_tech = "combat=2;magnets=4"
-	w_class = 4.0
+	w_class = 5
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	charge_cost = 100
@@ -35,7 +35,7 @@ obj/item/weapon/gun/energy/staff
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
-	w_class = 4.0
+	w_class = 5
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"
 	origin_tech = null

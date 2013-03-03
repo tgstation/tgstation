@@ -205,7 +205,7 @@
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
 	school = "evocation"
-	charge_max = 100
+	charge_max = 60
 	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
@@ -219,7 +219,7 @@
 	proj_step_delay = 1
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
-	explosion(T, -1, 1, 2, 3)
+	explosion(T, -1, 0, 2, 3)
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/fireball
