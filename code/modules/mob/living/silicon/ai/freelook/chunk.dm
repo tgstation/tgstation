@@ -81,8 +81,8 @@
 		if(!c.can_use())
 			continue
 
-		var/turf/point = locate(src.x + 8, src.y + 8, src.z)
-		if(get_dist(point, c) > 24)
+		var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), src.z)
+		if(get_dist(point, c) > CHUNK_SIZE + (CHUNK_SIZE / 2))
 			continue
 
 		for(var/turf/t in c.can_see())
@@ -123,24 +123,26 @@
 				if(m.ai.client)
 					m.ai.client.images += t.obscured
 
+	changed = 0
+
 // Create a new camera chunk, since the chunks are made as they are needed.
 
 /datum/camerachunk/New(loc, x, y, z)
 
 	// 0xf = 15
-	x &= ~0xf
-	y &= ~0xf
+	x &= ~(CHUNK_SIZE - 1)
+	y &= ~(CHUNK_SIZE - 1)
 
 	src.x = x
 	src.y = y
 	src.z = z
 
-	for(var/obj/machinery/camera/c in range(16, locate(x + 8, y + 8, z)))
+	for(var/obj/machinery/camera/c in range(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(c.can_use())
 			cameras += c
 
-	for(var/turf/t in range(10, locate(x + 8, y + 8, z)))
-		if(t.x >= x && t.y >= y && t.x < x + 16 && t.y < y + 16)
+	for(var/turf/t in range(CHUNK_SIZE + (CHUNK_SIZE / 6), locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
+		if(t.x >= x && t.y >= y && t.x < x + CHUNK_SIZE && t.y < y + CHUNK_SIZE)
 			turfs[t] = t
 
 	for(var/camera in cameras)
