@@ -11,14 +11,15 @@
 	var/obj/item/weapon/cell/cell = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/device/mmi/mmi = null
-	var/list/req_access = list(access_robotics)
+	var/list/req_access = list(access_robotics) //Access needed to pop out the brain.
 
-	name = "spider-bot"
+	name = "Spider-bot"
 	desc = "A skittering robotic friend!"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
 	icon_dead = "spiderbot-smashed"
+	wander = 0
 
 	health = 10
 	maxHealth = 10
@@ -33,9 +34,10 @@
 	response_harm   = "stomps on"
 
 	var/obj/item/held_item = null //Storage for single item they can hold.
-	wander = 0
-	speed = -1 //Spiderbots gotta go fast.
-	//pass_flags = PASSTABLE //Maybe griefy?
+	var/emagged = 0               //IS WE EXPLODEN?
+	var/syndie = 0                //IS WE SYNDICAT? (currently unused)
+	speed = -1                    //Spiderbots gotta go fast.
+	//pass_flags = PASSTABLE      //Maybe griefy?
 	small = 1
 	speak_emote = list("beeps","clicks","chirps")
 
@@ -119,17 +121,15 @@
 			user << "\red You swipe your card, with no effect."
 			return 0
 	else if (istype(O, /obj/item/weapon/card/emag))
-		if (!mmi)
-			user << "\red What exactly would that accomplish? The spiderbot has no brain to remove."
+		if (emagged)
+			user << "\red [src] is already overloaded - better run."
 			return 0
-		user << "\blue You short out the security protocols and overload [src]'s cell."
-
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [src] makes an odd warbling noise, fizzles, and explodes.")
-
-		eject_brain()
-		Die()
+		else
+			emagged = 1
+			user << "\blue You short out the security protocols and overload [src]'s cell, priming it to explode in a short time."
+			spawn(100)	src << "\red Your cell seems to be outputting a lot of power..."
+			spawn(200)	src << "\red Internal heat sensors are spiking! Something is badly wrong with your cell!"
+			spawn(300)	src.explode()
 
 	else
 		if(O.force)
@@ -152,6 +152,14 @@
 		src.mind.key = M.brainmob.key
 		src.name = "Spider-bot ([M.brainmob.name])"
 
+/mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
+	for(var/mob/M in viewers(src, null))
+		if ((M.client && !( M.blinded )))
+			M.show_message("\red [src] makes an odd warbling noise, fizzles, and explodes.")
+	explosion(get_turf(loc), -1, -1, 3, 5)
+	eject_brain()
+	Die()
+
 /mob/living/simple_animal/spiderbot/proc/update_icon()
 	if(mmi)
 		if (istype(mmi,/obj/item/device/mmi))
@@ -171,7 +179,7 @@
 			mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
-		src.name = "spider-bot"
+		src.name = "Spider-bot"
 		update_icon()
 
 /mob/living/simple_animal/spiderbot/Del()
