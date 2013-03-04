@@ -43,13 +43,13 @@
 		owner.ui_action_click()
 		switch(owner.icon_action_button)
 			if("action_hardhat", "action_welding")
-				usr.update_inv_head()
+				usr.update_inv_head(0)
 			if("action_welding_g")
-				usr.update_inv_glasses()
+				usr.update_inv_glasses(0)
 			if("action_jetpack")
-				usr.update_inv_back()
+				usr.update_inv_back(0)
 			if("action_magboots")
-				usr.update_inv_shoes()
+				usr.update_inv_shoes(0)
 
 //This is the proc used to update all the action buttons. It just returns for all mob types except humans.
 /mob/proc/update_action_buttons()
@@ -469,13 +469,13 @@
 /obj/screen/inventory/attack_hand(mob/user as mob)
 	if(user.attack_ui(slot_id))
 		user.update_inv_l_hand(0)
-		user.update_inv_r_hand()
+		user.update_inv_r_hand(0)
 	return
 
 /obj/screen/inventory/attack_paw(mob/user as mob)
 	if(user.attack_ui(slot_id))
 		user.update_inv_l_hand(0)
-		user.update_inv_r_hand()
+		user.update_inv_r_hand(0)
 	return
 
 
@@ -508,7 +508,7 @@
 		var/mob/living/carbon/human/H = usr
 		H.equip_to_appropriate_slot(I)
 		H.update_inv_l_hand(0)
-		H.update_inv_r_hand()
+		H.update_inv_r_hand(0)
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -655,7 +655,7 @@
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.handcuffed)
 						CM.handcuffed = null
-						CM.update_inv_handcuffed()
+						CM.update_inv_handcuffed(0)
 			else
 				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
 				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
@@ -675,7 +675,7 @@
 						CM << "\blue You successfully remove \the [CM.handcuffed]."
 						CM.handcuffed.loc = usr.loc
 						CM.handcuffed = null
-						CM.update_inv_handcuffed()
+						CM.update_inv_handcuffed(0)
 		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
@@ -693,7 +693,7 @@
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.legcuffed)
 						CM.legcuffed = null
-						CM.update_inv_legcuffed()
+						CM.update_inv_legcuffed(0)
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
 				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
@@ -713,4 +713,4 @@
 						CM << "\blue You successfully remove \the [CM.legcuffed]."
 						CM.legcuffed.loc = usr.loc
 						CM.legcuffed = null
-						CM.update_inv_legcuffed()
+						CM.update_inv_legcuffed(0)

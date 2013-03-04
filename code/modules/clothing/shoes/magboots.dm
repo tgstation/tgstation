@@ -26,7 +26,7 @@
 			src.magpulse = 1
 			icon_state = "magboots1"
 			user << "You enable the mag-pulse traction system."
-		user.update_inv_shoes()	//so our mob-overlays update
+		user.update_inv_shoes(0)	//so our mob-overlays update
 
 	examine()
 		set src in view()

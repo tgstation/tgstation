@@ -24,7 +24,7 @@
 			else
 				icon_state = "[color]soft"
 				usr << "You flip the hat back in normal position."
-			usr.update_inv_head()	//so our mob-overlays update
+			usr.update_inv_head(0)	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

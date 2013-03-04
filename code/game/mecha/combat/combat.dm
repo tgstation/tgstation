@@ -58,7 +58,7 @@
 									H.reagents.add_reagent("cryptobiolin", force)
 						else
 							return
-					if(update)	H.UpdateDamageIcon()
+					if(update)	H.UpdateDamageIcon(0)
 				H.updatehealth()
 
 			else

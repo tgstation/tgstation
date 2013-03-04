@@ -28,7 +28,7 @@
 		var/heal_amt = 10
 		for(var/datum/limb/affecting in H.organs)
 			if(affecting.heal_damage(heal_amt, heal_amt))
-				H.UpdateDamageIcon()
+				H.UpdateDamageIcon(0)
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)

@@ -200,6 +200,8 @@ datum/hud/New(mob/owner)
 	if(!mymob) return
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
+		if(H.handcuffed)
+			H.handcuffed.screen_loc = null //no handcuffs in my UI!
 		if(inventory_shown && hud_shown)
 			if(H.shoes)		H.shoes.screen_loc = ui_shoes
 			if(H.gloves)	H.gloves.screen_loc = ui_gloves

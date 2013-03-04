@@ -138,7 +138,7 @@
 	var/obj/item/W = get_active_hand()
 
 	if(istype(W))
-		if(equip_to_slot_if_possible(W, slot))
+		if(equip_to_slot_if_possible(W, slot,0,0,0))
 			return 1
 
 	if(!W)
@@ -162,7 +162,6 @@
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
-
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(del_on_fail)
 			del(W)
@@ -170,7 +169,6 @@
 			if(!disable_warning)
 				src << "\red You are unable to equip that." //Only print if del_on_fail is false
 		return 0
-
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
 
@@ -285,12 +283,12 @@ var/list/slot_equipment_priority = list( \
 		var/obj/item/W = l_hand
 		if (W)
 			W.attack_self(src)
-			update_inv_l_hand()
+			update_inv_l_hand(0)
 	else
 		var/obj/item/W = r_hand
 		if (W)
 			W.attack_self(src)
-			update_inv_r_hand()
+			update_inv_r_hand(0)
 	return
 
 /*

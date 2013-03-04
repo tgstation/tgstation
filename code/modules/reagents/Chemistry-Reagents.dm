@@ -683,7 +683,7 @@ datum
 						if(H.wear_mask)
 							if(!H.wear_mask.unacidable)
 								del (H.wear_mask)
-								H.update_inv_wear_mask()
+								H.update_inv_wear_mask(0)
 								H << "\red Your mask melts away but protects you from the acid!"
 							else
 								H << "\red Your mask protects you from the acid!"
@@ -692,7 +692,7 @@ datum
 						if(H.head)
 							if(prob(10) && !H.head.unacidable)
 								del(H.head)
-								H.update_inv_head()
+								H.update_inv_head(0)
 								H << "\red Your helmet melts away but protects you from the acid"
 							else
 								H << "\red Your helmet protects you from the acid!"
@@ -703,7 +703,7 @@ datum
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
 								del (MK.wear_mask)
-								MK.update_inv_wear_mask()
+								MK.update_inv_wear_mask(0)
 								MK << "\red Your mask melts away but protects you from the acid!"
 							else
 								MK << "\red Your mask protects you from the acid!"
@@ -715,7 +715,7 @@ datum
 							var/datum/limb/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(10, 5))
-									H.UpdateDamageIcon()
+									H.UpdateDamageIcon(0)
 								if(prob(15))
 									H.emote("scream")
 									H.f_style = "Shaved"
@@ -760,7 +760,7 @@ datum
 						if(H.wear_mask)
 							if(!H.wear_mask.unacidable)
 								del (H.wear_mask)
-								H.update_inv_wear_mask()
+								H.update_inv_wear_mask(0)
 								H << "\red Your mask melts away but protects you from the acid!"
 							else
 								H << "\red Your mask protects you from the acid!"
@@ -769,7 +769,7 @@ datum
 						if(H.head)
 							if(prob(20) && !H.head.unacidable)
 								del(H.head)
-								H.update_inv_head()
+								H.update_inv_head(0)
 								H << "\red Your helmet melts away but protects you from the acid"
 							else
 								H << "\red Your helmet protects you from the acid!"
@@ -778,7 +778,7 @@ datum
 						if(!H.unacidable)
 							var/datum/limb/affecting = H.get_organ("head")
 							if(affecting.take_damage(rand(10,20), rand(0,10)))
-								H.UpdateDamageIcon()
+								H.UpdateDamageIcon(0)
 							if(prob(25))
 								H.emote("scream")
 								H.f_style = "Shaved"
@@ -792,7 +792,7 @@ datum
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
 								del (MK.wear_mask)
-								MK.update_inv_wear_mask()
+								MK.update_inv_wear_mask(0)
 								MK << "\red Your mask melts away but protects you from the acid!"
 							else
 								MK << "\red Your mask protects you from the acid!"
@@ -806,7 +806,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/limb/affecting = H.get_organ("head")
 							if(affecting.take_damage(rand(10,20), rand(0,10)))
-								H.UpdateDamageIcon()
+								H.UpdateDamageIcon(0)
 							if(prob(25))
 								H.emote("scream")
 								H.f_style = "Shaved"

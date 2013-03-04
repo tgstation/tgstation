@@ -118,7 +118,7 @@
 		"You cut \the [C]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
 		C.handcuffed = null
-		C.update_inv_handcuffed()
+		C.update_inv_handcuffed(0)
 		return
 	else
 		..()

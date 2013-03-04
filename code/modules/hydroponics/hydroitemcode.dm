@@ -34,7 +34,7 @@
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/limb/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
-				user.UpdateDamageIcon()
+				user.UpdateDamageIcon(0)
 		else
 			user.take_organ_damage(0,force)
 
@@ -57,7 +57,7 @@
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/limb/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
-				user.UpdateDamageIcon()
+				user.UpdateDamageIcon(0)
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))

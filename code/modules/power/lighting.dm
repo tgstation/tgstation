@@ -497,7 +497,7 @@
 			var/datum/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 
 			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
-				H.UpdateDamageIcon()
+				H.UpdateDamageIcon(0)
 			H.updatehealth()
 			return				// if burned, don't remove the light
 

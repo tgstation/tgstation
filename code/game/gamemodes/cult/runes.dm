@@ -278,7 +278,7 @@ var/list/sacrificed = list()
 //				corpse_to_raise.update_inv_handcuffed(0)
 			corpse_to_raise.stat = CONSCIOUS
 			corpse_to_raise.updatehealth()
-			corpse_to_raise.UpdateDamageIcon()
+			corpse_to_raise.UpdateDamageIcon(0)
 
 			corpse_to_raise.key = ghost.key	//the corpse will keep its old mind! but a new player takes ownership of it (they are essentially possessed)
 											//This means, should that player leave the body, the original may re-enter
@@ -769,11 +769,11 @@ var/list/sacrificed = list()
 				if (cultist.handcuffed)
 					cultist.handcuffed.loc = cultist.loc
 					cultist.handcuffed = null
-					cultist.update_inv_handcuffed()
+					cultist.update_inv_handcuffed(0)
 				if (cultist.legcuffed)
 					cultist.legcuffed.loc = cultist.loc
 					cultist.legcuffed = null
-					cultist.update_inv_legcuffed()
+					cultist.update_inv_legcuffed(0)
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 					cultist.u_equip(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)

@@ -23,7 +23,7 @@
 			if (source.handcuffed)
 				var/obj/item/weapon/W = source.handcuffed
 				source.handcuffed = null
-				source.update_inv_handcuffed()
+				source.update_inv_handcuffed(0)
 				if (source.client)
 					source.client.screen -= W
 				if (W)
@@ -34,7 +34,7 @@
 			if (source.legcuffed)
 				var/obj/item/weapon/W = source.legcuffed
 				source.legcuffed = null
-				source.update_inv_legcuffed()
+				source.update_inv_legcuffed(0)
 				if (source.client)
 					source.client.screen -= W
 				if (W)

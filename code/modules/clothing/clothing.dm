@@ -165,7 +165,7 @@ BLIND     // can't see anything
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
+			H.update_inv_w_uniform(0)
 
 		return
 
@@ -226,7 +226,7 @@ BLIND     // can't see anything
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
+			H.update_inv_w_uniform(0)
 
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)

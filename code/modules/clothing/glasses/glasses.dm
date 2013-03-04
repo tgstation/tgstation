@@ -97,7 +97,7 @@
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
 
-		usr.update_inv_glasses()
+		usr.update_inv_glasses(0)
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"

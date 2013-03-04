@@ -110,7 +110,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	//can't think of any other way to update the overlays :<
 	user.update_inv_wear_mask(0)
 	user.update_inv_l_hand(0)
-	user.update_inv_r_hand(1)
+	user.update_inv_r_hand(0)
 	return
 
 

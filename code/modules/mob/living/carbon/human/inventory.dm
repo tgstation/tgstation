@@ -59,7 +59,7 @@
 		if(W)
 			success = 1
 		wear_suit = null
-		update_inv_wear_suit()
+		update_inv_wear_suit(0)
 	else if (W == w_uniform)
 		if (r_store)
 			u_equip(r_store)
@@ -71,33 +71,33 @@
 			u_equip(belt)
 		w_uniform = null
 		success = 1
-		update_inv_w_uniform()
+		update_inv_w_uniform(0)
 	else if (W == gloves)
 		gloves = null
 		success = 1
-		update_inv_gloves()
+		update_inv_gloves(0)
 	else if (W == glasses)
 		glasses = null
 		success = 1
-		update_inv_glasses()
+		update_inv_glasses(0)
 	else if (W == head)
 		head = null
 		if(W.flags & BLOCKHAIR)
 			update_hair(0)	//rebuild hair
 		success = 1
-		update_inv_head()
+		update_inv_head(0)
 	else if (W == ears)
 		ears = null
 		success = 1
-		update_inv_ears()
+		update_inv_ears(0)
 	else if (W == shoes)
 		shoes = null
 		success = 1
-		update_inv_shoes()
+		update_inv_shoes(0)
 	else if (W == belt)
 		belt = null
 		success = 1
-		update_inv_belt()
+		update_inv_belt(0)
 	else if (W == wear_mask)
 		wear_mask = null
 		success = 1
@@ -107,43 +107,43 @@
 			if(internals)
 				internals.icon_state = "internal0"
 			internal = null
-		update_inv_wear_mask()
+		update_inv_wear_mask(0)
 	else if (W == wear_id)
 		wear_id = null
 		success = 1
-		update_inv_wear_id()
+		update_inv_wear_id(0)
 	else if (W == r_store)
 		r_store = null
 		success = 1
-		update_inv_pockets()
+		update_inv_pockets(0)
 	else if (W == l_store)
 		l_store = null
 		success = 1
-		update_inv_pockets()
+		update_inv_pockets(0)
 	else if (W == s_store)
 		s_store = null
 		success = 1
-		update_inv_s_store()
+		update_inv_s_store(0)
 	else if (W == back)
 		back = null
 		success = 1
-		update_inv_back()
+		update_inv_back(0)
 	else if (W == handcuffed)
 		handcuffed = null
 		success = 1
-		update_inv_handcuffed()
+		update_inv_handcuffed(0)
 	else if (W == legcuffed)
 		legcuffed = null
 		success = 1
-		update_inv_legcuffed()
+		update_inv_legcuffed(0)
 	else if (W == r_hand)
 		r_hand = null
 		success = 1
-		update_inv_r_hand()
+		update_inv_r_hand(0)
 	else if (W == l_hand)
 		l_hand = null
 		success = 1
-		update_inv_l_hand()
+		update_inv_l_hand(0)
 	else
 		return 0
 
@@ -595,9 +595,7 @@ It can still be worn/put on as normal.
 			if(item) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.u_equip(item)
-					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
-					source.update_icons()
-					target.update_icons()
+					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 0)
 
 	if(source && target)
 		if(source.machine == target)

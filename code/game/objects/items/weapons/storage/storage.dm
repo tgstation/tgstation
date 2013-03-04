@@ -236,7 +236,6 @@
 	if(!istype(W)) return 0
 	if(usr)
 		usr.u_equip(W)
-		usr.update_icons()	//update our overlays
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)

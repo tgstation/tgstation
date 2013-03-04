@@ -24,7 +24,7 @@
 		W.equipped(src,slot_l_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_l_hand()
+		update_inv_l_hand(0)
 		return 1
 	return 0
 
@@ -40,7 +40,7 @@
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_r_hand()
+		update_inv_r_hand(0)
 		return 1
 	return 0
 
@@ -107,7 +107,7 @@
 
 		l_hand.dropped(src)
 		l_hand = null
-		update_inv_l_hand()
+		update_inv_l_hand(0)
 		return 1
 	return 0
 
@@ -126,7 +126,7 @@
 
 		r_hand.dropped(src)
 		r_hand = null
-		update_inv_r_hand()
+		update_inv_r_hand(0)
 		return 1
 	return 0
 
@@ -148,7 +148,6 @@
 	W.loc = null
 	W.layer = initial(W.layer)
 	u_equip(W)
-	update_icons()
 	return
 
 

@@ -46,7 +46,7 @@
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
-		usr.update_inv_head()	//so our mob-overlays update
+		usr.update_inv_head(0)	//so our mob-overlays update
 
 
 /*

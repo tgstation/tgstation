@@ -23,7 +23,7 @@
 					if (istype(organ, /datum/limb))
 						var/datum/limb/temp = organ
 						if(temp.take_damage(d, 0))
-							H.UpdateDamageIcon()
+							H.UpdateDamageIcon(0)
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -366,7 +366,6 @@
 	if(!item) return //Grab processing has a chance of returning null
 
 	u_equip(item)
-	update_icons()
 	if(src.client)
 		src.client.screen -= item
 
@@ -426,11 +425,11 @@
 
 	else if(W == handcuffed)
 		handcuffed = null
-		update_inv_handcuffed()
+		update_inv_handcuffed(0)
 
 	else if(W == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed()
+		update_inv_legcuffed(0)
 
 	else
 		..()
