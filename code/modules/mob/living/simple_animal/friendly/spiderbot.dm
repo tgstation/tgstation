@@ -19,19 +19,25 @@
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
 	icon_dead = "spiderbot-smashed"
-	small = 1
-	speak_emote = list("beeps","clicks","chirps")
+
 	health = 10
 	maxHealth = 10
+
 	attacktext = "shocks"
 	attacktext = "shocks"
 	melee_damage_lower = 1
 	melee_damage_upper = 3
+
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
+
+	var/obj/item/held_item = null //Storage for single item they can hold.
 	wander = 0
 	speed = -1 //Spiderbots gotta go fast.
+	//pass_flags = PASSTABLE //Maybe griefy?
+	small = 1
+	speak_emote = list("beeps","clicks","chirps")
 
 /mob/living/simple_animal/spiderbot/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
@@ -100,9 +106,14 @@
 			var/obj/item/device/pda/pda = O
 			id_card = pda.id
 
-		if(check_access(id_card))
+		if(access_robotics in id_card.access)
 			user << "\blue You swipe your access card and pop the brain out of [src]."
 			eject_brain()
+
+			if(held_item)
+				held_item.loc = src.loc
+				held_item = null
+
 			return 1
 		else
 			user << "\red You swipe your card, with no effect."
@@ -139,7 +150,7 @@
 
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key
-		src.name = "spider-bot ([M.brainmob.name])"
+		src.name = "Spider-bot ([M.brainmob.name])"
 
 /mob/living/simple_animal/spiderbot/proc/update_icon()
 	if(mmi)
@@ -188,18 +199,6 @@
 	src.Del()
 	return
 
-/mob/living/simple_animal/spiderbot/proc/check_access(obj/item/weapon/card/id/I)
-
-	var/list/L = req_access
-	if(!L.len) //no access requirements.
-		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
-		return 0
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
-
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/spiderbot/verb/ventcrawl()
 	set name = "Crawl through Vent"
@@ -235,11 +234,6 @@
 			if(loc==startloc)
 				var/obj/target_vent = vents[selection_position]
 				if(target_vent)
-					/*
-					for(var/mob/O in oviewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-					*/
 					loc = target_vent.loc
 			else
 				src << "\blue You need to remain still while entering a vent."
@@ -260,16 +254,64 @@
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		src << text("\blue You are now hiding.")
-		/*
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O << text("<B>[] scurries to the ground!</B>", src)
-		*/
 	else
 		layer = MOB_LAYER
 		src << text("\blue You have stopped hiding.")
-		/*
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O << text("[] slowly peaks up from the ground...", src)
-		*/
+
+//Cannibalized from the parrot mob. ~Zuhayr
+
+/mob/living/simple_animal/spiderbot/verb/drop_held_item()
+	set name = "Drop held item"
+	set category = "Spiderbot"
+	set desc = "Drop the item you're holding."
+
+	if(stat)
+		return
+
+	if(!held_item)
+		usr << "\red You have nothing to drop!"
+		return 0
+
+	if(istype(held_item, /obj/item/weapon/grenade))
+		visible_message("\red [src] launches the [held_item]!", "\red You launch the [held_item]!", "You hear a skittering noise and a thump!")
+		var/obj/item/weapon/grenade/G = held_item
+		G.loc = src.loc
+		G.prime()
+		held_item = null
+		return 1
+
+	visible_message("\blue [src] drops the [held_item]!", "\blue You drop the [held_item]!", "You hear a skittering noise and a soft thump.")
+
+	held_item.loc = src.loc
+	held_item = null
+	return 1
+
+	return
+
+/mob/living/simple_animal/spiderbot/verb/get_item()
+	set name = "Pick up item"
+	set category = "Spiderbot"
+	set desc = "Allows you to take a nearby small item."
+
+	if(stat)
+		return -1
+
+	if(held_item)
+		src << "\red You are already holding the [held_item]"
+		return 1
+
+	var/list/items = list()
+	for(var/obj/item/I in view(1,src))
+		if(I.loc != src && I.w_class <= 2)
+			items.Add(I)
+
+	var/obj/selection = input("Select an item.", "Pickup") in items
+
+	if(selection)
+		held_item = selection
+		selection.loc = src
+		visible_message("\blue [src] scoops up the [held_item]!", "\blue You grab the [held_item]!", "You hear a skittering noise and a clink.")
+		return held_item
+
+	src << "\red There is nothing of interest to take."
+	return 0
