@@ -113,6 +113,8 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	minor_radius = field_strength * 0.2125// max = 8.625
 	volume_covered = PI * major_radius * minor_radius * 2.5 * 2.5 * 1000
 
+	processing_objects.Add(src)
+
 /obj/effect/rust_em_field/process()
 	//make sure the field generator is still intact
 	if(!owned_core)
@@ -228,9 +230,9 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	frequency = new_frequency
 
 /obj/effect/rust_em_field/proc/AddEnergy(var/a_energy, var/a_mega_energy, var/a_frequency)
-	var/energy_loss_ratio = src.frequency / abs(a_frequency - src.frequency)
-	if(a_frequency == src.frequency)
-		energy_loss_ratio = 0
+	var/energy_loss_ratio = 0
+	if(a_frequency != src.frequency)
+		energy_loss_ratio = 1 / abs(a_frequency - src.frequency)
 	energy += a_energy - a_energy * energy_loss_ratio
 	mega_energy += a_mega_energy - a_mega_energy * energy_loss_ratio
 
@@ -650,4 +652,5 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		del (catcher)
 	RadiateAll()
 
+	processing_objects.Remove(src)
 	..()
