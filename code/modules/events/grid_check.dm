@@ -2,7 +2,7 @@
 	announceWhen		= 5
 
 /datum/event/grid_check/setup()
-	endWhen = rand(90,600)
+	endWhen = rand(30,120)
 
 /datum/event/grid_check/start()
 	power_failure(0)
