@@ -201,7 +201,7 @@
 			user.visible_message("[user] starts mending the bruises on [target]'s liver with \the [tool].", \
 			"You start mending the bruises on [target]'s liver with \the [tool]." )
 		if(kidney.damage > 0)
-			user.visible_message("[user] starts mending the bruises on [target]'s liver with \the [tool].", \
+			user.visible_message("[user] starts mending the bruises on [target]'s kidney with \the [tool].", \
 			"You start mending the bruises on [target]'s kidney with \the [tool]." )
 		target.custom_pain("The pain in your chest is living hell!",1)
 		..()
