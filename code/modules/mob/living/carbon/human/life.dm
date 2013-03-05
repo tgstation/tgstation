@@ -155,6 +155,16 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						//At this point, we dun care which blood we are adding to, as long as they get more blood.
 						B.volume = B.volume + 0.1 // regenerate blood VERY slowly
 
+			// Damaged heart virtually reduces the blood volume, as the blood isn't
+			// being pumped properly anymore.
+			var/datum/organ/internal/heart/heart = internal_organs["heart"]
+			switch(heart.damage)
+				if(5 to 10)
+					blood_volume *= 0.8
+				if(11 to 20)
+					blood_volume *= 0.5
+				if(21 to INFINITY)
+					blood_volume *= 0.3
 
 			switch(blood_volume)
 				if(BLOOD_VOLUME_SAFE to 10000)
@@ -1043,6 +1053,22 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			// add chemistry traces to a random organ
 			var/datum/organ/O = pick(organs)
 			O.trace_chemicals[A.name] = 100
+
+		var/damaged_liver_process_accuracy = 10
+		if(life_tick % damaged_liver_process_accuracy == 0)
+			// Damaged liver means some chemicals are very dangerous
+			var/datum/organ/internal/liver/liver = internal_organs["liver"]
+			if(liver.damage >= liver.min_bruised_damage)
+				for(var/datum/reagent/R in src.reagents.reagent_list)
+					// Ethanol and all drinks are bad
+					if(istype(R, /datum/reagent/ethanol))
+						adjustToxLoss(0.1 * damaged_liver_process_accuracy)
+
+				// Can't cope with toxins at all
+				for(var/toxin in list("toxin", "plasma", "sacid", "pacid", "cyanide", "lexorin", "amatoxin", "chloralhydrate", "carpotoxin", "zombiepowder", "mindbreaker"))
+					if(src.reagents.has_reagent(toxin))
+						adjustToxLoss(0.3 * damaged_liver_process_accuracy)
+
 
 		updatehealth()
 
