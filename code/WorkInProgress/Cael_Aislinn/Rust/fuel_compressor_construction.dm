@@ -42,9 +42,9 @@
 		dir = ndir
 	else
 		has_electronics = 3
-		opened = 1
+		opened = 0
 		locked = 0
-		icon_state = "port0"
+		icon_state = "fuel_compressor1"
 
 	//20% easier to read than apc code
 	pixel_x = (dir & 3)? 0 : (dir == 4 ? 32 : -32)

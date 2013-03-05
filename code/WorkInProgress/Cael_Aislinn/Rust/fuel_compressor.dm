@@ -2,25 +2,16 @@ var/const/max_assembly_amount = 300
 
 /obj/machinery/rust_fuel_compressor
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
-	icon_state = "fuel_compressor0"
+	icon_state = "fuel_compressor1"
 	name = "Fuel Compressor"
-	var/list/new_assembly_quantities
+	var/list/new_assembly_quantities = list("Deuterium" = 200,"Tritium" = 100,"Helium-3" = 0,"Lithium-6" = 0,"Silver" = 0)
 	var/compressed_matter = 0
 	anchored = 1
+	layer = 2.9
 
 	var/opened = 1 //0=closed, 1=opened
 	var/locked = 0
 	var/has_electronics = 0 // 0 - none, bit 1 - circuitboard, bit 2 - wires
-
-/obj/machinery/rust_fuel_compressor/New()
-	new_assembly_quantities = new/list
-	spawn(0)
-		new_assembly_quantities["Deuterium"] = 200
-		new_assembly_quantities["Tritium"] = 100
-		//
-		new_assembly_quantities["Helium-3"] = 0
-		new_assembly_quantities["Lithium-6"] = 0
-		new_assembly_quantities["Silver"] = 0
 
 /obj/machinery/rust_fuel_compressor/attack_ai(mob/user)
 	attack_hand(user)
@@ -50,7 +41,7 @@ var/const/max_assembly_amount = 300
 	if(locked)
 		t += "Swipe your ID to unlock this console."
 	else
-		t += "Compressed matter in storage: [compressed_matter] <A href='?src=\ref[src];eject_matter=1'>\[Eject all\]</a>"
+		t += "Compressed matter in storage: [compressed_matter] <A href='?src=\ref[src];eject_matter=1'>\[Eject all\]</a><br>"
 		t += "<A href='?src=\ref[src];activate=1'><b>Activate Fuel Synthesis</b></A><BR> (fuel assemblies require no more than [max_assembly_amount] rods).<br>"
 		t += "<hr>"
 		t += "- New fuel assembly constituents:- <br>"
@@ -72,10 +63,15 @@ var/const/max_assembly_amount = 300
 		usr.machine = null
 
 	if( href_list["eject_matter"] )
+		var/ejected = 0
 		while(compressed_matter > 10)
-			new /obj/item/weapon/rcd_ammo(src.loc)
+			new /obj/item/weapon/rcd_ammo(get_step(get_turf(src), src.dir))
 			compressed_matter -= 10
-		src.visible_message("\blue \icon[src] [src] ejects some compressed matter units.")
+			ejected = 1
+		if(ejected)
+			usr << "\blue \icon[src] [src] ejects some compressed matter units."
+		else
+			usr << "\red \icon[src] there are no more compressed matter units in [src]."
 
 	if( href_list["activate"] )
 		//world << "\blue New fuel rod assembly"
@@ -83,7 +79,8 @@ var/const/max_assembly_amount = 300
 		var/fail = 0
 		var/old_matter = compressed_matter
 		for(var/reagent in new_assembly_quantities)
-			var/req_matter = F.rod_quantities[reagent] / 10
+			var/req_matter = new_assembly_quantities[reagent] / 30
+			//world << "[reagent] matter: [req_matter]/[compressed_matter]"
 			if(req_matter <= compressed_matter)
 				F.rod_quantities[reagent] = new_assembly_quantities[reagent]
 				compressed_matter -= req_matter
@@ -94,10 +91,12 @@ var/const/max_assembly_amount = 300
 		if(fail)
 			del(F)
 			compressed_matter = old_matter
-			src.visible_message("\red \icon[src] [src] flashes red: \'Out of matter.\'")
+			usr << "\red \icon[src] [src] flashes red: \'Out of matter.\'"
 		else
-			F.loc = src.loc
+			F.loc = get_step(get_turf(src), src.dir)
 			F.percent_depleted = 0
+			if(compressed_matter < 0.034)
+				compressed_matter = 0
 
 	if( href_list["change_reagent"] )
 		var/cur_reagent = href_list["change_reagent"]

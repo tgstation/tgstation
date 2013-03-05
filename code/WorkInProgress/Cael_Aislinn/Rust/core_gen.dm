@@ -180,7 +180,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		return
 
 	var/dat = ""
-	if(!powernet || locked)
+	if(stat & NOPOWER || locked)
 		dat += "<i>The console is dark and nonresponsive.</i>"
 	else
 		dat += "<b>RUST Tokamak pattern Electromagnetic Field Generator</b><br>"
