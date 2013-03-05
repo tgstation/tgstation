@@ -127,6 +127,14 @@
 /obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
+/obj/item/device/camera/attack_self(mob/user as mob)
+	on = !on
+	if(on)
+		src.icon_state = "camera"
+	else
+		src.icon_state = "camera_off"
+	user << "You switch the camera [on ? "on" : "off"]."
+	return
 
 /obj/item/device/camera/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/camera_film))

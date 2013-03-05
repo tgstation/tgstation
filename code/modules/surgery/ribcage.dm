@@ -109,7 +109,7 @@
 		affected.fracture()
 		if (prob(40))
 			user.visible_message("\red Rib pierces the lung!")
-			affected.ruptured_lungs = 1
+			target.rupture_lung()
 
 /datum/surgery_step/ribcage/mend_ribcage
 	required_tool = /obj/item/weapon/bonegel
@@ -168,9 +168,9 @@
 
 
 //////////////////////////////////////////////////////////////////
-//					LUNG SURGERY								//
+//				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
-/datum/surgery_step/ribcage/fix_lungs
+/datum/surgery_step/ribcage/fix_chest_internal
 	required_tool = /obj/item/weapon/scalpel
 	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
@@ -178,19 +178,59 @@
 	max_duration = 90
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target.is_lung_ruptured() && target.op_stage.ribcage == 2
+		var/is_chest_organ_damaged = 0
+		var/datum/organ/external/chest/chest = target.get_organ("chest")
+		for(var/datum/organ/internal/I in chest.internal_organs) if(I.damage > 0)
+			is_chest_organ_damaged = 1
+			break
+		return ..() && is_chest_organ_damaged && target.op_stage.ribcage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("[user] starts mending the rupture in [target]'s lungs with \the [tool].", \
-		"You start mending the rupture in [target]'s lungs with \the [tool]." )
+		var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+		var/datum/organ/internal/lungs/lungs = target.internal_organs["lungs"]
+		var/datum/organ/internal/liver/liver = target.internal_organs["liver"]
+		var/datum/organ/internal/liver/kidney = target.internal_organs["kidney"]
+
+		if(lungs.damage > 0)
+			user.visible_message("[user] starts mending the rupture in [target]'s lungs with \the [tool].", \
+			"You start mending the rupture in [target]'s lungs with \the [tool]." )
+		if(heart.damage > 0)
+			user.visible_message("[user] starts mending the bruises on [target]'s heart with \the [tool].", \
+			"You start mending the bruises on [target]'s heart with \the [tool]." )
+		if(liver.damage > 0)
+			user.visible_message("[user] starts mending the bruises on [target]'s liver with \the [tool].", \
+			"You start mending the bruises on [target]'s liver with \the [tool]." )
+		if(kidney.damage > 0)
+			user.visible_message("[user] starts mending the bruises on [target]'s kidney with \the [tool].", \
+			"You start mending the bruises on [target]'s kidney with \the [tool]." )
 		target.custom_pain("The pain in your chest is living hell!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/affected = target.get_organ("chest")
-		user.visible_message("\blue [user] mends the rupture in [target]'s lungs with \the [tool].", \
-		"\blue You mend the rupture in [target]'s lungs with \the [tool]." )
-		affected.ruptured_lungs = 0
+		var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+		var/datum/organ/internal/lungs/lungs = target.internal_organs["lungs"]
+		var/datum/organ/internal/liver/liver = target.internal_organs["liver"]
+		var/datum/organ/internal/liver/kidney = target.internal_organs["kidney"]
+
+		if(lungs.damage > 0)
+			user.visible_message("\blue [user] mends the rupture in [target]'s lungs with \the [tool].", \
+			"\blue You mend the rupture in [target]'s lungs with \the [tool]." )
+			lungs.damage = 0
+
+		if(heart.damage > 0)
+			user.visible_message("\blue [user] treats the bruises on [target]'s heart with \the [tool].", \
+			"\blue You treats the bruises on [target]'s heart with \the [tool]." )
+			heart.damage = 0
+
+		if(liver.damage > 0)
+			user.visible_message("\blue [user] treats the bruises on [target]'s liver with \the [tool].", \
+			"\blue You treats the bruises on [target]'s liver with \the [tool]." )
+			liver.damage = 0
+
+		if(kidney.damage > 0)
+			user.visible_message("\blue [user] treats the bruises on [target]'s kidney with \the [tool].", \
+			"\blue You treats the bruises on [target]'s kidney with \the [tool]." )
+			kidney.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/affected = target.get_organ("chest")
