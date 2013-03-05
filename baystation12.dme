@@ -1213,6 +1213,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_gen.dm"
+#include "code\WorkInProgress\Cael_Aislinn\Rust\core_monitor.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\fuel_assembly.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\fuel_assembly_port.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\fuel_assembly_port_construction.dm"
