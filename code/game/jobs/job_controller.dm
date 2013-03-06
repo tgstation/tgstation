@@ -326,7 +326,7 @@ var/global/datum/controller/occupations/job_master
 
 		//give them an account in the station database
 		if(centcomm_account_db)
-			var/datum/money_account/M = centcomm_account_db.add_account(H.real_name, starting_funds = rand(50,500)*10, pre_existing = 1)
+			var/datum/money_account/M = centcomm_account_db.add_account_across_all(H.real_name, starting_funds = rand(50,500)*10, pre_existing = 1)
 			if(H.mind)
 				var/remembered_info = ""
 				remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -339,6 +339,18 @@ var/global/datum/controller/occupations/job_master
 				H.mind.store_memory(remembered_info)
 
 				H.mind.initial_account = M
+
+			// If they're head, give them the account info for their department
+			if(H.mind && job.head_position)
+				var/remembered_info = ""
+				var/datum/money_account/department_account = department_accounts[job.department]
+
+				if(department_account)
+					remembered_info += "<b>Your department's account number is:</b> #[department_account.account_number]<br>"
+					remembered_info += "<b>Your department's account pin is:</b> [department_account.remote_access_pin]<br>"
+					remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
+
+				H.mind.store_memory(remembered_info)
 
 			spawn(0)
 				H << "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>"

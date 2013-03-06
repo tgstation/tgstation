@@ -64,7 +64,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	directwired = 1
 
 	var/state = 0
-	var/locked = 0
+	var/locked = 1
 	var/remote_access_enabled = 1
 
 /obj/machinery/power/rust_core/process()
@@ -180,7 +180,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		return
 
 	var/dat = ""
-	if(!powernet || locked)
+	if(stat & NOPOWER || locked || state != 2)
 		dat += "<i>The console is dark and nonresponsive.</i>"
 	else
 		dat += "<b>RUST Tokamak pattern Electromagnetic Field Generator</b><br>"

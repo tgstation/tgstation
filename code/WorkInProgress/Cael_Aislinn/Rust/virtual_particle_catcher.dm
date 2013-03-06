@@ -2,13 +2,13 @@
 //gimmicky hack to collect particles and direct them into the field
 /obj/effect/rust_particle_catcher
 	icon = 'effects.dmi'
-	icon_state = "energynet"
 	density = 0
 	anchored = 1
-	invisibility = 101
 	layer = 4
 	var/obj/effect/rust_em_field/parent
 	var/mysize = 0
+
+	invisibility = 101
 
 /*/obj/effect/rust_particle_catcher/New()
 	for(var/obj/machinery/rust/em_field/field in range(6))

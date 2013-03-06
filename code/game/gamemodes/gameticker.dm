@@ -38,8 +38,8 @@ var/global/datum/controller/gameticker/ticker
 
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick(\
-	'sound/music/title1.ogg',\
-	'sound/music/b12_combined_start.ogg')
+	'sound/music/space.ogg',\
+	'sound/music/traitor.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -117,6 +117,9 @@ var/global/datum/controller/gameticker/ticker
 	equip_characters()
 	data_core.manifest()
 	current_state = GAME_STATE_PLAYING
+
+	//here to initialize the random events nicely at round start
+	setup_economy()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()

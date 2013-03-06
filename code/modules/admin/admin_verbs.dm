@@ -64,7 +64,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
-	/datum/admins/proc/show_skills
+	/datum/admins/proc/show_skills,
+	/client/proc/check_customitem_activity
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -115,7 +116,8 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/adjump,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
-	/client/proc/toggle_random_events
+	/client/proc/toggle_random_events,
+	/client/proc/check_customitem_activity
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
