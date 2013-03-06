@@ -18,7 +18,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	var/access = null
 	var/hidden = 0
 	var/contraband = 0
-	var/group
+	var/group = "Operations"
 
 /datum/supply_packs/New()
 	manifest += "<ul>"
@@ -258,6 +258,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/goat
 	containername = "Goat Crate"
 	access = access_hydroponics
+	group = "Hydroponics"
 
 /datum/supply_packs/chicken
 	name = "Chicken Crate"
@@ -265,6 +266,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/chick
 	containername = "Chicken Crate"
 	access = access_hydroponics
+	group = "Hydroponics"
 
 /datum/supply_packs/lisa
 	name = "Corgi Crate"
@@ -272,6 +274,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 50
 	containertype = /obj/structure/largecrate/lisa
 	containername = "Corgi Crate"
+	group = "Hydroponics"
 
 /datum/supply_packs/seeds
 	name = "Seeds Crate"
@@ -337,7 +340,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Medical crate"
 	group = "Medical / Science"
-
 
 /datum/supply_packs/virus
 	name = "Virus crate"
