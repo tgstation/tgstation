@@ -26,6 +26,69 @@ RCD
 	var/mode = 1
 	var/canRwall = 0
 	var/disabled = 0
+	var/airlock_type = /obj/machinery/door/airlock
+	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
+
+	verb/change_airlock_setting(var/mob/user as mob)
+		set name = "Change Airlock Setting"
+		set category = "Object"
+		set src in usr
+
+		var airlockcat = input(user, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+		switch(airlockcat)
+			if("Solid")
+				if(advanced_airlock_setting == 1)
+					var airlockpaint = input(user, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+					switch(airlockpaint)
+						if("Default")
+							airlock_type = /obj/machinery/door/airlock
+						if("Engineering")
+							airlock_type = /obj/machinery/door/airlock/engineering
+						if("Atmospherics")
+							airlock_type = /obj/machinery/door/airlock/atmos
+						if("Security")
+							airlock_type = /obj/machinery/door/airlock/security
+						if("Command")
+							airlock_type = /obj/machinery/door/airlock/command
+						if("Medical")
+							airlock_type = /obj/machinery/door/airlock/medical
+						if("Research")
+							airlock_type = /obj/machinery/door/airlock/research
+						if("Mining")
+							airlock_type = /obj/machinery/door/airlock/mining
+						if("Maintenance")
+							airlock_type = /obj/machinery/door/airlock/maintenance
+						if("External")
+							airlock_type = /obj/machinery/door/airlock/external
+						if("High Security")
+							airlock_type = /obj/machinery/door/airlock/highsecurity
+				else
+					airlock_type = /obj/machinery/door/airlock
+
+			if("Glass")
+				if(advanced_airlock_setting == 1)
+					var airlockpaint = input(user, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+					switch(airlockpaint)
+						if("Default")
+							airlock_type = /obj/machinery/door/airlock/glass
+						if("Engineering")
+							airlock_type = /obj/machinery/door/airlock/glass_engineering
+						if("Atmospherics")
+							airlock_type = /obj/machinery/door/airlock/glass_atmos
+						if("Security")
+							airlock_type = /obj/machinery/door/airlock/glass_security
+						if("Command")
+							airlock_type = /obj/machinery/door/airlock/glass_command
+						if("Medical")
+							airlock_type = /obj/machinery/door/airlock/glass_medical
+						if("Research")
+							airlock_type = /obj/machinery/door/airlock/glass_research
+						if("Mining")
+							airlock_type = /obj/machinery/door/airlock/glass_mining
+				else
+					airlock_type = /obj/machinery/door/airlock/glass
+			else
+				airlock_type = /obj/machinery/door/airlock
 
 
 	New()
@@ -115,7 +178,7 @@ RCD
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
 							activate()
-							var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
+							var/obj/machinery/door/airlock/T = new airlock_type( A )
 							T.autoclose = 1
 							return 1
 						return 0
@@ -182,6 +245,7 @@ RCD
 
 /obj/item/weapon/rcd/borg/New()
 	..()
+	advanced_airlock_setting = 0 //Borgs can't set the access levels, so they only get the defaults!
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
 
