@@ -42,7 +42,7 @@
 		dir = ndir
 	else
 		has_electronics = 3
-		opened = 1
+		opened = 0
 		icon_state = "port0"
 
 	//20% easier to read than apc code

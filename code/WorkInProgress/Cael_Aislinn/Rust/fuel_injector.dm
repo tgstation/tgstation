@@ -4,7 +4,7 @@
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "injector0"
 	density = 1
-	var/state = 0
+	var/state = 2
 	var/locked = 0
 	var/obj/item/weapon/fuel_assembly/cur_assembly
 	var/fuel_usage = 0.0001			//percentage of available fuel to use per cycle
@@ -17,13 +17,14 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 500
+	directwired = 0
 	var/remote_access_enabled = 1
 	var/cached_power_avail = 0
 	var/emergency_insert_ready = 0
 
 /obj/machinery/power/rust_fuel_injector/process()
 	if(injecting)
-		if(stat & BROKEN || !powernet)
+		if(stat & (BROKEN|NOPOWER))
 			StopInjecting()
 		else
 			Inject()
@@ -74,7 +75,7 @@
 						state = 2
 						user << "You weld the [src] to the floor."
 						connect_to_network()
-						src.directwired = 1
+						//src.directwired = 1
 				else
 					user << "\red You need more welding fuel to complete this task."
 			if(2)
@@ -88,7 +89,7 @@
 						state = 1
 						user << "You cut the [src] free from the floor."
 						disconnect_from_network()
-						src.directwired = 0
+						//src.directwired = 0
 				else
 					user << "\red You need more welding fuel to complete this task."
 		return
@@ -140,7 +141,7 @@
 			return
 
 	var/dat = ""
-	if (!powernet || locked || state != 2)
+	if (stat & NOPOWER || locked || state != 2)
 		dat += "<i>The console is dark and nonresponsive.</i>"
 	else
 		dat += "<B>Reactor Core Fuel Injector</B><hr>"
