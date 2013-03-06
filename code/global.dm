@@ -172,6 +172,9 @@ var/list/AAlarmWireColorToIndex
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 
+	//radical shit
+var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
+
 	// MySQL configuration
 
 var/sqladdress = "localhost"

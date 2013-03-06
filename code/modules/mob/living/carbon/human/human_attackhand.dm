@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return
 
@@ -26,10 +26,11 @@
 					return 1
 				else
 					M << "<span class='notice'>Not enough charge!</span>"
-					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>")
+					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", \
+									"<span class='userdanger>[src] has been touched with the stun gloves by [M]!</span>")
 				return
 
-		if(istype(M.gloves , /obj/item/clothing/gloves/boxing/hologlove))	//HAHAHA FUCK THIS SHIT
+		if(istype(M.gloves , /obj/item/clothing/gloves/boxing/hologlove))	//HAHAHA FUCK THIS SHIT	//oh wow this is terrible i am realising this again
 
 			var/damage = rand(0, 9)
 			if(!damage)
@@ -39,17 +40,20 @@
 			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(HULK in M.mutations)			damage += 5
+			if(HULK in M.mutations)
+				damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 
-			visible_message("<span class='danger'>[M] has punched [src]!</span>")
+			visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+							"<span class='userdanger'>[M] has punched [src]!</span>")
 
 			apply_damage(damage, HALLOSS, affecting, armor_block)
 			if(damage >= 9)
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
+				visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
+								"<span class='userdanger'>[M] has weakened [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
-
+				forcesay(hit_appends)
 			return
 
 
@@ -64,7 +68,7 @@
 				M << "<span class='notice'>Remove your mask!</span>"
 				return 0
 			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove his mask!</span>"
+				M << "<span class='notice'>Remove their mask!</span>"
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -94,15 +98,13 @@
 			return 1
 
 		if("hurt")
-
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
 
 			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
 
-
 			var/attack_verb = "punch"
-			if(src.lying)
+			if(lying)
 				attack_verb = "kick"
 			else if(M.dna)
 				switch(M.dna.mutantrace)
@@ -110,7 +112,6 @@
 						attack_verb = "scratch"
 					if("plant")
 						attack_verb = "slash"
-
 
 			var/damage = rand(0, 9)
 			if(!damage)
@@ -127,7 +128,8 @@
 			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(HULK in M.mutations)			damage += 5
+			if(HULK in M.mutations)
+				damage += 5
 
 			switch(attack_verb)
 				if("slash")
@@ -135,20 +137,22 @@
 				else
 					playsound(loc, "punch", 25, 1, -1)
 
-			visible_message("<span class='danger'>[M] has [attack_verb]ed [src]!</span>")
+			visible_message("<span class='danger'>[M] has [attack_verb]ed [src]!</span>", \
+							"<span class='userdanger'>[M] has [attack_verb]ed [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			if(damage >= 9)
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
+				visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
+								"<span class='userdanger'>[M] has weakened [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
+				forcesay(hit_appends)
+			else if(lying)
+				forcesay(hit_appends)
 
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-
-
 			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
-
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
@@ -157,7 +161,9 @@
 			if(randn <= 25)
 				apply_effect(2, WEAKEN, run_armor_check(affecting, "melee"))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M] has pushed [src]!</span>")
+				visible_message("<span class='danger'>[M] has pushed [src]!</span>",
+								"<span class='userdanger'>[M] has pushed [src]!</span>")
+				forcesay(hit_appends)
 				return
 
 			var/talked = 0	// BubbleWrap
@@ -188,13 +194,15 @@
 
 				if(!talked)	//BubbleWrap
 					drop_item()
-					visible_message("<span class='danger'>[M] has disarmed [src]!</span>")
+					visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+									"<span class='userdanger'>[M] has disarmed [src]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				return
 
 
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			visible_message("<span class='warning'>[M] attempted to disarm [src]!</span>")
+			visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>", \
+							"<span class='userdanger'>[M] attemped to disarm [src]!</span>")
 	return
 
 /mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)

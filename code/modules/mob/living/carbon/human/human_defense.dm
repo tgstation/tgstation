@@ -170,7 +170,7 @@ emp_act
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 
-				if(bloody)//Apply blood
+				if(bloody)	//Apply blood
 					if(wear_mask)
 						wear_mask.add_blood(src)
 						update_inv_wear_mask(0)
@@ -194,3 +194,6 @@ emp_act
 					if(w_uniform)
 						w_uniform.add_blood(src)
 						update_inv_w_uniform(0)
+
+		if(I.force > 10 || I.force >= 5 && prob(33))
+			forcesay(hit_appends)
