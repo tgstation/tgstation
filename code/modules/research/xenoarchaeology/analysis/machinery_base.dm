@@ -72,7 +72,6 @@
 		return
 	user.machine = src
 	var/dat = "<B>[src.name]</B><BR>"
-	dat += "[owned_scanner ? "Scanner connected." : "Scanner disconnected."]<br>"
 	dat += "Module heat level: [temperature] kelvin<br>"
 	dat += "Safeties set at 300k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>"
 	dat += "<hr>"

@@ -1,5 +1,5 @@
 
-/obj/machinery/artifact_harvester
+/obj/machinery/anomaly/artifact_harvester
 	name = "Anomaly Power Collector"
 	icon = 'virology.dmi'
 	icon_state = "incubator"	//incubator_on
@@ -8,14 +8,17 @@
 	var/harvesting = 0
 	var/obj/item/weapon/anobattery/inserted_battery
 	var/obj/machinery/artifact/cur_artifact
-	var/obj/machinery/anomaly/scanner/owned_pad = null
+	var/obj/machinery/scanner/owned_scanner = null
 
-/obj/machinery/artifact_harvester/New()
+/obj/machinery/anomaly/artifact_harvester/New()
 	..()
-	spawn(10)
-		owned_pad = locate() in orange(1, src)
 
-/obj/machinery/artifact_harvester/attackby(var/obj/I as obj, var/mob/user as mob)
+	//connect to a nearby scanner pad
+	owned_scanner = locate(/obj/machinery/scanner) in get_step(src, dir)
+	if(!owned_scanner)
+		owned_scanner = locate(/obj/machinery/scanner) in orange(1, src)
+
+/obj/machinery/anomaly/artifact_harvester/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I,/obj/item/weapon/anobattery))
 		if(!inserted_battery)
 			user << "You insert the battery."
@@ -26,7 +29,7 @@
 	else
 		return..()
 
-/obj/machinery/artifact_harvester/process()
+/obj/machinery/anomaly/artifact_harvester/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	use_power(350)
@@ -38,19 +41,18 @@
 			inserted_battery.stored_charge = inserted_battery.capacity
 			harvesting = 0
 			cur_artifact.anchored = 0
-			cur_artifact.being_used = 0
 			src.visible_message("<b>[name]</b> states, \"Battery is full.\"")
 			icon_state = "incubator"
 	return
 
-/obj/machinery/artifact_harvester/interact(var/mob/user as mob)
+/obj/machinery/anomaly/artifact_harvester/interact(var/mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.machine = src
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
 	//
-	if(owned_pad)
+	if(owned_scanner)
 		if(harvesting)
 			dat += "Please wait. Harvesting in progress ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%).<br>"
 			dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
@@ -72,23 +74,23 @@
 	user << browse(dat, "window=artharvester;size=450x500")
 	onclose(user, "artharvester")
 
-/obj/machinery/artifact_harvester/Topic(href, href_list)
+/obj/machinery/anomaly/artifact_harvester/Topic(href, href_list)
 
 	if (href_list["harvest"])
 		//locate artifact on analysis pad
 		cur_artifact = null
 		var/articount = 0
 		var/obj/machinery/artifact/analysed
-		for(var/obj/machinery/artifact/A in get_turf(owned_pad))
+		for(var/obj/machinery/artifact/A in get_turf(owned_scanner))
 			analysed = A
 			articount++
 
 		var/mundane = 0
-		for(var/obj/O in get_turf(owned_pad))
-			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/anomaly/scanner))
+		for(var/obj/O in get_turf(owned_scanner))
+			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/scanner))
 				mundane++
 				break
-		for(var/mob/O in get_turf(owned_pad))
+		for(var/mob/O in get_turf(owned_scanner))
 			if(!istype(O, /obj/machinery/artifact))
 				mundane++
 				break
