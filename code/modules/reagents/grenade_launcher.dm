@@ -1,7 +1,6 @@
-
-
 /obj/item/weapon/gun/grenadelauncher
 	name = "grenade launcher"
+	desc = "a terrible, terrible thing. it's really awful!"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "riotgun"
 	item_state = "riotgun"
@@ -16,9 +15,9 @@
 	examine()
 		set src in view()
 		..()
-		if (!(usr in view(2)) && usr!=src.loc) return
-		usr << "\icon [src] Grenade launcher:"
-		usr << "\blue [grenades] / [max_grenades] Grenades."
+		if(!(usr in view(2)) && usr != loc)
+			return
+		usr << "[grenades] / [max_grenades] grenades."
 
 	attackby(obj/item/I as obj, mob/user as mob)
 

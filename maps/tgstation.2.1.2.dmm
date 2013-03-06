@@ -7154,7 +7154,7 @@
 "cHD" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/airless,/area/tcommsat/chamber)
 "cHE" = (/obj/item/weapon/cigbutt,/turf/simulated/floor/plating/airless,/area/tcommsat/chamber)
 "cHF" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/airless{tag = "icon-dark"; icon_state = "dark"},/area/tcommsat/chamber)
-"cHG" = (/obj/structure/table,/obj/item/weapon/reagent_containers/ld50_syringe/choral,/obj/item/weapon/reagent_containers/ld50_syringe{pixel_y = 4},/turf/simulated/floor/airless{tag = "icon-dark"; icon_state = "dark"},/area/tcommsat/chamber)
+"cHG" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/lethal/choral,/obj/item/weapon/reagent_containers/syringe/lethal{pixel_y = 4},/turf/simulated/floor/airless{tag = "icon-dark"; icon_state = "dark"},/area/tcommsat/chamber)
 "cHH" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/tcommsat/chamber)
 "cHI" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/floor/airless,/area/tcommsat/chamber)
 "cHJ" = (/obj/structure/table,/obj/item/weapon/hemostat,/turf/simulated/floor/airless{tag = "icon-dark"; icon_state = "dark"},/area/tcommsat/chamber)

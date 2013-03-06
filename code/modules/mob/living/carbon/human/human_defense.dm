@@ -9,14 +9,14 @@ emp_act
 */
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
-
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			var/reflectchance = 40 - round(P.damage/3)
 			if(!(def_zone in list("chest", "groin")))
 				reflectchance /= 2
 			if(prob(reflectchance))
-				visible_message("\red <B>The [P.name] gets reflected by [src]'s [wear_suit.name]!</B>")
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
 
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
@@ -75,17 +75,20 @@ emp_act
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
+			visible_message("<span class='danger'>[src] blocks [attack_text] with [l_hand]!</span>", \
+							"<span class='userdanger'>[src] blocks [attack_text] with [l_hand]!</span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
+			visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
+							"<span class='userdanger'>[src] blocks [attack_text] with [r_hand]!</span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsShield() && (prob(35)))
-			visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
+			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
+							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
@@ -118,11 +121,13 @@ emp_act
 		return 0
 
 	if(I.attack_verb.len)
-		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
+						"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
 	else
-		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
+						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 
-	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
+	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened hit to your [hit_area].</span>")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
@@ -131,16 +136,14 @@ emp_act
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
-//		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
-//		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
-		if(prob(33))
+		if(prob(I.force * 2))	//blood spatter!
 			bloody = 1
 			var/turf/location = loc
 			if(istype(location, /turf/simulated))
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(get_dist(H, src) > 1) //people with TK won't get smeared with blood
+				if(get_dist(H, src) > 1)	//people with TK won't get smeared with blood
 					if(H.wear_suit)
 						H.wear_suit.add_blood(src)
 						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
@@ -148,20 +151,22 @@ emp_act
 						H.w_uniform.add_blood(src)
 						H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
 					if (H.gloves)
-						H.gloves.add_blood(H)
-						H.gloves:transfer_blood = 2
-						H.gloves:bloody_hands_mob = H
+						var/obj/item/clothing/gloves/G = H.gloves
+						G.add_blood(H)
+						G.transfer_blood = 2
+						G.bloody_hands_mob = H
 					else
 						H.add_blood(H)
 						H.bloody_hands = 2
 						H.bloody_hands_mob = H
-					H.update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
+					H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 		switch(hit_area)
-			if("head")//Harder to score a stun but if you do it lasts a bit longer
+			if("head")	//Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
+					visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
+									"<span class='userdanger'>[src] has been knocked unconscious!</span>")
 					apply_effect(20, PARALYZE, armor)
-					visible_message("\red <B>[src] has been knocked unconscious!</B>")
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 
@@ -176,13 +181,13 @@ emp_act
 						glasses.add_blood(src)
 						update_inv_glasses(0)
 
-			if("chest")//Easier to score a stun but lasts less time
-				if(prob((I.force + 10)))
+			if("chest")	//Easier to score a stun but lasts less time
+				if(prob(I.force + 10))
+					visible_message("<span class='danger'>[src] has been knocked down!</span>", \
+									"<span class='userdanger'>[src] has been knocked down!</span>")
 					apply_effect(5, WEAKEN, armor)
-					visible_message("\red <B>[src] has been knocked down!</B>")
 
 				if(bloody)
-
 					if(wear_suit)
 						wear_suit.add_blood(src)
 						update_inv_wear_suit(0)

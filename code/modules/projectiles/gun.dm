@@ -52,16 +52,16 @@
 					return
 
 		if (!user.IsAdvancedToolUser())
-			user << "\red You don't have the dexterity to do this!"
+			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 			return
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if (HULK in M.mutations)
-				M << "\red Your meaty finger is much too large for the trigger guard!"
+				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
 				return
 		if(ishuman(user))
 			if(user.dna && user.dna.mutantrace == "adamantine")
-				user << "\red Your metal fingers don't fit in the trigger guard!"
+				user << "<span class='notice'>Your metal fingers don't fit in the trigger guard!</span>"
 				return
 
 		add_fingerprint(user)
@@ -74,7 +74,7 @@
 		if(!special_check(user))
 			return
 		if(!load_into_chamber())
-			user << "\red *click*";
+			user << "<span class='warning'>*click*</span>"
 			return
 
 		if(!in_chamber)
@@ -98,7 +98,7 @@
 			playsound(user, fire_sound, 10, 1)
 		else
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='warning'>[user] fires [src]!</span>", "<span class='warning'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 		in_chamber.original = target
 		in_chamber.loc = get_turf(user)

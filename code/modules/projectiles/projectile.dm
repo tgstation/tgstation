@@ -72,7 +72,7 @@
 		var/forcedodge = 0 // force the projectile to pass
 
 		bumped = 1
-		if(firer && istype(A, /mob))
+		if(ismob(A))
 			var/mob/M = A
 			if(!istype(A, /mob/living))
 				loc = A.loc
@@ -81,9 +81,10 @@
 			var/distance = get_dist(original,loc)
 			def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
 			if(silenced)
-				M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
+				M << "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by [src]!</span>"
 			else
-				visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				M.visible_message("<span class='danger'>[M] is hit by [src] in the [parse_zone(def_zone)]!", \
+									"<span class='userdanger'>[M] is hit by [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"

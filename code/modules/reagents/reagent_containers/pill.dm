@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/pill
 	name = "pill"
-	desc = "a pill."
+	desc = "A tablet or capsule."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	item_state = "pill"
@@ -15,11 +15,12 @@
 		if(!icon_state)
 			icon_state = "pill[rand(1,20)]"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
+
+	attack(mob/M, mob/user, def_zone)
 		if(M == user)
-			M << "\blue You swallow [src]."
+			M << "<span class='notice'>You swallow [src].</span>"
 			M.drop_from_inventory(src) //icon update
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -31,15 +32,15 @@
 			return 1
 
 		else if(istype(M, /mob/living/carbon/human) )
-
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to force [M] to swallow [src].", 1)
+			M.visible_message("<span class='danger'>[user] attempts to force [M] to swallow [src].</span>", \
+								"<span class='userdanger'>[user] attempts to force [M] to swallow [src].</span>")
 
 			if(!do_mob(user, M)) return
 
 			user.drop_from_inventory(src) //icon update
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] forces [M] to swallow [src].", 1)
+			M.visible_message("<span class='danger'>[user] forces [M] to swallow [src].</span>", \
+								"<span class='userdanger'>[user] forces [M] to swallow [src].</span>")
+
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] to [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -60,19 +61,17 @@
 		return 0
 
 	afterattack(obj/target, mob/user , flag)
-
 		if(target.is_open_container() != 0 && target.reagents)
 			if(!target.reagents.total_volume)
-				user << "\red [target] is empty. Cant dissolve pill."
+				user << "<span class='notice'>[target] is empty. There's nothing to dissolve [src] in.</span>"
 				return
-			user << "\blue You dissolve the pill in [target]"
+			user << "<span class='notice'>You dissolve [src] in [target].</span>"
+			for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
+				O << "<span class='warning'>[user] slips something into [target].</span>"
 			reagents.trans_to(target, reagents.total_volume)
-			for(var/mob/O in viewers(2, user))
-				O.show_message("\red [user] puts something in [target].", 1)
 			spawn(5)
 				del(src)
 
-		return
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
@@ -80,7 +79,7 @@
 
 //Pills
 /obj/item/weapon/reagent_containers/pill/antitox
-	name = "Anti-toxins pill"
+	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 	New()
@@ -88,7 +87,7 @@
 		reagents.add_reagent("anti_toxin", 50)
 
 /obj/item/weapon/reagent_containers/pill/tox
-	name = "Toxins pill"
+	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
 	New()
@@ -96,7 +95,7 @@
 		reagents.add_reagent("toxin", 50)
 
 /obj/item/weapon/reagent_containers/pill/cyanide
-	name = "Cyanide pill"
+	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	New()
@@ -104,7 +103,7 @@
 		reagents.add_reagent("cyanide", 50)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
-	name = "Adminordrazine pill"
+	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
 	New()
@@ -112,7 +111,7 @@
 		reagents.add_reagent("adminordrazine", 50)
 
 /obj/item/weapon/reagent_containers/pill/stox
-	name = "Sleeping pill"
+	name = "sleeping pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
 	New()
@@ -120,7 +119,7 @@
 		reagents.add_reagent("stoxin", 30)
 
 /obj/item/weapon/reagent_containers/pill/kelotane
-	name = "Kelotane pill"
+	name = "kelotane pill"
 	desc = "Used to treat burns."
 	icon_state = "pill11"
 	New()
@@ -128,7 +127,7 @@
 		reagents.add_reagent("kelotane", 30)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
-	name = "Inaprovaline pill"
+	name = "inaprovaline pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill20"
 	New()
@@ -136,7 +135,7 @@
 		reagents.add_reagent("inaprovaline", 30)
 
 /obj/item/weapon/reagent_containers/pill/dexalin
-	name = "Dexalin pill"
+	name = "dexalin pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
 	New()
@@ -144,7 +143,7 @@
 		reagents.add_reagent("dexalin", 30)
 
 /obj/item/weapon/reagent_containers/pill/bicaridine
-	name = "Bicaridine pill"
+	name = "bicaridine pill"
 	desc = "Used to treat physical injuries."
 	icon_state = "pill18"
 	New()

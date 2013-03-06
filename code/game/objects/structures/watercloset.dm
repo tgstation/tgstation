@@ -18,7 +18,7 @@
 
 /obj/structure/toilet/attack_hand(mob/living/user as mob)
 	if(swirlie)
-		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
 
@@ -32,7 +32,7 @@
 				user.put_in_hands(I)
 			else
 				I.loc = get_turf(src)
-			user << "<span class='notice'>You find \an [I] in the cistern.</span>"
+			user << "<span class='notice'>You find [I] in the cistern.</span>"
 			w_items -= I.w_class
 			return
 
@@ -58,15 +58,15 @@
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
 
-			if(G.state>1)
-				if(!GM.loc == get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on the toilet.</span>"
+			if(G.state > 1)
+				if(GM.loc != get_turf(src))
+					user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
 					return
 				if(open && !swirlie)
-					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
+					user.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='notice'>You start to give [GM] a swirlie!</span>")
 					swirlie = GM
 					if(do_after(user, 30, 5, 0))
-						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
+						user.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='notice'>You give [GM] a swirlie!</span>", "You hear a toilet flushing.")
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
 							if(!C.internal)
@@ -75,14 +75,14 @@
 							GM.adjustOxyLoss(5)
 					swirlie = null
 				else
-					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
+					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
 					GM.adjustBruteLoss(8)
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
 	if(cistern)
 		if(I.w_class > 3)
-			user << "<span class='notice'>\The [I] does not fit.</span>"
+			user << "<span class='notice'>[I] does not fit.</span>"
 			return
 		if(w_items + I.w_class > 5)
 			user << "<span class='notice'>The cistern is full.</span>"
@@ -90,7 +90,7 @@
 		user.drop_item()
 		I.loc = src
 		w_items += I.w_class
-		user << "You carefully place \the [I] into the cistern."
+		user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
 		return
 
 
@@ -103,16 +103,16 @@
 	density = 0
 	anchored = 1
 
-/obj/structure/urinal/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
-			if(G.state>1)
-				if(!GM.loc == get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"
+			if(G.state > 1)
+				if(GM.loc != get_turf(src))
+					user << "<span class='notice'>[GM.name] needs to on [src].</span>"
 					return
-				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
+				user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
 				GM.adjustBruteLoss(8)
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
@@ -143,17 +143,17 @@
 	anchored = 1
 	mouse_opacity = 0
 
-/obj/machinery/shower/attack_hand(mob/M as mob)
+/obj/machinery/shower/attack_hand(mob/M)
 	on = !on
 	update_icon()
 	if(on)
 		if (M.loc == loc)
 			wash(M)
 			check_heat(M)
-		for (var/atom/movable/G in src.loc)
+		for (var/atom/movable/G in loc)
 			G.clean_blood()
 
-/obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
@@ -206,7 +206,7 @@
 	..()
 
 //Yes, showers are super powerful as far as washing goes.
-/obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
+/obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
 
 	if(iscarbon(O))
@@ -287,7 +287,7 @@
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
 
-/obj/machinery/shower/proc/check_heat(mob/M as mob)
+/obj/machinery/shower/proc/check_heat(mob/M)
 	if(!on || watertemp == "normal") return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -321,42 +321,46 @@
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
 
-/obj/structure/sink/attack_hand(mob/M as mob)
-	if(isrobot(M) || isAI(M))
+/obj/structure/sink/attack_hand(mob/user)
+	if(isrobot(user) || isAI(user))
 		return
 
 	if(busy)
-		M << "\red Someone's already washing here."
+		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
 
-	var/turf/location = M.loc
+	var/turf/location = user.loc
 	if(!isturf(location)) return
-	usr << "\blue You start washing your hands."
+	user << "<span class='notice'>You start washing your hands.</span>"
 
 	busy = 1
 	sleep(40)
 	busy = 0
 
-	if(M.loc != location) return		//Person has moved away from the sink
+	if(user.loc != location) return		//Person has moved away from the sink
 
-	M.clean_blood()
-	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [M] washes their hands using \the [src].")
+	user.clean_blood()
+	user.visible_message("<span class='notice'>[user] washes their hands in [src].</span>")
 
-/obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(busy)
-		user << "\red Someone's already washing here."
+		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
 
-	if (istype(O, /obj/item/weapon/reagent_containers))
+	if(istype(O, /obj/item/trash))
+		user.drop_item()
+		user << "<span class='notice'>You wash up [O].</span>"	//sims!!!
+		del(O)
+
+	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("\blue [user] fills the [RG] using \the [src].","\blue You fill the [RG] using \the [src].")
+		user << "<span class='notice'>You fill [RG] from [src].</span>"
 		return
 
-	else if (istype(O, /obj/item/weapon/melee/baton))
+	else if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if (B.charges > 0 && B.status == 1)
+		if(B.charges > 0 && B.status == 1)
 			flick("baton_active", src)
 			user.Stun(10)
 			user.stuttering = 10
@@ -367,8 +371,8 @@
 			else
 				B.charges--
 			user.visible_message( \
-				"[user] was stunned by his wet [O].", \
-				"\red You have wet \the [O], it shocks you!")
+				"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
+				"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
 			return
 
 	var/turf/location = user.loc
@@ -377,7 +381,7 @@
 	var/obj/item/I = O
 	if(!I || !istype(I,/obj/item)) return
 
-	usr << "\blue You start washing \the [I]."
+	usr << "<span class='notice'>You start washing [I].</span>"
 
 	busy = 1
 	sleep(40)
@@ -389,8 +393,8 @@
 
 	O.clean_blood()
 	user.visible_message( \
-		"\blue [user] washes \a [I] using \the [src].", \
-		"\blue You wash \a [I] using \the [src].")
+		"<span class='notice'>[user] washes [I] using [src].</span>", \
+		"<span class='notice'>You wash [I] using [src].</span>")
 
 
 /obj/structure/sink/kitchen

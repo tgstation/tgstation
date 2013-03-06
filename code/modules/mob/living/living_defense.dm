@@ -10,7 +10,7 @@
 	1 - halfblock
 	2 - fullblock
 */
-/mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	var/absorb = 0
 	if(prob(armor))
@@ -19,15 +19,15 @@
 		absorb += 1
 	if(absorb >= 2)
 		if(absorb_text)
-			show_message("[absorb_text]")
+			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
-			show_message("\red Your armor absorbs the blow!")
+			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
 		return 2
 	if(absorb == 1)
 		if(absorb_text)
 			show_message("[soften_text]",4)
 		else
-			show_message("\red Your armor softens the blow!")
+			src << "<span class='userdanger'>Your armor softens the blow!</span>"
 		return 1
 	return 0
 
@@ -36,12 +36,12 @@
 	return 0
 
 
-/mob/living/bullet_act(var/obj/item/projectile/P, var/def_zone)
+/mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		update_icons()
-		src << "\blue Your [C.name] was disrupted!"
+		src << "<span class='notice'>Your [C] was disrupted!</span>"
 		Stun(2)
 
 	var/absorb = run_armor_check(def_zone, P.flag)
@@ -53,15 +53,16 @@
 	P.on_hit(src, absorb)
 	return absorb
 
-/mob/living/hitby(atom/movable/AM as mob|obj)//Standardization and logging -Sieve
+/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
 	if(istype(AM,/obj/))
 		var/obj/O = AM
-		var/zone = ran_zone("chest",75)//Hits a random part of the body, geared towards the chest
+		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		src.visible_message("\red [src] has been hit by [O].")
+		visible_message("<span class='danger'>[src] has been hit by [O].</span>", \
+						"<span class='userdanger'>[src] has been hit by [O].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
 		if(armor < 2)
 			apply_damage(O.throwforce, dtype, zone, armor, O)

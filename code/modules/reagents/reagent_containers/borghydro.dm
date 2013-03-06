@@ -1,7 +1,5 @@
-
-
 /obj/item/weapon/reagent_containers/borghypo
-	name = "Cyborg Hypospray"
+	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
@@ -19,6 +17,7 @@
 	var/list/reagent_ids = list("doctorsdelight", "inaprovaline", "spaceacillin")
 	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
 
+
 /obj/item/weapon/reagent_containers/borghypo/New()
 	..()
 	for(var/R in reagent_ids)
@@ -30,6 +29,7 @@
 /obj/item/weapon/reagent_containers/borghypo/Del()
 	processing_objects.Remove(src)
 	..()
+
 
 /obj/item/weapon/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
 	charge_tick++
@@ -53,6 +53,7 @@
 	add_reagent("cyanide")
 */
 
+
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(var/reagent)
 	reagent_ids |= reagent
@@ -66,43 +67,44 @@
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/M as mob, mob/user as mob)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		user << "\red The injector is empty."
+		user << "<span class='notice'>The injector is empty.</span>"
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (R.total_volume)
-		user << "\blue You inject [M] with the injector."
-		M << "\red You feel a tiny prick!"
+		user << "<span class='notice'>You inject [M] with the injector.</span>"
+		M << "<span class='warning'>You feel a tiny prick!</span>"
 
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected.  [R.total_volume] units remaining."
+			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
+/obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
+	playsound(loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
 	mode++
 	if(mode > reagent_list.len)
 		mode = 1
 
 	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "\blue Synthesizer is now producing '[R.name]'."
+	user << "<span class='notice'>Synthesizer is now producing '[R.name]'.</span>"
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/examine()
 	set src in view()
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+	if(!(usr in view(2)) && usr != loc)
+		return
 
 	var/empty = 1
 
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			usr << "\blue It currently has [R.volume] units of [R.name] stored."
+			usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
 			empty = 0
 
 	if(empty)
-		usr << "\blue It is currently empty. Allow some time for the internal syntheszier to produce more."
+		usr << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"

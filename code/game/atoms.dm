@@ -299,12 +299,10 @@ its easier to just keep the beam vertical.
 /atom/proc/hitby(atom/movable/AM as mob|obj)
 	return
 
-/atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/reagent_containers/spray)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O << "\red <B>[src] has been hit by [user] with [W]</B>"
-	return
+/atom/proc/attackby(obj/item/weapon/W, mob/user)
+	if(isturf(src))	return
+	if(!istype(W, /obj/item/weapon/grab) && !istype(W, /obj/item/weapon/plastique) && !istype(W, /obj/item/weapon/reagent_containers/spray) && !istype(W, /obj/item/weapon/packageWrap) && !istype(W, /obj/item/device/detective_scanner))
+		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 
 

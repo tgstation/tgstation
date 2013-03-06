@@ -1,54 +1,52 @@
-//Items labled as 'trash' for the trash bag.
-//TODO: Make this an item var or something...
-
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/trash.dmi'
-	w_class = 1.0
 	desc = "This is rubbish."
+	w_class = 1.0
+
 	raisins
 		name = "4no raisins"
 		icon_state= "4no_raisins"
 	candy
-		name = "Candy"
+		name = "candy"
 		icon_state= "candy"
 	cheesie
-		name = "Cheesie honkers"
+		name = "cheesie honkers"
 		icon_state = "cheesie_honkers"
 	chips
-		name = "Chips"
+		name = "chips"
 		icon_state = "chips"
 	popcorn
-		name = "Popcorn"
+		name = "popcorn"
 		icon_state = "popcorn"
 	sosjerky
-		name = "Scaredy's Private Reserve Beef Jerky"
+		name = "\improper Scaredy's Private Reserve Beef Jerky"
 		icon_state = "sosjerky"
 	syndi_cakes
-		name = "Syndi cakes"
+		name = "syndi-cakes"
 		icon_state = "syndi_cakes"
 	waffles
-		name = "Waffles"
+		name = "waffles"
 		icon_state = "waffles"
 	plate
-		name = "Plate"
+		name = "plate"
 		icon_state = "plate"
 	snack_bowl
-		name = "Snack bowl"
+		name = "snack bowl"
 		icon_state	= "snack_bowl"
 	pistachios
-		name = "Pistachios pack"
+		name = "pistachios pack"
 		icon_state = "pistachios_pack"
 	semki
-		name = "Semki pack"
+		name = "semki pack"
 		icon_state = "semki_pack"
 	tray
-		name = "Tray"
+		name = "tray"
 		icon_state = "tray"
 	candle
 		name = "candle"
 		icon = 'icons/obj/candle.dmi'
 		icon_state = "candle4"
 
-/obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/trash/attack(mob/M, mob/living/user)
 	return

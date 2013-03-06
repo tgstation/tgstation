@@ -3,13 +3,12 @@
 /// (Mixing)Glass.
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/glass
-	name = " "
-	desc = " "
+	name = "glass"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50)
+	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
@@ -34,73 +33,73 @@
 	examine()
 		set src in view()
 		..()
-		if (!(usr in view(2)) && usr!=src.loc) return
-		usr << "\blue It contains:"
+		if(!(usr in view(2)) && usr != loc)
+			return
 		if(reagents && reagents.reagent_list.len)
+			usr << "It contains:"
 			for(var/datum/reagent/R in reagents.reagent_list)
-				usr << "\blue [R.volume] units of [R.name]"
-		else
-			usr << "\blue Nothing."
+				usr << "[R.volume] units of [R.name]"
 
 	afterattack(obj/target, mob/user , flag)
-		for(var/type in src.can_be_placed_into)
+		for(var/type in can_be_placed_into)
 			if(istype(target, type))
 				return
 
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			var/mob/M = target
-			user << "\blue You splash the solution onto [target]."
 			var/R
-			if(src.reagents)
-				for(var/datum/reagent/A in src.reagents.reagent_list)
+			target.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", \
+							"<span class='userdanger'>[target] has been splashed with something by [user]!</span>")
+			if(reagents)
+				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
 			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
 			M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
 			log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])")
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red [] has been splashed with something by []!", target, user), 1)
-			src.reagents.reaction(target, TOUCH)
-			spawn(5) src.reagents.clear_reagents()
+			reagents.reaction(target, TOUCH)
+			spawn(5) reagents.clear_reagents()
 			return
+
 		else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 			if(!target.reagents.total_volume && target.reagents)
-				user << "\red [target] is empty."
+				user << "<span class='notice'>[target] is empty.</span>"
 				return
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "\red [src] is full."
+				user << "<span class='notice'>[src] is full.</span>"
 				return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "\blue You fill [src] with [trans] units of the contents of [target]."
+			user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
 
 		else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(!reagents.total_volume)
-				user << "\red [src] is empty."
+				user << "<span class='notice'>[src] is empty.</span>"
 				return
 
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
+				user << "<span class='notice'>[target] is full.</span>"
 				return
 
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the solution to [target]."
+			var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+			user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
-		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
+		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
 		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 			return
 
 		else if(reagents.total_volume)
-			user << "\blue You splash the solution onto [target]."
-			src.reagents.reaction(target, TOUCH)
-			spawn(5) src.reagents.clear_reagents()
-			return
+			user << "<span class='notice'>You splash the solution onto [target].</span>"
+			reagents.reaction(target, TOUCH)
+			spawn(5)
+				reagents.clear_reagents()
+
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. Can hold up to 50 units."
+	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
@@ -170,8 +169,8 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket
-	desc = "It's a bucket."
 	name = "bucket"
+	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
@@ -185,7 +184,7 @@
 
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
-			user << "You add [D] to [src]."
+			user << "<span class='notice'>You add [D] to [src].</span>"
 			del(D)
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 			user.drop_from_inventory(src)
