@@ -12,16 +12,9 @@
 	var/temperature = 273	//measured in kelvin, if this exceeds 1200, the machine is damaged and requires repairs
 							//if this exceeds 600 and safety is enabled it will shutdown
 							//temp greater than 600 also requires a safety prompt to initiate scanning
-	var/scanner_dir = 0
-	var/obj/machinery/anomaly/scanner/owned_scanner = null
 
 /obj/machinery/anomaly/New()
 	..()
-	//connect to a nearby scanner pad
-	if(scanner_dir)
-		owned_scanner = locate(/obj/machinery/anomaly/scanner) in get_step(src, scanner_dir)
-	if(!owned_scanner)
-		owned_scanner = locate(/obj/machinery/anomaly/scanner) in orange(1)
 
 	//for analysis debugging
 	var/obj/item/weapon/reagent_containers/glass/solution_tray/S = new(src.loc)

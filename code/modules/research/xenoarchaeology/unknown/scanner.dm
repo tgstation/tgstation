@@ -1,5 +1,5 @@
 
-/obj/machinery/anomaly/scanner
+/obj/machinery/scanner
 	name = "scanner pad"
 	desc = "Place larger objects here for scanning."
 	icon = 'stationobjs.dmi'

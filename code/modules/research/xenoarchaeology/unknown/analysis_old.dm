@@ -29,7 +29,7 @@
 	var/list/alltriggers = list("Contact with Living Organism","Heavy Impact","Contact with Energy Source","Contact with Hydrogen","Contact with Corrosive Substance","Contact with Volatile Substance","Contact with Toxins","Exposure to Heat")
 	var/list/alleffects = list("Healing Device","Anti-biological Weapon","Non-lethal Stunning Trap","Mechanoid Repair Module","Mechanoid Deconstruction Device","Power Generator","Power Drain","Stellar Mineral Attractor","Agriculture Regulator","Shield Generator","Space-Time Displacer")
 	var/list/allranges = list("Constant Short-Range Energy Field","Medium Range Energy Pulses","Long Range Energy Pulses","Extreme Range Energy Pulses","Requires contact with subject")
-/*
+
 /obj/machinery/artifact_analyser/New()
 	..()
 	origin_bonuses = new/list()
@@ -316,4 +316,3 @@
 				analyser.owned_pad = src
 				world << "pad set analyser to self"
 				break*/
-*/
