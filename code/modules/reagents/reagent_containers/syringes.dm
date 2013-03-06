@@ -51,6 +51,13 @@
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
 
+		if (user.a_intent == "hurt" && ismob(target))
+			if((CLUMSY in user.mutations) && prob(50))
+				target = user
+			syringestab(target, user)
+			return
+
+
 		switch(mode)
 			if(SYRINGE_DRAW)
 
@@ -305,6 +312,54 @@
 						update_icon()
 
 		return
+
+	/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
+
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
+		log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+		if(istype(target, /mob/living/carbon/human))
+
+			var/target_zone = check_zone(user.zone_sel.selecting, target)
+			var/datum/organ/external/affecting = target:get_organ(target_zone)
+
+			if (!affecting)
+				return
+			if(affecting.status & ORGAN_DESTROYED)
+				user << "What [affecting.display_name]?"
+				return
+			var/hit_area = affecting.display_name
+
+			var/mob/living/carbon/human/H = target
+			if((user != target) && H.check_shields(7, "the [src.name]"))
+				return
+
+			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message(text("\red <B>[user] tries to stab [target] in the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
+				user.u_equip(src)
+				del(src)
+				return
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red <B>[user] stabs [target] in the [hit_area] with [src.name]!</B>"), 1)
+
+			if(affecting.take_damage(7))
+				target:UpdateDamageIcon()
+
+		else
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red <B>[user] stabs [target] with [src.name]!</B>"), 1)
+			target.take_organ_damage(7)
+
+		src.reagents.reaction(target, INGEST)
+		var/syringestab_amount_transferred = rand(0, reagents.total_volume)
+		src.reagents.trans_to(target, syringestab_amount_transferred)
+		user.u_equip(src)
+		del(src)
+
 
 	update_icon()
 		var/rounded_vol = round(reagents.total_volume,50)
