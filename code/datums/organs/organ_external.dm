@@ -25,6 +25,9 @@
 	var/datum/organ/external/parent
 	var/list/datum/organ/external/children
 
+	// Internal organs of this body part
+	var/list/datum/organ/internal/internal_organs
+
 	var/damage_msg = "\red You feel an intense pain"
 	var/broken_description
 
@@ -92,6 +95,13 @@
 		if( (sharp && prob(5 * brute)) || (brute > 20 && prob(2 * brute)) )
 			droplimb(1)
 			return
+
+	// High brute damage or sharp objects may damage internal organs
+	if(internal_organs != null) if( (sharp && brute >= 5) || brute >= 10) if(prob(5))
+		// Damage an internal organ
+		var/datum/organ/internal/I = pick(internal_organs)
+		I.take_damage(brute / 2)
+		brute -= brute / 2
 
 	if(status & ORGAN_BROKEN && prob(40) && brute)
 		owner.emote("scream")	//getting hit on broken hand hurts
@@ -555,7 +565,6 @@
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
-	var/ruptured_lungs = 0
 
 /datum/organ/external/groin
 	name = "groin"

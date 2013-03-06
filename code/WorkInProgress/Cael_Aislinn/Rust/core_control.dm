@@ -1,7 +1,8 @@
 
 /obj/machinery/computer/rust_core_control
+	name = "RUST Core Control"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
-	icon_state = "core"
+	icon_state = "core_control"
 	var/list/connected_devices = list()
 	var/id_tag = "allan remember to update this before you leave"
 	var/scan_range = 25

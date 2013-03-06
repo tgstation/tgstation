@@ -165,6 +165,16 @@
 	sparks = "largebinsparks"
 	emag = "largebinemag"
 
+/obj/structure/closet/crate/secure/large
+	name = "large crate"
+	desc = "A hefty metal crate with an electronic locking system."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "largecrate"
+	icon_opened = "largecrateopen"
+	icon_closed = "largecrate"
+	redlight = "largecrater"
+	greenlight = "largecrateg"
+
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
 	name = "Secure crate"
@@ -177,6 +187,15 @@
 	var/emag = "securecrateemag"
 	var/broken = 0
 	var/locked = 1
+
+/obj/structure/closet/crate/large
+	name = "large crate"
+	desc = "A hefty metal crate."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "largecrate"
+	icon_opened = "largecrateopen"
+	icon_closed = "largecrate"
+	density = 1
 
 /obj/structure/closet/crate/hydroponics
 	name = "Hydroponics crate"
