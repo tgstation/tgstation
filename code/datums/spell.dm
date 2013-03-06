@@ -41,46 +41,50 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/centcomm_cancast = 1 //Whether or not the spell should be allowed on z2
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(!ishuman(user))
+
+	if(!(src in user.spell_list))
+		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
 		return 0
 
-	var/mob/living/carbon/human/H = user
-
-	if(!(src in H.spell_list))
-		H << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
-		return 0
-
-	if(H.z == 2 && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
+	if(user.z == 2 && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
 				if(charge_counter < charge_max)
-					H << "<span class='notice'>[name] is still recharging.</span>"
+					user << "<span class='notice'>[name] is still recharging.</span>"
 					return 0
 			if("charges")
 				if(!charge_counter)
-					H << "<span class='notice'>[name] has no charges left.</span>"
+					user << "<span class='notice'>[name] has no charges left.</span>"
 					return 0
 
-	if(H.stat && !stat_allowed)
-		H << "<span class='notice'>Not when you're incapacitated.</span>"
+	if(user.stat && !stat_allowed)
+		user << "<span class='notice'>Not when you're incapacitated.</span>"
 		return 0
 
-	if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
-		user << "<span class='notice'>You can't get the words out!</span>"
-		return 0
+	if(ishuman(user))
 
-	if(clothes_req) //clothes check
-		if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/rig/wizard))
-			H << "<span class='notice'>I don't feel strong enough without my robe.</span>"
+		var/mob/living/carbon/human/H = user
+
+		if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+			user << "<span class='notice'>You can't get the words out!</span>"
 			return 0
-		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-			H << "<span class='notice'>I don't feel strong enough without my sandals.</span>"
-			return 0
-		if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/rig/wizard))
-			H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
+
+		if(clothes_req) //clothes check
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/rig/wizard))
+				H << "<span class='notice'>I don't feel strong enough without my robe.</span>"
+				return 0
+			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+				H << "<span class='notice'>I don't feel strong enough without my sandals.</span>"
+				return 0
+			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/rig/wizard))
+				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
+				return 0
+	else
+		if(clothes_req)
+			user << "<span class='notice'>This spell can only be casted by humans!</span>"
 			return 0
 
 	if(!skipcharge)
