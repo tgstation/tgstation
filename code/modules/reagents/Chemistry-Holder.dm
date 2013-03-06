@@ -298,17 +298,11 @@ datum
 
 							if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 								var/multiplier = min(multipliers)
-								for(var/B in C.required_reagents)
-									remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
-
-								//try and grab any data so we can preserve it across reactions
-								//added for xenoarchaeology, might be useful for other things
 								var/preserved_data = null
-								for(var/B in src.reagent_list)
+								for(var/B in C.required_reagents)
 									if(!preserved_data)
-										var/temp_data = get_data(B)
-										if(temp_data)
-											preserved_data = temp_data
+										preserved_data = get_data(B)
+									remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
 								var/created_volume = C.result_amount*multiplier
 								if(C.result)
