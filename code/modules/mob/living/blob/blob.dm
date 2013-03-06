@@ -9,6 +9,7 @@
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
 	faction = "blob"
+	use_me = 0 //Blobs can't emote
 
 
 	New()

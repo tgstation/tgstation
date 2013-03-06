@@ -550,6 +550,8 @@ its easier to just keep the beam vertical.
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
+	if(!istype(src,/obj/item/weapon/gun))
+		usr.last_target_click = world.time
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
