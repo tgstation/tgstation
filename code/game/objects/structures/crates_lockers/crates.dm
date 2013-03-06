@@ -169,11 +169,21 @@
 	name = "large crate"
 	desc = "A hefty metal crate with an electronic locking system."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "largecrate"
-	icon_opened = "largecrateopen"
-	icon_closed = "largecrate"
-	redlight = "largecrater"
-	greenlight = "largecrateg"
+	icon_state = "largemetal"
+	icon_opened = "largemetalopen"
+	icon_closed = "largemetal"
+	redlight = "largemetalr"
+	greenlight = "largemetalg"
+
+/obj/structure/closet/crate/secure/large_reinforced
+	name = "large crate"
+	desc = "A hefty, reinforced metal crate with an electronic locking system."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "largermetal"
+	icon_opened = "largermetalopen"
+	icon_closed = "largermetal"
+	redlight = "largemetalr"
+	greenlight = "largemetalg"
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
@@ -192,10 +202,9 @@
 	name = "large crate"
 	desc = "A hefty metal crate."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "largecrate"
-	icon_opened = "largecrateopen"
-	icon_closed = "largecrate"
-	density = 1
+	icon_state = "largemetal"
+	icon_opened = "largemetalopen"
+	icon_closed = "largemetal"
 
 /obj/structure/closet/crate/hydroponics
 	name = "Hydroponics crate"
