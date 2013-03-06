@@ -51,14 +51,24 @@
 	if (!( ticker ))
 		return
 	if (mode) // accessing crew manifest
-		var/crew = ""
+
+		dat += "<h4>Crew Manifest</h4>"
+		dat += "Entries cannot be modified from this terminal.<br><br>"
+		if(data_core)
+			dat += data_core.get_manifest(0) // make it monochrome
+		dat += "<br>"
+		dat += "<a href='?src=\ref[src];choice=print'>Print</a><br>"
+		dat += "<br>"
+		dat += "<a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br>"
+
+		/*var/crew = ""
 		var/list/L = list()
 		for (var/datum/data/record/t in data_core.general)
 			var/R = t.fields["name"] + " - " + t.fields["rank"]
 			L += R
 		for(var/R in sortList(L))
-			crew += "[R]<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+			crew += "[R]<br>"*/
+		//dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<div align='center'><b>Identification Card Modifier</b></div>"
 
@@ -114,6 +124,14 @@
 									var nameField = document.getElementById('namefield');
 									nameField.style.backgroundColor = "#DDFFDD";
 								}
+								function markAccountGreen(){
+									var nameField = document.getElementById('accountfield');
+									nameField.style.backgroundColor = "#DDFFDD";
+								}
+								function markAccountRed(){
+									var nameField = document.getElementById('accountfield');
+									nameField.style.backgroundColor = "#FFDDDD";
+								}
 								function showAll(){
 									var allJobsSlot = document.getElementById('alljobsslot');
 									allJobsSlot.innerHTML = "<a href='#' onclick='hideAll()'>hide</a><br>"+ "[jobs_all]";
@@ -129,10 +147,16 @@
 			carddesc += "<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
 			carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
 			carddesc += "</form>"
+
+			carddesc += "<form name='accountnum' action='?src=\ref[src]' method='get'>"
+			carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
+			carddesc += "<input type='hidden' name='choice' value='account'>"
+			carddesc += "<b>Stored account number:</b> <input type='text' id='accountfield' name='account' value='[modify.associated_account_number]' style='width:250px; background-color:white;' onchange='markAccountRed()'>"
+			carddesc += "<input type='submit' value='Rename' onclick='markAccountGreen()'>"
+			carddesc += "</form>"
+
 			carddesc += "<b>Assignment:</b> "
-
 			var/jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
-
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
 				accesses += "<h5>Central Command:</h5>"
@@ -260,6 +284,13 @@
 						modify.registered_name = temp_name
 					else
 						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+		if ("account")
+			if (authenticated)
+				var/t2 = modify
+				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
+				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+					var/account_num = text2num(href_list["account"])
+					modify.associated_account_number = account_num
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")
@@ -267,13 +298,19 @@
 				printing = 1
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				var/t1 = "<B>Crew Manifest:</B><BR>"
+				/*var/t1 = "<B>Crew Manifest:</B><BR>"
 				var/list/L = list()
 				for (var/datum/data/record/t in data_core.general)
 					var/R = t.fields["name"] + " - " + t.fields["rank"]
 					L += R
 				for(var/R in sortList(L))
-					t1 += "[R]<br>"
+					t1 += "[R]<br>"*/
+
+				var/t1 = "<h4>Crew Manifest</h4>"
+				t1 += "<br>"
+				if(data_core)
+					t1 += data_core.get_manifest(0) // make it monochrome
+
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null

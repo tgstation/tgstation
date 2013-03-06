@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/
+	priority = 2
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return target_zone == "head" && hasorgans(target)
@@ -172,7 +173,8 @@
 		if(target.cores >= 0)
 			new target.coretype(target.loc)
 		if(target.cores <= 0)
-			target.icon_state = "baby roro dead-nocore"
+			var/origstate = initial(target.icon_state)
+			target.icon_state = "[origstate] dead-nocore"
 
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)

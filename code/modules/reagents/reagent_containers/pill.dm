@@ -84,7 +84,7 @@
 	icon_state = "pill17"
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 50)
+		reagents.add_reagent("anti_toxin", 25)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "Toxins pill"
@@ -133,6 +133,24 @@
 	New()
 		..()
 		reagents.add_reagent("tramadol", 15)
+
+
+/obj/item/weapon/reagent_containers/pill/methylphenidate
+	name = "Methylphenidate pill"
+	desc = "Improves the ability to concentrate."
+	icon_state = "pill8"
+	New()
+		..()
+		reagents.add_reagent("methylphenidate", 15)
+
+/obj/item/weapon/reagent_containers/pill/citalopram
+	name = "Citalopram pill"
+	desc = "Mild anti-depressant."
+	icon_state = "pill8"
+	New()
+		..()
+		reagents.add_reagent("citalopram", 15)
+
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"

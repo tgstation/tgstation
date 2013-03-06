@@ -1,87 +1,112 @@
 var/const/max_assembly_amount = 300
 
-/obj/machinery/rust/fuel_compressor
-	icon = 'fuel_compressor.dmi'
-	icon_state = "fuel_compressor"
+/obj/machinery/rust_fuel_compressor
+	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
+	icon_state = "fuel_compressor1"
 	name = "Fuel Compressor"
-	var/list/new_assembly_quantities
-	//
-	New()
-		new_assembly_quantities = new/list
-		spawn(0)
-			new_assembly_quantities["Deuterium"] = 200
-			new_assembly_quantities["Tritium"] = 100
-			//
-			new_assembly_quantities["Helium-3"] = 0
-			new_assembly_quantities["Lithium-6"] = 0
-			new_assembly_quantities["Silver"] = 0
+	var/list/new_assembly_quantities = list("Deuterium" = 200,"Tritium" = 100,"Helium-3" = 0,"Lithium-6" = 0,"Silver" = 0)
+	var/compressed_matter = 0
+	anchored = 1
+	layer = 2.9
 
-	attack_ai(mob/user)
-		attack_hand(user)
+	var/opened = 1 //0=closed, 1=opened
+	var/locked = 0
+	var/has_electronics = 0 // 0 - none, bit 1 - circuitboard, bit 2 - wires
 
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		/*if(stat & (BROKEN|NOPOWER))
-			return*/
-		interact(user)
+/obj/machinery/rust_fuel_compressor/attack_ai(mob/user)
+	attack_hand(user)
 
-	/*power_change()
-		if(stat & BROKEN)
-			icon_state = "broken"
-		else
-			if( powered() )
-				icon_state = initial(icon_state)
-				stat &= ~NOPOWER
-			else
-				spawn(rand(0, 15))
-					src.icon_state = "c_unpowered"
-					stat |= NOPOWER*/
+/obj/machinery/rust_fuel_compressor/attack_hand(mob/user)
+	add_fingerprint(user)
+	/*if(stat & (BROKEN|NOPOWER))
+		return*/
+	interact(user)
 
-	Topic(href, href_list)
-		..()
-		if( href_list["close"] )
-			usr << browse(null, "window=fuelcomp")
-			usr.machine = null
-			return
-		//
-		for(var/reagent in new_assembly_quantities)
-			if(href_list[reagent])
-				var/new_amount = text2num(input("Enter new rod amount", "Fuel Assembly Rod Composition ([reagent])", new_assembly_quantities[reagent]) as text|null)
-				if(!new_amount)
-					usr << "\red That's not a valid number."
-					return
-				var/sum_reactants = new_amount - new_assembly_quantities[reagent]
-				for(var/rod in new_assembly_quantities)
-					sum_reactants += new_assembly_quantities[rod]
-				if(sum_reactants > max_assembly_amount)
-					usr << "\red You have entered too many rods."
-				else
-					new_assembly_quantities[reagent] = new_amount
-				updateDialog()
-				return
-		if( href_list["activate"] )
-			var/obj/item/weapon/fuel_assembly/F = new(src)
-			//world << "\blue New fuel rod assembly"
-			for(var/reagent in new_assembly_quantities)
-				F.rod_quantities[reagent] = new_assembly_quantities[reagent]
-				//world << "\blue	[reagent]: new_assembly_quantities[reagent]<br>"
-			F.loc = src.loc
+/obj/machinery/rust_fuel_compressor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/rcd_ammo))
+		compressed_matter += 10
+		del(W)
+		return
+	..()
+
+/obj/machinery/rust_fuel_compressor/interact(mob/user)
+	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if (!istype(user, /mob/living/silicon))
+			user.unset_machine()
+			user << browse(null, "window=fuelcomp")
 			return
 
-	interact(mob/user)
-		/*if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-			if (!istype(user, /mob/living/silicon))
-				user.machine = null
-				user << browse(null, "window=fuelcomp")
-				return*/
-		var/t = "<B>Reactor Fuel Rod Compressor / Assembler</B><BR>"
-		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	var/t = "<B>Reactor Fuel Rod Compressor / Assembler</B><BR>"
+	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	if(locked)
+		t += "Swipe your ID to unlock this console."
+	else
+		t += "Compressed matter in storage: [compressed_matter] <A href='?src=\ref[src];eject_matter=1'>\[Eject all\]</a><br>"
 		t += "<A href='?src=\ref[src];activate=1'><b>Activate Fuel Synthesis</b></A><BR> (fuel assemblies require no more than [max_assembly_amount] rods).<br>"
 		t += "<hr>"
 		t += "- New fuel assembly constituents:- <br>"
 		for(var/reagent in new_assembly_quantities)
-			t += "	[reagent] rods: [new_assembly_quantities[reagent]] \[<A href='?src=\ref[src];reagent=1'>Modify</A>\]<br>"
-		t += "<hr>"
-		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-		user << browse(t, "window=fuelcomp;size=500x800")
-		user.machine = src
+			t += "	[reagent] rods: [new_assembly_quantities[reagent]] \[<A href='?src=\ref[src];change_reagent=[reagent]'>Modify</A>\]<br>"
+	t += "<hr>"
+	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+
+	user << browse(t, "window=fuelcomp;size=500x300")
+	user.set_machine(src)
+
+	//var/locked
+	//var/coverlocked
+
+/obj/machinery/rust_fuel_compressor/Topic(href, href_list)
+	..()
+	if( href_list["close"] )
+		usr << browse(null, "window=fuelcomp")
+		usr.machine = null
+
+	if( href_list["eject_matter"] )
+		var/ejected = 0
+		while(compressed_matter > 10)
+			new /obj/item/weapon/rcd_ammo(get_step(get_turf(src), src.dir))
+			compressed_matter -= 10
+			ejected = 1
+		if(ejected)
+			usr << "\blue \icon[src] [src] ejects some compressed matter units."
+		else
+			usr << "\red \icon[src] there are no more compressed matter units in [src]."
+
+	if( href_list["activate"] )
+		//world << "\blue New fuel rod assembly"
+		var/obj/item/weapon/fuel_assembly/F = new(src)
+		var/fail = 0
+		var/old_matter = compressed_matter
+		for(var/reagent in new_assembly_quantities)
+			var/req_matter = new_assembly_quantities[reagent] / 30
+			//world << "[reagent] matter: [req_matter]/[compressed_matter]"
+			if(req_matter <= compressed_matter)
+				F.rod_quantities[reagent] = new_assembly_quantities[reagent]
+				compressed_matter -= req_matter
+			else
+				fail = 1
+				break
+			//world << "\blue	[reagent]: new_assembly_quantities[reagent]<br>"
+		if(fail)
+			del(F)
+			compressed_matter = old_matter
+			usr << "\red \icon[src] [src] flashes red: \'Out of matter.\'"
+		else
+			F.loc = get_step(get_turf(src), src.dir)
+			F.percent_depleted = 0
+			if(compressed_matter < 0.034)
+				compressed_matter = 0
+
+	if( href_list["change_reagent"] )
+		var/cur_reagent = href_list["change_reagent"]
+		var/avail_rods = 300
+		for(var/rod in new_assembly_quantities)
+			avail_rods -= new_assembly_quantities[rod]
+		avail_rods += new_assembly_quantities[cur_reagent]
+		avail_rods = max(avail_rods, 0)
+
+		var/new_amount = min(input("Enter new [cur_reagent] rod amount (max [avail_rods])", "Fuel Assembly Rod Composition ([cur_reagent])") as num, avail_rods)
+		new_assembly_quantities[cur_reagent] = new_amount
+
+	updateDialog()

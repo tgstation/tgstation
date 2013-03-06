@@ -155,6 +155,16 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						//At this point, we dun care which blood we are adding to, as long as they get more blood.
 						B.volume = B.volume + 0.1 // regenerate blood VERY slowly
 
+			// Damaged heart virtually reduces the blood volume, as the blood isn't
+			// being pumped properly anymore.
+			var/datum/organ/internal/heart/heart = internal_organs["heart"]
+			switch(heart.damage)
+				if(5 to 10)
+					blood_volume *= 0.8
+				if(11 to 20)
+					blood_volume *= 0.5
+				if(21 to INFINITY)
+					blood_volume *= 0.3
 
 			switch(blood_volume)
 				if(BLOOD_VOLUME_SAFE to 10000)
@@ -617,7 +627,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						sleeping = max(sleeping+2, 10)
-				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+				else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
 				SA.moles = 0
@@ -1044,6 +1054,22 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			var/datum/organ/O = pick(organs)
 			O.trace_chemicals[A.name] = 100
 
+		var/damaged_liver_process_accuracy = 10
+		if(life_tick % damaged_liver_process_accuracy == 0)
+			// Damaged liver means some chemicals are very dangerous
+			var/datum/organ/internal/liver/liver = internal_organs["liver"]
+			if(liver.damage >= liver.min_bruised_damage)
+				for(var/datum/reagent/R in src.reagents.reagent_list)
+					// Ethanol and all drinks are bad
+					if(istype(R, /datum/reagent/ethanol))
+						adjustToxLoss(0.1 * damaged_liver_process_accuracy)
+
+				// Can't cope with toxins at all
+				for(var/toxin in list("toxin", "plasma", "sacid", "pacid", "cyanide", "lexorin", "amatoxin", "chloralhydrate", "carpotoxin", "zombiepowder", "mindbreaker"))
+					if(src.reagents.has_reagent(toxin))
+						adjustToxLoss(0.3 * damaged_liver_process_accuracy)
+
+
 		updatehealth()
 
 		return //TODO: DEFERRED
@@ -1260,10 +1286,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					if("lizard","slime")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-					if("tajaran")
-						see_in_dark = 4
-					if("shadow")
+					if("shadow","tajaran")
 						see_in_dark = 8
+						see_invisible = SEE_INVISIBLE_LEVEL_ONE
 					else
 						see_in_dark = 2
 
@@ -1403,7 +1428,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 			var/masked = 0
 
-			if( istype(head, /obj/item/clothing/head/welding) )
+			if( istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 				var/obj/item/clothing/head/welding/O = head
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask

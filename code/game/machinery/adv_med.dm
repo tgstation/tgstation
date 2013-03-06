@@ -286,7 +286,7 @@
 						for(var/datum/wound/W in e.wounds) if(W.internal)
 							internal_bleeding = "<br>Internal Bleeding"
 							break
-						if(istype(e, /datum/organ/external/chest) && e:ruptured_lungs)
+						if(istype(e, /datum/organ/external/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung Ruptured:"
 						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
@@ -304,6 +304,11 @@
 							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
+						dat += "</tr>"
+					for(var/organ_name in occupant.internal_organs)
+						var/datum/organ/internal/i = occupant.internal_organs[organ_name]
+						dat += "<tr>"
+						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>"
 						dat += "</tr>"
 					dat += "</table>"
 			else

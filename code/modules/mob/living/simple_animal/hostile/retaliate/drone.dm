@@ -19,7 +19,7 @@
 	stop_automated_movement_when_pulled = 0
 	health = 300
 	maxHealth = 300
-	speed = 4
+	speed = 8
 	projectiletype = /obj/item/projectile/beam/drone
 	projectilesound = 'sound/weapons/laser3.ogg'
 	destroy_surroundings = 0
@@ -35,11 +35,16 @@
 	var/disabled = 0
 	var/exploding = 0
 
+	//Drones aren't affected by atmos.
 	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
 	max_tox = 0
+	min_co2 = 0
 	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
 	minbodytemp = 0
-	maxbodytemp = 600
 
 	var/has_loot = 1
 	faction = "malf_drone"
@@ -152,7 +157,7 @@
 	hostile_drone = 0
 	walk(src,0)
 
-/mob/living/simple_animal/Die()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Die()
 	src.visible_message("\blue \icon[src] [src] suddenly breaks apart.")
 	..()
 	del(src)

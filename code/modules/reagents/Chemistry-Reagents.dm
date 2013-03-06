@@ -19,6 +19,8 @@ datum
 		var/list/data = null
 		var/volume = 0
 		var/nutriment_factor = 0
+		var/custom_metabolism = REAGENTS_METABOLISM
+		var/mildly_toxic = 0
 		//var/list/viruses = list()
 		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 
@@ -68,7 +70,14 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!istype(M, /mob/living))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-				holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
+							// Certain elements in too large amounts cause side-effects
+
+				if(mildly_toxic && istype(M, /mob/living/carbon/human/))
+					var/mob/living/carbon/human/H = M
+					if(H.side_effects.len == 0)
+						M.add_side_effect(pick("Headache", "Bad Stomach", "Itch"))
+
+				holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
 				return
 
 			on_move(var/mob/M)
@@ -113,6 +122,12 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
+				if(self.data && self.data["virus2"])
+					if(method == TOUCH)
+						infect_virus2(M,self.data["virus2"])
+					else
+						infect_virus2(M,self.data["virus2"],1)
+
 
 
 
@@ -193,6 +208,7 @@ datum
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
 			color = "#0064C8" // rgb: 0, 100, 200
+			custom_metabolism = 0.01
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
@@ -303,24 +319,28 @@ datum
 			description = "A Toxic chemical."
 			reagent_state = LIQUID
 			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.01
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1.5*REM)
+				// Toxins are really weak, but without being treated, last very long.
+				M.adjustToxLoss(0.2)
 				..()
 				return
 
 		cyanide
+			// Fast and lethal
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
 			reagent_state = LIQUID
 			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.4
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(3*REM)
-				M.adjustOxyLoss(3*REM)
+				M.adjustToxLoss(4)
+				M.adjustOxyLoss(4)
 				M.sleeping += 1
 				..()
 				return
@@ -398,6 +418,8 @@ datum
 			description = "An effective hypnotic used to treat insomnia."
 			reagent_state = LIQUID
 			color = "#E895CC" // rgb: 232, 149, 204
+
+			custom_metabolism = 0.1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -534,11 +556,16 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
+			custom_metabolism = 0.01
+
 		copper
 			name = "Copper"
 			id = "copper"
 			description = "A highly ductile metal."
 			color = "#6E3B08" // rgb: 110, 59, 8
+
+			mildly_toxic = 1
+			custom_metabolism = 0.01
 
 		nitrogen
 			name = "Nitrogen"
@@ -547,6 +574,9 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
+			mildly_toxic = 1
+			custom_metabolism = 0.01
+
 		hydrogen
 			name = "Hydrogen"
 			id = "hydrogen"
@@ -554,12 +584,19 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
+			mildly_toxic = 1
+			custom_metabolism = 0.01
+
 		potassium
 			name = "Potassium"
 			id = "potassium"
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
 			color = "#A0A0A0" // rgb: 160, 160, 160
+
+
+			mildly_toxic = 1
+			custom_metabolism = 0.01
 
 		mercury
 			name = "Mercury"
@@ -583,12 +620,18 @@ datum
 			reagent_state = SOLID
 			color = "#BF8C00" // rgb: 191, 140, 0
 
+			mildly_toxic = 1
+			custom_metabolism = 0.01
+
 		carbon
 			name = "Carbon"
 			id = "carbon"
 			description = "A chemical element."
 			reagent_state = SOLID
 			color = "#1C1300" // rgb: 30, 20, 0
+
+			mildly_toxic = 1
+			custom_metabolism = 0.01
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -628,12 +671,18 @@ datum
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
 
+			mildly_toxic = 1
+			custom_metabolism = 0.01
+
 		phosphorus
 			name = "Phosphorus"
 			id = "phosphorus"
 			description = "A chemical element."
 			reagent_state = SOLID
 			color = "#832828" // rgb: 131, 40, 40
+
+			mildly_toxic = 1
+			custom_metabolism = 0.01
 
 		lithium
 			name = "Lithium"
@@ -820,12 +869,18 @@ datum
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
 
+			mildly_toxic = 1
+			custom_metabolism = 0.01
+
 		nitroglycerin
 			name = "Nitroglycerin"
 			id = "nitroglycerin"
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
+
+			mildly_toxic = 1
+			custom_metabolism = 0.01
 
 		radium
 			name = "Radium"
@@ -1397,6 +1452,7 @@ datum
 			description = "Synaptizine is used to treat various diseases."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			custom_metabolism = 0.01
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1434,6 +1490,7 @@ datum
 			description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			custom_metabolism = 0.05
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1447,6 +1504,7 @@ datum
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			custom_metabolism = 0.05
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
@@ -1465,6 +1523,7 @@ datum
 			description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			custom_metabolism = 0.05
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1510,11 +1569,11 @@ datum
 			description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			custom_metabolism = 0.03
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
-				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
@@ -1529,9 +1588,9 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-1)
-					M.adjustOxyLoss(-3)
-					M.heal_organ_damage(3,3)
-					M.adjustToxLoss(-3)
+					M.adjustOxyLoss(-1)
+					M.heal_organ_damage(1,1)
+					M.adjustToxLoss(-1)
 				..()
 				return
 
@@ -1558,9 +1617,9 @@ datum
 			description = "An all-purpose antiviral agent."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			custom_metabolism = 0.01
 
-			on_mob_life(var/mob/living/M as mob)//no more mr. panacea
-				holder.remove_reagent(src.id, 0.2)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				return
 
@@ -1606,6 +1665,7 @@ datum
 			description = "A powerful hallucinogen. Not a thing to be messed with."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 139, 166, 233
+			custom_metabolism = 0.05
 
 			on_mob_life(var/mob/living/M)
 				if(!M) M = holder.my_atom
@@ -1919,21 +1979,21 @@ datum
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
 							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 3)
-							victim.eye_blind = max(M.eye_blind, 1)
+							victim.eye_blurry = max(M.eye_blurry, 15)
+							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Paralyse(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
 							victim.emote("scream")
-							victim.eye_blurry = max(M.eye_blurry, 1)
+							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream")
 							victim << "\red You're sprayed directly in the eyes with pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 5)
-							victim.eye_blind = max(M.eye_blind, 2)
+							victim.eye_blurry = max(M.eye_blurry, 25)
+							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
 							victim.drop_item()
 
