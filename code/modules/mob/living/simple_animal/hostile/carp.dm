@@ -46,7 +46,7 @@
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
-	var/mob/living/L = .
+	var/mob/living/carbon/L = .
 	if(istype(L))
 		if(prob(15))
 			L.Weaken(3)

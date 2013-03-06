@@ -446,17 +446,7 @@
 	proc/handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
-		var/loc_temp = T0C
-		if(istype(loc, /obj/mecha))
-			var/obj/mecha/M = loc
-			loc_temp =  M.return_temperature()
-		else if(istype(get_turf(src), /turf/space))
-			var/turf/heat_turf = get_turf(src)
-			loc_temp = heat_turf.temperature
-		else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-			loc_temp = loc:air_contents.temperature
-		else
-			loc_temp = environment.temperature
+		var/loc_temp = get_temperature(environment)
 
 		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 

@@ -172,8 +172,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 /datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
 	if(affected_mob)
 		if(resistance && !(type in affected_mob.resistances))
-			var/saved_type = "[type]"
-			affected_mob.resistances += text2path(saved_type)
+			affected_mob.resistances += type
 		/*if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
 			affected_mob.status_flags &= ~(XENO_HOST)*/
 		affected_mob.viruses -= src		//remove the datum from the list

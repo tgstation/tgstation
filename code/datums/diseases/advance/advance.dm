@@ -367,8 +367,6 @@ var/list/advance_cures = 	list(
 			for(var/datum/disease/A in data["viruses"])
 				preserve += A.Copy()
 			R.data = data.Copy()
-		else
-			R.data = data
 		if(preserve.len)
 			R.data["viruses"] = preserve
 

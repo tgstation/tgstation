@@ -204,7 +204,7 @@ datum
 					R.on_move (A, Running)
 				update_total()
 
-			conditional_update(var/atom/A, )
+			conditional_update(var/atom/A)
 				for(var/datum/reagent/R in reagent_list)
 					R.on_update (A)
 				update_total()
@@ -384,43 +384,18 @@ datum
 						R.volume += amount
 						update_total()
 						my_atom.on_reagent_change()
-
-						// mix dem viruses
-						if(R.id == "blood" && reagent == "blood")
-							if(R.data && data)
-
-								if(R.data["viruses"] || data["viruses"])
-
-									var/list/mix1 = R.data["viruses"]
-									var/list/mix2 = data["viruses"]
-
-									// Stop issues with the list changing during mixing.
-									var/list/to_mix = list()
-
-									for(var/datum/disease/advance/AD in mix1)
-										to_mix += AD
-									for(var/datum/disease/advance/AD in mix2)
-										to_mix += AD
-
-									var/datum/disease/advance/AD = Advance_Mix(to_mix)
-									if(AD)
-										var/list/preserve = list(AD)
-										for(var/D in R.data["viruses"])
-											if(!istype(D, /datum/disease/advance))
-												preserve += D
-										R.data["viruses"] = preserve
-
+						R.on_merge(data)
 						handle_reactions()
 						return 0
 
 				var/datum/reagent/D = chemical_reagents_list[reagent]
 				if(D)
 
-					var/datum/reagent/R = new D.type()
+					var/datum/reagent/R = new D.type(data)
 					reagent_list += R
 					R.holder = src
 					R.volume = amount
-					SetViruses(R, data) // Includes setting data
+					R.data = data
 
 					//debug
 					//world << "Adding data"

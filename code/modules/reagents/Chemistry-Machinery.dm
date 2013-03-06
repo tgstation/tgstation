@@ -477,27 +477,25 @@
 			if(B)
 				var/path = href_list["create_vaccine"]
 				var/vaccine_type = text2path(path)
-				var/datum/disease/D = null
+				var/vaccine_name = "Unknown"
 
-				if(!vaccine_type)
-					D = archive_diseases[path]
-					vaccine_type = path
+				if(!ispath(vaccine_type))
+					if(archive_diseases[path])
+						var/datum/disease/D = archive_diseases[path]
+						if(D)
+							vaccine_name = D.name
+							vaccine_type = path
 				else
-					if(vaccine_type in diseases)
-						D = new vaccine_type(0, null)
+					var/datum/disease/D = new vaccine_type(0, null)
+					if(D)
+						vaccine_name = D.name
 
-				if(D)
-					B.name = "[D.name] vaccine bottle"
-					B.reagents.add_reagent("vaccine",15,vaccine_type)
+				if(vaccine_type)
+
+					B.name = "[vaccine_name] vaccine bottle"
+					B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
 					wait = 1
-					var/datum/reagents/R = beaker.reagents
-					var/datum/reagent/blood/Blood = null
-					for(var/datum/reagent/blood/L in R.reagent_list)
-						if(L)
-							Blood = L
-							break
-					var/list/res = Blood.data["resistances"]
-					spawn(res.len*200)
+					spawn(200)
 						src.wait = null
 		else
 			src.temp_html = "The replicator is not ready yet."

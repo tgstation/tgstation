@@ -33,22 +33,23 @@
 	if(!node)
 		return
 	if(!on)
-		updateUsrDialog()
+		updateDialog()
 		return
 
-	if(occupant)
-		if(occupant.stat != 2)
-			process_occupant()
-
 	if(air_contents)
+
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
 		expel_gas()
 
+		if(occupant)
+			if(occupant.stat != 2)
+				process_occupant()
+
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		network.update = 1
 
-	updateUsrDialog()
+	updateDialog()
 	return 1
 
 
@@ -63,7 +64,10 @@
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user as mob)
-	user.set_machine(src)
+	interact(user)
+
+/obj/machinery/atmospherics/unary/cryo_cell/interact(mob/user as mob)
+
 
 	var/dat = "<h3>Cryo Cell Status</h3>"
 
@@ -85,12 +89,12 @@
 
 		dat += "<br />"
 
-		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>Body Temperature:</div><div class='statusValue'>[occupant.bodytemperature]</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [round(occupant.health)]%;' class='progressFill good'></div></div><div class='statusValue'>[round(occupant.health)]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [round(occupant.getBruteLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getBruteLoss())]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [round(occupant.getOxyLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getOxyLoss())]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [round(occupant.getToxLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getToxLoss())]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [round(occupant.getFireLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getFireLoss())]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>Body Temperature:</div><div class='statusValue'>[round(occupant.bodytemperature)]</div></div>"
 
 	var/temp_text = ""
 	if(air_contents.temperature > T0C)
@@ -122,7 +126,7 @@
 	user.set_machine(src)
 	//user << browse(dat, "window=cryo")
 	//onclose(user, "cryo")
-	var/datum/browser/popup = new(user, "cryo", "Cryo Cell Control System", 520, 400) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "cryo", "Cryo Cell Control System", 520, 410) // Set up the popup browser window
 	popup.add_stylesheet("sleeper", 'html/browser/cryo.css')
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)

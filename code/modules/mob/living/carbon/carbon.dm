@@ -434,6 +434,24 @@
 	else
 		..()
 
+/mob/living/carbon/proc/get_temperature(var/datum/gas_mixture/environment)
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+	else if(istype(get_turf(src), /turf/space))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
+		if(C.air_contents.total_moles() < 10)
+			loc_temp = environment.temperature
+		else
+			loc_temp = C.air_contents.temperature
+	else
+		loc_temp = environment.temperature
+	return loc_temp
+
 
 /mob/living/carbon/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)

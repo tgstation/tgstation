@@ -73,6 +73,10 @@ datum
 			on_move(var/mob/M)
 				return
 
+			// Called when two reagents of the same are mixing.
+			on_merge(var/data)
+				return
+
 			on_update(var/atom/A)
 				return
 
@@ -113,6 +117,30 @@ datum
 						else //injected
 							M.contract_disease(D, 1, 0)
 
+			on_merge(var/list/data)
+				if(src.data && data)
+
+					if(src.data["viruses"] || data["viruses"])
+
+						var/list/mix1 = src.data["viruses"]
+						var/list/mix2 = data["viruses"]
+
+						// Stop issues with the list changing during mixing.
+						var/list/to_mix = list()
+
+						for(var/datum/disease/advance/AD in mix1)
+							to_mix += AD
+						for(var/datum/disease/advance/AD in mix2)
+							to_mix += AD
+
+						var/datum/disease/advance/AD = Advance_Mix(to_mix)
+						if(AD)
+							var/list/preserve = list(AD)
+							for(var/D in src.data["viruses"])
+								if(!istype(D, /datum/disease/advance))
+									preserve += D
+							src.data["viruses"] = preserve
+				return 1
 
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
@@ -172,18 +200,16 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/vaccine/self = src
 				src = null
-				if(self.data&&method == INGEST)
+				if(islist(self.data) && method == INGEST)
 					for(var/datum/disease/D in M.viruses)
-						if(istype(D, /datum/disease/advance))
-							var/datum/disease/advance/A = D
-							if(A.GetDiseaseID() == self.data)
-								D.cure()
-						else
-							if(D.type == self.data)
-								D.cure()
-
-					M.resistances += self.data
+						if(D.GetDiseaseID() in self.data)
+							D.cure()
+					M.resistances |= self.data
 				return
+
+			on_merge(var/list/data)
+				if(istype(data))
+					src.data |= data
 
 
 		water

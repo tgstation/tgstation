@@ -76,17 +76,8 @@
 
 	if(!environment)
 		return
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-	else if(istype(get_turf(src), /turf/space))
-		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		loc_temp = loc:air_contents.temperature
-	else
-		loc_temp = environment.temperature
+
+	var/loc_temp = get_temperature(environment)
 
 	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
 
