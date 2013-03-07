@@ -56,7 +56,7 @@ var/list/mechtoys = list(
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime))	//If your not laying down, or a small creature, no pass.
+		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse))  //If your not laying down, or a small creature, no pass.
 			return 0
 	return ..()
 
@@ -98,6 +98,7 @@ var/list/mechtoys = list(
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/hacked = 0
 	var/can_order_contraband = 0
+	var/last_viewed_group = "categories"
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
@@ -106,6 +107,7 @@ var/list/mechtoys = list(
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
+	var/last_viewed_group = "categories"
 
 /*
 /obj/effect/marker/supplymarker
@@ -375,19 +377,20 @@ var/list/mechtoys = list(
 		if(href_list["order"] == "categories")
 			//all_supply_groups
 			//Request what?
+			last_viewed_group = "categories"
 			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
-			var/cur_supply_group = href_list["order"]
+			last_viewed_group = href_list["order"]
 			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>"
-			temp += "<b>Request from: [cur_supply_group]</b><BR><BR>"
+			temp += "<b>Request from: [last_viewed_group]</b><BR><BR>"
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
-				if(N.hidden || N.contraband || N.group != cur_supply_group) continue								//Have to send the type instead of a reference to
+				if(N.hidden || N.contraband || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 
 	else if (href_list["doorder"])
@@ -440,7 +443,7 @@ var/list/mechtoys = list(
 		supply_shuttle.requestlist += O
 
 		temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
@@ -558,19 +561,20 @@ var/list/mechtoys = list(
 		if(href_list["order"] == "categories")
 			//all_supply_groups
 			//Request what?
+			last_viewed_group = "categories"
 			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
-			var/cur_supply_group = href_list["order"]
+			last_viewed_group = href_list["order"]
 			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>"
-			temp += "<b>Request from: [cur_supply_group]</b><BR><BR>"
+			temp += "<b>Request from: [last_viewed_group]</b><BR><BR>"
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
-				if(N.hidden || (N.contraband && !can_order_contraband) || N.group != cur_supply_group) continue								//Have to send the type instead of a reference to
+				if(N.hidden || (N.contraband && !can_order_contraband) || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 
 		/*temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
@@ -632,7 +636,7 @@ var/list/mechtoys = list(
 		supply_shuttle.requestlist += O
 
 		temp = "Order request placed.<BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A> | <A href='?src=\ref[src];confirmorder=[O.ordernum]'>Authorize Order</A>"
+		temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.ordernum]'>Authorize Order</A>"
 
 	else if(href_list["confirmorder"])
 		//Find the correct supply_order datum
@@ -650,10 +654,10 @@ var/list/mechtoys = list(
 					supply_shuttle.points -= P.cost
 					supply_shuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
-					temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				else
 					temp = "Not enough supply points.<BR>"
-					temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
 
 	else if (href_list["vieworders"])
@@ -692,7 +696,7 @@ var/list/mechtoys = list(
 				supply_shuttle.requestlist.Cut(i,i+1)
 				temp = "Request removed.<BR>"
 				break
-		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>OK</A>"
+		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["clearreq"])
 		supply_shuttle.requestlist.Cut()

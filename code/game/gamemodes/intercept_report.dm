@@ -111,114 +111,74 @@
 		return num2text(md5(num2text(rand(1,10000))))
 */
 
+/datum/intercept_text/proc/get_suspect()
+	var/list/dudes = list()
+	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.client.prefs.nanotrasen_relation == "Opposed")
+		dudes += man
+	for(var/i = 0, i < max(player_list.len/10,2), i++)
+		dudes += pick(player_list)
+	return pick(dudes)
+
 /datum/intercept_text/proc/build_traitor(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
 
-	/*
-	var/fingerprints
-	var/traitor_name
-	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
-	if(prob(prob_right_dude) && ticker.mode == "traitor")
-		if(correct_person:assigned_role=="MODE")
-			traitor_name = pick_mob()
-		else
-			traitor_name = correct_person:current
-	else if(prob(prob_right_dude))
-		traitor_name = pick_mob()
-	else
-		fingerprints = pick_fingerprints()
-	*/
+	var/mob/living/carbon/human/H = get_suspect()
+	if(!H) return
+
+	var/fingerprints = num2text(md5(H.dna.uni_identity))
+	var/traitor_name = H.real_name
+	var/prob_right_dude = rand(1, 100)
 
 	src.text += "<BR><BR>The <B>[name_1] [name_2]</B> implied an undercover operative was acting on their behalf on the station currently."
 	src.text += "It would be in your best interests to suspect everybody, as these undercover operatives could have implants which trigger them to have their memories removed until they are needed. He, or she, could even be a high ranking officer."
-	/*
+
 	src.text += "After some investigation, we "
-	if(traitor_name)
+	if(prob(50))
 		src.text += "are [prob_right_dude]% sure that [traitor_name] may have been involved, and should be closely observed."
 		src.text += "<BR>Note: This group are known to be untrustworthy, so do not act on this information without proper discourse."
 	else
 		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
-	*/
+
 
 
 /datum/intercept_text/proc/build_cult(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
-	/*
-	var/traitor_name
-	var/traitor_job
-	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
-	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
-	if(prob(prob_right_job) && is_convertable_to_cult(correct_person))
-		if (correct_person)
-			if(correct_person:assigned_role=="MODE")
-				traitor_job = pick(get_all_jobs())
-			else
-				traitor_job = correct_person:assigned_role
-	else
-		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "Chaplain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer")
-		traitor_job = pick(job_tmp)
-	if(prob(prob_right_dude) && ticker.mode == "cult")
-		if(correct_person:assigned_role=="MODE")
-			traitor_name = src.pick_mob()
-		else
-			traitor_name = correct_person:current
-	else
-		traitor_name = pick_mob()
-	*/
+
+	var/prob_right_dude = rand(1, 100)
+	var/mob/living/carbon/human/H = get_suspect()
+	if(!H) return
+	var/traitor_job = H.mind.assigned_role
+
 	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge onto as many stations as they can."
 	src.text += "Watch out for the following: praying to an unfamilar god, preaching the word of \[REDACTED\], sacrifices, magical dark power, living constructs of evil and a portal to the dimension of the underworld."
-	/*
-	src.text += "Based on our intelligence, we are [prob_right_job]% sure that if true, someone doing the job of [traitor_job] on your station may have been converted "
+
+	src.text += "Based on our intelligence, we are [prob_right_dude]% sure that if true, someone doing the job of [traitor_job] on your station may have been converted "
 	src.text += "and instilled with the idea of the flimsiness of the real world, seeking to destroy it. "
-	if(prob(prob_right_dude))
-		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
-		src.text += "organisation."
+
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
-	*/
+
 
 
 /datum/intercept_text/proc/build_rev(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
-	/*
-	var/traitor_name
-	var/traitor_job
-	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
-	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
-	if(prob(prob_right_job) && is_convertable_to_rev(correct_person))
-		if (correct_person)
-			if(correct_person.assigned_role=="MODE")
-				traitor_job = pick(get_all_jobs())
-			else
-				traitor_job = correct_person.assigned_role
-	else
-		var/list/job_tmp = get_all_jobs()
-		job_tmp-=nonhuman_positions
-		job_tmp-=command_positions
-		job_tmp.Remove("Security Officer", "Detective", "Warden", "MODE")
-		traitor_job = pick(job_tmp)
-	if(prob(prob_right_dude) && ticker.mode.config_tag == "revolution")
-		if(correct_person.assigned_role=="MODE")
-			traitor_name = src.pick_mob()
-		else
-			traitor_name = correct_person.current
-	else
-		traitor_name = src.pick_mob()
-	*/
+
+	var/prob_right_dude = rand(1, 100)
+	var/mob/living/carbon/human/H = get_suspect()
+	if(!H) return
+	var/traitor_job = H.mind.assigned_role
+
 	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] are attempting to stir unrest on one of our stations in your sector."
 	src.text += "Watch out for suspicious activity among the crew and make sure that all heads of staff report in periodically."
-	/*
-	src.text += "Based on our intelligence, we are [prob_right_job]% sure that if true, someone doing the job of [traitor_job] on your station may have been brainwashed "
+
+	src.text += "Based on our intelligence, we are [prob_right_dude]% sure that if true, someone doing the job of [traitor_job] on your station may have been brainwashed "
 	src.text += "at a recent conference, and their department should be closely monitored for signs of mutiny. "
-	if(prob(prob_right_dude))
-		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
-		src.text += "organisation."
+
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
-	*/
+
 
 
 /datum/intercept_text/proc/build_wizard(datum/mind/correct_person)

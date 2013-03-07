@@ -37,9 +37,9 @@ var/global/datum/controller/gameticker/ticker
 	var/triai = 0//Global holder for Triumvirate
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/ambience/title2.ogg','sound/ambience/title1.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
-	for(var/mob/new_player/M in mob_list)
-		if(M.client)	M.client.playtitlemusic()
+	login_music = pick(\
+	'sound/music/space.ogg',\
+	'sound/music/traitor.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -105,11 +105,21 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	//setup the money accounts
+	if(!centcomm_account_db)
+		for(var/obj/machinery/account_database/check_db in world)
+			if(check_db.z == 2)
+				centcomm_account_db = check_db
+				break
+
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
 	data_core.manifest()
 	current_state = GAME_STATE_PLAYING
+
+	//here to initialize the random events nicely at round start
+	setup_economy()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
@@ -123,8 +133,8 @@ var/global/datum/controller/gameticker/ticker
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
-	start_events() //handles random events and space dust.
-//new random event system is handled from the MC.
+	//start_events() //handles random events and space dust.
+	//new random event system is handled from the MC.
 
 	var/admins_number = 0
 	for(var/client/C)

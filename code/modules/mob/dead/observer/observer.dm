@@ -263,25 +263,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Become mouse"
 	set category = "Ghost"
 
+	var/timedifference = world.time - client.time_died_as_mouse
+	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+		var/timedifference_text
+		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
+		src << "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		return
+
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
-	var/list/mouse_candidates = list()
-	for(var/mob/living/simple_animal/mouse/M in world)
-		if(!M.ckey && !M.stat)
-			mouse_candidates.Add(M)
-	if(mouse_candidates.len)
-		host = pick(mouse_candidates)
+	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+	var/list/found_vents = list()
+	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
+		if(!v.welded && v.z == src.z)
+			found_vents.Add(v)
+	if(found_vents.len)
+		vent_found = pick(found_vents)
+		host = new /mob/living/simple_animal/mouse(vent_found.loc)
 	else
-		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
-		var/list/found_vents = list()
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
-			if(!v.welded && v.z == src.z)
-				found_vents.Add(v)
-		if(found_vents.len)
-			vent_found = pick(found_vents)
-			host = new /mob/living/simple_animal/mouse(vent_found.loc)
-		else
-			src << "<span class='warning'>Unable to find any live mice, or unwelded vents to spawn one at.</span>"
+		src << "<span class='warning'>Unable to find any unwelded vents to spawn mice at.</span>"
 
 	if(host)
 		host.ckey = src.ckey

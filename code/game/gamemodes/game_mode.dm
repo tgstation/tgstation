@@ -64,8 +64,8 @@ Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom:3:Freedom Implant;
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
-/obj/item/weapon/implant/explosive:6:Explosive Implant (DANGER!);
-/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;Whitespace:Seperator;
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive:6:Explosive Implant (DANGER!);
+/obj/item/weapon/storage/box/syndie_kit/imp_compress:4:Compressed Matter Implant;Whitespace:Seperator;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
@@ -204,12 +204,12 @@ Implants;
 
 
 /datum/game_mode/proc/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
+	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	possible_modes -= "[ticker.mode]"
+	//possible_modes -= "[ticker.mode]"
 	var/number = pick(2, 3)
 	var/i = 0
 	for(i = 0, i < number, i++)
@@ -428,3 +428,15 @@ proc/display_roundstart_logout_report()
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
 			M << msg
+
+
+proc/get_nt_opposed()
+	var/list/dudes = list()
+	for(var/mob/living/carbon/human/man in player_list)
+		if(man.client)
+			if(man.client.prefs.nanotrasen_relation == "Opposed")
+				dudes += man
+			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
+				dudes += man
+	if(dudes.len == 0) return null
+	return pick(dudes)

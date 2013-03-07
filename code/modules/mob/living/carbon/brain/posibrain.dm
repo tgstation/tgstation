@@ -10,14 +10,13 @@
 	var/construction_time = 75
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
-
+	var/mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
 	var/locked = 0
-	var/mob/living/carbon/brain/brainmob = null//The current occupant.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	attack_self(mob/user as mob)
-		if(!brainmob && searching == 0)
+		if(!brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
 			icon_state = "posibrain-searching"
@@ -37,7 +36,7 @@
 		spawn(0)
 			if(!C)	return
 			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
-			if(!C || brainmob)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+			if(!C || brainmob.key)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 			if(response == "Yes")
 				transfer_personality(C.mob)
 			else if (response == "Never for this round")
@@ -47,29 +46,15 @@
 
 	proc/transfer_personality(var/mob/candidate)
 
-		var/mob/living/carbon/brain/B = new(src)
-
 		src.searching = 0
-
-		src.brainmob = B
 		src.brainmob.mind = candidate.mind
-
-		src.brainmob.name = "PBU-[rand(100, 999)]"
-		src.brainmob.real_name = "PBU-[rand(100, 999)]"
-		src.brainmob.loc = src
-		src.brainmob.container = src
-		src.brainmob.robot_talk_understand = 1
-		src.brainmob.stat = 0
-		src.brainmob.silent = 0
-		src.brainmob.brain_op_stage = 4.0
 		src.brainmob.key = candidate.key
-		dead_mob_list -= src.brainmob
-		living_mob_list += src.brainmob
+		src.name = "positronic brain ([src.brainmob.name])"
 
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
 		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 		src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
-		src.brainmob << "Use say :b to speak to other artificial intelligences."
+		src.brainmob << "<b>Use say :b to speak to other artificial intelligences.</b>"
 		src.brainmob.mind.assigned_role = "Positronic Brain"
 
 		var/turf/T = get_turf_or_move(src.loc)
@@ -100,12 +85,14 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
-	if(src.brainmob)
+	if(src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
 			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+	else
+		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
 	usr << msg
 	return
@@ -121,4 +108,19 @@
 				brainmob.emp_damage += rand(10,20)
 			if(3)
 				brainmob.emp_damage += rand(0,10)
+	..()
+
+/obj/item/device/posibrain/New()
+
+	src.brainmob = new(src)
+	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+	src.brainmob.real_name = src.brainmob.name
+	src.brainmob.loc = src
+	src.brainmob.container = src
+	src.brainmob.robot_talk_understand = 1
+	src.brainmob.stat = 0
+	src.brainmob.silent = 0
+	src.brainmob.brain_op_stage = 4.0
+	dead_mob_list -= src.brainmob
+
 	..()

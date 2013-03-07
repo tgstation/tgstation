@@ -98,6 +98,8 @@ datum/preferences
 	var/sec_record = ""
 	var/disabilities = 0
 
+	var/nanotrasen_relation = "Neutral"
+
 		// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
@@ -297,6 +299,8 @@ datum/preferences
 			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
 
 		dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+
+		dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
 		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
@@ -764,8 +768,8 @@ datum/preferences
 						var/prev_species = species
 						var/whitelisted = 0
 						if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-							if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
-								new_species += "Soghun"
+							if(is_alien_whitelisted(user, "Soghun")) //Check for Unathi and admins
+								new_species += "Unathi"
 								whitelisted = 1
 							if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran and admins
 								new_species += "Tajaran"
@@ -778,7 +782,7 @@ datum/preferences
 								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
 						else //Not using the whitelist? Aliens for everyone!
 							new_species += "Tajaran"
-							new_species += "Soghun"
+							new_species += "Unathi"
 							new_species += "Skrell"
 						species = input("Please select a species", "Character Generation", null) in new_species
 
@@ -839,7 +843,7 @@ datum/preferences
 							b_type = new_b_type
 
 					if("hair")
-						if(species == "Human" || species == "Soghun")
+						if(species == "Human" || species == "Unathi")
 							var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 							if(new_hair)
 								r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -918,6 +922,11 @@ datum/preferences
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
+
+					if("nt_relation")
+						var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
+						if(new_relation)
+							nanotrasen_relation = new_relation
 
 					if("flavor_text")
 						var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message

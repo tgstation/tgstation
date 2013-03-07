@@ -143,12 +143,15 @@
 	S["skills"]				>> skills
 	S["skill_specialization"] >> skill_specialization
 	S["organ_data"]			>> organ_data
+
+	S["nanotrasen_relation"] >> nanotrasen_relation
 	//S["skin_style"]			>> skin_style
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(isnull(species)) species = "Human"
+	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
@@ -238,6 +241,8 @@
 	S["skills"]				<< skills
 	S["skill_specialization"] << skill_specialization
 	S["organ_data"]			<< organ_data
+
+	S["nanotrasen_relation"] << nanotrasen_relation
 	//S["skin_style"]			<< skin_style
 
 	return 1

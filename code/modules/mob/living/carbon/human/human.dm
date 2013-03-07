@@ -38,6 +38,11 @@
 	organs_by_name["l_foot"] = new/datum/organ/external/l_foot(organs_by_name["l_leg"])
 	organs_by_name["r_foot"] = new/datum/organ/external/r_foot(organs_by_name["r_leg"])
 
+	new/datum/organ/internal/heart(src)
+	new/datum/organ/internal/lungs(src)
+	new/datum/organ/internal/liver(src)
+	new/datum/organ/internal/kidney(src)
+
 
 	// connect feet to legs and hands to arms
 /*	var/datum/organ/external/organ = organs_by_name["l_hand"]
@@ -899,24 +904,51 @@
 					H.brainmob.mind.transfer_to(src)
 					del(H)
 
-	var/datum/organ/external/chest/E = get_organ("chest")
-	if(E.ruptured_lungs == 1)
-		E.ruptured_lungs = 0
+	for(var/datum/organ/internal/I in internal_organs)
+		I.damage = 0
 
 	for (var/datum/disease/virus in viruses)
 		virus.cure()
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/external/chest/E = get_organ("chest")
-	return E.ruptured_lungs
-
+	var/datum/organ/internal/lungs/L = internal_organs["lungs"]
+	return L.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/external/chest/E = get_organ("chest")
+	var/datum/organ/internal/lungs/L = internal_organs["lungs"]
 
-	if(E.ruptured_lungs == 0)
+	if(!L.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
+		L.damage = L.min_bruised_damage
 
-	E.ruptured_lungs = 1
+/*
+/mob/living/carbon/human/verb/simulate()
+	set name = "sim"
+	set background = 1
 
+	var/damage = input("Wound damage","Wound damage") as num
+
+	var/germs = 0
+	var/tdamage = 0
+	var/ticks = 0
+	while (germs < 2501 && ticks < 100000 && round(damage/10)*20)
+		diary << "VIRUS TESTING: [ticks] : germs [germs] tdamage [tdamage] prob [round(damage/10)*20]"
+		ticks++
+		if (prob(round(damage/10)*20))
+			germs++
+		if (germs == 100)
+			world << "Reached stage 1 in [ticks] ticks"
+		if (germs > 100)
+			if (prob(10))
+				damage++
+				germs++
+		if (germs == 1000)
+			world << "Reached stage 2 in [ticks] ticks"
+		if (germs > 1000)
+			damage++
+			germs++
+		if (germs == 2500)
+			world << "Reached stage 3 in [ticks] ticks"
+	world << "Mob took [tdamage] tox damage"
+*/

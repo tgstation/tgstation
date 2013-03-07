@@ -66,6 +66,7 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 	for(var/T in paths)
 		var/datum/surgery_step/S = new T
 		surgery_steps += S
+	sort_surgeries()
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

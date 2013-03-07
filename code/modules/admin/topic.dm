@@ -2,8 +2,8 @@
 	..()
 
 	if(usr.client != src.owner || !check_rights(0))
-		world << "\blue [usr.key] has attempted to override the admin panel!"
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
+		message_admins("[usr.key] has attempted to override the admin panel!")
 		return
 
 	if(href_list["makeAntag"])
@@ -2417,6 +2417,10 @@
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
+
+	else if(href_list["populate_inactive_customitems"])
+		if(check_rights(R_ADMIN|R_SERVER))
+			populate_inactive_customitems_list(src.owner)
 
 	// player info stuff
 
