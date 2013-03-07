@@ -11,15 +11,27 @@
 	set name = "Lower Aim"
 	set category = "Object"
 	if(target)
-		for(var/mob/living/M in target)
-			if(M)
-				M.NotTargeted(src)
-		del(target)
+		stop_aim()
 		usr.visible_message("\blue \The [usr] lowers \the [src]...")
 
 //Clicking gun will still lower aim for guns that don't overwrite this
 /obj/item/weapon/gun/attack_self()
 	lower_aim()
+
+//Removing the lock and the buttons.
+/obj/item/weapon/gun/dropped(mob/user as mob)
+	stop_aim()
+	if (user.client)
+		user.client.remove_gun_icons()
+	return ..()
+
+//Removes lock fro mall targets
+/obj/item/weapon/gun/proc/stop_aim()
+	if(target)
+		for(var/mob/living/M in target)
+			if(M)
+				M.NotTargeted(src) //Untargeting people.
+		del(target)
 
 //Compute how to fire.....
 /obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
@@ -34,11 +46,6 @@
 			Aim(M) //Aha!  Aim at them!
 		else if(!ismob(M) || (ismob(M) && !(M in view(user)))) //Nope!  They weren't there!
 			Fire(A,user,params)  //Fire like normal, then.
-/*
-	else if(!target)
-		world << "\red DIDN'T HAVE A TARGET, FIRED"
-		Fire(A,user,params)  //Boom!
-		*/
 	usr.dir = get_cardinal_dir(src, A)
 
 //Aiming at the target mob.
@@ -61,11 +68,7 @@
 	if(M == T) return
 	if(!istype(M)) return
 	if(src != M.equipped())
-		for(var/mob/living/N in target)
-			if(N)
-				N.NotTargeted(src)
-		del(target)
-		return
+		stop_aim()
 	M.last_move_intent = world.time
 	if(load_into_chamber())
 		var/firing_check = in_chamber.check_fire(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
@@ -78,9 +81,7 @@
 			spawn(30)
 				told_cant_shoot = 0
 	else
-		usr.visible_message("*click click*", "\red <b>*click*</b>")
-		for(var/mob/living/K in viewers(usr))
-			K << 'empty.ogg'
+		click_empty(M)
 
 	usr.dir = get_cardinal_dir(src, T)
 
@@ -171,11 +172,8 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	//Adding the buttons to the controler person
 	var/mob/living/T = I.loc
 	if(T)
-		T.item_use_icon = new /obj/screen/gun/item(null)
-		T.gun_move_icon = new /obj/screen/gun/move(null)
 		if(T.client)
-			T.client.screen += T.item_use_icon
-			T.client.screen += T.gun_move_icon
+			T.client.add_gun_icons()
 		else
 			I.lower_aim()
 			return
@@ -215,9 +213,7 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 		del(I.target)
 	var/mob/living/T = I.loc //Remove the targeting icons
 	if(T && ismob(T) && !I.target)
-		del(T.item_use_icon)
-		del(T.gun_move_icon)
-		del(T.gun_run_icon)
+		T.client.remove_gun_icons()
 	if(!targeted_by.len)
 		del target_locked //Remove the overlay
 		del targeted_by
@@ -243,16 +239,50 @@ client/var
 	gun_mode = 0
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
+client/proc/add_gun_icons()
+	if (!usr.item_use_icon)
+		usr.item_use_icon = new /obj/screen/gun/item(null)
+		usr.item_use_icon.icon_state = "no_item[target_can_click]"
+		usr.item_use_icon.name = "[target_can_click ? "Disallow" : "Allow"] Item Use"
+
+	if (!usr.gun_move_icon)
+		usr.gun_move_icon = new /obj/screen/gun/move(null)
+		usr.gun_move_icon.icon_state = "no_walk[target_can_move]"
+		usr.gun_move_icon.name = "[target_can_move ? "Disallow" : "Allow"] Walking"
+
+	if (target_can_move && !usr.gun_run_icon)
+		usr.gun_run_icon = new /obj/screen/gun/run(null)
+		usr.gun_run_icon.icon_state = "no_run[target_can_run]"
+		usr.gun_run_icon.name = "[target_can_run ? "Disallow" : "Allow"] Running"
+
+	screen += usr.item_use_icon
+	screen += usr.gun_move_icon
+	if (target_can_move)
+		screen += usr.gun_run_icon
+
+client/proc/remove_gun_icons()
+	screen -= usr.item_use_icon
+	screen -= usr.gun_move_icon
+	if (target_can_move)
+		screen -= usr.gun_run_icon
+	del usr.gun_move_icon
+	del usr.item_use_icon
+	del usr.gun_run_icon
 
 client/verb/ToggleGunMode()
 	set hidden = 1
 	gun_mode = !gun_mode
 	if(gun_mode)
 		usr << "You will now take people captive."
+		add_gun_icons()
 	else
 		usr << "You will now shoot where you target."
+		for(var/obj/item/weapon/gun/G in usr)
+			G.stop_aim()
+		remove_gun_icons()
 	if(usr.gun_setting_icon)
 		usr.gun_setting_icon.icon_state = "gun[gun_mode]"
+
 
 client/verb/AllowTargetMove()
 	set hidden=1

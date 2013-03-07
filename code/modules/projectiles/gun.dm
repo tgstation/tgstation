@@ -34,18 +34,6 @@
 	proc/load_into_chamber()
 		return 0
 
-	//Removing the lock and the buttons.
-	dropped(mob/user as mob)
-		if(target)
-			for(var/mob/living/M in target)
-				if(M)
-					M.NotTargeted(src) //Untargeting people.
-			del(target)
-		del(user.item_use_icon) //Removing the control icons.
-		del(user.gun_move_icon)
-		del(user.gun_run_icon)
-		return ..()
-
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 		return 1
 
@@ -100,9 +88,7 @@
 		return
 
 	if(!load_into_chamber()) //CHECK
-		user.visible_message("*click click*", "\red <b>*click*</b>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-		return
+		return click_empty(user)
 
 	if(!in_chamber)
 		return
@@ -123,7 +109,7 @@
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
-		user.visible_message("<span class='warning'>[user] fires [src][reflex ? "by reflex":""]!</span>", \
+		user.visible_message("<span class='warning'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
 		"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
 		"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
@@ -157,6 +143,13 @@
 	else
 		user.update_inv_r_hand()
 
+/obj/item/weapon/gun/proc/click_empty(mob/user = null)
+	if (user)
+		user.visible_message("*click click*", "\red <b>*click*</b>")
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	else
+		src.visible_message("*click click*")
+		playsound(src.loc, 'sound/weapons/empty.ogg', 100, 1)
 
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
@@ -182,8 +175,7 @@
 			mouthshoot = 0
 			return
 		else
-			user.visible_message("*click click*", "\red <b>*click*</b>")
-			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+			click_empty(user)
 			mouthshoot = 0
 			return
 
@@ -195,8 +187,7 @@
 			Fire(M,user)
 			return
 		else if(target && M in target)
-			world << "\red PREFIRE IS CALLED TO SHOOT AT [M] BY [user]"
-			PreFire(M,user) ///Otherwise, shoot!
+			Fire(M,user) ///Otherwise, shoot!
 			return
 	else
 		return ..() //Pistolwhippin'
