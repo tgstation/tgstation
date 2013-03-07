@@ -129,6 +129,8 @@
 /mob/proc/restrained()
 	if (handcuffed)
 		return 1
+	if (complying)
+		return 1
 	return
 
 /mob/proc/db_click(text, t1)
@@ -719,6 +721,8 @@
 
 /mob/proc/can_use_hands()
 	if(handcuffed)
+		return 0
+	if(complying)
 		return 0
 	if(buckled && istype(buckled, /obj/structure/stool/bed)) // buckling does not restrict hands
 		return 0

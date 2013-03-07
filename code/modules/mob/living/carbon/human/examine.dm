@@ -24,6 +24,9 @@
 	if (src.handcuffed)
 		usr << "\blue [src.name] is \icon[src.handcuffed] handcuffed!"
 
+	if (src.iscomplying)
+		usr << "\blue [src.name] is on his knees, his hands behind his head!"
+
 	if (src.wear_suit)
 		if (src.wear_suit.blood_DNA)
 			usr << "\red [src.name] has a[src.wear_suit.blood_DNA ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name] on!"

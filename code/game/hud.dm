@@ -13,6 +13,7 @@
 #define ui_sstore1 "SOUTH+1,4"
 #define ui_hstore1 "SOUTH+1,5"
 #define ui_resist "EAST+1,SOUTH-1"
+#define ui_comply "EAST,SOUTH-1"
 #define ui_gloves "SOUTH,5"
 #define ui_glasses "SOUTH,7"
 #define ui_ears "SOUTH,6"

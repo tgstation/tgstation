@@ -185,6 +185,10 @@
 					src << "\blue You're restrained! You can't move!"
 					return 0
 
+			if(mob.iscomplying)
+				src << "You're on your knees, you can't move!"
+				return 0
+
 		move_delay = world.time//set move delay
 		switch(mob.m_intent)
 			if("run")

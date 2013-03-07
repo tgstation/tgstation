@@ -48,6 +48,7 @@
 	var/obj/screen/throw_icon = null
 	var/obj/screen/nutrition_icon = null
 	var/obj/screen/pressure = null
+	var/obj/screen/complying = null
 
 	var/total_luminosity = 0 //This controls luminosity for mobs, when you pick up lights and such this is edited.  If you want the mob to use lights it must update its lum in its life proc or such.  Note clamp this value around 7 or such to prevent massive light lag.
 	var/last_luminosity = 0
@@ -131,6 +132,7 @@
 	var/lastKnownIP = null
 	var/obj/structure/stool/buckled = null//Living
 	var/obj/item/weapon/handcuffs/handcuffed = null//Living
+	var/iscomplying = 0
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/back = null//Human/Monkey
