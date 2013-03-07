@@ -3,7 +3,8 @@
 	icon = 'icons/mob/screen1.dmi'
 	layer = 20.0
 	unacidable = 1
-	var/obj/master
+	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
+
 
 /obj/screen/text
 	icon = null
@@ -13,22 +14,25 @@
 	maptext_height = 480
 	maptext_width = 480
 
+
 /obj/screen/inventory
-	var/slot_id
+	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
+
 
 /obj/screen/close
 	name = "close"
-	master = null
 
-/obj/screen/close/DblClick()
-	if (src.master)
-		src.master:close(usr)
-	return
+/obj/screen/close/Click()
+	if(master)
+		if(istype(master, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = master
+			S.close(usr)
+
 
 /obj/screen/item_action
 	var/obj/item/owner
 
-/obj/screen/item_action/DblClick()
+/obj/screen/item_action/Click()
 	if(!usr || !owner)
 		return
 
@@ -38,194 +42,16 @@
 	if(!(owner in usr))
 		return
 
-	spawn()
-		owner.ui_action_click()
-		switch(owner.icon_action_button)
-			if("action_hardhat", "action_welding")
-				usr.update_inv_head(0)
-			if("action_welding_g")
-				usr.update_inv_glasses(0)
-			if("action_jetpack")
-				usr.update_inv_back(0)
-			if("action_magboots")
-				usr.update_inv_shoes(0)
+	owner.ui_action_click()
 
 //This is the proc used to update all the action buttons. It just returns for all mob types except humans.
 /mob/proc/update_action_buttons()
 	return
 
+
 /obj/screen/grab
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
-	master = null
-
-/obj/screen/storage
-	name = "storage"
-	master = null
-
-/obj/screen/storage/attack_hand(mob/user)
-	if(master)
-		var/obj/item/I = user.get_active_hand()
-		if(I)
-			master.attackby(I, user)
-
-/obj/screen/zone_sel
-	name = "damage zone"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "zone_sel"
-	var/selecting = "chest"
-	screen_loc = ui_zonesel
-
-
-/obj/screen/zone_sel/MouseDown(location, control,params)
-	// Changes because of 4.0
-	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
-
-	if (icon_y < 2)
-		return
-	else if (icon_y < 5)
-		if ((icon_x > 9 && icon_x < 23))
-			if (icon_x < 16)
-				selecting = "r_foot"
-			else
-				selecting = "l_foot"
-	else if (icon_y < 11)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 16)
-				selecting = "r_leg"
-			else
-				selecting = "l_leg"
-	else if (icon_y < 12)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 14)
-				selecting = "r_leg"
-			else if (icon_x < 19)
-				selecting = "groin"
-			else
-				selecting = "l_leg"
-		else
-			return
-	else if (icon_y < 13)
-		if ((icon_x > 7 && icon_x < 25))
-			if (icon_x < 12)
-				selecting = "r_hand"
-			else if (icon_x < 13)
-				selecting = "r_leg"
-			else if (icon_x < 20)
-				selecting = "groin"
-			else if (icon_x < 21)
-				selecting = "l_leg"
-			else
-				selecting = "l_hand"
-		else
-			return
-	else if (icon_y < 14)
-		if ((icon_x > 7 && icon_x < 25))
-			if (icon_x < 12)
-				selecting = "r_hand"
-			else if (icon_x < 21)
-				selecting = "groin"
-			else
-				selecting = "l_hand"
-		else
-			return
-	else if (icon_y < 16)
-		if ((icon_x > 7 && icon_x < 25))
-			if (icon_x < 13)
-				selecting = "r_hand"
-			else if (icon_x < 20)
-				selecting = "chest"
-			else
-				selecting = "l_hand"
-		else
-			return
-	else if (icon_y < 23)
-		if ((icon_x > 7 && icon_x < 25))
-			if (icon_x < 12)
-				selecting = "r_arm"
-			else if (icon_x < 21)
-				selecting = "chest"
-			else
-				selecting = "l_arm"
-		else
-			return
-	else if (icon_y < 24)
-		if ((icon_x > 11 && icon_x < 21))
-			selecting = "chest"
-		else
-			return
-	else if (icon_y < 25)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 16)
-				selecting = "head"
-			else if (icon_x < 17)
-				selecting = "mouth"
-			else
-				selecting = "head"
-		else
-			return
-	else if (icon_y < 26)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 15)
-				selecting = "head"
-			else if (icon_x < 18)
-				selecting = "mouth"
-			else
-				selecting = "head"
-		else
-			return
-	else if (icon_y < 27)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 15)
-				selecting = "head"
-			else if (icon_x < 16)
-				selecting = "eyes"
-			else if (icon_x < 17)
-				selecting = "mouth"
-			else if (icon_x < 18)
-				selecting = "eyes"
-			else
-				selecting = "head"
-		else
-			return
-	else if (icon_y < 28)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 14)
-				selecting = "head"
-			else if (icon_x < 19)
-				selecting = "eyes"
-			else
-				selecting = "head"
-		else
-			return
-	else if (icon_y < 29)
-		if ((icon_x > 11 && icon_x < 21))
-			if (icon_x < 15)
-				selecting = "head"
-			else if (icon_x < 16)
-				selecting = "eyes"
-			else if (icon_x < 17)
-				selecting = "head"
-			else if (icon_x < 18)
-				selecting = "eyes"
-			else
-				selecting = "head"
-		else
-			return
-	else if (icon_y < 31)
-		if ((icon_x > 11 && icon_x < 21))
-			selecting = "head"
-		else
-			return
-	else
-		return
-
-	overlays.Cut()
-	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
-
-	return
 
 /obj/screen/grab/Click()
 	var/obj/item/weapon/grab/G = master
@@ -237,35 +63,175 @@
 /obj/screen/grab/attackby()
 	return
 
-/*
-/obj/screen/MouseEntered(object,location,control,params)
-	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
-		return
-	switch(name)
-		if("act_intent")
-			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-				usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
 
-/obj/screen/MouseExited(object,location,control,params)
-	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
+/obj/screen/storage
+	name = "storage"
+
+/obj/screen/storage/attack_hand(mob/user)
+	if(master)
+		var/obj/item/I = user.get_active_hand()
+		if(I)
+			master.attackby(I, user)
+
+
+/obj/screen/zone_sel
+	name = "damage zone"
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "zone_sel"
+	var/selecting = "chest"
+	screen_loc = ui_zonesel
+
+/obj/screen/zone_sel/Click(location, control,params)
+	var/list/PL = params2list(params)
+	var/icon_x = text2num(PL["icon-x"])
+	var/icon_y = text2num(PL["icon-y"])
+
+	if(icon_y < 2)
 		return
-	switch(name)
-		if("act_intent")
-			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-				var/intent = usr.a_intent
-				if(intent == "hurt")
-					intent = "harm"	//hurt and harm have different sprite names for some reason.
-				usr.hud_used.action_intent.icon_state = "[intent]"
-*/
+	if(icon_y < 4)
+		if(icon_x > 9 && icon_x < 16)
+			selecting = "r_leg"
+		else if(icon_x > 15 && icon_x < 23)
+			selecting = "l_leg"
+		else
+			return
+	else if(icon_y < 11)
+		if(icon_x > 11 && icon_x < 21)
+			if(icon_x < 16)
+				selecting = "r_leg"
+			else
+				selecting = "l_leg"
+		else
+			return
+	else if(icon_y < 12)
+		if(icon_x > 7 && icon_x < 12)
+			selecting = "r_arm"
+		else if(icon_x > 11 && icon_x < 14)
+			selecting = "r_leg"
+		else if(icon_x < 19)
+			selecting = "groin"
+		else if(icon_x > 18 && icon_x < 21)
+			selecting = "l_leg"
+		else if(icon_x > 20 && icon_x < 25)
+			selecting = "l_arm"
+		else
+			return
+	else if(icon_y < 13)
+		if(icon_x > 7 && icon_x < 25)
+			if(icon_x < 13)
+				selecting = "r_leg"
+			else if(icon_x < 20)
+				selecting = "groin"
+			else if(icon_x < 21)
+				selecting = "l_leg"
+		else
+			return
+	else if(icon_y < 14)
+		if(icon_x > 11 && icon_x < 21)
+			selecting = "groin"
+		else if(icon_x > 7 && icon_x < 12)
+			selecting = "r_arm"
+		else if(icon_x > 20 && icon_x < 25)
+			selecting = "l_arm"
+		else
+			return
+	else if(icon_y < 16)
+		if(icon_x > 7 && icon_x < 25)
+			if(icon_x < 20)
+				selecting = "chest"
+		else
+			return
+	else if(icon_y < 23)
+		if(icon_x > 7 && icon_x < 25)
+			if(icon_x < 12)
+				selecting = "r_arm"
+			else if(icon_x < 21)
+				selecting = "chest"
+			else
+				selecting = "l_arm"
+		else
+			return
+	else if(icon_y < 24)
+		if(icon_x > 11 && icon_x < 21)
+			selecting = "chest"
+		else
+			return
+	else if(icon_y < 25)
+		if(icon_x > 11 && icon_x < 21)
+			if(icon_x < 16)
+				selecting = "head"
+			else if(icon_x < 17)
+				selecting = "mouth"
+			else
+				selecting = "head"
+		else
+			return
+	else if(icon_y < 26)
+		if(icon_x > 11 && icon_x < 21)
+			if(icon_x < 15)
+				selecting = "head"
+			else if(icon_x < 18)
+				selecting = "mouth"
+			else
+				selecting = "head"
+		else
+			return
+	else if(icon_y < 27)
+		if(icon_x > 11 && icon_x < 21)
+			if(icon_x < 15)
+				selecting = "head"
+			else if(icon_x < 16)
+				selecting = "eyes"
+			else if(icon_x < 17)
+				selecting = "mouth"
+			else if(icon_x < 18)
+				selecting = "eyes"
+			else
+				selecting = "head"
+		else
+			return
+	else if(icon_y < 28)
+		if(icon_x > 11 && icon_x < 21)
+			if(icon_x < 14)
+				selecting = "head"
+			else if(icon_x < 19)
+				selecting = "eyes"
+			else
+				selecting = "head"
+		else
+			return
+	else if(icon_y < 29)
+		if(icon_x > 11 && icon_x < 21)
+			if(icon_x < 15)
+				selecting = "head"
+			else if(icon_x < 16)
+				selecting = "eyes"
+			else if(icon_x < 17)
+				selecting = "head"
+			else if(icon_x < 18)
+				selecting = "eyes"
+			else
+				selecting = "head"
+		else
+			return
+	else if(icon_y < 31)
+		if(icon_x > 11 && icon_x < 21)
+			selecting = "head"
+		else
+			return
+	else
+		return
+
+	overlays.Cut()
+	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
+
 
 /obj/screen/Click(location, control, params)
 	if(!usr)	return
-	switch(name)
-		if("map")
-			usr.clearmap()
 
+	switch(name)
 		if("other")
-			if (usr.hud_used.inventory_shown)
+			if(usr.hud_used.inventory_shown)
 				usr.hud_used.inventory_shown = 0
 				usr.client.screen -= usr.hud_used.other
 			else
@@ -275,26 +241,20 @@
 			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
-			usr.quick_equip()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.quick_equip()
 
 		if("resist")
 			if(isliving(usr))
 				var/mob/living/L = usr
 				L.resist()
 
-		if("maprefresh")
-			var/obj/machinery/computer/security/seccomp = usr.machine
-
-			if(seccomp!=null)
-				seccomp.drawmap(usr)
-			else
-				usr.clearmap()
-
 		if("mov_intent")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
 				if(C.legcuffed)
-					C << "\red You are legcuffed! You cannot run until you get your cuffs removed!"
+					C << "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>"
 					C.m_intent = "walk"	//Just incase
 					C.hud_used.move_intent.icon_state = "walking"
 					return
@@ -305,9 +265,10 @@
 					if("walk")
 						usr.m_intent = "run"
 						usr.hud_used.move_intent.icon_state = "running"
-				if(istype(usr,/mob/living/carbon/alien/humanoid))	usr.update_icons()
+				if(istype(usr,/mob/living/carbon/alien/humanoid))
+					usr.update_icons()
 		if("m_intent")
-			if (!( usr.m_int ))
+			if(!usr.m_int)
 				switch(usr.m_intent)
 					if("run")
 						usr.m_int = "13,14"
@@ -342,10 +303,7 @@
 							C << "<span class='notice'>You are not wearing a mask.</span>"
 							return
 						else
-							if(istype(C.back, /obj/item/weapon/tank))
-								C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
-								C.internal = C.back
-							else if(istype(C.l_hand, /obj/item/weapon/tank))
+							if(istype(C.l_hand, /obj/item/weapon/tank))
 								C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
 								C.internal = C.l_hand
 							else if(istype(C.r_hand, /obj/item/weapon/tank))
@@ -365,6 +323,12 @@
 								else if(istype(H.r_store, /obj/item/weapon/tank))
 									H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
 									H.internal = H.r_store
+
+							//Seperate so CO2 jetpacks are a little less cumbersome.
+							if(!C.internal && istype(C.back, /obj/item/weapon/tank))
+								C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
+								C.internal = C.back
+
 							if(C.internal)
 								if(C.internals)
 									C.internals.icon_state = "internal1"
@@ -372,26 +336,10 @@
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
 		if("act_intent")
 			usr.a_intent_change("right")
-/*		if("help")
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-			usr.hud_used.show_intent_icons = 0
-		if("harm")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-			usr.hud_used.show_intent_icons = 0
-		if("grab")
-			usr.a_intent = "grab"
-			usr.hud_used.action_intent.icon_state = "grab"
-			usr.hud_used.show_intent_icons = 0
-		if("disarm")
-			usr.a_intent = "disarm"
-			usr.hud_used.action_intent.icon_state = "disarm"
-			usr.hud_used.show_intent_icons = 0	*/
 		if("pull")
 			usr.stop_pulling()
 		if("throw")
-			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
+			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
 		if("drop")
 			usr.drop_item_v()
@@ -459,51 +407,52 @@
 
 		else
 			DblClick()
-	return
 
-/obj/screen/inventory/attack_hand(mob/user as mob)
+
+/obj/screen/inventory/attack_hand(mob/user)
 	if(user.attack_ui(slot_id))
 		user.update_inv_l_hand(0)
 		user.update_inv_r_hand(0)
-	return
 
-/obj/screen/inventory/attack_paw(mob/user as mob)
-	if(user.attack_ui(slot_id))
-		user.update_inv_l_hand(0)
-		user.update_inv_r_hand(0)
-	return
+/obj/screen/inventory/attack_paw(mob/user)
+	return attack_hand(user)
 
 
-/mob/living/carbon/verb/mob_sleep()
+/mob/living/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
 
 	if(usr.sleeping)
-		usr << "\red You are already sleeping"
+		usr << "<span class='notice'>You are already sleeping.</span>"
 		return
 	else
-		if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			usr.sleeping = 20 //Short nap
+
 
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
 
 	resting = !resting
-	src << "\blue You are now [resting ? "resting" : "getting up"]"
+	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 
-/mob/verb/quick_equip()
+
+/mob/living/carbon/human/verb/quick_equip()
 	set name = "quick-equip"
 	set hidden = 1
-	var/obj/item/I = usr.get_active_hand()
-	if(!I)
-		usr << "\blue You are not holding anything to equip."
-		return
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/I = H.get_active_hand()
+		if(!I)
+			H << "<span class='notice'>You are not holding anything to equip.</span>"
+			return
+
 		H.equip_to_appropriate_slot(I)
 		H.update_inv_l_hand(0)
 		H.update_inv_r_hand(0)
+
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -559,69 +508,65 @@
 			L.buckled.manual_unbuckle(L)
 
 	//Breaking out of a locker?
-	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
+	else if(loc && istype(loc, /obj/structure/closet))
 		var/breakout_time = 2 //2 minutes by default
 
 		var/obj/structure/closet/C = L.loc
 		if(C.opened)
-			return //Door's open... wait, why are you in it's contents then?
+			return	//Door's open... wait, why are you in it's contents then?
 		if(istype(L.loc, /obj/structure/closet/secure_closet))
 			var/obj/structure/closet/secure_closet/SC = L.loc
 			if(!SC.locked && !SC.welded)
-				return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
+				return	//It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
 		else
 			if(!C.welded)
-				return //closed but not welded...
-		//	else Meh, lets just keep it at 2 minutes for now
-		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
+				return	//closed but not welded...</span>
 
 		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
 		L.last_special = world.time + 100
 		L << "<span class='notice'>You lean on the back of [C] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
-		for(var/mob/O in viewers(usr.loc))
+		for(var/mob/O in viewers(C))
 			O << "<span class='warning'>[C] begins to shake violently!</span>"
 
+		if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+			if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened)	//closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
+				return
 
-		spawn(0)
-			if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
+			//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
+			if(istype(L.loc, /obj/structure/closet/secure_closet))
+				var/obj/structure/closet/secure_closet/SC = L.loc
+				if(!SC.locked && !SC.welded)
+					return
+			else
+				if(!C.welded)
 					return
 
-				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
-				if(istype(L.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = L.loc
-					if(!SC.locked && !SC.welded)
-						return
-				else
-					if(!C.welded)
-						return
-
-				//Well then break it!
-				if(istype(usr.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = L.loc
-					SC.desc = "It appears to be broken."
-					SC.icon_state = SC.icon_off
-					flick(SC.icon_broken, SC)
-					sleep(10)
-					flick(SC.icon_broken, SC)
-					sleep(10)
-					SC.broken = 1
-					SC.locked = 0
-					L.visible_message("<span class='danger'>[L] successfully broke out of [SC]!</span>", \
-									"<span class='notice'>You successfully break out of [SC]!</span>")
-					if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
-						var/obj/structure/bigDelivery/BD = SC.loc
-						BD.attack_hand(usr)
-					SC.open()
-				else
-					C.welded = 0
-					L.visible_message("<span class='danger'>[L] successfully broke out of [C]!</span>", \
-									"<span class='notice'>You successfully break out of [C]!</span>")
-					if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
-						var/obj/structure/bigDelivery/BD = C.loc
-						BD.attack_hand(usr)
-					C.open()
+			//Well then break it!
+			if(istype(usr.loc, /obj/structure/closet/secure_closet))
+				var/obj/structure/closet/secure_closet/SC = L.loc
+				SC.desc = "It appears to be broken."
+				SC.icon_state = SC.icon_off
+				flick(SC.icon_broken, SC)
+				sleep(10)
+				flick(SC.icon_broken, SC)
+				sleep(10)
+				SC.broken = 1
+				SC.locked = 0
+				L.visible_message("<span class='danger'>[L] successfully broke out of [SC]!</span>", \
+								"<span class='notice'>You successfully break out of [SC]!</span>")
+				if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
+					var/obj/structure/bigDelivery/BD = SC.loc
+					BD.attack_hand(usr)
+				SC.open()
+			else
+				C.welded = 0
+				L.visible_message("<span class='danger'>[L] successfully broke out of [C]!</span>", \
+								"<span class='notice'>You successfully break out of [C]!</span>")
+				if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
+					var/obj/structure/bigDelivery/BD = C.loc
+					BD.attack_hand(usr)
+				C.open()
 
 	//breaking out of handcuffs
 	else if(iscarbon(L))

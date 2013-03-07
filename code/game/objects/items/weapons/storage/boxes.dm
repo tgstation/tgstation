@@ -24,9 +24,36 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	var/foldable = /obj/item/stack/sheet/cardboard
 
-/obj/item/weapon/storage/box/survival/
+
+/obj/item/weapon/storage/box/attack_self(mob/user)
+	..()
+
+	if(!foldable)
+		return
+	if(contents.len)
+		return
+	if(!ispath(foldable))
+		return
+
+	//Close any open UI windows first
+	var/found = 0
+	for(var/mob/M in range(1))
+		if(M.s_active == src)
+			close(M)
+		if(M == user)
+			found = 1
+	if(!found)	//User is too far away
+		return
+
+	user << "<span class='notice'>You fold [src] flat.</span>"
+	var/obj/item/I = new foldable(get_turf(src))
+	user.put_in_hands(I)
+	del(src)
+
+
+/obj/item/weapon/storage/box/survival
 	New()
 		..()
 		contents = list()
@@ -35,7 +62,7 @@
 		new /obj/item/weapon/tank/emergency_oxygen( src )
 		return
 
-/obj/item/weapon/storage/box/engineer/
+/obj/item/weapon/storage/box/engineer
 	New()
 		..()
 		contents = list()
@@ -366,6 +393,7 @@
 		..()
 		for(var/i=1; i <= storage_slots; i++)
 			new /obj/item/toy/snappop(src)
+
 
 /obj/item/weapon/storage/box/matches
 	name = "matchbox"
