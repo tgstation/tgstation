@@ -169,6 +169,10 @@
 			return
 		if (load_into_chamber())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger. Ow.</span>")
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
+			else
+				playsound(user, fire_sound, 50, 1)
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
 				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
@@ -180,6 +184,7 @@
 		else
 			user.visible_message("*click click*", "\red <b>*click*</b>")
 			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+			mouthshoot = 0
 			return
 
 	if (load_into_chamber())
