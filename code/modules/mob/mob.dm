@@ -80,38 +80,11 @@
 		M.show_message( message, 1, blind_message, 2)
 
 
-//This is awful
-/mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+//This is awful, still.
+/mob/attackby(obj/item/I, mob/user)
+	if(I && istype(I))	//The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
+		I.attack(src, user)
 
-	//Holding a balloon will shield you from an item that is_sharp() ... cause that makes sense
-	if (user.intent != "harm")
-		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
-			return src.l_hand.attackby(W)
-		if (istype(src.r_hand,/obj/item/latexballon) && src.r_hand:air_contents && is_sharp(W))
-			return src.r_hand.attackby(W)
-
-	//If src is grabbing someone and facing the attacker, the src will use the grabbed person as a shield
-	var/shielded = 0
-	if (locate(/obj/item/weapon/grab, src))
-		var/mob/safe = null
-		if (istype(src.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = src.l_hand
-			if ((G.state == 3 && get_dir(src, user) == src.dir))
-				safe = G.affecting
-		if (istype(src.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = src.r_hand
-			if ((G.state == 3 && get_dir(src, user) == src.dir))
-				safe = G.affecting
-		if (safe)
-			return safe.attackby(W, user)
-
-	//If the mob is not wearing a shield or otherwise is not shielded
-	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
-		spawn( 0 )
-			if (W && istype(W, /obj/item)) //The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
-				W.attack(src, user)
-				return
-	return
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)

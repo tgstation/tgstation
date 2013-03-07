@@ -304,8 +304,7 @@
 		return 0
 
 
-/obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
-
+/obj/structure/table/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
@@ -316,17 +315,18 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+/obj/structure/table/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user) < 2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+		if(G.state < GRAB_AGGRESSIVE)
+			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
-		if(!G.update())
+		if(!G.confirm())
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
+		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
+									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
 		del(W)
 		return
 
@@ -373,8 +373,10 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+		if(G.state < GRAB_AGGRESSIVE)
+			user << "<span class='notice'>You need a better grip to do that!</span>"
+			return
+		if(!G.confirm())
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -422,8 +424,10 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+		if(G.state < GRAB_AGGRESSIVE)
+			user << "<span class='notice'>You need a better grip to do that!</span>"
+			return
+		if(!G.confirm())
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)

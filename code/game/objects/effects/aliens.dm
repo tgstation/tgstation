@@ -137,7 +137,7 @@
 		if(isalien(user)&&(ishuman(G.affecting)||ismonkey(G.affecting)))
 		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
 			if(!affecting)
-				if(G.state<2)
+				if(G.state < GRAB_AGGRESSIVE)
 					user << "\red You need a better grip to do that!"
 					return
 				G.affecting.loc = src

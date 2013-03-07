@@ -1,5 +1,3 @@
-//todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
-
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
@@ -12,13 +10,15 @@
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
+
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
 
-/obj/structure/toilet/attack_hand(mob/living/user as mob)
+
+/obj/structure/toilet/attack_hand(mob/living/user)
 	if(swirlie)
-		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
+		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
 
@@ -39,10 +39,12 @@
 	open = !open
 	update_icon()
 
+
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
 
-/obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
+
+/obj/structure/toilet/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -54,13 +56,13 @@
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
-
+		if(!G.confirm())
+			return
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
-
-			if(G.state > 1)
+			if(G.state >= GRAB_AGGRESSIVE)
 				if(GM.loc != get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
+					user << "<span class='notice'>[GM] needs to be on [src].</span>"
 					return
 				if(open && !swirlie)
 					user.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='notice'>You start to give [GM] a swirlie!</span>")
@@ -103,12 +105,15 @@
 	density = 0
 	anchored = 1
 
+
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
+		if(!G.confirm())
+			return
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
-			if(G.state > 1)
+			if(G.state >= GRAB_AGGRESSIVE)
 				if(GM.loc != get_turf(src))
 					user << "<span class='notice'>[GM.name] needs to on [src].</span>"
 					return
@@ -133,7 +138,6 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 
-//add heat controls? when emagged, you can freeze to death in it?
 
 /obj/effect/mist
 	name = "mist"
@@ -142,6 +146,7 @@
 	layer = MOB_LAYER + 1
 	anchored = 1
 	mouse_opacity = 0
+
 
 /obj/machinery/shower/attack_hand(mob/M)
 	on = !on
@@ -152,6 +157,7 @@
 			check_heat(M)
 		for (var/atom/movable/G in loc)
 			G.clean_blood()
+
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer)
@@ -167,6 +173,7 @@
 				if("boiling")
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
+
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -193,6 +200,7 @@
 				del(mymist)
 				ismist = 0
 
+
 /obj/machinery/shower/HasEntered(atom/movable/O)
 	..()
 	wash(O)
@@ -200,10 +208,12 @@
 		mobpresent += 1
 		check_heat(O)
 
+
 /obj/machinery/shower/Uncrossed(atom/movable/O)
 	if(ismob(O))
 		mobpresent -= 1
 	..()
+
 
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O)
@@ -282,10 +292,12 @@
 			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
 				del(E)
 
+
 /obj/machinery/shower/process()
 	if(!on || !mobpresent) return
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
+
 
 /obj/machinery/shower/proc/check_heat(mob/M)
 	if(!on || watertemp == "normal") return
@@ -321,6 +333,7 @@
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
 
+
 /obj/structure/sink/attack_hand(mob/user)
 	if(isrobot(user) || isAI(user))
 		return
@@ -341,6 +354,7 @@
 
 	user.clean_blood()
 	user.visible_message("<span class='notice'>[user] washes their hands in [src].</span>")
+
 
 /obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(busy)

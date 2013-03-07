@@ -351,23 +351,31 @@
 /client/proc/Process_Grab()
 	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
 		var/list/grabbing = list()
+
 		if(istype(mob.l_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = mob.l_hand
 			grabbing += G.affecting
+
 		if(istype(mob.r_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = mob.r_hand
 			grabbing += G.affecting
+
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
-			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
-			if(G.state == 2)
-				move_delay = world.time + 10
-				if(!prob(25))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
+			if(G.state == GRAB_PASSIVE && !grabbing.Find(G.assailant))
 				del(G)
-			if(G.state == 3)
+
+			if(G.state == GRAB_AGGRESSIVE)
 				move_delay = world.time + 10
-				if(!prob(5))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
+				if(!prob(25))
+					return 1
+				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
+				del(G)
+
+			if(G.state == GRAB_NECK)
+				move_delay = world.time + 10
+				if(!prob(5))
+					return 1
+				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
 				del(G)
 	return 0
 

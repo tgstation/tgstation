@@ -399,7 +399,7 @@
 /obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
+		if(G.state < GRAB_AGGRESSIVE)
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
@@ -510,7 +510,7 @@
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
+		if(G.state < GRAB_AGGRESSIVE)
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
