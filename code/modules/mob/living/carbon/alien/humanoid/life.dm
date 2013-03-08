@@ -409,7 +409,11 @@
 			else
 				healths.icon_state = "health6"
 
-		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
+		if(pullin)
+			if(pulling)
+				pullin.icon_state = "pull"
+			else
+				pullin.icon_state = "pull0"
 
 
 		if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"

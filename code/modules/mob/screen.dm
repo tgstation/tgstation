@@ -1,6 +1,6 @@
 /obj/screen
 	name = ""
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/mob/screen_gen.dmi'
 	layer = 20.0
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
@@ -51,7 +51,6 @@
 
 /obj/screen/grab
 	name = "grab"
-	icon = 'icons/mob/screen1.dmi'
 
 /obj/screen/grab/Click()
 	var/obj/item/weapon/grab/G = master
@@ -76,10 +75,9 @@
 
 /obj/screen/zone_sel
 	name = "damage zone"
-	icon = 'icons/mob/screen1.dmi'
 	icon_state = "zone_sel"
-	var/selecting = "chest"
 	screen_loc = ui_zonesel
+	var/selecting = "chest"
 
 /obj/screen/zone_sel/Click(location, control,params)
 	var/list/PL = params2list(params)
@@ -223,14 +221,14 @@
 		return
 
 	overlays.Cut()
-	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
+	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
 
 
 /obj/screen/Click(location, control, params)
 	if(!usr)	return
 
 	switch(name)
-		if("other")
+		if("toggle")
 			if(usr.hud_used.inventory_shown)
 				usr.hud_used.inventory_shown = 0
 				usr.client.screen -= usr.hud_used.other

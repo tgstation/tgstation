@@ -37,7 +37,7 @@
 	if(!target)
 		return
 
-	if(user.a_intent != "hurt" || !isGlass)
+	if(user.a_intent != "harm" || !isGlass)
 		return ..()
 
 

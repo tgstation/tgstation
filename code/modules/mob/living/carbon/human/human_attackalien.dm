@@ -21,7 +21,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message(text("\red [] has grabbed [] passively!", M, src))
 
-		if("hurt")
+		if("harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)

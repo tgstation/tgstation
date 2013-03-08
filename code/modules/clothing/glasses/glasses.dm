@@ -71,7 +71,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
-	icon_action_button = "action_welding_g"
+	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()

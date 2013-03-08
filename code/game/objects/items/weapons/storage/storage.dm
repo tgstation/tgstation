@@ -295,8 +295,8 @@
 	..()
 
 	if(isrobot(user))
-		user << "\blue You're a robot. No."
-		return //Robots can't interact with storage items.
+		user << "<span class='notice'>You're a robot. No.</span>"
+		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
 		return
@@ -304,15 +304,8 @@
 	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
-			if(prob(85))
-				user << "\red The tray won't fit in [src]."
-				return
-			else
-				W.loc = user.loc
-				if((user.client && user.s_active != src))
-					user.client.screen -= W
-				W.dropped(user)
-				user << "\red God damnit!"
+			user << "<span class='notice'>[T] won't fit in [src]."
+			return
 
 	handle_item_insertion(W)
 
@@ -394,13 +387,13 @@
 	else
 		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
 
-	boxes = new /obj/screen/storage(  )
+	boxes = new /obj/screen/storage()
 	boxes.name = "storage"
 	boxes.master = src
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
 	boxes.layer = 19
-	closer = new /obj/screen/close(  )
+	closer = new /obj/screen/close()
 	closer.master = src
 	closer.icon_state = "x"
 	closer.layer = 20

@@ -128,7 +128,7 @@
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
 /mob/living/carbon/monkey/hand_p(mob/M as mob)
-	if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+	if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
 		if ((prob(75) && health > 0))
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
@@ -151,7 +151,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+		if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
@@ -182,7 +182,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.charge -= 2500
 					Weaken(5)
@@ -201,7 +201,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (M.a_intent == "hurt")
+		if (M.a_intent == "harm")
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -273,7 +273,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 
-		if ("hurt")
+		if ("harm")
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)

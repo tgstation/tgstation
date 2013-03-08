@@ -599,7 +599,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if ("hurt")
+		if ("harm")
 			var/damage = rand(10, 20)
 			if (prob(90))
 				/*

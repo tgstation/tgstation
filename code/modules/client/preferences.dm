@@ -598,9 +598,9 @@ datum/preferences
 					if("ui")
 						switch(UI_style)
 							if("Midnight")
-								UI_style = "Orange"
-							if("Orange")
-								UI_style = "old"
+								UI_style = "Plasmafire"
+							if("Plasmafire")
+								UI_style = "Retro"
 							else
 								UI_style = "Midnight"
 
@@ -639,7 +639,6 @@ datum/preferences
 						load_character(text2num(href_list["num"]))
 
 					if("tab")
-						user << "Selected tab: [href_list["tab"]], current tab: [current_tab]"
 						if (href_list["tab"])
 							current_tab = text2num(href_list["tab"])
 

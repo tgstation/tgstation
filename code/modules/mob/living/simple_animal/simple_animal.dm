@@ -279,7 +279,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt", "disarm")
+		if("harm", "disarm")
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -315,7 +315,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt", "disarm")
+		if("harm", "disarm")
 			var/damage = rand(15, 30)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 			adjustBruteLoss(damage)

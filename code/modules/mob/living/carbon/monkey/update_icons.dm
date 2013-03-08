@@ -117,13 +117,13 @@
 		if (hud_used)	//hud handcuff icons
 			var/obj/screen/inventory/R = hud_used.adding[4]
 			var/obj/screen/inventory/L = hud_used.adding[5]
-			R.overlays += image("icon" = 'icons/mob/screen1_Midnight.dmi', "icon_state" = "markus")
-			L.overlays += image("icon" = 'icons/mob/screen1_Midnight.dmi', "icon_state" = "gabrielle")
+			R.overlays += image("icon" = 'icons/mob/screen_gen.dmi', "icon_state" = "markus")
+			L.overlays += image("icon" = 'icons/mob/screen_gen.dmi', "icon_state" = "gabrielle")
 		overlays -= overlays_lying[M_HANDCUFF_LAYER]
 		overlays -= overlays_standing[M_HANDCUFF_LAYER]
 		overlays_lying[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff2", "layer" = -M_HANDCUFF_LAYER)
 		overlays_standing[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff1", "layer" = -M_HANDCUFF_LAYER)
-		if (src.lying)
+		if(src.lying)
 			overlays += overlays_lying[M_HANDCUFF_LAYER]
 		else
 			overlays += overlays_standing[M_HANDCUFF_LAYER]

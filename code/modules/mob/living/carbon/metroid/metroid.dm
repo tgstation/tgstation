@@ -437,7 +437,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.charge -= 2500
 					for(var/mob/O in viewers(src, null))
@@ -521,7 +521,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 
-		if ("hurt")
+		if ("harm")
 
 			if (prob(95))
 				attacked += 10

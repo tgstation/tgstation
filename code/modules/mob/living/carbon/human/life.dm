@@ -937,25 +937,25 @@
 				var/image/I
 				switch(health)
 					if(-20 to -10)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage1")
 					if(-30 to -20)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage2")
 					if(-40 to -30)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage3")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage3")
 					if(-50 to -40)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage4")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage4")
 					if(-60 to -50)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage5")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage5")
 					if(-70 to -60)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage6")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage6")
 					if(-80 to -70)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage7")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage7")
 					if(-90 to -80)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage8")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage8")
 					if(-95 to -90)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage9")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage9")
 					if(-INFINITY to -95)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage10")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage10")
 				damageoverlay.overlays += I
 		else
 			//Oxygen damage overlay
@@ -963,19 +963,19 @@
 				var/image/I
 				switch(oxyloss)
 					if(10 to 20)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay1")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay1")
 					if(20 to 25)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay2")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay2")
 					if(25 to 30)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay3")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay3")
 					if(30 to 35)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay4")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay4")
 					if(35 to 40)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay5")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay5")
 					if(40 to 45)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay6")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay6")
 					if(45 to INFINITY)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay7")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay7")
 				damageoverlay.overlays += I
 
 			//Fire and Brute damage overlay (BSSR)
@@ -985,17 +985,17 @@
 				var/image/I
 				switch(hurtdamage)
 					if(10 to 25)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay1")
 					if(25 to 40)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay2")
 					if(40 to 55)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay3")
 					if(55 to 70)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay4")
 					if(70 to 85)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay5")
 					if(85 to INFINITY)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
+						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay6")
 				damageoverlay.overlays += I
 
 		if( stat == DEAD )
@@ -1113,7 +1113,7 @@
 				pressure.icon_state = "pressure[pressure_alert]"
 
 			if(pullin)
-				if(pulling)								pullin.icon_state = "pull1"
+				if(pulling)								pullin.icon_state = "pull"
 				else									pullin.icon_state = "pull0"
 //			if(rest)	//Not used with new UI
 //				if(resting || lying || sleeping)		rest.icon_state = "rest1"

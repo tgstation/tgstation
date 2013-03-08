@@ -9,7 +9,7 @@
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
-	icon_action_button = "action_flashlight"
+	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -147,7 +147,7 @@
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	icon_action_button = null	//just pull it manually, neckbeard.
+	action_button_name = null	//just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -208,5 +208,4 @@
 	slot_flags = SLOT_BELT
 	m_amt = 0
 	g_amt = 0
-	icon_action_button = "action_flashlight"
 	brightness_on = 6 //luminosity when on

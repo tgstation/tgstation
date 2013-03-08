@@ -735,21 +735,21 @@ Please contact me on #coderbus IRC. ~Carn x
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
-		if (hud_used)	//hud handcuff icons
+		if(hud_used)	//hud handcuff icons
 			var/obj/screen/inventory/R = hud_used.adding[3]
 			var/obj/screen/inventory/L = hud_used.adding[4]
-			R.overlays += image("icon" = 'icons/mob/screen1_Midnight.dmi', "icon_state" = "markus")
-			L.overlays += image("icon" = 'icons/mob/screen1_Midnight.dmi', "icon_state" = "gabrielle")
+			R.overlays += image("icon" = 'icons/mob/screen_gen.dmi', "icon_state" = "markus")
+			L.overlays += image("icon" = 'icons/mob/screen_gen.dmi', "icon_state" = "gabrielle")
 		overlays -= overlays_lying[HANDCUFF_LAYER]
 		overlays -= overlays_standing[HANDCUFF_LAYER]
 		overlays_lying[HANDCUFF_LAYER]		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff2", "layer" = -HANDCUFF_LAYER)
 		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1", "layer" = -HANDCUFF_LAYER)
-		if (src.lying)
+		if(src.lying)
 			overlays += overlays_lying[HANDCUFF_LAYER]
 		else
 			overlays += overlays_standing[HANDCUFF_LAYER]
 	else
-		if (hud_used)
+		if(hud_used)
 			var/obj/screen/inventory/R = hud_used.adding[3]
 			var/obj/screen/inventory/L = hud_used.adding[4]
 			R.overlays = null

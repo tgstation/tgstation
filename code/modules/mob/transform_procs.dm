@@ -39,7 +39,7 @@
 		client.mob = O
 	if(mind)
 		mind.transfer_to(O)
-	O.a_intent = "hurt"
+	O.a_intent = "harm"
 	O << "<B>You are now a monkey.</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
@@ -199,7 +199,7 @@
 		if("Drone")
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
-	new_xeno.a_intent = "hurt"
+	new_xeno.a_intent = "harm"
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
@@ -235,7 +235,7 @@
 			new_slime = new /mob/living/carbon/slime/adult(loc)
 		else
 			new_slime = new /mob/living/carbon/slime(loc)
-	new_slime.a_intent = "hurt"
+	new_slime.a_intent = "harm"
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
@@ -257,7 +257,7 @@
 		del(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
-	new_corgi.a_intent = "hurt"
+	new_corgi.a_intent = "harm"
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
@@ -279,7 +279,7 @@
 		del(t)
 
 	var/mob/living/blob/new_blob = new /mob/living/blob (loc)
-	new_blob.a_intent = "hurt"
+	new_blob.a_intent = "harm"
 	new_blob.key = key
 
 	new_blob << "<B>You are now a Blob Fragment. You can now sacrifice yourself to spawn blobs!</B>"
@@ -313,7 +313,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "hurt"
+	new_mob.a_intent = "harm"
 
 
 	new_mob << "You suddenly feel more... animalistic."
@@ -333,7 +333,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "hurt"
+	new_mob.a_intent = "harm"
 	new_mob << "You feel more... animalistic"
 
 	del(src)

@@ -35,8 +35,8 @@
 //Lower right, persistant menu
 #define ui_drop_throw "14:28,2:7"
 #define ui_pull_resist "13:26,2:7"
-#define ui_acti "13:26,1:5"
-#define ui_movi "12:24,1:5"
+#define ui_movi "13:26,1:5"
+#define ui_acti "12:24,1:5"
 #define ui_zonesel "14:28,1:5"
 #define ui_acti_alt "14:28,1:5" //alternative intent switcher for when the interface is hidden (F12)
 
@@ -75,14 +75,6 @@
 #define ui_ears "3:10,3:9"
 
 #define ui_head "2:8,4:11"
-
-//Intent small buttons
-#define ui_help_small "12:8,1:1"
-#define ui_disarm_small "12:15,1:18"
-#define ui_grab_small "12:32,1:18"
-#define ui_harm_small "12:39,1:1"
-
-//#define ui_swapbutton "6:-16,1:5" //Unused
 
 //#define ui_headset "SOUTH,8"
 #define ui_hand "6:14,1:5"

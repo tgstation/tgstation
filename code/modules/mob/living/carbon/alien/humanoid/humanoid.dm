@@ -144,7 +144,7 @@
 
 
 /mob/living/carbon/alien/humanoid/hand_p(mob/living/carbon/user)
-	if(user.a_intent == "hurt")
+	if(user.a_intent == "harm")
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 			return
 		if(health > 0)
@@ -268,7 +268,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.charge -= 2500
 
@@ -323,7 +323,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if ("hurt")
+		if ("harm")
 			var/damage = rand(1, 9)
 			if (prob(90))
 				if (HULK in M.mutations)//HULK SMASH

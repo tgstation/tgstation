@@ -1,29 +1,25 @@
-/datum/hud/proc/monkey_hud(var/ui_style='icons/mob/screen1_old.dmi')
-
-	src.adding = list()
-	src.other = list()
+/datum/hud/proc/monkey_hud(ui_style = 'icons/mob/screen_midnight.dmi')
+	adding = list()
+	other = list()
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
 	using = new /obj/screen()
 	using.name = "act_intent"
-	using.dir = SOUTHWEST
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = 20
-	src.adding += using
+	adding += using
 	action_intent = using
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
-	using.dir = SOUTHWEST
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
 	using.layer = 20
-	src.adding += using
+	adding += using
 	move_intent = using
 
 	using = new /obj/screen()
@@ -32,71 +28,65 @@
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
 	using.layer = 19
-	src.adding += using
+	adding += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "r_hand"
-	inv_box.dir = WEST
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_inactive"
+	inv_box.icon_state = "hand_r_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_active"
+		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
 	inv_box.layer = 19
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
+	r_hand_hud_object = inv_box
+	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "l_hand"
-	inv_box.dir = EAST
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_inactive"
+	inv_box.icon_state = "hand_l_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_active"
+		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
 	inv_box.layer = 19
-	src.l_hand_hud_object = inv_box
-	src.adding += inv_box
+	l_hand_hud_object = inv_box
+	adding += inv_box
 
 	using = new /obj/screen()
 	using.name = "hand"
-	using.dir = SOUTH
 	using.icon = ui_style
-	using.icon_state = "hand1"
+	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
 	using.layer = 19
-	src.adding += using
+	adding += using
 
 	using = new /obj/screen()
 	using.name = "hand"
-	using.dir = SOUTH
 	using.icon = ui_style
-	using.icon_state = "hand2"
+	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
 	using.layer = 19
-	src.adding += using
+	adding += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mask"
-	inv_box.dir = NORTH
 	inv_box.icon = ui_style
-	inv_box.icon_state = "equip"
+	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_monkey_mask
 	inv_box.slot_id = slot_wear_mask
 	inv_box.layer = 19
-	src.adding += inv_box
+	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
-	inv_box.dir = NORTHEAST
 	inv_box.icon = ui_style
-	inv_box.icon_state = "equip"
+	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
 	inv_box.slot_id = slot_back
 	inv_box.layer = 19
-	src.adding += inv_box
+	adding += inv_box
 
 	mymob.throw_icon = new /obj/screen()
 	mymob.throw_icon.icon = ui_style
@@ -153,7 +143,7 @@
 	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.blind = new /obj/screen()
-	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
+	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1"
@@ -169,12 +159,9 @@
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.overlays += image('icons/mob/screen_gen.dmi', "[mymob.zone_sel.selecting]")
 
 	mymob.client.screen = null
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
-
-	return
-
+	mymob.client.screen += adding + other

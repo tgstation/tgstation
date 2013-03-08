@@ -4,7 +4,7 @@
 	icon_state = "magboots0"
 	var/magpulse = 0
 //	flags = NOSLIP //disabled by default
-	icon_action_button = "action_magboots"
+	action_button_name = "Toggle Magboots"
 
 
 	verb/toggle()

@@ -702,7 +702,7 @@
 /obj/item/weapon/light/afterattack(atom/target, mob/user)
 	if(istype(target, /obj/machinery/light))
 		return
-	if(user.a_intent != "hurt")
+	if(user.a_intent != "harm")
 		return
 
 	shatter()

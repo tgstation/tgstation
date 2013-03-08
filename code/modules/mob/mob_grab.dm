@@ -3,8 +3,6 @@
 
 /obj/item/weapon/grab
 	name = "grab"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
 	var/obj/screen/grab/hud = null
 	var/mob/affecting = null
 	var/mob/assailant = null

@@ -407,7 +407,7 @@ datum
 						W.loc = M.loc
 						W.dropped(M)
 					var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-					new_mob.a_intent = "hurt"
+					new_mob.a_intent = "harm"
 					new_mob.universal_speak = 1
 					if(M.mind)
 						M.mind.transfer_to(new_mob)

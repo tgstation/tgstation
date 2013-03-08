@@ -10,7 +10,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.charge -= 2500
 					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>")
@@ -98,7 +98,7 @@
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 			return 1
 
-		if("hurt")
+		if("harm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
 
