@@ -5,6 +5,7 @@
 	view = "15x15"
 	cache_lifespan = 1
 
+#define RECOMMENDED_VERSION 495
 
 /world/New()
 	//logs
@@ -85,6 +86,8 @@
 		if(config.kick_inactive)
 			KickInactiveClients()
 	return
+
+#undef RECOMMENDED_VERSION
 
 //world/Topic(href, href_list[])
 //		world << "Received a Topic() call!"
