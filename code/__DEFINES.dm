@@ -1,175 +1,47 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+//As a host, you should probably leave these defines alone.
+//They define low-level stuff you don't really want/need to mess with
 
-#define DEBUG
-
-#define PI 3.1415
-#define MIDNIGHT_ROLLOVER 864000
-
-#define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
-#define ONE_ATMOSPHERE		101.325	//kPa
-
-#define CELL_VOLUME 2500	//liters in a cell
-#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
-
-#define O2STANDARD 0.21
-#define N2STANDARD 0.79
-
-#define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD	// O2 standard value (21%)
-#define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
-
-#define MOLES_PLASMA_VISIBLE	0.7 //Moles in a standard cell after which plasma is visible
-#define MIN_PLASMA_DAMAGE 1
-#define MAX_PLASMA_DAMAGE 10
-
-#define BREATH_VOLUME 0.5	//liters in a normal breath
-#define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
-	//Amount of air to take a from a tile
-#define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
-	//Amount of air needed before pass out/suffocation commences
-
-// Pressure limits.
-#define HAZARD_HIGH_PRESSURE 550	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
-#define WARNING_HIGH_PRESSURE 325 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
-#define WARNING_LOW_PRESSURE 50 	//This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
-#define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
-
-#define TEMPERATURE_DAMAGE_COEFFICIENT 1.5	//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
-#define BODYTEMP_AUTORECOVERY_DIVISOR 12 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
-#define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
-#define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
-#define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
-#define BODYTEMP_COOLING_MAX 30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
-#define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
-
-#define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15 // The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_COLD_DAMAGE_LIMIT 260.15 // The limit the human body can take before it starts taking damage from coldness.
-
-#define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
-#define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
-#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
-#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //for fire helmet quality items (red and white hardhats)
-#define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
-#define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
-#define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE 160	//For armor
-#define ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For armor
-
-#define GLOVES_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For some gloves (black and)
-#define GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For some gloves
-#define SHOE_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For gloves
-#define SHOE_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For gloves
+#define PI						3.1415
+#define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
+#define SPEED_OF_LIGHT			3e8		//not exact but hey!
+#define SPEED_OF_LIGHT_SQ		9e+16
+#define FIRE_DAMAGE_MODIFIER	0.0215	//Higher values result in more external fire damage to the skin (default 0.0215)
+#define AIR_DAMAGE_MODIFIER		2.025	//More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
+#define INFINITY				1e31	//closer then enough
 
 
-#define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
-#define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
-#define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
-#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
+//atmos
+#define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
+#define ONE_ATMOSPHERE			101.325	//kPa
+#define T0C						273.15	// 0degC
+#define T20C					293.15	// 20degC
+#define TCMB					2.7		// -270.3degC
+#define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+#define O2STANDARD				0.21
+#define N2STANDARD				0.79
+#define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
+#define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
-// Doors!
-#define DOOR_CRUSH_DAMAGE 10
-
-// Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.1
-
-// How many units of reagent are consumed per tick, by default.
-#define  REAGENTS_METABOLISM 0.4
-
-// By defining the effect multiplier this way, it'll exactly adjust
-// all effects according to how they originally were with the 0.4 metabolism
-#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
-
-
-#define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
-	//Minimum ratio of air that must move to/from a tile to suspend group processing
-#define MINIMUM_AIR_TO_SUSPEND MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND
-	//Minimum amount of air that has to move before a group processing can be suspended
-
-#define MINIMUM_MOLES_DELTA_TO_MOVE MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND //Either this must be active
-#define MINIMUM_TEMPERATURE_TO_MOVE	T20C+100 		  //or this (or both, obviously)
-
-#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND 0.012
-#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND 4
-	//Minimum temperature difference before group processing is suspended
-#define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER 0.5
-	//Minimum temperature difference before the gas temperatures are just set to be equal
-
-#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
-#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
-
-#define FLOOR_HEAT_TRANSFER_COEFFICIENT 0.4
-#define WALL_HEAT_TRANSFER_COEFFICIENT 0.0
-#define DOOR_HEAT_TRANSFER_COEFFICIENT 0.0
-#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 //a hack to partly simulate radiative heat
-#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
-#define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1 //a hack for now
-	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
-	//Should not exceed 0.4 else strange heat flow occur
-
-#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
-#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
-#define FIRE_SPREAD_RADIOSITY_SCALE		0.85
-#define FIRE_CARBON_ENERGY_RELEASED	  500000 //Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_PLASMA_ENERGY_RELEASED	 3000000 //Amount of heat released per mole of burnt plasma into the tile
-#define FIRE_GROWTH_RATE			40000 //For small fires
-
-// Fire Damage
-#define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
-#define CARBON_LIFEFORM_FIRE_DAMAGE		4
-
-//Plasma fire properties
-#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define PLASMA_UPPER_TEMPERATURE			1370+T0C
-#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
-#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
-#define PLASMA_OXYGEN_FULLBURN				10
-
-#define T0C 273.15					// 0degC
-#define T20C 293.15					// 20degC
-#define TCMB 2.7					// -270.3degC
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
-#define TANK_LEAK_PRESSURE		(30.*ONE_ATMOSPHERE)	// Tank starts leaking
-#define TANK_RUPTURE_PRESSURE	(40.*ONE_ATMOSPHERE) // Tank spills all contents into atmosphere
-
-#define TANK_FRAGMENT_PRESSURE	(50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion
-#define TANK_FRAGMENT_SCALE	    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa aboe threshold
-								// was 2 atm
-
-//This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
-var/MAX_EX_DEVESTATION_RANGE = 3
-var/MAX_EX_HEAVY_RANGE = 7
-var/MAX_EX_LIGHT_RANGE = 14
-var/MAX_EX_FLASH_RANGE = 14
-//#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
-
-#define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
-
-#define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
-
-#define NORMPIPERATE 30					//pipe-insulation rate divisor
-#define HEATPIPERATE 8					//heat-exch pipe insulation
-
-#define FLOWFRAC 0.99				// fraction of gas transfered per process
-
-#define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
-
 
 //ITEM INVENTORY SLOT BITMASKS
-#define SLOT_OCLOTHING 1
-#define SLOT_ICLOTHING 2
-#define SLOT_GLOVES 4
-#define SLOT_EYES 8
-#define SLOT_EARS 16
-#define SLOT_MASK 32
-#define SLOT_HEAD 64
-#define SLOT_FEET 128
-#define SLOT_ID 256
-#define SLOT_BELT 512
-#define SLOT_BACK 1024
-#define SLOT_POCKET 2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
-#define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
+#define SLOT_OCLOTHING	1
+#define SLOT_ICLOTHING	2
+#define SLOT_GLOVES		4
+#define SLOT_EYES		8
+#define SLOT_EARS		16
+#define SLOT_MASK		32
+#define SLOT_HEAD		64
+#define SLOT_FEET		128
+#define SLOT_ID			256
+#define SLOT_BELT		512
+#define SLOT_BACK		1024
+#define SLOT_POCKET		2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
+#define SLOT_DENYPOCKET	4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
 
 
 //FLAGS BITMASK
@@ -220,31 +92,32 @@ var/MAX_EX_FLASH_RANGE = 14
 #define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+
+#define HIDEMASK		1	//APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEEARS		2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
+#define HIDEEYES		4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
+#define HIDEFACE		8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
 //slots
-#define slot_back 1
-#define slot_wear_mask 2
-#define slot_handcuffed 3
-#define slot_l_hand 4
-#define slot_r_hand 5
-#define slot_belt 6
-#define slot_wear_id 7
-#define slot_ears 8
-#define slot_glasses 9
-#define slot_gloves 10
-#define slot_head 11
-#define slot_shoes 12
-#define slot_wear_suit 13
-#define slot_w_uniform 14
-#define slot_l_store 15
-#define slot_r_store 16
-#define slot_s_store 17
-#define slot_in_backpack 18
-#define slot_legcuffed 19
+#define slot_back			1
+#define slot_wear_mask		2
+#define slot_handcuffed		3
+#define slot_l_hand			4
+#define slot_r_hand			5
+#define slot_belt			6
+#define slot_wear_id		7
+#define slot_ears			8
+#define slot_glasses		9
+#define slot_gloves			10
+#define slot_head			11
+#define slot_shoes			12
+#define slot_wear_suit		13
+#define slot_w_uniform		14
+#define slot_l_store		15
+#define slot_r_store		16
+#define slot_s_store		17
+#define slot_in_backpack	18
+#define slot_legcuffed		19
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -271,8 +144,8 @@ var/MAX_EX_FLASH_RANGE = 14
 // The values here should add up to 1.
 // Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
 #define THERMAL_PROTECTION_HEAD			0.3
-#define THERMAL_PROTECTION_CHEST	0.15
-#define THERMAL_PROTECTION_GROIN	0.15
+#define THERMAL_PROTECTION_CHEST		0.15
+#define THERMAL_PROTECTION_GROIN		0.15
 #define THERMAL_PROTECTION_LEG_LEFT		0.075
 #define THERMAL_PROTECTION_LEG_RIGHT	0.075
 #define THERMAL_PROTECTION_FOOT_LEFT	0.025
@@ -366,13 +239,6 @@ var/MAX_EX_FLASH_RANGE = 14
 #define SHOCK	8
 #define SAFE	16
 
-#define ENGINE_EJECT_Z	3
-
-//metal, glass, rod stacks
-#define MAX_STACK_AMOUNT_METAL	50
-#define MAX_STACK_AMOUNT_GLASS	50
-#define MAX_STACK_AMOUNT_RODS	60
-
 #define GAS_O2 	(1 << 0)
 #define GAS_N2	(1 << 1)
 #define GAS_PL	(1 << 2)
@@ -443,29 +309,7 @@ var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons
 #define SEC_LEVEL_RED	2
 #define SEC_LEVEL_DELTA	3
 
-#define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
 
-var/list/liftable_structures = list(\
-
-	/obj/machinery/autolathe, \
-	/obj/machinery/constructable_frame, \
-	/obj/machinery/hydroponics, \
-	/obj/machinery/computer, \
-	/obj/structure/optable, \
-	/obj/structure/dispenser, \
-	/obj/machinery/gibber, \
-	/obj/machinery/microwave, \
-	/obj/machinery/vending, \
-	/obj/machinery/seed_extractor, \
-	/obj/machinery/space_heater, \
-	/obj/machinery/recharge_station, \
-	/obj/machinery/flasher, \
-	/obj/structure/stool, \
-	/obj/structure/closet, \
-	/obj/machinery/photocopier, \
-	/obj/structure/filingcabinet, \
-	/obj/structure/reagent_dispensers, \
-	/obj/machinery/portable_atmospherics/canister)
 
 //A set of constants used to determine which type of mute an admin wishes to apply:
 //Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
@@ -476,10 +320,6 @@ var/list/liftable_structures = list(\
 #define MUTE_ADMINHELP	8
 #define MUTE_DEADCHAT	16
 #define MUTE_ALL		31
-
-//Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
-#define SPAM_TRIGGER_WARNING 5
-#define SPAM_TRIGGER_AUTOMUTE 10
 
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1
@@ -507,13 +347,6 @@ var/list/liftable_structures = list(\
 
 #define INVISIBILITY_MAXIMUM 100
 
-//Object specific defines
-#define CANDLE_LUM 2 //For how bright candles are
-
-
-//Some mob defines below
-#define AI_CAMERA_LUMINOSITY 5
-
 #define BORGMESON 1
 #define BORGTHERM 2
 #define BORGXRAY  4
@@ -531,15 +364,11 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
 
-#define HOSTILE_STANCE_IDLE 1
-#define HOSTILE_STANCE_ALERT 2
-#define HOSTILE_STANCE_ATTACK 3
-#define HOSTILE_STANCE_ATTACKING 4
-#define HOSTILE_STANCE_TIRED 5
-
-#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
-
-
+#define HOSTILE_STANCE_IDLE			1
+#define HOSTILE_STANCE_ALERT		2
+#define HOSTILE_STANCE_ATTACK		3
+#define HOSTILE_STANCE_ATTACKING	4
+#define HOSTILE_STANCE_TIRED		5
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
@@ -600,16 +429,3 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA
 	)
-
-#define AGE_MIN 17			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
-
-//Languages!
-#define LANGUAGE_HUMAN		1
-#define LANGUAGE_ALIEN		2
-#define LANGUAGE_DOG		4
-#define LANGUAGE_CAT		8
-#define LANGUAGE_BINARY		16
-#define LANGUAGE_OTHER		32768
-
-#define LANGUAGE_UNIVERSAL	65535

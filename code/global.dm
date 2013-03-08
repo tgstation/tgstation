@@ -1,16 +1,3 @@
-//#define TESTING
-#define KILL 26
-
-//#define dellogging		//Uncomment to compile with dellogging code (will slow down the game slightly)
-#ifdef dellogging
-#warn compiling del logging
-var/list/del_counter = list()
-/proc/log_del(datum/X)
-	if(istype(X)){del_counter[X.type]++;}
-	del(X)
-#define del(X) log_del(X)
-#endif
-
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/obj/effect/datacore/data_core = null
@@ -155,20 +142,33 @@ var/list/AAlarmIndexToFlag
 var/list/AAlarmIndexToWireColor
 var/list/AAlarmWireColorToIndex
 
-#define SPEED_OF_LIGHT 3e8 //not exact but hey!
-#define SPEED_OF_LIGHT_SQ 9e+16
-#define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
-#define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
-#define INFINITY 1e31 //closer then enough
+//This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
+var/MAX_EX_DEVESTATION_RANGE = 3
+var/MAX_EX_HEAVY_RANGE = 7
+var/MAX_EX_LIGHT_RANGE = 14
+var/MAX_EX_FLASH_RANGE = 14
 
-	//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-#define MAX_MESSAGE_LEN 1024
-#define MAX_NAME_LEN 26
-#define MAX_BROADCAST_LEN 512
-
-#define shuttle_time_in_station 1800 // 3 minutes in the station
-#define shuttle_time_to_arrive 6000 // 10 minutes to arrive
-
+var/list/liftable_structures = list(
+	/obj/machinery/autolathe,
+	/obj/machinery/constructable_frame,
+	/obj/machinery/hydroponics,
+	/obj/machinery/computer,
+	/obj/structure/optable,
+	/obj/structure/dispenser,
+	/obj/machinery/gibber,
+	/obj/machinery/microwave,
+	/obj/machinery/vending,
+	/obj/machinery/seed_extractor,
+	/obj/machinery/space_heater,
+	/obj/machinery/recharge_station,
+	/obj/machinery/flasher,
+	/obj/structure/stool,
+	/obj/structure/closet,
+	/obj/machinery/photocopier,
+	/obj/structure/filingcabinet,
+	/obj/structure/reagent_dispensers,
+	/obj/machinery/portable_atmospherics/canister
+	)
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 
