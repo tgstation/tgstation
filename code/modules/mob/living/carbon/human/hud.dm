@@ -338,7 +338,10 @@
 			var/obj/screen/item_action/A = new(hud_used)
 			A.icon = ui_style2icon(client.prefs.UI_style)
 			A.icon_state = "template"
-			A.overlays += I
+			var/image/img = image(I.icon, I.icon_state)
+			img.pixel_x = 0
+			img.pixel_y = 0
+			A.overlays += img
 			if(I.action_button_name)
 				A.name = I.action_button_name
 			else

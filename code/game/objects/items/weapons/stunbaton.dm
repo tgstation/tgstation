@@ -22,9 +22,9 @@
 	else
 		icon_state = "stunbaton"
 
-/obj/item/weapon/melee/baton/attack_self(mob/user as mob)
+/obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "\red You grab the [src] on the wrong side."
+		user << "<span class='warning'>You grab the [src] on the wrong side.</span>"
 		user.Weaken(30)
 		charges--
 		if(charges < 1)
@@ -33,17 +33,17 @@
 		return
 	if(charges > 0)
 		status = !status
-		user << "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>"
-		playsound(src.loc, "sparks", 75, 1, -1)
+		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		playsound(loc, "sparks", 75, 1, -1)
 		update_icon()
 	else
 		status = 0
-		user << "<span class='warning'>\The [src] is out of charge.</span>"
+		user << "<span class='warning'>[src] is out of charge.</span>"
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/melee/baton/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>You accidentally hit yourself with the [src]!</span>"
+		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
 		user.Weaken(30)
 		charges--
 		if(charges < 1)
@@ -58,11 +58,14 @@
 
 	if(user.a_intent == "harm")
 		if(!..()) return
-		//H.apply_effect(5, WEAKEN, 0)
-		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		H.visible_message("<span class='danger'>[H] has been beaten with [src] by [user]!</span>", \
+							"<span class='userdanger'>[M] has been beaten with the [src] by [user]!</span>")
+		playsound(loc, "swing_hit", 50, 1, -1)
+		if(!status)
+			H.forcesay(hit_appends)
+
 	else if(!status)
-		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+		H.visible_message("<span class='warning'>[H] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 
 	if(status)
@@ -77,11 +80,15 @@
 				R.cell.use(50)
 		else
 			charges--
-		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
+		H.visible_message("<span class='danger'>[H] has been stunned with [src] by [user]!</span>")
+		H.forcesay(hit_appends)
+
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [H.name] ([H.ckey]) with [src.name]</font>" )
+
 		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+
 		if(charges < 1)
 			status = 0
 			update_icon()
