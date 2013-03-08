@@ -78,7 +78,7 @@
 /mob/living/simple_animal/hostile/mimic/crate/ListTargets()
 	if(attempt_open)
 		return ..()
-	return view(src, 1)
+	return ..(1)
 
 /mob/living/simple_animal/hostile/mimic/crate/FindTarget()
 	. = ..()

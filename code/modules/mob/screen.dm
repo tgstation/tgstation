@@ -504,6 +504,8 @@
 						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", \
 											"<span class='notice'>You successfully unbuckle yourself.</span>")
 						C.buckled.manual_unbuckle(C)
+			else
+				L.buckled.manual_unbuckle(L)
 		else
 			L.buckled.manual_unbuckle(L)
 

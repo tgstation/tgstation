@@ -10,13 +10,14 @@
 	var/casingtype
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
+	var/vision_range = 10
 	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 
 	var/atom/T = null
 	stop_automated_movement = 0
-	for(var/atom/A in ListTargets(10))
+	for(var/atom/A in ListTargets())
 
 		var/atom/F = Found(A)
 		if(F)
@@ -35,14 +36,12 @@
 					T = L
 					break
 
-		else
-			if (can_see(src, A, 10))
-				if(istype(A, /obj/mecha))
-					var/obj/mecha/M = A
-					if (M.occupant)
-						stance = HOSTILE_STANCE_ATTACK
-						T = M
-						break
+		else if(istype(A, /obj/mecha)) // Our line of sight stuff was already done in ListTargets().
+			var/obj/mecha/M = A
+			if (M.occupant)
+				stance = HOSTILE_STANCE_ATTACK
+				T = M
+				break
 
 	return T
 
@@ -54,7 +53,7 @@
 	stop_automated_movement = 1
 	if(!target_mob || SA_attackable(target_mob))
 		stance = HOSTILE_STANCE_IDLE
-	if(target_mob in ListTargets(10))
+	if(target_mob in ListTargets())
 		if(ranged)
 			if(get_dist(src, target_mob) <= 6)
 				OpenFire(target_mob)
@@ -70,7 +69,7 @@
 	if(!target_mob || SA_attackable(target_mob))
 		LoseTarget()
 		return 0
-	if(!(target_mob in ListTargets(10)))
+	if(!(target_mob in ListTargets()))
 		LostTarget()
 		return 0
 	if(get_dist(src, target_mob) <= 1)	//Attacking
@@ -97,9 +96,17 @@
 	walk(src, 0)
 
 
-/mob/living/simple_animal/hostile/proc/ListTargets(var/dist = 7)
-	var/list/L = hearers(src, dist)
-	L += mechas_list
+/mob/living/simple_animal/hostile/proc/ListTargets(var/override = -1)
+
+	// Allows you to override how much the mob can see. Defaults to vision_range if none is entered.
+	if(override == -1)
+		override = vision_range
+
+	var/list/L = hearers(src, override)
+	for(var/obj/mecha/M in mechas_list)
+		// Will check the distance before checking the line of sight, if the distance is small enough.
+		if(get_dist(M, src) <= override && can_see(src, M, override))
+			L += M
 	return L
 
 /mob/living/simple_animal/hostile/Die()
