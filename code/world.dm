@@ -6,8 +6,6 @@
 	cache_lifespan = 1
 
 
-
-#define RECOMMENDED_VERSION 495
 /world/New()
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
@@ -86,9 +84,6 @@
 			ToRban_autoupdate()
 		if(config.kick_inactive)
 			KickInactiveClients()
-
-#undef RECOMMENDED_VERSION
-
 	return
 
 //world/Topic(href, href_list[])

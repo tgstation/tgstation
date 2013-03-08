@@ -290,20 +290,6 @@ proc/isInSight(var/atom/A, var/atom/B)
 			if(!G.client.is_afk() && (G.client.prefs.be_special & be_special_flag))
 				. += G.client
 
-
-/proc/get_apprentice_candidates()
-
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new apprentice
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.prefs.be_special & BE_WIZARD)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i)
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
-	return candidates
-
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()
 	O.maptext = maptext

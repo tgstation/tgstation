@@ -8,7 +8,9 @@
 
 //print a testing-mode debug message to world.log
 /proc/testing(msg)
+#ifdef TESTING
 	world.log << "## TESTING: [msg]"
+#endif
 
 /proc/log_admin(text)
 	admin_log.Add(text)

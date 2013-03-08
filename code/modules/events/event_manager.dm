@@ -60,7 +60,7 @@ var/datum/controller/event/events
 		if(E.holidayID)
 			if(E.holidayID != holiday)			continue
 		if(E.weight < 0)						//for round-start events etc.
-			if(E.runEvent() == KILL)
+			if(E.runEvent() == PROCESS_KILL)
 				E.max_occurrences = 0
 				continue
 			return
@@ -76,7 +76,7 @@ var/datum/controller/event/events
 		sum_of_weights -= E.weight
 
 		if(sum_of_weights <= 0)				//we've hit our goal
-			if(E.runEvent() == KILL)		//we couldn't run this event for some reason, set its max_occurrences to 0
+			if(E.runEvent() == PROCESS_KILL)//we couldn't run this event for some reason, set its max_occurrences to 0
 				E.max_occurrences = 0
 				continue
 			return

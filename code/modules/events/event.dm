@@ -19,12 +19,12 @@
 
 /datum/event_control/proc/runEvent()
 	if(!ispath(typepath,/datum/event))
-		return KILL
+		return PROCESS_KILL
 	var/datum/event/E = new typepath()
 	E.control = src
 	occurrences++
 
-	world.log << "[time2text(world.time, "hh:mm:ss")] [E.type]"
+	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 
 /datum/event	//NOTE: Times are measured in master controller ticks!
 	var/datum/event_control/control
