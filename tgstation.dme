@@ -841,6 +841,7 @@
 #include "code\modules\mob\living\carbon\alien\logout.dm"
 #include "code\modules\mob\living\carbon\alien\powers.dm"
 #include "code\modules\mob\living\carbon\alien\say.dm"
+#include "code\modules\mob\living\carbon\alien\screen.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\alien_powers.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\death.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\emote.dm"

@@ -67,15 +67,11 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.zone_sel = new /obj/screen/zone_sel/alien()
 	mymob.zone_sel.icon = 'icons/mob/screen_alien.dmi'
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/screen_gen.dmi',"[mymob.zone_sel.selecting]")
+	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = null
 
 	mymob.client.screen += list( mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
-
-
-

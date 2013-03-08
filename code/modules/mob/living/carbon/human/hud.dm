@@ -299,8 +299,7 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/screen_gen.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = null
 

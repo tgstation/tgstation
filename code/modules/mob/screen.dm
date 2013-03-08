@@ -215,11 +215,10 @@
 	else if(icon_y < 31)
 		if(icon_x > 11 && icon_x < 21)
 			selecting = "head"
-		else
-			return
-	else
-		return
 
+	update_icon()
+
+/obj/screen/zone_sel/update_icon()
 	overlays.Cut()
 	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
 
