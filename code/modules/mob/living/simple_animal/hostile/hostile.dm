@@ -18,7 +18,7 @@
 
 	var/atom/T = null
 	stop_automated_movement = 0
-	for(var/atom/A in ListTargets())
+	for(var/atom/A in ListTargets(10))
 
 		if(A == src)
 			continue
@@ -40,6 +40,8 @@
 					T = L
 					break
 
+		else
+			if (can_see(src, A, 10))
 		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			if (M.occupant)
@@ -63,7 +65,7 @@
 	stop_automated_movement = 1
 	if(!target_mob || SA_attackable(target_mob))
 		stance = HOSTILE_STANCE_IDLE
-	if(target_mob in ListTargets())
+	if(target_mob in ListTargets(10))
 		if(ranged)
 			if(get_dist(src, target_mob) <= 6)
 				OpenFire(target_mob)
@@ -79,7 +81,7 @@
 	if(!target_mob || SA_attackable(target_mob))
 		LoseTarget()
 		return 0
-	if(!(target_mob in ListTargets()))
+	if(!(target_mob in ListTargets(10)))
 		LostTarget()
 		return 0
 	if(get_dist(src, target_mob) <= 1)	//Attacking
@@ -109,8 +111,10 @@
 	walk(src, 0)
 
 
-/mob/living/simple_animal/hostile/proc/ListTargets()
-	return view(src, 10)
+/mob/living/simple_animal/hostile/proc/ListTargets(var/dist = 7)
+	var/list/L = hearers(src, dist)
+	L += mechas_list
+	return L
 
 /mob/living/simple_animal/hostile/Die()
 	..()
