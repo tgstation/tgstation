@@ -66,8 +66,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
 	flags = FPRINT |  TABLEPASS
-	toxicity = 4
-	PestKillStr = 0
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
