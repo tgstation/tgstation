@@ -64,6 +64,7 @@ There are several things that need to be remembered:
 		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
 																			...eyes were merged into update_body)
+		update_targeted() // Updates the target overlay when someone points a gun at you
 
 >	All of these procs update our overlays_lying and overlays_standing, and then call update_icons() by default.
 	If you wish to update several overlays at once, you can set the argument to 0 to disable the update and call
@@ -117,7 +118,8 @@ Please contact me on #coderbus IRC. ~Carn x
 #define L_HAND_LAYER			19
 #define R_HAND_LAYER			20
 #define TAIL_LAYER				21		//bs12 specific. this hack is probably gonna come back to haunt me
-#define TOTAL_LAYERS			21
+#define TARGETED_LAYER			22		//BS12: Layer for the target overlay from weapon targeting system
+#define TOTAL_LAYERS			22
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -130,7 +132,6 @@ Please contact me on #coderbus IRC. ~Carn x
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
-
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
 	overlays.Cut()
@@ -471,6 +472,19 @@ proc/get_damage_icon_part(damage_state, body_part)
 		update_body(0)
 	update_hair(0)
 	if(update_icons)   update_icons()
+
+//Call when target overlay should be added/removed
+/mob/living/carbon/human/update_targeted(var/update_icons=1)
+	if (targeted_by && target_locked)
+		overlays_lying[TARGETED_LAYER]		= target_locked
+		overlays_standing[TARGETED_LAYER]	= target_locked
+	else if (!targeted_by && target_locked)
+		del(target_locked)
+	if (!targeted_by)
+		overlays_lying[TARGETED_LAYER]		= null
+		overlays_standing[TARGETED_LAYER]	= null
+	if(update_icons)		update_icons()
+
 
 /* --------------------------------------- */
 //For legacy support.
@@ -858,4 +872,5 @@ proc/get_damage_icon_part(damage_state, body_part)
 #undef L_HAND_LAYER
 #undef R_HAND_LAYER
 #undef TAIL_LAYER
+#undef TARGETED_LAYER
 #undef TOTAL_LAYERS

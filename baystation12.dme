@@ -1072,6 +1072,7 @@
 #include "code\modules\projectiles\ammunition.dm"
 #include "code\modules\projectiles\gun.dm"
 #include "code\modules\projectiles\projectile.dm"
+#include "code\modules\projectiles\targeting.dm"
 #include "code\modules\projectiles\ammunition\boxes.dm"
 #include "code\modules\projectiles\ammunition\bullets.dm"
 #include "code\modules\projectiles\guns\energy.dm"

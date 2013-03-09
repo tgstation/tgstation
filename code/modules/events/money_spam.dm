@@ -11,13 +11,14 @@
 			break
 
 /datum/event/pda_spam/tick()
-	if(!useMS.active)
+	if(!useMS || !useMS.active)
 		useMS = null
-	if(!useMS && message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
-			if(MS.active)
-				useMS = MS
-				break
+		if(message_servers)
+			for (var/obj/machinery/message_server/MS in message_servers)
+				if(MS.active)
+					useMS = MS
+					break
+
 	if(useMS)
 		time_failed = world.time
 		if(prob(2))
