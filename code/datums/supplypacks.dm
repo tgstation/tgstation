@@ -18,7 +18,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	var/access = null
 	var/hidden = 0
 	var/contraband = 0
-	var/group
+	var/group = "Operations"
 
 /datum/supply_packs/New()
 	manifest += "<ul>"
@@ -258,6 +258,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/goat
 	containername = "Goat Crate"
 	access = access_hydroponics
+	group = "Hydroponics"
 
 /datum/supply_packs/chicken
 	name = "Chicken Crate"
@@ -265,6 +266,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/chick
 	containername = "Chicken Crate"
 	access = access_hydroponics
+	group = "Hydroponics"
 
 /datum/supply_packs/lisa
 	name = "Corgi Crate"
@@ -272,6 +274,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 50
 	containertype = /obj/structure/largecrate/lisa
 	containername = "Corgi Crate"
+	group = "Hydroponics"
 
 /datum/supply_packs/seeds
 	name = "Seeds Crate"
@@ -337,7 +340,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Medical crate"
 	group = "Medical / Science"
-
 
 /datum/supply_packs/virus
 	name = "Virus crate"
@@ -821,14 +823,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	group = "Medical / Science"
 
 /datum/supply_packs/randomised/pizza
-	num_contained = 6
+	num_contained = 5
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
-	name = "Surprise pack of half a dozen pizzas"
+	name = "Surprise pack of five dozen pizzas"
 	cost = 15
-	containertype = /obj/structure/closet/crate
+	containertype = /obj/structure/closet/crate/freezer
 	containername = "Pizza crate"
 	group = "Hospitality"
 
@@ -854,7 +856,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/machinery/power/rust_fuel_injector)
 	name = "RUST fuel injector"
 	cost = 50
-	containertype = /obj/structure/largecrate
+	containertype = /obj/structure/closet/crate/secure/large
 	containername = "RUST injector crate"
 	group = "Engineering"
 	access = access_engine
@@ -868,11 +870,20 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	group = "Engineering"
 	access = access_engine
 
+/datum/supply_packs/rust_assembly_port
+	contains = list(/obj/item/weapon/module/rust_fuel_port)
+	name = "RUST fuel assembly port circuitry"
+	cost = 40
+	containertype = /obj/structure/closet/crate/secure
+	containername = "RUST fuel assembly port circuitry"
+	group = "Engineering"
+	access = access_engine
+
 /datum/supply_packs/rust_core
 	contains = list(/obj/machinery/power/rust_core)
 	name = "RUST Tokamak Core"
 	cost = 75
-	containertype = /obj/structure/largecrate
+	containertype = /obj/structure/closet/crate/secure/large
 	containername = "RUST tokamak crate"
 	group = "Engineering"
 	access = access_engine
@@ -902,3 +913,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/closet/crate
 	containername = "EFTPOS crate"
 	group = "Operations"
+
+/datum/supply_packs/teg
+	contains = list(/obj/machinery/power/generator)
+	name = "Mark I Thermoelectric Generator"
+	cost = 75
+	containertype = /obj/structure/closet/crate/secure/large
+	containername = "Mk1 TEG crate"
+	group = "Engineering"
+	access = access_engine
+
+/datum/supply_packs/circulator
+	contains = list(/obj/machinery/atmospherics/binary/circulator)
+	name = "Binary atmospheric circulator"
+	cost = 60
+	containertype = /obj/structure/closet/crate/secure/large
+	containername = "Atmospheric circulator crate"
+	group = "Engineering"
+	access = access_engine

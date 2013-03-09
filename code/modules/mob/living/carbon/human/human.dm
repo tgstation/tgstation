@@ -38,6 +38,11 @@
 	organs_by_name["l_foot"] = new/datum/organ/external/l_foot(organs_by_name["l_leg"])
 	organs_by_name["r_foot"] = new/datum/organ/external/r_foot(organs_by_name["r_leg"])
 
+	new/datum/organ/internal/heart(src)
+	new/datum/organ/internal/lungs(src)
+	new/datum/organ/internal/liver(src)
+	new/datum/organ/internal/kidney(src)
+
 
 	// connect feet to legs and hands to arms
 /*	var/datum/organ/external/organ = organs_by_name["l_hand"]
@@ -899,26 +904,24 @@
 					H.brainmob.mind.transfer_to(src)
 					del(H)
 
-	var/datum/organ/external/chest/E = get_organ("chest")
-	if(E.ruptured_lungs == 1)
-		E.ruptured_lungs = 0
+	for(var/datum/organ/internal/I in internal_organs)
+		I.damage = 0
 
 	for (var/datum/disease/virus in viruses)
 		virus.cure()
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/external/chest/E = get_organ("chest")
-	return E.ruptured_lungs
-
+	var/datum/organ/internal/lungs/L = internal_organs["lungs"]
+	return L.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/external/chest/E = get_organ("chest")
+	var/datum/organ/internal/lungs/L = internal_organs["lungs"]
 
-	if(E.ruptured_lungs == 0)
+	if(!L.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
+		L.damage = L.min_bruised_damage
 
-	E.ruptured_lungs = 1
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
