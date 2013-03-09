@@ -469,8 +469,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(istype(M,/mob/dead))
 			M.invisibility = 0
 			user.visible_message( \
-				"\red [user] drags the ghost to our plan of reality!", \
-				"\red You drag the ghost to our plan of reality!" \
+				"\red [user] drags the ghost to our plane of reality!", \
+				"\red You drag the ghost to our plane of reality!" \
 			)
 			return
 		if(!istype(M))

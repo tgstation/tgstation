@@ -33,6 +33,7 @@
 	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
 						 "<span class='notice'>You label [A] as [label].</span>")
 	A.name = "[A.name] ([label])"
+	labels_left--
 
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user)
@@ -49,3 +50,20 @@
 		user << "<span class='notice'>You set the text to '[str]'.</span>"
 	else
 		user << "<span class='notice'>You turn off [src].</span>"
+
+/obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/hand_labeler_refill))
+		user << "<span class='notice'>You insert [I] into [src].</span>"
+		user.drop_item()
+		del(I)
+		labels_left = initial(labels_left)
+		return
+
+/obj/item/hand_labeler_refill
+	name = "hand labeler paper roll"
+	icon = 'icons/obj/bureaucracy.dmi'
+	desc = "A roll of paper. Use it on a hand labeler to refill it."
+	icon_state = "labeler_refill"
+	item_state = "electropack"
+	w_class = 1.0

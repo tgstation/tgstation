@@ -53,6 +53,25 @@
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "food crate"
 
+/datum/supply_packs/paper
+	name = "Bureaucracy crate"
+	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
+					/obj/item/weapon/hand_labeler,
+					/obj/item/hand_labeler_refill,
+					/obj/item/hand_labeler_refill,
+					/obj/item/weapon/paper_bin,
+					/obj/item/weapon/pen,
+					/obj/item/weapon/pen/blue,
+					/obj/item/weapon/pen/red,
+					/obj/item/weapon/folder/blue,
+					/obj/item/weapon/folder/red,
+					/obj/item/weapon/folder/yellow,
+					/obj/item/weapon/clipboard,
+					/obj/item/weapon/clipboard)
+	cost = 25
+	containertype = /obj/structure/closet/crate
+	containername = "Bureaucracy crate"
+
 /datum/supply_packs/monkey
 	name = "Monkey crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes)
