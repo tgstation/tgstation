@@ -42,10 +42,12 @@
 			if("9")
 				log_admin("[key_name(usr)] has spawned aliens.")
 				src.makeAliens()
+/* DEATH SQUADS
 			if("10")
 				log_admin("[key_name(usr)] has spawned a death squad.")
 				if(!src.makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
+*/
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -1607,10 +1609,12 @@
 					spawn(0)
 						H.corgize()
 				ok = 1
+/* DEATH SQUADS
 			if("striketeam")
 				if(usr.client.strike_team())
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","Strike")
+*/
 			if("tripleAI")
 				usr.client.triple_ai()
 				feedback_inc("admin_secrets_fun_used",1)
@@ -1681,24 +1685,12 @@
 				move_mining_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
 				log_admin("[key_name(usr)] moved the mining shuttle")
-			if("moveadminshuttle")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","ShA")
-				move_admin_shuttle()
-				message_admins("\blue [key_name_admin(usr)] moved the centcom administration shuttle", 1)
-				log_admin("[key_name(usr)] moved the centcom administration shuttle")
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
 				move_ferry()
 				message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")
-			if("movealienship")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","ShX")
-				move_alien_ship()
-				message_admins("\blue [key_name_admin(usr)] moved the alien dinghy", 1)
-				log_admin("[key_name(usr)] moved the alien dinghy")
 			if("togglebombcap")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BC")

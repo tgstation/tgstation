@@ -237,20 +237,6 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle"
 
-/area/shuttle/alien/base
-	icon_state = "shuttle"
-	name = "\improper Alien Shuttle Base"
-	requires_power = 1
-	luminosity = 0
-	lighting_use_dynamic = 1
-
-/area/shuttle/alien/mine
-	icon_state = "shuttle"
-	name = "\improper Alien Shuttle Mine"
-	requires_power = 1
-	luminosity = 0
-	lighting_use_dynamic = 1
-
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
 
@@ -268,53 +254,8 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered2"
 
-/area/shuttle/syndicate_elite/mothership
-	name = "\improper Syndicate Elite Shuttle"
-	icon_state = "shuttlered"
-
-/area/shuttle/syndicate_elite/station
-	name = "\improper Syndicate Elite Shuttle"
-	icon_state = "shuttlered2"
-
-/area/shuttle/administration/centcom
-	name = "\improper Administration Shuttle Centcom"
-	icon_state = "shuttlered"
-
-/area/shuttle/administration/station
-	name = "\improper Administration Shuttle"
-	icon_state = "shuttlered2"
-
 /area/shuttle/thunderdome
 	name = "honk"
-
-/area/shuttle/thunderdome/grnshuttle
-	name = "\improper Thunderdome GRN Shuttle"
-	icon_state = "green"
-
-/area/shuttle/thunderdome/grnshuttle/dome
-	name = "\improper GRN Shuttle"
-	icon_state = "shuttlegrn"
-
-/area/shuttle/thunderdome/grnshuttle/station
-	name = "\improper GRN Station"
-	icon_state = "shuttlegrn2"
-
-/area/shuttle/thunderdome/redshuttle
-	name = "\improper Thunderdome RED Shuttle"
-	icon_state = "red"
-
-/area/shuttle/thunderdome/redshuttle/dome
-	name = "\improper RED Shuttle"
-	icon_state = "shuttlered"
-
-/area/shuttle/thunderdome/redshuttle/station
-	name = "\improper RED Station"
-	icon_state = "shuttlered2"
-// === Trying to remove these areas:
-
-/area/airtunnel1/      // referenced in airtunnel.dm:759
-
-/area/dummy/           // Referenced in engine.dm:261
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
@@ -325,11 +266,6 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 
 // === end remove
-
-/area/alien
-	name = "\improper Alien base"
-	icon_state = "yellow"
-	requires_power = 0
 
 // CENTCOM
 
@@ -349,21 +285,6 @@ proc/process_ghost_teleport_locs()
 
 /area/centcom/ferry
 	name = "\improper Centcom Transport Shuttle"
-
-/area/centcom/shuttle
-	name = "\improper Centcom Administration Shuttle"
-
-/area/centcom/test
-	name = "\improper Centcom Testing Facility"
-
-/area/centcom/living
-	name = "\improper Centcom Living Quarters"
-
-/area/centcom/specops
-	name = "\improper Centcom Special Ops"
-
-/area/centcom/creed
-	name = "Creed's Office"
 
 /area/centcom/holding
 	name = "\improper Holding Facility"
@@ -1655,7 +1576,6 @@ var/list/centcom_areas = list (
 	/area/shuttle/escape_pod3/centcom,
 	/area/shuttle/escape_pod5/centcom,
 	/area/shuttle/transport1/centcom,
-	/area/shuttle/administration/centcom,
 	/area/shuttle/specops/centcom,
 )
 
@@ -1671,7 +1591,6 @@ var/list/the_station_areas = list (
 	/area/shuttle/transport1/station,
 //	/area/shuttle/transport2/station,	//not present on map
 	/area/shuttle/prison/station,
-	/area/shuttle/administration/station,
 	/area/shuttle/specops/station,
 	/area/atmos,
 	/area/maintenance,

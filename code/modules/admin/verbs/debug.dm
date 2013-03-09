@@ -726,13 +726,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Reaper"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-
+/* DEATH SQUADS
 		if("death commando")//Was looking to add this for a while.
 			M.equip_death_commando()
 
 		if("syndicate commando")
 			M.equip_syndicate_commando()
-
+*/
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)

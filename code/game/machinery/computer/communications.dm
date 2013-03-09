@@ -434,11 +434,11 @@
 /proc/call_shuttle_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
-
+/* DEATH SQUADS
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return
-
+*/
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
 		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again."
 		return
@@ -511,7 +511,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
 		return ..()
 
 	emergency_shuttle.incall(2)
@@ -536,7 +536,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
 		return ..()
 
 	emergency_shuttle.incall(2)

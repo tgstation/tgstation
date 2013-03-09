@@ -11,8 +11,8 @@ client/proc/one_click_antag()
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"<B>One-click Antagonist</B><br>
-		<a href='?src=\ref[src];makeAntag=1'>Make Tratiors</a><br>
-		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
+		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
+		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
@@ -313,6 +313,7 @@ client/proc/one_click_antag()
 	new /datum/event/ninja()
 	return 1
 
+/* DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
@@ -379,7 +380,7 @@ client/proc/one_click_antag()
 				new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 
 	return 1
-
+*/
 
 /datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
@@ -402,7 +403,7 @@ client/proc/one_click_antag()
 	new_character.key = G_found.key
 
 	return new_character
-
+/* DEATH SQUADS
 /datum/admins/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
 	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
 	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
@@ -430,3 +431,4 @@ client/proc/one_click_antag()
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
+	*/

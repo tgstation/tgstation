@@ -34,7 +34,7 @@
 			break
 		callshuttle++
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
 		callshuttle = 0
 
 	if(callshuttle == 3) //if all three conditions are met

@@ -1,7 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/pod
-	name = "Pod Launch Control"
+	name = "pod launch control"
 	desc = "A controll for launching pods. Some people prefer firing Mechas."
 	icon_state = "computer_generic"
 	var/id = 1.0
@@ -17,16 +15,13 @@
 		for(var/obj/machinery/mass_driver/M in world)
 			if(M.id == id)
 				connected = M
-			else
-		return
-	return
 
 
 /obj/machinery/computer/pod/proc/alarm()
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	if(!( connected ))
+	if(!connected)
 		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
 		return
 
@@ -45,8 +40,6 @@
 	for(var/obj/machinery/door/poddoor/M in world)
 		if(M.id == id)
 			M.close()
-			return
-	return
 
 
 /obj/machinery/computer/pod/attackby(I as obj, user as mob)

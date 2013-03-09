@@ -425,7 +425,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Trigger a Bluespace Anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
-			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
@@ -435,6 +434,11 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
+			<BR>
+			<B>Shuttles</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
@@ -447,16 +451,15 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			"}
 
+/* DEATH SQUADS
+<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
+*/
 	if(check_rights(R_SERVER,0))
 		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
 
@@ -859,26 +862,6 @@ var/global/floorIsLava = 0
 //
 
 
-/**********************Administration Shuttle**************************/
-
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
-
-proc/move_admin_shuttle()
-	var/area/fromArea
-	var/area/toArea
-	if (admin_shuttle_location == 1)
-		fromArea = locate(/area/shuttle/administration/station)
-		toArea = locate(/area/shuttle/administration/centcom)
-	else
-		fromArea = locate(/area/shuttle/administration/centcom)
-		toArea = locate(/area/shuttle/administration/station)
-	fromArea.move_contents_to(toArea)
-	if (admin_shuttle_location)
-		admin_shuttle_location = 0
-	else
-		admin_shuttle_location = 1
-	return
-
 /**********************Centcom Ferry**************************/
 
 var/ferry_location = 0 // 0 = centcom , 1 = station
@@ -897,24 +880,3 @@ proc/move_ferry()
 		ferry_location = 0
 	else
 		ferry_location = 1
-	return
-
-/**********************Alien ship**************************/
-
-var/alien_ship_location = 1 // 0 = base , 1 = mine
-
-proc/move_alien_ship()
-	var/area/fromArea
-	var/area/toArea
-	if (alien_ship_location == 1)
-		fromArea = locate(/area/shuttle/alien/mine)
-		toArea = locate(/area/shuttle/alien/base)
-	else
-		fromArea = locate(/area/shuttle/alien/base)
-		toArea = locate(/area/shuttle/alien/mine)
-	fromArea.move_contents_to(toArea)
-	if (alien_ship_location)
-		alien_ship_location = 0
-	else
-		alien_ship_location = 1
-	return

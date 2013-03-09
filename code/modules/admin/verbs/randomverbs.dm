@@ -368,6 +368,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(ninja_spawn.len)
 				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc
+/* DEATH SQUADS
 		if("Death Commando")//Leaves them at late-join spawn.
 			new_character.equip_death_commando()
 			new_character.internal = new_character.s_store
@@ -378,6 +379,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					new_character = new_character.Robotize()
 					if(new_character.mind.special_role=="traitor")
 						call(/datum/game_mode/proc/add_law_zero)(new_character)
+*/
 				if("AI")
 					new_character = new_character.AIize()
 					if(new_character.mind.special_role=="traitor")
