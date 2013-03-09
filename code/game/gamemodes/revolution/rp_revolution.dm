@@ -78,6 +78,17 @@
 		rev_mind.special_role = "Head Revolutionary"
 		obj_count++
 
+	// Show each head revolutionary up to 3 candidates
+	var/list/already_considered = list()
+	for(var/i = 0, i < 2, i++)
+		var/mob/rev_mob = rev_mind.current
+		already_considered += rev_mob
+		// Tell them about people they might want to contact.
+		var/mob/living/carbon/human/M = get_nt_opposed()
+		if(M && !(M.mind in head_revolutionaries) && !(M in already_considered))
+			rev_mob << "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them."
+			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
