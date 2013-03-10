@@ -11,14 +11,14 @@
 	var/harvesting = 0
 	var/obj/item/weapon/anobattery/inserted_battery
 	var/obj/machinery/artifact/cur_artifact
-	var/obj/machinery/scanner/owned_scanner = null
+	var/obj/machinery/artifact_scanpad/owned_scanner = null
 
 /obj/machinery/artifact_harvester/New()
 	..()
 	//connect to a nearby scanner pad
-	owned_scanner = locate(/obj/machinery/scanner) in get_step(src, dir)
+	owned_scanner = locate(/obj/machinery/artifact_scanpad) in get_step(src, dir)
 	if(!owned_scanner)
-		owned_scanner = locate(/obj/machinery/scanner) in orange(1, src)
+		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
 /obj/machinery/artifact_harvester/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I,/obj/item/weapon/anobattery))
@@ -126,7 +126,7 @@
 		for(var/obj/O in get_turf(owned_scanner))
 			if(O.invisibility)
 				continue
-			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/scanner))
+			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/artifact_scanpad))
 				mundane++
 				break
 		for(var/mob/O in get_turf(owned_scanner))

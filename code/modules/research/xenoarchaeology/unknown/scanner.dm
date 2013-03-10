@@ -1,7 +1,7 @@
 
-/obj/machinery/scanner
-	name = "scanner pad"
-	desc = "Place larger objects here for scanning."
+/obj/machinery/artifact_scanpad
+	name = "anomalous scanner pad"
+	desc = "Place things here for scanning."
 	icon = 'stationobjs.dmi'
 	icon_state = "tele0"
 	anchored = 1

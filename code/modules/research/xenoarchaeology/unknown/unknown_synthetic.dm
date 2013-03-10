@@ -134,7 +134,7 @@
 		cooldown = archived_time / 2
 
 		if(inserted_battery.battery_effect.activated)
-			inserted_battery.battery_effect.ToggleActivate()
+			inserted_battery.battery_effect.ToggleActivate(1)
 
 /obj/item/weapon/anodevice/Topic(href, href_list)
 

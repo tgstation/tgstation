@@ -9,7 +9,7 @@
 	var/scan_in_progress = 0
 	var/scan_num = 0
 	var/obj/scanned_obj
-	var/obj/machinery/scanner/owned_scanner = null
+	var/obj/machinery/artifact_scanpad/owned_scanner = null
 	var/scan_completion_time = 0
 	var/scan_duration = 120
 	var/obj/scanned_object
@@ -21,9 +21,9 @@
 
 /obj/machinery/artifact_analyser/proc/reconnect_scanner()
 	//connect to a nearby scanner pad
-	owned_scanner = locate(/obj/machinery/scanner) in get_step(src, dir)
+	owned_scanner = locate(/obj/machinery/artifact_scanpad) in get_step(src, dir)
 	if(!owned_scanner)
-		owned_scanner = locate(/obj/machinery/scanner) in orange(1, src)
+		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
 /obj/machinery/artifact_analyser/attack_hand(var/mob/user as mob)
 	src.add_fingerprint(user)

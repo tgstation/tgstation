@@ -63,8 +63,8 @@
 				display_msg = pick("grows dull!","fades in intensity!","suddenly becomes very still!","suddenly becomes very quiet!")
 			var/atom/toplevelholder = holder
 			while(!istype(toplevelholder.loc, /turf))
-				toplevelholder = holder.loc
-			toplevelholder.visible_message("\red \icon[holder] [holder] [display_msg]")
+				toplevelholder = toplevelholder.loc
+			toplevelholder.visible_message("\red \icon[toplevelholder] [toplevelholder] [display_msg]")
 
 /datum/artifact_effect/proc/DoEffectTouch(var/mob/user)
 /datum/artifact_effect/proc/DoEffectAura(var/atom/holder)
