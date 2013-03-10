@@ -1,9 +1,6 @@
 
 obj/machinery/anomaly/gas_chromatography
 	name = "Gas Chromatography spectrometer"
-	desc = "A specialised, complex analysis machine."
-	icon = 'virology.dmi'
-	icon_state = "analyser"
 
 obj/machinery/anomaly/gas_chromatography/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."

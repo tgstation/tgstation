@@ -1,7 +1,11 @@
 
 /obj/machinery/anomaly
+	name = "Analysis machine"
+	desc = "A specialised, complex analysis machine."
 	anchored = 1
 	density = 1
+	icon = 'icons/obj/virology.dmi'
+	icon_state = "analyser"
 	//
 	var/obj/item/weapon/reagent_containers/glass/held_container
 	var/obj/item/weapon/tank/fuel_container

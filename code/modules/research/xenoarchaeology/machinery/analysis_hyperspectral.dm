@@ -1,9 +1,16 @@
 
 obj/machinery/anomaly/hyperspectral
 	name = "Hyperspectral Imager"
-	desc = "A specialised, complex analysis machine."
-	//icon = 'icons/obj/computer.dmi'
-	//icon_state = "rdcomp"
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "scanner"
+
+obj/machinery/anomaly/hyperspectral/process()
+	..()
+	if(scan_process)
+		icon_state = "scanner_active"
+	else if(prob(10))
+		icon_state = "scanner"
+		flick(src"scanner_active")
 
 obj/machinery/anomaly/hyperspectral/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."

@@ -1,9 +1,6 @@
 
 obj/machinery/anomaly/accelerator
 	name = "Accelerator spectrometer"
-	desc = "A specialised, complex analysis machine."
-	icon = 'virology.dmi'
-	icon_state = "analyser"
 
 obj/machinery/anomaly/accelerator/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."

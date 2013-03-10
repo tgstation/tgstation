@@ -1,9 +1,6 @@
 
 obj/machinery/anomaly/fourier_transform
 	name = "Fourier Transform spectroscope"
-	desc = "A specialised, complex analysis machine."
-	icon = 'virology.dmi'
-	icon_state = "analyser"
 
 obj/machinery/anomaly/fourier_transform/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
