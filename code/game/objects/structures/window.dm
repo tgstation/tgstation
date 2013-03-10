@@ -104,9 +104,17 @@
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
+	else if (usr.a_intent == "hurt")
+		playsound(src.loc, 'Glassknock.ogg', 80, 1)
+		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
+							"\red You bang against the [src.name]!", \
+							"You hear a banging sound.")
 	else
-		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
-		playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
+		playsound(src.loc, 'Glassknock.ogg', 80, 1)
+		usr.visible_message("[usr.name] knocks on the [src.name].", \
+							"You knock on the [src.name].", \
+							"You hear a knocking sound.")
+	return
 
 
 /obj/structure/window/attack_paw(mob/user as mob)

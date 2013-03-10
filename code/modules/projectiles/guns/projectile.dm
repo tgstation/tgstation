@@ -10,7 +10,7 @@
 	origin_tech = "combat=2;materials=2"
 	w_class = 3.0
 	m_amt = 1000
-
+	recoil = 1
 	var/ammo_type = "/obj/item/ammo_casing/a357"
 	var/list/loaded = list()
 	var/max_shells = 7
@@ -27,8 +27,8 @@
 
 
 /obj/item/weapon/gun/projectile/load_into_chamber()
-//	if(in_chamber)
-//		return 1 {R}
+	if(in_chamber)
+		return 1 //{R}
 
 	if(!loaded.len)
 		return 0
@@ -77,6 +77,8 @@
 	return
 
 /obj/item/weapon/gun/projectile/attack_self(mob/user as mob)
+	if (target)
+		return ..()
 	if (loaded.len)
 		if (load_method == SPEEDLOADER)
 			var/obj/item/ammo_casing/AC = loaded[1]

@@ -261,7 +261,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
-		if (getBrainLoss() >= 60 && stat != 2)
+		// No. -- cib
+		/*if (getBrainLoss() >= 60 && stat != 2)
 			if (prob(3))
 				switch(pick(1,2,3))
 					if(1)
@@ -270,6 +271,25 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
 					if(3)
 						emote("drool")
+		*/
+
+		if(stat != 2)
+			var/rn = rand(0, 200)
+			if(getBrainLoss() >= 5)
+				if(0 <= rn && rn <= 3)
+					custom_pain("Your head feels numb and painful.")
+			if(getBrainLoss() >= 15)
+				if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
+					src << "\red It becomes hard to see for some reason."
+					eye_blurry = 10
+			if(getBrainLoss() >= 35)
+				if(7 <= rn && rn <= 9) if(hand && equipped())
+					src << "\red Your hand won't respond properly, you drop what you're holding."
+					drop_item()
+			if(getBrainLoss() >= 50)
+				if(10 <= rn && rn <= 12) if(!lying)
+					src << "\red Your legs won't respond properly, you fall down."
+					lying = 1
 
 	proc/handle_organs()
 		// take care of organ related updates, such as broken and missing limbs

@@ -7,6 +7,7 @@
 	caliber = "9mm"
 	origin_tech = "combat=4;materials=2"
 	ammo_type = "/obj/item/ammo_casing/c9mm"
+	automatic = 1
 
 	isHandgun()
 		return 0
@@ -18,7 +19,7 @@
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	max_shells = 16
-	caliber = ".45"
+	caliber = "			.45"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/c45"
 

@@ -220,9 +220,29 @@
 	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
+	//Handle the gun settings buttons
+	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+	if (mymob.client)
+		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
+			mymob.gun_setting_icon.dir = 2
+	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
+		if (G.target)
+			mymob.item_use_icon = new /obj/screen/gun/item(null)
+			if (mymob.client.target_can_click)
+				mymob.item_use_icon.dir = 1
+			src.adding += mymob.item_use_icon
+			mymob.gun_move_icon = new /obj/screen/gun/move(null)
+			if (mymob.client.target_can_move)
+				mymob.gun_move_icon.dir = 1
+				mymob.gun_run_icon = new /obj/screen/gun/run(null)
+				if (mymob.client.target_can_run)
+					mymob.gun_run_icon.dir = 1
+				src.adding += mymob.gun_run_icon
+			src.adding += mymob.gun_move_icon
+
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return
