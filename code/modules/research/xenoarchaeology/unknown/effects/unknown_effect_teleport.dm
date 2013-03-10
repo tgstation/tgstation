@@ -1,6 +1,7 @@
 
 /datum/artifact_effect/teleport
 	effecttype = "teleport"
+	effect_type = 6
 
 /datum/artifact_effect/teleport/DoEffectTouch(var/mob/user)
 	var/weakness = GetAnomalySusceptibility(user)

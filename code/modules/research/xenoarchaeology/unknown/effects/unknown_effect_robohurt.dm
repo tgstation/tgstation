@@ -2,6 +2,10 @@
 /datum/artifact_effect/robohurt
 	effecttype = "robohurt"
 
+/datum/artifact_effect/robohurt/New()
+	..()
+	effect_type = pick(3,4)
+
 /datum/artifact_effect/robohurt/DoEffectTouch(var/mob/user)
 	if(user)
 		if (istype(user, /mob/living/silicon/robot))

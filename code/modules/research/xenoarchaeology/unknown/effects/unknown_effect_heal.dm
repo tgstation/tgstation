@@ -1,6 +1,7 @@
 
 /datum/artifact_effect/heal
 	effecttype = "heal"
+	effect_type = 5
 
 /datum/artifact_effect/heal/DoEffectTouch(var/mob/toucher)
 	//todo: check over this properly

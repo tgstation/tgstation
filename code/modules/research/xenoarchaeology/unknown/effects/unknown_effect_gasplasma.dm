@@ -8,6 +8,7 @@
 	..()
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
 	max_pressure = rand(115,1000)
+	effect_type = pick(6,7)
 
 /datum/artifact_effect/gasplasma/DoEffectTouch(var/mob/user)
 	if(holder)

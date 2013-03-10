@@ -2,6 +2,7 @@
 /datum/artifact_effect/forcefield
 	effecttype = "forcefield"
 	var/list/created_field = list()
+	effect_type = 4
 
 /datum/artifact_effect/forcefield/New()
 	..()

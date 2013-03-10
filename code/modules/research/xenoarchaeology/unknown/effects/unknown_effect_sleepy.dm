@@ -3,6 +3,10 @@
 /datum/artifact_effect/sleepy
 	effecttype = "sleepy"
 
+/datum/artifact_effect/sleepy/New()
+	..()
+	effect_type = pick(5,2)
+
 /datum/artifact_effect/sleepy/DoEffectTouch(var/mob/toucher)
 	if(toucher)
 		var/weakness = GetAnomalySusceptibility(toucher)

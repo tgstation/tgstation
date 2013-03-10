@@ -6,6 +6,10 @@
 
 /datum/artifact_effect/heat/New()
 	..()
+	effect_type = pick(5,6,7)
+
+/datum/artifact_effect/heat/New()
+	..()
 	target_temp = rand(300,600)
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
 

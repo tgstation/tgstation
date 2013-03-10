@@ -10,6 +10,16 @@
 	var/chargelevel = 0
 	var/chargelevelmax = 10
 	var/artifact_id = ""
+	var/effect_type = 0
+
+//0 = Unknown / none detectable
+//1 = Concentrated energy
+//2 = Intermittent psionic wavefront
+//3 = Electromagnetic energy
+//4 = Particle field
+//5 = Organically reactive exotic particles
+//6 = Interdimensional/bluespace? phasing
+//7 = Atomic synthesis
 
 /datum/artifact_effect/New(var/atom/location)
 	..()

@@ -2,6 +2,10 @@
 /datum/artifact_effect/stun
 	effecttype = "stun"
 
+/datum/artifact_effect/stun/New()
+	..()
+	effect_type = pick(2,5)
+
 /datum/artifact_effect/stun/DoEffectTouch(var/mob/toucher)
 	if(toucher && iscarbon(toucher))
 		var/mob/living/carbon/C = toucher
