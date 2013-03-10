@@ -61,7 +61,10 @@
 				display_msg = pick("momentarily glows brightly!","distorts slightly for a moment!","flickers slightly!","vibrates!","shimmers slightly for a moment!")
 			else
 				display_msg = pick("grows dull!","fades in intensity!","suddenly becomes very still!","suddenly becomes very quiet!")
-			holder.visible_message("\red \icon[holder] [holder] [display_msg]")
+			var/atom/toplevelholder = holder
+			while(!istype(toplevelholder.loc, /turf))
+				toplevelholder = holder.loc
+			toplevelholder.visible_message("\red \icon[holder] [holder] [display_msg]")
 
 /datum/artifact_effect/proc/DoEffectTouch(var/mob/user)
 /datum/artifact_effect/proc/DoEffectAura(var/atom/holder)
