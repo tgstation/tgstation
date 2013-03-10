@@ -15,8 +15,9 @@
 			created_field.Remove(F)
 			del F
 	else if(holder)
+		var/turf/T = get_turf(holder)
 		while(created_field.len < 16)
-			var/obj/effect/energy_field/E = new (locate(holder.x,holder.y,holder.z))
+			var/obj/effect/energy_field/E = new (locate(T.x,T.y,T.z))
 			created_field.Add(E)
 			E.strength = 1
 			E.density = 1
@@ -36,43 +37,44 @@
 
 /datum/artifact_effect/forcefield/UpdateMove()
 	if(created_field.len && holder)
+		var/turf/T = get_turf(holder)
 		while(created_field.len < 16)
 			//for now, just instantly respawn the fields when they get destroyed
-			var/obj/effect/energy_field/E = new (locate(holder.x,holder.y,holder))
+			var/obj/effect/energy_field/E = new (locate(T.x,T.y,T))
 			created_field.Add(E)
 			E.anchored = 1
 			E.density = 1
 			E.invisibility = 0
 
 		var/obj/effect/energy_field/E = created_field[1]
-		E.loc = locate(holder.x + 2,holder.y + 2,holder.z)
+		E.loc = locate(T.x + 2,T.y + 2,T.z)
 		E = created_field[2]
-		E.loc = locate(holder.x + 2,holder.y + 1,holder.z)
+		E.loc = locate(T.x + 2,T.y + 1,T.z)
 		E = created_field[3]
-		E.loc = locate(holder.x + 2,holder.y,holder.z)
+		E.loc = locate(T.x + 2,T.y,T.z)
 		E = created_field[4]
-		E.loc = locate(holder.x + 2,holder.y - 1,holder.z)
+		E.loc = locate(T.x + 2,T.y - 1,T.z)
 		E = created_field[5]
-		E.loc = locate(holder.x + 2,holder.y - 2,holder.z)
+		E.loc = locate(T.x + 2,T.y - 2,T.z)
 		E = created_field[6]
-		E.loc = locate(holder.x + 1,holder.y + 2,holder.z)
+		E.loc = locate(T.x + 1,T.y + 2,T.z)
 		E = created_field[7]
-		E.loc = locate(holder.x + 1,holder.y - 2,holder.z)
+		E.loc = locate(T.x + 1,T.y - 2,T.z)
 		E = created_field[8]
-		E.loc = locate(holder.x,holder.y + 2,holder.z)
+		E.loc = locate(T.x,T.y + 2,T.z)
 		E = created_field[9]
-		E.loc = locate(holder.x,holder.y - 2,holder.z)
+		E.loc = locate(T.x,T.y - 2,T.z)
 		E = created_field[10]
-		E.loc = locate(holder.x - 1,holder.y + 2,holder.z)
+		E.loc = locate(T.x - 1,T.y + 2,T.z)
 		E = created_field[11]
-		E.loc = locate(holder.x - 1,holder.y - 2,holder.z)
+		E.loc = locate(T.x - 1,T.y - 2,T.z)
 		E = created_field[12]
-		E.loc = locate(holder.x - 2,holder.y + 2,holder.z)
+		E.loc = locate(T.x - 2,T.y + 2,T.z)
 		E = created_field[13]
-		E.loc = locate(holder.x - 2,holder.y + 1,holder.z)
+		E.loc = locate(T.x - 2,T.y + 1,T.z)
 		E = created_field[14]
-		E.loc = locate(holder.x - 2,holder.y,holder.z)
+		E.loc = locate(T.x - 2,T.y,T.z)
 		E = created_field[15]
-		E.loc = locate(holder.x - 2,holder.y - 1,holder.z)
+		E.loc = locate(T.x - 2,T.y - 1,T.z)
 		E = created_field[16]
-		E.loc = locate(holder.x - 2,holder.y - 2,holder.z)
+		E.loc = locate(T.x - 2,T.y - 2,T.z)

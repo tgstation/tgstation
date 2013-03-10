@@ -8,14 +8,14 @@
 /datum/artifact_effect/dnaswitch/New()
 	..()
 	if(effect == EFFECT_AURA)
-		severity = rand(1,10)
+		severity = rand(5,30)
 	else
-		severity = rand(5,95)
+		severity = rand(25,95)
 
 /datum/artifact_effect/dnaswitch/DoEffectTouch(var/mob/toucher)
 	var/weakness = GetAnomalySusceptibility(toucher)
 	if(ishuman(toucher) && prob(weakness * 100))
-		holder << pick("\green You feel a little different.",\
+		toucher << pick("\green You feel a little different.",\
 		"\green You feel very strange.",\
 		"\green Your stomach churns.",\
 		"\green Your skin feels loose.",\
@@ -23,9 +23,9 @@
 		"\green You feel a tingling sensation in your chest.",\
 		"\green Your entire body vibrates.")
 		if(prob(75))
-			scramble(1, holder, weakness * severity)
+			scramble(1, toucher, weakness * severity)
 		else
-			scramble(0, holder, weakness * severity)
+			scramble(0, toucher, weakness * severity)
 	return 1
 
 /datum/artifact_effect/dnaswitch/DoEffectAura()
@@ -41,7 +41,7 @@
 					"\green You feel a stabbing pain in your head.",\
 					"\green You feel a tingling sensation in your chest.",\
 					"\green Your entire body vibrates.")
-				if(prob(25))
+				if(prob(50))
 					scramble(1, H, weakness * severity)
 				else
 					scramble(0, H, weakness * severity)
@@ -60,7 +60,7 @@
 					"\green You feel a tingling sensation in your chest.",\
 					"\green Your entire body vibrates.")
 				if(prob(25))
-					if(prob(50))
+					if(prob(75))
 						scramble(1, H, weakness * severity)
 					else
 						scramble(0, H, weakness * severity)

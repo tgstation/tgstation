@@ -15,13 +15,15 @@
 		return 1
 
 /datum/artifact_effect/radiate/DoEffectAura()
-	for (var/mob/living/M in range(src.effectrange,holder))
-		M.apply_effect(radiation_amount,IRRADIATE,0)
-		M.updatehealth()
-	return 1
+	if(holder)
+		for (var/mob/living/M in range(src.effectrange,holder))
+			M.apply_effect(radiation_amount,IRRADIATE,0)
+			M.updatehealth()
+		return 1
 
 /datum/artifact_effect/radiate/DoEffectPulse()
-	for (var/mob/living/M in range(src.effectrange,holder))
-		M.apply_effect(radiation_amount * 25,IRRADIATE,0)
-		M.updatehealth()
-	return 1
+	if(holder)
+		for (var/mob/living/M in range(src.effectrange,holder))
+			M.apply_effect(radiation_amount * 25,IRRADIATE,0)
+			M.updatehealth()
+		return 1

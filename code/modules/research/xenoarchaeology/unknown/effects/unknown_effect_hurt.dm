@@ -4,8 +4,7 @@
 	effect_type = 5
 
 /datum/artifact_effect/hurt/DoEffectTouch(var/mob/toucher)
-	//caeltodo
-	if(holder)
+	if(toucher)
 		var/weakness = GetAnomalySusceptibility(toucher)
 		if(iscarbon(toucher) && prob(weakness * 100))
 			var/mob/living/carbon/C = toucher

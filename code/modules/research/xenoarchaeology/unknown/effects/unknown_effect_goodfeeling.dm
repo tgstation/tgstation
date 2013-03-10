@@ -27,7 +27,7 @@
 /datum/artifact_effect/goodfeeling/DoEffectTouch(var/mob/user)
 	if(user)
 		if (istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = holder
+			var/mob/living/carbon/human/H = user
 			if(prob(50))
 				if(prob(75))
 					H << "<b><font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>"
