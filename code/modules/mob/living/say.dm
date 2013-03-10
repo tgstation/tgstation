@@ -142,6 +142,9 @@ var/list/department_radio_keys = list(
 			// Check changed so that parrots can use headsets. Other simple animals do not have ears and will cause runtimes.
 			// And borgs -Sieve
 
+	if(src.stunned > 2 || (traumatic_shock > 61 && prob(50)))
+		message_mode = "" //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
+
 	if (!message)
 		return
 
