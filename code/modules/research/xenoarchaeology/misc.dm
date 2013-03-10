@@ -1,4 +1,6 @@
 
+//---- Noticeboard
+
 /obj/structure/noticeboard/anomaly/New()
 	notices = 5
 	icon_state = "nboard05"
@@ -6,7 +8,7 @@
 	//add some memos
 	var/obj/item/weapon/paper/P = new()
 	P.name = "Memo RE: proper analysis procedure"
-	P.info = "Rose,<br>activate <i>then</i> analyse the anomalies, your results will come so much quicker. Remember to employ basic quasi-elemental forces such as heat, energy, force and various chemical mixes - who knows why those ancient aliens made such obscure activation indices.<br><br>And don't forget your suit this time, I can't afford to have any researchers out of commision for as long as that again!.<br>Ward"
+	P.info = "Rose,<br>activate <i>then</i> analyse the artifacts, the machine will have a much easier time determining their function/s. Remember to employ basic quasi-elemental forces such as heat, energy, force and various chemical mixes - who knows why those ancient aliens made such obscure activation indices.<br><br>And don't forget your suit this time, I can't afford to have any researchers out of commision for as long as that again!.<br>Ward"
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
@@ -20,7 +22,7 @@
 
 	P = new()
 	P.name = "Memo RE: ethical quandaries"
-	P.info = "Darion-<br><br>I don't care what his rank is, our business is that of science and knowledge - questions of moral application do not come into this. Sure, so there are those who would employ the energy-wave particles my modified device has managed to abscond for their own personal gain, but I can hardly see the practical benefits of some of those things our benefactors left behind. Ward--"
+	P.info = "Darion-<br><br>I don't care what his rank is, our business is that of science and knowledge - questions of moral application do not come into this. Sure, so there are those who would employ the energy-wave particles my modified device has managed to abscond for their own personal gain, but I can hardly see the practical benefits of some of these artifacts our benefactors left behind. Ward--"
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
@@ -34,12 +36,12 @@
 
 	P = new()
 	P.name = "Reminder regarding the anomalous material suits"
-	P.info = "Do you people think the anomaly suits are cheap to come by? I'm about a hair trigger away from instituting a log book for the damn things. Only wear them if you're going out for a dig, and for god's sake don't go tramping around the station in them unless you're field testing something, R"
+	P.info = "Do you people think the anomaly suits are cheap to come by? I'm about a hair trigger away from instituting a log book for the damn things. Only wear them if you're going out for a dig, and for god's sake don't go tramping around in them unless you're field testing something, R"
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
 
-//Anomaly
+//---- Areas
 
 /area/anomaly
 	icon_state = "anomaly"
@@ -52,3 +54,17 @@
 
 /area/anomaly/outpost
 	name = "Research Outpost"
+
+//---- Bookcase
+
+/obj/structure/bookcase/manuals/xenoarchaeology
+	name = "Xenoarchaeology Manuals bookcase"
+
+	New()
+		..()
+		new /obj/item/weapon/book/manual/excavation(src)
+		new /obj/item/weapon/book/manual/mass_spectrometry(src)
+		new /obj/item/weapon/book/manual/materials_chemistry_analysis(src)
+		new /obj/item/weapon/book/manual/anomaly_testing(src)
+		new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
+		update_icon()

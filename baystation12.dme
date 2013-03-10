@@ -1141,6 +1141,7 @@
 #include "code\modules\research\server.dm"
 #include "code\modules\research\xenoarchaeology\chemistry.dm"
 #include "code\modules\research\xenoarchaeology\geosample.dm"
+#include "code\modules\research\xenoarchaeology\manuals.dm"
 #include "code\modules\research\xenoarchaeology\misc.dm"
 #include "code\modules\research\xenoarchaeology\readme.dm"
 #include "code\modules\research\xenoarchaeology\artifact\artifact.dm"
