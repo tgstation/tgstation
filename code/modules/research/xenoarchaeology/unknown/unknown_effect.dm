@@ -1,7 +1,7 @@
 
 //override procs in children as necessary
 /datum/artifact_effect
-	var/effecttype = "unknown"		//purely used for admin checks ingame
+	var/effecttype = "unknown"		//purely used for admin checks ingame, not needed any more
 	var/effect = EFFECT_TOUCH
 	var/effectrange = 4
 	var/trigger = TRIGGER_TOUCH
@@ -27,6 +27,9 @@
 	effect = rand(0,MAX_EFFECT)
 	trigger = rand(0,MAX_TRIGGER)
 
+	//this will be replaced by the excavation code later, but it's here just in case
+	artifact_id = "[pick("kappa","sigma","antaeres","beta","omicron","iota","epsilon","omega","gamma","delta","tau","alpha")]-[rand(100,999)]"
+
 	//random charge time and distance
 	switch(pick(100;1, 50;2, 25;3))
 		if(1)
@@ -49,17 +52,16 @@
 			activated = 0
 		else
 			activated = 1
-		if(holder && istype(holder, /obj/machinery/artifact))
-			var/obj/machinery/artifact/A = holder
+		if(reveal_toggle && holder)
+			if(istype(holder, /obj/machinery/artifact))
+				var/obj/machinery/artifact/A = holder
+				A.icon_state = "ano[A.icon_num][activated]"
 			var/display_msg
 			if(activated)
 				display_msg = pick("momentarily glows brightly!","distorts slightly for a moment!","flickers slightly!","vibrates!","shimmers slightly for a moment!")
 			else
 				display_msg = pick("grows dull!","fades in intensity!","suddenly becomes very still!","suddenly becomes very quiet!")
-
-			if(reveal_toggle)
-				A.icon_state = "ano[A.icon_num][activated]"
-				A.visible_message("\red \icon[A] [A] [display_msg]")
+			holder.visible_message("\red \icon[holder] [holder] [display_msg]")
 
 /datum/artifact_effect/proc/DoEffectTouch(var/mob/user)
 /datum/artifact_effect/proc/DoEffectAura(var/atom/holder)
