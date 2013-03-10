@@ -477,11 +477,6 @@ commented out in r5061, I left it because of the shroom thingies
 		for (var/i=0;i<mineralAmt;i++)
 			drop_mineral()
 
-	//leave a bit of cleared away rock
-	var/amount_leftover = rand(0,5)
-	for (var/i=0;i<amount_leftover;i++)
-		new /obj/item/weapon/ore(src)
-
 	/*if (prob(src.artifactChance))
 		//spawn a rare artifact here
 		new /obj/machinery/artifact(src)*/
