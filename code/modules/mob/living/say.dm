@@ -179,12 +179,14 @@ var/list/department_radio_keys = list(
 	var/is_speaking_skrell = 0
 	var/is_speaking_soghun = 0
 	var/is_speaking_taj = 0
+	var/is_speaking_radio = 0
 
 	switch (message_mode)
 		if ("headset")
 			if (src:ears)
 				src:ears.talk_into(src, message)
 				used_radios += src:ears
+				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
@@ -194,6 +196,7 @@ var/list/department_radio_keys = list(
 			if (src:ears)
 				src:ears.talk_into(src, message, 1)
 				used_radios += src:ears
+				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
@@ -202,6 +205,7 @@ var/list/department_radio_keys = list(
 			if (r_hand)
 				r_hand.talk_into(src, message)
 				used_radios += src:r_hand
+				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
@@ -210,6 +214,7 @@ var/list/department_radio_keys = list(
 			if (l_hand)
 				l_hand.talk_into(src, message)
 				used_radios += src:l_hand
+				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
@@ -218,6 +223,7 @@ var/list/department_radio_keys = list(
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, message)
 				used_radios += I
+				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
@@ -244,6 +250,7 @@ var/list/department_radio_keys = list(
 				if (src:ears)
 					src:ears.talk_into(src, message, message_mode)
 					used_radios += src:ears
+					is_speaking_radio = 1
 			else if(istype(src, /mob/living/silicon/robot))
 				if (src:radio)
 					src:radio.talk_into(src, message, message_mode)
@@ -375,6 +382,10 @@ var/list/department_radio_keys = list(
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
 	spawn(30) del(speech_bubble)
 
+	for(var/mob/M in hearers(5, src))
+		if(M != src && is_speaking_radio)
+			M:show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "radio"]</span>")
+
 	var/rendered = null
 	if (length(heard_a))
 		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
@@ -383,7 +394,6 @@ var/list/department_radio_keys = list(
 			message_a = "<i>[message_a]</i>"
 
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
-
 		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
 				var/deaf_message = ""
