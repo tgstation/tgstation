@@ -227,6 +227,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/lisa
 	containername = "Corgi Crate"
 	group = "Hydroponics"
+
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -931,3 +932,18 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Atmospheric circulator crate"
 	group = "Engineering"
 	access = access_engine
+
+/datum/supply_packs/bee_keeper
+	name = "Beekeeping Crate"
+	contains = list(/obj/item/beezeez,
+					/obj/item/beezeez,
+					/obj/item/weapon/bee_net,
+					/obj/item/apiary,
+					/obj/item/queen_bee,
+					/obj/item/queen_bee,
+					/obj/item/queen_bee)
+	cost = 20
+	containertype = /obj/structure/closet/crate/hydroponics
+	containername = "Beekeeping crate"
+	access = access_hydroponics
+	group = "Hydroponics"

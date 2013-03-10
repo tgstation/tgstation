@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
+#define SYRINGE_BROKEN 2
 
 /obj/item/weapon/reagent_containers/syringe
 	name = "Syringe"
@@ -27,14 +28,14 @@
 		update_icon()
 
 	attack_self(mob/user as mob)
-/*
+
 		switch(mode)
 			if(SYRINGE_DRAW)
 				mode = SYRINGE_INJECT
 			if(SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
-*/
-		mode = !mode
+			if(SYRINGE_BROKEN)
+				return
 		update_icon()
 
 	attack_hand()
@@ -50,6 +51,17 @@
 
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
+
+		if(mode == SYRINGE_BROKEN)
+			user << "\red This syringe is broken!"
+			return
+
+		if (user.a_intent == "hurt" && ismob(target))
+			if((CLUMSY in user.mutations) && prob(50))
+				target = user
+			syringestab(target, user)
+			return
+
 
 		switch(mode)
 			if(SYRINGE_DRAW)
@@ -183,6 +195,10 @@
 		return
 
 	update_icon()
+		if(mode == SYRINGE_BROKEN)
+			icon_state = "broken"
+			overlays = null //dirty fix
+			return
 		var/rounded_vol = round(reagents.total_volume,5)
 		overlays.Cut()
 		if(ismob(loc))
@@ -199,13 +215,61 @@
 		if(reagents.total_volume)
 			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
 
-			switch(rounded_vol)
-				if(5)	filling.icon_state = "syringe5"
-				if(10)	filling.icon_state = "syringe10"
-				if(15)	filling.icon_state = "syringe15"
+			filling.icon_state = "syringe[rounded_vol]"
 
 			filling.icon += mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
+
+
+	/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
+
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
+		log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+		if(istype(target, /mob/living/carbon/human))
+
+			var/target_zone = check_zone(user.zone_sel.selecting, target)
+			var/datum/organ/external/affecting = target:get_organ(target_zone)
+
+			if (!affecting)
+				return
+			if(affecting.status & ORGAN_DESTROYED)
+				user << "What [affecting.display_name]?"
+				return
+			var/hit_area = affecting.display_name
+
+			var/mob/living/carbon/human/H = target
+			if((user != target) && H.check_shields(7, "the [src.name]"))
+				return
+
+			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message(text("\red <B>[user] tries to stab [target] in the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
+				user.u_equip(src)
+				del(src)
+				return
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red <B>[user] stabs [target] in the [hit_area] with [src.name]!</B>"), 1)
+
+			if(affecting.take_damage(7))
+				target:UpdateDamageIcon()
+
+		else
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red <B>[user] stabs [target] with [src.name]!</B>"), 1)
+			target.take_organ_damage(3)// 7 is the same as crowbar punch
+
+		src.reagents.reaction(target, INGEST)
+		var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand
+		src.reagents.trans_to(target, syringestab_amount_transferred)
+		src.desc += " It is broken."
+		src.mode = SYRINGE_BROKEN
+		src.add_blood(target)
+		src.add_fingerprint(usr)
+		src.update_icon()
 
 
 /obj/item/weapon/reagent_containers/ld50_syringe
@@ -303,8 +367,8 @@
 					if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()
-
 		return
+
 
 	update_icon()
 		var/rounded_vol = round(reagents.total_volume,50)
@@ -319,6 +383,7 @@
 		else
 			icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Syringes. END
