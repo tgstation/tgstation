@@ -1,6 +1,4 @@
 
-//cael - some changes here. the analysis pad is entirely new
-
 /obj/machinery/artifact_analyser
 	name = "Artifact Analyser"
 	desc = "Studies the structure of artifacts to discover their uses."
@@ -13,7 +11,7 @@
 	var/obj/scanned_obj
 	var/obj/machinery/scanner/owned_scanner = null
 	var/scan_completion_time = 0
-	var/scan_duration = 50
+	var/scan_duration = 120
 	var/obj/scanned_object
 	var/report_num = 0
 
@@ -74,7 +72,7 @@
 		else
 			results = get_scan_info(scanned_object)
 
-		src.visible_message("\blue \icon[src] makes an insistent chime.", 2)
+		src.visible_message("<b>[name]</b> states, \"Scanning complete.\"")
 		var/obj/item/weapon/paper/P = new(src.loc)
 		P.name = "[src] report #[++report_num]"
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
@@ -83,23 +81,43 @@
 		P.stamped = list(/obj/item/weapon/stamp)
 		P.overlays = list("paper_stamped")
 
+		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
+			var/obj/machinery/artifact/A = scanned_object
+			A.anchored = 0
+			A.being_used = 0
+
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["begin_scan"])
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
+			var/artifact_in_use = 0
 			for(var/obj/O in owned_scanner.loc)
 				if(O == owned_scanner)
 					continue
 				if(O.invisibility)
 					continue
-				scanned_object = O
-				scan_in_progress = 1
-				scan_completion_time = world.time + scan_duration
+				if(istype(scanned_object, /obj/machinery/artifact))
+					var/obj/machinery/artifact/A = scanned_object
+					if(A.being_used)
+						artifact_in_use = 1
+					else
+						A.anchored = 1
+						A.being_used = 1
+
+				if(artifact_in_use)
+					src.visible_message("<b>[name]</b> states, \"Cannot harvest. Too much interference.\"")
+				else
+					scanned_object = O
+					scan_in_progress = 1
+					scan_completion_time = world.time + scan_duration
+					src.visible_message("<b>[name]</b> states, \"Scanning begun.\"")
 				break
+			if(!scanned_object)
+				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
 		scan_in_progress = 0
-		src.visible_message("\blue \icon[src] bleets rudely.", 2)
+		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
 	if(href_list["close"])
 		usr.unset_machine(src)
