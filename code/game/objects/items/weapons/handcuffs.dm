@@ -96,6 +96,7 @@
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
+	item_state = "coil_red"
 	breakouttime = 300 //Deciseconds = 30s
 
 /obj/item/weapon/handcuffs/cable/red
@@ -106,6 +107,7 @@
 
 /obj/item/weapon/handcuffs/cable/blue
 	icon_state = "cuff_blue"
+	item_state = "coil_blue"
 
 /obj/item/weapon/handcuffs/cable/green
 	icon_state = "cuff_green"
