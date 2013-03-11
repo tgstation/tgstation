@@ -112,11 +112,9 @@
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
-/obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
-	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-		"You cut \the [C]'s restraints with \the [src]!",\
-		"You hear cable being cut.")
+/obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
+	if(C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
+		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
 		return
