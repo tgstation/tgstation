@@ -128,7 +128,7 @@ var/list/solars_list = list()
 	if(!control)	return
 
 	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+		adir = (360+adir+Clamp(-10,10,ndir-adir))%360
 		update_icon()
 		update_solar_exposure()
 
@@ -438,12 +438,12 @@ var/list/solars_list = list()
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+			src.cdir = Clamp(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
+			src.trackrate = Clamp(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
 			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 
 	if(href_list["track"])

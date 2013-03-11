@@ -1,4 +1,4 @@
-/datum/job/rd
+/*/datum/job/rd
 	title = "Research Director"
 	flag = RD
 	department_flag = MEDSCI
@@ -29,19 +29,18 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 		return 1
 
-
+*/
 
 /datum/job/scientist
 	title = "Scientist"
 	flag = SCIENTIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
-	supervisors = "the research director"
+	total_positions = 2
+	spawn_positions = 2
 	selection_color = "#ffeeff"
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
-	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology)
+	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_robotics)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -55,7 +54,7 @@
 //		H.equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(H), slot_l_hand)
 		return 1
 
-
+/*
 
 /datum/job/roboticist
 	title = "Roboticist"
@@ -85,3 +84,4 @@
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
+*/

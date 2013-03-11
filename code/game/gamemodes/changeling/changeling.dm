@@ -9,9 +9,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	config_tag = "changeling"
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_players = 15
+	required_players = 10
 	required_enemies = 1
-	recommended_enemies = 4
+	recommended_enemies = 1
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10

@@ -37,7 +37,7 @@
 
 		return 1
 
-
+/*
 
 /datum/job/chef
 	title = "Chef"
@@ -113,19 +113,19 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 		return 1
 
-
+*/
 
 /datum/job/cargo_tech
-	title = "Cargo Technician"
+	title = "Cargo Miner"
 	flag = CARGOTECH
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the captain and lieutenant"
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
-	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
+	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mining, access_mint, access_mining_station, access_mailsorting)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -137,6 +137,7 @@
 //		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		return 1
 
+/*
 
 
 /datum/job/mining
@@ -245,7 +246,7 @@
 		H.miming = 1
 		return 1
 
-
+*/
 
 /datum/job/janitor
 	title = "Janitor"
@@ -265,11 +266,11 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/key(H), slot_l_store)
+		//H.equip_to_slot_or_del(new /obj/item/key(H), slot_l_store)
 		return 1
 
 
-
+/*
 //More or less assistants
 /datum/job/librarian
 	title = "Librarian"
@@ -329,4 +330,4 @@ var/global/lawyer = 0//Checks for another lawyer
 
 		return 1
 
-
+*/

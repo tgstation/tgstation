@@ -43,8 +43,8 @@
 
 
 
-/datum/job/hop
-	title = "Head of Personnel"
+/datum/job/lieutenant
+	title = "Lieutenant"
 	flag = HOP
 	department_flag = CIVILIAN
 	faction = "Station"

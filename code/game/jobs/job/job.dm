@@ -24,7 +24,7 @@
 	var/current_positions = 0
 
 	//Supervisors, who this person answers to directly
-	var/supervisors = ""
+	var/supervisors = "the captain and the lieutenant"
 
 	//Sellection screen color
 	var/selection_color = "#ffffff"

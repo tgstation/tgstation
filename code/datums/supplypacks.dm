@@ -23,7 +23,7 @@
 		if(!path)	continue
 		var/atom/movable/AM = new path()
 		manifest += "<li>[AM.name]</li>"
-		AM.loc = null	//just to make sure they're deleted by the garbage collector
+		del(AM)
 	manifest += "</ul>"
 
 /datum/supply_packs/specialops
@@ -213,13 +213,14 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate
 	containername = "wizard costume crate"
-
+/*
 /datum/supply_packs/mule
 	name = "MULEbot Crate"
 	contains = list(/obj/machinery/bot/mulebot)
 	cost = 20
 	containertype = /obj/structure/largecrate/mule
 	containername = "\improper MULEbot Crate"
+*/
 
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"

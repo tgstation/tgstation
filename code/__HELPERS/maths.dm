@@ -9,9 +9,15 @@ var/const/Sqrt2	= 1.41421356
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
+// Returns x rounded down.
+/proc/Floor(x)
+	return round(x)
+
+// Returns x rounded up.
 /proc/Ceiling(x)
 	return -round(-x)
 
+//Makes sure VAL is between MIN and MAX. If not, it adjusts it. Returns the adjusted value.
 /proc/Clamp(val, min, max)
 	return max(min, min(val, max))
 
@@ -23,11 +29,9 @@ var/const/Sqrt2	= 1.41421356
 /proc/Csc(x)
 	return 1 / sin(x)
 
+// Return a if it's true, b if it isn't.
 /proc/Default(a, b)
 	return a ? a : b
-
-/proc/Floor(x)
-	return round(x)
 
 // Greatest Common Divisor - Euclid's algorithm
 /proc/Gcd(a, b)
@@ -46,6 +50,7 @@ var/const/Sqrt2	= 1.41421356
 /proc/IsInRange(val, min, max)
 	return min <= val && val <= max
 
+// Returns whether the number is an integer (no decimal places)
 /proc/IsInteger(x)
 	return Floor(x) == x
 
@@ -112,3 +117,13 @@ var/const/Sqrt2	= 1.41421356
 	var/d = max - min
 	var/t = Floor((val - min) / d)
 	return val - (t * d)
+
+proc/Arctan(x)
+	var/y=arcsin(x/sqrt(1+x*x))
+	return y
+
+//Returns whether or not A is the middle most value
+/proc/InRange(var/A, var/lower, var/upper)
+	if(A < lower) return 0
+	if(A > upper) return 0
+	return 1
