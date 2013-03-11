@@ -1,6 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-obj/machinery/recharger
+/obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
@@ -10,20 +8,18 @@ obj/machinery/recharger
 	active_power_usage = 250
 	var/obj/item/weapon/charging = null
 
-obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+
+/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
 		if(charging)
 			return
 
-		// Checks to make sure he's not in space doing it, and that the area got proper power.
+		//Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
-		if(!isarea(a))
-			user << "\red The [name] blinks red as you try to insert the item!"
-			return
-		if(a.power_equip == 0)
-			user << "\red The [name] blinks red as you try to insert the item!"
+		if(!isarea(a) || a.power_equip == 0)
+			user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
@@ -38,26 +34,30 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 		update_icon()
 	else if(istype(G, /obj/item/weapon/wrench))
 		if(charging)
-			user << "\red Remove the weapon first!"
+			user << "<span class='notice'>Remove the charging item first!</span>"
 			return
 		anchored = !anchored
-		user << "You [anchored ? "attached" : "detached"] the recharger."
+		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 
-obj/machinery/recharger/attack_hand(mob/user as mob)
+
+/obj/machinery/recharger/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(charging)
 		charging.update_icon()
 		charging.loc = loc
+		user.put_in_hands(charging)
 		charging = null
 		use_power = 1
 		update_icon()
 
-obj/machinery/recharger/attack_paw(mob/user as mob)
+
+/obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
-obj/machinery/recharger/process()
+
+/obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -80,7 +80,8 @@ obj/machinery/recharger/process()
 			else
 				icon_state = "recharger2"
 
-obj/machinery/recharger/emp_act(severity)
+
+/obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		..(severity)
 		return
@@ -95,7 +96,8 @@ obj/machinery/recharger/emp_act(severity)
 		B.charges = 0
 	..(severity)
 
-obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+
+/obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
 		icon_state = "recharger1"
 	else
