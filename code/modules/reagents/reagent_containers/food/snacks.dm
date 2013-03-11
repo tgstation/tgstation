@@ -41,11 +41,11 @@
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if(fullness <= 50)
 				M << "<span class='notice'>You hungrily chew out a piece of [src] and gobble it down!</span>"
-			else if(fullness > 50 & fullness < 150)
+			else if(fullness > 50 && fullness < 150)
 				M << "<span class='notice'>You hungrily begin to eat [src].</span>"
-			else if(fullness > 150 & fullness < 350)
+			else if(fullness > 150 && fullness < 350)
 				M << "<span class='notice'>You take a bite of [src].</span>"
-			else if(fullness > 350 & fullness < 550)
+			else if(fullness > 350 && fullness < 550)
 				M << "<span class='notice'>You unwillingly chew a bit of [src].</span>"
 			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				M << "<span class='notice'>You cannot force any more of [src] to go down your throat.</span>"
@@ -309,39 +309,39 @@
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if(fullness <= 50)
 				//wrapped eating
-				if(wrapped & bitecount < 2)
+				if(wrapped && bitecount < 2)
 					M << "<span class='notice'>You hungrily [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
+				else if(wrapped && bitecount >= 2)
 					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
 					return 0
 				//unwrapped eating
 				else
 					M << "<span class='notice'>You hungrily [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > 50 & fullness < 150)
+			else if(fullness > 50 && fullness < 150)
 			//wrapped eating
-				if(wrapped & bitecount < 2)
+				if(wrapped && bitecount < 2)
 					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
+				else if(wrapped && bitecount >= 2)
 					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
 					return 0
 				//unwrapped eating
 				else
 					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > 150 & fullness < 350)
+			else if(fullness > 150 && fullness < 350)
 			//wrapped eating
-				if(wrapped & bitecount < 2)
+				if(wrapped && bitecount < 2)
 					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
+				else if(wrapped && bitecount >= 2)
 					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
 					return 0
 				//unwrapped eating
 				else
 					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > 350 & fullness < 550)
+			else if(fullness > 350 && fullness < 550)
 			//wrapped eating
-				if(wrapped & bitecount < 2)
+				if(wrapped && bitecount < 2)
 					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
+				else if(wrapped && bitecount >= 2)
 					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
 					return 0
 				//unwrapped eating
