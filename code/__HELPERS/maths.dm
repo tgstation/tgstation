@@ -24,6 +24,7 @@ var/const/Sqrt2	= 1.41421356
 /proc/Csc(x)
 	return 1 / sin(x)
 
+// Return a if it's true, b if it isn't.
 /proc/Default(a, b)
 	return a ? a : b
 
@@ -47,6 +48,7 @@ var/const/Sqrt2	= 1.41421356
 /proc/IsInRange(val, min, max)
 	return min <= val && val <= max
 
+// Returns whether the number is an integer (no decimal places)
 /proc/IsInteger(x)
 	return Floor(x) == x
 
