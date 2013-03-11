@@ -1,3 +1,8 @@
+MiniStation Mod
+================================
+
+Code: https://github.com/tgstation/-tg-station
+
 Original TG Station
 ================================
 
@@ -6,11 +11,6 @@ tgstation13 v1.0 - 6 October 2010
 Website: http://nanotrasen.com
 Code: https://github.com/tgstation/-tg-station
 IRC: irc://irc.rizon.net/tgstation13
-
-MiniStation Mod
-================================
-
-Code: https://github.com/tgstation/-tg-station
 
 Mini-TG station
 ==
