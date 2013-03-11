@@ -1,4 +1,5 @@
-=== Original TG Station ===
+Original TG Station
+================================
 
 tgstation13 v1.0 - 6 October 2010
 
@@ -6,29 +7,33 @@ Website: http://nanotrasen.com
 Code: https://github.com/tgstation/-tg-station
 IRC: irc://irc.rizon.net/tgstation13
 
-=== MiniStation Mod ===
+MiniStation Mod
+================================
 
 Code: https://github.com/tgstation/-tg-station
 
-=Mini-TG station=
+Mini-TG station
+===
 
-==Brief==
+Brief
+==
 
-*What is it?*
+**What is it?**
 
 A branch of tgstation 13 ( https://code.google.com/p/tgstation13/ ) that is modified for low population servers; with simplified jobs, maps, duties and command structure.
 
-*Who is the target audience?*
+**Who is the target audience?**
 
 Server hosters who want to host a server for a player count of around 5 to 20 people.
 
-*What about the map?*
+**What about the map?**
 
 Again, it will be changed, downsized and will have only the necessities to have a rich low population round.
 
-==Details==
+Details
+==
 
-*Which jobs will be changed exactly?*
+**Which jobs will be changed exactly?**
 
 Since many jobs are going to be merged into each other, I will list what jobs the station will have and their purpose.
 
@@ -47,8 +52,7 @@ Since many jobs are going to be merged into each other, I will list what jobs th
 
 There will be 15 jobs (not including Unemployed) available on mini-TG station. There is a more simplified command system, with the Captain being the big boss and the Lieutenant being second in command. The heads will have control over all departments and jobs.
 
-
-*What else has changed?*
+**What else has changed?**
 
 Game Modes have been changed to accommodate the low population count. All except traitor, changeling, revolution and extended are disabled by default. You can change this in the config file.
 
@@ -56,17 +60,16 @@ There will only be one antag in changeling or traitor. In revolution there will 
 
 Radio headsets will now only work with the department channels, using a handheld radio or intercom is required.
 
-*Current Goal:*
+**Current Goal:**
 
  * Create a new map.
 
-*Map Screenshots* (Please note that the map is under construction and is subject to change):
+**Map Screenshots** (Please note that the map is under construction and is subject to change):
 
 http://imgur.com/a/bjZ7X/all
 
-================================================================================
 INSTALLATION
-================================================================================
+============
 
 First-time installation should be fairly straightforward.  First, you'll need
 BYOND installed.  You can get it from http://www.byond.com/.  Once you've done 
@@ -106,9 +109,8 @@ compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join.
 
-================================================================================
 UPDATING
-================================================================================
+============
 
 To update an existing installation, first back up your /config and /data folders
 as these store your server configuration, player preferences and banlist.
@@ -119,18 +121,16 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
-================================================================================
 SQL Setup
-================================================================================
+============
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
 schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are
 coming soon, for now ask in our IRC channel.
 
-================================================================================
 IRC Bot Setup
-================================================================================
+============
 
 Included in the SVN is an IRC bot capable of relaying adminhelps to a specified IRC channel/server (thanks to Skibiliano)
 Instructions for bot setup are included in the /bot/ folder along with the bot/relay script itself
