@@ -12,6 +12,7 @@ var/const/Sqrt2	= 1.41421356
 /proc/Ceiling(x)
 	return -round(-x)
 
+//Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/Clamp(val, min, max)
 	return max(min, min(val, max))
 
@@ -112,3 +113,13 @@ var/const/Sqrt2	= 1.41421356
 	var/d = max - min
 	var/t = Floor((val - min) / d)
 	return val - (t * d)
+
+proc/Arctan(x)
+	var/y=arcsin(x/sqrt(1+x*x))
+	return y
+
+//Returns whether or not A is the middle most value
+/proc/InRange(var/A, var/lower, var/upper)
+	if(A < lower) return 0
+	if(A > upper) return 0
+	return 1

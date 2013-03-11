@@ -214,28 +214,28 @@
 			pump_direction = text2num(signal.data["direction"])
 
 		if("set_internal_pressure" in signal.data)
-			internal_pressure_bound = between(
+			internal_pressure_bound = Clamp(
 				0,
 				text2num(signal.data["set_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
 		if("set_external_pressure" in signal.data)
-			external_pressure_bound = between(
+			external_pressure_bound = Clamp(
 				0,
 				text2num(signal.data["set_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
 		if("adjust_internal_pressure" in signal.data)
-			internal_pressure_bound = between(
+			internal_pressure_bound = Clamp(
 				0,
 				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
 		if("adjust_external_pressure" in signal.data)
-			external_pressure_bound = between(
+			external_pressure_bound = Clamp(
 				0,
 				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
 				ONE_ATMOSPHERE*50
