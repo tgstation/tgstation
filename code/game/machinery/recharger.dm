@@ -1,4 +1,4 @@
-obj/machinery/recharger
+/obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
@@ -9,7 +9,7 @@ obj/machinery/recharger
 	var/obj/item/weapon/charging = null
 
 
-obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
+/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
@@ -41,7 +41,7 @@ obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 
-obj/machinery/recharger/attack_hand(mob/user)
+/obj/machinery/recharger/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(charging)
@@ -53,11 +53,11 @@ obj/machinery/recharger/attack_hand(mob/user)
 		update_icon()
 
 
-obj/machinery/recharger/attack_paw(mob/user)
+/obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-obj/machinery/recharger/process()
+/obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -81,7 +81,7 @@ obj/machinery/recharger/process()
 				icon_state = "recharger2"
 
 
-obj/machinery/recharger/emp_act(severity)
+/obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		..(severity)
 		return
@@ -97,7 +97,7 @@ obj/machinery/recharger/emp_act(severity)
 	..(severity)
 
 
-obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
 		icon_state = "recharger1"
 	else
