@@ -13,14 +13,14 @@ MiniStation Mod
 Code: https://github.com/tgstation/-tg-station
 
 Mini-TG station
-===
+==
 
 Brief
-==
+=
 
 **What is it?**
 
-A branch of tgstation 13 ( https://code.google.com/p/tgstation13/ ) that is modified for low population servers; with simplified jobs, maps, duties and command structure.
+A mod of tgstation 13 ( https://github.com/tgstation/-tg-station ) that is modified for low population servers; with simplified jobs, maps, duties and command structure.
 
 **Who is the target audience?**
 
@@ -31,7 +31,7 @@ Server hosters who want to host a server for a player count of around 5 to 20 pe
 Again, it will be changed, downsized and will have only the necessities to have a rich low population round.
 
 Details
-==
+=
 
 **Which jobs will be changed exactly?**
 
