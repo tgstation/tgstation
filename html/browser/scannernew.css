@@ -1,0 +1,25 @@
+.getblockstring
+{
+	font-family: Fixed, monospace;
+}
+
+.blockString
+{
+	width: 55px;
+	height: 19px;
+	padding: 0 8px 8px 0;
+	float: left;
+}
+
+.statusLabel
+{
+	width: 128px;
+	float: left;
+	overflow: hidden;
+}
+
+.statusValue
+{
+	float: left;
+}
+
