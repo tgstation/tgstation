@@ -1,4 +1,4 @@
-/datum/job/cmo
+/*/datum/job/cmo
 	title = "Chief Medical Officer"
 	flag = CMO
 	department_flag = MEDSCI
@@ -34,16 +34,15 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
-
+*/
 
 /datum/job/doctor
 	title = "Medical Doctor"
 	flag = DOCTOR
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
-	supervisors = "the chief medical officer"
+	total_positions = 2
+	spawn_positions = 2
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery)
@@ -74,9 +73,8 @@
 	flag = CHEMIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	total_positions = 1
+	spawn_positions = 1
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_chemistry)
@@ -91,7 +89,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/chemist(H), slot_wear_suit)
 		return 1
 
-
+/*
 
 /datum/job/geneticist
 	title = "Geneticist"
@@ -149,3 +147,4 @@
 		return 1
 
 
+*/

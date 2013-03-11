@@ -1,4 +1,4 @@
-//Due to how large this one is it gets its own file
+/*//Due to how large this one is it gets its own file
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
@@ -148,3 +148,4 @@
 			feedback_set_details("religion_deity","[new_deity]")
 			feedback_set_details("religion_book","[new_book_style]")
 		return 1
+*/

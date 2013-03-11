@@ -45,70 +45,41 @@ var/const/ASSISTANT			=(1<<13)
 
 var/list/assistant_occupations = list(
 	"Assistant",
-	"Atmospheric Technician",
-	"Cargo Technician",
-	"Chaplain",
-	"Lawyer",
-	"Librarian"
+	"Cargo Miner"
 )
 
 
 var/list/command_positions = list(
 	"Captain",
-	"Head of Personnel",
-	"Head of Security",
-	"Chief Engineer",
-	"Research Director",
-	"Chief Medical Officer"
+	"Lieutenant"
 )
 
 
 var/list/engineering_positions = list(
-	"Chief Engineer",
-	"Station Engineer",
-	"Atmospheric Technician",
-	"Roboticist"
+	"Station Engineer"
 )
 
 
 var/list/medical_positions = list(
-	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",
-	"Virologist",
 	"Chemist"
 )
 
 
 var/list/science_positions = list(
-	"Research Director",
-	"Scientist",
-	"Geneticist",	//Part of both medical and science
-	"Roboticist"	//Part of both engineering and science
+	"Scientist"
 )
 
 
 var/list/civilian_positions = list(
-	"Head of Personnel",
 	"Bartender",
-	"Botanist",
-	"Chef",
 	"Janitor",
-	"Librarian",
-	"Quartermaster",
-	"Cargo Technician",
-	"Shaft Miner",
-	"Lawyer",
-	"Chaplain",
-	"Clown",
-	"Mime",
-	"Assistant"
+	"Cargo Miner",
+	"Unemployed"
 )
 
 
 var/list/security_positions = list(
-	"Head of Security",
-	"Warden",
 	"Detective",
 	"Security Officer"
 )

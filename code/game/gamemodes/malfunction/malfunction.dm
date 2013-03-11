@@ -4,7 +4,7 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	required_players = 20
+	required_players = 40
 	required_enemies = 1
 	recommended_enemies = 1
 

@@ -1,4 +1,4 @@
-/datum/job/ai
+/*/datum/job/ai
 	title = "AI"
 	flag = AI
 	department_flag = ENGSEC
@@ -30,3 +30,4 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		return 1
+*/

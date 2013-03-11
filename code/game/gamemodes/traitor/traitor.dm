@@ -5,11 +5,11 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
+	restricted_jobs = list("Cyborg", "Captain", "Detective")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 0
 	required_enemies = 1
-	recommended_enemies = 4
+	recommended_enemies = 1
 
 
 	uplink_welcome = "Syndicate Uplink Console:"

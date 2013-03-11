@@ -247,7 +247,7 @@ datum/preferences
 		popup.set_content(dat)
 		popup.open(0)
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 580, height = 560)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 300, height = 450)
 		if(!job_master)	return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.

@@ -179,10 +179,11 @@ var/global/datum/controller/occupations/job_master
 		SetupOccupations()
 
 		//Holder for Triumvirate is stored in the ticker, this just processes it
-		if(ticker)
+		/*if(ticker)
 			for(var/datum/job/ai/A in occupations)
 				if(ticker.triai)
 					A.spawn_positions = 3
+		*/
 
 		//Get the players who are ready
 		for(var/mob/new_player/player in player_list)

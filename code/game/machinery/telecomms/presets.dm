@@ -41,7 +41,7 @@
 	id = "Receiver A"
 	network = "tcommsat"
 	autolinkers = list("receiverA") // link to relay
-	freq_listening = list(1351, 1355, 1347) // science, medical, supply
+	//freq_listening = list(1351, 1355, 1347) // science, medical, supply
 
 
 //--PRESET RIGHT--//
@@ -50,23 +50,24 @@
 	id = "Receiver B"
 	network = "tcommsat"
 	autolinkers = list("receiverB") // link to relay
-	freq_listening = list(1353, 1357, 1359) //command, engineering, security
+	//freq_listening = list(1353, 1357, 1359) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
-	New()
-		for(var/i = 1441, i < 1489, i += 2)
-			freq_listening |= i
-		..()
+	//New()
+	//	for(var/i = 1441, i < 1489, i += 2)
+	//		freq_listening |= i
+	//	..()
 
 
 //Buses
 
+
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
-	freq_listening = list(1351, 1355)
-	autolinkers = list("processor1", "science", "medical")
-
+	freq_listening = list()
+	autolinkers = list("processor1", "common")
+/*
 /obj/machinery/telecomms/bus/preset_two
 	id = "Bus 2"
 	network = "tcommsat"
@@ -89,6 +90,7 @@
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
 	..()
+*/
 
 //Processors
 
@@ -97,6 +99,8 @@
 	network = "tcommsat"
 	autolinkers = list("processor1") // processors are sort of isolated; they don't need backward links
 
+
+/*
 /obj/machinery/telecomms/processor/preset_two
 	id = "Processor 2"
 	network = "tcommsat"
@@ -111,6 +115,8 @@
 	id = "Processor 4"
 	network = "tcommsat"
 	autolinkers = list("processor4")
+
+
 
 //Servers
 
@@ -132,7 +138,7 @@
 	id = "Supply Server"
 	freq_listening = list(1347)
 	autolinkers = list("supply")
-/*
+
 /obj/machinery/telecomms/server/presets/mining
 	id = "Mining Server"
 	freq_listening = list(1349)
@@ -142,13 +148,14 @@
 	id = "Common Server"
 	freq_listening = list()
 	autolinkers = list("common")
-
+/*
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
 /obj/machinery/telecomms/server/presets/common/New()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
 	..()
+
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
@@ -164,7 +171,7 @@
 	id = "Security Server"
 	freq_listening = list(1359)
 	autolinkers = list("security")
-
+*/
 
 //Broadcasters
 
