@@ -114,3 +114,7 @@
 /datum/organ/internal/kidney
 	name = "kidney"
 	parent_organ = "chest"
+
+/datum/organ/internal/brain
+	name = "brain"
+	parent_organ = "head"
