@@ -5,7 +5,7 @@
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	flags = FPRINT|TABLEPASS
-	item_state = "centhat"
+	item_state = "that"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"

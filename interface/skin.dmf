@@ -77,19 +77,11 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "CTRL+4"
-		command = "a-intent hurt"
+		command = "a-intent harm"
 		is-disabled = false
 	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
-		is-disabled = false
-	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
 		is-disabled = false
 	elem 
 		name = "CTRL+D+REP"
@@ -126,6 +118,14 @@ macro "macro"
 	elem 
 		name = "CTRL+X"
 		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
 		is-disabled = false
 	elem 
 		name = "F1"
@@ -255,11 +255,11 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "4"
-		command = "a-intent hurt"
+		command = "a-intent harm"
 		is-disabled = false
 	elem 
 		name = "CTRL+4"
-		command = "a-intent hurt"
+		command = "a-intent harm"
 		is-disabled = false
 	elem 
 		name = "A+REP"
@@ -268,22 +268,6 @@ macro "hotkeymode"
 	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
-		is-disabled = false
-	elem 
-		name = "Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "Y"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
 		is-disabled = false
 	elem 
 		name = "D+REP"
@@ -360,6 +344,22 @@ macro "hotkeymode"
 	elem 
 		name = "CTRL+X"
 		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
 		is-disabled = false
 	elem 
 		name = "F1"

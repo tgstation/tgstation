@@ -24,8 +24,7 @@
 	return 1
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
-	for(var/x in verbs)
-		verbs -= x
+	verbs.Cut()
 	set_broken()
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, src)
@@ -48,13 +47,11 @@
 				del(src)
 				return
 			if (prob(50))
-				for(var/x in verbs)
-					verbs -= x
+				verbs.Cut()
 				set_broken()
 		if(3.0)
 			if (prob(25))
-				for(var/x in verbs)
-					verbs -= x
+				verbs.Cut()
 				set_broken()
 		else
 	return
@@ -67,8 +64,7 @@
 
 /obj/machinery/computer/blob_act()
 	if (prob(75))
-		for(var/x in verbs)
-			verbs -= x
+		verbs.Cut()
 		set_broken()
 		density = 0
 

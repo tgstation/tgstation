@@ -11,22 +11,6 @@
 	return
 
 
-/client/North()
-	..()
-
-
-/client/South()
-	..()
-
-
-/client/West()
-	..()
-
-
-/client/East()
-	..()
-
-
 /client/Northeast()
 	swap_hand()
 	return
@@ -221,50 +205,42 @@
 
 
 /client/Move(n, direct)
-
-	if(mob.control_object)	Move_object(direct)
-
-	if(isobserver(mob))	return mob.Move(n,direct)
-
-	if(moving)	return 0
-
-	if(world.time < move_delay)	return
-
-	if(!mob)	return
-
-	if(locate(/obj/effect/stop/, mob.loc))
-		for(var/obj/effect/stop/S in mob.loc)
-			if(S.victim == mob)
-				return
-
-	if(mob.stat==2)	return
-
-	if(isAI(mob))	return AIMove(n,direct,mob)
-
-	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
-
+	if(!mob)
+		return 0
+	if(mob.monkeyizing)
+		return 0//This is sota the goto stop mobs from moving var
+	if(mob.control_object)
+		return Move_object(direct)
+	if(isobserver(mob))
+		return mob.Move(n,direct)
+	if(moving)
+		return 0
+	if(world.time < move_delay)
+		return 0
+	if(mob.stat == DEAD)
+		return 0
+	if(isAI(mob))
+		return AIMove(n,direct,mob)
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)//Move though walls
 			Process_Incorpmove(direct)
-			return
+			return 0
 
 	if(Process_Grab())	return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
-	if(!mob.canmove)	return
-
-
-	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
-	//	if(!mob.Process_Spacemove(0))	return 0
+	if(!mob.canmove)
+		return 0
 
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
 	if((istype(mob.loc, /turf/space)) || (mob.lastarea.has_gravity == 0))
-		if(!mob.Process_Spacemove(0))	return 0
+		if(!mob.Process_Spacemove(0))
+			return 0
 
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved

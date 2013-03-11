@@ -225,6 +225,10 @@
 	getFiles(
 		'html/search.js',
 		'html/panels.css',
+		'html/browser/common.css',
+		'html/browser/cryo.css',
+		'html/browser/scannernew.css',
+		'html/browser/sleeper.css',
 		'icons/pda_icons/pda_atmos.png',
 		'icons/pda_icons/pda_back.png',
 		'icons/pda_icons/pda_bell.png',

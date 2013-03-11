@@ -407,7 +407,7 @@
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
 
-//pupplies cannot wear anything.
+//puppies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		usr << "\red You can't fit this on [src]"
