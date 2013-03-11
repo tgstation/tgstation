@@ -11,7 +11,32 @@
 	var/authenticated = 0.0
 	var/mode = 0.0
 	var/printing = null
+	var/edit_job_target = ""
 
+	//Cooldown for closing positions in seconds
+	//if set to -1: No cooldown... probably a bad idea
+	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
+	var/close_position_cooldown = 0
+	//Keeps track of the time
+	var/time_last_closed_position = 0
+	//Jobs you cannot open new positions for
+	var/list/blacklisted = list(
+		"Captain",
+		"Head of Personnel",
+		"Head of Security",
+		"Warden",
+		"Chief Engineer",
+		"Quartermaster",
+		"Research Director",
+		"Chief Medical Officer",
+		"Chaplain")
+
+	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
+	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
+
+	//This is used to keep track of opened positions for jobs to allow instant closing
+	//Assoc array: "JobName" = (int)<Opened Positions>
+	var/list/opened_positions = list();
 
 /obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -41,6 +66,14 @@
 /obj/machinery/computer/card/attack_paw(var/mob/user as mob)
 	return attack_hand(user)
 
+//Check if you can't open a new position for a certain job
+/obj/machinery/computer/card/proc/job_blacklisted(var/datum/job/job)
+	for(var/title in blacklisted)
+		if(job.title == title)
+			return 1
+
+	return 0
+
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
@@ -50,7 +83,7 @@
 	var/dat
 	if (!( ticker ))
 		return
-	if (mode) // accessing crew manifest
+	if (mode == 1) // accessing crew manifest
 		var/crew = ""
 		var/list/L = list()
 		for (var/datum/data/record/t in data_core.general)
@@ -59,6 +92,58 @@
 		for(var/R in sortList(L))
 			crew += "[R]<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+
+	else if(mode == 2)
+		// JOB MANAGEMENT
+		if(edit_job_target == "")
+		// SHOW MAIN JOB MANAGEMENT MENU
+			dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
+			dat += "<h1>Job Management</h1>"
+			dat += "<i>Choose Job</i><hr>"
+			for(var/datum/job/job in job_master.occupations)
+				if(job.title != "AI" && job.title != "Assistant" && job.title != "Cyborg")
+					dat += "<a href='?src=\ref[src];choice=edit_job;job=[job.title]'><b>[job.title]</b></a> ([job.current_positions]/[job.total_positions])<br>"
+		else
+			if(check_access(scan))
+			// EDIT SPECIFIC JOB
+				var/datum/job/job = job_master.GetJob(edit_job_target)
+				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
+				dat += "<h1>[job.title]: [job.current_positions]/[job.total_positions]</h1><hr>"
+				//Make sure antags can't completely ruin rounds
+
+				//Don't allow more than 1 Head / limit blacklisted jobs
+				if(job.total_positions == 0 || !job_blacklisted(job))
+					//Scale the max amount of total positions with the station's player amount
+					if(job.total_positions <= player_list.len * (max_relative_positions / 100))
+						dat += "<a href='?src=\ref[src];choice=make_job_available'>Open Position</a><br>"
+					else
+						dat += "<b>There are too many positions for this job.</b><br>"
+
+				else
+					dat += "<b>You cannot open positions for this job.</b><br>"
+				if(job.total_positions > 0)
+					//Make sure you can close position only every [close_position_cooldown] seconds, unless you opened a position before
+					var/time = world.time
+					var/secs = (time / 10)
+					var/delta = secs - time_last_closed_position
+					if(close_position_cooldown < delta || opened_positions[job.title] > 0)
+
+						if(job.total_positions > job.current_positions && close_position_cooldown != 0 /*closing positions disabled?*/ || opened_positions[job.title] > 0)
+							dat += "<a href='?src=\ref[src];choice=make_job_unavailable'>Close Position</a>"
+
+					else
+						var/ttw = close_position_cooldown - delta
+						ttw = round(ttw, 1)
+						var/ttwmins = round(ttw / 60)
+						var/ttwsecs = ttw % 60
+						dat += "<b>You have to wait [ttwmins]:[(ttwsecs < 10) ? "0" + num2text(ttwsecs) : ttwsecs] minutes before you can close a position.</b>"
+			else
+				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
+				dat += "<h1>Please insert your ID</h1>"
+				edit_job_target = ""
+				mode = 3
+
+
 	else
 		var/header = ""
 
@@ -162,7 +247,10 @@
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+			body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
+
 		dat = "<tt>[header][body]<hr><br></tt>"
+
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
@@ -261,6 +349,41 @@
 					modify.registered_name = href_list["reg"]
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
+
+		if("edit_job")
+			edit_job_target = href_list["job"]
+
+		if("return")
+			if(edit_job_target != "")
+				//RETURN TO JOB MANAGEMENT
+				edit_job_target = ""
+			else
+				//DISPLAY MAIN MENU
+				mode = 3;
+				edit_job_target = ""
+
+		if("make_job_available")
+			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
+			var/datum/job/j = job_master.GetJob(edit_job_target)
+			j.total_positions++
+			opened_positions[edit_job_target]++;
+
+		if("make_job_unavailable")
+			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
+			var/datum/job/j = job_master.GetJob(edit_job_target)
+
+			//Allow instant closing without cooldown if a position has been opened before
+			if(opened_positions[edit_job_target] > 0)
+				j.total_positions--
+				opened_positions[edit_job_target]--;
+			else if(j.total_positions > j.current_positions)
+				j.total_positions--
+				var/time = world.time
+				var/secs = (time / 10)
+				time_last_closed_position = secs;
+
+
+
 		if ("print")
 			if (!( printing ))
 				printing = 1
