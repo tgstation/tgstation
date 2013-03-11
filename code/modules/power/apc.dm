@@ -514,7 +514,7 @@
 
 
 	if(locked && (!istype(user, /mob/living/silicon)))
-		t += "<div class='notice icon'><img src='[user.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to unlock interface' /> Swipe ID card to unlock interface</div>"
+		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 		t += "<h3>Status</h3>"
 		t += "Main Breaker: <B>[operating ? "<font class='good'>On</font>" : "<font class='bad'>Off</font>"]</B><br />"
 		t += "External Power: <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
@@ -536,7 +536,7 @@
 
 	else
 		if (!istype(user, /mob/living/silicon))
-			t += "<div class='notice icon'><img src='[user.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to lock interface' /> Swipe ID card to lock interface</div>"
+			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "<h3>Status</h3>"
 		t += "Main breaker: [operating ? "<span class='linkOn'>On</span> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <span class='linkOn'>Off</span>" ]<br />"
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"

@@ -167,10 +167,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
 	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
-		for(var/x in autolinkers)
-			if(T.autolinkers.Find(x))
-				if(src != T)
+		if(src != T)
+			for(var/x in autolinkers)
+				if(x in T.autolinkers)
 					links |= T
+					break
 
 /obj/machinery/telecomms/update_icon()
 	if(on)

@@ -397,7 +397,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_w_uniform(var/update_icons=1)
 	if(w_uniform && istype(w_uniform, /obj/item/clothing/under) )
-		w_uniform.screen_loc = ui_iclothing
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			w_uniform.screen_loc = ui_iclothing
 		overlays -= overlays_lying[UNIFORM_LAYER]
 		overlays -= overlays_standing[UNIFORM_LAYER]
 		var/t_color = w_uniform.color
@@ -453,11 +454,12 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
 	if(wear_id)
+		if(hud_used && hud_used.hud_shown)
+			wear_id.screen_loc = ui_id	//TODO
 		overlays -= overlays_lying[ID_LAYER]
 		overlays -= overlays_standing[ID_LAYER]
 		overlays_lying[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id2", "layer" = -ID_LAYER)
 		overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id", "layer" = -ID_LAYER)
-		wear_id.screen_loc = ui_id	//TODO
 		if (src.lying)
 			overlays += overlays_lying[ID_LAYER]
 		else
@@ -471,6 +473,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
 	if(gloves)
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			gloves.screen_loc = ui_gloves
 		overlays -= overlays_lying[GLOVES_LAYER]
 		overlays -= overlays_standing[GLOVES_LAYER]
 		var/t_state = gloves.item_state
@@ -480,7 +484,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(gloves.blood_DNA)
 			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands2")
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
-		gloves.screen_loc = ui_gloves
 		overlays_lying[GLOVES_LAYER]	= lying
 		overlays_standing[GLOVES_LAYER]	= standing
 		if (src.lying)
@@ -501,7 +504,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
 	if(glasses)
-		glasses.screen_loc = ui_glasses
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			glasses.screen_loc = ui_glasses
 		overlays -= overlays_lying[GLASSES_LAYER]
 		overlays -= overlays_standing[GLASSES_LAYER]
 		overlays_lying[GLASSES_LAYER]		= image("icon" = 'icons/mob/eyes.dmi', "icon_state" = "[glasses.icon_state]2", "layer" = -GLASSES_LAYER)
@@ -519,7 +523,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
 	if(ears)
-		ears.screen_loc = ui_ears
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			ears.screen_loc = ui_ears
 		overlays -= overlays_lying[EARS_LAYER]
 		overlays -= overlays_standing[EARS_LAYER]
 		overlays_lying[EARS_LAYER] = image("icon" = 'icons/mob/ears.dmi', "icon_state" = "[ears.icon_state]2", "layer" = -EARS_LAYER)
@@ -537,7 +542,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
-		shoes.screen_loc = ui_shoes
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			shoes.screen_loc = ui_shoes
 		var/image/lying		= image("icon" = 'icons/mob/feet.dmi', "icon_state" = "[shoes.icon_state]2", "layer" = -SHOES_LAYER)
 		var/image/standing	= image("icon" = 'icons/mob/feet.dmi', "icon_state" = "[shoes.icon_state]", "layer" = -SHOES_LAYER)
 		if(shoes.blood_DNA)
@@ -560,13 +566,14 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_s_store(var/update_icons=1)
 	if(s_store)
+		if(hud_used && hud_used.hud_shown)
+			s_store.screen_loc = ui_sstore1		//TODO
 		overlays -= overlays_lying[SUIT_STORE_LAYER]
 		overlays -= overlays_standing[SUIT_STORE_LAYER]
 		var/t_state = s_store.item_state
 		if(!t_state)	t_state = s_store.icon_state
 		overlays_lying[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]2", "layer" = -SUIT_STORE_LAYER)
 		overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]", "layer" = -SUIT_STORE_LAYER)
-		s_store.screen_loc = ui_sstore1		//TODO
 		if (src.lying)
 			overlays += overlays_lying[SUIT_STORE_LAYER]
 		else
@@ -581,9 +588,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_head(var/update_icons=1)
 	if(head)
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			head.screen_loc = ui_head		//TODO
 		overlays -= overlays_lying[HEAD_LAYER]
 		overlays -= overlays_standing[HEAD_LAYER]
-		head.screen_loc = ui_head		//TODO
 		var/image/lying
 		var/image/standing
 		if(istype(head,/obj/item/clothing/head/kitty))
@@ -610,9 +618,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_belt(var/update_icons=1)
 	if(belt)
+		if(hud_used && hud_used.hud_shown)
+			belt.screen_loc = ui_belt	//TODO
 		overlays -= overlays_lying[BELT_LAYER]
 		overlays -= overlays_standing[BELT_LAYER]
-		belt.screen_loc = ui_belt	//TODO
 		var/t_state = belt.item_state
 		if(!t_state)	t_state = belt.icon_state
 		overlays_lying[BELT_LAYER]		= image("icon" = 'icons/mob/belt.dmi', "icon_state" = "[t_state]2", "layer" = -BELT_LAYER)
@@ -631,9 +640,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_wear_suit(var/update_icons=1)
 	if( wear_suit && istype(wear_suit, /obj/item/clothing/suit) )	//TODO check this
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			wear_suit.screen_loc = ui_oclothing	//TODO
 		overlays -= overlays_lying[SUIT_LAYER]
 		overlays -= overlays_standing[SUIT_LAYER]
-		wear_suit.screen_loc = ui_oclothing	//TODO
 		var/image/lying		= image("icon" = 'icons/mob/suit.dmi', "icon_state" = "[wear_suit.icon_state]2", "layer" = -SUIT_LAYER)
 		var/image/standing	= image("icon" = 'icons/mob/suit.dmi', "icon_state" = "[wear_suit.icon_state]", "layer" = -SUIT_LAYER)
 
@@ -682,7 +692,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
-		wear_mask.screen_loc = ui_mask	//TODO
+		if(hud_used && hud_used.hud_shown && hud_used.inventory_shown)
+			wear_mask.screen_loc = ui_mask	//TODO
 		overlays -= overlays_lying[FACEMASK_LAYER]
 		overlays -= overlays_standing[FACEMASK_LAYER]
 		var/image/lying		= image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]2", "layer" = -FACEMASK_LAYER)
@@ -706,7 +717,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_back(var/update_icons=1)
 	if(back)
-		back.screen_loc = ui_back	//TODO
+		if(hud_used && hud_used.hud_shown)
+			back.screen_loc = ui_back	//TODO
 		overlays -= overlays_lying[BACK_LAYER]
 		overlays -= overlays_standing[BACK_LAYER]
 		overlays_lying[BACK_LAYER]		= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]2", "layer" = -BACK_LAYER)

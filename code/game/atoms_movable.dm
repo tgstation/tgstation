@@ -160,8 +160,7 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
+	verbs.Cut()
 	return
 
 /atom/movable/overlay/attackby(a, b)

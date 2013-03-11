@@ -14,30 +14,72 @@
 /obj/structure/bookcase
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
-	icon_state = "book-0"
-	anchored = 1
+	icon_state = "bookempty"
+	anchored = 0
 	density = 1
 	opacity = 1
+	var/state = 0
 
 /obj/structure/bookcase/initialize()
+	state = 2
+	icon_state = "book-0"
+	anchored = 1
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/book))
 			I.loc = src
 	update_icon()
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
-		update_icon()
-	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
-		if(!newname)
-			return
-		else
-			name = ("bookcase ([sanitize(newname)])")
-	else
-		..()
+
+	switch(state)
+		if(0)
+			if(istype(O, /obj/item/weapon/wrench))
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				if(do_after(user, 20))
+					user << "\blue You wrench the frame into place."
+					anchored = 1
+					state = 1
+			if(istype(O, /obj/item/weapon/crowbar))
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+				if(do_after(user, 20))
+					user << "\blue You pry the frame apart."
+					new /obj/item/stack/sheet/wood( loc, 4)
+					del(src)
+
+		if(1)
+			if(istype(O, /obj/item/stack/sheet/wood))
+				var/obj/item/stack/sheet/wood/W = O
+				W.use(2)
+				user << "\blue You add a shelf."
+				state = 2
+				icon_state = "book-0"
+			if(istype(O, /obj/item/weapon/wrench))
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				user << "\blue You unrwench the frame."
+				anchored = 0
+				state = 0
+		if(2)
+			if(istype(O, /obj/item/weapon/book))
+				user.drop_item()
+				O.loc = src
+				update_icon()
+			else if(istype(O, /obj/item/weapon/pen))
+				var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
+				if(!newname)
+					return
+				else
+					name = ("bookcase ([sanitize(newname)])")
+			else if(istype(O, /obj/item/weapon/crowbar))
+				if(contents.len)
+					user << "\red You need to remove the books first."
+				else
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+					user << "\blue You pry the shelf out."
+					new /obj/item/stack/sheet/wood( loc, 1)
+					state = 1
+					icon_state = "bookempty"
+			else
+				..()
 
 /obj/structure/bookcase/attack_hand(var/mob/user as mob)
 	if(contents.len)

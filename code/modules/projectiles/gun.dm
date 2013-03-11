@@ -44,11 +44,10 @@
 		if(clumsy_check)
 			if(istype(user, /mob/living))
 				var/mob/living/M = user
-				if ((CLUMSY in M.mutations) && prob(50))
-					M << "<span class='danger'>[src] blows up in your face.</span>"
-					M.take_organ_damage(0,20)
+				if ((CLUMSY in M.mutations) && prob(40))
+					M << "<span class='danger'>You shoot yourself in the foot with the [src]!</span>"
+					afterattack(user, user)
 					M.drop_item()
-					del(src)
 					return
 
 		if (!user.IsAdvancedToolUser())

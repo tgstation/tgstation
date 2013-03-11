@@ -854,6 +854,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(M.stat)
 			user << "\red The slime is dead!"
 			return..()
+		if(M.mind)
+			user << "\red The slime resists!"
+			return ..()
 		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
 		pet.icon_state = "[M.colour] baby slime"
 		pet.icon_living = "[M.colour] baby slime"
@@ -882,6 +885,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(M.stat)
 			user << "\red The slime is dead!"
 			return..()
+		if(M.mind)
+			user << "\red The slime resists!"
+			return ..()
 		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
 		pet.icon_state = "[M.colour] adult slime"
 		pet.icon_living = "[M.colour] adult slime"

@@ -160,7 +160,7 @@
 	name = "Holiday Priest"
 	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
-	item_state = "holidaypriest"
+	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 

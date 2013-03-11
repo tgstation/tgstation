@@ -5,7 +5,7 @@
 	var/width = 0
 	var/height = 0
 	var/atom/ref = null
-	var/window_options = "focus=0;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
+	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
 	var/title_image
@@ -36,7 +36,7 @@
 	window_options = nwindow_options
 
 /datum/browser/proc/set_title_image(ntitle_image)
-	title_image = ntitle_image
+	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
 	stylesheets[name] = file
@@ -108,6 +108,7 @@
 // This is added to mob so that it can be used without a reference to the browser object
 // There is probably a better place for this...
 /mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
+	/*
 	var/icon/I
 	if (dir >= 0)
 		I = new /icon(icon, icon_state, dir)
@@ -118,6 +119,7 @@
 	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
 	src << browse_rsc(I, filename)
 	return filename
+	*/
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
