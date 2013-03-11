@@ -9,10 +9,15 @@ var/const/Sqrt2	= 1.41421356
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
+// Returns x rounded down.
+/proc/Floor(x)
+	return round(x)
+
+// Returns x rounded up.
 /proc/Ceiling(x)
 	return -round(-x)
 
-//Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
+//Makes sure VAL is between MIN and MAX. If not, it adjusts it. Returns the adjusted value.
 /proc/Clamp(val, min, max)
 	return max(min, min(val, max))
 
@@ -27,9 +32,6 @@ var/const/Sqrt2	= 1.41421356
 // Return a if it's true, b if it isn't.
 /proc/Default(a, b)
 	return a ? a : b
-
-/proc/Floor(x)
-	return round(x)
 
 // Greatest Common Divisor - Euclid's algorithm
 /proc/Gcd(a, b)
