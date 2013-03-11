@@ -41,11 +41,11 @@
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if(fullness <= 50)
 				M << "<span class='notice'>You hungrily chew out a piece of [src] and gobble it down!</span>"
-			else if(fullness > 50 & fullness < 150)
+			else if(fullness > 50)
 				M << "<span class='notice'>You hungrily begin to eat [src].</span>"
-			else if(fullness > 150 & fullness < 350)
+			else if(fullness > 150)
 				M << "<span class='notice'>You take a bite of [src].</span>"
-			else if(fullness > 350 & fullness < 550)
+			else if(fullness > 350)
 				M << "<span class='notice'>You unwillingly chew a bit of [src].</span>"
 			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				M << "<span class='notice'>You cannot force any more of [src] to go down your throat.</span>"
@@ -276,123 +276,13 @@
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
-	icon_state = "chocolatebarunwrapped"
-	var/wrapped = 0
-	bitesize = 5
+	icon_state = "chocolatebar"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 5)
-		reagents.add_reagent("sugar", 5)
-		reagents.add_reagent("coco", 5)
-
-	proc/Unwrap(mob/user)
-		icon_state = "chocolatebarunwrapped"
-		desc = "It won't make you all sticky."
-		user << "<span class='notice'>You remove the foil.</span>"
-		wrapped = 0
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
-	if(wrapped)
-		Unwrap(user)
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack(mob/M, mob/user, def_zone)
-	var/eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
-	if(!reagents.total_volume)
-		user << "<span class ='notice'>Someone has eaten all of the Chocolate</span>"
-		M.drop_from_inventory(src)
-		del(src)
-		return 0
-	if(istype(M,/mob/living/carbon))
-		if(M == user)
-			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-			if(fullness <= 50)
-				//wrapped eating
-				if(wrapped & bitecount < 2)
-					M << "<span class='notice'>You hungrily [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
-					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
-					return 0
-				//unwrapped eating
-				else
-					M << "<span class='notice'>You hungrily [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > 50 & fullness < 150)
-			//wrapped eating
-				if(wrapped & bitecount < 2)
-					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
-					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
-					return 0
-				//unwrapped eating
-				else
-					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > 150 & fullness < 350)
-			//wrapped eating
-				if(wrapped & bitecount < 2)
-					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
-					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
-					return 0
-				//unwrapped eating
-				else
-					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > 350 & fullness < 550)
-			//wrapped eating
-				if(wrapped & bitecount < 2)
-					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-				else if(wrapped & bitecount >= 2)
-					M << "<span class='notice'>You can't bite anymore off without removing the wrapper!</span>"
-					return 0
-				//unwrapped eating
-				else
-					M << "<span class='notice'>You [eatverb] off a piece of Chocolate.</span>"
-			else if(fullness > (550 * (1 + M.overeatduration / 2000)))
-				M << "<span class='notice'>You can't ram any more Chocolate down your throat.</span>"
-				return 0
-		else
-			if(!istype(M, /mob/living/carbon/slime))
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-				if(fullness <= (550 * (1 + M.overeatduration / 1000)))
-					M.visible_message("<span class='danger'>[user] attempts to ram Chocolate down [M]'s throat.</span>", \
-					"<span class='userdanger'>[user] attempts to ram Chocolate down [M]'s throat.</span>")
-				else
-					M.visible_message("<span class='danger'>[user] cannot ram anymore Chocolate down [M]'s throat!</span>", \
-					"<span class='userdanger'>[user] cannot ram anymore Chocolate down [src] down [M]'s throat!</span>")
-					return 0
-
-				if(!do_mob(user,M)) return
-
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-				log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-				M.visible_message("<span class='danger'>[user] attempts to ram Chocolate down [M]'s throat.</span>", \
-				"<span class='userdanger'>[user] attempts to ram Chocolate down [M]'s throat.</span>")
-			else
-				user << "<span class='notice'>[M] doesn't seem to have a mouth!</span>"
-				return
-
-		if(reagents)
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					if(reagents.total_volume > bitesize)
-						reagents.trans_to(M, bitesize)
-					else
-						reagents.trans_to(M, reagents.total_volume)
-					bitecount++
-					On_Consume()
-			return 1
-	return 0
-
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped
-	desc = "It's wrapped in some foil."
-	icon_state = "chocolatebar"
-	wrapped = 1
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 2)
+		reagents.add_reagent("coco", 2)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
 	name = "chocolate egg"
