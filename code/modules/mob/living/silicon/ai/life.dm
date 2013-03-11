@@ -92,8 +92,8 @@
 
 					src << "You've lost power!"
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
-					if (!is_special_character(src))
-						src.set_zeroth_law("")
+					//if (!is_special_character(src))
+						//src.set_zeroth_law("")
 					//src.clear_supplied_laws() // Don't reset our laws.
 					//var/time = time2text(world.realtime,"hh:mm:ss")
 					//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
