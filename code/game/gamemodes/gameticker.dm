@@ -328,11 +328,15 @@ var/global/datum/controller/gameticker/ticker
 		aiPlayer.show_laws(1)
 
 		if (aiPlayer.connected_robots.len)
-			var/robolist = "<b>The AI's loyal minions were:</b> "
+			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
+			var/vsrobolist = "\red <b>[aiPlayer.real_name]'s disloyal minions were:</b> \black"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				if (is_special_character(robo))
+					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
+					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
 			world << "[robolist]"
-
+			world << "[vsrobolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai)
 			if (robo.stat != 2)
