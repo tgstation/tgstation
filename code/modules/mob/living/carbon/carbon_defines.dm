@@ -6,7 +6,6 @@
 	var/antibodies = 0
 
 	var/silent = null 		//Can't talk. Value goes down every life proc.
-	var/last_eating = 0 	//Not sure what this does... I found it hidden in food.dm
 
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.

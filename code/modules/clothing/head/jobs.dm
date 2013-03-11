@@ -14,7 +14,7 @@
 	icon_state = "captain"
 	desc = "It's good being the king."
 	flags = FPRINT|TABLEPASS
-	item_state = "caphat"
+	item_state = "that"
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/helmet/cap

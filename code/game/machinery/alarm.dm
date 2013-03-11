@@ -415,10 +415,10 @@
 /obj/machinery/alarm/proc/return_text()
 	var/dat = ""
 	if(!(istype(usr, /mob/living/silicon)) && locked)
-		dat += "<div class='notice icon'><img src='[usr.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to unlock interface' /> Swipe ID card to unlock interface</div>"
+		dat += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 		dat += "[return_status()]"
 	else
-		dat += "<div class='notice icon'><img src='[usr.browse_rsc_icon('icons/obj/card.dmi', "id")]' alt='Swipe ID card to lock interface' /> Swipe ID card to lock interface</div>"
+		dat += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		dat += "[return_status()]<hr>[return_controls()]"
 	return dat
 

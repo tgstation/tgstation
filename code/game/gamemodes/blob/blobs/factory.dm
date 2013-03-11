@@ -26,9 +26,9 @@
 /mob/living/simple_animal/hostile/blobspore
 	name = "blob"
 	desc = "Some blob thing."
-	icon = 'icons/mob/critter.dmi'
-	icon_state = "blobsquiggle"
-	icon_living = "blobsquiggle"
+	icon = 'icons/mob/blob.dmi'
+	icon_state = "blobpod"
+	icon_living = "blobpod"
 	pass_flags = PASSBLOB
 	health = 20
 	maxHealth = 20

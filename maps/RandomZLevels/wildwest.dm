@@ -105,13 +105,13 @@
 	density = 1
 	anchored = 1
 	layer = 3
-	icon = 'icons/mob/critter.dmi'
-	icon_state = "blob"
+	icon = 'icons/mob/blob.dmi'
+	icon_state = "blobpod"
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/meatgrinder/New()
-	icon_state = "blob"
+	icon_state = "blobpod"
 
 /obj/effect/meatgrinder/HasEntered(AM as mob|obj)
 	Bumped(AM)
@@ -135,10 +135,10 @@
 		spawn(0)
 			del(src)
 
-/obj/effect/meatgrinder
+/*/obj/effect/meatgrinder
 	name = "Meat Grinder"
 	icon_state = "blob"
-	triggerproc = "triggerrad1"
+	triggerproc = "triggerrad1"*/
 
 
 /////For the Wishgranter///////////
