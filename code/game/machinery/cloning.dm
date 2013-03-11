@@ -275,6 +275,7 @@
 		src.go_out()
 		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
+		user << "\blue \The [src] processes \the [W]."
 		biomass += 50
 		user.drop_item()
 		del(W)
@@ -336,6 +337,9 @@
 	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
+
+	src.biomass -= CLONE_BIOMASS
+
 	return
 
 /obj/machinery/clonepod/proc/malfunction()

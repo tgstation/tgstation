@@ -398,7 +398,6 @@
 				del(C)
 				menu = 1
 			else
-				pod1.biomass -= CLONE_BIOMASS
 
 				var/mob/selected = find_dead_player("[C.fields["ckey"]]")
 				selected << 'chime.ogg'	//probably not the best sound but I think it's reasonable
