@@ -345,6 +345,7 @@
 #include "code\game\machinery\bots\bots.dm"
 #include "code\game\machinery\bots\cleanbot.dm"
 #include "code\game\machinery\bots\ed209bot.dm"
+#include "code\game\machinery\bots\floorbot.dm"
 #include "code\game\machinery\bots\medbot.dm"
 #include "code\game\machinery\bots\mulebot.dm"
 #include "code\game\machinery\bots\secbot.dm"
