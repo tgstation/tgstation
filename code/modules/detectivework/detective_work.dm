@@ -135,22 +135,22 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 	return
 
 
-///atom/proc/transfer_fingerprints_to(var/atom/A)
-//
-//	// Make sure everything are lists.
-//	if(!islist(A.fingerprints))
-//		A.fingerprints = list()
-//	if(!islist(A.fingerprintshidden))
-//		A.fingerprintshidden = list()
-//
-//	if(!islist(fingerprints))
-//		fingerprints = list()
-//	if(!islist(A.fingerprintshidden))
-//		fingerprintshidden = list()
-//
-//	// Transfer
-//	if(fingerprints)
-//		A.fingerprints |= fingerprints.Copy()            //detective
-//	if(fingerprintshidden)
-//		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
-//	A.fingerprintslast = fingerprintslast
+/atom/proc/transfer_fingerprints_to(var/atom/A)
+
+	// Make sure everything are lists.
+	if(!islist(A.fingerprints))
+		A.fingerprints = list()
+	if(!islist(A.fingerprintshidden))
+		A.fingerprintshidden = list()
+
+	if(!islist(fingerprints))
+		fingerprints = list()
+	if(!islist(A.fingerprintshidden))
+		fingerprintshidden = list()
+
+	// Transfer
+	if(fingerprints)
+		A.fingerprints |= fingerprints.Copy()            //detective
+	if(fingerprintshidden)
+		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
+	A.fingerprintslast = fingerprintslast

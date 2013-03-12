@@ -168,7 +168,7 @@
 					newlight = new /obj/machinery/light/small/built(src.loc)
 
 			newlight.dir = src.dir
-			newlight.add_fingerprint(user)
+			src.transfer_fingerprints_to(newlight)
 			del(src)
 			return
 	..()

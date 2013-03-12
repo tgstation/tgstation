@@ -76,7 +76,7 @@
 						if(!src || !W.isOn()) return
 						user << "You sliced the floorweld off the disposal unit."
 						var/obj/structure/disposalconstruct/C = new (src.loc)
-						C.add_fingerprint(user)
+						src.transfer_fingerprints_to(C)
 						C.ptype = 6 // 6 = disposal unit
 						C.anchored = 1
 						C.density = 1
@@ -861,6 +861,7 @@
 				C.ptype = 9
 			if("pipe-j2s")
 				C.ptype = 10
+		src.transfer_fingerprints_to(C)
 		C.dir = dir
 		C.density = 0
 		C.anchored = 1
@@ -1291,7 +1292,7 @@
 					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the disposal outlet."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
-					C.add_fingerprint(user)
+					src.transfer_fingerprints_to(C)
 					C.ptype = 7 // 7 =  outlet
 					C.update()
 					C.anchored = 1
