@@ -888,7 +888,9 @@
 	var/temp_footer_html = null
 
 	src.scanner_status_html = null // Scanner status is reset each update
-	var/mob/living/occupant = src.connected.occupant
+	var/mob/living/occupant = null
+	if(src.connected.occupant)
+		occupant = src.connected.occupant
 	var/viable_occupant = (occupant && occupant.dna && !(NOCLONE in occupant.mutations))
 	var/mob/living/carbon/human/human_occupant = src.connected.occupant
 
