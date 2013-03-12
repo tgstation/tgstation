@@ -21,6 +21,9 @@
 	var/time_last_closed_position = 0
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
+		"AI",
+		"Assistant",
+		"Cyborg",
 		"Captain",
 		"Head of Personnel",
 		"Head of Security",
@@ -71,9 +74,27 @@
 	for(var/title in blacklisted)
 		if(job.title == title)
 			return 1
-
 	return 0
 
+
+//Logic check for Topic() if you can open the job
+/obj/machinery/computer/card/proc/can_open_job(var/jobtitle)
+	var/datum/job/job = job_master.GetJob(jobtitle)
+	if(!job)
+		return 0
+	return (job.title != "AI" && job.title != "Assistant" && job.title != "Cyborg" && check_access(scan) && (job.total_positions == 0 || !job_blacklisted(job)) && job.total_positions <= player_list.len * (max_relative_positions / 100))
+
+
+
+//Logic check for Topic() if you can close the job
+/obj/machinery/computer/card/proc/can_close_job(var/jobtitle)
+	var/datum/job/job = job_master.GetJob(jobtitle)
+	if(!job)
+		return 0
+	var/time = world.time
+	var/secs = (time / 10)
+	var/delta = secs - time_last_closed_position
+	return (job.title != "AI" && job.title != "Assistant" && job.title != "Cyborg" && check_access(scan) && job.total_positions > job.current_positions && (close_position_cooldown < delta || opened_positions[job.title] > 0)  && close_position_cooldown != 0)
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
@@ -118,6 +139,7 @@
 						dat += "<a href='?src=\ref[src];choice=make_job_available'>Open Position</a><br>"
 					else
 						dat += "<b>There are too many positions for this job.</b><br>"
+						usr << "?src=\ref[src];choice=make_job_available"
 
 				else
 					dat += "<b>You cannot open positions for this job.</b><br>"
@@ -352,6 +374,8 @@
 
 		if("edit_job")
 			edit_job_target = href_list["job"]
+			if(job_master.GetJob(edit_job_target) == null)
+				edit_job_target = ""
 
 		if("return")
 			if(edit_job_target != "")
@@ -365,12 +389,23 @@
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
 			var/datum/job/j = job_master.GetJob(edit_job_target)
+
+			if(!j)
+				return 0
+			if(!can_open_job(j.title))
+				return 0
+
 			j.total_positions++
 			opened_positions[edit_job_target]++;
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
 			var/datum/job/j = job_master.GetJob(edit_job_target)
+
+			if(!j)
+				return 0
+			if(!can_close_job(j.title))
+				return 0
 
 			//Allow instant closing without cooldown if a position has been opened before
 			if(opened_positions[edit_job_target] > 0)
