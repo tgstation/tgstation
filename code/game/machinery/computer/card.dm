@@ -139,7 +139,6 @@
 						dat += "<a href='?src=\ref[src];choice=make_job_available'>Open Position</a><br>"
 					else
 						dat += "<b>There are too many positions for this job.</b><br>"
-						usr << "?src=\ref[src];choice=make_job_available"
 
 				else
 					dat += "<b>You cannot open positions for this job.</b><br>"
