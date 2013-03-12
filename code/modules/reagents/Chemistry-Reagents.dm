@@ -1815,6 +1815,7 @@ datum
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
+						M:toxloss += (data - 50)
 				..()
 
 				return
