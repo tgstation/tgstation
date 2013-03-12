@@ -212,21 +212,22 @@
 		// Backwards-apply variables onto signal data
 		/* sanitize EVERYTHING. fucking players can't be trusted with SHIT */
 
-		signal.data["message"] 	= interpreter.GetVar("$content")
-		signal.frequency 		= interpreter.GetVar("$freq")
+		signal.data["message"] 	= interpreter.GetCleanVar("$content", signal.data["message"])
+		signal.frequency 		= interpreter.GetCleanVar("$freq", signal.frequency)
 
 		var/setname = ""
 		var/obj/machinery/telecomms/server/S = signal.data["server"]
-		if(interpreter.GetVar("$source") in S.stored_names)
-			setname = interpreter.GetVar("$source")
+		var/name_var = interpreter.GetCleanVar("$source", signal.data["name"])
+		if(name_var in S.stored_names)
+			setname = name_var
 		else
-			setname = "<i>[interpreter.GetVar("$source")]</i>"
+			setname = "<i>[name_var]</i>"
 
 		if(signal.data["name"] != setname)
 			signal.data["realname"] = setname
 		signal.data["name"]		= setname
-		signal.data["job"]		= interpreter.GetVar("$job")
-		signal.data["reject"]	= !(interpreter.GetVar("$pass")) // set reject to the opposite of $pass
+		signal.data["job"]		= interpreter.GetCleanVar("$job", signal.data["job"])
+		signal.data["reject"]	= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
 
 		// If the message is invalid, just don't broadcast it!
 		if(signal.data["message"] == "" || !signal.data["message"])
@@ -328,6 +329,8 @@ datum/signal
 		newsign.data["vname"] = source
 		newsign.data["vmask"] = 0
 		newsign.data["level"] = list()
+
+		newsign.sanitize_data()
 
 		var/pass = S.relay_information(newsign, "/obj/machinery/telecomms/hub")
 		if(!pass)
