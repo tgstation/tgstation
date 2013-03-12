@@ -16,7 +16,7 @@
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
-	var/close_position_cooldown = 0
+	var/close_position_cooldown = 280
 	//Keeps track of the time
 	var/time_last_closed_position = 0
 	//Jobs you cannot open new positions for
