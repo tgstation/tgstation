@@ -295,17 +295,17 @@
 		reagents.add_reagent("sugar", 5)
 		reagents.add_reagent("coco", 5)
 
-	proc/Unwrap(mob/user)
+	attack_self(mob/user)
+		if(wrapped)
+			Unwrap(user)
+		else
+			..()
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/proc/Unwrap(mob/user)
 		icon_state = "chocolatebarunwrapped"
 		desc = "It won't make you all sticky."
 		user << "<span class='notice'>You remove the foil.</span>"
 		wrapped = 0
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
-	if(wrapped)
-		Unwrap(user)
-	else
-		..()
 
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped
