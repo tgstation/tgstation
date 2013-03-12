@@ -887,6 +887,12 @@
 	var/temp_header_html = null
 	var/temp_footer_html = null
 
+	if (!src.connected) //Is the scanner not connected?
+		src.scanner_status_html = "<span class='bad'>ERROR: No DNA Scanner connected.</span>"
+		src.current_screen = null // blank does not exist in the switch below, so no screen will be outputted
+		src.updateUsrDialog()
+		return
+
 	src.scanner_status_html = null // Scanner status is reset each update
 	var/mob/living/occupant = src.connected.occupant
 	var/viable_occupant = (occupant && occupant.dna && !(NOCLONE in occupant.mutations))
@@ -904,13 +910,6 @@
 
 	if (!src.current_screen) // If no screen is set default to mainmenu
 		src.current_screen = "mainmenu"
-
-
-	if (!src.connected) //Is the scanner not connected?
-		src.scanner_status_html = "<span class='bad'>ERROR: No DNA Scanner connected.</span>"
-		src.current_screen = null // blank does not exist in the switch below, so no screen will be outputted
-		src.updateUsrDialog()
-		return
 
 	usr.set_machine(src)
 	if (href_list["locked"])
