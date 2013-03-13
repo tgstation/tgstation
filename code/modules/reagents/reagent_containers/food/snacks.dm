@@ -47,15 +47,15 @@
 				M << "<span class='notice'>You can't eat wrapped food!</span>"
 				return 0
 			else if(fullness <= 50)
-				M << "<span class='notice'>You hungrily [eatverb] some of [src] and gobble it down!</span>"
+				M << "<span class='notice'>You hungrily [eatverb] some of the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
-				M << "<span class='notice'>You hungrily begin to [eatverb] [src].</span>"
+				M << "<span class='notice'>You hungrily begin to [eatverb] the [src].</span>"
 			else if(fullness > 150 && fullness < 350)
-				M << "<span class='notice'>You [eatverb] [src].</span>"
+				M << "<span class='notice'>You [eatverb] the [src].</span>"
 			else if(fullness > 350 && fullness < 550)
-				M << "<span class='notice'>You unwillingly [eatverb] a bit of [src].</span>"
+				M << "<span class='notice'>You unwillingly [eatverb] a bit of the [src].</span>"
 			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "<span class='notice'>You cannot force any more of [src] to go down your throat.</span>"
+				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
 				return 0
 		else
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
@@ -288,7 +288,7 @@
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolatebarunwrapped"
 	wrapped = 0
-	bitesize = 5
+	bitesize = 2
 	New()
 		..()
 		reagents.add_reagent("nutriment", 5)
@@ -766,12 +766,11 @@
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
-
-/obj/item/weapon/reagent_containers/food/snacks/pie/New()
-	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("banana",5)
-	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("banana",5)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
@@ -953,9 +952,10 @@
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	On_Consume()
-		if(prob(unpopped))	//lol ...what's the point?
-			usr << "\red You bite down on an un-popped kernel!"
+		if(prob(unpopped))	//lol ...what's the point? << AINT SO POINTLESS NO MORE
+			usr << "\red You bite down on an un-popped kernel, and it hurts your teeth!"
 			unpopped = max(0, unpopped-1)
+			reagents.add_reagent("sacid",0.1) //only a little tingle.
 		..()
 
 
