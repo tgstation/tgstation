@@ -508,6 +508,7 @@
 #include "code\game\objects\items\robot\robot_parts.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\game\objects\items\stacks\medical.dm"
+#include "code\game\objects\items\stacks\nanopaste.dm"
 #include "code\game\objects\items\stacks\rods.dm"
 #include "code\game\objects\items\stacks\stack.dm"
 #include "code\game\objects\items\stacks\sheets\glass.dm"
