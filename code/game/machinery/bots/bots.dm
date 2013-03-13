@@ -143,7 +143,7 @@
 	pulse2.dir = pick(cardinal)
 
 	spawn(10)
-		del(pulse2)
+		pulse2.delete()
 	if (on)
 		turn_off()
 	spawn(severity*300)
