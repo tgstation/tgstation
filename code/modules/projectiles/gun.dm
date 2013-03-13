@@ -37,8 +37,8 @@
 
 
 	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
-		if(flag)	return //we're placing gun on a table or in backpack
-		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+		if(flag)	//we're placing gun on a table or in backpack
+			return
 
 		//Exclude lasertag guns from the CLUMSY check.
 		if(clumsy_check)
