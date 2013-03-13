@@ -314,3 +314,9 @@ var/list/pointers = list()
 			var/list/L = data[i]
 			for(var/t in L)
 				. += "data\[\"[i]\"\] list has: [t]"
+
+/datum/signal/proc/sanitize_data()
+	for(var/d in data)
+		var/val = data[d]
+		if(istext(val))
+			data[d] = strip_html_simple(val)
