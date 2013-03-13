@@ -82,9 +82,9 @@ datum/controller/vote
 							factor = 0.5
 						if(61 to 120)
 							factor = 0.8
-						if(121 to 180)
+						if(121 to 240)
 							factor = 1
-						if(180 to 240)
+						if(241 to 300)
 							factor = 1.2
 						else
 							factor = 1.4
