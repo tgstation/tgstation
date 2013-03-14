@@ -1,3 +1,6 @@
+/****************************************************
+				BLOOD SYSTEM
+****************************************************/
 //Blood levels
 var/const/BLOOD_VOLUME_SAFE = 501
 var/const/BLOOD_VOLUME_OKAY = 336
@@ -24,32 +27,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,	\
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antobodies" = null)
 
-//Makes a blood drop, leaking certain amount of blood from the mob
-/mob/living/carbon/human/proc/drip(var/amt as num)
-	if(!amt)
-		return
-
-	var/amm = 0.1 * amt
-	var/turf/T = get_turf(src)
-	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
-	var/list/iconL = list("1","2","3","4","5")
-
-	vessel.remove_reagent("blood",amm)
-
-	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
-		nums += G
-		iconL.Remove(G.icon_state)
-
-	if (nums.len < 5)
-		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-		this.icon_state = pick(iconL)
-		this.blood_DNA = list()
-		this.blood_DNA[dna.unique_enzymes] = dna.b_type
-	else
-		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
-			del G
-		T.add_blood(src)
-
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
@@ -66,13 +43,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							B = D
 							break
 
-				B.volume += + 0.1 // regenerate blood VERY slowly
-				if (reagents.reagent_list.has_reagent("nutriment"))	//Getting food speeds it up
+				B.volume += 0.1 // regenerate blood VERY slowly
+				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
-					reagents.reagent_list.remove_reagent("nutriment", 0.1)
-				if (reagents.reagent_list.has_reagent("iron"))	//Hematogen candy anyone?
+					reagents.remove_reagent("nutriment", 0.1)
+				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.8
-					reagents.reagent_list.remove_reagent("iron", 0.1)
+					reagents.remove_reagent("iron", 0.1)
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
@@ -146,3 +123,91 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if (temp.open)
 				blood_max += 2  //Yer stomach is cut open
 		drip(blood_max)
+
+//Makes a blood drop, leaking certain amount of blood from the mob
+/mob/living/carbon/human/proc/drip(var/amt as num)
+	if(!amt)
+		return
+
+	var/amm = 0.1 * amt
+	var/turf/T = get_turf(src)
+	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
+	var/list/iconL = list("1","2","3","4","5")
+
+	vessel.remove_reagent("blood",amm)
+
+	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
+		nums += G
+		iconL.Remove(G.icon_state)
+
+	if (nums.len < 5)
+		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
+		this.icon_state = pick(iconL)
+		this.blood_DNA = list()
+		this.blood_DNA[dna.unique_enzymes] = dna.b_type
+	else
+		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
+			del G
+		T.add_blood(src)
+
+/****************************************************
+				BLOOD TRANSFERS
+****************************************************/
+
+//Gets blood from mob to the container, preserving all data in it.
+/mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
+	var/datum/reagent/B = get_blood(container.reagents)
+	if(!B) B = new /datum/reagent/blood
+	B.holder = container
+	B.volume += amount
+
+	//set reagent data
+	B.data["donor"] = src
+	if(src.virus2)
+		B.data["virus2"] = src.virus2.getcopy()
+	B.data["antibodies"] |= src.antibodies
+	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
+	if(src.resistances && src.resistances.len)
+		if(B.data["resistances"])
+			B.data["resistances"] |= src.resistances.Copy()
+		else
+			B.data["resistances"] = src.resistances.Copy()
+	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
+
+	var/list/temp_chem = list()
+	for(var/datum/reagent/R in src.reagents.reagent_list)
+		temp_chem += R.name
+		temp_chem[R.name] = R.volume
+	B.data["trace_chem"] = list2params(temp_chem)
+	return B
+
+//For humans, blood does not appear from blue, it comes from vessels.
+/mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
+	if(vessel.get_reagent_amount("blood") < amount)
+		return null
+	. = ..()
+	vessel.remove_reagent("blood",amount) // Removes blood if human
+
+//Transfers blood from container ot vessels, respecting blood types compatability.
+/mob/living/carbon/human/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
+	var/datum/reagent/blood/our = get_blood(vessel)
+	var/datum/reagent/blood/injected = get_blood(container.reagents)
+
+	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
+		reagents.add_reagent("toxin",amount * 0.5)
+		reagents.update_total()
+	else
+		vessel.add_reagent("blood", amount)
+		vessel.update_total()
+
+	container.reagents.remove_reagent("blood", amount)
+
+//Gets human's own blood.
+/mob/living/carbon/proc/get_blood(datum/reagents/container)
+	var/datum/reagent/blood/res = locate() in container.reagent_list //Grab some blood
+	if(res) // Make sure there's some blood at all
+		if(res.data["donor"] != src) //If it's not theirs, then we look for theirs
+			for(var/datum/reagent/blood/D in container.reagent_list)
+				if(D.data["donor"] == src)
+					return D
+	return res

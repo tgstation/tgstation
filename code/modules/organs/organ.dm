@@ -35,8 +35,6 @@
 
 //Creates and initializes and connects external and internal organs
 /mob/living/carbon/human/proc/make_organs()
-	if (organs)
-		return
 	organs = list()
 	organs_by_name["chest"] = new/datum/organ/external/chest()
 	organs_by_name["groin"] = new/datum/organ/external/groin(organs_by_name["chest"])
