@@ -97,3 +97,17 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 			user << "\blue You write on the label of the solution tray."
 	else
 		..(W, user)
+
+/obj/item/weapon/storage/box/solution_trays
+	name = "solution tray box"
+	icon_state = "solution_trays"
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
+		new /obj/item/weapon/reagent_containers/glass/solution_tray( src )
