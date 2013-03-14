@@ -15,6 +15,15 @@
 		ChangeToHusk()
 	return
 
+/mob/living/carbon/human/getBrainLoss()
+	var/res = brainloss
+	var/datum/organ/internal/brain/sponge = internal_organs["brain"]
+	if (sponge.is_bruised())
+		res += 20
+	if (sponge.is_broken())
+		res += 50
+	res = min(res,maxHealth*2)
+	return res
 
 //These procs fetch a cumulative total damage from all organs
 /mob/living/carbon/human/getBruteLoss()

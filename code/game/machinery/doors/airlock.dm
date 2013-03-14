@@ -847,6 +847,8 @@ About the new airlock wires panel:
 			if(src.shock(user, 100))
 				return
 
+	// No. -- cib
+	/**
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
@@ -861,6 +863,7 @@ About the new airlock wires panel:
 			else
 				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return
+	**/
 
 	if(src.p_open)
 		user.set_machine(src)

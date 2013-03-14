@@ -58,6 +58,17 @@
 		L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 		return 1
 
+	proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
+		if(!istype(target) || !istype(user))
+			return 0
+		var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
+		in_chamber.target = target
+		in_chamber.flags = flags //Set the flags...
+		in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
+		in_chamber.firer = user
+		var/output = in_chamber.process() //Test it!
+		del(in_chamber) //No need for it anymore
+		return output //Send it back to the gun!
 
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
@@ -74,9 +85,14 @@
 				loc = A.loc
 				return 0// nope.avi
 
-			var/distance = get_dist(starting,loc)
 			//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
 			// close distance, actually RAISE the chance to hit.
+			var/distance = get_dist(starting,loc)
+			var/miss_modifier = -30
+			if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
+				var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
+				if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
+					miss_modifier += -30
 			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
 
 			if(!def_zone)
@@ -148,3 +164,44 @@
 						Bump(original)
 						sleep(1)
 		return
+
+/obj/item/projectile/test //Used to see if you can hit them.
+	invisibility = 101 //Nope!  Can't see me!
+	yo = null
+	xo = null
+	var/target = null
+	var/result = 0 //To pass the message back to the gun.
+
+	Bump(atom/A as mob|obj|turf|area)
+		if(A == firer)
+			loc = A.loc
+			return //cannot shoot yourself
+		if(istype(A, /obj/item/projectile))
+			return
+		if(istype(A, /mob/living))
+			result = 2 //We hit someone, return 1!
+			return
+		result = 1
+		return
+
+	process()
+		var/turf/curloc = get_turf(src)
+		var/turf/targloc = get_turf(target)
+		if(!curloc || !targloc)
+			return 0
+		yo = targloc.y - curloc.y
+		xo = targloc.x - curloc.x
+		target = targloc
+		while(src) //Loop on through!
+			if(result)
+				return (result - 1)
+			if((!( target ) || loc == target))
+				target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+			step_towards(src, target)
+			var/mob/living/M = locate() in get_turf(src)
+			if(istype(M)) //If there is someting living...
+				return 1 //Return 1
+			else
+				M = locate() in get_step(src,target)
+				if(istype(M))
+					return 1
