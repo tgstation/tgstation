@@ -41,20 +41,6 @@
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
 
-//---- Areas
-
-/area/anomaly
-	icon_state = "anomaly"
-
-/area/anomaly/hallway
-	name = "Anomaly Hallway"
-
-/area/anomaly/lab
-	name = "Anomaly Lab"
-
-/area/anomaly/outpost
-	name = "Research Outpost"
-
 //---- Bookcase
 
 /obj/structure/bookcase/manuals/xenoarchaeology
@@ -68,3 +54,46 @@
 		new /obj/item/weapon/book/manual/anomaly_testing(src)
 		new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
 		update_icon()
+
+//---- Lockers and closets
+
+/obj/structure/closet/secure_closet/xenoarchaeologist
+	name = "Xenoarchaeologists's Locker"
+	req_access = list(access_tox_storage)
+	icon_state = "secureres1"
+	icon_closed = "secureres"
+	icon_locked = "secureres1"
+	icon_opened = "secureresopen"
+	icon_broken = "secureresbroken"
+	icon_off = "secureresoff"
+
+	New()
+		..()
+		sleep(2)
+		new /obj/item/clothing/under/rank/scientist(src)
+		new /obj/item/clothing/suit/storage/labcoat(src)
+		new /obj/item/clothing/shoes/white(src)
+		new /obj/item/clothing/glasses/science(src)
+		new /obj/item/device/radio/headset/headset_sci(src)
+		new /obj/item/weapon/storage/belt/archaeology(src)
+		new /obj/item/weapon/storage/box/excavation(src)
+		return
+
+/obj/structure/closet/excavation
+	name = "Excavation tools"
+	icon_state = "toolcloset"
+
+	New()
+		..()
+		sleep(2)
+		new /obj/item/weapon/storage/belt/archaeology(src)
+		new /obj/item/weapon/storage/box/excavation(src)
+		new /obj/item/device/flashlight/lantern(src)
+		new /obj/item/device/depth_scanner(src)
+		new /obj/item/device/core_sampler(src)
+		new /obj/item/device/gps(src)
+		new /obj/item/device/beacon_locator(src)
+		new /obj/item/device/radio/beacon(src)
+		new /obj/item/clothing/glasses/meson(src)
+		new /obj/item/weapon/pickaxe(src)
+		return
