@@ -1,6 +1,6 @@
 
 /obj/machinery/artifact_scanpad
-	name = "anomalous scanner pad"
+	name = "Anomaly Scanner Pad"
 	desc = "Place things here for scanning."
 	icon = 'stationobjs.dmi'
 	icon_state = "tele0"

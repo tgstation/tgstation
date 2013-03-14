@@ -1,7 +1,7 @@
 
 /obj/machinery/artifact_analyser
-	name = "Artifact Analyser"
-	desc = "Studies the structure of artifacts to discover their uses."
+	name = "Anomaly Analyser"
+	desc = "Studies the emissions of anomalous materials to discover their uses."
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "isolator"
 	anchored = 1

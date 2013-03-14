@@ -1,6 +1,6 @@
 
 /obj/machinery/artifact_harvester
-	name = "Anomaly Power Collector"
+	name = "Exotic Particle Harvester"
 	icon = 'virology.dmi'
 	icon_state = "incubator"	//incubator_on
 	anchored = 1
