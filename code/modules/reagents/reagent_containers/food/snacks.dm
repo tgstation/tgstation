@@ -235,10 +235,10 @@
 	name = "\improper Aesir salad"
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
-	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("tricordrazine", 8)
 		bitesize = 3
@@ -524,9 +524,9 @@
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat"
 	icon_state = "fishfillet"
-	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 	New()
 		..()
+		eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 6
@@ -592,9 +592,9 @@
 	name = "sausage"
 	desc = "A piece of mixed, long meat."
 	icon_state = "sausage"
-	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 	New()
 		..()
+		eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
@@ -943,11 +943,11 @@
 	name = "popcorn"
 	desc = "Now let's find some cinema."
 	icon_state = "popcorn"
-	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 	trash = /obj/item/trash/popcorn
 	var/unpopped = 0
 	New()
 		..()
+		eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 		unpopped = rand(1,10)
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
@@ -1069,9 +1069,9 @@
 	name = "burned mess"
 	desc = "Someone should be demoted from chef for this."
 	icon_state = "badrecipe"
-	eatverb = pick("choke down","nibble","gnaw","chomp")
 	New()
 		..()
+		eatverb = pick("choke down","nibble","gnaw","chomp")
 		reagents.add_reagent("toxin", 1)
 		reagents.add_reagent("carbon", 3)
 		bitesize = 2
@@ -1126,10 +1126,10 @@
 	name = "meatball soup"
 	desc = "You've got balls kid, BALLS!"
 	icon_state = "meatballsoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 5
@@ -1138,9 +1138,9 @@
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("slimejelly", 5)
 		reagents.add_reagent("water", 10)
 		bitesize = 5
@@ -1149,9 +1149,9 @@
 	name = "tomato soup"
 	desc = "Smells like copper"
 	icon_state = "tomatosoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("blood", 10)
 		reagents.add_reagent("water", 5)
@@ -1161,9 +1161,9 @@
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("banana", 5)
 		reagents.add_reagent("water", 10)
@@ -1173,10 +1173,10 @@
 	name = "vegetable soup"
 	desc = "A true vegan meal" //TODO
 	icon_state = "vegetablesoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 5
@@ -1185,10 +1185,10 @@
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		reagents.add_reagent("tricordrazine", 5)
@@ -1198,10 +1198,10 @@
 	name = "mystery soup"
 	desc = "The mystery is, why aren't you eating it?"
 	icon_state = "mysterysoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		var/mysteryselect = pick(1,2,3,4,5,6,7,8,9,10)
 		switch(mysteryselect)
 			if(1)
@@ -1244,10 +1244,10 @@
 	name = "wish soup"
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("water", 10)
 		bitesize = 5
 		if(prob(25))
@@ -1258,10 +1258,10 @@
 	name = "hot chili"
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("capsaicin", 3)
 		reagents.add_reagent("tomatojuice", 2)
@@ -1272,10 +1272,10 @@
 	name = "cold chili"
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("frostoil", 3)
 		reagents.add_reagent("tomatojuice", 2)
@@ -1437,10 +1437,10 @@
 	name = "tomato soup"
 	desc = "Drinking this feels like being a vampire! A tomato vampire..."
 	icon_state = "tomatosoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("tomatojuice", 10)
 		bitesize = 3
@@ -1460,9 +1460,9 @@
 	name = "stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 10)
 		reagents.add_reagent("tomatojuice", 5)
 		reagents.add_reagent("imidazoline", 5)
@@ -1512,10 +1512,10 @@
 	name = "milosoup"
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "milosoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 4
@@ -1524,10 +1524,10 @@
 	name = "stewed soy meat"
 	desc = "Even non-vegetarians will LOVE this!"
 	icon_state = "stewedsoymeat"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/plate
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
@@ -1670,10 +1670,10 @@
 	name = "chantrelle soup"
 	desc = "A delicious and hearty mushroom soup."
 	icon_state = "mushroomsoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 3
 
@@ -1707,10 +1707,10 @@
 	name = "beet soup"
 	desc = "Wait, how do you spell it again..?"
 	icon_state = "beetsoup"
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
