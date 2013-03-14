@@ -111,6 +111,17 @@
 			return Eval(x)
 
 /*
+	Proc: GetCleanVar
+	Returns the value of a global variable in the script and cleans it (sanitizes).
+*/
+
+		GetCleanVar(name, compare)
+			var/x = GetVar(name)
+			if(istext(x) && compare && x != compare) // Was changed
+				x = sanitize(x)
+			return x
+
+/*
 	Proc: CallProc
 	Calls a global function defined in the script and, amazingly enough, returns its return value. Remember to ensure that the function
 	exists before calling this procedure.

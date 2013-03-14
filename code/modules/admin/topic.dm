@@ -1660,6 +1660,9 @@
 					//ticker.mode.forge_traitor_objectives(H.mind)
 					ticker.mode.finalize_traitor(H.mind)
 				for(var/mob/living/silicon/A in player_list)
+					if(A.stat == 2 || !A.client || !A.mind) continue
+					if(ispAI(A)) continue
+					else if(is_special_character(A)) continue
 					ticker.mode.traitors += A.mind
 					A.mind.special_role = "traitor"
 					var/datum/objective/new_objective = new

@@ -251,7 +251,7 @@ datum/objective/survive
 	check_completion()
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
 			return 0		//Brains no longer win survive objectives. --NEO
-		if(issilicon(owner.current) && owner.current != owner.original)
+		if(!is_special_character(owner.current)) //This fails borg'd traitors
 			return 0
 		return 1
 
