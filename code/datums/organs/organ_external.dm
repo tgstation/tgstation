@@ -348,6 +348,7 @@
 	brute_dam = 0
 	burn_dam = 0
 	status &= ~ORGAN_BLEEDING
+	var/clamped = 0
 	for(var/datum/wound/W in wounds)
 		if(W.damage_type == CUT || W.damage_type == BRUISE)
 			brute_dam += W.damage
@@ -357,7 +358,12 @@
 		if(!(status & ORGAN_ROBOT) && W.bleeding())
 			status |= ORGAN_BLEEDING
 
+		clamped |= W.clamped
+
 		number_wounds += W.amount
+
+	if (open && !clamped)	//things tend to bleed if they are CUT OPEN
+		status |= ORGAN_BLEEDING
 
 
 // new damage icon system

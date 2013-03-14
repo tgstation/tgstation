@@ -223,6 +223,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					blood_max += W.damage / 4
 				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED) && !temp.amputated)
 					blood_max += 20 //Yer missing a fucking limb.
+				if (temp.open)
+					blood_max += 2  //Yer stomach is cut open
 			drip(blood_max)
 
 	proc/handle_disabilities()
