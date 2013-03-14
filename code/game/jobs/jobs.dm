@@ -45,12 +45,6 @@ var/const/ASSISTANT			=(1<<13)
 
 
 var/list/assistant_occupations = list(
-	"Assistant",
-	"Atmospheric Technician",
-	"Cargo Technician",
-	"Chaplain",
-	"Lawyer",
-	"Librarian"
 )
 
 
@@ -68,7 +62,6 @@ var/list/engineering_positions = list(
 	"Chief Engineer",
 	"Station Engineer",
 	"Atmospheric Technician",
-	"Roboticist"
 )
 
 
@@ -85,7 +78,7 @@ var/list/science_positions = list(
 	"Research Director",
 	"Scientist",
 	"Geneticist",	//Part of both medical and science
-	"Roboticist"	//Part of both engineering and science
+	"Roboticist"
 )
 
 //BS12 EDIT
