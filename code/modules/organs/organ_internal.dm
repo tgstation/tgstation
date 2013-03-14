@@ -46,6 +46,15 @@
 	name = "lungs"
 	parent_organ = "chest"
 
+	process()
+		if(is_bruised())
+			if(prob(2))
+				spawn owner.emote("me", 1, "coughs up blood!")
+				owner.drip(10)
+			if(prob(4))
+				spawn owner.emote("me", 1, "gasps for air!")
+				owner.losebreath += 5
+
 /datum/organ/internal/liver
 	name = "liver"
 	parent_organ = "chest"

@@ -256,20 +256,14 @@
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
-		var/lung_ruptured = is_lung_ruptured()
-
-		if(lung_ruptured && prob(2))
-			spawn emote("me", 1, "coughs up blood!")
-			src.drip(10)
+		var/datum/organ/internal/lungs/L = internal_organs["lungs"]
+		L.process()
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
 		if(health < 0)
 			losebreath++
-		if(lung_ruptured && prob(4))
-			spawn emote("me", 1, "gasps for air!")
-			losebreath += 5
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(10)) //Gasp per 10 ticks? Sounds about right.
@@ -299,7 +293,7 @@
 					breath = loc.remove_air(breath_moles)
 
 
-					if(!lung_ruptured)
+					if(!is_lung_ruptured())
 						if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
 							if(prob(5))
 								rupture_lung()
