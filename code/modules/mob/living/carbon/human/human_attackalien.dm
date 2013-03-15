@@ -32,7 +32,7 @@
 					if("h")
 						attackmodifier = 1.7
 					if("s")
-						attackmodifier = 1.5
+						attackmodifier = 1.2
 					if("q")
 						attackmodifier = 2
 				M.m_intent = "run"
@@ -46,8 +46,13 @@
 					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
 					else						light_amount =  10
 			//end the borrowing
-			if(light_amount < 3)
-				attackmodifier += 2 // Adding two to get 3.5 or 3, aliens attacking from the dark are deadly.
+			if(M.caste == "s" && light_amount > 2)
+				attackmodifier += 2
+			if(light_amount < 3 )
+				if(M.caste != "s")
+					attackmodifier += 2 // Adding two to get 3.5 or 3, aliens attacking from the dark are deadly.
+				else
+					attackmodifier += 1
 			var/damage = rand(10*attackmodifier, 20*attackmodifier)
 			switch(M.caste) // Add or remove damage based on caste
 				if("d")
