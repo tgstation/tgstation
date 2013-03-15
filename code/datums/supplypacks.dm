@@ -344,7 +344,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/virus
 	name = "Virus crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
+/*	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/cold,
 					/obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion,
@@ -355,7 +355,11 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/beakers,
-					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
+					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)*/
+	contains = list(/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random)
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Virus crate"

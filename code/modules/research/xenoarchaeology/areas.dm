@@ -12,11 +12,11 @@
 	icon_state = "anog"
 
 /area/research_outpost/power
-	name = "Research Outpost Power Substation"
+	name = "Research Outpost Power"
 	icon_state = "engine"
 
 /area/research_outpost/atmos
-	name = "Research Outpost Maintenance"
+	name = "Research Outpost Atmospherics"
 	icon_state = "atmos"
 
 /area/research_outpost/maint

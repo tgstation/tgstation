@@ -6,6 +6,10 @@
 	nodamage = 0
 	flag = "bullet"
 
+	on_hit(var/atom/target, var/blocked = 0)
+		if (..(target, blocked))
+			var/mob/living/L = target
+			shake_camera(L, 3, 2)
 
 /obj/item/projectile/bullet/weakbullet
 	damage = 10
