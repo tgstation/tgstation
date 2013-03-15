@@ -130,9 +130,10 @@ datum/shuttle_controller
 
 							start_location.move_contents_to(end_location, null, NORTH)
 
-							for(var/obj/machinery/door/D in world)
+							for(var/obj/machinery/door/unpowered/D in world)
 								if( get_area(D) == end_location )
 									spawn(0)
+										D.locked = 0
 										D.open()
 
 							for(var/mob/M in end_location)
@@ -291,9 +292,10 @@ datum/shuttle_controller
 					// Just before it leaves, close the damn doors!
 					if(timeleft == 2 || timeleft == 1)
 						var/area/start_location = locate(/area/shuttle/escape/station)
-						for(var/obj/machinery/door/D in start_location)
+						for(var/obj/machinery/door/unpowered/shuttle/D in start_location)
 							spawn(0)
 								D.close()
+								D.locked = 1
 
 					if(timeleft>0)
 						return 0
