@@ -87,6 +87,63 @@ datum
 			reagent_state = LIQUID
 			color = "#801E28" // rgb: 128, 30, 40
 			on_mob_life(var/mob/living/M as mob)
+				//ALIEN EFFECTS
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M //I had to convert M to an alien to access plasma.
+					this.visible_message(\
+					"\blue [this]'s flesh pulsates under it's exoskeleton!", \
+					"\blue Your flesh pulsates!")
+					var/effect = pick("fire","toxin","heal","drain","siesta") //Siesta (El Spanish Xeno) has a prob(100) chance.
+					var/insidereagent = this.reagents.get_reagent_amount("slimejelly")
+					switch(effect)
+						if("fire")
+							if(insidereagent > 2)
+								if(this.bodytemperature <= 500)
+									this.bodytemperature = 500
+									this.visible_message(\
+									"\red [src] reacts violently with [this]!", \
+									"\red You feel globs of burning [src] flowing through you!")
+								else
+									M << "The [src] still burns inside you!"
+								this.reagents.remove_reagent("slimejelly",insidereagent/2)
+							else
+								this.visible_message(\
+								"\blue [this] vents the [src] through it's pores!", \
+								"\blue You feel relieved as the [src] is dissolved and vented!")
+								this.reagents.remove_reagent("slimejelly",insidereagent)
+						if("toxin")
+							this << "You feel reinvigorated!"
+							var/uppedplasma = this.storedPlasma + (insidereagent*1.5)
+							if(uppedplasma > this.max_plasma)
+								var/cutplasma = this.max_plasma - uppedplasma
+								this.storedPlasma = this.max_plasma
+								this.heal_organ_damage(cutplasma/2,cutplasma/2)
+								this.visible_message(\
+								"\blue The [src] reacts oddly to [this] and heals some wounds!", \
+								"\blue You feel healthier from the [src]!")
+						if("heal")
+							this.heal_organ_damage(insidereagent*1.5,insidereagent*1.5)
+							this.visible_message(\
+							"\blue The [src] reacts oddly to [this] and heals some wounds!", \
+							"\blue You feel healthier from the [src]!")
+						if("drain")
+							this.visible_message(\
+							"\red The [src] begins to weaken the [this]'s muscles!", \
+							"\red You feel weaker from [src]!")
+							this.Stun(10)
+						if("siesta")
+							if(prob(100))//We don't want a lot of mehican aliens.
+								var/spanish = pick("¡Este es el extraterrestre fiesta!","¡Fiesta hacia abajo como es el extraterrestre!","¡Bailar Bailar Bailar!")
+								this.say("[spanish]")
+								for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2)) //Thanks Ian.
+									this.dir = i
+									sleep(1)
+							else
+								this.visible_message(\
+								"\blue [this] has no visible effect from the [src]", \
+								"\blue You feel no side effects from the [src]!")
+					return
+				//END ALIEN EFFECTS
 				if(prob(10))
 					M << "\red Your insides are burning!"
 					M.adjustToxLoss(rand(20,60)*REM)
@@ -273,6 +330,16 @@ datum
 			reagent_state = LIQUID
 			color = "#009CA8" // rgb: 0, 156, 168
 
+			on_mob_life(var/mob/living/M as mob)
+			//ALIEN EFFECTS
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					this.visible_message(\
+					"\red The [src] begins to weaken the [this]'s muscles!", \
+					"\red You feel weaker from the [src]!")
+					this.Stun(3)
+			//ALIEN EFFECTS
+
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
@@ -295,6 +362,27 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				//ALIEN EFFECTS
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("anti_toxin")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 340)
+							this.bodytemperature = 370
+							this.visible_message(\
+							"\red [src] reacts violently with [this]!", \
+							"\red You feel globs of burning [src] flowing through you!")
+							this.Stun(4)
+						else
+							M << "The [src] still burns inside you!"
+							this.Stun(2)
+							this.reagents.remove_reagent("anti_toxin",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel relieved as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("anti_toxin",insidereagent)
+				//END ALIEN EFFECTS
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-2*REM, 0)
 				if(holder.has_reagent("toxin"))
@@ -330,12 +418,25 @@ datum
 			color = "#CF3600" // rgb: 207, 54, 0
 
 			on_mob_life(var/mob/living/M as mob)
+				//ALIEN EFFECTS
+				var/mob/living/carbon/alien/this = M
+				var/insidereagent = this.reagents.get_reagent_amount("toxin")
+				this << "You feel reinvigorated!"
+				var/uppedplasma = this.storedPlasma + (insidereagent*1.5)
+				if(uppedplasma > this.max_plasma)
+					var/cutplasma = this.max_plasma - uppedplasma
+					this.storedPlasma = this.max_plasma
+					this.heal_organ_damage(cutplasma/2,cutplasma/2)
+					this.visible_message(\
+					"\blue The [src] reacts oddly to [this] and heals some wounds!", \
+					"\blue You feel healthier from the [src]!")
+				//END ALIEN EFFECTS
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1.5*REM)
 				..()
 				return
 
-		cyanide
+		cyanide // This contains chemicals poisonous to the alien, but I am skipping it due to being non-creatable.
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
@@ -425,6 +526,33 @@ datum
 			color = "#E895CC" // rgb: 232, 149, 204
 
 			on_mob_life(var/mob/living/M as mob)
+				/*
+					Alien blood absorbs toxins, creating plasma and healing them, so the toxin part of this
+					would be mostly nullified; I'm under the assumption it's the chlorine that provides the major
+					sleep reaction, but chemically chlorine and aliens is a perfect match (chloral/stox would actually
+					superpower aliens) but for game balance, it will instead absorb the acid, down the alien and expel it
+					in gas (see chlorine).
+				*/
+				//ALIEN EFFECTS
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/oFlags = this.flags
+					this.flags -= NOREACT
+					var/insidereagent = this.reagents.get_reagent_amount("stoxin")
+					var/smokes = list("potassium","sugar","phosphorus","sacid")
+					this.visible_message(\
+						"\blue [this] shivers momentarily and bursts a cloud of Acid through it's pores!", \
+						"\blue You shudder and exhale the created Acid through your pores!")
+					for(var/i in smokes)
+						this.reagents.add_reagent(i,insidereagent/4)
+					this.flags = oFlags
+					this.Paralyse(5)
+					for(var/i in smokes)
+						this.reagents.remove_reagent(i)
+					this.reagents.remove_reagent("stoxin")
+					..()
+					return
+				//ALIEN EFFECTS
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
@@ -572,6 +700,25 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
+			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("nitrogen")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 400)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] wriggle!", \
+							"\red You can feel the [src] warming you up!")
+						else
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("nitrogen",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("nitrogen",insidereagent)
+
 		hydrogen
 			name = "Hydrogen"
 			id = "hydrogen"
@@ -628,6 +775,26 @@ datum
 			color = "#808080" // rgb: 128, 128, 128
 
 			on_mob_life(var/mob/living/M as mob)
+				/*
+					Chlorine and Hydrogen Sulfide (Alien blood) makes Sulfuric Acid. This stuns the alien from the resulting
+					reaction and it violently expels the excess acid/blood through it's pores into a cloud around it.
+				*/
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/oFlags = this.flags
+					this.flags -= NOREACT
+					var/insidereagent = this.reagents.get_reagent_amount("chlorine")
+					var/smokes = list("potassium","sugar","phosphorus","sacid")
+					this.visible_message(\
+						"\blue [this] shivers momentarily and bursts a cloud of Acid through it's pores!", \
+						"\blue You shudder and exhale the created Acid through your pores!")
+					for(var/i in smokes)
+						this.reagents.add_reagent(i,insidereagent/4)
+					this.flags = oFlags
+					this.Paralyse(8)
+					for(var/i in smokes)
+						this.reagents.remove_reagent(i)
+					this.reagents.remove_reagent("chlorine")
 				if(!M) M = holder.my_atom
 				M.take_organ_damage(1*REM, 0)
 				..()
@@ -858,12 +1025,32 @@ datum
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
 
+
 		nitroglycerin
 			name = "Nitroglycerin"
 			id = "nitroglycerin"
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
+
+			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("glycerol")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 400)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] wriggle!", \
+							"\red You can feel the [src] warming you up!")
+						else
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("nitrogen",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("glycerol",insidereagent)
 
 		radium
 			name = "Radium"
@@ -894,6 +1081,25 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("ryetalyn")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 300)
+							this.bodytemperature = 350
+							this.visible_message(\
+							"\red [src] reacts violently with [this]!", \
+							"\red You feel globs of warm [src] flowing through you!")
+							this.Stun(2)
+						else
+							M << "The [src] still burns inside you!"
+							this.Stun(1)
+							this.reagents.remove_reagent("ryetalyn",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel relieved as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("ryetalyn",insidereagent)
 				if(!M) M = holder.my_atom
 
 				var/needs_update = M.mutations.len > 0
@@ -979,6 +1185,27 @@ datum
 			description = "Sterilizes wounds in preparation for surgery."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+
+			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("sterilizine")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 300)
+							this.bodytemperature = 350
+							this.visible_message(\
+							"\red [src] reacts violently with [this]!", \
+							"\red You feel globs of warm [src] flowing through you!")
+							this.Stun(2)
+						else
+							M << "The [src] still burns inside you!"
+							this.Stun(1)
+							this.reagents.remove_reagent("sterilizine",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel relieved as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("sterilizine",insidereagent)
 	/*		reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				src = null
 				if (method==TOUCH)
@@ -1063,6 +1290,13 @@ datum
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
 
+			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					M.visible_message(\
+					"\red The [src] weakens the [M]'s muscles!", \
+					"\red You feel weaker from [src]!")
+					M.Stun(7)
+
 		fuel
 			name = "Welding fuel"
 			id = "fuel"
@@ -1146,7 +1380,7 @@ datum
 								H.update_inv_shoes(0)
 					M.clean_blood()
 
-		plantbgone
+		plantbgone //Contains toxins but assuming to the point they're so watered down that they do not affect the Alien
 			name = "Plant-B-Gone"
 			id = "plantbgone"
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
@@ -1227,6 +1461,11 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					M.visible_message(\
+					"\red The [src] weakens the [M]'s muscles!", \
+					"\red You feel weaker from [src]!")
+					M.Stun(7)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -1259,6 +1498,23 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("lexorin")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 400)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] wriggle!", \
+							"\red You can feel the [src] warming you up!")
+						else
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("lexorin",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("lexorin",insidereagent)
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1277,6 +1533,11 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					M.visible_message(\
+					"\red The [src] weakens the [M]'s muscles!", \
+					"\red You feel weaker from [src]!")
+					M.Stun(6)
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1292,6 +1553,11 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					M.visible_message(\
+					"\red The [src] weakens the [M]'s muscles!", \
+					"\red You feel weaker from [src]!")
+					M.Stun(5)
 				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!M) M = holder.my_atom
@@ -1341,6 +1607,25 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("tricordrazine")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 500)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] writhe!", \
+							"\red You can feel the [src] warming you up!")
+							this.Stun(6)
+						else
+							this.Stun(2)
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("tricordrazine",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("tricordrazine",insidereagent)
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1460,6 +1745,25 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("hyronalin")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 500)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] writhe!", \
+							"\red You can feel the [src] warming you up!")
+							this.Stun(6)
+						else
+							this.Stun(2)
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("hyronalin",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("hyronalin",insidereagent)
 				if(!M) M = holder.my_atom
 				M.radiation = max(M.radiation-3*REM,0)
 				..()
@@ -1473,6 +1777,25 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("arithrazine")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 500)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] writhe!", \
+							"\red You can feel the [src] warming you up!")
+							this.Stun(6)
+						else
+							this.Stun(2)
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("arithrazine",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("arithrazine",insidereagent)
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
@@ -1491,6 +1814,25 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("alkysine")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 600)
+							this.bodytemperature += 30
+							this.visible_message(\
+							"\red [src] makes [this] screech in pain and writhe!", \
+							"\red You screech in pain from the [src]!")
+							this.Stun(5)
+						else
+							this.Paralyse(5)
+							M << "The [src] leaves your body with a final shudder and knocks you over!"
+							this.reagents.remove_reagent("alkysine",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("alkysine",insidereagent)
 				if(!M) M = holder.my_atom
 				M.adjustBrainLoss(-3*REM)
 				..()
@@ -1504,6 +1846,25 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("imidazoline")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 350)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] wiggle!", \
+							"\red You can feel the [src] warming you up!")
+							this.Stun(6)
+						else
+							this.Stun(2)
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("imidazoline",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("imidazoline",insidereagent)
 				if(!M) M = holder.my_atom
 				M.eye_blurry = max(M.eye_blurry-5 , 0)
 				M.eye_blind = max(M.eye_blind-5 , 0)
@@ -1542,7 +1903,7 @@ datum
 				..()
 				return
 
-		cryoxadone
+		cryoxadone //Only functions at low temperatures (in lore) and this is too much complication for players)
 			name = "Cryoxadone"
 			id = "cryoxadone"
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
@@ -1559,7 +1920,7 @@ datum
 				..()
 				return
 
-		clonexadone
+		clonexadone // ^
 			name = "Clonexadone"
 			id = "clonexadone"
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
@@ -1601,7 +1962,10 @@ datum
 				M.adjustToxLoss(2*REM)
 				..()
 				return
-
+		/*
+			I'm not sure exactly what carpotoxin's basis is, and how it would affect the alien, so i'm going to leave the
+			carpotoxin and zombiepowder alone.
+		*/
 		zombiepowder
 			name = "Zombie Powder"
 			id = "zombiepowder"
@@ -1633,6 +1997,25 @@ datum
 			color = "#B31008" // rgb: 139, 166, 233
 
 			on_mob_life(var/mob/living/M)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/insidereagent = this.reagents.get_reagent_amount("mindbreaker")
+					if(insidereagent > 2)
+						if(this.bodytemperature <= 350)
+							this.bodytemperature += 15
+							this.visible_message(\
+							"\red [src] makes [this] sluggish and twitchy!", \
+							"\red You feel as if [src] has put you into a warm time warp!")
+							this.Stun(10)
+						else
+							this.Stun(9)
+							M << "The [src] still flows inside you!"
+							this.reagents.remove_reagent("mindbreaker",insidereagent/2)
+					else
+						this.visible_message(\
+						"\blue [this] vents the [src] through it's pores!", \
+						"\blue You feel cooler and faster as the [src] is dissolved and vented!")
+						this.reagents.remove_reagent("mindbreaker",insidereagent)
 				if(!M) M = holder.my_atom
 				M.hallucination += 10
 				..()
@@ -1768,7 +2151,26 @@ datum
 			reagent_state = SOLID
 			color = "#000067" // rgb: 0, 0, 103
 
+			//Heyooo, CMO is going to get a dandy surprise next XENO he tries to robust. (see chlorine)
 			on_mob_life(var/mob/living/M as mob)
+				if(isalien(M))
+					var/mob/living/carbon/alien/this = M
+					var/oFlags = this.flags
+					this.flags -= NOREACT
+					var/insidereagent = this.reagents.get_reagent_amount("chloralhydrate")
+					var/smokes = list("potassium","sugar","phosphorus","sacid")
+					this.visible_message(\
+						"\blue [this] shivers momentarily and bursts a cloud of Acid through it's pores!", \
+						"\blue You shudder and exhale the created Acid through your pores!")
+					for(var/i in smokes)
+						this.reagents.add_reagent(i,insidereagent/4)
+					this.flags = oFlags
+					this.Paralyse(5)
+					for(var/i in smokes)
+						this.reagents.remove_reagent(i)
+					this.reagents.remove_reagent("chloralhydrate")
+					..()
+					return
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				data++
