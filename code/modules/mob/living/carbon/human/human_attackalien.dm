@@ -22,22 +22,58 @@
 			visible_message(text("\red [] has grabbed [] passively!", M, src))
 
 		if("harm")
-			if (w_uniform)
+			var/attackmodifier = 1 // Aliens are sneaky creatures, they can do stealthy moves
+			if (w_uniform && M.m_intent != "walk") // Sneaky stabbings only leave holes
 				w_uniform.add_fingerprint(M)
-			var/damage = rand(15, 30)
+			if(M.m_intent == "walk")
+				switch(M.caste) // If we're in sneaky mode, do an damage based on caste.
+					if("d")
+						attackmodifier = 1.1
+					if("h")
+						attackmodifier = 1.7
+					if("s")
+						attackmodifier = 1.2
+					if("q")
+						attackmodifier = 2
+				M.m_intent = "run"
+				M.update_icons()
+			//borrowed from life.dm
+			var/light_amount = 0
+			if(isturf(get_turf(M)))
+				var/turf/T = get_turf(M)
+				var/area/A = T.loc
+				if(A)
+					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
+					else						light_amount =  10
+			//end the borrowing
+			if(M.caste == "s" && light_amount > 2)
+				attackmodifier += 2
+			if(light_amount < 3 )
+				if(M.caste != "s")
+					attackmodifier += 2 // Adding two to get 3.5 or 3, aliens attacking from the dark are deadly.
+				else
+					attackmodifier += 1
+			var/damage = rand(10*attackmodifier, 20*attackmodifier)
+			switch(M.caste) // Add or remove damage based on caste
+				if("d")
+					damage -= 2
+				if("h")
+					damage += 2
+				if("s")
+					damage += 3
+				if("q")
+					damage -= 5 // Queenie is slow and her attacks tend to just whap people's faces.
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
 			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
-
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
-
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			if (damage >= 25)
-				visible_message("\red <B>[M] has wounded [src]!</B>")
+				visible_message("\red <B>[M] has mauled [src]!</B>")
 				apply_effect(4, WEAKEN, armor_block)
 			updatehealth()
 

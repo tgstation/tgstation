@@ -160,7 +160,7 @@
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		M << "The Hivemind does not encourage this activity."
 		return
 	..()
 
@@ -259,7 +259,7 @@
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		M << "The Hivemind does not encourage this activity."
 		return
 
 	if(..())	//to allow surgery to return properly.
@@ -383,7 +383,7 @@ In all, this is a lot like the monkey code. /N
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		M << "The Hivemind does not encourage this activity."
 		return
 
 	..()
