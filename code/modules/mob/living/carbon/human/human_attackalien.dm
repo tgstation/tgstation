@@ -22,19 +22,19 @@
 			visible_message(text("\red [] has grabbed [] passively!", M, src))
 
 		if("harm")
-			var/modifier = 1 // Aliens are sneaky creatures, they can do certain things
+			var/attackmodifier = 1 // Aliens are sneaky creatures, they can do stealthy moves
 			if (w_uniform && M.m_intent != "walk") // Sneaky stabbings only leave holes
 				w_uniform.add_fingerprint(M)
 			if(M.m_intent == "walk")
 				switch(M.caste) // If we're in sneaky mode, do an damage based on caste.
 					if("d")
-						modifier = 1.1
+						attackmodifier = 1.1
 					if("h")
-						modifier = 1.7
+						attackmodifier = 1.7
 					if("s")
-						modifier = 1.5
+						attackmodifier = 1.5
 					if("q")
-						modifier = 2
+						attackmodifier = 2
 				M.m_intent = "run"
 				M.update_icons()
 			//borrowed from life.dm
@@ -47,8 +47,8 @@
 					else						light_amount =  10
 			//end the borrowing
 			if(light_amount < 3)
-				modifier += 2 // Adding two to get 3.5 or 3, aliens attacking from the dark are deadly.
-			var/damage = rand(10*modifier, 20*modifier)
+				attackmodifier += 2 // Adding two to get 3.5 or 3, aliens attacking from the dark are deadly.
+			var/damage = rand(10*attackmodifier, 20*attackmodifier)
 			switch(M.caste) // Add or remove damage based on caste
 				if("d")
 					damage -= 2
