@@ -58,7 +58,7 @@
 //---- Lockers and closets
 
 /obj/structure/closet/secure_closet/xenoarchaeologist
-	name = "Xenoarchaeologists's Locker"
+	name = "Xenoarchaeologist Locker"
 	req_access = list(access_tox_storage)
 	icon_state = "secureres1"
 	icon_closed = "secureres"
@@ -97,3 +97,9 @@
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/weapon/pickaxe(src)
 		return
+
+//---- Isolation room air alarms
+
+/obj/machinery/alarm/isolation
+	name = "Isolation room air control"
+	req_access = list(access_research)

@@ -1,84 +1,76 @@
 
-/area/xenoarchaeology
+/area/research_outpost
 	name = "Research Outpost"
 	icon_state = "anomaly"
 
-/area/xenoarchaeology/hallway
+/area/research_outpost/hallway
 	name = "Research Outpost Hallway"
 	icon_state = "hallC"
 
-/area/xenoarchaeology/gearstore
+/area/research_outpost/gearstore
 	name = "Expedition Preparation"
 	icon_state = "anog"
 
-/area/xenoarchaeology/power
+/area/research_outpost/power
 	name = "Research Outpost Power Substation"
 	icon_state = "engine"
 
-/area/xenoarchaeology/atmos
+/area/research_outpost/atmos
 	name = "Research Outpost Maintenance"
 	icon_state = "atmos"
 
-/area/xenoarchaeology/maint
+/area/research_outpost/maint
 	name = "Research Outpost Maintenance"
 	icon_state = "maintcentral"
 
-/area/xenoarchaeology/iso1
+/area/research_outpost/iso1
 	name = "Isolation Cell"
 	icon_state = "iso1"
 
-/area/xenoarchaeology/iso2
+/area/research_outpost/iso2
 	name = "Isolation Cell"
 	icon_state = "iso2"
 
-/area/xenoarchaeology/iso3
+/area/research_outpost/iso3
 	name = "Isolation Cell"
 	icon_state = "iso3"
 
-/area/xenoarchaeology/harvesting
+/area/research_outpost/harvesting
 	name = "Exotic Particles Collection"
 	icon_state = "anolab"
 
-/area/xenoarchaeology/shuttle1
-	name = "Research Wing shuttle"
-	icon_state = "shuttle"
-
-/area/xenoarchaeology/shuttle2
-	name = "Research Outpost shuttle"
-	icon_state = "shuttle"
-
-/area/xenoarchaeology/sample
+/area/research_outpost/sample
 	name = "Sample Preparation Room"
 	icon_state = "anosample"
 
-/area/xenoarchaeology/spectro
+/area/research_outpost/spectro
 	name = "Mass Spectrometry Lab"
 	icon_state = "anospectro"
 
-/area/xenoarchaeology/anomaly
+/area/research_outpost/anomaly
 	name = "Anomalous Materials Lab"
 	icon_state = "anolab"
 
-/area/xenoarchaeology/med
+/area/research_outpost/med
 	name = "Research Outpost Medbay"
 	icon_state = "medbay3"
 
-/area/xenoarchaeology/entry
+/area/research_outpost/entry
 	name = "Research Outpost Shuttle Dock"
 	icon_state = "entry"
 
-/area/xenoarchaeology/longtermstorage
+/area/research_outpost/longtermstorage
 	name = "Long-Term Storage"
 	icon_state = "primarystorage"
 
-/area/xenoarchaeology/tempstorage
+/area/research_outpost/tempstorage
 	name = "Temporary Storage"
 	icon_state = "storage"
 
-/area/xenoarchaeology/maintstore1
+/area/research_outpost/maintstore1
 	name = "Auxiliary Storage"
 	icon_state = "auxstorage"
 
-/area/xenoarchaeology/maintstore2
-	name = "Auxiliary Storage"
+/area/research_outpost/maintstore2
+	name = "Maintenance Storage"
 	icon_state = "auxstorage"
