@@ -319,22 +319,40 @@ obj/structure/door_assembly
 		return
 
 	else if(istype(W, /obj/item/weapon/airlock_painter)) // |- Ricotez
+	//INFORMATION ABOUT ADDING A NEW AIRLOCK TO THE PAINT LIST:
+	//If your airlock has a regular version, add it to the list with regular versions.
+	//If your airlock has a glass version, add it to the list with glass versions.
+	//Do NOT add your airlock to a list if it does not have a version for that list,
+	//	or you will get broken icons.
+	//If you do this properly, you can just add the typetext and icontext of your airlock
+	//  to the big switch without having to make exceptions for glass airlocks, it will
+	//  simply be unavailable if the painter is used on an airlock of the wrong type.
+	//If your airlock has both a regular and a glass version, remember to also add the
+	//  icontext as exception in the part of the code that deals with turning a regular
+	//  airlock into a glass airlock, else your airlock can't transition from regular to
+	//  glass and will instead revert back to the white sprite.
+	// |- Ricotez
 		var/obj/item/weapon/airlock_painter/WT = W
-		if(WT.ink && WT.ink.charges > 0)
+		if(WT.ink.charges)
 			var/icontype
+			var/optionlist
 			var/glasstext = ""
 			var/gicontext = ""
 			if(src.mineral)
 				if(src.mineral == "glass")
 					gicontext = "g"
 					glasstext = "glass_"
-					icontype = WT.glass_setting
+					//These airlocks have a glass version.
+					optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
 				else
 					user << "The painter does not work on airlocks coated in minerals!"
 					return
 			else
-				icontype = WT.solid_setting
+				//These airlocks have a regular version.
+				optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
+
+			icontype = input(user, "Please select a paintjob for this glass airlock.") in optionlist
 			if(!in_range(src, usr) && src.loc != usr)	return
 			switch(icontype)
 				if("Default")
@@ -377,7 +395,7 @@ obj/structure/door_assembly
 			user << "\blue You change the paintjob on the airlock assembly."
 			WT.use()
 		else
-			user << "\blue You're out of toner!"
+			user << "\blue There aren't any charges left!"
 			return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
