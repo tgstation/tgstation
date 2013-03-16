@@ -3,8 +3,8 @@
 /obj/item/weapon/ore
 	name = "Rock"
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "ore"
-
+	icon_state = "ore2"
+	var/datum/geosample/geological_data
 
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
@@ -59,19 +59,16 @@
 	desc = "Completely useless"
 	icon_state = "slag"
 
-/obj/item/weapon/ore/strangerock		//see artifact_archaeo.dm in modules/research for more info
-	name = "Strange rock"
-	desc = "Seems to have some unusal strata evident throughout it."
-	icon_state = "strange"
-	var/obj/inside
-	var/method // 0 = fire, 1+ = acid
-	origin_tech = "materials=5"
-	//unacidable = 1 //This can prevent acid from gooey grey massing
-
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
+/obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/device/core_sampler))
+		var/obj/item/device/core_sampler/C = W
+		C.sample_item(src, user)
+	else
+		return ..()
 
 /*****************************Coin********************************/
 

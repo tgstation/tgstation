@@ -80,57 +80,20 @@
 					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
-						var/datum/reagent/B = new /datum/reagent/blood
 						if(!T.dna)
 							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
 							return
 						if(NOCLONE in T.mutations) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
-						if(ishuman(T))
-							if(T:vessel.get_reagent_amount("blood") < amount)
-								return
-						B.holder = src
-						B.volume = amount
-						//set reagent data
-						B.data["donor"] = T
-						/*
-						if(T.virus && T.virus.spread_type != SPECIAL)
-							B.data["virus"] = new T.virus.type(0)
-						*/
 
+						var/datum/reagent/B = T.take_blood(src,amount)
 
-
-						for(var/datum/disease/D in T.viruses)
-							if(!B.data["viruses"])
-								B.data["viruses"] = list()
-
-
-							B.data["viruses"] += new D.type(0, D, 1)
-
-						if(T.virus2)
-							B.data["virus2"] = T.virus2.getcopy()
-
-						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
-						if(T.resistances&&T.resistances.len)
-							B.data["resistances"] = T.resistances.Copy()
-						if(istype(target, /mob/living/carbon/human))//I wish there was some hasproperty operation...
-							var/mob/living/carbon/human/HT = target
-							B.data["blood_type"] = copytext(HT.dna.b_type,1,0)
-						var/list/temp_chem = list()
-						for(var/datum/reagent/R in target.reagents.reagent_list)
-							temp_chem += R.name
-							temp_chem[R.name] = R.volume
-						B.data["trace_chem"] = list2params(temp_chem)
-						B.data["antibodies"] = T.antibodies
-
-						if(ishuman(T))
-							T:vessel.remove_reagent("blood",amount) // Removes blood if human
-
-						src.reagents.reagent_list += B
-						src.reagents.update_total()
-						src.on_reagent_change()
-						src.reagents.handle_reactions()
+						if (B)
+							src.reagents.reagent_list += B
+							src.reagents.update_total()
+							src.on_reagent_change()
+							src.reagents.handle_reactions()
 						user << "\blue You take a blood sample from [target]"
 						for(var/mob/O in viewers(4, user))
 							O.show_message("\red [user] takes a blood sample from [target].", 1)
@@ -182,9 +145,7 @@
 					var/trans
 					if(B && ishuman(target))
 						var/mob/living/carbon/human/H = target
-						trans = B.volume > 5? 5 : B.volume
-						H.vessel.add_reagent("blood",trans,B.data)
-						src.reagents.remove_reagent("blood",trans)
+						H.inject_blood(src,5)
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
