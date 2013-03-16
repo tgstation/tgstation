@@ -101,7 +101,7 @@ mob/living/carbon/human/proc/handle_pain()
 		if(11 to 15)
 			toxMessageProb = 2
 			toxDamageMessage = "Your whole body hurts."
-		else
+		if(91 to 10000)
 			toxMessageProb = 5
 			toxDamageMessage = "Your body aches all over, it's driving you mad."
 
