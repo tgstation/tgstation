@@ -62,6 +62,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	active_power_usage = 500	//multiplied by field strength
 	var/cached_power_avail = 0
 	directwired = 1
+	anchored = 0
 
 	var/state = 0
 	var/locked = 1
