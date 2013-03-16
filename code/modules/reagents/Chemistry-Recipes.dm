@@ -13,6 +13,8 @@ datum
 
 		var/result_amount = 0
 		var/secondary = 0 // set to nonzero if secondary reaction
+		var/list/secondary_results = list()		//additional reagents produced by the reaction
+		var/requires_heating = 0
 
 		proc
 			on_reaction(var/datum/reagents/holder, var/created_volume)
