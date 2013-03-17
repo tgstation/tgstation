@@ -1,3 +1,10 @@
-<h1>Welcome to Space Station 13!</h1>
+<h1>Welcome to Infernus XIII!</h1>
 
-<i>This server is running a /tg/station13 SVN build.</i>
+<i>This is primarily a sandbox server, votes can change the game mode if people feel like it.</i><br>
+<br>
+Rules:<br>
+1. Do not damage the station through either bombs, or by releasing the singlo/summoning Nar-Sie.<br>
+2. Don't kill anyone except through defense or some other circumstance, reason must be legit.<br>
+3. You can spawn anything you want, even wizard gear/spells, as long as you don't break rule 1 & 2.<br>
+<br>
+Enjoy yourself.
