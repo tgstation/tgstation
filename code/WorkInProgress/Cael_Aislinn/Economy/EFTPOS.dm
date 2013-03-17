@@ -199,11 +199,11 @@
 						T.time = worldtime2text()
 						linked_account.transaction_log.Add(T)
 					else
-						usr << "\icon[src]<span class='warning'>You don't have that much money!<span>"
+						usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
 				else
 					usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
 			else
-				usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.<span>"
+				usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
 	else
 		..()
 

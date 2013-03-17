@@ -2,6 +2,7 @@
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
+	var/price = 0
 	var/display_color = "blue"
 
 
@@ -17,11 +18,13 @@
 	var/active = 1 //No sales pitches if off!
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
+	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 
 	// To be filled out at compile time
 	var/list/products	= list() // For each, use the following pattern:
 	var/list/contraband	= list() // list(/type/path = amount,/type/path2 = amount2)
 	var/list/premium 	= list() // No specified amount = only one in stock
+	var/list/prices     = list() // Prices for each item, list(/type/path = price), items not in the list don't have a price.
 
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
 	var/product_ads = "" //String of small ad messages in the vending screen - random chance
@@ -49,6 +52,9 @@
 	var/const/WIRE_SHOCK = 3
 	var/const/WIRE_SHOOTINV = 4
 
+	var/obj/machinery/account_database/linked_db
+	var/datum/money_account/linked_account
+
 /obj/machinery/vending/New()
 	..()
 	spawn(4)
@@ -64,9 +70,19 @@
 		src.build_inventory(contraband, 1)
 		src.build_inventory(premium, 0, 1)
 		power_change()
+
+		reconnect_database()
+		linked_account = vendor_account
+
 		return
 
 	return
+
+/obj/machinery/vending/proc/reconnect_database()
+	for(var/obj/machinery/account_database/DB in world)
+		if(DB.z == src.z)
+			linked_db = DB
+			break
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -98,6 +114,7 @@
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
+		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
 		var/atom/temp = new typepath(null)
@@ -105,6 +122,7 @@
 		R.product_name = temp.name
 		R.product_path = typepath
 		R.amount = amount
+		R.price = price
 		R.display_color = pick("red","blue","green")
 
 		if(hidden)
@@ -139,8 +157,68 @@
 		coin = W
 		user << "\blue You insert the [W] into the [src]"
 		return
+	else if(istype(W, /obj/item/weapon/card) && currently_vending)
+		//attempt to connect to a new db, and if that doesn't work then fail
+		if(!linked_db)
+			reconnect_database()
+		if(linked_db)
+			if(linked_account)
+				var/obj/item/weapon/card/I = W
+				scan_card(I)
+			else
+				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
+		else
+			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
 	else
 		..()
+
+/obj/machinery/vending/proc/scan_card(var/obj/item/weapon/card/I)
+	if(!currently_vending) return
+	if (istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = I
+		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+		if(linked_account)
+			var/attempt_pin = input("Enter pin code", "Vendor transaction") as num
+			var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, attempt_pin, 2)
+			if(D)
+				var/transaction_amount = currently_vending.price
+				if(transaction_amount <= D.money)
+
+					//transfer the money
+					D.money -= transaction_amount
+					linked_account.money += transaction_amount
+
+					//create entries in the two account transaction logs
+					var/datum/transaction/T = new()
+					T.target_name = "[linked_account.owner_name] (via [src.name])"
+					T.purpose = "Purchase of [currently_vending.product_name]"
+					if(transaction_amount > 0)
+						T.amount = "([transaction_amount])"
+					else
+						T.amount = "[transaction_amount]"
+					T.source_terminal = src.name
+					T.date = current_date_string
+					T.time = worldtime2text()
+					D.transaction_log.Add(T)
+					//
+					T = new()
+					T.target_name = D.owner_name
+					T.purpose = "Purchase of [currently_vending.product_name]"
+					T.amount = "[transaction_amount]"
+					T.source_terminal = src.name
+					T.date = current_date_string
+					T.time = worldtime2text()
+					linked_account.transaction_log.Add(T)
+
+					// Vend the item
+					src.vend(src.currently_vending, usr)
+					currently_vending = null
+				else
+					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+			else
+				usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
+		else
+			usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
 
 /obj/machinery/vending/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -158,6 +236,15 @@
 			return
 
 	var/vendorname = (src.name)  //import the machine's name
+
+	if(src.currently_vending)
+		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
+		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
+		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
+		user << browse(dat, "window=vending")
+		onclose(user, "")
+		return
+
 	var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
 	dat += "<b>Select an item: </b><br><br>" //the rest is just general spacing and bolding
 
@@ -178,8 +265,10 @@
 		for (var/datum/data/vending_product/R in display_records)
 			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
 			dat += " <b>[R.amount]</b> </font>"
+			if(R.price)
+				dat += " <b>(Price: [R.price])</b>"
 			if (R.amount > 0)
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
+				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
 			else
 				dat += " <font color = 'red'>SOLD OUT</font>"
 			dat += "<br>"
@@ -247,48 +336,27 @@
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
-		if ((href_list["vend"]) && (src.vend_ready))
+		if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
 
-			src.vend_ready = 0 //One thing at a time!!
-
 			var/datum/data/vending_product/R = locate(href_list["vend"])
 			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
-				src.vend_ready = 1
 				return
 
-			if (R in coin_records)
-				if(!coin)
-					usr << "\blue You need to insert a coin to get this item."
-					return
-				if(coin.string_attached)
-					if(prob(50))
-						usr << "\blue You successfully pull the coin out before the [src] could swallow it."
-					else
-						usr << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-						del(coin)
-				else
-					del(coin)
+			if(R.price == null)
+				src.vend(R, usr)
+			else
+				src.currently_vending = R
+				src.updateUsrDialog()
 
-			R.amount--
+			return
 
-			if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
-				spawn(0)
-					src.speak(src.vend_reply)
-					src.last_reply = world.time
-
-			use_power(5)
-			if (src.icon_vend) //Show the vending animation if needed
-				flick(src.icon_vend,src)
-			spawn(src.vend_delay)
-				new R.product_path(get_turf(src))
-				src.vend_ready = 1
-				return
-
+		else if (href_list["cancel_buying"])
+			src.currently_vending = null
 			src.updateUsrDialog()
 			return
 
@@ -322,6 +390,43 @@
 		usr << browse(null, "window=vending")
 		return
 	return
+
+/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
+	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+		user << "\red Access denied." //Unless emagged of course
+		flick(src.icon_deny,src)
+		return
+	src.vend_ready = 0 //One thing at a time!!
+
+	if (R in coin_records)
+		if(!coin)
+			user << "\blue You need to insert a coin to get this item."
+			return
+		if(coin.string_attached)
+			if(prob(50))
+				user << "\blue You successfully pull the coin out before the [src] could swallow it."
+			else
+				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
+				del(coin)
+		else
+			del(coin)
+
+	R.amount--
+
+	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
+		spawn(0)
+			src.speak(src.vend_reply)
+			src.last_reply = world.time
+
+	use_power(5)
+	if (src.icon_vend) //Show the vending animation if needed
+		flick(src.icon_vend,src)
+	spawn(src.vend_delay)
+		new R.product_path(get_turf(src))
+		src.vend_ready = 1
+		return
+
+	src.updateUsrDialog()
 
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
@@ -532,6 +637,8 @@
 	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25, /obj/item/weapon/reagent_containers/food/drinks/tea = 25, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
+
 
 
 
@@ -545,6 +652,9 @@
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 20,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 30,/obj/item/weapon/reagent_containers/food/snacks/chips =25,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 20,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 30,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25)
 
 
 
@@ -558,6 +668,9 @@
 					/obj/item/weapon/reagent_containers/food/drinks/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/space_up = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/thirteenloko = 5)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/cola = 20,/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind = 20,
+					/obj/item/weapon/reagent_containers/food/drinks/dr_gibb = 20,/obj/item/weapon/reagent_containers/food/drinks/starkist = 20,
+					/obj/item/weapon/reagent_containers/food/drinks/space_up = 20)
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -581,6 +694,8 @@
 	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 60)
+
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
