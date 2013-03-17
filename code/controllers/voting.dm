@@ -196,6 +196,7 @@ datum/controller/vote
 				text += "\n[question]"
 			log_vote(text)
 			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+			world << sound('misc/bloblarm.ogg')
 			time_remaining = round(config.vote_period/10)
 			return 1
 		return 0
