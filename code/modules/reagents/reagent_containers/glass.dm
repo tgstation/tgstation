@@ -29,6 +29,7 @@
 		/obj/machinery/iv_drip,
 		/obj/machinery/disease2/incubator,
 		/obj/machinery/disposal,
+		/obj/machinery/apiary,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat	)
 
@@ -91,6 +92,12 @@
 
 		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+			return
+
+		else if(istype(target, /obj/machinery/bunsen_burner))
+			return
+
+		else if(istype(target, /obj/machinery/anomaly))
 			return
 
 		else if(reagents.total_volume)

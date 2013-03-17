@@ -21,11 +21,6 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
-
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
@@ -133,98 +128,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human
 
-	proc/handle_blood()
-		// take care of blood and blood loss
-		if(stat < 2 && bodytemperature >= 170)
-			var/blood_volume = round(vessel.get_reagent_amount("blood"))
-			if(blood_volume < 560 && blood_volume)
-				var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
-				if(B) // Make sure there's some blood at all
-					if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
-						for(var/datum/reagent/blood/D in vessel.reagent_list)
-							if(D.data["donor"] == src)
-								B = D
-								break
-					var/datum/reagent/nutriment/F = locate() in reagents.reagent_list
-					if(F != null)
-						if(F.volume >= 1)
-							// nutriment speeds it up quite a bit
-							B.volume += 0.4
-							F.volume -= 0.1
-					else
-						//At this point, we dun care which blood we are adding to, as long as they get more blood.
-						B.volume = B.volume + 0.1 // regenerate blood VERY slowly
-
-			// Damaged heart virtually reduces the blood volume, as the blood isn't
-			// being pumped properly anymore.
-			var/datum/organ/internal/heart/heart = internal_organs["heart"]
-			switch(heart.damage)
-				if(5 to 10)
-					blood_volume *= 0.8
-				if(11 to 20)
-					blood_volume *= 0.5
-				if(21 to INFINITY)
-					blood_volume *= 0.3
-
-			switch(blood_volume)
-				if(BLOOD_VOLUME_SAFE to 10000)
-					if(pale)
-						pale = 0
-						update_body()
-				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-					if(!pale)
-						pale = 1
-						update_body()
-						var/word = pick("dizzy","woosey","faint")
-						src << "\red You feel [word]"
-					if(prob(1))
-						var/word = pick("dizzy","woosey","faint")
-						src << "\red You feel [word]"
-					if(oxyloss < 20)
-						// hint that they're getting close to suffocation
-						oxyloss += 3
-				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-					if(!pale)
-						pale = 1
-						update_body()
-					eye_blurry += 6
-					if(oxyloss < 50)
-						oxyloss += 10
-					oxyloss += 1
-					if(prob(15))
-						Paralyse(rand(1,3))
-						var/word = pick("dizzy","woosey","faint")
-						src << "\red You feel extremely [word]"
-				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-					oxyloss += 5
-					toxloss += 5
-					if(prob(15))
-						var/word = pick("dizzy","woosey","faint")
-						src << "\red You feel extremely [word]"
-				if(0 to BLOOD_VOLUME_SURVIVE)
-					// There currently is a strange bug here. If the mob is not below -100 health
-					// when death() is called, apparently they will be just fine, and this way it'll
-					// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-					toxloss += 300 // just to be safe!
-					death()
-
-			// Without enough blood you slowly go hungry.
-			if(blood_volume < BLOOD_VOLUME_SAFE)
-				if(nutrition >= 300)
-					nutrition -= 10
-				else if(nutrition >= 200)
-					nutrition -= 3
-
-			var/blood_max = 0
-			for(var/datum/organ/external/temp in organs)
-				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
-					continue
-				for(var/datum/wound/W in temp.wounds) if(W.bleeding())
-					blood_max += W.damage / 4
-				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED) && !temp.amputated)
-					blood_max += 20 //Yer missing a fucking limb.
-			drip(blood_max)
-
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
@@ -261,7 +164,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
-		if (getBrainLoss() >= 60 && stat != 2)
+		// No. -- cib
+		/*if (getBrainLoss() >= 60 && stat != 2)
 			if (prob(3))
 				switch(pick(1,2,3))
 					if(1)
@@ -270,108 +174,25 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
 					if(3)
 						emote("drool")
+		*/
 
-	proc/handle_organs()
-		// take care of organ related updates, such as broken and missing limbs
-
-		// recalculate number of wounds
-		number_wounds = 0
-		for(var/datum/organ/external/E in organs)
-			if(!E)
-				world << name
-				continue
-			number_wounds += E.number_wounds
-
-		var/leg_tally = 2
-		var/canstand_l = 1  //Can stand on left leg
-		var/canstand_r = 1  //Can stand on right leg
-		var/hasleg_l = 1  //Have left leg
-		var/hasleg_r = 1  //Have right leg
-		var/hasarm_l = 1  //Have left arm
-		var/hasarm_r = 1  //Have right arm
-		for(var/datum/organ/external/E in organs)
-			E.process()
-			if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
-				if(E.name == "l_hand" || E.name == "l_arm")
-					if(hand && equipped())
-						drop_item()
-						emote("me", 1, "drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
-						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-						spark_system.set_up(5, 0, src)
-						spark_system.attach(src)
-						spark_system.start()
-						spawn(10)
-							del(spark_system)
-				else if(E.name == "r_hand" || E.name == "r_arm")
-					if(!hand && equipped())
-						drop_item()
-						emote("me", 1, "drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
-						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-						spark_system.set_up(5, 0, src)
-						spark_system.attach(src)
-						spark_system.start()
-						spawn(10)
-							del(spark_system)
-				else if(E.name == "l_leg" || E.name == "l_foot" \
-					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-					leg_tally--									// let it fail even if just foot&leg
-			if(E.status & ORGAN_BROKEN || (E.status & ORGAN_DESTROYED && !E.amputated))
-				if(E.name == "l_hand" || E.name == "l_arm")
-					if(hand && equipped())
-						if(E.status & ORGAN_SPLINTED && prob(10))
-							drop_item()
-							emote("scream")
-						else
-							drop_item()
-							emote("scream")
-				else if(E.name == "r_hand" || E.name == "r_arm")
-					if(!hand && equipped())
-						if(E.status & ORGAN_SPLINTED && prob(10))
-							drop_item()
-							emote("scream")
-						else
-							drop_item()
-							emote("scream")
-				else if(E.name == "l_leg" || E.name == "l_foot" \
-					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-					if(!(E.status & ORGAN_SPLINTED))
-						leg_tally--									// let it fail even if just foot&leg
-
-		// standing is poor
-		if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
-			emote("scream")
-			emote("collapse")
-			paralysis = 10
-
-
-		//Check arms and legs for existence
-		var/datum/organ/external/E
-		E = get_organ("l_leg")
-		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
-			canstand_l = 0
-			hasleg_l = 0
-		E = get_organ("r_leg")
-		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
-			canstand_r = 0
-			hasleg_r = 0
-		E = get_organ("l_foot")
-		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
-			canstand_l = 0
-		E = get_organ("r_foot")
-		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
-			canstand_r = 0
-		E = get_organ("l_arm")
-		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
-			hasarm_l = 0
-		E = get_organ("r_arm")
-		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
-			hasarm_r = 0
-
-		// Can stand if have at least one full leg (with leg and foot parts present)
-		// Has limbs to move around if at least one arm or leg is at least partially there
-		can_stand = canstand_l||canstand_r
-		has_limbs = hasleg_l||hasleg_r||hasarm_l||hasarm_r
-
+		if(stat != 2)
+			var/rn = rand(0, 200)
+			if(getBrainLoss() >= 5)
+				if(0 <= rn && rn <= 3)
+					custom_pain("Your head feels numb and painful.")
+			if(getBrainLoss() >= 15)
+				if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
+					src << "\red It becomes hard to see for some reason."
+					eye_blurry = 10
+			if(getBrainLoss() >= 35)
+				if(7 <= rn && rn <= 9) if(hand && equipped())
+					src << "\red Your hand won't respond properly, you drop what you're holding."
+					drop_item()
+			if(getBrainLoss() >= 50)
+				if(10 <= rn && rn <= 12) if(!lying)
+					src << "\red Your legs won't respond properly, you fall down."
+					lying = 1
 
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
@@ -435,20 +256,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
-		var/lung_ruptured = is_lung_ruptured()
-
-		if(lung_ruptured && prob(2))
-			spawn emote("me", 1, "coughs up blood!")
-			src.drip(10)
+		var/datum/organ/internal/lungs/L = internal_organs["lungs"]
+		L.process()
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
 		if(health < 0)
 			losebreath++
-		if(lung_ruptured && prob(4))
-			spawn emote("me", 1, "gasps for air!")
-			losebreath += 5
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(10)) //Gasp per 10 ticks? Sounds about right.
@@ -478,7 +293,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					breath = loc.remove_air(breath_moles)
 
 
-					if(!lung_ruptured)
+					if(!is_lung_ruptured())
 						if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
 							if(prob(5))
 								rupture_lung()
@@ -1041,34 +856,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			dizziness = max(0, dizziness - 3)
 			jitteriness = max(0, jitteriness - 3)
 
+		handle_trace_chems()
 
-		if(life_tick % 10 == 0)
-			// handle trace chemicals for autopsy
-			for(var/datum/organ/O in organs)
-				for(var/chemID in O.trace_chemicals)
-					O.trace_chemicals[chemID] = O.trace_chemicals[chemID] - 1
-					if(O.trace_chemicals[chemID] <= 0)
-						O.trace_chemicals.Remove(chemID)
-		for(var/datum/reagent/A in reagents.reagent_list)
-			// add chemistry traces to a random organ
-			var/datum/organ/O = pick(organs)
-			O.trace_chemicals[A.name] = 100
-
-		var/damaged_liver_process_accuracy = 10
-		if(life_tick % damaged_liver_process_accuracy == 0)
-			// Damaged liver means some chemicals are very dangerous
-			var/datum/organ/internal/liver/liver = internal_organs["liver"]
-			if(liver.damage >= liver.min_bruised_damage)
-				for(var/datum/reagent/R in src.reagents.reagent_list)
-					// Ethanol and all drinks are bad
-					if(istype(R, /datum/reagent/ethanol))
-						adjustToxLoss(0.1 * damaged_liver_process_accuracy)
-
-				// Can't cope with toxins at all
-				for(var/toxin in list("toxin", "plasma", "sacid", "pacid", "cyanide", "lexorin", "amatoxin", "chloralhydrate", "carpotoxin", "zombiepowder", "mindbreaker"))
-					if(src.reagents.has_reagent(toxin))
-						adjustToxLoss(0.3 * damaged_liver_process_accuracy)
-
+		var/datum/organ/internal/liver/liver = internal_organs["liver"]
+		liver.process()
 
 		updatehealth()
 

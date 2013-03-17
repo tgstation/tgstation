@@ -336,7 +336,7 @@ datum/objective/silence
 
 
 datum/objective/escape
-	explanation_text = "Escape on the shuttle or an escape pod alive."
+	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
 
 	check_completion()
@@ -353,6 +353,10 @@ datum/objective/escape
 			return 0
 
 		if(istype(location, /turf/simulated/shuttle/floor4)) // Fails tratiors if they are in the shuttle brig -- Polymorph
+			if(istype(owner.current, /mob/living/carbon))
+				var/mob/living/carbon/C = owner.current
+				if (!C.handcuffed)
+					return 1
 			return 0
 
 		var/area/check_area = location.loc

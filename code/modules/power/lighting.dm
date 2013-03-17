@@ -502,13 +502,7 @@
 		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
 			user << "You remove the light [fitting]"
 		else
-			user << "You try to remove the light [fitting], but you burn your hand on it!"
-
-			var/datum/organ/external/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-
-			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
-				H.UpdateDamageIcon()
-			H.updatehealth()
+			user << "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand."
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand

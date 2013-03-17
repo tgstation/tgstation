@@ -45,6 +45,12 @@
 #define ui_borg_module "13:26,2:7"
 #define ui_borg_panel "14:28,2:7"
 
+//Gun buttons
+#define ui_gun1 "13:26,3:7"
+#define ui_gun2 "14:28, 4:7"
+#define ui_gun3 "13:26,4:7"
+#define ui_gun_select "14:28,3:7"
+
 //Upper-middle right (damage indicators)
 #define ui_toxin "14:28,13:27"
 #define ui_fire "14:28,12:25"

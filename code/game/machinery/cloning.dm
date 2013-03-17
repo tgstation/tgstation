@@ -3,6 +3,8 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
+#define CLONE_BIOMASS 150
+
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -18,6 +20,7 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
+	var/biomass = CLONE_BIOMASS
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -133,7 +136,7 @@
 					return 0
 
 
-	src.heal_level = rand(60,100) //Randomizes what health the clone is when ejected
+	src.heal_level = rand(10,40) //Randomizes what health the clone is when ejected
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
 
@@ -150,8 +153,8 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(src.heal_level + 100) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
-	H.adjustBrainLoss(heal_level)
+	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	H.adjustBrainLoss(src.heal_level + 50 + rand(10, 30)) // The rand(10, 30) will come out as extra brain damage
 	H.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
@@ -271,6 +274,12 @@
 		src.locked = 0
 		src.go_out()
 		return
+	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
+		user << "\blue \The [src] processes \the [W]."
+		biomass += 50
+		user.drop_item()
+		del(W)
+		return
 	else
 		..()
 
@@ -328,6 +337,9 @@
 	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
+
+	src.biomass -= CLONE_BIOMASS
+
 	return
 
 /obj/machinery/clonepod/proc/malfunction()
