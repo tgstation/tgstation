@@ -79,6 +79,8 @@ obj/structure/ex_act(severity)
 	air_contents.nitrogen = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
+	follow_tube()
+
 
 
 /obj/structure/transit_tube/New(loc)
@@ -91,9 +93,6 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube/station/New(loc)
 	..(loc)
-
-	spawn(automatic_launch_time)
-		launch_pod()
 
 
 
@@ -299,10 +298,13 @@ obj/structure/ex_act(severity)
 			sleep(last_delay)
 			dir = next_dir
 			loc = next_loc // When moving from one tube to another, skip collision and such.
+			density = current_tube.density
 
 			if(current_tube && current_tube.should_stop_pod(src, next_dir))
 				current_tube.pod_stopped(src, dir)
 				break
+
+		density = 1
 
 		// If the pod is no longer in a tube, move in a line until stopped or slowed to a halt.
 		//  /turf/inertial_drift appears to only work on mobs, and re-implementing some of the
@@ -421,7 +423,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/proc/init_dirs()
 	tube_dirs = parse_dirs(icon_state)
 
-	if(copytext(icon_state, 1, 3) == "D-")
+	if(copytext(icon_state, 1, 3) == "D-" || findtextEx(icon_state, "Pass"))
 		density = 0
 
 
