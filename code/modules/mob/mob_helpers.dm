@@ -392,22 +392,18 @@ proc/is_special_character(mob/M as mob) // returns 1 for special characters and 
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(ispAI(M))
-			return 0
 		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
 			if(R.emagged || R.syndicate) //Count as antags
 				return 1
-			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth)
-				if(R.connected_ai) //Make sure the AI isn't the REAL antag here.
-					if(is_special_character(R.connected_ai) && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth))
-						return 0 //Sorry, just following orders...
-					else
-						return 1 //The MAN can't keep me down! Row row fight da powa!
-				else
-					return 1 //I'm a strong, beautiful cyborg who don't need no master
-			return 0 //I'm just a poor borg, nobody loves me
-		if(isAI(M))
+			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth).
+				if(R.connected_ai)
+					if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
+						return 0 //AI is the real traitor here, so the borg itself is not a traitor
+					return 1 //Slaved but also a traitor
+				return 1 //Unslaved, traitor
+			return 0 //Not a traitor at all
+		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
 				if(ticker.mode.config_tag == "malfunction" && M.mind in ticker.mode.malf_ai)//Malf law is a law 0
@@ -415,7 +411,7 @@ proc/is_special_character(mob/M as mob) // returns 1 for special characters and 
 				return 1
 			return 0
 		else
-			M << "You, an undefined silicon, ran is_special_character! Report this to a coder."
+			return 0 //pAI's cannot into traitors
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		if (ticker.mode.config_tag == "revolution")
 			if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
@@ -432,11 +428,10 @@ proc/is_special_character(mob/M as mob) // returns 1 for special characters and 
 		if (ticker.mode.config_tag == "wizard")
 			if(M.mind in ticker.mode.wizards)
 				return 2
-		if(M.viruses)
+		if(M.viruses && ticker.mode.config_tag == "monkey")
 			for(var/datum/disease/D in M.viruses)
 				if(istype(D, /datum/disease/jungle_fever))
-					if (ticker.mode.config_tag == "monkey")
-						return 2
+					return 2
 		return 1
 
 	return 0
