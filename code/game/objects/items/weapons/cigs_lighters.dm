@@ -107,6 +107,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
+	else if(istype(W, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/M = W
+		if(M.lit)
+			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+	else if(istype(W, /obj/item/candle))
+		var/obj/item/candle/C = W
+		if(C.lit)
+			light("<span class='notice'>[user] lights their [name] with the [W].</span>")
+
 	//can't think of any other way to update the overlays :<
 	user.update_inv_wear_mask(0)
 	user.update_inv_l_hand(0)
@@ -187,7 +196,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		del(src)
 	return ..()
 
+/obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
 
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+	else
+		..()
 
 ////////////
 // CIGARS //
@@ -236,6 +256,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match))
+		..()
+	else if(istype(W, /obj/item/weapon/lighter))
+		..()
+	else if(istype(W, /obj/item/weapon/lighter/zippo))
+		..()
+	else if(istype(W, /obj/item/weapon/melee/energy/sword))
+		..()
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		..()
+	else if(istype(W, /obj/item/device/assembly/igniter))
+		..()
+	else if(istype(W, /obj/item/candle))
 		..()
 	else
 		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such uncivilized means.</span>"
@@ -295,6 +327,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match))
+		..()
+	else if(istype(W, /obj/item/weapon/lighter))
+		..()
+	else if(istype(W, /obj/item/weapon/lighter/zippo))
+		..()
+	else if(istype(W, /obj/item/weapon/melee/energy/sword))
+		..()
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		..()
+	else if(istype(W, /obj/item/device/assembly/igniter))
+		..()
+	else if(istype(W, /obj/item/candle))
 		..()
 	else
 		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such means.</span>"

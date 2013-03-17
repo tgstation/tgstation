@@ -41,6 +41,10 @@
 			var/obj/item/candle/C = W
 			if(C.lit)
 				light()
+		else if(istype(W, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/M = W
+			if(M.lit)
+				light()
 
 
 	light(var/flavor_text = "\red [usr] lights the [name].")
