@@ -5,10 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
 
-	var/datum/reagents/vessel
-	// TODO: make this actually affect the way the mob is rendered
-	var/pale = 0
-
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -24,78 +20,14 @@
 	if(!dna)
 		dna = new /datum/dna(null)
 
-	//initialise organs
-	organs = list()
-	organs_by_name["chest"] = new/datum/organ/external/chest()
-	organs_by_name["groin"] = new/datum/organ/external/groin(organs_by_name["chest"])
-	organs_by_name["head"] = new/datum/organ/external/head(organs_by_name["chest"])
-	organs_by_name["l_arm"] = new/datum/organ/external/l_arm(organs_by_name["chest"])
-	organs_by_name["r_arm"] = new/datum/organ/external/r_arm(organs_by_name["chest"])
-	organs_by_name["r_leg"] = new/datum/organ/external/r_leg(organs_by_name["groin"])
-	organs_by_name["l_leg"] = new/datum/organ/external/l_leg(organs_by_name["groin"])
-	organs_by_name["l_hand"] = new/datum/organ/external/l_hand(organs_by_name["l_arm"])
-	organs_by_name["r_hand"] = new/datum/organ/external/r_hand(organs_by_name["r_arm"])
-	organs_by_name["l_foot"] = new/datum/organ/external/l_foot(organs_by_name["l_leg"])
-	organs_by_name["r_foot"] = new/datum/organ/external/r_foot(organs_by_name["r_leg"])
-
-	new/datum/organ/internal/heart(src)
-	new/datum/organ/internal/lungs(src)
-	new/datum/organ/internal/liver(src)
-	new/datum/organ/internal/kidney(src)
-	new/datum/organ/internal/brain(src)
-
-
-	for(var/name in organs_by_name)
-		organs += organs_by_name[name]
-
-	for(var/datum/organ/external/O in organs)
-		O.owner = src
-
 	..()
 
 	if(dna)
 		dna.real_name = real_name
 
 	prev_gender = gender // Debug for plural genders
-
-
-	vessel = new/datum/reagents(600)
-	vessel.my_atom = src
-	vessel.add_reagent("blood",560)
-	spawn(1)
-		fixblood()
-
-/mob/living/carbon/human/proc/drip(var/amt as num)
-	if(!amt)
-		return
-
-	var/amm = 0.1 * amt
-	var/turf/T = get_turf(src)
-	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
-	var/list/iconL = list("1","2","3","4","5")
-
-	vessel.remove_reagent("blood",amm)
-
-	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
-		nums += G
-		iconL.Remove(G.icon_state)
-
-	if (nums.len < 5)
-		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-		this.icon_state = pick(iconL)
-		this.blood_DNA = list()
-		this.blood_DNA[dna.unique_enzymes] = dna.b_type
-	else
-		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
-			del G
-		T.add_blood(src)
-
-
-/mob/living/carbon/human/proc/fixblood()
-	for(var/datum/reagent/blood/B in vessel.reagent_list)
-		if(B.id == "blood")
-			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,"resistances"=null,"trace_chem"=null, "virus2" = null, "antobodies" = null)
-
+	make_organs()
+	make_blood()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))

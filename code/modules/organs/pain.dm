@@ -56,7 +56,12 @@ mob/living/carbon/human/proc/custom_pain(var/message, var/flash_strength)
 	var/msg = "\red <b>[message]</b>"
 	if(flash_strength >= 1)
 		msg = "\red <font size=3><b>[message]</b></font>"
-	src << msg
+
+	// Anti message spam checks
+	if(msg && ((msg != last_pain_message) || (world.time >= next_pain_time)))
+		last_pain_message = msg
+		src << msg
+	next_pain_time = world.time + 100
 
 mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
@@ -101,7 +106,10 @@ mob/living/carbon/human/proc/handle_pain()
 		if(11 to 15)
 			toxMessageProb = 2
 			toxDamageMessage = "Your whole body hurts."
-		else
+		if(15 to 25)
+			toxMessageProb = 3
+			toxDamageMessage = "Your whole body hurts badly."
+		if(26 to INFINITY)
 			toxMessageProb = 5
 			toxDamageMessage = "Your body aches all over, it's driving you mad."
 

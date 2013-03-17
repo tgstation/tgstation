@@ -84,7 +84,7 @@
 			if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
 				// speed up transfer on blood packs
 				transfer_amount = 4
-			src.beaker.reagents.trans_to(src.attached, transfer_amount)
+			attached.inject_blood(beaker,transfer_amount)
 			update_icon()
 
 		// Take blood
@@ -99,52 +99,23 @@
 			var/mob/living/carbon/human/T = attached
 
 			if(!istype(T)) return
-			var/datum/reagent/B
-			for(var/datum/reagent/blood/Blood in beaker.reagents.reagent_list)
-				if(Blood.data && Blood.data["blood_type"]==T.dna.b_type)
-					B = Blood
-					break
-			if(!B) B = new /datum/reagent/blood
 			if(!T.dna)
 				return
 			if(NOCLONE in T.mutations)
 				return
+
 			// If the human is losing too much blood, beep.
 			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
 				visible_message("\The [src] beeps loudly.")
-			if(T.vessel.get_reagent_amount("blood") < amount)
-				return
-			B.holder = beaker
-			B.volume += amount
-			//set reagent data
-			B.data["donor"] = T
 
-			if(T.virus2)
-				B.data["virus2"] = T.virus2.getcopy()
+			var/datum/reagent/B = T.take_blood(beaker,amount)
 
-			B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
-			if(T.resistances && T.resistances.len)
-				if(B.data["resistances"])
-					B.data["resistances"] |= T.resistances.Copy()
-				else
-					B.data["resistances"] = T.resistances.Copy()
-
-			B.data["blood_type"] = copytext(T.dna.b_type,1,0)
-
-			var/list/temp_chem = list()
-			for(var/datum/reagent/R in T.reagents.reagent_list)
-				temp_chem += R.name
-				temp_chem[R.name] = R.volume
-			B.data["trace_chem"] = list2params(temp_chem)
-			B.data["antibodies"] |= T.antibodies
-
-			T.vessel.remove_reagent("blood",amount) // Removes blood if human
-
-			beaker.reagents.reagent_list |= B
-			beaker.reagents.update_total()
-			beaker.on_reagent_change()
-			beaker.reagents.handle_reactions()
-			update_icon()
+			if (B)
+				beaker.reagents.reagent_list |= B
+				beaker.reagents.update_total()
+				beaker.on_reagent_change()
+				beaker.reagents.handle_reactions()
+				update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
 	if(src.beaker)
