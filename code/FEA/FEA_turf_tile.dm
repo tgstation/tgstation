@@ -376,10 +376,10 @@ turf/simulated
 		if(active_hotspot)
 			if (!active_hotspot.process(possible_fire_spreads))
 				return 0
-
+/*
 		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			consider_superconductivity(starting = 1)
-
+*/
 		if(air.check_tile_graphic())
 			update_visuals(air)
 
@@ -478,7 +478,7 @@ turf/simulated
 								share_temperature_mutual_solid(modeled_neighbor, modeled_neighbor.thermal_conductivity)
 					//			world << "SOLID, SOLID"
 
-						modeled_neighbor.consider_superconductivity()
+						//modeled_neighbor.consider_superconductivity()
 
 					else
 						if(air) //Open
@@ -510,7 +510,7 @@ turf/simulated
 
 
 		//Make sure still hot enough to continue conducting heat
-		if(air)
+/*		if(air)
 			if(air.temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
 				being_superconductive = 0
 				air_master.active_super_conductivity -= src
@@ -521,7 +521,7 @@ turf/simulated
 				being_superconductive = 0
 				air_master.active_super_conductivity -= src
 				return 0
-
+*/
 	proc/mimic_temperature_solid(turf/model, conduction_coefficient)
 		var/delta_temperature = (temperature_archived - model.temperature)
 		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
@@ -540,7 +540,7 @@ turf/simulated
 			temperature -= heat/heat_capacity
 			sharer.temperature += heat/sharer.heat_capacity
 
-	proc/consider_superconductivity(starting)
+/*	proc/consider_superconductivity(starting)
 
 		if(being_superconductive || !thermal_conductivity)
 			return 0
@@ -557,7 +557,7 @@ turf/simulated
 		being_superconductive = 1
 
 		air_master.active_super_conductivity += src
-
+*/
 	proc/reset_delay()
 		//sets this turf to process quickly again
 		next_check=0

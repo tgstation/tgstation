@@ -89,7 +89,7 @@ datum
 			var/list/turf/simulated/active_singletons = list()
 
 			//Special functions lists
-			var/list/turf/simulated/active_super_conductivity = list()
+			//var/list/turf/simulated/active_super_conductivity = list()
 			var/list/turf/simulated/high_pressure_delta = list()
 
 			//Geometry updates lists
@@ -124,7 +124,7 @@ datum
 					//Used by process()
 					//Warning: Do not call this
 
-				process_super_conductivity()
+				//process_super_conductivity()
 					//Used by process()
 					//Warning: Do not call this
 
@@ -265,7 +265,7 @@ datum
 				process_groups()
 				process_singletons()
 
-				process_super_conductivity()
+				//process_super_conductivity()
 				process_high_pressure_delta()
 
 				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
@@ -324,10 +324,10 @@ datum
 				for(var/item in active_singletons)
 					item:process_cell()
 
-			process_super_conductivity()
+/*			process_super_conductivity()
 				for(var/turf/simulated/hot_potato in active_super_conductivity)
 					hot_potato.super_conduct()
-
+*/
 			process_high_pressure_delta()
 				for(var/turf/pressurized in high_pressure_delta)
 					pressurized.high_pressure_movements()

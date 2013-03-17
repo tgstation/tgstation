@@ -30,7 +30,6 @@
 <BR>
 <B>Special Processing Data</B><BR>
 <B>Hotspot Processing:</B> [hotspots]<BR>
-<B>High Temperature Processing:</B> [air_master.active_super_conductivity.len]<BR>
 <B>High Pressure Processing:</B> [air_master.high_pressure_delta.len] (not yet implemented)<BR>
 <BR>
 <B>Geometry Processing Data</B><BR>
