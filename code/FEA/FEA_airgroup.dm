@@ -218,7 +218,7 @@ datum/air_group
 			for(var/T in members)
 				var/turf/simulated/member = T
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
-				member.consider_superconductivity(starting=1)
+				//member.consider_superconductivity(starting=1)
 
 		air.react()
 		return
