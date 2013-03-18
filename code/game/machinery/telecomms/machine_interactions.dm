@@ -348,7 +348,7 @@
 
 				// Remove link entries from both T and src.
 
-				if(src in T.links)
+				if(T.links)
 					T.links.Remove(src)
 				links.Remove(T)
 
