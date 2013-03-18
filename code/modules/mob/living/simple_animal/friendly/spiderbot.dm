@@ -315,11 +315,16 @@
 
 	var/obj/selection = input("Select an item.", "Pickup") in items
 
+	items.Cut()
 	if(selection)
-		held_item = selection
-		selection.loc = src
-		visible_message("\blue [src] scoops up the [held_item]!", "\blue You grab the [held_item]!", "You hear a skittering noise and a clink.")
-		return held_item
+		for(var/obj/item/I in view(1, src))
+			if(selection == I)
+				held_item = selection
+				selection.loc = src
+				visible_message("\blue [src] scoops up the [held_item]!", "\blue You grab the [held_item]!", "You hear a skittering noise and a clink.")
+				return held_item
+			else
+				src << "\red \The [selection] is too far away."
 
 	src << "\red There is nothing of interest to take."
 	return 0
