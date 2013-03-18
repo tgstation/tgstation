@@ -388,8 +388,7 @@ commented out in r5061, I left it because of the shroom thingies
 					if(artifact_find)
 						B.artifact_find = artifact_find
 				else if(src.excavation_level + P.excavation_amount >= 100)
-					spawn(0)
-						artifact_debris()
+					artifact_debris()
 
 				gets_drilled(B ? 0 : 1)
 				return
@@ -477,13 +476,8 @@ commented out in r5061, I left it because of the shroom thingies
 		for (var/i=0;i<mineralAmt;i++)
 			drop_mineral()
 
-	/*if (prob(src.artifactChance))
-		//spawn a rare artifact here
-		new /obj/machinery/artifact(src)*/
-	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
-	N.fullUpdateMineralOverlays()
-
 	//destroyed artifacts have weird, unpleasant effects
+	//make sure to destroy them before changing the turf though
 	if(artifact_find && artifact_fail)
 		var/pain = 0
 		if(prob(50))
@@ -499,6 +493,12 @@ commented out in r5061, I left it because of the shroom thingies
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
+
+	/*if (prob(src.artifactChance))
+		//spawn a rare artifact here
+		new /obj/machinery/artifact(src)*/
+	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
+	N.fullUpdateMineralOverlays()
 
 	/*if(destroyed)  //Display message about being a terrible miner
 		usr << "\red You destroy some of the rocks!"*/
