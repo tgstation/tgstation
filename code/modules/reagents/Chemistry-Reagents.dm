@@ -1676,6 +1676,13 @@ datum
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
+			reagent_state = LIQUID
+			color = "#535E66" // rgb: 83, 94, 102
+
 		nanites
 			name = "Nanomachines"
 			id = "nanites"
