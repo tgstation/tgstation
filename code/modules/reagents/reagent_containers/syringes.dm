@@ -158,7 +158,7 @@
 	update_icon()
 		if(mode == SYRINGE_BROKEN)
 			icon_state = "broken"
-			overlays = null //dirty fix
+			overlays.Cut()
 			return
 		var/rounded_vol = round(reagents.total_volume,5)
 		overlays.Cut()
