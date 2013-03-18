@@ -85,19 +85,17 @@ obj/structure/ex_act(severity)
 	air_contents.nitrogen = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
-	follow_tube()
+	// Give auto tubes time to align before trying to start moving
+	spawn(5)
+		follow_tube()
 
 
 
 /obj/structure/transit_tube/New(loc)
 	..(loc)
 
-	// Spawn here to allow in-game procs to set the icon_state
-	//  first, and so that the rest of the map loads before in-map
-	//  auto tubes try to generate.
-	spawn(1)
-		if(tube_dirs == null)
-			init_dirs()
+	if(tube_dirs == null)
+		init_dirs()
 
 
 
