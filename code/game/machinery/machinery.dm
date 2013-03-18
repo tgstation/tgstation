@@ -169,10 +169,8 @@ Class Procs:
 		return 1
 	if(usr.restrained() || usr.lying || usr.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
+	if(!(ishuman(usr) || issilicon(usr) || (ismonkey(usr) && ticker && ticker.mode.name == "monkey")))
+		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 1
 
 	var/norange = 0
@@ -184,10 +182,13 @@ Class Procs:
 			norange = 1
 
 	if(!norange)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
-			return 1
+		if(!issilicon(usr))
+			if(!in_range(src, usr))
+				return 1
+			if(!isturf(loc))
+				return 1
 
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)

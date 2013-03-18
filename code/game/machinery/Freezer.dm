@@ -89,7 +89,7 @@
 
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
-	name = "Heater"
+	name = "heater"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
@@ -118,11 +118,11 @@
 	update_icon()
 		if(src.node)
 			if(src.on)
-				icon_state = "heater_1"
+				icon_state = "freezer_1"
 			else
-				icon_state = "heater"
+				icon_state = "freezer"
 		else
-			icon_state = "heater_0"
+			icon_state = "freezer_0"
 		return
 
 	attack_ai(mob/user as mob)
