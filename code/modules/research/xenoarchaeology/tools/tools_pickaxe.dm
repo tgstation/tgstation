@@ -72,6 +72,7 @@
 	excavation_amount = 5
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
+	w_class = 2
 
 /obj/item/weapon/pickaxe/six_pick
 	name = "1/1 pick"
