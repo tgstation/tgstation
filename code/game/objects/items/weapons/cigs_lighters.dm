@@ -107,10 +107,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
-	//can't think of any other way to update the overlays :<
-	user.update_inv_wear_mask(0)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand(0)
+	else if(istype(W, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/M = W
+		if(M.lit)
+			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+	else if(istype(W, /obj/item/candle))
+		var/obj/item/candle/C = W
+		if(C.lit)
+			light("<span class='notice'>[user] lights their [name] with the [W].</span>")
 	return
 
 
@@ -150,6 +154,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
+		
+		//can't think of any other way to update the overlays :<
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_inv_wear_mask(0)
+			M.update_inv_l_hand(0)
+			M.update_inv_r_hand(0)
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -187,7 +198,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		del(src)
 	return ..()
 
+/obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!istype(M))
+		return ..()
 
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel && user.zone_sel.selecting == "mouth" && lit)
+		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+	else
+		return ..()
 
 ////////////
 // CIGARS //
@@ -233,13 +255,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
 
-
-/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match))
-		..()
-	else
-		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such uncivilized means.</span>"
-
 /////////////////
 //SMOKING PIPES//
 /////////////////
@@ -251,16 +266,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 100
-
-/obj/item/clothing/mask/cigarette/pipe/light(var/flavor_text = "[usr] lights the [name].")
-	if(!src.lit)
-		src.lit = 1
-		damtype = "fire"
-		icon_state = icon_on
-		item_state = icon_on
-		var/turf/T = get_turf(src)
-		T.visible_message(flavor_text)
-		processing_objects.Add(src)
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
@@ -292,12 +297,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user << "<span class='notice'>You refill the pipe with tobacco.</span>"
 		smoketime = initial(smoketime)
 	return
-
-/obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match))
-		..()
-	else
-		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such means.</span>"
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
 	name = "corn cob pipe"

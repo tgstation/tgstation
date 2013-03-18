@@ -19,6 +19,7 @@
 #define T20C					293.15	// 20degC
 #define TCMB					2.7		// -270.3degC
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+#define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005)
 #define O2STANDARD				0.21
 #define N2STANDARD				0.79
 #define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)

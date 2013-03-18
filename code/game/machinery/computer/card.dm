@@ -11,7 +11,35 @@
 	var/authenticated = 0.0
 	var/mode = 0.0
 	var/printing = null
+	var/edit_job_target = ""
 
+	//Cooldown for closing positions in seconds
+	//if set to -1: No cooldown... probably a bad idea
+	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
+	var/close_position_cooldown = 280
+	//Keeps track of the time
+	var/time_last_closed_position = 0
+	//Jobs you cannot open new positions for
+	var/list/blacklisted = list(
+		"AI",
+		"Assistant",
+		"Cyborg",
+		"Captain",
+		"Head of Personnel",
+		"Head of Security",
+		"Warden",
+		"Chief Engineer",
+		"Quartermaster",
+		"Research Director",
+		"Chief Medical Officer",
+		"Chaplain")
+
+	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
+	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
+
+	//This is used to keep track of opened positions for jobs to allow instant closing
+	//Assoc array: "JobName" = (int)<Opened Positions>
+	var/list/opened_positions = list();
 
 /obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -41,6 +69,32 @@
 /obj/machinery/computer/card/attack_paw(var/mob/user as mob)
 	return attack_hand(user)
 
+//Check if you can't open a new position for a certain job
+/obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
+	return (jobtitle in blacklisted)
+
+
+//Logic check for Topic() if you can open the job
+/obj/machinery/computer/card/proc/can_open_job(var/datum/job/job)
+	if(job)
+		if(!job_blacklisted(job.title))
+			if((job.total_positions <= player_list.len * (max_relative_positions / 100)) || (opened_positions[job.title] < 0))
+				return 1
+			return -1
+	return 0
+
+//Logic check for Topic() if you can close the job
+/obj/machinery/computer/card/proc/can_close_job(var/datum/job/job)
+	if(job)
+		if(!job_blacklisted(job.title))
+			if(job.total_positions > job.current_positions)
+				if(close_position_cooldown != 0)			//I guess this is so you can disable this functionality
+					var/delta = (world.time / 10) - time_last_closed_position
+					if((close_position_cooldown < delta) || (opened_positions[job.title] > 0))
+						return 1
+				return -2
+			return -1
+	return 0
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
@@ -50,7 +104,7 @@
 	var/dat
 	if (!( ticker ))
 		return
-	if (mode) // accessing crew manifest
+	if (mode == 1) // accessing crew manifest
 		var/crew = ""
 		var/list/L = list()
 		for (var/datum/data/record/t in data_core.general)
@@ -59,6 +113,52 @@
 		for(var/R in sortList(L))
 			crew += "[R]<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+
+	else if(mode == 2)
+		// JOB MANAGEMENT
+		var/datum/job/j = job_master.GetJob(edit_job_target)
+		if(!j)
+		// SHOW MAIN JOB MANAGEMENT MENU
+			dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
+			dat += "<h1>Job Management</h1>"
+			dat += "<i>Choose Job</i><hr>"
+			for(var/datum/job/job in job_master.occupations)
+				if(!(job.title in blacklisted))
+					dat += "<a href='?src=\ref[src];choice=edit_job;job=[job.title]'><b>[job.title]</b></a> ([job.current_positions]/[job.total_positions])<br>"
+		else
+			if(check_access(scan))
+			// EDIT SPECIFIC JOB
+				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"	
+				dat += "<h1>[j.title]: [j.current_positions]/[j.total_positions]</h1><hr>"
+				//Make sure antags can't completely ruin rounds
+
+				//Don't allow more than 1 Head / limit blacklisted jobs
+				switch(can_open_job(j))
+					if(1)
+						dat += "<a href='?src=\ref[src];choice=make_job_available'>Open Position</a><br>"
+					if(-1)
+						dat += "<b>You cannot open any more positions for this job.</b><br>"
+					if(0)
+						dat += "<b>You cannot open positions for this job.</b><br>"
+	
+				
+				switch(can_close_job(j))
+					if(1)
+						dat += "<a href='?src=\ref[src];choice=make_job_unavailable'>Close Position</a>"
+					if(-1)
+						dat += "<b>You cannot close any more positions for this job.</b><br>"
+					if(-2)
+						var/time_to_wait = round(close_position_cooldown - ((world.time / 10) - time_last_closed_position), 1)
+						var/mins = round(time_to_wait / 60)
+						var/seconds = time_to_wait - (60*mins)
+						dat += "<b>You have to wait [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"] minutes before you can close a position.</b>"
+					if(0)
+						dat += "<b>You cannot close positions for this job.</b><br>"
+			else
+				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
+				dat += "<h1>Please insert your ID</h1>"
+				mode = 3
+
 	else
 		var/header = ""
 
@@ -162,7 +262,10 @@
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+			body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
+
 		dat = "<tt>[header][body]<hr><br></tt>"
+
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
@@ -261,6 +364,44 @@
 					modify.registered_name = href_list["reg"]
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
+
+		if("edit_job")
+			edit_job_target = href_list["job"]
+			if(job_master.GetJob(edit_job_target) == null)
+				edit_job_target = ""
+
+		if("return")
+			if(edit_job_target != "")
+				//RETURN TO JOB MANAGEMENT
+				edit_job_target = ""
+			else
+				//DISPLAY MAIN MENU
+				mode = 3;
+				edit_job_target = ""
+
+		if("make_job_available")
+			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
+			var/datum/job/j = job_master.GetJob(edit_job_target)
+			if(!j)
+				return 0
+			if(can_open_job(j) != 1)
+				return 0
+			j.total_positions++
+			opened_positions[edit_job_target]++
+
+		if("make_job_unavailable")
+			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
+			var/datum/job/j = job_master.GetJob(edit_job_target)
+			if(!j)
+				return 0
+			if(can_close_job(j) != 1)
+				return 0
+			//Allow instant closing without cooldown if a position has been opened before
+			if(opened_positions[edit_job_target] <= 0)
+				time_last_closed_position = world.time / 10		
+			j.total_positions--
+			opened_positions[edit_job_target]--
+
 		if ("print")
 			if (!( printing ))
 				printing = 1
