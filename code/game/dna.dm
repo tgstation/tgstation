@@ -883,36 +883,38 @@
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 
+	src.scanner_status_html = null // Scanner status is reset each update
 	src.temp_html = null
 	var/temp_header_html = null
 	var/temp_footer_html = null
 
-	src.scanner_status_html = null // Scanner status is reset each update
-	var/mob/living/occupant = src.connected.occupant
-	var/viable_occupant = (occupant && occupant.dna && !(NOCLONE in occupant.mutations))
-	var/mob/living/carbon/human/human_occupant = src.connected.occupant
+	usr.set_machine(src)
+
+	var/mob/living/occupant = null
+	var/viable_occupant = null
+	var/mob/living/carbon/human/human_occupant = null
 
 	if (href_list["screen"]) // Passing a screen is only a request, we set current_screen here but it can be overridden below if necessary
 		src.current_screen = href_list["screen"]
 
-	if (!viable_occupant) // If there is no viable occupant only allow certain screens
+	if (!src.current_screen) // If no screen is set default to mainmenu
+		src.current_screen = "mainmenu"
+
+	if (!src.connected) //Is the scanner not connected?
+		src.scanner_status_html = "<div class='line'><span class='highlight'>Build a DNA Modifier adjacent to this computer and try again.</span></div>"
+		src.current_screen = null // blank does not exist in the switch below, so no screen will be outputted
+		href_list = new /list(0) //Clear out whatever button the user might have pressed
+	else
+		occupant = src.connected.occupant
+		viable_occupant = (occupant && occupant.dna && !(NOCLONE in occupant.mutations))
+		human_occupant = src.connected.occupant
+
+	if (!viable_occupant && src.connected) // If there is no viable occupant only allow certain screens
 		var/allowed_no_occupant_screens = list("mainmenu", "radsetmenu", "buffermenu") //These are the screens which will be allowed if there's no occupant
 		if (!(src.current_screen in allowed_no_occupant_screens))
 			href_list = new /list(0) // clear list of options
 			src.current_screen = "mainmenu"
 
-
-	if (!src.current_screen) // If no screen is set default to mainmenu
-		src.current_screen = "mainmenu"
-
-
-	if (!src.connected) //Is the scanner not connected?
-		src.scanner_status_html = "<span class='bad'>ERROR: No DNA Scanner connected.</span>"
-		src.current_screen = null // blank does not exist in the switch below, so no screen will be outputted
-		src.updateUsrDialog()
-		return
-
-	usr.set_machine(src)
 	if (href_list["locked"])
 		if (src.connected.occupant)
 			src.connected.locked = !( src.connected.locked )
@@ -1584,9 +1586,13 @@
 
 	var/dat = "<h3>Scanner Status</h3>"
 
+	dat += "<A href='?src=\ref[src];'>Scan</A> "
+
 	var/occupant_status = "Scanner Unoccupied"
+	if(!src.connected)
+		occupant_status = "<span class='bad'>No Scanner Detected!</span>"
 	if(occupant && occupant.dna) //is there REALLY someone in there?
-		if (!istype(occupant,/mob/living/carbon/human))
+		if (!istype(occupant,/mob/living/carbon/human)) //Why is this here?
 			sleep(1)
 		if(NOCLONE in occupant.mutations)
 			occupant_status = "<span class='bad'>Invalid DNA structure</span>"
@@ -1604,11 +1610,8 @@
 	dat += "<div class='statusDisplay'>[occupant_status][src.scanner_status_html]</div>"
 
 	var/scanner_access_text = "Lock Scanner"
-	if (src.connected.locked)
+	if (src.connected && src.connected.locked)
 		scanner_access_text = "Unlock Scanner"
-
-	dat += "<A href='?src=\ref[src];'>Scan</A> "
-
 	if (occupant && occupant.dna)
 		dat += "<A href='?src=\ref[src];locked=1'>[scanner_access_text]</A> "
 		if (human_occupant)

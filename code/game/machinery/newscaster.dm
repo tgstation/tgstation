@@ -393,15 +393,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(18)
-				dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
-				dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
-				dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
-				dat+="<B>Photo:</B>: "
-				if(news_network.wanted_issue.img)
-					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
-					dat+="<BR><img src='tmp_photow.png' width = '180'>"
+				if(news_network.wanted_issue)
+					dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
+					dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
+					dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+					dat+="<B>Photo:</B>: "
+					if(news_network.wanted_issue.img)
+						usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+						dat+="<BR><img src='tmp_photow.png' width = '180'>"
+					else
+						dat+="None"
 				else
-					dat+="None"
+					dat+="No current wanted issue found.<BR><BR>"
 				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
 			if(19)
 				dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] successfully edited.</FONT><BR><BR>"
