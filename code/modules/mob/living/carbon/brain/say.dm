@@ -2,10 +2,10 @@
 	if (silent)
 		return
 
-	if(!(container && (istype(container, /obj/item/device/mmi) || istype(container, /obj/item/device/posibrain))))
+	if(!(container && (istype(container, /obj/item/device/mmi) || istype(container, /obj/item/device/mmi/posibrain))))
 		return //No MMI, can't speak, bucko./N
 	else
-		if ((copytext(message, 1, 3) == ":b") || (copytext(message, 1, 3) == ":B") && (container && istype(container, /obj/item/device/posibrain)))
+		if ((copytext(message, 1, 3) == ":b") || (copytext(message, 1, 3) == ":B") && (container && istype(container, /obj/item/device/mmi/posibrain)))
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			robot_talk(message)
