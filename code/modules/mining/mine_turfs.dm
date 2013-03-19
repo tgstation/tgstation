@@ -177,7 +177,7 @@
 	// Get our directiosn
 	var/forward_cave_dir = pick(alldirs - exclude_dir)
 	// Get the opposite direction of our facing direction
-	var/backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
+	var/backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180, 1)
 
 	// Make our tunnels
 	make_tunnel(forward_cave_dir)
@@ -200,7 +200,7 @@
 
 		// Expand the edges of our tunnel
 		for(var/edge_angle in L)
-			var/turf/simulated/mineral/edge = get_step(tunnel, angle2dir(dir2angle(dir) + edge_angle))
+			var/turf/simulated/mineral/edge = get_step(tunnel, angle2dir(dir2angle(dir) + edge_angle, 1))
 			if(istype(edge))
 				SpawnFloor(edge)
 
@@ -220,7 +220,7 @@
 		if(i > 2 && prob(33))
 			// We can't go a full loop though
 			next_angle = -next_angle
-			dir = angle2dir(dir2angle(dir) + next_angle)
+			dir = angle2dir(dir2angle(dir) + next_angle, 1)
 
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(var/turf/T)

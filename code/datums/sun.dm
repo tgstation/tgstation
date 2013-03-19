@@ -10,7 +10,7 @@
 
 	solars = solars_list
 	rate = rand(75,125)/100			// 75% - 125% of standard rotation
-	if(prob(50))
+	if(prob(50))					// 50% chance to orbit counter-clockwise
 		rate = -rate
 
 // calculate the sun's position given the time of day

@@ -209,12 +209,15 @@ proc/tg_list2text(list/list, glue=",")
 	return
 
 //Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(var/degree)
+/proc/angle2dir(var/degree, var/filter_rotations = 0)
 
-	// Will filter out extra rotations and negative rotations
+	// @filter_rotations will filter out extra rotations and negative rotations
 	// E.g: 540 becomes 180. -180 becomes 180.
 	// Thanks to Flexicode for the formula.
-	degree = ((degree % 360 + 22.5) + 360) % 365
+	if(filter_rotations)
+		degree = ((degree % 360 + 22.5) + 360) % 365
+	else
+		degree = ((degree+22.5)%365)
 
 	if(degree < 45)		return NORTH
 	if(degree < 90)		return NORTHEAST
@@ -240,8 +243,8 @@ proc/tg_list2text(list/list, glue=",")
 		else			return null
 
 //Returns the angle in english
-/proc/angle2text(var/degree)
-	return dir2text(angle2dir(degree))
+/proc/angle2text(var/degree, var/filter_rotations = 0)
+	return dir2text(angle2dir(degree, filter_rotations))
 
 
 //Converts a rights bitfield into a string
