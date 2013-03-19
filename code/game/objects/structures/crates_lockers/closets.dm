@@ -46,7 +46,7 @@
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.loc = src.loc
 
-	for(var/obj/item/I in src)
+	for(var/obj/I in src)
 		I.loc = src.loc
 
 	for(var/mob/M in src)
