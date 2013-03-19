@@ -65,49 +65,6 @@
 
 	var/list/container = list(  )
 
-
-/obj/structure/cable
-	level = 1
-	anchored =1
-	var/datum/powernet/powernet
-	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer"
-	icon = 'icons/obj/power_cond_red.dmi'
-	icon_state = "0-1"
-	var/d1 = 0
-	var/d2 = 1
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
-	var/color = "red"
-	var/obj/structure/powerswitch/power_switch
-
-/obj/structure/cable/yellow
-	color = "yellow"
-	icon = 'icons/obj/power_cond_yellow.dmi'
-
-/obj/structure/cable/green
-	color = "green"
-	icon = 'icons/obj/power_cond_green.dmi'
-
-/obj/structure/cable/blue
-	color = "blue"
-	icon = 'icons/obj/power_cond_blue.dmi'
-
-/obj/structure/cable/pink
-	color = "pink"
-	icon = 'icons/obj/power_cond_pink.dmi'
-
-/obj/structure/cable/orange
-	color = "orange"
-	icon = 'icons/obj/power_cond_orange.dmi'
-
-/obj/structure/cable/cyan
-	color = "cyan"
-	icon = 'icons/obj/power_cond_cyan.dmi'
-
-/obj/structure/cable/white
-	color = "white"
-	icon = 'icons/obj/power_cond_white.dmi'
-
 /obj/effect/projection
 	name = "Projection"
 	desc = "This looks like a projection of something."

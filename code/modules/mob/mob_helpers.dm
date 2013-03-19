@@ -386,56 +386,48 @@ proc/is_blind(A)
 			return 1
 	return 0
 
-proc/is_special_character(mob/M as mob) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
+proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!ticker || !ticker.mode)
 		return 0
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(ispAI(M))
-			return 0
 		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
-			if(R.emagged || R.syndicate) //Count as antags as far as I'm concerned
+			if(R.emagged || R.syndicate) //Count as antags
 				return 1
-			if(R.mind && R.mind.special_role && R.laws.zeroth)
-				if(R.connected_ai) //Make sure the AI isn't the REAL antag here.
-					if(is_special_character(R.connected_ai) && R.connected_ai.laws.zeroth_borg == R.laws.zeroth)
-						return 0 //Sorry, just following orders...
-					else
-						return 1 //The MAN can't keep me down! Row row fight da powa!
-				else
-					return 1 //I'm a strong, beautiful cyborg who don't need no master
-		if(isAI(M))
+			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth).
+				if(R.connected_ai)
+					if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
+						return 0 //AI is the real traitor here, so the borg itself is not a traitor
+					return 1 //Slaved but also a traitor
+				return 1 //Unslaved, traitor
+		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
 				if(ticker.mode.config_tag == "malfunction" && M.mind in ticker.mode.malf_ai)//Malf law is a law 0
 					return 2
 				return 1
-			return 0
-		else
-			world << "Some undefined silicon ran is_special_character! Report this to a coder."
+		return 0
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		if (ticker.mode.config_tag == "revolution")
-			if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
-				return 2
-		if (ticker.mode.config_tag == "cult")
-			if(M.mind in ticker.mode.cult)
-				return 2
-		if (ticker.mode.config_tag == "nuclear")
-			if(M.mind in ticker.mode.syndicates)
-				return 2
-		if (ticker.mode.config_tag == "changeling")
-			if(M.mind in ticker.mode.changelings)
-				return 2
-		if (ticker.mode.config_tag == "wizard")
-			if(M.mind in ticker.mode.wizards)
-				return 2
-		for(var/datum/disease/D in M.viruses)
-			if(istype(D, /datum/disease/jungle_fever))
-				if (ticker.mode.config_tag == "monkey")
+		switch(ticker.mode.config_tag)
+			if("revolution")
+				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
 					return 2
-				return 1
+			if("cult")
+				if(M.mind in ticker.mode.cult)
+					return 2
+			if("nuclear")
+				if(M.mind in ticker.mode.syndicates)
+					return 2
+			if("changeling")
+				if(M.mind in ticker.mode.changelings)
+					return 2
+			if("wizard")
+				if(M.mind in ticker.mode.wizards)
+					return 2
+			if("monkey")
+				if(M.viruses && (locate(/datum/disease/jungle_fever) in M.viruses))
+					return 2
 		return 1
-
 	return 0
