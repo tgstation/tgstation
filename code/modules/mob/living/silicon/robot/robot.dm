@@ -194,7 +194,7 @@
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
-	if(istype(mmi, /obj/item/device/posibrain))
+	if(istype(mmi, /obj/item/device/mmi/posibrain))
 		braintype = "Android"
 	else
 		braintype = "Cyborg"

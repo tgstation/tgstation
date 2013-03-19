@@ -140,5 +140,5 @@
 	for (var/mob/M in dead_mob_list)
 		if (!(M.client))
 			continue
-		if (M.stat > 1 && !(M in heard_a))
+		if (M.stat > 1 && !(M in heard_a) && (M.client.prefs.toggles & CHAT_GHOSTEARS))
 			M.show_message(rendered, 2)
