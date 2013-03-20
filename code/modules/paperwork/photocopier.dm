@@ -186,3 +186,5 @@
 /obj/item/device/toner
 	name = "toner cartridge"
 	icon_state = "tonercartridge"
+	var/charges = 5
+	var/max_charges = 5
