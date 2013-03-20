@@ -538,14 +538,17 @@ obj/structure/door_assembly
 			//  and mineral doors. |- Ricotez
 			if (mineral)
 				if(mineral == "glass")
-					if(typetext == "")
+					if(!typetext)
 						airlock_type = /obj/machinery/door/airlock/glass
 					else
 						airlock_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
 				else
 					airlock_type = text2path("/obj/machinery/door/airlock/[mineral]")
 			else
-				airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
+				if(!typetext)
+					airlock_type = /obj/machinery/door/airlock
+				else
+					airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
 			door = new src.airlock_type( src.loc )
 			//door.req_access = src.req_access
 			door.electronics = src.electronics
