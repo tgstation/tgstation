@@ -293,6 +293,13 @@
 		return cost
 	else
 		return get_dist(src,t)
+
+// This Distance proc assumes that only cardinal movement is
+//  possible. It results in more efficient (CPU-wise) pathing
+//  for bots and anything else that only moves in cardinal dirs.
+/turf/proc/Distance_cardinal(turf/t)
+	return abs(src.x - t.x) + abs(src.y - t.y)
+
 /turf/proc/AdjacentTurfsSpace()
 	var/L[] = new()
 	for(var/turf/t in oview(src,1))
