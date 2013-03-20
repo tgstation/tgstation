@@ -13,6 +13,12 @@
 	var/exit_delay = 2
 	var/enter_delay = 1
 
+	// alldirs in global.dm is the same list of directions, but since
+	//  the specific order matters to get a usable icon_state, it is
+	//  copied here so that, in the unlikely case that alldirs is changed,
+	//  this continues to work.
+	var/global/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+
 
 // A place where tube pods stop, and people can get in or out.
 // Mappers: use "Generate Instances from Directions" for this
@@ -79,6 +85,10 @@ obj/structure/ex_act(severity)
 	air_contents.nitrogen = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
+	// Give auto tubes time to align before trying to start moving
+	spawn(5)
+		follow_tube()
+
 
 
 /obj/structure/transit_tube/New(loc)
@@ -91,9 +101,6 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube/station/New(loc)
 	..(loc)
-
-	spawn(automatic_launch_time)
-		launch_pod()
 
 
 
@@ -299,10 +306,13 @@ obj/structure/ex_act(severity)
 			sleep(last_delay)
 			dir = next_dir
 			loc = next_loc // When moving from one tube to another, skip collision and such.
+			density = current_tube.density
 
 			if(current_tube && current_tube.should_stop_pod(src, next_dir))
 				current_tube.pod_stopped(src, dir)
 				break
+
+		density = 1
 
 		// If the pod is no longer in a tube, move in a line until stopped or slowed to a halt.
 		//  /turf/inertial_drift appears to only work on mobs, and re-implementing some of the
@@ -419,10 +429,16 @@ obj/structure/ex_act(severity)
 //  variations. Additionally, as a separate proc, sub-types
 //  can handle it more intelligently.
 /obj/structure/transit_tube/proc/init_dirs()
-	tube_dirs = parse_dirs(icon_state)
+	if(icon_state == "auto")
+		// Additional delay, for map loading.
+		spawn(1)
+			init_dirs_automatic()
 
-	if(copytext(icon_state, 1, 3) == "D-")
-		density = 0
+	else
+		tube_dirs = parse_dirs(icon_state)
+
+		if(copytext(icon_state, 1, 3) == "D-" || findtextEx(icon_state, "Pass"))
+			density = 0
 
 
 
@@ -430,6 +446,94 @@ obj/structure/ex_act(severity)
 //  the exit.
 /obj/structure/transit_tube/station/init_dirs()
 	tube_dirs = list(turn(dir, 90), turn(dir, -90))
+
+
+
+// Initialize dirs by searching for tubes that do/might connect
+//  on nearby turfs. Create corner pieces if nessecary.
+// Pick two directions, preferring tubes that already connect
+//  to loc, or other auto tubes if there aren't enough connections.
+/obj/structure/transit_tube/proc/init_dirs_automatic()
+	var/list/connected = list()
+	var/list/connected_auto = list()
+
+	for(var/direction in tube_dir_list)
+		var/location = get_step(loc, direction)
+		for(var/obj/structure/transit_tube/tube in location)
+			if(tube.directions() == null && tube.icon_state == "auto")
+				connected_auto += direction
+				break
+
+			else if(turn(direction, 180) in tube.directions())
+				connected += direction
+				break
+
+	connected += connected_auto
+
+	tube_dirs = select_automatic_dirs(connected)
+
+	if(length(tube_dirs) == 2 && tube_dir_list.Find(tube_dirs[1]) > tube_dir_list.Find(tube_dirs[2]))
+		tube_dirs.Swap(1, 2)
+
+	generate_automatic_corners(tube_dirs)
+	select_automatic_icon_state(tube_dirs)
+
+
+
+// Given a list of directions, look a pair that forms a 180 or
+//  135 degree angle, and return a list containing the pair.
+//  If none exist, return list(connected[1], turn(connected[1], 180)
+/obj/structure/transit_tube/proc/select_automatic_dirs(connected)
+	if(length(connected) < 1)
+		return list()
+
+	for(var/i = 1, i <= length(connected), i++)
+		for(var/j = i + 1, j <= length(connected), j++)
+			var/d1 = connected[i]
+			var/d2 = connected[j]
+
+			if(d1 == turn(d2, 135) || d1 == turn(d2, 180) || d1 == turn(d2, 225))
+				return list(d1, d2)
+
+	return list(connected[1], turn(connected[1], 180))
+
+
+
+/obj/structure/transit_tube/proc/select_automatic_icon_state(directions)
+	if(length(directions) == 2)
+		icon_state = "[dir2text_short(directions[1])]-[dir2text_short(directions[2])]"
+
+
+
+// Look for diagonal directions, generate the decorative corners in each.
+/obj/structure/transit_tube/proc/generate_automatic_corners(directions)
+	for(var/direction in directions)
+		if(direction == 5 || direction == 6 || direction == 9 || direction == 10)
+			if(direction & NORTH)
+				create_automatic_decorative_corner(get_step(loc, NORTH), direction ^ 3)
+
+			else
+				create_automatic_decorative_corner(get_step(loc, SOUTH), direction ^ 3)
+
+			if(direction & EAST)
+				create_automatic_decorative_corner(get_step(loc, EAST), direction ^ 12)
+
+			else
+				create_automatic_decorative_corner(get_step(loc, WEST), direction ^ 12)
+
+
+
+// Generate a corner, if one doesn't exist for the direction on the turf.
+/obj/structure/transit_tube/proc/create_automatic_decorative_corner(location, direction)
+	var/state = "D-[dir2text_short(direction)]"
+
+	for(var/obj/structure/transit_tube/tube in location)
+		if(tube.icon_state == state)
+			return
+
+	var/obj/structure/transit_tube/tube = new(location)
+	tube.icon_state = state
+	tube.init_dirs()
 
 
 
@@ -490,3 +594,28 @@ obj/structure/ex_act(severity)
 			return 10
 		else
 	return 0
+
+
+
+// A copy of dir2text, which returns the short one or two letter
+//  directions used in tube icon states.
+/obj/structure/transit_tube/proc/dir2text_short(direction)
+	switch(direction)
+		if(1)
+			return "N"
+		if(2)
+			return "S"
+		if(4)
+			return "E"
+		if(8)
+			return "W"
+		if(5)
+			return "NE"
+		if(6)
+			return "SE"
+		if(9)
+			return "NW"
+		if(10)
+			return "SW"
+		else
+	return
