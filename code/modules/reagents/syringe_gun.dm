@@ -21,19 +21,21 @@
 		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\blue [syringes.len] / [max_syringes] syringes."
 
-	attackby(obj/item/weapon/reagent_containers/syringe/I as obj, mob/user as mob)
-
-		if(I.mode != 2)// 2 is SYRINGE_BROKEN in syringes.dm
-			if(syringes.len < max_syringes)
-				user.drop_item()
-				I.loc = src
-				syringes += I
-				user << "\blue You put the syringe in [src]."
-				user << "\blue [syringes.len] / [max_syringes] syringes."
+	attackby(obj/item/I as obj, mob/user as mob)
+		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+			var/obj/item/weapon/reagent_containers/syringe/S = I
+			if(S.mode != 2)
+				if(syringes.len < max_syringes)
+					user.drop_item()
+					I.loc = src
+					syringes += I
+					user << "\blue You put the syringe in [src]."
+					user << "\blue [syringes.len] / [max_syringes] syringes."
+				else
+					usr << "\red [src] cannot hold more syringes."
 			else
-				usr << "\red [src] cannot hold more syringes."
-		else
-			usr << "\red This syringe is broken!"
+				usr << "\red This syringe is broken!"
+
 
 	afterattack(obj/target, mob/user , flag)
 		if(!isturf(target.loc) || target == user) return
