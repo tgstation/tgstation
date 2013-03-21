@@ -7,11 +7,15 @@ var/global/datum/getrev/revdata = new()
 
 //Oh yeah, I'm an OOP fag, lalala
 /datum/getrev
-	var/project_href = "https://www.github.com/tgstation/-tg-station"
+	var/project_href
 	var/revision
 	var/showinfo
 
 	New()
+		if(fexists("config/git_host.txt"))
+			project_href = file2text("config/git_host.txt")
+		else
+			project_href = "https://www.github.com/tgstation/-tg-station"
 		var/list/head_log = file2list(".git/logs/HEAD", "\n")
 		for(var/line=head_log.len, line>=1, line--)
 			if(head_log[line])
