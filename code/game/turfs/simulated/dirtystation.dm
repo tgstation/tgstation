@@ -2,8 +2,6 @@
 
 
 // Conspicuously not-recent versions of suspicious cleanables
-// If someone wanted to resprite these, it would save icon operations
-// on every bootup.
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -18,6 +16,7 @@
 	New()
 		..()
 		icon_state += "-old"
+		dir = pick(1,2,4,8)
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
