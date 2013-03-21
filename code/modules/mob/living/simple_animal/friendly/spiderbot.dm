@@ -281,14 +281,14 @@
 		return 0
 
 	if(istype(held_item, /obj/item/weapon/grenade))
-		visible_message("\red [src] launches the [held_item]!", "\red You launch the [held_item]!", "You hear a skittering noise and a thump!")
+		visible_message("\red [src] launches \the [held_item]!", "\red You launch \the [held_item]!", "You hear a skittering noise and a thump!")
 		var/obj/item/weapon/grenade/G = held_item
 		G.loc = src.loc
 		G.prime()
 		held_item = null
 		return 1
 
-	visible_message("\blue [src] drops the [held_item]!", "\blue You drop the [held_item]!", "You hear a skittering noise and a soft thump.")
+	visible_message("\blue [src] drops \the [held_item]!", "\blue You drop \the [held_item]!", "You hear a skittering noise and a soft thump.")
 
 	held_item.loc = src.loc
 	held_item = null
@@ -305,7 +305,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		src << "\red You are already holding \the [held_item]"
 		return 1
 
 	var/list/items = list()
