@@ -129,7 +129,10 @@
 				return
 
 			if(client.prefs.species != "Human")
-				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
+
+				var/S = client.prefs.species
+				if(S == "Unathi") S = "Soghun"
+				if(!is_alien_whitelisted(src, S) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [client.prefs.species].")
 					return 0
 
@@ -144,7 +147,9 @@
 				usr << "\blue There is an administrative lock on entering the game!"
 				return
 
-			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
+			var/S = client.prefs.species
+			if(S == "Unathi") S = "Soghun"
+			if(!is_alien_whitelisted(src, S) && config.usealienwhitelist)
 				src << alert("You are currently not whitelisted to play [client.prefs.species].")
 				return 0
 
