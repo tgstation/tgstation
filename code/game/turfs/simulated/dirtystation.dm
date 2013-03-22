@@ -30,12 +30,11 @@
 	desc = "Looks like nobody has touched this in a while."
 
 
-// This code should do all the station-dirtying.
-// THIS IS AN UGLY HACK and I am sorry.
+// Making the station dirty, one tile at a time.  Called by master controller's setup_objects
 
 /turf/simulated/floor/proc/MakeDirty()
-	if(prob(66) || usr) //usr check to prevent manually created floors from having dirt
-		return			//prob() to keep the rate of creation down and do a fast exit
+	if(prob(66) // fastest possible exit 2/3 of the time
+		return
 
 	// These look weird if you make them dirty
 	if(istype(src,/turf/simulated/floor/carpet) || istype(src,/turf/simulated/floor/grass) || istype(src,/turf/simulated/floor/beach) || istype(src,/turf/simulated/floor/holofloor) || istype(src,/turf/simulated/floor/plating/snow) || istype(src,/turf/simulated/floor/plating/ironsand))
