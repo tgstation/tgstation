@@ -33,7 +33,7 @@
 // Making the station dirty, one tile at a time.  Called by master controller's setup_objects
 
 /turf/simulated/floor/proc/MakeDirty()
-	if(prob(66) // fastest possible exit 2/3 of the time
+	if(prob(66)) // fastest possible exit 2/3 of the time
 		return
 
 	// These look weird if you make them dirty
