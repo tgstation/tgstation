@@ -69,7 +69,6 @@
 		buckled_mob << "<span class='danger'>You feel a deep shock course through your body!</span>"
 		sleep(1)
 		buckled_mob.burn_skin(85)
-		buckled_mob.Stun(600)
 	visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='danger'>You hear a deep sharp shock!</span>")
 
 	A.power_light = light

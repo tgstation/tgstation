@@ -74,6 +74,10 @@
 			if(istype(C.loc, /mob/living/carbon/human))
 
 				var/mob/living/carbon/human/H = C.loc
+				var/obj/item/ID = null
+
+				if(H.wear_id)
+					ID = H.wear_id.GetID()
 
 				var/dam1 = round(H.getOxyLoss(),1)
 				var/dam2 = round(H.getToxLoss(),1)
@@ -83,8 +87,8 @@
 				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
 				var/damage_report = "(<font color='blue'>[dam1]</font>/<font color='green'>[dam2]</font>/<font color='orange'>[dam3]</font>/<font color='red'>[dam4]</font>)"
 
-				if(H.wear_id)
-					log += "<tr><td width='40%'>[H.wear_id.name]</td>"
+				if(ID)
+					log += "<tr><td width='40%'>[ID.name]</td>"
 				else
 					log += "<tr><td width='40%'>Unknown</td>"
 

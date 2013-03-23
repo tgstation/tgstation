@@ -4,7 +4,7 @@
  *
  */
 
-var/global/datum/getrev/revdata = new("config/svndir.txt")
+var/global/datum/getrev/revdata // = new("config/svndir.txt")	//commented out until the git revcount stuff is ready
 
 //Oh yeah, I'm an OOP fag, lalala
 /datum/getrev
@@ -90,11 +90,11 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
-	var/output =  "Sorry, the revision info is unavailable."
+	var/output =  "Sorry, the revision info is unavailable.<br>"
 	if(revdata)
 		output = revdata.showInfo()
 
-		output += "Current Infomational Settings: <br>"
-		output += "Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"
+	output += "Current Infomational Settings: <br>"
+	output += "Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"
 	usr << browse(output,"window=revdata");
 	return
