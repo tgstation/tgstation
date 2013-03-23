@@ -210,10 +210,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (!connection)
 		return
 
-	Broadcast_Message(connection, new /mob/living/silicon/ai(src,null,null,1),
+	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(src, null, null, 1)
+	//world << "src: [src], message: [message], from: [from], AI: [A] \icon[A]" //DEBUG
+	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, 1)
+						4, 0, list(1), 1459)
+	del(A)
 	return
 
 /obj/item/device/radio/talk_into(mob/living/M as mob, message, channel)

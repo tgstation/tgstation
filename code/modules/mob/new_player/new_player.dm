@@ -291,13 +291,8 @@
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
-
-			//unlikely for this to be an issue, but just in case
-			if(istype(character.wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/I = character.wear_id
-				a.autosay("\"[character.real_name],[I.assignment ? " [I.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
-			else
-				a.autosay("\"[character.real_name], visitor, has arrived on the station.\"", "Arrivals Announcement Computer")
+			world << "autosay parameters: name:[character.real_name], rank: [rank]"
+			a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
 			del(a)
 
 	proc/LateChoices()
