@@ -211,7 +211,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return
 
 	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(src, null, null, 1)
-	//world << "src: [src], message: [message], from: [from], AI: [A] \icon[A]" //DEBUG
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
