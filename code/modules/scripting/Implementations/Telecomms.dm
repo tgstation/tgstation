@@ -215,13 +215,7 @@
 		signal.data["message"] 	= interpreter.GetCleanVar("$content", signal.data["message"])
 		signal.frequency 		= interpreter.GetCleanVar("$freq", signal.frequency)
 
-		var/setname = ""
-		var/obj/machinery/telecomms/server/S = signal.data["server"]
-		var/name_var = interpreter.GetCleanVar("$source", signal.data["name"])
-		if(name_var in S.stored_names)
-			setname = name_var
-		else
-			setname = "<i>[name_var]</i>"
+		var/setname = interpreter.GetCleanVar("$source", signal.data["name"])
 
 		if(signal.data["name"] != setname)
 			signal.data["realname"] = setname
@@ -307,14 +301,11 @@ datum/signal
 
 		newsign.data["mob"] = null
 		newsign.data["mobtype"] = /mob/living/carbon/human
-		if(source in S.stored_names)
-			newsign.data["name"] = "[source]"
-		else
-			newsign.data["name"] = "<i>[html_encode(uppertext(source))]<i>"
+		newsign.data["name"] = source
 		newsign.data["realname"] = newsign.data["name"]
 		newsign.data["job"] = "[job]"
 		newsign.data["compression"] = 0
-		newsign.data["message"] = "[message]"
+		newsign.data["message"] = message
 		newsign.data["type"] = 2 // artificial broadcast
 		if(!isnum(freq))
 			freq = text2num(freq)
