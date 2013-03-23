@@ -33,7 +33,7 @@
 	var/gun_charge = 0		// the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null//holder for the shot when emagged
-	var/reqpower = 200 //holder for power needed
+	var/reqpower = 500 //holder for power needed
 	var/sound = null//So the taser can have sound
 	var/iconholder = null//holder for the icon_state. 1 for orange sprite, null for blue.
 	var/egun = null//holder to handle certain guns switching bullettypes
