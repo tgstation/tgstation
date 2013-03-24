@@ -26,12 +26,13 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "dirt"
 	gender = PLURAL
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "dirt"
+	mouse_opacity = 0
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"

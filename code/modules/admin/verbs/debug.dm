@@ -338,21 +338,90 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			src << "Made [M] a cultist."
 */
 
+var/list/TYPES_SHORTCUTS = list(
+	/obj/effect/decal/cleanable = "CLEANABLE",
+	/obj/item/device/radio/headset = "HEADSET",
+	/obj/item/clothing/head/helmet/space = "SPESSHELMET",
+	/obj/item/weapon/book/manual = "MANUAL",
+	/obj/item/weapon/reagent_containers/food/drinks = "DRINK", //longest paths comes first
+	/obj/item/weapon/reagent_containers/food = "FOOD",
+	/obj/item/weapon/reagent_containers = "REAGENT_CONTAINERS",
+	/obj/machinery/atmospherics = "ATMOS",
+	/obj/machinery/portable_atmospherics = "PORT_ATMOS",
+	/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack = "MECHA_MISSILE_RACK",
+	/obj/item/mecha_parts/mecha_equipment = "MECHA_EQUIP",
+)
+
+var/global/list/g_fancy_list_of_types = null
+/proc/get_fancy_list_of_types()
+	if (isnull(g_fancy_list_of_types)) //init
+		var/list/temp = sortList(typesof(/atom) - typesof(/area) - /atom - /atom/movable)
+		g_fancy_list_of_types = new(temp.len)
+		for(var/type in temp)
+			var/typename = "[type]"
+			for (var/tn in TYPES_SHORTCUTS)
+				if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
+					typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
+					break
+			g_fancy_list_of_types[typename] = type
+	return g_fancy_list_of_types
+
+var/global/list/g_fancy_list_of_safe_types = null
+/proc/get_fancy_list_of_safe_types()
+	if (isnull(g_fancy_list_of_safe_types)) //init
+		var/blocked = list(
+			/turf,
+			/obj,
+			/mob,
+			/mob/living,
+			/mob/living/carbon,
+			/mob/living/carbon/human,
+			/mob/dead,
+			/mob/dead/observer,
+			/mob/living/silicon,
+			/mob/living/silicon/robot,
+			/mob/living/silicon/ai
+		)
+		var/list/source = get_fancy_list_of_types()
+		g_fancy_list_of_safe_types = new
+		for(var/typename in source)
+			var/type = source[typename]
+			if(!(type in blocked))
+				g_fancy_list_of_safe_types[typename] = type
+	return g_fancy_list_of_safe_types
+
+/proc/filter_fancy_list(list/L, filter as text)
+	var/list/matches = new
+	for(var/key in L)
+		var/value = L[key]
+		if(findtext("[key]", filter) || findtext("[value]", filter))
+			matches[key] = value
+	return matches
+
 //TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all()
+/client/proc/cmd_debug_del_all(var/object as text)
 	set category = "Debug"
 	set name = "Del-All"
 
-	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human, /mob/dead, /mob/dead/observer, /mob/living/silicon, /mob/living/silicon/robot, /mob/living/silicon/ai)
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in typesof(/obj) + typesof(/mob) - blocked
+	// usng "safe" to prevent REALLY stupid deletions
+	var/list/matches = get_fancy_list_of_safe_types()
+	if (!isnull(object) && object!="")
+		matches = filter_fancy_list(matches, object)
+
+	if(matches.len==0)
+		return
+	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in matches
 	if(hsbitem)
+		hsbitem = matches[hsbitem]
+		var/counter = 0
 		for(var/atom/O in world)
 			if(istype(O, hsbitem))
+				counter++
 				del(O)
-		log_admin("[key_name(src)] has deleted all instances of [hsbitem].")
-		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].", 0)
-	feedback_add_details("admin_verb","DELA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(src)] has deleted all ([counter]) instances of [hsbitem].")
+		message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [hsbitem].", 0)
+		feedback_add_details("admin_verb","DELA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
