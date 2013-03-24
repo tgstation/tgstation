@@ -1,11 +1,5 @@
-/*
- * This datum gets revision info from local svn 'entries' file
- * Path to the directory containing it should be in 'config/svndir.txt' file
- *
- */	
 var/global/datum/getrev/revdata = new()
 
-//Oh yeah, I'm an OOP fag, lalala
 /datum/getrev
 	var/project_href
 	var/revision
@@ -23,15 +17,15 @@ var/global/datum/getrev/revdata = new()
 				if(last_entry.len < 2)	continue
 				revision = last_entry[2]
 				break
-		
+
 		showinfo = "<b>Server Revision:</b> "
 		if(revision)
 			showinfo += "<a href='[project_href]/commit/[revision]'>[revision]</a>"
 		else
 			showinfo += "*unknown*"
 		showinfo += "<p>-<a href='[project_href]/issues/new'>Report Bugs Here-</a><br><i>Please provide as much info as possible<br>Copy/paste the revision hash into your issue report if possible, thanks</i> :)</p>"
-		
-		world.log << "Running TG Revision Number: [revision]."
+
+		world.log << "Running /tg/ revision number: [revision]."
 		return
 
 client/verb/showrevinfo()
