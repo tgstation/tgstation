@@ -12,7 +12,7 @@
 	var/last_upgrade = 0
 
 	layer = 21
-	abstract = 1.0
+	abstract = 1
 	item_state = "nothing"
 	w_class = 5.0
 
