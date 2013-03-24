@@ -7,6 +7,8 @@ obj/structure/door_assembly
 	density = 1
 	var/state = 0
 	var/mineral = null
+	var/typetext = null
+	var/icontext = null
 	var/base_icon_state = "door_as_0"
 	var/glass_base_icon_state = "door_as_g0"
 	var/obj/item/weapon/airlock_electronics/electronics = null
@@ -31,6 +33,8 @@ obj/structure/door_assembly
 		name = "Command Airlock Assembly"
 		icon_state = "door_as_com1"
 		glass_base_icon_state = "door_as_gcom"
+		typetext = "command"
+		icontext = "com"
 		glass_type = /obj/machinery/door/airlock/glass_command
 		airlock_type = /obj/machinery/door/airlock/command
 		anchored = 1
@@ -46,6 +50,8 @@ obj/structure/door_assembly
 		name = "Security Airlock Assembly"
 		icon_state = "door_as_sec1"
 		glass_base_icon_state = "door_as_gsec"
+		typetext = "security"
+		icontext = "sec"
 		glass_type = /obj/machinery/door/airlock/glass_security
 		airlock_type = /obj/machinery/door/airlock/security
 		anchored = 1
@@ -61,6 +67,8 @@ obj/structure/door_assembly
 		name = "Engineering Airlock Assembly"
 		icon_state = "door_as_eng1"
 		glass_base_icon_state = "door_as_geng"
+		typetext = "engineering"
+		icontext = "eng"
 		glass_type = /obj/machinery/door/airlock/glass_engineering
 		airlock_type = /obj/machinery/door/airlock/engineering
 		anchored = 1
@@ -76,6 +84,8 @@ obj/structure/door_assembly
 		name = "Mining Airlock Assembly"
 		icon_state = "door_as_min1"
 		glass_base_icon_state = "door_as_gmin"
+		typetext = "mining"
+		icontext = "min"
 		glass_type = /obj/machinery/door/airlock/glass_mining
 		airlock_type = /obj/machinery/door/airlock/mining
 		anchored = 1
@@ -91,6 +101,8 @@ obj/structure/door_assembly
 		name = "Atmospherics Airlock Assembly"
 		icon_state = "door_as_atmo1"
 		glass_base_icon_state = "door_as_gatmo"
+		typetext = "atmos"
+		icontext = "atmo"
 		glass_type = /obj/machinery/door/airlock/glass_atmos
 		airlock_type = /obj/machinery/door/airlock/atmos
 		anchored = 1
@@ -106,6 +118,8 @@ obj/structure/door_assembly
 		name = "Research Airlock Assembly"
 		icon_state = "door_as_res1"
 		glass_base_icon_state = "door_as_gres"
+		typetext = "research"
+		icontext = "res"
 		glass_type = /obj/machinery/door/airlock/glass_research
 		airlock_type = /obj/machinery/door/airlock/research
 		anchored = 1
@@ -121,6 +135,8 @@ obj/structure/door_assembly
 		name = "Science Airlock Assembly"
 		icon_state = "door_as_sci1"
 		glass_base_icon_state = "door_as_gsci"
+		typetext = "science"
+		icontext = "sci"
 		glass_type = /obj/machinery/door/airlock/glass_science
 		airlock_type = /obj/machinery/door/airlock/science
 		anchored = 1
@@ -135,6 +151,8 @@ obj/structure/door_assembly
 	door_assembly_med
 		name = "Medical Airlock Assembly"
 		icon_state = "door_as_med1"
+		typetext = "medical"
+		icontext = "med"
 		airlock_type = /obj/machinery/door/airlock/medical
 		anchored = 1
 		density = 1
@@ -147,6 +165,8 @@ obj/structure/door_assembly
 	door_assembly_mai
 		name = "Maintenance Airlock Assembly"
 		icon_state = "door_as_mai1"
+		typetext = "maintenance"
+		icontext = "mai"
 		airlock_type = /obj/machinery/door/airlock/maintenance
 		anchored = 1
 		density = 1
@@ -156,6 +176,8 @@ obj/structure/door_assembly
 	door_assembly_ext
 		name = "External Airlock Assembly"
 		icon_state = "door_as_ext1"
+		typetext = "external"
+		icontext = "ext"
 		airlock_type = /obj/machinery/door/airlock/external
 		anchored = 1
 		density = 1
@@ -165,6 +187,8 @@ obj/structure/door_assembly
 	door_assembly_fre
 		name = "Freezer Airlock Assembly"
 		icon_state = "door_as_fre1"
+		typetext = "freezer"
+		icontext = "fre"
 		airlock_type = /obj/machinery/door/airlock/freezer
 		anchored = 1
 		density = 1
@@ -174,6 +198,8 @@ obj/structure/door_assembly
 	door_assembly_hatch
 		name = "Airtight Hatch Assembly"
 		icon_state = "door_as_hatch1"
+		typetext = "hatch"
+		icontext = "hatch"
 		airlock_type = /obj/machinery/door/airlock/hatch
 		anchored = 1
 		density = 1
@@ -183,6 +209,8 @@ obj/structure/door_assembly
 	door_assembly_mhatch
 		name = "Maintenance Hatch Assembly"
 		icon_state = "door_as_mhatch1"
+		typetext = "maintenance_hatch"
+		icontext = "mhatch"
 		airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 		anchored = 1
 		density = 1
@@ -274,6 +302,8 @@ obj/structure/door_assembly
 	door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
 		name = "High Tech Security Assembly"
 		icon_state = "door_as_highsec1"
+		typetext = "highsecurity"
+		icontext = "highsec"
 		airlock_type = /obj/machinery/door/airlock/highsecurity
 		anchored = 1
 		density = 1
@@ -288,7 +318,87 @@ obj/structure/door_assembly
 		created_name = t
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+	else if(istype(W, /obj/item/weapon/airlock_painter)) // |- Ricotez
+	//INFORMATION ABOUT ADDING A NEW AIRLOCK TO THE PAINT LIST:
+	//If your airlock has a regular version, add it to the list with regular versions.
+	//If your airlock has a glass version, add it to the list with glass versions.
+	//Do NOT add your airlock to a list if it does not have a version for that list,
+	//	or you will get broken icons.
+	//If you do this properly, you can just add the typetext and icontext of your airlock
+	//  to the big switch without having to make exceptions for glass airlocks, it will
+	//  simply be unavailable if the painter is used on an airlock of the wrong type.
+	//If your airlock has both a regular and a glass version, remember to also add the
+	//  icontext as exception in the part of the code that deals with turning a regular
+	//  airlock into a glass airlock, else your airlock can't transition from regular to
+	//  glass and will instead revert back to the white sprite.
+	// |- Ricotez
+		var/obj/item/weapon/airlock_painter/WT = W
+		if(WT.ink.charges)
+			var/icontype
+			var/optionlist
+			var/glasstext = ""
+			var/gicontext = ""
+			if(src.mineral)
+				if(src.mineral == "glass")
+					gicontext = "g"
+					glasstext = "glass_"
+					//These airlocks have a glass version.
+					optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				else
+					user << "The painter does not work on airlocks coated in minerals!"
+					return
+			else
+				//These airlocks have a regular version.
+				optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+
+
+			icontype = input(user, "Please select a paintjob for this glass airlock.") in optionlist
+			if(!in_range(src, usr) && src.loc != usr)	return
+			switch(icontype)
+				if("Default")
+					if(src.mineral == "glass")
+						glasstext = "glass"
+					typetext = ""
+					icontext = ""
+				if("Engineering")
+					typetext = "engineering"
+					icontext = "eng"
+				if("Atmospherics")
+					typetext = "atmos"
+					icontext = "atmo"
+				if("Security")
+					typetext = "security"
+					icontext = "sec"
+				if("Command")
+					typetext = "command"
+					icontext = "com"
+				if("Medical")
+					typetext = "medical"
+					icontext = "med"
+				if("Research")
+					typetext = "research"
+					icontext = "res"
+				if("Mining")
+					typetext = "mining"
+					icontext = "min"
+				if("Maintenance")
+					typetext = "maintenance"
+					icontext = "mai"
+				if("External")
+					typetext = "external"
+					icontext = "ext"
+				if("High Security")
+					typetext = "highsecurity"
+					icontext = "highsec"
+			src.airlock_type = text2path("/obj/machinery/door/airlock/[glasstext][typetext]")
+			src.base_icon_state = "door_as_[gicontext][icontext]"
+			user << "\blue You change the paintjob on the airlock assembly."
+			WT.use()
+		else
+			user << "\blue There aren't any charges left!"
+			return
+
+	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
@@ -395,8 +505,14 @@ obj/structure/door_assembly
 						G.use(1)
 						src.mineral = "glass"
 						src.name = "Near finished Window Airlock Assembly"
-						src.airlock_type = /obj/machinery/door/airlock/glass
-						src.base_icon_state = "door_as_g" //this will be applied to the icon_state with the correct state number at the proc's end.
+						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min")) //Make sure this airlock actually has a glass version.
+							src.airlock_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
+						else
+							//This airlock is default or does not have a glass version, so we revert to the default glass airlock. |- Ricotez
+							src.airlock_type = /obj/machinery/door/airlock/glass
+							typetext = ""
+							icontext = ""
+						src.base_icon_state = "door_as_g[icontext]" //this will be applied to the icon_state with the correct state number at the proc's end.
 				else if(istype(G, /obj/item/stack/sheet/mineral))
 					var/M = G.sheettype
 					if(G.amount>=2)
@@ -418,8 +534,21 @@ obj/structure/door_assembly
 			if(!src) return
 			user << "\blue You finish the airlock!"
 			var/obj/machinery/door/airlock/door
+			//The below cluster of if-else-statements is a result of the differences between normal
+			//  and mineral doors. |- Ricotez
 			if (mineral)
-				airlock_type = text2path("/obj/machinery/door/airlock/[mineral]")
+				if(mineral == "glass")
+					if(!typetext)
+						airlock_type = /obj/machinery/door/airlock/glass
+					else
+						airlock_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
+				else
+					airlock_type = text2path("/obj/machinery/door/airlock/[mineral]")
+			else
+				if(!typetext)
+					airlock_type = /obj/machinery/door/airlock
+				else
+					airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
 			door = new src.airlock_type( src.loc )
 			//door.req_access = src.req_access
 			door.electronics = src.electronics

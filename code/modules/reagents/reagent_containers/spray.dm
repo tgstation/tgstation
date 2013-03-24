@@ -90,6 +90,8 @@
 	set category = "Object"
 	set src in usr
 
+	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
+		return
 	if(isturf(usr.loc))
 		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"
 		reagents.reaction(usr.loc)

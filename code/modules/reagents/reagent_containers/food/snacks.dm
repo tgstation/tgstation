@@ -8,6 +8,8 @@
 	var/trash = null
 	var/slice_path
 	var/slices_num
+	var/eatverb
+	var/wrapped = 0
 
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -31,6 +33,8 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+	if(!eatverb)
+		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='notice'>None of [src] left, oh no!</span>"
 		M.drop_from_inventory(src)	//so icons update :[
@@ -39,20 +43,25 @@
 	if(istype(M, /mob/living/carbon))
 		if(M == user)								//If you're eating it yourself.
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-			if(fullness <= 50)
-				M << "<span class='notice'>You hungrily chew out a piece of [src] and gobble it down!</span>"
-			else if(fullness > 50)
-				M << "<span class='notice'>You hungrily begin to eat [src].</span>"
-			else if(fullness > 150)
-				M << "<span class='notice'>You take a bite of [src].</span>"
-			else if(fullness > 350)
-				M << "<span class='notice'>You unwillingly chew a bit of [src].</span>"
+			if(wrapped)
+				M << "<span class='notice'>You can't eat wrapped food!</span>"
+				return 0
+			else if(fullness <= 50)
+				M << "<span class='notice'>You hungrily [eatverb] some of the [src] and gobble it down!</span>"
+			else if(fullness > 50 && fullness < 150)
+				M << "<span class='notice'>You hungrily begin to [eatverb] the [src].</span>"
+			else if(fullness > 150 && fullness < 350)
+				M << "<span class='notice'>You [eatverb] the [src].</span>"
+			else if(fullness > 350 && fullness < 550)
+				M << "<span class='notice'>You unwillingly [eatverb] a bit of the [src].</span>"
 			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "<span class='notice'>You cannot force any more of [src] to go down your throat.</span>"
+				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
 				return 0
 		else
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+				if(wrapped)
+					return 0
 				if(fullness <= (550 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
@@ -229,6 +238,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("tricordrazine", 8)
 		bitesize = 3
@@ -276,13 +286,32 @@
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
-	icon_state = "chocolatebar"
+	icon_state = "chocolatebarunwrapped"
+	wrapped = 0
+	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("sugar", 2)
-		reagents.add_reagent("coco", 2)
-		bitesize = 2
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("sugar", 5)
+		reagents.add_reagent("coco", 5)
+
+	attack_self(mob/user)
+		if(wrapped)
+			Unwrap(user)
+		else
+			..()
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/proc/Unwrap(mob/user)
+		icon_state = "chocolatebarunwrapped"
+		desc = "It won't make you all sticky."
+		user << "<span class='notice'>You remove the foil.</span>"
+		wrapped = 0
+
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped
+	desc = "It's wrapped in some foil."
+	icon_state = "chocolatebar"
+	wrapped = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
 	name = "chocolate egg"
@@ -497,6 +526,7 @@
 	icon_state = "fishfillet"
 	New()
 		..()
+		eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 6
@@ -564,6 +594,7 @@
 	icon_state = "sausage"
 	New()
 		..()
+		eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
@@ -735,12 +766,11 @@
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
-
-/obj/item/weapon/reagent_containers/food/snacks/pie/New()
-	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("banana",5)
-	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("banana",5)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
@@ -917,13 +947,15 @@
 	var/unpopped = 0
 	New()
 		..()
+		eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 		unpopped = rand(1,10)
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	On_Consume()
-		if(prob(unpopped))	//lol ...what's the point?
-			usr << "\red You bite down on an un-popped kernel!"
+		if(prob(unpopped))	//lol ...what's the point? << AINT SO POINTLESS NO MORE
+			usr << "\red You bite down on an un-popped kernel, and it hurts your teeth!"
 			unpopped = max(0, unpopped-1)
+			reagents.add_reagent("sacid",0.1) //only a little tingle.
 		..()
 
 
@@ -1039,6 +1071,7 @@
 	icon_state = "badrecipe"
 	New()
 		..()
+		eatverb = pick("choke down","nibble","gnaw","chomp")
 		reagents.add_reagent("toxin", 1)
 		reagents.add_reagent("carbon", 3)
 		bitesize = 2
@@ -1096,6 +1129,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 5
@@ -1106,6 +1140,7 @@
 	icon_state = "slimesoup"
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("slimejelly", 5)
 		reagents.add_reagent("water", 10)
 		bitesize = 5
@@ -1116,6 +1151,7 @@
 	icon_state = "tomatosoup"
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("blood", 10)
 		reagents.add_reagent("water", 5)
@@ -1127,6 +1163,7 @@
 	icon_state = "clownstears"
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("banana", 5)
 		reagents.add_reagent("water", 10)
@@ -1139,6 +1176,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 5
@@ -1150,6 +1188,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		reagents.add_reagent("tricordrazine", 5)
@@ -1162,6 +1201,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		var/mysteryselect = pick(1,2,3,4,5,6,7,8,9,10)
 		switch(mysteryselect)
 			if(1)
@@ -1207,6 +1247,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("water", 10)
 		bitesize = 5
 		if(prob(25))
@@ -1220,6 +1261,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("capsaicin", 3)
 		reagents.add_reagent("tomatojuice", 2)
@@ -1233,6 +1275,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("frostoil", 3)
 		reagents.add_reagent("tomatojuice", 2)
@@ -1260,7 +1303,7 @@
 	desc = "Just add water!"
 	icon_state = "monkeycube"
 	bitesize = 12
-	var/wrapped = 0
+	wrapped = 0
 
 	New()
 		..()
@@ -1397,6 +1440,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("tomatojuice", 10)
 		bitesize = 3
@@ -1418,6 +1462,7 @@
 	icon_state = "stew"
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 10)
 		reagents.add_reagent("tomatojuice", 5)
 		reagents.add_reagent("imidazoline", 5)
@@ -1470,6 +1515,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 4
@@ -1481,6 +1527,7 @@
 	trash = /obj/item/trash/plate
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
@@ -1626,6 +1673,7 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 3
 
@@ -1662,19 +1710,8 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
-		switch(rand(1,6))
-			if(1)
-				name = "borsch"
-			if(2)
-				name = "bortsch"
-			if(3)
-				name = "borstch"
-			if(4)
-				name = "borsh"
-			if(5)
-				name = "borshch"
-			if(6)
-				name = "borscht"
+		eatverb = pick("slurp","sip","suck","inhale","drink")
+		name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 

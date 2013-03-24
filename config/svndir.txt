@@ -1,5 +1,0 @@
-#Path to the .svn directory. Used to get server revision info.
-SVNDIR .svn
-
-#Link to revision details.
-REVHREF http://code.google.com/p/tgstation13/source/detail?r=

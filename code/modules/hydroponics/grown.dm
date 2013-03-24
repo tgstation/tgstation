@@ -570,15 +570,6 @@
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
-		if(istype(src.loc,/mob))
-			pickup(src.loc)
-	lifespan = 120
-	endurance = 30
-	maturation = 15
-	production = 1
-	yield = 3
-	potency = 30
-	plant_type = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
@@ -816,15 +807,6 @@
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 2+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
-		if(istype(src.loc,/mob))
-			pickup(src.loc)
-	lifespan = 120
-	endurance = 30
-	maturation = 15
-	production = 1
-	yield = 3
-	potency = 30
-	plant_type = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
@@ -848,30 +830,31 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = "/obj/item/seeds/glowshroom"
 	name = "glowshroom cluster"
-	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark. Or does it?"
+	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
 	New()
 		..()
+		if(lifespan == 0) //basically, if you're spawning these via admin or on the map, then set up some default stats.
+			lifespan = 120
+			endurance = 30
+			maturation = 15
+			production = 1
+			yield = 3
+			potency = 30
+			plant_type = 2
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("radium",1+round((potency / 20), 1))
 		if(istype(src.loc,/mob))
-			pickup(src.loc)
+			pickup(src.loc)//adjusts the lighting on the mob
 		else
 			src.SetLuminosity(round(potency/10,1))
-	lifespan = 120 //ten times that is the delay
-	endurance = 30
-	maturation = 15
-	production = 1
-	yield = 3
-	potency = 30
-	plant_type = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
 	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
 
-	planted.delay = lifespan * 50
+	planted.delay = planted.delay - production*100 //So the delay goes DOWN with better stats instead of up. :I
 	planted.endurance = endurance
 	planted.yield = yield
 	planted.potency = potency

@@ -428,7 +428,9 @@ datum
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
-					if(1 to 15)
+					if(1 to 12)
+						if(prob(5))	M.emote("yawn")
+					if(12 to 15)
 						M.eye_blurry = max(M.eye_blurry, 10)
 					if(15 to 25)
 						M.drowsyness  = max(M.drowsyness, 20)
@@ -1691,40 +1693,6 @@ datum
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
 
-		ethanol
-			name = "Ethanol"
-			id = "ethanol"
-			description = "A well-known alcohol with a variety of applications."
-			reagent_state = LIQUID
-			color = "#404030" // rgb: 64, 64, 48
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.make_dizzy(5)
-				M.jitteriness = max(M.jitteriness-5,0)
-				if(data >= 25)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				if(data >= 40 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 3
-				..()
-				return
-			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/item/weapon/paper))
-					var/obj/item/weapon/paper/paperaffected = O
-					paperaffected.clearpaper()
-					usr << "The solution melts away the ink on the paper."
-				if(istype(O,/obj/item/weapon/book))
-					if(volume >= 5)
-						var/obj/item/weapon/book/affectedbook = O
-						affectedbook.dat = null
-						usr << "The solution melts away the ink on the book."
-					else
-						usr << "It wasn't enough..."
-				return
-
 		ammonia
 			name = "Ammonia"
 			id = "ammonia"
@@ -1773,14 +1741,15 @@ datum
 				if(!data) data = 1
 				data++
 				switch(data)
-					if(1)
+					if(1 to 10)
 						M.confused += 2
 						M.drowsyness += 2
-					if(2 to 50)
+					if(10 to 50)
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
 						M.adjustToxLoss((data - 50)*REM)
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
@@ -2586,31 +2555,6 @@ datum
 				..()
 				return
 
-		thirteenloko
-			name = "Thirteen Loko"
-			id = "thirteenloko"
-			description = "A potent mixture of caffeine and alcohol."
-			reagent_state = LIQUID
-			color = "#102000" // rgb: 16, 32, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M.drowsyness = max(0,M.drowsyness-7)
-				M.sleeping = max(0,M.sleeping-2)
-				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
-				M.nutrition += 1
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 45 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
 		dr_gibb
 			name = "Dr. Gibb"
 			id = "dr_gibb"
@@ -2654,203 +2598,18 @@ datum
 				..()
 				return
 
-		beer
-			name = "Beer"
-			id = "beer"
-			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+		sodawater
+			name = "Soda Water"
+			id = "sodawater"
+			description = "A can of club soda. Why not make a scotch and soda?"
 			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
+			color = "#619494" // rgb: 97, 148, 148
 
 			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				M.nutrition += 2
-				if(data >= 25)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				if(data >= 40 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-
-				..()
-				return
-
-		whiskey
-			name = "Whiskey"
-			id = "whiskey"
-			description = "A superb and well-aged single-malt whiskey. Damn."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		specialwhiskey
-			name = "Special Blend Whiskey"
-			id = "specialwhiskey"
-			description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-
-		gin
-			name = "Gin"
-			id = "gin"
-			description = "It's gin. In space. I say, good sir."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		rum
-			name = "Rum"
-			id = "rum"
-			description = "Yohoho and all that."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		vodka
-			name = "Vodka"
-			id = "vodka"
-			description = "Number one drink AND fueling choice for Russians worldwide."
-			reagent_state = LIQUID
-			color = "#0064C8" // rgb: 0, 100, 200
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				M.radiation = max(M.radiation-2,0)
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		holywater
-			name = "Holy Water"
-			id = "holywater"
-			description = "Water blessed by some deity."
-			reagent_state = LIQUID
-			color = "#E0E8EF" // rgb: 224, 232, 239
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=8
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 8
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+8,8)
-				..()
-				return
-
-			reaction_turf(var/turf/simulated/T, var/volume)
-				if(!istype(T)) return
-				T.Bless()
-
-		tequilla
-			name = "Tequila"
-			id = "tequilla"
-			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
-			reagent_state = LIQUID
-			color = "#FFFF91" // rgb: 255, 255, 145
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		vermouth
-			name = "Vermouth"
-			id = "vermouth"
-			description = "You suddenly feel a craving for a martini..."
-			reagent_state = LIQUID
-			color = "#91FF91" // rgb: 145, 255, 145
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		wine
-			name = "Wine"
-			id = "wine"
-			description = "An premium alchoholic beverage made from distilled grape juice."
-			reagent_state = LIQUID
-			color = "#7E4043" // rgb: 126, 64, 67
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=2
-				if(data >= 65 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 145 && prob(33))
-					M.confused = max(M.confused+2,0)
+				M.dizziness = max(0,M.dizziness-5)
+				M.drowsyness = max(0,M.drowsyness-3)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2870,94 +2629,6 @@ datum
 				..()
 				return
 
-		kahlua
-			name = "Kahlua"
-			id = "kahlua"
-			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M.dizziness = max(0,M.dizziness-5)
-				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = max(0,M.sleeping-2)//Copy-paste from Coffee, derp
-				M.make_jittery(5)
-				..()
-				return
-
-
-		cognac
-			name = "Cognac"
-			id = "cognac"
-			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
-			reagent_state = LIQUID
-			color = "#AB3C05" // rgb: 171, 60, 5
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 45 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		hooch
-			name = "Hooch"
-			id = "hooch"
-			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=6
-				if(data >= 35 && data <90)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 5
-				else if(data >= 90 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		ale
-			name = "Ale"
-			id = "ale"
-			description = "A dark alchoholic beverage made by malted barley and yeast."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		sodawater
-			name = "Soda Water"
-			id = "sodawater"
-			description = "A can of club soda. Why not make a scotch and soda?"
-			reagent_state = LIQUID
-			color = "#619494" // rgb: 97, 148, 148
-
-			on_mob_life(var/mob/living/M as mob)
-				M.dizziness = max(0,M.dizziness-5)
-				M.drowsyness = max(0,M.drowsyness-3)
-				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				..()
-				return
-
 		ice
 			name = "Ice"
 			id = "ice"
@@ -2968,948 +2639,6 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-				..()
-				return
-
-/////////////////////////////////////////////////////////////////cocktail entities//////////////////////////////////////////////
-
-		bilk
-			name = "Bilk"
-			id = "bilk"
-			description = "This appears to be beer mixed with milk. Disgusting."
-			reagent_state = LIQUID
-			color = "#895C4C" // rgb: 137, 92, 76
-
-			on_mob_life(var/mob/living/M as mob)
-				if(M.getBruteLoss() && prob(10)) M.heal_organ_damage(1,0)
-				M.nutrition += 2
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 25)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				if(data >= 40 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-				..()
-				return
-
-		atomicbomb
-			name = "Atomic Bomb"
-			id = "atomicbomb"
-			description = "Nuclear proliferation never tasted so good."
-			reagent_state = LIQUID
-			color = "#666300" // rgb: 102, 99, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M.druggy = max(M.druggy, 50)
-				M.confused = max(M.confused+2,0)
-				M.make_dizzy(10)
-				if (!M.stuttering) M.stuttering = 1
-				M.stuttering += 3
-				if(!data) data = 1
-				data++
-				switch(data)
-					if(51 to INFINITY)
-						M.sleeping += 1
-				..()
-				return
-
-		threemileisland
-			name = "THree Mile Island Iced Tea"
-			id = "threemileisland"
-			description = "Made for a woman, strong enough for a man."
-			reagent_state = LIQUID
-			color = "#666340" // rgb: 102, 99, 64
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				M.druggy = max(M.druggy, 50)
-				if(data >= 35 && data <90)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 90)
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		goldschlager
-			name = "Goldschlager"
-			id = "goldschlager"
-			description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
-			reagent_state = LIQUID
-			color = "#FFFF91" // rgb: 255, 255, 145
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		patron
-			name = "Patron"
-			id = "patron"
-			description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
-			reagent_state = LIQUID
-			color = "#585840" // rgb: 88, 88, 64
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		gintonic
-			name = "Gin and Tonic"
-			id = "gintonic"
-			description = "An all time classic, mild cocktail."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <135)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 135 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		cuba_libre
-			name = "Cuba Libre"
-			id = "cubalibre"
-			description = "Rum, mixed with cola. Viva la revolution."
-			reagent_state = LIQUID
-			color = "#3E1B00" // rgb: 62, 27, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <135)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 135 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		whiskey_cola
-			name = "Whiskey Cola"
-			id = "whiskeycola"
-			description = "Whiskey, mixed with cola. Surprisingly refreshing."
-			reagent_state = LIQUID
-			color = "#3E1B00" // rgb: 62, 27, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		martini
-			name = "Classic Martini"
-			id = "martini"
-			description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 135 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		vodkamartini
-			name = "Vodka Martini"
-			id = "vodkamartini"
-			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 135 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		white_russian
-			name = "White Russian"
-			id = "whiterussian"
-			description = "That's just, like, your opinion, man..."
-			reagent_state = LIQUID
-			color = "#A68340" // rgb: 166, 131, 64
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		screwdrivercocktail
-			name = "Screwdriver"
-			id = "screwdrivercocktail"
-			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
-			reagent_state = LIQUID
-			color = "#A68310" // rgb: 166, 131, 16
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		booger
-			name = "Booger"
-			id = "booger"
-			description = "Ewww..."
-			reagent_state = LIQUID
-			color = "#8CFF8C" // rgb: 140, 255, 140
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+4,0)
-				..()
-				return
-
-		bloody_mary
-			name = "Bloody Mary"
-			id = "bloodymary"
-			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		gargle_blaster
-			name = "Pan-Galactic Gargle Blaster"
-			id = "gargleblaster"
-			description = "Whoah, this stuff looks volatile!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=6
-				if(data >= 15 && data <45)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 45 && prob(50) && data <55)
-					M.confused = max(M.confused+3,0)
-				else if(data >=55)
-					M.druggy = max(M.druggy, 55)
-				..()
-				return
-
-		brave_bull
-			name = "Brave Bull"
-			id = "bravebull"
-			description = "It's just as effective as Dutch-Courage!."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <145)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 145 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		tequilla_sunrise
-			name = "Tequila Sunrise"
-			id = "tequillasunrise"
-			description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
-			reagent_state = LIQUID
-			color = "#FFE48C" // rgb: 255, 228, 140
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		toxins_special
-			name = "Toxins Special"
-			id = "toxinsspecial"
-			description = "This thing is ON FIRE!. CALL THE DAMN SHUTTLE!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if (M.bodytemperature < 330)
-					M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		beepsky_smash
-			name = "Beepsky Smash"
-			id = "beepskysmash"
-			description = "Deny drinking this and prepare for THE LAW."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M.Stun(2)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		doctor_delight
-			name = "The Doctor's Delight"
-			id = "doctorsdelight"
-			description = "A gulp a day keeps the MediBot away. That's probably for the best."
-			reagent_state = LIQUID
-			color = "#FF8CFF" // rgb: 255, 140, 255
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(M.getOxyLoss() && prob(80)) M.adjustOxyLoss(-2)
-				if(M.getBruteLoss() && prob(80)) M.heal_organ_damage(2,0)
-				if(M.getFireLoss() && prob(80)) M.heal_organ_damage(0,2)
-				if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-2)
-				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
-				if(M.confused !=0) M.confused = max(0,M.confused - 5)
-				..()
-				return
-
-		irish_cream
-			name = "Irish Cream"
-			id = "irishcream"
-			description = "Whiskey-imbued cream, what else would you expect from the Irish."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <145)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 145 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		manly_dorf
-			name = "The Manly Dorf"
-			id = "manlydorf"
-			description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 35 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		longislandicedtea
-			name = "Long Island Iced Tea"
-			id = "longislandicedtea"
-			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		moonshine
-			name = "Moonshine"
-			id = "moonshine"
-			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 30 && data <60)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 60 && prob(40))
-					M.confused = max(M.confused+5,0)
-				..()
-				return
-
-		b52
-			name = "B-52"
-			id = "b52"
-			description = "Coffee, Irish Cream, and cognac. You will get bombed."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 25 && data <90)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 90 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		irishcoffee
-			name = "Irish Coffee"
-			id = "irishcoffee"
-			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <150)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 150 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		margarita
-			name = "Margarita"
-			id = "margarita"
-			description = "On the rocks with salt on the rim. Arriba~!"
-			reagent_state = LIQUID
-			color = "#8CFF8C" // rgb: 140, 255, 140
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <150)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 150 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		black_russian
-			name = "Black Russian"
-			id = "blackrussian"
-			description = "For the lactose-intolerant. Still as classy as a White Russian."
-			reagent_state = LIQUID
-			color = "#360000" // rgb: 54, 0, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		manhattan
-			name = "Manhattan"
-			id = "manhattan"
-			description = "The Detective's undercover drink of choice. He never could stomach gin..."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		manhattan_proj
-			name = "Manhattan Project"
-			id = "manhattan_proj"
-			description = "A scientist's drink of choice, for pondering ways to blow up the station."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				M.druggy = max(M.druggy, 30)
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		whiskeysoda
-			name = "Whiskey Soda"
-			id = "whiskeysoda"
-			description = "For the more refined griffon."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		antifreeze
-			name = "Anti-freeze"
-			id = "antifreeze"
-			description = "Ultimate refreshment."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if (M.bodytemperature < 330)
-					M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		barefoot
-			name = "Barefoot"
-			id = "barefoot"
-			description = "Barefoot and pregnant"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 5
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+5,0)
-				..()
-				return
-
-		snowwhite
-			name = "Snow White"
-			id = "snowwhite"
-			description = "A cold refreshment"
-			reagent_state = LIQUID
-			color = "#FFFFFF" // rgb: 255, 255, 255
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 115 && prob(30))
-					M.confused = max(M.confused+4,0)
-				..()
-				return
-
-		demonsblood
-			name = "Demons Blood"
-			id = "demonsblood"
-			description = "AHHHH!!!!"
-			reagent_state = LIQUID
-			color = "#820000" // rgb: 130, 0, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 10
-				else if(data >= 115 && prob(90))
-					M.confused = max(M.confused+10,10)
-				..()
-				return
-
-		vodkatonic
-			name = "Vodka and Tonic"
-			id = "vodkatonic"
-			description = "For when a gin and tonic isn't russian enough."
-			reagent_state = LIQUID
-			color = "#0064C8" // rgb: 0, 100, 200
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		ginfizz
-			name = "Gin Fizz"
-			id = "ginfizz"
-			description = "Refreshingly lemony, deliciously dry."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		bahama_mama
-			name = "Bahama mama"
-			id = "bahama_mama"
-			description = "Tropical cocktail."
-			reagent_state = LIQUID
-			color = "#FF7F3B" // rgb: 255, 127, 59
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+2,0)
-				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				..()
-				return
-
-		singulo
-			name = "Singulo"
-			id = "singulo"
-			description = "A blue-space beverage!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=15
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 15
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
-
-		sbiten
-			name = "Sbiten"
-			id = "sbiten"
-			description = "A spicy Vodka! Might be a little hot for the little guys!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if (M.bodytemperature < 360)
-					M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-				if(!data) data = 1
-				data++
-				M.dizziness +=6
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 6
-				else if(data >= 125 && prob(33))
-					M.confused = max(M.confused+5,5)
-				..()
-				return
-
-		devilskiss
-			name = "Devils Kiss"
-			id = "devilskiss"
-			description = "Creepy time!"
-			reagent_state = LIQUID
-			color = "#A68310" // rgb: 166, 131, 16
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+4,0)
-				..()
-				return
-
-		red_mead
-			name = "Red Mead"
-			id = "red_mead"
-			description = "The true Viking drink! Even though it has a strange red color."
-			reagent_state = LIQUID
-			color = "#C73C00" // rgb: 199, 60, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+4,4)
-				..()
-				return
-
-		mead
-			name = "Mead"
-			id = "mead"
-			description = "A Vikings drink, though a cheap one."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				M.nutrition += 2
-				if(data >= 25)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				if(data >= 40 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-
-				..()
-				return
-
-		iced_beer
-			name = "Iced Beer"
-			id = "iced_beer"
-			description = "A beer which is so cold the air around it freezes."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(M.bodytemperature > 270)
-					M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				M.nutrition += 2
-				if(data >= 25)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 3
-				if(data >= 40 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-
-				..()
-				return
-
-		grog
-			name = "Grog"
-			id = "grog"
-			description = "Watered down rum, Nanotrasen approves!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=2
-				if(data >= 90 && data <250)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 2
-				else if(data >= 250 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		aloe
-			name = "Aloe"
-			id = "aloe"
-			description = "So very, very, very good."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=2
-				if(data >= 90 && data <250)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 2
-				else if(data >= 250 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		andalusia
-			name = "Andalusia"
-			id = "andalusia"
-			description = "A nice, strange named drink."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=8
-				if(data >= 90 && data <250)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 1
-				else if(data >= 250 && prob(33))
-					M.confused = max(M.confused+2,0)
-				..()
-				return
-
-		alliescocktail
-			name = "Allies Cocktail"
-			id = "alliescocktail"
-			description = "A drink made from your allies, not as sweet as when made from your enemies."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 90 && data <250)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 7
-				else if(data >= 250 && prob(60))
-					M.confused = max(M.confused+8,0)
 				..()
 				return
 
@@ -3953,42 +2682,65 @@ datum
 				..()
 				return
 
-		acid_spit
-			name = "Acid Spit"
-			id = "acidspit"
-			description = "A drink for the daring, can be deadly if incorrectly prepared!"
+		doctor_delight
+			name = "The Doctor's Delight"
+			id = "doctorsdelight"
+			description = "A gulp a day keeps the MediBot away. That's probably for the best."
 			reagent_state = LIQUID
-			color = "#365000" // rgb: 54, 80, 0
+			color = "#FF8CFF" // rgb: 255, 140, 255
 
 			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+10,0)
+				if(!M) M = holder.my_atom
+				if(M.getOxyLoss() && prob(80)) M.adjustOxyLoss(-2)
+				if(M.getBruteLoss() && prob(80)) M.heal_organ_damage(2,0)
+				if(M.getFireLoss() && prob(80)) M.heal_organ_damage(0,2)
+				if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-2)
+				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
+				if(M.confused !=0) M.confused = max(0,M.confused - 5)
 				..()
 				return
 
-		amasec
-			name = "Amasec"
-			id = "amasec"
-			description = "Official drink of the Nanotrasen Gun-Club!"
+//////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
+
+		atomicbomb
+			name = "Atomic Bomb"
+			id = "atomicbomb"
+			description = "Nuclear proliferation never tasted so good."
+			reagent_state = LIQUID
+			color = "#666300" // rgb: 102, 99, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.druggy = max(M.druggy, 50)
+				M.confused = max(M.confused+2,0)
+				M.make_dizzy(10)
+				if (!M.stuttering) M.stuttering = 1
+				M.stuttering += 3
+				if(!data) data = 1
+				data++
+				switch(data)
+					if(51 to INFINITY)
+						M.sleeping += 1
+				..()
+				return
+
+		gargle_blaster
+			name = "Pan-Galactic Gargle Blaster"
+			id = "gargleblaster"
+			description = "Whoah, this stuff looks volatile!"
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.stunned = 1
 				if(!data) data = 1
 				data++
-				M.dizziness +=4
-				if(data >= 55 && data <165)
+				M.dizziness +=6
+				if(data >= 15 && data <45)
 					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 165 && prob(33))
-					M.confused = max(M.confused+5,0)
+					M.stuttering += 3
+				else if(data >= 45 && prob(50) && data <55)
+					M.confused = max(M.confused+3,0)
+				else if(data >=55)
+					M.druggy = max(M.druggy, 55)
 				..()
 				return
 
@@ -4013,9 +2765,7 @@ datum
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
 				..()
-
 				return
-
 
 		hippies_delight
 			name = "Hippie's Delight"
@@ -4028,6 +2778,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 50)
 				if(!data) data = 1
+				data++
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
@@ -4046,11 +2797,549 @@ datum
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
-				data++
 				..()
 				return
 
-		bananahonk
+		ethanol
+			name = "Ethanol"
+			id = "ethanol"
+			description = "A well-known alcohol with a variety of applications."
+			reagent_state = LIQUID
+			color = "#404030" // rgb: 64, 64, 48
+			var/boozepwr = 45 //lower numbers mean the booze will have an effect faster.
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.jitteriness = max(M.jitteriness-5,0)
+				if(data >= boozepwr)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+					M.make_dizzy(5)
+				if(data >= boozepwr*2.5 && prob(33))
+					if (!M.confused) M.confused = 1
+					M.confused += 3
+				..()
+				return
+			reaction_obj(var/obj/O, var/volume)
+				if(istype(O,/obj/item/weapon/paper))
+					var/obj/item/weapon/paper/paperaffected = O
+					paperaffected.clearpaper()
+					usr << "The solution melts away the ink on the paper."
+				if(istype(O,/obj/item/weapon/book))
+					if(volume >= 5)
+						var/obj/item/weapon/book/affectedbook = O
+						affectedbook.dat = null
+						usr << "The solution melts away the ink on the book."
+					else
+						usr << "It wasn't enough..."
+				return
+
+		ethanol/beer
+			name = "Beer"
+			id = "beer"
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += 1
+				..()
+				return
+
+		ethanol/kahlua
+			name = "Kahlua"
+			id = "kahlua"
+			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.dizziness = max(0,M.dizziness-5)
+				M.drowsyness = max(0,M.drowsyness-3)
+				M.sleeping = max(0,M.sleeping-2)
+				M.make_jittery(5)
+				..()
+				return
+
+		ethanol/whiskey
+			name = "Whiskey"
+			id = "whiskey"
+			description = "A superb and well-aged single-malt whiskey. Damn."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/thirteenloko
+			name = "Thirteen Loko"
+			id = "thirteenloko"
+			description = "A potent mixture of caffeine and alcohol."
+			color = "#102000" // rgb: 16, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.drowsyness = max(0,M.drowsyness-7)
+				M.sleeping = max(0,M.sleeping-2)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+				M.make_jittery(5)
+				M.nutrition += 1
+				..()
+				return
+
+		ethanol/vodka
+			name = "Vodka"
+			id = "vodka"
+			description = "Number one drink AND fueling choice for Russians worldwide."
+			color = "#0064C8" // rgb: 0, 100, 200
+
+			on_mob_life(var/mob/living/M as mob)
+				M.radiation = max(M.radiation-2,0)
+				..()
+				return
+
+		ethanol/holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "Water blessed by some deity."
+			color = "#E0E8EF" // rgb: 224, 232, 239
+			boozepwr = 15
+
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if(!istype(T)) return
+				T.Bless()
+
+		ethanol/bilk
+			name = "Bilk"
+			id = "bilk"
+			description = "This appears to be beer mixed with milk. Disgusting."
+			color = "#895C4C" // rgb: 137, 92, 76
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.getBruteLoss() && prob(10)) M.heal_organ_damage(1,0)
+				M.nutrition += 2
+				..()
+				return
+
+		ethanol/threemileisland
+			name = "Three Mile Island Iced Tea"
+			id = "threemileisland"
+			description = "Made for a woman, strong enough for a man."
+			color = "#666340" // rgb: 102, 99, 64
+
+			on_mob_life(var/mob/living/M as mob)
+				M.druggy = max(M.druggy, 50)
+				..()
+				return
+
+		ethanol/gin
+			name = "Gin"
+			id = "gin"
+			description = "It's gin. In space. I say, good sir."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/rum
+			name = "Rum"
+			id = "rum"
+			description = "Yohoho and all that."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/tequilla
+			name = "Tequila"
+			id = "tequilla"
+			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
+			color = "#FFFF91" // rgb: 255, 255, 145
+
+		ethanol/vermouth
+			name = "Vermouth"
+			id = "vermouth"
+			description = "You suddenly feel a craving for a martini..."
+			color = "#91FF91" // rgb: 145, 255, 145
+
+		ethanol/wine
+			name = "Wine"
+			id = "wine"
+			description = "An premium alchoholic beverage made from distilled grape juice."
+			color = "#7E4043" // rgb: 126, 64, 67
+
+		ethanol/cognac
+			name = "Cognac"
+			id = "cognac"
+			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
+			color = "#AB3C05" // rgb: 171, 60, 5
+
+		ethanol/hooch
+			name = "Hooch"
+			id = "hooch"
+			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
+
+		ethanol/ale
+			name = "Ale"
+			id = "ale"
+			description = "A dark alchoholic beverage made by malted barley and yeast."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/goldschlager
+			name = "Goldschlager"
+			id = "goldschlager"
+			description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
+			color = "#FFFF91" // rgb: 255, 255, 145
+
+		ethanol/patron
+			name = "Patron"
+			id = "patron"
+			description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
+			color = "#585840" // rgb: 88, 88, 64
+
+		ethanol/gintonic
+			name = "Gin and Tonic"
+			id = "gintonic"
+			description = "An all time classic, mild cocktail."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 65
+
+		ethanol/cuba_libre
+			name = "Cuba Libre"
+			id = "cubalibre"
+			description = "Rum, mixed with cola. Viva la revolution."
+			color = "#3E1B00" // rgb: 62, 27, 0
+
+		ethanol/whiskey_cola
+			name = "Whiskey Cola"
+			id = "whiskeycola"
+			description = "Whiskey, mixed with cola. Surprisingly refreshing."
+			color = "#3E1B00" // rgb: 62, 27, 0
+			boozepwr = 65
+
+		ethanol/martini
+			name = "Classic Martini"
+			id = "martini"
+			description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/vodkamartini
+			name = "Vodka Martini"
+			id = "vodkamartini"
+			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/white_russian
+			name = "White Russian"
+			id = "whiterussian"
+			description = "That's just, like, your opinion, man..."
+			color = "#A68340" // rgb: 166, 131, 64
+			boozepwr = 55
+
+		ethanol/screwdrivercocktail
+			name = "Screwdriver"
+			id = "screwdrivercocktail"
+			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
+			color = "#A68310" // rgb: 166, 131, 16
+			boozepwr = 55
+
+		ethanol/booger
+			name = "Booger"
+			id = "booger"
+			description = "Ewww..."
+			color = "#8CFF8C" // rgb: 140, 255, 140
+			boozepwr = 55
+
+		ethanol/bloody_mary
+			name = "Bloody Mary"
+			id = "bloodymary"
+			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
+
+		ethanol/brave_bull
+			name = "Brave Bull"
+			id = "bravebull"
+			description = "It's just as effective as Dutch-Courage!."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/tequilla_sunrise
+			name = "Tequila Sunrise"
+			id = "tequillasunrise"
+			description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
+			color = "#FFE48C" // rgb: 255, 228, 140
+			boozepwr = 55
+
+		ethanol/toxins_special
+			name = "Toxins Special"
+			id = "toxinsspecial"
+			description = "This thing is ON FIRE!. CALL THE DAMN SHUTTLE!"
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 330)
+					M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		ethanol/beepsky_smash
+			name = "Beepsky Smash"
+			id = "beepskysmash"
+			description = "Deny drinking this and prepare for THE LAW."
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.Stun(2)
+				..()
+				return
+
+		ethanol/irish_cream
+			name = "Irish Cream"
+			id = "irishcream"
+			description = "Whiskey-imbued cream, what else would you expect from the Irish."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/manly_dorf
+			name = "The Manly Dorf"
+			id = "manlydorf"
+			description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 10
+
+		ethanol/longislandicedtea
+			name = "Long Island Iced Tea"
+			id = "longislandicedtea"
+			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
+
+		ethanol/moonshine
+			name = "Moonshine"
+			id = "moonshine"
+			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 25
+
+		ethanol/b52
+			name = "B-52"
+			id = "b52"
+			description = "Coffee, Irish Cream, and cognac. You will get bombed."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 25
+
+		ethanol/irishcoffee
+			name = "Irish Coffee"
+			id = "irishcoffee"
+			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
+
+		ethanol/margarita
+			name = "Margarita"
+			id = "margarita"
+			description = "On the rocks with salt on the rim. Arriba~!"
+			color = "#8CFF8C" // rgb: 140, 255, 140
+			boozepwr = 55
+
+		ethanol/black_russian
+			name = "Black Russian"
+			id = "blackrussian"
+			description = "For the lactose-intolerant. Still as classy as a White Russian."
+			color = "#360000" // rgb: 54, 0, 0
+			boozepwr = 55
+
+		ethanol/manhattan
+			name = "Manhattan"
+			id = "manhattan"
+			description = "The Detective's undercover drink of choice. He never could stomach gin..."
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
+
+		ethanol/manhattan_proj
+			name = "Manhattan Project"
+			id = "manhattan_proj"
+			description = "A scientist's drink of choice, for pondering ways to blow up the station."
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.druggy = max(M.druggy, 30)
+				..()
+				return
+
+		ethanol/whiskeysoda
+			name = "Whiskey Soda"
+			id = "whiskeysoda"
+			description = "For the more refined griffon."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/antifreeze
+			name = "Anti-freeze"
+			id = "antifreeze"
+			description = "Ultimate refreshment."
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 330)
+					M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		ethanol/barefoot
+			name = "Barefoot"
+			id = "barefoot"
+			description = "Barefoot and pregnant"
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/snowwhite
+			name = "Snow White"
+			id = "snowwhite"
+			description = "A cold refreshment"
+			color = "#FFFFFF" // rgb: 255, 255, 255
+
+		ethanol/demonsblood
+			name = "Demons Blood"
+			id = "demonsblood"
+			description = "AHHHH!!!!"
+			color = "#820000" // rgb: 130, 0, 0
+
+		ethanol/vodkatonic
+			name = "Vodka and Tonic"
+			id = "vodkatonic"
+			description = "For when a gin and tonic isn't russian enough."
+			color = "#0064C8" // rgb: 0, 100, 200
+
+		ethanol/ginfizz
+			name = "Gin Fizz"
+			id = "ginfizz"
+			description = "Refreshingly lemony, deliciously dry."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/bahama_mama
+			name = "Bahama mama"
+			id = "bahama_mama"
+			description = "Tropical cocktail."
+			color = "#FF7F3B" // rgb: 255, 127, 59
+
+		ethanol/singulo
+			name = "Singulo"
+			id = "singulo"
+			description = "A blue-space beverage!"
+			color = "#2E6671" // rgb: 46, 102, 113
+
+		ethanol/sbiten
+			name = "Sbiten"
+			id = "sbiten"
+			description = "A spicy Vodka! Might be a little hot for the little guys!"
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 360)
+					M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		ethanol/devilskiss
+			name = "Devils Kiss"
+			id = "devilskiss"
+			description = "Creepy time!"
+			color = "#A68310" // rgb: 166, 131, 16
+
+		ethanol/red_mead
+			name = "Red Mead"
+			id = "red_mead"
+			description = "The true Viking drink! Even though it has a strange red color."
+			color = "#C73C00" // rgb: 199, 60, 0
+
+		ethanol/mead
+			name = "Mead"
+			id = "mead"
+			description = "A Vikings drink, though a cheap one."
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += 1
+				..()
+				return
+
+		ethanol/iced_beer
+			name = "Iced Beer"
+			id = "iced_beer"
+			description = "A beer which is so cold the air around it freezes."
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.bodytemperature > 270)
+					M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		ethanol/grog
+			name = "Grog"
+			id = "grog"
+			description = "Watered down rum, Nanotrasen approves!"
+			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 90
+
+		ethanol/aloe
+			name = "Aloe"
+			id = "aloe"
+			description = "So very, very, very good."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/andalusia
+			name = "Andalusia"
+			id = "andalusia"
+			description = "A nice, strange named drink."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/alliescocktail
+			name = "Allies Cocktail"
+			id = "alliescocktail"
+			description = "A drink made from your allies, not as sweet as when made from your enemies."
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/acid_spit
+			name = "Acid Spit"
+			id = "acidspit"
+			description = "A drink for the daring, can be deadly if incorrectly prepared!"
+			reagent_state = LIQUID
+			color = "#365000" // rgb: 54, 80, 0
+
+		ethanol/amasec
+			name = "Amasec"
+			id = "amasec"
+			description = "Official drink of the Nanotrasen Gun-Club!"
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+		ethanol/changelingsting
+			name = "Changeling Sting"
+			id = "changelingsting"
+			description = "You take a tiny sip and feel a burning sensation..."
+			color = "#2E6671" // rgb: 46, 102, 113
+
+		ethanol/irishcarbomb
+			name = "Irish Car Bomb"
+			id = "irishcarbomb"
+			description = "Mmm, tastes like chocolate cake..."
+			color = "#2E6671" // rgb: 46, 102, 113
+
+		ethanol/syndicatebomb
+			name = "Syndicate Bomb"
+			id = "syndicatebomb"
+			description = "Tastes like terrorism!"
+			color = "#2E6671" // rgb: 46, 102, 113
+
+		ethanol/erikasurprise
+			name = "Erika Surprise"
+			id = "erikasurprise"
+			description = "The surprise is, it's green!"
+			color = "#2E6671" // rgb: 46, 102, 113
+
+		ethanol/driestmartini
+			name = "Driest Martini"
+			id = "driestmartini"
+			description = "Only for the experienced. You think you see sand floating in the glass."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#2E6671" // rgb: 46, 102, 113
+			boozepwr = 25
+
+		ethanol/bananahonk
 			name = "Banana Mama"
 			id = "bananahonk"
 			description = "A drink from Clown Heaven."
@@ -4059,32 +3348,13 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				if(!data) data = 1
-				data++
-				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown") || istype(M, /mob/living/carbon/monkey))
 					if(!M) M = holder.my_atom
 					M.heal_organ_damage(1,1)
-					M.dizziness +=5
-					if(data >= 55 && data <165)
-						if (!M.stuttering) M.stuttering = 1
-						M.stuttering += 5
-					else if(data >= 165 && prob(33))
-						M.confused = max(M.confused+5,0)
-					..()
-					return
-				if(istype(M, /mob/living/carbon/monkey))
-					if(!M) M = holder.my_atom
-					M.heal_organ_damage(1,1)
-					M.dizziness +=5
-					if(data >= 55 && data <165)
-						if (!M.stuttering) M.stuttering = 1
-						M.stuttering += 5
-					else if(data >= 165 && prob(33))
-						M.confused = max(M.confused+5,0)
 					..()
 					return
 
-		silencer
+		ethanol/silencer
 			name = "Silencer"
 			id = "silencer"
 			description = "A drink from Mime Heaven."
@@ -4093,114 +3363,11 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				if(!data) data = 1
-				data++
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
 					if(!M) M = holder.my_atom
 					M.heal_organ_damage(1,1)
-					M.dizziness +=5
-					if(data >= 55 && data <165)
-						if (!M.stuttering) M.stuttering = 1
-						M.stuttering += 5
-					else if(data >= 165 && prob(33))
-						M.confused = max(M.confused+5,0)
 					..()
 					return
 
-
-		changelingsting
-			name = "Changeling Sting"
-			id = "changelingsting"
-			description = "You take a tiny sip and feel a burning sensation..."
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 5
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
-
-		irishcarbomb
-			name = "Irish Car Bomb"
-			id = "irishcarbomb"
-			description = "Mmm, tastes like chocolate cake..."
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 5
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
-
-		syndicatebomb
-			name = "Syndicate Bomb"
-			id = "syndicatebomb"
-			description = "Tastes like terrorism!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
-
-		erikasurprise
-			name = "Erika Surprise"
-			id = "erikasurprise"
-			description = "The surprise is, it's green!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=30
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 30
-				else if(data >= 115 && prob(60))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
-
-		driestmartini
-			name = "Driest Martini"
-			id = "driestmartini"
-			description = "Only for the experienced. You think you see sand floating in the glass."
-			nutriment_factor = 1 * REAGENTS_METABOLISM
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

@@ -30,7 +30,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	mouse_opacity = 0
 	var/amount = 8.0
 
-/obj/effect/effect/proc/delete()
+/obj/effect/proc/delete()
 	loc = null
 	if(reagents)
 		reagents.delete()
