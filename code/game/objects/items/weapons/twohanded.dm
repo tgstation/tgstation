@@ -89,17 +89,20 @@
 		user.put_in_inactive_hand(O)
 		return
 
+
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
-	w_class = 5.0
-	icon_state = "offhand"
 	name = "offhand"
+	icon_state = "offhand"
+	w_class = 5.0
+	abstract = 1
 
-	unwield()
-		del(src)
+/obj/item/weapon/twohanded/offhand/unwield()
+	del(src)
 
-	wield()
-		del(src)
+/obj/item/weapon/twohanded/offhand/wield()
+	del(src)
+
 
 /*
  * Fireaxe
