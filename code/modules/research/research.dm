@@ -1,3 +1,8 @@
+/obj/machinery/r_n_d/server/proc/TestDesignHasReqs(var/i = 1000)
+	for(i,i>0,i--)
+		files.RefreshResearch()
+	world << "Tested [i] loops of RefreshResearch"
+
 /*
 General Explination:
 The research datum is the "folder" where all the research information is stored in a R&D console. It's also a holder for all the
@@ -79,7 +84,7 @@ research holder datum.
 
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
-/datum/research/proc/DesignHasReqs(var/datum/design/D)
+/*/datum/research/proc/DesignHasReqs(var/datum/design/D)
 	if(D.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -92,7 +97,16 @@ research holder datum.
 	if(matches == D.req_tech.len)
 		return 1
 	else
-		return 0
+		return 0*/
+
+/datum/research/proc/DesignHasReqs(var/datum/design/D)
+	if(D.req_tech.len == 0)
+		return 1
+	for(var/datum/tech/T in known_tech)
+		if(!(D.req_tech[T.id]) || T.level < D.req_tech[T.id])
+			return 0
+	return 1
+
 /*
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
