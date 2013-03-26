@@ -842,15 +842,16 @@ table tr:first-child th:first-child { border: none;}
 				send_signal(device_id, list(
 					"power"= 0
 				))
-		/*if(AALARM_MODE_OFF) Commented out cause the "turn off panic" uses scrubbing mode now instead.
+		if(AALARM_MODE_OFF)
 			for(var/device_id in alarm_area.air_scrub_names)
 				send_signal(device_id, list(
-					"panic_siphon" = 0
+					"panic_siphon"= 0,
+					"power"= 0
 				))
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list(
-					"power"= 1
-				))*/
+					"power"= 0
+				))
 
 /obj/machinery/alarm/update_icon()
 	if(wiresexposed)
