@@ -5,6 +5,25 @@ Code: https://github.com/tgstation/-tg-station
 IRC: irc://irc.rizon.net/tgstation13
 
 ================================================================================
+DOWNLOADING
+================================================================================
+There are a number of ways to download tgstation13. I've listed 3 here (easiest first).
+
+Option 1: Download the source code as a zip by clicking the ZIP button in the code tab of https://github.com/tgstation/-tg-station
+(note: this will use a lot of bandwidth if you wish to update andis alot of hassle if you want to make any changes at all, so I don't recommend it)
+
+(Option 2 & 3): Install Git-scm from here first: http://git-scm.com/download/win
+Option 2:
+Install GitHub::windows from http://windows.github.com/
+It handles most of the setup/configuraton of Git for you.
+Then you simply search for tgstation repository and click the big clone button.
+
+Option 3:
+Follow this guide linked in Giacom's post thread here: http://forums.nanotrasen.com/viewtopic.php?f=16&t=12552
+(I recommend usng git-scm rather than the git CLI suggested by the guide linked to in that thread)
+
+
+================================================================================
 INSTALLATION
 ================================================================================
 
