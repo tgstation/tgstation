@@ -30,8 +30,8 @@ var/list/solars_list = list()
 	var/health = 10
 	var/obscured = 0
 	var/sunfrac = 0
-	var/adir = SOUTH
-	var/ndir = SOUTH
+	var/adir = SOUTH // actual dir
+	var/ndir = SOUTH // target dir
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
@@ -314,7 +314,7 @@ var/list/solars_list = list()
 		return
 	icon_state = "solar"
 	overlays.Cut()
-	if(cdir > 0)
+	if(cdir > -1)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 	return
 
@@ -375,7 +375,6 @@ var/list/solars_list = list()
 		nexttime = world.timeofday + 3600/abs(trackrate)
 		cdir = (cdir+trackrate/abs(trackrate)+360)%360
 		set_panels(cdir)
-		update_icon()
 
 	src.updateDialog()
 
@@ -386,7 +385,6 @@ var/list/solars_list = list()
 		return
 	cdir = angle
 	set_panels(cdir)
-	update_icon()
 	src.updateDialog()
 
 
@@ -434,14 +432,12 @@ var/list/solars_list = list()
 	if(href_list["dir"])
 		cdir = text2num(href_list["dir"])
 		set_panels(cdir)
-		update_icon()
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
 			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
 			spawn(1)
 				set_panels(cdir)
-				update_icon()
 		if(href_list["tdir"])
 			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
 			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
@@ -456,7 +452,6 @@ var/list/solars_list = list()
 					break
 
 	set_panels(cdir)
-	update_icon()
 	src.updateUsrDialog()
 	return
 
@@ -469,6 +464,7 @@ var/list/solars_list = list()
 				if(!S.control)
 					S.control = src
 				S.ndir = cdir
+	update_icon()
 
 
 /obj/machinery/power/solar_control/power_change()
