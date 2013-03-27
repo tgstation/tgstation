@@ -24,7 +24,7 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			var/obj/item/weapon/reagent_containers/syringe/S = I
-			if(S.mode != 2)
+			if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 				if(syringes.len < max_syringes)
 					user.drop_item()
 					I.loc = src
