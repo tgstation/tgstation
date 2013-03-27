@@ -500,6 +500,23 @@ datum
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				return
 
+		holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
+			reagent_state = LIQUID
+			color = "#0064C8" // rgb: 0, 100, 200
+
+			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					if((M.mind in ticker.mode.cult) && prob(10))
+						M << "\blue A cooling sensation from inside you brings you an untold calmness."
+						ticker.mode.remove_cultist(M.mind)
+						for(var/mob/O in viewers(M, null))
+							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
+				holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
+				return
+
 		serotrotium
 			name = "Serotrotium"
 			id = "serotrotium"
