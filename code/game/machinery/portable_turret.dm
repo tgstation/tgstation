@@ -33,9 +33,9 @@
 	var/gun_charge = 0		// the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null//holder for the shot when emagged
-	var/reqpower = 0 //holder for power needed
+	var/reqpower = 500 //holder for power needed
 	var/sound = null//So the taser can have sound
-	var/iconholder = null//holder for the icon_state
+	var/iconholder = null//holder for the icon_state. 1 for orange sprite, null for blue.
 	var/egun = null//holder to handle certain guns switching bullettypes
 
 	var/obj/machinery/porta_turret_cover/cover = null	// the cover that is covering this turret
@@ -68,18 +68,16 @@
 		if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 			projectile = /obj/item/projectile/energy/electrode//holder for the projectile, here it is being set
 			eprojectile = /obj/item/projectile/beam//holder for the projectile when emagged, if it is different
-			reqpower = 200
 			sound = 1
-			iconholder = 1
 		else
-			var/obj/item/weapon/gun/energy/E=new installation
-					// All energy-based weapons are applicable
+			var/obj/item/weapon/gun/energy/E=new installation // All energy-based weapons are applicable
+			projectile = E.projectile_type
+			eprojectile = projectile
+
 			switch(E.type)
+
 				if(/obj/item/weapon/gun/energy/laser/bluetag)
-					projectile = /obj/item/projectile/bluetag
 					eprojectile = /obj/item/projectile/omnitag//This bolt will stun ERRYONE with a vest
-					iconholder = null
-					reqpower = 100
 					lasercolor = "b"
 					req_access = list(access_maint_tunnels,access_clown,access_mime)
 					check_records = 0
@@ -90,10 +88,7 @@
 					shot_delay = 30
 
 				if(/obj/item/weapon/gun/energy/laser/redtag)
-					projectile = /obj/item/projectile/redtag
 					eprojectile = /obj/item/projectile/omnitag
-					iconholder = null
-					reqpower = 100
 					lasercolor = "r"
 					req_access = list(access_maint_tunnels,access_clown,access_mime)
 					check_records = 0
@@ -102,79 +97,41 @@
 					stun_all = 0
 					check_anomalies = 0
 					shot_delay = 30
+					iconholder = 1
 
 				if(/obj/item/weapon/gun/energy/laser/practice)
-					projectile = /obj/item/projectile/practice
+					iconholder = 1
 					eprojectile = /obj/item/projectile/beam
-					iconholder = null
-					reqpower = 100
 
-				if(/obj/item/weapon/gun/energy/pulse_rifle)
-					projectile = /obj/item/projectile/beam/pulse
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 700
-
-				if(/obj/item/weapon/gun/energy/staff)
-					projectile = /obj/item/projectile/change
-					eprojectile = projectile
+				if(/obj/item/weapon/gun/energy/laser/practice/sc_laser)
 					iconholder = 1
-					reqpower = 700
+					eprojectile = /obj/item/projectile/beam
 
-				if(/obj/item/weapon/gun/energy/ionrifle)
-					projectile = /obj/item/projectile/ion
-					eprojectile = projectile
+				if(/obj/item/weapon/gun/energy/laser/retro)
 					iconholder = 1
-					reqpower = 700
 
-				if(/obj/item/weapon/gun/energy/taser)
-					projectile = /obj/item/projectile/energy/electrode
-					eprojectile = projectile
+				if(/obj/item/weapon/gun/energy/laser/retro/sc_retro)
 					iconholder = 1
-					reqpower = 200
 
-				if(/obj/item/weapon/gun/energy/stunrevolver)
-					projectile = /obj/item/projectile/energy/electrode
-					eprojectile = projectile
+				if(/obj/item/weapon/gun/energy/laser/captain)
 					iconholder = 1
-					reqpower = 200
 
 				if(/obj/item/weapon/gun/energy/lasercannon)
-					projectile = /obj/item/projectile/beam/heavylaser
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 600
-
-				if(/obj/item/weapon/gun/energy/decloner)
-					projectile = /obj/item/projectile/energy/declone
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 600
-
-				if(/obj/item/weapon/gun/energy/crossbow/largecrossbow)
-					projectile = /obj/item/projectile/energy/bolt/large
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 125
-
-				if(/obj/item/weapon/gun/energy/crossbow)
-					projectile = /obj/item/projectile/energy/bolt
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 50
-
-				if(/obj/item/weapon/gun/energy/laser)
-					projectile = /obj/item/projectile/beam
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 500
-
-				else // Energy gun shots
-					projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
-					eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
 					iconholder = 1
+
+				if(/obj/item/weapon/gun/energy/taser)
+					eprojectile = /obj/item/projectile/beam
+
+				if(/obj/item/weapon/gun/energy/stunrevolver)
+					eprojectile = /obj/item/projectile/beam
+
+				if(/obj/item/weapon/gun/energy/gun)
+					eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
 					egun = 1
-					reqpower = 200
+
+				if(/obj/item/weapon/gun/energy/gun/nuclear)
+					eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
+					egun = 1
 
 	Del()
 		// deletes its own cover with it
@@ -269,11 +226,11 @@ Status: []<BR>"},
 	else
 		if( powered() )
 			if (on)
-				if (installation == /obj/item/weapon/gun/energy/laser || installation == /obj/item/weapon/gun/energy/pulse_rifle)
-					// laser guns and pulse rifles have an orange icon
+				if (iconholder)
+					// lasers have a orange icon
 					icon_state = "[lasercolor]orange_target_prism"
 				else
-					// anything else has a blue icon
+					// almost everything has a blue icon
 					icon_state = "[lasercolor]target_prism"
 			else
 				icon_state = "[lasercolor]grey_target_prism"
@@ -641,9 +598,9 @@ Status: []<BR>"},
 	// any emagged turrets will shoot extremely fast! This not only is deadly, but drains a lot power!
 
 	if(iconholder)
-		icon_state = "[lasercolor]target_prism"
-	else
 		icon_state = "[lasercolor]orange_target_prism"
+	else
+		icon_state = "[lasercolor]target_prism"
 	if(sound)
 		playsound(src.loc, 'sound/weapons/Taser.ogg', 75, 1)
 	var/obj/item/projectile/A
@@ -750,6 +707,7 @@ Status: []<BR>"},
 		if(3)
 			if(istype(W, /obj/item/weapon/gun/energy)) // the gun installation part
 
+				if(isrobot(user))	return
 				var/obj/item/weapon/gun/energy/E = W // typecasts the item to an energy gun
 				installation = W.type // installation becomes W.type
 				gun_charge = E.power_supply.charge // the gun's charge is stored in src.gun_charge
