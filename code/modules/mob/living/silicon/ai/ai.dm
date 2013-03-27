@@ -112,11 +112,13 @@ var/list/ai_list = list()
 
 			job = "AI"
 	ai_list += src
+	shuttle_caller_list += src
 	..()
 	return
 
 /mob/living/silicon/ai/Del()
 	ai_list -= src
+	shuttle_caller_list -= src
 	..()
 
 

@@ -41,6 +41,9 @@ datum/shuttle_controller
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(timeleft >= 600)
+				online = 0
+				direction = 1
+				endtime = null
 				return
 			captain_announce("The emergency shuttle has been recalled.")
 			world << sound('sound/AI/shuttlerecalled.ogg')
