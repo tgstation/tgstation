@@ -488,7 +488,7 @@
 			if(user.a_intent == "help")
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(user, src))
-						return
+						return 1
 
 	..()
 
