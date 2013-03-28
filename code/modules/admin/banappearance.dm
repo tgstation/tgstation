@@ -59,7 +59,7 @@ DEBUG
 			return
 
 		//appearance bans
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'APPEARANCE_BAN' AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM erro_ban WHERE bantype = 'APPEARANCE_BAN' AND NOT unbanned = 1")
 		query.Execute()
 
 		while(query.NextRow())

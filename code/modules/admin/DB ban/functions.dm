@@ -27,6 +27,7 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 			bantype_pass = 1
 		if(BANTYPE_APPEARANCE)
 			bantype_str = "APPEARANCE_BAN"
+			duration = -1
 			bantype_pass = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
