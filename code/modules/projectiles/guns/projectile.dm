@@ -37,6 +37,7 @@
 	if(AC.BB)
 		in_chamber = AC.BB //Load projectile into chamber.
 		AC.BB.loc = src //Set projectile loc to gun.
+		AC.BB = null
 		return 1
 	return 0
 
