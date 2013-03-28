@@ -45,8 +45,7 @@
 	stat = DEAD
 
 	if(!gibbed)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<b>The [name]</b> lets out a faint chimper as it collapses and stops moving...", 1) //ded -- Urist
+		visible_message("<b>[src]</b> lets out a faint chimper as it collapses and stops moving...")	//ded -- Urist
 
 	update_canmove()
 	if(blind)	blind.layer = 0
