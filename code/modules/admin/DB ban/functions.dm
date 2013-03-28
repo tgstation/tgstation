@@ -25,6 +25,10 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 		if(BANTYPE_JOB_TEMP)
 			bantype_str = "JOB_TEMPBAN"
 			bantype_pass = 1
+		if(BANTYPE_APPEARANCE)
+			bantype_str = "APPEARANCE_BAN"
+			duration = -1
+			bantype_pass = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
 	if( !isnum(duration) ) return
@@ -106,6 +110,9 @@ datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 				bantype_pass = 1
 			if(BANTYPE_JOB_TEMP)
 				bantype_str = "JOB_TEMPBAN"
+				bantype_pass = 1
+			if(BANTYPE_APPEARANCE)
+				bantype_str = "APPEARANCE_BAN"
 				bantype_pass = 1
 			if(BANTYPE_ANY_FULLBAN)
 				bantype_str = "ANY"
@@ -291,6 +298,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
 	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
 	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
+	output += "<option value='[BANTYPE_APPEARANCE]'>APPEARANCE BAN</option>"
 	output += "</select></td>"
 	output += "<td><b>Ckey:</b> <input type='text' name='dbbanaddckey'></td></tr>"
 	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
@@ -378,6 +386,8 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
 				if("JOB_TEMPBAN")
 					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]"
+				if("APPEARANCE_BAN")
+					typedesc = "<b>APPEARANCE/NAME BAN</b>"
 
 			output += "<tr bgcolor='[dcolor]'>"
 			output += "<td align='center'>[typedesc]</td>"
