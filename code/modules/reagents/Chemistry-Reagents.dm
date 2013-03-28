@@ -296,41 +296,6 @@ datum
 							T.wet_overlay = null
 						return
 
-		anti_toxin
-			name = "Anti-Toxin (Dylovene)"
-			id = "anti_toxin"
-			description = "Dylovene is a broad-spectrum antitoxin."
-			reagent_state = LIQUID
-			color = "#C8A5DC" // rgb: 200, 165, 220
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				M.drowsyness = max(M.drowsyness-2*REM, 0)
-				if(holder.has_reagent("toxin"))
-					holder.remove_reagent("toxin", 2*REM)
-				if(holder.has_reagent("stoxin"))
-					holder.remove_reagent("stoxin", 2*REM)
-				if(holder.has_reagent("plasma"))
-					holder.remove_reagent("plasma", 1*REM)
-				if(holder.has_reagent("sacid"))
-					holder.remove_reagent("sacid", 1*REM)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 1*REM)
-				if(holder.has_reagent("amatoxin"))
-					holder.remove_reagent("amatoxin", 2*REM)
-				if(holder.has_reagent("chloralhydrate"))
-					holder.remove_reagent("chloralhydrate", 5*REM)
-				if(holder.has_reagent("carpotoxin"))
-					holder.remove_reagent("carpotoxin", 1*REM)
-				if(holder.has_reagent("zombiepowder"))
-					holder.remove_reagent("zombiepowder", 0.5*REM)
-				if(holder.has_reagent("mindbreaker"))
-					holder.remove_reagent("mindbreaker", 2*REM)
-				M.hallucination = max(0, M.hallucination - 5*REM)
-				M.adjustToxLoss(-2*REM)
-				..()
-				return
-
 		slimetoxin
 			name = "Mutation Toxin"
 			id = "mutationtoxin"
@@ -1000,6 +965,22 @@ datum
 				..()
 				return
 
+		anti_toxin
+			name = "Anti-Toxin (Dylovene)"
+			id = "anti_toxin"
+			description = "Dylovene is a broad-spectrum antitoxin."
+			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.reagents.remove_all_type(/datum/reagent/toxin, 1*REM, 0, 1)
+				M.drowsyness = max(M.drowsyness-2*REM, 0)
+				M.hallucination = max(0, M.hallucination - 5*REM)
+				M.adjustToxLoss(-2*REM)
+				..()
+				return
+
 		adminordrazine //An OP chemical for admins
 			name = "Adminordrazine"
 			id = "adminordrazine"
@@ -1009,43 +990,18 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom ///This can even heal dead people.
+				M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 				M.setCloneLoss(0)
 				M.setOxyLoss(0)
 				M.radiation = 0
 				M.heal_organ_damage(5,5)
 				M.adjustToxLoss(-5)
-				if(holder.has_reagent("toxin"))
-					holder.remove_reagent("toxin", 5)
-				if(holder.has_reagent("stoxin"))
-					holder.remove_reagent("stoxin", 5)
-				if(holder.has_reagent("plasma"))
-					holder.remove_reagent("plasma", 5)
-				if(holder.has_reagent("sacid"))
-					holder.remove_reagent("sacid", 5)
-				if(holder.has_reagent("pacid"))
-					holder.remove_reagent("pacid", 5)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 5)
-				if(holder.has_reagent("lexorin"))
-					holder.remove_reagent("lexorin", 5)
-				if(holder.has_reagent("amatoxin"))
-					holder.remove_reagent("amatoxin", 5)
-				if(holder.has_reagent("chloralhydrate"))
-					holder.remove_reagent("chloralhydrate", 5)
-				if(holder.has_reagent("carpotoxin"))
-					holder.remove_reagent("carpotoxin", 5)
-				if(holder.has_reagent("zombiepowder"))
-					holder.remove_reagent("zombiepowder", 5)
-				if(holder.has_reagent("mindbreaker"))
-					holder.remove_reagent("mindbreaker", 5)
 				M.hallucination = 0
 				M.setBrainLoss(0)
 				M.disabilities = 0
 				M.sdisabilities = 0
 				M.eye_blurry = 0
 				M.eye_blind = 0
-//				M.disabilities &= ~NEARSIGHTED		//doesn't even do anythig cos of the disabilities = 0 bit
-//				M.sdisabilities &= ~BLIND			//doesn't even do anythig cos of the sdisabilities = 0 bit
 				M.SetWeakened(0)
 				M.SetStunned(0)
 				M.SetParalysis(0)
@@ -1317,7 +1273,8 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(toxpwr*REM)
+				if(toxpwr)
+					M.adjustToxLoss(toxpwr*REM)
 				..()
 				return
 
