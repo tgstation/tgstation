@@ -625,7 +625,7 @@ datum/mind
 					if(src in ticker.mode.wizards)
 						ticker.mode.wizards -= src
 						special_role = null
-						current.spellremove(current, config.feature_object_spell_system? "object":"verb")
+						current.spellremove(current)
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-wizard'ed [current].")
 				if("wizard")
