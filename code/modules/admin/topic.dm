@@ -360,9 +360,56 @@
 
 	/////////////////////////////////////new ban stuff
 
-	else if(href_list["jobban2"])
-//		if(!check_rights(R_BAN))	return
+	else if(href_list["appearanceban"])
+		if(!check_rights(R_BAN))
+			return
+		var/mob/M = locate(href_list["appearanceban"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(!M.ckey)	//sanity
+			usr << "This mob has no ckey"
+			return
 
+		var/banreason = appearance_isbanned(M)
+		if(banreason)
+	/*		if(!config.ban_legacy_system)
+				usr << "Unfortunately, database based unbanning cannot be done through this panel"
+				DB_ban_panel(M.ckey)
+				return	*/
+			switch(alert("Reason: '[banreason]' Remove appearance ban?","Please Confirm","Yes","No"))
+				if("Yes")
+					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban")
+					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban")
+					feedback_inc("ban_appearance_unban", 1)
+					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
+					appearance_unban(M)
+					message_admins("\blue [key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban", 1)
+					M << "\red<BIG><B>[usr.client.ckey] has removed your appearance ban.</B></BIG>"
+
+		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
+			if("Yes")
+				var/reason = input(usr,"Reason?","reason","Metafriender") as text|null
+				if(!reason)
+					return
+				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
+				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
+				feedback_inc("ban_appearance",1)
+				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
+				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
+				notes_add(M.ckey, "Appearance banned - [reason]")
+				message_admins("\blue [key_name_admin(usr)] appearance banned [key_name_admin(M)]", 1)
+				M << "\red<BIG><B>You have been appearance banned by [usr.client.ckey].</B></BIG>"
+				M << "\red <B>The reason is: [reason]</B>"
+				M << "\red Appearance ban can be lifted only upon request."
+				if(config.banappeals)
+					M << "\red To try to resolve this matter head to [config.banappeals]"
+				else
+					M << "\red No ban appeals URL has been set."
+			if("No")
+				return
+
+	else if(href_list["jobban2"])
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"
