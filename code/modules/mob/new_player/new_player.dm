@@ -308,7 +308,7 @@
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
 
-		if(ticker.random_players)
+		if(ticker.random_players || appearance_isbanned(new_character))
 			new_character.gender = pick(MALE, FEMALE)
 			client.prefs.real_name = random_name()
 			client.prefs.randomize_appearance_for(new_character)

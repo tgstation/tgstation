@@ -31,6 +31,7 @@
 	if(config.usewhitelist)
 		load_whitelist()
 	jobban_loadbanfile()
+	appearance_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
 	investigate_reset()

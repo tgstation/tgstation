@@ -79,20 +79,14 @@ research holder datum.
 
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
-/datum/research/proc/DesignHasReqs(var/datum/design/D)
+/datum/research/proc/DesignHasReqs(var/datum/design/D)//Heavily optimized -Sieve
 	if(D.req_tech.len == 0)
 		return 1
-	var/matches = 0
-	var/list/k_tech = list()
-	for(var/datum/tech/known in known_tech)
-		k_tech[known.id] = known.level
-	for(var/req in D.req_tech)
-		if(!isnull(k_tech[req]) && k_tech[req] >= D.req_tech[req])
-			matches++
-	if(matches == D.req_tech.len)
-		return 1
-	else
-		return 0
+	for(var/datum/tech/T in known_tech)
+		if((D.req_tech[T.id]) && (T.level < D.req_tech[T.id]))
+			return 0
+	return 1
+
 /*
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
