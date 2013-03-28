@@ -1018,9 +1018,10 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 			if (W)
 				// ------- YOU HAVE AN ITEM IN YOUR HAND - HANDLE ATTACKBY AND AFTERATTACK -------
+				var/ignoreAA = 0 //Ignore afterattack(). Surgery uses this.
 				if (t5)
-					src.attackby(W, usr)
-				if (W)
+					ignoreAA = src.attackby(W, usr)
+				if (W && !ignoreAA)
 					W.afterattack(src, usr, (t5 ? 1 : 0), params)
 
 			else
