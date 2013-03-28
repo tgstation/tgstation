@@ -18,6 +18,9 @@
 
 	load_into_chamber()
 		if(in_chamber)
+			var/obj/item/ammo_casing/AC = current_shell
+			AC.desc += " This one is spent."
+			AC.BB = null //remove the ammunition from the shell
 			return 1
 		return 0
 
@@ -86,11 +89,12 @@
 
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
-		AC.desc += " This one is spent."
 
 		if(AC.BB)
 			in_chamber = AC.BB //Load projectile into chamber.
 			AC.BB.loc = src //Set projectile loc to gun.
+			AC.BB = null //Remove the ammunition from the shell
+			AC.desc += " This one is spent."
 			return 1
 		return 0
 
@@ -104,7 +108,7 @@
 				loaded -= shell
 			shell.loc = get_turf(src.loc)
 
-		user << "<span class='notice'>You break \the [src].</span>"
+		user << "<span class='notice'>You open \the [src].</span>"
 		update_icon()
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
