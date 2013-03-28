@@ -391,13 +391,7 @@ client/proc/one_click_antag()
 	new_character.gender = pick(MALE,FEMALE)
 
 	var/datum/preferences/A = new()
-	A.randomize_appearance_for(new_character)
-	if(new_character.gender == MALE)
-		new_character.real_name = "[pick(first_names_male)] [pick(last_names)]"
-	else
-		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
-	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	A.copy_to(new_character)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
