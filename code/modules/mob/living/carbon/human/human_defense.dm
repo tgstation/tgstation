@@ -99,6 +99,8 @@ emp_act
 			if(!turfs.len) turfs += pick(/turf in orange(6))
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
+			if(buckled)
+				buckled.unbuckle()
 			src.loc = picked
 			return 1
 	return 0
