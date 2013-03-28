@@ -84,6 +84,8 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		handle_virus_updates()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
@@ -1262,6 +1264,7 @@
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
+			if(virus2)	virus2.cure(src)
 		if(!virus2)
 			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
 				if(B.virus2 && get_infection_chance())
