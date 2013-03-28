@@ -1,22 +1,11 @@
 ## Server name: This appears at the top of the screen in-game. In this case it will read "tgstation: station_name" where station_name is the randomly generated name of the station for the round. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
 # SERVERNAME tgstation
 
-## Alert levels
-ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
-ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
-ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
-
 ## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
-
-## Add a # here if you wish to use the setup where jobs have more access. This is intended for servers with low populations - where there are not enough players to fill all roles, so players need to do more than just one job. Also for servers where they don't want people to hide in their own departments.
-JOBS_HAVE_MINIMAL_ACCESS
 
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
@@ -24,9 +13,6 @@ JOBS_HAVE_MINIMAL_ACCESS
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
-
-## Unhash this to use recursive explosions, keep it hashed to use circle explosions. Recursive explosions react to walls, airlocks and blast doors, making them look a lot cooler than the boring old circular explosions. They require more CPU and are (as of january 2013) experimental
-#USE_RECURSIVE_EXPLOSIONS
 
 ## log OOC channel
 LOG_OOC
@@ -70,40 +56,8 @@ LOG_LAW
 ## log admin warning messages
 ##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
-## sql switching
-# SQL_ENABLED
-
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
-
-## probablities for game modes chosen in "secret" and "random" modes
-## 
-## default probablity is 1, increase to make that mode more likely to be picked
-## set to 0 to disable that mode
-## Cult mode is in alpha test, enable at your own risk
-PROBABILITY EXTENDED 0
-PROBABILITY TRAITOR 0
-PROBABILITY METEOR 0
-PROBABILITY MALFUNCTION 2
-PROBABILITY BLOB 0
-PROBABILITY NUCLEAR 5
-PROBABILITY SANDBOX 0
-PROBABILITY WIZARD 0
-PROBABILITY RESTRUCTURING 0
-PROBABILITY REVOLUTION 5
-PROBABILITY CHANGELING 0
-PROBABILITY CULT 1
-PROBABILITY MONKEY 0
-PROBABILITY TRAITORCHAN 0
-
-## Hash out to disable random events during the round.
-ALLOW_RANDOM_EVENTS
-
-## if amount of traitors scales or not
-#TRAITOR_SCALING
-
-## If security is prohibited from being most antagonists
-#PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
@@ -128,10 +82,6 @@ VOTE_PERIOD 600
 
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
-
-## allow AI job
-ALLOW_AI
-
 
 ## disable abandon mob
 NORESPAWN
@@ -188,24 +138,8 @@ TICKLAG 0.9
 ## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
 TICKCOMP 0
 
-## if uncommented this adds a random surname to a player's name if they only specify one name
-HUMANS_NEED_SURNAMES
-
 ## Uncomment this to ban use of ToR
 #TOR_BAN
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
-
-## How long the delay is before the Away Mission gate opens. Default is half an hour.
-GATEWAY_DELAY 18000
-
-## Remove the # to give assistants maint access.
-#ASSISTANT_MAINT
-
-## Remove the # to make rounds which end instantly (Rev, Wizard, Malf) to continue until the shuttle is called or the station is nuked.
-## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUNDS
-
-##Remove the # to let ghosts spin chairs
-#GHOST_INTERACTION
