@@ -36,10 +36,10 @@ var/list/mechtoys = list(
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
-/obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
-	name = "\improper Plastic flaps"
-	desc = "I definitely cant get past those. No way."
-	icon = 'icons/obj/stationobjs.dmi' //Change this.
+/obj/structure/plasticflaps	//HOW DO YOU CALL THOSE THINGS ANYWAY
+	name = "plastic flaps"
+	desc = "Definitely can't get past those. No way."
+	icon = 'icons/obj/stationobjs.dmi'	//Change this.
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
@@ -72,7 +72,7 @@ var/list/mechtoys = list(
 				del(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
-	name = "\improper Airtight plastic flaps"
+	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
 	New() //set the turf below the flaps to block air
@@ -89,7 +89,7 @@ var/list/mechtoys = list(
 		..()
 
 /obj/machinery/computer/supplycomp
-	name = "Supply shuttle console"
+	name = "supply shuttle console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
@@ -100,7 +100,7 @@ var/list/mechtoys = list(
 	var/can_order_contraband = 0
 
 /obj/machinery/computer/ordercomp
-	name = "Supply ordering console"
+	name = "supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
