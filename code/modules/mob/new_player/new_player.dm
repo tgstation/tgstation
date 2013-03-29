@@ -132,7 +132,7 @@
 
 				var/S = client.prefs.species
 				if(S == "Unathi") S = "Soghun"
-				if(!is_alien_whitelisted(src, S))
+				if(!is_alien_whitelisted(src, S) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [client.prefs.species].")
 					return 0
 
@@ -149,7 +149,7 @@
 
 			var/S = client.prefs.species
 			if(S == "Unathi") S = "Soghun"
-			if(!is_alien_whitelisted(src, S))
+			if(!is_alien_whitelisted(src, S) && config.usealienwhitelist)
 				src << alert("You are currently not whitelisted to play [client.prefs.species].")
 				return 0
 
@@ -330,15 +330,15 @@
 		new_character.lastarea = get_area(loc)
 
 		if(client.prefs.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
-			if(is_alien_whitelisted(src, "Tajaran"))
+			if(is_alien_whitelisted(src, "Tajaran"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "tajaran"
 				new_character.tajaran_talk_understand = 1
 		if(client.prefs.species == "Unathi")
-			if(is_alien_whitelisted(src, "Soghun"))
+			if(is_alien_whitelisted(src, "Soghun"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "lizard"
 				new_character.soghun_talk_understand = 1
 		if(client.prefs.species == "Skrell")
-			if(is_alien_whitelisted(src, "Skrell"))
+			if(is_alien_whitelisted(src, "Skrell"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "skrell"
 				new_character.skrell_talk_understand = 1
 
