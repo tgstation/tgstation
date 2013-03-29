@@ -59,22 +59,26 @@
 		..()
 		return
 
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+
 	if(user.a_intent == "harm")
 		..()
 
 	else if(!status)
-		M.visible_message("<span class='warning'>[M] has been prodded with [src] by [user]. Luckily it was off.</span>")
+		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 
 	if(status)
-		user.lastattacked = M
-		M.lastattacker = user
+		user.lastattacked = L
+		L.lastattacker = user
 
-		M.Stun(10)
-		M.Weaken(10)
-		M.stuttering = max(M.stuttering, 10)
+		L.Stun(10)
+		L.Weaken(10)
+		L.apply_effect(STUTTER, 10)
 
-		M.visible_message("<span class='danger'>[M] has been stunned with [src] by [user]!</span>")
+		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 		if(isrobot(loc))
@@ -83,13 +87,13 @@
 				R.cell.use(50)
 		else
 			charges--
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
 			H.forcesay(hit_appends)
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [M.name] ([M.ckey]) with [name]</font>"
-		M.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [name]</font>"
-		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [M.name] ([M.ckey]) with [name]</font>" )
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
+		L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [name]</font>"
+		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [L.name] ([L.ckey]) with [name]</font>" )
 
 		if(charges < 1)
 			status = 0
