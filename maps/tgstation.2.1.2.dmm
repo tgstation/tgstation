@@ -3483,7 +3483,7 @@
 "boY" = (/obj/machinery/light_switch{pixel_x = 27},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/crew_quarters/heads)
 "boZ" = (/obj/machinery/camera{c_tag = "AI Upload Access"; dir = 1; network = list("SS13","RD")},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/table,/obj/item/weapon/phone,/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai_upload_foyer)
 "bpa" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai_upload_foyer)
-"bpb" = (/obj/machinery/power/apc{dir = 4; name = "AI Upload Access APC"; pixel_x = 27; pixel_y = -2},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/light,/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai_upload_foyer)
+"bpb" = (/obj/machinery/power/apc{dir = 4; name = "AI Upload Access APC"; pixel_x = 27; pixel_y = -2},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/light/small,/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai_upload_foyer)
 "bpc" = (/obj/machinery/computer/teleporter,/turf/simulated/floor/plating,/area/teleporter)
 "bpd" = (/obj/machinery/teleport/station,/turf/simulated/floor/plating,/area/teleporter)
 "bpe" = (/obj/machinery/teleport/hub,/turf/simulated/floor/plating,/area/teleporter)
