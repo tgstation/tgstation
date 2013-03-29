@@ -1,7 +1,7 @@
 // All mobs should have custom emote, really..
 mob/proc/custom_emote(var/m_type=1,var/message = null)
 
-	if(!emote_allowed && usr == src)
+	if(!use_me && usr == src)
 		usr << "You are unable to emote."
 		return
 

@@ -4,7 +4,8 @@
 #define M_HANDCUFF_LAYER		3
 #define M_L_HAND_LAYER			4
 #define M_R_HAND_LAYER			5
-#define M_TOTAL_LAYERS			5
+#define TARGETED_LAYER			6
+#define M_TOTAL_LAYERS			6
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -101,11 +102,24 @@
 	if (client)
 		client.screen |= contents
 
+//Call when target overlay should be added/removed
+/mob/living/carbon/monkey/update_targeted(var/update_icons=1)
+	if (targeted_by && target_locked)
+		overlays_lying[TARGETED_LAYER]		= target_locked
+		overlays_standing[TARGETED_LAYER]	= target_locked
+	else if (!targeted_by && target_locked)
+		del(target_locked)
+	if (!targeted_by)
+		overlays_lying[TARGETED_LAYER]		= null
+		overlays_standing[TARGETED_LAYER]	= null
+	if(update_icons)		update_icons()
+
 //Monkey Overlays Indexes////////
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER
 #undef M_HANDCUFF_LAYER
 #undef M_L_HAND_LAYER
 #undef M_R_HAND_LAYER
+#undef TARGETED_LAYER
 #undef M_TOTAL_LAYERS
 

@@ -169,11 +169,35 @@
 	name = "large crate"
 	desc = "A hefty metal crate with an electronic locking system."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "largecrate"
-	icon_opened = "largecrateopen"
-	icon_closed = "largecrate"
-	redlight = "largecrater"
-	greenlight = "largecrateg"
+	icon_state = "largemetal"
+	icon_opened = "largemetalopen"
+	icon_closed = "largemetal"
+	redlight = "largemetalr"
+	greenlight = "largemetalg"
+
+/obj/structure/closet/crate/secure/large/close()
+	//we can hold up to one large item
+	var/found = 0
+	for(var/obj/structure/S in src.loc)
+		if(S == src)
+			continue
+		if(!S.anchored)
+			found = 1
+			S.loc = src
+			break
+	if(!found)
+		for(var/obj/machinery/M in src.loc)
+			if(!M.anchored)
+				M.loc = src
+				break
+	..()
+
+//fluff variant
+/obj/structure/closet/crate/secure/large/reinforced
+	desc = "A hefty, reinforced metal crate with an electronic locking system."
+	icon_state = "largermetal"
+	icon_opened = "largermetalopen"
+	icon_closed = "largermetal"
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
@@ -192,10 +216,26 @@
 	name = "large crate"
 	desc = "A hefty metal crate."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "largecrate"
-	icon_opened = "largecrateopen"
-	icon_closed = "largecrate"
-	density = 1
+	icon_state = "largemetal"
+	icon_opened = "largemetalopen"
+	icon_closed = "largemetal"
+
+/obj/structure/closet/crate/large/close()
+	//we can hold up to one large item
+	var/found = 0
+	for(var/obj/structure/S in src.loc)
+		if(S == src)
+			continue
+		if(!S.anchored)
+			found = 1
+			S.loc = src
+			break
+	if(!found)
+		for(var/obj/machinery/M in src.loc)
+			if(!M.anchored)
+				M.loc = src
+				break
+	..()
 
 /obj/structure/closet/crate/hydroponics
 	name = "Hydroponics crate"

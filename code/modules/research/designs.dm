@@ -1321,6 +1321,14 @@ datum/design/synthetic_flash
 	build_path = "/obj/item/device/flash/synthetic"
 	category = "Misc"
 
+datum/design/nanopaste
+	name = "nanopaste"
+	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
+	id = "nanopaste"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 7000, "$glass" = 7000)
+	build_path = "/obj/item/stack/nanopaste"
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

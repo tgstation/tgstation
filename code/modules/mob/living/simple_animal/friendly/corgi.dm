@@ -27,7 +27,7 @@
 	regenerate_icons()
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
-	/*
+	/* If you're turning this back on, scroll down and uncomment target_updated
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -402,7 +402,6 @@
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
 
 	return
-
 
 
 /mob/living/simple_animal/corgi/puppy

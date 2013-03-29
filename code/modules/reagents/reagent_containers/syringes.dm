@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
+#define SYRINGE_BROKEN 2
 
 /obj/item/weapon/reagent_containers/syringe
 	name = "Syringe"
@@ -27,14 +28,14 @@
 		update_icon()
 
 	attack_self(mob/user as mob)
-/*
+
 		switch(mode)
 			if(SYRINGE_DRAW)
 				mode = SYRINGE_INJECT
 			if(SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
-*/
-		mode = !mode
+			if(SYRINGE_BROKEN)
+				return
 		update_icon()
 
 	attack_hand()
@@ -50,6 +51,10 @@
 
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
+
+		if(mode == SYRINGE_BROKEN)
+			user << "\red This syringe is broken!"
+			return
 
 		if (user.a_intent == "hurt" && ismob(target))
 			if((CLUMSY in user.mutations) && prob(50))
@@ -75,57 +80,20 @@
 					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
-						var/datum/reagent/B = new /datum/reagent/blood
 						if(!T.dna)
 							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
 							return
 						if(NOCLONE in T.mutations) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
-						if(ishuman(T))
-							if(T:vessel.get_reagent_amount("blood") < amount)
-								return
-						B.holder = src
-						B.volume = amount
-						//set reagent data
-						B.data["donor"] = T
-						/*
-						if(T.virus && T.virus.spread_type != SPECIAL)
-							B.data["virus"] = new T.virus.type(0)
-						*/
 
+						var/datum/reagent/B = T.take_blood(src,amount)
 
-
-						for(var/datum/disease/D in T.viruses)
-							if(!B.data["viruses"])
-								B.data["viruses"] = list()
-
-
-							B.data["viruses"] += new D.type(0, D, 1)
-
-						if(T.virus2)
-							B.data["virus2"] = T.virus2.getcopy()
-
-						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
-						if(T.resistances&&T.resistances.len)
-							B.data["resistances"] = T.resistances.Copy()
-						if(istype(target, /mob/living/carbon/human))//I wish there was some hasproperty operation...
-							var/mob/living/carbon/human/HT = target
-							B.data["blood_type"] = copytext(HT.dna.b_type,1,0)
-						var/list/temp_chem = list()
-						for(var/datum/reagent/R in target.reagents.reagent_list)
-							temp_chem += R.name
-							temp_chem[R.name] = R.volume
-						B.data["trace_chem"] = list2params(temp_chem)
-						B.data["antibodies"] = T.antibodies
-
-						if(ishuman(T))
-							T:vessel.remove_reagent("blood",amount) // Removes blood if human
-
-						src.reagents.reagent_list += B
-						src.reagents.update_total()
-						src.on_reagent_change()
-						src.reagents.handle_reactions()
+						if (B)
+							src.reagents.reagent_list += B
+							src.reagents.update_total()
+							src.on_reagent_change()
+							src.reagents.handle_reactions()
 						user << "\blue You take a blood sample from [target]"
 						for(var/mob/O in viewers(4, user))
 							O.show_message("\red [user] takes a blood sample from [target].", 1)
@@ -177,9 +145,7 @@
 					var/trans
 					if(B && ishuman(target))
 						var/mob/living/carbon/human/H = target
-						trans = B.volume > 5? 5 : B.volume
-						H.vessel.add_reagent("blood",trans,B.data)
-						src.reagents.remove_reagent("blood",trans)
+						H.inject_blood(src,5)
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
@@ -190,6 +156,10 @@
 		return
 
 	update_icon()
+		if(mode == SYRINGE_BROKEN)
+			icon_state = "broken"
+			overlays.Cut()
+			return
 		var/rounded_vol = round(reagents.total_volume,5)
 		overlays.Cut()
 		if(ismob(loc))
@@ -206,13 +176,61 @@
 		if(reagents.total_volume)
 			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
 
-			switch(rounded_vol)
-				if(5)	filling.icon_state = "syringe5"
-				if(10)	filling.icon_state = "syringe10"
-				if(15)	filling.icon_state = "syringe15"
+			filling.icon_state = "syringe[rounded_vol]"
 
 			filling.icon += mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
+
+
+	/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
+
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
+		log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+		if(istype(target, /mob/living/carbon/human))
+
+			var/target_zone = check_zone(user.zone_sel.selecting, target)
+			var/datum/organ/external/affecting = target:get_organ(target_zone)
+
+			if (!affecting)
+				return
+			if(affecting.status & ORGAN_DESTROYED)
+				user << "What [affecting.display_name]?"
+				return
+			var/hit_area = affecting.display_name
+
+			var/mob/living/carbon/human/H = target
+			if((user != target) && H.check_shields(7, "the [src.name]"))
+				return
+
+			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message(text("\red <B>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
+				user.u_equip(src)
+				del(src)
+				return
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B>"), 1)
+
+			if(affecting.take_damage(3))
+				target:UpdateDamageIcon()
+
+		else
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red <B>[user] stabs [target] with [src.name]!</B>"), 1)
+			target.take_organ_damage(3)// 7 is the same as crowbar punch
+
+		src.reagents.reaction(target, INGEST)
+		var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand
+		src.reagents.trans_to(target, syringestab_amount_transferred)
+		src.desc += " It is broken."
+		src.mode = SYRINGE_BROKEN
+		src.add_blood(target)
+		src.add_fingerprint(usr)
+		src.update_icon()
 
 
 /obj/item/weapon/reagent_containers/ld50_syringe
@@ -310,55 +328,7 @@
 					if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()
-
 		return
-
-	/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
-
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-
-		log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-		if(istype(target, /mob/living/carbon/human))
-
-			var/target_zone = check_zone(user.zone_sel.selecting, target)
-			var/datum/organ/external/affecting = target:get_organ(target_zone)
-
-			if (!affecting)
-				return
-			if(affecting.status & ORGAN_DESTROYED)
-				user << "What [affecting.display_name]?"
-				return
-			var/hit_area = affecting.display_name
-
-			var/mob/living/carbon/human/H = target
-			if((user != target) && H.check_shields(7, "the [src.name]"))
-				return
-
-			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("\red <B>[user] tries to stab [target] in the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
-				user.u_equip(src)
-				del(src)
-				return
-
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red <B>[user] stabs [target] in the [hit_area] with [src.name]!</B>"), 1)
-
-			if(affecting.take_damage(7))
-				target:UpdateDamageIcon()
-
-		else
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red <B>[user] stabs [target] with [src.name]!</B>"), 1)
-			target.take_organ_damage(7)
-
-		src.reagents.reaction(target, INGEST)
-		var/syringestab_amount_transferred = rand(0, reagents.total_volume)
-		src.reagents.trans_to(target, syringestab_amount_transferred)
-		user.u_equip(src)
-		del(src)
 
 
 	update_icon()
@@ -374,6 +344,7 @@
 		else
 			icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Syringes. END

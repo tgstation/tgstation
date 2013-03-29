@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/spiderbot/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
-	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/posibrain))
+	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
 			user << "\red There's already a brain in [src]!"
@@ -281,14 +281,14 @@
 		return 0
 
 	if(istype(held_item, /obj/item/weapon/grenade))
-		visible_message("\red [src] launches the [held_item]!", "\red You launch the [held_item]!", "You hear a skittering noise and a thump!")
+		visible_message("\red [src] launches \the [held_item]!", "\red You launch \the [held_item]!", "You hear a skittering noise and a thump!")
 		var/obj/item/weapon/grenade/G = held_item
 		G.loc = src.loc
 		G.prime()
 		held_item = null
 		return 1
 
-	visible_message("\blue [src] drops the [held_item]!", "\blue You drop the [held_item]!", "You hear a skittering noise and a soft thump.")
+	visible_message("\blue [src] drops \the [held_item]!", "\blue You drop \the [held_item]!", "You hear a skittering noise and a soft thump.")
 
 	held_item.loc = src.loc
 	held_item = null
@@ -305,7 +305,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		src << "\red You are already holding \the [held_item]"
 		return 1
 
 	var/list/items = list()
@@ -316,10 +316,13 @@
 	var/obj/selection = input("Select an item.", "Pickup") in items
 
 	if(selection)
-		held_item = selection
-		selection.loc = src
-		visible_message("\blue [src] scoops up the [held_item]!", "\blue You grab the [held_item]!", "You hear a skittering noise and a clink.")
-		return held_item
+		for(var/obj/item/I in view(1, src))
+			if(selection == I)
+				held_item = selection
+				selection.loc = src
+				visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
+				return held_item
+		src << "\red \The [selection] is too far away."
 
 	src << "\red There is nothing of interest to take."
 	return 0

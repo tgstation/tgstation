@@ -3,17 +3,19 @@
 	name = "Fuel Injector"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "injector0"
+
 	density = 1
-	var/state = 2
+	anchored = 0
+	var/state = 0
 	var/locked = 0
+	req_access = list(access_engine)
+
 	var/obj/item/weapon/fuel_assembly/cur_assembly
 	var/fuel_usage = 0.0001			//percentage of available fuel to use per cycle
 	var/id_tag = "One"
 	var/injecting = 0
 	var/trying_to_swap_fuel = 0
-	//
-	req_access = list(access_engine)
-	//
+
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 500

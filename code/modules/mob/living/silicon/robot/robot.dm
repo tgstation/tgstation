@@ -1,7 +1,7 @@
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
-	icon = 'icons/mob/robots.dmi'//
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	maxHealth = 300
 	health = 300
@@ -194,7 +194,7 @@
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
-	if(istype(mmi, /obj/item/device/posibrain))
+	if(istype(mmi, /obj/item/device/mmi/posibrain))
 		braintype = "Android"
 	else
 		braintype = "Cyborg"
@@ -806,7 +806,13 @@
 			overlays += "ov-openpanel -c"
 	return
 
-
+//Call when target overlay should be added/removed
+/mob/living/silicon/robot/update_targeted()
+	if(!targeted_by && target_locked)
+		del(target_locked)
+	updateicon()
+	if (targeted_by && target_locked)
+		overlays += target_locked
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)

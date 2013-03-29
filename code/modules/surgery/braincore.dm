@@ -1,4 +1,4 @@
-//Procedures in this file: Brain extraction. slime Core extraction.
+//Procedures in this file: Brain extraction. Brain fixing. Slime Core extraction.
 //////////////////////////////////////////////////////////////////
 //						BRAIN SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -99,7 +99,39 @@
 
 
 //////////////////////////////////////////////////////////////////
-//				slime CORE EXTRACTION							//
+//				BRAIN DAMAGE FIXING								//
+//////////////////////////////////////////////////////////////////
+
+/datum/surgery_step/brain/fix_brain
+	required_tool =  /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
+
+	min_duration = 80
+	max_duration = 100
+
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return ..() && target.brain_op_stage == 2
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("[user] starts mending ruptured vessels in [target]'s brain with \the [tool].", \
+		"You start mending [target]'s brain with \the [tool].")
+		..()
+
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("\blue [user] mends [target]'s brain hematoma with \the [tool].",	\
+		"\blue You mend ruptured vessels to [target]'s brain hematoma with \the [tool].")
+		var/datum/organ/internal/brain/sponge = target.internal_organs["brain"]
+		if (sponge)
+			sponge.damage = 0
+
+
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
+		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
+		target.apply_damage(50, BRUTE, "head", 1)
+
+//////////////////////////////////////////////////////////////////
+//				SLIME CORE EXTRACTION							//
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/slime/

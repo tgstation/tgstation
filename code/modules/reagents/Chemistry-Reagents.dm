@@ -103,7 +103,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -122,11 +122,14 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
-				if(self.data && self.data["virus2"])
+				if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
 					if(method == TOUCH)
 						infect_virus2(M,self.data["virus2"])
 					else
 						infect_virus2(M,self.data["virus2"],1)
+				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
+					var/mob/living/carbon/C = M
+					C.antibodies |= self.data["antibodies"]
 
 
 
@@ -1676,6 +1679,13 @@ datum
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
+			reagent_state = LIQUID
+			color = "#535E66" // rgb: 83, 94, 102
+
 		nanites
 			name = "Nanomachines"
 			id = "nanites"
@@ -1815,6 +1825,7 @@ datum
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
+						M:toxloss += (data - 50)
 				..()
 
 				return
