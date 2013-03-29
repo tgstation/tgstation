@@ -538,7 +538,11 @@ datum/preferences
 							b_hair = hex2num(copytext(new_hair, 6, 8))
 
 					if("h_style")
-						var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_list
+						var/new_h_style
+						if(gender == MALE)
+							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
+						else
+							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
 						if(new_h_style)
 							h_style = new_h_style
 
@@ -550,18 +554,20 @@ datum/preferences
 							b_facial = hex2num(copytext(new_facial, 6, 8))
 
 					if("f_style")
-						var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_list
+						var/new_f_style
+						if(gender == MALE)
+							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
+						else
+							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
 						if(new_f_style)
 							f_style = new_f_style
 
 					if("underwear")
-						var/list/underwear_options
+						var/new_underwear
 						if(gender == MALE)
-							underwear_options = underwear_m
+							new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_m
 						else
-							underwear_options = underwear_f
-
-						var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
+							new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_f
 						if(new_underwear)
 							underwear = new_underwear
 
