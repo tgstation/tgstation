@@ -45,7 +45,8 @@
 				reagents.trans_to(I, 5)	//
 				user << "<span class='notice'>You wet [I] in [src].</span>"
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-		else if(!mymop)
+				return
+		if(!mymop)
 			user.drop_item()
 			mymop = I
 			I.loc = src
@@ -154,7 +155,7 @@
 	if(myreplacer)
 		overlays += "cart_replacer"
 	if(signs)
-		overlays += "cart_signs[signs]"
+		overlays += "cart_sign[signs]"
 
 
 //old style retardo-cart
