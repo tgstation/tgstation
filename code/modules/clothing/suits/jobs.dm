@@ -86,7 +86,7 @@
 
 //Lawyer
 /obj/item/clothing/suit/lawyer/bluejacket
-	name = "Blue Suit Jacket"
+	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
 	item_state = "suitjacket_blue_open"
@@ -94,8 +94,8 @@
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/lawyer/purpjacket
-	name = "Purple Suit Jacket"
-	desc = "A snappy dress jacket."
+	name = "purple suit jacket"
+	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
 	blood_overlay_type = "coat"

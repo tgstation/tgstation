@@ -43,8 +43,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>"
 			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
 		if(1)
-			establish_old_db_connection()
-			if(!dbcon_old.IsConnected())
+			establish_db_connection()
+			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(!SQLquery)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
@@ -52,7 +52,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
-				var/DBQuery/query = dbcon_old.NewQuery(SQLquery)
+				var/DBQuery/query = dbcon.NewQuery(SQLquery)
 				query.Execute()
 
 				while(query.NextRow())
@@ -98,7 +98,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM library WHERE "
+		SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
 		if(category == "Any")
 			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
 		else
@@ -193,15 +193,15 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(4)
 			dat += "<h3>External Archive</h3>"
-			establish_old_db_connection()
-			if(!dbcon_old.IsConnected())
+			establish_db_connection()
+			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
 				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
-				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM erro_library")
 				query.Execute()
 
 				while(query.NextRow())
@@ -337,8 +337,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(scanner.cache)
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
-					establish_old_db_connection()
-					if(!dbcon_old.IsConnected())
+					establish_db_connection()
+					if(!dbcon.IsConnected())
 						alert("Connection to Archive has been severed. Aborting.")
 					else
 						/*
@@ -351,7 +351,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
+						var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
 						if(!query.Execute())
 							usr << query.ErrorMsg()
 						else
@@ -360,8 +360,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
-		establish_old_db_connection()
-		if(!dbcon_old.IsConnected())
+		establish_db_connection()
+		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(bibledelay)
 			for (var/mob/V in hearers(src))
@@ -370,7 +370,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
-			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id=[sqlid]")
 			query.Execute()
 
 			while(query.NextRow())

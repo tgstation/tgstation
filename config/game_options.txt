@@ -1,35 +1,36 @@
 ### HEALTH ###
 
-## level of health at which a mob becomes unconscious (crit)
+# level of health at which a mob becomes unconscious (crit)
 HEALTH_THRESHOLD_CRIT 0
 
-## level of health at which a mob becomes dead
+# level of health at which a mob becomes dead
 HEALTH_THRESHOLD_DEAD -100
+
 
 ### REVIVAL ###
 
-## whether pod plants work or not
+# whether pod plants work or not
 REVIVAL_POD_PLANTS 1
 
-## whether cloning tubes work or not
+# whether cloning tubes work or not
 REVIVAL_CLONING 1
 
-## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
+# amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
-
 
 
 ### MOB MOVEMENT ###
 
-## We suggest editing these variabled in-game to find a good speed for your server. To do this you must be a high level admin. Open the 'debug' tab ingame. Select "Debug Controller" and then, in the popup, select "Configuration". These variables should have the same name.
+## We suggest editing these variables ingame to find a good speed for your server.
+## To do this you must be a high level admin. Open the 'debug' tab ingame.
+## Select "Debug Controller" and then, in the popup, select "Configuration". These variables should have the same name.
 
-## These values get directly added to values and totals in-game. To speed things up make the number negative, to slow things down, make the number positive.
-
+## These values get directly added to values and totals ingame.
+## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
 RUN_DELAY 0
 WALK_DELAY 0
-
 
 ## The variables below affect the movement of specific mob types.
 HUMAN_DELAY 0
@@ -38,3 +39,98 @@ MONKEY_DELAY 0
 ALIEN_DELAY 0
 METROID_DELAY 0
 ANIMAL_DELAY 0
+
+
+### NAMES ###
+## If uncommented this adds a random surname to a player's name if they only specify one name.
+#HUMANS_NEED_SURNAMES
+
+
+### ALERT LEVELS ###
+ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
+ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
+ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
+ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
+ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+
+
+### EXPLOSIONS ###
+
+## Unhash this to use recursive explosions, keep it hashed to use normal style explosions.
+## Recursive explosions react to walls, airlocks and blast doors, making them look a lot cooler
+## than the boring old circular explosions. They require more CPU and are (as of March 2013) experimental.
+## The default map is generally designed for the old style explosions in terms of security.
+
+#USE_RECURSIVE_EXPLOSIONS
+
+
+### GAME MODES ###
+
+## Probablities for game modes chosen in 'secret' and 'random' modes.
+## Default probablity is 1, increase to make that mode more likely to be picked.
+## Set to 0 to disable that mode.
+
+PROBABILITY TRAITOR 5
+PROBABILITY TRAITORCHAN 4
+PROBABILITY NUCLEAR 2
+PROBABILITY REVOLUTION 2
+PROBABILITY CULT 2
+PROBABILITY CHANGELING 2
+PROBABILITY WIZARD 4
+PROBABILITY MALFUNCTION 1
+PROBABILITY BLOB 0
+PROBABILITY METEOR 0
+PROBABILITY EXTENDED 0
+
+## You probably want to keep sandbox off by default for secret and random.
+PROBABILITY SANDBOX 0
+
+## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
+## the shuttle is called or the station is nuked.
+## Malf and Rev will let the shuttle be called when the antags/protags are dead.
+#CONTINUOUS_ROUNDS
+
+## Uncomment to scale the number of antagonists to crew population. Doesn't
+## affect all gamemodes.
+#TRAITOR_SCALING
+
+## Uncomment to prohibit jobs that start with loyalty
+## implants from being most antagonists.
+#PROTECT_ROLES_FROM_ANTAGONIST
+
+
+### RANDOM EVENTS ###
+
+## Comment this to disable random events during the round.
+ALLOW_RANDOM_EVENTS
+
+
+### AI ###
+
+## Allow the AI job to be picked.
+ALLOW_AI
+
+
+
+### AWAY MISSIONS ###
+
+## How long the delay is before the Away Mission gate opens. Default is half an hour.
+## 600 is one minute.
+GATEWAY_DELAY 18000
+
+
+### ACCESS ###
+## Comment this out if you wish to use the setup where jobs have more access.
+## This is intended for servers with low populations - where there are not enough
+## players to fill all roles, so players need to do more than just one job.
+## Also for servers where they don't want people to hide in their own departments.
+JOBS_HAVE_MINIMAL_ACCESS
+
+## Uncomment to give assistants maint access.
+#ASSISTANT_MAINT
+
+
+### GHOST INTERACTION ###
+## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
+#GHOST_INTERACTION
