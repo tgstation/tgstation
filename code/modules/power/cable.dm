@@ -547,21 +547,21 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	color = color_n
 	switch(colorC)
 		if("red")
-			icon = 'icons/obj/power_cond_red.dmi'
+			icon = 'icons/obj/power_cond/power_cond_red.dmi'
 		if("yellow")
-			icon = 'icons/obj/power_cond_yellow.dmi'
+			icon = 'icons/obj/power_cond/power_cond_yellow.dmi'
 		if("green")
-			icon = 'icons/obj/power_cond_green.dmi'
+			icon = 'icons/obj/power_cond/power_cond_green.dmi'
 		if("blue")
-			icon = 'icons/obj/power_cond_blue.dmi'
+			icon = 'icons/obj/power_cond/power_cond_blue.dmi'
 		if("pink")
-			icon = 'icons/obj/power_cond_pink.dmi'
+			icon = 'icons/obj/power_cond/power_cond_pink.dmi'
 		if("orange")
-			icon = 'icons/obj/power_cond_orange.dmi'
+			icon = 'icons/obj/power_cond/power_cond_orange.dmi'
 		if("cyan")
-			icon = 'icons/obj/power_cond_cyan.dmi'
+			icon = 'icons/obj/power_cond/power_cond_cyan.dmi'
 		if("white")
-			icon = 'icons/obj/power_cond_white.dmi'
+			icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
 /obj/item/weapon/cable_coil/cut
 	item_state = "coil_red2"
