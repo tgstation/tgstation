@@ -76,7 +76,7 @@
 					body += "</td><td align='center'>";
 
 					body += "<a href='?_src_=holder;adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;notes=show;mob="+ref+"'>N</a> - "
+					body += "<a href='?_src_=holder;notes=show;ckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
@@ -266,23 +266,9 @@
 			else if(isobserver(M))
 				M_job = "Ghost"
 
-			M_job = replacetext(M_job, "'", "")
-			M_job = replacetext(M_job, "\"", "")
-			M_job = replacetext(M_job, "\\", "")
-
-			var/M_name = M.name
-			M_name = replacetext(M_name, "'", "")
-			M_name = replacetext(M_name, "\"", "")
-			M_name = replacetext(M_name, "\\", "")
-			var/M_rname = M.real_name
-			M_rname = replacetext(M_rname, "'", "")
-			M_rname = replacetext(M_rname, "\"", "")
-			M_rname = replacetext(M_rname, "\\", "")
-
-			var/M_key = M.key
-			M_key = replacetext(M_key, "'", "")
-			M_key = replacetext(M_key, "\"", "")
-			M_key = replacetext(M_key, "\\", "")
+			var/M_name = html_encode(M.name)
+			var/M_rname = html_encode(M.real_name)
+			var/M_key = html_encode(M.key)
 
 			//output for each mob
 			dat += {"

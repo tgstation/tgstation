@@ -828,11 +828,6 @@
 	//Player Notes
 	else if(href_list["notes"])
 		var/ckey = href_list["ckey"]
-		if(!ckey)
-			var/mob/M = locate(href_list["mob"])
-			if(ismob(M))
-				ckey = M.ckey
-
 		switch(href_list["notes"])
 			if("show")
 				notes_show(ckey)
@@ -933,16 +928,7 @@
 
 	else if(href_list["mute"])
 		if(!check_rights(R_ADMIN))	return
-
-		var/mob/M = locate(href_list["mute"])
-		if(!ismob(M))	return
-		if(!M.client)	return
-
-		var/mute_type = href_list["mute_type"]
-		if(istext(mute_type))	mute_type = text2num(mute_type)
-		if(!isnum(mute_type))	return
-
-		cmd_admin_mute(M, mute_type)
+		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
 	else if(href_list["c_mode"])
 		if(!check_rights(R_ADMIN))	return
