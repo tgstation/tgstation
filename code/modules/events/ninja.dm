@@ -341,13 +341,10 @@ ________________________________________________________________________________
 
 /proc/create_space_ninja(turf/spawnturf)
 	var/mob/living/carbon/human/new_ninja = new(spawnturf)
-	var/ninja_title = pick(ninja_titles)
-	var/ninja_name = pick(ninja_names)
-	new_ninja.gender = pick(MALE, FEMALE)
 
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.randomize_appearance_for(new_ninja)
-	new_ninja.real_name = "[ninja_title] [ninja_name]"
+	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
+	A.copy_to(new_ninja)
 	new_ninja.dna.ready_dna(new_ninja)
 	new_ninja.equip_space_ninja()
 	return new_ninja

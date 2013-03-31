@@ -10,18 +10,11 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
-		if(H.gender == MALE)
-			var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_m
-			if(!in_range(src, usr))//no tele-grooming
-				return
-			if(new_undies)
-				H.underwear = underwear_m.Find(new_undies)
-		else
-			var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_f
-			if(!in_range(src, usr))
-				return
-			if(new_undies)
-				H.underwear = underwear_f.Find(new_undies)
+		var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_all
+		if(!in_range(src, user))//no tele-grooming
+			return
+		if(new_undies)
+			H.underwear = new_undies
 
 		add_fingerprint(H)
 		H.update_body()
