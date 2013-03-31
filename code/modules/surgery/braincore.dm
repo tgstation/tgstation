@@ -102,7 +102,7 @@
 //				BRAIN DAMAGE FIXING								//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/brain/cut_brain
+/datum/surgery_step/brain/fix_brain
 	required_tool =  /obj/item/weapon/hemostat
 	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
 
@@ -114,7 +114,7 @@
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts mending ruptured vessels in [target]'s brain with \the [tool].", \
-		"You start mending [target]'s brainwith \the [tool].")
+		"You start mending [target]'s brain with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
