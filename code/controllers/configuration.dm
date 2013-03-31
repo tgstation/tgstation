@@ -58,6 +58,7 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 
 	//game_options.txt configs
+	var/force_random_names = 0
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
@@ -332,6 +333,8 @@
 					use_recursive_explosions = 1
 				if("humans_need_surnames")
 					humans_need_surnames = 1
+				if("force_random_names")
+					config.force_random_names = 1
 				if("allow_ai")
 					config.allow_ai = 1
 				else
