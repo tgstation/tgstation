@@ -116,7 +116,7 @@
 				src << "\blue Now teleporting."
 				observer.loc = O.loc
 				if(client.prefs.be_random_name)
-					client.prefs.real_name = random_name()
+					client.prefs.real_name = random_name(gender)
 				observer.real_name = client.prefs.real_name
 				observer.name = observer.real_name
 				observer.key = key
@@ -309,11 +309,9 @@
 		new_character.lastarea = get_area(loc)
 
 		if(ticker.random_players || appearance_isbanned(new_character))
-			new_character.gender = pick(MALE, FEMALE)
-			client.prefs.real_name = random_name()
-			client.prefs.randomize_appearance_for(new_character)
-		else
-			client.prefs.copy_to(new_character)
+			client.prefs.random_character()
+			client.prefs.real_name = random_name(gender)
+		client.prefs.copy_to(new_character)
 
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 

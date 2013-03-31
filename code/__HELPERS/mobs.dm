@@ -1,3 +1,9 @@
+/proc/random_underwear(gender)
+	switch(gender)
+		if(MALE)	return pick(underwear_m)
+		if(FEMALE)	return pick(underwear_f)
+		else		return pick(underwear_all)
+
 proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)	return pick(hair_styles_male_list)
