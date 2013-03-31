@@ -432,6 +432,8 @@ AI MODULES
 	target << "\red BZZZZT"
 	var/law = "[newFreeFormLaw]"
 	target.add_ion_law(law)
+	message_admins("[key_name_admin(sender)] used hacked module on [key_name_admin(target)]. The law was '[newFreeFormLaw].'")
+	log_law("[sender.key]/([sender.name]) used hacked module on [sender.key]/([sender.name]): '[newFreeFormLaw].'")
 
 /obj/item/weapon/aiModule/syndicate/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
