@@ -32,7 +32,9 @@
 	var/stat_msg1
 	var/stat_msg2
 
-
+/obj/machinery/computer/communications/New()
+	shuttle_caller_list += src
+	..()
 
 /obj/machinery/computer/communications/process()
 	if(..())
@@ -499,50 +501,29 @@
 
 /obj/machinery/computer/communications/Del()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(istype(commconsole.loc,/turf) && commconsole != src)
-			return ..()
+	shuttle_caller_list -= src
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
-			return ..()
+	var/callshuttle = 1
 
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
-		return ..()
-
-	emergency_shuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
-	..()
-
-/obj/item/weapon/circuitboard/communications/Del()
-
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(istype(commconsole.loc,/turf))
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
+	for(var/SC in shuttle_caller_list)
+		if(istype(SC,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = SC
+			if(AI.stat && !AI.client)
+				continue
+		var/turf/T = get_turf(SC)
+		if(T && T.z == 1)
+			callshuttle = 0 //if there's an alive AI or a communication console on the station z level, we don't call the shuttle
+			break
 
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
-		return ..()
+		callshuttle = 0
 
-	emergency_shuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	if(callshuttle)
+		if(!emergency_shuttle.online && emergency_shuttle.direction == 1) //we don't call the shuttle if it's already coming
+			emergency_shuttle.incall(2.5) //25 minutes! If they want to recall, they have 20 minutes to do so
+			log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+			message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
+			captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+			world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()

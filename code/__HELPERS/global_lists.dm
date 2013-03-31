@@ -16,6 +16,7 @@ var/global/list/chemical_reagents_list				//list of all /datum/reagent datums in
 var/global/list/landmarks_list = list()				//list of all landmarks created
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 var/global/list/mechas_list = list()				//list of all mechs. Used by hostile mobs target tracking.
+var/global/list/shuttle_caller_list = list()		//list of all communication consoles and AIs, for automatic shuttle calls when there are none.
 
 var/global/list/portals = list()					//for use by portals
 
