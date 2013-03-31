@@ -478,36 +478,46 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/mob/M
 	var/client/C
 	var/key
+	var/ckey
 
 	if(!whom)	return "*null*"
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
 		key = C.key
+		ckey = C.ckey
 	else if(ismob(whom))
 		M = whom
 		C = M.client
 		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
+		ckey = M.ckey
+	else if(istext(whom))
+		key = whom
+		ckey = ckey(whom)
+		C = directory[ckey]
+		if(C)
+			M = C.mob
 	else
 		return "*invalid*"
 
 	. = ""
 
+	if(!ckey)
+		include_link = 0
+	
 	if(key)
-		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C]'>"
-
+		if(include_link)
+			. += "<a href='?priv_msg=[ckey]'>"
+		
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
 		else
 			. += key
+		if(!C)
+			. += "\[DC\]"
 
 		if(include_link)
-			if(C)	. += "</a>"
-			else	. += " (DC)"
+			. += "</a>"
 	else
 		. += "*no key*"
 
