@@ -15,37 +15,21 @@
 		if("shuttle")
 			shuttle_z = z
 			del(src)
-
-		if("airtunnel_stop")
-			airtunnel_stop = x
-
-		if("airtunnel_start")
-			airtunnel_start = x
-
-		if("airtunnel_bottom")
-			airtunnel_bottom = y
-
 		if("monkey")
 			monkeystart += loc
 			del(src)
 		if("start")
 			newplayer_start += loc
 			del(src)
-
 		if("wizard")
 			wizardstart += loc
 			del(src)
-
 		if("JoinLate")
 			latejoin += loc
 			del(src)
-
-		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
 			del(src)
-	//	if("mazewarp")
-	//		mazewarp += loc
 		if("Holding Facility")
 			holdingfacility += loc
 		if("tdome1")
@@ -56,11 +40,9 @@
 			tdomeadmin	+= loc
 		if("tdomeobserve")
 			tdomeobserve += loc
-		//not prisoners
 		if("prisonsecuritywarp")
 			prisonsecuritywarp += loc
 			del(src)
-
 		if("blobstart")
 			blobstart += loc
 			del(src)

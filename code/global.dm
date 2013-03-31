@@ -52,17 +52,14 @@ var/station_name = null
 var/game_version = "/tg/ Station 13"
 var/changelog_hash = ""
 
-var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
 var/master_mode = "traitor"//"extended"
 var/secret_force_mode = "secret" // if this is anything but "secret", the secret rotation will forceably choose this mode
 
-var/datum/engine_eject/engine_eject_control = null
 var/host = null
 var/ooc_allowed = 1
 var/dooc_allowed = 1
 var/traitor_scaling = 1
-//var/goonsay_allowed = 0
 var/dna_ident = 1
 var/abandon_allowed = 1
 var/enter_allowed = 1
@@ -85,9 +82,6 @@ var/CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002
 var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
 var/shuttle_z = 2	//default
-var/airtunnel_start = 68 // default
-var/airtunnel_stop = 68 // default
-var/airtunnel_bottom = 72 // default
 var/list/monkeystart = list()
 var/list/wizardstart = list()
 var/list/newplayer_start = list()
@@ -95,7 +89,6 @@ var/list/latejoin = list()
 var/list/prisonwarp = list()	//prisoners go to these
 var/list/holdingfacility = list()	//captured people go here
 var/list/xeno_spawn = list()//Aliens spawn at these.
-//	list/mazewarp = list()
 var/list/tdome1 = list()
 var/list/tdome2 = list()
 var/list/tdomeobserve = list()
@@ -103,7 +96,6 @@ var/list/tdomeadmin = list()
 var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
-//	list/traitors = list()	//traitor list
 var/list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
