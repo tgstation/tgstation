@@ -783,12 +783,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
 
-	if (ticker && ticker.mode)
+	if(ticker && ticker.mode)
 		usr << "Nope you can't do this, the game's already started. This only works before rounds!"
 		return
 
-	if(ticker.random_players)
-		ticker.random_players = 0
+	if(config.force_random_names)
+		config.force_random_names = 0
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.", 1)
 		usr << "Disabled."
 		return
@@ -806,7 +806,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	usr << "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>."
 
-	ticker.random_players = 1
+	config.force_random_names = 1
 	feedback_add_details("admin_verb","MER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
