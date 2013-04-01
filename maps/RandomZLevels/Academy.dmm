@@ -470,7 +470,7 @@
 "jb" = (/obj/structure/noticeboard,/turf/simulated/wall,/area/awaymission/academy/academyaft)
 "jc" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "jd" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/airless{tag = "icon-white (EAST)"; icon_state = "white"; dir = 4},/area/awaymission/academy/academyaft)
-"je" = (/obj/structure/table,/obj/item/brain{name = "The preserved brain of Harry Houdini"},/turf/simulated/floor/airless{tag = "icon-whitered (EAST)"; icon_state = "whitered"; dir = 4},/area/awaymission/academy/academyaft)
+"je" = (/obj/structure/table,/obj/item/organ/brain{name = "The preserved brain of Harry Houdini"},/turf/simulated/floor/airless{tag = "icon-whitered (EAST)"; icon_state = "whitered"; dir = 4},/area/awaymission/academy/academyaft)
 "jf" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/academy/academyaft)
 "jg" = (/turf/simulated/floor{dir = 8; icon_state = "yellow"},/area/awaymission/academy/academyaft)
 "jh" = (/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/awaymission/academy/academyaft)
