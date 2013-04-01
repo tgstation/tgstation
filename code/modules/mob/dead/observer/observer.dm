@@ -205,6 +205,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)
+	if (usr != src)
+		return
 	if (href_list["follow"])
 		var/mob/target = locate(href_list["follow"]) in mob_list
 		var/mob/A = usr;
