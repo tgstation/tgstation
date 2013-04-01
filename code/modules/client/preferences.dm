@@ -600,7 +600,8 @@ datum/preferences
 						else
 							gender = MALE
 						underwear = random_underwear(gender)
-					
+						f_style = random_facial_hair_style(gender)
+						h_style = random_hair_style(gender)
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP

@@ -3,13 +3,6 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 #define SAVEFILE_VERSION_MAX	9
-
-/*//This will allow you to print savefiles
-/client/verb/read_savefile(client/C in clients)
-	var/savefile/S = new /savefile(prefs.path)
-	S.ExportText("/",file("savefile.txt"))
-*/
-
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -285,3 +278,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
+/*
+//DEBUG
+//Some crude tools for testing savefiles
+//path is the savefile path
+/client/verb/savefile_export(path as text)
+	var/savefile/S = new /savefile(path)
+	S.ExportText("/",file("[path].txt"))
+//path is the savefile path
+/client/verb/savefile_import(path as text)
+	var/savefile/S = new /savefile(path)
+	S.ImportText("/",file("[path].txt"))
+*/
