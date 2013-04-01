@@ -603,7 +603,7 @@
 "lE" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor,/area/awaymission/arrivalblock)
 "lF" = (/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor,/area/awaymission/arrivalblock)
 "lG" = (/obj/machinery/computer/operating,/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
-"lH" = (/obj/machinery/optable,/obj/machinery/light/small{dir = 1},/obj/effect/decal/remains/human,/obj/item/weapon/tank/anesthetic,/obj/item/clothing/mask/breath,/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
+"lH" = (/obj/structure/optable,/obj/machinery/light/small{dir = 1},/obj/effect/decal/remains/human,/obj/item/weapon/tank/anesthetic,/obj/item/clothing/mask/breath,/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
 "lI" = (/obj/structure/sink{pixel_y = 32},/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
 "lJ" = (/obj/structure/stool/bed,/obj/structure/window/reinforced/tinted,/obj/item/weapon/bedsheet/medical,/obj/effect/decal/remains/human,/turf/simulated/floor{icon_state = "whitehall"; dir = 4},/area/awaymission/southblock)
 "lK" = (/obj/effect/decal/remains/human,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/southblock)
