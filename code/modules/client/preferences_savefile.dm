@@ -288,5 +288,5 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //path is the savefile path
 /client/verb/savefile_import(path as text)
 	var/savefile/S = new /savefile(path)
-	S.ExportText("/",file("[path].txt"))
+	S.ImportText("/",file("[path].txt"))
 */
