@@ -627,6 +627,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	sleep(max(sleeptime, 15))
 	del(animation)
 
+
 //Will return the contents of an atom recursivly to a depth of 'searchDepth'
 /atom/proc/GetAllContents(searchDepth = 5)
 	var/list/toReturn = list()
@@ -637,6 +638,17 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			toReturn += part.GetAllContents(searchDepth - 1)
 
 	return toReturn
+
+
+/atom/proc/GetTypeInAllContents(typepath, searchDepth = 5)
+	for(var/atom/part in contents)
+		if(istype(part, typepath))
+			return 1
+		if(part.contents.len && searchDepth)
+			if(part.GetTypeInAllContents(typepath, searchDepth - 1))
+				return 1
+	return 0
+
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
