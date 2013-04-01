@@ -17,6 +17,8 @@ namespace AddToChangelog
 
         public string changelogPath = "changelog.html";
         public string changelogMarker = "#ADDTOCHANGELOGMARKER#";
+        public string longDateFormat = "dd MMMM yyyy";
+        public string shortDateFormat = "d";
 
         public Dictionary<string, string> ItemList = new Dictionary<string, string>()
         {
@@ -38,7 +40,7 @@ namespace AddToChangelog
         {
             InitializeComponent();
             this.dropdownBox.SelectedIndex = 0;
-            this.dateBox.Text = DateTime.Now.ToShortDateString();
+            this.dateBox.Text = DateTime.Now.ToString(shortDateFormat);
             this.listBox.Text = "# Enter your logs in the text box above and it'll be parsed into here. You can use 'Get HTML' to format it for the changelog. You can also use Lazy Add to automatically add the logs to the changelog, no effort needed (just remember to save)! Below is the changelog, you can edit and save it from here to easily fix mistakes. Save will save the changelog below, reload will undo any unsaved changes.";
         }
 
@@ -154,10 +156,15 @@ namespace AddToChangelog
         {
             if (listBox.Text != "")
             {
-                DateTime dateTime = Convert.ToDateTime(dateBox.Text);
+                DateTime dateTime;
+                if (!DateTime.TryParse(dateBox.Text, out dateTime))
+                {
+                    MessageBox.Show("Invalid date time.");
+                    return;
+                }
 
                 resultsBox.Text = "<div class='commit sansserif'>\r\n";
-                resultsBox.Text += "\t<h2 class='date'>" + dateTime.ToString("dd MMMM yyyy") + "</h2>\r\n";
+                resultsBox.Text += "\t<h2 class='date'>" + dateTime.ToString(longDateFormat) + "</h2>\r\n";
                 resultsBox.Text += "\t<h3 class='author'>" + authorBox.Text + " updated:</h3>\r\n";
                 resultsBox.Text += "\t<ul class='changes bgimages16'>\r\n";
                 resultsBox.Text += GetHTMLLines();
