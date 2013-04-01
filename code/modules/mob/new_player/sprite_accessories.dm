@@ -347,3 +347,7 @@
 	dwarf
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
+
+	fiveoclock
+		name = "Five o Clock Shadow"
+		icon_state = "facial_fiveoclock"
