@@ -139,12 +139,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			var/datum/effect/effect/system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
 			e.start()
+			if(ismob(loc))
+				var/mob/M = loc
+				M.drop_from_inventory(src)
 			del(src)
 			return
 		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
 			var/datum/effect/effect/system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("fuel") / 5, 1), get_turf(src), 0, 0)
 			e.start()
+			if(ismob(loc))
+				var/mob/M = loc
+				M.drop_from_inventory(src)
 			del(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
