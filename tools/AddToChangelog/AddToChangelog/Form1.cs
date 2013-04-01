@@ -18,7 +18,7 @@ namespace AddToChangelog
         public string changelogPath = "changelog.html";
         public string changelogMarker = "#ADDTOCHANGELOGMARKER#";
         public string longDateFormat = "dd MMMM yyyy";
-        public string shortDateFormat = "d";
+        public string shortDateFormat = "ddMMyyyy";
 
         public Dictionary<string, string> ItemList = new Dictionary<string, string>()
         {
@@ -52,7 +52,6 @@ namespace AddToChangelog
                 try
                 {
                     File.WriteAllText(changelogPath, editBox.Text);
-                    MessageBox.Show("Save successful!");
                 }
                 catch
                 {
