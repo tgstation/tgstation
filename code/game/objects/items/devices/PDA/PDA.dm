@@ -188,9 +188,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	ttone = "data"
 	detonate = 0
 
-/obj/item/device/pda/ai/can_use()
-	return 1
-
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -220,18 +217,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		cartridge = new default_cartridge(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/device/pda/proc/can_use()
-
-	if(!ismob(loc))
-		return 0
-
-	var/mob/M = loc
-	if(!M.canmove)
-		return 0
-	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ))
-		return 1
-	else
-		return 0
+/obj/item/device/pda/proc/can_use(mob/user)
+	if(user)
+		if(loc == user)
+			return 1
+	return 0
 
 /obj/item/device/pda/GetAccess()
 	if(id)
@@ -244,7 +234,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && !M.restrained() && !M.stat && can_use())
+	if((!istype(over_object, /obj/screen)) && !M.restrained() && !M.stat && can_use(M))
 		return attack_self(M)
 	return
 
@@ -453,7 +443,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
 
-	if(can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
+	if(can_use(U)) //Why reinvent the wheel? There's a proc that does exactly that.
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)
@@ -724,7 +714,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if (last_text && world.time < last_text + 5)
 		return
 
-	if(!can_use())
+	if(!can_use(U))
 		return
 
 	last_text = world.time
