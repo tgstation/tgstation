@@ -448,6 +448,33 @@
 	icon_state = (src.beaker?"mixer1_b":"mixer0_b")
 	stat |= BROKEN
 
+/obj/machinery/computer/pandemic/proc/GetVirusByIndex(var/index)
+	if(beaker && beaker.reagents)
+		if(beaker.reagents.reagent_list.len)
+			var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
+			if(BL)
+				if(BL.data && BL.data["viruses"])
+					var/list/viruses = BL.data["viruses"]
+					return viruses[index]
+	return null
+
+/obj/machinery/computer/pandemic/proc/GetResistancesByIndex(var/index)
+	if(beaker && beaker.reagents)
+		if(beaker.reagents.reagent_list.len)
+			var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
+			if(BL)
+				if(BL.data && BL.data["resistances"])
+					var/list/resistances = BL.data["resistances"]
+					return resistances[index]
+	return null
+
+/obj/machinery/computer/pandemic/proc/GetVirusTypeByIndex(var/index)
+	var/datum/disease/D = GetVirusByIndex(index)
+	if(D)
+		return D.GetDiseaseID()
+	return null
+
+
 
 /obj/machinery/computer/pandemic/power_change()
 
@@ -475,8 +502,9 @@
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			if(B)
-				var/path = href_list["create_vaccine"]
-				var/vaccine_type = text2path(path)
+
+				var/path = GetResistancesByIndex(text2num(href_list["create_vaccine"]))
+				var/vaccine_type = path
 				var/vaccine_name = "Unknown"
 
 				if(!ispath(vaccine_type))
@@ -485,7 +513,7 @@
 						if(D)
 							vaccine_name = D.name
 							vaccine_type = path
-				else
+				else if(vaccine_type)
 					var/datum/disease/D = new vaccine_type(0, null)
 					if(D)
 						vaccine_name = D.name
@@ -505,15 +533,18 @@
 		if(!wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
-			var/type = text2path(href_list["create_virus_culture"])//the path is received as string - converting
+			var/type = GetVirusTypeByIndex(text2num(href_list["create_virus_culture"]))//the path is received as string - converting
 			var/datum/disease/D = null
-			if(!type)
-				var/datum/disease/advance/A = archive_diseases[href_list["create_virus_culture"]]
+			if(!ispath(type))
+				D = GetVirusByIndex(text2num(href_list["create_virus_culture"]))
+				var/datum/disease/advance/A = archive_diseases[D.GetDiseaseID()]
 				if(A)
 					D = new A.type(0, A)
-			else
+			else if(type)
 				if(type in diseases) // Make sure this is a disease
 					D = new type(0, null)
+			if(!D)
+				return
 			var/list/data = list("viruses"=list(D))
 			var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
 			if(!name || name == " ") name = D.name
@@ -546,7 +577,7 @@
 		var/new_name = stripped_input(usr, "Name the Disease", "New Name", "", MAX_NAME_LEN)
 		if(..())
 			return
-		var/id = href_list["name_disease"]
+		var/id = GetVirusTypeByIndex(text2num(href_list["name_disease"]))
 		if(archive_diseases[id])
 			var/datum/disease/advance/A = archive_diseases[id]
 			A.AssignName(new_name)
@@ -601,23 +632,22 @@
 			if(Blood.data["viruses"])
 				var/list/vir = Blood.data["viruses"]
 				if(vir.len)
+					var/i = 0
 					for(var/datum/disease/D in Blood.data["viruses"])
+						i++
 						if(!D.hidden[PANDEMIC])
 
-
-							var/disease_creation = D.type
 							if(istype(D, /datum/disease/advance))
 
 								var/datum/disease/advance/A = D
 								D = archive_diseases[A.GetDiseaseID()]
-								disease_creation = A.GetDiseaseID()
-								if(D.name == "Unknown")
-									dat += "<b><a href='?src=\ref[src];name_disease=[A.GetDiseaseID()]'>Name Disease</a></b><BR>"
+								if(D && D.name == "Unknown")
+									dat += "<b><a href='?src=\ref[src];name_disease=[i]'>Name Disease</a></b><BR>"
 
 							if(!D)
 								CRASH("We weren't able to get the advance disease from the archive.")
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
+							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[i]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
 							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
@@ -637,7 +667,9 @@
 				var/list/res = Blood.data["resistances"]
 				if(res.len)
 					dat += "<ul>"
+					var/i = 0
 					for(var/type in Blood.data["resistances"])
+						i++
 						var/disease_name = "Unknown"
 
 						if(!ispath(type))
@@ -648,7 +680,7 @@
 							var/datum/disease/D = new type(0, null)
 							disease_name = D.name
 
-						dat += "<li>[disease_name] - <A href='?src=\ref[src];create_vaccine=[type]'>Create vaccine bottle</A></li>"
+						dat += "<li>[disease_name] - <A href='?src=\ref[src];create_vaccine=[i]'>Create vaccine bottle</A></li>"
 					dat += "</ul><BR>"
 				else
 					dat += "nothing<BR>"
