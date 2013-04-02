@@ -42,7 +42,6 @@ var/list/uplink_items = list()
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
-	var/abstract = 0
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
@@ -167,7 +166,6 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
-	abstract = 1
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
