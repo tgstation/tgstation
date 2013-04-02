@@ -18,17 +18,7 @@
 //- Check for any misplaced or stacked piece of wire
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
-
-var/camera_range_display_status = 0
 var/intercom_range_display_status = 0
-
-/obj/effect/debugging/camera_range
-	icon = 'icons/480x480.dmi'
-	icon_state = "25percent"
-
-	New()
-		src.pixel_x = -224
-		src.pixel_y = -224
 
 /obj/effect/debugging/marker
 	icon = 'icons/turf/areas.dmi'
@@ -47,19 +37,19 @@ var/intercom_range_display_status = 0
 	set category = "Mapping"
 	set name = "Camera Range Display"
 
-	if(camera_range_display_status)
-		camera_range_display_status = 0
-	else
-		camera_range_display_status = 1
-
-
-
-	for(var/obj/effect/debugging/camera_range/C in world)
-		del(C)
-
-	if(camera_range_display_status)
+	var/on = 0
+	for(var/turf/T in world)
+		if(T.maptext)
+			on = 1
+		T.maptext = null
+	
+	if(!on)
+		var/list/seen = list()
 		for(var/obj/machinery/camera/C in cameranet.cameras)
-			new/obj/effect/debugging/camera_range(C.loc)
+			for(var/turf/T in C.can_see())
+				seen[T]++
+		for(var/turf/T in seen)
+			T.maptext = "[seen[T]]"
 	feedback_add_details("admin_verb","mCRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
