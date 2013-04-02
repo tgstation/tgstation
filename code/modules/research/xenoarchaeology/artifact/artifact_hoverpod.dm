@@ -33,19 +33,19 @@
 	return 0
 
 //these three procs overriden to play different sounds
-/obj/mecha/mechturn(direction)
+/obj/mecha/working/hoverpod/mechturn(direction)
 	dir = direction
 	//playsound(src,'sound/machines/hiss.ogg',40,1)
 	return 1
 
-/obj/mecha/mechstep(direction)
+/obj/mecha/working/hoverpod/mechstep(direction)
 	var/result = step(src,direction)
 	if(result)
 		playsound(src,'sound/machines/hiss.ogg',40,1)
 	return result
 
 
-/obj/mecha/mechsteprand()
+/obj/mecha/working/hoverpod/mechsteprand()
 	var/result = step_rand(src)
 	if(result)
 		playsound(src,'sound/machines/hiss.ogg',40,1)
