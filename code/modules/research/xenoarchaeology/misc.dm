@@ -86,7 +86,6 @@
 	icon_closed = "toolcloset"
 	icon_opened = "toolclosetopen"
 
-
 	New()
 		..()
 		sleep(2)

@@ -350,6 +350,8 @@ commented out in r5061, I left it because of the shroom thingies
 					excavate_find(5, src.finds[1])
 				else if(prob(50))
 					src.finds.Remove(src.finds[1])
+					if(prob(50))
+						artifact_debris()
 
 		if(do_after(user,P.digspeed))
 			user << "\blue You finish [P.drill_verb] the rock."
@@ -387,8 +389,8 @@ commented out in r5061, I left it because of the shroom thingies
 					B = new(src)
 					if(artifact_find)
 						B.artifact_find = artifact_find
-				else if(src.excavation_level + P.excavation_amount >= 100)
-					artifact_debris()
+				else if(artifact_find && src.excavation_level + P.excavation_amount >= 100)
+					artifact_debris(1)
 
 				gets_drilled(B ? 0 : 1)
 				return
@@ -528,73 +530,60 @@ commented out in r5061, I left it because of the shroom thingies
 		var/obj/effect/suspension_field/S = locate() in src
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
 			if(X)
-				src.visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart","[display_name] collapses onto itself")].</b>")
+				src.visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</b>")
 				del(X)
 
 	src.finds.Remove(F)
 
-/turf/simulated/mineral/proc/artifact_debris()
+/turf/simulated/mineral/proc/artifact_debris(var/severity = 0)
 	//cael's patented random limited drop componentized loot system!
+	severity = max(min(severity,1),0)
 	var/materials = 0
 	var/list/viable_materials = list(1,2,4,8,16,32,64,128,256)
 
-	var/num_materials = rand(1,5)
+	var/num_materials = rand(1,3 + severity*2)
 	for(var/i=0, i<num_materials, i++)
 		var/chosen = pick(viable_materials)
 		materials |= chosen
 		viable_materials.Remove(chosen)
 
 	if(materials & 1)
-		var/quantity = rand(0,3)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/rods/R = new(src)
-			R.amount = rand(5,25)
+		var/obj/item/stack/rods/R = new(src)
+		R.amount = rand(5,25)
 
 	if(materials & 2)
-		var/quantity = pick(0, 0, 1)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/tile/R = new(src)
-			R.amount = rand(1,5)
+		var/obj/item/stack/tile/R = new(src)
+		R.amount = rand(1,5)
 
 	if(materials & 4)
-		var/quantity = rand(0,3)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/sheet/metal/R = new(src)
-			R.amount = rand(5,25)
+		var/obj/item/stack/sheet/metal/R = new(src)
+		R.amount = rand(5,25)
 
 	if(materials & 8)
-		var/quantity = rand(0,3)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/sheet/plasteel/R = new(src)
-			R.amount = rand(5,25)
+		var/obj/item/stack/sheet/plasteel/R = new(src)
+		R.amount = rand(5,25)
 
 	if(materials & 16)
-		var/quantity = rand(0,3)
+		var/quantity = rand(1,3)
 		for(var/i=0, i<quantity, i++)
 			new /obj/item/weapon/shard(src)
 
 	if(materials & 32)
-		var/quantity = rand(0,3)
+		var/quantity = rand(1,3)
 		for(var/i=0, i<quantity, i++)
 			new /obj/item/weapon/shard/plasma(src)
 
 	if(materials & 64)
-		var/quantity = rand(0,3)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/sheet/mineral/uranium/R = new(src)
-			R.amount = rand(5,25)
+		var/obj/item/stack/sheet/mineral/uranium/R = new(src)
+		R.amount = rand(5,25)
 
 	if(materials & 128)
-		var/quantity = rand(0,3)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/sheet/mineral/mythril/R = new(src)
-			R.amount = rand(5,25)
+		var/obj/item/stack/sheet/mineral/mythril/R = new(src)
+		R.amount = rand(1,5)
 
 	if(materials & 256)
-		var/quantity = rand(0,3)
-		for(var/i=0, i<quantity, i++)
-			var/obj/item/stack/sheet/mineral/adamantine/R = new(src)
-			R.amount = rand(5,25)
+		var/obj/item/stack/sheet/mineral/adamantine/R = new(src)
+		R.amount = rand(1,5)
 
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
