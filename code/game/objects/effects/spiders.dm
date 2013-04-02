@@ -114,7 +114,8 @@
 
 /obj/effect/spider/spiderling/proc/die()
 	visible_message("<span class='alert'>[src] dies!</span>")
-	icon_state = "greenshatter"
+	new /obj/effect/decal/cleanable/spiderling_remains(src.loc)
+	del(src)
 
 /obj/effect/spider/spiderling/healthcheck()
 	if(health <= 0)
@@ -188,6 +189,12 @@
 			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
 			new spawn_type(src.loc)
 			del(src)
+
+/obj/effect/decal/cleanable/spiderling_remains
+	name = "spiderling remains"
+	desc = "Green squishy mess."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "greenshatter"
 
 /obj/effect/spider/cocoon
 	name = "cocoon"

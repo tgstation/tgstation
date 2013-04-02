@@ -129,7 +129,10 @@
 				return
 
 			if(client.prefs.species != "Human")
-				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
+
+				var/S = client.prefs.species
+				if(S == "Unathi") S = "Soghun"
+				if(!is_alien_whitelisted(src, S) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [client.prefs.species].")
 					return 0
 
@@ -144,7 +147,9 @@
 				usr << "\blue There is an administrative lock on entering the game!"
 				return
 
-			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
+			var/S = client.prefs.species
+			if(S == "Unathi") S = "Soghun"
+			if(!is_alien_whitelisted(src, S) && config.usealienwhitelist)
 				src << alert("You are currently not whitelisted to play [client.prefs.species].")
 				return 0
 
@@ -286,13 +291,9 @@
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
-
-			//unlikely for this to be an issue, but just in case
-			if(istype(character.wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/I = character.wear_id
-				a.autosay("\"[character.real_name],[I.assignment ? " [I.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
-			else
-				a.autosay("\"[character.real_name], visitor, has arrived on the station.\"", "Arrivals Announcement Computer")
+			if(character.mind.role_alt_title)
+				rank = character.mind.role_alt_title
+			a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
 			del(a)
 
 	proc/LateChoices()
@@ -331,15 +332,15 @@
 		new_character.lastarea = get_area(loc)
 
 		if(client.prefs.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
-			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
+			if(is_alien_whitelisted(src, "Tajaran"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "tajaran"
 				new_character.tajaran_talk_understand = 1
 		if(client.prefs.species == "Unathi")
-			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
+			if(is_alien_whitelisted(src, "Soghun"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "lizard"
 				new_character.soghun_talk_understand = 1
 		if(client.prefs.species == "Skrell")
-			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
+			if(is_alien_whitelisted(src, "Skrell"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "skrell"
 				new_character.skrell_talk_understand = 1
 

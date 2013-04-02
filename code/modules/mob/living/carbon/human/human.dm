@@ -684,7 +684,7 @@
 	if(dna)
 		switch(dna.mutantrace)
 			if("lizard")
-				return "Soghun"
+				return "Unathi"
 			if("tajaran")
 				return "Tajaran"
 			if("skrell")
@@ -699,7 +699,7 @@
 /mob/living/carbon/get_species()
 	if(src.dna)
 		if(src.dna.mutantrace == "lizard")
-			return "Soghun"
+			return "Unathi"
 		else if(src.dna.mutantrace == "skrell")
 			return "Skrell"
 		else if(src.dna.mutantrace == "tajaran")
