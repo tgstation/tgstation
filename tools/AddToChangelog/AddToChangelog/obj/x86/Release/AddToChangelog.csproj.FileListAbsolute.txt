@@ -1,9 +1,0 @@
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\bin\Release\AddToChangelog.exe
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\bin\Release\AddToChangelog.pdb
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\ResolveAssemblyReference.cache
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\AddToChangelog.MainForm.resources
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\AddToChangelog.Properties.Resources.resources
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\GenerateResource.read.1.tlog
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\GenerateResource.write.1.tlog
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\AddToChangelog.exe
-C:\Users\Alex\Documents\Visual Studio 2010\Projects\AddToChangelog\AddToChangelog\obj\x86\Release\AddToChangelog.pdb
