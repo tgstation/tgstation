@@ -198,17 +198,15 @@
 	for(var/i = 1; i <= 3; i++)
 		for(var/j = 1; j <= 3; j++)
 			var/turf/T = locate(x_c, y_c, z_c)
-			var/mob/dummy = new(T)	//Go go visibility check dummy
+			//var/mob/dummy = new(T)	//Go go visibility check dummy
 			var/viewer = user
 			if(user.client)		//To make shooting through security cameras possible
 				viewer = user.client.eye
-			if(dummy in viewers(world.view, viewer))
+			if(T in hear(world.view, viewer))
 				temp.Blend(get_icon(T), ICON_OVERLAY, 32 * (j-1-1), 32 - 32 * (i-1))
 			else
 				temp.Blend(black, ICON_OVERLAY, 32 * (j-1), 64 - 32 * (i-1))
 			mobs += get_mobs(T)
-			dummy.loc = null
-			dummy = null	//Alas, nameless creature	//garbage collect it instead
 			x_c++
 		y_c--
 		x_c = x_c - 3
