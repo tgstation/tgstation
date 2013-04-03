@@ -91,12 +91,10 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 		a_computerid = src.owner:computer_id
 		a_ip = src.owner:address
 
-	/* TODO UNCEOMMENT
 	if(blockselfban)
 		if(a_ckey == ckey)
 			usr << "\red You cannot apply this ban type on yourself."
 			return
-	*/
 
 	var/who
 	for(var/client/C in clients)
