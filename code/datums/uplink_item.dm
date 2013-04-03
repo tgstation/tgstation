@@ -55,7 +55,7 @@ var/list/uplink_items = list()
 	if(!istype(U))
 		return 0
 
-	if (user.stat || user.restrained())
+	if (!user || user.stat || user.restrained())
 		return 0
 
 	if (!( istype(user, /mob/living/carbon/human)))
@@ -69,7 +69,7 @@ var/list/uplink_items = list()
 
 		var/obj/I = spawn_item(get_turf(user), U)
 
-		if(ishuman(user))
+		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
 			U.purchase_log += "[user] ([user.ckey]) bought [name]."
