@@ -16,6 +16,7 @@
 	if(!reagents.total_volume)
 		if(M == usr)
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
+		usr.visible_message("<span class='notice'>[usr] finishes eating \the [src].</span>")
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
