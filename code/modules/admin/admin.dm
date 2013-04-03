@@ -50,7 +50,7 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
 	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | "
-	body += "<A href='?src=\ref[src];appearanceban=\ref[M]'>Appearance Ban</A> | "
+	body += "<A href='?src=\ref[src];appearanceban=\ref[M]'>Identity Ban</A> | "
 	body += "<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A> "
 
 	if(M.client)
