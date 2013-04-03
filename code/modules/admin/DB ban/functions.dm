@@ -14,6 +14,9 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 	var/maxadminbancheck	//Used to limit the number of active bans of a certein type that each admin can give. Used to protect against abuse or mutiny.
 	var/announceinirc		//When set, it announces the ban in irc. Intended to be a way to raise an alarm, so to speak.
 	var/blockselfban		//Used to prevent the banning of yourself.
+	var/kickbannedckey		//Defines whether this proc should kick the banned person, if they are connected (if banned_mob is defined).
+							//some ban types kick players after this proc passes (tempban, permaban), but some are specific to db_ban, so
+							//they should kick within this proc.
 	switch(bantype)
 		if(BANTYPE_PERMA)
 			bantype_str = "PERMABAN"
@@ -42,12 +45,14 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 			maxadminbancheck = 1
 			announceinirc = 1
 			blockselfban = 1
+			kickbannedckey = 1
 		if(BANTYPE_ADMIN_TEMP)
 			bantype_str = "ADMIN_TEMPBAN"
 			bantype_pass = 1
 			maxadminbancheck = 1
 			announceinirc = 1
 			blockselfban = 1
+			kickbannedckey = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
 	if( !isnum(duration) ) return
@@ -86,10 +91,12 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 		a_computerid = src.owner:computer_id
 		a_ip = src.owner:address
 
+	/* TODO UNCEOMMENT
 	if(blockselfban)
 		if(a_ckey == ckey)
 			usr << "\red You cannot apply this ban type on yourself."
 			return
+	*/
 
 	var/who
 	for(var/client/C in clients)
@@ -124,6 +131,10 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 
 	if(announceinirc)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
+
+	if(kickbannedckey)
+		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
+			del(banned_mob.client)
 
 
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
@@ -339,7 +350,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
 	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
 	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
-	output += "<option value='[BANTYPE_APPEARANCE]'>IDENTITY PERMABAN</option>"
+	output += "<option value='[BANTYPE_APPEARANCE]'>IDENTITY BAN</option>"
 	output += "<option value='[BANTYPE_ADMIN_PERMA]'>ADMIN PERMABAN</option>"
 	output += "<option value='[BANTYPE_ADMIN_TEMP]'>ADMIN TEMPBAN</option>"
 	output += "</select></td>"
@@ -464,5 +475,3 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		output += "</table></div>"
 
 	usr << browse(output,"window=lookupbans;size=900x500")
-
-#undef MAX_ADMIN_BANS_PER_ADMIN
