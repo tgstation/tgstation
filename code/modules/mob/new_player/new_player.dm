@@ -15,6 +15,7 @@
 	anchored = 1	//  don't get pushed around
 
 	New()
+		tag = "mob_[next_mob_id++]"
 		mob_list += src
 
 	verb/new_player_panel()
