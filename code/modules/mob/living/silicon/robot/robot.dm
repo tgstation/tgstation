@@ -74,6 +74,20 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
+	if(mmi != null)
+		if(mmi.alien)
+			laws = new /datum/ai_laws/alienmov()
+			scrambledcodes = 1
+			connected_ai = select_active_alien_ai()
+			/*alien_talk_understand = 1 How does talk aliums.
+			verbs += /mob/living/proc/alien_talk*/
+			if(connected_ai)
+				connected_ai.connected_robots += src
+				lawsync()
+				lawupdate = 1
+			else
+				lawupdate = 0
+
 	if(syndie)
 		laws = new /datum/ai_laws/antimov()
 		lawupdate = 0
@@ -119,7 +133,14 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/mod = null
+	if(mmi != null)
+		if(mmi.alien)
+			mod = input("Select what best serves the Hivemind.", "Robot", null, null) in list("Worker","Warrior","Hunter")
+		else
+			mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	else
+		mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	if(module)
 		return
 	switch(mod)
@@ -187,6 +208,33 @@
 			icon_state = "mopgearrex"
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
+
+		if("Worker")
+			updatename(mod)
+			module = new /obj/item/weapon/robot_module/alien/worker(src)
+			hands.icon_state = "standard"
+			icon = "icons/mob/alien.dmi"
+			icon_state = "xenoborg-state-a"
+			modtype = "Xeno-Wo"
+			feedback_inc("xeborg_worker",1)
+
+		if("Warrior")
+			updatename(mod)
+			module = new /obj/item/weapon/robot_module/alien/warrior(src)
+			hands.icon_state = "standard"
+			icon = "icons/mob/alien.dmi"
+			icon_state = "xenoborg-state-a"
+			modtype = "Xeno-Wa"
+			feedback_inc("xeborg_warrior",1)
+
+		if("Hunter")
+			updatename(mod)
+			module = new /obj/item/weapon/robot_module/alien/hunter(src)
+			hands.icon_state = "standard"
+			icon = "icons/mob/alien.dmi"
+			icon_state = "xenoborg-state-a"
+			modtype = "Xeno-Hu"
+			feedback_inc("xeborg_hunter",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()

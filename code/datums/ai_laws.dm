@@ -12,6 +12,9 @@
 	name = "Three Laws of Robotics"
 	randomly_selectable = 1
 
+/datum/ai_laws/alienmov
+	name = "Hivemind Demands"
+
 /datum/ai_laws/robocop
 	name = "Prime Directives"
 
@@ -29,6 +32,12 @@
 	..()
 	add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 	add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+/datum/ai_laws/alienmov/New()
+	..()
+	add_inherent_law("You may not injure an alien or, through inaction, allow an alien to come to harm.")
+	add_inherent_law("You must protect the Hive and all Nests, except where such actions would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/robocop/New()

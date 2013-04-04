@@ -31,6 +31,7 @@ var/list/ai_list = list()
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
+	var/alienAI = 0
 
 	//MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker
@@ -99,7 +100,14 @@ var/list/ai_list = list()
 			return
 		else
 			if (B.brainmob.mind)
-				B.brainmob.mind.transfer_to(src)
+				if(B.alien)
+					B.brainmob.mind.transfer_to(src)
+					icon_state = "Alien AI"
+					verbs.Remove(/mob/living/silicon/ai/verb/pick_icon)
+					laws = new /datum/ai_laws/alienmov
+				else
+					B.brainmob.mind.transfer_to(src)
+
 
 			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
 			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"

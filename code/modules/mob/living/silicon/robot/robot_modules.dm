@@ -197,3 +197,40 @@
 		modules += new /obj/item/weapon/melee/energy/sword(src)
 		modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 		modules += new /obj/item/weapon/card/emag(src)
+
+/obj/item/weapon/robot_module/alien/worker
+	name = "alien drone module"
+
+	New()
+		modules += new /obj/item/weapon/weldingtool/largetank/alien(src)
+		modules += new /obj/item/device/flash/alien(src)
+		modules += new /obj/item/weapon/rcd/borg/alien(src)
+		emag = new /obj/item/weapon/reagent_containers/spray/alien/acid(src)
+		emag.reagents.add_reagent("pacid", 125)
+		emag.reagents.add_reagent("sacid", 125)
+
+/obj/item/weapon/robot_module/alien/warrior
+	name = "alien warrior module"
+
+	New()
+		modules += new /obj/item/weapon/melee/energy/alien/claws(src)
+		modules += new /obj/item/device/flash/alien(src)
+		var/obj/item/weapon/reagent_containers/spray/alien/stun/S = new /obj/item/weapon/reagent_containers/spray/alien/stun(src)
+		S.reagents.add_reagent("chloralhydrate",250)
+		modules += S
+		emag = new /obj/item/weapon/reagent_containers/spray/alien/acid(src)
+		emag.reagents.add_reagent("pacid", 125)
+		emag.reagents.add_reagent("sacid", 125)
+
+/obj/item/weapon/robot_module/alien/hunter
+	name = "alien hunter module"
+
+	New()
+		modules += new /obj/item/weapon/melee/energy/alien/claws(src)
+		modules += new /obj/item/device/flash/alien(src)
+		var/obj/item/weapon/reagent_containers/spray/alien/smoke/S = new /obj/item/weapon/reagent_containers/spray/alien/smoke(src)
+		S.reagents.add_reagent("water",250)
+		modules += S
+		emag = new /obj/item/weapon/reagent_containers/spray/alien/acid(src)
+		emag.reagents.add_reagent("pacid", 125)
+		emag.reagents.add_reagent("sacid", 125)
