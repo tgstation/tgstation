@@ -19,183 +19,32 @@
 	instrumentDir = dir
 	instrumentObj = obj
 
-/datum/song/proc/playnote(var/note as text)
-	//world << "Note: [note]"
-	var/soundfile
-	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
-	Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
-	switch(note)
-		if("Cn1")	soundfile = "sound/[instrumentDir]/Cn1.[instrumentExt]"
-		if("C#1")	soundfile = "sound/[instrumentDir]/C#1.[instrumentExt]"
-		if("Db1")	soundfile = "sound/[instrumentDir]/Db1.[instrumentExt]"
-		if("Dn1")	soundfile = "sound/[instrumentDir]/Dn1.[instrumentExt]"
-		if("D#1")	soundfile = "sound/[instrumentDir]/D#1.[instrumentExt]"
-		if("Eb1")	soundfile = "sound/[instrumentDir]/Eb1.[instrumentExt]"
-		if("En1")	soundfile = "sound/[instrumentDir]/En1.[instrumentExt]"
-		if("E#1")	soundfile = "sound/[instrumentDir]/E#1.[instrumentExt]"
-		if("Fb1")	soundfile = "sound/[instrumentDir]/Fb1.[instrumentExt]"
-		if("Fn1")	soundfile = "sound/[instrumentDir]/Fn1.[instrumentExt]"
-		if("F#1")	soundfile = "sound/[instrumentDir]/F#1.[instrumentExt]"
-		if("Gb1")	soundfile = "sound/[instrumentDir]/Gb1.[instrumentExt]"
-		if("Gn1")	soundfile = "sound/[instrumentDir]/Gn1.[instrumentExt]"
-		if("G#1")	soundfile = "sound/[instrumentDir]/G#1.[instrumentExt]"
-		if("Ab1")	soundfile = "sound/[instrumentDir]/Ab1.[instrumentExt]"
-		if("An1")	soundfile = "sound/[instrumentDir]/An1.[instrumentExt]"
-		if("A#1")	soundfile = "sound/[instrumentDir]/A#1.[instrumentExt]"
-		if("Bb1")	soundfile = "sound/[instrumentDir]/Bb1.[instrumentExt]"
-		if("Bn1")	soundfile = "sound/[instrumentDir]/Bn1.[instrumentExt]"
-		if("B#1")	soundfile = "sound/[instrumentDir]/B#1.[instrumentExt]"
-		if("Cb2")	soundfile = "sound/[instrumentDir]/Cb2.[instrumentExt]"
-		if("Cn2")	soundfile = "sound/[instrumentDir]/Cn2.[instrumentExt]"
-		if("C#2")	soundfile = "sound/[instrumentDir]/C#2.[instrumentExt]"
-		if("Db2")	soundfile = "sound/[instrumentDir]/Db2.[instrumentExt]"
-		if("Dn2")	soundfile = "sound/[instrumentDir]/Dn2.[instrumentExt]"
-		if("D#2")	soundfile = "sound/[instrumentDir]/D#2.[instrumentExt]"
-		if("Eb2")	soundfile = "sound/[instrumentDir]/Eb2.[instrumentExt]"
-		if("En2")	soundfile = "sound/[instrumentDir]/En2.[instrumentExt]"
-		if("E#2")	soundfile = "sound/[instrumentDir]/E#2.[instrumentExt]"
-		if("Fb2")	soundfile = "sound/[instrumentDir]/Fb2.[instrumentExt]"
-		if("Fn2")	soundfile = "sound/[instrumentDir]/Fn2.[instrumentExt]"
-		if("F#2")	soundfile = "sound/[instrumentDir]/F#2.[instrumentExt]"
-		if("Gb2")	soundfile = "sound/[instrumentDir]/Gb2.[instrumentExt]"
-		if("Gn2")	soundfile = "sound/[instrumentDir]/Gn2.[instrumentExt]"
-		if("G#2")	soundfile = "sound/[instrumentDir]/G#2.[instrumentExt]"
-		if("Ab2")	soundfile = "sound/[instrumentDir]/Ab2.[instrumentExt]"
-		if("An2")	soundfile = "sound/[instrumentDir]/An2.[instrumentExt]"
-		if("A#2")	soundfile = "sound/[instrumentDir]/A#2.[instrumentExt]"
-		if("Bb2")	soundfile = "sound/[instrumentDir]/Bb2.[instrumentExt]"
-		if("Bn2")	soundfile = "sound/[instrumentDir]/Bn2.[instrumentExt]"
-		if("B#2")	soundfile = "sound/[instrumentDir]/B#2.[instrumentExt]"
-		if("Cb3")	soundfile = "sound/[instrumentDir]/Cb3.[instrumentExt]"
-		if("Cn3")	soundfile = "sound/[instrumentDir]/Cn3.[instrumentExt]"
-		if("C#3")	soundfile = "sound/[instrumentDir]/C#3.[instrumentExt]"
-		if("Db3")	soundfile = "sound/[instrumentDir]/Db3.[instrumentExt]"
-		if("Dn3")	soundfile = "sound/[instrumentDir]/Dn3.[instrumentExt]"
-		if("D#3")	soundfile = "sound/[instrumentDir]/D#3.[instrumentExt]"
-		if("Eb3")	soundfile = "sound/[instrumentDir]/Eb3.[instrumentExt]"
-		if("En3")	soundfile = "sound/[instrumentDir]/En3.[instrumentExt]"
-		if("E#3")	soundfile = "sound/[instrumentDir]/E#3.[instrumentExt]"
-		if("Fb3")	soundfile = "sound/[instrumentDir]/Fb3.[instrumentExt]"
-		if("Fn3")	soundfile = "sound/[instrumentDir]/Fn3.[instrumentExt]"
-		if("F#3")	soundfile = "sound/[instrumentDir]/F#3.[instrumentExt]"
-		if("Gb3")	soundfile = "sound/[instrumentDir]/Gb3.[instrumentExt]"
-		if("Gn3")	soundfile = "sound/[instrumentDir]/Gn3.[instrumentExt]"
-		if("G#3")	soundfile = "sound/[instrumentDir]/G#3.[instrumentExt]"
-		if("Ab3")	soundfile = "sound/[instrumentDir]/Ab3.[instrumentExt]"
-		if("An3")	soundfile = "sound/[instrumentDir]/An3.[instrumentExt]"
-		if("A#3")	soundfile = "sound/[instrumentDir]/A#3.[instrumentExt]"
-		if("Bb3")	soundfile = "sound/[instrumentDir]/Bb3.[instrumentExt]"
-		if("Bn3")	soundfile = "sound/[instrumentDir]/Bn3.[instrumentExt]"
-		if("B#3")	soundfile = "sound/[instrumentDir]/B#3.[instrumentExt]"
-		if("Cb4")	soundfile = "sound/[instrumentDir]/Cb4.[instrumentExt]"
-		if("Cn4")	soundfile = "sound/[instrumentDir]/Cn4.[instrumentExt]"
-		if("C#4")	soundfile = "sound/[instrumentDir]/C#4.[instrumentExt]"
-		if("Db4")	soundfile = "sound/[instrumentDir]/Db4.[instrumentExt]"
-		if("Dn4")	soundfile = "sound/[instrumentDir]/Dn4.[instrumentExt]"
-		if("D#4")	soundfile = "sound/[instrumentDir]/D#4.[instrumentExt]"
-		if("Eb4")	soundfile = "sound/[instrumentDir]/Eb4.[instrumentExt]"
-		if("En4")	soundfile = "sound/[instrumentDir]/En4.[instrumentExt]"
-		if("E#4")	soundfile = "sound/[instrumentDir]/E#4.[instrumentExt]"
-		if("Fb4")	soundfile = "sound/[instrumentDir]/Fb4.[instrumentExt]"
-		if("Fn4")	soundfile = "sound/[instrumentDir]/Fn4.[instrumentExt]"
-		if("F#4")	soundfile = "sound/[instrumentDir]/F#4.[instrumentExt]"
-		if("Gb4")	soundfile = "sound/[instrumentDir]/Gb4.[instrumentExt]"
-		if("Gn4")	soundfile = "sound/[instrumentDir]/Gn4.[instrumentExt]"
-		if("G#4")	soundfile = "sound/[instrumentDir]/G#4.[instrumentExt]"
-		if("Ab4")	soundfile = "sound/[instrumentDir]/Ab4.[instrumentExt]"
-		if("An4")	soundfile = "sound/[instrumentDir]/An4.[instrumentExt]"
-		if("A#4")	soundfile = "sound/[instrumentDir]/A#4.[instrumentExt]"
-		if("Bb4")	soundfile = "sound/[instrumentDir]/Bb4.[instrumentExt]"
-		if("Bn4")	soundfile = "sound/[instrumentDir]/Bn4.[instrumentExt]"
-		if("B#4")	soundfile = "sound/[instrumentDir]/B#4.[instrumentExt]"
-		if("Cb5")	soundfile = "sound/[instrumentDir]/Cb5.[instrumentExt]"
-		if("Cn5")	soundfile = "sound/[instrumentDir]/Cn5.[instrumentExt]"
-		if("C#5")	soundfile = "sound/[instrumentDir]/C#5.[instrumentExt]"
-		if("Db5")	soundfile = "sound/[instrumentDir]/Db5.[instrumentExt]"
-		if("Dn5")	soundfile = "sound/[instrumentDir]/Dn5.[instrumentExt]"
-		if("D#5")	soundfile = "sound/[instrumentDir]/D#5.[instrumentExt]"
-		if("Eb5")	soundfile = "sound/[instrumentDir]/Eb5.[instrumentExt]"
-		if("En5")	soundfile = "sound/[instrumentDir]/En5.[instrumentExt]"
-		if("E#5")	soundfile = "sound/[instrumentDir]/E#5.[instrumentExt]"
-		if("Fb5")	soundfile = "sound/[instrumentDir]/Fb5.[instrumentExt]"
-		if("Fn5")	soundfile = "sound/[instrumentDir]/Fn5.[instrumentExt]"
-		if("F#5")	soundfile = "sound/[instrumentDir]/F#5.[instrumentExt]"
-		if("Gb5")	soundfile = "sound/[instrumentDir]/Gb5.[instrumentExt]"
-		if("Gn5")	soundfile = "sound/[instrumentDir]/Gn5.[instrumentExt]"
-		if("G#5")	soundfile = "sound/[instrumentDir]/G#5.[instrumentExt]"
-		if("Ab5")	soundfile = "sound/[instrumentDir]/Ab5.[instrumentExt]"
-		if("An5")	soundfile = "sound/[instrumentDir]/An5.[instrumentExt]"
-		if("A#5")	soundfile = "sound/[instrumentDir]/A#5.[instrumentExt]"
-		if("Bb5")	soundfile = "sound/[instrumentDir]/Bb5.[instrumentExt]"
-		if("Bn5")	soundfile = "sound/[instrumentDir]/Bn5.[instrumentExt]"
-		if("B#5")	soundfile = "sound/[instrumentDir]/B#5.[instrumentExt]"
-		if("Cb6")	soundfile = "sound/[instrumentDir]/Cb6.[instrumentExt]"
-		if("Cn6")	soundfile = "sound/[instrumentDir]/Cn6.[instrumentExt]"
-		if("C#6")	soundfile = "sound/[instrumentDir]/C#6.[instrumentExt]"
-		if("Db6")	soundfile = "sound/[instrumentDir]/Db6.[instrumentExt]"
-		if("Dn6")	soundfile = "sound/[instrumentDir]/Dn6.[instrumentExt]"
-		if("D#6")	soundfile = "sound/[instrumentDir]/D#6.[instrumentExt]"
-		if("Eb6")	soundfile = "sound/[instrumentDir]/Eb6.[instrumentExt]"
-		if("En6")	soundfile = "sound/[instrumentDir]/En6.[instrumentExt]"
-		if("E#6")	soundfile = "sound/[instrumentDir]/E#6.[instrumentExt]"
-		if("Fb6")	soundfile = "sound/[instrumentDir]/Fb6.[instrumentExt]"
-		if("Fn6")	soundfile = "sound/[instrumentDir]/Fn6.[instrumentExt]"
-		if("F#6")	soundfile = "sound/[instrumentDir]/F#6.[instrumentExt]"
-		if("Gb6")	soundfile = "sound/[instrumentDir]/Gb6.[instrumentExt]"
-		if("Gn6")	soundfile = "sound/[instrumentDir]/Gn6.[instrumentExt]"
-		if("G#6")	soundfile = "sound/[instrumentDir]/G#6.[instrumentExt]"
-		if("Ab6")	soundfile = "sound/[instrumentDir]/Ab6.[instrumentExt]"
-		if("An6")	soundfile = "sound/[instrumentDir]/An6.[instrumentExt]"
-		if("A#6")	soundfile = "sound/[instrumentDir]/A#6.[instrumentExt]"
-		if("Bb6")	soundfile = "sound/[instrumentDir]/Bb6.[instrumentExt]"
-		if("Bn6")	soundfile = "sound/[instrumentDir]/Bn6.[instrumentExt]"
-		if("B#6")	soundfile = "sound/[instrumentDir]/B#6.[instrumentExt]"
-		if("Cb7")	soundfile = "sound/[instrumentDir]/Cb7.[instrumentExt]"
-		if("Cn7")	soundfile = "sound/[instrumentDir]/Cn7.[instrumentExt]"
-		if("C#7")	soundfile = "sound/[instrumentDir]/C#7.[instrumentExt]"
-		if("Db7")	soundfile = "sound/[instrumentDir]/Db7.[instrumentExt]"
-		if("Dn7")	soundfile = "sound/[instrumentDir]/Dn7.[instrumentExt]"
-		if("D#7")	soundfile = "sound/[instrumentDir]/D#7.[instrumentExt]"
-		if("Eb7")	soundfile = "sound/[instrumentDir]/Eb7.[instrumentExt]"
-		if("En7")	soundfile = "sound/[instrumentDir]/En7.[instrumentExt]"
-		if("E#7")	soundfile = "sound/[instrumentDir]/E#7.[instrumentExt]"
-		if("Fb7")	soundfile = "sound/[instrumentDir]/Fb7.[instrumentExt]"
-		if("Fn7")	soundfile = "sound/[instrumentDir]/Fn7.[instrumentExt]"
-		if("F#7")	soundfile = "sound/[instrumentDir]/F#7.[instrumentExt]"
-		if("Gb7")	soundfile = "sound/[instrumentDir]/Gb7.[instrumentExt]"
-		if("Gn7")	soundfile = "sound/[instrumentDir]/Gn7.[instrumentExt]"
-		if("G#7")	soundfile = "sound/[instrumentDir]/G#7.[instrumentExt]"
-		if("Ab7")	soundfile = "sound/[instrumentDir]/Ab7.[instrumentExt]"
-		if("An7")	soundfile = "sound/[instrumentDir]/An7.[instrumentExt]"
-		if("A#7")	soundfile = "sound/[instrumentDir]/A#7.[instrumentExt]"
-		if("Bb7")	soundfile = "sound/[instrumentDir]/Bb7.[instrumentExt]"
-		if("Bn7")	soundfile = "sound/[instrumentDir]/Bn7.[instrumentExt]"
-		if("B#7")	soundfile = "sound/[instrumentDir]/B#7.[instrumentExt]"
-		if("Cb8")	soundfile = "sound/[instrumentDir]/Cb8.[instrumentExt]"
-		if("Cn8")	soundfile = "sound/[instrumentDir]/Cn8.[instrumentExt]"
-		if("C#8")	soundfile = "sound/[instrumentDir]/C#8.[instrumentExt]"
-		if("Db8")	soundfile = "sound/[instrumentDir]/Db8.[instrumentExt]"
-		if("Dn8")	soundfile = "sound/[instrumentDir]/Dn8.[instrumentExt]"
-		if("D#8")	soundfile = "sound/[instrumentDir]/D#8.[instrumentExt]"
-		if("Eb8")	soundfile = "sound/[instrumentDir]/Eb8.[instrumentExt]"
-		if("En8")	soundfile = "sound/[instrumentDir]/En8.[instrumentExt]"
-		if("E#8")	soundfile = "sound/[instrumentDir]/E#8.[instrumentExt]"
-		if("Fb8")	soundfile = "sound/[instrumentDir]/Fb8.[instrumentExt]"
-		if("Fn8")	soundfile = "sound/[instrumentDir]/Fn8.[instrumentExt]"
-		if("F#8")	soundfile = "sound/[instrumentDir]/F#8.[instrumentExt]"
-		if("Gb8")	soundfile = "sound/[instrumentDir]/Gb8.[instrumentExt]"
-		if("Gn8")	soundfile = "sound/[instrumentDir]/Gn8.[instrumentExt]"
-		if("G#8")	soundfile = "sound/[instrumentDir]/G#8.[instrumentExt]"
-		if("Ab8")	soundfile = "sound/[instrumentDir]/Ab8.[instrumentExt]"
-		if("An8")	soundfile = "sound/[instrumentDir]/An8.[instrumentExt]"
-		if("A#8")	soundfile = "sound/[instrumentDir]/A#8.[instrumentExt]"
-		if("Bb8")	soundfile = "sound/[instrumentDir]/Bb8.[instrumentExt]"
-		if("Bn8")	soundfile = "sound/[instrumentDir]/Bn8.[instrumentExt]"
-		if("B#8")	soundfile = "sound/[instrumentDir]/B#8.[instrumentExt]"
-		if("Cb9")	soundfile = "sound/[instrumentDir]/Cb9.[instrumentExt]"
-		if("Cn9")	soundfile = "sound/[instrumentDir]/Cn9.[instrumentExt]"
-		else		return
+// note is a number from 1-7 for A-G
+// acc is either "b", "n", or "#"
+// oct is 1-8 (or 9 for C)
+/datum/song/proc/playnote(var/note, var/acc as text, var/oct)
+	// handle accidental -> B<>C of E<>F
+	if(acc == "b" && (note == 3 || note == 6)) // C or F
+		if(note == 3)
+			oct--
+		note--
+		acc = "n"
+	else if(acc == "#" && (note == 2 || note == 5)) // B or E
+		if(note == 2)
+			oct++
+		note++
+		acc = "n"
+	else if(acc == "#") // mass convert all sharps to flats, octave jump already handled
+		acc = "b"
+		note++
 
+	// check octave, C is allowed to go to 9
+	if(oct < 1 || (note == 3 ? oct > 9 : oct > 8))
+		return
+
+	// now generate name
+	var/soundfile = "sound/[instrumentDir]/[ascii2text(note+64)][acc][oct].[instrumentExt]"
+	// and play
 	hearers(15, get_turf(instrumentObj)) << sound(soundfile)
 
 /datum/song/proc/updateDialog(mob/user as mob)
@@ -209,7 +58,7 @@
 		var/cur_oct[7]
 		var/cur_acc[7]
 		for(var/i = 1 to 7)
-			cur_oct[i] = "3"
+			cur_oct[i] = 3
 			cur_acc[i] = "n"
 
 		for(var/line in lines)
@@ -236,8 +85,8 @@
 							else if(ni == "s")
 								cur_acc[cur_note] = "#" // so shift is never required
 						else
-							cur_oct[cur_note] = ni
-					playnote(uppertext(copytext(note,1,2)) + cur_acc[cur_note] + cur_oct[cur_note])
+							cur_oct[cur_note] = text2num(ni)
+					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(tempo / text2num(notes[2]))
 				else
