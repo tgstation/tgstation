@@ -224,9 +224,11 @@
 			return "[emote], \"[text]\""
 	return "says, \"[text]\"";
 
-/mob/living/simple_animal/emote(var/act)
+/mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(act)
 		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
+		if(act == "me") //Allow me-emotes.
+			act = desc
 		if( findtext(act,".",lentext(act)) == 0 && findtext(act,"!",lentext(act)) == 0 && findtext(act,"?",lentext(act)) == 0 )
 			act = addtext(act,".") //Makes sure all emotes end with a period.
 		for (var/mob/O in viewers(src, null))

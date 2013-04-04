@@ -12,7 +12,7 @@
 	var/target_scan_ticks = 60
 	var/report_num = 0
 	var/scan_process = 0
-	var/heat_accumulation_rate = 1
+	var/heat_accumulation_rate = 0.25
 	var/temperature = 273	//measured in kelvin, if this exceeds 1200, the machine is damaged and requires repairs
 							//if this exceeds 600 and safety is enabled it will shutdown
 							//temp greater than 600 also requires a safety prompt to initiate scanning

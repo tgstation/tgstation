@@ -25,7 +25,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
 			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,	\
-							"resistances"=null,"trace_chem"=null, "virus2" = null, "antobodies" = null)
+							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
@@ -165,7 +165,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["donor"] = src
 	if(src.virus2)
 		B.data["virus2"] = src.virus2.getcopy()
-	B.data["antibodies"] |= src.antibodies
+	B.data["antibodies"] = src.antibodies
 	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
 	if(src.resistances && src.resistances.len)
 		if(B.data["resistances"])
@@ -176,8 +176,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
-		temp_chem += R.name
-		temp_chem[R.name] = R.volume
+		temp_chem += R.id
+		temp_chem[R.id] = R.volume
 	B.data["trace_chem"] = list2params(temp_chem)
 	return B
 
@@ -197,8 +197,15 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		reagents.add_reagent("toxin",amount * 0.5)
 		reagents.update_total()
 	else
-		vessel.add_reagent("blood", amount)
+		vessel.add_reagent("blood", amount, injected.data)
 		vessel.update_total()
+
+	var/list/chems = list()
+	chems = params2list(injected.data["trace_chem"])
+	for(var/C in chems)
+		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
+		//world << "added [(text2num(chems[C])/560) * amount] = [text2num(chems[C])]/560*[amount] units of [C] to [src]"	//DEBUG
+	reagents.update_total()
 
 	container.reagents.remove_reagent("blood", amount)
 
