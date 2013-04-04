@@ -203,6 +203,9 @@
 	if(camera)
 		camera.status = 0
 
+	held_item.loc = src.loc
+	held_item = null
+
 	robogibs(src.loc, viruses)
 	src.Del()
 	return
@@ -326,3 +329,8 @@
 
 	src << "\red There is nothing of interest to take."
 	return 0
+
+/mob/living/simple_animal/spiderbot/examine()
+	..()
+	if(src.held_item)
+		usr << "It is carrying \a [src.held_item] \icon[src.held_item]."
