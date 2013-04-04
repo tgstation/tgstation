@@ -117,7 +117,7 @@
 				laws.add_inherent_law(M.newFreeFormLaw)
 				usr << "Added a freeform law."
 
-			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/posibrain))
+			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
 				if(!P:brainmob)
 					user << "\red Sticking an empty [P] into the frame would sort of defeat the purpose."
 					return

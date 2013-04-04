@@ -340,6 +340,9 @@
 			P.pixel_y = rand(-7, 7)
 			P.icon_state = "pill"+pillsprite
 			reagents.trans_to(P,50)
+			if(src.loaded_pill_bottle)
+				P.loc = src.loaded_pill_bottle
+				src.updateUsrDialog()
 		else if (href_list["createbottle"])
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))

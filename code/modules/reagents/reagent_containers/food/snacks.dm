@@ -11,10 +11,12 @@
 	var/slices_num
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/M)
 	if(!usr)	return
 	if(!reagents.total_volume)
-		usr.visible_message("<span class='notice'>[usr] finishes eating [src].</span>","<span class='notice'>You finish eating [src].</span>")
+		if(M == usr)
+			usr << "<span class='notice'>You finish eating \the [src].</span>"
+		usr.visible_message("<span class='notice'>[usr] finishes eating \the [src].</span>")
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -90,7 +92,7 @@
 					else
 						reagents.trans_to(M, reagents.total_volume)
 					bitecount++
-					On_Consume()
+					On_Consume(M)
 			return 1
 
 	return 0
