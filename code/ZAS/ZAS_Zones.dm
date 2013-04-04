@@ -388,11 +388,11 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		plasma_avg = unsim_plasma//(full_plasma + unsim_plasma) / (size + share_size)
 
 	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[connecting_tiles]
+	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
+		ratio = sharing_lookup_table[unsimulated_tiles.len]
 	ratio *= 2
 	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-		
+
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
