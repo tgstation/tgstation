@@ -1,25 +1,22 @@
-# MySQL Connection Configuration
-# This is used for stats, feedback gathering,
-# administration, and the in game library.
+## MySQL Connection Configuration
+## This is used for stats, feedback gathering,
+## administration, and the in game library.
 
-# Should SQL be enabled? Uncomment to enable.
+## Should SQL be enabled? Uncomment to enable.
 #SQL_ENABLED
 
-# Server the MySQL database can be found at.
+## Server the MySQL database can be found at.
 # Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
 ADDRESS localhost
 
-# MySQL server port (default is 3306).
+## MySQL server port (default is 3306).
 PORT 3306
 
-# Database for all SQL functions, not just feedback.
+## Database for all SQL functions, not just feedback.
 FEEDBACK_DATABASE feedback
 
-# Username/Login used to access the database.
+## Username/Login used to access the database.
 FEEDBACK_LOGIN username
 
-# Password used to access the database.
+## Password used to access the database.
 FEEDBACK_PASSWORD password
-
-# Comment out to disable tracking of population and death statistics.
-ENABLE_STAT_TRACKING
