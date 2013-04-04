@@ -268,7 +268,7 @@ var/failed_db_connections = 0
 
 proc/setup_database_connection()
 
-	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+	if(failed_db_connections >= FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return 0
 
 	if(!dbcon)
@@ -286,7 +286,8 @@ proc/setup_database_connection()
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
-		world.log << "SQL error: " + dbcon.ErrorMsg()
+		if(config.sql_enabled)
+			world.log << "SQL error: " + dbcon.ErrorMsg()
 
 	return .
 
