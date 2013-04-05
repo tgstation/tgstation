@@ -136,7 +136,7 @@
 	var/mod = null
 	if(mmi != null)
 		if(mmi.alien)
-			mod = input("Select what best serves the Hivemind.", "Robot", null, null) in list("Worker","Warrior","Hunter")
+			mod = "Hunter"
 		else
 			mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	else
@@ -208,24 +208,6 @@
 			icon_state = "mopgearrex"
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
-
-		if("Worker")
-			updatename(mod)
-			module = new /obj/item/weapon/robot_module/alien/worker(src)
-			hands.icon_state = "standard"
-			icon = "icons/mob/alien.dmi"
-			icon_state = "xenoborg-state-a"
-			modtype = "Xeno-Wo"
-			feedback_inc("xeborg_worker",1)
-
-		if("Warrior")
-			updatename(mod)
-			module = new /obj/item/weapon/robot_module/alien/warrior(src)
-			hands.icon_state = "standard"
-			icon = "icons/mob/alien.dmi"
-			icon_state = "xenoborg-state-a"
-			modtype = "Xeno-Wa"
-			feedback_inc("xeborg_warrior",1)
 
 		if("Hunter")
 			updatename(mod)

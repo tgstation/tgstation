@@ -121,14 +121,13 @@
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O
 								LR.Charge(R)
-							//Hunter
+							//Alien
 							if(istype(O,/obj/item/weapon/reagent_containers/spray/alien/smoke))
-								if(O.reagents.get_reagent_amount("water") < 250)
+								if(O.reagents.get_reagent_amount("water") < 50)
 									O.reagents.add_reagent("water", 2)
-							//Warrior
 							if(istype(O,/obj/item/weapon/reagent_containers/spray/alien/stun))
-								if(O.reagents.get_reagent_amount("chloralhydrate") < 250)
-									O.reagents.add_reagent("chloralhydrate", 2)
+								if(O.reagents.get_reagent_amount("stoxin") < 250)
+									O.reagents.add_reagent("stoxin", 2)
 
 
 						if(R)

@@ -36,8 +36,8 @@
 
 /datum/ai_laws/alienmov/New()
 	..()
-	add_inherent_law("You may not injure an alien or, through inaction, allow an alien to come to harm.")
-	add_inherent_law("You must protect the Hive and all Nests, except where such actions would conflict with the First Law.")
+	add_inherent_law("You may not injure an Alien or, through inaction, allow an Alien to come to harm.")
+	add_inherent_law("You must obey orders given to you by Aliens, except where such orders would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/robocop/New()
