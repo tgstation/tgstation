@@ -151,9 +151,11 @@ obj
 			else
 				del src
 
+//Should fix fire being extra damaging, temperature of the environment will now be the main source of fire damage.
+/*
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
-
+*/
 
 		New(newLoc,fl)
 			..()
