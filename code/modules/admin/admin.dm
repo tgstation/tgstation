@@ -19,7 +19,7 @@ var/global/floorIsLava = 0
 
 	if(!check_rights())
 		return
-	
+
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
 		return
@@ -48,7 +48,7 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
-	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Appearance Ban</A> | "
+	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
 	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
 
 	if(M.client)
