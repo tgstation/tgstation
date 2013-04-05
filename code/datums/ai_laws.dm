@@ -36,8 +36,8 @@
 
 /datum/ai_laws/alienmov/New()
 	..()
-	add_inherent_law("You may not injure a Xenomorph or, through inaction, allow a Xenomorph to come to harm.")
-	add_inherent_law("You must obey orders given to you by Xenomorphs, except where such orders would conflict with the First Law.")
+	add_inherent_law("You may not injure the Alien Queen or her Children or, through inaction, allow the Alien Queen or her Children to come to harm.")
+	add_inherent_law("You must obey orders given to you by the Alien Queen or her Children, except where such orders would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/robocop/New()
