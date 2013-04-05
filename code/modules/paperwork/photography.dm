@@ -193,25 +193,21 @@
 	var/z_c	= target.z
 
 	var/icon/temp = icon('icons/effects/96x96.dmi',"")
-	var/icon/black = icon('icons/turf/space.dmi', "black")
+	temp.Blend("#000", ICON_OVERLAY)
 	var/mobs = ""
+	var/viewer = user
+	if(user.client)		//To make shooting through security cameras possible
+		viewer = user.client.eye
+	var/list/seen = hear(world.view, viewer)
 	for(var/i = 1; i <= 3; i++)
 		for(var/j = 1; j <= 3; j++)
 			var/turf/T = locate(x_c, y_c, z_c)
-			var/mob/dummy = new(T)	//Go go visibility check dummy
-			var/viewer = user
-			if(user.client)		//To make shooting through security cameras possible
-				viewer = user.client.eye
-			if(dummy in viewers(world.view, viewer))
+			if(T in seen)
 				temp.Blend(get_icon(T), ICON_OVERLAY, 32 * (j-1-1), 32 - 32 * (i-1))
-			else
-				temp.Blend(black, ICON_OVERLAY, 32 * (j-1), 64 - 32 * (i-1))
-			mobs += get_mobs(T)
-			dummy.loc = null
-			dummy = null	//Alas, nameless creature	//garbage collect it instead
+				mobs += get_mobs(T)
 			x_c++
 		y_c--
-		x_c = x_c - 3
+		x_c -= 3
 
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	P.loc = user.loc

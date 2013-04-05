@@ -12,19 +12,19 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
 	if(ckey)
-		. = "<b>Notes for <a href='?src=\ref[src];notes=show'>[ckey]</a>:</b> <a href='?src=\ref[src];notes=add;ckey=[ckey]'>\[+\]</a> <a href='?src=\ref[src];notes=remove;ckey=[ckey]'>\[-\]</a><br>"
+		. = "<b>Notes for <a href='?_src_=holder;notes=show'>[ckey]</a>:</b> <a href='?_src_=holder;notes=add;ckey=[ckey]'>\[+\]</a> <a href='?_src_=holder;notes=remove;ckey=[ckey]'>\[-\]</a><br>"
 		notesfile.cd = "/[ckey]"
 		var/index = 1
 		while( !notesfile.eof )
 			var/note
 			notesfile >> note
-			. += "[note] <a href='?src=\ref[src];notes=remove;ckey=[ckey];from=[index]'>\[-\]</a><br>"
+			. += "[note] <a href='?_src_=holder;notes=remove;ckey=[ckey];from=[index]'>\[-\]</a><br>"
 			index++
 	else
-		. = "<b>All Notes:</b> <a href='?src=\ref[src];notes=add'>\[+\]</a> <a href='?src=\ref[src];notes=remove'>\[-\]</a><br>"
+		. = "<b>All Notes:</b> <a href='?_src_=holder;notes=add'>\[+\]</a> <a href='?_src_=holder;notes=remove'>\[-\]</a><br>"
 		notesfile.cd = "/"
 		for(var/dir in notesfile.dir)
-			. += "<a href='?src=\ref[src];notes=show;ckey=[dir]'>[dir]</a><br>"
+			. += "<a href='?_src_=holder;notes=show;ckey=[dir]'>[dir]</a><br>"
 	return
 
 
