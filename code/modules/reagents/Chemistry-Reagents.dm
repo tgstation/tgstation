@@ -73,6 +73,10 @@ datum
 			on_move(var/mob/M)
 				return
 
+			// Called after add_reagents creates a new reagent.
+			on_new(var/data)
+				return
+
 			// Called when two reagents of the same are mixing.
 			on_merge(var/data)
 				return
@@ -100,6 +104,10 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
+
+			on_new(var/list/data)
+				if(istype(data))
+					SetViruses(src, data)
 
 			on_merge(var/list/data)
 				if(src.data && data)
@@ -193,7 +201,7 @@ datum
 
 			on_merge(var/list/data)
 				if(istype(data))
-					src.data |= data
+					src.data |= data.Copy()
 
 
 		water
