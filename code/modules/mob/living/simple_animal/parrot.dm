@@ -39,7 +39,7 @@
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
 
-	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
+	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 
@@ -56,6 +56,10 @@
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_been_shot = 0 //Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.
 
+	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
+	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
+	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
+
 	var/list/speech_buffer = list()
 	var/list/available_channels = list()
 
@@ -66,7 +70,7 @@
 	//mobs it wants to attack or mobs that have attacked it
 	var/atom/movable/parrot_interest = null
 
-	//Parrots will generally sit on their pertch unless something catches their eye.
+	//Parrots will generally sit on their perch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
 	var/obj/desired_perches = list(/obj/structure/computerframe, 		/obj/structure/displaycase, \
@@ -430,6 +434,8 @@
 			return
 
 		walk_to(src, parrot_interest, 1, parrot_speed)
+		if(isStuck()) return
+
 		return
 
 //-----RETURNING TO PERCH
@@ -448,6 +454,8 @@
 			return
 
 		walk_to(src, parrot_perch, 1, parrot_speed)
+		if(isStuck()) return
+
 		return
 
 //-----FLEEING
@@ -458,6 +466,8 @@
 
 		walk_away(src, parrot_interest, 1, parrot_speed-parrot_been_shot)
 		parrot_been_shot--
+		if(isStuck()) return
+
 		return
 
 //-----ATTACKING
@@ -505,6 +515,8 @@
 		//Otherwise, fly towards the mob!
 		else
 			walk_to(src, parrot_interest, 1, parrot_speed)
+			if(isStuck()) return
+
 		return
 //-----STATE MISHAP
 	else //This should not happen. If it does lets reset everything and try again
@@ -523,6 +535,21 @@
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
 	..()
+
+/mob/living/simple_animal/parrot/proc/isStuck()
+	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
+	if(parrot_lastmove)
+		if(parrot_lastmove == src.loc)
+			if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
+				parrot_state = PARROT_WANDER
+				parrot_stuck = 0
+				parrot_lastmove = null
+				return 1
+		else
+			parrot_lastmove = null
+	else
+		parrot_lastmove = src.loc
+	return 0
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	for(var/atom/movable/AM in view(src))
@@ -654,7 +681,8 @@
 		return -1
 
 	if(!held_item)
-		usr << "\red You have nothing to drop!"
+		if(src == usr) //So that other mobs wont make this message appear when they're bludgeoning you.
+			src << "\red You have nothing to drop!"
 		return 0
 
 	if(!drop_gently)
