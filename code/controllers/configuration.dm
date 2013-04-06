@@ -255,61 +255,55 @@
 					diary << "Unknown setting in configuration: '[name]'"
 
 		else if(type == "game_options")
-			if(!value)
-				diary << "Unknown value for setting [name] in [filename]."
-			value = text2num(value)
-
 			switch(name)
 				if("health_threshold_crit")
-					config.health_threshold_crit = value
+					config.health_threshold_crit	= text2num(value)
 				if("health_threshold_dead")
-					config.health_threshold_dead = value
+					config.health_threshold_dead	= text2num(value)
 				if("revival_pod_plants")
-					config.revival_pod_plants = value
+					config.revival_pod_plants		= text2num(value)
 				if("revival_cloning")
-					config.revival_cloning = value
+					config.revival_cloning			= text2num(value)
 				if("revival_brain_life")
-					config.revival_brain_life = value
-				if("run_speed")
-					config.run_speed = value
-				if("walk_speed")
-					config.walk_speed = value
+					config.revival_brain_life		= text2num(value)
+				if("run_delay")
+					config.run_speed				= text2num(value)
+				if("walk_delay")
+					config.walk_speed				= text2num(value)
 				if("human_delay")
-					config.human_delay = value
+					config.human_delay				= text2num(value)
 				if("robot_delay")
-					config.robot_delay = value
+					config.robot_delay				= text2num(value)
 				if("monkey_delay")
-					config.monkey_delay = value
+					config.monkey_delay				= text2num(value)
 				if("alien_delay")
-					config.alien_delay = value
+					config.alien_delay				= text2num(value)
 				if("slime_delay")
-					config.slime_delay = value
+					config.slime_delay				= text2num(value)
 				if("animal_delay")
-					config.animal_delay = value
+					config.animal_delay				= text2num(value)
 				if("alert_red_upto")
-					config.alert_desc_red_upto = value
+					config.alert_desc_red_upto		= value
 				if("alert_red_downto")
-					config.alert_desc_red_downto = value
+					config.alert_desc_red_downto	= value
 				if("alert_blue_downto")
-					config.alert_desc_blue_downto = value
+					config.alert_desc_blue_downto	= value
 				if("alert_blue_upto")
-					config.alert_desc_blue_upto = value
+					config.alert_desc_blue_upto		= value
 				if("alert_green")
-					config.alert_desc_green = value
+					config.alert_desc_green			= value
 				if("alert_delta")
-					config.alert_desc_delta = value
+					config.alert_desc_delta			= value
 				if("assistant_maint")
-					config.assistant_maint = 1
+					config.assistant_maint			= 1
 				if("gateway_delay")
-					config.gateway_delay = text2num(value)
+					config.gateway_delay			= text2num(value)
 				if("continuous_rounds")
-					config.continous_rounds = 1
+					config.continous_rounds			= 1
 				if("ghost_interaction")
-					config.ghost_interaction = 1
+					config.ghost_interaction		= 1
 				if("traitor_scaling")
-					config.traitor_scaling = 1
-				if("protect_roles_from_antagonist")
-					config.protect_roles_from_antagonist = 1
+					config.traitor_scaling			= 1
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -325,18 +319,20 @@
 					else
 						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
+				if("protect_roles_from_antagonist")
+					config.protect_roles_from_antagonist	= 1
 				if("allow_random_events")
-					config.allow_random_events = 1
+					config.allow_random_events		= 1
 				if("jobs_have_minimal_access")
-					config.jobs_have_minimal_access = 1
+					config.jobs_have_minimal_access	= 1
 				if("use_recursive_explosions")
-					use_recursive_explosions = 1
+					use_recursive_explosions		= 1
 				if("humans_need_surnames")
-					humans_need_surnames = 1
+					humans_need_surnames			= 1
 				if("force_random_names")
-					config.force_random_names = 1
+					config.force_random_names		= 1
 				if("allow_ai")
-					config.allow_ai = 1
+					config.allow_ai					= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -377,8 +373,6 @@
 				sqlfdbklogin = value
 			if("feedback_password")
 				sqlfdbkpass = value
-			if("enable_stat_tracking")
-				sqllogging = 1
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 
