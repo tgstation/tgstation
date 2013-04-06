@@ -434,18 +434,7 @@
 			return
 
 		walk_to(src, parrot_interest, 1, parrot_speed)
-		//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
-		if(parrot_lastmove)
-			if(parrot_lastmove == src.loc)
-				if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
-					parrot_state = PARROT_WANDER
-					parrot_stuck = 0
-					parrot_lastmove = null
-					return
-			else
-				parrot_lastmove = null
-		else
-			parrot_lastmove = src.loc
+		if(isStuck()) return
 
 		return
 
@@ -465,18 +454,8 @@
 			return
 
 		walk_to(src, parrot_perch, 1, parrot_speed)
-		//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
-		if(parrot_lastmove)
-			if(parrot_lastmove == src.loc)
-				if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
-					parrot_state = PARROT_WANDER
-					parrot_stuck = 0
-					parrot_lastmove = null
-					return
-			else
-				parrot_lastmove = null
-		else
-			parrot_lastmove = src.loc
+		if(isStuck()) return
+
 		return
 
 //-----FLEEING
@@ -487,18 +466,8 @@
 
 		walk_away(src, parrot_interest, 1, parrot_speed-parrot_been_shot)
 		parrot_been_shot--
-		//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
-		if(parrot_lastmove)
-			if(parrot_lastmove == src.loc)
-				if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
-					parrot_state = PARROT_WANDER
-					parrot_stuck = 0
-					parrot_lastmove = null
-					return
-			else
-				parrot_lastmove = null
-		else
-			parrot_lastmove = src.loc
+		if(isStuck()) return
+
 		return
 
 //-----ATTACKING
@@ -546,18 +515,8 @@
 		//Otherwise, fly towards the mob!
 		else
 			walk_to(src, parrot_interest, 1, parrot_speed)
-			//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
-			if(parrot_lastmove)
-				if(parrot_lastmove == src.loc)
-					if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
-						parrot_state = PARROT_WANDER
-						parrot_stuck = 0
-						parrot_lastmove = null
-						return
-				else
-					parrot_lastmove = null
-			else
-				parrot_lastmove = src.loc
+			if(isStuck()) return
+
 		return
 //-----STATE MISHAP
 	else //This should not happen. If it does lets reset everything and try again
@@ -576,6 +535,21 @@
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
 	..()
+
+/mob/living/simple_animal/parrot/proc/isStuck()
+	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
+	if(parrot_lastmove)
+		if(parrot_lastmove == src.loc)
+			if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
+				parrot_state = PARROT_WANDER
+				parrot_stuck = 0
+				parrot_lastmove = null
+				return 1
+		else
+			parrot_lastmove = null
+	else
+		parrot_lastmove = src.loc
+	return 0
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	for(var/atom/movable/AM in view(src))
