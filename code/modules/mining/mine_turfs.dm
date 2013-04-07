@@ -63,7 +63,7 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/, "Cave" = 1)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Clown" = 25, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/, "Cave" = 1)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -74,6 +74,8 @@
 		if (mName)
 			var/turf/simulated/mineral/M
 			switch(mName)
+				if("Clown")
+					M = new/turf/simulated/mineral/clown(src)
 				if("Uranium")
 					M = new/turf/simulated/mineral/uranium(src)
 				if("Iron")
@@ -98,7 +100,7 @@
 
 /turf/simulated/mineral/random/high_chance
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25)
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Clown" = 25)
 
 /turf/simulated/mineral/uranium
 	name = "Uranium deposit"
