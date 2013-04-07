@@ -24,7 +24,7 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/proc/HasClaws(mob/living/carbon/alien/humanoid/src)
+/mob/living/carbon/alien/humanoid/proc/HasClaws()
 	return locate(/obj/item/organ/aclaws) in src.internal_organs
 
 /mob/living/carbon/alien/proc/HasTail(mob/living/carbon/alien/humanoid/src)
