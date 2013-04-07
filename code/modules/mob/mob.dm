@@ -798,3 +798,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	return
+
+/mob/proc/ghost_follow(var/mob/Mob)
+	return

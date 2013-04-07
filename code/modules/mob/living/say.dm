@@ -338,8 +338,8 @@ var/list/department_radio_keys = list(
 			//BEGIN TELEPORT CHANGES
 			var/mob/MM = M
 			if(!istype(MM, /mob/new_player))
-				if(MM.stat == DEAD)
-					rendered2 = "<span class='game say'><a href='byond://?src=\ref[MM];follow2=\ref[MM];follow=\ref[src]'><span class='name'>[GetVoice()]</span></span> [alt_name]<span class='message'>[message_a]</span></span>"
+				if(MM && MM.stat == DEAD)
+					rendered2 = "<span class='game say'><span class='name'>[GetVoice()]</span> [alt_name] <a href='byond://?src=\ref[MM];follow2=\ref[MM];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span>"
 					MM:show_message(rendered2, 2)
 					continue
 			if(hascall(M,"show_message"))
@@ -370,8 +370,8 @@ var/list/department_radio_keys = list(
 		for (var/M in heard_b)
 			var/mob/MM
 			if(!istype(MM, /mob/new_player))
-				if(MM.stat == DEAD)
-					rendered2 = "<span class='game say'><a href='byond://?src=\ref[MM];follow2=\ref[MM];follow=\ref[src]'><span class='name'>[voice_name]</span></span> <span class='message'>[message_b]</span></span>"
+				if(MM && MM.stat == DEAD)
+					rendered2 = "<span class='game say'><span class='name'>[voice_name]</span> <a href='byond://?src=\ref[MM];follow2=\ref[MM];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_b]</span></span>"
 					MM:show_message(rendered2, 2)
 					continue
 			//END CHANGES
