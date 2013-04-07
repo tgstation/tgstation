@@ -134,11 +134,8 @@
 	if(module)
 		return
 	var/mod = null
-	if(mmi != null)
-		if(mmi.alien)
-			mod = "Hunter"
-		else
-			mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	if(mmi != null & mmi.alien)
+		mod = "Hunter"
 	else
 		mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	if(module)

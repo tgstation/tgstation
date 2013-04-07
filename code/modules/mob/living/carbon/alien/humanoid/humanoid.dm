@@ -24,13 +24,13 @@
 	real_name = name
 	..()
 
-proc/HasClaws(mob/living/carbon/alien/humanoid/src)
+/mob/living/carbon/alien/proc/HasClaws(mob/living/carbon/alien/humanoid/src)
 	return locate(/obj/item/organ/aclaws) in src.internal_organs
 
-proc/HasTail(mob/living/carbon/alien/humanoid/src)
+/mob/living/carbon/alien/proc/HasTail(mob/living/carbon/alien/humanoid/src)
 	return locate(/obj/item/organ/avein) in src.internal_organs
 
-proc/HasChitin(mob/living/carbon/alien/humanoid/src)
+/mob/living/carbon/alien/proc/HasChitin(mob/living/carbon/alien/humanoid/src)
 	return locate(/obj/item/organ/achitin) in src.internal_organs
 
 //This is fine, works the same as a human

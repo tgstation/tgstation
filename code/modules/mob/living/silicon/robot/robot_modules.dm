@@ -209,7 +209,7 @@
 		S.reagents.add_reagent("stoxin",250) //nerfed to sleeptoxin to make it less instant drop.
 		modules += S
 		var/obj/item/weapon/reagent_containers/spray/alien/smoke/A = new /obj/item/weapon/reagent_containers/spray/alien/smoke(src)
-		S.reagents.add_reagent("water",50)
+		S.reagents.add_reagent("water",50) //Water is used as a dummy reagent for the smoke bombs. More of an ammo counter.
 		modules += A
 		emag = new /obj/item/weapon/reagent_containers/spray/alien/acid(src)
 		emag.reagents.add_reagent("pacid", 125)

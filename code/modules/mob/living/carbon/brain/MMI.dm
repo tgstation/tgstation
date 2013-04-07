@@ -77,23 +77,17 @@
 			user << "\red You upend the MMI, but the brain is clamped into place."
 		else
 			user << "\blue You upend the MMI, spilling the brain onto the floor."
+			var/obj/item/organ/brain/alien/brain = new(user.loc)
+			brainmob.container = null//Reset brainmob mmi var.
+			brainmob.loc = brain//Throw mob into brain.
+			living_mob_list -= brainmob//Get outta here
+			brain.brainmob = brainmob//Set the brain to use the brainmob
+			brain.brainmob.cancel_camera()
+			brainmob = null//Set mmi brainmob var to null
 			if(alien)
-				var/obj/item/organ/brain/alien/brain = new(user.loc)
-				brainmob.container = null//Reset brainmob mmi var.
-				brainmob.loc = brain//Throw mob into brain.
-				living_mob_list -= brainmob//Get outta here
-				brain.brainmob = brainmob//Set the brain to use the brainmob
-				brain.brainmob.cancel_camera()
-				brainmob = null//Set mmi brainmob var to null
-				alien = 0
+				alien = 1
 			else
-				var/obj/item/organ/brain/brain = new(user.loc)
-				brainmob.container = null//Reset brainmob mmi var.
-				brainmob.loc = brain//Throw mob into brain.
-				living_mob_list -= brainmob//Get outta here
-				brain.brainmob = brainmob//Set the brain to use the brainmob
-				brain.brainmob.cancel_camera()
-				brainmob = null//Set mmi brainmob var to null
+				alien = 0
 			icon = 'icons/obj/assemblies.dmi'
 			icon_state = "mmi_empty"
 			name = "Man-Machine Interface"

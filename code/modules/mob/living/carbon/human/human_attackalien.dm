@@ -24,7 +24,7 @@
 		if("harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			if(HasClaws(M))
+			if(M.HasClaws())
 				var/damage = rand(15, 30)
 				if(!damage)
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
