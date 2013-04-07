@@ -480,6 +480,13 @@ datum
 				required_reagents = list("mutagen" = 5)
 				level = 4
 
+			mix_virus_3
+
+				name = "Mix Virus 3"
+				id = "mixvirus3"
+				required_reagents = list("plasma" = 5)
+				level = 6
+
 			rem_virus
 
 				name = "Devolve Virus"
