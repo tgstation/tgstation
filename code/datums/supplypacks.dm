@@ -653,7 +653,7 @@
 	containertype = /obj/structure/closet/crate/secure/gear
 	containername = "security barriers crate"
 
-/datum/supply_packs/securitybarriers
+/datum/supply_packs/shieldwalls
 	name = "Shield Generators"
 	contains = list(/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen,
