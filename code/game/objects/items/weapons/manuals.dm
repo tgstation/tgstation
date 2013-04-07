@@ -67,6 +67,22 @@
 				</body>
 				</html>"}
 
+/obj/item/weapon/book/manual/infections
+	name = "Infections - Making your own pandemic!"
+	icon_state = "bookInfections"
+	author = "Infections Encyclopedia"
+	title = "Infections - Making your own pandemic!"
+
+	dat = {"
+	<html><head>
+	</head>
+
+	<body>
+	<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Infections&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+	</body>
+
+	</html>
+	"}
 
 /obj/item/weapon/book/manual/engineering_hacking
 	name = "Hacking"
