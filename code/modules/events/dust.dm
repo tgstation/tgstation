@@ -1,17 +1,17 @@
-/datum/event_control/dust
+/datum/round_event_control/dust
 	name = "Minor Space Dust"
-	typepath = /datum/event/dust
+	typepath = /datum/round_event/dust
 	weight = 600
 	max_occurrences = 10000
 	earliest_start = 0
 
-/datum/event/dust
+/datum/round_event/dust
 	var/qnty = 1
 
-/datum/event/dust/setup()
+/datum/round_event/dust/setup()
 	qnty = rand(1,5)
 
-/datum/event/dust/start()
+/datum/round_event/dust/start()
 	while(qnty-- > 0)
 		new /obj/effect/space_dust/weak()
 

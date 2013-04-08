@@ -1,8 +1,8 @@
 var/datum/controller/event/events
 
 /datum/controller/event
-	var/list/control = list()	//list of all datum/event_control. Used for selecting events based on weight and occurrences.
-	var/list/running = list()	//list of all existing /datum/event
+	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
+	var/list/running = list()	//list of all existing /datum/round_event
 
 	var/scheduled = 0			//The next world.time that a naturally occuring random event can be selected.
 	var/frequency_lower = 3000	//5 minutes lower bound.
@@ -18,8 +18,8 @@ var/datum/controller/event/events
 			del(events)
 		events = src
 
-	for(var/type in typesof(/datum/event_control))
-		var/datum/event_control/E = new type()
+	for(var/type in typesof(/datum/round_event_control))
+		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
 			continue				//don't want this one! leave it for the garbage collector
 		control += E				//add it to the list of all events (controls)
@@ -31,7 +31,7 @@ var/datum/controller/event/events
 	checkEvent()
 	var/i = 1
 	while(i<=running.len)
-		var/datum/event/Event = running[i]
+		var/datum/round_event/Event = running[i]
 		if(Event)
 			Event.process()
 			i++
@@ -54,7 +54,7 @@ var/datum/controller/event/events
 		return
 
 	var/sum_of_weights = 0
-	for(var/datum/event_control/E in control)
+	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
 		if(E.holidayID)
@@ -68,7 +68,7 @@ var/datum/controller/event/events
 
 	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
 
-	for(var/datum/event_control/E in control)
+	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
 		if(E.holidayID)
@@ -82,7 +82,7 @@ var/datum/controller/event/events
 			return
 
 //allows a client to trigger an event (For Debugging Purposes)
-/client/proc/forceEvent(var/datum/event_control/E in events.control)
+/client/proc/forceEvent(var/datum/round_event_control/E in events.control)
 	set name = "Trigger Event (Debug Only)"
 	set category = "Debug"
 

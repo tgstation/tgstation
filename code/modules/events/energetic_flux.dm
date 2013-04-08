@@ -1,16 +1,16 @@
-/datum/event_control/energetic_flux
+/datum/round_event_control/energetic_flux
 	name = "Energetic Flux"
-	typepath = /datum/event/energetic_flux
+	typepath = /datum/round_event/energetic_flux
 	max_occurrences = 2
 	weight = 15
 
-/datum/event/energetic_flux
+/datum/round_event/energetic_flux
 	startWhen	= 30
 
 	var/area/impact_area
 
 
-/datum/event/energetic_flux/setup()
+/datum/round_event/energetic_flux/setup()
 	var/list/safe_areas = list(
 	/area/turret_protected/ai,
 	/area/turret_protected/ai_upload,
@@ -37,11 +37,11 @@
 	impact_area = locate(pick((the_station_areas - safe_areas) + danger_areas))	//need to locate() as it's just a list of paths.
 
 
-/datum/event/energetic_flux/announce()
+/datum/round_event/energetic_flux/announce()
 	command_alert("Warning! Localized hyper-energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name]. Vacate [impact_area.name].", "Anomaly Alert")
 
 
-/datum/event/energetic_flux/start()
+/datum/round_event/energetic_flux/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
 		explosion(T, -1, 2, 4, 5)

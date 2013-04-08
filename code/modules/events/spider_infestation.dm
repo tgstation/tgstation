@@ -1,25 +1,25 @@
-/datum/event_control/spider_infestation
+/datum/round_event_control/spider_infestation
 	name = "Spider Infestation"
-	typepath = /datum/event/spider_infestation
+	typepath = /datum/round_event/spider_infestation
 	weight = 5
 	max_occurrences = 1
 
-/datum/event/spider_infestation
+/datum/round_event/spider_infestation
 	announceWhen	= 400
 
 	var/spawncount = 1
 
 
-/datum/event/spider_infestation/setup()
+/datum/round_event/spider_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
 	spawncount = rand(5, 8)
 
-/datum/event/spider_infestation/announce()
+/datum/round_event/spider_infestation/announce()
 	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	world << sound('sound/AI/aliens.ogg')
 
 
-/datum/event/spider_infestation/start()
+/datum/round_event/spider_infestation/start()
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)
