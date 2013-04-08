@@ -1774,6 +1774,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sugar",6)
+		reagents.add_reagent("ice",2)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/icecreamcup
@@ -1784,6 +1785,7 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("sugar",8)
+		reagents.add_reagent("ice",2)
 		bitesize = 6
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels

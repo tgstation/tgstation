@@ -445,41 +445,16 @@
 /obj/machinery/icemachine/proc/generate_name(var/reagent_name)
 	var/name_prefix = pick("Mr.","Mrs.","Super","Happy","Whippy")
 	var/name_suffix = pick(" Whippy ","Slappy "," Creamy "," Dippy "," Swirly "," Swirl ")
-	var/name = null
-	name += name_prefix
-	name += name_suffix
-	name += "[reagent_name] "
-	return name
+	var/cone_name = null //Heart failiure prevention.
+	cone_name += name_prefix
+	cone_name += name_suffix
+	cone_name += "[reagent_name] "
+	return cone_name
 
 /obj/machinery/icemachine/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-
-/obj/machinery/icemachine/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			del(src)
-			return
-		if(2.0)
-			if (prob(50))
-				del(src)
-				return
-
-/obj/machinery/icemachine/blob_act()
-	if (prob(50))
-		del(src)
-
-/obj/machinery/icemachine/meteorhit()
-	del(src)
-	return
-
-/obj/machinery/icemachine/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
 
 /obj/machinery/icemachine/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
@@ -495,9 +470,7 @@
 	return
 
 /obj/machinery/icemachine/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER)) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	if(..()) return
 
 	src.add_fingerprint(usr)
 	usr.set_machine(src)
@@ -589,8 +562,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/icemachine/attack_hand(mob/user as mob)
-	if(stat & BROKEN)
-		return
+	if(..()) return
 	user.set_machine(src)
 	var/dat = ""
 	if(!beaker)
