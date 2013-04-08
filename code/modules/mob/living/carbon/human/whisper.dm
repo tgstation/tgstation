@@ -1,5 +1,9 @@
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text)
+
+	if(!IsVocal())
+		return
+
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
 		return

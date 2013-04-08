@@ -105,6 +105,9 @@
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
+	var/silent_ai = 0
+	var/silent_borg = 0
+
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -333,6 +336,10 @@
 					config.force_random_names		= 1
 				if("allow_ai")
 					config.allow_ai					= 1
+				if("silent_ai")
+					config.silent_ai 				= 1
+				if("silent_borg")
+					config.silent_borg				= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
