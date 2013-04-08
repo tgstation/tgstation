@@ -568,10 +568,69 @@
 									usr << "<b>Major Crimes:</b> [R.fields["ma_crim"]]"
 									usr << "<b>Details:</b> [R.fields["ma_crim_d"]]"
 									usr << "<b>Notes:</b> [R.fields["notes"]]"
+									usr << "<a href='?src=\ref[src];secrecordComment=`'>\[View Comment Log\]</a>"
 									read = 1
 
 				if(!read)
 					usr << "\red Unable to locate a data core entry for this person."
+
+	if (href_list["secrecordComment"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+				var/perpname = "wot"
+				var/read = 0
+
+				if(wear_id)
+					if(istype(wear_id,/obj/item/weapon/card/id))
+						perpname = wear_id:registered_name
+					else if(istype(wear_id,/obj/item/device/pda))
+						var/obj/item/device/pda/tempPda = wear_id
+						perpname = tempPda.owner
+				else
+					perpname = src.name
+				for (var/datum/data/record/E in data_core.general)
+					if (E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.security)
+							if (R.fields["id"] == E.fields["id"])
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+									read = 1
+									var/counter = 1
+									while(R.fields[text("com_[]", counter)])
+										usr << text("[]", R.fields[text("com_[]", counter)])
+										counter++
+									if (counter == 1)
+										usr << "No comment found"
+									usr << "<a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>"
+
+				if(!read)
+					usr << "\red Unable to locate a data core entry for this person."
+
+	if (href_list["secrecordadd"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+				var/perpname = "wot"
+				if(wear_id)
+					if(istype(wear_id,/obj/item/weapon/card/id))
+						perpname = wear_id:registered_name
+					else if(istype(wear_id,/obj/item/device/pda))
+						var/obj/item/device/pda/tempPda = wear_id
+						perpname = tempPda.owner
+				else
+					perpname = src.name
+				for (var/datum/data/record/E in data_core.general)
+					if (E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.security)
+							if (R.fields["id"] == E.fields["id"])
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+									var/t1 = copytext(sanitize(input("Add Comment:", "Sec. records", null, null)  as message),1,MAX_MESSAGE_LEN)
+									if ((!( t1 ) || src.stat || src.restrained() || !(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))))
+										return
+									var/counter = 1
+									while(R.fields[text("com_[]", counter)])
+										counter++
+									R.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2053<BR>[]",H.get_authentification_name(), H.get_assignment(), time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
 
 	if (href_list["medical"])
 		if(istype(usr, /mob/living/carbon/human))
