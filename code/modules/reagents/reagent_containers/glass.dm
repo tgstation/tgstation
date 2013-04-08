@@ -13,6 +13,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	var/list/can_be_placed_into = list(
+		/obj/machinery/icemachine/,
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
 		/obj/machinery/reagentgrinder,
