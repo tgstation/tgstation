@@ -47,7 +47,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
 		U.uses -= max(cost, 0)
-		feedback_add_details("traitor_uplink_items_bought", item)
+		feedback_add_details("traitor_uplink_items_bought", "[item]")
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(var/obj/item/device/uplink/U, var/mob/user)
