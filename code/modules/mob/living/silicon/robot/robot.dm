@@ -119,7 +119,7 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
 	if(module)
 		return
 	switch(mod)
