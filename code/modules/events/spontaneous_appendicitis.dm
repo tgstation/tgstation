@@ -1,11 +1,11 @@
-/datum/event_control/spontaneous_appendicitis
+/datum/round_event_control/spontaneous_appendicitis
 	name = "Spontaneous Appendicitis"
-	typepath = /datum/event/spontaneous_appendicitis
+	typepath = /datum/round_event/spontaneous_appendicitis
 	weight = 20
 	max_occurrences = 4
 	earliest_start = 6000
 
-/datum/event/spontaneous_appendicitis/start()
+/datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
 		var/foundAlready = 0	//don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)

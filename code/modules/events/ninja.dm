@@ -1,32 +1,32 @@
 //Note to future generations: I didn't write this god-awful code I just ported it to the event system and tried to make it less moon-speaky.
 //Don't judge me D; ~Carn
 
-/datum/event_control/ninja
+/datum/round_event_control/ninja
 	name = "Space Ninja"
-	typepath = /datum/event/ninja
+	typepath = /datum/round_event/ninja
 	max_occurrences = 1
 
-/datum/event/ninja
+/datum/round_event/ninja
 	var/success_spawn = 0
 
 	var/helping_station
 	var/key
-	var/turf/spawnturf
+	var/spawn_loc
 	var/mission
 
 	var/mob/living/carbon/human/Ninja
 
-/datum/event/ninja/setup()
+/datum/round_event/ninja/setup()
 	helping_station = rand(0,1)
 
-/datum/event/ninja/kill()
+/datum/round_event/ninja/kill()
 	if(!success_spawn && control)
 		control.occurrences--
 	return ..()
 
-/datum/event/ninja/start()
-	//selecting a spawnturf
-	if(!spawnturf)
+/datum/round_event/ninja/start()
+	//selecting a spawn_loc
+	if(!spawn_loc)
 		var/list/spawn_locs = list()
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if(isturf(L.loc))
@@ -35,8 +35,8 @@
 						spawn_locs += L.loc
 		if(!spawn_locs.len)
 			return kill()
-		spawnturf = pick(spawn_locs)
-	if(!spawnturf)
+		spawn_loc = pick(spawn_locs)
+	if(!spawn_loc)
 		return kill()
 
 	//selecting a candidate player
@@ -161,7 +161,7 @@
 	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
 	//spawn the ninja and assign the candidate
-	Ninja = create_space_ninja(spawnturf)
+	Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
 
 	//initialise equipment
@@ -180,7 +180,7 @@ This proc will give the ninja a directive to follow. They are not obligated to d
 Making this random or semi-random will probably not work without it also being incredibly silly.
 As such, it's hard-coded for now. No reason for it not to be, really.
 */
-/datum/event/ninja/proc/generate_ninja_directive()
+/datum/round_event/ninja/proc/generate_ninja_directive()
 	switch(rand(1,13))
 		if(1)	return "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
 		if(2)	return "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as possible."
@@ -330,7 +330,9 @@ ________________________________________________________________________________
 	if(!C)
 		return
 
-	new /datum/event/ninja(list("key"=C.key,"mission"=mission))
+	var/datum/round_event/ninja/E = new /datum/round_event/ninja()
+	E.key=C.key
+	E.mission=mission
 
 	message_admins("\blue [key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Space Ninja.")
 	log_admin("[key] used Spawn Space Ninja.")
@@ -339,8 +341,8 @@ ________________________________________________________________________________
 
 //=======//NINJA CREATION PROCS//=======//
 
-/proc/create_space_ninja(turf/spawnturf)
-	var/mob/living/carbon/human/new_ninja = new(spawnturf)
+/proc/create_space_ninja(spawn_loc)
+	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
 
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
