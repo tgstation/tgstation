@@ -84,11 +84,11 @@ obj
 				var/turf/simulated/floor/S = loc
 				if(!S.zone) del src //Cannot exist where zones are broken.
 
-				if(istype(S,/turf/simulated/floor))
+				if(istype(S))
 					var
 						datum/gas_mixture/air_contents = S.return_air()
 						//Get whatever trace fuels are in the area
-						datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
+						datum/gas/volatile_fuel/fuel = locate() in air_contents.trace_gases
 						//Also get liquid fuels on the ground.
 						obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
 
@@ -115,7 +115,7 @@ obj
 
 									//Spread the fire.
 									if(!(locate(/obj/fire) in enemy_tile))
-										if( prob( firelevel*10 ) )
+										if( prob( firelevel*10 ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
 											new/obj/fire(enemy_tile,firelevel)
 
 					if(flow)
@@ -136,6 +136,8 @@ obj
 
 							//Burn the gas mixture.
 							flow.zburn(liquid)
+							if(fuel && fuel.moles <= 0.00001)
+								del fuel
 
 						else
 
@@ -160,14 +162,12 @@ obj
 		New(newLoc,fl)
 			..()
 
-			if(!istype(loc, /turf) || !loc.CanPass(null, loc, 0, 0))
+			if(!istype(loc, /turf))
 				del src
 
 			dir = pick(cardinal)
 			//sd_SetLuminosity(3,2,0)
 			firelevel = fl
-			for(var/mob/living/carbon/human/M in loc)
-				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
 			air_master.active_hotspots.Add(src)
 
 		Del()
@@ -195,12 +195,8 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 
 		if(fuel)
 		//Volatile Fuel
-			if(fuel.moles < 0.01)
-				trace_gases.Remove(fuel)
-				fuel = null
-			else
-				total_fuel += fuel.moles
-				fuel_sources++
+			total_fuel += fuel.moles
+			fuel_sources++
 
 		if(liquid)
 		//Liquid Fuel
