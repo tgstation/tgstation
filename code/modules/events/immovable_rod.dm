@@ -7,18 +7,18 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 --NEOFite
 */
 
-/datum/event_control/immovable_rod
+/datum/round_event_control/immovable_rod
 	name = "Immovable Rod"
-	typepath = /datum/event/immovable_rod
+	typepath = /datum/round_event/immovable_rod
 	max_occurrences = 5
 
-/datum/event/immovable_rod
+/datum/round_event/immovable_rod
 	announceWhen = 5
 
-/datum/event/immovable_rod/announce()
+/datum/round_event/immovable_rod/announce()
 	command_alert("What the fuck was that?!", "General Alert")
 
-/datum/event/immovable_rod/start()
+/datum/round_event/immovable_rod/start()
 	var/startx = 0
 	var/starty = 0
 	var/endy = 0

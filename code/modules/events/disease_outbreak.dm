@@ -1,23 +1,23 @@
-/datum/event_control/disease_outbreak
+/datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak"
-	typepath = /datum/event/disease_outbreak
+	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 1
 	weight = 5
 
-/datum/event/disease_outbreak
+/datum/round_event/disease_outbreak
 	announceWhen	= 15
 
 	var/virus_type
 
 
-/datum/event/disease_outbreak/announce()
+/datum/round_event/disease_outbreak/announce()
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 	world << sound('sound/AI/outbreak7.ogg')
 
-/datum/event/disease_outbreak/setup()
+/datum/round_event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
 
-/datum/event/disease_outbreak/start()
+/datum/round_event/disease_outbreak/start()
 	if(!virus_type)
 		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 

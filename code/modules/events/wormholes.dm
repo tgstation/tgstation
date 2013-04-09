@@ -1,10 +1,10 @@
-/datum/event_control/wormholes
+/datum/round_event_control/wormholes
 	name = "Wormholes"
-	typepath = /datum/event/wormholes
+	typepath = /datum/round_event/wormholes
 	max_occurrences = 3
 	weight = 2
 
-/datum/event/wormholes
+/datum/round_event/wormholes
 	announceWhen = 10
 	endWhen = 60
 
@@ -12,24 +12,24 @@
 	var/shift_frequency = 3
 	var/number_of_wormholes = 1000
 
-/datum/event/wormholes/setup()
+/datum/round_event/wormholes/setup()
 	announceWhen = rand(0,20)
 	endWhen = rand(40,80)
 
-/datum/event/wormholes/start()
+/datum/round_event/wormholes/start()
 	for(var/i=1, i<=number_of_wormholes, i++)
 		var/x = rand(40,world.maxx-40)
 		var/y = rand(40,world.maxy-40)
 		var/turf/T = locate(x, y, 1)
 		wormholes += new /obj/effect/portal/wormhole(T, null, null, -1)
 
-/datum/event/wormholes/announce()
+/datum/round_event/wormholes/announce()
 	command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
 			M << sound('sound/AI/spanomalies.ogg')
 
-/datum/event/wormholes/tick()
+/datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
 		for(var/obj/effect/portal/wormhole/O in wormholes)
 			var/x = rand(20,world.maxx-20)
@@ -37,7 +37,7 @@
 			var/turf/T = locate(x, y, 1)
 			if(T)	O.loc = T
 
-/datum/event/wormholes/end()
+/datum/round_event/wormholes/end()
 	portals.Remove(wormholes)
 	for(var/obj/effect/portal/wormhole/O in wormholes)
 		O.loc = null
