@@ -71,7 +71,6 @@
 		new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 		return
 
-
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains white gloves."
@@ -100,7 +99,6 @@
 		new /obj/item/clothing/mask/surgical(src)
 		new /obj/item/clothing/mask/surgical(src)
 		new /obj/item/clothing/mask/surgical(src)
-
 
 /obj/item/weapon/storage/box/syringes
 	name = "syringes"
@@ -145,7 +143,6 @@
 		new /obj/item/weapon/dnainjector/m2h(src)
 		new /obj/item/weapon/dnainjector/m2h(src)
 
-
 /obj/item/weapon/storage/box/blanks
 	name = "box of blank shells"
 	desc = "It has a picture of a gun and several warning symbols on the front."
@@ -159,8 +156,6 @@
 		new /obj/item/ammo_casing/shotgun/blank(src)
 		new /obj/item/ammo_casing/shotgun/blank(src)
 		new /obj/item/ammo_casing/shotgun/blank(src)
-
-
 
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -177,6 +172,21 @@
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 
+/obj/item/weapon/storage/box/teargas
+	name = "box of tear gas grenades (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+
 /obj/item/weapon/storage/box/emps
 	name = "emp grenades"
 	desc = "A box with 5 emp grenades."
@@ -189,7 +199,6 @@
 		new /obj/item/weapon/grenade/empgrenade(src)
 		new /obj/item/weapon/grenade/empgrenade(src)
 		new /obj/item/weapon/grenade/empgrenade(src)
-
 
 /obj/item/weapon/storage/box/trackimp
 	name = "tracking implant kit"
@@ -221,7 +230,6 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
-
 /obj/item/weapon/storage/box/rxglasses
 	name = "prescription glasses"
 	desc = "This box contains nerd glasses."
@@ -250,7 +258,6 @@
 		new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
 		new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
 
-
 /obj/item/weapon/storage/box/condimentbottles
 	name = "box of condiment bottles"
 	desc = "It has a large ketchup smear on it."
@@ -264,8 +271,6 @@
 		new /obj/item/weapon/reagent_containers/food/condiment(src)
 		new /obj/item/weapon/reagent_containers/food/condiment(src)
 
-
-
 /obj/item/weapon/storage/box/cups
 	name = "box of paper cups"
 	desc = "It has pictures of paper cups on the front."
@@ -278,7 +283,6 @@
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-
 
 /obj/item/weapon/storage/box/donkpockets
 	name = "box of donk-pockets"
@@ -305,7 +309,6 @@
 		..()
 		for(var/i = 1; i <= 5; i++)
 			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
-
 
 /obj/item/weapon/storage/box/ids
 	name = "spare IDs"
@@ -336,7 +339,6 @@
 		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/weapon/cartridge/security(src)
-
 
 /obj/item/weapon/storage/box/handcuffs
 	name = "spare handcuffs"
@@ -381,7 +383,6 @@
 		new /obj/item/weapon/storage/pill_bottle( src )
 		new /obj/item/weapon/storage/pill_bottle( src )
 
-
 /obj/item/weapon/storage/box/snappops
 	name = "snap pop box"
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
@@ -393,7 +394,6 @@
 		..()
 		for(var/i=1; i <= storage_slots; i++)
 			new /obj/item/toy/snappop(src)
-
 
 /obj/item/weapon/storage/box/matches
 	name = "matchbox"
@@ -418,7 +418,6 @@
 			processing_objects.Add(W)
 		W.update_icon()
 		return
-
 
 /obj/item/weapon/storage/box/lights
 	name = "replacement bulbs"
