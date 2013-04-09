@@ -200,7 +200,7 @@ zone/proc/process()
 	progress = "problem with an inbuilt byond function: some conditional checks"
 
 	//Only run through the individual turfs if there's reason to.
-	if(air.graphic != air.graphic_archived || air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(air.graphic != air.graphic_archived || air.temperature > PLASMA_FLASHPOINT)
 
 		progress = "problem with: turf/simulated/update_visuals()"
 
@@ -215,10 +215,10 @@ zone/proc/process()
 			progress = "problem with: item or turf temperature_expose()"
 
 			//Expose stuff to extreme heat.
-			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			if(air.temperature > PLASMA_FLASHPOINT)
 				for(var/atom/movable/item in S)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				S.temperature_expose(air, air.temperature, CELL_VOLUME)
+				S.hotspot_expose(air, air.temperature, CELL_VOLUME)
 
 	progress = "problem with: calculating air graphic"
 
