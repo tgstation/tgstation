@@ -41,9 +41,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		return 1
 	var/datum/gas/volatile_fuel/fuel = locate() in air_contents.trace_gases
 	var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in src
-	if(air_contents.calculate_firelevel(liquid) > vsc.IgnitionLevel && (fuel || liquid || air_contents.toxins > 0.1))
+	if(air_contents.calculate_firelevel(liquid) > vsc.IgnitionLevel && (fuel || liquid || air_contents.toxins > 0.5))
 		igniting = 1
-		if(air_contents.oxygen < 0.1)
+		if(air_contents.oxygen < 0.5)
 			return 0
 
 		if(! (locate(/obj/fire) in src))
@@ -63,7 +63,7 @@ obj
 		anchored = 1
 		mouse_opacity = 0
 
-		luminosity = 3
+		//luminosity = 3
 
 		icon = 'fire.dmi'
 		icon_state = "1"
@@ -79,78 +79,83 @@ obj
 		process()
 			. = 1
 
-			var/turf/simulated/floor/S = loc
-			if(!S.zone) del src //Cannot exist where zones are broken.
+			if(firelevel > vsc.IgnitionLevel)
 
-			if(istype(S,/turf/simulated/floor))
-				var
-					datum/gas_mixture/air_contents = S.return_air()
-					//Get whatever trace fuels are in the area
-					datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
-					//Also get liquid fuels on the ground.
-					obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
+				var/turf/simulated/floor/S = loc
+				if(!S.zone) del src //Cannot exist where zones are broken.
 
-				var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
-				//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
-				//the fire's max temperature instantaneously.
+				if(istype(S,/turf/simulated/floor))
+					var
+						datum/gas_mixture/air_contents = S.return_air()
+						//Get whatever trace fuels are in the area
+						datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
+						//Also get liquid fuels on the ground.
+						obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
 
-				firelevel = air_contents.calculate_firelevel(liquid)
+					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
+					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
+					//the fire's max temperature instantaneously.
 
-				//Ensure that there is an appropriate amount of fuel and O2 here.
-				if(firelevel > 0.25 && flow.oxygen > 0.1 && (air_contents.toxins || fuel || liquid))
+					firelevel = air_contents.calculate_firelevel(liquid)
 
-					for(var/direction in cardinal)
-						if(S.air_check_directions&direction) //Grab all valid bordering tiles
+					//Ensure that there is an appropriate amount of fuel and O2 here.
+					if(firelevel > 0.25 && flow.oxygen > 0.3 && (air_contents.toxins || fuel || liquid))
 
-							var/turf/simulated/enemy_tile = get_step(S, direction)
+						for(var/direction in cardinal)
+							if(S.air_check_directions&direction) //Grab all valid bordering tiles
 
-							if(istype(enemy_tile))
-								//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
-								//reduce firelevel.
-								if(enemy_tile.fire_protection > world.time-30)
-									firelevel -= 1.5
-									continue
+								var/turf/simulated/enemy_tile = get_step(S, direction)
 
-								//Spread the fire.
-								if(!(locate(/obj/fire) in enemy_tile))
-									if( prob( firelevel*10 ) )
-										new/obj/fire(enemy_tile,firelevel)
+								if(istype(enemy_tile))
+									//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
+									//reduce firelevel.
+									if(enemy_tile.fire_protection > world.time-30)
+										firelevel -= 1.5
+										continue
 
-				if(flow)
+									//Spread the fire.
+									if(!(locate(/obj/fire) in enemy_tile))
+										if( prob( firelevel*10 ) )
+											new/obj/fire(enemy_tile,firelevel)
 
-					//Ensure adequate oxygen and fuel.
-					if(flow.oxygen > 0.1 && (flow.toxins || fuel || liquid))
+					if(flow)
 
-						//Change icon depending on the fuel, and thus temperature.
-						if(firelevel > 6)
-							icon_state = "3"
-						else if(firelevel > 2.5)
-							icon_state = "2"
+						//Ensure adequate oxygen and fuel.
+						if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
+
+							//Change icon depending on the fuel, and thus temperature.
+							if(firelevel > 6)
+								icon_state = "3"
+							else if(firelevel > 2.5)
+								icon_state = "2"
+							else
+								icon_state = "1"
+
+							//Ensure flow temperature is higher than minimum fire temperatures.
+							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
+
+							//Burn the gas mixture.
+							flow.zburn(liquid)
+
 						else
-							icon_state = "1"
 
-						//Ensure flow temperature is higher than minimum fire temperatures.
-						flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.2,flow.temperature)
-
-						//Burn the gas mixture.
-						if(!flow.zburn(liquid))
 							del src
 
+
+						S.assume_air(flow) //Then put it back where you found it.
+
 					else
-
 						del src
-
-
-					S.assume_air(flow) //Then put it back where you found it.
-
 				else
 					del src
 			else
 				del src
 
+//Should fix fire being extra damaging, temperature of the environment will now be the main source of fire damage.
+/*
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
-
+*/
 
 		New(newLoc,fl)
 			..()
@@ -174,6 +179,7 @@ obj
 
 			..()
 
+
 turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 turf/proc/apply_fire_protection()
 turf/simulated/apply_fire_protection()
@@ -188,16 +194,16 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 			datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
 		if(fuel)
-			//Volatile Fuel
+		//Volatile Fuel
 			if(fuel.moles < 0.01)
 				trace_gases.Remove(fuel)
-				del fuel
+				fuel = null
 			else
 				total_fuel += fuel.moles
 				fuel_sources++
 
 		if(liquid)
-			//Liquid Fuel
+		//Liquid Fuel
 			if(liquid.amount <= 0)
 				del liquid
 			else
@@ -205,16 +211,14 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 				fuel_sources++
 
 			//Toxins
-		if(toxins > 0.1) fuel_sources++
+		if(toxins > 0.3) fuel_sources++
 
 		if(!fuel_sources) return 0 //If there's no fuel, there's no burn. Can't divide by zero anyway.
 
-		if(oxygen > 0.1)
+		if(oxygen > 0.3)
 
 				//Calculate the firelevel.
 			var/firelevel = calculate_firelevel(liquid)
-			if(firelevel < 0.01)
-				return 0
 
 				//Reaches a maximum practical temperature of around 4500.
 
@@ -222,7 +226,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,firelevel * 50,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,0.05*firelevel,total_fuel) / fuel_sources
 
 			oxygen = max(0,oxygen-consumed_gas)
 
@@ -248,19 +252,14 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 	var
 		datum/gas/volatile_fuel/fuel = locate() in trace_gases
 		liquid_concentration = 0
-		fuel_concentration = 0
 
 		oxy_concentration = oxygen / volume
 		tox_concentration = toxins / volume
+		fuel_concentration = 0
 
 	if(fuel) fuel_concentration = (fuel.moles) / volume
 	if(liquid) liquid_concentration = (liquid.amount*15) / volume
-
-	var/final = tox_concentration + liquid_concentration + fuel_concentration
-	if(final > oxy_concentration)
-		final = oxy_concentration
-
-	return final * 100
+	return (oxy_concentration + tox_concentration + liquid_concentration + fuel_concentration)*100
 
 /mob/living/carbon/human/proc/FireBurn(mx as num)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
@@ -273,7 +272,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 		arms_exposure = 1
 
 	//Get heat transfer coefficients for clothing.
-	//skytodo: different handling of temp with tg //Jesus, mate.  Don't ask me.  I have no diea how their crap works, and Aryn wrote this proc.
+	//skytodo: different handling of temp with tg
 	/*for(var/obj/item/clothing/C in src)
 		if(l_hand == C || r_hand == C) continue
 		if(C.body_parts_covered & HEAD)
