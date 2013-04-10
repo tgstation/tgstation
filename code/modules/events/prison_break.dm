@@ -1,15 +1,15 @@
-/datum/event_control/prison_break
+/datum/round_event_control/prison_break
 	name = "Prison Break"
-	typepath = /datum/event/prison_break
+	typepath = /datum/round_event/prison_break
 	max_occurrences = 2
 
-/datum/event/prison_break
+/datum/round_event/prison_break
 	announceWhen = 50
 	endWhen = 20
 	var/list/area/prisonAreas = list()
 
 
-/datum/event/prison_break/setup()
+/datum/round_event/prison_break/setup()
 	announceWhen = rand(50, 60)
 	endWhen = rand(20, 30)
 
@@ -18,7 +18,7 @@
 			prisonAreas += A
 
 
-/datum/event/prison_break/announce()
+/datum/round_event/prison_break/announce()
 	if(prisonAreas && prisonAreas.len > 0)
 		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
 	else
@@ -26,12 +26,12 @@
 		kill()
 
 
-/datum/event/prison_break/start()
+/datum/round_event/prison_break/start()
 	for(var/area/A in prisonAreas)
 		for(var/obj/machinery/light/L in A)
 			L.flicker(10)
 
-/datum/event/prison_break/end()
+/datum/round_event/prison_break/end()
 	for(var/area/A in prisonAreas)
 		for(var/obj/O in A)
 			if(istype(O,/obj/machinery/power/apc))

@@ -1,10 +1,10 @@
-/datum/event_control/brand_intelligence
+/datum/round_event_control/brand_intelligence
 	name = "Brand Intelligence"
-	typepath = /datum/event/brand_intelligence
+	typepath = /datum/round_event/brand_intelligence
 	weight = 5
 	max_occurrences = 1
 
-/datum/event/brand_intelligence
+/datum/round_event/brand_intelligence
 	announceWhen	= 21
 	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
 
@@ -12,11 +12,11 @@
 	var/obj/machinery/vending/originMachine
 
 
-/datum/event/brand_intelligence/announce()
+/datum/round_event/brand_intelligence/announce()
 	command_alert("Rampant brand intelligence has been detected aboard [station_name()], please stand-by.", "Machine Learning Alert")
 
 
-/datum/event/brand_intelligence/start()
+/datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in machines)
 		if(V.z != 1)	continue
 		vendingMachines.Add(V)
@@ -31,7 +31,7 @@
 	originMachine.shoot_inventory = 1
 
 
-/datum/event/brand_intelligence/tick()
+/datum/round_event/brand_intelligence/tick()
 	if(!vendingMachines.len || !originMachine || originMachine.shut_up)	//if every machine is infected, or if the original vending machine is missing or has it's voice switch flipped
 		kill()
 		return

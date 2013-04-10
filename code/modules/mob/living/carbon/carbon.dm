@@ -245,16 +245,18 @@
 							i++
 							index = "[T.loc.name]\[[i]\]"
 						vents[index] = temp_vent
+					if(!vents.len)
+						src << "\red There are no available vents to travel to, they could be welded."
+						return
 
 					var/turf/startloc = loc
 					var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortList(vents)
 					if(!selection)	return
 					if(loc==startloc)
-						if(contents.len)
-							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
-								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
-									src << "\red You can't be carrying items or have items equipped when vent crawling!"
-									return
+						for(var/obj/item/carried_item in contents)//If the monkey got on objects.
+							if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+								src << "\red You can't be carrying items or have items equipped when vent crawling!"
+								return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 						if(target_vent)
 							for(var/mob/O in viewers(src, null))
