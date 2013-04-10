@@ -1,7 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/door
-	name = "Door"
+	name = "door"
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
@@ -14,7 +12,6 @@
 	var/visible = 1
 	var/p_open = 0
 	var/operating = 0
-	var/autoclose = 0
 	var/glass = 0
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
@@ -204,13 +201,6 @@
 
 	if(operating)	operating = 0
 
-	if(autoclose  && normalspeed)
-		spawn(150)
-			autoclose()
-	if(autoclose && !normalspeed)
-		spawn(5)
-			autoclose()
-
 	return 1
 
 
@@ -285,12 +275,6 @@
 			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
-
-/obj/machinery/door/proc/autoclose()
-	var/obj/machinery/door/airlock/A = src
-	if(!A.density && !A.operating && !A.locked && !A.welded && A.autoclose)
-		close()
-	return
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
