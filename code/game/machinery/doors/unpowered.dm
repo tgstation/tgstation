@@ -1,5 +1,4 @@
 /obj/machinery/door/unpowered
-	autoclose = 0
 	var/locked = 0
 
 
