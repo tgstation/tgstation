@@ -181,7 +181,7 @@ datum/controller/game_controller/proc/process()
 
 				//EVENTS
 				timer = world.timeofday
-				last_thing_processed = /datum/event
+				last_thing_processed = /datum/round_event
 				events.process()
 				events_cost = (world.timeofday - timer) / 10
 

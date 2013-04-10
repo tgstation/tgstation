@@ -210,9 +210,7 @@
 		x_c -= 3
 
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	P.loc = user.loc
-	if(!user.get_inactive_hand())
-		user.put_in_inactive_hand(P)
+	user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
