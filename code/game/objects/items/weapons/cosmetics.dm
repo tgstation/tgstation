@@ -85,3 +85,81 @@
 					H.update_body()
 	else
 		..()
+
+/obj/item/weapon/razor
+	name = "electric razor"
+	desc = "The latest and greatest power razor born from the science of shaving."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "razor"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	w_class = 1.0
+
+
+/obj/item/weapon/razor/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(user.zone_sel.selecting == "mouth")
+			if(H.f_style == "Shaved")
+				user << "<span class='notice'>Already clean-shaven.</span>"
+				return
+
+			if(H.wear_mask)
+				user << "<span class='warning'>The mask blocks you from shaving it.</span>"
+				return
+
+			if(H == user) //shaving yourself
+				user.visible_message("<span class='notice'>[user] starts to shave their facial hair with \the [src].</span>", \
+									 "<span class='notice'>You take a moment shave your facial hair with \the [src].</span>")
+				if(do_after(user, 30))
+					user.visible_message("<span class='notice'>[user] shaves his facial hair clean with the [src].</span>", \
+										 "<span class='notice'>You finish shaving with the [src]. Fast and clean!</span>")
+					H.f_style = "Shaved"
+					H.update_hair()
+					playsound(src.loc, 'sound/items/Welder2.ogg', 20, 1)
+			else
+				var/turf/user_loc = user.loc
+				var/turf/H_loc = H.loc
+				user.visible_message("<span class='danger'>[user] tries to shave [H]'s facial hair with \the [src].</span>", \
+									 "<span class='warning'>You start shaving [H]'s facial hair.</span>")
+				if(do_after(user, 50))
+					if(user_loc == user.loc && H_loc == H.loc)
+						user.visible_message("<span class='danger'>[user] shaves off [H]'s facial hair with \the [src].</span>", \
+											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
+						H.f_style = "Shaved"
+						H.update_hair()
+						playsound(src.loc, 'sound/items/Welder2.ogg', 20, 1)
+
+		if(user.zone_sel.selecting == "head")
+			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead")
+				user << "<span class='notice'>There is not enough hair left to shave...</span>"
+				return
+
+			if(H.head)
+				user << "<span class='warning'>The headgear blocks you from shaving the hair.</span>"
+				return
+
+			if(H == user) //shaving yourself
+				user.visible_message("<span class='warning'>[user] starts to shave their head with \the [src].</span>", \
+									 "<span class='warning'>You start to shave your head with \the [src].</span>")
+				if(do_after(user, 30))
+					user.visible_message("<span class='notice'>[user] shaves his head with the [src].</span>", \
+										 "<span class='notice'>You finish shaving with the [src].</span>")
+					H.h_style = "Skinhead"
+					H.update_hair()
+					playsound(src.loc, 'sound/items/Welder2.ogg', 40, 1)
+			else
+				var/turf/user_loc = user.loc
+				var/turf/H_loc = H.loc
+				user.visible_message("<span class='danger'>[user] tries to shave [H]'s head with \the [src]!</span>", \
+									 "<span class='warning'>You start shaving [H]'s head.</span>")
+				if(do_after(user, 50))
+					if(user_loc == user.loc && H_loc == H.loc)
+						user.visible_message("<span class='danger'>[user] shaves [H]'s head bald with \the [src]!</span>", \
+											 "<span class='warning'>You shave [H]'s head bald.</span>")
+						H.h_style = "Skinhead"
+						H.update_hair()
+						playsound(src.loc, 'sound/items/Welder2.ogg', 40, 1)
+		else
+			..()
+	else
+		..()
