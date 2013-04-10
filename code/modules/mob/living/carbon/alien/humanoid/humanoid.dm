@@ -27,10 +27,10 @@
 /mob/living/carbon/alien/humanoid/proc/HasClaws()
 	return locate(/obj/item/organ/aclaws) in src.internal_organs
 
-/mob/living/carbon/alien/proc/HasTail(mob/living/carbon/alien/humanoid/src)
+/mob/living/carbon/alien/humanoid/proc/HasTail()
 	return locate(/obj/item/organ/avein) in src.internal_organs
 
-/mob/living/carbon/alien/proc/HasChitin(mob/living/carbon/alien/humanoid/src)
+/mob/living/carbon/alien/proc/HasChitin()
 	return locate(/obj/item/organ/achitin) in src.internal_organs
 
 //This is fine, works the same as a human
