@@ -2422,6 +2422,15 @@
 		if(check_rights(R_ADMIN|R_SERVER))
 			populate_inactive_customitems_list(src.owner)
 
+	else if(href_list["vsc"])
+		if(check_rights(R_ADMIN|R_SERVER))
+			if(href_list["vsc"] == "airflow")
+				vsc.ChangeSettingsDialog(usr,vsc.settings)
+			if(href_list["vsc"] == "plasma")
+				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+			if(href_list["vsc"] == "default")
+				vsc.SetDefault(usr)
+
 	// player info stuff
 
 	if(href_list["add_player_info"])

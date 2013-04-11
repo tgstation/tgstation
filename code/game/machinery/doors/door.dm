@@ -229,6 +229,11 @@
 		SetOpacity(1)	//caaaaarn!
 	operating = 0
 	update_nearby_tiles()
+
+	//I shall not add a check every x ticks if a door has closed over some fire.
+	var/obj/fire/fire = locate() in loc
+	if(fire)
+		del fire
 	return
 
 /obj/machinery/door/proc/requiresID()
