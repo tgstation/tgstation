@@ -37,7 +37,9 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0)
 	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
 
 /obj/item/clothing/head/culthood/alt
@@ -58,6 +60,10 @@
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
 /obj/item/clothing/head/magus
 	name = "magus helm"

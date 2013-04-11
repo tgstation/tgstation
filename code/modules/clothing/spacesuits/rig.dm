@@ -51,14 +51,19 @@
 	icon_state = "rig0-white"
 	item_state = "ce_helm"
 	color = "white"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 90)
+	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 90)
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 90)
+	slowdown = 2
+	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 90)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 
 //Mining rig
@@ -68,14 +73,15 @@
 	icon_state = "rig0-mining"
 	item_state = "mining_helm"
 	color = "mining"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 20, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating and mobility assist-servoes."
 	item_state = "mining_hardsuit"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+	slowdown = 2
+	armor = list(melee = 20, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
 
@@ -147,7 +153,7 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	color = "sec"
-	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 25, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
@@ -155,4 +161,4 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
-	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 25, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
