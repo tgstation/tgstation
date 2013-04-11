@@ -223,7 +223,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 				if(fuel.moles <= 0) del fuel
 
 			if(liquid)
-				liquid.amount -= liquid.amount*consumed_gas/(15*total_reactants)
+				liquid.amount -= liquid.amount*consumed_gas/(total_reactants)
 				if(liquid.amount <= 0) del liquid
 
 			update_values()
