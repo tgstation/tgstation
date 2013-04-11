@@ -385,8 +385,10 @@ datum
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
 					var/datum/gas_mixture/napalm = new
+					var/datum/gas/volatile_fuel/fuel = new
+					fuel.moles = created_volume
+					napalm.trace_gases += fuel
 
-					napalm.volatile_fuel = created_volume
 					napalm.temperature = 400+T0C
 					napalm.update_values()
 
