@@ -65,7 +65,7 @@
 
 	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
-		if(brainmob) return
+		if(src.brainmob.key) return
 
 		src.searching = 0
 		icon_state = "posibrain"
