@@ -1770,6 +1770,7 @@
 	name = "ice cream cone"
 	desc = "delicious ice cream"
 	icon_state = "cone"
+	volume = 15
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -1781,6 +1782,7 @@
 	name = "ice cream cup"
 	desc = "delicious ice cream"
 	icon_state = "icup"
+	volume = 30
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
