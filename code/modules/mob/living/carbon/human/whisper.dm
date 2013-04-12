@@ -10,7 +10,7 @@
 
 	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
 
-	if (!message || silent || miming)
+	if (!message || silent)
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")
