@@ -17,7 +17,7 @@ namespace AddToChangelog
 
         public string changelogPath = "changelog.html";
         public string changelogMarker = "#ADDTOCHANGELOGMARKER#";
-        public string longDateFormat = "dd MMMM yyyy";
+        public string longDateFormat = "d MMMM yyyy";
         public string shortDateFormat = "ddMMyyyy";
 
         public Dictionary<string, string> ItemList = new Dictionary<string, string>()
