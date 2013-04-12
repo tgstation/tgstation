@@ -1,5 +1,5 @@
 /datum/surgery/xenodetail
-	name = "xeno deveining"
+	name = "alien deveining"
 	steps = list(/datum/surgery_step/alien/armor_check, /datum/surgery_step/alien/saw, /datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/extract_xenotail, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/alien/humanoid)
 	location = "groin"

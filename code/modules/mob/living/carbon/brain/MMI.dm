@@ -70,6 +70,18 @@
 			return
 		..()
 
+
+	//I made this proc as a way to have a brainmob be transferred to any created brain, and to solve the
+	//problem i was having with alien/nonalien brain drops.
+	/obj/item/device/mmi/proc/dropbrain(var/obj/item/organ/brain/brain, var/turf/dropspot)
+		brainmob.container = null//Reset brainmob mmi var.
+		brainmob.loc = brain//Throw mob into brain.
+		living_mob_list -= brainmob//Get outta here
+		brain.brainmob = brainmob//Set the brain to use the brainmob
+		brain.brainmob.cancel_camera()
+		brainmob = null//Set mmi brainmob var to null
+
+
 	attack_self(mob/user as mob)
 		if(!brainmob)
 			user << "\red You upend the MMI, but there's nothing in it."
@@ -77,17 +89,12 @@
 			user << "\red You upend the MMI, but the brain is clamped into place."
 		else
 			user << "\blue You upend the MMI, spilling the brain onto the floor."
-			var/obj/item/organ/brain/alien/brain = new(user.loc)
-			brainmob.container = null//Reset brainmob mmi var.
-			brainmob.loc = brain//Throw mob into brain.
-			living_mob_list -= brainmob//Get outta here
-			brain.brainmob = brainmob//Set the brain to use the brainmob
-			brain.brainmob.cancel_camera()
-			brainmob = null//Set mmi brainmob var to null
 			if(alien)
-				alien = 1
+				var/obj/item/organ/brain/alien/brain = new(user.loc)
+				dropbrain(brain,get_turf(user))
 			else
-				alien = 0
+				var/obj/item/organ/brain/brain = new(user.loc)
+				dropbrain(brain,get_turf(user))
 			icon = 'icons/obj/assemblies.dmi'
 			icon_state = "mmi_empty"
 			name = "Man-Machine Interface"

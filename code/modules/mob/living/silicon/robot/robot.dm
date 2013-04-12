@@ -79,8 +79,6 @@
 			laws = new /datum/ai_laws/alienmov()
 			scrambledcodes = 1
 			connected_ai = select_active_alien_ai()
-			/*alien_talk_understand = 1 How does talk aliums.
-			verbs += /mob/living/proc/alien_talk*/
 			if(connected_ai)
 				connected_ai.connected_robots += src
 				lawsync()

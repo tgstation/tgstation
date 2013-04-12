@@ -1,5 +1,5 @@
 /datum/surgery/xenodeclaw
-	name = "xeno declawing"
+	name = "alien declawing"
 	steps = list(/datum/surgery_step/alien/armor_check, /datum/surgery_step/alien/saw, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/extract_xenoclaw, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/alien/humanoid)
 	location = "l_arm"
