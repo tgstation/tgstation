@@ -195,12 +195,12 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 	alert = "Put out %target%'s eyes."
 	target = 1
 
-/datum/sadistic_objective/burn/CheckCompletion()
+/datum/sadistic_objective/stab/CheckCompletion()
 	if(!target)
 		var/list/living_players = living_mob_list
 		living_players &= player_list
 		target = pick(living_players)
-		command_alert("Hello humans. Do it to [target] instead.")
+		command_alert("[GREETING] Do it to [target] instead.")
 	if(target)
 		var/mob/living/carbon/human/H = target
 		if(H.blinded)
