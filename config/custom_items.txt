@@ -30,6 +30,7 @@ leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/fla
 lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
 lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
 madmalicemccrea: Alice McCrea: /obj/item/clothing/head/welding/fluff/alice_mccrea_1
+magmaram: Maria Crash: /obj/item/device/camera/fluff/oldcamera
 mangled: Li Matsuda: /obj/item/weapon/lighter/zippo/fluff/li_matsuda_1
 maximumbob: Maurice Bedford: /obj/item/fluff/maurice_bedford_1
 mcgulliver: Wox Derax: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/lithiumflask
