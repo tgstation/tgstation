@@ -501,7 +501,7 @@
 
 
 /obj/machinery/computer/communications/Del()
-	ai_list -= src
+	shuttle_caller_list -= src
 	emergency_shuttle.autoshuttlecall()
 	..()
 

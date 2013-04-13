@@ -11,7 +11,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	ai_list -= src
+	shuttle_caller_list -= src
 	emergency_shuttle.autoshuttlecall()
 
 	if(explosive)

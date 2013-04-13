@@ -120,8 +120,8 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/Del()
 	ai_list -= src
-	emergency_shuttle.autoshuttlecall()
 	shuttle_caller_list -= src
+	emergency_shuttle.autoshuttlecall()
 	..()
 
 
