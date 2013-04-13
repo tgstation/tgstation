@@ -132,7 +132,7 @@ var/list/mechtoys = list(
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/plasma_per_point = 5 // 2 plasma for 1 point
+	var/plasma_per_point = 25 // 2 coins for 1 point, -500 points if it's a bananium coin because that bananium should of gone to the clown you chucklefuck
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -252,10 +252,9 @@ var/list/mechtoys = list(
 							find_slip = 0
 						continue
 
-					// Sell plasma
-					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/sheet/mineral/plasma/P = A
-						plasma_count += P.amount
+					// Sell coins
+					if(istype(A, /obj/item/weapon/coin/))
+						plasma_count += 1
 			del(MA)
 
 		if(plasma_count)
