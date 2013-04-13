@@ -149,6 +149,24 @@
 
 	// Neutral to everyone, friendly to Marauders
 
+	/datum/faction/syndicate/cloningsquad // these are basically the old vanilla syndicate
+
+	/* Additional notes:
+
+		These are the syndicate that really like their old fashioned, projectile-based
+		weapons. They are the only member of the syndie coalition that launch
+		nuclear attacks on Nanotrasen.
+	*/
+
+	name = "Gorlex Marauders"
+	desc = "The <b>Gorlex Cloning Squad</b> is an offshoot of the founding fathers of the Syndicates, the Gorlex Marauders. Their primary goal is to steal cloning records of Nanotrasen crew members, and clone them into soldiers for the Syndicate."
+
+	alliances = list("Cybersun Industries", "MI13", "Tiger Cooperative", "S.E.L.F.", "Animal Rights Consortium", "Donk Corporation", "Waffle Corporation")
+	friendly_identification = 1
+	operative_notes = "Those who you kill, will be your comrades."
+
+	// Syndicate Cloning Squad for Clone gamemode, friendly to everyone.
+
 
 /* ----- Begin defining miscellaneous factions ------ */
 
