@@ -6,7 +6,7 @@
 	config_tag = "crystal"
 	restricted_jobs = list("Cyborg", "AI", "Captain", "Head of Personnel", "Chief Medical Officer", "Research Director", "Chief Engineer", "Head of Security")
 	protected_jobs = list("Security Officer", "Warden", "Detective")
-	required_players = 3
+	required_players = 12
 	required_enemies = 3
 	recommended_enemies = 3
 
