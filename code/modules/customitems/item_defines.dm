@@ -466,6 +466,11 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "edvin_telephosphor_1"
 
+/obj/item/clothing/head/hardhat/fluff/neil_patterson_1 //superboredguy: Neil Patterson
+	name = "Engineering Cap"
+	desc = "Much safer than a hard helmet."
+	icon = 'custom_items.dmi'
+	icon_state = "neilpatterson0_hat"
 //////////// Suits ////////////
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
