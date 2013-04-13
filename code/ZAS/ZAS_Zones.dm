@@ -218,7 +218,7 @@ zone/proc/process()
 			if(air.temperature > PLASMA_FLASHPOINT)
 				for(var/atom/movable/item in S)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				S.hotspot_expose(air, air.temperature, CELL_VOLUME)
+				S.hotspot_expose(air.temperature, CELL_VOLUME)
 
 	progress = "problem with: calculating air graphic"
 

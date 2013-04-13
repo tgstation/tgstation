@@ -378,15 +378,17 @@ datum
 			name = "Napalm"
 			id = "napalm"
 			result = null
-			//required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 ) //Let's not make napalm.
+			required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
 					var/datum/gas_mixture/napalm = new
+					var/datum/gas/volatile_fuel/fuel = new
+					fuel.moles = created_volume
+					napalm.trace_gases += fuel
 
-					napalm.toxins = created_volume*10
 					napalm.temperature = 400+T0C
 					napalm.update_values()
 
