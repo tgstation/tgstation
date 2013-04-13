@@ -194,6 +194,13 @@ hi
 	icon_state = "orangecamera"
 	pictures_left = 30
 
+/obj/item/device/camera/fluff/oldcamera //magmaram: Maria Crash
+	name = "Old Camera"
+	icon = 'custom_items.dmi'
+	desc = "An old, slightly beat-up digital camera, with a cheap photo printer taped on. It's a nice shade of blue."
+	icon_state = "oldcamera"
+	pictures_left = 30
+
 /obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
