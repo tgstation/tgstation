@@ -24,7 +24,7 @@
 
 /datum/game_mode/clone/announce()
 	world << "<B>The current game mode is - Clone!</B>"
-	world << "<B>The Syndicate stole the cloning records of all the crew! A clone is on board as well, courtesy of the Syndicate. If anyone dies, they will respawn as a random antagonist! Space Wizards, Changelings, Nuclear Operatives, oh my!</B>"
+	world << "<B>The Syndicate stole the cloning records of all the crew! If anyone dies, they will respawn as a random antagonist! Space Wizards, Changelings, Nuclear Operatives, oh my!</B>"
 
 
 /datum/game_mode/clone/pre_setup()
@@ -32,7 +32,7 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/possible_clones = get_players_for_role(BE_CLONE)
+	var/list/possible_clones = get_players_for_role(BE_TRAITOR)
 
 	// stop setup if no possible clones
 	if(!possible_clones.len)
@@ -55,7 +55,7 @@
 			break
 		var/datum/mind/clone = pick(possible_clones)
 		clones += clone
-		clone.special_role = "clone"
+		clone.special_role = "traitor"
 		possible_clones.Remove(clone)
 
 	if(!clones.len)
@@ -82,9 +82,9 @@
 		if(1)
 			makeCWizard()
 		if(2)
-			makeCRevs()
-		if(3)
 			makeCTratiors()
+		if(3)
+			makeCRevs()
 		else makeCChanglings()
 
 /datum/game_mode/proc/forge_clone_objectives(var/datum/mind/clone)
@@ -119,7 +119,7 @@
 
 
 /datum/game_mode/proc/greet_clone(var/datum/mind/clone)
-	clone.current << "<B><font size=3 color=red>You are the clone.</font></B>"
+	clone.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in clone.objectives)
 		clone.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -142,7 +142,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_clone()
 	if(clones.len)
-		var/text = "<FONT size = 2><B>The clones were:</B></FONT>"
+		var/text = "<FONT size = 2><B>The ORIGINAL traitors were:</B></FONT>"
 		for(var/datum/mind/clone in clones)
 			var/clonewin = 1
 

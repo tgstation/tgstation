@@ -1,4 +1,4 @@
-var/is_wizard = 0
+var/is_gettingdatfukkendiskwithmagic = 0
 /datum/game_mode/proc/makeMalfAImode()
 
 	var/list/mob/living/silicon/AIs = list()
@@ -123,7 +123,7 @@ var/is_wizard = 0
 			spawn(0)
 				switch(alert(G, "Your random role is: Space Wizard.","Please answer in 30 seconds!","Become Space Wizard"))
 					if("Become Space Wizard")
-						is_wizard = 1
+						is_gettingdatfukkendiskwithmagic = 1
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
 						candidates += G
@@ -147,39 +147,40 @@ var/is_wizard = 0
 
 
 /datum/game_mode/proc/makeCCult()
+	var/list/mob/dead/observer/candidates = list()
+	var/mob/dead/observer/theghost = null
+	var/time_passed = world.time
 
-	var/datum/game_mode/cult/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
+	for(var/mob/dead/observer/G in player_list)
+		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+			spawn(0)
+				switch(alert(G, "Your random role is: Cultist.","Random Role","Become Cultist"))
+					if("Become Head Revolutionary")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
 
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CULTIST)
-			if(applicant.stat == CONSCIOUS)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
+	sleep(50)
 
 	if(candidates.len)
-		var/numCultists = min(candidates.len, 4)
+		shuffle(candidates)
+		for(var/mob/i in candidates)
+			if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
 
-		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
-			H.mind.make_Cultist()
-			candidates.Remove(H)
-			temp.grant_runeword(H)
+			theghost = i
+			break
 
+	if(theghost)
+		var/mob/living/carbon/human/new_character=makeBody(theghost)
+		new_character.mind.make_Cultist()
 		return 1
 
 	return 0
 
 
 
-/datum/game_mode/proc/makeNukeTeam()
+
+/datum/game_mode/proc/makeCNukeTeam()
 
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
@@ -188,17 +189,16 @@ var/is_wizard = 0
 	for(var/mob/dead/observer/G in player_list)
 		if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
 			spawn(0)
-				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+				switch(alert(G,"Your random role is: Nuclear Operative","Please answer in 30 seconds!","Become Nuke Operative"))
 					if("Yes")
+						is_gettingdatfukkendiskwithmagic = 1
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
 						candidates += G
-					if("No")
-						return
 					else
 						return
 
-	sleep(300)
+	sleep(50)
 
 	if(candidates.len)
 		var/numagents = 5
@@ -361,8 +361,9 @@ var/is_wizard = 0
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
-	if(is_wizard == 1)
-		is_wizard = 0
+	// Here it determins if you are getting dat fukken disk or if you're a wizard, harry, so it can NOT replace essential items with the assigning a job.
+	if(is_gettingdatfukkendiskwithmagic == 1)
+		is_gettingdatfukkendiskwithmagic = 0
 		return new_character
 	else
 		job_master.GiveRandomJob(new_character)
