@@ -328,6 +328,9 @@ var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
+#define BANTYPE_APPEARANCE	6
+#define BANTYPE_ADMIN_PERMA	7
+#define BANTYPE_ADMIN_TEMP	8
 
 #define SEE_INVISIBLE_MINIMUM 5
 

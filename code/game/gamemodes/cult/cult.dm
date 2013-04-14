@@ -199,6 +199,7 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
 		update_cult_icons_added(cult_mind)
+		cult_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the cult!</font>"
 		return 1
 
 
@@ -214,6 +215,7 @@
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
+		cult_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the cult!</font>"
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"

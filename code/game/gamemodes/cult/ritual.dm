@@ -57,7 +57,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
-	var/visibility = 0
 	unacidable = 1
 	layer = TURF_LAYER
 
@@ -146,8 +145,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return
 		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 			return fizzle()
-//		if(!src.visibility)
-//			src.visibility=1
 		if(word1 == wordtravel && word2 == wordself)
 			return teleport(src.word3)
 		if(word1 == wordsee && word2 == wordblood && word3 == wordhell)

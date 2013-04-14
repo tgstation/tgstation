@@ -1,19 +1,19 @@
-/datum/event_control/electrical_storm
+/datum/round_event_control/electrical_storm
 	name = "Electrical Storm"
-	typepath = /datum/event/electrical_storm
+	typepath = /datum/round_event/electrical_storm
 	earliest_start = 6000
 	weight = 40
 
-/datum/event/electrical_storm
+/datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1
 	var/lightsoutRange	= 25
 
 
-/datum/event/electrical_storm/announce()
+/datum/round_event/electrical_storm/announce()
 	command_alert("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
 
 
-/datum/event/electrical_storm/start()
+/datum/round_event/electrical_storm/start()
 	var/list/epicentreList = list()
 
 	for(var/i=1, i <= lightsoutAmount, i++)

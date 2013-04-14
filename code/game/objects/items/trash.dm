@@ -1,6 +1,6 @@
 //Added by Jack Rost
 /obj/item/trash
-	icon = 'icons/obj/trash.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	desc = "This is rubbish."
 	w_class = 1.0
 

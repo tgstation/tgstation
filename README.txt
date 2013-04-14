@@ -1,8 +1,31 @@
-tgstation13 v1.0 - 6 October 2010
+/tg/station 13 v1.0 - 6 October 2010
 
-Website: http://nanotrasen.com
+Website:http://nanotrasen.com
 Code: https://github.com/tgstation/-tg-station
-IRC: irc://irc.rizon.net/tgstation13
+IRC: irc://irc.rizon.net/coderbus
+
+================================================================================
+DOWNLOADING
+================================================================================
+There are a number of ways to download the source code.
+
+Option 1: Download the source code as a zip by clicking the ZIP button in the
+code tab of https://github.com/tgstation/-tg-station
+(note: this will use a lot of bandwidth if you wish to update and is a lot of
+hassle if you want to make any changes at all, so it's not recommended.)
+
+(Options 2/3): Install Git-scm from here first: http://git-scm.com/download/win
+
+Option 2:
+Install GitHub::windows from http://windows.github.com/
+It handles most of the setup and configuraton of Git for you.
+Then you simply search for the -tg-station repository and click the big clone
+button.
+
+Option 3:
+Follow this: http://baystation12.net/wiki/index.php?title=Installing_TortoiseGit
+(It's recommended that you use git-scm, as above, rather than the git CLI
+suggested by the guide)
 
 ================================================================================
 INSTALLATION
@@ -21,7 +44,8 @@ saving tgstation.dmb (DEBUG mode)
 tgstation.dmb - 0 errors, 0 warnings
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
-download or the files extracted wrong.
+download or the files extracted wrong. If problems persist, ask for assistance
+in irc://irc.rizon.net/coderbus
 
 Once that's done, open up the config folder.  You'll want to edit config.txt to
 set the probabilities for different gamemodes in Secret and to set your server
@@ -31,15 +55,17 @@ except Extended, as they have various issues and aren't currently being tested,
 so they may have unknown and bizarre bugs.  Extended is essentially no mode, and
 isn't in the Secret rotation by default as it's just not very fun.
 
-You'll also want to edit admins.txt to remove the default admins and add your
-own.  "Game Master" is the highest level of access, and the other recommended admin
-levels for now are "Game Admin" (a little below host) and "Moderator".  The format is
+You'll also want to edit config/admins.txt to remove the default admins and add
+your own.  "Game Master" is the highest level of access, and probably the one
+you'll want to use for now.  You can set up your own ranks and find out more in
+config/admin_ranks.txt
+
+The format is
 
 byondkey - Rank
 
 where the BYOND key must be in lowercase and the admin rank must be properly
-capitalised.  There are a bunch more admin ranks, but these three should be
-enough for most servers, assuming you have trustworthy admins.
+capitalised.
 
 Finally, to start the server, run Dream Daemon and enter the path to your
 compiled tgstation.dmb file.  Make sure to set the port to the one you 
@@ -60,7 +86,7 @@ recompile the game.  Once you start the server up again, you should be running
 the new version.
 
 ================================================================================
-SQL Setup
+SQL SETUP
 ================================================================================
 
 The SQL backend for the library and stats tracking requires a 
@@ -69,8 +95,20 @@ schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are
 coming soon, for now ask in our IRC channel.
 
 ================================================================================
-IRC Bot Setup
+IRC BOT SETUP
 ================================================================================
 
-Included in the SVN is an IRC bot capable of relaying adminhelps to a specified IRC channel/server (thanks to Skibiliano)
-Instructions for bot setup are included in the /bot/ folder along with the bot/relay script itself
+Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
+IRC channel/server (thanks to Skibiliano).
+Instructions for bot setup are included in the /bot folder along with the script
+itself
+
+
+================================================================================
+LICENSE
+================================================================================
+
+All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
+including tools unless their readme specifies otherwise.
+All content including icons and sound is under a Creative Commons 3.0 BY-SA
+license (http://creativecommons.org/licenses/by-sa/3.0/).

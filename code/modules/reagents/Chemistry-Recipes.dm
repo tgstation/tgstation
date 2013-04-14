@@ -449,6 +449,13 @@ datum
 				new /obj/item/stack/sheet/mineral/plasma(location)
 				return
 
+		capsaicincondensation
+			name = "Capsaicincondensation"
+			id = "capsaicincondensation"
+			result = "condensedcapsaicin"
+			required_reagents = list("capsaicin" = 1, "ethanol" = 5)
+			result_amount = 5
+
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -479,6 +486,13 @@ datum
 				id = "mixvirus2"
 				required_reagents = list("mutagen" = 5)
 				level = 4
+
+			mix_virus_3
+
+				name = "Mix Virus 3"
+				id = "mixvirus3"
+				required_reagents = list("plasma" = 5)
+				level = 6
 
 			rem_virus
 

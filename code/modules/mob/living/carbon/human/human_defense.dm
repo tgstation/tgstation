@@ -99,6 +99,8 @@ emp_act
 			if(!turfs.len) turfs += pick(/turf in orange(6))
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
+			if(buckled)
+				buckled.unbuckle()
 			src.loc = picked
 			return 1
 	return 0
@@ -163,7 +165,7 @@ emp_act
 
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(I.force))
+				if(stat == CONSCIOUS && prob(I.force))
 					visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
 									"<span class='userdanger'>[src] has been knocked unconscious!</span>")
 					apply_effect(20, PARALYZE, armor)
@@ -182,7 +184,7 @@ emp_act
 						update_inv_glasses(0)
 
 			if("chest")	//Easier to score a stun but lasts less time
-				if(prob(I.force + 10))
+				if(stat == CONSCIOUS && prob(I.force + 10))
 					visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 									"<span class='userdanger'>[src] has been knocked down!</span>")
 					apply_effect(5, WEAKEN, armor)
@@ -196,4 +198,4 @@ emp_act
 						update_inv_w_uniform(0)
 
 		if(I.force > 10 || I.force >= 5 && prob(33))
-			forcesay(hit_appends)
+			forcesay(hit_appends)	//forcesay checks stat already.

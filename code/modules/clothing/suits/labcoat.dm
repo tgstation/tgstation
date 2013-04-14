@@ -16,7 +16,7 @@
 		if(!usr.canmove || usr.stat || usr.restrained())
 			return 0
 
-		switch(icon_state)
+		switch(icon_state)	//n-nooooo
 			if("labcoat_open")
 				src.icon_state = "labcoat"
 				usr << "You button up the labcoat."
@@ -71,27 +71,27 @@
 	item_state = "labcoat_cmo"
 
 /obj/item/clothing/suit/labcoat/mad
-	name = "The Mad's labcoat"
+	name = "\improper The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
 	icon_state = "labgreen_open"
 	item_state = "labgreen"
 
 /obj/item/clothing/suit/labcoat/genetics
-	name = "Geneticist Labcoat"
+	name = "geneticist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a blue stripe on the shoulder."
 	icon_state = "labcoat_gen_open"
 
 /obj/item/clothing/suit/labcoat/chemist
-	name = "Chemist Labcoat"
+	name = "chemist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem_open"
 
 /obj/item/clothing/suit/labcoat/virologist
-	name = "Virologist Labcoat"
+	name = "virologist labcoat"
 	desc = "A suit that protects against minor chemical spills. Offers slightly more protection against biohazards than the standard model. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir_open"
 
 /obj/item/clothing/suit/labcoat/science
-	name = "Scientist Labcoat"
+	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox_open"

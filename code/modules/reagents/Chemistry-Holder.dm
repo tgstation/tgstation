@@ -396,6 +396,7 @@ datum
 					R.holder = src
 					R.volume = amount
 					R.data = data
+					R.on_new(data)
 
 					//debug
 					//world << "Adding data"
@@ -456,6 +457,27 @@ datum
 					res += A.name
 
 				return res
+
+			remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+				if(!isnum(amount)) return 1
+
+				var/has_removed_reagent = 0
+
+				for(var/datum/reagent/R in reagent_list)
+					var/matches = 0
+					// Switch between how we check the reagent type
+					if(strict)
+						if(R.type == reagent_type)
+							matches = 1
+					else
+						if(istype(R, reagent_type))
+							matches = 1
+					// We found a match, proceed to remove the reagent.	Keep looping, we might find other reagents of the same type.
+					if(matches)
+						// Have our other proc handle removement
+						has_removed_reagent = remove_reagent(R.id, amount, safety)
+
+				return has_removed_reagent
 
 			delete()
 				for(var/datum/reagent/R in reagent_list)

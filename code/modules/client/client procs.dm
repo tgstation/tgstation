@@ -29,20 +29,9 @@
 		return
 	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
-	//search the href for script injection
-	if( findtext(href,"<script",1,0) )
-		world.log << "Attempted use of scripts within a topic call, by [src]"
-		message_admins("Attempted use of scripts within a topic call, by [src]")
-		//del(usr)
-		return
-
 	//Admin PM
 	if(href_list["priv_msg"])
-		var/client/C = locate(href_list["priv_msg"])
-		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-		cmd_admin_pm(C,null)
+		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
 	//Logs all hrefs
@@ -62,7 +51,7 @@
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
-			cmd_admin_mute(src.mob, mute_type, 1)
+			cmd_admin_mute(src, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			src << "\red You are nearing the spam filter limit for identical messages."

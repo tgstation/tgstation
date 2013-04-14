@@ -142,13 +142,6 @@
 	return ..() //check for shuttle and nuke
 
 
-/datum/game_mode/malfunction/Topic(href, href_list)
-	..()
-	if (href_list["ai_win"])
-		ai_win()
-	return
-
-
 /datum/game_mode/malfunction/proc/takeover()
 	set category = "Malfunction"
 	set name = "System Override"

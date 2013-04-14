@@ -5,7 +5,9 @@
 	ghostize()
 	..()
 
+var/next_mob_id = 0
 /mob/New()
+	tag = "mob_[next_mob_id++]"
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src

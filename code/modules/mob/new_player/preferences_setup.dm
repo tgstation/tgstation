@@ -1,22 +1,19 @@
 datum/preferences
 	//The mob should have a gender you want before running this proc. Will run fine without H
-	proc/randomize_appearance_for(var/mob/living/carbon/human/H)
-		if(H)
-			if(H.gender == MALE)
-				gender = MALE
-			else
-				gender = FEMALE
+	proc/random_character(gender_override)
+		if(gender_override)
+			gender = gender_override
+		else
+			gender = pick(MALE,FEMALE)
+		underwear = random_underwear(gender)
 		s_tone = random_skin_tone()
 		h_style = random_hair_style(gender)
 		f_style = random_facial_hair_style(gender)
 		randomize_hair_color("hair")
 		randomize_hair_color("facial")
 		randomize_eyes_color()
-		underwear = rand(1,underwear_m.len)
 		backbag = 2
 		age = rand(AGE_MIN,AGE_MAX)
-		if(H)
-			copy_to(H,1)
 
 
 	proc/randomize_hair_color(var/target = "hair")
@@ -144,8 +141,10 @@ datum/preferences
 		else
 			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
-		if (underwear < 12)
-			preview_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+		if(underwear)
+			var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
+			if(U)
+				preview_icon.Blend(new /icon(U.icon, "[U.icon_state]_s"), ICON_OVERLAY)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s")
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)

@@ -28,7 +28,7 @@
 /obj/item/weapon/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
-	icon = 'icons/obj/trash.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag0"
 	item_state = "trashbag"
 
@@ -53,7 +53,7 @@
 // -----------------------------
 
 /obj/item/weapon/storage/bag/ore
-	name = "Mining Satchel"
+	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
@@ -70,9 +70,9 @@
 // -----------------------------
 
 /obj/item/weapon/storage/bag/plants
+	name = "plant bag"
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "plantbag"
-	name = "Plant Bag"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = 3
@@ -104,10 +104,10 @@
 // However, making it a storage/bag allows us to reuse existing code in some places. -Sayu
 
 /obj/item/weapon/storage/bag/sheetsnatcher
+	name = "sheet snatcher"
+	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
-	name = "Sheet Snatcher"
-	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 
 	var/capacity = 300; //the number of sheets it can carry.
 	w_class = 3
@@ -234,6 +234,6 @@
 // -----------------------------
 
 /obj/item/weapon/storage/bag/sheetsnatcher/borg
-	name = "Sheet Snatcher 9000"
+	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization

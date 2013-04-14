@@ -233,10 +233,12 @@ Please contact me on #coderbus IRC. ~Carn x
 		lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_l"), ICON_OVERLAY)
 
 	//Underwear
-	if(underwear >0 && underwear < 12)
-		if(!fat && !skeleton)
-			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+	if(underwear && !fat && !skeleton)
+		var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
+		if(U)
+			stand_icon.Blend(new /icon(U.icon, "[U.icon_state]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon(U.icon, "[U.icon_state]_l"), ICON_OVERLAY)
+
 	if(update_icons)	update_icons()
 
 
