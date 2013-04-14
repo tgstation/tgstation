@@ -1,22 +1,26 @@
-## MySQL Connection Configuration
-## This is used for stats, feedback gathering,
-## administration, and the in game library.
+# MySQL Connection Configuration
 
-## Should SQL be enabled? Uncomment to enable.
-#SQL_ENABLED
-
-## Server the MySQL database can be found at.
+# Server the MySQL database can be found at
 # Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
 ADDRESS localhost
 
-## MySQL server port (default is 3306).
+# MySQL server port (default is 3306)
 PORT 3306
 
-## Database for all SQL functions, not just feedback.
-FEEDBACK_DATABASE feedback
+# Database the population, death, karma, etc. tables may be found in
+DATABASE tgstation
 
-## Username/Login used to access the database.
-FEEDBACK_LOGIN username
+# Username/Login used to access the database
+LOGIN mylogin
 
-## Password used to access the database.
-FEEDBACK_PASSWORD password
+# Password used to access the database
+PASSWORD mypassword
+
+# The following information is for feedback tracking via the blackbox server
+FEEDBACK_DATABASE test
+FEEDBACK_LOGIN mylogin
+FEEDBACK_PASSWORD mypassword
+
+# Track population and death statistics
+# Comment this out to disable
+ENABLE_STAT_TRACKING

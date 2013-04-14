@@ -16,8 +16,22 @@
 	R.my_atom = src
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
+
+	internal_organs += new /obj/item/organ/aclaws
+	internal_organs += new /obj/item/organ/avein
+	internal_organs += new /obj/item/organ/achitin
+
 	real_name = name
 	..()
+
+/mob/living/carbon/alien/humanoid/proc/HasClaws()
+	return locate(/obj/item/organ/aclaws) in src.internal_organs
+
+/mob/living/carbon/alien/humanoid/proc/HasTail()
+	return locate(/obj/item/organ/avein) in src.internal_organs
+
+/mob/living/carbon/alien/proc/HasChitin()
+	return locate(/obj/item/organ/achitin) in src.internal_organs
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)

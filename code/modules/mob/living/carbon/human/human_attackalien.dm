@@ -24,22 +24,22 @@
 		if("harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/damage = rand(15, 30)
-			if(!damage)
+			if(M.HasClaws())
+				var/damage = rand(15, 30)
+				var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+				var/armor_block = run_armor_check(affecting, "melee")
+
+				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				visible_message("\red <B>[M] has slashed at [src]!</B>")
+
+				apply_damage(damage, BRUTE, affecting, armor_block)
+				if (damage >= 25)
+					visible_message("\red <B>[M] has wounded [src]!</B>")
+					apply_effect(4, WEAKEN, armor_block)
+				updatehealth()
+			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-				visible_message("\red <B>[M] has lunged at [src]!</B>")
-				return 0
-			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
-
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			visible_message("\red <B>[M] has slashed at [src]!</B>")
-
-			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (damage >= 25)
-				visible_message("\red <B>[M] has wounded [src]!</B>")
-				apply_effect(4, WEAKEN, armor_block)
-			updatehealth()
+				visible_message(text("\blue [M] swats at [src] with its arms."))
 
 		if("disarm")
 			var/randn = rand(1, 100)
