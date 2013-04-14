@@ -29,6 +29,7 @@
 		else				L += D.name
 
 		switch(D.gender)
+			if(SPECIAL)	return
 			if(MALE)	male += D.name
 			if(FEMALE)	female += D.name
 			else
@@ -272,6 +273,11 @@
 		name = "Bald"
 		icon_state = null
 		gender = MALE
+
+	debrained //Special hair sprite for debrained mobs. Does not appear on hair lists.
+		name = "Debrained"
+		icon_state = "hair_debrained"
+		gender = SPECIAL
 
 /////////////////////////////
 // Facial Hair Definitions //
