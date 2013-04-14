@@ -1,3 +1,4 @@
+var/is_wizard = 0
 /datum/game_mode/proc/makeMalfAImode()
 
 	var/list/mob/living/silicon/AIs = list()
@@ -122,6 +123,7 @@
 			spawn(0)
 				switch(alert(G, "Your random role is: Space Wizard.","Please answer in 30 seconds!","Become Space Wizard"))
 					if("Become Space Wizard")
+						is_wizard = 1
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
 						candidates += G
@@ -359,7 +361,12 @@
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
-
+	if(is_wizard == 1)
+		is_wizard = 0
+		return new_character
+	else
+		job_master.GiveRandomJob(new_character)
+		job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
 	return new_character
 /* DEATH SQUADS
 /datum/game_mode/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
