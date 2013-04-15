@@ -1770,7 +1770,7 @@
 	name = "ice cream cone"
 	desc = "delicious ice cream"
 	icon_state = "cone"
-	volume = 15
+	volume = 24 // takes into account current reagents, so the player can insert all their reagents. plus one for rounding.
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -1782,7 +1782,7 @@
 	name = "ice cream cup"
 	desc = "delicious ice cream"
 	icon_state = "icup"
-	volume = 30
+	volume = 44 // likewise
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
