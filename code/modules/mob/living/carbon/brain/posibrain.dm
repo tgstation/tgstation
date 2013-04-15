@@ -17,7 +17,7 @@
 
 
 	attack_self(mob/user as mob)
-		if(!brainmob && !brainmob.key && searching == 0)
+		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
 			icon_state = "posibrain-searching"
