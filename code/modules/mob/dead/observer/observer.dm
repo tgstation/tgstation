@@ -184,24 +184,40 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/mobs = getmobs()
 		var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 		var/mob/target = mobs[input]
-		if(target && target != usr)
-			following = target
-			spawn(0)
-				var/turf/pos = get_turf(src)
-				while(src.loc == pos)
+		ghost_follow(target)
 
-					var/turf/T = get_turf(target)
-					if(!T)
-						break
-					if(following != target)
-						break
-					if(!client)
-						break
-					src.loc = T
-					pos = src.loc
-					sleep(15)
-				following = null
 
+
+//BEGIN TELEPORT HREF CODE
+/mob/dead/observer/Topic(href, href_list)
+	if (usr != src)
+		return
+	..()
+	if (href_list["follow"])
+		var/mob/target = locate(href_list["follow"]) in mob_list
+		ghost_follow(target)
+//END TELEPORT HREF CODE
+
+/mob/dead/observer/ghost_follow(var/mob/target)
+	var/mob/A = usr;
+	A << "You are now following [target]"
+	if(target && target != usr)
+		following = target
+		spawn(0)
+			var/turf/pos = get_turf(A)
+			while(A.loc == pos)
+
+				var/turf/T = get_turf(target)
+				if(!T)
+					break
+				if(following != target)
+					break
+				if(!client)
+					break
+				A.loc = T
+				pos = A.loc
+				sleep(15)
+			following = null
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
