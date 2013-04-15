@@ -152,10 +152,8 @@
 
 /obj/item/weapon/weldingtool/New()
 //	var/random_fuel = min(rand(10,20),max_fuel)
-	var/datum/reagents/R = new/datum/reagents(max_fuel)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("fuel", max_fuel)
+	create_reagents(max_fuel)
+	reagents.add_reagent("fuel", max_fuel)
 	return
 
 

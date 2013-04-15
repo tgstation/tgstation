@@ -13,9 +13,7 @@
 
 
 /mob/living/carbon/human/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 
 	if(!dna)
 		dna = new /datum/dna(null)

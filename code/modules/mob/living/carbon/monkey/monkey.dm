@@ -12,9 +12,7 @@
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 
 /mob/living/carbon/monkey/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
