@@ -111,39 +111,48 @@
 	icon_state = "telebaton_0"
 	item_state = "telebaton_0"
 	flags = FPRINT | TABLEPASS
-	attack_verb = list("smacked", "struck", "hit", "slapped")
+	slot_flags = SLOT_BELT
 	w_class = 2
 	force = 3
 	var/on = 0
-	var/mob/lastAttacked	//fix for blood overlays not updating
+
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
 	on = !on
-	src.clean_blood()
 	if(on)
 		user.visible_message("\red You extend the baton.",\
 		"\red With a flick of their wrist, [user] extends their telescopic baton.",\
 		"You hear an ominous click.")
-		playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 		icon_state = "telebaton_1"
 		item_state = "telebaton_1"
 		w_class = 4
 		force = 15//quite robust
+		attack_verb = list("smacked", "struck", "slapped")
 	else
 		user.visible_message("\blue You collapse the baton.",\
 		"\blue [user] collapses their telescopic baton.",\
 		"You hear a click.")
-		playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 		icon_state = "telebaton_0"
 		item_state = "telebaton_0"
 		w_class = 2
 		force = 3//not so robust now
-	src.add_blood(lastAttacked)
-	src.add_fingerprint(user)
+		attack_verb = list("hit", "punched")
+	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+	add_fingerprint(user)
+
+	if(blood_overlay && (blood_DNA.len >= 1))							//updates blood overlay, if any
+		overlays.Cut()//this might delete other item overlays as well but eeeeeeeh
+
+		var/icon/I = new /icon(src.icon, src.icon_state)
+		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
+		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
+		blood_overlay = I
+
+		overlays += blood_overlay
+
 	return
 
 /obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
-	lastAttacked = target
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
 			user << "\red You club yourself over the head."
@@ -157,8 +166,8 @@
 
 		if(!..()) return
 		playsound(src.loc, "swing_hit", 50, 1, -1)
-		target.Stun(8)
-		target.Weaken(8)
+		target.Stun(4)
+		target.Weaken(4)
 		return
 	else
 		return ..()
