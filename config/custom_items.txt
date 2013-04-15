@@ -62,6 +62,7 @@ spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/s
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 sparklysheep: Uzenwa Sissra: /obj/item/clothing/glasses/fluff/uzenwa_sissra_1
 suethecake: Ana Ka'Rimah: /obj/item/weapon/gun/energy/stunrevolver/fluff/ana_peacemaker
+superboredguy: Neil Patterson: /obj/item/clothing/head/hardhat/fluff/neil_patterson_1
 staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 thatoneguy: Hugo Cinderbatch: /obj/item/weapon/fluff/hugo_cinderbacth_1
