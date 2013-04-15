@@ -1747,6 +1747,48 @@
 		reagents.add_reagent("gold", 5)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/icecream
+	name = "ice cream"
+	desc = "delicious ice cream"
+	icon_state = "cone"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("sugar",1)
+		bitesize = 1
+
+	on_reagent_change()
+		update_icon()
+
+	update_icon()
+		overlays.Cut()
+		var/image/filling = image('icons/obj/food.dmi', src, "[icon_state]-color")
+		filling.icon += mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/icecreamcone
+	name = "ice cream cone"
+	desc = "delicious ice cream"
+	icon_state = "cone"
+	volume = 24 // takes into account current reagents, so the player can insert all their reagents. plus one for rounding.
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar",6)
+		reagents.add_reagent("ice",2)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/icecreamcup
+	name = "ice cream cup"
+	desc = "delicious ice cream"
+	icon_state = "icup"
+	volume = 44 // likewise
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("sugar",8)
+		reagents.add_reagent("ice",2)
+		bitesize = 6
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
