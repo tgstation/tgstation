@@ -773,7 +773,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
-	icon_state = "dark purple slime extract"
+	icon_state = "darkpurple slime extract"
 
 /obj/item/slime_extract/orange
 	name = "orange slime extract"
@@ -805,7 +805,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
-	icon_state = "light pink slime extract"
+	icon_state = "lightpink slime extract"
 
 /obj/item/slime_extract/black
 	name = "black slime extract"
