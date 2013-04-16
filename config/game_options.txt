@@ -138,7 +138,7 @@ JOBS_HAVE_MINIMAL_ACCESS
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
 
-### VOCAL SILICONS ###
-## Comment to allow the silicon type from being able to talk via regular means.
-SILENT_AI
-SILENT_BORG
+### NON-VOCAL SILICONS ###
+## Uncomment to stop the AI, or cyborgs, from having vocal communication.
+#SILENT_AI
+#SILENT_BORG
