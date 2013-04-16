@@ -20,26 +20,20 @@
 		//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
-		//handle male hair
+		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			//Facial hair
-			var/new_f_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
 			if(userloc != H.loc) return	//no tele-grooming
-			if(new_f_style)
-				H.f_style = new_f_style
-			//Head hair
-			var/new_h_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_male_list
-			if(userloc != H.loc) return	//no tele-grooming
-			if(new_h_style)
-				H.h_style = new_h_style
-
-		//handle female hair
+			if(new_style)
+				H.f_style = new_style
 		else
-			H.f_style = "Shaved" //No bearded ladies
-			var/new_h_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_female_list
-			if(userloc != H.loc) return	//no tele-grooming
-			if(new_h_style)
-				H.h_style = new_h_style
+			H.f_style = "Shaved"
+
+		//handle normal hair
+		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_select_list
+		if(userloc != H.loc) return	//no tele-grooming
+		if(new_style)
+			H.h_style = new_style
 
 		H.update_hair()
 

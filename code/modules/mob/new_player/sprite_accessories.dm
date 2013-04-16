@@ -16,8 +16,9 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female)
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/select, list/male, list/female)
 	if(!istype(L))		L = list()
+	if(!istype(select))	select = list() //Excludes special 'hair styles'
 	if(!istype(male))	male = list()
 	if(!istype(female))	female = list()
 
@@ -28,8 +29,9 @@
 		if(D.icon_state)	L[D.name] = D
 		else				L += D.name
 
+		select += D.name
 		switch(D.gender)
-			if(SPECIAL)	return
+			if(SPECIAL)	select -= D.name
 			if(MALE)	male += D.name
 			if(FEMALE)	female += D.name
 			else

@@ -22,6 +22,7 @@ var/global/list/portals = list()					//for use by portals
 //Preferences stuff
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
+var/global/list/hair_styles_select_list = list()	//stores /datum/sprite_accessory/hair indexed by name, excluding SPECIAL gendered hair
 var/global/list/hair_styles_male_list = list()		//stores only hair names
 var/global/list/hair_styles_female_list = list()	//stores only hair names
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
@@ -40,12 +41,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
 /proc/make_datum_references_lists()
 	//hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_select_list, hair_styles_male_list, hair_styles_female_list)
 	//facial hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)	
-	
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)
+
 	//Surgeries
 	for(var/path in typesof(/datum/surgery))
 		if(path == /datum/surgery)

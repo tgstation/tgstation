@@ -274,7 +274,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(hair_style)
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			var/icon/hair_l = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
-			if(!(h_style == "Debrained"))
+			if(!(hair_style.gender == SPECIAL))
 				hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 				hair_l.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 			face_standing.Blend(hair_s, ICON_OVERLAY)
