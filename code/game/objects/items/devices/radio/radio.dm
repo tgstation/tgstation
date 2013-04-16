@@ -200,6 +200,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(isWireCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		return
 
+	if(!M.IsVocal())
+		return
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
 
