@@ -117,6 +117,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
+	detonate = 0
 	//toff = 1
 
 /obj/item/device/pda/cargo
