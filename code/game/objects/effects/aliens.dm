@@ -217,6 +217,7 @@
 	name = "purple sac"
 	desc = "Weird purple octopus-like thing."
 	icon_state = "weednode"
+	luminosity = NODERANGE
 	var/node_range = NODERANGE
 
 
