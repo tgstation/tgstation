@@ -28,6 +28,7 @@ var/list/ai_list = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/ioncheck[1]
+	var/statelaws_cooldown = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
@@ -48,7 +49,7 @@ var/list/ai_list = list()
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
-	
+
 	var/last_paper_seen = null
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)

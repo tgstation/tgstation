@@ -56,46 +56,43 @@
 
 
 /mob/living/silicon/ai/proc/statelaws() // -- TLE
-//	set category = "AI Commands"
-//	set name = "State Laws"
-	src.say("Current Active Laws:")
-	//src.laws_sanity_check()
-	//src.laws.show_laws(world)
+	if(statelaws_cooldown > world.time)
+		var/wait = Ceiling((statelaws_cooldown - world.time) * 0.1)
+		src << "<span class='notice'>Wait for [wait] more second\s.</span>"
+		return
+
+	statelaws_cooldown = world.time + 150
+	say("Current Active Laws:")
 	var/number = 1
 	sleep(10)
 
-
-
-	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
-			src.say("0. [src.laws.zeroth]")
+	if(laws.zeroth)
+		if(lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+			say("0. [src.laws.zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+	for(var/index = 1, index <= laws.ion.len, index++)
+		var/law = laws.ion[index]
 		var/num = ionnum()
-		if (length(law) > 0)
-			if (src.ioncheck[index] == "Yes")
-				src.say("[num]. [law]")
+		if(length(law) > 0)
+			if(ioncheck[index] == "Yes")
+				say("[num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
-
-		if (length(law) > 0)
-			if (src.lawcheck[index+1] == "Yes")
-				src.say("[number]. [law]")
+	for(var/index = 1, index <= laws.inherent.len, index++)
+		var/law = laws.inherent[index]
+		if(length(law) > 0)
+			if(lawcheck[index+1] == "Yes")
+				say("[number]. [law]")
 				sleep(10)
 			number++
 
-
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
-
-		if (length(law) > 0)
-			if(src.lawcheck.len >= number+1)
-				if (src.lawcheck[number+1] == "Yes")
-					src.say("[number]. [law]")
+	for(var/index = 1, index <= laws.supplied.len, index++)
+		var/law = laws.supplied[index]
+		if(length(law) > 0)
+			if(lawcheck.len >= number+1)
+				if(lawcheck[number+1] == "Yes")
+					say("[number]. [law]")
 					sleep(10)
 				number++
 
