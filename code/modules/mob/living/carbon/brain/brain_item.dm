@@ -88,6 +88,7 @@
 
 		M.internal_organs += src
 		loc = null
+		H.update_hair()
 
 		//Update the body's icon so it doesnt appear debrained anymore
 		if(ishuman(M))
