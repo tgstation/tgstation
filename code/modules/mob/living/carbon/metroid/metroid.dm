@@ -972,9 +972,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS | HEAD
-	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	canremove = 0
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
@@ -1026,7 +1026,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	unacidable = 1
 	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
 	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/effect/golemrune
