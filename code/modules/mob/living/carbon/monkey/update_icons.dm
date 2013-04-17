@@ -39,20 +39,20 @@
 
 ////////
 /mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
-	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
+	if(wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		wear_mask.screen_loc = ui_monkey_mask
-		if(hud_used)
+		if(client && hud_used)
 			client.screen += wear_mask
 		overlays -= overlays_lying[M_MASK_LAYER]
 		overlays -= overlays_standing[M_MASK_LAYER]
 		var/image/lying		= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]2", "layer" = -M_MASK_LAYER)
 		var/image/standing	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]", "layer" = -M_MASK_LAYER)
-		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
+		if(!istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
 			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood2")
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 		overlays_lying[M_MASK_LAYER]	= lying
 		overlays_standing[M_MASK_LAYER]	= standing
-		if (src.lying)
+		if(src.lying)
 			overlays += overlays_lying[M_MASK_LAYER]
 		else
 			overlays += overlays_standing[M_MASK_LAYER]
@@ -67,7 +67,7 @@
 /mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand
-		if(hud_used)
+		if(client && hud_used)
 			client.screen += r_hand
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
@@ -83,7 +83,7 @@
 /mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand
-		if(hud_used)
+		if(client && hud_used)
 			client.screen += l_hand
 		var/t_state = l_hand.item_state
 		if(!t_state)	 t_state = l_hand.icon_state
@@ -99,13 +99,13 @@
 /mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
 	if(back)
 		back.screen_loc = ui_monkey_back
-		if(hud_used)
+		if(client && hud_used)
 			client.screen += back
 		overlays -= overlays_lying[M_BACK_LAYER]
 		overlays -= overlays_standing[M_BACK_LAYER]
 		overlays_lying[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]2", "layer" = -M_BACK_LAYER)
 		overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]", "layer" = -M_BACK_LAYER)
-		if (src.lying)
+		if(src.lying)
 			overlays += overlays_lying[M_BACK_LAYER]
 		else
 			overlays += overlays_standing[M_BACK_LAYER]
@@ -122,7 +122,7 @@
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()
-		if (hud_used)	//hud handcuff icons
+		if(hud_used)	//hud handcuff icons
 			var/obj/screen/inventory/R = hud_used.adding[4]
 			var/obj/screen/inventory/L = hud_used.adding[5]
 			R.overlays += image("icon" = 'icons/mob/screen_gen.dmi', "icon_state" = "markus")
@@ -136,7 +136,7 @@
 		else
 			overlays += overlays_standing[M_HANDCUFF_LAYER]
 	else
-		if (hud_used)
+		if(hud_used)
 			var/obj/screen/inventory/R = hud_used.adding[4]
 			var/obj/screen/inventory/L = hud_used.adding[5]
 			R.overlays = null
@@ -149,7 +149,7 @@
 
 
 /mob/living/carbon/monkey/update_hud()
-	if (client)
+	if(client)
 		client.screen |= contents
 
 //Monkey Overlays Indexes////////
