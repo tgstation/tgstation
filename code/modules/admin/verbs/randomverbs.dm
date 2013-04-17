@@ -120,25 +120,12 @@
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
-	if(automute)
-		if(!config.automute_on)	return
-	else
-		if(!usr || !usr.client)
-			return
-		if(!usr.client.holder)
-			usr << "<font color='red'>Error: cmd_admin_mute: You don't have permission to do this.</font>"
-			return
-		if(!M.client)
-			usr << "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>"
-		if(M.client.holder)
-			usr << "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin.</font>"
-	if(!M.client)		return
-	if(M.client.holder)	return
+proc/cmd_admin_mute(whom, mute_type, automute = 0)
+	if(!whom)
+		return
 
 	var/muteunmute
 	var/mute_string
-
 	switch(mute_type)
 		if(MUTE_IC)			mute_string = "IC (say and emote)"
 		if(MUTE_OOC)		mute_string = "OOC"
@@ -147,26 +134,45 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		if(MUTE_DEADCHAT)	mute_string = "deadchat and DSAY"
 		if(MUTE_ALL)		mute_string = "everything"
 		else				return
+		
+	var/client/C
+	if(istype(whom, /client))
+		C = whom
+	else if(istext(whom))
+		C = directory[whom]
+	else
+		return
+	
+	var/datum/preferences/P
+	if(C)	P = C.prefs
+	else	P = preferences_datums[whom]
+	if(!P)	return
+	
+	if(automute)
+		if(!config.automute_on)	return
+	else
+		if(!check_rights())
+			return
 
 	if(automute)
 		muteunmute = "auto-muted"
-		M.client.prefs.muted |= mute_type
-		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
-		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
-		M << "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin."
+		P.muted |= mute_type
+		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(whom)] from [mute_string]")
+		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(whom)] from [mute_string].", 1)
+		if(C)	C << "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin."
 		feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
-	if(M.client.prefs.muted & mute_type)
+	if(P.muted & mute_type)
 		muteunmute = "unmuted"
-		M.client.prefs.muted &= ~mute_type
+		P.muted &= ~mute_type
 	else
 		muteunmute = "muted"
-		M.client.prefs.muted |= mute_type
+		P.muted |= mute_type
 
-	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
-	M << "You have been [muteunmute] from [mute_string]."
+	log_admin("[key_name(usr)] has [muteunmute] [key_name(whom)] from [mute_string]")
+	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(whom)] from [mute_string].", 1)
+	if(C)	C << "You have been [muteunmute] from [mute_string]."
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -186,7 +192,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 		world << sound('sound/AI/ionstorm.ogg')
 
-	new /datum/event/ion_storm(list("botEmagChance"=0))
+	new /datum/round_event/ion_storm{botEmagChance=0}()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -304,14 +310,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
-		A.randomize_appearance_for(new_character)
-		new_character.real_name = G_found.real_name
+		A.real_name = G_found.real_name
+		A.copy_to(new_character)
 
 	if(!new_character.real_name)
-		if(new_character.gender == MALE)
-			new_character.real_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-		else
-			new_character.real_name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+		new_character.real_name = random_name(new_character.gender)
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -783,12 +786,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
 
-	if (ticker && ticker.mode)
+	if(ticker && ticker.mode)
 		usr << "Nope you can't do this, the game's already started. This only works before rounds!"
 		return
 
-	if(ticker.random_players)
-		ticker.random_players = 0
+	if(config.force_random_names)
+		config.force_random_names = 0
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.", 1)
 		usr << "Disabled."
 		return
@@ -806,7 +809,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	usr << "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>."
 
-	ticker.random_players = 1
+	config.force_random_names = 1
 	feedback_add_details("admin_verb","MER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

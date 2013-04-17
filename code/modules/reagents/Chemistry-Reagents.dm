@@ -73,6 +73,10 @@ datum
 			on_move(var/mob/M)
 				return
 
+			// Called after add_reagents creates a new reagent.
+			on_new(var/data)
+				return
+
 			// Called when two reagents of the same are mixing.
 			on_merge(var/data)
 				return
@@ -100,6 +104,10 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
+
+			on_new(var/list/data)
+				if(istype(data))
+					SetViruses(src, data)
 
 			on_merge(var/list/data)
 				if(src.data && data)
@@ -193,7 +201,7 @@ datum
 
 			on_merge(var/list/data)
 				if(istype(data))
-					src.data |= data
+					src.data |= data.Copy()
 
 
 		water
@@ -1742,7 +1750,7 @@ datum
 		condensedcapsaicin
 			name = "Condensed Capsaicin"
 			id = "condensedcapsaicin"
-			description = "This shit goes in pepperspray."
+			description = "A chemical agent used for self-defense and in police work."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 179, 16, 8
 
@@ -1774,26 +1782,29 @@ datum
 							if ( !safe_thing )
 								safe_thing = victim.glasses
 						if ( eyes_covered && mouth_covered )
-							victim << "\red Your [safe_thing] protects you from the pepperspray!"
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
-							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							if(prob(5))
+								victim.emote("scream")
 							victim.eye_blurry = max(M.eye_blurry, 3)
 							victim.eye_blind = max(M.eye_blind, 1)
-							victim.Paralyse(1)
+							victim.confused = max(M.confused, 3)
+							victim.damageoverlaytemp = 60
+							victim.Weaken(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
-							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
-							victim.emote("scream")
-							victim.eye_blurry = max(M.eye_blurry, 1)
+							victim.eye_blurry = max(M.eye_blurry, 3)
+							victim.damageoverlaytemp = 30
 							return
 						else // Oh dear :D
-							victim.emote("scream")
-							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							if(prob(5))
+								victim.emote("scream")
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							victim.eye_blind = max(M.eye_blind, 2)
-							victim.Paralyse(1)
+							victim.confused = max(M.confused, 6)
+							victim.damageoverlaytemp = 75
+							victim.Weaken(3)
 							victim.drop_item()
 
 		frostoil

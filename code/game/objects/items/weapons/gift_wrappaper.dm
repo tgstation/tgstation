@@ -21,17 +21,6 @@
 	pixel_y = rand(-10,10)
 	icon_state = "giftcrate[rand(1,5)]"
 
-
-/obj/item/weapon/gift/attack_self(mob/user as mob)
-	user.drop_item()
-	if(gift)
-		user.put_in_active_hand(gift)
-		gift.add_fingerprint(user)
-	else
-		user << "<span class='notice'>[src] was empty!</span>"
-	del(src)
-
-
 /obj/item/weapon/a_gift/attack_self(mob/M as mob)
 	var/gift_type = pick(/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,

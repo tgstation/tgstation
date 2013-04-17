@@ -298,6 +298,7 @@
 //  possible. It results in more efficient (CPU-wise) pathing
 //  for bots and anything else that only moves in cardinal dirs.
 /turf/proc/Distance_cardinal(turf/t)
+	if(!src || !t) return 0
 	return abs(src.x - t.x) + abs(src.y - t.y)
 
 /turf/proc/AdjacentTurfsSpace()

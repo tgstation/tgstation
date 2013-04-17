@@ -37,13 +37,16 @@ HUMAN_DELAY 0
 ROBOT_DELAY 0
 MONKEY_DELAY 0
 ALIEN_DELAY 0
-METROID_DELAY 0
+SLIME_DELAY 0
 ANIMAL_DELAY 0
 
 
 ### NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
 #HUMANS_NEED_SURNAMES
+
+## If uncommented, this forces all players to use random names !and appearances!.
+#FORCE_RANDOM_NAMES
 
 
 ### ALERT LEVELS ###
@@ -134,3 +137,8 @@ JOBS_HAVE_MINIMAL_ACCESS
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
+
+### NON-VOCAL SILICONS ###
+## Uncomment to stop the AI, or cyborgs, from having vocal communication.
+#SILENT_AI
+#SILENT_BORG

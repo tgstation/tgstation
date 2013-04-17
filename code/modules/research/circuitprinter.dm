@@ -86,29 +86,29 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 					var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
 					G.amount = round(diamond_amount / 2000)
 				del(src)
-				return 1
+				return
 			else
 				user << "\red You can't load the [src.name] while it's opened."
-				return 1
+				return
 		if (disabled)
 			return
 		if (!linked_console)
 			user << "\The [name] must be linked to an R&D console first!"
-			return 1
+			return
 		if (O.is_open_container())
-			return 1
+			return
 		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
 			user << "\red You cannot insert this item into the [name]!"
-			return 1
+			return
 		if (stat)
-			return 1
+			return
 		if (busy)
 			user << "\red The [name] is busy. Please wait for completion of previous operation."
-			return 1
+			return
 		var/obj/item/stack/sheet/stack = O
 		if ((TotalMaterials() + stack.perunit) > max_material_amount)
 			user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
-			return 1
+			return
 
 		var/amount = round(input("How many sheets do you want to add?") as num)
 		if(amount < 0)

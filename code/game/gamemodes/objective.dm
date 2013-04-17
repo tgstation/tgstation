@@ -288,7 +288,7 @@ datum/objective/steal
 	)
 
 	var/global/possible_items_special[] = list(
-		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
+	//	"nuclear authentication disk" = /obj/item/weapon/disk/nuclear, //Broken with the change to nuke disk making it respawn on z level change.
 		"advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
@@ -334,8 +334,8 @@ datum/objective/steal
 	check_completion()
 		if(!steal_target || !owner.current)	return 0
 		if(!isliving(owner.current))	return 0
-		var/list/all_items = owner.current.get_contents()
-		switch (target_name)
+		var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		switch(target_name)
 			if("28 moles of plasma (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
 				var/target_amount = text2num(target_name)//Non-numbers are ignored.
 				var/found_amount = 0.0//Always starts as zero.
@@ -344,16 +344,6 @@ datum/objective/steal
 					if(istype(I, steal_target))
 						found_amount += (target_name=="28 moles of plasma (full tank)" ? (I:air_contents:toxins) : (I:amount))
 				return found_amount>=target_amount
-
-			if("50 coins (in bag)")
-				var/obj/item/weapon/moneybag/B = locate() in all_items
-
-				if(B)
-					var/target = text2num(target_name)
-					var/found_amount = 0.0
-					for(var/obj/item/weapon/coin/C in B)
-						found_amount++
-					return found_amount>=target
 
 			if("a functional AI")
 				for(var/obj/item/device/aicard/C in all_items) //Check for ai card

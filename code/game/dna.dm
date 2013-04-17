@@ -77,7 +77,7 @@
 	//Hair
 	var/hair	= 0
 	if(!character.h_style)
-		character.h_style = "Bald"
+		character.h_style = random_hair_style(character.gender)
 
 	var/hrange = round(4095 / hair_styles_list.len)
 	var/index = hair_styles_list.Find(character.h_style)
@@ -87,7 +87,7 @@
 	//Facial Hair
 	var/beard	= 0
 	if(!character.f_style)
-		character.f_style = "Shaved"
+		character.f_style = random_facial_hair_style(character.gender)
 
 	var/f_hrange = round(4095 / facial_hair_styles_list.len)
 	index = facial_hair_styles_list.Find(character.f_style)

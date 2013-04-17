@@ -1,18 +1,18 @@
-/datum/event_control/radiation_storm
+/datum/round_event_control/radiation_storm
 	name = "Radiation Storm"
-	typepath = /datum/event/radiation_storm
+	typepath = /datum/round_event/radiation_storm
 	max_occurrences = 1
 
-/datum/event/radiation_storm
+/datum/round_event/radiation_storm
 	announceWhen	= 5
 
 
-/datum/event/radiation_storm/announce()
+/datum/round_event/radiation_storm/announce()
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	world << sound('sound/AI/radiation.ogg')
 
 
-/datum/event/radiation_storm/start()
+/datum/round_event/radiation_storm/start()
 	for(var/mob/living/carbon/C in living_mob_list)
 		var/turf/T = get_turf(C)
 		if(!T)			continue

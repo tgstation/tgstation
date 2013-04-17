@@ -396,6 +396,7 @@ datum
 					R.holder = src
 					R.volume = amount
 					R.data = data
+					R.on_new(data)
 
 					//debug
 					//world << "Adding data"

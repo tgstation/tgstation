@@ -1,32 +1,32 @@
-/datum/event_control/alien_infestation
+/datum/round_event_control/alien_infestation
 	name = "Alien Infestation"
-	typepath = /datum/event/alien_infestation
+	typepath = /datum/round_event/alien_infestation
 	weight = 5
 	max_occurrences = 1
 
-/datum/event/alien_infestation
+/datum/round_event/alien_infestation
 	announceWhen	= 400
 
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
 
 
-/datum/event/alien_infestation/setup()
+/datum/round_event/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
 	spawncount = rand(1, 2)
 
-/datum/event/alien_infestation/kill()
+/datum/round_event/alien_infestation/kill()
 	if(!successSpawn && control)
 		control.occurrences--
 	return ..()
 
-/datum/event/alien_infestation/announce()
+/datum/round_event/alien_infestation/announce()
 	if(successSpawn)
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 		world << sound('sound/AI/aliens.ogg')
 
 
-/datum/event/alien_infestation/start()
+/datum/round_event/alien_infestation/start()
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)

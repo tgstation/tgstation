@@ -1,16 +1,16 @@
-/datum/event_control/bluespace_anomaly
+/datum/round_event_control/bluespace_anomaly
 	name = "Bluespace Anomaly"
-	typepath = /datum/event/bluespace_anomaly
+	typepath = /datum/round_event/bluespace_anomaly
 	weight = 5
 	max_occurrences = 1
 
-/datum/event/bluespace_anomaly
+/datum/round_event/bluespace_anomaly
 	announceWhen	= 20
 
 	var/area/impact_area
 
 
-/datum/event/bluespace_anomaly/setup()
+/datum/round_event/bluespace_anomaly/setup()
 	var/list/safe_areas = list(
 	/area/turret_protected/ai,
 	/area/turret_protected/ai_upload,
@@ -37,11 +37,11 @@
 	impact_area = locate(pick((the_station_areas - safe_areas) + danger_areas))	//need to locate() as it's just a list of paths.
 
 
-/datum/event/bluespace_anomaly/announce()
+/datum/round_event/bluespace_anomaly/announce()
 	command_alert("Bluespace anomaly detected in the vicinity of [station_name()]. [impact_area.name] has gone missing.", "Anomaly Alert")
 
 
-/datum/event/bluespace_anomaly/start()
+/datum/round_event/bluespace_anomaly/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
 			// Calculate new position (searches through beacons in world)

@@ -478,36 +478,46 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/mob/M
 	var/client/C
 	var/key
+	var/ckey
 
 	if(!whom)	return "*null*"
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
 		key = C.key
+		ckey = C.ckey
 	else if(ismob(whom))
 		M = whom
 		C = M.client
 		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
+		ckey = M.ckey
+	else if(istext(whom))
+		key = whom
+		ckey = ckey(whom)
+		C = directory[ckey]
+		if(C)
+			M = C.mob
 	else
 		return "*invalid*"
 
 	. = ""
 
+	if(!ckey)
+		include_link = 0
+	
 	if(key)
-		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C]'>"
-
+		if(include_link)
+			. += "<a href='?priv_msg=[ckey]'>"
+		
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
 		else
 			. += key
+		if(!C)
+			. += "\[DC\]"
 
 		if(include_link)
-			if(C)	. += "</a>"
-			else	. += " (DC)"
+			. += "</a>"
 	else
 		. += "*no key*"
 
@@ -627,6 +637,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	sleep(max(sleeptime, 15))
 	del(animation)
 
+
 //Will return the contents of an atom recursivly to a depth of 'searchDepth'
 /atom/proc/GetAllContents(searchDepth = 5)
 	var/list/toReturn = list()
@@ -637,6 +648,17 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			toReturn += part.GetAllContents(searchDepth - 1)
 
 	return toReturn
+
+
+/atom/proc/GetTypeInAllContents(typepath, searchDepth = 5)
+	for(var/atom/part in contents)
+		if(istype(part, typepath))
+			return 1
+		if(part.contents.len && searchDepth)
+			if(part.GetTypeInAllContents(typepath, searchDepth - 1))
+				return 1
+	return 0
+
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

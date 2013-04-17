@@ -233,10 +233,12 @@ Please contact me on #coderbus IRC. ~Carn x
 		lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_l"), ICON_OVERLAY)
 
 	//Underwear
-	if(underwear >0 && underwear < underwear_m.len)
-		if(!fat && !skeleton)
-			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+	if(underwear && !fat && !skeleton)
+		var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
+		if(U)
+			stand_icon.Blend(new /icon(U.icon, "[U.icon_state]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon(U.icon, "[U.icon_state]_l"), ICON_OVERLAY)
+
 	if(update_icons)	update_icons()
 
 
@@ -346,7 +348,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(dna)
 		switch(dna.mutantrace)
-			if("lizard","golem","slime","shadow","adamantine")
+			if("lizard","golem","slime","shadow","adamantine", "fly")
 				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l", "layer" = -MUTANTRACE_LAYER)
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s", "layer" = -MUTANTRACE_LAYER)
 			if("plant")

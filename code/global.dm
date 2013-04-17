@@ -171,17 +171,9 @@ var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
 
 var/sqladdress = "localhost"
 var/sqlport = "3306"
-var/sqldb = "tgstation"
-var/sqllogin = "root"
-var/sqlpass = ""
-
-	// Feedback gathering sql connection
-
 var/sqlfdbkdb = "test"
 var/sqlfdbklogin = "root"
 var/sqlfdbkpass = ""
-
-var/sqllogging = 0 // Should we log deaths, population stats, etc?
 
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.

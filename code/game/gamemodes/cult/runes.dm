@@ -310,7 +310,7 @@ var/list/sacrificed = list()
 			var/S=0
 			for(var/obj/effect/rune/R in orange(rad,src))
 				if(R!=src)
-					R:visibility=0
+					R.invisibility=101
 				S=1
 			if(S)
 				if(istype(src,/obj/effect/rune))
@@ -699,7 +699,7 @@ var/list/sacrificed = list()
 			if(go)
 				for(var/obj/effect/rune/R in orange(rad,src))
 					if(R!=src)
-						R:visibility=15
+						R.invisibility=0
 					S=1
 			if(S)
 				if(istype(W,/obj/item/weapon/nullrod))
