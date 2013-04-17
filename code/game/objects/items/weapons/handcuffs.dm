@@ -25,9 +25,18 @@
 			C.update_inv_handcuffed(0)
 			return
 
+	var/cable = 0
+	if(istype(src, /obj/item/weapon/handcuffs/cable))
+		cable = 1
+
 	if(!C.handcuffed)
 		C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
 							"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
+
+		if(cable)
+			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		else
+			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 
 		var/turf/user_loc = user.loc
 		var/turf/C_loc = C.loc
@@ -39,12 +48,10 @@
 				loc = C
 				C.handcuffed = src
 				C.update_inv_handcuffed(0)
-			if(istype(src, /obj/item/weapon/handcuffs/cable))
+			if(cable)
 				feedback_add_details("handcuffs","C")
-				playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			else
 				feedback_add_details("handcuffs","H")
-				playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 
 			C.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [C.name] ([C.ckey])</font>")
@@ -83,15 +90,6 @@
 /obj/item/weapon/handcuffs/cable/white
 	icon_state = "cuff_white"
 
-/obj/item/weapon/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob)
-	..()
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-		R.use(1)
-		user.put_in_hands(W)
-		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
-		del(src)
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
