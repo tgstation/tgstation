@@ -346,7 +346,7 @@ datum
 						if(current == NT)
 							return //We made it, yaaay~
 						stepped_back = 0
-						zone.rebuild = 1
+					zone.rebuild = 1
 
 				else if ( current.air_check_directions&test_dir )
 						//Try to connect to the left hand side.

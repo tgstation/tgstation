@@ -42,7 +42,6 @@ obj/var/contaminated = 0
 
 obj/item/proc
 	can_contaminate()
-		return 0
 		//Clothing and backpacks can be contaminated.
 		if(flags & PLASMAGUARD) return 0
 		else if(istype(src,/obj/item/clothing)) return 1
