@@ -90,15 +90,15 @@
 //Tier 3
 
 /mob/living/carbon/slime/darkblue
-	colour = "darkblue"
-	icon_state = "darkblue baby slime"
+	colour = "dark blue"
+	icon_state = "dark blue baby slime"
 	primarytype = /mob/living/carbon/slime/darkblue
 	adulttype = /mob/living/carbon/slime/adult/darkblue
 	coretype = /obj/item/slime_extract/darkblue
 
 /mob/living/carbon/slime/adult/darkblue
-	colour = "darkblue"
-	icon_state = "darkblue adult slime"
+	icon_state = "dark blue adult slime"
+	colour = "dark blue"
 	primarytype = /mob/living/carbon/slime/darkblue
 	adulttype = /mob/living/carbon/slime/adult/darkblue
 	coretype = /obj/item/slime_extract/darkblue
@@ -111,15 +111,15 @@
 		slime_mutation[4] = /mob/living/carbon/slime/cerulean
 
 /mob/living/carbon/slime/darkpurple
-	colour = "darkpurple"
-	icon_state = "darkpurple baby slime"
+	colour = "dark purple"
+	icon_state = "dark purple baby slime"
 	primarytype = /mob/living/carbon/slime/darkpurple
 	adulttype = /mob/living/carbon/slime/adult/darkpurple
 	coretype = /obj/item/slime_extract/darkpurple
 
 /mob/living/carbon/slime/adult/darkpurple
-	icon_state = "darkpurple adult slime"
-	colour = "darkpurple"
+	icon_state = "dark purple adult slime"
+	colour = "dark purple"
 	primarytype = /mob/living/carbon/slime/darkpurple
 	adulttype = /mob/living/carbon/slime/adult/darkpurple
 	coretype = /obj/item/slime_extract/darkpurple
@@ -266,15 +266,15 @@
 // Tier 5
 
 /mob/living/carbon/slime/lightpink
-	colour = "lightpink"
-	icon_state = "lightpink baby slime"
+	colour = "light pink"
+	icon_state = "light pink baby slime"
 	primarytype = /mob/living/carbon/slime/lightpink
 	adulttype = /mob/living/carbon/slime/adult/lightpink
 	coretype = /obj/item/slime_extract/lightpink
 
 /mob/living/carbon/slime/adult/lightpink
-	icon_state = "lightpink adult slime"
-	colour = "lightpink"
+	icon_state = "light pink adult slime"
+	colour = "light pink"
 	primarytype = /mob/living/carbon/slime/lightpink
 	adulttype = /mob/living/carbon/slime/adult/lightpink
 	coretype = /obj/item/slime_extract/lightpink
