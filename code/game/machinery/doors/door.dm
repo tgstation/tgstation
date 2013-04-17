@@ -47,7 +47,7 @@
 		var/mob/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
-		if(!M.restrained() && !M.small && !M.airflow_speed)
+		if(!M.restrained() && !M.small)
 			bumpopen(M)
 		return
 
@@ -78,6 +78,8 @@
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if(operating)	return
+	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
+		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
