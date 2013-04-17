@@ -8,7 +8,7 @@ proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)	return pick(hair_styles_male_list)
 		if(FEMALE)	return pick(hair_styles_female_list)
-		else		return pick(hair_styles_list)
+		else		return pick(hair_styles_select_list)
 
 proc/random_facial_hair_style(gender)
 	switch(gender)

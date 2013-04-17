@@ -1626,7 +1626,8 @@ datum
 								if(prob(meltprob))
 									H.emote("scream")
 									H.f_style = "Shaved"
-									H.h_style = "Bald"
+									if(!(H.h_style == "Debrained")) // So the acid doesn't make the scalp magically regrow
+										H.h_style = "Bald"
 									H.update_hair(0)
 									H.status_flags |= DISFIGURED
 						else

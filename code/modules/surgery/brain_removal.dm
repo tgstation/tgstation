@@ -21,6 +21,12 @@
 /datum/surgery_step/extract_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(B)
 		user.visible_message("<span class='notice'>[user] successfully removes [target]'s brain!</span>")
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.h_style = "Debrained"
+			H.update_hair()
+
 		B.loc = get_turf(target)
 		B.transfer_identity(target)
 		target.internal_organs -= B

@@ -141,7 +141,7 @@
 			if(!get_location_accessible(H, location))
 				user << "<span class='notice'>The headgear is in the way.</span>"
 				return
-			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead")
+			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead" || H.h_style == "Debrained")
 				user << "<span class='notice'>There is not enough hair left to shave!</span>"
 				return
 
