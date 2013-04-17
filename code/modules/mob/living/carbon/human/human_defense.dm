@@ -129,7 +129,7 @@ emp_act
 		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
 						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 
-	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened hit to your [hit_area].</span>")
+	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
