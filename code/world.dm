@@ -68,16 +68,16 @@
 	slmaster.layer = FLY_LAYER
 	slmaster.mouse_opacity = 0
 
+	sleep_offline = 1
+
 	master_controller = new /datum/controller/game_controller()
-	spawn(-1)
+	spawn(1)
 		master_controller.setup()
-		lighting_controller.Initialize()
 
 	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
-	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
