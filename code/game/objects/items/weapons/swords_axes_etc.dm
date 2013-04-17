@@ -166,7 +166,7 @@
 
 		if(!..()) return
 		playsound(src.loc, "swing_hit", 50, 1, -1)
-		target.Stun(4)
+		//target.Stun(4)	//naaah
 		target.Weaken(4)
 		return
 	else
