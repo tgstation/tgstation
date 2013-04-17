@@ -345,7 +345,7 @@
 					M.rabid = rabid
 					M.Discipline = Discipline
 					if(i != 1) step_away(M,src)
-					feedback_add_details("slime_babies_born","slimebirth_[M.colour]")
+					feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 				del(src)
 
 		else
