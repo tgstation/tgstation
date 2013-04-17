@@ -97,3 +97,31 @@
 /obj/item/weapon/katana/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
+
+obj/item/weapon/wirerod
+	name = "Wired rod"
+	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
+	icon_state = "wiredrod"
+	item_state = "rods"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 9
+	throwforce = 10
+	w_class = 3
+	m_amt = 1875
+	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
+obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/weapon/shard))
+		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
+		user.put_in_hands(S)
+		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
+		del(I)
+		del(src)
+
+	else if(istype(I, /obj/item/weapon/wirecutters))
+		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
+		user.put_in_hands(P)
+		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
+		del(I)
+		del(src)

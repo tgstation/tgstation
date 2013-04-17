@@ -194,3 +194,26 @@
 /obj/item/weapon/twohanded/dualsaber/red
 	New()
 		color = "red"
+
+
+//spears
+/obj/item/weapon/twohanded/spear
+	icon_state = "spearglass0"
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
+	w_class = 4.0
+	slot_flags = SLOT_BACK
+	force_unwielded = 10
+	force_wielded = 13
+	throwforce = 15
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+
+/obj/item/weapon/twohanded/spear/update_icon()
+	icon_state = "spearglass[wielded]"
+	return
+
+/obj/item/weapon/twohanded/spear/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()

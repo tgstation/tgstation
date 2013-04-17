@@ -44,8 +44,6 @@ BLIND     // can't see anything
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.50
-	var/wired = 0
-	var/obj/item/weapon/cell/cell = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -54,16 +52,6 @@ BLIND     // can't see anything
 	set src in usr
 	..()
 	return
-
-/obj/item/clothing/gloves/emp_act(severity)
-	if(cell)
-		cell.charge -= 1000 / severity
-		if (cell.charge < 0)
-			cell.charge = 0
-		if(cell.reliability != 100 && prob(50/severity))
-			cell.reliability -= 10 / severity
-	..()
-
 
 //Head
 /obj/item/clothing/head

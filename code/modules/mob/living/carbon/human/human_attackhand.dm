@@ -6,57 +6,6 @@
 		visible_message("<span class='warning'>[M] attempted to touch [src]!</span>")
 		return 0
 
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
-					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>")
-					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
-					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-
-
-					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
-
-
-					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-					apply_effects(5,5,0,0,5,0,0,armorblock)
-					return 1
-				else
-					M << "<span class='notice'>Not enough charge!</span>"
-					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", \
-									"<span class='userdanger>[src] has been touched with the stun gloves by [M]!</span>")
-				return
-
-		if(istype(M.gloves , /obj/item/clothing/gloves/boxing/hologlove))	//HAHAHA FUCK THIS SHIT	//oh wow this is terrible i am realising this again
-
-			var/damage = rand(0, 9)
-			if(!damage)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='warning'>[M] has attempted to punch [src]!</span>")
-				return 0
-			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
-
-			if(HULK in M.mutations)
-				damage += 5
-
-			playsound(loc, "punch", 25, 1, -1)
-
-			visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-							"<span class='userdanger'>[M] has punched [src]!</span>")
-
-			apply_damage(damage, HALLOSS, affecting, armor_block)
-			if(damage >= 9)
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
-								"<span class='userdanger'>[M] has weakened [src]!</span>")
-				apply_effect(4, WEAKEN, armor_block)
-				forcesay(hit_appends)
-			return
-
-
 	switch(M.a_intent)
 		if("help")
 			if(health >= 0)
