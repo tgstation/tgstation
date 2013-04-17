@@ -40,6 +40,9 @@
 	for(var/atom/A in contents)
 		A.clean_blood()
 
+	for(var/obj/item/I in contents)
+		I.decontaminate()
+
 	//Tanning!
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
 		var/obj/item/stack/sheet/wetleather/WL = new(src)

@@ -2,40 +2,69 @@ var/global/vs_control/vsc = new
 
 vs_control/var
 	IgnitionLevel = 0.5
-	IgnitionLevel_DESC = "Moles of oxygen+plasma - co2 needed to burn."
-	airflow_lightest_pressure = 30
+	IgnitionLevel_DESC = "Determines point at which fire can ignite"
+
+	fire_consuption_rate = 0.25
+	fire_consuption_rate_NAME = "Fire - Air Consumption Ratio"
+	fire_consuption_rate_DESC = "Ratio of air removed and combusted per tick."
+
+	fire_firelevel_multiplier = 25
+	fire_firelevel_multiplier_NAME = "Fire - Firelevel Constant"
+	fire_firelevel_multiplier_DESC = "Multiplied by the equation for firelevel, affects the combustion and ignition of gas mixes."
+
+	fire_temperature_multiplier = 1700
+	fire_temperature_multiplier_NAME = "Fire - Temperature Multiplier"
+	fire_temperature_multiplier_DESC = "Base value for fire temperatures."
+
+	fire_gas_combustion_ratio = 0.25
+	fire_gas_combustion_ratio_NAME = "Fire - Gas Conversion Ratio"
+	fire_gas_combustion_ratio_DESC = "The rate at which oxygen and plasma are converted to CO2, expressed in terms of the firelevel."
+
+
+	airflow_lightest_pressure = 20
 	airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
 	airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
-	airflow_light_pressure = 45
+
+	airflow_light_pressure = 35
 	airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
 	airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
-	airflow_medium_pressure = 90
+
+	airflow_medium_pressure = 50
 	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
-	airflow_heavy_pressure = 95
+
+	airflow_heavy_pressure = 65
 	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
 	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
-	airflow_dense_pressure = 120
+
+	airflow_dense_pressure = 85
 	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
-	airflow_stun_pressure = 100
+
+	airflow_stun_pressure = 60
 	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
 	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
+
 	airflow_stun_cooldown = 60
 	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
 	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
-	airflow_stun = 0.15
+
+	airflow_stun = 1
 	airflow_stun_NAME = "Airflow Impact - Stunning"
 	airflow_stun_DESC = "How much a mob is stunned when hit by an object."
-	airflow_damage = 0.3
+
+	airflow_damage = 2
 	airflow_damage_NAME = "Airflow Impact - Damage"
 	airflow_damage_DESC = "Damage from airflow impacts."
+
 	airflow_speed_decay = 1.5
 	airflow_speed_decay_NAME = "Airflow Speed Decay"
 	airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
+
 	airflow_delay = 30
 	airflow_delay_NAME = "Airflow Retrigger Delay"
 	airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
+
 	airflow_mob_slowdown = 1
 	airflow_mob_slowdown_NAME = "Airflow Slowdown"
 	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
@@ -164,21 +193,22 @@ vs_control
 			return
 		switch(def)
 			if("Plasma - Standard")
-				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
+				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
 				plc.PLASMAGUARD_ONLY = 0
 				plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
 				plc.SKIN_BURNS = 0       //Plasma has an effect similar to mustard gas on the un-suited.
-				plc.EYE_BURNS = 0 //Plasma burns the eyes of anyone not wearing eye protection.
+				plc.EYE_BURNS = 1 //Plasma burns the eyes of anyone not wearing eye protection.
 				plc.PLASMA_HALLUCINATION = 0
-				plc.CONTAMINATION_LOSS = 0
+				plc.CONTAMINATION_LOSS = 0.02
 
 			if("Plasma - Low Hazard")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
 				plc.PLASMAGUARD_ONLY = 0
 				plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000
-				plc.SKIN_BURNS = 1       //Plasma has an effect similar to mustard gas on the un-suited.
-				plc.EYE_BURNS = 0 //Plasma burns the eyes of anyone not wearing eye protection.
-				plc.CONTAMINATION_LOSS = 0
+				plc.SKIN_BURNS = 0       //Plasma has an effect similar to mustard gas on the un-suited.
+				plc.EYE_BURNS = 1 //Plasma burns the eyes of anyone not wearing eye protection.
+				plc.PLASMA_HALLUCINATION = 0
+				plc.CONTAMINATION_LOSS = 0.01
 
 			if("Plasma - High Hazard")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
@@ -186,6 +216,8 @@ vs_control
 				plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
 				plc.SKIN_BURNS = 1       //Plasma has an effect similar to mustard gas on the un-suited.
 				plc.EYE_BURNS = 1 //Plasma burns the eyes of anyone not wearing eye protection.
+				plc.PLASMA_HALLUCINATION = 1
+				plc.CONTAMINATION_LOSS = 0.05
 
 			if("Plasma - Oh Shit!")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
@@ -193,18 +225,20 @@ vs_control
 				plc.GENETIC_CORRUPTION = 5 //Chance of genetic corruption as well as toxic damage, X in 1000.
 				plc.SKIN_BURNS = 1       //Plasma has an effect similar to mustard gas on the un-suited.
 				plc.EYE_BURNS = 1 //Plasma burns the eyes of anyone not wearing eye protection.
+				plc.PLASMA_HALLUCINATION = 1
+				plc.CONTAMINATION_LOSS = 0.075
 
 			if("ZAS - Normal")
 				IgnitionLevel = 0.5
-				airflow_lightest_pressure = 30
-				airflow_light_pressure = 45
-				airflow_medium_pressure = 90
-				airflow_heavy_pressure = 95
-				airflow_dense_pressure = 120
-				airflow_stun_pressure = 100
+				airflow_lightest_pressure = 20
+				airflow_light_pressure = 35
+				airflow_medium_pressure = 50
+				airflow_heavy_pressure = 65
+				airflow_dense_pressure = 85
+				airflow_stun_pressure = 60
 				airflow_stun_cooldown = 60
-				airflow_stun = 0.15
-				airflow_damage = 0.3
+				airflow_stun = 1
+				airflow_damage = 2
 				airflow_speed_decay = 1.5
 				airflow_delay = 30
 				airflow_mob_slowdown = 1
@@ -226,15 +260,15 @@ vs_control
 
 			if("ZAS - Dangerous")
 				IgnitionLevel = 0.4
-				airflow_lightest_pressure = 25
-				airflow_light_pressure = 35
-				airflow_medium_pressure = 75
-				airflow_heavy_pressure = 80
-				airflow_dense_pressure = 100
-				airflow_stun_pressure = 90
+				airflow_lightest_pressure = 15
+				airflow_light_pressure = 30
+				airflow_medium_pressure = 45
+				airflow_heavy_pressure = 55
+				airflow_dense_pressure = 70
+				airflow_stun_pressure = 50
 				airflow_stun_cooldown = 50
 				airflow_stun = 2
-				airflow_damage = 1
+				airflow_damage = 3
 				airflow_speed_decay = 1.2
 				airflow_delay = 25
 				airflow_mob_slowdown = 2
@@ -243,13 +277,13 @@ vs_control
 				IgnitionLevel = 0.3
 				airflow_lightest_pressure = 20
 				airflow_light_pressure = 30
-				airflow_medium_pressure = 70
-				airflow_heavy_pressure = 75
-				airflow_dense_pressure = 80
-				airflow_stun_pressure = 70
+				airflow_medium_pressure = 40
+				airflow_heavy_pressure = 50
+				airflow_dense_pressure = 60
+				airflow_stun_pressure = 40
 				airflow_stun_cooldown = 40
 				airflow_stun = 3
-				airflow_damage = 2
+				airflow_damage = 4
 				airflow_speed_decay = 1
 				airflow_delay = 20
 				airflow_mob_slowdown = 3

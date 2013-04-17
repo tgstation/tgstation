@@ -564,6 +564,9 @@
 					pressure_alert = -2
 				else
 					pressure_alert = -1
+
+		if(environment.toxins > MOLES_PLASMA_VISIBLE)
+			pl_effects()
 		return
 
 	/*
@@ -777,6 +780,12 @@
 
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
+		var/total_plasmaloss = 0
+		for(var/obj/item/I in src)
+			if(I.contaminated)
+				total_plasmaloss += vsc.plc.CONTAMINATION_LOSS
+
+		adjustToxLoss(total_plasmaloss)
 
 //		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 		if(PLANT in mutations)

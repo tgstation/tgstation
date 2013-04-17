@@ -17,6 +17,11 @@
 
 	New()
 		. = ..()
+		for(var/obj/machinery/door/firedoor/F in loc)
+			if(F != src)
+				spawn(1)
+					del src
+				return .
 		var/area/A = get_area(src)
 		ASSERT(istype(A))
 
@@ -134,7 +139,7 @@
 			else
 				users_name = "Unknown"
 
-		if( !stat && ( istype(C, /obj/item/weapon/card/id) || istype(C, /obj/item/device/pda) ) )
+		if( ishuman(user) &&  !stat && ( istype(C, /obj/item/weapon/card/id) || istype(C, /obj/item/device/pda) ) )
 			var/obj/item/weapon/card/id/ID = C
 
 			if( istype(C, /obj/item/device/pda) )

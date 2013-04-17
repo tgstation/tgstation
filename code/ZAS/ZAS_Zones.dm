@@ -218,7 +218,7 @@ zone/proc/process()
 			if(air.temperature > PLASMA_FLASHPOINT)
 				for(var/atom/movable/item in S)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				S.hotspot_expose(air, air.temperature, CELL_VOLUME)
+				S.hotspot_expose(air.temperature, CELL_VOLUME)
 
 	progress = "problem with: calculating air graphic"
 
@@ -275,13 +275,13 @@ zone/proc/process()
  //Air Movement//
 ////////////////
 
-var/list/sharing_lookup_table = list(0.06, 0.11, 0.15, 0.18, 0.20, 0.21)
+var/list/sharing_lookup_table = list(0.08, 0.15, 0.21, 0.26, 0.30, 0.33)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-		ratio = 0.21
+		ratio = 0.33
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 		size = max(1,A.group_multiplier)
@@ -368,7 +368,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 	var
 		// Depressurize very, very fast(it's fine since many rooms are internally multiple zones)
-		ratio = 0.21
+		ratio = 0.33
 
 		old_pressure = A.return_pressure()
 

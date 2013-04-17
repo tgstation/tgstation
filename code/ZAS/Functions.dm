@@ -21,7 +21,24 @@ proc/FloodFill(turf/simulated/start)
 
 			if(istype(O) && !(O in open) && !(O in closed) && O.ZCanPass(T))
 
-				if(!O.HasDoor())
+				if(T.HasDoor())
+					//If they both have doors, then they are nto able to connect period.
+					if(O.HasDoor())
+						continue
+
+					//connect first to north and west
+					if(d == NORTH || d == WEST)
+						open += O
+
+					else
+						var/turf/simulated/W = get_step(O, WEST)
+						var/turf/simulated/N = get_step(O, NORTH)
+
+						if( !O.ZCanPass(N) && !O.ZCanPass(W) )
+							//If it cannot connect either to the north or west, connect it!
+							open += O
+
+				else if(!O.HasDoor())
 					open += O
 
 				else
@@ -108,8 +125,10 @@ proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	//Make some preliminary checks to see if the connection is valid.
 	if(!A.zone || !B.zone) return
 	if(A.zone == B.zone) return
+
 	if(!A.CanPass(null,B,0,0)) return
-	if(A.CanPass(null,B,1.5,1))
+
+	if(A.CanPass(null,B,0,1))
 		return ZMerge(A.zone,B.zone)
 
 	//Ensure the connection isn't already made.
