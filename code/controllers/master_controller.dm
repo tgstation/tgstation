@@ -38,12 +38,6 @@ datum/controller/game_controller/New()
 			del(master_controller)
 		master_controller = src
 
-	createRandomZlevel()
-
-	if(!air_master)
-		air_master = new /datum/controller/air_system()
-		air_master.setup()
-
 	if(!job_master)
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
@@ -55,9 +49,14 @@ datum/controller/game_controller/New()
 	if(!ticker)						ticker = new /datum/controller/gameticker()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 
-
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
+
+	createRandomZlevel()
+
+	if(!air_master)
+		air_master = new /datum/controller/air_system()
+		air_master.setup()
 
 	setup_objects()
 	setupgenetics()
