@@ -250,6 +250,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_standing[HAIR_LAYER] = null
 	overlays_lying[HAIR_LAYER] = null
 
+	//Applies the debrained overlay if there is no brain
+	if(!getbrain(src))
+		stand_icon.Blend(new /icon('icons/mob/human_face.dmi', "debrained_s"), ICON_OVERLAY)
+		lying_icon.Blend(new /icon('icons/mob/human_face.dmi', "debrained_l"), ICON_OVERLAY)
+		h_style = "Bald"
+
 	//mutants don't have hair. masks and helmets can obscure our hair too.
 	if( (dna && dna.mutantrace) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		if(update_icons)   update_icons()
