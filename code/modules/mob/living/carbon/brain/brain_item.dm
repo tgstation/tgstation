@@ -88,6 +88,7 @@
 
 		M.internal_organs += src
 		loc = null
+		H.update_hair()
 
 	else
 		..()
