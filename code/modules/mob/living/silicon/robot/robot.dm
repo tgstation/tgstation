@@ -57,6 +57,9 @@
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 
+	var/lawcheck[1]
+	var/ioncheck[1]
+
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -903,6 +906,27 @@
 		else
 			src << "Module isn't activated"
 		installed_modules()
+
+
+	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawc"])
+		switch(lawcheck[L+1])
+			if ("Yes") lawcheck[L+1] = "No"
+			if ("No") lawcheck[L+1] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+		checklaws()
+
+	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawi"])
+		switch(ioncheck[L])
+			if ("Yes") ioncheck[L] = "No"
+			if ("No") ioncheck[L] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+		checklaws()
+
+	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+		statelaws()
+
 	return
 
 /mob/living/silicon/robot/proc/radio_menu()
@@ -994,3 +1018,99 @@
 		state = 1
 	lockcharge = state
 	update_canmove()
+
+
+
+
+
+//******************************************************
+
+
+/mob/living/silicon/robot/proc/statelaws() // -- TLE
+//	set category = "Robot Commands"
+//	set name = "State Laws"
+	src.say("Current Active Laws:")
+	//src.laws_sanity_check()
+	//src.laws.show_laws(world)
+	var/number = 1
+	sleep(10)
+
+
+
+	if (src.laws.zeroth)
+		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+			src.say("0. [src.laws.zeroth]")
+			sleep(10)
+
+	for (var/index = 1, index <= src.laws.ion.len, index++)
+		var/law = src.laws.ion[index]
+		var/num = ionnum()
+		if (length(law) > 0)
+			if (src.ioncheck[index] == "Yes")
+				src.say("[num]. [law]")
+				sleep(10)
+
+	for (var/index = 1, index <= src.laws.inherent.len, index++)
+		var/law = src.laws.inherent[index]
+
+		if (length(law) > 0)
+			if (src.lawcheck[index+1] == "Yes")
+				src.say("[number]. [law]")
+				sleep(10)
+			number++
+
+
+	for (var/index = 1, index <= src.laws.supplied.len, index++)
+		var/law = src.laws.supplied[index]
+
+		if (length(law) > 0)
+			if(src.lawcheck.len >= number+1)
+				if (src.lawcheck[number+1] == "Yes")
+					src.say("[number]. [law]")
+					sleep(10)
+				number++
+
+
+/mob/living/silicon/robot/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
+	set category = "Robot Commands"
+	set name = "State Laws"
+
+	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+
+	if (src.laws.zeroth)
+		if (!src.lawcheck[1])
+			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
+		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
+
+	for (var/index = 1, index <= src.laws.ion.len, index++)
+		var/law = src.laws.ion[index]
+
+		if (length(law) > 0)
+			if (!src.ioncheck[index])
+				src.ioncheck[index] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
+			src.ioncheck.len += 1
+
+	var/number = 1
+	for (var/index = 1, index <= src.laws.inherent.len, index++)
+		var/law = src.laws.inherent[index]
+
+		if (length(law) > 0)
+			src.lawcheck.len += 1
+
+			if (!src.lawcheck[number+1])
+				src.lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			number++
+
+	for (var/index = 1, index <= src.laws.supplied.len, index++)
+		var/law = src.laws.supplied[index]
+		if (length(law) > 0)
+			src.lawcheck.len += 1
+			if (!src.lawcheck[number+1])
+				src.lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			number++
+	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
+
+	usr << browse(list, "window=laws")
