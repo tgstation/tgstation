@@ -26,6 +26,7 @@
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/clothing/suit/armor/captain(src)
+		new /obj/item/weapon/melee/telebaton(src)
 		return
 
 
@@ -90,6 +91,7 @@
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/clothing/tie/holster/waist(src)
+		new /obj/item/weapon/melee/telebaton(src)
 		return
 
 
