@@ -17,7 +17,7 @@
 
 
 	attack_self(mob/user as mob)
-		if(!brainmob.key && searching == 0)
+		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
 			icon_state = "posibrain-searching"
@@ -65,7 +65,7 @@
 
 	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
-		if(brainmob) return
+		if(src.brainmob && src.brainmob.key) return
 
 		src.searching = 0
 		icon_state = "posibrain"
@@ -86,7 +86,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
-	if(src.brainmob.key)
+	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk

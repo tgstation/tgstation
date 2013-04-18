@@ -12,6 +12,7 @@ zone
 		list/connections // /connection objects which refer to connections with other zones, e.g. through a door.
 		list/connected_zones //Parallels connections, but lists zones to which this one is connected and the number
 							//of points they're connected at.
+		list/closed_connection_zones //Same as connected_zones, but for zones where the door or whatever is closed.
 		list/unsimulated_tiles // Any space tiles in this list will cause air to flow out.
 		last_update = 0
 		progress = "nothing"
@@ -200,7 +201,7 @@ zone/proc/process()
 	progress = "problem with an inbuilt byond function: some conditional checks"
 
 	//Only run through the individual turfs if there's reason to.
-	if(air.graphic != air.graphic_archived || air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(air.graphic != air.graphic_archived || air.temperature > PLASMA_FLASHPOINT)
 
 		progress = "problem with: turf/simulated/update_visuals()"
 
@@ -215,10 +216,10 @@ zone/proc/process()
 			progress = "problem with: item or turf temperature_expose()"
 
 			//Expose stuff to extreme heat.
-			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			if(air.temperature > PLASMA_FLASHPOINT)
 				for(var/atom/movable/item in S)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				S.temperature_expose(air, air.temperature, CELL_VOLUME)
+				S.hotspot_expose(air.temperature, CELL_VOLUME)
 
 	progress = "problem with: calculating air graphic"
 
@@ -244,9 +245,11 @@ zone/proc/process()
 			//Do merging if conditions are met. Specifically, if there's a non-door connection
 			//to somewhere with space, the zones are merged regardless of equilibrium, to speed
 			//up spacing in areas with double-plated windows.
-			if(C && C.indirect == 2 && C.A.zone && C.B.zone) //indirect = 2 is a direct connection.
-				if(C.A.zone.air.compare(C.B.zone.air) || unsimulated_tiles)
-					ZMerge(C.A.zone,C.B.zone)
+			if(C && C.A.zone && C.B.zone)
+				//indirect = 2 is a direct connection.
+				if(C.indirect == 2 )
+					if(C.A.zone.air.compare(C.B.zone.air) || unsimulated_tiles)
+						ZMerge(C.A.zone,C.B.zone)
 
 		progress = "problem with: ShareRatio(), Airflow(), a couple of misc procs"
 
@@ -269,19 +272,24 @@ zone/proc/process()
 						Airflow(src,Z)
 					ShareRatio( air , Z.air , connected_zones[Z] )
 
+		for(var/zone/Z in closed_connection_zones)
+			if(air && Z.air)
+				if( abs(air.temperature - Z.air.temperature) > 10 )
+					ShareHeat(air, Z.air, closed_connection_zones[Z])
+
 	progress = "all components completed successfully, the problem is not here"
 
   ////////////////
  //Air Movement//
 ////////////////
 
-var/list/sharing_lookup_table = list(0.06, 0.11, 0.15, 0.18, 0.20, 0.21)
+var/list/sharing_lookup_table = list(0.15, 0.20, 0.24, 0.27, 0.30, 0.33)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-		ratio = 0.21
+		ratio = 0.33
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 		size = max(1,A.group_multiplier)
@@ -367,39 +375,37 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		unsim_temperature += T.temperature/unsimulated_tiles.len
 
 	var
-		// Depressurize very, very fast(it's fine since many rooms are internally multiple zones)
-		ratio = 0.21
+		ratio = 0.33
 
 		old_pressure = A.return_pressure()
 
 		size = max(1,A.group_multiplier)
 		share_size = max(1,unsimulated_tiles.len)
 
-		//full_oxy = A.oxygen * size
-		//full_nitro = A.nitrogen * size
-		//full_co2 = A.carbon_dioxide * size
-		//full_plasma = A.toxins * size
+		full_oxy = A.oxygen * size
+		full_nitro = A.nitrogen * size
+		full_co2 = A.carbon_dioxide * size
+		full_plasma = A.toxins * size
 
-		//full_heat_capacity = A.heat_capacity() * size
+		full_heat_capacity = A.heat_capacity() * size
 
-		oxy_avg = unsim_oxygen//(full_oxy + unsim_oxygen) / (size + share_size)
-		nit_avg = unsim_nitrogen//(full_nitro + unsim_nitrogen) / (size + share_size)
-		co2_avg = unsim_co2//(full_co2 + unsim_co2) / (size + share_size)
-		plasma_avg = unsim_plasma//(full_plasma + unsim_plasma) / (size + share_size)
+		oxy_avg = (full_oxy + unsim_oxygen) / (size + share_size)
+		nit_avg = (full_nitro + unsim_nitrogen) / (size + share_size)
+		co2_avg = (full_co2 + unsim_co2) / (size + share_size)
+		plasma_avg = (full_plasma + unsim_plasma) / (size + share_size)
 
-	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
+
 	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
 	ratio *= 2
-	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
 	A.toxins = max(0, (A.toxins - plasma_avg) * (1-ratio) + plasma_avg )
 
-	// EXPERIMENTAL: Disable space being cold
-	//A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
+	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/G_avg = (G.moles*size + 0) / (size+share_size)
@@ -408,6 +414,29 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 	A.update_values()
 
 	return abs(old_pressure - A.return_pressure())
+
+
+proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
+	//Shares a specific ratio of gas between mixtures using simple weighted averages.
+	var
+		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+		ratio = 0.33
+		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+
+		full_heat_capacity = A.heat_capacity()
+
+		s_full_heat_capacity = B.heat_capacity()
+
+		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
+
+	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
+		ratio = sharing_lookup_table[connecting_tiles]
+	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+
+	A.temperature = max(0, (A.temperature - temp_avg) * (1- (ratio / max(1,A.group_multiplier)) ) + temp_avg )
+	B.temperature = max(0, (B.temperature - temp_avg) * (1- (ratio / max(1,B.group_multiplier)) ) + temp_avg )
+
 
   ///////////////////
  //Zone Rebuilding//
@@ -488,6 +517,7 @@ zone/proc/Rebuild()
 				var/turf/simulated/T = get_step(S,direction)
 				if(istype(T) && T.zone && S.CanPass(null, T, 0, 0))
 					T.zone.AddTurf(S)
+
 
 proc/play_wind_sound(var/turf/random_border, var/n)
 	if(random_border)
