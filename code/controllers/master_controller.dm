@@ -71,7 +71,9 @@ datum/controller/game_controller/proc/setup()
 	spawn(0)
 		if(ticker)
 			ticker.pregame()
-		lighting_controller.Initialize()
+
+	lighting_controller.Initialize()
+
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
