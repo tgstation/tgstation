@@ -74,31 +74,25 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
-	if(mmi != null)
-		if(syndie)
-			laws = new /datum/ai_laws/antimov()
-			lawupdate = 0
-			scrambledcodes = 1
-			cell.maxcharge = 25000
-			cell.charge = 25000
-			module = new /obj/item/weapon/robot_module/syndicate(src)
-			hands.icon_state = "standard"
-			icon_state = "secborg"
-			modtype = "Synd"
+	if(syndie)
+		laws = new /datum/ai_laws/antimov()
+		lawupdate = 0
+		scrambledcodes = 1
+		cell.maxcharge = 25000
+		cell.charge = 25000
+		module = new /obj/item/weapon/robot_module/syndicate(src)
+		hands.icon_state = "standard"
+		icon_state = "secborg"
+		modtype = "Synd"
+	else
+		laws = new /datum/ai_laws/asimov()
+		connected_ai = select_active_ai_with_fewest_borgs()
+		if(connected_ai)
+			connected_ai.connected_robots += src
+			lawsync()
+			lawupdate = 1
 		else
-			if(mmi.alien)
-				laws = new /datum/ai_laws/alienmov()
-				connected_ai = select_active_alien_ai()
-				scrambledcodes = 1
-			else
-				laws = new /datum/ai_laws/asimov()
-				connected_ai = select_active_ai_with_fewest_borgs()
-			if(connected_ai)
-				connected_ai.connected_robots += src
-				lawsync()
-				lawupdate = 1
-			else
-				lawupdate = 0
+			lawupdate = 0
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -125,11 +119,7 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/mod = null
-	if(mmi != null & mmi.alien)
-		mod = "Hunter"
-	else
-		mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	if(module)
 		return
 	switch(mod)
@@ -197,15 +187,6 @@
 			icon_state = "mopgearrex"
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
-
-		if("Hunter")
-			updatename(mod)
-			module = new /obj/item/weapon/robot_module/alien/hunter(src)
-			hands.icon_state = "standard"
-			icon = "icons/mob/alien.dmi"
-			icon_state = "xenoborg-state-a"
-			modtype = "Xeno-Hu"
-			feedback_inc("xeborg_hunter",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()

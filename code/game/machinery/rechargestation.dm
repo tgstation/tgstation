@@ -121,15 +121,6 @@
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O
 								LR.Charge(R)
-							//Alien
-							if(istype(O,/obj/item/weapon/reagent_containers/spray/alien/smoke))
-								if(O.reagents.get_reagent_amount("water") < 50)
-									O.reagents.add_reagent("water", 2)
-							if(istype(O,/obj/item/weapon/reagent_containers/spray/alien/stun))
-								if(O.reagents.get_reagent_amount("stoxin") < 250)
-									O.reagents.add_reagent("stoxin", 2)
-
-
 						if(R)
 							if(R.module)
 								R.module.respawn_consumable(R)
@@ -142,10 +133,6 @@
 									S.reagents.add_reagent("pacid", 2)
 								if(S.name == "Lube spray")
 									S.reagents.add_reagent("lube", 2)
-								else if(S.name == "acid synthesizer")
-									S.reagents.add_reagent("pacid", 2)
-									S.reagents.add_reagent("sacid", 2)
-
 
 	verb
 		move_eject()
