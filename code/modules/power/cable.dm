@@ -238,9 +238,9 @@
 		color = param_color
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
-	updateicon()
+	update_icon()
 
-/obj/item/weapon/cable_coil/proc/updateicon()
+/obj/item/weapon/cable_coil/update_icon()
 	if (!color)
 		color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
@@ -287,7 +287,7 @@
 		src.amount--
 		new/obj/item/weapon/cable_coil(user.loc, 1,color)
 		user << "You cut a piece off the cable coil."
-		src.updateicon()
+		src.update_icon()
 		return
 
 	else if( istype(W, /obj/item/weapon/cable_coil) )
@@ -299,26 +299,30 @@
 		if( (C.amount + src.amount <= MAXCOIL) )
 			C.amount += src.amount
 			user << "You join the cable coils together."
-			C.updateicon()
+			C.update_icon()
 			del(src)
 			return
 
 		else
 			user << "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other."
 			src.amount -= (MAXCOIL-C.amount)
-			src.updateicon()
+			src.update_icon()
 			C.amount = MAXCOIL
-			C.updateicon()
+			C.update_icon()
 			return
 
 /obj/item/weapon/cable_coil/proc/use(var/used)
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
+		//handle mob icon update
+		if(ismob(loc))
+			var/mob/M = loc
+			M.drop_item(src)
 		del(src)
 	else
 		amount -= used
-		updateicon()
+		update_icon()
 		return 1
 
 // called when cable_coil is clicked on a turf/simulated/floor
@@ -571,7 +575,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
-	updateicon()
+	update_icon()
 
 /obj/item/weapon/cable_coil/yellow
 	color = "yellow"
