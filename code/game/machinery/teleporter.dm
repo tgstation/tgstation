@@ -158,6 +158,7 @@
 				disconnect()
 				stat |= BROKEN // make sure the machine won't work during deconstruction.
 				construct_op ++
+			return
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
 				user << "You fasten the bolts."
@@ -168,6 +169,7 @@
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				stat &= ~BROKEN
 				construct_op ++
+			return
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "You secure the external plating."
@@ -179,6 +181,7 @@
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
 				A.amount = 5
+			return
 		if(3)
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/A = P
@@ -201,6 +204,8 @@
 					var/obj/machinery/constructable_frame/machine_frame/F = new
 					F.loc = src.loc
 					del(src)
+			return
+	return ..()
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -235,7 +240,7 @@
 	return
 
 /obj/machinery/teleport/hub/verb/connect()
-	set name = "Connect"
+	set name = "Connect hub"
 	set category = "Object"
 	set src in oview(1)
 	var/sta = 0
@@ -375,6 +380,7 @@
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				stat |= BROKEN //prevents it from working while being deconstructed
 				construct_op ++
+			return
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
 				user << "You fasten the bolts."
@@ -385,17 +391,20 @@
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				stat &= ~BROKEN // the machine's not borked anymore!
 				construct_op ++
+			return
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "You secure the external plating."
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
+				return
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You remove the cables."
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
 				A.amount = 5
+			return
 		if(3)
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/A = P
@@ -418,6 +427,8 @@
 					var/obj/machinery/constructable_frame/machine_frame/F = new
 					F.loc = src.loc
 					del(src)
+				return
+	return ..()
 
 /obj/machinery/teleport/station/attack_paw()
 	src.attack_hand()
@@ -492,7 +503,7 @@
 		icon_state = "controller"
 
 /obj/machinery/teleport/station/verb/connect()
-	set name = "Connect"
+	set name = "Connect station"
 	set category = "Object"
 	set src in oview(1)
 	for (dir in cardinal)
