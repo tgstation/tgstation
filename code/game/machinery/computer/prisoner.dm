@@ -1,7 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/prisoner
-	name = "Prisoner Management Comsole"
+	name = "prisoner management console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_armory)

@@ -64,6 +64,9 @@ var/list/department_radio_keys = list(
 		if(!istype(dongle)) return
 		if(dongle.translate_binary) return 1
 
+/mob/living/proc/IsVocal()
+	return 1
+
 /mob/living/proc/hivecheck()
 	if (isalien(src)) return 1
 	if (!ishuman(src)) return
@@ -261,6 +264,9 @@ var/list/department_radio_keys = list(
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
+
+	if(!IsVocal())
+		return
 
 	var/list/listening
 

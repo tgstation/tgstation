@@ -221,7 +221,7 @@
 				M.powerlevel = new_powerlevel
 				if(i != 1) step_away(M,src)
 				babies += M
-				feedback_add_details("slime_babies_born","slimebirth_[M.colour]")
+				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"
