@@ -66,6 +66,9 @@ connection
 					B.zone.connected_zones += A.zone
 					B.zone.connected_zones[A.zone] = 1
 
+				if(A.HasDoor(B) || B.HasDoor(A))
+					indirect = CONNECTION_INDIRECT
+
 			else
 				indirect = CONNECTION_CLOSED
 
@@ -86,8 +89,6 @@ connection
 					B.zone.closed_connection_zones += A.zone
 					B.zone.closed_connection_zones[A.zone] = 1
 
-			if(A.HasDoor(B) || B.HasDoor(A))
-				indirect = CONNECTION_INDIRECT
 		else
 			world.log << "Attempted to create connection object for non-zone tiles: [T] -> [O]"
 			del(src)

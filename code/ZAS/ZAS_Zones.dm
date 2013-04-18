@@ -274,7 +274,7 @@ zone/proc/process()
 
 		for(var/zone/Z in closed_connection_zones)
 			if(air && Z.air)
-				if( abs(air.temperature - Z.air.temperature) > 50 )
+				if( abs(air.temperature - Z.air.temperature) > 10 )
 					ShareHeat(air, Z.air, closed_connection_zones[Z])
 
 	progress = "all components completed successfully, the problem is not here"
@@ -283,7 +283,7 @@ zone/proc/process()
  //Air Movement//
 ////////////////
 
-var/list/sharing_lookup_table = list(0.08, 0.15, 0.21, 0.26, 0.30, 0.33)
+var/list/sharing_lookup_table = list(0.15, 0.20, 0.24, 0.27, 0.30, 0.33)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
