@@ -288,6 +288,12 @@
 	icon_state = "stripper_g_over"
 	item_state = "stripper_g"
 
+/obj/item/clothing/under/stripper/mankini
+	name = "the mankini"
+	desc = "No honest man would wear this abomination"
+	icon_state = "mankini"
+	color = "mankini"
+
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
