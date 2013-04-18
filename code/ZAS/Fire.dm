@@ -125,7 +125,7 @@ obj
 							//Burn the gas mixture.
 							flow.zburn(liquid)
 							if(fuel && fuel.moles <= 0.00001)
-								del fuel
+								air_contents.trace_gases.Remove(fuel)
 
 						else
 

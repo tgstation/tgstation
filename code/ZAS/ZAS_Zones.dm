@@ -367,7 +367,6 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		unsim_temperature += T.temperature/unsimulated_tiles.len
 
 	var
-		// Depressurize very, very fast(it's fine since many rooms are internally multiple zones)
 		ratio = 0.33
 
 		old_pressure = A.return_pressure()
@@ -375,31 +374,30 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		size = max(1,A.group_multiplier)
 		share_size = max(1,unsimulated_tiles.len)
 
-		//full_oxy = A.oxygen * size
-		//full_nitro = A.nitrogen * size
-		//full_co2 = A.carbon_dioxide * size
-		//full_plasma = A.toxins * size
+		full_oxy = A.oxygen * size
+		full_nitro = A.nitrogen * size
+		full_co2 = A.carbon_dioxide * size
+		full_plasma = A.toxins * size
 
-		//full_heat_capacity = A.heat_capacity() * size
+		full_heat_capacity = A.heat_capacity() * size
 
-		oxy_avg = unsim_oxygen//(full_oxy + unsim_oxygen) / (size + share_size)
-		nit_avg = unsim_nitrogen//(full_nitro + unsim_nitrogen) / (size + share_size)
-		co2_avg = unsim_co2//(full_co2 + unsim_co2) / (size + share_size)
-		plasma_avg = unsim_plasma//(full_plasma + unsim_plasma) / (size + share_size)
+		oxy_avg = (full_oxy + unsim_oxygen) / (size + share_size)
+		nit_avg = (full_nitro + unsim_nitrogen) / (size + share_size)
+		co2_avg = (full_co2 + unsim_co2) / (size + share_size)
+		plasma_avg = (full_plasma + unsim_plasma) / (size + share_size)
 
-	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
+
 	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
 	ratio *= 2
-	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
 	A.toxins = max(0, (A.toxins - plasma_avg) * (1-ratio) + plasma_avg )
 
-	// EXPERIMENTAL: Disable space being cold
-	//A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
+	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/G_avg = (G.moles*size + 0) / (size+share_size)
