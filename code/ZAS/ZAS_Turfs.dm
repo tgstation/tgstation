@@ -181,38 +181,9 @@ turf
 	//				var/list/zone/adjacent_zones = list()
 
 					if(air_check_directions&direction) //I can connect air in this direction
-						if(!CanPass(null, T, 0, 0)) //If either block air, we must look to see if the adjacent turfs need rebuilt.
-							if(!T.CanPass(null, T, 0, 0)) //Target blocks air
-								var/turf/NT = get_step(T, direction)
-								if(istype(NT,/turf/simulated) && NT in zone.contents)
-									air_master.AddToConsiderRebuild(src,NT)
-								else if(istype(NT) && NT in zone.unsimulated_tiles)
-									var/consider_rebuild = 0
-									for(var/d in cardinal)
-										var/turf/UT = get_step(NT,d)
-										if(istype(UT, /turf/simulated) && UT.zone == zone && UT.CanPass(null, NT, 0, 0)) //If we find a neighboring tile that is in the same zone, check if we need to rebuild
-											consider_rebuild = 1
-											break
-									if(consider_rebuild)
-										air_master.AddToConsiderRebuild(src,NT) //Gotta check if we need to rebuild, dammit
-									else
-										zone.RemoveTurf(NT) //Not adjacent to anything, and unsimulated.  Goodbye~
-
-							if(T.zone && !T.zone.rebuild) //I block air.
-								var/turf/NT = get_step(src, reverse_direction(direction))
-								if(istype(NT,/turf/simulated) && (NT in T.zone.contents || (NT.zone && T in NT.zone.contents)))
-									air_master.AddToConsiderRebuild(T,NT)
-								else if(istype(NT) && NT in T.zone.unsimulated_tiles)
-									var/consider_rebuild = 0
-									for(var/d in cardinal)
-										var/turf/UT = get_step(NT,d)
-										if(istype(UT, /turf/simulated) && UT.zone == T.zone && UT.CanPass(null, NT, 0, 0)) //If we find a neighboring tile that is in the same zone, check if we need to rebuild
-											consider_rebuild = 1
-											break
-									if(consider_rebuild)
-										air_master.AddToConsiderRebuild(T,NT) //Gotta check if we need to rebuild, dammit
-									else
-										T.zone.RemoveTurf(NT) //Not adjacent to anything, and unsimulated.  Goodbye~
+						if(!CanPass(null, T, 0, 0)) //If either block air from a door
+							if(!CanPass(null, src, 0, 0)) //I block air, so I have a door.  Forge a closed connection through me.
+								ZConnect(src, T)
 
 						else
 							ZConnect(src,T)
