@@ -16,6 +16,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_cap(src)
 		new /obj/item/clothing/suit/captunic(src)
+		new /obj/item/clothing/suit/captunic/trek(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/armor/vest(src)
@@ -27,6 +28,7 @@
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/clothing/suit/armor/captain(src)
 		new /obj/item/weapon/melee/telebaton(src)
+		new /obj/item/clothing/under/dress/dress_cap(src)
 		return
 
 
@@ -55,6 +57,7 @@
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/clothing/under/dress/dress_hop(src)
 		return
 
 

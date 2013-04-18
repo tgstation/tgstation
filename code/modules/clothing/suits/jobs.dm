@@ -21,6 +21,11 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/captunic/trek
+	name = "captain's uniform jacket"
+	desc = "A less formal jacket for everyday captain use."
+	icon_state = "capjacket"
+
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
 	name = "chaplain hoodie"
