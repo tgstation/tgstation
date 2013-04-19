@@ -9,7 +9,7 @@
 	unacidable = 1
 
 
-	bullet_act(var/obj/item/projectile/Proj, var/def_zone)
+	bullet_act(var/obj/item/weapon/projectile/Proj, var/def_zone)
 		var/turf/T = get_turf(src.loc)
 		if(T)
 			for(var/mob/M in T)

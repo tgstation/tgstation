@@ -24,12 +24,12 @@
 
 /obj/structure/stool/blob_act()
 	if(prob(75))
-		new /obj/item/stack/sheet/metal(src.loc)
+		new /obj/item/part/stack/sheet/metal(src.loc)
 		del(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/tool/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc)
+		new /obj/item/part/stack/sheet/metal(src.loc)
 		del(src)
 	return

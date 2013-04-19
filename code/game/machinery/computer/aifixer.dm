@@ -12,14 +12,14 @@
 
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
 /*
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/tool/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/robotics/M = new /obj/item/weapon/circuitboard/robotics( A )
+				new /obj/item/trash/shard( src.loc )
+				var/obj/item/part/circuitboard/robotics/M = new /obj/item/part/circuitboard/robotics( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				M.id = src.id
@@ -31,7 +31,7 @@
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/robotics/M = new /obj/item/weapon/circuitboard/robotics( A )
+				var/obj/item/part/circuitboard/robotics/M = new /obj/item/part/circuitboard/robotics( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				M.id = src.id

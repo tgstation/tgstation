@@ -198,14 +198,14 @@
 	density = 1*/
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/minihoe(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
+		new /obj/item/chem/spray/plantbgone(src)
+		new /obj/item/chem/spray/plantbgone(src)
+		new /obj/item/botany/minihoe(src)
+//		new /obj/item/botany/weedspray(src)
+//		new /obj/item/botany/weedspray(src)
+//		new /obj/item/botany/pestspray(src)
+//		new /obj/item/botany/pestspray(src)
+//		new /obj/item/botany/pestspray(src)
 
 
 /obj/structure/closet/crate/secure/New()
@@ -219,10 +219,10 @@
 
 /obj/structure/closet/crate/rcd/New()
 	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
+	new /obj/item/part/refill/rcd(src)
+	new /obj/item/part/refill/rcd(src)
+	new /obj/item/part/refill/rcd(src)
+	new /obj/item/tool/rcd(src)
 
 /obj/structure/closet/crate/radiation/New()
 	..()
@@ -297,13 +297,13 @@
 		..()
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
+	if(istype(W, /obj/item/security/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
 		overlays.Cut()
 		overlays += redlight
 		return
-	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
+	else if ( (istype(W, /obj/item/security/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks
@@ -326,9 +326,9 @@
 		user.drop_item()
 		if(W)
 			W.loc = src.loc
-	else if(istype(W, /obj/item/weapon/packageWrap))
+	else if(istype(W, /obj/item/office/package_wrap))
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/part/cable_coil))
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
@@ -343,7 +343,7 @@
 			user.drop_item()
 			W.loc = src
 			return
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/part/wirecutters))
 		if(rigged)
 			user  << "<span class='notice'>You cut away the wiring.</span>"
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)

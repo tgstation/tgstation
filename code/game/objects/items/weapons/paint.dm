@@ -2,7 +2,7 @@
 
 var/global/list/cached_icons = list()
 
-/obj/item/weapon/paint
+/obj/item/service/paint
 	name = "Paint Can"
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
@@ -12,43 +12,43 @@ var/global/list/cached_icons = list()
 	w_class = 3.0
 	var/paintleft = 10
 
-/obj/item/weapon/paint/red
+/obj/item/service/paint/red
 	name = "Red paint"
 	color = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
-/obj/item/weapon/paint/green
+/obj/item/service/paint/green
 	name = "Green paint"
 	color = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
-/obj/item/weapon/paint/blue
+/obj/item/service/paint/blue
 	name = "Blue paint"
 	color = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
-/obj/item/weapon/paint/yellow
+/obj/item/service/paint/yellow
 	name = "Yellow paint"
 	color = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
-/obj/item/weapon/paint/violet
+/obj/item/service/paint/violet
 	name = "Violet paint"
 	color = "AE4CCD" //"FF00FF"
 	icon_state = "paint_violet"
 
-/obj/item/weapon/paint/black
+/obj/item/service/paint/black
 	name = "Black paint"
 	color = "333333"
 	icon_state = "paint_black"
 
-/obj/item/weapon/paint/white
+/obj/item/service/paint/white
 	name = "White paint"
 	color = "FFFFFF"
 	icon_state = "paint_white"
 
 
-/obj/item/weapon/paint/anycolor
+/obj/item/service/paint/anycolor
 	name = "Any color"
 	icon_state = "paint_neutral"
 
@@ -76,7 +76,7 @@ var/global/list/cached_icons = list()
 		return
 
 
-/obj/item/weapon/paint/afterattack(turf/target, mob/user as mob)
+/obj/item/service/paint/afterattack(turf/target, mob/user as mob)
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
@@ -95,7 +95,7 @@ var/global/list/cached_icons = list()
 		paintleft--
 	return
 
-/obj/item/weapon/paint/paint_remover
+/obj/item/service/paint/paint_remover
 	name = "Paint remover"
 	icon_state = "paint_neutral"
 

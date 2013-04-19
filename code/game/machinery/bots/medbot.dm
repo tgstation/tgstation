@@ -17,7 +17,7 @@
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 //	var/emagged = 0
 	var/list/botcard_access = list(access_medical)
-	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
+	var/obj/item/chem/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/frustration = 0
 	var/path[] = new()
@@ -48,7 +48,7 @@
 	treatment_fire = "kelotane"
 	treatment_tox = "anti_toxin"
 
-/obj/item/weapon/firstaid_arm_assembly
+/obj/item/part/frame/medbot
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
 	icon = 'icons/obj/aibots.dmi'
@@ -73,7 +73,7 @@
 		if(src.skin)
 			src.overlays += image('icons/obj/aibots.dmi', "medskin_[src.skin]")
 
-		src.botcard = new /obj/item/weapon/card/id(src)
+		src.botcard = new /obj/item/security/card/id(src)
 		if(isnull(src.botcard_access) || (src.botcard_access.len < 1))
 			var/datum/job/doctor/J = new/datum/job/doctor
 			src.botcard.access = J.get_access()
@@ -181,7 +181,7 @@
 	return
 
 /obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if (istype(W, /obj/item/security/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
 			user << "<span class='notice'>Controls are now [src.locked ? "locked." : "unlocked."]</span>"
@@ -194,7 +194,7 @@
 			else
 				user << "<span class='warning'>Access denied.</span>"
 
-	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
+	else if (istype(W, /obj/item/chem/glass))
 		if(src.locked)
 			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
 			return
@@ -211,7 +211,7 @@
 
 	else
 		..()
-		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
+		if (health < maxhealth && !istype(W, /obj/item/tool/screwdriver) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/Emag(mob/user as mob)
@@ -450,7 +450,7 @@
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(Proj.flag == "taser")
 		src.stunned = min(stunned+10,20)
 	..()
@@ -460,18 +460,18 @@
 	visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/weapon/storage/firstaid(Tsec)
+	new /obj/item/storage/firstaid(Tsec)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/part/assembly/prox_sensor(Tsec)
 
-	new /obj/item/device/healthanalyzer(Tsec)
+	new /obj/item/device/scanner/health(Tsec)
 
 	if(src.reagent_glass)
 		src.reagent_glass.loc = Tsec
 		src.reagent_glass = null
 
 	if (prob(50))
-		new /obj/item/robot_parts/l_arm(Tsec)
+		new /obj/item/part/cyborg/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
@@ -532,9 +532,9 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+/obj/item/storage/firstaid/attackby(var/obj/item/part/cyborg/S, mob/user as mob)
 
-	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
+	if ((!istype(S, /obj/item/part/cyborg/l_arm)) && (!istype(S, /obj/item/part/cyborg/r_arm)))
 		..()
 		return
 
@@ -543,12 +543,12 @@
 		user << "<span class='notice'>You need to empty [src] out first.</span>"
 		return
 
-	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
-	if(istype(src,/obj/item/weapon/storage/firstaid/fire))
+	var/obj/item/part/frame/medbot/A = new /obj/item/part/frame/medbot
+	if(istype(src,/obj/item/storage/firstaid/fire))
 		A.skin = "ointment"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/toxin))
+	else if(istype(src,/obj/item/storage/firstaid/toxin))
 		A.skin = "tox"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
+	else if(istype(src,/obj/item/storage/firstaid/o2))
 		A.skin = "o2"
 
 	del(S)
@@ -558,9 +558,9 @@
 	del(src)
 
 
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/part/frame/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/office/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if (!t)
 			return
@@ -570,7 +570,7 @@
 	else
 		switch(build_step)
 			if(0)
-				if(istype(W, /obj/item/device/healthanalyzer))
+				if(istype(W, /obj/item/device/scanner/health))
 					user.drop_item()
 					del(W)
 					src.build_step++

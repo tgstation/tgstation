@@ -123,11 +123,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+		if(istype(I, /obj/item/magic/tome) && iscultist(user))
 			user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
 			del(src)
 			return
-		else if(istype(I, /obj/item/weapon/nullrod))
+		else if(istype(I, /obj/item/magic/nullrod))
 			user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
 			del(src)
 			return
@@ -297,8 +297,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			src.icon -= rgb(255,255,255)
 			src.icon += rgb(rand(1,255),rand(1,255),rand(1,255))
 
-/obj/item/weapon/tome
+/obj/item/magic/tome
 	name = "arcane tome"
+	icon = 'icons/obj/weapons.dmi'
 	icon_state ="tome"
 	throw_speed = 1
 	throw_range = 5
@@ -432,7 +433,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 						[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 						"}
 			usr << browse("[notedat]", "window=notes")
-//		call(/obj/item/weapon/tome/proc/edit_notes)()
+//		call(/obj/item/magic/tome/proc/edit_notes)()
 		else
 			usr << browse(null, "window=notes")
 			return
@@ -528,7 +529,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 					[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 					"}
-//						call(/obj/item/weapon/tome/proc/edit_notes)()
+//						call(/obj/item/magic/tome/proc/edit_notes)()
 						user << browse("[notedat]", "window=notes")
 						return
 			if(usr.get_active_hand() != src)
@@ -580,8 +581,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "The book seems full of illegible scribbles. Is this a joke?"
 			return
 
-	attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob)
-		if(istype(T, /obj/item/weapon/tome)) // sanity check to prevent a runtime error
+	attackby(obj/item/magic/tome/T as obj, mob/living/user as mob)
+		if(istype(T, /obj/item/magic/tome)) // sanity check to prevent a runtime error
 			switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 				if("cancel")
 					return
@@ -602,7 +603,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		else
 			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
-/obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
+/obj/item/magic/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0
 	var/cultistsonly = 1
 	attack_self(mob/user as mob)

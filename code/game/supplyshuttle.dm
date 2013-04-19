@@ -93,7 +93,7 @@ var/list/mechtoys = list(
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
-	circuit = "/obj/item/weapon/circuitboard/supplycomp"
+	circuit = "/obj/item/part/circuitboard/supplycomp"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/hacked = 0
@@ -103,7 +103,7 @@ var/list/mechtoys = list(
 	name = "supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
-	circuit = "/obj/item/weapon/circuitboard/ordercomp"
+	circuit = "/obj/item/part/circuitboard/ordercomp"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 
@@ -211,7 +211,7 @@ var/list/mechtoys = list(
 	proc/forbidden_atoms_check(atom/A)
 		if(istype(A,/mob/living))
 			return 1
-		if(istype(A,/obj/item/weapon/disk/nuclear))
+		if(istype(A,/obj/item/office/disk/nuclear))
 			return 1
 		if(istype(A,/obj/machinery/nuclearbomb))
 			return 1
@@ -245,16 +245,16 @@ var/list/mechtoys = list(
 				for(var/atom in MA)
 					// Sell manifests
 					var/atom/A = atom
-					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
-						var/obj/item/weapon/paper/slip = A
+					if(find_slip && istype(A,/obj/item/office/paper/manifest))
+						var/obj/item/office/paper/slip = A
 						if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
 							points += points_per_slip
 							find_slip = 0
 						continue
 
 					// Sell plasma
-					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/sheet/mineral/plasma/P = A
+					if(istype(A, /obj/item/part/stack/sheet/mineral/plasma))
+						var/obj/item/part/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
 			del(MA)
 
@@ -292,7 +292,7 @@ var/list/mechtoys = list(
 
 			//supply manifest generation begin
 
-			var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
+			var/obj/item/office/paper/manifest/slip = new /obj/item/office/paper/manifest(A)
 			slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
 			slip.info +="Order #[SO.ordernum]<br>"
 			slip.info +="Destination: [station_name]<br>"
@@ -327,7 +327,7 @@ var/list/mechtoys = list(
 		supply_shuttle.shoppinglist.Cut()
 		return
 
-/obj/item/weapon/paper/manifest
+/obj/item/office/paper/manifest
 	name = "Supply Manifest"
 
 
@@ -403,7 +403,7 @@ var/list/mechtoys = list(
 			idname = usr.real_name
 
 		supply_shuttle.ordernum++
-		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
+		var/obj/item/office/paper/reqform = new /obj/item/office/paper(loc)
 		reqform.name = "Requisition Form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
@@ -478,18 +478,18 @@ var/list/mechtoys = list(
 	return
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
+	if(istype(I,/obj/item/security/card/emag) && !hacked)
 		user << "\blue Special supplies unlocked."
 		hacked = 1
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/tool/screwdriver))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-				new /obj/item/weapon/shard( loc )
-				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
+				new /obj/item/trash/shard( loc )
+				var/obj/item/part/circuitboard/supplycomp/M = new /obj/item/part/circuitboard/supplycomp( A )
 				for (var/obj/C in src)
 					C.loc = loc
 				A.circuit = M
@@ -500,7 +500,7 @@ var/list/mechtoys = list(
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
+				var/obj/item/part/circuitboard/supplycomp/M = new /obj/item/part/circuitboard/supplycomp( A )
 				if(can_order_contraband)
 					M.contraband_enabled = 1
 				for (var/obj/C in src)
@@ -577,7 +577,7 @@ var/list/mechtoys = list(
 			idname = usr.real_name
 
 		supply_shuttle.ordernum++
-		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
+		var/obj/item/office/paper/reqform = new /obj/item/office/paper(loc)
 		reqform.name = "Requisition Form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"

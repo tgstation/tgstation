@@ -1,4 +1,4 @@
-/obj/item/stack/tile/plasteel
+/obj/item/part/stack/tile/plasteel
 	name = "floor tiles"
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
@@ -12,14 +12,14 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
 
-/obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
+/obj/item/part/stack/tile/plasteel/New(var/loc, var/amount=null)
 	..()
 	src.pixel_x = rand(1, 14)
 	src.pixel_y = rand(1, 14)
 	return
 
 /*
-/obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
+/obj/item/part/stack/tile/plasteel/attack_self(mob/user as mob)
 	if (usr.stat)
 		return
 	var/T = user.loc
@@ -35,7 +35,7 @@
 	return
 */
 
-/obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
+/obj/item/part/stack/tile/plasteel/proc/build(turf/S as turf)
 	S.ChangeTurf(/turf/simulated/floor/plating)
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()

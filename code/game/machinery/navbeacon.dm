@@ -104,14 +104,14 @@
 		if(T.intact)
 			return		// prevent intraction when T-scanner revealed
 
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/tool/screwdriver))
 			open = !open
 
 			user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
 			updateicon()
 
-		else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+		else if (istype(I, /obj/item/security/card/id)||istype(I, /obj/item/device/pda))
 			if(open)
 				if (src.allowed(user))
 					src.locked = !src.locked

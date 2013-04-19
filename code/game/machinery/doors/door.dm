@@ -102,13 +102,13 @@
 
 
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/device/detective_scanner))
+	if(istype(I, /obj/item/device/scanner/forensic))
 		return
 	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
-	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && (istype(I, /obj/item/security/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("door_spark", src)
 		sleep(6)
 		open()

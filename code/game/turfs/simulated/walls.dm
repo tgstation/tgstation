@@ -17,11 +17,11 @@
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/plasteel( src )
+			new /obj/item/part/stack/sheet/plasteel( src )
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/plasteel( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -36,22 +36,22 @@
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
 			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/part/stack/sheet/metal( src )
+				new /obj/item/part/stack/sheet/metal( src )
 			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				var/M = text2path("/obj/item/part/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
 		else
 			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/part/stack/sheet/metal( src )
+				new /obj/item/part/stack/sheet/metal( src )
+				new /obj/item/part/stack/sheet/metal( src )
 			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				var/M = text2path("/obj/item/part/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
-				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/part/stack/sheet/metal( src )
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
@@ -145,13 +145,13 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if( istype(W, /obj/item/weapon/weldingtool) )
-			var/obj/item/weapon/weldingtool/WT = W
+		if( istype(W, /obj/item/tool/welder) )
+			var/obj/item/tool/welder/WT = W
 			if( WT.remove_fuel(0,user) )
 				thermitemelt(user)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		else if(istype(W, /obj/item/mining/pickaxe/plasmacutter))
 			thermitemelt(user)
 			return
 
@@ -169,8 +169,8 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if( istype(W, /obj/item/weapon/weldingtool) )
-		var/obj/item/weapon/weldingtool/WT = W
+	if( istype(W, /obj/item/tool/welder) )
+		var/obj/item/tool/welder/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -185,7 +185,7 @@
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	else if( istype(W, /obj/item/mining/pickaxe/plasmacutter) )
 
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -203,7 +203,7 @@
 		return
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/mining/pickaxe/diamonddrill))
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 
@@ -240,33 +240,33 @@
 				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
 		return
 
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
+	else if(istype(W,/obj/item/part/frame/apc))
+		var/obj/item/part/frame/apc/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
+	else if(istype(W,/obj/item/part/frame/air_alarm))
+		var/obj/item/part/frame/air_alarm/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
+	else if(istype(W,/obj/item/part/frame/fire_alarm))
+		var/obj/item/part/frame/fire_alarm/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(W,/obj/item/part/frame/light))
+		var/obj/item/part/frame/light/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(W,/obj/item/part/frame/light/small))
+		var/obj/item/part/frame/light/small/AH = W
 		AH.try_build(src)
 		return
 
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/office/contraband/poster))
 		place_poster(W,user)
 		return
 

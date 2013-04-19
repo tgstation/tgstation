@@ -1,7 +1,7 @@
 
 /////////Apprentice Contract//////////
 
-/obj/item/weapon/contract
+/obj/item/magic/scroll/contract
 	name = "contract"
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
 	icon = 'icons/obj/wizard.dmi'
@@ -13,7 +13,7 @@
 	flags = FPRINT | TABLEPASS
 
 
-/obj/item/weapon/contract/attack_self(mob/user as mob)
+/obj/item/magic/scroll/contract/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat
 	if(used)
@@ -34,7 +34,7 @@
 	return
 
 
-/obj/item/weapon/contract/Topic(href, href_list)
+/obj/item/magic/scroll/contract/Topic(href, href_list)
 	..()
 	var/mob/living/carbon/human/H = usr
 
@@ -75,9 +75,9 @@
 				M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 				M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(M), slot_wear_suit)
 				M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(M), slot_head)
-				M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
-				M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
-				M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(M), slot_r_store)
+				M.equip_to_slot_or_del(new /obj/item/storage/backpack(M), slot_back)
+				M.equip_to_slot_or_del(new /obj/item/storage/box(M), slot_in_backpack)
+				M.equip_to_slot_or_del(new /obj/item/magic/scroll/tele/apprentice(M), slot_r_store)
 				var/wizard_name_first = pick(wizard_first)
 				var/wizard_name_second = pick(wizard_second)
 				var/randomname = "[wizard_name_first] [wizard_name_second]"
@@ -169,7 +169,7 @@
 		del src
 
 /obj/effect/rend/cow/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/nullrod))
+	if(istype(I, /obj/item/magic/nullrod))
 		visible_message("\red <b>[I] strikes a blow against \the [src], banishing it!</b>")
 		spawn(1)
 			del src
@@ -179,7 +179,7 @@
 
 /////////////////////////////////////////Scrying///////////////////
 
-/obj/item/weapon/scrying
+/obj/item/magic/scrying
 	name = "scrying orb"
 	desc = "An incandescent orb of otherworldly energy, staring into it gives you vision beyond mortal means."
 	icon = 'icons/obj/projectiles.dmi'
@@ -192,7 +192,7 @@
 	flags = FPRINT | TABLEPASS
 	hitsound = 'sound/items/welder2.ogg'
 
-/obj/item/weapon/scrying/attack_self(mob/user as mob)
+/obj/item/magic/scrying/attack_self(mob/user as mob)
 	user << "\blue You can see...everything!"
 	visible_message("\red <B>[usr] stares into [src], their eyes glazing over.</B>")
 	user.ghostize(1)

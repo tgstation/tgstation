@@ -1,4 +1,4 @@
-/obj/item/blueprints
+/obj/item/office/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
 	icon = 'icons/obj/items.dmi'
@@ -19,14 +19,14 @@
 	var/const/ROOM_ERR_SPACE = -1
 	var/const/ROOM_ERR_TOOLARGE = -2
 
-/obj/item/blueprints/attack_self(mob/M as mob)
+/obj/item/office/blueprints/attack_self(mob/M as mob)
 	if (!istype(M,/mob/living/carbon/human))
 		M << "This is stack of useless pieces of harsh paper." //monkeys cannot into projecting
 		return
 	interact()
 	return
 
-/obj/item/blueprints/Topic(href, href_list)
+/obj/item/office/blueprints/Topic(href, href_list)
 	..()
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
@@ -44,7 +44,7 @@
 				return
 			edit_area()
 
-/obj/item/blueprints/interact()
+/obj/item/office/blueprints/interact()
 	var/area/A = get_area()
 	var/text = {"<HTML><head><title>[src]</title></head><BODY>
 <h2>[station_name()] blueprints</h2>
@@ -73,13 +73,13 @@ move an amendment</a> to the drawing.</p>
 	onclose(usr, "blueprints")
 
 
-/obj/item/blueprints/proc/get_area()
+/obj/item/office/blueprints/proc/get_area()
 	var/turf/T = get_turf_loc(usr)
 	var/area/A = T.loc
 	A = A.master
 	return A
 
-/obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
+/obj/item/office/blueprints/proc/get_area_type(var/area/A = get_area())
 	if (A.name == "Space")
 		return AREA_SPACE
 	var/list/SPECIALS = list(
@@ -99,7 +99,7 @@ move an amendment</a> to the drawing.</p>
 			return AREA_SPECIAL
 	return AREA_STATION
 
-/obj/item/blueprints/proc/create_area()
+/obj/item/office/blueprints/proc/create_area()
 	//world << "DEBUG: create_area"
 	var/res = detect_room(get_turf_loc(usr))
 	if(!istype(res,/list))
@@ -138,13 +138,13 @@ move an amendment</a> to the drawing.</p>
 	return
 
 
-/obj/item/blueprints/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
+/obj/item/office/blueprints/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
 	A.contents.Add(turfs)
 		//oldarea.contents.Remove(usr.loc) // not needed
 		//T.loc = A //error: cannot change constant value
 
 
-/obj/item/blueprints/proc/edit_area()
+/obj/item/office/blueprints/proc/edit_area()
 	var/area/A = get_area()
 	//world << "DEBUG: edit_area"
 	var/prevname = A.name
@@ -163,7 +163,7 @@ move an amendment</a> to the drawing.</p>
 
 
 
-/obj/item/blueprints/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
+/obj/item/office/blueprints/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
@@ -179,7 +179,7 @@ move an amendment</a> to the drawing.</p>
 			M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
-/obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)
+/obj/item/office/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)
 	if (istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (istype(T2, /turf/simulated/shuttle))
@@ -208,7 +208,7 @@ move an amendment</a> to the drawing.</p>
 
 	return BORDER_NONE
 
-/obj/item/blueprints/proc/detect_room(var/turf/first)
+/obj/item/office/blueprints/proc/detect_room(var/turf/first)
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
 	while(pending.len)

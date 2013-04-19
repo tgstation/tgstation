@@ -105,7 +105,7 @@
 	return 1
 
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(W, /obj/item/tool/wrench))
 		return ..()
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You begin to unfasten \the [src]..."
@@ -114,7 +114,7 @@
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
-		new /obj/item/pipe_meter(src.loc)
+		new /obj/item/part/pipe_meter(src.loc)
 		del(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS

@@ -1,4 +1,4 @@
-/obj/item/device/assembly/prox_sensor
+/obj/item/part/assembly/prox_sensor
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"

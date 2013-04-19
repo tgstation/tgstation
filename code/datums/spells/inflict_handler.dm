@@ -25,7 +25,7 @@
 				target.gib()
 			if("gib_brain")
 				if(ishuman(target) || ismonkey(target))
-					var/obj/item/organ/brain/B = getbrain(target)
+					var/obj/item/medical/organ/brain/B = getbrain(target)
 					if(B)
 						B.loc = get_turf(target)
 						B.transfer_identity(target)

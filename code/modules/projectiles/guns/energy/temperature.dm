@@ -8,8 +8,8 @@
 	charge_cost = 100
 	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
 
-	projectile_type = "/obj/item/projectile/temp"
-	cell_type = "/obj/item/weapon/cell/crap"
+	projectile_type = "/obj/item/weapon/projectile/temp"
+	cell_type = "/obj/item/part/cell/crap"
 
 
 	New()

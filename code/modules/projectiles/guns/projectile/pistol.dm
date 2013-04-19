@@ -7,7 +7,7 @@
 	caliber = ".45"
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
-	ammo_type = "/obj/item/ammo_casing/c45"
+	ammo_type = "/obj/item/weapon/ammo/casing/c45"
 
 
 
@@ -18,11 +18,11 @@
 	force = 14.0
 	max_shells = 7
 	caliber = ".50"
-	ammo_type ="/obj/item/ammo_casing/a50"
+	ammo_type ="/obj/item/weapon/ammo/casing/a50"
 	load_method = 2
 	New()
 		..()
-		empty_mag = new /obj/item/ammo_magazine/a50/empty(src)
+		empty_mag = new /obj/item/weapon/ammo/magazine/a50/empty(src)
 		update_icon()
 		return
 
@@ -58,11 +58,11 @@
 	caliber = "75"
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
-	ammo_type = "/obj/item/ammo_casing/a75"
+	ammo_type = "/obj/item/weapon/ammo/casing/a75"
 	load_method = 2
 	New()
 		..()
-		empty_mag = new /obj/item/ammo_magazine/a75/empty(src)
+		empty_mag = new /obj/item/weapon/ammo/magazine/a75/empty(src)
 		update_icon()
 		return
 
@@ -93,12 +93,12 @@
 	caliber = "9mm"
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	ammo_type = "/obj/item/ammo_casing/c9mm"
+	ammo_type = "/obj/item/weapon/ammo/casing/c9mm"
 	load_method = 2
 
 /obj/item/weapon/gun/projectile/pistol/New()
 	..()
-	empty_mag = new /obj/item/ammo_magazine/mc9mm/empty(src)
+	empty_mag = new /obj/item/weapon/ammo/magazine/mc9mm/empty(src)
 	return
 
 /obj/item/weapon/gun/projectile/pistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)

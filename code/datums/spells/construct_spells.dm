@@ -55,7 +55,7 @@
 	invocation_type = "none"
 	range = 0
 
-	summon_type = list(/obj/item/device/soulstone)
+	summon_type = list(/obj/item/magic/soulstone)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall

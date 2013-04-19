@@ -209,25 +209,25 @@
 	var/turf/U = get_turf(target)
 	if (!T || !U)
 		return
-	var/obj/item/projectile/A
+	var/obj/item/weapon/projectile/A
 	if (src.lasers)
 		switch(lasertype)
 			if(1)
-				A = new /obj/item/projectile/beam( loc )
+				A = new /obj/item/weapon/projectile/beam( loc )
 			if(2)
-				A = new /obj/item/projectile/beam/heavylaser( loc )
+				A = new /obj/item/weapon/projectile/beam/heavylaser( loc )
 			if(3)
-				A = new /obj/item/projectile/beam/pulse( loc )
+				A = new /obj/item/weapon/projectile/beam/pulse( loc )
 			if(4)
-				A = new /obj/item/projectile/change( loc )
+				A = new /obj/item/weapon/projectile/change( loc )
 			if(5)
-				A = new /obj/item/projectile/bluetag( loc )
+				A = new /obj/item/weapon/projectile/bluetag( loc )
 			if(6)
-				A = new /obj/item/projectile/redtag( loc )
+				A = new /obj/item/weapon/projectile/redtag( loc )
 		A.original = target
 		use_power(500)
 	else
-		A = new /obj/item/projectile/energy/electrode( loc )
+		A = new /obj/item/weapon/projectile/energy/electrode( loc )
 		use_power(200)
 	A.current = T
 	A.yo = U.y - T.y
@@ -261,7 +261,7 @@
 				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
 
-/obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/turret/bullet_act(var/obj/item/weapon/projectile/Proj)
 	src.health -= Proj.damage
 	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
@@ -337,7 +337,7 @@
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+	if (istype(W, /obj/item/security/card/emag) && !emagged)
 		user << "\red You short out the turret controls' access analysis module."
 		emagged = 1
 		locked = 0
@@ -514,7 +514,7 @@
 		return
 
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(var/obj/item/weapon/projectile/Proj)
 		src.take_damage(Proj.damage)
 		..()
 		return
@@ -635,7 +635,7 @@
 			if (targloc == curloc)
 				continue
 			playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
-			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
+			var/obj/item/weapon/projectile/A = new /obj/item/weapon/projectile(curloc)
 			src.projectiles--
 			A.current = curloc
 			A.yo = targloc.y - curloc.y

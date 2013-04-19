@@ -7,7 +7,7 @@
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
-	idtype = /obj/item/weapon/card/id/gold
+	idtype = /obj/item/security/card/id/gold
 	req_admin_notify = 1
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
@@ -17,9 +17,9 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
-		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(H), slot_back)
-		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_cap(H), slot_back)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/storage/backpack/captain(H), slot_back)
+		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel_cap(H), slot_back)
+		H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H.back), slot_in_backpack)
 		var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 		U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
 		H.equip_to_slot_or_del(U, slot_w_uniform)
@@ -29,10 +29,10 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+			H.equip_to_slot_or_del(new /obj/item/storage/box/ids(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+			H.equip_to_slot_or_del(new /obj/item/storage/box/ids(H.back), slot_in_backpack)
+		var/obj/item/medical/implant/loyalty/L = new/obj/item/medical/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
 		world << "<b>[H.real_name] is the captain!</b>"
@@ -52,7 +52,7 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ddddff"
-	idtype = /obj/item/weapon/card/id/silver
+	idtype = /obj/item/security/card/id/silver
 	req_admin_notify = 1
 	minimal_player_age = 10
 	access = list(access_security, access_sec_doors, access_court,
@@ -72,16 +72,16 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hop(H), slot_ears)
-		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/storage/backpack(H), slot_back)
+		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel_norm(H), slot_back)
+		H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hop(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet(H), slot_head)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+			H.equip_to_slot_or_del(new /obj/item/storage/box/ids(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+			H.equip_to_slot_or_del(new /obj/item/storage/box/ids(H.back), slot_in_backpack)
 		return 1

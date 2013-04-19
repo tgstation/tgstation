@@ -3,14 +3,14 @@
 
 #define NUM_OF_POSTER_DESIGNS 10
 
-/obj/item/weapon/contraband
+/obj/item/office/contraband
 	name = "contraband item"
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
 
 
-/obj/item/weapon/contraband/poster
+/obj/item/office/contraband/poster
 	name = "rolled-up poster"
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as Contraband aboard Nanotrasen© Space Facilities."
 	icon_state = "rolled_poster"
@@ -18,7 +18,7 @@
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 
 
-/obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)
+/obj/item/office/contraband/poster/New(turf/loc, var/given_serial = 0)
 	if(given_serial == 0)
 		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
 		resulting_poster = new(serial_number)
@@ -29,13 +29,13 @@
 	..(loc)
 
 
-/*/obj/item/weapon/contraband/poster/attack(mob/M as mob, mob/user as mob)
+/*/obj/item/office/contraband/poster/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
 	if(resulting_poster)
 		resulting_poster.add_fingerprint(user)
 	..()*/
 
-/*/obj/item/weapon/contraband/poster/attack(atom/A, mob/user as mob) //This shit is handled through the wall's attackby()
+/*/obj/item/office/contraband/poster/attack(atom/A, mob/user as mob) //This shit is handled through the wall's attackby()
 	if(istype(A, /turf/simulated/wall))
 		if(resulting_poster == null)
 			return
@@ -120,7 +120,7 @@ obj/structure/sign/poster/New(var/serial)
 	..()
 
 obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/part/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
 			user << "<span class='notice'>You remove the remnants of the poster.</span>"
@@ -150,14 +150,14 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			return
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/loc)
-	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
+	var/obj/item/office/contraband/poster/P = new(src, serial_number)
 	P.resulting_poster = src
 	P.loc = loc
 	loc = P
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/simulated/wall/proc/place_poster(var/obj/item/weapon/contraband/poster/P, var/mob/user)
+/turf/simulated/wall/proc/place_poster(var/obj/item/office/contraband/poster/P, var/mob/user)
 	if(!P.resulting_poster)	return
 
 	var/stuff_on_wall = 0

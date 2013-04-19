@@ -87,9 +87,9 @@ var/list/sacrificed = list()
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.", \
 			"\red You hear a pop and smell ozone.")
 			if(istype(src,/obj/effect/rune))
-				new /obj/item/weapon/tome(src.loc)
+				new /obj/item/magic/tome(src.loc)
 			else
-				new /obj/item/weapon/tome(usr.loc)
+				new /obj/item/magic/tome(usr.loc)
 			del(src)
 			return
 
@@ -409,9 +409,9 @@ var/list/sacrificed = list()
 /////////////////////////////////////////TWELFTH RUNE
 
 		talisman()//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
-			var/obj/item/weapon/paper/newtalisman
+			var/obj/item/office/paper/newtalisman
 			var/unsuitable_newtalisman = 0
-			for(var/obj/item/weapon/paper/P in src.loc)
+			for(var/obj/item/office/paper/P in src.loc)
 				if(!P.info)
 					newtalisman = P
 					break
@@ -423,7 +423,7 @@ var/list/sacrificed = list()
 				return fizzle()
 
 			var/obj/effect/rune/imbued_from
-			var/obj/item/weapon/paper/talisman/T
+			var/obj/item/office/paper/talisman/T
 			for(var/obj/effect/rune/R in orange(1,src))
 				if(R==src)
 					continue
@@ -543,11 +543,11 @@ var/list/sacrificed = list()
 					if(!(iscultist(V)))
 						victims += V//Checks for cult status and mob type
 			for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
-				if(istype(I,/obj/item/organ/brain))
-					var/obj/item/organ/brain/B = I
+				if(istype(I,/obj/item/medical/organ/brain))
+					var/obj/item/medical/organ/brain/B = I
 					victims += B.brainmob
-				else if(istype(I,/obj/item/device/mmi))
-					var/obj/item/device/mmi/B = I
+				else if(istype(I,/obj/item/medical/mmi))
+					var/obj/item/medical/mmi/B = I
 					victims += B.brainmob
 				else if(istype(I,/obj/item/device/aicard))
 					for(var/mob/living/silicon/ai/A in I)
@@ -690,10 +690,10 @@ var/list/sacrificed = list()
 			if(istype(W,/obj/effect/rune))
 				rad = 6
 				go = 1
-			if (istype(W,/obj/item/weapon/paper/talisman))
+			if (istype(W,/obj/item/office/paper/talisman))
 				rad = 4
 				go = 1
-			if (istype(W,/obj/item/weapon/nullrod))
+			if (istype(W,/obj/item/magic/nullrod))
 				rad = 1
 				go = 1
 			if(go)
@@ -702,7 +702,7 @@ var/list/sacrificed = list()
 						R.invisibility=0
 					S=1
 			if(S)
-				if(istype(W,/obj/item/weapon/nullrod))
+				if(istype(W,/obj/item/magic/nullrod))
 					usr << "\red Arcane markings suddenly glow from underneath a thin layer of dust!"
 					return
 				if(istype(W,/obj/effect/rune))
@@ -711,7 +711,7 @@ var/list/sacrificed = list()
 						V.show_message("\red The rune turns into red dust, reveaing the surrounding runes.", 3)
 					del(src)
 					return
-				if(istype(W,/obj/item/weapon/paper/talisman))
+				if(istype(W,/obj/item/office/paper/talisman))
 					usr.whisper("Nikt[pick("'","`")]o barada kla'atu!")
 					usr << "\red Your talisman turns into red dust, revealing the surrounding runes."
 					for (var/mob/V in orange(1,usr.loc))
@@ -721,7 +721,7 @@ var/list/sacrificed = list()
 				return
 			if(istype(W,/obj/effect/rune))
 				return	fizzle()
-			if(istype(W,/obj/item/weapon/paper/talisman))
+			if(istype(W,/obj/item/office/paper/talisman))
 				call(/obj/effect/rune/proc/fizzle)()
 				return
 
@@ -830,7 +830,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,src))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/magic/nullrod/N = locate() in C
 					if(N)
 						continue
 					C.ear_deaf += 50
@@ -849,7 +849,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,usr))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/magic/nullrod/N = locate() in C
 					if(N)
 						continue
 					C.ear_deaf += 30
@@ -870,7 +870,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in viewers(src))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/magic/nullrod/N = locate() in C
 					if(N)
 						continue
 					C.eye_blurry += 50
@@ -892,7 +892,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in view(2,usr))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/magic/nullrod/N = locate() in C
 					if(N)
 						continue
 					C.eye_blurry += 30
@@ -922,7 +922,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/M in viewers(usr))
 					if(iscultist(M))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in M
+					var/obj/item/magic/nullrod/N = locate() in M
 					if(N)
 						continue
 					M.take_overall_damage(51,51)
@@ -993,7 +993,7 @@ var/list/sacrificed = list()
 				del(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.
 				usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
-				var/obj/item/weapon/nullrod/N = locate() in T
+				var/obj/item/magic/nullrod/N = locate() in T
 				if(N)
 					for(var/mob/O in viewers(T, null))
 						O.show_message(text("\red <B>[] invokes a talisman at [], but they are unaffected!</B>", usr, T), 1)
@@ -1027,7 +1027,7 @@ var/list/sacrificed = list()
 			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
 			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+			user.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), slot_back)
 			//the above update their overlay icons cache but do not call update_icons()
 			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
 			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor

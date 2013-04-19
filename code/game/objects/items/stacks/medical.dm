@@ -1,4 +1,4 @@
-/obj/item/stack/medical
+/obj/item/part/stack/medical
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/items.dmi'
@@ -10,7 +10,7 @@
 	var/heal_brute = 0
 	var/heal_burn = 0
 
-/obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/part/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if (M.stat == 2)
 		var/t_him = "it"
 		if (M.gender == MALE)
@@ -67,7 +67,7 @@
 
 	use(1)
 
-/obj/item/stack/medical/bruise_pack
+/obj/item/part/stack/medical/bruise_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
 	desc = "A pack designed to treat blunt-force trauma."
@@ -75,7 +75,7 @@
 	heal_brute = 60
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/ointment
+/obj/item/part/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
 	gender = PLURAL

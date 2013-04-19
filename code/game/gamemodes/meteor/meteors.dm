@@ -160,7 +160,7 @@
 		return
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/mining/pickaxe))
 		del(src)
 		return
 	..()

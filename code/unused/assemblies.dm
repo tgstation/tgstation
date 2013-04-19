@@ -12,7 +12,7 @@
 	name = "Health-Analyzer/Igniter/Armor Assembly"
 	desc = "A health-analyzer, igniter and armor assembly."
 	icon_state = "armor-igniter-analyzer"
-	var/obj/item/device/healthanalyzer/part1 = null
+	var/obj/item/device/scanner/health/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/clothing/suit/armor/vest/part3 = null
 	status = null
@@ -24,7 +24,7 @@
 	icon_state = "prox-igniter-tank0"
 	var/obj/item/device/prox_sensor/part1 = null
 	var/obj/item/device/igniter/part2 = null
-	var/obj/item/weapon/tank/plasma/part3 = null
+	var/obj/item/clothing/tank/plasma/part3 = null
 	status = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 
@@ -43,7 +43,7 @@
 	icon_state = "radio-igniter-tank"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/igniter/part2 = null
-	var/obj/item/weapon/tank/plasma/part3 = null
+	var/obj/item/clothing/tank/plasma/part3 = null
 	status = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 
@@ -51,7 +51,7 @@
 	name = "Health-Analyzer/Igniter Assembly"
 	desc = "A health-analyzer igniter assembly."
 	icon_state = "timer-igniter0"
-	var/obj/item/device/healthanalyzer/part1 = null
+	var/obj/item/device/scanner/health/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -72,7 +72,7 @@
 	icon_state = "timer-igniter-tank0"
 	var/obj/item/device/timer/part1 = null
 	var/obj/item/device/igniter/part2 = null
-	var/obj/item/weapon/tank/plasma/part3 = null
+	var/obj/item/clothing/tank/plasma/part3 = null
 	status = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 
@@ -147,7 +147,7 @@
 
 /obj/item/assembly/time_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -160,7 +160,7 @@
 
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	src.status = !( src.status )
 	if (src.status)
@@ -179,7 +179,7 @@
 
 /obj/item/assembly/anal_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -192,7 +192,7 @@
 
 		del(src)
 		return
-	if (( istype(W, /obj/item/weapon/screwdriver) ))
+	if (( istype(W, /obj/item/tool/screwdriver) ))
 		src.status = !( src.status )
 		if (src.status)
 			user.show_message("\blue The analyzer is now secured!", 1)
@@ -274,7 +274,7 @@
 
 /obj/item/assembly/a_i_a/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -290,7 +290,7 @@
 
 		del(src)
 		return
-	if (( istype(W, /obj/item/weapon/screwdriver) ))
+	if (( istype(W, /obj/item/tool/screwdriver) ))
 		if (!src.status && (!part1||!part2||!part3))
 			user << "\red You cannot finish the assembly, not all components are in place!"
 			return
@@ -322,7 +322,7 @@
 /obj/item/assembly/rad_time/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -335,7 +335,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	src.status = !( src.status )
 	if (src.status)
@@ -378,7 +378,7 @@
 
 /obj/item/assembly/rad_prox/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -391,7 +391,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	src.status = !( src.status )
 	if (src.status)
@@ -439,7 +439,7 @@
 
 /obj/item/assembly/rad_infra/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -452,7 +452,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	src.status = !( src.status )
 	if (src.status)
@@ -528,7 +528,7 @@
 
 /obj/item/assembly/prox_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -541,7 +541,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	src.status = !( src.status )
 	if (src.status)
@@ -575,7 +575,7 @@
 
 /obj/item/assembly/rad_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -588,7 +588,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	src.status = !( src.status )
 	if (src.status)
@@ -677,10 +677,10 @@
 
 /obj/item/assembly/m_i_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/device/analyzer))
+	if (istype(W, /obj/item/device/scanner/atmospheric))
 		src.part3.attackby(W, user)
 		return
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/obj/item/assembly/prox_ignite/R = new(get_turf(src.loc))
 		R.part1 = src.part1
 		R.part1.master = R
@@ -697,7 +697,7 @@
 		src.part3 = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/weldingtool)&&W:welding ))
+	if (!( istype(W, /obj/item/tool/welder)&&W:welding ))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -737,7 +737,7 @@
 
 /obj/item/assembly/m_i_ptank/emp_act(severity)
 
-	if(istype(part3,/obj/item/weapon/tank/plasma) && prob(100/severity))
+	if(istype(part3,/obj/item/clothing/tank/plasma) && prob(100/severity))
 		part3.ignite()
 	..()
 
@@ -766,10 +766,10 @@
 /obj/item/assembly/t_i_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
-	if (istype(W, /obj/item/device/analyzer))
+	if (istype(W, /obj/item/device/scanner/atmospheric))
 		src.part3.attackby(W, user)
 		return
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/obj/item/assembly/time_ignite/R = new(get_turf(src.loc))
 		R.part1 = src.part1
 		R.part1.master = R
@@ -786,7 +786,7 @@
 		src.part3 = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/weldingtool) && W:welding))
+	if (!( istype(W, /obj/item/tool/welder) && W:welding))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -823,7 +823,7 @@
 	return
 
 /obj/item/assembly/t_i_ptank/emp_act(severity)
-	if(istype(part3,/obj/item/weapon/tank/plasma) && prob(100/severity))
+	if(istype(part3,/obj/item/clothing/tank/plasma) && prob(100/severity))
 		part3.ignite()
 	..()
 
@@ -845,10 +845,10 @@
 /obj/item/assembly/r_i_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
-	if (istype(W, /obj/item/device/analyzer))
+	if (istype(W, /obj/item/device/scanner/atmospheric))
 		src.part3.attackby(W, user)
 		return
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/obj/item/assembly/rad_ignite/R = new(get_turf(src.loc))
 		R.part1 = src.part1
 		R.part1.master = R
@@ -865,7 +865,7 @@
 		src.part3 = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/weldingtool) && W:welding ))
+	if (!( istype(W, /obj/item/tool/welder) && W:welding ))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -882,17 +882,17 @@
 	return
 
 /obj/item/assembly/r_i_ptank/emp_act(severity)
-	if(istype(part3,/obj/item/weapon/tank/plasma) && prob(100/severity))
+	if(istype(part3,/obj/item/clothing/tank/plasma) && prob(100/severity))
 		part3.ignite()
 	..()
 
 
 /obj/item/clothing/suit/armor/a_i_a_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/device/analyzer))
+	if (istype(W, /obj/item/device/scanner/atmospheric))
 		src.part4.attackby(W, user)
 		return
-	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
+	if ((istype(W, /obj/item/tool/wrench) && !( src.status )))
 		var/obj/item/assembly/a_i_a/R = new(get_turf(src.loc))
 		R.part1 = src.part1
 		R.part1.master = R
@@ -913,7 +913,7 @@
 		src.part4 = null
 		del(src)
 		return
-	if (( istype(W, /obj/item/weapon/weldingtool) && W:welding))
+	if (( istype(W, /obj/item/tool/welder) && W:welding))
 		return
 	if (!( src.status ))
 		src.status = 1

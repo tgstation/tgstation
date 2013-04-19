@@ -10,14 +10,14 @@
 	item_state = "apron"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
+	allowed = list(/obj/item/chem/spray/plantbgone,/obj/item/device/scanner/plant,/obj/item/botany/seeds,/obj/item/botany/nutrient,/obj/item/botany/minihoe)
 
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
-	allowed = list(/obj/item/weapon/scalpel, /obj/item/weapon/surgical_drapes, /obj/item/weapon/cautery, /obj/item/weapon/hemostat, /obj/item/weapon/retractor)
+	allowed = list(/obj/item/medical/scalpel, /obj/item/medical/drapes, /obj/item/medical/cautery, /obj/item/medical/hemostat, /obj/item/medical/retractor)
 
 //Captain
 /obj/item/clothing/suit/captunic
@@ -54,7 +54,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	allowed = list (/obj/item/kitchen/knife,/obj/item/kitchen/butch)
 
 //Chef
 /obj/item/clothing/suit/chef/classic
@@ -73,7 +73,7 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	allowed = list(/obj/item/clothing/tank/emergency_oxygen, /obj/item/tool/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/weapon/ammo/magazine,/obj/item/weapon/ammo/casing,/obj/item/weapon/melee/baton,/obj/item/security/handcuffs,/obj/item/storage/fancy/cigarettes,/obj/item/tool/lighter,/obj/item/device/scanner/forensic,/obj/item/security/recorder)
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS

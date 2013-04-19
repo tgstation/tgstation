@@ -17,7 +17,7 @@
 "q" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/plating,/area/planet/clown)
 "r" = (/obj/machinery/vending/robotics,/turf/simulated/floor/plating{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/planet/clown)
 "s" = (/turf/simulated/floor/plating{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area/planet/clown)
-"t" = (/obj/item/weapon/paper/pamphlet,/turf/simulated/floor/plating,/area/planet/clown)
+"t" = (/obj/item/office/paper/pamphlet,/turf/simulated/floor/plating,/area/planet/clown)
 "u" = (/turf/simulated/floor/plating{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/planet/clown)
 "v" = (/obj/machinery/vending/engineering,/turf/simulated/floor/plating{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area/planet/clown)
 "w" = (/obj/machinery/vending/tool,/turf/simulated/floor/plating{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/planet/clown)

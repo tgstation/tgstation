@@ -1,7 +1,7 @@
 /mob/living/carbon/
 	gender = MALE
 	var/list/stomach_contents	= list()
-	var/list/internal_organs	= list()	//List of /obj/item/organ in the mob. they don't go in the contents.
+	var/list/internal_organs	= list()	//List of /obj/item/medical/organ in the mob. they don't go in the contents.
 
 	var/antibodies = 0
 
@@ -13,4 +13,4 @@
 //inventory slots
 	var/obj/item/weapon/back = null
 	var/obj/item/clothing/mask/wear_mask = null
-	var/obj/item/weapon/tank/internal = null
+	var/obj/item/clothing/tank/internal = null

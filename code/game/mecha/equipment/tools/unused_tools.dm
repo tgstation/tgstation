@@ -8,7 +8,7 @@
 
 
 //NEEDS SPRITE! (When this gets ticked in search for 'TODO MECHA JETPACK SPRITE MISSING' through code to uncomment the place where it's missing.)
-/obj/item/mecha_parts/mecha_equipment/jetpack
+/obj/item/part/mecha/mecha_equipment/jetpack
 	name = "Jetpack"
 	desc = "Using directed ion bursts and cunning solar wind reflection technique, this device enables controlled space flight."
 	icon_state = "mecha_equip"
@@ -107,7 +107,7 @@
 		return 1
 
 
-/obj/item/mecha_parts/mecha_equipment/defence_shocker
+/obj/item/part/mecha/mecha_equipment/defence_shocker
 	name = "Exosuit Defence Shocker"
 	desc = ""
 	icon_state = "mecha_teleport"
@@ -137,7 +137,7 @@
 
 
 /*
-/obj/item/mecha_parts/mecha_equipment/book_stocker
+/obj/item/part/mecha/mecha_equipment/book_stocker
 
 	action(var/mob/target)
 		if(!istype(target))

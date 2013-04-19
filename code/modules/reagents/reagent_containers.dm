@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers
+/obj/item/chem
 	name = "Container"
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
@@ -8,7 +8,7 @@
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
 
-/obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
+/obj/item/chem/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
@@ -16,31 +16,31 @@
 	if (N)
 		amount_per_transfer_from_this = N
 
-/obj/item/weapon/reagent_containers/New()
+/obj/item/chem/New()
 	..()
 	if (!possible_transfer_amounts)
-		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
+		src.verbs -= /obj/item/chem/verb/set_APTFT
 	var/datum/reagents/R = new/datum/reagents(volume)
 	reagents = R
 	R.my_atom = src
 
-/obj/item/weapon/reagent_containers/attack_self(mob/user as mob)
+/obj/item/chem/attack_self(mob/user as mob)
 	return
 
-/obj/item/weapon/reagent_containers/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/chem/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
 
 // this prevented pills, food, and other things from being picked up by bags.
 // possibly intentional, but removing it allows us to not duplicate functionality.
 // -Sayu (storage conslidation)
 /*
-/obj/item/weapon/reagent_containers/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/chem/attackby(obj/item/I as obj, mob/user as mob)
 	return
 */
-/obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
+/obj/item/chem/afterattack(obj/target, mob/user , flag)
 	return
 
-/obj/item/weapon/reagent_containers/proc/reagentlist(var/obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
+/obj/item/chem/proc/reagentlist(var/obj/item/chem/snack) //Attack logs for regents in pills
 	var/data
 	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind

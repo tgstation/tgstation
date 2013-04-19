@@ -91,7 +91,7 @@ obj/machinery/atmospherics/trinary/mixer
 		return 1
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
+		if (!istype(W, /obj/item/tool/wrench))
 			return ..()
 		var/turf/T = src.loc
 		if (level==1 && isturf(T) && T.intact)
@@ -110,7 +110,7 @@ obj/machinery/atmospherics/trinary/mixer
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			new /obj/item/part/pipe(loc, make_from=src)
 			del(src)
 
 	attack_hand(user as mob)

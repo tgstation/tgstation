@@ -3,7 +3,7 @@
 	desc = "A lock, for doors. Used by security."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "sec_lock"
-	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/security/card/id/scan = null
 	var/a_type = 0.0
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
@@ -319,8 +319,8 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 				src.scan.loc = src.loc
 				src.scan = null
 			else
-				var/obj/item/weapon/card/id/I = usr.equipped()
-				if (istype(I, /obj/item/weapon/card/id))
+				var/obj/item/security/card/id/I = usr.equipped()
+				if (istype(I, /obj/item/security/card/id))
 					usr.drop_item()
 					I.loc = src
 					src.scan = I

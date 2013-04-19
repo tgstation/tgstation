@@ -1,4 +1,4 @@
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper
+/obj/item/part/mecha/mecha_equipment/tool/sleeper
 	name = "Mounted Sleeper"
 	desc = "Mounted Sleeper. (Can be attached to: Medical Exosuits)"
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -180,7 +180,7 @@
 
 	proc/get_available_reagents()
 		var/output
-		var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun) in chassis
+		var/obj/item/part/mecha/mecha_equipment/tool/syringe_gun/SG = locate(/obj/item/part/mecha/mecha_equipment/tool/syringe_gun) in chassis
 		if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 			for(var/datum/reagent/R in SG.reagents.reagent_list)
 				if(R.volume > 0)
@@ -188,7 +188,7 @@
 		return output
 
 
-	proc/inject_reagent(var/datum/reagent/R,var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
+	proc/inject_reagent(var/datum/reagent/R,var/obj/item/part/mecha/mecha_equipment/tool/syringe_gun/SG)
 		if(!R || !occupant || !SG || !(SG in chassis.equipment))
 			return 0
 		var/to_inject = min(R.volume, inject_amount)
@@ -209,7 +209,7 @@
 
 /datum/global_iterator/mech_sleeper
 
-	process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
+	process(var/obj/item/part/mecha/mecha_equipment/tool/sleeper/S)
 		if(!S.chassis)
 			S.set_ready_state(1)
 			return stop()
@@ -237,13 +237,13 @@
 		return
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer
+/obj/item/part/mecha/mecha_equipment/tool/cable_layer
 	name = "Cable Layer"
 	icon_state = "mecha_wire"
 	var/datum/event/event
 	var/turf/old_turf
 	var/obj/structure/cable/last_piece
-	var/obj/item/weapon/cable_coil/cable
+	var/obj/item/part/cable_coil/cable
 	var/max_cable = 1000
 
 	New()
@@ -270,7 +270,7 @@
 		chassis.events.clearEvent("onMove",event)
 		return ..()
 
-	action(var/obj/item/weapon/cable_coil/target)
+	action(var/obj/item/part/cable_coil/target)
 		if(!action_checks(target))
 			return
 		var/result = load_cable(target)
@@ -298,7 +298,7 @@
 				m = min(m, cable.amount)
 				if(m)
 					use_cable(m)
-					var/obj/item/weapon/cable_coil/CC = new (get_turf(chassis))
+					var/obj/item/part/cable_coil/CC = new (get_turf(chassis))
 					CC.amount = m
 			else
 				occupant_message("There's no more cable on the reel.")
@@ -310,7 +310,7 @@
 			return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
 		return
 
-	proc/load_cable(var/obj/item/weapon/cable_coil/CC)
+	proc/load_cable(var/obj/item/part/cable_coil/CC)
 		if(istype(CC) && CC.amount)
 			var/cur_amount = cable? cable.amount : 0
 			var/to_load = max(max_cable - cur_amount,0)
@@ -384,7 +384,7 @@
 		last_piece = NC
 		return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
+/obj/item/part/mecha/mecha_equipment/tool/syringe_gun
 	name = "Syringe Gun"
 	desc = "Exosuit-mounted chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur. (Can be attached to: Medical Exosuits)"
 	icon = 'icons/obj/gun.dmi'
@@ -437,10 +437,10 @@
 	action(atom/movable/target)
 		if(!action_checks(target))
 			return
-		if(istype(target,/obj/item/weapon/reagent_containers/syringe))
+		if(istype(target,/obj/item/chem/syringe))
 			return load_syringe(target)
-		if(istype(target,/obj/item/weapon/storage))//Loads syringes from boxes
-			for(var/obj/item/weapon/reagent_containers/syringe/S in target.contents)
+		if(istype(target,/obj/item/storage))//Loads syringes from boxes
+			for(var/obj/item/chem/syringe/S in target.contents)
 				load_syringe(S)
 			return
 		if(mode)
@@ -454,7 +454,7 @@
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		var/turf/trg = get_turf(target)
-		var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+		var/obj/item/chem/syringe/S = syringes[1]
 		S.forceMove(get_turf(chassis))
 		reagents.trans_to(S, min(S.volume, reagents.total_volume))
 		syringes -= S
@@ -591,7 +591,7 @@
 			output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=\ref[src];purge_all=1\">Purge All</a>"
 		return output || "None"
 
-	proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)
+	proc/load_syringe(obj/item/chem/syringe/S)
 		if(syringes.len<max_syringes)
 			if(get_dist(src,S) >= 2)
 				occupant_message("The syringe is too far away.")
@@ -653,7 +653,7 @@
 /datum/global_iterator/mech_synth
 	delay = 100
 
-	process(var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
+	process(var/obj/item/part/mecha/mecha_equipment/tool/syringe_gun/S)
 		if(!S.chassis)
 			return stop()
 		var/energy_drain = S.energy_drain*10

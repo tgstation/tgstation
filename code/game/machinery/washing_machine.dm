@@ -41,8 +41,8 @@
 		A.clean_blood()
 
 	//Tanning!
-	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
-		var/obj/item/stack/sheet/wetleather/WL = new(src)
+	for(var/obj/item/part/stack/sheet/hairlesshide/HH in contents)
+		var/obj/item/part/stack/sheet/wetleather/WL = new(src)
 		WL.amount = HH.amount
 		del(HH)
 
@@ -52,8 +52,8 @@
 		if(istype(crayon,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = crayon
 			color = CR.colourName
-		else if(istype(crayon,/obj/item/weapon/stamp))
-			var/obj/item/weapon/stamp/ST = crayon
+		else if(istype(crayon,/obj/item/office/stamp))
+			var/obj/item/office/stamp/ST = crayon
 			color = ST.color
 
 		if(color)
@@ -102,8 +102,8 @@
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				del(S)
-			for(var/T in typesof(/obj/item/weapon/bedsheet))
-				var/obj/item/weapon/bedsheet/B = new T
+			for(var/T in typesof(/obj/item/service/bedsheet))
+				var/obj/item/service/bedsheet/B = new T
 				//world << "DEBUG: [color] == [J.color]"
 				if(color == B.color)
 					new_sheet_icon_state = B.icon_state
@@ -144,13 +144,13 @@
 					if (S.chained == 1)
 						S.chained = 0
 						S.slowdown = SHOES_SLOWDOWN
-						new /obj/item/weapon/handcuffs( src )
+						new /obj/item/security/handcuffs( src )
 					S.icon_state = new_shoe_icon_state
 					S.color = color
 					S.name = new_shoe_name
 					S.desc = new_desc
 			if(new_sheet_icon_state && new_sheet_name)
-				for(var/obj/item/weapon/bedsheet/B in contents)
+				for(var/obj/item/service/bedsheet/B in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					B.icon_state = new_sheet_icon_state
 					B.color = color
@@ -188,10 +188,10 @@
 	icon_state = "wm_[state][panel]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
+	/*if(istype(W,/obj/item/tool/screwdriver))
 		panel = !panel
 		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
-	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
+	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/office/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
 				user.drop_item()
@@ -201,23 +201,23 @@
 				..()
 		else
 			..()
-	else if(istype(W,/obj/item/weapon/grab))
+	else if(istype(W,/obj/item/effect/grab))
 		if( (state == 1) && hacked)
-			var/obj/item/weapon/grab/G = W
+			var/obj/item/effect/grab/G = W
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
 				G.affecting.loc = src
 				del(G)
 				state = 3
 		else
 			..()
-	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
+	else if(istype(W,/obj/item/part/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
 		istype(W,/obj/item/clothing/head) || \
 		istype(W,/obj/item/clothing/gloves) || \
 		istype(W,/obj/item/clothing/shoes) || \
 		istype(W,/obj/item/clothing/suit) || \
-		istype(W,/obj/item/weapon/bedsheet))
+		istype(W,/obj/item/service/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )

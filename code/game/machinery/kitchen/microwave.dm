@@ -49,7 +49,7 @@
 
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/weapon/screwdriver)) // If it's broken and they're using a screwdriver
+		if(src.broken == 2 && istype(O, /obj/item/tool/screwdriver)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
@@ -60,7 +60,7 @@
 					"\blue You have fixed part of the microwave." \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/wrench)) // If it's broken and they're doing the wrench
+		else if(src.broken == 1 && istype(O, /obj/item/tool/wrench)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
@@ -78,7 +78,7 @@
 			user << "\red It's broken!"
 			return 1
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		if(istype(O, /obj/item/weapon/reagent_containers/spray/cleaner) || istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+		if(istype(O, /obj/item/chem/spray/cleaner) || istype(O, /obj/item/service/soap/)) // If they're trying to clean it then let them
 			user.visible_message( \
 				"\blue [user] starts to clean the microwave.", \
 				"\blue You start to clean the microwave." \
@@ -99,7 +99,7 @@
 		if (contents.len>=max_n_of_items)
 			user << "\red This [src] is full of ingredients, you cannot put more."
 			return 1
-		if (istype(O,/obj/item/stack) && O:amount>1)
+		if (istype(O,/obj/item/part/stack) && O:amount>1)
 			new O.type (src)
 			O:use(1)
 			user.visible_message( \
@@ -112,9 +112,9 @@
 			user.visible_message( \
 				"\blue [user] has added \the [O] to \the [src].", \
 				"\blue You add \the [O] to \the [src].")
-	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
+	else if(istype(O,/obj/item/chem/glass) || \
+	        istype(O,/obj/item/chem/food/drinks) || \
+	        istype(O,/obj/item/chem/food/condiment) \
 		)
 		if (!O.reagents)
 			return 1
@@ -123,8 +123,8 @@
 				user << "\red Your [O] contains components unsuitable for cookery."
 				return 1
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
-	else if(istype(O,/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
+	else if(istype(O,/obj/item/effect/grab))
+		var/obj/item/effect/grab/G = O
 		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
 		return 1
 	else
@@ -160,20 +160,20 @@
 		var/list/items_measures_p = new
 		for (var/obj/O in contents)
 			var/display_name = O.name
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg))
+			if (istype(O,/obj/item/chem/food/snacks/egg))
 				items_measures[display_name] = "egg"
 				items_measures_p[display_name] = "eggs"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
+			if (istype(O,/obj/item/chem/food/snacks/tofu))
 				items_measures[display_name] = "tofu chunk"
 				items_measures_p[display_name] = "tofu chunks"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
+			if (istype(O,/obj/item/chem/food/snacks/meat)) //any meat
 				items_measures[display_name] = "slab of meat"
 				items_measures_p[display_name] = "slabs of meat"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/donkpocket))
+			if (istype(O,/obj/item/chem/food/snacks/donkpocket))
 				display_name = "Turnovers"
 				items_measures[display_name] = "turnover"
 				items_measures_p[display_name] = "turnovers"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/carpmeat))
+			if (istype(O,/obj/item/chem/food/snacks/carpmeat))
 				items_measures[display_name] = "fillet of meat"
 				items_measures_p[display_name] = "fillets of meat"
 			items_counts[display_name]++
@@ -282,8 +282,8 @@
 /obj/machinery/microwave/proc/has_extra_item()
 	for (var/obj/O in contents)
 		if ( \
-				!istype(O,/obj/item/weapon/reagent_containers/food) && \
-				!istype(O, /obj/item/weapon/grown) \
+				!istype(O,/obj/item/chem/food) && \
+				!istype(O, /obj/item/botany/grown) \
 			)
 			return 1
 	return 0
@@ -339,7 +339,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/fail()
-	var/obj/item/weapon/reagent_containers/food/snacks/badrecipe/ffuu = new(src)
+	var/obj/item/chem/food/snacks/badrecipe/ffuu = new(src)
 	var/amount = 0
 	for (var/obj/O in contents-ffuu)
 		amount++

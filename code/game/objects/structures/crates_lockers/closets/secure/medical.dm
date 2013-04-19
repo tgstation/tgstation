@@ -13,15 +13,15 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/box/syringes(src)
-		new /obj/item/weapon/reagent_containers/dropper(src)
-		new /obj/item/weapon/reagent_containers/dropper(src)
-		new /obj/item/weapon/reagent_containers/glass/beaker(src)
-		new /obj/item/weapon/reagent_containers/glass/beaker(src)
-		new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
-		new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
-		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
-		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+		new /obj/item/storage/box/syringes(src)
+		new /obj/item/chem/dropper(src)
+		new /obj/item/chem/dropper(src)
+		new /obj/item/chem/glass/beaker(src)
+		new /obj/item/chem/glass/beaker(src)
+		new /obj/item/chem/glass/bottle/inaprovaline(src)
+		new /obj/item/chem/glass/bottle/inaprovaline(src)
+		new /obj/item/chem/glass/bottle/antitoxin(src)
+		new /obj/item/chem/glass/bottle/antitoxin(src)
 		return
 
 
@@ -41,9 +41,9 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/tank/anesthetic(src)
-		new /obj/item/weapon/tank/anesthetic(src)
-		new /obj/item/weapon/tank/anesthetic(src)
+		new /obj/item/clothing/tank/anesthetic(src)
+		new /obj/item/clothing/tank/anesthetic(src)
+		new /obj/item/clothing/tank/anesthetic(src)
 		new /obj/item/clothing/mask/breath/medical(src)
 		new /obj/item/clothing/mask/breath/medical(src)
 		new /obj/item/clothing/mask/breath/medical(src)
@@ -65,9 +65,9 @@
 		..()
 		sleep(2)
 		if(prob(50))
-			new /obj/item/weapon/storage/backpack/medic(src)
+			new /obj/item/storage/backpack/medic(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_med(src)
+			new /obj/item/storage/backpack/satchel_med(src)
 		new /obj/item/clothing/under/rank/nursesuit (src)
 		new /obj/item/clothing/head/nursehat (src)
 		switch(pick("blue", "green", "purple"))
@@ -87,9 +87,9 @@
 		new /obj/item/clothing/under/rank/medical(src)
 		new /obj/item/clothing/suit/labcoat(src)
 		new /obj/item/clothing/shoes/white(src)
-//		new /obj/item/weapon/cartridge/medical(src)
+//		new /obj/item/part/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)
-		new /obj/item/weapon/storage/belt/medical(src)
+		new /obj/item/storage/belt/medical(src)
 		return
 
 
@@ -108,20 +108,20 @@
 		..()
 		sleep(2)
 		if(prob(50))
-			new /obj/item/weapon/storage/backpack/medic(src)
+			new /obj/item/storage/backpack/medic(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_med(src)
+			new /obj/item/storage/backpack/satchel_med(src)
 		new /obj/item/clothing/suit/bio_suit/cmo(src)
 		new /obj/item/clothing/head/bio_hood/cmo(src)
 		new /obj/item/clothing/under/rank/chief_medical_officer(src)
 		new /obj/item/clothing/suit/labcoat/cmo(src)
-		new /obj/item/weapon/cartridge/cmo(src)
+		new /obj/item/part/cartridge/cmo(src)
 		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/clothing/shoes/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
-		new /obj/item/weapon/storage/belt/medical(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/hypospray(src)
+		new /obj/item/storage/belt/medical(src)
+		new /obj/item/security/flash(src)
+		new /obj/item/chem/hypospray(src)
 		return
 
 
@@ -134,7 +134,7 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/device/assembly/signaler(src)
+		new /obj/item/part/assembly/signaler(src)
 		new /obj/item/device/radio/electropack(src)
 		new /obj/item/device/radio/electropack(src)
 		new /obj/item/device/radio/electropack(src)
@@ -157,8 +157,8 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/box/pillbottles(src)
-		new /obj/item/weapon/storage/box/pillbottles(src)
+		new /obj/item/storage/box/pillbottles(src)
+		new /obj/item/storage/box/pillbottles(src)
 		return
 
 /obj/structure/closet/secure_closet/medical_wall

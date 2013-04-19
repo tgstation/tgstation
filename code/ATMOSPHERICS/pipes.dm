@@ -483,7 +483,7 @@ obj/machinery/atmospherics/pipe
 			return null
 
 		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-			if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
+			if (istype(W, /obj/item/device/scanner/atmospheric) && get_dist(user, src) <= 1)
 				for (var/mob/O in viewers(user, null))
 					O << "\red [user] has used the analyzer on \icon[icon]"
 
@@ -833,7 +833,7 @@ obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/u
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/pipe/vent))
 		return ..()
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(W, /obj/item/tool/wrench))
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
@@ -852,9 +852,9 @@ obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/u
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
+		new /obj/item/part/pipe(loc, make_from=src)
 		for (var/obj/machinery/meter/meter in T)
 			if (meter.target == src)
-				new /obj/item/pipe_meter(T)
+				new /obj/item/part/pipe_meter(T)
 				del(meter)
 		del(src)

@@ -25,7 +25,7 @@
 	icon_state = "book-0"
 	anchored = 1
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/book))
+		if(istype(I, /obj/item/office/book))
 			I.loc = src
 	update_icon()
 
@@ -33,50 +33,50 @@
 /obj/structure/bookcase/attackby(obj/item/I, mob/user)
 	switch(state)
 		if(0)
-			if(istype(I, /obj/item/weapon/wrench))
+			if(istype(I, /obj/item/tool/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
-			if(istype(I, /obj/item/weapon/crowbar))
+			if(istype(I, /obj/item/tool/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You pry the frame apart.</span>"
-					new /obj/item/stack/sheet/wood(loc, 4)
+					new /obj/item/part/stack/sheet/wood(loc, 4)
 					del(src)
 
 		if(1)
-			if(istype(I, /obj/item/stack/sheet/wood))
-				var/obj/item/stack/sheet/wood/W = I
+			if(istype(I, /obj/item/part/stack/sheet/wood))
+				var/obj/item/part/stack/sheet/wood/W = I
 				W.use(2)
 				user << "<span class='notice'>You add a shelf.</span>"
 				state = 2
 				icon_state = "book-0"
-			if(istype(I, /obj/item/weapon/wrench))
+			if(istype(I, /obj/item/tool/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unrwench the frame.</span>"
 				anchored = 0
 				state = 0
 
 		if(2)
-			if(istype(I, /obj/item/weapon/book))
+			if(istype(I, /obj/item/office/book))
 				user.drop_item()
 				I.loc = src
 				update_icon()
-			else if(istype(I, /obj/item/weapon/pen))
+			else if(istype(I, /obj/item/office/pen))
 				var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
 				if(!newname)
 					return
 				else
 					name = ("bookcase ([sanitize(newname)])")
-			else if(istype(I, /obj/item/weapon/crowbar))
+			else if(istype(I, /obj/item/tool/crowbar))
 				if(contents.len)
 					user << "<span class='notice'>You need to remove the books first.</span>"
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/wood(loc, 1)
+					new /obj/item/part/stack/sheet/wood(loc, 1)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -85,7 +85,7 @@
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/office/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
@@ -100,11 +100,11 @@
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/obj/item/weapon/book/b in contents)
+			for(var/obj/item/office/book/b in contents)
 				del(b)
 			del(src)
 		if(2.0)
-			for(var/obj/item/weapon/book/b in contents)
+			for(var/obj/item/office/book/b in contents)
 				if(prob(50))
 					b.loc = (get_turf(src))
 				else
@@ -112,7 +112,7 @@
 			del(src)
 		if(3.0)
 			if(prob(50))
-				for(var/obj/item/weapon/book/b in contents)
+				for(var/obj/item/office/book/b in contents)
 					b.loc = (get_turf(src))
 				del(src)
 
@@ -129,7 +129,7 @@
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/medical_cloning(src)
+		new /obj/item/office/book/manual/medical_cloning(src)
 		update_icon()
 
 
@@ -138,12 +138,12 @@
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/engineering_construction(src)
-		new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-		new /obj/item/weapon/book/manual/engineering_hacking(src)
-		new /obj/item/weapon/book/manual/engineering_guide(src)
-		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
-		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
+		new /obj/item/office/book/manual/engineering_construction(src)
+		new /obj/item/office/book/manual/engineering_particle_accelerator(src)
+		new /obj/item/office/book/manual/engineering_hacking(src)
+		new /obj/item/office/book/manual/engineering_guide(src)
+		new /obj/item/office/book/manual/engineering_singularity_safety(src)
+		new /obj/item/office/book/manual/robotics_cyborgs(src)
 		update_icon()
 
 
@@ -152,14 +152,14 @@
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/research_and_development(src)
+		new /obj/item/office/book/manual/research_and_development(src)
 		update_icon()
 
 
 /*
  * Book
  */
-/obj/item/weapon/book
+/obj/item/office/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
@@ -177,7 +177,7 @@
 	var/obj/item/store	//What's in the book?
 
 
-/obj/item/weapon/book/attack_self(mob/user)
+/obj/item/office/book/attack_self(mob/user)
 	if(carved)
 		if(store)
 			user << "<span class='notice'>[store] falls out of [title]!</span>"
@@ -199,7 +199,7 @@
 		user << "<span class='notice'>This book is completely blank!</span>"
 
 
-/obj/item/weapon/book/attackby(obj/item/I, mob/user)
+/obj/item/office/book/attackby(obj/item/I, mob/user)
 	if(carved)
 		if(!store)
 			if(I.w_class < 3)
@@ -215,7 +215,7 @@
 			user << "<span class='notice'>There's already something in [title]!</span>"
 			return
 
-	if(istype(I, /obj/item/weapon/pen))
+	if(istype(I, /obj/item/office/pen))
 		if(is_blind(user))
 			return
 		if(unique)
@@ -248,8 +248,8 @@
 			else
 				return
 
-	else if(istype(I, /obj/item/weapon/barcodescanner))
-		var/obj/item/weapon/barcodescanner/scanner = I
+	else if(istype(I, /obj/item/device/scanner/book))
+		var/obj/item/device/scanner/book/scanner = I
 		if(!scanner.computer)
 			user << "[I]'s screen flashes: 'No associated computer found!'"
 		else
@@ -271,14 +271,14 @@
 					user << "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"
 				if(3)
 					scanner.book = src
-					for(var/obj/item/weapon/book in scanner.computer.inventory)
+					for(var/obj/item/office/book in scanner.computer.inventory)
 						if(book == src)
 							user << "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
 							return
 					scanner.computer.inventory.Add(src)
 					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
-	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/kitchen/knife) || istype(I, /obj/item/part/wirecutters))
 		if(carved)
 			return
 		user << "<span class='notice'>You begin to carve out [title].</span>"
@@ -293,7 +293,7 @@
 /*
  * Barcode Scanner
  */
-/obj/item/weapon/barcodescanner
+/obj/item/device/scanner/book
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
@@ -302,7 +302,7 @@
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
 	var/obj/machinery/librarycomp/computer	//Associated computer - Modes 1 to 3 use this
-	var/obj/item/weapon/book/book			//Currently scanned book
+	var/obj/item/office/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
 	attack_self(mob/user)

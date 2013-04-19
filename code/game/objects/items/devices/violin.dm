@@ -1,6 +1,6 @@
 //copy pasta of the space piano, don't hurt me -Pete
 
-/obj/item/device/violin
+/obj/item/service/violin
 	name = "space violin"
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon = 'icons/obj/musician.dmi'
@@ -9,14 +9,14 @@
 	force = 10
 	var/datum/song/handheld/song
 
-/obj/item/device/violin/New()
+/obj/item/service/violin/New()
 	song = new("violin", src)
 	song.instrumentExt = "mid"
 
-/obj/item/device/violin/attack_self(mob/user as mob)
+/obj/item/service/violin/attack_self(mob/user as mob)
 	interact(user)
 
-/obj/item/device/violin/interact(mob/user as mob)
+/obj/item/service/violin/interact(mob/user as mob)
 	if(!user)
 		return
 

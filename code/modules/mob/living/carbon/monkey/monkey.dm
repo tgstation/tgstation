@@ -9,16 +9,16 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
+	var/obj/item/security/card/id/wear_id = null // Fix for station bounced radios -- Skie
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/heart
-	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/medical/organ/appendix
+	internal_organs += new /obj/item/medical/organ/heart
+	internal_organs += new /obj/item/medical/organ/brain
 
 	if(name == "monkey")
 		name = text("monkey ([rand(1, 1000)])")
@@ -125,7 +125,7 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return
 
-//mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
+//mob/living/carbon/monkey/bullet_act(var/obj/item/weapon/projectile/Proj)taken care of in living
 
 /mob/living/carbon/monkey/hand_p(mob/M as mob)
 	if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
@@ -230,7 +230,7 @@
 				if (M == src)
 					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+				var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 				M.put_in_active_hand(G)
 
@@ -299,7 +299,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 			M.put_in_active_hand(G)
 

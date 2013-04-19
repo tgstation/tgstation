@@ -20,8 +20,8 @@
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/device/destTagger))
-			var/obj/item/device/destTagger/O = W
+		if(istype(W, /obj/item/office/mail_tagger))
+			var/obj/item/office/mail_tagger/O = W
 
 			if(sortTag != O.currTag)
 				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
@@ -29,7 +29,7 @@
 				sortTag = O.currTag
 				playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-		else if(istype(W, /obj/item/weapon/pen))
+		else if(istype(W, /obj/item/office/pen))
 			var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 			if(!str || !length(str))
 				user << "<span class='notice'>Invalid text.</span>"
@@ -37,7 +37,7 @@
 			user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 			name = "[name] ([str])"
 
-		else if(istype(W, /obj/item/weapon/wrapping_paper))
+		else if(istype(W, /obj/item/service/gift_wrap))
 			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 			if(istype(wrapped, /obj/structure/closet/crate))
 				icon_state = "giftcrate"
@@ -45,7 +45,7 @@
 				icon_state = "giftcloset"
 
 
-/obj/item/smallDelivery
+/obj/item/office/package
 	name = "small parcel"
 	desc = "A small wrapped package."
 	icon = 'icons/obj/storage.dmi'
@@ -67,8 +67,8 @@
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/device/destTagger))
-			var/obj/item/device/destTagger/O = W
+		if(istype(W, /obj/item/office/mail_tagger))
+			var/obj/item/office/mail_tagger/O = W
 
 			if(sortTag != O.currTag)
 				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
@@ -76,7 +76,7 @@
 				sortTag = O.currTag
 				playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-		else if(istype(W, /obj/item/weapon/pen))
+		else if(istype(W, /obj/item/office/pen))
 			var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 			if(!str || !length(str))
 				user << "<span class='notice'>Invalid text.</span>"
@@ -84,12 +84,12 @@
 			user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 			name = "[name] ([str])"
 
-		else if(istype(W, /obj/item/weapon/wrapping_paper))
+		else if(istype(W, /obj/item/service/gift_wrap))
 			icon_state = "giftcrate[wrapped.w_class]"
 			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 
 
-/obj/item/weapon/packageWrap
+/obj/item/office/package_wrap
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
@@ -101,8 +101,8 @@
 		if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
-		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/evidencebag) || istype(target, /obj/structure/closet/body_bag))
+		|| istype(target, /obj/item/office/package) || istype(target,/obj/structure/bigDelivery) \
+		|| istype(target, /obj/item/security/evidence) || istype(target, /obj/structure/closet/body_bag))
 			return
 		if(target.anchored)
 			return
@@ -112,10 +112,10 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on \ref[target]</font>")
 
 
-		if(istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
+		if(istype(target, /obj/item) && !(istype(target, /obj/item/storage) && !istype(target,/obj/item/storage/box)))
 			var/obj/item/O = target
 			if(amount > 1)
-				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
+				var/obj/item/office/package/P = new /obj/item/office/package(get_turf(O.loc))	//Aaannd wrap it up!
 				if(!istype(O.loc, /turf))
 					if(user.client)
 						user.client.screen -= O
@@ -151,7 +151,7 @@
 		else
 			user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery.</span>"
 		if(amount <= 0)
-			new /obj/item/weapon/c_tube( loc )
+			new /obj/item/trash/c_tube( loc )
 			del(src)
 			return
 		return
@@ -164,9 +164,10 @@
 		return
 
 
-/obj/item/device/destTagger
+/obj/item/office/mail_tagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "forensic0"
 	var/currTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,
@@ -228,7 +229,7 @@
 		return
 
 	Bumped(var/atom/movable/AM) //Go straight into the chute
-		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
+		if(istype(AM, /obj/item/weapon/projectile) || istype(AM, /obj/effect/passcheck))	return
 		switch(dir)
 			if(NORTH)
 				if(AM.loc.y != loc.y+1) return
@@ -257,7 +258,7 @@
 			deliveryCheck = 1
 			if(O.sortTag == 0)
 				O.sortTag = 1
-		for(var/obj/item/smallDelivery/O in src)
+		for(var/obj/item/office/package/O in src)
 			deliveryCheck = 1
 			if(O.sortTag == 0)
 				O.sortTag = 1
@@ -285,7 +286,7 @@
 		if(!I || !user)
 			return
 
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/tool/screwdriver))
 			if(c_mode==0)
 				c_mode=1
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -296,8 +297,8 @@
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You attach the screws around the power connection.</span>"
 				return
-		else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
-			var/obj/item/weapon/weldingtool/W = I
+		else if(istype(I,/obj/item/tool/welder) && c_mode==1)
+			var/obj/item/tool/welder/W = I
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off the delivery chute.</span>"

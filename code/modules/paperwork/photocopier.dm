@@ -17,8 +17,8 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	var/obj/item/weapon/paper/copy = null	//what's in the copier!
-	var/obj/item/weapon/photo/photocopy = null
+	var/obj/item/office/paper/copy = null	//what's in the copier!
+	var/obj/item/office/photo/photocopy = null
 	var/copies = 1	//how many copies to print!
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
@@ -56,7 +56,7 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0)
-					var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+					var/obj/item/office/paper/c = new /obj/item/office/paper (loc)
 					if(toner > 10)	//lots of toner, make it dark
 						c.info = "<font color = #101010>"
 					else			//no toner? shitty copies for you!
@@ -77,7 +77,7 @@
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0)
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+					var/obj/item/office/photo/p = new /obj/item/office/photo (loc)
 					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 					var/icon/img = icon(photocopy.img)
 					if(toner > 10)	//plenty of toner, go straight greyscale
@@ -119,7 +119,7 @@
 			updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/paper))
+	if(istype(O, /obj/item/office/paper))
 		if(!copy && !photocopy)
 			user.drop_item()
 			copy = O
@@ -129,7 +129,7 @@
 			updateUsrDialog()
 		else
 			user << "<span class='notice'>There is already something in [src].</span>"
-	else if(istype(O, /obj/item/weapon/photo))
+	else if(istype(O, /obj/item/office/photo))
 		if(!copy && !photocopy)
 			user.drop_item()
 			photocopy = O
@@ -139,7 +139,7 @@
 			updateUsrDialog()
 		else
 			user << "<span class='notice'>There is already something in [src].</span>"
-	else if(istype(O, /obj/item/device/toner))
+	else if(istype(O, /obj/item/part/refill/toner))
 		if(toner == 0)
 			user.drop_item()
 			del(O)
@@ -148,7 +148,7 @@
 			updateUsrDialog()
 		else
 			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(istype(O, /obj/item/tool/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
@@ -183,8 +183,9 @@
 /*
  * Toner cartridge
  */
-/obj/item/device/toner
+/obj/item/part/refill/toner
 	name = "toner cartridge"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	var/charges = 5
 	var/max_charges = 5

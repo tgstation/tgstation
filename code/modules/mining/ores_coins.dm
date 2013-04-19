@@ -1,72 +1,72 @@
 /**********************Mineral ores**************************/
 
-/obj/item/weapon/ore
+/obj/item/mining/ore
 	name = "Rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 
 
-/obj/item/weapon/ore/uranium
+/obj/item/mining/ore/uranium
 	name = "Uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
 
-/obj/item/weapon/ore/iron
+/obj/item/mining/ore/iron
 	name = "Iron ore"
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 
-/obj/item/weapon/ore/glass
+/obj/item/mining/ore/glass
 	name = "Sand"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 
 	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
 		var/location = get_turf(user)
-		for(var/obj/item/weapon/ore/glass/sandToConvert in location)
-			new /obj/item/stack/sheet/mineral/sandstone(location)
+		for(var/obj/item/mining/ore/glass/sandToConvert in location)
+			new /obj/item/part/stack/sheet/mineral/sandstone(location)
 			del(sandToConvert)
-		new /obj/item/stack/sheet/mineral/sandstone(location)
+		new /obj/item/part/stack/sheet/mineral/sandstone(location)
 		del(src)
 
-/obj/item/weapon/ore/plasma
+/obj/item/mining/ore/plasma
 	name = "Plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
 
-/obj/item/weapon/ore/silver
+/obj/item/mining/ore/silver
 	name = "Silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
 
-/obj/item/weapon/ore/gold
+/obj/item/mining/ore/gold
 	name = "Gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 
-/obj/item/weapon/ore/diamond
+/obj/item/mining/ore/diamond
 	name = "Diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
 
-/obj/item/weapon/ore/clown
+/obj/item/mining/ore/clown
 	name = "Bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 
-/obj/item/weapon/ore/slag
+/obj/item/mining/ore/slag
 	name = "Slag"
 	desc = "Completely useless"
 	icon_state = "slag"
 
-/obj/item/weapon/ore/New()
+/obj/item/mining/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
 
 /*****************************Coin********************************/
 
-/obj/item/weapon/coin
+/obj/item/money/coin
 	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
@@ -76,49 +76,49 @@
 	w_class = 1.0
 	var/string_attached
 
-/obj/item/weapon/coin/New()
+/obj/item/money/coin/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/weapon/coin/gold
+/obj/item/money/coin/gold
 	name = "Gold coin"
 	icon_state = "coin_gold"
 
-/obj/item/weapon/coin/silver
+/obj/item/money/coin/silver
 	name = "Silver coin"
 	icon_state = "coin_silver"
 
-/obj/item/weapon/coin/diamond
+/obj/item/money/coin/diamond
 	name = "Diamond coin"
 	icon_state = "coin_diamond"
 
-/obj/item/weapon/coin/iron
+/obj/item/money/coin/iron
 	name = "Iron coin"
 	icon_state = "coin_iron"
 
-/obj/item/weapon/coin/plasma
+/obj/item/money/coin/plasma
 	name = "Solid plasma coin"
 	icon_state = "coin_plasma"
 
-/obj/item/weapon/coin/uranium
+/obj/item/money/coin/uranium
 	name = "Uranium coin"
 	icon_state = "coin_uranium"
 
-/obj/item/weapon/coin/clown
+/obj/item/money/coin/clown
 	name = "Bananaium coin"
 	icon_state = "coin_clown"
 
-/obj/item/weapon/coin/adamantine
+/obj/item/money/coin/adamantine
 	name = "Adamantine coin"
 	icon_state = "coin_adamantine"
 
-/obj/item/weapon/coin/mythril
+/obj/item/money/coin/mythril
 	name = "Mythril coin"
 	icon_state = "coin_mythril"
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/cable_coil) )
-		var/obj/item/weapon/cable_coil/CC = W
+/obj/item/money/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/part/cable_coil) )
+		var/obj/item/part/cable_coil/CC = W
 		if(string_attached)
 			user << "\blue There already is a string attached to this coin."
 			return
@@ -132,12 +132,12 @@
 		string_attached = 1
 		user << "\blue You attach a string to the coin."
 		CC.use(1)
-	else if(istype(W,/obj/item/weapon/wirecutters) )
+	else if(istype(W,/obj/item/part/wirecutters) )
 		if(!string_attached)
 			..()
 			return
 
-		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
+		var/obj/item/part/cable_coil/CC = new/obj/item/part/cable_coil(user.loc)
 		CC.amount = 1
 		CC.updateicon()
 		overlays = list()

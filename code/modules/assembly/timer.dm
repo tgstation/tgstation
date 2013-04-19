@@ -1,4 +1,4 @@
-/obj/item/device/assembly/timer
+/obj/item/part/assembly/timer
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"

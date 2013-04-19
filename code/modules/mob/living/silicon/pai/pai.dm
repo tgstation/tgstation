@@ -20,7 +20,7 @@
 	var/speakQuery = "queries"
 
 
-	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
+	var/obj/item/device/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
@@ -50,7 +50,7 @@
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
-	var/obj/item/radio/integrated/signal/sradio // AI's signaller
+	var/obj/item/part/radio/integrated/signal/sradio // AI's signaller
 
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)

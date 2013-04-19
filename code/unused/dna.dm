@@ -11,9 +11,9 @@
 	name = "DNA Operations Console"
 	desc = "A Computer used to advanced DNA stuff."
 	icon_state = "dna"
-	var/obj/item/weapon/card/data/scan = null
-	var/obj/item/weapon/card/data/modify = null
-	var/obj/item/weapon/card/data/modify2 = null
+	var/obj/item/security/card/data/scan = null
+	var/obj/item/security/card/data/modify = null
+	var/obj/item/security/card/data/modify2 = null
 	var/mode = null
 	var/temp = null
 
@@ -53,7 +53,7 @@
 				src.mode = null
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/weapon/card/data))
+				if (istype(I, /obj/item/security/card/data))
 					usr.drop_item()
 					I.loc = src
 					src.modify = I
@@ -65,7 +65,7 @@
 				src.mode = null
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/weapon/card/data))
+				if (istype(I, /obj/item/security/card/data))
 					usr.drop_item()
 					I.loc = src
 					src.modify2 = I
@@ -77,7 +77,7 @@
 				src.mode = null
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/weapon/card/data))
+				if (istype(I, /obj/item/security/card/data))
 					usr.drop_item()
 					I.loc = src
 					src.scan = I
@@ -263,8 +263,8 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/dna_scanner/attackby(obj/item/weapon/grab/G as obj, user as mob)
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+/obj/machinery/dna_scanner/attackby(obj/item/effect/grab/G as obj, user as mob)
+	if ((!( istype(G, /obj/item/effect/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
 		user << "\blue <B>The scanner is already occupied!</B>"
@@ -656,7 +656,7 @@
 				src.scan = null
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/weapon/card/data))
+				if (istype(I, /obj/item/security/card/data))
 					usr.drop_item()
 					I.loc = src
 					src.scan = I
@@ -890,10 +890,10 @@
 	src.go_out()
 	return
 
-/obj/machinery/restruct/attackby(obj/item/weapon/grab/G as obj, user as mob)
+/obj/machinery/restruct/attackby(obj/item/effect/grab/G as obj, user as mob)
 	if(..())
 		return
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+	if ((!( istype(G, /obj/item/effect/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
 		user << "\blue <B>The machine is already occupied!</B>"

@@ -46,7 +46,7 @@
 			r += "<BR>Progress Speed : [dish.virus2.stageprob * 10]"
 			for(var/datum/disease2/effectholder/E in dish.virus2.effects)
 				r += "<BR>Effect:[E.effect.name]. Strength : [E.multiplier * 8]. Verosity : [E.chance * 15]. Type : [5-E.stage]."
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src.loc)
+			var/obj/item/office/paper/P = new /obj/item/office/paper(src.loc)
 			P.info = r
 			dish.info = r
 			dish.analysed = 1

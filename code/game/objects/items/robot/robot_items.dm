@@ -4,7 +4,7 @@
 						Cyborg Spec Items
 ***********************************************************************/
 //Might want to move this into several files later but for now it works here
-/obj/item/borg/stun
+/obj/item/part/cyborg/equipment/stun
 	name = "Electrified Arm"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
@@ -26,7 +26,7 @@
 			if (O.client)
 				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
 
-/obj/item/borg/overdrive
+/obj/item/part/cyborg/equipment/overdrive
 	name = "Overdrive"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
@@ -34,33 +34,33 @@
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/
-/obj/item/borg/sight
+/obj/item/part/cyborg/equipment/sight
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	var/sight_mode = null
 
 
-/obj/item/borg/sight/xray
+/obj/item/part/cyborg/equipment/sight/xray
 	name = "X-ray Vision"
 	sight_mode = BORGXRAY
 
 
-/obj/item/borg/sight/thermal
+/obj/item/part/cyborg/equipment/sight/thermal
 	name = "Thermal Vision"
 	sight_mode = BORGTHERM
 
 
-/obj/item/borg/sight/meson
+/obj/item/part/cyborg/equipment/sight/meson
 	name = "Meson Vision"
 	sight_mode = BORGMESON
 
 
-/obj/item/borg/sight/hud
+/obj/item/part/cyborg/equipment/sight/hud
 	name = "Hud"
 	var/obj/item/clothing/glasses/hud/hud = null
 
 
-/obj/item/borg/sight/hud/med
+/obj/item/part/cyborg/equipment/sight/hud/med
 	name = "Medical Hud"
 
 
@@ -70,7 +70,7 @@
 		return
 
 
-/obj/item/borg/sight/hud/sec
+/obj/item/part/cyborg/equipment/sight/hud/sec
 	name = "Security Hud"
 
 

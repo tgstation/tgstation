@@ -67,7 +67,7 @@
 		// check for TK users
 
 		if (istype(usr, /mob/living/carbon/human))
-			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
+			if(istype(usr.l_hand, /obj/item/effect/telekinesis) || istype(usr.r_hand, /obj/item/effect/telekinesis/))
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
 						is_in_use = 1

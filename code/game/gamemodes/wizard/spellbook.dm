@@ -1,4 +1,4 @@
-/obj/item/weapon/spellbook
+/obj/item/magic/spellbook
 	name = "spell book"
 	desc = "The legendary book of spells of the wizard."
 	icon = 'icons/obj/library.dmi'
@@ -12,9 +12,9 @@
 	var/max_uses = 5
 	var/op = 1
 
-/obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/contract))
-		var/obj/item/weapon/contract/contract = O
+/obj/item/magic/spellbook/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/magic/scroll/contract))
+		var/obj/item/magic/scroll/contract/contract = O
 		if(contract.used)
 			user << "The contract has been used, you can't get your points back now."
 		else
@@ -26,7 +26,7 @@
 
 
 
-/obj/item/weapon/spellbook/attack_self(mob/user as mob)
+/obj/item/magic/spellbook/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat
 	if(temp)
@@ -118,7 +118,7 @@
 	onclose(user, "radio")
 	return
 
-/obj/item/weapon/spellbook/Topic(href, href_list)
+/obj/item/magic/spellbook/Topic(href, href_list)
 	..()
 	var/mob/living/carbon/human/H = usr
 
@@ -227,7 +227,7 @@
 							max_uses--
 						if("soulstone")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
+							new /obj/item/storage/belt/soulstone/full(get_turf(H))
 							H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(H)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
@@ -246,12 +246,12 @@
 							max_uses--
 						if("contract")
 							feedback_add_details("wizard_spell_learned","CT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/contract(get_turf(H))
+							new /obj/item/magic/scroll/contract(get_turf(H))
 							temp = "You have purchased a contract of apprenticeship."
 							max_uses--
 						if("scrying")
 							feedback_add_details("wizard_spell_learned","SO") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/scrying(get_turf(H))
+							new /obj/item/magic/scrying(get_turf(H))
 							if (!(XRAY in H.mutations))
 								H.mutations.Add(XRAY)
 								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)

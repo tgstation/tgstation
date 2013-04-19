@@ -124,14 +124,14 @@
 /obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 //Warning, uncommenting this can have concequences. For example, deconstructing the computer may cause holographic eswords to never derez
 
-/*		if(istype(D, /obj/item/weapon/screwdriver))
+/*		if(istype(D, /obj/item/tool/screwdriver))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					new /obj/item/weapon/shard( src.loc )
-					var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
+					new /obj/item/trash/shard( src.loc )
+					var/obj/item/part/circuitboard/comm_traffic/M = new /obj/item/part/circuitboard/comm_traffic( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
 					A.circuit = M
@@ -142,7 +142,7 @@
 				else
 					user << "\blue You disconnect the monitor."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
+					var/obj/item/part/circuitboard/comm_traffic/M = new /obj/item/part/circuitboard/comm_traffic( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
 					A.circuit = M
@@ -152,7 +152,7 @@
 					del(src)
 
 */
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+	if(istype(D, /obj/item/security/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
@@ -346,7 +346,7 @@
 /turf/simulated/floor/holofloor/grass
 	name = "Lush Grass"
 	icon_state = "grass1"
-	floor_tile = new/obj/item/stack/tile/grass
+	floor_tile = new/obj/item/part/stack/tile/grass
 
 	New()
 		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
@@ -397,8 +397,8 @@
 
 
 /obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
+	if (istype(W, /obj/item/effect/grab) && get_dist(src,user)<2)
+		var/obj/item/effect/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "\red You need a better grip to do that!"
 			return
@@ -408,7 +408,7 @@
 		del(W)
 		return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/tool/wrench))
 		user << "It's a holotable!  There are no bolts!"
 		return
 
@@ -490,7 +490,7 @@
 
 //BASKETBALL OBJECTS
 
-/obj/item/weapon/beach_ball/holoball
+/obj/item/toy/beach_ball/holoball
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
 	name = "basketball"
@@ -508,8 +508,8 @@
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
+	if (istype(W, /obj/item/effect/grab) && get_dist(src,user)<2)
+		var/obj/item/effect/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "\red You need a better grip to do that!"
 			return
@@ -526,7 +526,7 @@
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
-		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+		if(istype(I, /obj/effect/passcheck) || istype(I, /obj/item/weapon/projectile))
 			return
 		if(prob(50))
 			I.loc = src.loc

@@ -17,7 +17,7 @@ Mineral Sheets
 /*
  * Sandstone
  */
-/obj/item/stack/sheet/mineral/sandstone
+/obj/item/part/stack/sheet/mineral/sandstone
 	name = "sandstone bricks"
 	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
@@ -34,7 +34,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 		new/datum/stack_recipe("sandstone floor", ???),\ */
 	)
 
-/obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -43,7 +43,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 /*
  * Diamond
  */
-/obj/item/stack/sheet/mineral/diamond
+/obj/item/part/stack/sheet/mineral/diamond
 	name = "diamond"
 	icon_state = "sheet-diamond"
 	force = 5.0
@@ -58,7 +58,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
 	recipes = diamond_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -67,7 +67,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 /*
  * Uranium
  */
-/obj/item/stack/sheet/mineral/uranium
+/obj/item/part/stack/sheet/mineral/uranium
 	name = "uranium"
 	icon_state = "sheet-uranium"
 	force = 5.0
@@ -83,7 +83,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
 	recipes = uranium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -92,7 +92,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 /*
  * Plasma
  */
-/obj/item/stack/sheet/mineral/plasma
+/obj/item/part/stack/sheet/mineral/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
 	force = 5.0
@@ -108,7 +108,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
 	recipes = plasma_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -117,7 +117,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 /*
  * Gold
  */
-/obj/item/stack/sheet/mineral/gold
+/obj/item/part/stack/sheet/mineral/gold
 	name = "gold"
 	icon_state = "sheet-gold"
 	force = 5.0
@@ -133,7 +133,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
 	recipes = gold_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -142,7 +142,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 /*
  * Silver
  */
-/obj/item/stack/sheet/mineral/silver
+/obj/item/part/stack/sheet/mineral/silver
 	name = "silver"
 	icon_state = "sheet-silver"
 	force = 5.0
@@ -158,7 +158,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
 	recipes = silver_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -167,7 +167,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Clown
  */
-/obj/item/stack/sheet/mineral/clown
+/obj/item/part/stack/sheet/mineral/clown
 	name = "bananium"
 	icon_state = "sheet-clown"
 	force = 5.0
@@ -179,7 +179,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	perunit = 2000
 	sheettype = "clown"
 
-/obj/item/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
+/obj/item/part/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -190,7 +190,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Enriched Uranium
  */
-/obj/item/stack/sheet/mineral/enruranium
+/obj/item/part/stack/sheet/mineral/enruranium
 	name = "enriched uranium"
 	icon_state = "sheet-enruranium"
 	force = 5.0
@@ -204,7 +204,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Adamantine
  */
-/obj/item/stack/sheet/mineral/adamantine
+/obj/item/part/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	force = 5.0
@@ -218,7 +218,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Mythril
  */
-/obj/item/stack/sheet/mineral/mythril
+/obj/item/part/stack/sheet/mineral/mythril
 	name = "mythril"
 	icon_state = "sheet-mythril"
 	force = 5.0

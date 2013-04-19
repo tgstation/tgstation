@@ -1,6 +1,6 @@
 /*****************************Money bag********************************/
 
-/obj/item/weapon/moneybag
+/obj/item/money/bag
 	icon = 'icons/obj/storage.dmi'
 	name = "Money bag"
 	icon_state = "moneybag"
@@ -9,7 +9,7 @@
 	throwforce = 2.0
 	w_class = 4.0
 
-/obj/item/weapon/moneybag/attack_hand(user as mob)
+/obj/item/money/bag/attack_hand(user as mob)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -19,22 +19,22 @@
 	var/amt_clown = 0
 	var/amt_adamantine = 0
 
-	for (var/obj/item/weapon/coin/C in contents)
-		if (istype(C,/obj/item/weapon/coin/diamond))
+	for (var/obj/item/money/coin/C in contents)
+		if (istype(C,/obj/item/money/coin/diamond))
 			amt_diamond++;
-		if (istype(C,/obj/item/weapon/coin/plasma))
+		if (istype(C,/obj/item/money/coin/plasma))
 			amt_plasma++;
-		if (istype(C,/obj/item/weapon/coin/iron))
+		if (istype(C,/obj/item/money/coin/iron))
 			amt_iron++;
-		if (istype(C,/obj/item/weapon/coin/silver))
+		if (istype(C,/obj/item/money/coin/silver))
 			amt_silver++;
-		if (istype(C,/obj/item/weapon/coin/gold))
+		if (istype(C,/obj/item/money/coin/gold))
 			amt_gold++;
-		if (istype(C,/obj/item/weapon/coin/uranium))
+		if (istype(C,/obj/item/money/coin/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/coin/clown))
+		if (istype(C,/obj/item/money/coin/clown))
 			amt_clown++;
-		if (istype(C,/obj/item/weapon/coin/adamantine))
+		if (istype(C,/obj/item/money/coin/adamantine))
 			amt_adamantine++;
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
@@ -56,44 +56,44 @@
 		dat += text("Adamantine coins: [amt_adamantine] <A href='?src=\ref[src];remove=adamantine'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
-/obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/money/bag/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = W
+	if (istype(W, /obj/item/money/coin))
+		var/obj/item/money/coin/C = W
 		user << "\blue You add the [C.name] into the bag."
 		usr.drop_item()
 		contents += C
-	if (istype(W, /obj/item/weapon/moneybag))
-		var/obj/item/weapon/moneybag/C = W
+	if (istype(W, /obj/item/money/bag))
+		var/obj/item/money/bag/C = W
 		for (var/obj/O in C.contents)
 			contents += O;
 		user << "\blue You empty the [C.name] into the bag."
 	return
 
-/obj/item/weapon/moneybag/Topic(href, href_list)
+/obj/item/money/bag/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["remove"])
-		var/obj/item/weapon/coin/COIN
+		var/obj/item/money/coin/COIN
 		switch(href_list["remove"])
 			if("gold")
-				COIN = locate(/obj/item/weapon/coin/gold,src.contents)
+				COIN = locate(/obj/item/money/coin/gold,src.contents)
 			if("silver")
-				COIN = locate(/obj/item/weapon/coin/silver,src.contents)
+				COIN = locate(/obj/item/money/coin/silver,src.contents)
 			if("iron")
-				COIN = locate(/obj/item/weapon/coin/iron,src.contents)
+				COIN = locate(/obj/item/money/coin/iron,src.contents)
 			if("diamond")
-				COIN = locate(/obj/item/weapon/coin/diamond,src.contents)
+				COIN = locate(/obj/item/money/coin/diamond,src.contents)
 			if("plasma")
-				COIN = locate(/obj/item/weapon/coin/plasma,src.contents)
+				COIN = locate(/obj/item/money/coin/plasma,src.contents)
 			if("uranium")
-				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
+				COIN = locate(/obj/item/money/coin/uranium,src.contents)
 			if("clown")
-				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
+				COIN = locate(/obj/item/money/coin/clown,src.contents)
 			if("adamantine")
-				COIN = locate(/obj/item/weapon/coin/adamantine,src.contents)
+				COIN = locate(/obj/item/money/coin/adamantine,src.contents)
 		if(!COIN)
 			return
 		COIN.loc = src.loc
@@ -101,14 +101,14 @@
 
 
 
-/obj/item/weapon/moneybag/vault
+/obj/item/money/bag/vault
 
-/obj/item/weapon/moneybag/vault/New()
+/obj/item/money/bag/vault/New()
 	..()
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/gold(src)
-	new /obj/item/weapon/coin/gold(src)
-	new /obj/item/weapon/coin/adamantine(src)
+	new /obj/item/money/coin/silver(src)
+	new /obj/item/money/coin/silver(src)
+	new /obj/item/money/coin/silver(src)
+	new /obj/item/money/coin/silver(src)
+	new /obj/item/money/coin/gold(src)
+	new /obj/item/money/coin/gold(src)
+	new /obj/item/money/coin/adamantine(src)

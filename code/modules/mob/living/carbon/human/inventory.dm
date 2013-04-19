@@ -336,7 +336,7 @@
 				if ((!( target.wear_id ) || !( target.w_uniform )))
 					del(src)
 			if("internal")
-				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
+				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/clothing/tank) && !( target.internal )) ) && !( target.internal )))
 					del(src)
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
@@ -546,10 +546,10 @@ It can still be worn/put on as normal.
 				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
 				source << "\red Repeat at least every 7 seconds."
 		if("dnainjector")
-			var/obj/item/weapon/dnainjector/S = item
+			var/obj/item/medical/dnainjector/S = item
 			if(S)
 				S.add_fingerprint(source)
-				if (!( istype(S, /obj/item/weapon/dnainjector) ))
+				if (!( istype(S, /obj/item/medical/dnainjector) ))
 					S.inuse = 0
 					del(src)
 				S.inject(target, source)
@@ -573,11 +573,11 @@ It can still be worn/put on as normal.
 				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
 					return
 				else
-					if (istype(target.back, /obj/item/weapon/tank))
+					if (istype(target.back, /obj/item/clothing/tank))
 						target.internal = target.back
-					else if (istype(target.s_store, /obj/item/weapon/tank))
+					else if (istype(target.s_store, /obj/item/clothing/tank))
 						target.internal = target.s_store
-					else if (istype(target.belt, /obj/item/weapon/tank))
+					else if (istype(target.belt, /obj/item/clothing/tank))
 						target.internal = target.belt
 					if (target.internal)
 						for(var/mob/M in viewers(target, 1))

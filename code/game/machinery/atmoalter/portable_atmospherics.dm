@@ -4,7 +4,7 @@
 	var/datum/gas_mixture/air_contents = new
 
 	var/obj/machinery/atmospherics/portables_connector/connected_port
-	var/obj/item/weapon/tank/holding
+	var/obj/item/clothing/tank/holding
 
 	var/volume = 0
 	var/destroyed = 0
@@ -76,17 +76,17 @@
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	var/obj/icon = src
-	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
+	if ((istype(W, /obj/item/clothing/tank) && !( src.destroyed )))
 		if (src.holding)
 			return
-		var/obj/item/weapon/tank/T = W
+		var/obj/item/clothing/tank/T = W
 		user.drop_item()
 		T.loc = src
 		src.holding = T
 		update_icon()
 		return
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/tool/wrench))
 		if(connected_port)
 			disconnect()
 			user << "\blue You disconnect [name] from the port."
@@ -106,7 +106,7 @@
 				user << "\blue Nothing happens."
 				return
 
-	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	else if ((istype(W, /obj/item/device/scanner/atmospheric)) && get_dist(user, src) <= 1)
 		visible_message("\red [user] has used [W] on \icon[icon]")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()

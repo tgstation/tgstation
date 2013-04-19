@@ -11,7 +11,7 @@
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
-	var/saved_item = "/obj/item/weapon/cigbutt"
+	var/saved_item = "/obj/item/trash/cigbutt"
 
 	dropped()
 		disrupt()
@@ -20,7 +20,7 @@
 		toggle()
 
 	afterattack(atom/target, mob/user , flag)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(istype(target,/obj/item) && !istype(target, /obj/item/office/disk/nuclear))
 			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			user << "\blue Scanned [target]."
 			saved_item = target.type

@@ -1,4 +1,4 @@
-/obj/item/robot_parts
+/obj/item/part/cyborg
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
 	item_state = "buildpipe"
@@ -8,71 +8,71 @@
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 
-/obj/item/robot_parts/l_arm
+/obj/item/part/cyborg/l_arm
 	name = "Cyborg Left Arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
 	construction_time = 200
 	construction_cost = list("metal"=18000)
 
-/obj/item/robot_parts/r_arm
+/obj/item/part/cyborg/r_arm
 	name = "Cyborg Right Arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
 	construction_time = 200
 	construction_cost = list("metal"=18000)
 
-/obj/item/robot_parts/l_leg
+/obj/item/part/cyborg/l_leg
 	name = "Cyborg Left Leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
 	construction_time = 200
 	construction_cost = list("metal"=15000)
 
-/obj/item/robot_parts/r_leg
+/obj/item/part/cyborg/r_leg
 	name = "Cyborg Right Leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
 	construction_time = 200
 	construction_cost = list("metal"=15000)
 
-/obj/item/robot_parts/chest
+/obj/item/part/cyborg/chest
 	name = "Cyborg Torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
 	construction_time = 350
 	construction_cost = list("metal"=40000)
 	var/wires = 0.0
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/part/cell/cell = null
 
-/obj/item/robot_parts/head
+/obj/item/part/cyborg/head
 	name = "Cyborg Head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
 	construction_time = 350
 	construction_cost = list("metal"=25000)
-	var/obj/item/device/flash/flash1 = null
-	var/obj/item/device/flash/flash2 = null
+	var/obj/item/security/flash/flash1 = null
+	var/obj/item/security/flash/flash2 = null
 
-/obj/item/robot_parts/robot_suit
+/obj/item/part/cyborg/robot_suit
 	name = "Cyborg Endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
 	construction_time = 500
 	construction_cost = list("metal"=50000)
-	var/obj/item/robot_parts/l_arm/l_arm = null
-	var/obj/item/robot_parts/r_arm/r_arm = null
-	var/obj/item/robot_parts/l_leg/l_leg = null
-	var/obj/item/robot_parts/r_leg/r_leg = null
-	var/obj/item/robot_parts/chest/chest = null
-	var/obj/item/robot_parts/head/head = null
+	var/obj/item/part/cyborg/l_arm/l_arm = null
+	var/obj/item/part/cyborg/r_arm/r_arm = null
+	var/obj/item/part/cyborg/l_leg/l_leg = null
+	var/obj/item/part/cyborg/r_leg/r_leg = null
+	var/obj/item/part/cyborg/chest/chest = null
+	var/obj/item/part/cyborg/head/head = null
 	var/created_name = ""
 
-/obj/item/robot_parts/robot_suit/New()
+/obj/item/part/cyborg/robot_suit/New()
 	..()
 	src.updateicon()
 
-/obj/item/robot_parts/robot_suit/proc/updateicon()
+/obj/item/part/cyborg/robot_suit/proc/updateicon()
 	src.overlays.Cut()
 	if(src.l_arm)
 		src.overlays += "l_arm+o"
@@ -87,7 +87,7 @@
 	if(src.head)
 		src.overlays += "head+o"
 
-/obj/item/robot_parts/robot_suit/proc/check_completion()
+/obj/item/part/cyborg/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
@@ -95,10 +95,10 @@
 				return 1
 	return 0
 
-/obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/part/cyborg/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+	if(istype(W, /obj/item/part/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
+		var/obj/item/part/frame/ed209/B = new /obj/item/part/frame/ed209
 		B.loc = get_turf(src)
 		user << "You armed the robot frame"
 		W:use(1)
@@ -106,35 +106,35 @@
 			user.before_take_item(src)
 			user.put_in_inactive_hand(B)
 		del(src)
-	if(istype(W, /obj/item/robot_parts/l_leg))
+	if(istype(W, /obj/item/part/cyborg/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
 		W.loc = src
 		src.l_leg = W
 		src.updateicon()
 
-	if(istype(W, /obj/item/robot_parts/r_leg))
+	if(istype(W, /obj/item/part/cyborg/r_leg))
 		if(src.r_leg)	return
 		user.drop_item()
 		W.loc = src
 		src.r_leg = W
 		src.updateicon()
 
-	if(istype(W, /obj/item/robot_parts/l_arm))
+	if(istype(W, /obj/item/part/cyborg/l_arm))
 		if(src.l_arm)	return
 		user.drop_item()
 		W.loc = src
 		src.l_arm = W
 		src.updateicon()
 
-	if(istype(W, /obj/item/robot_parts/r_arm))
+	if(istype(W, /obj/item/part/cyborg/r_arm))
 		if(src.r_arm)	return
 		user.drop_item()
 		W.loc = src
 		src.r_arm = W
 		src.updateicon()
 
-	if(istype(W, /obj/item/robot_parts/chest))
+	if(istype(W, /obj/item/part/cyborg/chest))
 		if(src.chest)	return
 		if(W:wires && W:cell)
 			user.drop_item()
@@ -146,7 +146,7 @@
 		else
 			user << "\blue You need to attach a cell to it first!"
 
-	if(istype(W, /obj/item/robot_parts/head))
+	if(istype(W, /obj/item/part/cyborg/head))
 		if(src.head)	return
 		if(W:flash2 && W:flash1)
 			user.drop_item()
@@ -156,8 +156,8 @@
 		else
 			user << "\blue You need to attach a flash to it first!"
 
-	if(istype(W, /obj/item/device/mmi))
-		var/obj/item/device/mmi/M = W
+	if(istype(W, /obj/item/medical/mmi))
+		var/obj/item/medical/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
 				user << "\red You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise."
@@ -215,7 +215,7 @@
 		else
 			user << "\blue The MMI must go in after everything else!"
 
-	if (istype(W, /obj/item/weapon/pen))
+	if (istype(W, /obj/item/office/pen))
 		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name, MAX_NAME_LEN)
 		if (!t)
 			return
@@ -226,9 +226,9 @@
 
 	return
 
-/obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/part/cyborg/chest/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/part/cell))
 		if(src.cell)
 			user << "\blue You have already inserted a cell!"
 			return
@@ -237,20 +237,20 @@
 			W.loc = src
 			src.cell = W
 			user << "\blue You insert the cell!"
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/part/cable_coil))
 		if(src.wires)
 			user << "\blue You have already inserted wire!"
 			return
 		else
-			var/obj/item/weapon/cable_coil/coil = W
+			var/obj/item/part/cable_coil/coil = W
 			coil.use(1)
 			src.wires = 1.0
 			user << "\blue You insert the wire!"
 	return
 
-/obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/part/cyborg/head/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/device/flash))
+	if(istype(W, /obj/item/security/flash))
 		if(src.flash1 && src.flash2)
 			user << "\blue You have already inserted the eyes!"
 			return

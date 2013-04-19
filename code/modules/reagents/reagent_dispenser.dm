@@ -94,8 +94,8 @@
 		reagents.add_reagent("fuel",1000)
 
 
-	bullet_act(var/obj/item/projectile/Proj)
-		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+	bullet_act(var/obj/item/weapon/projectile/Proj)
+		if(istype(Proj ,/obj/item/weapon/projectile/beam)||istype(Proj,/obj/item/weapon/projectile/bullet))
 			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 			explosion(src.loc,-1,0,2)

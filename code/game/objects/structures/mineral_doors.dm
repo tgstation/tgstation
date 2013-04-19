@@ -101,8 +101,8 @@
 			icon_state = mineralType
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/weapon/pickaxe))
-			var/obj/item/weapon/pickaxe/digTool = W
+		if(istype(W,/obj/item/mining/pickaxe))
+			var/obj/item/mining/pickaxe/digTool = W
 			user << "You start digging the [name]."
 			if(do_after(user,digTool.digspeed*hardness) && src)
 				user << "You finished digging."
@@ -116,7 +116,7 @@
 		return
 
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(var/obj/item/weapon/projectile/Proj)
 		hardness -= Proj.damage
 		..()
 		CheckHardness()
@@ -130,20 +130,20 @@
 	proc/Dismantle(devastated = 0)
 		if(!devastated)
 			if (mineralType == "metal")
-				var/ore = /obj/item/stack/sheet/metal
+				var/ore = /obj/item/part/stack/sheet/metal
 				for(var/i = 1, i <= oreAmount, i++)
 					new ore(get_turf(src))
 			else
-				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				var/ore = text2path("/obj/item/part/stack/sheet/mineral/[mineralType]")
 				for(var/i = 1, i <= oreAmount, i++)
 					new ore(get_turf(src))
 		else
 			if (mineralType == "metal")
-				var/ore = /obj/item/stack/sheet/metal
+				var/ore = /obj/item/part/stack/sheet/metal
 				for(var/i = 3, i <= oreAmount, i++)
 					new ore(get_turf(src))
 			else
-				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				var/ore = text2path("/obj/item/part/stack/sheet/mineral/[mineralType]")
 				for(var/i = 3, i <= oreAmount, i++)
 					new ore(get_turf(src))
 		del(src)
@@ -238,8 +238,8 @@
 	mineralType = "plasma"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(istype(W,/obj/item/tool/welder))
+			var/obj/item/tool/welder/WT = W
 			if(WT.remove_fuel(0, user))
 				TemperatureAct(100)
 		..()
@@ -299,7 +299,7 @@
 	Dismantle(devastated = 0)
 		if(!devastated)
 			for(var/i = 1, i <= oreAmount, i++)
-				new/obj/item/stack/sheet/wood(get_turf(src))
+				new/obj/item/part/stack/sheet/wood(get_turf(src))
 		del(src)
 
 /obj/structure/mineral_door/resin

@@ -10,9 +10,9 @@
 // I. The mill is intended to be loaded with produce and returns ground up items. For example: Wheat should become flour and grapes should become raisins.
 
 /obj/machinery/mill
-	var/list/obj/item/weapon/reagent_containers/food/input = list()
-	var/list/obj/item/weapon/reagent_containers/food/output = list()
-	var/obj/item/weapon/reagent_containers/food/milled_item
+	var/list/obj/item/chem/food/input = list()
+	var/list/obj/item/chem/food/output = list()
+	var/obj/item/chem/food/milled_item
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
@@ -44,11 +44,11 @@
 		return	//Not done yet.
 
 	switch(milled_item.type)
-		if(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)	//Wheat becomes flour
-			var/obj/item/weapon/reagent_containers/food/drinks/flour/F = new(src)
+		if(/obj/item/chem/food/snacks/grown/wheat)	//Wheat becomes flour
+			var/obj/item/chem/food/drinks/flour/F = new(src)
 			output += F
-		if(/obj/item/weapon/reagent_containers/food/drinks/flour)	//Flour is still flour
-			var/obj/item/weapon/reagent_containers/food/drinks/flour/F = new(src)
+		if(/obj/item/chem/food/drinks/flour)	//Flour is still flour
+			var/obj/item/chem/food/drinks/flour/F = new(src)
 			output += F
 		else
 			error = 1
@@ -57,7 +57,7 @@
 	busy = 0
 
 /obj/machinery/mill/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W,/obj/item/chem/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -65,7 +65,7 @@
 		..()
 
 /obj/machinery/mill/attack_hand(var/mob/user as mob)
-	for(var/obj/item/weapon/reagent_containers/food/F in output)
+	for(var/obj/item/chem/food/F in output)
 		F.loc = src.loc
 		output -= F
 
@@ -77,9 +77,9 @@
 // II. The fermenter is intended to be loaded with food items and returns medium-strength alcohol items, sucha s wine and beer.
 
 /obj/machinery/fermenter
-	var/list/obj/item/weapon/reagent_containers/food/input = list()
-	var/list/obj/item/weapon/reagent_containers/food/output = list()
-	var/obj/item/weapon/reagent_containers/food/fermenting_item
+	var/list/obj/item/chem/food/input = list()
+	var/list/obj/item/chem/food/output = list()
+	var/obj/item/chem/food/fermenting_item
 	var/water_level = 0
 	var/busy = 0
 	var/progress = 0
@@ -117,8 +117,8 @@
 		return	//Not done yet.
 
 	switch(fermenting_item.type)
-		if(/obj/item/weapon/reagent_containers/food/drinks/flour)	//Flour is still flour
-			var/obj/item/weapon/reagent_containers/food/drinks/beer/B = new(src)
+		if(/obj/item/chem/food/drinks/flour)	//Flour is still flour
+			var/obj/item/chem/food/drinks/beer/B = new(src)
 			output += B
 		else
 			error = 1
@@ -127,7 +127,7 @@
 	busy = 0
 
 /obj/machinery/fermenter/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W,/obj/item/chem/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -135,7 +135,7 @@
 		..()
 
 /obj/machinery/fermenter/attack_hand(var/mob/user as mob)
-	for(var/obj/item/weapon/reagent_containers/food/F in output)
+	for(var/obj/item/chem/food/F in output)
 		F.loc = src.loc
 		output -= F
 
@@ -144,9 +144,9 @@
 // III. The still is a machine that is loaded with food items and returns hard liquor, such as vodka.
 
 /obj/machinery/still
-	var/list/obj/item/weapon/reagent_containers/food/input = list()
-	var/list/obj/item/weapon/reagent_containers/food/output = list()
-	var/obj/item/weapon/reagent_containers/food/destilling_item
+	var/list/obj/item/chem/food/input = list()
+	var/list/obj/item/chem/food/output = list()
+	var/obj/item/chem/food/destilling_item
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
@@ -178,8 +178,8 @@
 		return	//Not done yet.
 
 	switch(destilling_item.type)
-		if(/obj/item/weapon/reagent_containers/food/drinks/beer)	//Flour is still flour
-			var/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/V = new(src)
+		if(/obj/item/chem/food/drinks/beer)	//Flour is still flour
+			var/obj/item/chem/food/drinks/bottle/vodka/V = new(src)
 			output += V
 		else
 			error = 1
@@ -188,7 +188,7 @@
 	busy = 0
 
 /obj/machinery/still/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W,/obj/item/chem/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -196,7 +196,7 @@
 		..()
 
 /obj/machinery/still/attack_hand(var/mob/user as mob)
-	for(var/obj/item/weapon/reagent_containers/food/F in output)
+	for(var/obj/item/chem/food/F in output)
 		F.loc = src.loc
 		output -= F
 
@@ -206,8 +206,8 @@
 // IV. The squeezer is intended to destroy inserted food items, but return some of the reagents they contain.
 
 /obj/machinery/squeezer
-	var/list/obj/item/weapon/reagent_containers/food/input = list()
-	var/obj/item/weapon/reagent_containers/food/squeezed_item
+	var/list/obj/item/chem/food/input = list()
+	var/obj/item/chem/food/squeezed_item
 	var/water_level = 0
 	var/busy = 0
 	var/progress = 0
@@ -228,9 +228,9 @@
 // V. The centrifuge spins inserted food items. It is intended to squeeze out the reagents that are common food catalysts (enzymes currently)
 
 /obj/machinery/centrifuge
-	var/list/obj/item/weapon/reagent_containers/food/input = list()
-	var/list/obj/item/weapon/reagent_containers/food/output = list()
-	var/obj/item/weapon/reagent_containers/food/spinning_item
+	var/list/obj/item/chem/food/input = list()
+	var/list/obj/item/chem/food/output = list()
+	var/obj/item/chem/food/spinning_item
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
@@ -273,7 +273,7 @@
 	busy = 0
 
 /obj/machinery/centrifuge/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W,/obj/item/chem/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -281,10 +281,10 @@
 		..()
 
 /obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
-	for(var/obj/item/weapon/reagent_containers/food/F in output)
+	for(var/obj/item/chem/food/F in output)
 		F.loc = src.loc
 		output -= F
 	while(enzymes >= 50)
 		enzymes -= 50
-		new/obj/item/weapon/reagent_containers/food/condiment/enzyme(src.loc)
+		new/obj/item/chem/food/condiment/enzyme(src.loc)
 

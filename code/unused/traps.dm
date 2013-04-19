@@ -125,10 +125,10 @@
 
 	var/list/varieties = list()
 
-	varieties = typesof(/obj/item/weapon/ore)
-	varieties -= /obj/item/weapon/ore/diamond  //don't want easily available rare ores, hmm?
-	varieties -= /obj/item/weapon/ore/uranium
-	varieties -= /obj/item/weapon/ore/slag     //that'd be just stupid
+	varieties = typesof(/obj/item/mining/ore)
+	varieties -= /obj/item/mining/ore/diamond  //don't want easily available rare ores, hmm?
+	varieties -= /obj/item/mining/ore/uranium
+	varieties -= /obj/item/mining/ore/slag     //that'd be just stupid
 
 	return varieties
 
@@ -141,7 +141,7 @@
 		for(var/i=0,i<rocks_amt,i++)
 			var/turf/hit_loc = pick(targets)
 			var/rock_type = pick(rocks_type)
-			var/obj/item/weapon/ore/rock = new rock_type(hit_loc)
+			var/obj/item/mining/ore/rock = new rock_type(hit_loc)
 			for(var/mob/living/M in hit_loc)
 				if(prob(rocks_hit_chance))
 					M.take_organ_damage(rand(rocks_min_dmg,rocks_max_dmg))
@@ -151,7 +151,7 @@
 		for(var/i=0,i<rocks_amt,i++)
 			var/mob/living/hit_loc = pick(targets)
 			var/rock_type = pick(rocks_type)
-			var/obj/item/weapon/ore/rock = new rock_type(hit_loc.loc)
+			var/obj/item/mining/ore/rock = new rock_type(hit_loc.loc)
 			if(prob(rocks_hit_chance))
 				hit_loc.take_organ_damage(rand(rocks_min_dmg,rocks_max_dmg))
 				hit_loc << "A chunk of [lowertext(rock.name)] hits you in the head!"
@@ -179,16 +179,16 @@
 
 	var/list/varieties = list()
 
-	varieties = typesof(/obj/item/weapon/ore)
-	varieties -= /obj/item/weapon/ore/diamond  //don't want easily available rare ores, hmm?
-	varieties -= /obj/item/weapon/ore/uranium
-	varieties -= /obj/item/weapon/ore/slag     //that'd be just stupid
+	varieties = typesof(/obj/item/mining/ore)
+	varieties -= /obj/item/mining/ore/diamond  //don't want easily available rare ores, hmm?
+	varieties -= /obj/item/mining/ore/uranium
+	varieties -= /obj/item/mining/ore/slag     //that'd be just stupid
 
 	return varieties
 
 /obj/effect/trap/single/rockfalls/activate(mob/living/victim)
 	var/rock_type = pick(rocks_type)
-	var/obj/item/weapon/ore/rock = new rock_type(victim:loc)
+	var/obj/item/mining/ore/rock = new rock_type(victim:loc)
 	if (istype(victim) && prob(rock_hit_chance))
 		var/dmg = rand(rock_min_dmg,rock_max_dmg)
 		if(istype(victim, /mob/living/carbon/human))

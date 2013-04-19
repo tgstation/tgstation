@@ -1,4 +1,4 @@
-/obj/item/weapon/camera_assembly
+/obj/item/part/frame/camera
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
@@ -10,7 +10,7 @@
 	g_amt = 300
 
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
+	var/list/obj/item/possible_upgrades = list(/obj/item/part/assembly/prox_sensor, /obj/item/part/stack/sheet/mineral/plasma, /obj/item/chem/food/snacks/grown/carrot)
 	var/list/upgrades = list()
 	var/state = 0
 	var/busy = 0
@@ -22,7 +22,7 @@
 				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/item/weapon/camera_assembly/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/item/part/frame/camera/attackby(obj/item/W as obj, mob/living/user as mob)
 
 	switch(state)
 
@@ -57,7 +57,7 @@
 		if(2)
 			// State 2
 			if(iscoil(W))
-				var/obj/item/weapon/cable_coil/C = W
+				var/obj/item/part/cable_coil/C = W
 				if(C.use(2))
 					user << "You add wires to the assembly."
 					state = 3
@@ -110,7 +110,7 @@
 
 			else if(iswirecutter(W))
 
-				new/obj/item/weapon/cable_coil(get_turf(src), 2)
+				new/obj/item/part/cable_coil(get_turf(src), 2)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the wires from the circuits."
 				state = 2
@@ -136,17 +136,17 @@
 
 	..()
 
-/obj/item/weapon/camera_assembly/update_icon()
+/obj/item/part/frame/camera/update_icon()
 	if(anchored)
 		icon_state = "camera1"
 	else
 		icon_state = "cameracase"
 
-/obj/item/weapon/camera_assembly/attack_hand(mob/user as mob)
+/obj/item/part/frame/camera/attack_hand(mob/user as mob)
 	if(!anchored)
 		..()
 
-/obj/item/weapon/camera_assembly/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+/obj/item/part/frame/camera/proc/weld(var/obj/item/tool/welder/WT, var/mob/user)
 
 	if(busy)
 		return 0

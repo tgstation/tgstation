@@ -1,4 +1,4 @@
-/obj/item/weapon/implantcase
+/obj/item/medical/implantcase
 	name = "glass case"
 	desc = "A case containing an implant."
 	icon_state = "implantcase-0"
@@ -6,19 +6,19 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 1.0
-	var/obj/item/weapon/implant/imp = null
+	var/obj/item/medical/implant/imp = null
 
 
-/obj/item/weapon/implantcase/update_icon()
+/obj/item/medical/implantcase/update_icon()
 	if(imp)
 		icon_state = "implantcase-[imp.color]"
 	else
 		icon_state = "implantcase-0"
 
 
-/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user)
+/obj/item/medical/implantcase/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/office/pen))
 		var/t = input(user, "What would you like the label to be?", name, null) as text
 		if(user.get_active_hand() != W)
 			return
@@ -29,7 +29,7 @@
 			name = "glass case- '[t]'"
 		else
 			name = "glass case"
-	else if(istype(W, /obj/item/weapon/reagent_containers/syringe))
+	else if(istype(W, /obj/item/chem/syringe))
 		if(!imp)	return
 		if(!imp.allow_reagents)	return
 		if(imp.reagents.total_volume >= imp.reagents.maximum_volume)
@@ -37,8 +37,8 @@
 		else
 			W.reagents.trans_to(imp, 5)
 			user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [W.reagents.total_volume] units.</span>"
-	else if(istype(W, /obj/item/weapon/implanter))
-		var/obj/item/weapon/implanter/I = W
+	else if(istype(W, /obj/item/medical/implanter))
+		var/obj/item/medical/implanter/I = W
 		if(I.imp)
 			if((imp || I.imp.implanted))
 				return
@@ -58,45 +58,45 @@
 			I.update_icon()
 
 
-/obj/item/weapon/implantcase/tracking
+/obj/item/medical/implantcase/tracking
 	name = "glass case- 'Tracking'"
 	desc = "A case containing a tracking implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
-/obj/item/weapon/implantcase/tracking/New()
-	imp = new /obj/item/weapon/implant/tracking(src)
+/obj/item/medical/implantcase/tracking/New()
+	imp = new /obj/item/medical/implant/tracking(src)
 	..()
 
 
-/obj/item/weapon/implantcase/explosive
+/obj/item/medical/implantcase/explosive
 	name = "glass case- 'Explosive'"
 	desc = "A case containing an explosive implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
-/obj/item/weapon/implantcase/explosive/New()
-	imp = new /obj/item/weapon/implant/explosive(src)
+/obj/item/medical/implantcase/explosive/New()
+	imp = new /obj/item/medical/implant/explosive(src)
 	..()
 
 
-/obj/item/weapon/implantcase/chem
+/obj/item/medical/implantcase/chem
 	name = "glass case- 'Chem'"
 	desc = "A case containing a chemical implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
-/obj/item/weapon/implantcase/chem/New()
-	imp = new /obj/item/weapon/implant/chem(src)
+/obj/item/medical/implantcase/chem/New()
+	imp = new /obj/item/medical/implant/chem(src)
 	..()
 
 
-/obj/item/weapon/implantcase/loyalty
+/obj/item/medical/implantcase/loyalty
 	name = "glass case- 'Loyalty'"
 	desc = "A case containing a loyalty implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
-/obj/item/weapon/implantcase/loyalty/New()
-	imp = new /obj/item/weapon/implant/loyalty(src)
+/obj/item/medical/implantcase/loyalty/New()
+	imp = new /obj/item/medical/implant/loyalty(src)
 	..()

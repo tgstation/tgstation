@@ -1,4 +1,4 @@
-/obj/item/weapon/paper/talisman
+/obj/item/office/paper/talisman
 	icon_state = "paper_talisman"
 	var/imbue = null
 	var/uses = 0
@@ -88,29 +88,29 @@
 		if (href_list["rune"])
 			switch(href_list["rune"])
 				if("newtome")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "newtome"
 				if("teleport")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "[pick("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri", "orkan", "allaq")]"
 					T.info = "[T.imbue]"
 				if("emp")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "emp"
 				if("conceal")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "conceal"
 				if("communicate")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "communicate"
 				if("runestun")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "runestun"
 				if("armor")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/office/paper/talisman/T = new /obj/item/office/paper/talisman(get_turf(usr))
 					T.imbue = "armor"
 				if("soulstone")
-					new /obj/item/device/soulstone(get_turf(usr))
+					new /obj/item/magic/soulstone(get_turf(usr))
 				if("construct")
 					new /obj/structure/constructshell(get_turf(usr))
 			src.uses--
@@ -118,6 +118,6 @@
 		return
 
 
-/obj/item/weapon/paper/talisman/supply
+/obj/item/office/paper/talisman/supply
 	imbue = "supply"
 	uses = 5

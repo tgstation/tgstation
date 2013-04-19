@@ -7,11 +7,11 @@
 	w_class = 3.0
 	m_amt = 1000
 
-	var/ammo_type = "/obj/item/ammo_casing/a357"
+	var/ammo_type = "/obj/item/weapon/ammo/casing/a357"
 	var/list/loaded = list()
 	var/max_shells = 7
 	var/load_method = 0 //0 = Single shells or quick loader, 1 = box, 2 = magazine
-	var/obj/item/ammo_magazine/empty_mag = null
+	var/obj/item/weapon/ammo/magazine/empty_mag = null
 
 
 /obj/item/weapon/gun/projectile/New()
@@ -28,7 +28,7 @@
 
 	if(!loaded.len)
 		return 0
-	var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
+	var/obj/item/weapon/ammo/casing/AC = loaded[1] //load next casing.
 	loaded -= AC //Remove casing from loaded list.
 	if(isnull(AC) || !istype(AC))
 		return 0
@@ -45,10 +45,10 @@
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
 
 	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_magazine))
+	if(istype(A, /obj/item/weapon/ammo/magazine))
 		if((load_method == 2) && loaded.len)	return
-		var/obj/item/ammo_magazine/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
+		var/obj/item/weapon/ammo/magazine/AM = A
+		for(var/obj/item/weapon/ammo/casing/AC in AM.stored_ammo)
 			if(loaded.len >= max_shells)
 				break
 			if(AC.caliber == caliber && loaded.len < max_shells)
@@ -60,8 +60,8 @@
 			user.remove_from_mob(AM)
 			empty_mag = AM
 			empty_mag.loc = src
-	if(istype(A, /obj/item/ammo_casing) && !load_method)
-		var/obj/item/ammo_casing/AC = A
+	if(istype(A, /obj/item/weapon/ammo/casing) && !load_method)
+		var/obj/item/weapon/ammo/casing/AC = A
 		if(AC.caliber == caliber && loaded.len < max_shells)
 			user.drop_item()
 			AC.loc = src
@@ -85,7 +85,7 @@
 
 /obj/item/weapon/gun/projectile/proc/getAmmo()
 	var/bullets = 0
-	for(var/obj/item/ammo_casing/AC in loaded)
+	for(var/obj/item/weapon/ammo/casing/AC in loaded)
 		if(istype(AC))
 			bullets += 1
 	return bullets

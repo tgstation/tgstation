@@ -5,7 +5,7 @@
 	item_state = "labcoat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
+	allowed = list(/obj/item/device/scanner/atmospheric,/obj/item/part/stack/medical,/obj/item/medical/dnainjector,/obj/item/chem/dropper,/obj/item/chem/syringe,/obj/item/chem/hypospray,/obj/item/device/scanner/health,/obj/item/tool/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 
 	verb/toggle()

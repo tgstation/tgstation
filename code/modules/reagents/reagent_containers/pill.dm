@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills.
 ////////////////////////////////////////////////////////////////////////////////
-/obj/item/weapon/reagent_containers/pill
+/obj/item/chem/pill
 	name = "pill"
 	desc = "A tablet or capsule."
 	icon = 'icons/obj/chemical.dmi'
@@ -78,7 +78,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Pills
-/obj/item/weapon/reagent_containers/pill/antitox
+/obj/item/chem/pill/antitox
 	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
@@ -86,7 +86,7 @@
 		..()
 		reagents.add_reagent("anti_toxin", 50)
 
-/obj/item/weapon/reagent_containers/pill/tox
+/obj/item/chem/pill/tox
 	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
@@ -94,7 +94,7 @@
 		..()
 		reagents.add_reagent("toxin", 50)
 
-/obj/item/weapon/reagent_containers/pill/cyanide
+/obj/item/chem/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
@@ -102,7 +102,7 @@
 		..()
 		reagents.add_reagent("cyanide", 50)
 
-/obj/item/weapon/reagent_containers/pill/adminordrazine
+/obj/item/chem/pill/adminordrazine
 	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
@@ -110,7 +110,7 @@
 		..()
 		reagents.add_reagent("adminordrazine", 50)
 
-/obj/item/weapon/reagent_containers/pill/stox
+/obj/item/chem/pill/stox
 	name = "sleeping pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
@@ -118,7 +118,7 @@
 		..()
 		reagents.add_reagent("stoxin", 30)
 
-/obj/item/weapon/reagent_containers/pill/kelotane
+/obj/item/chem/pill/kelotane
 	name = "kelotane pill"
 	desc = "Used to treat burns."
 	icon_state = "pill11"
@@ -126,7 +126,7 @@
 		..()
 		reagents.add_reagent("kelotane", 30)
 
-/obj/item/weapon/reagent_containers/pill/inaprovaline
+/obj/item/chem/pill/inaprovaline
 	name = "inaprovaline pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill20"
@@ -134,7 +134,7 @@
 		..()
 		reagents.add_reagent("inaprovaline", 30)
 
-/obj/item/weapon/reagent_containers/pill/dexalin
+/obj/item/chem/pill/dexalin
 	name = "dexalin pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
@@ -142,7 +142,7 @@
 		..()
 		reagents.add_reagent("dexalin", 30)
 
-/obj/item/weapon/reagent_containers/pill/bicaridine
+/obj/item/chem/pill/bicaridine
 	name = "bicaridine pill"
 	desc = "Used to treat physical injuries."
 	icon_state = "pill18"

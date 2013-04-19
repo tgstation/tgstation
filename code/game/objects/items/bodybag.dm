@@ -1,32 +1,32 @@
 //Also contains /obj/structure/closet/body_bag because I doubt anyone would think to look for bodybags in /object/structures
 
-/obj/item/bodybag
+/obj/item/medical/bodybag
 	name = "body bag"
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
 	w_class = 2
 
-/obj/item/bodybag/attack_self(mob/user)
+/obj/item/medical/bodybag/attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
 		R.add_fingerprint(user)
 		del(src)
 
 
-/obj/item/weapon/storage/box/bodybags
+/obj/item/storage/box/bodybags
 	name = "body bags"
 	desc = "The label indicates that it contains body bags."
 	icon_state = "bodybags"
 
 	New()
 		..()
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
+		new /obj/item/medical/bodybag(src)
+		new /obj/item/medical/bodybag(src)
+		new /obj/item/medical/bodybag(src)
+		new /obj/item/medical/bodybag(src)
+		new /obj/item/medical/bodybag(src)
+		new /obj/item/medical/bodybag(src)
+		new /obj/item/medical/bodybag(src)
 
 
 /obj/structure/closet/body_bag
@@ -40,7 +40,7 @@
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/pen))
+	if (istype(I, /obj/item/office/pen))
 		var/t = input(user, "What would you like the label to be?", name, null) as text
 		if(user.get_active_hand() != I)
 			return
@@ -54,7 +54,7 @@
 		else
 			name = "body bag"
 		return
-	else if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/part/wirecutters))
 		user << "<span class='notice'>You cut the tag off of [src].</span>"
 		name = "body bag"
 		overlays.Cut()
@@ -77,7 +77,7 @@
 		if(contents.len)
 			return 0
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new /obj/item/bodybag(get_turf(src))
+		var/obj/item/medical/bodybag/B = new /obj/item/medical/bodybag(get_turf(src))
 		usr.put_in_hands(B)
 		del(src)
 

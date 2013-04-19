@@ -115,7 +115,7 @@
 			src.authenticated = 1
 			src.rank = "AI"
 			src.screen = 1
-		else if (istype(src.master.authid, /obj/item/weapon/card/id))
+		else if (istype(src.master.authid, /obj/item/security/card/id))
 			src.active1 = null
 			src.active2 = null
 			if (src.check_access(src.master.authid))

@@ -254,7 +254,7 @@
 					if(!selection)	return
 					if(loc==startloc)
 						for(var/obj/item/carried_item in contents)//If the monkey got on objects.
-							if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+							if( !istype(carried_item, /obj/item/medical/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
 								src << "\red You can't be carrying items or have items equipped when vent crawling!"
 								return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
@@ -318,12 +318,12 @@
 	var/obj/item/W = get_active_hand()
 	if( !W )//Not holding anything
 		if( client && (TK in mutations) )
-			var/obj/item/tk_grab/O = new(src)
+			var/obj/item/effect/telekinesis/O = new(src)
 			put_in_active_hand(O)
 			O.host = src
 		return
 
-	if( istype(W,/obj/item/tk_grab) )
+	if( istype(W,/obj/item/effect/telekinesis) )
 		if(hand)	del(l_hand)
 		else		del(r_hand)
 		return
@@ -351,8 +351,8 @@
 
 	if(!item) return
 
-	if (istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
+	if (istype(item, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = item
 		item = G.throw() //throw the person instead of the grab
 		del(G)			//We delete the grab, as it needs to stay around until it's returned.
 		if(ismob(item))
@@ -472,7 +472,7 @@
 	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/clothing/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>

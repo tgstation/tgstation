@@ -8,7 +8,7 @@
 	var/on = 0
 	var/temperature_archived
 	var/mob/living/carbon/occupant = null
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/chem/beaker = null
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 
@@ -134,7 +134,7 @@
 			update_icon()
 		if(href_list["eject"])
 			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				var/obj/item/chem/glass/B = beaker
 				B.loc = get_step(loc, SOUTH)
 				beaker = null
 
@@ -143,7 +143,7 @@
 
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/chem/glass))
 		if(beaker)
 			user << "<span class='notice'>A beaker is already loaded into [src].</span>"
 			return
@@ -153,8 +153,8 @@
 		I.loc = src
 		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
 							"<span class='notice'>You place [I] in [src].</span>")
-	else if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
+	else if(istype(I, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = I
 		if(!ismob(G.affecting))
 			return
 		for(var/mob/living/carbon/slime/M in range(1, G.affecting))

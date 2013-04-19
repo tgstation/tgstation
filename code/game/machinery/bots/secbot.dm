@@ -57,7 +57,7 @@
 	idcheck = 0
 	auto_patrol = 1
 
-/obj/item/weapon/secbot_assembly
+/obj/item/part/frame/secbot
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
 	icon = 'icons/obj/aibots.dmi'
@@ -73,7 +73,7 @@
 		..()
 		src.icon_state = "secbot[src.on]"
 		spawn(3)
-			src.botcard = new /obj/item/weapon/card/id(src)
+			src.botcard = new /obj/item/security/card/id(src)
 			var/datum/job/detective/J = new/datum/job/detective
 			src.botcard.access = J.get_access()
 			if(radio_controller)
@@ -157,7 +157,7 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/security/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
@@ -170,7 +170,7 @@ Auto Patrol: []"},
 				user << "\red Access denied."
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
+		if(!istype(W, /obj/item/tool/screwdriver) && (W.force) && (!src.target))
 			src.target = user
 			src.mode = SECBOT_HUNT
 
@@ -272,7 +272,7 @@ Auto Patrol: []"},
 								return
 
 							if(istype(src.target,/mob/living/carbon))
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.handcuffed = new /obj/item/security/handcuffs(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 
 							mode = SECBOT_IDLE
@@ -624,14 +624,14 @@ Auto Patrol: []"},
 			threatcount += 2
 
 		//Agent cards lower threatlevel.
-		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/security/card/id/syndicate))
 			threatcount -= 2
 
 	if(src.check_records)
 		for (var/datum/data/record/E in data_core.general)
 			var/perpname = perp.name
 			if(perp.wear_id)
-				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
+				var/obj/item/security/card/id/id = perp.wear_id.GetID()
 				if(id)
 					perpname = id.registered_name
 
@@ -674,17 +674,17 @@ Auto Patrol: []"},
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
-	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
+	var/obj/item/part/frame/secbot/Sa = new /obj/item/part/frame/secbot(Tsec)
 	Sa.build_step = 1
 	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/part/assembly/prox_sensor(Tsec)
 
 	var/obj/item/weapon/melee/baton/B = new /obj/item/weapon/melee/baton(Tsec)
 	B.charges = 0
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_arm(Tsec)
+		new /obj/item/part/cyborg/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
@@ -701,7 +701,7 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/attackby(var/obj/item/part/assembly/signaler/S, mob/user as mob)
 	..()
 	if(!issignaler(S))
 		..()
@@ -712,7 +712,7 @@ Auto Patrol: []"},
 
 	if(S.secured)
 		del(S)
-		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+		var/obj/item/part/frame/secbot/A = new /obj/item/part/frame/secbot
 		user.put_in_hands(A)
 		user << "You add the signaler to the helmet."
 		user.drop_from_inventory(src)
@@ -720,10 +720,10 @@ Auto Patrol: []"},
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/part/frame/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
-		var/obj/item/weapon/weldingtool/WT = W
+	if((istype(W, /obj/item/tool/welder)) && (!src.build_step))
+		var/obj/item/tool/welder/WT = W
 		if(WT.remove_fuel(0,user))
 			src.build_step++
 			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
@@ -737,7 +737,7 @@ Auto Patrol: []"},
 		src.name = "helmet/signaler/prox sensor assembly"
 		del(W)
 
-	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
+	else if(((istype(W, /obj/item/part/cyborg/l_arm)) || (istype(W, /obj/item/part/cyborg/r_arm))) && (src.build_step == 2))
 		user.drop_item()
 		src.build_step++
 		user << "You add the robot arm to [src]!"
@@ -755,7 +755,7 @@ Auto Patrol: []"},
 		del(W)
 		del(src)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/office/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if(!t)
 			return

@@ -99,7 +99,7 @@
 
 /obj/machinery/atmoalter/siphs/fullairsiphon/air_vent/attackby(W as obj, user as mob)
 
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (istype(W, /obj/item/tool/screwdriver))
 		if (src.c_status)
 			src.anchored = 1
 			src.c_status = 0
@@ -108,7 +108,7 @@
 				src.anchored = 1
 				src.c_status = 3
 	else
-		if (istype(W, /obj/item/weapon/wrench))
+		if (istype(W, /obj/item/tool/wrench))
 			src.alterable = !( src.alterable )
 	return
 
@@ -221,7 +221,7 @@
 
 /obj/machinery/atmoalter/siphs/scrubbers/air_filter/attackby(W as obj, user as mob)
 
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (istype(W, /obj/item/tool/screwdriver))
 		if (src.c_status)
 			src.anchored = 1
 			src.c_status = 0
@@ -230,7 +230,7 @@
 				src.anchored = 1
 				src.c_status = 3
 	else
-		if (istype(W, /obj/item/weapon/wrench))
+		if (istype(W, /obj/item/tool/wrench))
 			src.alterable = !( src.alterable )
 	return
 
@@ -477,15 +477,15 @@
 
 /obj/machinery/atmoalter/siphs/attackby(var/obj/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/tank))
+	if (istype(W, /obj/item/clothing/tank))
 		if (src.holding)
 			return
-		var/obj/item/weapon/tank/T = W
+		var/obj/item/clothing/tank/T = W
 		user.drop_item()
 		T.loc = src
 		src.holding = T
 	else
-		if (istype(W, /obj/item/weapon/screwdriver))
+		if (istype(W, /obj/item/tool/screwdriver))
 			var/obj/machinery/connector/con = locate(/obj/machinery/connector, src.loc)
 			if (src.c_status)
 				src.anchored = 0
@@ -504,7 +504,7 @@
 
 
 		else
-			if (istype(W, /obj/item/weapon/wrench))
+			if (istype(W, /obj/item/tool/wrench))
 				src.alterable = !( src.alterable )
 				if (src.alterable)
 					user << "\blue You unlock the interface!"

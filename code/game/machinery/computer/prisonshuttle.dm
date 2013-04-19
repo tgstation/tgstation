@@ -15,7 +15,7 @@ var/prison_shuttle_timeleft = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_security)
-	circuit = "/obj/item/weapon/circuitboard/prison_shuttle"
+	circuit = "/obj/item/part/circuitboard/prison_shuttle"
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
@@ -35,11 +35,11 @@ var/prison_shuttle_timeleft = 0
 
 
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/tool/screwdriver))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/prison_shuttle/M = new /obj/item/weapon/circuitboard/prison_shuttle( A )
+				var/obj/item/part/circuitboard/prison_shuttle/M = new /obj/item/part/circuitboard/prison_shuttle( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -47,7 +47,7 @@ var/prison_shuttle_timeleft = 0
 
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
-					new /obj/item/weapon/shard( src.loc )
+					new /obj/item/trash/shard( src.loc )
 					A.state = 3
 					A.icon_state = "3"
 				else
@@ -56,7 +56,7 @@ var/prison_shuttle_timeleft = 0
 					A.icon_state = "4"
 
 				del(src)
-		else if(istype(I,/obj/item/weapon/card/emag) && (!hacked))
+		else if(istype(I,/obj/item/security/card/emag) && (!hacked))
 			hacked = 1
 			user << "\blue You disable the lock."
 		else

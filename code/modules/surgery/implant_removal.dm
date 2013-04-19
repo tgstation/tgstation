@@ -7,12 +7,12 @@
 
 //extract implant
 /datum/surgery_step/extract_implant
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 65)
+	implements = list(/obj/item/medical/hemostat = 100, /obj/item/tool/crowbar = 65)
 	time = 64
-	var/obj/item/weapon/implant/I = null
+	var/obj/item/medical/implant/I = null
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/obj/item/weapon/implant/W in target)
+	for(var/obj/item/medical/implant/W in target)
 		if(W.imp_in == target)	//Checking that it's actually implanted, not just in his pocket
 			I = W
 			break
@@ -24,7 +24,7 @@
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
 		user.visible_message("<span class='notice'>[user] successfully removes [I] implant from [target]'s [target_zone]!</span>")
-		if(istype(I, /obj/item/weapon/implant/loyalty))
+		if(istype(I, /obj/item/medical/implant/loyalty))
 			target << "<span class='notice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
 		del(I)
 	else

@@ -128,12 +128,12 @@
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
 
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
+			new /obj/item/trash/shard( W.loc )
+			if(W.reinf) new /obj/item/part/stack/rods( W.loc)
 
 			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
+				new /obj/item/trash/shard( W.loc )
+				if(W.reinf) new /obj/item/part/stack/rods( W.loc)
 		del(A)
 
 

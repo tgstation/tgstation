@@ -31,7 +31,7 @@
 
 // Items removed from above:
 /*
-/obj/item/weapon/cloaking_device:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
+/obj/item/device/cloaking:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
 */
 
 /datum/game_mode/proc/announce() //to be calles when round starts
@@ -184,7 +184,7 @@
 
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+			var/obj/item/office/paper/intercept = new /obj/item/office/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
 			intercept.info = intercepttext
 

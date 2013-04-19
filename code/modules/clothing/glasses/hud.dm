@@ -85,7 +85,7 @@
 		if(!C) continue
 		var/perpname = "wot"
 		if(perp.wear_id)
-			var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
+			var/obj/item/security/card/id/I = perp.wear_id.GetID()
 			if(I)
 				C.images += image(tempHud, perp, "hud[ckey(I.GetJobName())]")
 				perpname = I.registered_name
@@ -111,11 +111,11 @@
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
 						C.images += image(tempHud, perp, "hudreleased")
 						break
-		for(var/obj/item/weapon/implant/I in perp)
+		for(var/obj/item/medical/implant/I in perp)
 			if(I.implanted)
-				if(istype(I,/obj/item/weapon/implant/tracking))
+				if(istype(I,/obj/item/medical/implant/tracking))
 					C.images += image(tempHud, perp, "hud_imp_tracking")
-				if(istype(I,/obj/item/weapon/implant/loyalty))
+				if(istype(I,/obj/item/medical/implant/loyalty))
 					C.images += image(tempHud, perp, "hud_imp_loyal")
-				if(istype(I,/obj/item/weapon/implant/chem))
+				if(istype(I,/obj/item/medical/implant/chem))
 					C.images += image(tempHud, perp, "hud_imp_chem")

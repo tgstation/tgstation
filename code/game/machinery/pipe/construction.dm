@@ -21,7 +21,7 @@ Buildable meters
 #define PIPE_VOLUME_PUMP        16
 #define PIPE_HEAT_EXCHANGE      17
 
-/obj/item/pipe
+/obj/item/part/pipe
 	name = "pipe"
 	desc = "A pipe"
 	var/pipe_type = 0
@@ -35,7 +35,7 @@ Buildable meters
 	w_class = 3
 	level = 2
 
-/obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
+/obj/item/part/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
 	..()
 	if (make_from)
 		src.dir = make_from.dir
@@ -85,7 +85,7 @@ Buildable meters
 
 //update the name and icon of the pipe item depending on the type
 
-/obj/item/pipe/proc/update()
+/obj/item/part/pipe/proc/update()
 	var/list/nlist = list( \
 		"pipe", \
 		"bent pipe", \
@@ -134,7 +134,7 @@ Buildable meters
 
 // rotate the pipe item clockwise
 
-/obj/item/pipe/verb/rotate()
+/obj/item/part/pipe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate Pipe"
 	set src in view(1)
@@ -152,7 +152,7 @@ Buildable meters
 	//src.pipe_dir = get_pipe_dir()
 	return
 
-/obj/item/pipe/Move()
+/obj/item/part/pipe/Move()
 	..()
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
 		&& (src.dir in cardinal))
@@ -166,7 +166,7 @@ Buildable meters
 
 // returns all pipe's endpoints
 
-/obj/item/pipe/proc/get_pipe_dir()
+/obj/item/part/pipe/proc/get_pipe_dir()
 	if (!dir)
 		return 0
 	var/flip = turn(dir, 180)
@@ -194,7 +194,7 @@ Buildable meters
 			return dir|flip|cw
 	return 0
 
-/obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
+/obj/item/part/pipe/proc/get_pdir() //endpoints for regular pipes
 
 	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -211,7 +211,7 @@ Buildable meters
 
 // return the h_dir (heat-exchange pipes) from the type and the dir
 
-/obj/item/pipe/proc/get_hdir() //endpoints for h/e pipes
+/obj/item/part/pipe/proc/get_hdir() //endpoints for h/e pipes
 
 //	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -226,13 +226,13 @@ Buildable meters
 		else
 			return 0
 
-/obj/item/pipe/attack_self(mob/user as mob)
+/obj/item/part/pipe/attack_self(mob/user as mob)
 	return rotate()
 
-/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/part/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()
 	//*
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(W, /obj/item/tool/wrench))
 		return ..()
 	if (!isturf(src.loc))
 		return 1
@@ -530,7 +530,7 @@ Buildable meters
 
 
 
-/obj/item/pipe_meter
+/obj/item/part/pipe_meter
 	name = "meter"
 	desc = "A meter that can be laid on pipes"
 	icon = 'icons/obj/pipe-item.dmi'
@@ -539,10 +539,10 @@ Buildable meters
 	flags = TABLEPASS|FPRINT
 	w_class = 4
 
-/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/part/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(W, /obj/item/tool/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		user << "\red You need to fasten it to a pipe"

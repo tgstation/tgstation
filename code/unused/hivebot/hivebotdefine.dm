@@ -13,7 +13,7 @@
 	var/obj/screen/inv3 = null
 
 //3 Modules can be activated at any one time.
-	var/obj/item/weapon/robot_module/module = null
+	var/obj/item/part/cyborg/module/module = null
 	var/module_active = null
 	var/module_state_1 = null
 	var/module_state_2 = null

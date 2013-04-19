@@ -262,7 +262,7 @@ client/proc/one_click_antag()
 		var/nuke_code = "[rand(10000, 99999)]"
 
 		if(nuke_spawn)
-			var/obj/item/weapon/paper/P = new
+			var/obj/item/office/paper/P = new
 			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[nuke_code]</b>"
 			P.name = "nuclear bomb code and instructions"
 			P.loc = nuke_spawn.loc

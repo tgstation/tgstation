@@ -1,4 +1,4 @@
-/obj/item/weapon/handcuffs
+/obj/item/security/handcuffs
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
@@ -15,7 +15,7 @@
 	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
 
 
-/obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
+/obj/item/security/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if(CLUMSY in user.mutations && prob(50))
 		user << "<span class='warning'>Uh... how do those things work?!</span>"
 		if(!C.handcuffed)
@@ -26,7 +26,7 @@
 			return
 
 	var/cable = 0
-	if(istype(src, /obj/item/weapon/handcuffs/cable))
+	if(istype(src, /obj/item/security/handcuffs/cable))
 		cable = 1
 
 	if(!C.handcuffed)
@@ -58,40 +58,40 @@
 			log_attack("<font color='red'>[user.name] ([user.ckey]) Attempted to handcuff [C.name] ([C.ckey])</font>")
 
 
-/obj/item/weapon/handcuffs/cable
+/obj/item/security/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
 	item_state = "coil_red"
 	breakouttime = 300 //Deciseconds = 30s
 
-/obj/item/weapon/handcuffs/cable/red
+/obj/item/security/handcuffs/cable/red
 	icon_state = "cuff_red"
 
-/obj/item/weapon/handcuffs/cable/yellow
+/obj/item/security/handcuffs/cable/yellow
 	icon_state = "cuff_yellow"
 
-/obj/item/weapon/handcuffs/cable/blue
+/obj/item/security/handcuffs/cable/blue
 	icon_state = "cuff_blue"
 	item_state = "coil_blue"
 
-/obj/item/weapon/handcuffs/cable/green
+/obj/item/security/handcuffs/cable/green
 	icon_state = "cuff_green"
 
-/obj/item/weapon/handcuffs/cable/pink
+/obj/item/security/handcuffs/cable/pink
 	icon_state = "cuff_pink"
 
-/obj/item/weapon/handcuffs/cable/orange
+/obj/item/security/handcuffs/cable/orange
 	icon_state = "cuff_orange"
 
-/obj/item/weapon/handcuffs/cable/cyan
+/obj/item/security/handcuffs/cable/cyan
 	icon_state = "cuff_cyan"
 
-/obj/item/weapon/handcuffs/cable/white
+/obj/item/security/handcuffs/cable/white
 	icon_state = "cuff_white"
 
 
-/obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
+/obj/item/security/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
 			var/turf/user_loc = user.loc
@@ -103,5 +103,5 @@
 				if(!C || C.handcuffed)
 					return
 				if(user_loc == user.loc && C_loc == C.loc)
-					C.handcuffed = new /obj/item/weapon/handcuffs(C)
+					C.handcuffed = new /obj/item/security/handcuffs(C)
 					C.update_inv_handcuffed(0)

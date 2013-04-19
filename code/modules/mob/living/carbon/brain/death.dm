@@ -1,6 +1,6 @@
 /mob/living/carbon/brain/death(gibbed)
 	if(stat == DEAD)	return
-	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
+	if(!gibbed && container && istype(container, /obj/item/medical/mmi))//If not gibbed but in a container.
 		for(var/mob/O in viewers(container, null))
 			O.show_message(text("\red <B>[]'s MMI flatlines!</B>", src), 1, "\red You hear something flatline.", 2)
 		container.icon_state = "mmi_dead"
@@ -33,10 +33,10 @@
 	gibs(loc, viruses, dna)
 
 	dead_mob_list -= src
-	if(container && istype(container, /obj/item/device/mmi))
+	if(container && istype(container, /obj/item/medical/mmi))
 		del(container)//Gets rid of the MMI if there is one
 	if(loc)
-		if(istype(loc,/obj/item/organ/brain))
+		if(istype(loc,/obj/item/medical/organ/brain))
 			del(loc)//Gets rid of the brain item
 	spawn(15)
 		if(animation)	del(animation)

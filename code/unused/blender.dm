@@ -27,8 +27,8 @@ the blender or the processor: Processor items are solid objects and Blender resu
 		var/datum/reagents/R = new/datum/reagents(100)		//Its large since you only get one.
 		reagents = R
 		R.my_atom = src
-		src.contents += new /obj/item/weapon/reagent_containers/glass/blender_jug(src)
-		src.container = "/obj/item/weapon/reagent_containers/glass/blender_jug"		//Loads a jug into the blender.
+		src.contents += new /obj/item/chem/glass/blender_jug(src)
+		src.container = "/obj/item/chem/glass/blender_jug"		//Loads a jug into the blender.
 
 	on_reagent_change()			//When the reagents change, change the icon as well.
 		update_icon()
@@ -50,10 +50,10 @@ the blender or the processor: Processor items are solid objects and Blender resu
 /obj/machinery/blender/attackby(var/obj/item/O as obj, var/mob/user as mob)		//Attack it with an object.
 	if(src.contents.len >= 10 || src.reagents.total_volume >= 80)		//Too full. Max 10 items or 80 units of reagent
 		user << "Too many items are already in the blending chamber."
-	else if(istype(O, /obj/item/weapon/reagent_containers/glass/blender_jug) && src.container == 0) //Load jug.
+	else if(istype(O, /obj/item/chem/glass/blender_jug) && src.container == 0) //Load jug.
 		O.reagents.trans_to(src, O.reagents.total_volume)
 		del(O)
-		src.contents += new /obj/item/weapon/reagent_containers/glass/blender_jug(src)
+		src.contents += new /obj/item/chem/glass/blender_jug(src)
 		//user.drop_item()
 		//O.loc = src
 		src.container = 1
@@ -62,12 +62,12 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	else if(src.container == 0)											//No jug to load in to.
 		user << "There is no container to put [O] in to!"
 	else
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//Will only blend food items. Add others in this else clause.
+		if(istype(O, /obj/item/chem/food/snacks))	//Will only blend food items. Add others in this else clause.
 			user.drop_item()
 			O.loc = src
 			user << "You drop the [O] into the blender."
 		else if (istype(O, /obj/item/weapon/plantbag)) //Allows plant bags to empty into the blender.
-			for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+			for (var/obj/item/chem/food/snacks/grown/G in O.contents)
 				O.contents -= G
 				G.loc = src
 				if(src.contents.len >= 10 || src.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
@@ -99,16 +99,16 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	usr << "\blue You turn on the blender."
 	use_power(250)
 	for(var/obj/O in src.contents)
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))	 //  Mass balance law
+		if(istype(O, /obj/item/chem/food/snacks/grown/soybeans))	 //  Mass balance law
 			src.reagents.add_reagent("soymilk", O.reagents.get_reagent_amount("nutriment"))
 			O.reagents.del_reagent("nutriment")
-		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato)) //  Mass balance law
+		else if(istype(O, /obj/item/chem/food/snacks/grown/tomato)) //  Mass balance law
 			src.reagents.add_reagent("ketchup", O.reagents.get_reagent_amount("nutriment"))
 			O.reagents.del_reagent("nutriment")
-		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/corn))   //  Mass balance law
+		else if(istype(O, /obj/item/chem/food/snacks/grown/corn))   //  Mass balance law
 			src.reagents.add_reagent("cornoil", O.reagents.get_reagent_amount("nutriment"))
 			O.reagents.del_reagent("nutriment")
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//This is intentionally not an "else if"
+		if(istype(O, /obj/item/chem/food/snacks))	//This is intentionally not an "else if"
 			O.reagents.trans_to(src, O.reagents.total_volume)			//Think of it as the "pulp" leftover.
 			del(O)
 	src.processing = 0
@@ -127,7 +127,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 		usr << "There is nothing to detach!"
 	else
 		for(var/obj/O in src.contents)			//Searches through the contents for the jug.
-			if(istype(O, /obj/item/weapon/reagent_containers/glass/blender_jug))
+			if(istype(O, /obj/item/chem/glass/blender_jug))
 				O.loc = get_turf(src)
 				src.reagents.trans_to(O, src.reagents.total_volume)
 				O = null
@@ -149,7 +149,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 		usr << "There is nothing to eject!"
 	else
 		for(var/obj/O in src.contents)
-			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
+			if(istype(O, /obj/item/chem/food/snacks))
 				O.loc = get_turf(src)
 				O = null
 	return

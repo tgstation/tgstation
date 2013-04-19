@@ -1,4 +1,4 @@
-/obj/item/projectile/beam
+/obj/item/weapon/projectile/beam
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -7,7 +7,7 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/practice
+/obj/item/weapon/projectile/practice
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -17,34 +17,34 @@
 	eyeblur = 2
 
 
-/obj/item/projectile/beam/heavylaser
+/obj/item/weapon/projectile/beam/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
 	damage = 40
 
-/obj/item/projectile/beam/xray
+/obj/item/weapon/projectile/beam/xray
 	name = "xray beam"
 	icon_state = "xray"
 	damage = 30
 
-/obj/item/projectile/beam/pulse
+/obj/item/weapon/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
 
 
-/obj/item/projectile/beam/deathlaser
+/obj/item/weapon/projectile/beam/deathlaser
 	name = "death laser"
 	icon_state = "heavylaser"
 	damage = 60
 
-/obj/item/projectile/beam/emitter
+/obj/item/weapon/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
 
 
-/obj/item/projectile/bluetag
+/obj/item/weapon/projectile/bluetag
 	name = "lasertag beam"
 	icon_state = "bluelaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -59,7 +59,7 @@
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/redtag
+/obj/item/weapon/projectile/redtag
 	name = "lasertag beam"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -74,7 +74,7 @@
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/omnitag//A laser tag bolt that stuns EVERYONE
+/obj/item/weapon/projectile/omnitag//A laser tag bolt that stuns EVERYONE
 	name = "lasertag beam"
 	icon_state = "omnilaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE

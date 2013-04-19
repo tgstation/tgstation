@@ -469,7 +469,7 @@
 		var/mob/living/carbon/human/H = M
 		H.monkeyizing = 1
 		var/list/implants = list() //Try to preserve implants.
-		for(var/obj/item/weapon/implant/W in H)
+		for(var/obj/item/medical/implant/W in H)
 			implants += W
 			W.loc = null
 
@@ -529,7 +529,7 @@
 		O.adjustOxyLoss(M.getOxyLoss())
 		O.stat = M.stat
 		O.a_intent = "harm"
-		for (var/obj/item/weapon/implant/I in implants)
+		for (var/obj/item/medical/implant/I in implants)
 			I.loc = O
 			I.implanted = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
@@ -541,7 +541,7 @@
 		var/mob/living/carbon/monkey/Mo = M
 		Mo.monkeyizing = 1
 		var/list/implants = list() //Still preserving implants
-		for(var/obj/item/weapon/implant/W in Mo)
+		for(var/obj/item/medical/implant/W in Mo)
 			implants += W
 			W.loc = null
 		if(!connected)
@@ -610,7 +610,7 @@
 		O.adjustToxLoss(M.getToxLoss())
 		O.adjustOxyLoss(M.getOxyLoss())
 		O.stat = M.stat
-		for (var/obj/item/weapon/implant/I in implants)
+		for (var/obj/item/medical/implant/I in implants)
 			I.loc = O
 			I.implanted = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
@@ -640,13 +640,13 @@
 /obj/machinery/dna_scannernew/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonescanner(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/part/circuitboard/clonescanner(src)
+	component_parts += new /obj/item/part/basic/scanning_module(src)
+	component_parts += new /obj/item/part/basic/manipulator(src)
+	component_parts += new /obj/item/part/basic/micro_laser(src)
+	component_parts += new /obj/item/part/basic/console_screen(src)
+	component_parts += new /obj/item/part/cable_coil(src)
+	component_parts += new /obj/item/part/cable_coil(src)
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/allow_drop()
@@ -667,7 +667,7 @@
 		return
 	src.go_out()
 	for(var/obj/O in src)
-		if((!istype(O,/obj/item/weapon/circuitboard/clonescanner)) && (!istype(O,/obj/item/weapon/stock_parts)) && (!istype(O,/obj/item/weapon/cable_coil)))
+		if((!istype(O,/obj/item/part/circuitboard/clonescanner)) && (!istype(O,/obj/item/part/basic)) && (!istype(O,/obj/item/part/cable_coil)))
 			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components)
 	if(!occupant)
 		for(var/mob/M in src)//Failsafe so you can get mobs out
@@ -706,8 +706,8 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
-	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
+/obj/machinery/dna_scannernew/attackby(obj/item/effect/grab/G, mob/user)
+	if(!istype(G, /obj/item/effect/grab) || !ismob(G.affecting))
 		return
 	if(occupant)
 		user << "<span class='notice'>The scanner is already occupied!</span>"
@@ -842,7 +842,7 @@
 	return
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
-	if ((istype(W, /obj/item/weapon/disk/data)) && (!src.diskette))
+	if ((istype(W, /obj/item/office/disk/data)) && (!src.diskette))
 		user.drop_item()
 		W.loc = src
 		src.diskette = W
@@ -1369,7 +1369,7 @@
 
 	if (href_list["b1injector"])
 		if (src.injectorready)
-			var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
+			var/obj/item/medical/dnainjector/I = new /obj/item/medical/dnainjector
 			I.dna = src.buffer1
 			I.dnatype = src.buffer1type
 			I.loc = src.loc
@@ -1385,7 +1385,7 @@
 
 	if (href_list["b2injector"])
 		if (src.injectorready)
-			var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
+			var/obj/item/medical/dnainjector/I = new /obj/item/medical/dnainjector
 			I.dna = src.buffer2
 			I.dnatype = src.buffer2type
 			I.loc = src.loc
@@ -1401,7 +1401,7 @@
 
 	if (href_list["b3injector"])
 		if (src.injectorready)
-			var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
+			var/obj/item/medical/dnainjector/I = new /obj/item/medical/dnainjector
 			I.dna = src.buffer3
 			I.dnatype = src.buffer3type
 			I.loc = src.loc

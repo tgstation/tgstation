@@ -263,7 +263,7 @@
 				src.hackdoor = null
 			if(href_list["cable"])
 				var/turf/T = get_turf_or_move(src.loc)
-				src.cable = new /obj/item/weapon/pai_cable(T)
+				src.cable = new /obj/item/device/pai_cable(T)
 				for (var/mob/M in viewers(T))
 					M.show_message("\red A port on [src] opens to reveal [src.cable], which promptly falls to the floor.", 3, "\red You hear the soft click of something light and hard falling to the ground.", 2)
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window

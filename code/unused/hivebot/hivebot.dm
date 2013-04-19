@@ -182,7 +182,7 @@
 
 
 /mob/living/silicon/hivebot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if (istype(W, /obj/item/tool/welder) && W:welding)
 		if (W:remove_fuel(0))
 			src.adjustBruteLoss(-30)
 			src.updatehealth()
@@ -198,7 +198,7 @@
 	if (M.a_intent == "grab")
 		if (M == src)
 			return
-		var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+		var/obj/item/effect/grab/G = new /obj/item/effect/grab( M )
 		G.assailant = M
 		if (M.hand)
 			M.l_hand = G
@@ -262,14 +262,14 @@
 		return 1
 	return 0
 
-/mob/living/silicon/hivebot/proc/check_access(obj/item/weapon/card/id/I)
+/mob/living/silicon/hivebot/proc/check_access(obj/item/security/card/id/I)
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
 	var/list/L = src.req_access
 	if(!L.len) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+	if(!I || !istype(I, /obj/item/security/card/id) || !I.access) //not ID or no access
 		return 0
 	for(var/req in src.req_access)
 		if(!(req in I.access)) //doesn't have this access
@@ -463,16 +463,16 @@ Frequency:
 				if (ismob(src.pulling))
 					var/mob/M = src.pulling
 					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+					if (locate(/obj/item/effect/grab, M.grabbed_by))
 						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
+							var/obj/item/effect/grab/G = pick(M.grabbed_by)
+							if (istype(G, /obj/item/effect/grab))
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("\red [G.affecting] has been pulled from [G.assailant]'s grip by [src]"), 1)
 								del(G)
 						else
 							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+						if (locate(/obj/item/effect/grab, M.grabbed_by.len))
 							ok = 0
 					if (ok)
 						var/atom/movable/t = M.pulling

@@ -2,7 +2,7 @@
 // Other harvested materials from plants (that are not food)
 // **********************
 
-/obj/item/weapon/grown // Grown weapons
+/obj/item/botany/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/weapons.dmi'
 	var/seed = ""
@@ -21,10 +21,10 @@
 		reagents = R
 		R.my_atom = src
 
-/obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
+/obj/item/botany/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
 
-/obj/item/weapon/grown/log
+/obj/item/botany/grown/log
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
 	icon = 'icons/obj/harvest.dmi'
@@ -37,16 +37,16 @@
 	throw_range = 3
 	plant_type = 2
 	origin_tech = "materials=1"
-	seed = "/obj/item/seeds/towermycelium"
+	seed = "/obj/item/botany/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/botany/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/medical/saw) || istype(W, /obj/item/botany/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)
-			var/obj/item/stack/sheet/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/wood/G in user.loc)
+			var/obj/item/part/stack/sheet/wood/NG = new (user.loc)
+			for (var/obj/item/part/stack/sheet/wood/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
@@ -56,7 +56,7 @@
 		del(src)
 		return
 
-/obj/item/weapon/grown/sunflower // FLOWER POWER!
+/obj/item/botany/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon = 'icons/obj/harvest.dmi'
@@ -69,9 +69,9 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/sunflower"
+	seed = "/obj/item/botany/seeds/sunflower"
 
-/obj/item/weapon/grown/novaflower
+/obj/item/botany/grown/novaflower
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon = 'icons/obj/harvest.dmi'
@@ -84,7 +84,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/novaflower"
+	seed = "/obj/item/botany/seeds/novaflower"
 	attack_verb = list("seared", "heated", "whacked", "steamed")
 	New()
 		..()
@@ -93,7 +93,7 @@
 			reagents.add_reagent("capsaicin", round(potency, 1))
 			force = round((5+potency/5), 1)
 
-/obj/item/weapon/grown/nettle // -- Skie
+/obj/item/botany/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
@@ -107,7 +107,7 @@
 	throw_range = 3
 	plant_type = 1
 	origin_tech = "combat=1"
-	seed = "/obj/item/seeds/nettleseed"
+	seed = "/obj/item/botany/seeds/nettleseed"
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -115,7 +115,7 @@
 			reagents.add_reagent("sacid", round(potency, 1))
 			force = round((5+potency/5), 1)
 
-/obj/item/weapon/grown/deathnettle // -- Skie
+/obj/item/botany/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
@@ -128,7 +128,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
-	seed = "/obj/item/seeds/deathnettleseed"
+	seed = "/obj/item/botany/seeds/deathnettleseed"
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
 	New()

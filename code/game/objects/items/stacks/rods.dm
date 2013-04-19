@@ -1,4 +1,4 @@
-/obj/item/stack/rods
+/obj/item/part/stack/rods
 	name = "metal rods"
 	desc = "Some rods. Can be used for building, or something."
 	singular_name = "metal rod"
@@ -13,21 +13,21 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/part/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if (istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 
 		if(amount < 2)
 			user << "\red You need at least two rods to do this."
 			return
 
 		if(WT.remove_fuel(0,user))
-			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
+			var/obj/item/part/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
 			for (var/mob/M in viewers(src))
 				M.show_message("\red [src] is shaped into metal by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
-			var/obj/item/stack/rods/R = src
+			var/obj/item/part/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_hand()==R)
 			R.use(2)
@@ -37,7 +37,7 @@
 	..()
 
 
-/obj/item/stack/rods/attack_self(mob/user as mob)
+/obj/item/part/stack/rods/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if(!istype(user.loc,/turf)) return 0

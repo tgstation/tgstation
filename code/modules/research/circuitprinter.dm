@@ -17,22 +17,22 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	New()
 		..()
 		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-		component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-		component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
+		component_parts += new /obj/item/part/circuitboard/circuit_imprinter(src)
+		component_parts += new /obj/item/part/basic/matter_bin(src)
+		component_parts += new /obj/item/part/basic/manipulator(src)
+		component_parts += new /obj/item/chem/glass/beaker(src)
+		component_parts += new /obj/item/chem/glass/beaker(src)
 		RefreshParts()
 
 	RefreshParts()
 		var/T = 0
-		for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		for(var/obj/item/chem/glass/G in component_parts)
 			T += G.reagents.maximum_volume
 		var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
 		reagents = R
 		R.my_atom = src
 		T = 0
-		for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		for(var/obj/item/part/basic/matter_bin/M in component_parts)
 			T += M.rating
 		max_material_amount = T * 75000.0
 
@@ -51,7 +51,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (shocked)
 			shock(user,50)
-		if (istype(O, /obj/item/weapon/screwdriver))
+		if (istype(O, /obj/item/tool/screwdriver))
 			if (!opened)
 				opened = 1
 				if(linked_console)
@@ -65,25 +65,25 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				user << "You close the maintenance hatch of [src]."
 			return
 		if (opened)
-			if(istype(O, /obj/item/weapon/crowbar))
+			if(istype(O, /obj/item/tool/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
 				M.icon_state = "box_1"
 				for(var/obj/I in component_parts)
-					if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
+					if(istype(I, /obj/item/chem/glass/beaker))
 						reagents.trans_to(I, reagents.total_volume)
 					if(I.reliability != 100 && crit_fail)
 						I.crit_fail = 1
 					I.loc = src.loc
 				if(g_amount >= 3750)
-					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+					var/obj/item/part/stack/sheet/glass/G = new /obj/item/part/stack/sheet/glass(src.loc)
 					G.amount = round(g_amount / 3750)
 				if(gold_amount >= 2000)
-					var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
+					var/obj/item/part/stack/sheet/mineral/gold/G = new /obj/item/part/stack/sheet/mineral/gold(src.loc)
 					G.amount = round(gold_amount / 2000)
 				if(diamond_amount >= 2000)
-					var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
+					var/obj/item/part/stack/sheet/mineral/diamond/G = new /obj/item/part/stack/sheet/mineral/diamond(src.loc)
 					G.amount = round(diamond_amount / 2000)
 				del(src)
 				return
@@ -97,7 +97,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return
 		if (O.is_open_container())
 			return
-		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
+		if (!istype(O, /obj/item/part/stack/sheet/glass) && !istype(O, /obj/item/part/stack/sheet/mineral/gold) && !istype(O, /obj/item/part/stack/sheet/mineral/diamond))
 			user << "\red You cannot insert this item into the [name]!"
 			return
 		if (stat)
@@ -105,7 +105,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if (busy)
 			user << "\red The [name] is busy. Please wait for completion of previous operation."
 			return
-		var/obj/item/stack/sheet/stack = O
+		var/obj/item/part/stack/sheet/stack = O
 		if ((TotalMaterials() + stack.perunit) > max_material_amount)
 			user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
 			return
@@ -122,11 +122,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		use_power(max(1000, (3750*amount/10)))
 		spawn(16)
 			user << "\blue You add [amount] sheets to the [src.name]."
-			if(istype(stack, /obj/item/stack/sheet/glass))
+			if(istype(stack, /obj/item/part/stack/sheet/glass))
 				g_amount += amount * 3750
-			else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
+			else if(istype(stack, /obj/item/part/stack/sheet/mineral/gold))
 				gold_amount += amount * 2000
-			else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
+			else if(istype(stack, /obj/item/part/stack/sheet/mineral/diamond))
 				diamond_amount += amount * 2000
 			stack.use(amount)
 			busy = 0

@@ -22,7 +22,7 @@
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
 
-	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
+	var/cores = 1 // the number of /obj/item/slime/extract's the slime has left inside
 
 	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
@@ -46,7 +46,7 @@
 	var/colour = "grey"
 	var/primarytype = /mob/living/carbon/slime
 	var/adulttype = /mob/living/carbon/slime/adult
-	var/coretype = /obj/item/slime_extract/grey
+	var/coretype = /obj/item/slime/extract/grey
 	var/list/slime_mutation[4]
 
 /mob/living/carbon/slime/adult
@@ -204,7 +204,7 @@
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/slime/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/carbon/slime/bullet_act(var/obj/item/weapon/projectile/Proj)
 	attacked += 10
 	..(Proj)
 	return 0
@@ -456,7 +456,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 			M.put_in_active_hand(G)
 
@@ -547,7 +547,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 			M.put_in_active_hand(G)
 
@@ -637,7 +637,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/proc/get_obstacle_ok(atom/A)
 	var/direct = get_dir(src, A)
-	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )
+	var/obj/effect/passcheck/D = new /obj/effect/passcheck( src.loc )
 	var/ok = 0
 	if ( (direct - 1) & direct)
 		var/turf/Step_1
@@ -717,7 +717,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	return 1
 
 
-/obj/item/slime_extract
+/obj/item/slime/extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
@@ -733,7 +733,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	var/enhanced = 0 //has it been enhanced before?
 
 	attackby(obj/item/O as obj, mob/user as mob)
-		if(istype(O, /obj/item/weapon/slimesteroid2))
+		if(istype(O, /obj/item/slime/steroid2))
 			if(enhanced == 1)
 				user << "\red This extract has already been enhanced!"
 				return ..()
@@ -745,100 +745,100 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			enhanced = 1
 			del (O)
 
-/obj/item/slime_extract/New()
+/obj/item/slime/extract/New()
 		..()
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
 
-/obj/item/slime_extract/grey
+/obj/item/slime/extract/grey
 	name = "grey slime extract"
 	icon_state = "grey slime extract"
 
-/obj/item/slime_extract/gold
+/obj/item/slime/extract/gold
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
 
-/obj/item/slime_extract/silver
+/obj/item/slime/extract/silver
 	name = "silver slime extract"
 	icon_state = "silver slime extract"
 
-/obj/item/slime_extract/metal
+/obj/item/slime/extract/metal
 	name = "metal slime extract"
 	icon_state = "metal slime extract"
 
-/obj/item/slime_extract/purple
+/obj/item/slime/extract/purple
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
 
-/obj/item/slime_extract/darkpurple
+/obj/item/slime/extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
 
-/obj/item/slime_extract/orange
+/obj/item/slime/extract/orange
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
 
-/obj/item/slime_extract/yellow
+/obj/item/slime/extract/yellow
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 
-/obj/item/slime_extract/red
+/obj/item/slime/extract/red
 	name = "red slime extract"
 	icon_state = "red slime extract"
 
-/obj/item/slime_extract/blue
+/obj/item/slime/extract/blue
 	name = "blue slime extract"
 	icon_state = "blue slime extract"
 
-/obj/item/slime_extract/darkblue
+/obj/item/slime/extract/darkblue
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
 
-/obj/item/slime_extract/pink
+/obj/item/slime/extract/pink
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
 
-/obj/item/slime_extract/green
+/obj/item/slime/extract/green
 	name = "green slime extract"
 	icon_state = "green slime extract"
 
-/obj/item/slime_extract/lightpink
+/obj/item/slime/extract/lightpink
 	name = "light pink slime extract"
 	icon_state = "light pink slime extract"
 
-/obj/item/slime_extract/black
+/obj/item/slime/extract/black
 	name = "black slime extract"
 	icon_state = "black slime extract"
 
-/obj/item/slime_extract/oil
+/obj/item/slime/extract/oil
 	name = "oil slime extract"
 	icon_state = "oil slime extract"
 
-/obj/item/slime_extract/adamantine
+/obj/item/slime/extract/adamantine
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
 
-/obj/item/slime_extract/bluespace
+/obj/item/slime/extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
 
-/obj/item/slime_extract/pyrite
+/obj/item/slime/extract/pyrite
 	name = "pyrite slime extract"
 	icon_state = "pyrite slime extract"
 
-/obj/item/slime_extract/cerulean
+/obj/item/slime/extract/cerulean
 	name = "cerulean slime extract"
 	icon_state = "cerulean slime extract"
 
-/obj/item/slime_extract/sepia
+/obj/item/slime/extract/sepia
 	name = "sepia slime extract"
 	icon_state = "sepia slime extract"
 
 
 ////Pet Slime Creation///
 
-/obj/item/weapon/slimepotion
+/obj/item/slime/potion
 	name = "docility potion"
 	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
@@ -872,7 +872,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.real_name = newname
 		del (src)
 
-/obj/item/weapon/slimepotion2
+/obj/item/slime/potion2
 	name = "advanced docility potion"
 	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame. This one is meant for adult slimes"
 	icon = 'icons/obj/chemical.dmi'
@@ -904,7 +904,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		del (src)
 
 
-/obj/item/weapon/slimesteroid
+/obj/item/slime/steroid
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
@@ -928,14 +928,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		M.cores = 3
 		del (src)
 
-/obj/item/weapon/slimesteroid2
+/obj/item/slime/steroid2
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
 
 	/*afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/item/slime_extract))
+		if(istype(target, /obj/item/slime/extract))
 			if(target.enhanced == 1)
 				user << "\red This extract has already been enhanced!"
 				return ..()
@@ -1128,7 +1128,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime
+/obj/item/chem/food/snacks/egg/slime
 	name = "slime egg"
 	desc = "A small, gelatinous egg."
 	icon = 'icons/mob/mob.dmi'
@@ -1137,20 +1137,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	origin_tech = "biotech=4"
 	var/grown = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/New()
+/obj/item/chem/food/snacks/egg/slime/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("slimejelly", 1)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
+/obj/item/chem/food/snacks/egg/slime/proc/Grow()
 	grown = 1
 	icon_state = "slime egg-grown"
 	processing_objects.Add(src)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
+/obj/item/chem/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
 	src.visible_message("\blue The [name] pulsates and quivers!")
@@ -1160,13 +1160,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		del(src)
 
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
+/obj/item/chem/food/snacks/egg/slime/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
 		src.Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/chem/food/snacks/egg/slime/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype( W, /obj/item/toy/crayon ))
 		return
 	else

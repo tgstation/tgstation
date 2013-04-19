@@ -30,15 +30,15 @@
 	attackby(obj/item/weapon/C as obj, mob/user as mob)
 		add_fingerprint(user)
 		if(operating)	return//Already doing something.
-		if(istype(C, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/W = C
+		if(istype(C, /obj/item/tool/welder))
+			var/obj/item/tool/welder/W = C
 			if(W.remove_fuel(0, user))
 				blocked = !blocked
 				user << text("\red You [blocked?"welded":"unwelded"] the [src]")
 				update_icon()
 				return
 
-		if(istype(C, /obj/item/weapon/crowbar) || (istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1))
+		if(istype(C, /obj/item/tool/crowbar) || (istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1))
 			if(blocked || operating)	return
 			if(density)
 				open()

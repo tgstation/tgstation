@@ -1,5 +1,5 @@
 /mob/living/carbon/brain/emote(var/act,var/m_type=1,var/message = null)
-	if(!(container && istype(container, /obj/item/device/mmi)))//No MMI, no emotes
+	if(!(container && istype(container, /obj/item/medical/mmi)))//No MMI, no emotes
 		return
 
 	if (findtext(act, "-", 1, null))

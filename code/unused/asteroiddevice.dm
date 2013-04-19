@@ -68,20 +68,20 @@
 			sleep(5)
 
 
-/obj/item/weapon/storage/explorers_box
+/obj/item/storage/explorers_box
 	name = "SpaceFriend(tm)"
 	icon_state = "box"
 	desc = "Everything a dashing space explorer would want to have near in the grim darkness of... whatever."
 
-/obj/item/weapon/storage/explorers_box/New()
+/obj/item/storage/explorers_box/New()
 	..()
 	new /obj/item/device/radio/beacon(src)
 	new /obj/item/device/gps(src)
-	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/chips(src)
-	new /obj/item/weapon/storage/fancy/cigarettes(src)
-	var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src)
+	new /obj/item/tool/flashlight(src)
+	new /obj/item/chem/food/drinks/beer(src)
+	new /obj/item/chem/food/snacks/chips(src)
+	new /obj/item/storage/fancy/cigarettes(src)
+	var/obj/item/chem/pill/P = new/obj/item/chem/pill(src)
 	P.reagents.add_reagent("nutriment", 500)
 	P.name = "Cyanide pill"
 	return

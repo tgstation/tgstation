@@ -15,8 +15,8 @@
 /obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (src.stat != 0) //NOPOWER etc
 		return
-	if (istype(O, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
+	if (istype(O, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = O
 		var/grabbed = G.affecting
 		if(istype(grabbed, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/target = grabbed
@@ -42,7 +42,7 @@
 		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= 5
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
+		new /obj/item/chem/food/snacks/monkeycube/wrapped(src.loc)
 		user << "\blue The machine's display flashes that it has [grinded] monkeys worth of material left."
 	else
 		user << "\red The machine needs at least 5 monkeys worth of material to produce a monkey cube. It only has [grinded]."

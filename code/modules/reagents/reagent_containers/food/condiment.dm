@@ -5,7 +5,7 @@
 //	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 //Food items that aren't eaten normally and leave an empty container behind.
-/obj/item/weapon/reagent_containers/food/condiment
+/obj/item/chem/food/condiment
 	name = "Condiment Container"
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food.dmi'
@@ -77,7 +77,7 @@
 			user << "\blue You fill [src] with [trans] units of the contents of [target]."
 
 		//Something like a glass or a food item. Player probably wants to transfer TO it.
-		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
+		else if(target.is_open_container() || istype(target, /obj/item/chem/food/snacks))
 			if(!reagents.total_volume)
 				user << "\red [src] is empty."
 				return
@@ -140,7 +140,7 @@
 			desc = "An empty condiment bottle."
 			return
 
-/obj/item/weapon/reagent_containers/food/condiment/enzyme
+/obj/item/chem/food/condiment/enzyme
 	name = "Universal Enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
@@ -148,12 +148,12 @@
 		..()
 		reagents.add_reagent("enzyme", 50)
 
-/obj/item/weapon/reagent_containers/food/condiment/sugar
+/obj/item/chem/food/condiment/sugar
 	New()
 		..()
 		reagents.add_reagent("sugar", 50)
 
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
+/obj/item/chem/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "Salt Shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
@@ -164,7 +164,7 @@
 		..()
 		reagents.add_reagent("sodiumchloride", 20)
 
-/obj/item/weapon/reagent_containers/food/condiment/peppermill
+/obj/item/chem/food/condiment/peppermill
 	name = "Pepper Mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"

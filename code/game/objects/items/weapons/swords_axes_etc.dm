@@ -11,7 +11,7 @@
 /*
  * Banhammer
  */
-/obj/item/weapon/banhammer/attack(mob/M, mob/user)
+/obj/item/toy/banhammer/attack(mob/M, mob/user)
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 

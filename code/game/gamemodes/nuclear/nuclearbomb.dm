@@ -14,7 +14,7 @@ var/bomb_set
 	var/code = ""
 	var/yes_code = 0.0
 	var/safety = 1.0
-	var/obj/item/weapon/disk/nuclear/auth = null
+	var/obj/item/office/disk/nuclear/auth = null
 	flags = FPRINT
 	use_power = 0
 
@@ -35,7 +35,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
 	if (src.extended)
-		if (istype(I, /obj/item/weapon/disk/nuclear))
+		if (istype(I, /obj/item/office/disk/nuclear))
 			usr.drop_item()
 			I.loc = src
 			src.auth = I
@@ -101,7 +101,7 @@ var/bomb_set
 				src.auth = null
 			else
 				var/obj/item/I = usr.get_active_hand()
-				if (istype(I, /obj/item/weapon/disk/nuclear))
+				if (istype(I, /obj/item/office/disk/nuclear))
 					usr.drop_item()
 					I.loc = src
 					src.auth = I
@@ -225,9 +225,9 @@ var/bomb_set
 				return
 	return
 
-/obj/item/weapon/disk/nuclear/Del()
+/obj/item/office/disk/nuclear/Del()
 	if(blobstart.len > 0)
-		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
+		var/obj/D = new /obj/item/office/disk/nuclear(pick(blobstart))
 		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
 		log_game("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
 	..()

@@ -29,8 +29,8 @@
 
 
 /obj/structure/optable/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
+	if(istype(W, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = W
 		if(!G.confirm())
 			return
 		if(ismob(G.affecting))

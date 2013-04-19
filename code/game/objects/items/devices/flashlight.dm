@@ -1,4 +1,4 @@
-/obj/item/device/flashlight
+/obj/item/tool/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
 	icon = 'icons/obj/lighting.dmi'
@@ -13,7 +13,7 @@
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
-/obj/item/device/flashlight/initialize()
+/obj/item/tool/flashlight/initialize()
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
@@ -22,7 +22,7 @@
 		icon_state = initial(icon_state)
 		SetLuminosity(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/tool/flashlight/proc/update_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
@@ -36,7 +36,7 @@
 		else if(isturf(loc))
 			SetLuminosity(0)
 
-/obj/item/device/flashlight/attack_self(mob/user)
+/obj/item/tool/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
 		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
 		return 0
@@ -45,7 +45,7 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/tool/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
@@ -87,19 +87,19 @@
 		return ..()
 
 
-/obj/item/device/flashlight/pickup(mob/user)
+/obj/item/tool/flashlight/pickup(mob/user)
 	if(on)
 		user.SetLuminosity(user.luminosity + brightness_on)
 		SetLuminosity(0)
 
 
-/obj/item/device/flashlight/dropped(mob/user)
+/obj/item/tool/flashlight/dropped(mob/user)
 	if(on)
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
 
-/obj/item/device/flashlight/pen
+/obj/item/tool/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
@@ -109,7 +109,7 @@
 
 
 // the desk lamps are a bit special
-/obj/item/device/flashlight/lamp
+/obj/item/tool/flashlight/lamp
 	name = "desk lamp"
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
@@ -123,14 +123,14 @@
 
 
 // green-shaded desk lamp
-/obj/item/device/flashlight/lamp/green
+/obj/item/tool/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
 	brightness_on = 5
 
 
-/obj/item/device/flashlight/lamp/verb/toggle_light()
+/obj/item/tool/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
 	set category = "Object"
 	set src in oview(1)
@@ -140,7 +140,7 @@
 
 // FLARES
 
-/obj/item/device/flashlight/flare
+/obj/item/tool/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
@@ -152,11 +152,11 @@
 	var/on_damage = 7
 	var/produce_heat = 1500
 
-/obj/item/device/flashlight/flare/New()
+/obj/item/tool/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
-/obj/item/device/flashlight/flare/process()
+/obj/item/tool/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
 	if(pos)
 		pos.hotspot_expose(produce_heat, 5)
@@ -167,7 +167,7 @@
 			src.icon_state = "[initial(icon_state)]-empty"
 		processing_objects -= src
 
-/obj/item/device/flashlight/flare/proc/turn_off()
+/obj/item/tool/flashlight/flare/proc/turn_off()
 	on = 0
 	src.force = initial(src.force)
 	src.damtype = initial(src.damtype)
@@ -177,7 +177,7 @@
 	else
 		update_brightness(null)
 
-/obj/item/device/flashlight/flare/attack_self(mob/user)
+/obj/item/tool/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
 	if(!fuel)
@@ -197,7 +197,7 @@
 
 
 
-/obj/item/device/flashlight/slime
+/obj/item/tool/flashlight/slime
 	name = "glowing slime extract"
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'

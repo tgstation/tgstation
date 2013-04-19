@@ -15,8 +15,8 @@
 	attack_paw(mob/user as mob)
 		return src.attack_hand(usr)
 
-	attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
-		if(!istype(G, /obj/item/weapon/grab))
+	attackby(obj/item/effect/grab/G as obj, mob/user as mob)
+		if(!istype(G, /obj/item/effect/grab))
 			return
 		if(istype(G.affecting, /mob/living/carbon/monkey))
 			if(src.occupied == 0)
@@ -59,22 +59,22 @@
 			if(src.meattype == 1)
 				if(src.meat > 1)
 					src.meat--
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey( src.loc )
+					new /obj/item/chem/food/snacks/meat/monkey( src.loc )
 					usr << "You remove some meat from the monkey."
 				else if(src.meat == 1)
 					src.meat--
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc)
+					new /obj/item/chem/food/snacks/meat/monkey(src.loc)
 					usr << "You remove the last piece of meat from the monkey!"
 					src.icon_state = "spike"
 					src.occupied = 0
 			else if(src.meattype == 2)
 				if(src.meat > 1)
 					src.meat--
-					new /obj/item/weapon/reagent_containers/food/snacks/xenomeat( src.loc )
+					new /obj/item/chem/food/snacks/xenomeat( src.loc )
 					usr << "You remove some meat from the alien."
 				else if(src.meat == 1)
 					src.meat--
-					new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src.loc)
+					new /obj/item/chem/food/snacks/xenomeat(src.loc)
 					usr << "You remove the last piece of meat from the alien!"
 					src.icon_state = "spike"
 					src.occupied = 0

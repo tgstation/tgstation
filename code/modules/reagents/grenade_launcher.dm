@@ -33,7 +33,7 @@
 
 	afterattack(obj/target, mob/user , flag)
 
-		if (istype(target, /obj/item/weapon/storage/backpack ))
+		if (istype(target, /obj/item/storage/backpack ))
 			return
 
 		else if (locate (/obj/structure/table, src.loc))

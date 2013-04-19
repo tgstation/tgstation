@@ -16,15 +16,15 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/part/circuitboard/destructive_analyzer(src)
+	component_parts += new /obj/item/part/basic/scanning_module(src)
+	component_parts += new /obj/item/part/basic/manipulator(src)
+	component_parts += new /obj/item/part/basic/micro_laser(src)
 	RefreshParts()
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/S in src)
+	for(var/obj/item/part/basic/S in src)
 		T += S.rating * 0.1
 	T = between (0, T, 1)
 	decon_mod = T
@@ -43,7 +43,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (istype(O, /obj/item/tool/screwdriver))
 		if (!opened)
 			opened = 1
 			if(linked_console)
@@ -57,7 +57,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			user << "You close the maintenance hatch of [src]."
 		return
 	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
+		if(istype(O, /obj/item/tool/crowbar))
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2

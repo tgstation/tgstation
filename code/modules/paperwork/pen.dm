@@ -9,7 +9,7 @@
 /*
  * Pens
  */
-/obj/item/weapon/pen
+/obj/item/office/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -26,23 +26,23 @@
 	var/colour = "black"	//what colour the ink is!
 
 
-/obj/item/weapon/pen/blue
+/obj/item/office/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
 	colour = "blue"
 
-/obj/item/weapon/pen/red
+/obj/item/office/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	colour = "red"
 
-/obj/item/weapon/pen/invisible
+/obj/item/office/pen/invisible
 	desc = "It's an invisble pen marker."
 	icon_state = "pen"
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/M, mob/user)
+/obj/item/office/pen/attack(mob/M, mob/user)
 	if(!ismob(M))
 		return
 
@@ -57,12 +57,12 @@
 /*
  * Sleepy Pens
  */
-/obj/item/weapon/pen/sleepypen
+/obj/item/office/pen/sleepypen
 	desc = "It's a black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/sleepypen/New()
+/obj/item/office/pen/sleepypen/New()
 	var/datum/reagents/R = new /datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
@@ -70,7 +70,7 @@
 	..()
 
 
-/obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
+/obj/item/office/pen/sleepypen/attack(mob/M, mob/user)
 	if(!istype(M))	return
 
 	..()
@@ -82,11 +82,11 @@
 /*
  * Parapens
  */
- /obj/item/weapon/pen/paralysis
+ /obj/item/office/pen/paralysis
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/M, mob/user)
+/obj/item/office/pen/paralysis/attack(mob/M, mob/user)
 	if(!istype(M))	return
 
 	..()
@@ -95,7 +95,7 @@
 			reagents.trans_to(M, 50)
 
 
-/obj/item/weapon/pen/paralysis/New()
+/obj/item/office/pen/paralysis/New()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src

@@ -138,7 +138,7 @@
 			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 				var/turf/simulated/wall/wall = target
 				wall.ChangeTurf(/turf/simulated/floor)
-				new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
+				new /obj/item/part/stack/sheet/metal(src, flatPlasmaValue)
 				return 1
 		else if(istype(target,/atom/movable))
 			if(istype(target,/mob) || eatingDuration >= 50) //5 ticks to eat stuff like airlocks
@@ -173,19 +173,19 @@
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
 			if(prob(digestionProbability))
-				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
-					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/oldStack = stomachContent
-						new /obj/item/stack/sheet/mineral/plasma(src, oldStack.amount)
+				if(istype(stomachContent,/obj/item/part/stack)) //converts to plasma, keeping the stack value
+					if(!istype(stomachContent,/obj/item/part/stack/sheet/mineral/plasma))
+						var/obj/item/part/stack/oldStack = stomachContent
+						new /obj/item/part/stack/sheet/mineral/plasma(src, oldStack.amount)
 						del(oldStack)
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent
-					new /obj/item/stack/sheet/mineral/plasma(src, oldItem.w_class)
+					new /obj/item/part/stack/sheet/mineral/plasma(src, oldItem.w_class)
 					del(oldItem)
 					continue
 				else
-					new /obj/item/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
+					new /obj/item/part/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
 					del(stomachContent)
 					continue
 

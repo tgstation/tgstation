@@ -16,7 +16,7 @@
 	var/obj/screen/inv3 = null
 
 //3 Modules can be activated at any one time.
-	var/obj/item/weapon/robot_module/module = null
+	var/obj/item/part/cyborg/module/module = null
 	var/module_active = null
 	var/module_state_1 = null
 	var/module_state_2 = null
@@ -24,10 +24,10 @@
 
 	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/part/cell/cell = null
 	var/obj/machinery/camera/camera = null
 
-	var/obj/item/device/mmi/mmi = null
+	var/obj/item/medical/mmi/mmi = null
 	var/datum/wires/robot/wires = null
 
 	var/opened = 0
@@ -55,7 +55,7 @@
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 
-	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
+	var/obj/item/clothing/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
@@ -70,7 +70,7 @@
 	updateicon()
 
 	if(!cell)
-		cell = new /obj/item/weapon/cell(src)
+		cell = new /obj/item/part/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
@@ -80,7 +80,7 @@
 		scrambledcodes = 1
 		cell.maxcharge = 25000
 		cell.charge = 25000
-		module = new /obj/item/weapon/robot_module/syndicate(src)
+		module = new /obj/item/part/cyborg/module/syndicate(src)
 		hands.icon_state = "standard"
 		icon_state = "secborg"
 		modtype = "Synd"
@@ -125,7 +125,7 @@
 	switch(mod)
 		if("Standard")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/standard(src)
+			module = new /obj/item/part/cyborg/module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
@@ -133,7 +133,7 @@
 
 		if("Service")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/butler(src)
+			module = new /obj/item/part/cyborg/module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
 			switch(icontype)
@@ -147,7 +147,7 @@
 
 		if("Miner")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/miner(src)
+			module = new /obj/item/part/cyborg/module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
 			modtype = "Miner"
@@ -155,7 +155,7 @@
 
 		if("Medical")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/medical(src)
+			module = new /obj/item/part/cyborg/module/medical(src)
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
 			modtype = "Med"
@@ -164,7 +164,7 @@
 
 		if("Security")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/security(src)
+			module = new /obj/item/part/cyborg/module/security(src)
 			hands.icon_state = "security"
 			icon_state = "bloodhound"
 			modtype = "Sec"
@@ -174,7 +174,7 @@
 
 		if("Engineering")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/engineering(src)
+			module = new /obj/item/part/cyborg/module/engineering(src)
 			hands.icon_state = "engineer"
 			icon_state = "landmate"
 			modtype = "Eng"
@@ -182,7 +182,7 @@
 
 		if("Janitor")
 			updatename(mod)
-			module = new /obj/item/weapon/robot_module/janitor(src)
+			module = new /obj/item/part/cyborg/module/janitor(src)
 			hands.icon_state = "janitor"
 			icon_state = "mopgearrex"
 			modtype = "Jan"
@@ -261,7 +261,7 @@
 			stat(null, text("No Cell Inserted!"))
 
 		if(module)
-			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
+			internal = locate(/obj/item/clothing/tank/jetpack) in module.modules
 			if(internal)
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
@@ -312,7 +312,7 @@
 	return
 
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(var/obj/item/weapon/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
@@ -400,11 +400,11 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	if (istype(W, /obj/item/security/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if (istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
 			updatehealth()
@@ -415,15 +415,15 @@
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/part/cable_coil) && wiresexposed)
+		var/obj/item/part/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
 		coil.use(1)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if (istype(W, /obj/item/tool/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			user << "You close the cover."
 			opened = 0
@@ -436,7 +436,7 @@
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if (istype(W, /obj/item/part/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
 			user << "Close the panel first."
 		else if(cell)
@@ -449,31 +449,31 @@
 //			chargecount = 0
 		updateicon()
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
+	else if (istype(W, /obj/item/part/wirecutters) || istype(W, /obj/item/tool/multitool) || istype(W, /obj/item/part/assembly/signaler))
 		if (wiresexposed)
 			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
+	else if(istype(W, /obj/item/tool/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
 		updateicon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
+	else if(istype(W, /obj/item/tool/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			user << "Unable to locate a radio."
 		updateicon()
 
-	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
+	else if(istype(W, /obj/item/part/cipher/) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
 			user << "Unable to locate a radio."
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if (istype(W, /obj/item/security/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
 			user << "The interface seems slightly damaged"
 		if(opened)
@@ -486,7 +486,7 @@
 			else
 				user << "\red Access denied."
 
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+	else if(istype(W, /obj/item/security/card/emag))		// trying to unlock with an emag card
 		if(!opened)//Cover is closed
 			if(locked)
 				if(prob(90))
@@ -536,10 +536,10 @@
 					src << "<b>Obey these laws:</b>"
 					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+					if(src.module && istype(src.module, /obj/item/part/cyborg/module/miner))
+						for(var/obj/item/mining/pickaxe/borgdrill/D in src.module.modules)
 							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+						src.module.modules += new /obj/item/mining/pickaxe/diamonddrill(src.module)
 						src.module.rebuild()
 					updateicon()
 				else
@@ -548,8 +548,8 @@
 						src << "Hack attempt detected."
 			return
 
-	else if(istype(W, /obj/item/borg/upgrade/))
-		var/obj/item/borg/upgrade/U = W
+	else if(istype(W, /obj/item/part/cyborg/equipment/upgrade/))
+		var/obj/item/part/cyborg/equipment/upgrade/U = W
 		if(!opened)
 			usr << "You must access the borgs internals!"
 		else if(!src.module && U.require_module)
@@ -588,7 +588,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 			M.put_in_active_hand(G)
 
@@ -745,18 +745,18 @@
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
+		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/security/card/id) && check_access(george.get_active_hand()))
 			return 1
 	return 0
 
-/mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
+/mob/living/silicon/robot/proc/check_access(obj/item/security/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
 		return 1
 
 	var/list/L = req_access
 	if(!L.len) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+	if(!I || !istype(I, /obj/item/security/card/id) || !I.access) //not ID or no access
 		return 0
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
@@ -868,19 +868,19 @@
 			module_state_1 = O
 			O.layer = 20
 			contents += O
-			if(istype(module_state_1,/obj/item/borg/sight))
+			if(istype(module_state_1,/obj/item/part/cyborg/equipment/sight))
 				sight_mode |= module_state_1:sight_mode
 		else if(!module_state_2)
 			module_state_2 = O
 			O.layer = 20
 			contents += O
-			if(istype(module_state_2,/obj/item/borg/sight))
+			if(istype(module_state_2,/obj/item/part/cyborg/equipment/sight))
 				sight_mode |= module_state_2:sight_mode
 		else if(!module_state_3)
 			module_state_3 = O
 			O.layer = 20
 			contents += O
-			if(istype(module_state_3,/obj/item/borg/sight))
+			if(istype(module_state_3,/obj/item/part/cyborg/equipment/sight))
 				sight_mode |= module_state_3:sight_mode
 		else
 			src << "You need to disable a module first!"
@@ -914,7 +914,7 @@
 	. = ..()
 
 	if(module)
-		if(module.type == /obj/item/weapon/robot_module/janitor)
+		if(module.type == /obj/item/part/cyborg/module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()

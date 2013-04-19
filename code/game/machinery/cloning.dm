@@ -21,7 +21,7 @@
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
-/obj/item/weapon/disk/data
+/obj/item/office/disk/data
 	name = "Cloning Data Disk"
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
@@ -33,14 +33,14 @@
 	var/owner = "God Emperor of Mankind"
 	var/read_only = 0 //Well,it's still a floppy disk
 
-/obj/item/weapon/disk/data/demo
+/obj/item/office/disk/data/demo
 	name = "data disk - 'God Emperor of Mankind'"
 	data = "066000033000000000AF00330660FF4DB002690"
 	//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
 	ue = 1
 	read_only = 1
 
-/obj/item/weapon/disk/data/monkey
+/obj/item/office/disk/data/monkey
 	name = "data disk - 'Mr. Muggles'"
 	data_type = "se"
 	data = "0983E840344C39F4B059D5145FC5785DC6406A4FFF"
@@ -66,16 +66,16 @@
 	return selected
 
 //Disk stuff.
-/obj/item/weapon/disk/data/New()
+/obj/item/office/disk/data/New()
 	..()
 	var/diskcolor = pick(0,1,2)
 	src.icon_state = "datadisk[diskcolor]"
 
-/obj/item/weapon/disk/data/attack_self(mob/user as mob)
+/obj/item/office/disk/data/attack_self(mob/user as mob)
 	src.read_only = !src.read_only
 	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
 
-/obj/item/weapon/disk/data/examine()
+/obj/item/office/disk/data/examine()
 	set src in oview(5)
 	..()
 	usr << text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
@@ -83,11 +83,11 @@
 
 //Health Tracker Implant
 
-/obj/item/weapon/implant/health
+/obj/item/medical/implant/health
 	name = "health implant"
 	var/healthstring = ""
 
-/obj/item/weapon/implant/health/proc/sensehealth()
+/obj/item/medical/implant/health/proc/sensehealth()
 	if (!src.implanted)
 		return "ERROR"
 	else
@@ -252,7 +252,7 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if (istype(W, /obj/item/security/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
 			user << "\red Access Denied."
 			return
@@ -264,7 +264,7 @@
 		else
 			src.locked = 0
 			user << "System unlocked."
-	else if (istype(W, /obj/item/weapon/card/emag))
+	else if (istype(W, /obj/item/security/card/emag))
 		if (isnull(src.occupant))
 			return
 		user << "You force an emergency ejection."
@@ -377,25 +377,25 @@
  *	Diskette Box
  */
 
-/obj/item/weapon/storage/box/disks
+/obj/item/storage/box/disks
 	name = "Diskette Box"
 	icon_state = "disk_kit"
 
-/obj/item/weapon/storage/box/disks/New()
+/obj/item/storage/box/disks/New()
 	..()
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
+	new /obj/item/office/disk/data(src)
+	new /obj/item/office/disk/data(src)
+	new /obj/item/office/disk/data(src)
+	new /obj/item/office/disk/data(src)
+	new /obj/item/office/disk/data(src)
+	new /obj/item/office/disk/data(src)
+	new /obj/item/office/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.
  */
 
-/obj/item/weapon/paper/Cloning
+/obj/item/office/paper/Cloning
 	name = "paper - 'H-87 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
 	Congratulations, your station has purchased the H-87 industrial cloning device!<br>

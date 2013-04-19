@@ -33,21 +33,21 @@
 
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
-	if (istype(C, /obj/item/stack/rods))
+	if (istype(C, /obj/item/part/stack/rods))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			return
-		var/obj/item/stack/rods/R = C
+		var/obj/item/part/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	if (istype(C, /obj/item/part/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
+			var/obj/item/part/stack/tile/plasteel/S = C
 			del(L)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
@@ -79,11 +79,11 @@
 				del(A)
 				return
 
-			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
+			if(istype(A, /obj/item/office/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
 				del(A) //The disk's Del() proc ensures a new one is created
 				return
 
-			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
+			var/list/disk_search = A.search_contents_for(/obj/item/office/disk/nuclear)
 			if(!isemptylist(disk_search))
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
@@ -98,10 +98,10 @@
 						else if(MM.y >= world.maxy -TRANSITIONEDGE)
 							MM.inertia_dir = 2
 					else
-						for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+						for(var/obj/item/office/disk/nuclear/N in disk_search)
 							del(N)//Make the disk respawn it is on a clientless mob or corpse
 				else
-					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+					for(var/obj/item/office/disk/nuclear/N in disk_search)
 						del(N)//Make the disk respawn if it is floating on its own
 				return
 

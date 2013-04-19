@@ -8,7 +8,7 @@
 	icon_gib = "pine_1"
 	speak_chance = 0
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
+	meat_type = /obj/item/chem/food/snacks/carpmeat
 	response_help = "brushes the"
 	response_disarm = "pushes the"
 	response_harm = "hits the"
@@ -53,5 +53,5 @@
 /mob/living/simple_animal/hostile/tree/Die()
 	..()
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
-	new /obj/item/stack/sheet/wood(loc)
+	new /obj/item/part/stack/sheet/wood(loc)
 	del(src)

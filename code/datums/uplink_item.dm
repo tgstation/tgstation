@@ -97,7 +97,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
-	item = /obj/item/ammo_magazine/a357
+	item = /obj/item/weapon/ammo/magazine/a357
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow
@@ -112,7 +112,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/emp
 	name = "5 EMP Grenades"
-	item = /obj/item/weapon/storage/box/emps
+	item = /obj/item/storage/box/emps
 	cost = 3
 
 
@@ -123,12 +123,12 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
-	item = /obj/item/weapon/pen/paralysis
+	item = /obj/item/office/pen/paralysis
 	cost = 3
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
-	item = /obj/item/weapon/cartridge/syndicate
+	item = /obj/item/part/cartridge/syndicate
 	cost = 3
 
 
@@ -149,7 +149,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent ID Card"
-	item = /obj/item/weapon/card/id/syndicate
+	item = /obj/item/security/card/id/syndicate
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/voice_changer
@@ -170,17 +170,17 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
-	item = /obj/item/weapon/card/emag
+	item = /obj/item/security/card/emag
 	cost = 3
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Fully Loaded Toolbox"
-	item = /obj/item/weapon/storage/toolbox/syndicate
+	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Space Suit"
-	item = /obj/item/weapon/storage/box/syndie_kit/space
+	item = /obj/item/storage/box/syndie_kit/space
 	cost = 3
 
 /datum/uplink_item/device_tools/thermal
@@ -190,12 +190,12 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
-	item = /obj/item/device/encryptionkey/binary
+	item = /obj/item/part/cipher/binary
 	cost = 3
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/part/board/aiModule/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
@@ -215,7 +215,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
-	item = /obj/item/weapon/circuitboard/teleporter
+	item = /obj/item/part/circuitboard/teleporter
 	cost = 20
 	gamemodes = list("nuclear emergency")
 
@@ -227,12 +227,12 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
+	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 3
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant (Contains 5 Telecrystals)"
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
+	item = /obj/item/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
 
@@ -243,7 +243,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
-	item = /obj/item/weapon/storage/box/syndicate
+	item = /obj/item/storage/box/syndicate
 	cost = 10
 
 /datum/uplink_item/badass/balloon
@@ -253,7 +253,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/random
 	name = "Random Item (??)"
-	item = /obj/item/weapon/storage/box/syndicate
+	item = /obj/item/storage/box/syndicate
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)

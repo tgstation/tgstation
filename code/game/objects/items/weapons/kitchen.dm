@@ -10,13 +10,13 @@
  *		Trays
  */
 
-/obj/item/weapon/kitchen
+/obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 
 /*
  * Utensils
  */
-/obj/item/weapon/kitchen/utensil
+/obj/item/kitchen/utensil
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -26,7 +26,7 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 
-/obj/item/weapon/kitchen/utensil/New()
+/obj/item/kitchen/utensil/New()
 	if (prob(60))
 		src.pixel_y = rand(0, 4)
 	return
@@ -34,7 +34,7 @@
 /*
  * Spoons
  */
- /obj/item/weapon/kitchen/utensil/spoon
+ /obj/item/kitchen/utensil/spoon
 	name = "spoon"
 	desc = "SPOON!"
 	icon_state = "spoon"
@@ -43,12 +43,12 @@
 /*
  * Forks
  */
-/obj/item/weapon/kitchen/utensil/fork
+/obj/item/kitchen/utensil/fork
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
 
@@ -74,7 +74,7 @@
 /*
  * Knives
  */
-/obj/item/weapon/kitchen/utensil/knife
+/obj/item/kitchen/utensil/knife
 	name = "knife"
 	desc = "Can cut through any food."
 	icon_state = "knife"
@@ -87,7 +87,7 @@
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
 		return (BRUTELOSS)
 
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+/obj/item/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
@@ -98,7 +98,7 @@
 /*
  * Kitchen knives
  */
-/obj/item/weapon/kitchenknife
+/obj/item/kitchen/knife
 	name = "kitchen knife"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
@@ -119,7 +119,7 @@
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
 		return (BRUTELOSS)
 
-/obj/item/weapon/kitchenknife/ritual
+/obj/item/kitchen/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
@@ -128,7 +128,7 @@
 /*
  * Bucher's cleaver
  */
-/obj/item/weapon/butch
+/obj/item/kitchen/butch
 	name = "butcher's Cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
@@ -143,7 +143,7 @@
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/kitchen/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
@@ -151,7 +151,7 @@
  * Rolling Pins
  */
 
-/obj/item/weapon/kitchen/rollingpin
+/obj/item/kitchen/rollingpin
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
@@ -162,7 +162,7 @@
 	w_class = 3.0
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
-/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
@@ -199,7 +199,7 @@
 /*
  * Trays - Agouri
  */
-/obj/item/weapon/tray
+/obj/item/kitchen/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
@@ -231,7 +231,7 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
-/obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/kitchen/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
 	overlays.Cut()
@@ -357,7 +357,7 @@
 =																			=
 ===============~~~~~================================~~~~~====================
 */
-/obj/item/weapon/tray/proc/calc_carry()
+/obj/item/kitchen/tray/proc/calc_carry()
 	// calculate the weight of the items on the tray
 	var/val = 0 // value to return
 
@@ -371,13 +371,13 @@
 
 	return val
 
-/obj/item/weapon/tray/pickup(mob/user)
+/obj/item/kitchen/tray/pickup(mob/user)
 
 	if(!isturf(loc))
 		return
 
 	for(var/obj/item/I in loc)
-		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
+		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/weapon/projectile) )
 			var/add = 0
 			if(I.w_class == 1.0)
 				add = 1
@@ -392,7 +392,7 @@
 			carrying.Add(I)
 			overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
 
-/obj/item/weapon/tray/dropped(mob/user)
+/obj/item/kitchen/tray/dropped(mob/user)
 
 	var/mob/living/M
 	for(M in src.loc) //to handle hand switching
@@ -426,8 +426,8 @@
 
 
 
-/*/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
+/*/obj/item/kitchen/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
 			user << "\red You already have omelette on your fork."
 			return

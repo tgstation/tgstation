@@ -227,10 +227,10 @@
 /obj/structure/table/blob_act()
 	if(prob(75))
 		if(istype(src, /obj/structure/table/woodentable))
-			new /obj/item/weapon/table_parts/wood( src.loc )
+			new /obj/item/part/table/wood( src.loc )
 			del(src)
 			return
-		new /obj/item/weapon/table_parts( src.loc )
+		new /obj/item/part/table( src.loc )
 		del(src)
 		return
 
@@ -245,11 +245,11 @@
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the table apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced(loc)
+			new /obj/item/part/table/reinforced(loc)
 		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood(loc)
+			new/obj/item/part/table/wood(loc)
 		else
-			new /obj/item/weapon/table_parts(loc)
+			new /obj/item/part/table(loc)
 		density = 0
 		del(src)
 
@@ -257,11 +257,11 @@
 /obj/structure/table/attack_alien(mob/user)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
-		new /obj/item/weapon/table_parts/reinforced(loc)
+		new /obj/item/part/table/reinforced(loc)
 	else if(istype(src, /obj/structure/table/woodentable))
-		new/obj/item/weapon/table_parts/wood(loc)
+		new/obj/item/part/table/wood(loc)
 	else
-		new /obj/item/weapon/table_parts(loc)
+		new /obj/item/part/table(loc)
 	density = 0
 	del(src)
 
@@ -270,11 +270,11 @@
 	if(user.wall_smash)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced(loc)
+			new /obj/item/part/table/reinforced(loc)
 		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood(loc)
+			new/obj/item/part/table/wood(loc)
 		else
-			new /obj/item/weapon/table_parts(loc)
+			new /obj/item/part/table(loc)
 		density = 0
 		del(src)
 
@@ -286,11 +286,11 @@
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced(loc)
+			new /obj/item/part/table/reinforced(loc)
 		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood(loc)
+			new/obj/item/part/table/wood(loc)
 		else
-			new /obj/item/weapon/table_parts(loc)
+			new /obj/item/part/table(loc)
 		density = 0
 		del(src)
 
@@ -316,8 +316,8 @@
 
 
 /obj/structure/table/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user) < 2)
-		var/obj/item/weapon/grab/G = W
+	if (istype(W, /obj/item/effect/grab) && get_dist(src, user) < 2)
+		var/obj/item/effect/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -330,11 +330,11 @@
 		del(W)
 		return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/tool/wrench))
 		user << "\blue Now disassembling table"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
-			new /obj/item/weapon/table_parts( src.loc )
+			new /obj/item/part/table( src.loc )
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			//SN src = null
 			del(src)
@@ -351,7 +351,7 @@
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-		new /obj/item/weapon/table_parts( src.loc )
+		new /obj/item/part/table( src.loc )
 		del(src)
 		return
 
@@ -371,8 +371,8 @@
 
 /obj/structure/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
+	if (istype(W, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -383,11 +383,11 @@
 		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
 		del(W)
 		return
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/tool/wrench))
 		user << "\blue Now disassembling the wooden table"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		sleep(50)
-		new /obj/item/weapon/table_parts/wood( src.loc )
+		new /obj/item/part/table/wood( src.loc )
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		del(src)
 		return
@@ -401,7 +401,7 @@
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
-		new /obj/item/weapon/table_parts/wood( src.loc )
+		new /obj/item/part/table/wood( src.loc )
 		del(src)
 		return
 
@@ -422,8 +422,8 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
+	if (istype(W, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -435,8 +435,8 @@
 		del(W)
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if (istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
@@ -459,12 +459,12 @@
 		//if(W && W.loc)	W.loc = src.loc
 		return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/tool/wrench))
 		if(src.status == 1)
 			user << "\blue Now disassembling the reinforced table"
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 50))
-				new /obj/item/weapon/table_parts/reinforced( src.loc )
+				new /obj/item/part/table/reinforced( src.loc )
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				del(src)
 			return
@@ -479,7 +479,7 @@
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The reinforced table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-		new /obj/item/weapon/table_parts/reinforced( src.loc )
+		new /obj/item/part/table/reinforced( src.loc )
 		del(src)
 		return
 
@@ -508,18 +508,18 @@
 		if(2.0)
 			del(src)
 			if(prob(50))
-				new /obj/item/weapon/rack_parts(src.loc)
+				new /obj/item/part/rack(src.loc)
 		if(3.0)
 			if(prob(25))
 				del(src)
-				new /obj/item/weapon/rack_parts(src.loc)
+				new /obj/item/part/rack(src.loc)
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
 		del(src)
 		return
 	else if(prob(50))
-		new /obj/item/weapon/rack_parts(src.loc)
+		new /obj/item/part/rack(src.loc)
 		del(src)
 		return
 
@@ -543,8 +543,8 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/weapon/rack_parts( src.loc )
+	if (istype(W, /obj/item/tool/wrench))
+		new /obj/item/part/rack( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 		return
@@ -562,7 +562,7 @@
 	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		new /obj/item/weapon/rack_parts(loc)
+		new /obj/item/part/rack(loc)
 		density = 0
 		del(src)
 
@@ -571,14 +571,14 @@
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		new /obj/item/weapon/rack_parts(loc)
+		new /obj/item/part/rack(loc)
 		density = 0
 		del(src)
 
 
 /obj/structure/rack/attack_alien(mob/user)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
-	new /obj/item/weapon/rack_parts(loc)
+	new /obj/item/part/rack(loc)
 	density = 0
 	del(src)
 
@@ -586,6 +586,6 @@
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.wall_smash)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		new /obj/item/weapon/rack_parts(loc)
+		new /obj/item/part/rack(loc)
 		density = 0
 		del(src)

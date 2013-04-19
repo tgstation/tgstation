@@ -22,7 +22,7 @@
 /obj/machinery/door/poddoor/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 
-	if(!istype(I, /obj/item/weapon/crowbar))
+	if(!istype(I, /obj/item/tool/crowbar))
 		return
 	if(istype(I, /obj/item/weapon/twohanded/fireaxe))
 		var/obj/item/weapon/twohanded/fireaxe/F = I

@@ -85,7 +85,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
 	var/msg = "";                //Feed message
-	var/obj/item/weapon/photo/photo = null
+	var/obj/item/office/photo/photo = null
 	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
 	var/c_locked=0;        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
@@ -696,7 +696,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
 
-/*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
+/*	if (istype(I, /obj/item/security/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
 		if(src.screen == 4 || src.screen == 5)
 			if( istype(I, /obj/item/device/pda) )
 				var/obj/item/device/pda/P = I
@@ -704,7 +704,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
 					src.screen=2
 			else
-				var/obj/item/weapon/card/id/T = I
+				var/obj/item/security/card/id/T = I
 				src.scanned_user = text("[T.registered_name] ([T.assignment])")
 				src.screen=2*/  //Obsolete after autorecognition
 
@@ -747,7 +747,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo.loc = src.loc
 		user.put_in_inactive_hand(photo)
 		photo = null
-	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
+	if(istype(user.get_active_hand(), /obj/item/office/photo))
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
@@ -760,7 +760,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 //###################################### NEWSPAPER! ######################################################################
 //########################################################################################################################
 
-/obj/item/weapon/newspaper
+/obj/item/office/newspaper
 	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -775,11 +775,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/scribble=""
 	var/scribble_page = null
 
-/*obj/item/weapon/newspaper/attack_hand(mob/user as mob)
+/*obj/item/office/newspaper/attack_hand(mob/user as mob)
 	..()
 	world << "derp"*/
 
-obj/item/weapon/newspaper/attack_self(mob/user as mob)
+obj/item/office/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
@@ -859,7 +859,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 		user << "The paper is full of intelligible symbols!"
 
 
-obj/item/weapon/newspaper/Topic(href, href_list)
+obj/item/office/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
@@ -891,8 +891,8 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 			src.attack_self(src.loc)
 
 
-obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/pen))
+obj/item/office/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/office/pen))
 		if(src.scribble_page == src.curr_page)
 			user << "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>"
 		else
@@ -921,8 +921,8 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
 				else
 					src.scanned_user = "Unknown"
-			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = human_user.wear_id
+			else if(istype(human_user.wear_id, /obj/item/security/card/id) )
+				var/obj/item/security/card/id/ID = human_user.wear_id
 				src.scanned_user ="[ID.registered_name] ([ID.assignment])"
 			else
 				src.scanned_user ="Unknown"
@@ -935,7 +935,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)
-	var/obj/item/weapon/newspaper/NEWSPAPER = new /obj/item/weapon/newspaper
+	var/obj/item/office/newspaper/NEWSPAPER = new /obj/item/office/newspaper
 	for(var/datum/feed_channel/FC in news_network.network_channels)
 		NEWSPAPER.news_content += FC
 	if(news_network.wanted_issue)

@@ -13,8 +13,8 @@
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/assembly/shock_kit))
-		var/obj/item/assembly/shock_kit/SK = W
+	if(istype(W, /obj/item/part/shock_kit))
+		var/obj/item/part/shock_kit/SK = W
 		if(!SK.status)
 			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
 			return
@@ -80,9 +80,9 @@
 	desc = "Old is never too old to not be in fashion."
 
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/tool/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/wood(src.loc)
+		new /obj/item/part/stack/sheet/wood(src.loc)
 		del(src)
 	else
 		..()

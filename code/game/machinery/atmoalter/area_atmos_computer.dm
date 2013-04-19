@@ -2,7 +2,7 @@
 	name = "Area Air Control"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
 	icon_state = "area_atmos"
-	circuit = "/obj/item/weapon/circuitboard/area_atmos"
+	circuit = "/obj/item/part/circuitboard/area_atmos"
 
 	var/list/connectedscrubbers = new()
 	var/status = ""

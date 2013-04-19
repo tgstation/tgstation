@@ -98,8 +98,8 @@ display round(lastgen) and plasmatank amount
 	var/sheets = 0
 	var/max_sheets = 100
 	var/sheet_name = ""
-	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/sheet_path = /obj/item/part/stack/sheet/mineral/plasma
+	var/board_path = "/obj/item/part/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 40
 	var/heat = 0
@@ -112,11 +112,11 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/part/basic/matter_bin(src)
+	component_parts += new /obj/item/part/basic/micro_laser(src)
+	component_parts += new /obj/item/part/cable_coil(src)
+	component_parts += new /obj/item/part/cable_coil(src)
+	component_parts += new /obj/item/part/basic/capacitor(src)
 	component_parts += new board_path(src)
 	var/obj/sheet = new sheet_path(null)
 	sheet_name = sheet.name
@@ -129,10 +129,10 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/temp_reliability = 0
-	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
+	for(var/obj/item/part/basic/SP in component_parts)
+		if(istype(SP, /obj/item/part/basic/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
-		else if(istype(SP, /obj/item/weapon/stock_parts/micro_laser) || istype(SP, /obj/item/weapon/stock_parts/capacitor))
+		else if(istype(SP, /obj/item/part/basic/micro_laser) || istype(SP, /obj/item/part/basic/capacitor))
 			temp_rating += SP.rating
 	for(var/obj/item/weapon/CP in component_parts)
 		temp_reliability += CP.reliability
@@ -154,7 +154,7 @@ display round(lastgen) and plasmatank amount
 		var/fail_safe = 0
 		while(sheets > 0 && fail_safe < 100)
 			fail_safe += 1
-			var/obj/item/stack/sheet/S = new sheet_path(loc)
+			var/obj/item/part/stack/sheet/S = new sheet_path(loc)
 			var/amount = min(sheets, S.max_amount)
 			S.amount = amount
 			sheets -= amount
@@ -201,7 +201,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, sheet_path))
-		var/obj/item/stack/addstack = O
+		var/obj/item/part/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
 			user << "\blue The [src.name] is full!"
@@ -211,12 +211,12 @@ display round(lastgen) and plasmatank amount
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
+	else if (istype(O, /obj/item/security/card/emag))
 		emagged = 1
 		emp_act(1)
 	else if(!active)
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/tool/wrench))
 
 			if(!anchored)
 				connect_to_network()
@@ -228,14 +228,14 @@ display round(lastgen) and plasmatank amount
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			anchored = !anchored
 
-		else if(istype(O, /obj/item/weapon/screwdriver))
+		else if(istype(O, /obj/item/tool/screwdriver))
 			open = !open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(open)
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && !open)
+		else if(istype(O, /obj/item/tool/crowbar) && !open)
 			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			for(var/obj/item/I in component_parts)
 				if(I.reliability < 100)
@@ -317,19 +317,19 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
-	sheet_path = /obj/item/stack/sheet/mineral/uranium
+	sheet_path = /obj/item/part/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 65
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+	board_path = "/obj/item/part/circuitboard/pacman/super"
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
-	sheet_path = /obj/item/stack/sheet/mineral/diamond
+	sheet_path = /obj/item/part/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+	board_path = "/obj/item/part/circuitboard/pacman/mrs"
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)

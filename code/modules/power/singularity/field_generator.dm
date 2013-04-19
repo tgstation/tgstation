@@ -99,7 +99,7 @@ field_generator power level display
 	if(active)
 		user << "The [src] needs to be off."
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/tool/wrench))
 		switch(state)
 			if(0)
 				state = 1
@@ -118,8 +118,8 @@ field_generator power level display
 			if(2)
 				user << "\red The [src.name] needs to be unwelded from the floor."
 				return
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 		switch(state)
 			if(0)
 				user << "\red The [src.name] needs to be wrenched to the floor."
@@ -166,7 +166,7 @@ field_generator power level display
 /obj/machinery/containment_field/meteorhit()
 	return 0
 
-/obj/machinery/field_generator/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/field_generator/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(Proj.flag != "bullet")
 		power += Proj.damage
 		update_icon()

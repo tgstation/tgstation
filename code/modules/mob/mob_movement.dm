@@ -277,7 +277,7 @@
 		//We are now going to move
 		moving = 1
 		//Something with pulling things
-		if(locate(/obj/item/weapon/grab, mob))
+		if(locate(/obj/item/effect/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
@@ -325,18 +325,18 @@
 ///Called by client/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
 /client/proc/Process_Grab()
-	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+	if(locate(/obj/item/effect/grab, locate(/obj/item/effect/grab, mob.grabbed_by.len)))
 		var/list/grabbing = list()
 
-		if(istype(mob.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.l_hand
+		if(istype(mob.l_hand, /obj/item/effect/grab))
+			var/obj/item/effect/grab/G = mob.l_hand
 			grabbing += G.affecting
 
-		if(istype(mob.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.r_hand
+		if(istype(mob.r_hand, /obj/item/effect/grab))
+			var/obj/item/effect/grab/G = mob.r_hand
 			grabbing += G.affecting
 
-		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
+		for(var/obj/item/effect/grab/G in mob.grabbed_by)
 			if(G.state == GRAB_PASSIVE && !grabbing.Find(G.assailant))
 				del(G)
 

@@ -13,7 +13,7 @@
 /obj/structure/displaycase/ex_act(severity)
 	switch(severity)
 		if (1)
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/trash/shard( src.loc )
 			if (occupied)
 				new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 				occupied = 0
@@ -28,7 +28,7 @@
 				src.healthcheck()
 
 
-/obj/structure/displaycase/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/displaycase/bullet_act(var/obj/item/weapon/projectile/Proj)
 	health -= Proj.damage
 	..()
 	src.healthcheck()
@@ -37,7 +37,7 @@
 
 /obj/structure/displaycase/blob_act()
 	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/trash/shard( src.loc )
 		if (occupied)
 			new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 			occupied = 0
@@ -45,7 +45,7 @@
 
 
 /obj/structure/displaycase/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/trash/shard( src.loc )
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 		del(src)
 
@@ -55,7 +55,7 @@
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/trash/shard( src.loc )
 			playsound(src, "shatter", 70, 1)
 			update_icon()
 	else

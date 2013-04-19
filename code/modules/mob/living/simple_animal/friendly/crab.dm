@@ -10,7 +10,7 @@
 	emote_see = list("clacks")
 	speak_chance = 1
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/chem/food/snacks/meat
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stomps the"
@@ -41,7 +41,7 @@
 
 //LOOK AT THIS - ..()??
 /*/mob/living/simple_animal/crab/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/wirecutters))
+	if(istype(O, /obj/item/part/wirecutters))
 		if(prob(50))
 			user << "\red \b This kills the crab."
 			health -= 20
@@ -49,9 +49,9 @@
 		else
 			GetMad()
 			get
-	if(istype(O, /obj/item/stack/medical))
+	if(istype(O, /obj/item/part/stack/medical))
 		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
+			var/obj/item/part/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
 					health = min(maxHealth, health + MED.heal_brute)

@@ -1,4 +1,4 @@
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+/obj/item/part/mecha/mecha_equipment/tool/hydraulic_clamp
 	name = "Hydraulic Clamp"
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
@@ -63,7 +63,7 @@
 			do_after_cooldown()
 		return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill
+/obj/item/part/mecha/mecha_equipment/tool/drill
 	name = "Drill"
 	desc = "This is the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_drill"
@@ -91,10 +91,10 @@
 						if(get_dir(chassis,M)&chassis.dir)
 							M.gets_drilled()
 					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+					if(locate(/obj/item/part/mecha/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							for(var/obj/item/mining/ore/ore in range(chassis,1))
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(istype(target, /turf/simulated/floor/plating/airless/asteroid))
@@ -102,10 +102,10 @@
 						if(get_dir(chassis,M)&chassis.dir)
 							M.gets_dug()
 					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+					if(locate(/obj/item/part/mecha/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							for(var/obj/item/mining/ore/ore in range(chassis,1))
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(target.loc == C)
@@ -119,7 +119,7 @@
 				return 1
 		return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+/obj/item/part/mecha/mecha_equipment/tool/drill/diamonddrill
 	name = "Diamond Drill"
 	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_diamond_drill"
@@ -150,20 +150,20 @@
 						if(get_dir(chassis,M)&chassis.dir)
 							M.gets_drilled()
 					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+					if(locate(/obj/item/part/mecha/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							for(var/obj/item/mining/ore/ore in range(chassis,1))
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(istype(target,/turf/simulated/floor/plating/airless/asteroid))
 					for(var/turf/simulated/floor/plating/airless/asteroid/M in range(target,1))
 						M.gets_dug()
 					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+					if(locate(/obj/item/part/mecha/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(target,1))
+							for(var/obj/item/mining/ore/ore in range(target,1))
 								ore.Move(ore_box)
 				else if(target.loc == C)
 					log_message("Drilled through [target]")
@@ -176,7 +176,7 @@
 				return 1
 		return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher
+/obj/item/part/mecha/mecha_equipment/tool/extinguisher
 	name = "Extinguisher"
 	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
 	icon_state = "mecha_exting"
@@ -248,7 +248,7 @@
 		return 0
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd
+/obj/item/part/mecha/mecha_equipment/tool/rcd
 	name = "Mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device. (Can be attached to: Any exosuit)"
 	icon_state = "mecha_rcd"
@@ -353,7 +353,7 @@
 
 
 
-/obj/item/mecha_parts/mecha_equipment/teleporter
+/obj/item/part/mecha/mecha_equipment/teleporter
 	name = "Teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
@@ -373,7 +373,7 @@
 		return
 
 
-/obj/item/mecha_parts/mecha_equipment/wormhole_generator
+/obj/item/part/mecha/mecha_equipment/wormhole_generator
 	name = "Wormhole Generator"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	icon_state = "mecha_wholegen"
@@ -423,7 +423,7 @@
 			del(P)
 		return
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult
+/obj/item/part/mecha/mecha_equipment/gravcatapult
 	name = "Gravitational Catapult"
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
@@ -488,7 +488,7 @@
 		return
 
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster //what is that noise? A BAWWW from TK mutants.
+/obj/item/part/mecha/mecha_equipment/anticcw_armor_booster //what is that noise? A BAWWW from TK mutants.
 	name = "Armor Booster Module (Close Combat Weaponry)"
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
@@ -539,7 +539,7 @@
 		return
 
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+/obj/item/part/mecha/mecha_equipment/antiproj_armor_booster
 	name = "Armor Booster Module (Ranged Weaponry)"
 	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots. Requires energy to operate."
 	icon_state = "mecha_abooster_proj"
@@ -574,7 +574,7 @@
 		if(!chassis) return
 		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
 
-	proc/dynbulletdamage(var/obj/item/projectile/Proj)
+	proc/dynbulletdamage(var/obj/item/weapon/projectile/Proj)
 		if(!action_checks(src))
 			return chassis.dynbulletdamage(Proj)
 		if(prob(chassis.deflect_chance*deflect_coeff))
@@ -593,7 +593,7 @@
 	proc/dynhitby(atom/movable/A)
 		if(!action_checks(A))
 			return chassis.dynhitby(A)
-		if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
+		if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/part/mecha/mecha_tracking))
 			chassis.occupant_message("\blue The [A] bounces off the armor.")
 			chassis.visible_message("The [A] bounces off the [chassis] armor")
 			chassis.log_append_to_last("Armor saved.")
@@ -611,7 +611,7 @@
 		return
 
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid
+/obj/item/part/mecha/mecha_equipment/repair_droid
 	name = "Repair Droid"
 	desc = "Automated repair droid. Scans exosuit for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
@@ -671,7 +671,7 @@
 
 /datum/global_iterator/mecha_repair_droid
 
-	process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
+	process(var/obj/item/part/mecha/mecha_equipment/repair_droid/RD as obj)
 		if(!RD.chassis)
 			stop()
 			RD.set_ready_state(1)
@@ -701,7 +701,7 @@
 		return
 
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+/obj/item/part/mecha/mecha_equipment/tesla_energy_relay
 	name = "Energy Relay"
 	desc = "Wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
@@ -786,7 +786,7 @@
 
 /datum/global_iterator/mecha_energy_relay
 
-	process(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
+	process(var/obj/item/part/mecha/mecha_equipment/tesla_energy_relay/ER)
 		if(!ER.chassis || ER.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			stop()
 			ER.set_ready_state(1)
@@ -813,7 +813,7 @@
 
 
 
-/obj/item/mecha_parts/mecha_equipment/generator
+/obj/item/part/mecha/mecha_equipment/generator
 	name = "Plasma Converter"
 	desc = "Generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
@@ -824,7 +824,7 @@
 	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
 	var/datum/global_iterator/pr_mech_generator
 	var/coeff = 100
-	var/obj/item/stack/sheet/fuel
+	var/obj/item/part/stack/sheet/fuel
 	var/max_fuel = 150000
 	var/fuel_per_cycle_idle = 100
 	var/fuel_per_cycle_active = 500
@@ -837,7 +837,7 @@
 		return
 
 	proc/init()
-		fuel = new /obj/item/stack/sheet/mineral/plasma(src)
+		fuel = new /obj/item/part/stack/sheet/mineral/plasma(src)
 		fuel.amount = 0
 		pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
 		pr_mech_generator.set_delay(equip_cooldown)
@@ -880,7 +880,7 @@
 			occupant_message(message)
 		return
 
-	proc/load_fuel(var/obj/item/stack/sheet/P)
+	proc/load_fuel(var/obj/item/part/stack/sheet/P)
 		if(P.type == fuel.type && P.amount)
 			var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
 			if(to_load)
@@ -923,7 +923,7 @@
 
 /datum/global_iterator/mecha_generator
 
-	process(var/obj/item/mecha_parts/mecha_equipment/generator/EG)
+	process(var/obj/item/part/mecha/mecha_equipment/generator/EG)
 		if(!EG.chassis)
 			stop()
 			EG.set_ready_state(1)
@@ -953,7 +953,7 @@
 		return 1
 
 
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear
+/obj/item/part/mecha/mecha_equipment/generator/nuclear
 	name = "ExoNuclear Reactor"
 	desc = "Generates power using uranium. Pollutes the environment."
 	icon_state = "tesla"
@@ -967,7 +967,7 @@
 	reliability = 1000
 
 	init()
-		fuel = new /obj/item/stack/sheet/mineral/uranium(src)
+		fuel = new /obj/item/part/stack/sheet/mineral/uranium(src)
 		fuel.amount = 0
 		pr_mech_generator = new /datum/global_iterator/mecha_generator/nuclear(list(src),0)
 		pr_mech_generator.set_delay(equip_cooldown)
@@ -978,7 +978,7 @@
 
 /datum/global_iterator/mecha_generator/nuclear
 
-	process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
+	process(var/obj/item/part/mecha/mecha_equipment/generator/nuclear/EG)
 		if(..())
 			for(var/mob/living/carbon/M in view(EG.chassis))
 				if(istype(M,/mob/living/carbon/human))
@@ -990,7 +990,7 @@
 
 
 //This is pretty much just for the death-ripley so that it is harmless
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
+/obj/item/part/mecha/mecha_equipment/tool/safety_clamp
 	name = "KILL CLAMP"
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15

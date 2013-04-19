@@ -13,7 +13,7 @@
 	name = "Light floor"
 	luminosity = 5
 	icon_state = "light_on"
-	floor_tile = new/obj/item/stack/tile/light
+	floor_tile = new/obj/item/part/stack/tile/light
 
 	New()
 		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
@@ -29,7 +29,7 @@
 /turf/simulated/floor/wood
 	name = "floor"
 	icon_state = "wood"
-	floor_tile = new/obj/item/stack/tile/wood
+	floor_tile = new/obj/item/part/stack/tile/wood
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -56,11 +56,11 @@
 		return
 	if(!user)
 		return
-	if(istype(C, /obj/item/weapon/wrench))
+	if(istype(C, /obj/item/tool/wrench))
 		user << "\blue Removing rods..."
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
-			new /obj/item/stack/rods(src, 2)
+			new /obj/item/part/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src
 			F.make_plating()
@@ -164,7 +164,7 @@
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass1"
-	floor_tile = new/obj/item/stack/tile/grass
+	floor_tile = new/obj/item/part/stack/tile/grass
 
 	New()
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
@@ -181,7 +181,7 @@
 /turf/simulated/floor/carpet
 	name = "Carpet"
 	icon_state = "carpet"
-	floor_tile = new/obj/item/stack/tile/carpet
+	floor_tile = new/obj/item/part/stack/tile/carpet
 
 	New()
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.

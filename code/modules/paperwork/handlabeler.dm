@@ -1,4 +1,4 @@
-/obj/item/weapon/hand_labeler
+/obj/item/office/labeler
 	name = "hand labeler"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
@@ -8,7 +8,7 @@
 	var/mode = 0
 
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user)
+/obj/item/office/labeler/afterattack(atom/A, mob/user)
 	if(!mode)	//if it's off, give up.
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
@@ -36,7 +36,7 @@
 	labels_left--
 
 
-/obj/item/weapon/hand_labeler/attack_self(mob/user)
+/obj/item/office/labeler/attack_self(mob/user)
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
@@ -51,16 +51,16 @@
 	else
 		user << "<span class='notice'>You turn off [src].</span>"
 
-/obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/office/labeler/attackby(obj/item/I as obj, mob/user as mob)
 	..()
-	if(istype(I, /obj/item/hand_labeler_refill))
+	if(istype(I, /obj/item/part/refill/labeler))
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		user.drop_item()
 		del(I)
 		labels_left = initial(labels_left)
 		return
 
-/obj/item/hand_labeler_refill
+/obj/item/part/refill/labeler
 	name = "hand labeler paper roll"
 	icon = 'icons/obj/bureaucracy.dmi'
 	desc = "A roll of paper. Use it on a hand labeler to refill it."

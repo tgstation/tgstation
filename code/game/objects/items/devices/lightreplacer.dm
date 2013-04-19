@@ -38,7 +38,7 @@
 #define LIGHT_BURNED 3
 
 
-/obj/item/device/lightreplacer
+/obj/item/service/lightreplacer
 
 	name = "light replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."
@@ -61,23 +61,23 @@
 	var/decrement = 1
 	var/charge = 1
 
-/obj/item/device/lightreplacer/New()
+/obj/item/service/lightreplacer/New()
 	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
 	..()
 
-/obj/item/device/lightreplacer/examine()
+/obj/item/service/lightreplacer/examine()
 	set src in view(2)
 	..()
 	usr << "It has [uses] lights remaining."
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
+/obj/item/service/lightreplacer/attackby(obj/item/W, mob/user)
+	if(istype(W,  /obj/item/security/card/emag) && emagged == 0)
 		Emag()
 		return
 
-	if(istype(W, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = W
+	if(istype(W, /obj/item/part/stack/sheet/glass))
+		var/obj/item/part/stack/sheet/glass/G = W
 		if(G.amount - decrement >= 0 && uses < max_uses)
 			var/remaining = max(G.amount - decrement, 0)
 			if(!remaining && !(G.amount - decrement) == 0)
@@ -91,8 +91,8 @@
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return
 
-	if(istype(W, /obj/item/weapon/light))
-		var/obj/item/weapon/light/L = W
+	if(istype(W, /obj/item/part/light))
+		var/obj/item/part/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				AddUses(1)
@@ -105,7 +105,7 @@
 			return
 
 
-/obj/item/device/lightreplacer/attack_self(mob/user)
+/obj/item/service/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
@@ -116,27 +116,27 @@
 	*/
 	usr << "It has [uses] lights remaining."
 
-/obj/item/device/lightreplacer/update_icon()
+/obj/item/service/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
 
 
-/obj/item/device/lightreplacer/proc/Use(var/mob/user)
+/obj/item/service/lightreplacer/proc/Use(var/mob/user)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
+/obj/item/service/lightreplacer/proc/AddUses(var/amount = 1)
 	uses = min(max(uses + amount, 0), max_uses)
 
-/obj/item/device/lightreplacer/proc/Charge(var/mob/user)
+/obj/item/service/lightreplacer/proc/Charge(var/mob/user)
 	charge += 1
 	if(charge > 7)
 		AddUses(1)
 		charge = 1
 
-/obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
+/obj/item/service/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
@@ -145,7 +145,7 @@
 
 			if(target.status != LIGHT_EMPTY)
 
-				var/obj/item/weapon/light/L1 = new target.light_type(target.loc)
+				var/obj/item/part/light/L1 = new target.light_type(target.loc)
 				L1.status = target.status
 				L1.rigged = target.rigged
 				L1.brightness = target.brightness
@@ -156,7 +156,7 @@
 				target.status = LIGHT_EMPTY
 				target.update()
 
-			var/obj/item/weapon/light/L2 = new target.light_type()
+			var/obj/item/part/light/L2 = new target.light_type()
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
@@ -177,7 +177,7 @@
 		U << "There is a working [target.fitting] already inserted."
 		return
 
-/obj/item/device/lightreplacer/proc/Emag()
+/obj/item/service/lightreplacer/proc/Emag()
 	emagged = !emagged
 	playsound(src.loc, "sparks", 100, 1)
 	if(emagged)
@@ -188,7 +188,7 @@
 
 //Can you use it?
 
-/obj/item/device/lightreplacer/proc/CanUse(var/mob/living/user)
+/obj/item/service/lightreplacer/proc/CanUse(var/mob/living/user)
 	src.add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)

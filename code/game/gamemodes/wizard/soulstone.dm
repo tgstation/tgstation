@@ -1,4 +1,4 @@
-/obj/item/device/soulstone
+/obj/item/magic/soulstone
 	name = "Soul Stone Shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
@@ -88,7 +88,7 @@
 	flags = FPRINT | TABLEPASS
 
 /obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/device/soulstone))
+	if(istype(O, /obj/item/magic/soulstone))
 		O.transfer_soul("CONSTRUCT",src,user)
 
 
@@ -99,7 +99,7 @@
 	switch(choice)
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			var/obj/item/device/soulstone/C = src
+			var/obj/item/magic/soulstone/C = src
 			if(C.imprinted != "empty")
 				U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
 			else
@@ -140,7 +140,7 @@
 							del T
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
-			var/obj/item/device/soulstone/C = src
+			var/obj/item/magic/soulstone/C = src
 			if (T.stat == DEAD)
 				U << "\red <b>Capture failed!</b>: \black The shade has already been banished!"
 			else
@@ -159,7 +159,7 @@
 						U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
-			var/obj/item/device/soulstone/C = src
+			var/obj/item/magic/soulstone/C = src
 			var/mob/living/simple_animal/shade/A = locate() in C
 			if(A)
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")

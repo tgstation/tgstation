@@ -1,6 +1,6 @@
 // The lighting system
 //
-// consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
+// consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/part/light)
 
 
 // status values shared between lighting fixtures and items
@@ -11,7 +11,7 @@
 
 
 
-/obj/item/light_fixture_frame
+/obj/item/part/frame/light
 	name = "light fixture frame"
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
@@ -21,14 +21,14 @@
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+/obj/item/part/frame/light/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/tool/wrench))
+		new /obj/item/part/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		del(src)
 		return
 	..()
 
-/obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
+/obj/item/part/frame/light/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
 		return
 	var/ndir = get_dir(usr,on_wall)
@@ -58,7 +58,7 @@
 		"You attach [src] to the wall.")
 	del(src)
 
-/obj/item/light_fixture_frame/small
+/obj/item/part/frame/light/small
 	name = "small light fixture frame"
 	desc = "Used for building small lights."
 	icon = 'icons/obj/lighting.dmi'
@@ -101,13 +101,13 @@
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/tool/wrench))
 		if (src.stage == 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			usr << "You begin deconstructing [src]."
 			if (!do_after(usr, 30))
 				return
-			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+			new /obj/item/part/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
@@ -120,7 +120,7 @@
 			usr << "You have to unscrew the case first."
 			return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/part/wirecutters))
 		if (src.stage != 2) return
 		src.stage = 1
 		switch(fixture_type)
@@ -128,15 +128,15 @@
 				src.icon_state = "tube-construct-stage1"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/weapon/cable_coil(get_turf(src.loc), 1, "red")
+		new /obj/item/part/cable_coil(get_turf(src.loc), 1, "red")
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/part/cable_coil))
 		if (src.stage != 1) return
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/part/cable_coil/coil = W
 		coil.use(1)
 		switch(fixture_type)
 			if ("tube")
@@ -148,7 +148,7 @@
 			"You add wires to [src].")
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/tool/screwdriver))
 		if (src.stage == 2)
 			switch(fixture_type)
 				if ("tube")
@@ -202,7 +202,7 @@
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
-	var/light_type = /obj/item/weapon/light/tube		// the type of light item
+	var/light_type = /obj/item/part/light/tube		// the type of light item
 	var/fitting = "tube"
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
@@ -217,7 +217,7 @@
 	fitting = "bulb"
 	brightness = 4
 	desc = "A small lighting fixture."
-	light_type = /obj/item/weapon/light/bulb
+	light_type = /obj/item/part/light/bulb
 
 
 /obj/machinery/light/Move()
@@ -329,21 +329,21 @@
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
 	//Light replacer code
-	if(istype(W, /obj/item/device/lightreplacer))
-		var/obj/item/device/lightreplacer/LR = W
+	if(istype(W, /obj/item/service/lightreplacer))
+		var/obj/item/service/lightreplacer/LR = W
 		if(isliving(user))
 			var/mob/living/U = user
 			LR.ReplaceLight(src, U)
 			return
 
 	// attempt to insert light
-	if(istype(W, /obj/item/weapon/light))
+	if(istype(W, /obj/item/part/light))
 		if(status != LIGHT_EMPTY)
 			user << "There is a [fitting] already inserted."
 			return
 		else
 			src.add_fingerprint(user)
-			var/obj/item/weapon/light/L = W
+			var/obj/item/part/light/L = W
 			if(istype(L, light_type))
 				status = L.status
 				user << "You insert the [L.name]."
@@ -386,7 +386,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
+		if(istype(W, /obj/item/tool/screwdriver)) //If it's a screwdriver open it.
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
@@ -502,7 +502,7 @@
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
-	var/obj/item/weapon/light/L = new light_type()
+	var/obj/item/part/light/L = new light_type()
 	L.status = status
 	L.rigged = rigged
 	L.brightness = src.brightness
@@ -603,7 +603,7 @@
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
 
-/obj/item/weapon/light
+/obj/item/part/light
 	icon = 'icons/obj/lighting.dmi'
 	flags = FPRINT | TABLEPASS
 	force = 2
@@ -616,7 +616,7 @@
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
-/obj/item/weapon/light/tube
+/obj/item/part/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
 	icon_state = "ltube"
@@ -625,12 +625,12 @@
 	g_amt = 100
 	brightness = 8
 
-/obj/item/weapon/light/tube/large
+/obj/item/part/light/tube/large
 	w_class = 2
 	name = "large light tube"
 	brightness = 15
 
-/obj/item/weapon/light/bulb
+/obj/item/part/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
@@ -639,11 +639,11 @@
 	g_amt = 100
 	brightness = 5
 
-/obj/item/weapon/light/throw_impact(atom/hit_atom)
+/obj/item/part/light/throw_impact(atom/hit_atom)
 	..()
 	shatter()
 
-/obj/item/weapon/light/bulb/fire
+/obj/item/part/light/bulb/fire
 	name = "fire bulb"
 	desc = "A replacement fire bulb."
 	icon_state = "fbulb"
@@ -654,7 +654,7 @@
 
 // update the icon state and description of the light
 
-/obj/item/weapon/light/proc/update()
+/obj/item/part/light/proc/update()
 	switch(status)
 		if(LIGHT_OK)
 			icon_state = base_state
@@ -667,7 +667,7 @@
 			desc = "A broken [name]."
 
 
-/obj/item/weapon/light/New()
+/obj/item/part/light/New()
 	..()
 	switch(name)
 		if("light tube")
@@ -679,10 +679,10 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
-/obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user)
+/obj/item/part/light/attackby(var/obj/item/I, var/mob/user)
 	..()
-	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
-		var/obj/item/weapon/reagent_containers/syringe/S = I
+	if(istype(I, /obj/item/chem/syringe))
+		var/obj/item/chem/syringe/S = I
 
 		user << "You inject the solution into the [src]."
 
@@ -699,7 +699,7 @@
 // shatter light, unless it was an attempt to put it in a light socket
 // now only shatter if the intent was harm
 
-/obj/item/weapon/light/afterattack(atom/target, mob/user)
+/obj/item/part/light/afterattack(atom/target, mob/user)
 	if(istype(target, /obj/machinery/light))
 		return
 	if(user.a_intent != "harm")
@@ -707,7 +707,7 @@
 
 	shatter()
 
-/obj/item/weapon/light/proc/shatter()
+/obj/item/part/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
 		status = LIGHT_BROKEN

@@ -46,7 +46,7 @@
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/mirror/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(prob(Proj.damage * 2))
 		if(!shattered)
 			shatter()

@@ -7,7 +7,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robot"
 	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/robotics"
+	circuit = "/obj/item/part/circuitboard/robotics"
 
 	var/id = 0.0
 	var/temp = null
@@ -116,7 +116,7 @@
 			<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 		else if (href_list["eject2"])
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
+			var/obj/item/security/card/id/I = usr.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id

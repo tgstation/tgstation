@@ -1,5 +1,5 @@
 // Plant analyzer
-/obj/item/device/analyzer/plant_analyzer
+/obj/item/device/scanner/plant
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'
@@ -14,7 +14,7 @@
 // Hydroponics Tools
 // *************************************
 
-/obj/item/weapon/weedspray // -- Skie
+/obj/item/botany/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "weed-spray"
@@ -33,7 +33,7 @@
 		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (TOXLOSS)
 
-/obj/item/weapon/pestspray // -- Skie
+/obj/item/botany/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "pest-spray"
@@ -52,7 +52,7 @@
 		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (TOXLOSS)
 
-/obj/item/weapon/minihoe // -- Numbers
+/obj/item/botany/minihoe // -- Numbers
 	name = "mini hoe"
 	desc = "It's used for removing weeds or scratching your back."
 	icon = 'icons/obj/weapons.dmi'
@@ -69,7 +69,7 @@
 // Nutrient defines for hydroponics
 // *************************************
 
-/obj/item/nutrient
+/obj/item/botany/nutrient
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
@@ -81,7 +81,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/nutrient/ez
+/obj/item/botany/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
@@ -92,7 +92,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/nutrient/l4z
+/obj/item/botany/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
@@ -103,7 +103,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/nutrient/rh
+/obj/item/botany/nutrient/rh
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
@@ -118,7 +118,7 @@
 // Pestkiller defines for hydroponics
 // *************************************
 
-/obj/item/pestkiller
+/obj/item/botany/pestkiller
 	name = "bottle of pestkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
@@ -129,7 +129,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/pestkiller/carbaryl
+/obj/item/botany/pestkiller/carbaryl
 	name = "bottle of carbaryl"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
@@ -140,7 +140,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/pestkiller/lindane
+/obj/item/botany/pestkiller/lindane
 	name = "bottle of lindane"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
@@ -151,7 +151,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/pestkiller/phosmet
+/obj/item/botany/pestkiller/phosmet
 	name = "bottle of phosmet"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
@@ -166,7 +166,7 @@
 // Weedkiller defines for hydroponics
 // *************************************
 
-/obj/item/weedkiller
+/obj/item/botany/weedkiller
 	name = "bottle of weedkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
@@ -174,7 +174,7 @@
 	var/toxicity = 0
 	var/WeedKillStr = 0
 
-/obj/item/weedkiller/glyphosate
+/obj/item/botany/weedkiller/glyphosate
 	name = "bottle of glyphosate"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
@@ -182,7 +182,7 @@
 	toxicity = 4
 	WeedKillStr = 2
 
-/obj/item/weedkiller/triclopyr
+/obj/item/botany/weedkiller/triclopyr
 	name = "bottle of triclopyr"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
@@ -190,7 +190,7 @@
 	toxicity = 6
 	WeedKillStr = 4
 
-/obj/item/weedkiller/D24
+/obj/item/botany/weedkiller/D24
 	name = "bottle of 2,4-D"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"

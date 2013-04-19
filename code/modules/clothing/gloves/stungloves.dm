@@ -3,8 +3,8 @@
 		user << "<span class='notice'>That won't work.</span>"	//i'm not putting my lips on that!
 		..()
 		return
-	if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
+	if(istype(W, /obj/item/part/cable_coil))
+		var/obj/item/part/cable_coil/C = W
 		if(!wired)
 			if(C.amount >= 2)
 				C.use(2)
@@ -17,7 +17,7 @@
 		else
 			user << "<span class='notice'>[src] are already wired.</span>"
 
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/part/cell))
 		if(!wired)
 			user << "<span class='notice'>[src] need to be wired first.</span>"
 		else if(!cell)
@@ -29,7 +29,7 @@
 		else
 			user << "<span class='notice'>[src] already have a cell.</span>"
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/part/wirecutters))
 		if(cell)
 			cell.updateicon()
 			cell.loc = get_turf(src.loc)

@@ -17,9 +17,9 @@
 	var/lit = 0	//on or off
 	var/operating = 0//cooldown
 	var/turf/previousturf = null
-	var/obj/item/weapon/weldingtool/weldtool = null
-	var/obj/item/device/assembly/igniter/igniter = null
-	var/obj/item/weapon/tank/plasma/ptank = null
+	var/obj/item/tool/welder/weldtool = null
+	var/obj/item/part/assembly/igniter/igniter = null
+	var/obj/item/clothing/tank/plasma/ptank = null
 
 
 /obj/item/weapon/flamethrower/Del()
@@ -81,7 +81,7 @@
 		if(ptank)
 			ptank.loc = T
 			ptank = null
-		new /obj/item/stack/rods(T)
+		new /obj/item/part/stack/rods(T)
 		del(src)
 		return
 
@@ -92,7 +92,7 @@
 		return
 
 	if(isigniter(W))
-		var/obj/item/device/assembly/igniter/I = W
+		var/obj/item/part/assembly/igniter/I = W
 		if(I.secured)	return
 		if(igniter)		return
 		user.drop_item()
@@ -101,7 +101,7 @@
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/plasma))
+	if(istype(W,/obj/item/clothing/tank/plasma))
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
@@ -111,7 +111,7 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/device/analyzer) && ptank)
+	if(istype(W, /obj/item/device/scanner/atmospheric) && ptank)
 		var/obj/item/weapon/icon = src
 		user.visible_message("<span class='notice'>[user] has used the analyzer on \icon[icon]</span>")
 		var/pressure = ptank.air_contents.return_pressure()
@@ -219,9 +219,9 @@
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()
-	weldtool = new /obj/item/weapon/weldingtool(src)
+	weldtool = new /obj/item/tool/welder(src)
 	weldtool.status = 0
-	igniter = new /obj/item/device/assembly/igniter(src)
+	igniter = new /obj/item/part/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
 	update_icon()

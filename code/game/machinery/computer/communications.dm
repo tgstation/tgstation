@@ -6,7 +6,7 @@
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = "/obj/item/part/circuitboard/communications"
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -56,7 +56,7 @@
 			src.state = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/obj/item/security/card/id/I = M.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -70,7 +70,7 @@
 
 		if("swipeidseclevel")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/obj/item/security/card/id/I = M.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -261,7 +261,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I,/obj/item/weapon/card/emag/))
+	if(istype(I,/obj/item/security/card/emag/))
 		src.emagged = 1
 		user << "You scramble the communication routing circuits!"
 	..()
@@ -503,8 +503,8 @@
 		if(istype(commconsole.loc,/turf) && commconsole != src)
 			return ..()
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
+	for(var/obj/item/part/circuitboard/communications/commboard in world)
+		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/storage))
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
@@ -522,14 +522,14 @@
 
 	..()
 
-/obj/item/weapon/circuitboard/communications/Del()
+/obj/item/part/circuitboard/communications/Del()
 
 	for(var/obj/machinery/computer/communications/commconsole in world)
 		if(istype(commconsole.loc,/turf))
 			return ..()
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
+	for(var/obj/item/part/circuitboard/communications/commboard in world)
+		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/storage)) && commboard != src)
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)

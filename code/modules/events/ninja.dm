@@ -371,11 +371,11 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
 	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
 	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/tool/flashlight(src), slot_belt)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
+	equip_to_slot_or_del(new /obj/item/clothing/tank/emergency_oxygen(src), slot_s_store)
+	equip_to_slot_or_del(new /obj/item/clothing/tank/jetpack/carbondioxide(src), slot_back)
 	return 1
 
 //=======//HELPER PROCS//=======//
@@ -940,11 +940,11 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 
 //=======//TELEPORT GRAB CHECK//=======//
 /obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/U)
-	if(istype(U.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
-		var/obj/item/weapon/grab/G = U.get_active_hand()
+	if(istype(U.get_active_hand(),/obj/item/effect/grab))//Handles grabbed persons.
+		var/obj/item/effect/grab/G = U.get_active_hand()
 		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
-	if(istype(U.get_inactive_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = U.get_inactive_hand()
+	if(istype(U.get_inactive_hand(),/obj/item/effect/grab))
+		var/obj/item/effect/grab/G = U.get_inactive_hand()
 		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
 	return
 
@@ -1111,7 +1111,7 @@ This could be a lot better but I'm too tired atm.*/
 				return
 			if (targloc == curloc)
 				return
-			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
+			var/obj/item/weapon/projectile/energy/dart/A = new /obj/item/weapon/projectile/energy/dart(U.loc)
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -1369,7 +1369,7 @@ ________________________________________________________________________________
 	reagents.my_atom = src
 	for(var/reagent_id in reagent_list)
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
-	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
+	cell = new/obj/item/part/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
 /obj/item/clothing/suit/space/space_ninja/Del()
@@ -2140,7 +2140,7 @@ ________________________________________________________________________________
 			U << "\blue You slot \the [I] into \the [src]."
 			updateUsrDialog()
 			return
-		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
+		else if(istype(I, /obj/item/chem/glass))//If it's a glass beaker.
 			var/total_reagent_transfer//Keep track of this stuff.
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/R = I.reagents.has_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
@@ -2155,14 +2155,14 @@ ________________________________________________________________________________
 
 			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
 			return
-		else if(istype(I, /obj/item/weapon/cell))
+		else if(istype(I, /obj/item/part/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "\blue Higher maximum capacity detected.\nUpgrading..."
 				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
-					var/obj/item/weapon/cell/old_cell = cell
+					var/obj/item/part/cell/old_cell = cell
 					old_cell.charge = 0
 					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
@@ -2173,8 +2173,8 @@ ________________________________________________________________________________
 				else
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
-		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			var/obj/item/weapon/disk/tech_disk/TD = I
+		else if(istype(I, /obj/item/office/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
+			var/obj/item/office/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
@@ -2334,7 +2334,7 @@ ________________________________________________________________________________
 				U << "\red This SMES cell has run dry of power. You must find another source."
 
 		if("CELL")
-			var/obj/item/weapon/cell/A = target
+			var/obj/item/part/cell/A = target
 			if(A.charge)
 				if (G.candrain&&do_after(U,30))
 					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
@@ -2716,7 +2716,7 @@ It is possible to destroy the net by the occupant or someone else.
 			M << "\blue You are free of the net!"
 		return
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(var/obj/item/weapon/projectile/Proj)
 		health -= Proj.damage
 		healthcheck()
 		return 0

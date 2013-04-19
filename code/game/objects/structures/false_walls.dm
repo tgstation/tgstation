@@ -102,12 +102,12 @@
 		if(T.density)
 			user << "\red The wall is blocked!"
 			return
-		if(istype(W, /obj/item/weapon/screwdriver))
+		if(istype(W, /obj/item/tool/screwdriver))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			ChangeToWall()
 
-		if( istype(W, /obj/item/weapon/weldingtool) )
-			var/obj/item/weapon/weldingtool/WT = W
+		if( istype(W, /obj/item/tool/welder) )
+			var/obj/item/tool/welder/WT = W
 			if( WT:welding )
 				ChangeToWall(0)
 				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
@@ -117,7 +117,7 @@
 	else
 		user << "\blue You can't reach, close it first!"
 
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/pickaxe/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
+	if( istype(W, /obj/item/mining/pickaxe/plasmacutter) || istype(W, /obj/item/mining/pickaxe/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
 		ChangeToWall(0)
 		if(mineral != "plasma")
 			var/turf/T = get_turf(src)
@@ -206,14 +206,14 @@
 		user << "\red You must wait until the door has stopped moving."
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/tool/screwdriver))
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
 		T.ChangeTurf(/turf/simulated/wall) //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
 		del(src)
 
-	if( istype(W, /obj/item/weapon/weldingtool) )
-		var/obj/item/weapon/weldingtool/WT = W
+	if( istype(W, /obj/item/tool/welder) )
+		var/obj/item/tool/welder/WT = W
 		if( WT.remove_fuel(0,user) )
 			var/turf/T = get_turf(src)
 			T.ChangeTurf(/turf/simulated/wall)
@@ -221,7 +221,7 @@
 			T.attackby(W,user)
 			del(src)
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	else if( istype(W, /obj/item/mining/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)
@@ -229,7 +229,7 @@
 		del(src)
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/mining/pickaxe/diamonddrill))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)

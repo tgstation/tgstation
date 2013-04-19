@@ -21,7 +21,7 @@
 	if(isscrewdriver(I))
 		open_panel = !open_panel
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-	else if(iswirecutter(I) || ismultitool(I) || istype(I, /obj/item/device/assembly/signaler ))
+	else if(iswirecutter(I) || ismultitool(I) || istype(I, /obj/item/part/assembly/signaler ))
 		wires.Interact(user)
 	else
 		..()
@@ -36,7 +36,7 @@
 /obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/storage/))
 		return
 	user << "Planting explosives..."
 	if(ismob(target))

@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks/meat
+/obj/item/chem/food/snacks/meat
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
@@ -9,19 +9,19 @@
 		src.bitesize = 3
 
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
+/obj/item/chem/food/snacks/meat/syntiflesh
 	name = "synthetic meat"
 	desc = "A synthetic slab of flesh."
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/human
+/obj/item/chem/food/snacks/meat/human
 	name = "-meat"
 	var/subjectname = ""
 	var/subjectjob = null
 
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+/obj/item/chem/food/snacks/meat/monkey
 	//same as plain meat
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+/obj/item/chem/food/snacks/meat/corgi
 	name = "Corgi meat"
 	desc = "Tastes like... well you know..."

@@ -132,7 +132,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W,/obj/item/tool/multitool))
 		user << "\black The gate is already calibrated, there is no work for you to do here."
 		return
 
@@ -217,7 +217,7 @@ obj/machinery/gateway/centerstation/process()
 	if(!ready)	return
 	if(!active)	return
 	if(istype(M, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
+		for(var/obj/item/medical/implant/exile/E in M)//Checking that there is an exile implant in the contents
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
 				M << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
@@ -226,7 +226,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W,/obj/item/tool/multitool))
 		if(calibrated)
 			user << "\black The gate is already calibrated, there is no work for you to do here."
 			return

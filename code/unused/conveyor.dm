@@ -80,7 +80,7 @@
 							if(C)
 								M.buckled = C
 							else
-								new/obj/item/weapon/cable_coil/cut(M.loc)
+								new/obj/item/part/cable_coil/cut(M.loc)
 						else
 							step(M,movedir)
 					else
@@ -92,12 +92,12 @@
 // attack with item, place item on conveyor
 
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/grab))	// special handling if grabbing a mob
-		var/obj/item/weapon/grab/G = I
+	if(istype(I, /obj/item/effect/grab))	// special handling if grabbing a mob
+		var/obj/item/effect/grab/G = I
 		G.affecting.Move(src.loc)
 		del(G)
 		return
-	else if(istype(I, /obj/item/weapon/cable_coil))	// if cable, see if a mob is present
+	else if(istype(I, /obj/item/part/cable_coil))	// if cable, see if a mob is present
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
@@ -117,7 +117,7 @@
 
 			// else if no mob in loc, then allow coil to be placed
 
-	else if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/part/wirecutters))
 		var/mob/M = locate() in src.loc
 		if(M && M.buckled == src)
 			M.buckled = null

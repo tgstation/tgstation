@@ -26,8 +26,8 @@
 		del(src)
 		return
 
-	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
-		if(!istype(B,/obj/item/weapon/reagent_containers/syringe))
+	attackby(var/obj/item/chem/glass/B as obj, var/mob/user as mob)
+		if(!istype(B,/obj/item/chem/syringe))
 			return
 
 		if(src.beaker)
@@ -37,7 +37,7 @@
 		src.beaker =  B
 		user.drop_item()
 		B.loc = src
-		if(istype(B,/obj/item/weapon/reagent_containers/syringe))
+		if(istype(B,/obj/item/chem/syringe))
 			user << "You add the syringe to the machine!"
 			src.updateUsrDialog()
 			icon_state = "isolator_in"
@@ -135,7 +135,7 @@
 	growth = rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(var/obj/item/weapon/W as obj,var/mob/living/carbon/user as mob)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+	if(istype(W,/obj/item/office/labeler) || istype(W,/obj/item/chem/syringe))
 		return
 	..()
 	if(prob(50))

@@ -33,21 +33,21 @@
 	var/scanner_status_html = null
 	var/temp_html = null
 	var/obj/machinery/dna_scannernew/connected = null
-	var/obj/item/weapon/disk/data/diskette = null
+	var/obj/item/office/disk/data/diskette = null
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/tool/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/scan_consolenew/M = new /obj/item/weapon/circuitboard/scan_consolenew( A )
+				new /obj/item/trash/shard( src.loc )
+				var/obj/item/part/circuitboard/scan_consolenew/M = new /obj/item/part/circuitboard/scan_consolenew( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -58,7 +58,7 @@
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/scan_consolenew/M = new /obj/item/weapon/circuitboard/scan_consolenew( A )
+				var/obj/item/part/circuitboard/scan_consolenew/M = new /obj/item/part/circuitboard/scan_consolenew( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -66,7 +66,7 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				del(src)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if (istype(I, /obj/item/office/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_item()
 			I.loc = src
@@ -82,7 +82,7 @@
 	name = "Cloning Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	circuit = "/obj/item/weapon/circuitboard/cloning"
+	circuit = "/obj/item/part/circuitboard/cloning"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
@@ -92,7 +92,7 @@
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/data/record/active_record = null
-	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
+	var/obj/item/office/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 
 /obj/machinery/computer/cloning/New()
@@ -138,7 +138,7 @@
 	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if (istype(W, /obj/item/office/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_item()
 			W.loc = src
@@ -231,7 +231,7 @@
 				dat += "<h4>[src.active_record.fields["name"]]</h4>"
 				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"
 
-				var/obj/item/weapon/implant/health/H = locate(src.active_record.fields["imp"])
+				var/obj/item/medical/implant/health/H = locate(src.active_record.fields["imp"])
 
 				if ((H) && (istype(H)))
 					dat += "<b>Health Implant Data:</b><br />[H.sensehealth()]<br><br />"
@@ -330,7 +330,7 @@
 			src.menu = 4
 
 		else if (src.menu == 4)
-			var/obj/item/weapon/card/id/C = usr.get_active_hand()
+			var/obj/item/security/card/id/C = usr.get_active_hand()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
@@ -457,9 +457,9 @@
 	R.fields["SE"] = subject.dna.struc_enzymes
 
 	//Add an implant if needed
-	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
+	var/obj/item/medical/implant/health/imp = locate(/obj/item/medical/implant/health, subject)
 	if (isnull(imp))
-		imp = new /obj/item/weapon/implant/health(subject)
+		imp = new /obj/item/medical/implant/health(subject)
 		imp.implanted = subject
 		R.fields["imp"] = "\ref[imp]"
 	//Update it if needed

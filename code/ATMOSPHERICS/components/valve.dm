@@ -312,7 +312,7 @@ obj/machinery/atmospherics/valve
 						open()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
+		if (!istype(W, /obj/item/tool/wrench))
 			return ..()
 		if (istype(src, /obj/machinery/atmospherics/valve/digital))
 			user << "\red You cannot unwrench this [src], it's too complicated."
@@ -334,5 +334,5 @@ obj/machinery/atmospherics/valve
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			new /obj/item/part/pipe(loc, make_from=src)
 			del(src)

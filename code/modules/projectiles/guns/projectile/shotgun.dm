@@ -10,15 +10,15 @@
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
 	origin_tech = "combat=4;materials=2"
-	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
+	ammo_type = "/obj/item/weapon/ammo/casing/shotgun/beanbag"
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
-	var/obj/item/ammo_casing/current_shell = null
+	var/obj/item/weapon/ammo/casing/current_shell = null
 
 
 	load_into_chamber()
 		if(in_chamber)
-			var/obj/item/ammo_casing/AC = current_shell
+			var/obj/item/weapon/ammo/casing/AC = current_shell
 			AC.desc += " This one is spent."
 			AC.BB = null //remove the ammunition from the shell
 			return 1
@@ -43,7 +43,7 @@
 			if(in_chamber)
 				in_chamber = null
 		if(!loaded.len)	return 0
-		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
+		var/obj/item/weapon/ammo/casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
 		current_shell = AC
 		if(AC.BB)
@@ -56,7 +56,7 @@
 	icon_state = "cshotgun"
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
-	ammo_type = "/obj/item/ammo_casing/shotgun"
+	ammo_type = "/obj/item/weapon/ammo/casing/shotgun"
 	w_class = 5
 
 //this is largely hacky and bad :(	-Pete
@@ -72,7 +72,7 @@
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
 	origin_tech = "combat=3;materials=1"
-	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
+	ammo_type = "/obj/item/weapon/ammo/casing/shotgun/beanbag"
 
 	New()
 		for(var/i = 1, i <= max_shells, i++)
@@ -87,7 +87,7 @@
 		if(!loaded.len)
 			return 0
 
-		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
+		var/obj/item/weapon/ammo/casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
 
 		if(AC.BB)
@@ -99,11 +99,11 @@
 		return 0
 
 	attack_self(mob/living/user as mob)
-		if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
+		if(!(locate(/obj/item/weapon/ammo/casing/shotgun) in src) && !loaded.len)
 			user << "<span class='notice'>\The [src] is empty.</span>"
 			return
 
-		for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
+		for(var/obj/item/weapon/ammo/casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
 			if(shell in loaded)
 				loaded -= shell
 			shell.loc = get_turf(src.loc)
@@ -112,8 +112,8 @@
 		update_icon()
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
-		if(istype(A, /obj/item/ammo_casing) && !load_method)
-			var/obj/item/ammo_casing/AC = A
+		if(istype(A, /obj/item/weapon/ammo/casing) && !load_method)
+			var/obj/item/weapon/ammo/casing/AC = A
 			if(AC.caliber == caliber && (loaded.len < max_shells) && (contents.len < max_shells))	//forgive me father, for i have sinned
 				user.drop_item()
 				AC.loc = src
@@ -121,7 +121,7 @@
 				user << "<span class='notice'>You load a shell into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
-		if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+		if(istype(A, /obj/item/medical/saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/mining/pickaxe/plasmacutter))
 			user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
 			if(loaded.len)
 				afterattack(user, user)	//will this work?

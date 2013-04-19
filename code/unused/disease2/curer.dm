@@ -7,19 +7,19 @@
 //	brightnessblue = 2
 	var/curing
 	var/virusing
-	circuit = "/obj/item/weapon/circuitboard/mining"
+	circuit = "/obj/item/part/circuitboard/mining"
 
 	var/obj/item/weapon/virusdish/dish = null
 
 /obj/machinery/computer/curer/attackby(var/obj/I as obj, var/mob/user as mob)
-	/*if(istype(I, /obj/item/weapon/screwdriver))
+	/*if(istype(I, /obj/item/tool/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/curer/M = new /obj/item/weapon/circuitboard/curer( A )
+				new /obj/item/trash/shard( src.loc )
+				var/obj/item/part/circuitboard/curer/M = new /obj/item/part/circuitboard/curer( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -30,7 +30,7 @@
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/curer/M = new /obj/item/weapon/circuitboard/curer( A )
+				var/obj/item/part/circuitboard/curer/M = new /obj/item/part/circuitboard/curer( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M

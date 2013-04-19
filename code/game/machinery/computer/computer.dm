@@ -6,7 +6,7 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
-	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
+	var/obj/item/part/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 
 /obj/machinery/computer/New()
@@ -56,7 +56,7 @@
 		else
 	return
 
-/obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(prob(Proj.damage))
 		set_broken()
 	..()
@@ -93,18 +93,18 @@
 
 
 /obj/machinery/computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
+	if(istype(I, /obj/item/tool/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/M = new circuit( A )
+			var/obj/item/part/circuitboard/M = new circuit( A )
 			A.circuit = M
 			A.anchored = 1
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/trash/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else

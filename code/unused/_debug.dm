@@ -526,7 +526,7 @@ Doing this because FindTurfs() isn't even used
 	for(var/turf/T in world)
 		if(prob(4) && T.z == 1 && istype(T,/turf/station/floor))
 			spawn(50+rand(0,3000))
-				var/obj/item/weapon/tank/plasmatank/pt = new /obj/item/weapon/tank/plasmatank( T )
+				var/obj/item/clothing/tank/plasmatank/pt = new /obj/item/clothing/tank/plasmatank( T )
 				pt.gas.temperature = 400+T0C
 				pt.ignite()
 				for(var/turf/P in view(3, T))
@@ -606,7 +606,7 @@ Doing this because FindTurfs() isn't even used
 		src << "Only administrators may use this command."
 		return
 	world << "[usr.key] created an explosion"
-	var/obj/item/weapon/tank/plasmatank/pt = new /obj/item/weapon/tank/plasmatank( T )
+	var/obj/item/clothing/tank/plasmatank/pt = new /obj/item/clothing/tank/plasmatank( T )
 	playsound(pt.loc, "explosion", 100, 1,3)
 	playsound(pt.loc, 'sound/effects/explosionfar.ogg', 100, 1,10)
 	pt.gas.temperature = 500+T0C

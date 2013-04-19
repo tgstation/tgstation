@@ -2,7 +2,7 @@
 	if (silent)
 		return
 
-	if(!(container && istype(container, /obj/item/device/mmi)))
+	if(!(container && istype(container, /obj/item/medical/mmi)))
 		return //No MMI, can't speak, bucko./N
 	else
 		if(prob(emp_damage*4))
@@ -10,8 +10,8 @@
 				return
 			else
 				message = Gibberish(message, (emp_damage*6))//scrambles the message, gets worse when emp_damage is higher
-		if(istype(container, /obj/item/device/mmi/radio_enabled))
-			var/obj/item/device/mmi/radio_enabled/R = container
+		if(istype(container, /obj/item/medical/mmi/radio_enabled))
+			var/obj/item/medical/mmi/radio_enabled/R = container
 			if(R.radio)
 				spawn(0) R.radio.hear_talk(src, sanitize(message))
 		..()

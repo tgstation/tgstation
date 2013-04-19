@@ -8,7 +8,7 @@
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
-	var/obj/item/weapon/cell/charging = null
+	var/obj/item/part/cell/charging = null
 	var/chargelevel = -1
 	proc
 		updateicon()
@@ -38,7 +38,7 @@
 		if(stat & BROKEN)
 			return
 
-		if(istype(W, /obj/item/weapon/cell) && anchored)
+		if(istype(W, /obj/item/part/cell) && anchored)
 			if(charging)
 				user << "\red There is already a cell in the charger."
 				return
@@ -56,7 +56,7 @@
 				user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 				chargelevel = -1
 			updateicon()
-		else if(istype(W, /obj/item/weapon/wrench))
+		else if(istype(W, /obj/item/tool/wrench))
 			if(charging)
 				user << "\red Remove the cell first!"
 				return

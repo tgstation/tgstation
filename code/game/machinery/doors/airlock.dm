@@ -43,7 +43,7 @@
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/part/board/airlock/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/autoclose = 1
 
@@ -849,12 +849,12 @@ About the new airlock wires panel:
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
-	if(istype(C, /obj/item/device/detective_scanner))
+	if(istype(C, /obj/item/device/scanner/forensic))
 		return
 
 	src.add_fingerprint(user)
-	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weapon/weldingtool/W = C
+	if((istype(C, /obj/item/tool/welder) && !( src.operating ) && src.density))
+		var/obj/item/tool/welder/W = C
 		if(W.remove_fuel(0,user))
 			if(!src.welded)
 				src.welded = 1
@@ -864,21 +864,21 @@ About the new airlock wires panel:
 			return
 		else
 			return
-	else if(istype(C, /obj/item/weapon/screwdriver))
+	else if(istype(C, /obj/item/tool/screwdriver))
 		src.p_open = !( src.p_open )
 		src.update_icon()
-	else if(istype(C, /obj/item/weapon/wirecutters))
+	else if(istype(C, /obj/item/part/wirecutters))
 		return src.attack_hand(user)
-	else if(istype(C, /obj/item/device/multitool))
+	else if(istype(C, /obj/item/tool/multitool))
 		return src.attack_hand(user)
-	else if(istype(C, /obj/item/device/assembly/signaler))
+	else if(istype(C, /obj/item/part/assembly/signaler))
 		return src.attack_hand(user)
-	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
-		var/obj/item/weapon/pai_cable/cable = C
+	else if(istype(C, /obj/item/device/pai_cable))	// -- TLE
+		var/obj/item/device/pai_cable/cable = C
 		cable.plugin(src, user)
-	else if(istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
+	else if(istype(C, /obj/item/tool/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
 		var/beingcrowbarred = null
-		if(istype(C, /obj/item/weapon/crowbar) )
+		if(istype(C, /obj/item/tool/crowbar) )
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
@@ -919,9 +919,9 @@ About the new airlock wires panel:
 					if(32) new/obj/structure/door_assembly/door_assembly_science/glass( src.loc )
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 
-				var/obj/item/weapon/airlock_electronics/ae
+				var/obj/item/part/board/airlock/ae
 				if(!electronics)
-					ae = new/obj/item/weapon/airlock_electronics( src.loc )
+					ae = new/obj/item/part/board/airlock( src.loc )
 					ae.conf_access = src.req_access
 				else
 					ae = electronics

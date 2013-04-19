@@ -446,7 +446,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/stack/sheet/mineral/plasma(location)
+				new /obj/item/part/stack/sheet/mineral/plasma(location)
 				return
 
 		capsaicincondensation
@@ -691,7 +691,7 @@ datum
 			required_other = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
+				new /obj/item/chem/food/snacks/meat/syntiflesh(location)
 				return
 
 		slimeenzyme
@@ -842,7 +842,7 @@ datum
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+				var/list/borks = typesof(/obj/item/chem/food/snacks) - /obj/item/chem/food/snacks
 				// BORK BORK BORK
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -922,7 +922,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/grey
+			required_container = /obj/item/slime/extract/grey
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -938,12 +938,12 @@ datum
 			result = null
 			required_reagents = list("blood" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/grey
+			required_container = /obj/item/slime/extract/grey
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/i = 1, i <= 3, i++)
-					var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
+					var /obj/item/chem/food/snacks/monkeycube/M = new /obj/item/chem/food/snacks/monkeycube
 					M.loc = get_turf_loc(holder.my_atom)
 
 //Green
@@ -954,7 +954,7 @@ datum
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
 			required_other = 1
-			required_container = /obj/item/slime_extract/green
+			required_container = /obj/item/slime/extract/green
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
@@ -965,14 +965,14 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/metal
+			required_container = /obj/item/slime/extract/metal
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
+				var/obj/item/part/stack/sheet/metal/M = new /obj/item/part/stack/sheet/metal
 				M.amount = 15
 				M.loc = get_turf_loc(holder.my_atom)
-				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
+				var/obj/item/part/stack/sheet/plasteel/P = new /obj/item/part/stack/sheet/plasteel
 				P.amount = 5
 				P.loc = get_turf_loc(holder.my_atom)
 
@@ -983,7 +983,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/gold
+			required_container = /obj/item/slime/extract/gold
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1047,7 +1047,7 @@ datum
 			result = null
 			required_reagents = list("blood" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/gold
+			required_container = /obj/item/slime/extract/gold
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1108,13 +1108,13 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/silver
+			required_container = /obj/item/slime/extract/silver
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+				var/list/borks = typesof(/obj/item/chem/food/snacks) - /obj/item/chem/food/snacks
 				// BORK BORK BORK
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1139,13 +1139,13 @@ datum
 			result = null
 			required_reagents = list("water" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/silver
+			required_container = /obj/item/slime/extract/silver
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
+				var/list/borks = typesof(/obj/item/chem/food/drinks) - /obj/item/chem/food/drinks
 				// BORK BORK BORK
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1171,7 +1171,7 @@ datum
 			result = "frostoil"
 			required_reagents = list("plasma" = 5)
 			result_amount = 10
-			required_container = /obj/item/slime_extract/blue
+			required_container = /obj/item/slime/extract/blue
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1183,7 +1183,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/darkblue
+			required_container = /obj/item/slime/extract/darkblue
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1202,7 +1202,7 @@ datum
 			result = "capsaicin"
 			required_reagents = list("blood" = 5)
 			result_amount = 10
-			required_container = /obj/item/slime_extract/orange
+			required_container = /obj/item/slime/extract/orange
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1213,7 +1213,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/orange
+			required_container = /obj/item/slime/extract/orange
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1240,7 +1240,7 @@ datum
 			result = null
 			required_reagents = list("blood" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/yellow
+			required_container = /obj/item/slime/extract/yellow
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1253,11 +1253,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/yellow
+			required_container = /obj/item/slime/extract/yellow
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
+				var/obj/item/part/cell/slime/P = new /obj/item/part/cell/slime
 				P.loc = get_turf_loc(holder.my_atom)
 
 		slimeglow
@@ -1266,13 +1266,13 @@ datum
 			result = null
 			required_reagents = list("water" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/yellow
+			required_container = /obj/item/slime/extract/yellow
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					O.show_message(text("\red The slime begins to emit a soft light. Squeezing it will cause it to grow brightly."), 1)
-				var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
+				var/obj/item/tool/flashlight/slime/F = new /obj/item/tool/flashlight/slime
 				F.loc = get_turf_loc(holder.my_atom)
 
 //Purple
@@ -1283,11 +1283,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/purple
+			required_container = /obj/item/slime/extract/purple
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
+				var/obj/item/slime/steroid/P = new /obj/item/slime/steroid
 				P.loc = get_turf_loc(holder.my_atom)
 
 		slimejam
@@ -1296,7 +1296,7 @@ datum
 			result = "slimejelly"
 			required_reagents = list("sugar" = 5)
 			result_amount = 10
-			required_container = /obj/item/slime_extract/purple
+			required_container = /obj/item/slime/extract/purple
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1309,11 +1309,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/darkpurple
+			required_container = /obj/item/slime/extract/darkpurple
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/stack/sheet/mineral/plasma/P = new /obj/item/stack/sheet/mineral/plasma
+				var/obj/item/part/stack/sheet/mineral/plasma/P = new /obj/item/part/stack/sheet/mineral/plasma
 				P.amount = 10
 				P.loc = get_turf_loc(holder.my_atom)
 
@@ -1324,7 +1324,7 @@ datum
 			result = "glycerol"
 			required_reagents = list("plasma" = 5)
 			result_amount = 8
-			required_container = /obj/item/slime_extract/red
+			required_container = /obj/item/slime/extract/red
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1336,7 +1336,7 @@ datum
 			result = null
 			required_reagents = list("blood" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/red
+			required_container = /obj/item/slime/extract/red
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1353,11 +1353,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/pink
+			required_container = /obj/item/slime/extract/pink
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/weapon/slimepotion/P = new /obj/item/weapon/slimepotion
+				var/obj/item/slime/potion/P = new /obj/item/slime/potion
 				P.loc = get_turf_loc(holder.my_atom)
 
 
@@ -1369,7 +1369,7 @@ datum
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
 			required_other = 1
-			required_container = /obj/item/slime_extract/black
+			required_container = /obj/item/slime/extract/black
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
@@ -1380,7 +1380,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/oil
+			required_container = /obj/item/slime/extract/oil
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1394,12 +1394,12 @@ datum
 			id = "m_potion2"
 			result = null
 			result_amount = 1
-			required_container = /obj/item/slime_extract/lightpink
+			required_container = /obj/item/slime/extract/lightpink
 			required_reagents = list("plasma" = 5)
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
+				var/obj/item/slime/potion2/P = new /obj/item/slime/potion2
 				P.loc = get_turf_loc(holder.my_atom)
 //Adamantine
 		slimegolem
@@ -1408,7 +1408,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/adamantine
+			required_container = /obj/item/slime/extract/adamantine
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1424,7 +1424,7 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/bluespace
+			required_container = /obj/item/slime/extract/bluespace
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1486,11 +1486,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/cerulean
+			required_container = /obj/item/slime/extract/cerulean
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
+				var/obj/item/slime/steroid2/P = new /obj/item/slime/steroid2
 				P.loc = get_turf_loc(holder.my_atom)
 
 //Sepia
@@ -1500,11 +1500,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/sepia
+			required_container = /obj/item/slime/extract/sepia
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/device/camera/P = new /obj/item/device/camera
+				var/obj/item/security/camera/P = new /obj/item/security/camera
 				P.loc = get_turf_loc(holder.my_atom)
 
 		slimefilm
@@ -1513,11 +1513,11 @@ datum
 			result = null
 			required_reagents = list("blood" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/sepia
+			required_container = /obj/item/slime/extract/sepia
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
+				var/obj/item/part/refill/camera_film/P = new /obj/item/part/refill/camera_film
 				P.loc = get_turf_loc(holder.my_atom)
 
 
@@ -1529,11 +1529,11 @@ datum
 			result = null
 			required_reagents = list("plasma" = 5)
 			result_amount = 1
-			required_container = /obj/item/slime_extract/pyrite
+			required_container = /obj/item/slime/extract/pyrite
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/list/paints = typesof(/obj/item/weapon/paint) - /obj/item/weapon/paint
+				var/list/paints = typesof(/obj/item/service/paint) - /obj/item/service/paint
 				var/chosen = pick(paints)
 				var/obj/P = new chosen
 				if(P)
@@ -1552,7 +1552,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/i = 1, i <= created_volume, i++)
-					new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
+					new /obj/item/chem/food/snacks/tofu(location)
 				return
 
 		chocolate_bar
@@ -1564,7 +1564,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/i = 1, i <= created_volume, i++)
-					new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+					new /obj/item/chem/food/snacks/chocolatebar(location)
 				return
 
 		chocolate_bar2
@@ -1576,7 +1576,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/i = 1, i <= created_volume, i++)
-					new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+					new /obj/item/chem/food/snacks/chocolatebar(location)
 				return
 
 		hot_coco
@@ -1602,7 +1602,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
+				new /obj/item/chem/food/snacks/sliceable/cheesewheel(location)
 				return
 
 		syntiflesh
@@ -1613,7 +1613,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
+				new /obj/item/chem/food/snacks/meat/syntiflesh(location)
 				return
 
 		hot_ramen
