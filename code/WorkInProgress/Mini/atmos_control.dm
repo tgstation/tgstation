@@ -13,9 +13,19 @@
 	var/overridden = 0 //not set yet, can't think of a good way to do it
 	req_access = list(access_ce)
 
+
+/obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
+	return interact(user)
+
+/obj/machinery/computer/atmoscontrol/attack_paw(var/mob/user as mob)
+	return interact(user)
+
 /obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
 	if(..())
 		return
+	return interact(user)
+
+/obj/machinery/computer/atmoscontrol/interact(mob/user)
 	user.set_machine(src)
 	if(allowed(user))
 		overridden = 1
@@ -62,7 +72,6 @@
 		return
 	if(href_list["reset"])
 		current = null
-		src.updateUsrDialog()
 	if(href_list["alarm"])
 		current = locate(href_list["alarm"])
 		if(href_list["command"])
@@ -129,6 +138,11 @@
 							selected[2] = selected[4]
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
+
+					//Sets the temperature the built-in heater/cooler tries to maintain.
+					if(env == "temperature")
+						current.target_temperature = (selected[2] + selected[3])/2
+
 					spawn(1)
 						updateUsrDialog()
 			return
@@ -167,7 +181,7 @@
 			spawn(5)
 				src.updateUsrDialog()
 			return
-		src.updateUsrDialog()
+	updateUsrDialog()
 
 //copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
@@ -185,7 +199,7 @@
 			output += {"
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_SCRUB]'>Scrubbers Control</a><br>
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_VENT]'>Vents Control</a><br>
-<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MODE]'>Set envirenomentals mode</a><br>
+<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MODE]'>Set environmental mode</a><br>
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_SENSORS]'>Sensor Control</a><br>
 <HR>
 "}
