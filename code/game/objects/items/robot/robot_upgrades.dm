@@ -14,7 +14,7 @@
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "/red The [src] will not function on a deceased robot."
+		usr << "\red The [src] will not function on a deceased robot."
 		return 1
 	return 0
 

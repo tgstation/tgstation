@@ -17,6 +17,14 @@
 	construction_cost = list("metal"=18000)
 	part = list("l_arm","l_hand")
 
+/obj/item/robot_parts/l_hand
+	name = "robot left hand"
+	desc = "A skeletal hand wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "l_arm"
+	construction_time = 150
+	construction_cost = list("metal"=9000)
+	part = list("l_hand")
+
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
@@ -24,6 +32,14 @@
 	construction_time = 200
 	construction_cost = list("metal"=18000)
 	part = list("r_arm","r_hand")
+
+/obj/item/robot_parts/r_hand
+	name = "robot right hand"
+	desc = "A skeletal hand wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "r_arm"
+	construction_time = 150
+	construction_cost = list("metal"=9000)
+	part = list("r_hand")
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
@@ -33,6 +49,14 @@
 	construction_cost = list("metal"=15000)
 	part = list("l_leg","l_foot")
 
+/obj/item/robot_parts/l_foot
+	name = "robot left foot"
+	desc = "A skeletal foot wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "l_leg"
+	construction_time = 150
+	construction_cost = list("metal"=9000)
+	part = list("l_foot")
+
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
@@ -40,6 +64,14 @@
 	construction_time = 200
 	construction_cost = list("metal"=15000)
 	part = list("r_leg","r_foot")
+
+/obj/item/robot_parts/r_foot
+	name = "robot right foot"
+	desc = "A skeletal foot wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "r_leg"
+	construction_time = 150
+	construction_cost = list("metal"=9000)
+	part = list("r_foot")
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
@@ -230,6 +262,38 @@
 
 		src.created_name = t
 
+	return
+
+/obj/item/robot_parts/r_arm/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		user << "\blue You screw the wrist join apart and discard the arm."
+		new /obj/item/robot_parts/r_hand(src.loc)
+		del(src)
+	return
+
+/obj/item/robot_parts/l_arm/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		user << "\blue You screw the wrist join apart and discard the arm."
+		new /obj/item/robot_parts/l_hand(src.loc)
+		del(src)
+	return
+
+/obj/item/robot_parts/l_leg/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		user << "\blue You screw the ankle join apart and discard the leg."
+		new /obj/item/robot_parts/l_foot(src.loc)
+		del(src)
+	return
+
+/obj/item/robot_parts/r_leg/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		user << "\blue You screw the ankle join apart and discard the leg."
+		new /obj/item/robot_parts/r_foot(src.loc)
+		del(src)
 	return
 
 /obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
