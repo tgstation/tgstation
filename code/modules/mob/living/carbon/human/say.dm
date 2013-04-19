@@ -26,6 +26,10 @@
 				if(copytext(message, 1, 2) != "*")
 					message = replacetext(message, "s", stutter("ss"))
 
+			if(dna.mutantrace == "fly")
+				if(copytext(message, 1, 2) != "*")
+					message = replacetext(message, "z", stutter("zz"))
+
 			/*if(dna.mutantrace == "slime" && prob(5))
 				if(copytext(message, 1, 2) != "*")
 					if(copytext(message, 1, 2) == ";")
