@@ -21,7 +21,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/part/stack/sheet/glass(), \
 		new /obj/item/part/stack/sheet/rglass(), \
 		new /obj/item/part/stack/rods(), \
-		new /obj/item/tool/rcd_ammo(), \
+		new /obj/item/part/refill/rcd(), \
 		new /obj/item/kitchen/knife(), \
 		new /obj/item/medical/scalpel(), \
 		new /obj/item/medical/saw(), \

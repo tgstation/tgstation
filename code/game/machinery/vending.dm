@@ -494,8 +494,8 @@
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 	vend_delay = 34
 	icon_state = "cigs"
-	products = list(/obj/item/storage/fancy/cigarettes = 10,/obj/item/storage/box/matches = 10,/obj/item/part/lighter/random = 4)
-	contraband = list(/obj/item/part/lighter/zippo = 4)
+	products = list(/obj/item/storage/fancy/cigarettes = 10,/obj/item/storage/box/matches = 10,/obj/item/tool/lighter/random = 4)
+	contraband = list(/obj/item/tool/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
 
 /obj/machinery/vending/medical
@@ -597,7 +597,7 @@
 	desc = "A kitchen and restaurant equipment vendor"
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/service/tray = 8,/obj/item/kitchen/utensil/fork = 6,/obj/item/kitchen/knife = 3,/obj/item/chem/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2)
+	products = list(/obj/item/kitchen/tray = 8,/obj/item/kitchen/utensil/fork = 6,/obj/item/kitchen/knife = 3,/obj/item/chem/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2)
 	contraband = list(/obj/item/kitchen/rollingpin = 2, /obj/item/kitchen/butch = 2)
 
 /obj/machinery/vending/sovietsoda

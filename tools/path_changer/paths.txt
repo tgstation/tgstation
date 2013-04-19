@@ -99,7 +99,7 @@ obj/item/weapon/dnainjector obj/item/medical/dnainjector
 obj/item/weapon/dummy obj/effect/passcheck
 obj/item/weapon/ectoplasm obj/item/trash/ectoplasm
 obj/item/weapon/ed209_assembly obj/item/part/frame/ed209
-obj/item/weapon/evidencebag obj/item/service/evidence
+obj/item/weapon/evidencebag obj/item/security/evidence
 obj/item/weapon/extinguisher obj/item/tool/extinguisher
 obj/item/weapon/firealarm_electronics obj/item/part/board/fire_alarm
 obj/item/weapon/firstaid_arm_assembly obj/item/part/frame/medbot
@@ -118,8 +118,8 @@ obj/item/weapon/implantpad obj/item/device/implantpad
 obj/item/weapon/kitchenknife obj/item/kitchen/knife
 obj/item/weapon/kitchen obj/item/kitchen
 obj/item/weapon/legcuffs obj/item/security/legcuffs
-obj/item/weapon/light obj/item/part/light
 obj/item/weapon/lighter obj/item/tool/lighter
+obj/item/weapon/light obj/item/part/light
 obj/item/weapon/lipstick obj/item/service/lipstick
 obj/item/weapon/locator obj/item/device/locator
 obj/item/weapon/match obj/item/tool/match
@@ -143,8 +143,8 @@ obj/item/weapon/pickaxe obj/item/mining/pickaxe
 obj/item/weapon/pinpointer obj/item/device/pinpointer
 obj/item/weapon/rack_parts obj/item/part/rack
 obj/item/weapon/razor obj/item/service/razor
-obj/item/weapon/rcd obj/item/tool/rcd
 obj/item/weapon/rcd_ammo obj/item/part/refill/rcd
+obj/item/weapon/rcd obj/item/tool/rcd
 obj/item/weapon/reagent_containers obj/item/chem
 obj/item/weapon/research obj/item/magic/research
 obj/item/weapon/retractor obj/item/medical/retractor
@@ -181,7 +181,7 @@ obj/item/weapon/toolbox_tiles obj/item/part/frame/floorbot/stage_1
 obj/item/weapon/toolbox_tiles_sensor obj/item/part/frame/floorbot/stage_2
 obj/item/weapon/toy obj/item/toy
 obj/item/weapon/tracker_electronics obj/item/part/board/solar_tracker
-obj/item/weapon/tray obj/item/service/tray
+obj/item/weapon/tray obj/item/kitchen/tray
 obj/item/weapon/weedspray obj/item/botany/weedspray
 obj/item/weapon/weldingtool obj/item/tool/welder
 obj/item/weapon/wire obj/item/part/wire

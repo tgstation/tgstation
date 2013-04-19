@@ -102,7 +102,7 @@
 "bX" = (/turf/simulated/floor/engine,/area/awaymission/academy/classrooms)
 "bY" = (/obj/structure/target_stake,/obj/item/part/target/alien,/turf/simulated/floor/engine,/area/awaymission/academy/classrooms)
 "bZ" = (/obj/machinery/vending/cigarette,/turf/simulated/floor,/area/awaymission/academy/headmaster)
-"ca" = (/obj/structure/table,/obj/item/part/lighter/random,/turf/simulated/floor,/area/awaymission/academy/headmaster)
+"ca" = (/obj/structure/table,/obj/item/tool/lighter/random,/turf/simulated/floor,/area/awaymission/academy/headmaster)
 "cb" = (/turf/simulated/floor{icon_state = "dark"},/area/awaymission/academy/headmaster)
 "cc" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/academy/headmaster)
 "cd" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)

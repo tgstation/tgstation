@@ -29,8 +29,8 @@
 			var/obj/item/tool/welder/WT = W
 			if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
 				light("\red [user] casually lights the [name] with [W], what a badass.")
-		else if(istype(W, /obj/item/part/lighter))
-			var/obj/item/part/lighter/L = W
+		else if(istype(W, /obj/item/tool/lighter))
+			var/obj/item/tool/lighter/L = W
 			if(L.lit)
 				light()
 		else if(istype(W, /obj/item/tool/match))

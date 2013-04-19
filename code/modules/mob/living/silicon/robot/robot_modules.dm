@@ -163,11 +163,11 @@
 
 		modules += new /obj/item/chem/dropper(src)
 
-		var/obj/item/part/lighter/zippo/L = new /obj/item/part/lighter/zippo(src)
+		var/obj/item/tool/lighter/zippo/L = new /obj/item/tool/lighter/zippo(src)
 		L.lit = 1
 		modules += L
 
-		modules += new /obj/item/service/tray(src)
+		modules += new /obj/item/kitchen/tray(src)
 		modules += new /obj/item/chem/food/drinks/shaker(src)
 		emag = new /obj/item/chem/food/drinks/beer(src)
 

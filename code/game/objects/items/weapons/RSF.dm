@@ -22,7 +22,7 @@ RSF
 
 /obj/item/service/rsf/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/tool/rcd_ammo))
+	if (istype(W, /obj/item/part/refill/rcd))
 		if ((matter + 10) > 30)
 			user << "The RSF cant hold any more matter."
 			return

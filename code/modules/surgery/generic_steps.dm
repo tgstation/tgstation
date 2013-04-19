@@ -27,7 +27,7 @@
 
 //close incision
 /datum/surgery_step/close
-	implements = list(/obj/item/medical/cautery = 100, /obj/item/tool/welder = 70, /obj/item/part/lighter = 45, /obj/item/tool/match = 20)
+	implements = list(/obj/item/medical/cautery = 100, /obj/item/tool/welder = 70, /obj/item/tool/lighter = 45, /obj/item/tool/match = 20)
 	time = 32
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -41,8 +41,8 @@
 		var/obj/item/tool/welder/WT = tool
 		if(WT.isOn())	return 1
 
-	else if(istype(tool, /obj/item/part/lighter))
-		var/obj/item/part/lighter/L = tool
+	else if(istype(tool, /obj/item/tool/lighter))
+		var/obj/item/tool/lighter/L = tool
 		if(L.lit)	return 1
 
 	else if(istype(tool, /obj/item/tool/match))

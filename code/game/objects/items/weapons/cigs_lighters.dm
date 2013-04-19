@@ -84,13 +84,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
 			light("<span class='notice'>[user] casually lights the [name] with [W], what a badass.</span>")
 
-	else if(istype(W, /obj/item/part/lighter/zippo))
-		var/obj/item/part/lighter/zippo/Z = W
+	else if(istype(W, /obj/item/tool/lighter/zippo))
+		var/obj/item/tool/lighter/zippo/Z = W
 		if(Z.lit)
 			light("<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.</span>")
 
-	else if(istype(W, /obj/item/part/lighter))
-		var/obj/item/part/lighter/L = W
+	else if(istype(W, /obj/item/tool/lighter))
+		var/obj/item/tool/lighter/L = W
 		if(L.lit)
 			light("<span class='notice'>After some fiddling, [user] manages to light their [name] with [W].</span>")
 
@@ -160,7 +160,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
-		
+
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
 			var/mob/M = loc
@@ -318,7 +318,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /////////
 //ZIPPO//
 /////////
-/obj/item/part/lighter
+/obj/item/tool/lighter
 	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
 	icon = 'icons/obj/items.dmi'
@@ -333,7 +333,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
 
-/obj/item/part/lighter/zippo
+/obj/item/tool/lighter/zippo
 	name = "Zippo lighter"
 	desc = "The zippo."
 	icon_state = "zippo"
@@ -341,20 +341,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "zippoon"
 	icon_off = "zippo"
 
-/obj/item/part/lighter/random
+/obj/item/tool/lighter/random
 	New()
 		var/color = pick("r","c","y","g")
 		icon_on = "lighter-[color]-on"
 		icon_off = "lighter-[color]"
 		icon_state = icon_off
 
-/obj/item/part/lighter/attack_self(mob/living/user)
+/obj/item/tool/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)
 		if(!lit)
 			lit = 1
 			icon_state = icon_on
 			item_state = icon_on
-			if(istype(src, /obj/item/part/lighter/zippo) )
+			if(istype(src, /obj/item/tool/lighter/zippo) )
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
 				if(prob(75))
@@ -370,7 +370,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
-			if(istype(src, /obj/item/part/lighter/zippo) )
+			if(istype(src, /obj/item/tool/lighter/zippo) )
 				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.")
 			else
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
@@ -382,7 +382,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 
-/obj/item/part/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/tool/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
 
@@ -391,28 +391,28 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(M == user)
 			cig.attackby(src, user)
 		else
-			if(istype(src, /obj/item/part/lighter/zippo))
+			if(istype(src, /obj/item/tool/lighter/zippo))
 				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light \the [cig] with.</span>")
 			else
 				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		..()
 
-/obj/item/part/lighter/process()
+/obj/item/tool/lighter/process()
 	var/turf/location = get_turf(src)
 	if(location)
 		location.hotspot_expose(700, 5)
 	return
 
 
-/obj/item/part/lighter/pickup(mob/user)
+/obj/item/tool/lighter/pickup(mob/user)
 	if(lit)
 		SetLuminosity(0)
 		user.SetLuminosity(user.luminosity+1)
 	return
 
 
-/obj/item/part/lighter/dropped(mob/user)
+/obj/item/tool/lighter/dropped(mob/user)
 	if(lit)
 		user.SetLuminosity(user.luminosity-1)
 		SetLuminosity(1)

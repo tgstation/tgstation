@@ -158,7 +158,7 @@
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/structure/optable) in src.loc) && \
-			!(locate(/obj/item/service/tray) in src.loc) \
+			!(locate(/obj/item/kitchen/tray) in src.loc) \
 		)
 		user << "<span class='notice'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1

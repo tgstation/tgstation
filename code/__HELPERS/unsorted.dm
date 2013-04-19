@@ -1254,7 +1254,7 @@ proc/is_hot(obj/item/W as obj)
 				return 3800
 			else
 				return 0
-		if(/obj/item/part/lighter)
+		if(/obj/item/tool/lighter)
 			if(W:lit)
 				return 1500
 			else
@@ -1284,7 +1284,7 @@ proc/is_hot(obj/item/W as obj)
 		istype(W, /obj/item/tool/screwdriver)                   || \
 		istype(W, /obj/item/office/pen)                           || \
 		istype(W, /obj/item/tool/welder)					  || \
-		istype(W, /obj/item/part/lighter/zippo)				  || \
+		istype(W, /obj/item/tool/lighter/zippo)				  || \
 		istype(W, /obj/item/tool/match)            		      || \
 		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
 		istype(W, /obj/item/part/wirecutters)                   || \

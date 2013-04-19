@@ -16,7 +16,7 @@
 		"/obj/item/toy/dice",
 		"/obj/item/office/disk",
 		"/obj/item/medical/implanter",
-		"/obj/item/part/lighter",
+		"/obj/item/tool/lighter",
 		"/obj/item/tool/match",
 		"/obj/item/office/paper",
 		"/obj/item/office/pen",

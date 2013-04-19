@@ -297,8 +297,8 @@
 	if(!can_be_inserted(W))
 		return
 
-	if(istype(W, /obj/item/service/tray))	//THIS ISN'T HOW OOP WORKS
-		var/obj/item/service/tray/T = W
+	if(istype(W, /obj/item/kitchen/tray))	//THIS ISN'T HOW OOP WORKS
+		var/obj/item/kitchen/tray/T = W
 		if(T.calc_carry() > 0)
 			user << "<span class='notice'>[T] won't fit in [src]."
 			return

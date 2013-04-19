@@ -101,7 +101,7 @@ RCD
 
 	attackby(obj/item/weapon/W, mob/user)
 		..()
-		if(istype(W, /obj/item/tool/rcd_ammo))
+		if(istype(W, /obj/item/part/refill/rcd))
 			if((matter + 10) > 30)
 				user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 				return
@@ -249,7 +249,7 @@ RCD
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
 
-/obj/item/tool/rcd_ammo
+/obj/item/part/refill/rcd
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/ammo.dmi'

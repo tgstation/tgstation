@@ -89,7 +89,7 @@
 		"/obj/item/chem/pill",
 		"/obj/item/chem/syringe",
 		"/obj/item/chem/glass/dispenser",
-		"/obj/item/part/lighter/zippo",
+		"/obj/item/tool/lighter/zippo",
 		"/obj/item/storage/fancy/cigarettes",
 		"/obj/item/storage/pill_bottle",
 		"/obj/item/part/stack/medical",

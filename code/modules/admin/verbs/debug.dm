@@ -839,7 +839,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/centhat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/mateba(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/part/lighter/zippo(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/tool/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/ammo/magazine/a357(M), slot_l_store)
 
 			var/obj/item/security/card/id/W = new(M)
@@ -861,7 +861,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/part/lighter/zippo(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/tool/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/security/card/id/W = new(M)

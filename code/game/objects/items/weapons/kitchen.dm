@@ -199,7 +199,7 @@
 /*
  * Trays - Agouri
  */
-/obj/item/service/tray
+/obj/item/kitchen/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
@@ -231,7 +231,7 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
-/obj/item/service/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/kitchen/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
 	overlays.Cut()
@@ -357,7 +357,7 @@
 =																			=
 ===============~~~~~================================~~~~~====================
 */
-/obj/item/service/tray/proc/calc_carry()
+/obj/item/kitchen/tray/proc/calc_carry()
 	// calculate the weight of the items on the tray
 	var/val = 0 // value to return
 
@@ -371,7 +371,7 @@
 
 	return val
 
-/obj/item/service/tray/pickup(mob/user)
+/obj/item/kitchen/tray/pickup(mob/user)
 
 	if(!isturf(loc))
 		return
@@ -392,7 +392,7 @@
 			carrying.Add(I)
 			overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
 
-/obj/item/service/tray/dropped(mob/user)
+/obj/item/kitchen/tray/dropped(mob/user)
 
 	var/mob/living/M
 	for(M in src.loc) //to handle hand switching
@@ -426,7 +426,7 @@
 
 
 
-/*/obj/item/service/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/*/obj/item/kitchen/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
 			user << "\red You already have omelette on your fork."

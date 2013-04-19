@@ -1,6 +1,6 @@
 //CONTAINS: Evidence bags
 
-/obj/item/service/evidence
+/obj/item/security/evidence
 	name = "evidence bag"
 	desc = "An empty evidence bag."
 	icon = 'icons/obj/storage.dmi'
@@ -8,7 +8,7 @@
 	item_state = ""
 	w_class = 1
 
-/obj/item/service/evidence/afterattack(obj/item/I, mob/user as mob)
+/obj/item/security/evidence/afterattack(obj/item/I, mob/user as mob)
 	if(!in_range(I, user))
 		return
 
@@ -18,7 +18,7 @@
 	if(istype(I, /obj/item/storage))
 		return ..()
 
-	if(istype(I, /obj/item/service/evidence))
+	if(istype(I, /obj/item/security/evidence))
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return
 
@@ -63,7 +63,7 @@
 	return
 
 
-/obj/item/service/evidence/attack_self(mob/user as mob)
+/obj/item/security/evidence/attack_self(mob/user as mob)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src]", "You take [I] out of [src].",\
@@ -83,11 +83,11 @@
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 	New()
-		new /obj/item/service/evidence(src)
-		new /obj/item/service/evidence(src)
-		new /obj/item/service/evidence(src)
-		new /obj/item/service/evidence(src)
-		new /obj/item/service/evidence(src)
-		new /obj/item/service/evidence(src)
+		new /obj/item/security/evidence(src)
+		new /obj/item/security/evidence(src)
+		new /obj/item/security/evidence(src)
+		new /obj/item/security/evidence(src)
+		new /obj/item/security/evidence(src)
+		new /obj/item/security/evidence(src)
 		..()
 		return

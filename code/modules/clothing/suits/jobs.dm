@@ -73,7 +73,7 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/clothing/tank/emergency_oxygen, /obj/item/tool/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/weapon/ammo/magazine,/obj/item/weapon/ammo/casing,/obj/item/weapon/melee/baton,/obj/item/security/handcuffs,/obj/item/storage/fancy/cigarettes,/obj/item/part/lighter,/obj/item/device/scanner/forensic,/obj/item/security/recorder)
+	allowed = list(/obj/item/clothing/tank/emergency_oxygen, /obj/item/tool/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/weapon/ammo/magazine,/obj/item/weapon/ammo/casing,/obj/item/weapon/melee/baton,/obj/item/security/handcuffs,/obj/item/storage/fancy/cigarettes,/obj/item/tool/lighter,/obj/item/device/scanner/forensic,/obj/item/security/recorder)
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS

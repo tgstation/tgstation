@@ -219,9 +219,9 @@
 
 /obj/structure/closet/crate/rcd/New()
 	..()
-	new /obj/item/tool/rcd_ammo(src)
-	new /obj/item/tool/rcd_ammo(src)
-	new /obj/item/tool/rcd_ammo(src)
+	new /obj/item/part/refill/rcd(src)
+	new /obj/item/part/refill/rcd(src)
+	new /obj/item/part/refill/rcd(src)
 	new /obj/item/tool/rcd(src)
 
 /obj/structure/closet/crate/radiation/New()
