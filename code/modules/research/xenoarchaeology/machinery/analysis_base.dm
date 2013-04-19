@@ -1,3 +1,14 @@
+//Handles how much the temperature changes on power use. (Joules/Kelvin)
+//Equates to as much heat energy per kelvin as a quarter tile of air.
+#define XENOARCH_HEAT_CAPACITY 5000
+
+//Handles heat transfer to the air. (In watts)
+//Can heat a single tile 2 degrees per tick.
+#define XENOARCH_MAX_ENERGY_TRANSFER 4000
+
+//How many joules of electrical energy produce how many joules of heat energy?
+#define XENOARCH_HEAT_COEFFICIENT 10
+
 
 /obj/machinery/anomaly
 	name = "Analysis machine"
@@ -6,13 +17,15 @@
 	density = 1
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
-	//
+
+	idle_power_usage = 20 //watts
+	active_power_usage = 300 //Because  I need to make up numbers~
+
 	var/obj/item/weapon/reagent_containers/glass/held_container
 	var/obj/item/weapon/tank/fuel_container
 	var/target_scan_ticks = 60
 	var/report_num = 0
 	var/scan_process = 0
-	var/heat_accumulation_rate = 0.25
 	var/temperature = 273	//measured in kelvin, if this exceeds 1200, the machine is damaged and requires repairs
 							//if this exceeds 600 and safety is enabled it will shutdown
 							//temp greater than 600 also requires a safety prompt to initiate scanning
@@ -37,9 +50,6 @@
 		if(scan_process++ > target_scan_ticks)
 			FinishScan()
 
-		//heat up as we go, but if the air is freezing then heat up much slower
-		var/new_heat = heat_accumulation_rate + heat_accumulation_rate * rand(-5,5) / 10
-		temperature += new_heat
 		if(temperature > 350 && prob(10))
 			src.visible_message("\blue \icon[src] bleets plaintively.", 2)
 			if(temperature > 400)
@@ -49,26 +59,43 @@
 		if(prob(5))
 			src.visible_message("\blue \icon[src] [pick("whirrs","chuffs","clicks")][pick(" quietly"," softly"," sadly"," excitedly"," energetically"," angrily"," plaintively")].", 2)
 
-	else if(temperature > environmental_temp)
+		use_power = 2
+
+	else
+		use_power = 1
+
+	auto_use_power()
+
+	//Add 200 joules when idle, or 3000 when active.  This is about 0.6 degrees per tick.
+	//May need adjustment
+	var/heat_added = ( use_power == 1 ? active_power_usage : idle_power_usage )*XENOARCH_HEAT_COEFFICIENT
+
+	temperature += heat_added/XENOARCH_HEAT_CAPACITY
+
+	var/temperature_difference = abs(environmental_temp-temperature)
+	var/datum/gas_mixture/removed = loc.remove_air(env.total_moles*0.25)
+	var/heat_capacity = removed.heat_capacity()
+
+	heat_added = max(temperature_difference*heat_capacity, XENOARCH_MAX_ENERGY_TRANSFER)
+
+	if(temperature > environmental_temp)
 		//cool down to match the air
-		temperature -= heat_accumulation_rate + heat_accumulation_rate * rand(-5,5) / 10
-		if(temperature < environmental_temp)
-			temperature = environmental_temp
-		if(prob(5))
+		temperature = max(TCMB, temperature - heat_added/XENOARCH_HEAT_CAPACITY)
+		removed.temperature = max(TCMB, removed.temperature + heat_added/heat_capacity)
+
+		if(temperature_difference > 10 && prob(5))
 			src.visible_message("\blue \icon[src] hisses softly.", 2)
 
-	else if(temperature < environmental_temp)
+	else
 		//heat up to match the air
-		temperature += heat_accumulation_rate + rand(-5,5) / 10
-		if(temperature > environmental_temp)
-			temperature = environmental_temp
-		else
-			if(prob(5))
-				src.visible_message("\blue \icon[src] plinks quietly.", 2)
+		temperature = max(TCMB, temperature + heat_added/XENOARCH_HEAT_CAPACITY)
+		removed.temperature = max(TCMB, removed.temperature - heat_added/heat_capacity)
 
-	//warm up the lab slightly
-	if(env.temperature < temperature)
-		env.temperature += (temperature - env.temperature) * 0.1
+		if(temperature_difference > 10 && prob(5))
+			src.visible_message("\blue \icon[src] plinks quietly.", 2)
+
+	env.merge(removed)
+
 
 //this proc should be overriden by each individual machine
 /obj/machinery/anomaly/attack_hand(var/mob/user as mob)
