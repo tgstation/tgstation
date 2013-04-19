@@ -57,7 +57,7 @@
 	item_state = "cultrobes"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/magic/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -81,7 +81,7 @@
 	item_state = "magusred"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/magic/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -99,6 +99,6 @@
 	item_state = "cult_armour"
 	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
 	w_class = 3
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/magic/tome,/obj/item/weapon/melee/cultblade,/obj/item/clothing/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)

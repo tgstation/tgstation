@@ -1,7 +1,7 @@
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 
-/obj/item/alien_embryo
+/obj/item/medical/alien/embryo
 	name = "alien embryo"
 	desc = "All slimy and yuck."
 	icon = 'icons/mob/alien.dmi'
@@ -9,7 +9,7 @@
 	var/mob/living/affected_mob
 	var/stage = 0
 
-/obj/item/alien_embryo/New()
+/obj/item/medical/alien/embryo/New()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
 		processing_objects.Add(src)
@@ -18,14 +18,14 @@
 	else
 		del(src)
 
-/obj/item/alien_embryo/Del()
+/obj/item/medical/alien/embryo/Del()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 	..()
 
-/obj/item/alien_embryo/process()
+/obj/item/medical/alien/embryo/process()
 	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
@@ -71,7 +71,7 @@
 			if(prob(50))
 				AttemptGrow()
 
-/obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
+/obj/item/medical/alien/embryo/proc/AttemptGrow(var/gib_on_success = 1)
 	var/list/candidates = get_candidates(BE_ALIEN)
 	var/client/C = null
 
@@ -104,7 +104,7 @@
 Proc: RefreshInfectionImage()
 Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
 ----------------------------------------*/
-/obj/item/alien_embryo/proc/RefreshInfectionImage()
+/obj/item/medical/alien/embryo/proc/RefreshInfectionImage()
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
@@ -120,7 +120,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
-/obj/item/alien_embryo/proc/AddInfectionImages(var/mob/living/C)
+/obj/item/medical/alien/embryo/proc/AddInfectionImages(var/mob/living/C)
 	if(C)
 		for(var/mob/living/carbon/alien/alien in player_list)
 			if(alien.client)
@@ -133,7 +133,7 @@ Proc: RemoveInfectionImage(C)
 Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
 ----------------------------------------*/
 
-/obj/item/alien_embryo/proc/RemoveInfectionImages(var/mob/living/C)
+/obj/item/medical/alien/embryo/proc/RemoveInfectionImages(var/mob/living/C)
 	if(C)
 		for(var/mob/living/carbon/alien/alien in player_list)
 			if(alien.client)

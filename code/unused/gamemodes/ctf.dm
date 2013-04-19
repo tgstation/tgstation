@@ -48,13 +48,13 @@
 					H.set_frequency(1465)
 					M.w_radio = H
 					M.w_radio.layer = 20
-					var/obj/item/weapon/tank/air/O = new /obj/item/weapon/tank/air(M)
+					var/obj/item/clothing/tank/air/O = new /obj/item/clothing/tank/air(M)
 					M.back = O
 					M.back.layer = 20
 					M.internal = O
 
 					del(M.wear_id)
-					var/obj/item/weapon/card/id/W = new(M)
+					var/obj/item/security/card/id/W = new(M)
 					W.name = "[M.real_name]'s ID card (Red Team)"
 					W.access = access_red
 					W.assignment = "Red Team"
@@ -88,13 +88,13 @@
 					H.set_frequency(1449)
 					M.w_radio = H
 					M.w_radio.layer = 20
-					var/obj/item/weapon/tank/air/O = new /obj/item/weapon/tank/air(M)
+					var/obj/item/clothing/tank/air/O = new /obj/item/clothing/tank/air(M)
 					M.back = O
 					M.back.layer = 20
 					M.internal = O
 
 					del(M.wear_id)
-					var/obj/item/weapon/card/id/W = new(M)
+					var/obj/item/security/card/id/W = new(M)
 					W.name = "[M.real_name]'s ID card (Green Team)"
 					W.access = access_green
 					W.assignment = "Green Team"

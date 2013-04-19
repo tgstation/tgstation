@@ -2,9 +2,9 @@
 
 /obj/machinery/power/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/part/cable_coil))
 
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/part/cable_coil/coil = W
 
 		var/turf/T = user.loc
 
@@ -121,7 +121,7 @@
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/part/wirecutters))
 
 //		if(power_switch)
 //			user << "\red This piece of cable is tied to a power switch. Flip the switch to remove it."
@@ -131,9 +131,9 @@
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/weapon/cable_coil(T, 2, color)
+			new/obj/item/part/cable_coil(T, 2, color)
 		else
-			new/obj/item/weapon/cable_coil(T, 1, color)
+			new/obj/item/part/cable_coil(T, 1, color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
@@ -155,11 +155,11 @@
 		return	// not needed, but for clarity
 
 
-	else if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/part/cable_coil))
+		var/obj/item/part/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(istype(W, /obj/item/tool/multitool))
 
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 
@@ -196,19 +196,19 @@
 			del(src)
 		if(2.0)
 			if (prob(50))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new/obj/item/part/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				del(src)
 
 		if(3.0)
 			if (prob(25))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new/obj/item/part/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				del(src)
 	return
 
 // the cable coil object, used for laying cable
 
 #define MAXCOIL 30
-/obj/item/weapon/cable_coil
+/obj/item/part/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
@@ -231,7 +231,7 @@
 		return(OXYLOSS)
 
 
-/obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
+/obj/item/part/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
 	..()
 	src.amount = length
 	if (param_color)
@@ -240,7 +240,7 @@
 	pixel_y = rand(-2,2)
 	updateicon()
 
-/obj/item/weapon/cable_coil/proc/updateicon()
+/obj/item/part/cable_coil/proc/updateicon()
 	if (!color)
 		color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
@@ -253,7 +253,7 @@
 		icon_state = "coil_[color]"
 		name = "cable coil"
 
-/obj/item/weapon/cable_coil/examine()
+/obj/item/part/cable_coil/examine()
 	set src in view(1)
 
 	if(amount == 1)
@@ -263,7 +263,7 @@
 	else
 		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
-/obj/item/weapon/cable_coil/verb/make_restraint()
+/obj/item/part/cable_coil/verb/make_restraint()
 	set name = "Make Cable Restraints"
 	set category = "Object"
 	var/mob/M = usr
@@ -273,7 +273,7 @@
 		if(src.amount <= 14)
 			usr << "\red You need at least 15 lengths to make restraints!"
 			return
-		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
+		var/obj/item/security/handcuffs/cable/B = new /obj/item/security/handcuffs/cable(usr.loc)
 		B.icon_state = "cuff_[color]"
 		usr << "\blue You wind some cable together to make some restraints."
 		src.use(15)
@@ -281,17 +281,17 @@
 		usr << "\blue You cannot do that."
 	..()
 
-/obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
+/obj/item/part/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
+	if( istype(W, /obj/item/part/wirecutters) && src.amount > 1)
 		src.amount--
-		new/obj/item/weapon/cable_coil(user.loc, 1,color)
+		new/obj/item/part/cable_coil(user.loc, 1,color)
 		user << "You cut a piece off the cable coil."
 		src.updateicon()
 		return
 
-	else if( istype(W, /obj/item/weapon/cable_coil) )
-		var/obj/item/weapon/cable_coil/C = W
+	else if( istype(W, /obj/item/part/cable_coil) )
+		var/obj/item/part/cable_coil/C = W
 		if(C.amount == MAXCOIL)
 			user << "The coil is too long, you cannot add any more cable to it."
 			return
@@ -311,7 +311,7 @@
 			C.updateicon()
 			return
 
-/obj/item/weapon/cable_coil/proc/use(var/used)
+/obj/item/part/cable_coil/proc/use(var/used)
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
@@ -323,7 +323,7 @@
 
 // called when cable_coil is clicked on a turf/simulated/floor
 
-/obj/item/weapon/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
+/obj/item/part/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
 
 	if(!isturf(user.loc))
 		return
@@ -369,7 +369,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 1, C.color)
+				new/obj/item/part/cable_coil(C.loc, 1, C.color)
 				del(C)
 		//src.laying = 1
 		//last = C
@@ -377,7 +377,7 @@
 
 // called when cable_coil is click on an installed obj/cable
 
-/obj/item/weapon/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
+/obj/item/part/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
 
 	var/turf/U = user.loc
 	if(!isturf(U))
@@ -429,7 +429,7 @@
 			use(1)
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
+					new/obj/item/part/cable_coil(NC.loc, 1, NC.color)
 					del(NC)
 
 			return
@@ -468,7 +468,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 2, C.color)
+				new/obj/item/part/cable_coil(C.loc, 2, C.color)
 				del(C)
 
 		return
@@ -563,46 +563,46 @@ obj/structure/cable/proc/cableColor(var/colorC)
 		if("white")
 			icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
-/obj/item/weapon/cable_coil/cut
+/obj/item/part/cable_coil/cut
 	item_state = "coil_red2"
 
-/obj/item/weapon/cable_coil/cut/New(loc)
+/obj/item/part/cable_coil/cut/New(loc)
 	..()
 	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	updateicon()
 
-/obj/item/weapon/cable_coil/yellow
+/obj/item/part/cable_coil/yellow
 	color = "yellow"
 	icon_state = "coil_yellow"
 
-/obj/item/weapon/cable_coil/blue
+/obj/item/part/cable_coil/blue
 	color = "blue"
 	icon_state = "coil_blue"
 	item_state = "coil_blue"
 
-/obj/item/weapon/cable_coil/green
+/obj/item/part/cable_coil/green
 	color = "green"
 	icon_state = "coil_green"
 
-/obj/item/weapon/cable_coil/pink
+/obj/item/part/cable_coil/pink
 	color = "pink"
 	icon_state = "coil_pink"
 
-/obj/item/weapon/cable_coil/orange
+/obj/item/part/cable_coil/orange
 	color = "orange"
 	icon_state = "coil_orange"
 
-/obj/item/weapon/cable_coil/cyan
+/obj/item/part/cable_coil/cyan
 	color = "cyan"
 	icon_state = "coil_cyan"
 
-/obj/item/weapon/cable_coil/white
+/obj/item/part/cable_coil/white
 	color = "white"
 	icon_state = "coil_white"
 
-/obj/item/weapon/cable_coil/random/New()
+/obj/item/part/cable_coil/random/New()
 	color = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[color]"
 	..()

@@ -52,7 +52,7 @@
 	update_canmove()
 
 	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
+	for(var/obj/item/effect/grab/G in src)
 		G.process()
 
 	//some kind of bug in canmove() isn't properly calling update_icons, so this is here as a placeholder

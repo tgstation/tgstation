@@ -144,7 +144,7 @@
 //			return
 
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(var/obj/item/weapon/projectile/Proj)
 		if(!Proj)	return
 		switch(Proj.damage_type)
 		 if(BRUTE)
@@ -163,7 +163,7 @@
 		switch(W.damtype)
 			if("fire")
 				damage = (W.force / max(src.fire_resist,1))
-				if(istype(W, /obj/item/weapon/weldingtool))
+				if(istype(W, /obj/item/tool/welder))
 					playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			if("brute")
 				damage = (W.force / max(src.brute_resist,1))

@@ -15,11 +15,11 @@
 
 	var/sun_angle = 0		// sun angle as set by sun datum
 
-/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
+/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/part/frame/solar/S)
 	..(loc)
 	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
+		S = new /obj/item/part/frame/solar(src)
+		S.glass_type = /obj/item/part/stack/sheet/glass
 		S.tracker = 1
 		S.anchored = 1
 	S.loc = src
@@ -59,7 +59,7 @@
 	if(iscrowbar(W))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, 50))
-			var/obj/item/solar_assembly/S = locate() in src
+			var/obj/item/part/frame/solar/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
@@ -84,7 +84,7 @@
 
 // Tracker Electronic
 
-/obj/item/weapon/tracker_electronics
+/obj/item/part/board/solar_tracker
 
 	name = "tracker electronics"
 	icon = 'icons/obj/doors/door_assembly.dmi'

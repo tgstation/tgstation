@@ -16,7 +16,7 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
-	var/obj/item/projectile/in_chamber = null
+	var/obj/item/weapon/projectile/in_chamber = null
 	var/caliber = ""
 	var/silenced = 0
 	var/recoil = 0
@@ -97,7 +97,7 @@
 			playsound(user, fire_sound, 10, 1)
 		else
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/weapon/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 		in_chamber.original = target
 		in_chamber.loc = get_turf(user)

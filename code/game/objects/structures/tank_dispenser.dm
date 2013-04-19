@@ -43,7 +43,7 @@
 
 
 /obj/structure/dispenser/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/tank/oxygen) || istype(I, /obj/item/weapon/tank/air) || istype(I, /obj/item/weapon/tank/anesthetic))
+	if(istype(I, /obj/item/clothing/tank/oxygen) || istype(I, /obj/item/clothing/tank/air) || istype(I, /obj/item/clothing/tank/anesthetic))
 		if(oxygentanks < 10)
 			user.drop_item()
 			I.loc = src
@@ -52,7 +52,7 @@
 			user << "<span class='notice'>You put [I] in [src].</span>"
 		else
 			user << "<span class='notice'>[src] is full.</span>"
-	if(istype(I, /obj/item/weapon/tank/plasma))
+	if(istype(I, /obj/item/clothing/tank/plasma))
 		if(plasmatanks < 10)
 			user.drop_item()
 			I.loc = src
@@ -71,24 +71,24 @@
 		usr.set_machine(src)
 		if(href_list["oxygen"])
 			if(oxygentanks > 0)
-				var/obj/item/weapon/tank/oxygen/O
+				var/obj/item/clothing/tank/oxygen/O
 				if(oxytanks.len == oxygentanks)
 					O = oxytanks[1]
 					oxytanks.Remove(O)
 				else
-					O = new /obj/item/weapon/tank/oxygen(loc)
+					O = new /obj/item/clothing/tank/oxygen(loc)
 				O.loc = loc
 				usr << "<span class='notice'>You take [O] out of [src].</span>"
 				oxygentanks--
 				update_icon()
 		if(href_list["plasma"])
 			if(plasmatanks > 0)
-				var/obj/item/weapon/tank/plasma/P
+				var/obj/item/clothing/tank/plasma/P
 				if(platanks.len == plasmatanks)
 					P = platanks[1]
 					platanks.Remove(P)
 				else
-					P = new /obj/item/weapon/tank/plasma(loc)
+					P = new /obj/item/clothing/tank/plasma(loc)
 				P.loc = loc
 				usr << "<span class='notice'>You take [P] out of [src].</span>"
 				plasmatanks--

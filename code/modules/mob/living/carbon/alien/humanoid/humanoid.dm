@@ -59,7 +59,7 @@
 		tally = -1 // hunters go supersuperfast
 	return (tally + move_delay_add + config.alien_delay)
 
-///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
+///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/weapon/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(wear_suit) wear_suit.emp_act(severity)
@@ -309,7 +309,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src)
 
 			M.put_in_active_hand(G)
 

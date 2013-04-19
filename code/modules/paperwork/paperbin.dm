@@ -1,4 +1,4 @@
-/obj/item/weapon/paper_bin
+/obj/item/office/bin
 	name = "paper bin"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
@@ -12,7 +12,7 @@
 	var/list/papers = new/list()	//List of papers put in the bin for reference.
 
 
-/obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
+/obj/item/office/bin/MouseDrop(atom/over_object)
 	var/mob/M = usr
 	if(M.restrained() || M.stat)
 		return
@@ -32,21 +32,21 @@
 	add_fingerprint(M)
 
 
-/obj/item/weapon/paper_bin/attack_paw(mob/user)
+/obj/item/office/bin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user)
+/obj/item/office/bin/attack_hand(mob/user)
 	if(amount >= 1)
 		amount--
 		update_icon()
 
-		var/obj/item/weapon/paper/P
+		var/obj/item/office/paper/P
 		if(papers.len > 0)	//If there's any custom paper on the stack, use that instead of creating a new paper.
 			P = papers[papers.len]
 			papers.Remove(P)
 		else
-			P = new /obj/item/weapon/paper
+			P = new /obj/item/office/paper
 			if(events.holiday == "April Fool's Day")
 				if(prob(30))
 					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
@@ -62,7 +62,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
+/obj/item/office/bin/attackby(obj/item/office/paper/i, mob/user)
 	if(!istype(i))
 		return ..()
 
@@ -74,7 +74,7 @@
 	update_icon()
 
 
-/obj/item/weapon/paper_bin/examine()
+/obj/item/office/bin/examine()
 	set src in oview(1)
 
 	if(amount)
@@ -83,7 +83,7 @@
 		usr << "<span class='notice'>There are no papers in the bin.</span>"
 
 
-/obj/item/weapon/paper_bin/update_icon()
+/obj/item/office/bin/update_icon()
 	if(amount < 1)
 		icon_state = "paper_bin0"
 	else

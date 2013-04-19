@@ -48,7 +48,7 @@ var/global/mulebot_count = 0
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/obj/item/weapon/cell/cell
+	var/obj/item/part/cell/cell
 	var/datum/wires/mulebot/wires = null
 						// the installed power cell
 
@@ -96,22 +96,22 @@ var/global/mulebot_count = 0
 // cell: insert it
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
+	if(istype(I,/obj/item/security/card/emag))
 		locked = !locked
 		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
-	else if(istype(I, /obj/item/weapon/card/id))
+	else if(istype(I, /obj/item/security/card/id))
 		if(toggle_lock(user))
 			user << "\blue Controls [(locked ? "locked" : "unlocked")]."
 
-	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
-		var/obj/item/weapon/cell/C = I
+	else if(istype(I,/obj/item/part/cell) && open && !cell)
+		var/obj/item/part/cell/C = I
 		user.drop_item()
 		C.loc = src
 		cell = C
 		updateDialog()
-	else if(istype(I,/obj/item/weapon/screwdriver))
+	else if(istype(I,/obj/item/tool/screwdriver))
 		if(locked)
 			user << "\blue The maintenance hatch cannot be opened or closed while the controls are locked."
 			return
@@ -126,7 +126,7 @@ var/global/mulebot_count = 0
 			icon_state = "mulebot0"
 
 		updateDialog()
-	else if (istype(I, /obj/item/weapon/wrench))
+	else if (istype(I, /obj/item/tool/wrench))
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
@@ -290,7 +290,7 @@ var/global/mulebot_count = 0
 
 			if("cellinsert")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					var/obj/item/part/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C
@@ -892,10 +892,10 @@ var/global/mulebot_count = 0
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
-	new /obj/item/stack/rods(Tsec)
-	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut(Tsec)
+	new /obj/item/part/assembly/prox_sensor(Tsec)
+	new /obj/item/part/stack/rods(Tsec)
+	new /obj/item/part/stack/rods(Tsec)
+	new /obj/item/part/cable_coil/cut(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()

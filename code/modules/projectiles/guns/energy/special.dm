@@ -8,7 +8,7 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	charge_cost = 100
-	projectile_type = "/obj/item/projectile/ion"
+	projectile_type = "/obj/item/weapon/projectile/ion"
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
@@ -24,7 +24,7 @@
 	fire_sound = 'sound/weapons/pulse3.ogg'
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	charge_cost = 100
-	projectile_type = "/obj/item/projectile/energy/declone"
+	projectile_type = "/obj/item/weapon/projectile/energy/declone"
 
 obj/item/weapon/gun/energy/staff
 	name = "staff of change"
@@ -37,7 +37,7 @@ obj/item/weapon/gun/energy/staff
 	slot_flags = SLOT_BACK
 	w_class = 5
 	charge_cost = 200
-	projectile_type = "/obj/item/projectile/change"
+	projectile_type = "/obj/item/weapon/projectile/change"
 	origin_tech = null
 	clumsy_check = 0
 	var/charge_tick = 0
@@ -67,7 +67,7 @@ obj/item/weapon/gun/energy/staff
 /obj/item/weapon/gun/energy/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
-	projectile_type = "/obj/item/projectile/animate"
+	projectile_type = "/obj/item/weapon/projectile/animate"
 	icon_state = "staffofanimation"
 	item_state = "staffofanimation"
 
@@ -78,7 +78,7 @@ obj/item/weapon/gun/energy/staff
 	item_state = "obj/item/gun.dmi"
 	fire_sound = 'sound/effects/stealthoff.ogg'
 	charge_cost = 100
-	projectile_type = "/obj/item/projectile/energy/floramut"
+	projectile_type = "/obj/item/weapon/projectile/energy/floramut"
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = "floramut"
 	var/charge_tick = 0
@@ -109,13 +109,13 @@ obj/item/weapon/gun/energy/staff
 				mode = 1
 				charge_cost = 100
 				user << "\red The [src.name] is now set to increase yield."
-				projectile_type = "/obj/item/projectile/energy/florayield"
+				projectile_type = "/obj/item/weapon/projectile/energy/florayield"
 				modifystate = "florayield"
 			if(1)
 				mode = 0
 				charge_cost = 100
 				user << "\red The [src.name] is now set to induce mutations."
-				projectile_type = "/obj/item/projectile/energy/floramut"
+				projectile_type = "/obj/item/weapon/projectile/energy/floramut"
 				modifystate = "floramut"
 		update_icon()
 		return
@@ -126,9 +126,9 @@ obj/item/weapon/gun/energy/staff
 	icon_state = "riotgun"
 	item_state = "c20r"
 	w_class = 4
-	projectile_type = "/obj/item/projectile/meteor"
+	projectile_type = "/obj/item/weapon/projectile/meteor"
 	charge_cost = 100
-	cell_type = "/obj/item/weapon/cell/potato"
+	cell_type = "/obj/item/part/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
@@ -166,5 +166,5 @@ obj/item/weapon/gun/energy/staff
 	name = "mind flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
-	projectile_type = "/obj/item/projectile/beam/mindflayer"
+	projectile_type = "/obj/item/weapon/projectile/beam/mindflayer"
 	fire_sound = 'sound/weapons/Laser.ogg'

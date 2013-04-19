@@ -11,18 +11,18 @@
 	New()
 		sleep(2)
 		if(prob(50))
-			new /obj/item/weapon/storage/backpack/captain(src)
+			new /obj/item/storage/backpack/captain(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_cap(src)
+			new /obj/item/storage/backpack/satchel_cap(src)
 		new /obj/item/clothing/suit/captunic(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/weapon/cartridge/captain(src)
+		new /obj/item/part/cartridge/captain(src)
 		new /obj/item/clothing/head/helmet/swat(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/heads/captain(src)
-		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
+		new /obj/item/chem/food/drinks/flask(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		return
@@ -44,12 +44,12 @@
 		new /obj/item/clothing/under/rank/head_of_personnel(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/head/helmet(src)
-		new /obj/item/weapon/cartridge/hop(src)
+		new /obj/item/part/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
 		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/weapon/storage/id_kit(src)
-		new /obj/item/weapon/storage/id_kit( src )
-		new /obj/item/device/flash(src)
+		new /obj/item/storage/id_kit(src)
+		new /obj/item/storage/id_kit( src )
+		new /obj/item/security/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		return
 
@@ -67,16 +67,16 @@
 
 	New()
 		sleep(2)
-		new /obj/item/weapon/storage/backpack/satchel_sec(src)
-		new /obj/item/weapon/cartridge/hos(src)
+		new /obj/item/storage/backpack/satchel_sec(src)
+		new /obj/item/part/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
-		new /obj/item/weapon/storage/lockbox/loyalty(src)
-		new /obj/item/weapon/storage/flashbang_kit(src)
-		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/device/flash(src)
+		new /obj/item/storage/lockbox/loyalty(src)
+		new /obj/item/storage/flashbang_kit(src)
+		new /obj/item/storage/belt/security(src)
+		new /obj/item/security/flash(src)
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/weapon/gun/energy/taser(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		new /obj/item/chem/spray/pepper(src)
 		return
 
 
@@ -94,14 +94,14 @@
 
 	New()
 		sleep(2)
-		new /obj/item/weapon/storage/backpack/satchel_sec(src)
+		new /obj/item/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/under/rank/advisor(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
-		new /obj/item/weapon/storage/flashbang_kit(src)
-		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		new /obj/item/storage/flashbang_kit(src)
+		new /obj/item/storage/belt/security(src)
+		new /obj/item/chem/spray/pepper(src)
+		new /obj/item/chem/spray/pepper(src)
 		new /obj/item/weapon/melee/baton(src)
 		return
 
@@ -119,12 +119,12 @@
 
 	New()
 		sleep(2)
-		new /obj/item/weapon/storage/backpack/satchel_sec(src)
+		new /obj/item/storage/backpack/satchel_sec(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		new /obj/item/storage/belt/security(src)
+		new /obj/item/security/flash(src)
+		new /obj/item/chem/spray/pepper(src)
+		new /obj/item/chem/spray/pepper(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		return
 
@@ -149,10 +149,10 @@
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/weapon/cartridge/detective(src)
-		new /obj/item/weapon/clipboard(src)
-		new /obj/item/device/detective_scanner(src)
-		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/part/cartridge/detective(src)
+		new /obj/item/office/clipboard(src)
+		new /obj/item/device/scanner/forensic(src)
+		new /obj/item/storage/box/evidence(src)
 		return
 
 /obj/structure/closet/secure_closet/detective/update_icon()
@@ -174,8 +174,8 @@
 
 	New()
 		sleep(2)
-		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
-		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
+		new /obj/item/chem/ld50_syringe/choral(src)
+		new /obj/item/chem/ld50_syringe/choral(src)
 		return
 
 
@@ -199,13 +199,13 @@
 	New()
 		sleep(2)
 		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/weapon/paper/Court (src)
-		new /obj/item/weapon/paper/Court (src)
-		new /obj/item/weapon/paper/Court (src)
-		new /obj/item/weapon/pen (src)
+		new /obj/item/office/paper/Court (src)
+		new /obj/item/office/paper/Court (src)
+		new /obj/item/office/paper/Court (src)
+		new /obj/item/office/pen (src)
 		new /obj/item/clothing/suit/judgerobe (src)
 		new /obj/item/clothing/head/powdered_wig (src)
-		new /obj/item/weapon/storage/briefcase(src)
+		new /obj/item/storage/briefcase(src)
 		return
 
 /obj/structure/closet/secure_closet/wall

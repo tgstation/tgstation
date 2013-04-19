@@ -1,6 +1,6 @@
 /datum/computer
 	var/size = 4.0
-	var/obj/item/weapon/disk/data/holder = null
+	var/obj/item/office/disk/data/holder = null
 	var/datum/computer/folder/holding_folder = null
 	folder
 		name = "Folder"
@@ -72,7 +72,7 @@
 	name = "blank program"
 	extension = "PROG"
 	//var/size = 4.0
-	//var/obj/item/weapon/disk/data/holder = null
+	//var/obj/item/office/disk/data/holder = null
 	var/obj/machinery/computer2/master = null
 	var/active_icon = null
 	var/id_tag = null
@@ -157,7 +157,7 @@
 			else
 				del(signal)
 
-		transfer_holder(obj/item/weapon/disk/data/newholder,datum/computer/folder/newfolder)
+		transfer_holder(obj/item/office/disk/data/newholder,datum/computer/folder/newfolder)
 
 			if((newholder.file_used + src.size) > newholder.file_amount)
 				return 0
@@ -201,11 +201,11 @@
 			else if(istype(M, /mob/living/carbon/monkey))
 				var/mob/living/carbon/monkey/george = M
 				//they can only hold things :(
-				if(george.equipped() && istype(george.equipped(), /obj/item/weapon/card/id) && src.check_access(george.equipped()))
+				if(george.equipped() && istype(george.equipped(), /obj/item/security/card/id) && src.check_access(george.equipped()))
 					return 1
 			return 0
 
-		check_access(obj/item/weapon/card/id/I)
+		check_access(obj/item/security/card/id/I)
 			if(!src.req_access) //no requirements
 				return 1
 			if(!istype(src.req_access, /list)) //something's very wrong
@@ -214,7 +214,7 @@
 			var/list/L = src.req_access
 			if(!L.len) //no requirements
 				return 1
-			if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+			if(!I || !istype(I, /obj/item/security/card/id) || !I.access) //not ID or no access
 				return 0
 			for(var/req in src.req_access)
 				if(!(req in I.access)) //doesn't have this access

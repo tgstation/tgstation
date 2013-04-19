@@ -1,7 +1,7 @@
 #define UPGRADE_COOLDOWN	40
 #define UPGRADE_KILL_TIMER	100
 
-/obj/item/weapon/grab
+/obj/item/effect/grab
 	name = "grab"
 	var/obj/screen/grab/hud = null
 	var/mob/affecting = null
@@ -13,11 +13,12 @@
 
 	layer = 21
 	abstract = 1
+	icon = 'icons/obj/weapons.dmi'
 	item_state = "nothing"
 	w_class = 5.0
 
 
-/obj/item/weapon/grab/New(mob/user, mob/victim)
+/obj/item/effect/grab/New(mob/user, mob/victim)
 	..()
 	loc = user
 	assailant = user
@@ -34,7 +35,7 @@
 
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
-/obj/item/weapon/grab/proc/throw()
+/obj/item/effect/grab/proc/throw()
 	if(affecting)
 		if(state >= GRAB_AGGRESSIVE)
 			return affecting
@@ -42,7 +43,7 @@
 
 
 //This makes sure that the grab screen object is displayed in the correct hand.
-/obj/item/weapon/grab/proc/synch()
+/obj/item/effect/grab/proc/synch()
 	if(affecting)
 		if(assailant.r_hand == src)
 			hud.screen_loc = ui_rhand
@@ -50,7 +51,7 @@
 			hud.screen_loc = ui_lhand
 
 
-/obj/item/weapon/grab/process()
+/obj/item/effect/grab/process()
 	confirm()
 
 	if(assailant.client)
@@ -62,12 +63,12 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
-		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
-			var/obj/item/weapon/grab/G = assailant.l_hand
+		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/effect/grab)))
+			var/obj/item/effect/grab/G = assailant.l_hand
 			if(G.affecting != affecting)
 				allow_upgrade = 0
-		if((assailant.r_hand && assailant.r_hand != src && istype(assailant.r_hand, /obj/item/weapon/grab)))
-			var/obj/item/weapon/grab/G = assailant.r_hand
+		if((assailant.r_hand && assailant.r_hand != src && istype(assailant.r_hand, /obj/item/effect/grab)))
+			var/obj/item/effect/grab/G = assailant.r_hand
 			if(G.affecting != affecting)
 				allow_upgrade = 0
 		if(state == GRAB_AGGRESSIVE)
@@ -77,7 +78,7 @@
 			affecting.hand = 1
 			affecting.drop_item()
 			affecting.hand = h
-			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
+			for(var/obj/item/effect/grab/G in affecting.grabbed_by)
 				if(G.state == GRAB_AGGRESSIVE)
 					allow_upgrade = 0
 		if(allow_upgrade)
@@ -99,7 +100,7 @@
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 
 
-/obj/item/weapon/grab/proc/s_click(obj/screen/S)
+/obj/item/effect/grab/proc/s_click(obj/screen/S)
 	if(!affecting)
 		return
 	if(state == GRAB_UPGRADING)
@@ -171,7 +172,7 @@
 
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
-/obj/item/weapon/grab/proc/confirm()
+/obj/item/effect/grab/proc/confirm()
 	if(!assailant || !affecting)
 		del(src)
 		return 0
@@ -184,7 +185,7 @@
 	return 1
 
 
-/obj/item/weapon/grab/attack(mob/M, mob/user)
+/obj/item/effect/grab/attack(mob/M, mob/user)
 	if(!affecting)
 		return
 
@@ -206,9 +207,9 @@
 			del(src)
 
 
-/obj/item/weapon/grab/dropped()
+/obj/item/effect/grab/dropped()
 	del(src)
 
-/obj/item/weapon/grab/Del()
+/obj/item/effect/grab/Del()
 	del(hud)
 	..()

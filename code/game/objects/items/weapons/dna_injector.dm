@@ -1,4 +1,4 @@
-/obj/item/weapon/dnainjector
+/obj/item/medical/dnainjector
 	name = "DNA-Injector"
 	desc = "This injects the person with DNA."
 	icon = 'icons/obj/items.dmi'
@@ -17,11 +17,11 @@
 	var/is_bullet = 0
 	var/inuse = 0
 
-/obj/item/weapon/dnainjector/attack_paw(mob/user as mob)
+/obj/item/medical/dnainjector/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
 
-/obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
+/obj/item/medical/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living))
 		M.radiation += rand(20,50)
 
@@ -58,7 +58,7 @@
 		del(src)
 	return uses
 
-/obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
+/obj/item/medical/dnainjector/attack(mob/M as mob, mob/user as mob)
 	if (!istype(M, /mob))
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -134,7 +134,7 @@
 
 
 
-/obj/item/weapon/dnainjector/antihulk
+/obj/item/medical/dnainjector/antihulk
 	name = "DNA-Injector (Anti-Hulk)"
 	desc = "Cures green skin."
 	dnatype = "se"
@@ -144,7 +144,7 @@
 		..()
 		block = HULKBLOCK
 
-/obj/item/weapon/dnainjector/hulkmut
+/obj/item/medical/dnainjector/hulkmut
 	name = "DNA-Injector (Hulk)"
 	desc = "This will make you big and strong, but give you a bad skin condition."
 	dnatype = "se"
@@ -154,7 +154,7 @@
 		..()
 		block = HULKBLOCK
 
-/obj/item/weapon/dnainjector/xraymut
+/obj/item/medical/dnainjector/xraymut
 	name = "DNA-Injector (Xray)"
 	desc = "Finally you can see what the Captain does."
 	dnatype = "se"
@@ -164,7 +164,7 @@
 		..()
 		block = XRAYBLOCK
 
-/obj/item/weapon/dnainjector/antixray
+/obj/item/medical/dnainjector/antixray
 	name = "DNA-Injector (Anti-Xray)"
 	desc = "It will make you see harder."
 	dnatype = "se"
@@ -175,49 +175,49 @@
 		block = XRAYBLOCK
 
 /////////////////////////////////////
-/obj/item/weapon/dnainjector/antiglasses
+/obj/item/medical/dnainjector/antiglasses
 	name = "DNA-Injector (Anti-Glasses)"
 	desc = "Toss away those glasses!"
 	dnatype = "se"
 	dna = "708"
 	block = 1
 
-/obj/item/weapon/dnainjector/glassesmut
+/obj/item/medical/dnainjector/glassesmut
 	name = "DNA-Injector (Glasses)"
 	desc = "Will make you need dorkish glasses."
 	dnatype = "se"
 	dna = "BD6"
 	block = 1
 
-/obj/item/weapon/dnainjector/epimut
+/obj/item/medical/dnainjector/epimut
 	name = "DNA-Injector (Epi.)"
 	desc = "Shake shake shake the room!"
 	dnatype = "se"
 	dna = "FA0"
 	block = 3
 
-/obj/item/weapon/dnainjector/antiepi
+/obj/item/medical/dnainjector/antiepi
 	name = "DNA-Injector (Anti-Epi.)"
 	desc = "Will fix you up from shaking the room."
 	dnatype = "se"
 	dna = "708"
 	block = 3
 ////////////////////////////////////
-/obj/item/weapon/dnainjector/anticough
+/obj/item/medical/dnainjector/anticough
 	name = "DNA-Injector (Anti-Cough)"
 	desc = "Will stop that aweful noise."
 	dnatype = "se"
 	dna = "708"
 	block = 5
 
-/obj/item/weapon/dnainjector/coughmut
+/obj/item/medical/dnainjector/coughmut
 	name = "DNA-Injector (Cough)"
 	desc = "Will bring forth a sound of horror from your throat."
 	dnatype = "se"
 	dna = "BD6"
 	block = 5
 
-/obj/item/weapon/dnainjector/clumsymut
+/obj/item/medical/dnainjector/clumsymut
 	name = "DNA-Injector (Clumsy)"
 	desc = "Makes clown minions."
 	dnatype = "se"
@@ -227,7 +227,7 @@
 		..()
 		block = CLUMSYBLOCK
 
-/obj/item/weapon/dnainjector/anticlumsy
+/obj/item/medical/dnainjector/anticlumsy
 	name = "DNA-Injector (Anti-Clumy)"
 	desc = "Apply this for Security Clown."
 	dnatype = "se"
@@ -237,35 +237,35 @@
 		..()
 		block = CLUMSYBLOCK
 
-/obj/item/weapon/dnainjector/antitour
+/obj/item/medical/dnainjector/antitour
 	name = "DNA-Injector (Anti-Tour.)"
 	desc = "Will cure tourrets."
 	dnatype = "se"
 	dna = "708"
 	block = 7
 
-/obj/item/weapon/dnainjector/tourmut
+/obj/item/medical/dnainjector/tourmut
 	name = "DNA-Injector (Tour.)"
 	desc = "Gives you a nasty case off tourrets."
 	dnatype = "se"
 	dna = "BD6"
 	block = 7
 
-/obj/item/weapon/dnainjector/stuttmut
+/obj/item/medical/dnainjector/stuttmut
 	name = "DNA-Injector (Stutt.)"
 	desc = "Makes you s-s-stuttterrr"
 	dnatype = "se"
 	dna = "FA0"
 	block = 9
 
-/obj/item/weapon/dnainjector/antistutt
+/obj/item/medical/dnainjector/antistutt
 	name = "DNA-Injector (Anti-Stutt.)"
 	desc = "Fixes that speaking impairment."
 	dnatype = "se"
 	dna = "708"
 	block = 9
 
-/obj/item/weapon/dnainjector/antifire
+/obj/item/medical/dnainjector/antifire
 	name = "DNA-Injector (Anti-Fire)"
 	desc = "Cures fire."
 	dnatype = "se"
@@ -275,7 +275,7 @@
 		..()
 		block = FIREBLOCK
 
-/obj/item/weapon/dnainjector/firemut
+/obj/item/medical/dnainjector/firemut
 	name = "DNA-Injector (Fire)"
 	desc = "Gives you fire."
 	dnatype = "se"
@@ -285,7 +285,7 @@
 		..()
 		block = FIREBLOCK
 
-/obj/item/weapon/dnainjector/blindmut
+/obj/item/medical/dnainjector/blindmut
 	name = "DNA-Injector (Blind)"
 	desc = "Makes you not see anything."
 	dnatype = "se"
@@ -295,7 +295,7 @@
 		..()
 		block = BLINDBLOCK
 
-/obj/item/weapon/dnainjector/antiblind
+/obj/item/medical/dnainjector/antiblind
 	name = "DNA-Injector (Anti-Blind)"
 	desc = "ITS A MIRACLE!!!"
 	dnatype = "se"
@@ -305,7 +305,7 @@
 		..()
 		block = BLINDBLOCK
 
-/obj/item/weapon/dnainjector/antitele
+/obj/item/medical/dnainjector/antitele
 	name = "DNA-Injector (Anti-Tele.)"
 	desc = "Will make you not able to control your mind."
 	dnatype = "se"
@@ -315,7 +315,7 @@
 		..()
 		block = TELEBLOCK
 
-/obj/item/weapon/dnainjector/telemut
+/obj/item/medical/dnainjector/telemut
 	name = "DNA-Injector (Tele.)"
 	desc = "Super brain man!"
 	dnatype = "se"
@@ -325,14 +325,14 @@
 		..()
 		block = TELEBLOCK
 
-/obj/item/weapon/dnainjector/telemut/darkbundle
+/obj/item/medical/dnainjector/telemut/darkbundle
 	name = "DNA-Injector"
 	desc = "Good. Let the hate flow through you."
-/obj/item/weapon/dnainjector/telemut/darkbundle/attack(mob/M as mob, mob/user as mob)
+/obj/item/medical/dnainjector/telemut/darkbundle/attack(mob/M as mob, mob/user as mob)
 	..()
 	domutcheck(M,null) //guarantees that it works instead of getting a dud injector.
 
-/obj/item/weapon/dnainjector/deafmut
+/obj/item/medical/dnainjector/deafmut
 	name = "DNA-Injector (Deaf)"
 	desc = "Sorry, what did you say?"
 	dnatype = "se"
@@ -342,7 +342,7 @@
 		..()
 		block = DEAFBLOCK
 
-/obj/item/weapon/dnainjector/antideaf
+/obj/item/medical/dnainjector/antideaf
 	name = "DNA-Injector (Anti-Deaf)"
 	desc = "Will make you hear once more."
 	dnatype = "se"
@@ -352,14 +352,14 @@
 		..()
 		block = DEAFBLOCK
 
-/obj/item/weapon/dnainjector/h2m
+/obj/item/medical/dnainjector/h2m
 	name = "DNA-Injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
 	dnatype = "se"
 	dna = "FA0"
 	block = 14
 
-/obj/item/weapon/dnainjector/m2h
+/obj/item/medical/dnainjector/m2h
 	name = "DNA-Injector (Monkey > Human)"
 	desc = "Will make you...less hairy."
 	dnatype = "se"

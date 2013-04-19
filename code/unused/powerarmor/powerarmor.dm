@@ -9,7 +9,7 @@
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/tool/flashlight,/obj/item/weapon/gun,/obj/item/security/handcuffs,/obj/item/clothing/tank/emergency_oxygen)
 	slowdown = 9
 	var/fuel = 0
 
@@ -168,7 +168,7 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(power && istype(power,/obj/item/powerarmor/power/plasma))
 			switch(W.type)
-				if(/obj/item/stack/sheet/mineral/plasma)
+				if(/obj/item/part/stack/sheet/mineral/plasma)
 					if(fuel < 50)
 						user << "\blue You feed some refined plasma into the armor's generator."
 						power:fuel += 25
@@ -180,7 +180,7 @@
 						user << "\red The generator already has plenty of plasma."
 						return
 
-				if(/obj/item/weapon/ore/plasma) //raw plasma has impurities, so it doesn't provide as much fuel. --NEO
+				if(/obj/item/mining/ore/plasma) //raw plasma has impurities, so it doesn't provide as much fuel. --NEO
 					if(fuel < 50)
 						user << "\blue You feed some plasma into the armor's generator."
 						power:fuel += 15

@@ -146,10 +146,10 @@
 
 	setPrecision(aprecision)
 		..()
-		if(istype(teleatom, /obj/item/weapon/storage/backpack/holding))
+		if(istype(teleatom, /obj/item/storage/backpack/holding))
 			precision = rand(1,100)
 
-		var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
+		var/list/bagholding = teleatom.search_contents_for(/obj/item/storage/backpack/holding)
 		if(bagholding.len)
 			precision = max(rand(1,100)*bagholding.len,100)
 			if(istype(teleatom, /mob/living))
@@ -158,11 +158,11 @@
 		return 1
 
 	teleportChecks()
-		if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
+		if(istype(teleatom, /obj/item/office/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
 			teleatom.visible_message("\red <B>The [teleatom] bounces off of the portal!</B>")
 			return 0
 
-		if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
+		if(!isemptylist(teleatom.search_contents_for(/obj/item/office/disk/nuclear)))
 			if(istype(teleatom, /mob/living))
 				var/mob/living/MM = teleatom
 				MM.visible_message("\red <B>The [MM] bounces off of the portal!</B>","\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.")
@@ -175,7 +175,7 @@
 				var/obj/mecha/MM = teleatom
 				MM.occupant << "\red <B>The mech would not survive the jump to a location so far away!</B>"
 				return 0
-			if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)))
+			if(!isemptylist(teleatom.search_contents_for(/obj/item/storage/backpack/holding)))
 				teleatom.visible_message("\red <B>The Bag of Holding bounces off of the portal!</B>")
 				return 0
 

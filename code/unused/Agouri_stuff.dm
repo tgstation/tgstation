@@ -192,7 +192,7 @@
 	//var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	var/obj/item/weapon/cell/cell //Our power source
+	var/obj/item/part/cell/cell //Our power source
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -269,7 +269,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank*/
 
-/obj/vehicle/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/vehicle/proc/add_cell(var/obj/item/part/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -411,14 +411,14 @@
 	return 0
 
 
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/pulse))
+/turf/bullet_act(var/obj/item/weapon/projectile/Proj)
+	if(istype(Proj ,/obj/item/weapon/projectile/beam/pulse))
 		src.ex_act(2)
 	..()
 	return 0
 
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/bullet/gyro))
+/turf/bullet_act(var/obj/item/weapon/projectile/Proj)
+	if(istype(Proj ,/obj/item/weapon/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 	..()
 	return 0
@@ -667,11 +667,11 @@
 		if(!devastated)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/plasteel( src )
+			new /obj/item/part/stack/sheet/plasteel( src )
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/plasteel( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
@@ -683,12 +683,12 @@
 		if(!devastated)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
+			new /obj/item/part/stack/sheet/metal( src )
 
 	ReplaceWithPlating(explode)
 
@@ -776,7 +776,7 @@
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if (istype(W, /obj/item/tool/welder) && W:welding)
 		var/turf/T = get_turf(user)
 		if (!( istype(T, /turf) ))
 			return
@@ -812,7 +812,7 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 
-	else if (istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if (istype(W, /obj/item/mining/pickaxe/plasmacutter))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -846,7 +846,7 @@
 						O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced apart."), 2)
 		return
 
-	else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if(istype(W, /obj/item/mining/pickaxe/diamonddrill))
 		var/turf/T = user.loc
 		user << "\blue Now drilling through wall."
 		sleep(60)
@@ -873,11 +873,11 @@
 					O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		return
 
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
+	else if(istype(W,/obj/item/part/frame/apc))
+		var/obj/item/part/frame/apc/AH = W
 		AH.try_build(src)
-	else if(istype(W,/obj/item/weapon/contraband/poster))
-		var/obj/item/weapon/contraband/poster/P = W
+	else if(istype(W,/obj/item/office/contraband/poster))
+		var/obj/item/office/contraband/poster/P = W
 		if(P.resulting_poster)
 			var/check = 0
 			var/stuff_on_wall = 0
@@ -927,7 +927,7 @@
 		return // this may seem stupid and redundant but apparently floors can call this attackby() proc, it was spamming shit up. -- Doohl
 
 
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if (istype(W, /obj/item/tool/welder) && W:welding)
 		W:eyecheck(user)
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -967,11 +967,11 @@
 			sleep(100)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
-				new /obj/item/stack/rods( src )
+				new /obj/item/part/stack/rods( src )
 				user << "\blue You removed the support rods."
 			W:welding = 1
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/mining/pickaxe/plasmacutter))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -1007,14 +1007,14 @@
 			sleep(70)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
-				new /obj/item/stack/rods( src )
+				new /obj/item/part/stack/rods( src )
 				user << "\blue You removed the support rods."
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
 		user << "\blue This wall is too thick to slice through. You will need to find a different path."
 		return
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/tool/wrench))
 		if (src.d_state == 4)
 			var/turf/T = user.loc
 			user << "\blue Detaching support rods."
@@ -1024,13 +1024,13 @@
 				src.d_state = 5
 				user << "\blue You detach the support rods."
 
-	else if (istype(W, /obj/item/weapon/wirecutters))
+	else if (istype(W, /obj/item/part/wirecutters))
 		if (src.d_state == 0)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			src.d_state = 1
-			new /obj/item/stack/rods( src )
+			new /obj/item/part/stack/rods( src )
 
-	else if (istype(W, /obj/item/weapon/screwdriver))
+	else if (istype(W, /obj/item/tool/screwdriver))
 		if (src.d_state == 1)
 			var/turf/T = user.loc
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -1040,7 +1040,7 @@
 				src.d_state = 2
 				user << "\blue You removed the support lines."
 
-	else if (istype(W, /obj/item/weapon/crowbar))
+	else if (istype(W, /obj/item/tool/crowbar))
 
 		if (src.d_state == 3)
 			var/turf/T = user.loc
@@ -1062,7 +1062,7 @@
 					dismantle_wall()
 					return
 
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/mining/pickaxe/diamonddrill))
 		var/turf/T = user.loc
 		user << "\blue You begin to drill though, this will take some time."
 		sleep(200)
@@ -1072,7 +1072,7 @@
 				dismantle_wall()
 				return
 
-	else if ((istype(W, /obj/item/stack/sheet/metal)) && (src.d_state))
+	else if ((istype(W, /obj/item/part/stack/sheet/metal)) && (src.d_state))
 		var/turf/T = user.loc
 		user << "\blue Repairing wall."
 		sleep(100)
@@ -1085,8 +1085,8 @@
 			else
 				del(W)
 
-	else if(istype(W,/obj/item/weapon/contraband/poster))
-		var/obj/item/weapon/contraband/poster/P = W
+	else if(istype(W,/obj/item/office/contraband/poster))
+		var/obj/item/office/contraband/poster/P = W
 		if(P.resulting_poster)
 			var/check = 0
 			var/stuff_on_wall = 0
@@ -1123,8 +1123,8 @@
 				P.resulting_poster.icon_state = temp
 		return
 
-	if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
+	if(istype(W,/obj/item/part/frame/apc))
+		var/obj/item/part/frame/apc/AH = W
 		AH.try_build(src)
 		return
 
@@ -1171,7 +1171,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	heat_capacity = 10000
 	var/broken = 0
 	var/burnt = 0
-	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
+	var/obj/item/part/stack/tile/floor_tile = new/obj/item/part/stack/tile/plasteel
 
 	airless
 		icon_state = "floor"
@@ -1188,7 +1188,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 		name = "Light floor"
 		luminosity = 5
 		icon_state = "light_on"
-		floor_tile = new/obj/item/stack/tile/light
+		floor_tile = new/obj/item/part/stack/tile/light
 
 		New()
 			floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
@@ -1201,7 +1201,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	grass
 		name = "Grass patch"
 		icon_state = "grass1"
-		floor_tile = new/obj/item/stack/tile/grass
+		floor_tile = new/obj/item/part/stack/tile/grass
 
 		New()
 			floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
@@ -1301,7 +1301,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33)) new /obj/item/part/stack/sheet/metal(src)
 				if(2)
 					src.ReplaceWithSpace()
 				if(3)
@@ -1310,7 +1310,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33)) new /obj/item/part/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()
@@ -1328,7 +1328,7 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			icon_state = icon_plating //Because asteroids are 'platings' too.
 	if(is_light_floor())
-		var/obj/item/stack/tile/light/T = floor_tile
+		var/obj/item/part/stack/tile/light/T = floor_tile
 		if(T.on)
 			switch(T.state)
 				if(0)
@@ -1375,7 +1375,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 /turf/simulated/floor/attack_hand(mob/user as mob)
 	if (is_light_floor())
-		var/obj/item/stack/tile/light/T = floor_tile
+		var/obj/item/part/stack/tile/light/T = floor_tile
 		T.on = !T.on
 	update_icon()
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -1399,11 +1399,11 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 	if(!user)
 		return
-	if(istype(C, /obj/item/weapon/wrench))
+	if(istype(C, /obj/item/tool/wrench))
 		user << "\blue Removing rods..."
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
-			new /obj/item/stack/rods(src, 2)
+			new /obj/item/part/stack/rods(src, 2)
 			ReplaceWithFloor()
 			var/turf/simulated/floor/F = src
 			F.make_plating()
@@ -1418,19 +1418,19 @@ turf/simulated/floor/return_siding_icon_state()
 	break_tile()
 
 /turf/simulated/floor/is_plasteel_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/plasteel))
+	if(istype(floor_tile,/obj/item/part/stack/tile/plasteel))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_light_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/light))
+	if(istype(floor_tile,/obj/item/part/stack/tile/light))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_grass_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/grass))
+	if(istype(floor_tile,/obj/item/part/stack/tile/grass))
 		return 1
 	else
 		return 0
@@ -1500,13 +1500,13 @@ turf/simulated/floor/return_siding_icon_state()
 //This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/stack/tile/plasteel/T = null)
+/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/part/stack/tile/plasteel/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	sd_SetLuminosity(0)
 	if(T)
-		if(istype(T,/obj/item/stack/tile/plasteel))
+		if(istype(T,/obj/item/part/stack/tile/plasteel))
 			floor_tile = T
 			if (icon_regular_floor)
 				icon_state = icon_regular_floor
@@ -1517,7 +1517,7 @@ turf/simulated/floor/return_siding_icon_state()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/plasteel
+	floor_tile = new/obj/item/part/stack/tile/plasteel
 	icon_state = "floor"
 	icon_regular_floor = icon_state
 
@@ -1527,36 +1527,36 @@ turf/simulated/floor/return_siding_icon_state()
 //This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
+/turf/simulated/floor/proc/make_light_floor(var/obj/item/part/stack/tile/light/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/light))
+		if(istype(T,/obj/item/part/stack/tile/light))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/light
+	floor_tile = new/obj/item/part/stack/tile/light
 
 	update_icon()
 	levelupdate()
 
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
+/turf/simulated/floor/proc/make_grass_floor(var/obj/item/part/stack/tile/grass/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/grass))
+		if(istype(T,/obj/item/part/stack/tile/grass))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/grass
+	floor_tile = new/obj/item/part/stack/tile/grass
 
 	update_icon()
 	levelupdate()
@@ -1566,9 +1566,9 @@ turf/simulated/floor/return_siding_icon_state()
 	if(!C || !user)
 		return 0
 
-	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
+	if(istype(C,/obj/item/part/light/bulb)) //only for light tiles
 		if(is_light_floor())
-			var/obj/item/stack/tile/light/T = floor_tile
+			var/obj/item/part/stack/tile/light/T = floor_tile
 			if(T.state)
 				user.u_equip(C)
 				del(C)
@@ -1578,7 +1578,7 @@ turf/simulated/floor/return_siding_icon_state()
 			else
 				user << "\blue The lightbulb seems fine, no need to replace it."
 
-	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
+	if(istype(C, /obj/item/tool/crowbar) && (!(is_plating())))
 		if(broken || burnt)
 			user << "\red You remove the broken plating."
 		else
@@ -1590,8 +1590,8 @@ turf/simulated/floor/return_siding_icon_state()
 
 		return
 
-	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
+	if(istype(C, /obj/item/part/stack/rods))
+		var/obj/item/part/stack/rods/R = C
 		if (is_plating())
 			if (R.amount >= 2)
 				user << "\blue Reinforcing the floor..."
@@ -1606,18 +1606,18 @@ turf/simulated/floor/return_siding_icon_state()
 			user << "\red You must remove the plating first."
 		return
 
-	if(istype(C, /obj/item/stack/tile))
+	if(istype(C, /obj/item/part/stack/tile))
 		if(is_plating())
 			if(!broken && !burnt)
-				var/obj/item/stack/tile/T = C
+				var/obj/item/part/stack/tile/T = C
 				floor_tile = new T.type
 				intact = 1
-				if(istype(T,/obj/item/stack/tile/light))
-					var/obj/item/stack/tile/light/L = T
-					var/obj/item/stack/tile/light/F = floor_tile
+				if(istype(T,/obj/item/part/stack/tile/light))
+					var/obj/item/part/stack/tile/light/L = T
+					var/obj/item/part/stack/tile/light/F = floor_tile
 					F.state = L.state
 					F.on = L.on
-				if(istype(T,/obj/item/stack/tile/grass))
+				if(istype(T,/obj/item/part/stack/tile/grass))
 					for(var/direction in cardinal)
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
@@ -1630,24 +1630,24 @@ turf/simulated/floor/return_siding_icon_state()
 				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/part/cable_coil))
 		if(is_plating())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/part/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
 			user << "\red You must remove the plating first."
 
-	if(istype(C, /obj/item/weapon/shovel))
+	if(istype(C, /obj/item/mining/shovel))
 		if(is_grass_floor())
-			new /obj/item/weapon/ore/glass(src)
-			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
+			new /obj/item/mining/ore/glass(src)
+			new /obj/item/mining/ore/glass(src) //Make some sand if you shovel grass
 			user << "\blue You shovel the grass."
 			make_plating()
 		else
 			user << "\red You cannot shovel this."
 
-	if(istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/welder = C
+	if(istype(C, /obj/item/tool/welder))
+		var/obj/item/tool/welder/welder = C
 		if(welder.welding && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
@@ -1703,21 +1703,21 @@ turf/simulated/floor/return_siding_icon_state()
 
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
-	if (istype(C, /obj/item/stack/rods))
+	if (istype(C, /obj/item/part/stack/rods))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			return
-		var/obj/item/stack/rods/R = C
+		var/obj/item/part/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	if (istype(C, /obj/item/part/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
+			var/obj/item/part/stack/tile/plasteel/S = C
 			del(L)
 			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
@@ -1750,10 +1750,10 @@ turf/simulated/floor/return_siding_icon_state()
 					del(A)
 					return
 
-				if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
+				if(istype(A, /obj/item/office/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
 					return
 
-				if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+				if(!isemptylist(A.search_contents_for(/obj/item/office/disk/nuclear)))
 					if(istype(A, /mob/living))
 						var/mob/living/MM = A
 						if(MM.client)

@@ -642,7 +642,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( istype(W, /obj/item/tool/screwdriver) ))
 		return
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
@@ -669,15 +669,15 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 //Giving borgs their own radio to have some more room to work with -Sieve
 
 /obj/item/device/radio/borg
-	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
+	var/obj/item/part/cipher/keyslot = null//Borg radios can handle a single encryption key
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
+	if (!( istype(W, /obj/item/tool/screwdriver) || (istype(W, /obj/item/part/cipher/ ))))
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/tool/screwdriver))
 		if(keyslot)
 
 
@@ -698,7 +698,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		else
 			user << "This radio doesn't have any encryption keys!"
 
-	if(istype(W, /obj/item/device/encryptionkey/))
+	if(istype(W, /obj/item/part/cipher/))
 		if(keyslot)
 			user << "The radio can't hold another key!"
 			return

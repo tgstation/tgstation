@@ -1,4 +1,4 @@
-/obj/item/device/assembly_holder
+/obj/item/part/assembly_holder
 	name = "Assembly"
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
@@ -10,8 +10,8 @@
 	throw_range = 10
 
 	var/secured = 0
-	var/obj/item/device/assembly/a_left = null
-	var/obj/item/device/assembly/a_right = null
+	var/obj/item/part/assembly/a_left = null
+	var/obj/item/part/assembly/a_right = null
 	var/obj/special_assembly = null
 
 	proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
@@ -29,7 +29,7 @@
 		return 1
 
 
-	attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
+	attach(var/obj/item/D, var/obj/item/D2, var/mob/user)
 		if((!D)||(!D2))	return 0
 		if((!isassembly(D))||(!isassembly(D2)))	return 0
 		if((D:secured)||(D2:secured))	return 0

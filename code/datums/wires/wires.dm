@@ -128,7 +128,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 				// Attach
 				else
-					if(istype(I, /obj/item/device/assembly/signaler))
+					if(istype(I, /obj/item/part/assembly/signaler))
 						L.drop_item()
 						Attach(colour, I)
 					else
@@ -225,7 +225,7 @@ var/const/POWER = 8
 		return signallers[colour]
 	return null
 
-/datum/wires/proc/Attach(var/colour, var/obj/item/device/assembly/signaler/S)
+/datum/wires/proc/Attach(var/colour, var/obj/item/part/assembly/signaler/S)
 	if(colour && S)
 		if(!IsAttached(colour))
 			signallers[colour] = S
@@ -235,7 +235,7 @@ var/const/POWER = 8
 
 /datum/wires/proc/Detach(var/colour)
 	if(colour)
-		var/obj/item/device/assembly/signaler/S = GetAttached(colour)
+		var/obj/item/part/assembly/signaler/S = GetAttached(colour)
 		if(S)
 			signallers -= colour
 			S.connected = null
@@ -243,7 +243,7 @@ var/const/POWER = 8
 			return S
 
 
-/datum/wires/proc/Pulse(var/obj/item/device/assembly/signaler/S)
+/datum/wires/proc/Pulse(var/obj/item/part/assembly/signaler/S)
 
 	for(var/colour in signallers)
 		if(S == signallers[colour])

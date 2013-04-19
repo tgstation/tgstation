@@ -137,7 +137,7 @@ datum/mind
 				text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
+				var/obj/item/security/flash/flash = locate() in L
 				if (flash)
 					if(!flash.broken)
 						text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>."
@@ -549,14 +549,14 @@ datum/mind
 
 				if("takeflash")
 					var/list/L = current.get_contents()
-					var/obj/item/device/flash/flash = locate() in L
+					var/obj/item/security/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Deleting flash failed!"
 					del(flash)
 
 				if("repairflash")
 					var/list/L = current.get_contents()
-					var/obj/item/device/flash/flash = locate() in L
+					var/obj/item/security/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Repairing flash failed!"
 					else
@@ -564,7 +564,7 @@ datum/mind
 
 				if("reequip")
 					var/list/L = current.get_contents()
-					var/obj/item/device/flash/flash = locate() in L
+					var/obj/item/security/flash/flash = locate() in L
 					del(flash)
 					take_uplink()
 					var/fail = 0
@@ -600,7 +600,7 @@ datum/mind
 				if("tome")
 					var/mob/living/carbon/human/H = current
 					if (istype(H))
-						var/obj/item/weapon/tome/T = new(H)
+						var/obj/item/magic/tome/T = new(H)
 
 						var/list/slots = list (
 							"backpack" = slot_in_backpack,
@@ -799,8 +799,8 @@ datum/mind
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
+						var/obj/item/medical/dnainjector/m2h/m2h = new
+						var/obj/item/medical/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null
 						m2h.inject(M)
 						src = mobfinder.loc:mind
@@ -917,7 +917,7 @@ datum/mind
 				if (t:traitorradio) del(t:traitorradio)
 				t:traitorradio = null
 				t:traitor_frequency = 0.0
-			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
+			else if (istype(t, /obj/item/device/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
 				if (t:origradio)
 					var/obj/item/device/radio/R = t:origradio
 					R.loc = current.loc
@@ -1019,7 +1019,7 @@ datum/mind
 				current.loc = pick(wizardstart)
 
 			ticker.mode.equip_wizard(current)
-			for(var/obj/item/weapon/spellbook/S in current.contents)
+			for(var/obj/item/magic/spellbook/S in current.contents)
 				S.op = 0
 			ticker.mode.name_wizard(current)
 			ticker.mode.forge_wizard_objectives(src)
@@ -1045,7 +1045,7 @@ datum/mind
 
 		var/mob/living/carbon/human/H = current
 		if (istype(H))
-			var/obj/item/weapon/tome/T = new(H)
+			var/obj/item/magic/tome/T = new(H)
 
 			var/list/slots = list (
 				"backpack" = slot_in_backpack,
@@ -1082,7 +1082,7 @@ datum/mind
 		ticker.mode.greet_revolutionary(src,0)
 
 		var/list/L = current.get_contents()
-		var/obj/item/device/flash/flash = locate() in L
+		var/obj/item/security/flash/flash = locate() in L
 		del(flash)
 		take_uplink()
 		var/fail = 0

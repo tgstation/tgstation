@@ -50,11 +50,11 @@
 					M.equip_to_slot_or_del(new /obj/item/weapon/m_pill/cyanide(M), slot_l_store)
 					M.equip_to_slot_or_del(new /obj/item/weapon/flashbang(M), slot_r_store)
 
-					var/obj/item/weapon/tank/air/O = new(M)
+					var/obj/item/clothing/tank/air/O = new(M)
 					M.equip_to_slot_or_del(O, slot_back)
 					M.internal = O
 
-					var/obj/item/weapon/card/id/W = new(M)
+					var/obj/item/security/card/id/W = new(M)
 					W.access = get_all_accesses()
 					W.name = "[newname]'s ID card (Death Commando)"
 					W.assignment = "Death Commando"

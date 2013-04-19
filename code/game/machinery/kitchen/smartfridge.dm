@@ -19,7 +19,7 @@
 	var/isbroken = 0
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/chem/food/snacks/grown/) || istype(O,/obj/item/botany/seeds/))
 		return 1
 	return 0
 
@@ -32,7 +32,7 @@
 	icon_off = "seeds-off"
 
 /obj/machinery/smartfridge/seeds/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/botany/seeds/))
 		return 1
 	return 0
 
@@ -41,7 +41,7 @@
 	desc = "A refrigerated storage unit for slime extracts"
 
 /obj/machinery/smartfridge/extract/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/slime_extract))
+	if(istype(O,/obj/item/slime/extract))
 		return 1
 	return 0
 
@@ -83,8 +83,8 @@
 			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/storage/bag/plants/P = O
+	else if(istype(O, /obj/item/storage/bag/plants))
+		var/obj/item/storage/bag/plants/P = O
 		var/plants_loaded = 0
 		for(var/obj/G in P.contents)
 			if(accept_check(G))

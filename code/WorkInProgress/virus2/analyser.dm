@@ -51,7 +51,7 @@
 			for(var/V in ANTIGENS) if(text2num(V) & dish.virus2.antigen) code += ANTIGENS[V]
 			r += "<BR>Antigen pattern: [code]"
 
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src.loc)
+			var/obj/item/office/paper/P = new /obj/item/office/paper(src.loc)
 			P.info = r
 			dish.info = r
 			dish.analysed = 1

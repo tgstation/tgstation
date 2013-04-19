@@ -9,7 +9,7 @@
 /datum/surgery_step/extract_appendix
 	accept_hand = 1
 	time = 64
-	var/obj/item/organ/appendix/A = null
+	var/obj/item/medical/organ/appendix/A = null
 
 /datum/surgery_step/extract_appendix/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	A = locate() in target.internal_organs

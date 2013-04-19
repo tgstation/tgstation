@@ -66,7 +66,7 @@ for reference:
 	var/maxhealth = 100.0
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/stack/sheet/wood))
+		if (istype(W, /obj/item/part/stack/sheet/wood))
 			if (src.health < src.maxhealth)
 				visible_message("\red [user] begins to repair the [src]!")
 				if(do_after(user,20))
@@ -86,9 +86,9 @@ for reference:
 				else
 			if (src.health <= 0)
 				visible_message("\red <B>The barricade is smashed apart!</B>")
-				new /obj/item/stack/sheet/wood(get_turf(src))
-				new /obj/item/stack/sheet/wood(get_turf(src))
-				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/part/stack/sheet/wood(get_turf(src))
+				new /obj/item/part/stack/sheet/wood(get_turf(src))
+				new /obj/item/part/stack/sheet/wood(get_turf(src))
 				del(src)
 			..()
 
@@ -102,17 +102,17 @@ for reference:
 				src.health -= 25
 				if (src.health <= 0)
 					visible_message("\red <B>The barricade is blown apart!</B>")
-					new /obj/item/stack/sheet/wood(get_turf(src))
-					new /obj/item/stack/sheet/wood(get_turf(src))
-					new /obj/item/stack/sheet/wood(get_turf(src))
+					new /obj/item/part/stack/sheet/wood(get_turf(src))
+					new /obj/item/part/stack/sheet/wood(get_turf(src))
+					new /obj/item/part/stack/sheet/wood(get_turf(src))
 					del(src)
 				return
 
 	meteorhit()
 		visible_message("\red <B>The barricade is smashed apart!</B>")
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		new /obj/item/stack/sheet/wood(get_turf(src))
+		new /obj/item/part/stack/sheet/wood(get_turf(src))
+		new /obj/item/part/stack/sheet/wood(get_turf(src))
+		new /obj/item/part/stack/sheet/wood(get_turf(src))
 		del(src)
 		return
 
@@ -158,7 +158,7 @@ for reference:
 		src.icon_state = "barrier[src.locked]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/card/id/))
+		if (istype(W, /obj/item/security/card/id/))
 			if (src.allowed(user))
 				if	(src.emagged < 2.0)
 					src.locked = !src.locked
@@ -177,7 +177,7 @@ for reference:
 					visible_message("\red BZZzZZzZZzZT")
 					return
 			return
-		else if (istype(W, /obj/item/weapon/card/emag))
+		else if (istype(W, /obj/item/security/card/emag))
 			if (src.emagged == 0)
 				src.emagged = 1
 				src.req_access = null
@@ -195,7 +195,7 @@ for reference:
 				s.start()
 				visible_message("\red BZZzZZzZZzZT")
 				return
-		else if (istype(W, /obj/item/weapon/wrench))
+		else if (istype(W, /obj/item/tool/wrench))
 			if (src.health < src.maxhealth)
 				src.health = src.maxhealth
 				src.emagged = 0
@@ -260,8 +260,8 @@ for reference:
 		visible_message("\red <B>[src] blows apart!</B>")
 		var/turf/Tsec = get_turf(src)
 
-	/*	var/obj/item/stack/rods/ =*/
-		new /obj/item/stack/rods(Tsec)
+	/*	var/obj/item/part/stack/rods/ =*/
+		new /obj/item/part/stack/rods(Tsec)
 
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)

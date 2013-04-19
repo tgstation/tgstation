@@ -35,8 +35,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "R&D Console"
 	icon_state = "rdcomp"
 	var/datum/research/files							//Stores all the collected research data.
-	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/obj/item/office/disk/tech_disk/t_disk = null	//Stores the technology disk.
+	var/obj/item/office/disk/design_disk/d_disk = null	//Stores the design disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
@@ -142,14 +142,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 	//The construction/deconstruction of the console code.
-	if(istype(D, /obj/item/weapon/screwdriver))
+	if(istype(D, /obj/item/tool/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
+				new /obj/item/trash/shard( src.loc )
+				var/obj/item/part/circuitboard/rdconsole/M = new /obj/item/part/circuitboard/rdconsole( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -160,7 +160,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
+				var/obj/item/part/circuitboard/rdconsole/M = new /obj/item/part/circuitboard/rdconsole( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -169,20 +169,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				A.anchored = 1
 				del(src)
 	//Loading a disk into it.
-	else if(istype(D, /obj/item/weapon/disk))
+	else if(istype(D, /obj/item/office/disk))
 		if(t_disk || d_disk)
 			user << "A disk is already loaded into the machine."
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
+		if(istype(D, /obj/item/office/disk/tech_disk)) t_disk = D
+		else if (istype(D, /obj/item/office/disk/design_disk)) d_disk = D
 		else
 			user << "\red Machine cannot accept disks in that format."
 			return
 		user.drop_item()
 		D.loc = src
 		user << "\blue You add the disk to the machine!"
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+	else if(istype(D, /obj/item/security/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You you disable the security protocols"
@@ -292,8 +292,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
 								M.death()
-							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
-								var/obj/item/stack/sheet/S = I
+							if(istype(I,/obj/item/part/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+								var/obj/item/part/stack/sheet/S = I
 								if(S.amount > 1)
 									S.amount--
 									linked_destroy.loaded_item = S
@@ -390,12 +390,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 						if(being_built.build_path)
 							var/obj/new_item = new being_built.build_path(src)
-							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+							if( new_item.type == /obj/item/storage/backpack/holding )
 								new_item.investigate_log("built by [key]","singulo")
 							new_item.reliability = being_built.reliability
 							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
 							if(being_built.locked)
-								var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
+								var/obj/item/storage/lockbox/L = new/obj/item/storage/lockbox(linked_lathe.loc)
 								new_item.loc = L
 								L.name += " ([new_item.name])"
 							else
@@ -456,31 +456,31 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/res_amount, type
 		switch(href_list["lathe_ejectsheet"])
 			if("metal")
-				type = /obj/item/stack/sheet/metal
+				type = /obj/item/part/stack/sheet/metal
 				res_amount = "m_amount"
 			if("glass")
-				type = /obj/item/stack/sheet/glass
+				type = /obj/item/part/stack/sheet/glass
 				res_amount = "g_amount"
 			if("gold")
-				type = /obj/item/stack/sheet/mineral/gold
+				type = /obj/item/part/stack/sheet/mineral/gold
 				res_amount = "gold_amount"
 			if("silver")
-				type = /obj/item/stack/sheet/mineral/silver
+				type = /obj/item/part/stack/sheet/mineral/silver
 				res_amount = "silver_amount"
 			if("plasma")
-				type = /obj/item/stack/sheet/mineral/plasma
+				type = /obj/item/part/stack/sheet/mineral/plasma
 				res_amount = "plasma_amount"
 			if("uranium")
-				type = /obj/item/stack/sheet/mineral/uranium
+				type = /obj/item/part/stack/sheet/mineral/uranium
 				res_amount = "uranium_amount"
 			if("diamond")
-				type = /obj/item/stack/sheet/mineral/diamond
+				type = /obj/item/part/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 			if("clown")
-				type = /obj/item/stack/sheet/mineral/clown
+				type = /obj/item/part/stack/sheet/mineral/clown
 				res_amount = "clown_amount"
 		if(ispath(type) && hasvar(linked_lathe, res_amount))
-			var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
+			var/obj/item/part/stack/sheet/sheet = new type(linked_lathe.loc)
 			var/available_num_sheets = round(linked_lathe.vars[res_amount]/sheet.perunit)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
@@ -492,16 +492,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/res_amount, type
 		switch(href_list["imprinter_ejectsheet"])
 			if("glass")
-				type = /obj/item/stack/sheet/glass
+				type = /obj/item/part/stack/sheet/glass
 				res_amount = "g_amount"
 			if("gold")
-				type = /obj/item/stack/sheet/mineral/gold
+				type = /obj/item/part/stack/sheet/mineral/gold
 				res_amount = "gold_amount"
 			if("diamond")
-				type = /obj/item/stack/sheet/mineral/diamond
+				type = /obj/item/part/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 		if(ispath(type) && hasvar(linked_imprinter, res_amount))
-			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
+			var/obj/item/part/stack/sheet/sheet = new type(linked_imprinter.loc)
 			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/sheet.perunit)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)

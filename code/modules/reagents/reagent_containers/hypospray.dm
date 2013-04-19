@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/hypospray
+/obj/item/chem/hypospray
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon = 'icons/obj/syringe.dmi'
@@ -10,16 +10,16 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	slot_flags = SLOT_BELT
 
-/obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
+/obj/item/chem/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/item/weapon/reagent_containers/hypospray/New()	//comment this to make hypos start off empty
+/obj/item/chem/hypospray/New()	//comment this to make hypos start off empty
 	..()
 	reagents.add_reagent("doctorsdelight", 30)
 
 
-/obj/item/weapon/reagent_containers/hypospray/attack(mob/M, mob/user)
+/obj/item/chem/hypospray/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
 		user << "<span class='notice'>[src] is empty.</span>"
 		return

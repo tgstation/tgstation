@@ -99,5 +99,5 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/syndicate_station/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/syndicate_station/bullet_act(var/obj/item/weapon/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")	//let's not let them fuck themselves in the rear

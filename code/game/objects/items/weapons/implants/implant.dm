@@ -1,4 +1,4 @@
-/obj/item/weapon/implant
+/obj/item/medical/implant
 	name = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
@@ -6,31 +6,31 @@
 	var/allow_reagents = 0
 
 
-/obj/item/weapon/implant/proc/trigger(emote, mob/source)
+/obj/item/medical/implant/proc/trigger(emote, mob/source)
 	return
 
 
-/obj/item/weapon/implant/proc/activate()
+/obj/item/medical/implant/proc/activate()
 	return
 
 
 //What does the implant do upon injection?
 //return 0 if the implant fails (ex. Revhead and loyalty implant.)
 //return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
-/obj/item/weapon/implant/proc/implanted(var/mob/source)
+/obj/item/medical/implant/proc/implanted(var/mob/source)
 	return 1
 
 
-/obj/item/weapon/implant/proc/get_data()
+/obj/item/medical/implant/proc/get_data()
 	return "No information available"
 
 
-/obj/item/weapon/implant/tracking
+/obj/item/medical/implant/tracking
 	name = "tracking"
 	desc = "Track with this."
 	var/id = 1.0
 
-/obj/item/weapon/implant/tracking/get_data()
+/obj/item/medical/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
 				<b>Life:</b> 10 minutes after death of host<BR>
@@ -49,11 +49,11 @@
 
 
 
-/obj/item/weapon/implant/explosive
+/obj/item/medical/implant/explosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
 
-/obj/item/weapon/implant/explosive/get_data()
+/obj/item/medical/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
 				<b>Life:</b> Activates upon death.<BR>
@@ -65,23 +65,23 @@
 				<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-/obj/item/weapon/implant/explosive/trigger(emote, mob/source)
+/obj/item/medical/implant/explosive/trigger(emote, mob/source)
 	if(emote == "deathgasp")
 		activate("death")
 
-/obj/item/weapon/implant/explosive/activate(var/cause)
+/obj/item/medical/implant/explosive/activate(var/cause)
 	if(!cause || !imp_in)	return 0
 	explosion(src, -1, 0, 2, 3, 0)	//This might be a bit much, dono will have to see.
 	if(imp_in)
 		imp_in.gib()
 
 
-/obj/item/weapon/implant/chem
+/obj/item/medical/implant/chem
 	name = "chem"
 	desc = "Injects things."
 	allow_reagents = 1
 
-/obj/item/weapon/implant/chem/get_data()
+/obj/item/medical/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
 				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
@@ -98,17 +98,17 @@
 				the implant may become unstable and either pre-maturely inject the subject or simply break."}
 	return dat
 
-/obj/item/weapon/implant/chem/New()
+/obj/item/medical/implant/chem/New()
 	..()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
 
-/obj/item/weapon/implant/chem/trigger(emote, mob/source)
+/obj/item/medical/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")
 		activate(reagents.total_volume)
 
-/obj/item/weapon/implant/chem/activate(var/cause)
+/obj/item/medical/implant/chem/activate(var/cause)
 	if(!cause || !imp_in)	return 0
 	var/mob/living/carbon/R = imp_in
 	reagents.trans_to(R, cause)
@@ -118,11 +118,11 @@
 		del(src)
 
 
-/obj/item/weapon/implant/loyalty
+/obj/item/medical/implant/loyalty
 	name = "loyalty"
 	desc = "Makes you loyal or such."
 
-/obj/item/weapon/implant/loyalty/get_data()
+/obj/item/medical/implant/loyalty/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
 				<b>Life:</b> Ten years.<BR>
@@ -135,7 +135,7 @@
 	return dat
 
 
-/obj/item/weapon/implant/loyalty/implanted(mob/M)
+/obj/item/medical/implant/loyalty/implanted(mob/M)
 	if(!ishuman(M))	return 0
 	var/mob/living/carbon/human/H = M
 	if(H.mind in ticker.mode.head_revolutionaries)
@@ -147,12 +147,12 @@
 	return 1
 
 
-/obj/item/weapon/implant/adrenalin
+/obj/item/medical/implant/adrenalin
 	name = "adrenalin"
 	desc = "Removes all stuns and knockdowns."
 	var/uses = 3
 
-/obj/item/weapon/implant/adrenalin/get_data()
+/obj/item/medical/implant/adrenalin/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
 				<b>Life:</b> Five days.<BR>
@@ -164,7 +164,7 @@
 				<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
 	return dat
 
-/obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
+/obj/item/medical/implant/adrenalin/trigger(emote, mob/source)
 	if(uses < 1)	return 0
 	if(emote == "pale")
 		uses--
@@ -173,7 +173,7 @@
 		source.SetWeakened(0)
 		source.SetParalysis(0)
 
-/obj/item/weapon/implant/adrenalin/implanted(mob/source)
+/obj/item/medical/implant/adrenalin/implanted(mob/source)
 	source.mind.store_memory("An adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
 	source << "<span class='notice'>The implanted adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.</span>"
 	return 1

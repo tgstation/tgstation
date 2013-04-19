@@ -216,7 +216,7 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
+	if ((!( istype(l_hand, /obj/item/effect/grab) ) && !( istype(r_hand, /obj/item/effect/grab) )))
 		if (!( L ))
 			return null
 		else
@@ -226,14 +226,14 @@ var/list/slot_equipment_priority = list( \
 			L = new /obj/effect/list_container/mobl( null )
 			L.container += src
 			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
+		if (istype(l_hand, /obj/item/effect/grab))
+			var/obj/item/effect/grab/G = l_hand
 			if (!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
 				if (G.affecting)
 					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
+		if (istype(r_hand, /obj/item/effect/grab))
+			var/obj/item/effect/grab/G = r_hand
 			if (!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
 				if (G.affecting)
@@ -401,7 +401,7 @@ var/list/slot_equipment_priority = list( \
 	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
 		if(!O.loc)
 			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
+		if(istype(O, /obj/item/office/disk/nuclear))
 			var/name = "Nuclear Disk"
 			if (names.Find(name))
 				namecounts[name]++

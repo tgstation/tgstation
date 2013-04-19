@@ -12,7 +12,7 @@
 	//pixel_y = -64
 
 /obj/effect/new_year_tree/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/grab))
+	if (istype(W, /obj/item/effect/grab))
 		return
 	W.loc = src
 	if (user.client)
@@ -129,9 +129,9 @@
 	contains = list("/obj/item/weapon/firbang",
 					"/obj/item/weapon/firbang",
 					"/obj/item/weapon/firbang",
-					"/obj/item/weapon/wrapping_paper",
-					"/obj/item/weapon/wrapping_paper",
-					"/obj/item/weapon/wrapping_paper")
+					"/obj/item/service/gift_wrap",
+					"/obj/item/service/gift_wrap",
+					"/obj/item/service/gift_wrap")
 	cost = 20
 	containertype = "/obj/structure/closet/crate"
 	containername = "New Year Celebration crate"

@@ -16,7 +16,7 @@
 
 	alien_talk_understand = 1
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
+	var/obj/item/security/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 
 	var/move_delay_add = 0 // movement delay to add
@@ -33,7 +33,7 @@
 
 
 /mob/living/carbon/alien/New()
-	internal_organs += new /obj/item/organ/brain/alien
+	internal_organs += new /obj/item/medical/organ/brain/alien
 
 	..()
 
@@ -184,7 +184,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/alien_embryo/A = locate() in C
+				var/obj/item/medical/alien/embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return

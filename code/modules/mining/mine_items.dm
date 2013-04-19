@@ -23,18 +23,18 @@
 	..()
 	sleep(2)
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/industrial(src)
+		new /obj/item/storage/backpack/industrial(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+		new /obj/item/storage/backpack/satchel_eng(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/device/analyzer(src)
-	new /obj/item/weapon/storage/bag/ore(src)
-	new /obj/item/device/flashlight/lantern(src)
-	new /obj/item/weapon/shovel(src)
-	new /obj/item/weapon/pickaxe(src)
+	new /obj/item/device/scanner/atmospheric(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/tool/flashlight/lantern(src)
+	new /obj/item/mining/shovel(src)
+	new /obj/item/mining/pickaxe(src)
 	new /obj/item/clothing/glasses/meson(src)
 
 
@@ -111,7 +111,7 @@ proc/move_mining_shuttle()
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
+	circuit = "/obj/item/part/circuitboard/mining_shuttle"
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
 
@@ -146,16 +146,16 @@ proc/move_mining_shuttle()
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/card/emag))
+	if (istype(W, /obj/item/security/card/emag))
 		src.req_access = list()
 		hacked = 1
 		usr << "You fried the consoles ID checking system. It's now available to everyone!"
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/tool/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/mining_shuttle/M = new /obj/item/weapon/circuitboard/mining_shuttle( A )
+			var/obj/item/part/circuitboard/mining_shuttle/M = new /obj/item/part/circuitboard/mining_shuttle( A )
 			for (var/obj/C in src)
 				C.loc = src.loc
 			A.circuit = M
@@ -163,7 +163,7 @@ proc/move_mining_shuttle()
 
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/trash/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
@@ -175,7 +175,7 @@ proc/move_mining_shuttle()
 
 /******************************Lantern*******************************/
 
-/obj/item/device/flashlight/lantern
+/obj/item/tool/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
 	desc = "A mining lantern."
@@ -183,7 +183,7 @@ proc/move_mining_shuttle()
 
 /*****************************Pickaxe********************************/
 
-/obj/item/weapon/pickaxe
+/obj/item/mining/pickaxe
 	name = "pickaxe"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "pickaxe"
@@ -270,7 +270,7 @@ proc/move_mining_shuttle()
 
 /*****************************Shovel********************************/
 
-/obj/item/weapon/shovel
+/obj/item/mining/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/items.dmi'
@@ -285,7 +285,7 @@ proc/move_mining_shuttle()
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 
-/obj/item/weapon/shovel/spade
+/obj/item/mining/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"

@@ -7,34 +7,34 @@
 /*
  * Stacks
  */
-/obj/item/stack
+/obj/item/part/stack
 	origin_tech = "materials=1"
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 
-/obj/item/stack/New(var/loc, var/amount=null)
+/obj/item/part/stack/New(var/loc, var/amount=null)
 	..()
 	if (amount)
 		src.amount=amount
 	return
 
-/obj/item/stack/Del()
+/obj/item/part/stack/Del()
 	if (src && usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	..()
 
-/obj/item/stack/examine()
+/obj/item/part/stack/examine()
 	set src in view(1)
 	..()
 	usr << "There are [src.amount] [src.singular_name]\s in the stack."
 	return
 
-/obj/item/stack/attack_self(mob/user as mob)
+/obj/item/part/stack/attack_self(mob/user as mob)
 	interact(user)
 
-/obj/item/stack/interact(mob/user as mob)
+/obj/item/part/stack/interact(mob/user as mob)
 	if (!recipes)
 		return
 	if (!src || amount<=0)
@@ -83,7 +83,7 @@
 	onclose(user, "stack")
 	return
 
-/obj/item/stack/Topic(href, href_list)
+/obj/item/part/stack/Topic(href, href_list)
 	..()
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
@@ -114,7 +114,7 @@
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
 		if (R.max_res_amount>1)
-			var/obj/item/stack/new_item = O
+			var/obj/item/part/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
 			//new_item.add_to_stacks(usr)
 		src.amount-=R.req_amount*multiplier
@@ -127,7 +127,7 @@
 				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
+		if ( istype(O, /obj/item/storage) )
 			for (var/obj/item/I in O)
 				del(I)
 		//BubbleWrap END
@@ -137,7 +137,7 @@
 			return
 	return
 
-/obj/item/stack/proc/use(var/amount)
+/obj/item/part/stack/proc/use(var/amount)
 	src.amount-=amount
 	if (src.amount<=0)
 		var/oldsrc = src
@@ -147,10 +147,10 @@
 		del(oldsrc)
 	return
 
-/obj/item/stack/proc/add_to_stacks(mob/usr as mob)
-	var/obj/item/stack/oldsrc = src
+/obj/item/part/stack/proc/add_to_stacks(mob/usr as mob)
+	var/obj/item/part/stack/oldsrc = src
 	src = null
-	for (var/obj/item/stack/item in usr.loc)
+	for (var/obj/item/part/stack/item in usr.loc)
 		if (item==oldsrc)
 			continue
 		if (!istype(item, oldsrc.type))
@@ -162,9 +162,9 @@
 		if(!oldsrc)
 			break
 
-/obj/item/stack/attack_hand(mob/user as mob)
+/obj/item/part/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
-		var/obj/item/stack/F = new src.type( user, amount=1)
+		var/obj/item/part/stack/F = new src.type( user, amount=1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)
@@ -176,10 +176,10 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/part/stack/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if (istype(W, src.type))
-		var/obj/item/stack/S = W
+		var/obj/item/part/stack/S = W
 		if (S.amount >= max_amount)
 			return 1
 		var/to_transfer as num
@@ -195,7 +195,7 @@
 			spawn(0) src.interact(usr)
 	else return ..()
 
-/obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
+/obj/item/part/stack/proc/copy_evidences(obj/item/part/stack/from as obj)
 	src.blood_DNA = from.blood_DNA
 	src.fingerprints  = from.fingerprints
 	src.fingerprintshidden  = from.fingerprintshidden

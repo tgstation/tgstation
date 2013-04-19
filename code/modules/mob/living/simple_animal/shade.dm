@@ -31,7 +31,7 @@
 	Life()
 		..()
 		if(stat == 2)
-			new /obj/item/weapon/ectoplasm (src.loc)
+			new /obj/item/trash/ectoplasm (src.loc)
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
 					M.show_message("\red [src] lets out a contented sigh as their form unwinds. ")
@@ -41,7 +41,7 @@
 
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
-		if(istype(O, /obj/item/device/soulstone))
+		if(istype(O, /obj/item/magic/soulstone))
 			O.transfer_soul("SHADE", src, user)
 		else
 			if(O.force)

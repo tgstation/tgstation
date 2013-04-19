@@ -22,7 +22,7 @@
 			hasaxe = 1
 
 		if (isrobot(usr) || src.locked)
-			if(istype(O, /obj/item/device/multitool))
+			if(istype(O, /obj/item/tool/multitool))
 				user << "\red Resetting circuitry..."
 				playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 				sleep(50) // Sleeping time~
@@ -75,7 +75,7 @@
 		else
 			if(src.smashed)
 				return
-			if(istype(O, /obj/item/device/multitool))
+			if(istype(O, /obj/item/tool/multitool))
 				if(localopened)
 					localopened = 0
 					icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)

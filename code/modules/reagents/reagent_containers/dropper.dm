@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/dropper
+/obj/item/chem/dropper
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/chemical.dmi'
@@ -16,7 +16,7 @@
 				user << "<span class='notice'>[target] is full.</span>"
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
+			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/chem/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
 				user << "<span class='notice'>You cannot directly fill [target].</span>"
 				return
 

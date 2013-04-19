@@ -24,8 +24,8 @@
 
 /obj/screen/close/Click()
 	if(master)
-		if(istype(master, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = master
+		if(istype(master, /obj/item/storage))
+			var/obj/item/storage/S = master
 			S.close(usr)
 
 
@@ -53,7 +53,7 @@
 	name = "grab"
 
 /obj/screen/grab/Click()
-	var/obj/item/weapon/grab/G = master
+	var/obj/item/effect/grab/G = master
 	G.s_click(src)
 
 /obj/screen/grab/attack_hand()
@@ -300,29 +300,29 @@
 							C << "<span class='notice'>You are not wearing a mask.</span>"
 							return
 						else
-							if(istype(C.l_hand, /obj/item/weapon/tank))
+							if(istype(C.l_hand, /obj/item/clothing/tank))
 								C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
 								C.internal = C.l_hand
-							else if(istype(C.r_hand, /obj/item/weapon/tank))
+							else if(istype(C.r_hand, /obj/item/clothing/tank))
 								C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
 								C.internal = C.r_hand
 							else if(ishuman(C))
 								var/mob/living/carbon/human/H = C
-								if(istype(H.s_store, /obj/item/weapon/tank))
+								if(istype(H.s_store, /obj/item/clothing/tank))
 									H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
 									H.internal = H.s_store
-								else if(istype(H.belt, /obj/item/weapon/tank))
+								else if(istype(H.belt, /obj/item/clothing/tank))
 									H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
 									H.internal = H.belt
-								else if(istype(H.l_store, /obj/item/weapon/tank))
+								else if(istype(H.l_store, /obj/item/clothing/tank))
 									H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
 									H.internal = H.l_store
-								else if(istype(H.r_store, /obj/item/weapon/tank))
+								else if(istype(H.r_store, /obj/item/clothing/tank))
 									H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
 									H.internal = H.r_store
 
 							//Seperate so CO2 jetpacks are a little less cumbersome.
-							if(!C.internal && istype(C.back, /obj/item/weapon/tank))
+							if(!C.internal && istype(C.back, /obj/item/clothing/tank))
 								C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
 								C.internal = C.back
 
@@ -467,7 +467,7 @@
 		for(var/obj/O in L.requests)
 			del(O)
 			resisting++
-		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
+		for(var/obj/item/effect/grab/G in usr.grabbed_by)
 			resisting++
 			if(G.state == GRAB_PASSIVE)
 				del(G)
@@ -587,8 +587,8 @@
 						CM.handcuffed = null
 						CM.update_inv_handcuffed(0)
 			else
-				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
-				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/obj/item/security/handcuffs/HC = CM.handcuffed
+				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/security/handcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
@@ -621,8 +621,8 @@
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
 			else
-				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
-				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/obj/item/security/legcuffs/HC = CM.legcuffed
+				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/security/legcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime

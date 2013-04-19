@@ -1,4 +1,4 @@
-/obj/item/assembly/shock_kit
+/obj/item/part/shock_kit
 	name = "electrohelmet assembly"
 	desc = "This appears to be made from both an electropack and a helmet."
 	icon_state = "shock_kit"
@@ -8,14 +8,14 @@
 	w_class = 5.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/assembly/shock_kit/Del()
+/obj/item/part/shock_kit/Del()
 	del(part1)
 	del(part2)
 	..()
 	return
 
-/obj/item/assembly/shock_kit/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench) && !status)
+/obj/item/part/shock_kit/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/tool/wrench) && !status)
 		var/turf/T = loc
 		if(ismob(T))
 			T = T.loc
@@ -27,19 +27,19 @@
 		part2 = null
 		del(src)
 		return
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/tool/screwdriver))
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "secured" : "unsecured"]!</span>"
 	add_fingerprint(user)
 	return
 
-/obj/item/assembly/shock_kit/attack_self(mob/user as mob)
+/obj/item/part/shock_kit/attack_self(mob/user as mob)
 	part1.attack_self(user, status)
 	part2.attack_self(user, status)
 	add_fingerprint(user)
 	return
 
-/obj/item/assembly/shock_kit/receive_signal()
+/obj/item/part/shock_kit/receive_signal()
 	if(istype(loc, /obj/structure/stool/bed/chair/e_chair))
 		var/obj/structure/stool/bed/chair/e_chair/C = loc
 		C.shock()

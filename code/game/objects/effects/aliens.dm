@@ -59,7 +59,7 @@
 		del(src)
 	return
 
-/obj/effect/alien/resin/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/alien/resin/bullet_act(var/obj/item/weapon/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -132,8 +132,8 @@
 	return
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	/*if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
+	/*if (istype(W, /obj/item/effect/grab) && get_dist(src,user)<2)
+		var/obj/item/effect/grab/G = W
 		if(isalien(user)&&(ishuman(G.affecting)||ismonkey(G.affecting)))
 		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
 			if(!affecting)
@@ -265,8 +265,8 @@ Alien plants should do something if theres a lot of poison
 
 	var/damage = W.force / 4.0
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 
 		if(WT.remove_fuel(0, user))
 			damage = 15
@@ -430,7 +430,7 @@ Alien plants should do something if theres a lot of poison
 								break
 
 
-/obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/alien/egg/bullet_act(var/obj/item/weapon/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -445,8 +445,8 @@ Alien plants should do something if theres a lot of poison
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = W.force / 4.0
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 
 		if(WT.remove_fuel(0, user))
 			damage = 15

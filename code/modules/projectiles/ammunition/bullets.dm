@@ -1,65 +1,65 @@
-/obj/item/ammo_casing/a357
+/obj/item/weapon/ammo/casing/a357
 	desc = "A .357 bullet casing."
 	caliber = "357"
-	projectile_type = "/obj/item/projectile/bullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet"
 
-/obj/item/ammo_casing/a50
+/obj/item/weapon/ammo/casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
-	projectile_type = "/obj/item/projectile/bullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet"
 
-/obj/item/ammo_casing/a418
+/obj/item/weapon/ammo/casing/a418
 	desc = "A .418 bullet casing."
 	caliber = "357"
-	projectile_type = "/obj/item/projectile/bullet/suffocationbullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet/suffocationbullet"
 
 
-/obj/item/ammo_casing/a75
+/obj/item/weapon/ammo/casing/a75
 	desc = "A .75 bullet casing."
 	caliber = "75"
-	projectile_type = "/obj/item/projectile/bullet/gyro"
+	projectile_type = "/obj/item/weapon/projectile/bullet/gyro"
 
 
-/obj/item/ammo_casing/a666
+/obj/item/weapon/ammo/casing/a666
 	desc = "A .666 bullet casing."
 	caliber = "357"
-	projectile_type = "/obj/item/projectile/bullet/cyanideround"
+	projectile_type = "/obj/item/weapon/projectile/bullet/cyanideround"
 
 
-/obj/item/ammo_casing/c38
+/obj/item/weapon/ammo/casing/c38
 	desc = "A .38 bullet casing."
 	caliber = "38"
-	projectile_type = "/obj/item/projectile/bullet/weakbullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet/weakbullet"
 
 
-/obj/item/ammo_casing/c9mm
+/obj/item/weapon/ammo/casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
-	projectile_type = "/obj/item/projectile/bullet/midbullet2"
+	projectile_type = "/obj/item/weapon/projectile/bullet/midbullet2"
 
 
-/obj/item/ammo_casing/c45
+/obj/item/weapon/ammo/casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = "/obj/item/projectile/bullet/midbullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet/midbullet"
 
 
-/obj/item/ammo_casing/a12mm
+/obj/item/weapon/ammo/casing/a12mm
 	desc = "A 12mm bullet casing."
 	caliber = "12mm"
-	projectile_type = "/obj/item/projectile/bullet/midbullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet/midbullet"
 
 
-/obj/item/ammo_casing/shotgun
+/obj/item/weapon/ammo/casing/shotgun
 	name = "shotgun shell"
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
 	caliber = "shotgun"
-	projectile_type = "/obj/item/projectile/bullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet"
 	m_amt = 12500
 
 
-/obj/item/ammo_casing/shotgun/blank
+/obj/item/weapon/ammo/casing/shotgun/blank
 	name = "shotgun shell"
 	desc = "A blank shell."
 	icon_state = "blshell"
@@ -67,30 +67,30 @@
 	m_amt = 250
 
 
-/obj/item/ammo_casing/shotgun/beanbag
+/obj/item/weapon/ammo/casing/shotgun/beanbag
 	name = "beanbag shell"
 	desc = "A weak beanbag shell."
 	icon_state = "bshell"
-	projectile_type = "/obj/item/projectile/bullet/weakbullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet/weakbullet"
 	m_amt = 500
 
 
-/obj/item/ammo_casing/shotgun/stunshell
+/obj/item/weapon/ammo/casing/shotgun/stunshell
 	name = "stun shell"
 	desc = "A stunning shell."
 	icon_state = "stunshell"
-	projectile_type = "/obj/item/projectile/bullet/stunshot"
+	projectile_type = "/obj/item/weapon/projectile/bullet/stunshot"
 	m_amt = 2500
 
 
-/obj/item/ammo_casing/shotgun/dart
+/obj/item/weapon/ammo/casing/shotgun/dart
 	name = "shotgun darts"
 	desc = "A dart for use in shotguns."
 	icon_state = "blshell" //someone, draw the icon, please.
-	projectile_type = "/obj/item/projectile/energy/dart"
+	projectile_type = "/obj/item/weapon/projectile/energy/dart"
 	m_amt = 12500
 
-/obj/item/ammo_casing/a762
+/obj/item/weapon/ammo/casing/a762
 	desc = "A 7.62 bullet casing."
 	caliber = "a762"
-	projectile_type = "/obj/item/projectile/bullet"
+	projectile_type = "/obj/item/weapon/projectile/bullet"

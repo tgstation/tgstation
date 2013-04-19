@@ -90,11 +90,11 @@
 						// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 						for(var/obj/O in um)
 							// Engineering
-							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/weapon/cable_coil))
+							if(istype(O,/obj/item/part/stack/sheet/metal) || istype(O,/obj/item/part/stack/sheet/rglass) || istype(O,/obj/item/part/cable_coil))
 								if(O:amount < 50)
 									O:amount += 1
 							// Security
-							if(istype(O,/obj/item/device/flash))
+							if(istype(O,/obj/item/security/flash))
 								if(O:broken)
 									O:broken = 0
 									O:times_used = 0
@@ -109,17 +109,17 @@
 								if(O:charges < 10)
 									O:charges += 1
 							//Service
-							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
+							if(istype(O,/obj/item/chem/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
 									O.reagents.add_reagent("enzyme", 2)
 							//Medical
-							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
-								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
+							if(istype(O,/obj/item/chem/glass/bottle/robot))
+								var/obj/item/chem/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
 							//Janitor
-							if(istype(O, /obj/item/device/lightreplacer))
-								var/obj/item/device/lightreplacer/LR = O
+							if(istype(O, /obj/item/service/lightreplacer))
+								var/obj/item/service/lightreplacer/LR = O
 								LR.Charge(R)
 
 						if(R)
@@ -128,8 +128,8 @@
 
 						//Emagged items for janitor and medical borg
 						if(R.module.emag)
-							if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
-								var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
+							if(istype(R.module.emag, /obj/item/chem/spray))
+								var/obj/item/chem/spray/S = R.module.emag
 								if(S.name == "Polyacid spray")
 									S.reagents.add_reagent("pacid", 2)
 								else if(S.name == "Lube spray")

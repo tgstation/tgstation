@@ -10,7 +10,7 @@
 /*
  * Oxygen
  */
-/obj/item/weapon/tank/oxygen
+/obj/item/clothing/tank/oxygen
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
@@ -31,11 +31,11 @@
 			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 
 
-/obj/item/weapon/tank/oxygen/yellow
+/obj/item/clothing/tank/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
 
-/obj/item/weapon/tank/oxygen/red
+/obj/item/clothing/tank/oxygen/red
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
 
@@ -43,13 +43,13 @@
 /*
  * Anesthetic
  */
-/obj/item/weapon/tank/anesthetic
+/obj/item/clothing/tank/anesthetic
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
-/obj/item/weapon/tank/anesthetic/New()
+/obj/item/clothing/tank/anesthetic/New()
 	..()
 
 	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
@@ -63,7 +63,7 @@
 /*
  * Air
  */
-/obj/item/weapon/tank/air
+/obj/item/clothing/tank/air
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
@@ -76,7 +76,7 @@
 			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
 			usr << sound('sound/effects/alert.ogg')
 
-/obj/item/weapon/tank/air/New()
+/obj/item/clothing/tank/air/New()
 	..()
 
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
@@ -87,7 +87,7 @@
 /*
  * Plasma
  */
-/obj/item/weapon/tank/plasma
+/obj/item/clothing/tank/plasma
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
@@ -95,13 +95,13 @@
 	slot_flags = null	//they have no straps!
 
 
-/obj/item/weapon/tank/plasma/New()
+/obj/item/clothing/tank/plasma/New()
 	..()
 
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-/obj/item/weapon/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
 	if (istype(W, /obj/item/weapon/flamethrower))
@@ -116,7 +116,7 @@
 /*
  * Emergency Oxygen
  */
-/obj/item/weapon/tank/emergency_oxygen
+/obj/item/clothing/tank/emergency_oxygen
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
@@ -141,12 +141,12 @@
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
 			usr << sound('sound/effects/alert.ogg')
 
-/obj/item/weapon/tank/emergency_oxygen/engi
+/obj/item/clothing/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 6
 
-/obj/item/weapon/tank/emergency_oxygen/double
+/obj/item/clothing/tank/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 10

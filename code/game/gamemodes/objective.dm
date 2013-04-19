@@ -267,35 +267,35 @@ datum/objective/steal
 
 	var/global/possible_items[] = list(
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
-		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"an RCD" = /obj/item/weapon/rcd,
-		"a jetpack" = /obj/item/weapon/tank/jetpack,
+		"a hand teleporter" = /obj/item/device/teleporter,
+		"an RCD" = /obj/item/tool/rcd,
+		"a jetpack" = /obj/item/clothing/tank/jetpack,
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
-		"the station blueprints" = /obj/item/blueprints,
-		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
-		"an unused sample of slime extract" = /obj/item/slime_extract,
-		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"the station blueprints" = /obj/item/office/blueprints,
+		"28 moles of plasma (full tank)" = /obj/item/clothing/tank,
+		"an unused sample of slime extract" = /obj/item/slime/extract,
+		"a piece of corgi meat" = /obj/item/chem/food/snacks/meat/corgi,
 		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
 		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
 		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
 		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
 		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
+		"the hypospray" = /obj/item/chem/hypospray,
+		"the captain's pinpointer" = /obj/item/device/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
 
 	var/global/possible_items_special[] = list(
-	//	"nuclear authentication disk" = /obj/item/weapon/disk/nuclear, //Broken with the change to nuke disk making it respawn on z level change.
+	//	"nuclear authentication disk" = /obj/item/office/disk/nuclear, //Broken with the change to nuke disk making it respawn on z level change.
 		"advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
-		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
-		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
-		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
-		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
-		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
-		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
+		"diamond drill" = /obj/item/mining/pickaxe/diamonddrill,
+		"bag of holding" = /obj/item/storage/backpack/holding,
+		"hyper-capacity cell" = /obj/item/part/cell/hyper,
+		"10 diamonds" = /obj/item/part/stack/sheet/mineral/diamond,
+		"50 gold bars" = /obj/item/part/stack/sheet/mineral/gold,
+		"25 refined uranium bars" = /obj/item/part/stack/sheet/mineral/uranium,
 	)
 
 
@@ -353,15 +353,15 @@ datum/objective/steal
 
 			if("the station blueprints")
 				for(var/obj/item/I in all_items)	//the actual blueprints are good too!
-					if(istype(I, /obj/item/blueprints))
+					if(istype(I, /obj/item/office/blueprints))
 						return 1
-					if(istype(I, /obj/item/weapon/photo))
-						var/obj/item/weapon/photo/P = I
+					if(istype(I, /obj/item/office/photo))
+						var/obj/item/office/photo/P = I
 						if(P.blueprints)	//if the blueprints are in frame
 							return 1
 
 			if("an unused sample of slime extract")
-				for(var/obj/item/slime_extract/E in all_items)
+				for(var/obj/item/slime/extract/E in all_items)
 					if(E.Uses > 0)
 						return 1
 

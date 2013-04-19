@@ -25,7 +25,7 @@
 		if(!b_stat)
 			user << "<span class='notice'>[src] is not ready to be attached!</span>"
 			return
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		var/obj/item/part/shock_kit/A = new /obj/item/part/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		user.drop_from_inventory(W)

@@ -471,7 +471,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		command_alert(input);
 		for (var/obj/machinery/computer/communications/C in machines)
 			if(! (C.stat & (BROKEN|NOPOWER) ) )
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+				var/obj/item/office/paper/P = new /obj/item/office/paper( C.loc )
 				P.name = "paper- '[command_name()] Update.'"
 				P.info = input
 				C.messagetitle.Add("[command_name()] Update")
@@ -480,7 +480,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		command_alert("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message");
 		for (var/obj/machinery/computer/communications/C in machines)
 			if(! (C.stat & (BROKEN|NOPOWER) ) )
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+				var/obj/item/office/paper/P = new /obj/item/office/paper( C.loc )
 				P.name = "paper- 'Classified [command_name()] Update.'"
 				P.info = input
 				C.messagetitle.Add("Classified [command_name()] Update")

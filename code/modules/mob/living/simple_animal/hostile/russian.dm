@@ -20,7 +20,7 @@
 	attacktext = "punches"
 	a_intent = "harm"
 	var/corpse = /obj/effect/landmark/mobcorpse/russian
-	var/weapon1 = /obj/item/weapon/kitchenknife
+	var/weapon1 = /obj/item/kitchen/knife
 	min_oxy = 5
 	max_oxy = 0
 	min_tox = 0
@@ -40,9 +40,9 @@
 	corpse = /obj/effect/landmark/mobcorpse/russian/ranged
 	weapon1 = /obj/item/weapon/gun/projectile/mateba
 	ranged = 1
-	projectiletype = /obj/item/projectile/bullet
+	projectiletype = /obj/item/weapon/projectile/bullet
 	projectilesound = 'sound/weapons/Gunshot.ogg'
-	casingtype = /obj/item/ammo_casing/a357
+	casingtype = /obj/item/weapon/ammo/casing/a357
 
 
 /mob/living/simple_animal/hostile/russian/Die()

@@ -4,7 +4,7 @@ BEDSHEETS
 LINEN BINS
 */
 
-/obj/item/weapon/bedsheet
+/obj/item/service/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
 	icon = 'icons/obj/items.dmi'
@@ -18,11 +18,11 @@ LINEN BINS
 	color = "white"
 
 
-/obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
+/obj/item/service/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
 
-/obj/item/weapon/bedsheet/attack_self(mob/user as mob)
+/obj/item/service/bedsheet/attack_self(mob/user as mob)
 	user.drop_item()
 	if(layer == initial(layer))
 		layer = 5
@@ -32,67 +32,67 @@ LINEN BINS
 	return
 
 
-/obj/item/weapon/bedsheet/blue
+/obj/item/service/bedsheet/blue
 	icon_state = "sheetblue"
 	color = "blue"
 
-/obj/item/weapon/bedsheet/green
+/obj/item/service/bedsheet/green
 	icon_state = "sheetgreen"
 	color = "green"
 
-/obj/item/weapon/bedsheet/orange
+/obj/item/service/bedsheet/orange
 	icon_state = "sheetorange"
 	color = "orange"
 
-/obj/item/weapon/bedsheet/purple
+/obj/item/service/bedsheet/purple
 	icon_state = "sheetpurple"
 	color = "purple"
 
-/obj/item/weapon/bedsheet/rainbow
+/obj/item/service/bedsheet/rainbow
 	icon_state = "sheetrainbow"
 	color = "rainbow"
 
-/obj/item/weapon/bedsheet/red
+/obj/item/service/bedsheet/red
 	icon_state = "sheetred"
 	color = "red"
 
-/obj/item/weapon/bedsheet/yellow
+/obj/item/service/bedsheet/yellow
 	icon_state = "sheetyellow"
 	color = "yellow"
 
-/obj/item/weapon/bedsheet/mime
+/obj/item/service/bedsheet/mime
 	icon_state = "sheetmime"
 	color = "mime"
 
-/obj/item/weapon/bedsheet/clown
+/obj/item/service/bedsheet/clown
 	icon_state = "sheetclown"
 	color = "clown"
 
-/obj/item/weapon/bedsheet/captain
+/obj/item/service/bedsheet/captain
 	icon_state = "sheetcaptain"
 	color = "captain"
 
-/obj/item/weapon/bedsheet/rd
+/obj/item/service/bedsheet/rd
 	icon_state = "sheetrd"
 	color = "director"
 
-/obj/item/weapon/bedsheet/medical
+/obj/item/service/bedsheet/medical
 	icon_state = "sheetmedical"
 	color = "medical"
 
-/obj/item/weapon/bedsheet/hos
+/obj/item/service/bedsheet/hos
 	icon_state = "sheethos"
 	color = "hosred"
 
-/obj/item/weapon/bedsheet/hop
+/obj/item/service/bedsheet/hop
 	icon_state = "sheethop"
 	color = "hop"
 
-/obj/item/weapon/bedsheet/ce
+/obj/item/service/bedsheet/ce
 	icon_state = "sheetce"
 	color = "chief"
 
-/obj/item/weapon/bedsheet/brown
+/obj/item/service/bedsheet/brown
 	icon_state = "sheetbrown"
 	color = "brown"
 
@@ -129,7 +129,7 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/bedsheet))
+	if(istype(I, /obj/item/service/bedsheet))
 		user.drop_item()
 		I.loc = src
 		sheets.Add(I)
@@ -152,13 +152,13 @@ LINEN BINS
 	if(amount >= 1)
 		amount--
 
-		var/obj/item/weapon/bedsheet/B
+		var/obj/item/service/bedsheet/B
 		if(sheets.len > 0)
 			B = sheets[sheets.len]
 			sheets.Remove(B)
 
 		else
-			B = new /obj/item/weapon/bedsheet(loc)
+			B = new /obj/item/service/bedsheet(loc)
 
 		B.loc = user.loc
 		user.put_in_hands(B)

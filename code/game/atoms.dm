@@ -99,7 +99,7 @@
 /atom/proc/emp_act(var/severity)
 	return
 
-/atom/proc/bullet_act(var/obj/item/projectile/Proj)
+/atom/proc/bullet_act(var/obj/item/weapon/projectile/Proj)
 	return 0
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -301,7 +301,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/attackby(obj/item/weapon/W, mob/user)
 	if(isturf(src))	return
-	if(!istype(W, /obj/item/weapon/grab) && !istype(W, /obj/item/weapon/plastique) && !istype(W, /obj/item/weapon/reagent_containers/spray) && !istype(W, /obj/item/weapon/packageWrap) && !istype(W, /obj/item/device/detective_scanner))
+	if(!istype(W, /obj/item/effect/grab) && !istype(W, /obj/item/weapon/plastique) && !istype(W, /obj/item/chem/spray) && !istype(W, /obj/item/office/package_wrap) && !istype(W, /obj/item/device/scanner/forensic))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 
@@ -909,7 +909,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- CLICKED OBJECT EXISTS IN GAME WORLD, DISTANCE FROM PERSON TO OBJECT IS 1 SQUARE OR THEY'RE ON THE SAME SQUARE -------
 
 			var/direct = get_dir(usr, src)
-			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
+			var/obj/effect/passcheck/D = new /obj/effect/passcheck( usr.loc )
 			var/ok = 0
 			if ( (direct - 1) & direct)
 
@@ -1108,7 +1108,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					usr:nutrition -= rand(1,5)
 					usr:handle_regular_hud_updates()
 
-				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( usr.loc )
+				var/obj/item/weapon/projectile/beam/A = new /obj/item/weapon/projectile/beam( usr.loc )
 				A.icon = 'icons/effects/genetics.dmi'
 				A.icon_state = "eyelasers"
 				playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
@@ -1152,7 +1152,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				if(liftable)
 
 					add_fingerprint(usr)
-					var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(usr)
+					var/obj/item/effect/grab/G = new /obj/item/effect/grab(usr)
 					G.assailant = usr
 					usr.put_in_active_hand(G)
 					G.structure = src
@@ -1243,7 +1243,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	set category = "Debug"
 
 	var/list/dummies = list()
-	for(var/obj/item/weapon/dummy/D in world)
+	for(var/obj/effect/passcheck/D in world)
 		usr << "[D] - [D.x], [D.y], [D.z] - [D.loc]"
 		dummies += D
 	usr << "[dummies.len] found!"

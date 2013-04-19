@@ -1,4 +1,4 @@
-/obj/item/weapon/cartridge
+/obj/item/part/cartridge
 	name = "generic cartridge"
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
@@ -6,7 +6,7 @@
 	item_state = "electronic"
 	w_class = 1
 
-	var/obj/item/radio/integrated/radio = null
+	var/obj/item/part/radio/integrated/radio = null
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_atmos = 0
@@ -61,7 +61,7 @@
 		New()
 			..()
 			spawn(5)
-				radio = new /obj/item/radio/integrated/beepsky(src)
+				radio = new /obj/item/part/radio/integrated/beepsky(src)
 
 	detective
 		name = "D.E.T.E.C.T. Cartridge"
@@ -114,7 +114,7 @@
 		New()
 			..()
 			spawn(5)
-				radio = new /obj/item/radio/integrated/signal(src)
+				radio = new /obj/item/part/radio/integrated/signal(src)
 
 
 
@@ -127,7 +127,7 @@
 		New()
 			..()
 			spawn(5)
-				radio = new /obj/item/radio/integrated/mule(src)
+				radio = new /obj/item/part/radio/integrated/mule(src)
 
 	head
 		name = "Easy-Record DELUXE"
@@ -147,7 +147,7 @@
 		New()
 			..()
 			spawn(5)
-				radio = new /obj/item/radio/integrated/mule(src)
+				radio = new /obj/item/part/radio/integrated/mule(src)
 
 	hos
 		name = "R.O.B.U.S.T. DELUXE"
@@ -159,7 +159,7 @@
 		New()
 			..()
 			spawn(5)
-				radio = new /obj/item/radio/integrated/beepsky(src)
+				radio = new /obj/item/part/radio/integrated/beepsky(src)
 
 	ce
 		name = "Power-On DELUXE"
@@ -188,7 +188,7 @@
 		New()
 			..()
 			spawn(5)
-				radio = new /obj/item/radio/integrated/signal(src)
+				radio = new /obj/item/part/radio/integrated/signal(src)
 
 	captain
 		name = "Value-PAK Cartridge"
@@ -427,7 +427,7 @@ Code:
 
 				menu += "<br>"
 			if (46) //beepsky control
-				var/obj/item/radio/integrated/beepsky/SC = radio
+				var/obj/item/part/radio/integrated/beepsky/SC = radio
 				if(!SC)
 					menu = "Interlink Error - Please reinsert cartridge."
 					return
@@ -493,7 +493,7 @@ Code:
 				menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
 			if (48) //mulebot control
-				var/obj/item/radio/integrated/mule/QC = radio
+				var/obj/item/part/radio/integrated/mule/QC = radio
 				if(!QC)
 					menu = "Interlink Error - Please reinsert cartridge."
 					return
@@ -560,7 +560,7 @@ Code:
 					menu += "<h4>Located Mops:</h4>"
 
 					var/ldat
-					for (var/obj/item/weapon/mop/M in world)
+					for (var/obj/item/service/mop/M in world)
 						var/turf/ml = get_turf(M)
 
 						if(ml)
@@ -613,7 +613,7 @@ Code:
 				menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
 
-/obj/item/weapon/cartridge/Topic(href, href_list)
+/obj/item/part/cartridge/Topic(href, href_list)
 	..()
 
 	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))

@@ -142,7 +142,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			stealth = 1
 		else
 			//cloaking devices. //TODO: get rid of this :<
-			for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
+			for(var/obj/item/device/cloaking/S in list(l_hand,r_hand,belt,l_store,r_store))
 				if(S.active)
 					stealth = 1
 					break

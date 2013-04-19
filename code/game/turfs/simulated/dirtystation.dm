@@ -124,7 +124,7 @@
 		else
 			if(prob(30))
 				if(istype(A, /area/medical/morgue))
-					new /obj/item/weapon/ectoplasm(src)
+					new /obj/item/trash/ectoplasm(src)
 				else
 					new /obj/effect/decal/cleanable/vomit/old(src)
 		return

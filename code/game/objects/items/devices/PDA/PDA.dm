@@ -17,7 +17,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	//Main variables
 	var/owner = null
 	var/default_cartridge = 0 // Access level defined by cartridge
-	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
+	var/obj/item/part/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 
 	//Secondary variables
@@ -39,99 +39,99 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/detonate = 1 // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 
-	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
+	var/obj/item/security/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 /obj/item/device/pda/medical
-	default_cartridge = /obj/item/weapon/cartridge/medical
+	default_cartridge = /obj/item/part/cartridge/medical
 	icon_state = "pda-m"
 
 /obj/item/device/pda/viro
-	default_cartridge = /obj/item/weapon/cartridge/medical
+	default_cartridge = /obj/item/part/cartridge/medical
 	icon_state = "pda-v"
 
 /obj/item/device/pda/engineering
-	default_cartridge = /obj/item/weapon/cartridge/engineering
+	default_cartridge = /obj/item/part/cartridge/engineering
 	icon_state = "pda-e"
 
 /obj/item/device/pda/security
-	default_cartridge = /obj/item/weapon/cartridge/security
+	default_cartridge = /obj/item/part/cartridge/security
 	icon_state = "pda-s"
 
 /obj/item/device/pda/detective
-	default_cartridge = /obj/item/weapon/cartridge/detective
+	default_cartridge = /obj/item/part/cartridge/detective
 	icon_state = "pda-det"
 
 /obj/item/device/pda/warden
-	default_cartridge = /obj/item/weapon/cartridge/security
+	default_cartridge = /obj/item/part/cartridge/security
 	icon_state = "pda-warden"
 
 /obj/item/device/pda/janitor
-	default_cartridge = /obj/item/weapon/cartridge/janitor
+	default_cartridge = /obj/item/part/cartridge/janitor
 	icon_state = "pda-j"
 	ttone = "slip"
 
 /obj/item/device/pda/toxins
-	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
+	default_cartridge = /obj/item/part/cartridge/signal/toxins
 	icon_state = "pda-tox"
 	ttone = "boom"
 
 /obj/item/device/pda/clown
-	default_cartridge = /obj/item/weapon/cartridge/clown
+	default_cartridge = /obj/item/part/cartridge/clown
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
 /obj/item/device/pda/mime
-	default_cartridge = /obj/item/weapon/cartridge/mime
+	default_cartridge = /obj/item/part/cartridge/mime
 	icon_state = "pda-mime"
 	silent = 1
 	ttone = "silence"
 
 /obj/item/device/pda/heads
-	default_cartridge = /obj/item/weapon/cartridge/head
+	default_cartridge = /obj/item/part/cartridge/head
 	icon_state = "pda-h"
 
 /obj/item/device/pda/heads/hop
-	default_cartridge = /obj/item/weapon/cartridge/hop
+	default_cartridge = /obj/item/part/cartridge/hop
 	icon_state = "pda-hop"
 
 /obj/item/device/pda/heads/hos
-	default_cartridge = /obj/item/weapon/cartridge/hos
+	default_cartridge = /obj/item/part/cartridge/hos
 	icon_state = "pda-hos"
 
 /obj/item/device/pda/heads/ce
-	default_cartridge = /obj/item/weapon/cartridge/ce
+	default_cartridge = /obj/item/part/cartridge/ce
 	icon_state = "pda-ce"
 
 /obj/item/device/pda/heads/cmo
-	default_cartridge = /obj/item/weapon/cartridge/cmo
+	default_cartridge = /obj/item/part/cartridge/cmo
 	icon_state = "pda-cmo"
 
 /obj/item/device/pda/heads/rd
-	default_cartridge = /obj/item/weapon/cartridge/rd
+	default_cartridge = /obj/item/part/cartridge/rd
 	icon_state = "pda-rd"
 
 /obj/item/device/pda/captain
-	default_cartridge = /obj/item/weapon/cartridge/captain
+	default_cartridge = /obj/item/part/cartridge/captain
 	icon_state = "pda-c"
 	toff = 1
 
 /obj/item/device/pda/cargo
-	default_cartridge = /obj/item/weapon/cartridge/quartermaster
+	default_cartridge = /obj/item/part/cartridge/quartermaster
 	icon_state = "pda-cargo"
 
 /obj/item/device/pda/quartermaster
-	default_cartridge = /obj/item/weapon/cartridge/quartermaster
+	default_cartridge = /obj/item/part/cartridge/quartermaster
 	icon_state = "pda-q"
 
 /obj/item/device/pda/shaftminer
 	icon_state = "pda-miner"
 
 /obj/item/device/pda/syndicate
-	default_cartridge = /obj/item/weapon/cartridge/syndicate
+	default_cartridge = /obj/item/part/cartridge/syndicate
 	icon_state = "pda-syn"
 	name = "Military PDA"
 	owner = "John Doe"
@@ -142,12 +142,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	ttone = "holy"
 
 /obj/item/device/pda/lawyer
-	default_cartridge = /obj/item/weapon/cartridge/lawyer
+	default_cartridge = /obj/item/part/cartridge/lawyer
 	icon_state = "pda-lawyer"
 	ttone = "objection"
 
 /obj/item/device/pda/botanist
-	//default_cartridge = /obj/item/weapon/cartridge/botanist
+	//default_cartridge = /obj/item/part/cartridge/botanist
 	icon_state = "pda-hydro"
 
 /obj/item/device/pda/roboticist
@@ -171,15 +171,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-bar"
 
 /obj/item/device/pda/atmos
-	default_cartridge = /obj/item/weapon/cartridge/atmos
+	default_cartridge = /obj/item/part/cartridge/atmos
 	icon_state = "pda-atmo"
 
 /obj/item/device/pda/chemist
-	default_cartridge = /obj/item/weapon/cartridge/chemistry
+	default_cartridge = /obj/item/part/cartridge/chemistry
 	icon_state = "pda-chem"
 
 /obj/item/device/pda/geneticist
-	default_cartridge = /obj/item/weapon/cartridge/medical
+	default_cartridge = /obj/item/part/cartridge/medical
 	icon_state = "pda-gene"
 
 // Special AI/pAI PDAs that cannot explode.
@@ -215,7 +215,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	new /obj/item/office/pen(src)
 
 /obj/item/device/pda/proc/can_use(mob/user)
 	if(user)
@@ -302,7 +302,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
+					if(istype(cartridge.radio, /obj/item/part/radio/integrated/beepsky))
 						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
 					else	dat += "</ul>"
@@ -319,7 +319,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (cartridge)
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
-					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
+					if (istype(cartridge.radio, /obj/item/part/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_reagent_scanner)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
@@ -351,11 +351,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"
 
-				if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+				if (istype(cartridge, /obj/item/part/cartridge/syndicate))
 					dat += "<b>[cartridge:shock_charges] detonation charges left.</b><HR>"
-				if (istype(cartridge, /obj/item/weapon/cartridge/clown))
+				if (istype(cartridge, /obj/item/part/cartridge/clown))
 					dat += "<b>[cartridge:honk_charges] viral files left.</b><HR>"
-				if (istype(cartridge, /obj/item/weapon/cartridge/mime))
+				if (istype(cartridge, /obj/item/part/cartridge/mime))
 					dat += "<b>[cartridge:mime_charges] viral files left.</b><HR>"
 
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
@@ -368,11 +368,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					for (var/obj/item/device/pda/P in sortAtom(get_viewable_pdas()))
 						if (P == src)	continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
+						if (istype(cartridge, /obj/item/part/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
-						if (istype(cartridge, /obj/item/weapon/cartridge/clown))
+						if (istype(cartridge, /obj/item/part/cartridge/clown))
 							dat += " (<a href='byond://?src=\ref[src];choice=Send Honk;target=\ref[P]'><img src=pda_honk.png>*Send Virus*</a>)"
-						if (istype(cartridge, /obj/item/weapon/cartridge/mime))
+						if (istype(cartridge, /obj/item/part/cartridge/mime))
 							dat += " (<a href='byond://?src=\ref[src];choice=Send Silence;target=\ref[P]'>*Send Virus*</a>)"
 						dat += "</li>"
 						count++
@@ -575,7 +575,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					src.create_message(U, P)
 
 				if("Send Honk")//Honk virus
-					if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
+					if(istype(cartridge, /obj/item/part/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 						var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
 						if(!isnull(P))
 							if (!P.toff && cartridge:honk_charges > 0)
@@ -588,7 +588,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U << browse(null, "window=pda")
 						return
 				if("Send Silence")//Silent virus
-					if(istype(cartridge, /obj/item/weapon/cartridge/mime))
+					if(istype(cartridge, /obj/item/part/cartridge/mime))
 						var/obj/item/device/pda/P = locate(href_list["target"])
 						if(!isnull(P))
 							if (!P.toff && cartridge:mime_charges > 0)
@@ -615,7 +615,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 									M.close()
 
 				if("Detonate")//Detonate PDA
-					if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+					if(istype(cartridge, /obj/item/part/cartridge/syndicate))
 						var/obj/item/device/pda/P = locate(href_list["target"])
 						if(!isnull(P))
 							if (!P.toff && cartridge:shock_charges > 0)
@@ -808,7 +808,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if ( !(usr.stat || usr.restrained()) )
-		var/obj/item/weapon/pen/O = locate() in src
+		var/obj/item/office/pen/O = locate() in src
 		if(O)
 			if (istype(loc, /mob))
 				var/mob/M = loc
@@ -828,13 +828,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			remove_id()
 		else
 			var/obj/item/I = user.get_active_hand()
-			if (istype(I, /obj/item/weapon/card/id))
+			if (istype(I, /obj/item/security/card/id))
 				user.drop_item()
 				I.loc = src
 				id = I
 	else
-		var/obj/item/weapon/card/I = user.get_active_hand()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+		var/obj/item/security/card/I = user.get_active_hand()
+		if (istype(I, /obj/item/security/card/id) && I:registered_name)
 			var/obj/old_id = id
 			user.drop_item()
 			I.loc = src
@@ -845,7 +845,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
-	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
+	if(istype(C, /obj/item/part/cartridge) && !cartridge)
 		cartridge = C
 		user.drop_item()
 		cartridge.loc = src
@@ -853,8 +853,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
 
-	else if(istype(C, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = C
+	else if(istype(C, /obj/item/security/card/id))
+		var/obj/item/security/card/id/idcard = C
 		if(!idcard.registered_name)
 			user << "<span class='notice'>\The [src] rejects the ID.</span>"
 			return
@@ -878,8 +878,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
-	else if(istype(C, /obj/item/weapon/pen))
-		var/obj/item/weapon/pen/O = locate() in src
+	else if(istype(C, /obj/item/office/pen))
+		var/obj/item/office/pen/O = locate() in src
 		if(O)
 			user << "<span class='notice'>There is already a pen in \the [src].</span>"
 		else
@@ -961,7 +961,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user << "\blue No significant chemical agents found in [A]."
 
 		if(5)
-			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
+			if((istype(A, /obj/item/clothing/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
 				var/obj/icon = A
 				for (var/mob/O in viewers(user, null))
 					O << "\red [user] has used [src] on \icon[icon] [A]"
@@ -1017,7 +1017,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					user << "\blue Tank is empty!"
 
-	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
+	if (!scanmode && istype(A, /obj/item/office/paper) && owner)
 		note = A:info
 		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
 
@@ -1050,7 +1050,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if ((istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || M.m_intent == "walk")
 			return
 
-		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))
+		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/part/cartridge/clown))))
 			if (src.cartridge:honk_charges < 5)
 				src.cartridge:honk_charges++
 
@@ -1141,7 +1141,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "You do not have a PDA. You should make an issue report about this."
 
 //Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
+/obj/item/storage/box/PDAs
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
 	icon = 'icons/obj/pda.dmi'
@@ -1153,13 +1153,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		new /obj/item/device/pda(src)
 		new /obj/item/device/pda(src)
 		new /obj/item/device/pda(src)
-		new /obj/item/weapon/cartridge/head(src)
+		new /obj/item/part/cartridge/head(src)
 
-		var/newcart = pick(	/obj/item/weapon/cartridge/engineering,
-							/obj/item/weapon/cartridge/security,
-							/obj/item/weapon/cartridge/medical,
-							/obj/item/weapon/cartridge/signal/toxins,
-							/obj/item/weapon/cartridge/quartermaster)
+		var/newcart = pick(	/obj/item/part/cartridge/engineering,
+							/obj/item/part/cartridge/security,
+							/obj/item/part/cartridge/medical,
+							/obj/item/part/cartridge/signal/toxins,
+							/obj/item/part/cartridge/quartermaster)
 		new newcart(src)
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP

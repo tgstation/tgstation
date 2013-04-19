@@ -22,7 +22,7 @@
 	var/obj/structure/cable/attached		// the attached cable
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/tool/screwdriver))
 			if(mode == 0)
 				var/turf/T = loc
 				if(isturf(T) && !T.intact)

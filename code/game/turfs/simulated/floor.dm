@@ -34,7 +34,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
-	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
+	var/obj/item/part/stack/tile/floor_tile = new/obj/item/part/stack/tile/plasteel
 
 
 /turf/simulated/floor/New()
@@ -59,7 +59,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33)) new /obj/item/part/stack/sheet/metal(src)
 				if(2)
 					src.ChangeTurf(/turf/space)
 				if(3)
@@ -68,7 +68,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33)) new /obj/item/part/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()
@@ -88,7 +88,7 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			icon_state = icon_plating //Because asteroids are 'platings' too.
 	else if(is_light_floor())
-		var/obj/item/stack/tile/light/T = floor_tile
+		var/obj/item/part/stack/tile/light/T = floor_tile
 		if(T.on)
 			switch(T.state)
 				if(0)
@@ -183,7 +183,7 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/attack_hand(mob/user as mob)
 	if (is_light_floor())
-		var/obj/item/stack/tile/light/T = floor_tile
+		var/obj/item/part/stack/tile/light/T = floor_tile
 		T.on = !T.on
 		update_icon()
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -216,31 +216,31 @@ turf/simulated/floor/proc/update_icon()
 	break_tile()
 
 /turf/simulated/floor/is_plasteel_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/plasteel))
+	if(istype(floor_tile,/obj/item/part/stack/tile/plasteel))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_light_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/light))
+	if(istype(floor_tile,/obj/item/part/stack/tile/light))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_grass_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/grass))
+	if(istype(floor_tile,/obj/item/part/stack/tile/grass))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_wood_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/wood))
+	if(istype(floor_tile,/obj/item/part/stack/tile/wood))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_carpet_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/carpet))
+	if(istype(floor_tile,/obj/item/part/stack/tile/carpet))
 		return 1
 	else
 		return 0
@@ -335,13 +335,13 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/stack/tile/plasteel/T = null)
+/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/part/stack/tile/plasteel/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	SetLuminosity(0)
 	if(T)
-		if(istype(T,/obj/item/stack/tile/plasteel))
+		if(istype(T,/obj/item/part/stack/tile/plasteel))
 			floor_tile = T
 			if (icon_regular_floor)
 				icon_state = icon_regular_floor
@@ -352,7 +352,7 @@ turf/simulated/floor/proc/update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get this far.
-	floor_tile = new/obj/item/stack/tile/plasteel
+	floor_tile = new/obj/item/part/stack/tile/plasteel
 	icon_state = "floor"
 	icon_regular_floor = "floor"
 
@@ -362,72 +362,72 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
+/turf/simulated/floor/proc/make_light_floor(var/obj/item/part/stack/tile/light/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/light))
+		if(istype(T,/obj/item/part/stack/tile/light))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/light
+	floor_tile = new/obj/item/part/stack/tile/light
 
 	update_icon()
 	levelupdate()
 
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
+/turf/simulated/floor/proc/make_grass_floor(var/obj/item/part/stack/tile/grass/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/grass))
+		if(istype(T,/obj/item/part/stack/tile/grass))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/grass
+	floor_tile = new/obj/item/part/stack/tile/grass
 
 	update_icon()
 	levelupdate()
 
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
+/turf/simulated/floor/proc/make_wood_floor(var/obj/item/part/stack/tile/wood/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/wood))
+		if(istype(T,/obj/item/part/stack/tile/wood))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/wood
+	floor_tile = new/obj/item/part/stack/tile/wood
 
 	update_icon()
 	levelupdate()
 
 //This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
+/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/part/stack/tile/carpet/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/carpet))
+		if(istype(T,/obj/item/part/stack/tile/carpet))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/carpet
+	floor_tile = new/obj/item/part/stack/tile/carpet
 
 	update_icon()
 	levelupdate()
@@ -437,9 +437,9 @@ turf/simulated/floor/proc/update_icon()
 	if(!C || !user)
 		return 0
 
-	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
+	if(istype(C,/obj/item/part/light/bulb)) //only for light tiles
 		if(is_light_floor())
-			var/obj/item/stack/tile/light/T = floor_tile
+			var/obj/item/part/stack/tile/light/T = floor_tile
 			if(T.state)
 				user.drop_item(C)
 				del(C)
@@ -449,7 +449,7 @@ turf/simulated/floor/proc/update_icon()
 			else
 				user << "\blue The lightbulb seems fine, no need to replace it."
 
-	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
+	if(istype(C, /obj/item/tool/crowbar) && (!(is_plating())))
 		if(broken || burnt)
 			user << "\red You remove the broken plating."
 		else
@@ -464,7 +464,7 @@ turf/simulated/floor/proc/update_icon()
 
 		return
 
-	if(istype(C, /obj/item/weapon/screwdriver) && is_wood_floor())
+	if(istype(C, /obj/item/tool/screwdriver) && is_wood_floor())
 		if(broken || burnt)
 			return
 		else
@@ -477,8 +477,8 @@ turf/simulated/floor/proc/update_icon()
 
 		return
 
-	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
+	if(istype(C, /obj/item/part/stack/rods))
+		var/obj/item/part/stack/rods/R = C
 		if (is_plating())
 			if (R.amount >= 2)
 				user << "\blue Reinforcing the floor..."
@@ -493,23 +493,23 @@ turf/simulated/floor/proc/update_icon()
 			user << "\red You must remove the plating first."
 		return
 
-	if(istype(C, /obj/item/stack/tile))
+	if(istype(C, /obj/item/part/stack/tile))
 		if(is_plating())
 			if(!broken && !burnt)
-				var/obj/item/stack/tile/T = C
+				var/obj/item/part/stack/tile/T = C
 				floor_tile = new T.type
 				intact = 1
-				if(istype(T,/obj/item/stack/tile/light))
-					var/obj/item/stack/tile/light/L = T
-					var/obj/item/stack/tile/light/F = floor_tile
+				if(istype(T,/obj/item/part/stack/tile/light))
+					var/obj/item/part/stack/tile/light/L = T
+					var/obj/item/part/stack/tile/light/F = floor_tile
 					F.state = L.state
 					F.on = L.on
-				if(istype(T,/obj/item/stack/tile/grass))
+				if(istype(T,/obj/item/part/stack/tile/grass))
 					for(var/direction in cardinal)
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly
-				else if(istype(T,/obj/item/stack/tile/carpet))
+				else if(istype(T,/obj/item/part/stack/tile/carpet))
 					for(var/direction in list(1,2,4,8,5,6,9,10))
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
@@ -522,24 +522,24 @@ turf/simulated/floor/proc/update_icon()
 				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/part/cable_coil))
 		if(is_plating())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/part/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
 			user << "\red You must remove the plating first."
 
-	if(istype(C, /obj/item/weapon/shovel))
+	if(istype(C, /obj/item/mining/shovel))
 		if(is_grass_floor())
-			new /obj/item/weapon/ore/glass(src)
-			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
+			new /obj/item/mining/ore/glass(src)
+			new /obj/item/mining/ore/glass(src) //Make some sand if you shovel grass
 			user << "\blue You shovel the grass."
 			make_plating()
 		else
 			user << "\red You cannot shovel this."
 
-	if(istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/welder = C
+	if(istype(C, /obj/item/tool/welder))
+		var/obj/item/tool/welder/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))

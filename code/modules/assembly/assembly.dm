@@ -1,4 +1,4 @@
-/obj/item/device/assembly
+/obj/item/part/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
@@ -15,7 +15,7 @@
 
 	var/secured = 1
 	var/list/attached_overlays = null
-	var/obj/item/device/assembly_holder/holder = null
+	var/obj/item/part/assembly_holder/holder = null
 	var/cooldown = 0//To prevent spam
 	var/wires = WIRE_RECEIVE | WIRE_PULSE
 
@@ -96,8 +96,8 @@
 		return secured
 
 
-	attach_assembly(var/obj/item/device/assembly/A, var/mob/user)
-		holder = new/obj/item/device/assembly_holder(get_turf(src))
+	attach_assembly(var/obj/item/part/assembly/A, var/mob/user)
+		holder = new/obj/item/part/assembly_holder(get_turf(src))
 		if(holder.attach(A,src,user))
 			user << "\blue You attach \the [A] to \the [src]!"
 			return 1
@@ -106,7 +106,7 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(isassembly(W))
-			var/obj/item/device/assembly/A = W
+			var/obj/item/part/assembly/A = W
 			if((!A.secured) && (!secured))
 				attach_assembly(A,user)
 				return

@@ -1,4 +1,4 @@
-/obj/item/weapon/tank
+/obj/item/clothing/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -16,7 +16,7 @@
 	var/integrity = 3
 	var/volume = 70
 
-/obj/item/weapon/tank/New()
+/obj/item/clothing/tank/New()
 	..()
 
 	src.air_contents = new /datum/gas_mixture()
@@ -27,7 +27,7 @@
 
 	return
 
-/obj/item/weapon/tank/Del()
+/obj/item/clothing/tank/Del()
 	if(air_contents)
 		del(air_contents)
 
@@ -35,10 +35,10 @@
 
 	..()
 
-/obj/item/weapon/tank/examine()
+/obj/item/clothing/tank/examine()
 	var/obj/icon = src
-	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+//	if (istype(src.loc, /obj/item/assembly))
+//		icon = src.loc
 	if (!in_range(src, usr))
 		if (icon == src) usr << "\blue It's \a \icon[icon][src]! If you want any more information you'll need to get closer."
 		return
@@ -63,7 +63,7 @@
 
 	return
 
-/obj/item/weapon/tank/blob_act()
+/obj/item/clothing/tank/blob_act()
 	if(prob(50))
 		var/turf/location = src.loc
 		if (!( istype(location, /turf) ))
@@ -74,14 +74,14 @@
 
 		del(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/tank/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	var/obj/icon = src
 
-	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+//	if (istype(src.loc, /obj/item/assembly))
+//		icon = src.loc
 
-	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	if ((istype(W, /obj/item/device/scanner/atmospheric)) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
 			O << "\red [user] has used [W] on \icon[icon] [src]"
 
@@ -109,15 +109,15 @@
 		else
 			user << "\blue Tank is empty!"
 		src.add_fingerprint(user)
-	else if (istype(W,/obj/item/latexballon))
-		var/obj/item/latexballon/LB = W
+	else if (istype(W,/obj/item/toy/latexballon))
+		var/obj/item/toy/latexballon/LB = W
 		LB.blow(src)
 		src.add_fingerprint(user)
 
-	if(istype(W, /obj/item/device/assembly_holder))
+	if(istype(W, /obj/item/part/assembly_holder))
 		bomb_assemble(W,user)
 
-/obj/item/weapon/tank/attack_self(mob/user as mob)
+/obj/item/clothing/tank/attack_self(mob/user as mob)
 	if (!(src.air_contents))
 		return
 	user.set_machine(src)
@@ -139,7 +139,7 @@
 	onclose(user, "tank")
 	return
 
-/obj/item/weapon/tank/Topic(href, href_list)
+/obj/item/clothing/tank/Topic(href, href_list)
 	..()
 	if (usr.stat|| usr.restrained())
 		return
@@ -181,19 +181,19 @@
 	return
 
 
-/obj/item/weapon/tank/remove_air(amount)
+/obj/item/clothing/tank/remove_air(amount)
 	return air_contents.remove(amount)
 
-/obj/item/weapon/tank/return_air()
+/obj/item/clothing/tank/return_air()
 	return air_contents
 
-/obj/item/weapon/tank/assume_air(datum/gas_mixture/giver)
+/obj/item/clothing/tank/assume_air(datum/gas_mixture/giver)
 	air_contents.merge(giver)
 
 	check_status()
 	return 1
 
-/obj/item/weapon/tank/proc/remove_air_volume(volume_to_return)
+/obj/item/clothing/tank/proc/remove_air_volume(volume_to_return)
 	if(!air_contents)
 		return null
 
@@ -205,13 +205,13 @@
 
 	return remove_air(moles_needed)
 
-/obj/item/weapon/tank/process()
+/obj/item/clothing/tank/process()
 	//Allow for reactions
 	air_contents.react()
 	check_status()
 
 
-/obj/item/weapon/tank/proc/check_status()
+/obj/item/clothing/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
 
 	if(!air_contents)
@@ -219,7 +219,7 @@
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc,/obj/item/device/transfer_valve))
+		if(!istype(src.loc,/obj/item/part/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"

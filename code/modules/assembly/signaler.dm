@@ -1,4 +1,4 @@
-/obj/item/device/assembly/signaler
+/obj/item/part/assembly/signaler
 	name = "remote signaling device"
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
@@ -114,7 +114,7 @@
 
 		return
 /*
-		for(var/obj/item/device/assembly/signaler/S in world)
+		for(var/obj/item/part/assembly/signaler/S in world)
 			if(!S)	continue
 			if(S == src)	continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
@@ -153,7 +153,7 @@
 // Embedded signaller used in grenade construction.
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
-/obj/item/device/assembly/signaler/reciever
+/obj/item/part/assembly/signaler/reciever
 	var/on = 0
 
 	proc/toggle_safety()

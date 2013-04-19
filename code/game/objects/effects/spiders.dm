@@ -28,8 +28,8 @@
 
 	var/damage = W.force / 4.0
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 
 		if(WT.remove_fuel(0, user))
 			damage = 15
@@ -38,7 +38,7 @@
 	health -= damage
 	healthcheck()
 
-/obj/effect/spider/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/spider/bullet_act(var/obj/item/weapon/projectile/Proj)
 	..()
 	health -= Proj.damage
 	healthcheck()
@@ -66,7 +66,7 @@
 		if(prob(50))
 			mover << "\red You get stuck in \the [src] for a moment."
 			return 0
-	else if(istype(mover, /obj/item/projectile))
+	else if(istype(mover, /obj/item/weapon/projectile))
 		return prob(30)
 	return 1
 

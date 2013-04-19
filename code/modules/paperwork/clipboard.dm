@@ -1,4 +1,4 @@
-/obj/item/weapon/clipboard
+/obj/item/office/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "clipboard"
@@ -7,17 +7,17 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-	var/obj/item/weapon/pen/haspen		//The stored pen.
-	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
+	var/obj/item/office/pen/haspen		//The stored pen.
+	var/obj/item/office/paper/toppaper	//The topmost piece of paper.
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 
 
-/obj/item/weapon/clipboard/New()
+/obj/item/office/clipboard/New()
 	update_icon()
 
 
-/obj/item/weapon/clipboard/update_icon()
+/obj/item/office/clipboard/update_icon()
 	overlays.Cut()
 	if(toppaper)
 		overlays += toppaper.icon_state
@@ -27,8 +27,8 @@
 	overlays += "clipboard_over"
 
 
-/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/paper))
+/obj/item/office/clipboard/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/office/paper))
 		user.drop_item()
 		W.loc = src
 		toppaper = W
@@ -39,7 +39,7 @@
 		update_icon()
 
 
-/obj/item/weapon/clipboard/attack_self(mob/user)
+/obj/item/office/clipboard/attack_self(mob/user)
 	var/dat = "<title>Clipboard</title>"
 	if(haspen)
 		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
@@ -48,7 +48,7 @@
 
 	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
-		var/obj/item/weapon/paper/P = toppaper
+		var/obj/item/office/paper/P = toppaper
 		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR><HR>"
 
 		for(P in src)
@@ -60,7 +60,7 @@
 	add_fingerprint(usr)
 
 
-/obj/item/weapon/clipboard/Topic(href, href_list)
+/obj/item/office/clipboard/Topic(href, href_list)
 	..()
 	if(usr.stat || usr.restrained())
 		return
@@ -75,8 +75,8 @@
 
 		if(href_list["addpen"])
 			if(!haspen)
-				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
-					var/obj/item/weapon/pen/W = usr.get_active_hand()
+				if(istype(usr.get_active_hand(), /obj/item/office/pen))
+					var/obj/item/office/pen/W = usr.get_active_hand()
 					usr.drop_item()
 					W.loc = src
 					haspen = W
@@ -95,14 +95,14 @@
 				usr.put_in_hands(P)
 				if(P == toppaper)
 					toppaper = null
-					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper) in src
+					var/obj/item/office/paper/newtop = locate(/obj/item/office/paper) in src
 					if(newtop && (newtop != P))
 						toppaper = newtop
 					else
 						toppaper = null
 
 		if(href_list["read"])
-			var/obj/item/weapon/paper/P = locate(href_list["read"])
+			var/obj/item/office/paper/P = locate(href_list["read"])
 			if(P)
 				P.examine()
 

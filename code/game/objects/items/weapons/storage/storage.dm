@@ -5,7 +5,7 @@
 // -Sayu
 
 
-/obj/item/weapon/storage
+/obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = 3.0
@@ -23,7 +23,7 @@
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object)
+/obj/item/storage/MouseDrop(obj/over_object)
 	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 		if(!( istype(over_object, /obj/screen) ))
@@ -47,16 +47,16 @@
 			show_to(usr)
 
 
-/obj/item/weapon/storage/proc/return_inv()
+/obj/item/storage/proc/return_inv()
 	var/list/L = list()
 	L += contents
 
-	for(var/obj/item/weapon/storage/S in src)
+	for(var/obj/item/storage/S in src)
 		L += S.return_inv()
 	return L
 
 
-/obj/item/weapon/storage/proc/show_to(mob/user)
+/obj/item/storage/proc/show_to(mob/user)
 	if(user.s_active != src)
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
@@ -72,7 +72,7 @@
 	user.s_active = src
 
 
-/obj/item/weapon/storage/proc/hide_from(mob/user)
+/obj/item/storage/proc/hide_from(mob/user)
 	if(!user.client)
 		return
 	user.client.screen -= boxes
@@ -82,14 +82,14 @@
 		user.s_active = null
 
 
-/obj/item/weapon/storage/proc/close(mob/user)
+/obj/item/storage/proc/close(mob/user)
 	hide_from(user)
 	user.s_active = null
 
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
-/obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
+/obj/item/storage/proc/orient_objs(tx, ty, mx, my)
 	var/cx = tx
 	var/cy = ty
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
@@ -104,7 +104,7 @@
 
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
-/obj/item/weapon/storage/proc/standard_orient_objs(rows, cols, list/obj/item/display_contents)
+/obj/item/storage/proc/standard_orient_objs(rows, cols, list/obj/item/display_contents)
 	var/cx = 4
 	var/cy = 2+rows
 	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
@@ -142,7 +142,7 @@
 
 
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
-/obj/item/weapon/storage/proc/orient2hud(mob/user)
+/obj/item/storage/proc/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
 	//Numbered contents display
@@ -171,7 +171,7 @@
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
-/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0)
+/obj/item/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(!istype(W)) return //Not an item
 
 	if(loc == W)
@@ -212,8 +212,8 @@
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0
 
-	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
-		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
+	if(W.w_class >= w_class && (istype(W, /obj/item/storage)))
+		if(!istype(src, /obj/item/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
 				usr << "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>"
 			return 0 //To prevent the stacking of same sized storage items.
@@ -223,7 +223,7 @@
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
-/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
 		usr.u_equip(W)
@@ -252,11 +252,11 @@
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
 	if(!istype(W)) return 0
 
-	if(istype(src, /obj/item/weapon/storage/fancy))
-		var/obj/item/weapon/storage/fancy/F = src
+	if(istype(src, /obj/item/storage/fancy))
+		var/obj/item/storage/fancy/F = src
 		F.update_icon(1)
 
 	for(var/mob/M in range(1, loc))
@@ -287,7 +287,7 @@
 
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W, mob/user)
+/obj/item/storage/attackby(obj/item/W, mob/user)
 	..()
 
 	if(isrobot(user))
@@ -297,8 +297,8 @@
 	if(!can_be_inserted(W))
 		return
 
-	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
-		var/obj/item/weapon/tray/T = W
+	if(istype(W, /obj/item/service/tray))	//THIS ISN'T HOW OOP WORKS
+		var/obj/item/service/tray/T = W
 		if(T.calc_carry() > 0)
 			user << "<span class='notice'>[T] won't fit in [src]."
 			return
@@ -306,11 +306,11 @@
 	handle_item_insertion(W)
 
 
-/obj/item/weapon/storage/dropped(mob/user)
+/obj/item/storage/dropped(mob/user)
 	return
 
 
-/obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
+/obj/item/storage/MouseDrop(over_object, src_location, over_location)
 	..()
 	orient2hud(usr)
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
@@ -319,7 +319,7 @@
 		show_to(usr)
 
 
-/obj/item/weapon/storage/attack_hand(mob/user)
+/obj/item/storage/attack_hand(mob/user)
 	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
@@ -346,7 +346,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/storage/verb/toggle_gathering_mode()
+/obj/item/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
@@ -358,7 +358,7 @@
 			usr << "[src] now picks up one item at a time."
 
 
-/obj/item/weapon/storage/verb/quick_empty()
+/obj/item/storage/verb/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
 
@@ -371,17 +371,17 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/New()
+/obj/item/storage/New()
 
 	if(allow_quick_empty)
-		verbs += /obj/item/weapon/storage/verb/quick_empty
+		verbs += /obj/item/storage/verb/quick_empty
 	else
-		verbs -= /obj/item/weapon/storage/verb/quick_empty
+		verbs -= /obj/item/storage/verb/quick_empty
 
 	if(allow_quick_gather)
-		verbs += /obj/item/weapon/storage/verb/toggle_gathering_mode
+		verbs += /obj/item/storage/verb/toggle_gathering_mode
 	else
-		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
+		verbs -= /obj/item/storage/verb/toggle_gathering_mode
 
 	boxes = new /obj/screen/storage()
 	boxes.name = "storage"
@@ -396,15 +396,15 @@
 	orient2hud()
 
 
-/obj/item/weapon/storage/emp_act(severity)
+/obj/item/storage/emp_act(severity)
 	if(!istype(loc, /mob/living))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()
 
 
-/obj/item/weapon/storage/attack_self(mob/user)
+/obj/item/storage/attack_self(mob/user)
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
+		if(verbs.Find(/obj/item/storage/verb/quick_empty))
 			quick_empty()

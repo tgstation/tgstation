@@ -1,13 +1,13 @@
 /*********************MANUALS (BOOKS)***********************/
 
 //Oh god what the fuck I am not good at computer
-/obj/item/weapon/book/manual
+/obj/item/office/book/manual
 	icon = 'icons/obj/library.dmi'
 	due_date = 0 // Game time in 1/10th seconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
 
-/obj/item/weapon/book/manual/engineering_construction
+/obj/item/office/book/manual/engineering_construction
 	name = "Station Repairs and Construction"
 	icon_state ="bookEngineering"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -25,7 +25,7 @@
 
 		"}
 
-/obj/item/weapon/book/manual/engineering_particle_accelerator
+/obj/item/office/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
 	icon_state ="bookParticleAccelerator"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -67,7 +67,7 @@
 				</body>
 				</html>"}
 
-/obj/item/weapon/book/manual/infections
+/obj/item/office/book/manual/infections
 	name = "Infections - Making your own pandemic!"
 	icon_state = "bookInfections"
 	author = "Infections Encyclopedia"
@@ -84,7 +84,7 @@
 	</html>
 	"}
 
-/obj/item/weapon/book/manual/engineering_hacking
+/obj/item/office/book/manual/engineering_hacking
 	name = "Hacking"
 	icon_state ="bookHacking"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -104,7 +104,7 @@
 
 		"}
 
-/obj/item/weapon/book/manual/engineering_singularity_safety
+/obj/item/office/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
 	icon_state ="bookEngineeringSingularitySafety"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -152,7 +152,7 @@
 				</html>
 				"}
 
-/obj/item/weapon/book/manual/hydroponics_pod_people
+/obj/item/office/book/manual/hydroponics_pod_people
 	name = "The Human Harvest - From seed to market"
 	icon_state ="bookHydroponicsPodPeople"
 	author = "Farmer John"
@@ -187,7 +187,7 @@
 				</html>
 				"}
 
-/obj/item/weapon/book/manual/medical_cloning
+/obj/item/office/book/manual/medical_cloning
 	name = "Cloning techniques of the 26th century"
 	icon_state ="bookCloning"
 	author = "Medical Journal, volume 3"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -265,7 +265,7 @@
 				"}
 
 
-/obj/item/weapon/book/manual/ripley_build_and_repair
+/obj/item/office/book/manual/ripley_build_and_repair
 	name = "APLU \"Ripley\" Construction and Operation Manual"
 	icon_state ="book"
 	author = "Weyland-Yutani Corp"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -341,7 +341,7 @@
 			"}
 
 
-/obj/item/weapon/book/manual/research_and_development
+/obj/item/office/book/manual/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
 	author = "Dr. L. Ight"
@@ -391,7 +391,7 @@
 			"}
 
 
-/obj/item/weapon/book/manual/robotics_cyborgs
+/obj/item/office/book/manual/robotics_cyborgs
 	name = "Cyborgs for Dummies"
 	icon_state = "borgbook"
 	author = "XISC"
@@ -593,7 +593,7 @@
 		</html>
 		"}
 
-/obj/item/weapon/book/manual/security_space_law
+/obj/item/office/book/manual/security_space_law
 	name = "Space Law"
 	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."
 	icon_state = "bookSpaceLaw"
@@ -612,7 +612,7 @@
 
 		"}
 
-/obj/item/weapon/book/manual/engineering_guide
+/obj/item/office/book/manual/engineering_guide
 	name = "Engineering Textbook"
 	icon_state ="bookEngineering2"
 	author = "Engineering Encyclopedia"
@@ -631,7 +631,7 @@
 		"}
 
 
-/obj/item/weapon/book/manual/chef_recipes
+/obj/item/office/book/manual/chef_recipes
 	name = "Chef Recipes"
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
@@ -683,7 +683,7 @@
 				</html>
 			"}
 
-/obj/item/weapon/book/manual/barman_recipes
+/obj/item/office/book/manual/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "barbook"
 	author = "Sir John Rose"
@@ -736,7 +736,7 @@
 			"}
 
 
-/obj/item/weapon/book/manual/detective
+/obj/item/office/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookDetective"
 	author = "Nanotrasen"
@@ -777,7 +777,7 @@
 			</body>
 			</html>"}
 
-/obj/item/weapon/book/manual/nuclear
+/obj/item/office/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
 	icon_state ="bookNuclear"
 	author = "Syndicate"

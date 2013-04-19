@@ -1,4 +1,4 @@
-/obj/item/organ/brain
+/obj/item/medical/organ/brain
 	name = "brain"
 	desc = "A piece of juicy meat found in a person's head."
 	icon = 'icons/obj/surgery.dmi'
@@ -14,7 +14,7 @@
 	var/mob/living/carbon/brain/brainmob = null
 
 
-/obj/item/organ/brain/New()
+/obj/item/medical/organ/brain/New()
 	..()
 	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
 	spawn(5)
@@ -22,7 +22,7 @@
 			brainmob.client.screen.len = null //clear the hud
 
 
-/obj/item/organ/brain/proc/transfer_identity(mob/living/carbon/H)
+/obj/item/medical/organ/brain/proc/transfer_identity(mob/living/carbon/H)
 	name = "[H]'s brain"
 	brainmob = new(src)
 	brainmob.name = H.real_name
@@ -34,7 +34,7 @@
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 
 
-/obj/item/organ/brain/examine()
+/obj/item/medical/organ/brain/examine()
 	set src in oview(12)
 	if(!usr)	return
 
@@ -45,7 +45,7 @@
 		usr << "This one seems particularly lifeless. Perhaps it will regain some of it's luster later.."
 
 
-/obj/item/organ/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/medical/organ/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
 
@@ -92,7 +92,7 @@
 	else
 		..()
 
-/obj/item/organ/brain/alien
+/obj/item/medical/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-alien"

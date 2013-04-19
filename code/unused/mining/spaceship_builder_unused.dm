@@ -124,9 +124,9 @@
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
-	if (istype(W, /obj/item/stack/sheet/metal))
+	if (istype(W, /obj/item/part/stack/sheet/metal))
 
-		var/obj/item/stack/sheet/metal/M = W
+		var/obj/item/part/stack/sheet/metal/M = W
 		user << "\blue You insert all the metal into the machine."
 		metal_amount += M.amount * 100
 		del(M)

@@ -1,4 +1,4 @@
-/obj/item/device/assembly/igniter
+/obj/item/part/assembly/igniter
 	name = "igniter"
 	desc = "A small electronic device able to ignite combustable substances."
 	icon_state = "igniter"

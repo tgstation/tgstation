@@ -1,4 +1,4 @@
-/obj/item/weapon/implanter
+/obj/item/medical/implanter
 	name = "implanter"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
@@ -6,17 +6,17 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	var/obj/item/weapon/implant/imp = null
+	var/obj/item/medical/implant/imp = null
 
 
-/obj/item/weapon/implanter/update_icon()
+/obj/item/medical/implanter/update_icon()
 	if(imp)
 		icon_state = "implanter1"
 	else
 		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user)
+/obj/item/medical/implanter/attack(mob/M, mob/user)
 	if(!iscarbon(M))
 		return
 	if(user && imp)
@@ -41,28 +41,28 @@
 
 
 
-/obj/item/weapon/implanter/loyalty
+/obj/item/medical/implanter/loyalty
 	name = "implanter-loyalty"
 
-/obj/item/weapon/implanter/loyalty/New()
-	imp = new /obj/item/weapon/implant/loyalty(src)
+/obj/item/medical/implanter/loyalty/New()
+	imp = new /obj/item/medical/implant/loyalty(src)
 	..()
 	update_icon()
 
 
-/obj/item/weapon/implanter/explosive
+/obj/item/medical/implanter/explosive
 	name = "implanter-explosive"
 
-/obj/item/weapon/implanter/explosive/New()
-	imp = new /obj/item/weapon/implant/explosive(src)
+/obj/item/medical/implanter/explosive/New()
+	imp = new /obj/item/medical/implant/explosive(src)
 	..()
 	update_icon()
 
 
-/obj/item/weapon/implanter/adrenalin
+/obj/item/medical/implanter/adrenalin
 	name = "implanter-adrenalin"
 
-/obj/item/weapon/implanter/adrenalin/New()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+/obj/item/medical/implanter/adrenalin/New()
+	imp = new /obj/item/medical/implant/adrenalin(src)
 	..()
 	update_icon()

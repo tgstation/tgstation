@@ -27,7 +27,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	var/obj/item/weapon/cell/cell
+	var/obj/item/part/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -64,7 +64,7 @@
 	var/wreckage
 
 	var/list/equipment = new
-	var/obj/item/mecha_parts/mecha_equipment/selected
+	var/obj/item/part/mecha/mecha_equipment/selected
 	var/max_equip = 3
 	var/datum/events/events
 
@@ -108,7 +108,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/mecha/proc/add_cell(var/obj/item/part/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -181,7 +181,7 @@
 			usr << "It's falling apart."
 	if(equipment && equipment.len)
 		usr << "It's equipped with:"
-		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
+		for(var/obj/item/part/mecha/mecha_equipment/ME in equipment)
 			usr << "\icon[ME] [ME]"
 	return
 
@@ -359,7 +359,7 @@
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
-			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)
+			var/obj/item/part/mecha/mecha_equipment/destr = safepick(equipment)
 			if(destr)
 				destr.destroy()
 	return
@@ -477,7 +477,7 @@
 	return
 
 /obj/mecha/proc/dynhitby(atom/movable/A)
-	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
+	if(istype(A, /obj/item/part/mecha/mecha_tracking))
 		A.forceMove(src)
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
@@ -496,13 +496,13 @@
 	return
 
 
-/obj/mecha/bullet_act(var/obj/item/projectile/Proj) //wrapper
+/obj/mecha/bullet_act(var/obj/item/weapon/projectile/Proj) //wrapper
 	src.log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
 	..()
 	return
 
-/obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
+/obj/mecha/proc/dynbulletdamage(var/obj/item/weapon/projectile/Proj)
 	if(prob(src.deflect_chance))
 		src.occupant_message("\blue The armor deflects incoming projectile.")
 		src.visible_message("The [src.name] armor deflects the projectile")
@@ -512,7 +512,7 @@
 	if(Proj.flag == "taser")
 		use_power(200)
 		return
-	if(istype(Proj, /obj/item/projectile/beam/pulse))
+	if(istype(Proj, /obj/item/weapon/projectile/beam/pulse))
 		ignore_threshold = 1
 	src.take_damage(Proj.damage,Proj.flag)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
@@ -541,7 +541,7 @@
 			spawn(0)
 				if(wreckage)
 					var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
-					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+					for(var/obj/item/part/mecha/mecha_equipment/E in equipment)
 						if(E.salvageable && prob(30))
 							WR.crowbar_salvage += E
 							E.forceMove(WR)
@@ -558,7 +558,7 @@
 						WR.crowbar_salvage += internal_tank
 						internal_tank.forceMove(WR)
 				else
-					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+					for(var/obj/item/part/mecha/mecha_equipment/E in equipment)
 						E.forceMove(T)
 						E.destroy()
 		spawn(0)
@@ -651,15 +651,15 @@
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if(istype(W, /obj/item/device/mmi))
+	if(istype(W, /obj/item/medical/mmi))
 		if(mmi_move_inside(W,user))
 			user << "[src]-MMI interface initialized successfuly"
 		else
 			user << "[src]-MMI interface initialization failed."
 		return
 
-	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
-		var/obj/item/mecha_parts/mecha_equipment/E = W
+	if(istype(W, /obj/item/part/mecha/mecha_equipment))
+		var/obj/item/part/mecha/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
 				user.drop_item()
@@ -668,11 +668,11 @@
 			else
 				user << "You were unable to attach [W] to [src]"
 		return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/security/card/id)||istype(W, /obj/item/device/pda))
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(usr))
-				var/obj/item/weapon/card/id/id_card
-				if(istype(W, /obj/item/weapon/card/id))
+				var/obj/item/security/card/id/id_card
+				if(istype(W, /obj/item/security/card/id))
 					id_card = W
 				else
 					var/obj/item/device/pda/pda = W
@@ -683,7 +683,7 @@
 				user << "\red Invalid ID: Access denied."
 		else
 			user << "\red Maintenance protocols disabled by operator."
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/tool/wrench))
 		if(state==1)
 			state = 2
 			user << "You undo the securing bolts."
@@ -691,7 +691,7 @@
 			state = 1
 			user << "You tighten the securing bolts."
 		return
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/tool/crowbar))
 		if(state==2)
 			state = 3
 			user << "You open the hatch to the power unit"
@@ -699,9 +699,9 @@
 			state=2
 			user << "You close the hatch to the power unit"
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/part/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/weapon/cable_coil/CC = W
+			var/obj/item/part/cable_coil/CC = W
 			if(CC.amount > 1)
 				CC.use(2)
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
@@ -709,7 +709,7 @@
 			else
 				user << "There's not enough wire to finish the task."
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/tool/screwdriver))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			user << "You repair the damaged temperature controller."
@@ -724,7 +724,7 @@
 			user << "You screw the cell in place"
 		return
 
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/part/cell))
 		if(state==4)
 			if(!src.cell)
 				user << "You install the powercell"
@@ -736,8 +736,8 @@
 				user << "There's already a powercell installed."
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/tool/welder) && user.a_intent != "harm")
+		var/obj/item/tool/welder/WT = W
 		if (WT.remove_fuel(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
@@ -751,7 +751,7 @@
 			user << "The [src.name] is at full integrity"
 		return
 
-	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
+	else if(istype(W, /obj/item/part/mecha/mecha_tracking))
 		user.drop_from_inventory(W)
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
@@ -1005,7 +1005,7 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_move_inside(var/obj/item/medical/mmi/mmi_as_oc as obj,mob/user as mob)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "Consciousness matrix not detected."
 		return 0
@@ -1032,7 +1032,7 @@
 		user << "You stop inserting the MMI."
 	return 0
 
-/obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_moved_inside(var/obj/item/medical/mmi/mmi_as_oc as obj,mob/user as mob)
 	if(mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			user << "Consciousness matrix not detected."
@@ -1136,8 +1136,8 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
-		if(istype(mob_container, /obj/item/device/mmi))
-			var/obj/item/device/mmi/mmi = mob_container
+		if(istype(mob_container, /obj/item/medical/mmi))
+			var/obj/item/medical/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
 			mmi.mecha = null
@@ -1166,7 +1166,7 @@
 	return 0
 
 
-/obj/mecha/check_access(obj/item/weapon/card/id/I, list/access_list)
+/obj/mecha/check_access(obj/item/security/card/id/I, list/access_list)
 	if(!istype(access_list))
 		return 1
 	if(!access_list.len) //no requirements
@@ -1322,7 +1322,7 @@
 		output += {"<div class='wr'>
 						<div class='header'>Equipment</div>
 						<div class='links'>"}
-		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
+		for(var/obj/item/part/mecha/mecha_equipment/W in equipment)
 			output += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
 		output += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
 		output += "</div></div>"
@@ -1332,7 +1332,7 @@
 	if(!equipment.len)
 		return
 	var/output = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
-	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
+	for(var/obj/item/part/mecha/mecha_equipment/MT in equipment)
 		output += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
 	output += "</div>"
 	return output
@@ -1348,7 +1348,7 @@
 	return output
 
 
-/obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
+/obj/mecha/proc/output_access_dialog(obj/item/security/card/id/id_card, mob/user)
 	if(!id_card || !user) return
 	var/output = {"<html>
 						<head><style>
@@ -1373,7 +1373,7 @@
 	onclose(user, "exosuit_add_access")
 	return
 
-/obj/mecha/proc/output_maintenance_dialog(obj/item/weapon/card/id/id_card,mob/user)
+/obj/mecha/proc/output_maintenance_dialog(obj/item/security/card/id/id_card,mob/user)
 	if(!id_card || !user) return
 	var/output = {"<html>
 						<head>
@@ -1431,7 +1431,7 @@
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])
 		if(usr != src.occupant)	return
-		var/obj/item/mecha_parts/mecha_equipment/equip = filter.getObj("select_equip")
+		var/obj/item/part/mecha/mecha_equipment/equip = filter.getObj("select_equip")
 		if(equip)
 			src.selected = equip
 			src.occupant_message("You switch to [equip]")

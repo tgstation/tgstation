@@ -1,19 +1,19 @@
 // APC HULL
 
-/obj/item/apc_frame
+/obj/item/part/frame/apc
 	name = "APC frame"
 	desc = "Used for repairing or building APCs"
 	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "apc_frame"
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/apc_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/part/frame/apc/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+	if (istype(W, /obj/item/tool/wrench))
+		new /obj/item/part/stack/sheet/metal( get_turf(src.loc), 2 )
 		del(src)
 
-/obj/item/apc_frame/proc/try_build(turf/on_wall)
+/obj/item/part/frame/apc/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
 		return
 	var/ndir = get_dir(usr,on_wall)
@@ -35,7 +35,7 @@
 			usr << "\red There is another network terminal here."
 			return
 		else
-			var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(loc)
+			var/obj/item/part/cable_coil/C = new /obj/item/part/cable_coil(loc)
 			C.amount = 10
 			usr << "You cut the cables and disassemble the unused power terminal."
 			del(T)

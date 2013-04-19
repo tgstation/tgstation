@@ -6,7 +6,7 @@
 	max_shells = 18
 	caliber = "9mm"
 	origin_tech = "combat=4;materials=2"
-	ammo_type = "/obj/item/ammo_casing/c9mm"
+	ammo_type = "/obj/item/weapon/ammo/casing/c9mm"
 
 
 
@@ -18,7 +18,7 @@
 	max_shells = 16
 	caliber = ".45"
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = "/obj/item/ammo_casing/c45"
+	ammo_type = "/obj/item/weapon/ammo/casing/c45"
 
 
 
@@ -31,14 +31,14 @@
 	max_shells = 20
 	caliber = "12mm"
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = "/obj/item/ammo_casing/a12mm"
+	ammo_type = "/obj/item/weapon/ammo/casing/a12mm"
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	load_method = 2
 
 
 	New()
 		..()
-		empty_mag = new /obj/item/ammo_magazine/a12mm/empty(src)
+		empty_mag = new /obj/item/weapon/ammo/magazine/a12mm/empty(src)
 		update_icon()
 		return
 
@@ -73,7 +73,7 @@
 	max_shells = 50
 	caliber = "a762"
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	ammo_type = "/obj/item/ammo_casing/a762"
+	ammo_type = "/obj/item/weapon/ammo/casing/a762"
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	load_method = 2
 	var/cover_open = 0
@@ -106,7 +106,7 @@
 		..()
 	else if(cover_open && mag_inserted)
 		//drop the mag
-		empty_mag = new /obj/item/ammo_magazine/a762(src)
+		empty_mag = new /obj/item/weapon/ammo/magazine/a762(src)
 		empty_mag.stored_ammo = loaded
 		empty_mag.icon_state = "a762-[round(loaded.len, 10)]"
 		empty_mag.desc = "There are [loaded.len] shells left!"

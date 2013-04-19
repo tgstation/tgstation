@@ -38,86 +38,86 @@
 	var/temp
 	var/list/part_sets = list( //set names must be unique
 	"Cyborg"=list(
-						/obj/item/robot_parts/robot_suit,
-						/obj/item/robot_parts/chest,
-						/obj/item/robot_parts/head,
-						/obj/item/robot_parts/l_arm,
-						/obj/item/robot_parts/r_arm,
-						/obj/item/robot_parts/l_leg,
-						/obj/item/robot_parts/r_leg
+						/obj/item/part/cyborg/robot_suit,
+						/obj/item/part/cyborg/chest,
+						/obj/item/part/cyborg/head,
+						/obj/item/part/cyborg/l_arm,
+						/obj/item/part/cyborg/r_arm,
+						/obj/item/part/cyborg/l_leg,
+						/obj/item/part/cyborg/r_leg
 					),
 	"Ripley"=list(
-						/obj/item/mecha_parts/chassis/ripley,
-						/obj/item/mecha_parts/part/ripley_torso,
-						/obj/item/mecha_parts/part/ripley_left_arm,
-						/obj/item/mecha_parts/part/ripley_right_arm,
-						/obj/item/mecha_parts/part/ripley_left_leg,
-						/obj/item/mecha_parts/part/ripley_right_leg
+						/obj/item/part/mecha/chassis/ripley,
+						/obj/item/part/mecha/part/ripley_torso,
+						/obj/item/part/mecha/part/ripley_left_arm,
+						/obj/item/part/mecha/part/ripley_right_arm,
+						/obj/item/part/mecha/part/ripley_left_leg,
+						/obj/item/part/mecha/part/ripley_right_leg
 					),
 	"Odysseus"=list(
-						/obj/item/mecha_parts/chassis/odysseus,
-						/obj/item/mecha_parts/part/odysseus_torso,
-						/obj/item/mecha_parts/part/odysseus_head,
-						/obj/item/mecha_parts/part/odysseus_left_arm,
-						/obj/item/mecha_parts/part/odysseus_right_arm,
-						/obj/item/mecha_parts/part/odysseus_left_leg,
-						/obj/item/mecha_parts/part/odysseus_right_leg
+						/obj/item/part/mecha/chassis/odysseus,
+						/obj/item/part/mecha/part/odysseus_torso,
+						/obj/item/part/mecha/part/odysseus_head,
+						/obj/item/part/mecha/part/odysseus_left_arm,
+						/obj/item/part/mecha/part/odysseus_right_arm,
+						/obj/item/part/mecha/part/odysseus_left_leg,
+						/obj/item/part/mecha/part/odysseus_right_leg
 					),
 
 	"Gygax"=list(
-						/obj/item/mecha_parts/chassis/gygax,
-						/obj/item/mecha_parts/part/gygax_torso,
-						/obj/item/mecha_parts/part/gygax_head,
-						/obj/item/mecha_parts/part/gygax_left_arm,
-						/obj/item/mecha_parts/part/gygax_right_arm,
-						/obj/item/mecha_parts/part/gygax_left_leg,
-						/obj/item/mecha_parts/part/gygax_right_leg,
-						/obj/item/mecha_parts/part/gygax_armour
+						/obj/item/part/mecha/chassis/gygax,
+						/obj/item/part/mecha/part/gygax_torso,
+						/obj/item/part/mecha/part/gygax_head,
+						/obj/item/part/mecha/part/gygax_left_arm,
+						/obj/item/part/mecha/part/gygax_right_arm,
+						/obj/item/part/mecha/part/gygax_left_leg,
+						/obj/item/part/mecha/part/gygax_right_leg,
+						/obj/item/part/mecha/part/gygax_armour
 					),
 	"Durand"=list(
-						/obj/item/mecha_parts/chassis/durand,
-						/obj/item/mecha_parts/part/durand_torso,
-						/obj/item/mecha_parts/part/durand_head,
-						/obj/item/mecha_parts/part/durand_left_arm,
-						/obj/item/mecha_parts/part/durand_right_arm,
-						/obj/item/mecha_parts/part/durand_left_leg,
-						/obj/item/mecha_parts/part/durand_right_leg,
-						/obj/item/mecha_parts/part/durand_armour
+						/obj/item/part/mecha/chassis/durand,
+						/obj/item/part/mecha/part/durand_torso,
+						/obj/item/part/mecha/part/durand_head,
+						/obj/item/part/mecha/part/durand_left_arm,
+						/obj/item/part/mecha/part/durand_right_arm,
+						/obj/item/part/mecha/part/durand_left_leg,
+						/obj/item/part/mecha/part/durand_right_leg,
+						/obj/item/part/mecha/part/durand_armour
 					),
 	"H.O.N.K"=list(
-						/obj/item/mecha_parts/chassis/honker,
-						/obj/item/mecha_parts/part/honker_torso,
-						/obj/item/mecha_parts/part/honker_head,
-						/obj/item/mecha_parts/part/honker_left_arm,
-						/obj/item/mecha_parts/part/honker_right_arm,
-						/obj/item/mecha_parts/part/honker_left_leg,
-						/obj/item/mecha_parts/part/honker_right_leg
+						/obj/item/part/mecha/chassis/honker,
+						/obj/item/part/mecha/part/honker_torso,
+						/obj/item/part/mecha/part/honker_head,
+						/obj/item/part/mecha/part/honker_left_arm,
+						/obj/item/part/mecha/part/honker_right_arm,
+						/obj/item/part/mecha/part/honker_left_leg,
+						/obj/item/part/mecha/part/honker_right_leg
 						),
 	"Exosuit Equipment"=list(
-						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
-						/obj/item/mecha_parts/mecha_equipment/tool/drill,
-						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
-						/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
-						/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
-						/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
-						/obj/item/mecha_parts/chassis/firefighter,
-						///obj/item/mecha_parts/mecha_equipment/repair_droid,
-						/obj/item/mecha_parts/mecha_equipment/generator,
-						///obj/item/mecha_parts/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
-						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
-						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
-						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/honker
+						/obj/item/part/mecha/mecha_equipment/tool/hydraulic_clamp,
+						/obj/item/part/mecha/mecha_equipment/tool/drill,
+						/obj/item/part/mecha/mecha_equipment/tool/extinguisher,
+						/obj/item/part/mecha/mecha_equipment/tool/cable_layer,
+						/obj/item/part/mecha/mecha_equipment/tool/sleeper,
+						/obj/item/part/mecha/mecha_equipment/tool/syringe_gun,
+						/obj/item/part/mecha/chassis/firefighter,
+						///obj/item/part/mecha/mecha_equipment/repair_droid,
+						/obj/item/part/mecha/mecha_equipment/generator,
+						///obj/item/part/mecha/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
+						/obj/item/part/mecha/mecha_equipment/weapon/energy/taser,
+						/obj/item/part/mecha/mecha_equipment/weapon/ballistic/lmg,
+						/obj/item/part/mecha/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
+						/obj/item/part/mecha/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
+						/obj/item/part/mecha/mecha_equipment/weapon/honker
 						),
 
 	"Cyborg Upgrade Modules" = list(
-						/obj/item/borg/upgrade/reset,
-						/obj/item/borg/upgrade/rename,
-						/obj/item/borg/upgrade/restart,
-						/obj/item/borg/upgrade/vtec,
-						/obj/item/borg/upgrade/tasercooler,
-						/obj/item/borg/upgrade/jetpack
+						/obj/item/part/cyborg/equipment/upgrade/reset,
+						/obj/item/part/cyborg/equipment/upgrade/rename,
+						/obj/item/part/cyborg/equipment/upgrade/restart,
+						/obj/item/part/cyborg/equipment/upgrade/vtec,
+						/obj/item/part/cyborg/equipment/upgrade/tasercooler,
+						/obj/item/part/cyborg/equipment/upgrade/jetpack
 						),
 
 
@@ -125,7 +125,7 @@
 
 
 
-	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
+	"Misc"=list(/obj/item/part/mecha/mecha_tracking)
 	)
 
 
@@ -134,15 +134,15 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/part/circuitboard/mechfab(src)
+	component_parts += new /obj/item/part/basic/matter_bin(src)
+	component_parts += new /obj/item/part/basic/matter_bin(src)
+	component_parts += new /obj/item/part/basic/manipulator(src)
+	component_parts += new /obj/item/part/basic/micro_laser(src)
+	component_parts += new /obj/item/part/basic/console_screen(src)
 	RefreshParts()
 
-	//	part_sets["Cyborg Upgrade Modules"] = typesof(/obj/item/borg/upgrade/) - /obj/item/borg/upgrade/  // Eh.  This does it dymaically, but to support having the items referenced otherwhere in the code but not being constructable, going to do it manaully.
+	//	part_sets["Cyborg Upgrade Modules"] = typesof(/obj/item/part/cyborg/equipment/upgrade/) - /obj/item/part/cyborg/equipment/upgrade/  // Eh.  This does it dymaically, but to support having the items referenced otherwhere in the code but not being constructable, going to do it manaully.
 
 	for(var/part_set in part_sets)
 		convert_part_set(part_set)
@@ -157,11 +157,11 @@
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/part/basic/matter_bin/M in component_parts)
 		T += M.rating
 	res_max_amount = (187500+(T * 37500))
 	T = 0
-	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+	for(var/obj/item/part/basic/micro_laser/Ma in component_parts)
 		T += Ma.rating
 	if(T >= 1)
 		T -= 1
@@ -170,7 +170,7 @@
 	if(resource_coeff!=diff)
 		resource_coeff = diff
 	T = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
+	for(var/obj/item/part/basic/manipulator/Ml in component_parts)
 		T += Ml.rating
 	if(T>= 2)
 		T -= 2
@@ -197,7 +197,7 @@
 	M << "<font color='red'>You don't have required permissions to use [src]</font>"
 	return 0
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
+/obj/machinery/mecha_part_fabricator/check_access(obj/item/security/card/id/I)
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
@@ -292,8 +292,8 @@
 /*
 	New()
 		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
+		src.add_part_to_set("Test",list("result"="/obj/item/part/mecha/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/part/mecha/part/ripley_left_arm","time"=200,"metal"=25000))
 		src.remove_part_set("Gygax")
 		return
 */
@@ -343,7 +343,7 @@
 		return
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
-//		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
+//		if(istype(part, /obj/item/part/cyborg) || istype(part, /obj/item/part/mecha) || istype(part,/obj/item/part/cyborg/equipment/upgrade))
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 		for(var/resource in part:construction_cost)
@@ -464,7 +464,7 @@
 			switch(T.id) //bad, bad formulas
 				if("materials")
 					var/pmat = 0//Calculations to make up for the fact that these parts and tech modify the same thing
-					for(var/obj/item/weapon/stock_parts/micro_laser/Ml in component_parts)
+					for(var/obj/item/part/basic/micro_laser/Ml in component_parts)
 						pmat += Ml.rating
 					if(pmat >= 1)
 						pmat -= 1//So the equations don't have to be reworked, upgrading a single part from T1 to T2 is == to 1 tech level
@@ -474,7 +474,7 @@
 						output+="Production efficiency increased.<br>"
 				if("programming")
 					var/ptime = 0
-					for(var/obj/item/weapon/stock_parts/manipulator/Ma in component_parts)
+					for(var/obj/item/part/basic/manipulator/Ma in component_parts)
 						ptime += Ma.rating
 					if(ptime >= 2)
 						ptime -= 2
@@ -673,25 +673,25 @@
 	var/type
 	switch(mat_string)
 		if("metal")
-			type = /obj/item/stack/sheet/metal
+			type = /obj/item/part/stack/sheet/metal
 		if("glass")
-			type = /obj/item/stack/sheet/glass
+			type = /obj/item/part/stack/sheet/glass
 		if("gold")
-			type = /obj/item/stack/sheet/mineral/gold
+			type = /obj/item/part/stack/sheet/mineral/gold
 		if("silver")
-			type = /obj/item/stack/sheet/mineral/silver
+			type = /obj/item/part/stack/sheet/mineral/silver
 		if("diamond")
-			type = /obj/item/stack/sheet/mineral/diamond
+			type = /obj/item/part/stack/sheet/mineral/diamond
 		if("plasma")
-			type = /obj/item/stack/sheet/mineral/plasma
+			type = /obj/item/part/stack/sheet/mineral/plasma
 		if("uranium")
-			type = /obj/item/stack/sheet/mineral/uranium
+			type = /obj/item/part/stack/sheet/mineral/uranium
 		if("bananium")
-			type = /obj/item/stack/sheet/mineral/clown
+			type = /obj/item/part/stack/sheet/mineral/clown
 		else
 			return 0
 	var/result = 0
-	var/obj/item/stack/sheet/res = new type(src)
+	var/obj/item/part/stack/sheet/res = new type(src)
 	var/total_amount = round(resources[mat_string]/res.perunit)
 	res.amount = min(total_amount,amount)
 	if(res.amount>0)
@@ -704,7 +704,7 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(istype(W,/obj/item/tool/screwdriver))
 		if (!opened)
 			opened = 1
 			icon_state = "fab-o"
@@ -715,7 +715,7 @@
 			user << "You close the maintenance hatch of [src]."
 		return
 	if (opened)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(istype(W, /obj/item/tool/crowbar))
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
@@ -725,28 +725,28 @@
 					I.crit_fail = 1
 				I.loc = src.loc
 			if(src.resources["metal"] >= 3750)
-				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+				var/obj/item/part/stack/sheet/metal/G = new /obj/item/part/stack/sheet/metal(src.loc)
 				G.amount = round(src.resources["metal"] / G.perunit)
 			if(src.resources["glass"] >= 3750)
-				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+				var/obj/item/part/stack/sheet/glass/G = new /obj/item/part/stack/sheet/glass(src.loc)
 				G.amount = round(src.resources["glass"] / G.perunit)
 			if(src.resources["plasma"] >= 2000)
-				var/obj/item/stack/sheet/mineral/plasma/G = new /obj/item/stack/sheet/mineral/plasma(src.loc)
+				var/obj/item/part/stack/sheet/mineral/plasma/G = new /obj/item/part/stack/sheet/mineral/plasma(src.loc)
 				G.amount = round(src.resources["plasma"] / G.perunit)
 			if(src.resources["silver"] >= 2000)
-				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
+				var/obj/item/part/stack/sheet/mineral/silver/G = new /obj/item/part/stack/sheet/mineral/silver(src.loc)
 				G.amount = round(src.resources["silver"] / G.perunit)
 			if(src.resources["gold"] >= 2000)
-				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
+				var/obj/item/part/stack/sheet/mineral/gold/G = new /obj/item/part/stack/sheet/mineral/gold(src.loc)
 				G.amount = round(src.resources["gold"] / G.perunit)
 			if(src.resources["uranium"] >= 2000)
-				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
+				var/obj/item/part/stack/sheet/mineral/uranium/G = new /obj/item/part/stack/sheet/mineral/uranium(src.loc)
 				G.amount = round(src.resources["uranium"] / G.perunit)
 			if(src.resources["diamond"] >= 2000)
-				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
+				var/obj/item/part/stack/sheet/mineral/diamond/G = new /obj/item/part/stack/sheet/mineral/diamond(src.loc)
 				G.amount = round(src.resources["diamond"] / G.perunit)
 			if(src.resources["bananium"] >= 2000)
-				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
+				var/obj/item/part/stack/sheet/mineral/clown/G = new /obj/item/part/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
 			del(src)
 			return 1
@@ -754,26 +754,26 @@
 			user << "\red You can't load the [src.name] while it's opened."
 			return 1
 
-	if(istype(W, /obj/item/weapon/card/emag))
+	if(istype(W, /obj/item/security/card/emag))
 		emag()
 		return
 	var/material
 	switch(W.type)
-		if(/obj/item/stack/sheet/mineral/gold)
+		if(/obj/item/part/stack/sheet/mineral/gold)
 			material = "gold"
-		if(/obj/item/stack/sheet/mineral/silver)
+		if(/obj/item/part/stack/sheet/mineral/silver)
 			material = "silver"
-		if(/obj/item/stack/sheet/mineral/diamond)
+		if(/obj/item/part/stack/sheet/mineral/diamond)
 			material = "diamond"
-		if(/obj/item/stack/sheet/mineral/plasma)
+		if(/obj/item/part/stack/sheet/mineral/plasma)
 			material = "plasma"
-		if(/obj/item/stack/sheet/metal)
+		if(/obj/item/part/stack/sheet/metal)
 			material = "metal"
-		if(/obj/item/stack/sheet/glass)
+		if(/obj/item/part/stack/sheet/glass)
 			material = "glass"
-		if(/obj/item/stack/sheet/mineral/clown)
+		if(/obj/item/part/stack/sheet/mineral/clown)
 			material = "bananium"
-		if(/obj/item/stack/sheet/mineral/uranium)
+		if(/obj/item/part/stack/sheet/mineral/uranium)
 			material = "uranium"
 		else
 			return ..()
@@ -781,7 +781,7 @@
 	if(src.being_built)
 		user << "The fabricator is currently processing. Please wait until completion."
 		return
-	var/obj/item/stack/sheet/stack = W
+	var/obj/item/part/stack/sheet/stack = W
 	var/sname = "[stack.name]"
 	var/amnt = stack.perunit
 	if(src.resources[material] < res_max_amount)

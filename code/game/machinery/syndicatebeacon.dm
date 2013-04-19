@@ -170,7 +170,7 @@
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/weapon/screwdriver))
+		if(istype(W,/obj/item/tool/screwdriver))
 			if(active)
 				user << "\red You need to deactivate the beacon first!"
 				return

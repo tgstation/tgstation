@@ -227,18 +227,18 @@
 	new /turf/simulated/floor/plating/airless/asteroid(T)
 
 
-/turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/mineral/attackby(obj/item/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
-	if (istype(W, /obj/item/weapon/pickaxe))
+	if (istype(W, /obj/item/mining/pickaxe))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
 /*
-	if (istype(W, /obj/item/weapon/pickaxe/radius))
+	if (istype(W, /obj/item/mining/pickaxe/radius))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -263,19 +263,19 @@
 		var/i
 		for (i=0;i<mineralAmt;i++)
 			if (src.mineralName == "Uranium")
-				new /obj/item/weapon/ore/uranium(src)
+				new /obj/item/mining/ore/uranium(src)
 			if (src.mineralName == "Iron")
-				new /obj/item/weapon/ore/iron(src)
+				new /obj/item/mining/ore/iron(src)
 			if (src.mineralName == "Gold")
-				new /obj/item/weapon/ore/gold(src)
+				new /obj/item/mining/ore/gold(src)
 			if (src.mineralName == "Silver")
-				new /obj/item/weapon/ore/silver(src)
+				new /obj/item/mining/ore/silver(src)
 			if (src.mineralName == "Plasma")
-				new /obj/item/weapon/ore/plasma(src)
+				new /obj/item/mining/ore/plasma(src)
 			if (src.mineralName == "Diamond")
-				new /obj/item/weapon/ore/diamond(src)
+				new /obj/item/mining/ore/diamond(src)
 			if (src.mineralName == "Clown")
-				new /obj/item/weapon/ore/clown(src)
+				new /obj/item/mining/ore/clown(src)
 	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
 	N.fullUpdateMineralOverlays()
 	return
@@ -298,19 +298,19 @@
 	..()
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
+		if((istype(H.l_hand,/obj/item/mining/pickaxe)) && (!H.hand))
 			src.attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
+		else if((istype(H.r_hand,/obj/item/mining/pickaxe)) && H.hand)
 			src.attackby(H.r_hand,H)
 		return
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+		if(istype(R.module_active,/obj/item/mining/pickaxe))
 			src.attackby(R.module_active,R)
 			return
 /*	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/part/mecha/mecha_equipment/tool/drill))
 			src.attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
@@ -357,7 +357,7 @@
 	if(!W || !user)
 		return 0
 
-	if ((istype(W, /obj/item/weapon/shovel)))
+	if ((istype(W, /obj/item/mining/shovel)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -374,7 +374,7 @@
 			user << "\blue You dug a hole."
 			gets_dug()
 
-	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
+	if ((istype(W,/obj/item/mining/pickaxe/drill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -391,7 +391,7 @@
 			user << "\blue You dug a hole."
 			gets_dug()
 
-	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
+	if ((istype(W,/obj/item/mining/pickaxe/diamonddrill)) || (istype(W,/obj/item/mining/pickaxe/borgdrill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -408,10 +408,10 @@
 			user << "\blue You dug a hole."
 			gets_dug()
 
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
-		var/obj/item/weapon/storage/bag/ore/S = W
+	if(istype(W,/obj/item/storage/bag/ore))
+		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode)
-			for(var/obj/item/weapon/ore/O in src.contents)
+			for(var/obj/item/mining/ore/O in src.contents)
 				O.attackby(W,user)
 				return
 
@@ -422,11 +422,11 @@
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/mining/ore/glass(src)
+	new/obj/item/mining/ore/glass(src)
+	new/obj/item/mining/ore/glass(src)
+	new/obj/item/mining/ore/glass(src)
+	new/obj/item/mining/ore/glass(src)
 	dug = 1
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
@@ -478,12 +478,12 @@
 	..()
 	if(istype(M,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
+		if(istype(R.module, /obj/item/part/cyborg/module/miner))
+			if(istype(R.module_state_1,/obj/item/storage/bag/ore))
 				src.attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
+			else if(istype(R.module_state_2,/obj/item/storage/bag/ore))
 				src.attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
+			else if(istype(R.module_state_3,/obj/item/storage/bag/ore))
 				src.attackby(R.module_state_3,R)
 			else
 				return

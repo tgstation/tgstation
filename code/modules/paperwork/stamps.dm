@@ -1,4 +1,4 @@
-/obj/item/weapon/stamp
+/obj/item/office/stamp
 	name = "rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -14,46 +14,46 @@
 	pressure_resistance = 2
 	attack_verb = list("stamped")
 
-/obj/item/weapon/stamp/captain
+/obj/item/office/stamp/captain
 	name = "captain's rubber stamp"
 	icon_state = "stamp-cap"
 	color = "captain"
 
-/obj/item/weapon/stamp/hop
+/obj/item/office/stamp/hop
 	name = "head of personnel's rubber stamp"
 	icon_state = "stamp-hop"
 	color = "hop"
 
-/obj/item/weapon/stamp/hos
+/obj/item/office/stamp/hos
 	name = "head of security's rubber stamp"
 	icon_state = "stamp-hos"
 	color = "hosred"
 
-/obj/item/weapon/stamp/ce
+/obj/item/office/stamp/ce
 	name = "chief engineer's rubber stamp"
 	icon_state = "stamp-ce"
 	color = "chief"
 
-/obj/item/weapon/stamp/rd
+/obj/item/office/stamp/rd
 	name = "research director's rubber stamp"
 	icon_state = "stamp-rd"
 	color = "director"
 
-/obj/item/weapon/stamp/cmo
+/obj/item/office/stamp/cmo
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
 	color = "medical"
 
-/obj/item/weapon/stamp/denied
+/obj/item/office/stamp/denied
 	name = "\improper DENIED rubber stamp"
 	icon_state = "stamp-deny"
 	color = "redcoat"
 
-/obj/item/weapon/stamp/clown
+/obj/item/office/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 	color = "clown"
 
 
-/obj/item/weapon/stamp/attack_paw(mob/user)
+/obj/item/office/stamp/attack_paw(mob/user)
 	return attack_hand(user)

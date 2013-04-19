@@ -6,21 +6,21 @@
 	icon_state = "0"
 	var/state = 0
 	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
-	var/obj/item/weapon/circuitboard/circuit = null
-	var/obj/item/device/mmi/brain = null
+	var/obj/item/part/circuitboard/circuit = null
+	var/obj/item/medical/mmi/brain = null
 
 
 /obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(istype(P, /obj/item/tool/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You wrench the frame into place."
 					anchored = 1
 					state = 1
-			if(istype(P, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = P
+			if(istype(P, /obj/item/tool/welder))
+				var/obj/item/tool/welder/WT = P
 				if(!WT.isOn())
 					user << "The welder must be on for this task."
 					return
@@ -28,28 +28,28 @@
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "\blue You deconstruct the frame."
-					new /obj/item/stack/sheet/plasteel( loc, 4)
+					new /obj/item/part/stack/sheet/plasteel( loc, 4)
 					del(src)
 		if(1)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(istype(P, /obj/item/tool/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You unfasten the frame."
 					anchored = 0
 					state = 0
-			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
+			if(istype(P, /obj/item/part/circuitboard/aicore) && !circuit)
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				user << "\blue You place the circuit board inside the frame."
 				icon_state = "1"
 				circuit = P
 				user.drop_item()
 				P.loc = src
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(istype(P, /obj/item/tool/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You screw the circuit board into place."
 				state = 2
 				icon_state = "2"
-			if(istype(P, /obj/item/weapon/crowbar) && circuit)
+			if(istype(P, /obj/item/tool/crowbar) && circuit)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the circuit board."
 				state = 1
@@ -57,12 +57,12 @@
 				circuit.loc = loc
 				circuit = null
 		if(2)
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(istype(P, /obj/item/tool/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You unfasten the circuit board."
 				state = 1
 				icon_state = "1"
-			if(istype(P, /obj/item/weapon/cable_coil))
+			if(istype(P, /obj/item/part/cable_coil))
 				if(P:amount >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
@@ -72,7 +72,7 @@
 						state = 3
 						icon_state = "3"
 		if(3)
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(istype(P, /obj/item/part/wirecutters))
 				if (brain)
 					user << "Get that brain out of there first"
 				else
@@ -80,10 +80,10 @@
 					user << "\blue You remove the cables."
 					state = 2
 					icon_state = "2"
-					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( loc )
+					var/obj/item/part/cable_coil/A = new /obj/item/part/cable_coil( loc )
 					A.amount = 5
 
-			if(istype(P, /obj/item/stack/sheet/rglass))
+			if(istype(P, /obj/item/part/stack/sheet/rglass))
 				if(P:amount >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
@@ -94,23 +94,23 @@
 							state = 4
 							icon_state = "4"
 
-			if(istype(P, /obj/item/weapon/aiModule/asimov))
+			if(istype(P, /obj/item/part/board/aiModule/asimov))
 				laws.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 				laws.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 				laws.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 				usr << "Law module applied."
 
-			if(istype(P, /obj/item/weapon/aiModule/purge))
+			if(istype(P, /obj/item/part/board/aiModule/purge))
 				laws.clear_inherent_laws()
 				usr << "Law module applied."
 
 
-			if(istype(P, /obj/item/weapon/aiModule/freeform))
-				var/obj/item/weapon/aiModule/freeform/M = P
+			if(istype(P, /obj/item/part/board/aiModule/freeform))
+				var/obj/item/part/board/aiModule/freeform/M = P
 				laws.add_inherent_law(M.newFreeFormLaw)
 				usr << "Added a freeform law."
 
-			if(istype(P, /obj/item/device/mmi))
+			if(istype(P, /obj/item/medical/mmi))
 				if(!P:brainmob)
 					user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
 					return
@@ -136,7 +136,7 @@
 				usr << "Added a brain."
 				icon_state = "3b"
 
-			if(istype(P, /obj/item/weapon/crowbar) && brain)
+			if(istype(P, /obj/item/tool/crowbar) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the brain."
 				brain.loc = loc
@@ -144,7 +144,7 @@
 				icon_state = "3"
 
 		if(4)
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(istype(P, /obj/item/tool/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				state = 3
@@ -152,10 +152,10 @@
 					icon_state = "3b"
 				else
 					icon_state = "3"
-				new /obj/item/stack/sheet/rglass( loc, 2 )
+				new /obj/item/part/stack/sheet/rglass( loc, 2 )
 				return
 
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(istype(P, /obj/item/tool/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )

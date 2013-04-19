@@ -1,6 +1,6 @@
 
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+/obj/item/chem/food/drinks/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
@@ -433,13 +433,13 @@
 			return
 
 // for /obj/machinery/vending/sovietsoda
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
+/obj/item/chem/food/drinks/drinkingglass/soda
 	New()
 		..()
 		reagents.add_reagent("sodawater", 50)
 		on_reagent_change()
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
+/obj/item/chem/food/drinks/drinkingglass/cola
 	New()
 		..()
 		reagents.add_reagent("cola", 50)

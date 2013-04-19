@@ -6,7 +6,7 @@
 	icon_state = "purple baby slime"
 	primarytype = /mob/living/carbon/slime/purple
 	adulttype = /mob/living/carbon/slime/adult/purple
-	coretype = /obj/item/slime_extract/purple
+	coretype = /obj/item/slime/extract/purple
 
 
 /mob/living/carbon/slime/adult/purple
@@ -14,7 +14,7 @@
 	colour = "purple"
 	primarytype = /mob/living/carbon/slime/purple
 	adulttype = /mob/living/carbon/slime/adult/purple
-	coretype = /obj/item/slime_extract/purple
+	coretype = /obj/item/slime/extract/purple
 
 	New()
 		..()
@@ -28,14 +28,14 @@
 	icon_state = "metal baby slime"
 	primarytype = /mob/living/carbon/slime/metal
 	adulttype = /mob/living/carbon/slime/adult/metal
-	coretype = /obj/item/slime_extract/metal
+	coretype = /obj/item/slime/extract/metal
 
 /mob/living/carbon/slime/adult/metal
 	icon_state = "metal adult slime"
 	colour = "metal"
 	primarytype = /mob/living/carbon/slime/metal
 	adulttype = /mob/living/carbon/slime/adult/metal
-	coretype = /obj/item/slime_extract/metal
+	coretype = /obj/item/slime/extract/metal
 
 	New()
 		..()
@@ -49,14 +49,14 @@
 	icon_state = "orange baby slime"
 	primarytype = /mob/living/carbon/slime/orange
 	adulttype = /mob/living/carbon/slime/adult/orange
-	coretype = /obj/item/slime_extract/orange
+	coretype = /obj/item/slime/extract/orange
 
 /mob/living/carbon/slime/adult/orange
 	colour = "orange"
 	icon_state = "orange adult slime"
 	primarytype = /mob/living/carbon/slime/orange
 	adulttype = /mob/living/carbon/slime/adult/orange
-	coretype = /obj/item/slime_extract/orange
+	coretype = /obj/item/slime/extract/orange
 
 	New()
 		..()
@@ -70,14 +70,14 @@
 	icon_state = "blue baby slime"
 	primarytype = /mob/living/carbon/slime/blue
 	adulttype = /mob/living/carbon/slime/adult/blue
-	coretype = /obj/item/slime_extract/blue
+	coretype = /obj/item/slime/extract/blue
 
 /mob/living/carbon/slime/adult/blue
 	icon_state = "blue adult slime"
 	colour = "blue"
 	primarytype = /mob/living/carbon/slime/blue
 	adulttype = /mob/living/carbon/slime/adult/blue
-	coretype = /obj/item/slime_extract/blue
+	coretype = /obj/item/slime/extract/blue
 
 	New()
 		..()
@@ -94,14 +94,14 @@
 	icon_state = "dark blue baby slime"
 	primarytype = /mob/living/carbon/slime/darkblue
 	adulttype = /mob/living/carbon/slime/adult/darkblue
-	coretype = /obj/item/slime_extract/darkblue
+	coretype = /obj/item/slime/extract/darkblue
 
 /mob/living/carbon/slime/adult/darkblue
 	icon_state = "dark blue adult slime"
 	colour = "dark blue"
 	primarytype = /mob/living/carbon/slime/darkblue
 	adulttype = /mob/living/carbon/slime/adult/darkblue
-	coretype = /obj/item/slime_extract/darkblue
+	coretype = /obj/item/slime/extract/darkblue
 
 	New()
 		..()
@@ -115,14 +115,14 @@
 	icon_state = "dark purple baby slime"
 	primarytype = /mob/living/carbon/slime/darkpurple
 	adulttype = /mob/living/carbon/slime/adult/darkpurple
-	coretype = /obj/item/slime_extract/darkpurple
+	coretype = /obj/item/slime/extract/darkpurple
 
 /mob/living/carbon/slime/adult/darkpurple
 	icon_state = "dark purple adult slime"
 	colour = "dark purple"
 	primarytype = /mob/living/carbon/slime/darkpurple
 	adulttype = /mob/living/carbon/slime/adult/darkpurple
-	coretype = /obj/item/slime_extract/darkpurple
+	coretype = /obj/item/slime/extract/darkpurple
 
 	New()
 		..()
@@ -137,14 +137,14 @@
 	colour = "yellow"
 	primarytype = /mob/living/carbon/slime/yellow
 	adulttype = /mob/living/carbon/slime/adult/yellow
-	coretype = /obj/item/slime_extract/yellow
+	coretype = /obj/item/slime/extract/yellow
 
 /mob/living/carbon/slime/adult/yellow
 	icon_state = "yellow adult slime"
 	colour = "yellow"
 	primarytype = /mob/living/carbon/slime/yellow
 	adulttype = /mob/living/carbon/slime/adult/yellow
-	coretype = /obj/item/slime_extract/yellow
+	coretype = /obj/item/slime/extract/yellow
 
 	New()
 		..()
@@ -159,14 +159,14 @@
 	icon_state = "silver baby slime"
 	primarytype = /mob/living/carbon/slime/silver
 	adulttype = /mob/living/carbon/slime/adult/silver
-	coretype = /obj/item/slime_extract/silver
+	coretype = /obj/item/slime/extract/silver
 
 /mob/living/carbon/slime/adult/silver
 	icon_state = "silver adult slime"
 	colour = "silver"
 	primarytype = /mob/living/carbon/slime/silver
 	adulttype = /mob/living/carbon/slime/adult/silver
-	coretype = /obj/item/slime_extract/silver
+	coretype = /obj/item/slime/extract/silver
 
 	New()
 		..()
@@ -184,14 +184,14 @@
 	icon_state = "pink baby slime"
 	primarytype = /mob/living/carbon/slime/pink
 	adulttype = /mob/living/carbon/slime/adult/pink
-	coretype = /obj/item/slime_extract/pink
+	coretype = /obj/item/slime/extract/pink
 
 /mob/living/carbon/slime/adult/pink
 	icon_state = "pink adult slime"
 	colour = "pink"
 	primarytype = /mob/living/carbon/slime/pink
 	adulttype = /mob/living/carbon/slime/adult/pink
-	coretype = /obj/item/slime_extract/pink
+	coretype = /obj/item/slime/extract/pink
 
 	New()
 		..()
@@ -205,14 +205,14 @@
 	icon_state = "red baby slime"
 	primarytype = /mob/living/carbon/slime/red
 	adulttype = /mob/living/carbon/slime/adult/red
-	coretype = /obj/item/slime_extract/red
+	coretype = /obj/item/slime/extract/red
 
 /mob/living/carbon/slime/adult/red
 	icon_state = "red adult slime"
 	colour = "red"
 	primarytype = /mob/living/carbon/slime/red
 	adulttype = /mob/living/carbon/slime/adult/red
-	coretype = /obj/item/slime_extract/red
+	coretype = /obj/item/slime/extract/red
 
 	New()
 		..()
@@ -226,14 +226,14 @@
 	icon_state = "gold baby slime"
 	primarytype = /mob/living/carbon/slime/gold
 	adulttype = /mob/living/carbon/slime/adult/gold
-	coretype = /obj/item/slime_extract/gold
+	coretype = /obj/item/slime/extract/gold
 
 /mob/living/carbon/slime/adult/gold
 	icon_state = "gold adult slime"
 	colour = "gold"
 	primarytype = /mob/living/carbon/slime/gold
 	adulttype = /mob/living/carbon/slime/adult/gold
-	coretype = /obj/item/slime_extract/gold
+	coretype = /obj/item/slime/extract/gold
 
 	New()
 		..()
@@ -247,14 +247,14 @@
 	icon_state = "green baby slime"
 	primarytype = /mob/living/carbon/slime/green
 	adulttype = /mob/living/carbon/slime/adult/green
-	coretype = /obj/item/slime_extract/green
+	coretype = /obj/item/slime/extract/green
 
 /mob/living/carbon/slime/adult/green
 	icon_state = "green adult slime"
 	colour = "green"
 	primarytype = /mob/living/carbon/slime/green
 	adulttype = /mob/living/carbon/slime/adult/green
-	coretype = /obj/item/slime_extract/green
+	coretype = /obj/item/slime/extract/green
 
 	New()
 		..()
@@ -270,14 +270,14 @@
 	icon_state = "light pink baby slime"
 	primarytype = /mob/living/carbon/slime/lightpink
 	adulttype = /mob/living/carbon/slime/adult/lightpink
-	coretype = /obj/item/slime_extract/lightpink
+	coretype = /obj/item/slime/extract/lightpink
 
 /mob/living/carbon/slime/adult/lightpink
 	icon_state = "light pink adult slime"
 	colour = "light pink"
 	primarytype = /mob/living/carbon/slime/lightpink
 	adulttype = /mob/living/carbon/slime/adult/lightpink
-	coretype = /obj/item/slime_extract/lightpink
+	coretype = /obj/item/slime/extract/lightpink
 
 	New()
 		..()
@@ -291,14 +291,14 @@
 	colour = "oil"
 	primarytype = /mob/living/carbon/slime/oil
 	adulttype = /mob/living/carbon/slime/adult/oil
-	coretype = /obj/item/slime_extract/oil
+	coretype = /obj/item/slime/extract/oil
 
 /mob/living/carbon/slime/adult/oil
 	icon_state = "oil adult slime"
 	colour = "oil"
 	primarytype = /mob/living/carbon/slime/oil
 	adulttype = /mob/living/carbon/slime/adult/oil
-	coretype = /obj/item/slime_extract/oil
+	coretype = /obj/item/slime/extract/oil
 
 	New()
 		..()
@@ -312,14 +312,14 @@
 	colour = "black"
 	primarytype = /mob/living/carbon/slime/black
 	adulttype = /mob/living/carbon/slime/adult/black
-	coretype = /obj/item/slime_extract/black
+	coretype = /obj/item/slime/extract/black
 
 /mob/living/carbon/slime/adult/black
 	icon_state = "black adult slime"
 	colour = "black"
 	primarytype = /mob/living/carbon/slime/black
 	adulttype = /mob/living/carbon/slime/adult/black
-	coretype = /obj/item/slime_extract/black
+	coretype = /obj/item/slime/extract/black
 
 	New()
 		..()
@@ -333,14 +333,14 @@
 	colour = "adamantine"
 	primarytype = /mob/living/carbon/slime/adamantine
 	adulttype = /mob/living/carbon/slime/adult/adamantine
-	coretype = /obj/item/slime_extract/adamantine
+	coretype = /obj/item/slime/extract/adamantine
 
 /mob/living/carbon/slime/adult/adamantine
 	icon_state = "adamantine adult slime"
 	colour = "adamantine"
 	primarytype = /mob/living/carbon/slime/adamantine
 	adulttype = /mob/living/carbon/slime/adult/adamantine
-	coretype = /obj/item/slime_extract/adamantine
+	coretype = /obj/item/slime/extract/adamantine
 
 	New()
 		..()
@@ -356,14 +356,14 @@
 	colour = "bluespace"
 	primarytype = /mob/living/carbon/slime/bluespace
 	adulttype = /mob/living/carbon/slime/adult/bluespace
-	coretype = /obj/item/slime_extract/bluespace
+	coretype = /obj/item/slime/extract/bluespace
 
 /mob/living/carbon/slime/adult/bluespace
 	icon_state = "bluespace adult slime"
 	colour = "bluespace"
 	primarytype = /mob/living/carbon/slime/bluespace
 	adulttype = /mob/living/carbon/slime/adult/bluespace
-	coretype = /obj/item/slime_extract/bluespace
+	coretype = /obj/item/slime/extract/bluespace
 
 	New()
 		..()
@@ -377,14 +377,14 @@
 	colour = "pyrite"
 	primarytype = /mob/living/carbon/slime/pyrite
 	adulttype = /mob/living/carbon/slime/adult/pyrite
-	coretype = /obj/item/slime_extract/pyrite
+	coretype = /obj/item/slime/extract/pyrite
 
 /mob/living/carbon/slime/adult/pyrite
 	icon_state = "pyrite adult slime"
 	colour = "pyrite"
 	primarytype = /mob/living/carbon/slime/pyrite
 	adulttype = /mob/living/carbon/slime/adult/pyrite
-	coretype = /obj/item/slime_extract/pyrite
+	coretype = /obj/item/slime/extract/pyrite
 
 	New()
 		..()
@@ -398,14 +398,14 @@
 	colour = "cerulean"
 	primarytype = /mob/living/carbon/slime/cerulean
 	adulttype = /mob/living/carbon/slime/adult/cerulean
-	coretype = /obj/item/slime_extract/cerulean
+	coretype = /obj/item/slime/extract/cerulean
 
 /mob/living/carbon/slime/adult/cerulean
 	icon_state = "cerulean adult slime"
 	colour = "cerulean"
 	primarytype = /mob/living/carbon/slime/cerulean
 	adulttype = /mob/living/carbon/slime/adult/cerulean
-	coretype = /obj/item/slime_extract/cerulean
+	coretype = /obj/item/slime/extract/cerulean
 
 	New()
 		..()
@@ -419,14 +419,14 @@
 	colour = "sepia"
 	primarytype = /mob/living/carbon/slime/sepia
 	adulttype = /mob/living/carbon/slime/adult/sepia
-	coretype = /obj/item/slime_extract/sepia
+	coretype = /obj/item/slime/extract/sepia
 
 /mob/living/carbon/slime/adult/sepia
 	icon_state = "sepia adult slime"
 	colour = "sepia"
 	primarytype = /mob/living/carbon/slime/sepia
 	adulttype = /mob/living/carbon/slime/adult/sepia
-	coretype = /obj/item/slime_extract/sepia
+	coretype = /obj/item/slime/extract/sepia
 
 	New()
 		..()

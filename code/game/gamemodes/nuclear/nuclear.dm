@@ -163,7 +163,7 @@
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
-		var/obj/item/weapon/paper/P = new
+		var/obj/item/office/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		if (ticker.mode.config_tag=="nuclear")
@@ -211,15 +211,15 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(synd_mob), slot_gloves)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/security/card/id/syndicate(synd_mob), slot_wear_id)
+	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/storage/backpack(synd_mob), slot_back)
+	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel_norm(synd_mob), slot_back)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/ammo/magazine/a12mm(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/ammo/magazine/a12mm(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/chem/pill/cyanide(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), slot_belt)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
+	synd_mob.equip_to_slot_or_del(new /obj/item/storage/box/engineer(synd_mob.back), slot_in_backpack)
+	var/obj/item/medical/implant/explosive/E = new/obj/item/medical/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
 	synd_mob.update_icons()
@@ -243,7 +243,7 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in world)
+	for(var/obj/item/office/disk/nuclear/D in world)
 		var/disk_area = get_area(D)
 		if(!is_type_in_list(disk_area, centcom_areas))
 			disk_rescued = 0

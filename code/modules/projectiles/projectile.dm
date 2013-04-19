@@ -9,7 +9,7 @@
 #define SET "set"
 */
 
-/obj/item/projectile
+/obj/item/weapon/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
@@ -38,7 +38,7 @@
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
-	var/projectile_type = "/obj/item/projectile"
+	var/projectile_type = "/obj/item/weapon/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
@@ -122,7 +122,7 @@
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if(air_group || (height==0)) return 1
 
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/weapon/projectile))
 			return prob(95)
 		else
 			return 1

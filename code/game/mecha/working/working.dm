@@ -3,7 +3,7 @@
 
 /obj/mecha/working/New()
 	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
+	new /obj/item/part/mecha/mecha_tracking(src)
 	return
 
 /*
@@ -23,7 +23,7 @@
 	var/output = ..()
 	output += "<b>[src.name] Tools:</b><div style=\"margin-left: 15px;\">"
 	if(equipment.len)
-		for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
+		for(var/obj/item/part/mecha/mecha_equipment/MT in equipment)
 			output += "[selected==MT?"<b>":"<a href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
 	else
 		output += "None"

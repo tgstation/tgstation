@@ -1,4 +1,4 @@
-/obj/item/projectile/ion
+/obj/item/weapon/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
 	damage = 0
@@ -12,7 +12,7 @@
 		return 1
 
 
-/obj/item/projectile/bullet/gyro
+/obj/item/weapon/projectile/bullet/gyro
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
@@ -23,7 +23,7 @@
 		explosion(target, -1, 0, 2)
 		return 1
 
-/obj/item/projectile/temp
+/obj/item/weapon/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
 	damage = 0
@@ -39,7 +39,7 @@
 			M.bodytemperature = temperature
 		return 1
 
-/obj/item/projectile/meteor
+/obj/item/weapon/projectile/meteor
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "smallf"
@@ -69,7 +69,7 @@
 		else
 			return 0
 
-/obj/item/projectile/energy/floramut
+/obj/item/weapon/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
 	damage = 0
@@ -106,7 +106,7 @@
 		else
 			return 1
 
-/obj/item/projectile/energy/florayield
+/obj/item/weapon/projectile/energy/florayield
 	name = "beta somatoray"
 	icon_state = "energy2"
 	damage = 0
@@ -125,7 +125,7 @@
 			return 1
 
 
-/obj/item/projectile/beam/mindflayer
+/obj/item/weapon/projectile/beam/mindflayer
 	name = "flayer ray"
 
 	on_hit(var/atom/target, var/blocked = 0)

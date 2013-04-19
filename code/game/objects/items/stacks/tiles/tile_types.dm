@@ -8,7 +8,7 @@
 /*
  * Grass
  */
-/obj/item/stack/tile/grass
+/obj/item/part/stack/tile/grass
 	name = "grass tiles"
 	singular_name = "grass floor tile"
 	desc = "A patch of grass like they often use on golf courses"
@@ -25,7 +25,7 @@
 /*
  * Wood
  */
-/obj/item/stack/tile/wood
+/obj/item/part/stack/tile/wood
 	name = "wood floor tiles"
 	singular_name = "wood floor tile"
 	desc = "an easy to fit wood floor tile"
@@ -41,7 +41,7 @@
 /*
  * Carpets
  */
-/obj/item/stack/tile/carpet
+/obj/item/part/stack/tile/carpet
 	name = "carpet"
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a floor tile"

@@ -244,7 +244,7 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 
-/mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(!Proj)	return
 	adjustBruteLoss(Proj.damage)
 	return 0
@@ -266,7 +266,7 @@
 			if (!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 			M.put_in_active_hand(G)
 
@@ -302,7 +302,7 @@
 			if(!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src )
 
 			M.put_in_active_hand(G)
 
@@ -362,10 +362,10 @@
 
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
-	if(istype(O, /obj/item/stack/medical))
+	if(istype(O, /obj/item/part/stack/medical))
 
 		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
+			var/obj/item/part/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
 					adjustBruteLoss(-MED.heal_brute)
@@ -378,7 +378,7 @@
 		else
 			user << "\blue this [src] is dead, medical items won't bring it back to life."
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
+		if(istype(O, /obj/item/kitchen/knife) || istype(O, /obj/item/kitchen/butch))
 			new meat_type (get_turf(src))
 			if(prob(95))
 				del(src)

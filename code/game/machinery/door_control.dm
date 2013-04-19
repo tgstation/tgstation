@@ -42,7 +42,7 @@
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user as mob)
 	/* For later implementation
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (istype(W, /obj/item/tool/screwdriver))
 	{
 		if(wiresexposed)
 			icon_state = "doorctrl0"
@@ -55,9 +55,9 @@
 		return
 	}
 	*/
-	if(istype(W, /obj/item/device/detective_scanner))
+	if(istype(W, /obj/item/device/scanner/forensic))
 		return
-	if(istype(W, /obj/item/weapon/card/emag))
+	if(istype(W, /obj/item/security/card/emag))
 		req_access = list()
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
@@ -145,7 +145,7 @@
 
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user as mob)
 
-	if(istype(W, /obj/item/device/detective_scanner))
+	if(istype(W, /obj/item/device/scanner/forensic))
 		return
 	return src.attack_hand(user)
 

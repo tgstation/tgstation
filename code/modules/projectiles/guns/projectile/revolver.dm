@@ -5,7 +5,7 @@
 	max_shells = 6
 	caliber = "38"
 	origin_tech = "combat=2;materials=2"
-	ammo_type = "/obj/item/ammo_casing/c38"
+	ammo_type = "/obj/item/weapon/ammo/casing/c38"
 
 
 	special_check(var/mob/living/carbon/human/M)
@@ -39,7 +39,7 @@
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
 		..()
-		if(istype(A, /obj/item/weapon/screwdriver))
+		if(istype(A, /obj/item/tool/screwdriver))
 			if(caliber == "38")
 				user << "<span class='notice'>You begin to reinforce the barrel of [src].</span>"
 				if(loaded.len)
@@ -93,7 +93,7 @@
 
 /obj/item/weapon/gun/projectile/russian/proc/Spin()
 
-	for(var/obj/item/ammo_casing/AC in loaded)
+	for(var/obj/item/weapon/ammo/casing/AC in loaded)
 		del(AC)
 	loaded = list()
 	var/random = rand(1, max_shells)
@@ -109,11 +109,11 @@
 	if(!A) return
 
 	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_magazine))
+	if(istype(A, /obj/item/weapon/ammo/magazine))
 
 		if((load_method == 2) && loaded.len)	return
-		var/obj/item/ammo_magazine/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
+		var/obj/item/weapon/ammo/magazine/AM = A
+		for(var/obj/item/weapon/ammo/casing/AC in AM.stored_ammo)
 			if(getAmmo() > 0 || loaded.len >= max_shells)
 				break
 			if(AC.caliber == caliber && loaded.len < max_shells)
@@ -150,15 +150,15 @@
 			var/datum/limb/affecting = user.zone_sel.selecting
 			if(affecting == "head")
 
-				var/obj/item/ammo_casing/AC = loaded[1]
+				var/obj/item/weapon/ammo/casing/AC = loaded[1]
 				if(!load_into_chamber())
 					user.visible_message("\red *click*", "\red *click*")
 					return
 				if(!in_chamber)
 					return
-				var/obj/item/projectile/P = new AC.projectile_type
+				var/obj/item/weapon/projectile/P = new AC.projectile_type
 				playsound(user, fire_sound, 50, 1)
-				user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+				user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(in_chamber, /obj/item/weapon/projectile/beam) ? "laser blast" : "gunshot"]!")
 				if(!P.nodamage)
 					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
 				return

@@ -1,4 +1,4 @@
-/obj/item/weapon/folder
+/obj/item/office/folder
 	name = "folder"
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -6,54 +6,54 @@
 	w_class = 2
 	pressure_resistance = 2
 
-/obj/item/weapon/folder/blue
+/obj/item/office/folder/blue
 	desc = "A blue folder."
 	icon_state = "folder_blue"
 
-/obj/item/weapon/folder/red
+/obj/item/office/folder/red
 	desc = "A red folder."
 	icon_state = "folder_red"
 
-/obj/item/weapon/folder/yellow
+/obj/item/office/folder/yellow
 	desc = "A yellow folder."
 	icon_state = "folder_yellow"
 
-/obj/item/weapon/folder/white
+/obj/item/office/folder/white
 	desc = "A white folder."
 	icon_state = "folder_white"
 
 
-/obj/item/weapon/folder/update_icon()
+/obj/item/office/folder/update_icon()
 	overlays.Cut()
 	if(contents.len)
 		overlays += "folder_paper"
 
 
-/obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
+/obj/item/office/folder/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/office/paper) || istype(W, /obj/item/office/photo))
 		user.drop_item()
 		W.loc = src
 		user << "<span class='notice'>You put [W] into [src].</span>"
 		update_icon()
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/office/pen))
 		var/n_name = copytext(sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text), 1, MAX_NAME_LEN)
 		if((loc == usr && usr.stat == 0))
 			name = "folder[(n_name ? "- '[n_name]'" : null)]"
 
 
-/obj/item/weapon/folder/attack_self(mob/user)
+/obj/item/office/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"
 
-	for(var/obj/item/weapon/paper/P in src)
+	for(var/obj/item/office/paper/P in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
-	for(var/obj/item/weapon/photo/Ph in src)
+	for(var/obj/item/office/photo/Ph in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - [Ph.name]<BR>"
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
 
 
-/obj/item/weapon/folder/Topic(href, href_list)
+/obj/item/office/folder/Topic(href, href_list)
 	..()
 	if(usr.stat || usr.restrained())
 		return
@@ -67,7 +67,7 @@
 				usr.put_in_hands(P)
 
 		if(href_list["read"])
-			var/obj/item/weapon/paper/P = locate(href_list["read"])
+			var/obj/item/office/paper/P = locate(href_list["read"])
 			if(P)
 				P.examine()
 

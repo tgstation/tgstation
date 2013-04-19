@@ -7,14 +7,14 @@
 
 //remove xeno from premises
 /datum/surgery_step/xenomorph_removal
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/shovel/spade = 65, /obj/item/weapon/minihoe = 50, /obj/item/weapon/crowbar = 35)
+	implements = list(/obj/item/medical/hemostat = 100, /obj/item/mining/shovel/spade = 65, /obj/item/botany/minihoe = 50, /obj/item/tool/crowbar = 35)
 	time = 64
 
 /datum/surgery_step/xenomorph_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to search in [target]'s chest for a xenomorph.</span>")
 
 /datum/surgery_step/xenomorph_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/alien_embryo/A = locate() in target.contents
+	var/obj/item/medical/alien/embryo/A = locate() in target.contents
 	if(A)
 		user << "<span class='notice'>You found an unknown alien organism in [target]'s chest!</span>"
 		if(A.stage < 4)
@@ -31,7 +31,7 @@
 	return 1
 
 /datum/surgery_step/xenomorph_removal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/alien_embryo/A = locate() in target.contents
+	var/obj/item/medical/alien/embryo/A = locate() in target.contents
 	if(A)
 		if(prob(50))
 			A.AttemptGrow(0)

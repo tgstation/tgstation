@@ -253,7 +253,7 @@ var/global/list/uneatable = list(
 		sleep(1)
 	else if(istype(A,/obj/))
 
-		if (istype(A,/obj/item/weapon/storage/backpack/holding))
+		if (istype(A,/obj/item/storage/backpack/holding))
 			var/dist = max((current_size - 2),1)
 			explosion(src.loc,(dist),(dist*2),(dist*4))
 			return

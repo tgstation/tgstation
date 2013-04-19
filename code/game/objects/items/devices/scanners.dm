@@ -8,7 +8,7 @@ GAS ANALYZER
 MASS SPECTROMETER
 
 */
-/obj/item/device/t_scanner
+/obj/item/device/scanner/t_ray
 	name = "T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
@@ -20,7 +20,7 @@ MASS SPECTROMETER
 	m_amt = 150
 	origin_tech = "magnets=1;engineering=1"
 
-/obj/item/device/t_scanner/attack_self(mob/user)
+/obj/item/device/scanner/t_ray/attack_self(mob/user)
 
 	on = !on
 	icon_state = "t-ray[on]"
@@ -29,7 +29,7 @@ MASS SPECTROMETER
 		processing_objects.Add(src)
 
 
-/obj/item/device/t_scanner/process()
+/obj/item/device/scanner/t_ray/process()
 	if(!on)
 		processing_objects.Remove(src)
 		return null
@@ -60,7 +60,7 @@ MASS SPECTROMETER
 					M.invisibility = INVISIBILITY_LEVEL_TWO
 
 
-/obj/item/device/healthanalyzer
+/obj/item/device/scanner/health
 	name = "Health Analyzer"
 	icon_state = "health"
 	item_state = "analyzer"
@@ -75,7 +75,7 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/scanner/health/attack(mob/living/M as mob, mob/living/user as mob)
 	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
@@ -132,7 +132,7 @@ MASS SPECTROMETER
 	src.add_fingerprint(user)
 	return
 
-/obj/item/device/healthanalyzer/verb/toggle_mode()
+/obj/item/device/scanner/health/verb/toggle_mode()
 	set name = "Switch Verbosity"
 	set category = "Object"
 
@@ -144,7 +144,7 @@ MASS SPECTROMETER
 			usr << "The scanner no longer shows limb damage."
 
 
-/obj/item/device/analyzer
+/obj/item/device/scanner/atmospheric
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "analyzer"
 	icon_state = "atmos"
@@ -159,7 +159,7 @@ MASS SPECTROMETER
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 
-/obj/item/device/analyzer/attack_self(mob/user as mob)
+/obj/item/device/scanner/atmospheric/attack_self(mob/user as mob)
 
 	if (user.stat)
 		return
@@ -214,7 +214,7 @@ MASS SPECTROMETER
 	src.add_fingerprint(user)
 	return
 
-/obj/item/device/mass_spectrometer
+/obj/item/device/scanner/blood
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
@@ -231,19 +231,19 @@ MASS SPECTROMETER
 	var/details = 0
 	var/recent_fail = 0
 
-/obj/item/device/mass_spectrometer/New()
+/obj/item/device/scanner/blood/New()
 	..()
 	var/datum/reagents/R = new/datum/reagents(5)
 	reagents = R
 	R.my_atom = src
 
-/obj/item/device/mass_spectrometer/on_reagent_change()
+/obj/item/device/scanner/blood/on_reagent_change()
 	if(reagents.total_volume)
 		icon_state = initial(icon_state) + "_s"
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
+/obj/item/device/scanner/blood/attack_self(mob/user as mob)
 	if (user.stat)
 		return
 	if (crit_fail)
@@ -281,7 +281,7 @@ MASS SPECTROMETER
 		reagents.clear_reagents()
 	return
 
-/obj/item/device/mass_spectrometer/adv
+/obj/item/device/scanner/blood/adv
 	name = "advanced mass-spectrometer"
 	icon_state = "adv_spectrometer"
 	details = 1

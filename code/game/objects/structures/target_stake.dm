@@ -6,7 +6,7 @@
 	icon_state = "target_stake"
 	density = 1
 	flags = CONDUCT
-	var/obj/item/target/pinned_target // the current pinned target
+	var/obj/item/part/target/pinned_target // the current pinned target
 
 	Move()
 		..()
@@ -23,7 +23,7 @@
 		if(pinned_target)
 			return // get rid of that pinned target first!
 
-		if(istype(W, /obj/item/target))
+		if(istype(W, /obj/item/part/target))
 			density = 0
 			W.density = 1
 			user.drop_item(src)

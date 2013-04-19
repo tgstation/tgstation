@@ -14,7 +14,7 @@
  */
 
 //  Generic non-item
-/obj/item/weapon/storage/bag
+/obj/item/storage/bag
 	allow_quick_gather = 1
 	allow_quick_empty = 1
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
@@ -25,7 +25,7 @@
 // -----------------------------
 //          Trash bag
 // -----------------------------
-/obj/item/weapon/storage/bag/trash
+/obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
@@ -36,10 +36,10 @@
 	max_w_class = 2
 	storage_slots = 21
 	can_hold = list() // any
-	cant_hold = list("/obj/item/weapon/disk/nuclear")
+	cant_hold = list("/obj/item/office/disk/nuclear")
 
 
-/obj/item/weapon/storage/bag/trash/update_icon()
+/obj/item/storage/bag/trash/update_icon()
 	if(contents.len == 0)
 		icon_state = "trashbag0"
 	else if(contents.len < 12)
@@ -52,7 +52,7 @@
 //        Mining Satchel
 // -----------------------------
 
-/obj/item/weapon/storage/bag/ore
+/obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
@@ -62,14 +62,14 @@
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
 	max_w_class = 3
-	can_hold = list("/obj/item/weapon/ore")
+	can_hold = list("/obj/item/mining/ore")
 
 
 // -----------------------------
 //          Plant bag
 // -----------------------------
 
-/obj/item/weapon/storage/bag/plants
+/obj/item/storage/bag/plants
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "plantbag"
@@ -77,11 +77,11 @@
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
+	can_hold = list("/obj/item/chem/food/snacks/grown","/obj/item/botany/seeds","/obj/item/botany/grown")
 
 ////////
 
-/obj/item/weapon/storage/bag/plants/portaseeder
+/obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
@@ -103,7 +103,7 @@
 // Because it stacks stacks, this doesn't operate normally.
 // However, making it a storage/bag allows us to reuse existing code in some places. -Sayu
 
-/obj/item/weapon/storage/bag/sheetsnatcher
+/obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
@@ -115,16 +115,16 @@
 	allow_quick_empty = 1 // this function is superceded
 	New()
 		..()
-		//verbs -= /obj/item/weapon/storage/verb/quick_empty
-		//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
+		//verbs -= /obj/item/storage/verb/quick_empty
+		//verbs += /obj/item/storage/bag/sheetsnatcher/quick_empty
 
 	can_be_inserted(obj/item/W as obj, stop_messages = 0)
-		if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/wood))
+		if(!istype(W,/obj/item/part/stack/sheet) || istype(W,/obj/item/part/stack/sheet/mineral/sandstone) || istype(W,/obj/item/part/stack/sheet/wood))
 			if(!stop_messages)
 				usr << "The snatcher does not accept [W]."
 			return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
 		var/current = 0
-		for(var/obj/item/stack/sheet/S in contents)
+		for(var/obj/item/part/stack/sheet/S in contents)
 			current += S.amount
 		if(capacity == current)//If it's full, you're done
 			if(!stop_messages)
@@ -135,20 +135,20 @@
 
 // Modified handle_item_insertion.  Would prefer not to, but...
 	handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
-		var/obj/item/stack/sheet/S = W
+		var/obj/item/part/stack/sheet/S = W
 		if(!istype(S)) return 0
 
 		var/amount
 		var/inserted = 0
 		var/current = 0
-		for(var/obj/item/stack/sheet/S2 in contents)
+		for(var/obj/item/part/stack/sheet/S2 in contents)
 			current += S2.amount
 		if(capacity < current + S.amount)//If the stack will fill it up
 			amount = capacity - current
 		else
 			amount = S.amount
 
-		for(var/obj/item/stack/sheet/sheet in contents)
+		for(var/obj/item/part/stack/sheet/sheet in contents)
 			if(S.type == sheet.type) // we are violating the amount limitation because these are not sane objects
 				sheet.amount += amount	// they should only be removed through procs in this file, which split them up.
 				S.amount -= amount
@@ -182,7 +182,7 @@
 		if(display_contents_with_number)
 			numbered_contents = list()
 			adjusted_contents = 0
-			for(var/obj/item/stack/sheet/I in contents)
+			for(var/obj/item/part/stack/sheet/I in contents)
 				adjusted_contents++
 				var/datum/numbered_display/D = new/datum/numbered_display(I)
 				D.number = I.amount
@@ -199,9 +199,9 @@
 // Modified quick_empty verb drops appropriate sized stacks
 	quick_empty()
 		var/location = get_turf(src)
-		for(var/obj/item/stack/sheet/S in contents)
+		for(var/obj/item/part/stack/sheet/S in contents)
 			while(S.amount)
-				var/obj/item/stack/sheet/N = new S.type(location)
+				var/obj/item/part/stack/sheet/N = new S.type(location)
 				var/stacksize = min(S.amount,N.max_amount)
 				N.amount = stacksize
 				S.amount -= stacksize
@@ -214,7 +214,7 @@
 
 // Instead of removing
 	remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/stack/sheet/S = W
+		var/obj/item/part/stack/sheet/S = W
 		if(!istype(S)) return 0
 
 		//I would prefer to drop a new stack, but the item/attack_hand code
@@ -223,7 +223,7 @@
 		// -Sayu
 
 		if(S.amount > S.max_amount)
-			var/obj/item/stack/sheet/temp = new S.type(src)
+			var/obj/item/part/stack/sheet/temp = new S.type(src)
 			temp.amount = S.amount - S.max_amount
 			S.amount = S.max_amount
 
@@ -233,7 +233,7 @@
 //    Sheet Snatcher (Cyborg)
 // -----------------------------
 
-/obj/item/weapon/storage/bag/sheetsnatcher/borg
+/obj/item/storage/bag/sheetsnatcher/borg
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization

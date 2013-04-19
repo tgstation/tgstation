@@ -1,5 +1,5 @@
 // Targets, the things that actually get shot!
-/obj/item/target
+/obj/item/part/target
 	name = "shooting target"
 	desc = "A shooting target."
 	icon = 'icons/obj/objects.dmi'
@@ -33,8 +33,8 @@
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
+		if (istype(W, /obj/item/tool/welder))
+			var/obj/item/tool/welder/WT = W
 			if(WT.remove_fuel(0, user))
 				overlays.Cut()
 				usr << "You slice off [src]'s uneven chunks of aluminum and scorch marks."
@@ -79,12 +79,12 @@
 		desc = "A shooting target that looks like a xenomorphic alien."
 		hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/part/target/bullet_act(var/obj/item/weapon/projectile/Proj)
 	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet
 
-	if(istype(/obj/item/projectile/bullet, Proj))
+	if(istype(/obj/item/weapon/projectile/bullet, Proj))
 		decaltype = 2
 
 
@@ -114,7 +114,7 @@
 			bmark.pixel_x--
 			bmark.pixel_y--
 
-			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/practice))
+			if(Proj.damage >= 20 || istype(Proj, /obj/item/weapon/projectile/practice))
 				bmark.icon_state = "scorch"
 				bmark.dir = pick(NORTH,SOUTH,EAST,WEST) // random scorch design
 
@@ -161,7 +161,7 @@
 	var/b2y1 = 0
 	var/b2y2 = 0
 
-	New(var/obj/item/target/Target, var/pixel_x = 0, var/pixel_y = 0)
+	New(var/obj/item/part/target/Target, var/pixel_x = 0, var/pixel_y = 0)
 		if(!Target) return
 
 		// Randomize the first box

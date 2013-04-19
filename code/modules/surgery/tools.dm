@@ -1,4 +1,4 @@
-/obj/item/weapon/retractor
+/obj/item/medical/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
@@ -10,7 +10,7 @@
 	origin_tech = "materials=1;biotech=1"
 
 
-/obj/item/weapon/hemostat
+/obj/item/medical/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
@@ -23,7 +23,7 @@
 	attack_verb = list("attacked", "pinched")
 
 
-/obj/item/weapon/cautery
+/obj/item/medical/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
@@ -36,7 +36,7 @@
 	attack_verb = list("burnt")
 
 
-/obj/item/weapon/surgicaldrill
+/obj/item/medical/drill
 	name = "surgical drill"
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
@@ -56,7 +56,7 @@
 		return (BRUTELOSS)
 
 
-/obj/item/weapon/scalpel
+/obj/item/medical/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
@@ -79,7 +79,7 @@
 		return (BRUTELOSS)
 
 
-/obj/item/weapon/circular_saw
+/obj/item/medical/saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
@@ -97,7 +97,7 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
 
-/obj/item/weapon/surgical_drapes
+/obj/item/medical/drapes
 	name = "surgical drapes"
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
 	icon = 'icons/obj/surgery.dmi'
@@ -106,6 +106,6 @@
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
 
-/obj/item/weapon/surgical_drapes/attack(mob/living/M, mob/user)
+/obj/item/medical/drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()

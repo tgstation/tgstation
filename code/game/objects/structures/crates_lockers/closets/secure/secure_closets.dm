@@ -56,11 +56,11 @@
 	else
 		user << "<span class='notice'>Access Denied</span>"
 
-/obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/secure_closet/attackby(obj/item/W as obj, mob/user as mob)
 	if(issilicon(user))
 		return
 	if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
+		if(istype(W, /obj/item/effect/grab))
 			if(src.large)
 				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
 			else
@@ -71,7 +71,7 @@
 	else if(src.broken)
 		user << "<span class='notice'>The locker appears to be broken.</span>"
 		return
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+	else if((istype(W, /obj/item/security/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
@@ -89,8 +89,8 @@
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
 	else
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(istype(W, /obj/item/tool/welder))
+			var/obj/item/tool/welder/WT = W
 			if(!WT.remove_fuel(0,user))
 				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return

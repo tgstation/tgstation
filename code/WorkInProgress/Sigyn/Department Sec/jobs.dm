@@ -48,7 +48,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 							else
 								break
 					H << "<b>You have been assigned to [department]!</b>"
-					var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
+					var/obj/item/security/card/id/I = locate(/obj/item/security/card/id, H)
 					if(I)
 						I.access |= access
 
@@ -67,22 +67,22 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
+		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/storage/backpack/security(H), slot_back)
+		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel_sec(H), slot_back)
 		assign_sec_to_department(H)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet(H), slot_head)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
-		H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
+		H.equip_to_slot_or_del(new /obj/item/security/handcuffs(H), slot_s_store)
+		H.equip_to_slot_or_del(new /obj/item/security/flash(H), slot_l_store)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-			H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
+			H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H), slot_r_hand)
+			H.equip_to_slot_or_del(new /obj/item/security/handcuffs(H), slot_l_hand)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-			H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+			H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H.back), slot_in_backpack)
+			H.equip_to_slot_or_del(new /obj/item/security/handcuffs(H), slot_in_backpack)
+		var/obj/item/medical/implant/loyalty/L = new/obj/item/medical/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
 		return 1
@@ -96,20 +96,20 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec/department/engi
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
+	keyslot1 = new /obj/item/part/cipher/headset_sec
+	keyslot2 = new /obj/item/part/cipher/headset_eng
 
 /obj/item/device/radio/headset/headset_sec/department/supply
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
+	keyslot1 = new /obj/item/part/cipher/headset_sec
+	keyslot2 = new /obj/item/part/cipher/headset_cargo
 
 /obj/item/device/radio/headset/headset_sec/department/med
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_med
+	keyslot1 = new /obj/item/part/cipher/headset_sec
+	keyslot2 = new /obj/item/part/cipher/headset_med
 
 /obj/item/device/radio/headset/headset_sec/department/sci
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+	keyslot1 = new /obj/item/part/cipher/headset_sec
+	keyslot2 = new /obj/item/part/cipher/headset_sci
 
 /obj/item/clothing/under/rank/security/cargo/New()
 	var/obj/item/clothing/tie/armband/cargo/A		= new /obj/item/clothing/tie/armband/cargo

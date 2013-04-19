@@ -11,7 +11,7 @@
 /*
  * DATA CARDS - Used for the teleporter
  */
-/obj/item/weapon/card
+/obj/item/security/card
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
@@ -19,7 +19,7 @@
 
 	var/list/files = list(  )
 
-/obj/item/weapon/card/data
+/obj/item/security/card/data
 	name = "data disk"
 	desc = "A disk of data."
 	icon_state = "data"
@@ -28,7 +28,7 @@
 	var/special = null
 	item_state = "card-id"
 
-/obj/item/weapon/card/data/verb/label(t as text)
+/obj/item/security/card/data/verb/label(t as text)
 	set name = "Label Disk"
 	set category = "Object"
 	set src in usr
@@ -40,7 +40,7 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/item/weapon/card/data/clown
+/obj/item/security/card/data/clown
 	name = "coordinates to clown planet"
 	icon_state = "data"
 	item_state = "card-id"
@@ -53,14 +53,14 @@
 /*
  * ID CARDS
  */
-/obj/item/weapon/card/emag
+/obj/item/security/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
-/obj/item/weapon/card/id
+/obj/item/security/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
@@ -72,20 +72,20 @@
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
-/obj/item/weapon/card/id/attack_self(mob/user as mob)
+/obj/item/security/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
 
 	src.add_fingerprint(user)
 	return
 
-/obj/item/weapon/card/id/GetAccess()
+/obj/item/security/card/id/GetAccess()
 	return access
 
-/obj/item/weapon/card/id/GetID()
+/obj/item/security/card/id/GetID()
 	return src
 
-/obj/item/weapon/card/id/verb/read()
+/obj/item/security/card/id/verb/read()
 	set name = "Read ID Card"
 	set category = "Object"
 	set src in usr
@@ -94,33 +94,33 @@
 	return
 
 
-/obj/item/weapon/card/id/silver
+/obj/item/security/card/id/silver
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 
-/obj/item/weapon/card/id/gold
+/obj/item/security/card/id/gold
 	name = "identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
 
-/obj/item/weapon/card/id/syndicate
+/obj/item/security/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
 
-/obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = O
+/obj/item/security/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/security/card/id))
+		var/obj/item/security/card/id/I = O
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
 				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
 
 
-/obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
+/obj/item/security/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
@@ -140,14 +140,14 @@
 	else
 		..()
 
-/obj/item/weapon/card/id/syndicate_command
+/obj/item/security/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
-/obj/item/weapon/card/id/captains_spare
+/obj/item/security/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
@@ -159,7 +159,7 @@
 		access = J.get_access()
 		..()
 
-/obj/item/weapon/card/id/centcom
+/obj/item/security/card/id/centcom
 	name = "\improper CentCom. ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"

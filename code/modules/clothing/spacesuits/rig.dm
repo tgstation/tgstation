@@ -5,7 +5,7 @@
 	icon_state = "rig0-engineering"
 	item_state = "eng_helm"
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 75)
-	allowed = list(/obj/item/device/flashlight)
+	allowed = list(/obj/item/tool/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
@@ -41,7 +41,7 @@
 	item_state = "eng_hardsuit"
 	slowdown = 3
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/tool/flashlight,/obj/item/clothing/tank,/obj/item/device/scanner/t_ray, /obj/item/tool/rcd)
 
 
 //Chief Engineer's rig
@@ -80,7 +80,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
 	item_state = "mining_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
+	allowed = list(/obj/item/tool/flashlight,/obj/item/clothing/tank,/obj/item/storage/bag/ore,/obj/item/mining/pickaxe)
 
 
 
@@ -101,7 +101,7 @@
 	slowdown = 1
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo/magazine,/obj/item/weapon/ammo/casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/security/handcuffs,/obj/item/clothing/tank/emergency_oxygen)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -122,7 +122,7 @@
 	w_class = 3
 	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 50)
-	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/magic/scroll/tele,/obj/item/clothing/tank/emergency_oxygen)
 
 
 
@@ -141,7 +141,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
 	slowdown = 2
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+	allowed = list(/obj/item/tool/flashlight,/obj/item/clothing/tank,/obj/item/storage/firstaid,/obj/item/device/scanner/health,/obj/item/part/stack/medical)
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 50)
 
 	//Security
@@ -158,5 +158,5 @@
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/tool/flashlight,/obj/item/clothing/tank, /obj/item/weapon/gun/energy,/obj/item/chem/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/weapon/ammo/magazine,/obj/item/weapon/ammo/casing,/obj/item/weapon/melee/baton,/obj/item/security/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)

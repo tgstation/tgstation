@@ -164,7 +164,7 @@
 	O.loc = loc
 	O.job = "Cyborg"
 
-	O.mmi = new /obj/item/device/mmi(O)
+	O.mmi = new /obj/item/medical/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
 

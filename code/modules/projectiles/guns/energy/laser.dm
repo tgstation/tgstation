@@ -7,12 +7,12 @@
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
-	projectile_type = "/obj/item/projectile/beam"
+	projectile_type = "/obj/item/weapon/projectile/beam"
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	projectile_type = "/obj/item/projectile/practice"
+	projectile_type = "/obj/item/weapon/projectile/practice"
 	clumsy_check = 0
 
 obj/item/weapon/gun/energy/laser/retro
@@ -57,7 +57,7 @@ obj/item/weapon/gun/energy/laser/retro
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
 			R.cell.use(100)
-			in_chamber = new/obj/item/projectile/beam(src)
+			in_chamber = new/obj/item/weapon/projectile/beam(src)
 			return 1
 	return 0
 
@@ -69,7 +69,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "lasercannon"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
-	projectile_type = "/obj/item/projectile/beam/heavylaser"
+	projectile_type = "/obj/item/weapon/projectile/beam/heavylaser"
 
 
 /obj/item/weapon/gun/energy/xray
@@ -78,7 +78,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "xray"
 	fire_sound = 'sound/weapons/laser3.ogg'
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
-	projectile_type = "/obj/item/projectile/beam/xray"
+	projectile_type = "/obj/item/weapon/projectile/beam/xray"
 	charge_cost = 50
 
 
@@ -88,7 +88,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/bluetag"
+	projectile_type = "/obj/item/weapon/projectile/bluetag"
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
@@ -125,7 +125,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/redtag"
+	projectile_type = "/obj/item/weapon/projectile/redtag"
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0

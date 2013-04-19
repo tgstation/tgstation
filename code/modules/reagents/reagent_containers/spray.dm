@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/spray
+/obj/item/chem/spray
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
@@ -15,9 +15,9 @@
 	possible_transfer_amounts = null
 
 
-/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
+/obj/item/chem/spray/afterattack(atom/A as mob|obj, mob/user as mob)
+	if(istype(A, /obj/item/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
+	|| istype(A, /obj/item/chem) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
 		return
 
 	if(istype(A, /obj/effect/proc_holder/spell))
@@ -67,20 +67,20 @@
 		log_game("[key_name(user)] fired Space lube from a spray bottle.")
 	return
 
-/obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
+/obj/item/chem/spray/attack_self(var/mob/user)
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 
-/obj/item/weapon/reagent_containers/spray/examine()
+/obj/item/chem/spray/examine()
 	set src in usr
 	..()
 	for(var/datum/reagent/R in reagents.reagent_list)
 		usr << "[round(R.volume)] units of [R.name] left."
 	return
 
-/obj/item/weapon/reagent_containers/spray/verb/empty()
+/obj/item/chem/spray/verb/empty()
 
 	set name = "Empty Spray Bottle"
 	set category = "Object"
@@ -94,17 +94,17 @@
 		spawn(5) src.reagents.clear_reagents()
 
 //space cleaner
-/obj/item/weapon/reagent_containers/spray/cleaner
+/obj/item/chem/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
 
 
-/obj/item/weapon/reagent_containers/spray/cleaner/New()
+/obj/item/chem/spray/cleaner/New()
 	..()
 	reagents.add_reagent("cleaner", 250)
 
 //pepperspray
-/obj/item/weapon/reagent_containers/spray/pepper
+/obj/item/chem/spray/pepper
 	name = "pepperspray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
 	icon = 'icons/obj/weapons.dmi'
@@ -114,13 +114,13 @@
 	amount_per_transfer_from_this = 10
 
 
-/obj/item/weapon/reagent_containers/spray/pepper/New()
+/obj/item/chem/spray/pepper/New()
 	..()
 	reagents.add_reagent("condensedcapsaicin", 40)
 
 
 //chemsprayer
-/obj/item/weapon/reagent_containers/spray/chemsprayer
+/obj/item/chem/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagent in a given area."
 	icon = 'icons/obj/gun.dmi'
@@ -133,9 +133,9 @@
 
 
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
+/obj/item/chem/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
+	if(istype(A, /obj/item/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
+	|| istype(A, /obj/item/chem) || istype(A, /obj/structure/sink))
 		return
 
 	if(istype(A, /obj/effect/proc_holder/spell))
@@ -206,7 +206,7 @@
 	return
 
 // Plant-B-Gone
-/obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
+/obj/item/chem/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
 	desc = "Kills those pesky weeds!"
 	icon = 'icons/obj/hydroponics.dmi'
@@ -215,12 +215,12 @@
 	volume = 100
 
 
-/obj/item/weapon/reagent_containers/spray/plantbgone/New()
+/obj/item/chem/spray/plantbgone/New()
 	..()
 	reagents.add_reagent("plantbgone", 100)
 
 
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/chem/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
 		return
 

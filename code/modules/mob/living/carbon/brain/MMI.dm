@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-/obj/item/device/mmi
+/obj/item/medical/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
@@ -22,7 +22,7 @@
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if(istype(O,/obj/item/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
+		if(istype(O,/obj/item/medical/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
 			if(!O:brainmob)
 				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."
 				return
@@ -49,7 +49,7 @@
 
 			return
 
-		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
+		if((istype(O,/obj/item/security/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 			if(allowed(user))
 				locked = !locked
 				user << "\blue You [locked ? "lock" : "unlock"] the brain holder."
@@ -68,7 +68,7 @@
 			user << "\red You upend the MMI, but the brain is clamped into place."
 		else
 			user << "\blue You upend the MMI, spilling the brain onto the floor."
-			var/obj/item/organ/brain/brain = new(user.loc)
+			var/obj/item/medical/organ/brain/brain = new(user.loc)
 			brainmob.container = null//Reset brainmob mmi var.
 			brainmob.loc = brain//Throw mob into brain.
 			living_mob_list -= brainmob//Get outta here
@@ -91,7 +91,7 @@
 			locked = 1
 			return
 
-/obj/item/device/mmi/radio_enabled
+/obj/item/medical/mmi/radio_enabled
 	name = "Radio-enabled Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
 	origin_tech = "biotech=4"
@@ -130,7 +130,7 @@
 			radio.listening = radio.listening==1 ? 0 : 1
 			brainmob << "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast."
 
-/obj/item/device/mmi/emp_act(severity)
+/obj/item/medical/mmi/emp_act(severity)
 	if(!brainmob)
 		return
 	else

@@ -127,7 +127,7 @@
 	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
-		if(george.get_active_hand() && (istype(george.get_active_hand(), /obj/item/weapon/card/id) || istype(george.get_active_hand(), /obj/item/device/pda)) && src.check_access(george.get_active_hand()))
+		if(george.get_active_hand() && (istype(george.get_active_hand(), /obj/item/security/card/id) || istype(george.get_active_hand(), /obj/item/device/pda)) && src.check_access(george.get_active_hand()))
 			return 1
 	return 0
 
@@ -137,7 +137,7 @@
 /obj/item/proc/GetID()
 	return null
 
-/obj/proc/check_access(obj/item/weapon/card/id/I)
+/obj/proc/check_access(obj/item/security/card/id/I)
 
 	if (istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
@@ -151,7 +151,7 @@
 	var/list/L = src.req_access
 	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+	if(!I || !istype(I, /obj/item/security/card/id) || !I.access) //not ID or no access
 		return 0
 	for(var/req in src.req_access)
 		if(!(req in I.access)) //doesn't have this access
@@ -505,7 +505,7 @@
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
 
 /obj/proc/GetJobName()
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
+	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/security/card/id))
 		return
 
 	var/jobName
@@ -513,7 +513,7 @@
 	if(istype(src, /obj/item/device/pda))
 		if(src:id)
 			jobName = src:id:assignment
-	if(istype(src, /obj/item/weapon/card/id))
+	if(istype(src, /obj/item/security/card/id))
 		jobName = src:assignment
 
 	if(jobName in get_all_jobs())

@@ -63,9 +63,9 @@ rcd light flash thingy on matter drain
 	for(var/datum/AI_Module/large/disable_rcd/rcdmod in usr:current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
-			for(var/obj/item/weapon/rcd/rcd in world)
+			for(var/obj/item/tool/rcd/rcd in world)
 				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+			for(var/obj/item/part/mecha/mecha_equipment/tool/rcd/rcd in world)
 				rcd.disabled = 1
 			usr << "RCD-disabling pulse emitted."
 		else usr << "Out of uses."

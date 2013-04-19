@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-/obj/item/weapon/storage/lockbox
+/obj/item/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
@@ -18,7 +18,7 @@
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/card/id))
+		if (istype(W, /obj/item/security/card/id))
 			if(src.broken)
 				user << "\red It appears to be broken."
 				return
@@ -34,7 +34,7 @@
 					return
 			else
 				user << "\red Access Denied"
-		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+		else if((istype(W, /obj/item/security/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 			broken = 1
 			locked = 0
 			desc = "It appears to be broken."
@@ -66,19 +66,19 @@
 		return
 
 
-/obj/item/weapon/storage/lockbox/loyalty
+/obj/item/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
 	req_access = list(access_security)
 
 	New()
 		..()
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implanter/loyalty(src)
+		new /obj/item/medical/implantcase/loyalty(src)
+		new /obj/item/medical/implantcase/loyalty(src)
+		new /obj/item/medical/implantcase/loyalty(src)
+		new /obj/item/medical/implanter/loyalty(src)
 
 
-/obj/item/weapon/storage/lockbox/clusterbang
+/obj/item/storage/lockbox/clusterbang
 	name = "lockbox (clusterbang)"
 	desc = "You have a bad feeling about opening this."
 	req_access = list(access_security)

@@ -9,7 +9,7 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
+	meat_type = /obj/item/chem/food/snacks/carpmeat
 	response_help = "touches the"
 	response_disarm = "pushes the"
 	response_harm = "hits the"

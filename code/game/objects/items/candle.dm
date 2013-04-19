@@ -1,5 +1,5 @@
 #define CANDLE_LUMINOSITY	2
-/obj/item/candle
+/obj/item/tool/candle
 	name = "red candle"
 	desc = "a candle"
 	icon = 'icons/obj/candle.dmi'
@@ -25,20 +25,20 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(istype(W, /obj/item/tool/welder))
+			var/obj/item/tool/welder/WT = W
 			if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
 				light("\red [user] casually lights the [name] with [W], what a badass.")
-		else if(istype(W, /obj/item/weapon/lighter))
-			var/obj/item/weapon/lighter/L = W
+		else if(istype(W, /obj/item/part/lighter))
+			var/obj/item/part/lighter/L = W
 			if(L.lit)
 				light()
-		else if(istype(W, /obj/item/weapon/match))
-			var/obj/item/weapon/match/M = W
+		else if(istype(W, /obj/item/tool/match))
+			var/obj/item/tool/match/M = W
 			if(M.lit)
 				light()
-		else if(istype(W, /obj/item/candle))
-			var/obj/item/candle/C = W
+		else if(istype(W, /obj/item/tool/candle))
+			var/obj/item/tool/candle/C = W
 			if(C.lit)
 				light()
 		else if(istype(W, /obj/item/clothing/mask/cigarette))

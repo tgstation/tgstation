@@ -9,7 +9,7 @@
 	use_power = 0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/part/board/airlock/electronics = null
 	explosion_resistance = 5
 
 
@@ -138,14 +138,14 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
-		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+		new /obj/item/trash/shard(src.loc)
+		var/obj/item/part/cable_coil/CC = new /obj/item/part/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
 		del(src)
 		return
 
-/obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/door/window/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
 	..()
@@ -177,8 +177,8 @@
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			new /obj/item/trash/shard(src.loc)
+			var/obj/item/part/cable_coil/CC = new /obj/item/part/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
 			del(src)
@@ -196,7 +196,7 @@
 		return
 
 	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if (src.density && (istype(I, /obj/item/security/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -211,15 +211,15 @@
 		return 1
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
+	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/security/card))
 		var/aforce = I.force
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			new /obj/item/trash/shard(src.loc)
+			var/obj/item/part/cable_coil/CC = new /obj/item/part/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
 			del(src)

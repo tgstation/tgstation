@@ -107,7 +107,7 @@
 /obj/machinery/pipefilter/attackby(obj/item/weapon/W, mob/user as mob)
 	if(istype(W, /obj/item/weapon/detective_scanner))
 		return ..()
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/tool/screwdriver))
 		if(bypassed)
 			user.show_message(text("\red Remove the foreign wires first!"), 1)
 			return
@@ -118,11 +118,11 @@
 		user.show_message(text("\red Done!"),1)
 		src.updateicon()
 		return
-	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
+	if(istype(W, /obj/item/part/cable_coil) && !bypassed)
 		if(src.locked)
 			user.show_message(text("\red You must remove the panel first!"),1)
 			return
-		var/obj/item/weapon/cable_coil/C = W
+		var/obj/item/part/cable_coil/C = W
 		if(C.use(4))
 			user.show_message(text("\red You unravel some cable.."),1)
 		else
@@ -133,14 +133,14 @@
 		bypassed = 1
 		src.updateicon()
 		return
-	if(istype(W, /obj/item/weapon/wirecutters) && bypassed)
+	if(istype(W, /obj/item/part/wirecutters) && bypassed)
 		src.add_fingerprint(user)
 		user.show_message(text("\red Now removing the bypass wires... <I>(This may take a while)</I>"), 1)
 		sleep(50)
 		bypassed = 0
 		src.updateicon()
 		return
-	if(istype(W, /obj/item/weapon/card/emag) && (!emagged))
+	if(istype(W, /obj/item/security/card/emag) && (!emagged))
 		emagged++
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))

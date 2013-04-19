@@ -30,7 +30,7 @@ var/list/ai_list = list()
 	var/ioncheck[1]
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
-	var/obj/item/device/multitool/aiMulti = null
+	var/obj/item/tool/multitool/aiMulti = null
 
 	//MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker
@@ -51,7 +51,7 @@ var/list/ai_list = list()
 	
 	var/last_paper_seen = null
 
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/medical/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
 
 	var/pickedName = null
@@ -388,7 +388,7 @@ var/list/ai_list = list()
 		updatehealth()
 	return
 
-/mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(var/obj/item/weapon/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	return 2

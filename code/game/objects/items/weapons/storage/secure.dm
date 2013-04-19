@@ -10,7 +10,7 @@
 // -----------------------------
 //         Generic Item
 // -----------------------------
-/obj/item/weapon/storage/secure
+/obj/item/storage/secure
 	name = "secstorage"
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
@@ -34,7 +34,7 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(locked)
-			if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
+			if ( (istype(W, /obj/item/security/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
 				emagged = 1
 				src.overlays += image('icons/obj/storage.dmi', icon_sparking)
 				sleep(6)
@@ -52,12 +52,12 @@
 					user << "You short out the lock on [src]."
 				return
 
-			if (istype(W, /obj/item/weapon/screwdriver))
+			if (istype(W, /obj/item/tool/screwdriver))
 				if (do_after(user, 20))
 					src.open =! src.open
 					user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
 				return
-			if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
+			if ((istype(W, /obj/item/tool/multitool)) && (src.open == 1)&& (!src.l_hacking))
 				user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
 				src.l_hacking = 1
 				if (do_after(usr, 100))
@@ -140,7 +140,7 @@
 // -----------------------------
 //        Secure Briefcase
 // -----------------------------
-/obj/item/weapon/storage/secure/briefcase
+/obj/item/storage/secure/briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
@@ -156,8 +156,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/paper(src)
-		new /obj/item/weapon/pen(src)
+		new /obj/item/office/paper(src)
+		new /obj/item/office/pen(src)
 
 	attack_hand(mob/user as mob)
 		if ((src.loc == user) && (src.locked == 1))
@@ -216,7 +216,7 @@
 //        Secure Safe
 // -----------------------------
 
-/obj/item/weapon/storage/secure/safe
+/obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
@@ -229,16 +229,16 @@
 	max_w_class = 8
 	anchored = 1.0
 	density = 0
-	cant_hold = list("/obj/item/weapon/storage/secure/briefcase")
+	cant_hold = list("/obj/item/storage/secure/briefcase")
 
 	New()
 		..()
-		new /obj/item/weapon/paper(src)
-		new /obj/item/weapon/pen(src)
+		new /obj/item/office/paper(src)
+		new /obj/item/office/pen(src)
 
 	attack_hand(mob/user as mob)
 		return attack_self(user)
 
-/obj/item/weapon/storage/secure/safe/HoS/New()
+/obj/item/storage/secure/safe/HoS/New()
 	..()
-	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)
+	//new /obj/item/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)

@@ -38,13 +38,13 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if( istype(W, /obj/item/weapon/weldingtool) )
-			var/obj/item/weapon/weldingtool/WT = W
+		if( istype(W, /obj/item/tool/welder) )
+			var/obj/item/tool/welder/WT = W
 			if( WT.remove_fuel(0,user) )
 				thermitemelt(user)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		else if(istype(W, /obj/item/mining/pickaxe/plasmacutter))
 			thermitemelt(user)
 			return
 
@@ -68,16 +68,16 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)
-			if (istype(W, /obj/item/weapon/wirecutters))
+			if (istype(W, /obj/item/part/wirecutters))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = 1
 				src.icon_state = "r_wall-1"
-				new /obj/item/stack/rods( src )
+				new /obj/item/part/stack/rods( src )
 				user << "<span class='notice'>You cut the outer grille.</span>"
 				return
 
 		if(1)
-			if (istype(W, /obj/item/weapon/screwdriver))
+			if (istype(W, /obj/item/tool/screwdriver))
 				user << "<span class='notice'>You begin removing the support lines.</span>"
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 
@@ -91,8 +91,8 @@
 				return
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
-			else if( istype(W, /obj/item/stack/rods) )
-				var/obj/item/stack/O = W
+			else if( istype(W, /obj/item/part/stack/rods) )
+				var/obj/item/part/stack/O = W
 				src.d_state = 0
 				src.icon_state = "r_wall"
 				relativewall_neighbours()	//call smoothwall stuff
@@ -104,8 +104,8 @@
 				return
 
 		if(2)
-			if( istype(W, /obj/item/weapon/weldingtool) )
-				var/obj/item/weapon/weldingtool/WT = W
+			if( istype(W, /obj/item/tool/welder) )
+				var/obj/item/tool/welder/WT = W
 				if( WT.remove_fuel(0,user) )
 
 					user << "<span class='notice'>You begin slicing through the metal cover.</span>"
@@ -122,7 +122,7 @@
 					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
-			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+			if( istype(W, /obj/item/mining/pickaxe/plasmacutter) )
 
 				user << "<span class='notice'>You begin slicing through the metal cover.</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -137,7 +137,7 @@
 				return
 
 		if(3)
-			if (istype(W, /obj/item/weapon/crowbar))
+			if (istype(W, /obj/item/tool/crowbar))
 
 				user << "<span class='notice'>You struggle to pry off the cover.</span>"
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
@@ -152,7 +152,7 @@
 				return
 
 		if(4)
-			if (istype(W, /obj/item/weapon/wrench))
+			if (istype(W, /obj/item/tool/wrench))
 
 				user << "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>"
 				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
@@ -167,8 +167,8 @@
 				return
 
 		if(5)
-			if( istype(W, /obj/item/weapon/weldingtool) )
-				var/obj/item/weapon/weldingtool/WT = W
+			if( istype(W, /obj/item/tool/welder) )
+				var/obj/item/tool/welder/WT = W
 				if( WT.remove_fuel(0,user) )
 
 					user << "<span class='notice'>You begin slicing through the support rods.</span>"
@@ -180,13 +180,13 @@
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 						src.d_state = 6
 						src.icon_state = "r_wall-6"
-						new /obj/item/stack/rods( src )
+						new /obj/item/part/stack/rods( src )
 						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
 				else
 					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
-			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+			if( istype(W, /obj/item/mining/pickaxe/plasmacutter) )
 
 				user << "<span class='notice'>You begin slicing through the support rods.</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -197,12 +197,12 @@
 				if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 					src.d_state = 6
 					src.icon_state = "r_wall-6"
-					new /obj/item/stack/rods( src )
+					new /obj/item/part/stack/rods( src )
 					user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
 				return
 
 		if(6)
-			if( istype(W, /obj/item/weapon/crowbar) )
+			if( istype(W, /obj/item/tool/crowbar) )
 
 				user << "<span class='notice'>You struggle to pry off the outer sheath.</span>"
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
@@ -218,7 +218,7 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/mining/pickaxe/diamonddrill))
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 
@@ -230,8 +230,8 @@
 			dismantle_wall()
 
 	//REPAIRING
-	else if( istype(W, /obj/item/stack/sheet/metal) && d_state )
-		var/obj/item/stack/sheet/metal/MS = W
+	else if( istype(W, /obj/item/part/stack/sheet/metal) && d_state )
+		var/obj/item/part/stack/sheet/metal/MS = W
 
 		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
 
@@ -249,31 +249,31 @@
 				del(MS)
 
 	//APC
-	else if( istype(W,/obj/item/apc_frame) )
-		var/obj/item/apc_frame/AH = W
+	else if( istype(W,/obj/item/part/frame/apc) )
+		var/obj/item/part/frame/apc/AH = W
 		AH.try_build(src)
 
-	else if( istype(W,/obj/item/alarm_frame) )
-		var/obj/item/alarm_frame/AH = W
+	else if( istype(W,/obj/item/part/frame/air_alarm) )
+		var/obj/item/part/frame/air_alarm/AH = W
 		AH.try_build(src)
 
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(W,/obj/item/part/frame/fire_alarm))
+		var/obj/item/part/frame/fire_alarm/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(W,/obj/item/part/frame/light))
+		var/obj/item/part/frame/light/AH = W
+		AH.try_build(src)
+		return
+
+	else if(istype(W,/obj/item/part/frame/light/small))
+		var/obj/item/part/frame/light/small/AH = W
 		AH.try_build(src)
 		return
 
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/office/contraband/poster))
 		place_poster(W,user)
 		return
 

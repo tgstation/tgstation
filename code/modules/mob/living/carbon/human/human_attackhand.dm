@@ -88,7 +88,7 @@
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src)
 			if(buckled)
 				M << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
 			if(!G)	//the grab will delete itself in New if affecting is anchored
@@ -181,15 +181,15 @@
 					stop_pulling()
 
 				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
-				if(istype(l_hand, /obj/item/weapon/grab))
-					var/obj/item/weapon/grab/lgrab = l_hand
+				if(istype(l_hand, /obj/item/effect/grab))
+					var/obj/item/effect/grab/lgrab = l_hand
 					if(lgrab.affecting)
 						visible_message("<span class='warning'>[M] has broken [src]'s grip on [lgrab.affecting]!</span>")
 						talked = 1
 					spawn(1)
 						del(lgrab)
-				if(istype(r_hand, /obj/item/weapon/grab))
-					var/obj/item/weapon/grab/rgrab = r_hand
+				if(istype(r_hand, /obj/item/effect/grab))
+					var/obj/item/effect/grab/rgrab = r_hand
 					if(rgrab.affecting)
 						visible_message("<span class='warning'>[M] has broken [src]'s grip on [rgrab.affecting]!</span>")
 						talked = 1

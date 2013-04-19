@@ -45,11 +45,11 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
-		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
+		if(isrobot(user) && !istype(I, /obj/item/storage/bag/trash))
 			return
 		src.add_fingerprint(user)
 		if(mode<=0) // It's off
-			if(istype(I, /obj/item/weapon/screwdriver))
+			if(istype(I, /obj/item/tool/screwdriver))
 				if(contents.len > 0)
 					user << "Eject the items first!"
 					return
@@ -63,11 +63,11 @@
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You attach the screws around the power connection."
 					return
-			else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
+			else if(istype(I,/obj/item/tool/welder) && mode==-1)
 				if(contents.len > 0)
 					user << "Eject the items first!"
 					return
-				var/obj/item/weapon/weldingtool/W = I
+				var/obj/item/tool/welder/W = I
 				if(W.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 					user << "You start slicing the floorweld off the disposal unit."
@@ -91,8 +91,8 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/storage/bag/trash))
-			var/obj/item/weapon/storage/bag/trash/T = I
+		if(istype(I, /obj/item/storage/bag/trash))
+			var/obj/item/storage/bag/trash/T = I
 			user << "\blue You empty the bag."
 			for(var/obj/item/O in T.contents)
 				T.remove_from_storage(O,src)
@@ -100,7 +100,7 @@
 			update()
 			return
 
-		var/obj/item/weapon/grab/G = I
+		var/obj/item/effect/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
@@ -391,7 +391,7 @@
 		var/wrapcheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
-		for(var/obj/item/smallDelivery/O in src)
+		for(var/obj/item/office/package/O in src)
 			wrapcheck = 1
 
 		if(wrapcheck == 1)
@@ -448,7 +448,7 @@
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (istype(mover,/obj/item) && mover.throwing)
 			var/obj/item/I = mover
-			if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+			if(istype(I, /obj/effect/passcheck) || istype(I, /obj/item/weapon/projectile))
 				return
 			if(prob(75))
 				I.loc = src
@@ -507,8 +507,8 @@
 			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 				var/obj/structure/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
-			if(istype(AM, /obj/item/smallDelivery) && !hasmob)
-				var/obj/item/smallDelivery/T = AM
+			if(istype(AM, /obj/item/office/package) && !hasmob)
+				var/obj/item/office/package/T = AM
 				src.destinationTag = T.sortTag
 
 
@@ -714,7 +714,7 @@
 			F.burnt	= 1
 			F.intact	= 0
 			F.levelupdate()
-			new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
+			new /obj/item/part/stack/tile(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
 		if(direction)		// direction is specified
@@ -821,8 +821,8 @@
 		if(T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 		src.add_fingerprint(user)
-		if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/W = I
+		if(istype(I, /obj/item/tool/welder))
+			var/obj/item/tool/welder/W = I
 
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
@@ -973,8 +973,8 @@
 		if(..())
 			return
 
-		if(istype(I, /obj/item/device/destTagger))
-			var/obj/item/device/destTagger/O = I
+		if(istype(I, /obj/item/office/mail_tagger))
+			var/obj/item/office/mail_tagger/O = I
 
 			if(O.currTag > 0)// Tag set
 				sortType = O.currTag
@@ -1155,8 +1155,8 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	src.add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/tool/welder))
+		var/obj/item/tool/welder/W = I
 
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
@@ -1272,7 +1272,7 @@
 		if(!I || !user)
 			return
 		src.add_fingerprint(user)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/tool/screwdriver))
 			if(mode==0)
 				mode=1
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -1283,8 +1283,8 @@
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "You attach the screws around the power connection."
 				return
-		else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
-			var/obj/item/weapon/weldingtool/W = I
+		else if(istype(I,/obj/item/tool/welder) && mode==1)
+			var/obj/item/tool/welder/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal outlet."

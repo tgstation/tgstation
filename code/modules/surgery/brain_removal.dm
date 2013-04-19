@@ -7,9 +7,9 @@
 
 //extract brain
 /datum/surgery_step/extract_brain
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
+	implements = list(/obj/item/medical/hemostat = 100, /obj/item/tool/crowbar = 55)
 	time = 64
-	var/obj/item/organ/brain/B = null
+	var/obj/item/medical/organ/brain/B = null
 
 /datum/surgery_step/extract_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	B = getbrain(target)

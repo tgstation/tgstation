@@ -2,7 +2,7 @@
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
 	icon_state = "computer_generic"
-	circuit = "/obj/item/weapon/circuitboard/pod"
+	circuit = "/obj/item/part/circuitboard/pod"
 	var/obj/machinery/mass_driver/connected = null
 	var/title = "Mass Driver Controls"
 	var/id = 1

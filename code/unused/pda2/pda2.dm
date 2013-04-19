@@ -3,7 +3,7 @@
 
 //TO-DO: rearrange all this disk/data stuff so that fixed disks are the parent type
 //because otherwise you have carts going into floppy drives and it's ALL MAD
-/obj/item/weapon/disk/data/cartridge
+/obj/item/office/disk/data/cartridge
 	name = "Cart 2.0"
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
@@ -38,11 +38,11 @@
 
 	var/owner = null
 	var/default_cartridge = null // Access level defined by cartridge
-	var/obj/item/weapon/disk/data/cartridge/cartridge = null //current cartridge
+	var/obj/item/office/disk/data/cartridge/cartridge = null //current cartridge
 	var/datum/computer/file/pda_program/active_program = null
 	var/datum/computer/file/pda_program/os/host_program = null
 	var/datum/computer/file/pda_program/scan/scan_program = null
-	var/obj/item/weapon/disk/data/fixed_disk/hd = null
+	var/obj/item/office/disk/data/fixed_disk/hd = null
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 3 //Luminosity for the flashlight function
 //	var/datum/data/record/active1 = null //General
@@ -70,7 +70,7 @@
 /obj/item/device/pda2/New()
 	..()
 	spawn(5)
-		src.hd = new /obj/item/weapon/disk/data/fixed_disk(src)
+		src.hd = new /obj/item/office/disk/data/fixed_disk(src)
 		src.hd.file_amount = src.setup_drive_size
 		src.hd.name = "Minidrive"
 		src.hd.title = "Minidrive"
@@ -152,14 +152,14 @@
 		return
 
 /obj/item/device/pda2/attackby(obj/item/weapon/C as obj, mob/user as mob)
-	if (istype(C, /obj/item/weapon/disk/data/cartridge) && isnull(src.cartridge))
+	if (istype(C, /obj/item/office/disk/data/cartridge) && isnull(src.cartridge))
 		user.drop_item()
 		C.loc = src
 		user << "\blue You insert [C] into [src]."
 		src.cartridge = C
 		src.updateSelfDialog()
 
-	else if (istype(C, /obj/item/weapon/card/id) && !src.owner && C:registered_name)
+	else if (istype(C, /obj/item/security/card/id) && !src.owner && C:registered_name)
 		src.owner = C:registered_name
 		src.name = "PDA-[src.owner]"
 		user << "\blue Card scanned."

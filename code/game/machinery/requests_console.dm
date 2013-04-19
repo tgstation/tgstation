@@ -379,7 +379,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	/*
-	if (istype(O, /obj/item/weapon/crowbar))
+	if (istype(O, /obj/item/tool/crowbar))
 		if(open)
 			open = 0
 			icon_state="req_comp0"
@@ -389,7 +389,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				icon_state="req_comp_open"
 			else if(hackState == 1)
 				icon_state="req_comp_rewired"
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (istype(O, /obj/item/tool/screwdriver))
 		if(open)
 			if(hackState == 0)
 				hackState = 1
@@ -400,22 +400,22 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		else
 			user << "You can't do much with that."*/
 
-	if (istype(O, /obj/item/weapon/card/id))
+	if (istype(O, /obj/item/security/card/id))
 		if(screen == 9)
-			var/obj/item/weapon/card/id/T = O
+			var/obj/item/security/card/id/T = O
 			msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
 			updateUsrDialog()
 		if(screen == 10)
-			var/obj/item/weapon/card/id/ID = O
+			var/obj/item/security/card/id/ID = O
 			if (access_RC_announce in ID.GetAccess())
 				announceAuth = 1
 			else
 				announceAuth = 0
 				user << "\red You are not authorized to send announcements."
 			updateUsrDialog()
-	if (istype(O, /obj/item/weapon/stamp))
+	if (istype(O, /obj/item/office/stamp))
 		if(screen == 9)
-			var/obj/item/weapon/stamp/T = O
+			var/obj/item/office/stamp/T = O
 			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")
 			updateUsrDialog()
 	return

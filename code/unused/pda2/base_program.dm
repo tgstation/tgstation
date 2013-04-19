@@ -102,7 +102,7 @@
 			else
 				del(signal)
 
-		transfer_holder(obj/item/weapon/disk/data/newholder,datum/computer/folder/newfolder)
+		transfer_holder(obj/item/office/disk/data/newholder,datum/computer/folder/newfolder)
 
 			if((newholder.file_used + src.size) > newholder.file_amount)
 				return 0

@@ -52,7 +52,7 @@
 				dat += " | <a href='byond://?src=\ref[src];mode=0'>Main</a>"
 				dat += " | <a href='byond://?src=\ref[master];disk=1'>Eject</a><br>"
 
-				for(var/obj/item/weapon/disk/data/D in src.master)
+				for(var/obj/item/office/disk/data/D in src.master)
 					if(D == current_folder.holder)
 						dat += "[D.name]<br>"
 					else
@@ -154,7 +154,7 @@
 			src.mode = newmode
 
 		if(href_list["drive"])
-			var/obj/item/weapon/disk/data/D = locate(href_list["drive"])
+			var/obj/item/office/disk/data/D = locate(href_list["drive"])
 			if(D && istype(D) && D.root)
 				current_folder = D.root
 				src.mode = 0

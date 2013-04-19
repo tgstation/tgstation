@@ -1,4 +1,4 @@
-/obj/item/projectile/change
+/obj/item/weapon/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
 	damage = 0
@@ -10,7 +10,7 @@
 		wabbajack(change)
 
 
-/obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
+/obj/item/weapon/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
 		M.monkeyizing = 1
@@ -24,7 +24,7 @@
 			if(Robot.mmi)	del(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
-				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+				if(istype(W, /obj/item/medical/implant))	//TODO: Carn. give implants a dropped() or something
 					del(W)
 					continue
 				W.layer = initial(W.layer)
@@ -44,7 +44,7 @@
 				new_mob.invisibility = 0
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
-				Robot.mmi = new /obj/item/device/mmi(new_mob)
+				Robot.mmi = new /obj/item/medical/mmi(new_mob)
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("slime")
 				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)

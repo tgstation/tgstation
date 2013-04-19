@@ -78,11 +78,11 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/attackby(obj/item/effect/grab/G as obj, mob/user as mob)
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
-	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
+	if (!( istype(G, /obj/item/effect/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
 		user << "\red This item is not suitable for the gibber!"
 		return
 	if(G.affecting.abiotic(1))
@@ -143,9 +143,9 @@
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
 	var/totalslabs = 3
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
+	var/obj/item/chem/food/snacks/meat/human/allmeat[totalslabs]
 	for (var/i=1 to totalslabs)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
+		var/obj/item/chem/food/snacks/meat/human/newmeat = new
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob

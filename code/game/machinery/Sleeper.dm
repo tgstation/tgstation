@@ -155,9 +155,9 @@
 
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
-	if(!istype(I, /obj/item/weapon/grab))
+	if(!istype(I, /obj/item/effect/grab))
 		return
-	var/obj/item/weapon/grab/G = I
+	var/obj/item/effect/grab/G = I
 
 	if(!ismob(G.affecting))
 		return

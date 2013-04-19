@@ -1,4 +1,4 @@
-/obj/item/radio/integrated
+/obj/item/part/radio/integrated
 	name = "PDA radio module"
 	desc = "An electronic radio system of nanotrasen origin."
 	icon = 'icons/obj/module.dmi'
@@ -44,7 +44,7 @@
 
 	proc/generate_menu()
 
-/obj/item/radio/integrated/beepsky
+/obj/item/part/radio/integrated/beepsky
 	var/list/botlist = null		// list of bots
 	var/obj/machinery/bot/secbot/active 	// the active bot; if null, show bot list
 	var/list/botstatus			// the status signal sent by the bot
@@ -109,7 +109,7 @@
 				post_signal(control_freq, "command", "bot_status", "active", active, s_filter = RADIO_SECBOT)
 		PDA.cartridge.unlock()
 
-/obj/item/radio/integrated/mule
+/obj/item/part/radio/integrated/mule
 	var/list/botlist = null		// list of bots
 	var/obj/machinery/bot/mulebot/active 	// the active bot; if null, show bot list
 	var/list/botstatus			// the status signal sent by the bot
@@ -217,7 +217,7 @@
  */
 
 
-/obj/item/radio/integrated/signal
+/obj/item/part/radio/integrated/signal
 	var/frequency = 1457
 	var/code = 30.0
 	var/last_transmission

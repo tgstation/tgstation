@@ -1,4 +1,4 @@
-/obj/item/ammo_casing
+/obj/item/weapon/ammo/casing
 	name = "bullet casing"
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo.dmi'
@@ -9,7 +9,7 @@
 	w_class = 1.0
 	var/caliber = ""							//Which kind of guns it can be loaded into
 	var/projectile_type = ""//The bullet type to create when New() is called
-	var/obj/item/projectile/BB = null 			//The loaded bullet
+	var/obj/item/weapon/projectile/BB = null 			//The loaded bullet
 
 
 	New()
@@ -23,7 +23,7 @@
 
 
 //Boxes of ammo
-/obj/item/ammo_magazine
+/obj/item/weapon/ammo/magazine
 	name = "ammo box (.357)"
 	desc = "A box of ammo"
 	icon_state = "357"
@@ -37,7 +37,7 @@
 	throw_speed = 4
 	throw_range = 10
 	var/list/stored_ammo = list()
-	var/ammo_type = "/obj/item/ammo_casing"
+	var/ammo_type = "/obj/item/weapon/ammo/casing"
 	var/max_ammo = 7
 	var/multiple_sprites = 0
 

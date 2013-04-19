@@ -21,7 +21,7 @@
 	..()
 
 /obj/structure/mopbucket/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop))
+	if(istype(I, /obj/item/service/mop))
 		if(reagents.total_volume < 1)
 			user << "[src] is out of water!</span>"
 		else

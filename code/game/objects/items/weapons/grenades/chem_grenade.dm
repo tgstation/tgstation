@@ -7,11 +7,11 @@
 	var/stage = 0
 	var/state = 0
 	var/path = 0
-	var/obj/item/weapon/circuitboard/circuit = null
+	var/obj/item/part/circuitboard/circuit = null
 	var/list/beakers = new/list()
-	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
+	var/list/allowed_containers = list(/obj/item/chem/glass/beaker, /obj/item/chem/glass/bottle)
 	var/affected_area = 3
-	var/obj/item/device/assembly/trigger = null // Grenade assemblies by Sayu
+	var/obj/item/part/assembly/trigger = null // Grenade assemblies by Sayu
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)
@@ -22,11 +22,11 @@
 	// When constructing a grenade in code rather than by hand
 	// Pass in the path to an assembly -Sayu
 	proc/CreateDefaultTrigger(var/type)
-		if(!ispath(type,/obj/item/device/assembly) || (type in list(/obj/item/device/assembly,/obj/item/device/assembly/igniter)))
+		if(!ispath(type,/obj/item/part/assembly) || (type in list(/obj/item/part/assembly,/obj/item/part/assembly/igniter)))
 			return
 		if(trigger) del trigger
-		if(type == /obj/item/device/assembly/signaler) type = /obj/item/device/assembly/signaler/reciever
-		if(type == /obj/item/device/assembly/infra)
+		if(type == /obj/item/part/assembly/signaler) type = /obj/item/part/assembly/signaler/reciever
+		if(type == /obj/item/part/assembly/infra)
 			verbs += /obj/item/weapon/grenade/chem_grenade/verb/rotate
 
 		trigger = new type(src)
@@ -67,9 +67,9 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-		if(istype(W,/obj/item/device/assembly_holder) && !stage && path != 2)
+		if(istype(W,/obj/item/part/assembly_holder) && !stage && path != 2)
 
-			var/obj/item/device/assembly/igniter/I = locate() in W
+			var/obj/item/part/assembly/igniter/I = locate() in W
 
 			if(!I)
 				user << "You need an igniter if you're going to make any sort of bomb!"
@@ -88,28 +88,28 @@
 			//If you add a new assembly, create a new effective grenade type here
 			//If you don't, grenade construction will fail.
 			switch(trigger.type)
-				if(/obj/item/device/assembly/infra)
+				if(/obj/item/part/assembly/infra)
 					name = "unsecured tripwire mine"
 					desc = "A grenade casing with an infrared tripwire assembly."
 					verbs += /obj/item/weapon/grenade/chem_grenade/verb/rotate
-				if(/obj/item/device/assembly/mousetrap,/obj/item/device/assembly/mousetrap/armed)
+				if(/obj/item/part/assembly/mousetrap,/obj/item/part/assembly/mousetrap/armed)
 					name = "unsecured contact mine"
 					desc = "A grenade casing with a pressure switch assembly."
-					var/obj/item/device/assembly/mousetrap/M = trigger
+					var/obj/item/part/assembly/mousetrap/M = trigger
 					M.armed = 0 // Make it safe
-				if(/obj/item/device/assembly/prox_sensor)
+				if(/obj/item/part/assembly/prox_sensor)
 					name = "unsecured proximity mine"
 					desc = "A grenade casing with a short-range sensor assembly."
-				if(/obj/item/device/assembly/signaler)
+				if(/obj/item/part/assembly/signaler)
 					name = "unsecured remote mine"
 					desc = "A grenade casing with a radio tranciever assembly."
-					var/obj/item/device/assembly/signaler/reciever/R = new (src)
-					var/obj/item/device/assembly/signaler/S = trigger
+					var/obj/item/part/assembly/signaler/reciever/R = new (src)
+					var/obj/item/part/assembly/signaler/S = trigger
 					R.frequency = S.frequency
 					R.code = S.code
 					trigger = R
 					del S
-				if(/obj/item/device/assembly/timer)
+				if(/obj/item/part/assembly/timer)
 					name = "unsecured grenade"
 					desc = "A grenade casing with a timer assembly."
 				else
@@ -129,22 +129,22 @@
 			user << "\blue You add [W] to the metal casing."
 			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
 
-		else if(istype(W,/obj/item/device/multitool) && trigger && trigger.secured)
+		else if(istype(W,/obj/item/tool/multitool) && trigger && trigger.secured)
 			trigger.interact(user) // Set trigger options
 
-		else if(istype(W,/obj/item/weapon/screwdriver) && stage == 1 && path != 2)
+		else if(istype(W,/obj/item/tool/screwdriver) && stage == 1 && path != 2)
 			path = 1
 			if(beakers.len)
 				switch(trigger.type)
-					if(/obj/item/device/assembly/infra)
+					if(/obj/item/part/assembly/infra)
 						name = "tripwire mine"
-					if(/obj/item/device/assembly/mousetrap,/obj/item/device/assembly/mousetrap/armed)
+					if(/obj/item/part/assembly/mousetrap,/obj/item/part/assembly/mousetrap/armed)
 						name = "contact mine"
-					if(/obj/item/device/assembly/prox_sensor)
+					if(/obj/item/part/assembly/prox_sensor)
 						name = "proximity mine"
-					if(/obj/item/device/assembly/signaler/reciever)
+					if(/obj/item/part/assembly/signaler/reciever)
 						name = "remote mine"
-					if(/obj/item/device/assembly/timer)
+					if(/obj/item/part/assembly/timer)
 						name = "grenade"
 					else
 						warning("Bad trigger in grenade during final construction: [trigger]")
@@ -176,7 +176,7 @@
 	prime()
 		//if(prob(reliability))
 		var/has_reagents = 0
-		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		for(var/obj/item/chem/glass/G in beakers)
 			if(G.reagents.total_volume) has_reagents = 1
 
 		if(!has_reagents)
@@ -186,7 +186,7 @@
 
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
-		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		for(var/obj/item/chem/glass/G in beakers)
 			G.reagents.trans_to(src, G.reagents.total_volume)
 
 		if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
@@ -206,7 +206,7 @@
 		/*else
 			icon_state = initial(icon_state) + "_locked"
 			crit_fail = 1
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			for(var/obj/item/chem/glass/G in beakers)
 				G.loc = get_turf(src.loc)*/
 
 	//This hack is necessary for infrared beam grenades.
@@ -226,8 +226,8 @@
 	name = "Large Chem Grenade"
 	desc = "An oversized grenade that affects a larger area."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass,/obj/item/weapon/reagent_containers/food/condiment,
-								/obj/item/weapon/reagent_containers/food/drinks)
+	allowed_containers = list(/obj/item/chem/glass,/obj/item/chem/food/condiment,
+								/obj/item/chem/food/drinks)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 	prime()
@@ -235,12 +235,12 @@
 			return // Signaller on an incomplete grenade, probably
 
 		var/has_reagents = 0
-		var/obj/item/slime_extract/valid_core = null
+		var/obj/item/slime/extract/valid_core = null
 
-		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		for(var/obj/item/chem/glass/G in beakers)
 			if(!istype(G)) continue
 			if(G.reagents.total_volume) has_reagents = 1
-		for(var/obj/item/slime_extract/E in beakers)
+		for(var/obj/item/slime/extract/E in beakers)
 			if(!istype(E)) continue
 			if(E.Uses) valid_core = E
 			if(E.reagents.total_volume) has_reagents = 1
@@ -255,7 +255,7 @@
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
 		if(valid_core)
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			for(var/obj/item/chem/glass/G in beakers)
 				G.reagents.trans_to(valid_core, G.reagents.total_volume)
 
 			// If there is still a core (sometimes it's used up)
@@ -264,7 +264,7 @@
 			if(valid_core && valid_core.reagents && valid_core.reagents.total_volume)
 				valid_core.reagents.trans_to(src,valid_core.reagents.total_volume)
 		else
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			for(var/obj/item/chem/glass/G in beakers)
 				G.reagents.trans_to(src, G.reagents.total_volume)
 
 		if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
@@ -285,7 +285,7 @@
 	//if you do that it must have reagents.  If you're going to
 	//make a special case you might as well do it explicitly. -Sayu
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/slime_extract) && stage == 1 && path != 2)
+		if(istype(W,/obj/item/slime/extract) && stage == 1 && path != 2)
 			user << "\blue You add \the [W] to the assembly."
 			user.drop_item()
 			W.loc = src
@@ -301,8 +301,8 @@
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+		var/obj/item/chem/glass/beaker/B1 = new(src)
+		var/obj/item/chem/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("aluminum", 30)
 		B2.reagents.add_reagent("foaming_agent", 10)
@@ -312,7 +312,7 @@
 		beakers += B2
 		icon_state = "grenade"
 
-		CreateDefaultTrigger(/obj/item/device/assembly/timer)
+		CreateDefaultTrigger(/obj/item/part/assembly/timer)
 
 /obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "Incendiary Grenade"
@@ -322,8 +322,8 @@
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+		var/obj/item/chem/glass/beaker/B1 = new(src)
+		var/obj/item/chem/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("aluminum", 25)
 		B2.reagents.add_reagent("plasma", 25)
@@ -333,7 +333,7 @@
 		beakers += B2
 		icon_state = "grenade"
 
-		CreateDefaultTrigger(/obj/item/device/assembly/timer)
+		CreateDefaultTrigger(/obj/item/part/assembly/timer)
 
 /obj/item/weapon/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
@@ -343,8 +343,8 @@
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+		var/obj/item/chem/glass/beaker/B1 = new(src)
+		var/obj/item/chem/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("plantbgone", 25)
 		B1.reagents.add_reagent("potassium", 25)
@@ -355,7 +355,7 @@
 		beakers += B2
 		icon_state = "grenade"
 
-		CreateDefaultTrigger(/obj/item/device/assembly/timer)
+		CreateDefaultTrigger(/obj/item/part/assembly/timer)
 
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
@@ -365,8 +365,8 @@
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+		var/obj/item/chem/glass/beaker/B1 = new(src)
+		var/obj/item/chem/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("fluorosurfactant", 40)
 		B2.reagents.add_reagent("water", 40)
@@ -376,7 +376,7 @@
 		beakers += B2
 		icon_state = "grenade"
 
-		CreateDefaultTrigger(/obj/item/device/assembly/timer)
+		CreateDefaultTrigger(/obj/item/part/assembly/timer)
 
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
@@ -386,8 +386,8 @@
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+		var/obj/item/chem/glass/beaker/B1 = new(src)
+		var/obj/item/chem/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("condensedcapsaicin", 25)
 		B1.reagents.add_reagent("potassium", 25)
@@ -398,4 +398,4 @@
 		beakers += B2
 		icon_state = "grenade"
 
-		CreateDefaultTrigger(/obj/item/device/assembly/timer)
+		CreateDefaultTrigger(/obj/item/part/assembly/timer)

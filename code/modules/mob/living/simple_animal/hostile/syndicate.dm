@@ -73,7 +73,7 @@
 		visible_message("\red [user] gently taps [src] with the [O]. ")
 
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(!Proj)	return
 	if(prob(65))
 		src.health -= Proj.damage
@@ -106,9 +106,9 @@
 	rapid = 1
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
-	casingtype = /obj/item/ammo_casing/a12mm
+	casingtype = /obj/item/weapon/ammo/casing/a12mm
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	projectiletype = /obj/item/projectile/bullet/midbullet2
+	projectiletype = /obj/item/weapon/projectile/bullet/midbullet2
 
 	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r
 

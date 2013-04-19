@@ -4,7 +4,7 @@
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 
-/obj/item/weapon/reagent_containers/syringe
+/obj/item/chem/syringe
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
@@ -106,7 +106,7 @@
 						user << "<span class='notice'>[target] is empty.</span>"
 						return
 
-					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
+					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime/extract))
 						user << "<span class='notice'>You cannot directly remove reagents from [target].</span>"
 						return
 
@@ -121,10 +121,10 @@
 				if(!reagents.total_volume)
 					user << "<span class='notice'>[src] is empty.</span>"
 					return
-				if(istype(target, /obj/item/weapon/implantcase/chem))
+				if(istype(target, /obj/item/medical/implantcase/chem))
 					return
 
-				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/chem/food) && !istype(target, /obj/item/slime/extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/storage/fancy/cigarettes))
 					user << "<span class='notice'>You cannot directly fill [target].</span>"
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -175,7 +175,7 @@
 			overlays += filling
 
 
-/obj/item/weapon/reagent_containers/syringe/lethal
+/obj/item/chem/syringe/lethal
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
 	amount_per_transfer_from_this = 50
@@ -187,7 +187,7 @@
 
 
 
-/obj/item/weapon/reagent_containers/syringe/inaprovaline
+/obj/item/chem/syringe/inaprovaline
 	name = "syringe (inaprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
 	New()
@@ -196,7 +196,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/antitoxin
+/obj/item/chem/syringe/antitoxin
 	name = "syringe (anti-toxin)"
 	desc = "Contains anti-toxins."
 	New()
@@ -205,7 +205,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/antiviral
+/obj/item/chem/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
 	New()
@@ -214,7 +214,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/lethal/choral
+/obj/item/chem/syringe/lethal/choral
 	New()
 		..()
 		reagents.add_reagent("chloralhydrate", 50)
@@ -224,7 +224,7 @@
 
 //Robot syringes
 //Not special in any way, code wise. They don't have added variables or procs.
-/obj/item/weapon/reagent_containers/syringe/robot/antitoxin
+/obj/item/chem/syringe/robot/antitoxin
 	name = "syringe (anti-toxin)"
 	desc = "Contains anti-toxins."
 	New()
@@ -233,7 +233,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/robot/inoprovaline
+/obj/item/chem/syringe/robot/inoprovaline
 	name = "syringe (inoprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
 	New()
@@ -242,7 +242,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/robot/mixed
+/obj/item/chem/syringe/robot/mixed
 	name = "syringe (mixed)"
 	desc = "Contains inaprovaline & anti-toxins."
 	New()

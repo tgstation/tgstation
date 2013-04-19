@@ -18,21 +18,21 @@
 /obj/machinery/filter_control/attackby(obj/item/weapon/W, mob/user as mob)
 	if(istype(W, /obj/item/weapon/detective_scanner))
 		return ..()
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/tool/screwdriver))
 		src.add_fingerprint(user)
 		user.show_message(text("\red Now [] the panel...", (src.locked) ? "unscrewing" : "reattaching"), 1)
 		sleep(30)
 		src.locked =! src.locked
 		src.updateicon()
 		return
-	if(istype(W, /obj/item/weapon/wirecutters) && !src.locked)
+	if(istype(W, /obj/item/part/wirecutters) && !src.locked)
 		stat ^= BROKEN
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
 		src.updateicon()
 		return
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+	if(istype(W, /obj/item/security/card/emag) && !emagged)
 		emagged++
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [] has shorted out the []'s access system with an electromagnetic card!", user, src), 1)

@@ -1,4 +1,4 @@
-/obj/item/device/assembly/mousetrap
+/obj/item/part/assembly/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
@@ -128,6 +128,6 @@
 		triggered(null)
 
 
-/obj/item/device/assembly/mousetrap/armed
+/obj/item/part/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
 	armed = 1

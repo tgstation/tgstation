@@ -1,4 +1,4 @@
-/obj/item/weapon/banhammer
+/obj/item/toy/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
 	icon = 'icons/obj/items.dmi'
@@ -15,9 +15,10 @@
 		viewers(user) << "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
-/obj/item/weapon/nullrod
+/obj/item/magic/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	flags = FPRINT | TABLEPASS
@@ -32,9 +33,10 @@
 		viewers(user) << "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/sord
+/obj/item/trash/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sord"
 	item_state = "sord"
 	flags = FPRINT | TABLEPASS
@@ -48,7 +50,7 @@
 		viewers(user) << "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return(BRUTELOSS)
 
-/obj/item/weapon/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/trash/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 

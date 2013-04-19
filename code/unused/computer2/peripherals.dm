@@ -107,7 +107,7 @@
 				src.printing = 0
 				return
 			spawn(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.host.loc )
+				var/obj/item/office/paper/P = new /obj/item/office/paper( src.host.loc )
 				P.info = print_data
 				if(print_title)
 					P.name = "paper- '[print_title]'"
@@ -154,7 +154,7 @@
 
 		switch(prizeselect)
 			if(1)
-				prize = new /obj/item/weapon/spacecash( prize_location )
+				prize = new /obj/item/money/cash( prize_location )
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
@@ -162,11 +162,11 @@
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)
-				prize = new /obj/item/weapon/lighter/zippo( prize_location )
+				prize = new /obj/item/part/lighter/zippo( prize_location )
 				prize.name = "Burno Lighter"
 				prize.desc = "Almost like a decent lighter!"
 			if(4)
-				prize = new /obj/item/weapon/c_tube( prize_location )
+				prize = new /obj/item/trash/c_tube( prize_location )
 				prize.name = "toy sword"
 				prize.icon = 'icons/obj/weapons.dmi'
 				prize.icon_state = "sword1"
@@ -176,7 +176,7 @@
 /obj/item/weapon/peripheral/card_scanner
 	name = "ID scanner module"
 	icon_state = "card_mod"
-	var/obj/item/weapon/card/id/authid = null
+	var/obj/item/security/card/id/authid = null
 
 	attack_self(mob/user as mob)
 		if(authid)

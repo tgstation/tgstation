@@ -116,7 +116,7 @@ proc/cardinalrange(var/center)
 	return
 
 
-/obj/machinery/am_shielding/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/am_shielding/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
 	return 0
@@ -199,7 +199,7 @@ proc/cardinalrange(var/center)
 
 
 
-/obj/item/device/am_shielding_container
+/obj/item/device/antimatter/shielding
 	name = "packaged antimatter reactor section"
 	desc = "A small storage unit containing an antimatter reactor section.  To use place near an antimatter control unit or deployed antimatter reactor section and use a multitool to activate this package."
 	icon = 'icons/obj/machines/antimatter.dmi'
@@ -213,8 +213,8 @@ proc/cardinalrange(var/center)
 	m_amt = 100
 	w_amt = 2000
 
-/obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+/obj/item/device/antimatter/shielding/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/tool/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
 		del(src)
 		return

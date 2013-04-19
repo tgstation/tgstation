@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// (Mixing)Glass.
 ////////////////////////////////////////////////////////////////////////////////
-/obj/item/weapon/reagent_containers/glass
+/obj/item/chem/glass
 	name = "glass"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "null"
@@ -19,12 +19,12 @@
 		/obj/structure/table,
 		/obj/structure/closet,
 		/obj/structure/sink,
-		/obj/item/weapon/storage,
+		/obj/item/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
-		/obj/item/weapon/storage/secure/safe,
+		/obj/item/storage/secure/safe,
 		/obj/machinery/disposal,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat
@@ -97,7 +97,7 @@
 				reagents.clear_reagents()
 
 
-/obj/item/weapon/reagent_containers/glass/beaker
+/obj/item/chem/glass/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
@@ -140,7 +140,7 @@
 			filling.icon += mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
 
-/obj/item/weapon/reagent_containers/glass/beaker/large
+/obj/item/chem/glass/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
@@ -150,25 +150,25 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
+/obj/item/chem/glass/beaker/cryoxadone
 	New()
 		..()
 		reagents.add_reagent("cryoxadone", 30)
 		update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/sulphuric
+/obj/item/chem/glass/beaker/sulphuric
 	New()
 		..()
 		reagents.add_reagent("sacid", 50)
 		update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/slime
+/obj/item/chem/glass/beaker/slime
 	New()
 		..()
 		reagents.add_reagent("slimejelly", 50)
 		update_icon()
 
-/obj/item/weapon/reagent_containers/glass/bucket
+/obj/item/chem/glass/bucket
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
@@ -186,12 +186,12 @@
 		if(isprox(D))
 			user << "<span class='notice'>You add [D] to [src].</span>"
 			del(D)
-			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
+			user.put_in_hands(new /obj/item/part/frame/cleanbot)
 			user.drop_from_inventory(src)
 			del(src)
 
 /*
-/obj/item/weapon/reagent_containers/glass/blender_jug
+/obj/item/chem/glass/blender_jug
 	name = "Blender Jug"
 	desc = "A blender jug, part of a blender."
 	icon = 'icons/obj/kitchen.dmi'
@@ -207,7 +207,7 @@
 			if(76 to 100)
 				icon_state = "blender_jug_f"
 
-/obj/item/weapon/reagent_containers/glass/canister		//not used apparantly
+/obj/item/chem/glass/canister		//not used apparantly
 	desc = "It's a canister. Mainly used for transporting fuel."
 	name = "canister"
 	icon = 'icons/obj/tank.dmi'
@@ -222,7 +222,7 @@
 	volume = 120
 	flags = FPRINT
 
-/obj/item/weapon/reagent_containers/glass/dispenser
+/obj/item/chem/glass/dispenser
 	name = "reagent glass"
 	desc = "A reagent glass."
 	icon = 'icons/obj/chemical.dmi'
@@ -230,7 +230,7 @@
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/dispenser/surfactant
+/obj/item/chem/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"
 	icon_state = "liquid"
 

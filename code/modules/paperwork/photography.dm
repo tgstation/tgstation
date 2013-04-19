@@ -9,7 +9,7 @@
 /*
  * Film
  */
-/obj/item/device/camera_film
+/obj/item/part/refill/camera_film
 	name = "film cartridge"
 	icon = 'icons/obj/items.dmi'
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
@@ -21,7 +21,7 @@
 /*
  * Photo
  */
-/obj/item/weapon/photo
+/obj/item/office/photo
 	name = "photo"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
@@ -32,12 +32,12 @@
 	var/blueprints = 0	//Does it include the blueprints?
 
 
-/obj/item/weapon/photo/attack_self(mob/user)
+/obj/item/office/photo/attack_self(mob/user)
 	examine()
 
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+/obj/item/office/photo/attackby(obj/item/weapon/P, mob/user)
+	if(istype(P, /obj/item/office/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == 0)
@@ -45,7 +45,7 @@
 	..()
 
 
-/obj/item/weapon/photo/examine()
+/obj/item/office/photo/examine()
 	set src in oview(1)
 	if(is_blind(usr))	return
 
@@ -56,7 +56,7 @@
 		usr << "<span class='notice'>It is too far away.</span>"
 
 
-/obj/item/weapon/photo/proc/show(mob/user)
+/obj/item/office/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden'>" \
@@ -66,7 +66,7 @@
 	onclose(user, "[name]")
 
 
-/obj/item/weapon/photo/verb/rename()
+/obj/item/office/photo/verb/rename()
 	set name = "Rename photo"
 	set category = "Object"
 	set src in usr
@@ -81,18 +81,18 @@
 /*
  * Photo album
  */
-/obj/item/weapon/storage/photo_album
+/obj/item/storage/photo_album
 	name = "photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+	can_hold = list("/obj/item/office/photo",)
 
 
 /*
  * Camera
  */
-/obj/item/device/camera
+/obj/item/security/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
 	desc = "A polaroid camera. 10 photos left."
@@ -108,12 +108,12 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/security/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/camera_film))
+/obj/item/security/camera/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/part/refill/camera_film))
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
@@ -125,7 +125,7 @@
 	..()
 
 
-/obj/item/device/camera/proc/get_icon(turf/the_turf)
+/obj/item/security/camera/proc/get_icon(turf/the_turf)
 	//Bigger icon base to capture those icons that were shifted to the next tile
 	//i.e. pretty much all wall-mounted machinery
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
@@ -160,12 +160,12 @@
 			var/icon/img = getFlatIcon(A, A.dir)//build_composite_icon(A)
 			if(istype(img, /icon))
 				res.Blend(new/icon(img, "", A.dir), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
-		if(!blueprints && istype(A, /obj/item/blueprints))
+		if(!blueprints && istype(A, /obj/item/office/blueprints))
 			blueprints = 1
 	return res
 
 
-/obj/item/device/camera/proc/get_mobs(turf/the_turf)
+/obj/item/security/camera/proc/get_mobs(turf/the_turf)
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
@@ -185,7 +185,7 @@
 	return mob_detail
 
 
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+/obj/item/security/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc)) return
 
 	var/x_c = target.x - 1
@@ -209,7 +209,7 @@
 		y_c--
 		x_c -= 3
 
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	var/obj/item/office/photo/P = new/obj/item/office/photo()
 	user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")

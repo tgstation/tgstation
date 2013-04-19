@@ -1,31 +1,31 @@
 // robot_upgrades.dm
 // Contains various borg upgrades.
 
-/obj/item/borg/upgrade
+/obj/item/part/cyborg/equipment/upgrade
 	name = "A borg upgrade module."
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	var/construction_time = 120
-	var/construction_cost = list("metal"=10000)
+	construction_time = 120
+	construction_cost = list("metal"=10000)
 	var/locked = 0
 	var/require_module = 0
 	var/installed = 0
 
-/obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
 		usr << "/red The [src] will not function on a deceased cyborg."
 		return 1
 	return 0
 
 
-/obj/item/borg/upgrade/reset
+/obj/item/part/cyborg/equipment/upgrade/reset
 	name = "cyborg module reset board"
 	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the cyborg."
 	icon_state = "cyborg_upgrade1"
 	require_module = 1
 
-/obj/item/borg/upgrade/reset/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/reset/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
@@ -39,31 +39,31 @@
 
 	return 1
 
-/obj/item/borg/upgrade/rename
+/obj/item/part/cyborg/equipment/upgrade/rename
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
 	construction_cost = list("metal"=35000)
 	var/heldname = "default name"
 
-/obj/item/borg/upgrade/rename/attack_self(mob/user as mob)
+/obj/item/part/cyborg/equipment/upgrade/rename/attack_self(mob/user as mob)
 	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
 
-/obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 	R.name = heldname
 	R.real_name = heldname
 
 	return 1
 
-/obj/item/borg/upgrade/restart
+/obj/item/part/cyborg/equipment/upgrade/restart
 	name = "cyborg emergency restart module"
 	desc = "Used to force a restart of a disabled-but-repaired cyborg, bringing it back online."
 	construction_cost = list("metal"=60000 , "glass"=5000)
 	icon_state = "cyborg_upgrade1"
 
 
-/obj/item/borg/upgrade/restart/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/restart/action(var/mob/living/silicon/robot/R)
 	if(R.health < 0)
 		usr << "You have to repair the cyborg before using this module!"
 		return 0
@@ -77,14 +77,14 @@
 	return 1
 
 
-/obj/item/borg/upgrade/vtec
+/obj/item/part/cyborg/equipment/upgrade/vtec
 	name = "cyborg VTEC Module"
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
 	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 5000)
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
 
-/obj/item/borg/upgrade/vtec/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/vtec/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
 	if(R.speed == -1)
@@ -94,7 +94,7 @@
 	return 1
 
 
-/obj/item/borg/upgrade/tasercooler
+/obj/item/part/cyborg/equipment/upgrade/tasercooler
 	name = "cyborg Rapid Taser Cooling Module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
 	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 2000, "diamond" = 500)
@@ -102,10 +102,10 @@
 	require_module = 1
 
 
-/obj/item/borg/upgrade/tasercooler/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/tasercooler/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/security))
+	if(!istype(R.module, /obj/item/part/cyborg/module/security))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
 		return 0
@@ -129,36 +129,36 @@
 
 	return 1
 
-/obj/item/borg/upgrade/jetpack
+/obj/item/part/cyborg/equipment/upgrade/jetpack
 	name = "mining cyborg jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
 	construction_cost = list("metal"=10000,"plasma"=15000,"uranium" = 20000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
-/obj/item/borg/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
+	if(!istype(R.module, /obj/item/part/cyborg/module/miner))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
 		return 0
 	else
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
-		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
+		R.module.modules += new/obj/item/clothing/tank/jetpack/carbondioxide
+		for(var/obj/item/clothing/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		R.icon_state="Miner+j"
 		return 1
 
 
-/obj/item/borg/upgrade/syndicate/
+/obj/item/part/cyborg/equipment/upgrade/syndicate/
 	name = "Illegal Equipment Module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
 	construction_cost = list("metal"=10000,"glass"=15000,"diamond" = 10000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
-/obj/item/borg/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
+/obj/item/part/cyborg/equipment/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
 	if(R.emagged == 1)

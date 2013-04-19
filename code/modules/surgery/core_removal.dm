@@ -7,7 +7,7 @@
 
 //extract brain
 /datum/surgery_step/extract_core
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 100)
+	implements = list(/obj/item/medical/hemostat = 100, /obj/item/tool/crowbar = 100)
 	time = 16
 
 /datum/surgery_step/extract_core/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

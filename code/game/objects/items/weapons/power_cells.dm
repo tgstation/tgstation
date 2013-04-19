@@ -1,4 +1,4 @@
-/obj/item/weapon/cell
+/obj/item/part/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
 	icon = 'icons/obj/power.dmi'
@@ -24,39 +24,39 @@
 		viewers(user) << "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (FIRELOSS)
 
-/obj/item/weapon/cell/crap
+/obj/item/part/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
 	g_amt = 40
 
-/obj/item/weapon/cell/crap/empty/New()
+/obj/item/part/cell/crap/empty/New()
 	..()
 	charge = 0
 
-/obj/item/weapon/cell/secborg
+/obj/item/part/cell/secborg
 	name = "\improper Security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40
 
-/obj/item/weapon/cell/secborg/empty/New()
+/obj/item/part/cell/secborg/empty/New()
 	..()
 	charge = 0
 
-/obj/item/weapon/cell/high
+/obj/item/part/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
 
-/obj/item/weapon/cell/high/empty/New()
+/obj/item/part/cell/high/empty/New()
 	..()
 	charge = 0
 
-/obj/item/weapon/cell/super
+/obj/item/part/cell/super
 	name = "super-capacity power cell"
 	origin_tech = "powerstorage=5"
 	icon_state = "scell"
@@ -64,11 +64,11 @@
 	g_amt = 70
 	construction_cost = list("metal"=750,"glass"=100)
 
-/obj/item/weapon/cell/super/empty/New()
+/obj/item/part/cell/super/empty/New()
 	..()
 	charge = 0
 
-/obj/item/weapon/cell/hyper
+/obj/item/part/cell/hyper
 	name = "hyper-capacity power cell"
 	origin_tech = "powerstorage=6"
 	icon_state = "hpcell"
@@ -76,11 +76,11 @@
 	g_amt = 80
 	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
 
-/obj/item/weapon/cell/hyper/empty/New()
+/obj/item/part/cell/hyper/empty/New()
 	..()
 	charge = 0
 
-/obj/item/weapon/cell/infinite
+/obj/item/part/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"
 	origin_tech =  null
@@ -89,7 +89,7 @@
 	use()
 		return 1
 
-/obj/item/weapon/cell/potato
+/obj/item/part/cell/potato
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
@@ -102,7 +102,7 @@
 	minor_fault = 1
 
 
-/obj/item/weapon/cell/slime
+/obj/item/part/cell/slime
 	name = "charged slime core"
 	desc = "A yellow slime core infused with plasma, it crackles with power."
 	origin_tech = "powerstorage=2;biotech=4"

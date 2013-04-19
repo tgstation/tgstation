@@ -3,10 +3,10 @@
 	if(t_max == -1)
 		t_max = rand(1,4)
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
+	if(istype(O, /obj/item/chem/food/snacks/grown/))
+		var/obj/item/chem/food/snacks/grown/F = O
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new F.seed(O.loc)
+			var/obj/item/botany/seeds/t_prod = new F.seed(O.loc)
 			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
@@ -18,10 +18,10 @@
 		del(O)
 		return 1
 
-	else if(istype(O, /obj/item/weapon/grown/))
-		var/obj/item/weapon/grown/F = O
+	else if(istype(O, /obj/item/botany/grown/))
+		var/obj/item/botany/grown/F = O
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new F.seed(O.loc)
+			var/obj/item/botany/seeds/t_prod = new F.seed(O.loc)
 			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
@@ -33,9 +33,9 @@
 		del(O)
 		return 1
 
-	/*else if(istype(O, /obj/item/stack/tile/grass))
-		var/obj/item/stack/tile/grass/S = O
-		new /obj/item/seeds/grassseed(O.loc)
+	/*else if(istype(O, /obj/item/part/stack/tile/grass))
+		var/obj/item/part/stack/tile/grass/S = O
+		new /obj/item/botany/seeds/grassseed(O.loc)
 		S.use(1)
 		return 1*/
 

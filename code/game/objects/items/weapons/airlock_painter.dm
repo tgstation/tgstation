@@ -1,4 +1,4 @@
-/obj/item/weapon/airlock_painter
+/obj/item/tool/airlock_painter
 	name = "airlock painter"
 	desc = "This device can change the paintjob of an airlock assembly."
 	icon = 'icons/obj/objects.dmi'
@@ -14,10 +14,10 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 
-	var/obj/item/device/toner/ink = null
+	var/obj/item/part/refill/toner/ink = null
 
 	New()
-		ink = new /obj/item/device/toner(src)
+		ink = new /obj/item/part/refill/toner(src)
 
 	proc/use()
 		if(!ink || ink.charges < 1)

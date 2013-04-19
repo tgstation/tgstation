@@ -5,7 +5,7 @@
 	name = "Security Cameras"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
-	circuit = "/obj/item/weapon/circuitboard/security"
+	circuit = "/obj/item/part/circuitboard/security"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
@@ -116,4 +116,4 @@
 	desc = "Used to access the various cameras on the outpost."
 	icon_state = "miningcameras"
 	network = list("MINE")
-	circuit = "/obj/item/weapon/circuitboard/mining"
+	circuit = "/obj/item/part/circuitboard/mining"

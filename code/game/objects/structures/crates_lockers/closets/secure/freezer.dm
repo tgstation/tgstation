@@ -20,8 +20,8 @@
 		..()
 		sleep(2)
 		for(var/i = 0, i < 3, i++)
-			new /obj/item/weapon/reagent_containers/food/drinks/flour(src)
-		new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+			new /obj/item/chem/food/drinks/flour(src)
+		new /obj/item/chem/food/condiment/sugar(src)
 		return
 
 
@@ -44,7 +44,7 @@
 		..()
 		sleep(2)
 		for(var/i = 0, i < 4, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+			new /obj/item/chem/food/snacks/meat/monkey(src)
 		return
 
 
@@ -63,11 +63,11 @@
 		..()
 		sleep(2)
 		for(var/i = 0, i < 5, i++)
-			new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
+			new /obj/item/chem/food/drinks/milk(src)
 		for(var/i = 0, i < 5, i++)
-			new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
+			new /obj/item/chem/food/drinks/soymilk(src)
 		for(var/i = 0, i < 2, i++)
-			new /obj/item/weapon/storage/fancy/egg_box(src)
+			new /obj/item/storage/fancy/egg_box(src)
 		return
 
 
@@ -87,11 +87,11 @@
 		..()
 		sleep(2)
 		for(var/i = 0, i < 3, i++)
-			new /obj/item/weapon/spacecash/c1000(src)
+			new /obj/item/money/cash/c1000(src)
 		for(var/i = 0, i < 5, i++)
-			new /obj/item/weapon/spacecash/c500(src)
+			new /obj/item/money/cash/c500(src)
 		for(var/i = 0, i < 6, i++)
-			new /obj/item/weapon/spacecash/c200(src)
+			new /obj/item/money/cash/c200(src)
 		return
 
 

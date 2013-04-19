@@ -271,8 +271,8 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(istype(W, /obj/item/tool/welder))
+			var/obj/item/tool/welder/WT = W
 			if (WT.remove_fuel(0,user))
 				user << "\blue Now welding the vent."
 				if(do_after(user, 20))
@@ -305,7 +305,7 @@
 		update_icon()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
+		if (!istype(W, /obj/item/tool/wrench))
 			return ..()
 		if (!(stat & NOPOWER) && on)
 			user << "\red You cannot unwrench this [src], turn it off first."
@@ -327,7 +327,7 @@
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			new /obj/item/part/pipe(loc, make_from=src)
 			del(src)
 
 /obj/machinery/atmospherics/unary/vent_pump/Del()

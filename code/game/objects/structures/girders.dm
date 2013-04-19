@@ -6,14 +6,14 @@
 	var/state = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench) && state == 0)
+		if(istype(W, /obj/item/tool/wrench) && state == 0)
 			if(anchored && !istype(src,/obj/structure/girder/displaced))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "\blue Now disassembling the girder"
 				if(do_after(user,40))
 					if(!src) return
 					user << "\blue You dissasembled the girder!"
-					new /obj/item/stack/sheet/metal(get_turf(src))
+					new /obj/item/part/stack/sheet/metal(get_turf(src))
 					del(src)
 			else if(!anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -23,20 +23,20 @@
 					new/obj/structure/girder( src.loc )
 					del(src)
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		else if(istype(W, /obj/item/mining/pickaxe/plasmacutter))
 			user << "\blue Now slicing apart the girder"
 			if(do_after(user,30))
 				if(!src) return
 				user << "\blue You slice apart the girder!"
-				new /obj/item/stack/sheet/metal(get_turf(src))
+				new /obj/item/part/stack/sheet/metal(get_turf(src))
 				del(src)
 
-		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		else if(istype(W, /obj/item/mining/pickaxe/diamonddrill))
 			user << "\blue You drill through the girder!"
-			new /obj/item/stack/sheet/metal(get_turf(src))
+			new /obj/item/part/stack/sheet/metal(get_turf(src))
 			del(src)
 
-		else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+		else if(istype(W, /obj/item/tool/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			user << "\blue Now unsecuring support struts"
 			if(do_after(user,40))
@@ -44,7 +44,7 @@
 				user << "\blue You unsecured the support struts!"
 				state = 1
 
-		else if(istype(W, /obj/item/weapon/wirecutters) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+		else if(istype(W, /obj/item/part/wirecutters) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			user << "\blue Now removing support struts"
 			if(do_after(user,40))
@@ -53,7 +53,7 @@
 				new/obj/structure/girder( src.loc )
 				del(src)
 
-		else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored )
+		else if(istype(W, /obj/item/tool/crowbar) && state == 0 && anchored )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user << "\blue Now dislodging the girder"
 			if(do_after(user, 40))
@@ -62,12 +62,12 @@
 				new/obj/structure/girder/displaced( src.loc )
 				del(src)
 
-		else if(istype(W, /obj/item/stack/sheet))
+		else if(istype(W, /obj/item/part/stack/sheet))
 
-			var/obj/item/stack/sheet/S = W
+			var/obj/item/part/stack/sheet/S = W
 			switch(S.type)
 
-				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
+				if(/obj/item/part/stack/sheet/metal, /obj/item/part/stack/sheet/metal/cyborg)
 					if(!anchored)
 						if(S.amount < 2) return
 						S.use(2)
@@ -88,7 +88,7 @@
 							del(src)
 						return
 
-				if(/obj/item/stack/sheet/plasteel)
+				if(/obj/item/part/stack/sheet/plasteel)
 					if(!anchored)
 						if(S.amount < 2) return
 						S.use(2)
@@ -145,8 +145,8 @@
 
 			add_hiddenprint(usr)
 
-		else if(istype(W, /obj/item/pipe))
-			var/obj/item/pipe/P = W
+		else if(istype(W, /obj/item/part/pipe))
+			var/obj/item/part/pipe/P = W
 			if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 				user.drop_item()
 				P.loc = src.loc
@@ -167,13 +167,13 @@
 				return
 			if(2.0)
 				if (prob(30))
-					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+					var/remains = pick(/obj/item/part/stack/rods,/obj/item/part/stack/sheet/metal)
 					new remains(loc)
 					del(src)
 				return
 			if(3.0)
 				if (prob(5))
-					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+					var/remains = pick(/obj/item/part/stack/rods,/obj/item/part/stack/sheet/metal)
 					new remains(loc)
 					del(src)
 				return
@@ -196,7 +196,7 @@
 	layer = 2
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench))
+		if(istype(W, /obj/item/tool/wrench))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "\blue Now disassembling the girder"
 			if(do_after(user,40))
@@ -204,14 +204,14 @@
 				new /obj/effect/decal/remains/human(get_turf(src))
 				del(src)
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		else if(istype(W, /obj/item/mining/pickaxe/plasmacutter))
 			user << "\blue Now slicing apart the girder"
 			if(do_after(user,30))
 				user << "\blue You slice apart the girder!"
 			new /obj/effect/decal/remains/human(get_turf(src))
 			del(src)
 
-		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		else if(istype(W, /obj/item/mining/pickaxe/diamonddrill))
 			user << "\blue You drill through the girder!"
 			new /obj/effect/decal/remains/human(get_turf(src))
 			del(src)

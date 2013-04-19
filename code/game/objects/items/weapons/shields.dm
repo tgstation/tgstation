@@ -46,7 +46,7 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/cloaking_device
+/obj/item/device/cloaking
 	name = "cloaking device"
 	desc = "Use this to become invisible to the human eyesocket."
 	icon = 'icons/obj/device.dmi'
@@ -61,7 +61,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 
 
-/obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
+/obj/item/device/cloaking/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
 		user << "\blue The cloaking device is now active."
@@ -72,7 +72,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/item/weapon/cloaking_device/emp_act(severity)
+/obj/item/device/cloaking/emp_act(severity)
 	active = 0
 	icon_state = "shield0"
 	if(ismob(loc))

@@ -329,14 +329,14 @@ var/global/datum/controller/occupations/job_master
 				else
 					switch(H.backbag)
 						if(1)
-							H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+							H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H), slot_r_hand)
 						if(2)
-							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							var/obj/item/storage/backpack/BPK = new/obj/item/storage/backpack(H)
+							new /obj/item/storage/box/survival(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 						if(3)
-							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							var/obj/item/storage/backpack/BPK = new/obj/item/storage/backpack/satchel_norm(H)
+							new /obj/item/storage/box/survival(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 
 		H << "<B>You are the [rank].</B>"
@@ -352,7 +352,7 @@ var/global/datum/controller/occupations/job_master
 
 	proc/spawnId(var/mob/living/carbon/human/H, rank)
 		if(!H)	return 0
-		var/obj/item/weapon/card/id/C = null
+		var/obj/item/security/card/id/C = null
 
 		var/datum/job/job = null
 		for(var/datum/job/J in occupations)
@@ -367,16 +367,16 @@ var/global/datum/controller/occupations/job_master
 				C = new job.idtype(H)
 				C.access = job.get_access()
 		else
-			C = new /obj/item/weapon/card/id(H)
+			C = new /obj/item/security/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.assignment = rank
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			H.equip_to_slot_or_del(C, slot_wear_id)
 	/*	if(prob(50))
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
+			H.equip_to_slot_or_del(new /obj/item/office/pen(H), slot_r_store)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
+			H.equip_to_slot_or_del(new /obj/item/office/pen/blue(H), slot_r_store)*/
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
 		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)

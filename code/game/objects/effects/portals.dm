@@ -6,7 +6,7 @@
 	density = 1
 	unacidable = 1//Can't destroy energy portals.
 	var/failchance = 5
-	var/obj/item/target = null
+	var/obj/item/part/target = null
 	var/creator = null
 	anchored = 1.0
 
@@ -34,8 +34,8 @@
 
 /obj/effect/portal/Del()
 	portals -= src
-	if(istype(creator, /obj/item/weapon/hand_tele))
-		var/obj/item/weapon/hand_tele/O = creator
+	if(istype(creator, /obj/item/device/teleporter))
+		var/obj/item/device/teleporter/O = creator
 		O.active_portals--
 	return ..()
 

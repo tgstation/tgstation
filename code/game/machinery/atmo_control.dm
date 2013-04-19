@@ -106,14 +106,14 @@ obj/machinery/computer/general_air_control
 		src.updateDialog()
 
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/tool/screwdriver))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					new /obj/item/weapon/shard( src.loc )
-					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
+					new /obj/item/trash/shard( src.loc )
+					var/obj/item/part/circuitboard/air_management/M = new /obj/item/part/circuitboard/air_management( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
 					M.frequency = src.frequency
@@ -125,7 +125,7 @@ obj/machinery/computer/general_air_control
 				else
 					user << "\blue You disconnect the monitor."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
+					var/obj/item/part/circuitboard/air_management/M = new /obj/item/part/circuitboard/air_management( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
 					M.frequency = src.frequency
@@ -304,14 +304,14 @@ Rate: [volume_rate] L/sec<BR>"}
 		var/on_temperature = 1200
 
 		attackby(I as obj, user as mob)
-			if(istype(I, /obj/item/weapon/screwdriver))
+			if(istype(I, /obj/item/tool/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, 20))
 					if (src.stat & BROKEN)
 						user << "\blue The broken glass falls out."
 						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						new /obj/item/weapon/shard( src.loc )
-						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
+						new /obj/item/trash/shard( src.loc )
+						var/obj/item/part/circuitboard/injector_control/M = new /obj/item/part/circuitboard/injector_control( A )
 						for (var/obj/C in src)
 							C.loc = src.loc
 						M.frequency = src.frequency
@@ -323,7 +323,7 @@ Rate: [volume_rate] L/sec<BR>"}
 					else
 						user << "\blue You disconnect the monitor."
 						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
+						var/obj/item/part/circuitboard/injector_control/M = new /obj/item/part/circuitboard/injector_control( A )
 						for (var/obj/C in src)
 							C.loc = src.loc
 						M.frequency = src.frequency

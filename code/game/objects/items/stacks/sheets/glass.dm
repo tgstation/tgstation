@@ -8,7 +8,7 @@
 /*
  * Glass sheets
  */
-/obj/item/stack/sheet/glass
+/obj/item/part/stack/sheet/glass
 	name = "glass"
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
@@ -17,27 +17,27 @@
 	origin_tech = "materials=1"
 
 
-/obj/item/stack/sheet/glass/attack_self(mob/user as mob)
+/obj/item/part/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
+/obj/item/part/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
-	if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/CC = W
+	if(istype(W,/obj/item/part/cable_coil))
+		var/obj/item/part/cable_coil/CC = W
 		if(CC.amount < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 			return
 		CC.use(5)
 		user << "\blue You attach wire to the [name]."
-		new /obj/item/stack/light_w(user.loc)
+		new /obj/item/part/stack/light_w(user.loc)
 		src.use(1)
-	else if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+	else if( istype(W, /obj/item/part/stack/rods) )
+		var/obj/item/part/stack/rods/V  = W
+		var/obj/item/part/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
+		var/obj/item/part/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand()==G)
 		G.use(1)
@@ -46,7 +46,7 @@
 	else
 		return ..()
 
-/obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
+/obj/item/part/stack/sheet/glass/proc/construct_window(mob/user as mob)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -109,7 +109,7 @@
 /*
  * Reinforced glass sheets
  */
-/obj/item/stack/sheet/rglass
+/obj/item/part/stack/sheet/rglass
 	name = "reinforced glass"
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
@@ -118,7 +118,7 @@
 	m_amt = 1875
 	origin_tech = "materials=2"
 
-/obj/item/stack/sheet/rglass/cyborg
+/obj/item/part/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
@@ -126,10 +126,10 @@
 	g_amt = 0
 	m_amt = 0
 
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
+/obj/item/part/stack/sheet/rglass/attack_self(mob/user as mob)
 	construct_window(user)
 
-/obj/item/stack/sheet/rglass/proc/construct_window(mob/user as mob)
+/obj/item/part/stack/sheet/rglass/proc/construct_window(mob/user as mob)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -231,7 +231,7 @@
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
-/obj/item/weapon/shard/Bump()
+/obj/item/trash/shard/Bump()
 
 	spawn( 0 )
 		if (prob(20))
@@ -242,7 +242,7 @@
 		return
 	return
 
-/obj/item/weapon/shard/New()
+/obj/item/trash/shard/New()
 
 	src.icon_state = pick("large", "medium", "small")
 	switch(src.icon_state)
@@ -258,13 +258,13 @@
 		else
 	return
 
-/obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/trash/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ( istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if ( istype(W, /obj/item/tool/welder))
+		var/obj/item/tool/welder/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/G in user.loc)
+			var/obj/item/part/stack/sheet/glass/NG = new (user.loc)
+			for (var/obj/item/part/stack/sheet/glass/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
@@ -276,7 +276,7 @@
 			return
 	return ..()
 
-/obj/item/weapon/shard/HasEntered(AM as mob|obj)
+/obj/item/trash/shard/HasEntered(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"

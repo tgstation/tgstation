@@ -8,10 +8,10 @@
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/weapon/storage/bag/trash/mybag	= null
-	var/obj/item/weapon/mop/mymop = null
-	var/obj/item/weapon/reagent_containers/spray/myspray = null
-	var/obj/item/device/lightreplacer/myreplacer = null
+	var/obj/item/storage/bag/trash/mybag	= null
+	var/obj/item/service/mop/mymop = null
+	var/obj/item/chem/spray/myspray = null
+	var/obj/item/service/lightreplacer/myreplacer = null
 	var/signs = 0	//maximum capacity hardcoded below
 
 
@@ -29,7 +29,7 @@
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
+	if(istype(I, /obj/item/storage/bag/trash) && !mybag)
 		user.drop_item()
 		mybag = I
 		I.loc = src
@@ -37,7 +37,7 @@
 		updateUsrDialog()
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
-	else if(istype(I, /obj/item/weapon/mop))
+	else if(istype(I, /obj/item/service/mop))
 		if(I.reagents.total_volume < 1)	//if it's at all wet, we assume they want to store the mop.
 			if(reagents.total_volume < 1)
 				user << "[src] is out of water!</span>"
@@ -54,7 +54,7 @@
 			updateUsrDialog()
 			user << "<span class='notice'>You put [I] into [src].</span>"
 
-	else if(istype(I, /obj/item/weapon/reagent_containers/spray) && !myspray)
+	else if(istype(I, /obj/item/chem/spray) && !myspray)
 		user.drop_item()
 		myspray = I
 		I.loc = src
@@ -62,7 +62,7 @@
 		updateUsrDialog()
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
-	else if(istype(I, /obj/item/device/lightreplacer) && !myreplacer)
+	else if(istype(I, /obj/item/service/lightreplacer) && !myreplacer)
 		user.drop_item()
 		myreplacer = I
 		I.loc = src
@@ -70,7 +70,7 @@
 		updateUsrDialog()
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
-	else if(istype(I, /obj/item/weapon/caution))
+	else if(istype(I, /obj/item/service/caution))
 		if(signs < 4)
 			user.drop_item()
 			I.loc = src
@@ -131,7 +131,7 @@
 			myreplacer = null
 	if(href_list["sign"])
 		if(signs)
-			var/obj/item/weapon/caution/Sign = locate() in src
+			var/obj/item/service/caution/Sign = locate() in src
 			if(Sign)
 				user.put_in_hands(Sign)
 				user << "<span class='notice'>You take \a [Sign] from [src].</span>"
@@ -168,7 +168,7 @@
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/weapon/storage/bag/trash/mybag	= null
+	var/obj/item/storage/bag/trash/mybag	= null
 	var/callme = "pimpin' ride"	//how do people refer to it?
 
 
@@ -188,16 +188,16 @@
 
 
 /obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop))
+	if(istype(I, /obj/item/service/mop))
 		if(reagents.total_volume > 1)
 			reagents.trans_to(I, 2)
 			user << "<span class='notice'>You wet [I] in the [callme].</span>"
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		else
 			user << "<span class='notice'>This [callme] is out of water!</span>"
-	else if(istype(I, /obj/item/key))
+	else if(istype(I, /obj/item/service/key))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
-	else if(istype(I, /obj/item/weapon/storage/bag/trash))
+	else if(istype(I, /obj/item/storage/bag/trash))
 		user << "<span class='notice'>You hook the trashbag onto the [callme].</span>"
 		user.drop_item()
 		I.loc = src
@@ -216,7 +216,7 @@
 /obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle()
-	if(istype(user.l_hand, /obj/item/key) || istype(user.r_hand, /obj/item/key))
+	if(istype(user.l_hand, /obj/item/service/key) || istype(user.r_hand, /obj/item/service/key))
 		step(src, direction)
 		update_mob()
 		handle_rotation()
@@ -288,14 +288,14 @@
 				buckled_mob.pixel_y = 7
 
 
-/obj/structure/stool/bed/chair/janicart/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/janicart/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(buckled_mob)
 		if(prob(85))
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
 
 
-/obj/item/key
+/obj/item/service/key
 	name = "key"
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon = 'icons/obj/vehicles.dmi'

@@ -45,7 +45,7 @@
 
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/tool/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30))
@@ -54,8 +54,8 @@
 			update_icon()
 			return
 
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
+	if(istype(I, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = I
 		if(!G.confirm())
 			return
 		if(isliving(G.affecting))
@@ -107,8 +107,8 @@
 
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
+	if(istype(I, /obj/item/effect/grab))
+		var/obj/item/effect/grab/G = I
 		if(!G.confirm())
 			return
 		if(isliving(G.affecting))
@@ -160,9 +160,9 @@
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
-	if(I.type == /obj/item/device/analyzer)
+	if(I.type == /obj/item/device/scanner/atmospheric)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/tool/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with the [I].</span>"
 		if(do_after(user, 50))
 			switch(watertemp)
@@ -316,7 +316,7 @@
 
 
 
-/obj/item/weapon/bikehorn/rubberducky
+/obj/item/toy/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
@@ -366,8 +366,8 @@
 		user << "<span class='notice'>You wash up [O].</span>"	//sims!!!
 		del(O)
 
-	if(istype(O, /obj/item/weapon/reagent_containers))
-		var/obj/item/weapon/reagent_containers/RG = O
+	if(istype(O, /obj/item/chem))
+		var/obj/item/chem/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user << "<span class='notice'>You fill [RG] from [src].</span>"
 		return

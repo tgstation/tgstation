@@ -2,7 +2,7 @@
 
 // TODO: Split everything into easy to manage procs.
 
-/obj/item/device/detective_scanner
+/obj/item/device/scanner/forensic
 	name = "scanner"
 	desc = "Used to scan objects for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensic1"
@@ -13,7 +13,7 @@
 	var/scanning = 0
 	var/list/log = list()
 
-/obj/item/device/detective_scanner/attack_self(var/mob/user)
+/obj/item/device/scanner/forensic/attack_self(var/mob/user)
 	if(log.len && !scanning)
 		scanning = 1
 		user << "<span class='notice'>Printing report, please wait...</span>"
@@ -21,7 +21,7 @@
 		spawn(100)
 
 			// Create our paper
-			var/obj/item/weapon/paper/P = new(get_turf(src))
+			var/obj/item/office/paper/P = new(get_turf(src))
 			P.name = "paper- 'Scanner Report'"
 			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
 			P.info += dd_list2text(log, "<BR>")
@@ -39,11 +39,11 @@
 	else
 		user << "<span class='notice'>The scanner has no logs or is in use.</span>"
 
-/obj/item/device/detective_scanner/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/scanner/forensic/attack(mob/living/M as mob, mob/user as mob)
 	scan(M, user)
 
 
-/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob)
+/obj/item/device/scanner/forensic/afterattack(atom/A as obj|turf|area, mob/user as mob)
 
 	if(!in_range(A,user))
 		return
@@ -53,7 +53,7 @@
 		return
 	scan(A, user)
 
-/obj/item/device/detective_scanner/proc/scan(var/atom/A, var/mob/user)
+/obj/item/device/scanner/forensic/proc/scan(var/atom/A, var/mob/user)
 
 	if(!scanning)
 		scanning = 1
@@ -153,7 +153,7 @@
 			scanning = 0
 			return
 
-/obj/item/device/detective_scanner/proc/add_log(var/msg, var/broadcast = 1)
+/obj/item/device/scanner/forensic/proc/add_log(var/msg, var/broadcast = 1)
 	if(scanning)
 		if(broadcast && ismob(loc))
 			var/mob/M = loc

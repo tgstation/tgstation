@@ -176,9 +176,9 @@ Class Procs:
 	var/norange = 0
 	if(istype(usr, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
+		if(istype(H.l_hand, /obj/item/effect/telekinesis))
 			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
+		else if(istype(H.r_hand, /obj/item/effect/telekinesis))
 			norange = 1
 
 	if(!norange)

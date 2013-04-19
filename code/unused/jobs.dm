@@ -177,10 +177,10 @@ proc/setup_jobs()
 	JOB.equipment_shoes = list(/obj/item/clothing/shoes/orange,/obj/item/clothing/shoes/brown,/obj/item/clothing/shoes/black)
 	JOB.equipment_suit = list(/obj/item/clothing/suit/hazardvest)
 	JOB.equipment_under = list(/obj/item/clothing/under/rank/engineer,/obj/item/clothing/under/color/yellow)
-	JOB.equipment_belt = list(/obj/item/weapon/storage/belt/utility/full)
-	JOB.equipment_back = list(/obj/item/weapon/storage/backpack/industrial,/obj/item/weapon/storage/backpack)
+	JOB.equipment_belt = list(/obj/item/storage/belt/utility/full)
+	JOB.equipment_back = list(/obj/item/storage/backpack/industrial,/obj/item/storage/backpack)
 	JOB.equipment_pda = /obj/item/device/pda/engineering
-	JOB.equipment_id = /obj/item/weapon/card/id
+	JOB.equipment_id = /obj/item/security/card/id
 
 	jobs.all_jobs += JOB
 
@@ -199,16 +199,16 @@ proc/dress_for_job_default(var/mob/living/carbon/human/employee as mob, var/job_
 
 
 		/*
-	src.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial (src), slot_back)
-	src.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
+	src.equip_to_slot_or_del(new /obj/item/storage/backpack/industrial (src), slot_back)
+	src.equip_to_slot_or_del(new /obj/item/storage/box/engineer(src), slot_in_backpack)
 	src.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng (src), slot_ears) // -- TLE
 	src.equip_to_slot_or_del(new /obj/item/device/pda/engineering(src), slot_belt)
 	src.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(src), slot_w_uniform)
 	src.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(src), slot_shoes)
 	src.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/hardhat(src), slot_head)
-	src.equip_to_slot_or_del(new /obj/item/weapon/storage/utilitybelt/full(src), slot_l_hand) //currently spawns in hand due to traitor assignment requiring a PDA to be on the belt. --Errorage
+	src.equip_to_slot_or_del(new /obj/item/storage/utilitybelt/full(src), slot_l_hand) //currently spawns in hand due to traitor assignment requiring a PDA to be on the belt. --Errorage
 	//src.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(src), slot_gloves) removed as part of Dangercon 2011, approved by Urist_McDorf --Errorage
-	src.equip_to_slot_or_del(new /obj/item/device/t_scanner(src), slot_r_store)
+	src.equip_to_slot_or_del(new /obj/item/device/scanner/t_ray(src), slot_r_store)
 	*/
 
 

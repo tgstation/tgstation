@@ -3,7 +3,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "mecha"
 	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/mecha_control"
+	circuit = "/obj/item/part/circuitboard/mecha_control"
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
@@ -21,7 +21,7 @@
 		var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 		if(screen == 0)
 			dat += "<h3>Tracking beacons data</h3>"
-			for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
+			for(var/obj/item/part/mecha/mecha_tracking/TR in world)
 				var/answer = TR.get_mecha_info()
 				if(answer)
 					dat += {"<hr>[answer]<br/>
@@ -45,17 +45,17 @@
 			return
 		var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 		if(href_list["send_message"])
-			var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
+			var/obj/item/part/mecha/mecha_tracking/MT = filter.getObj("send_message")
 			var/message = strip_html_simple(input(usr,"Input message","Transmit message") as text)
 			var/obj/mecha/M = MT.in_mecha()
 			if(trim(message) && M)
 				M.occupant_message(message)
 			return
 		if(href_list["shock"])
-			var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
+			var/obj/item/part/mecha/mecha_tracking/MT = filter.getObj("shock")
 			MT.shock()
 		if(href_list["get_log"])
-			var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
+			var/obj/item/part/mecha/mecha_tracking/MT = filter.getObj("get_log")
 			stored_data = MT.get_mecha_log()
 			screen = 1
 		if(href_list["return"])
@@ -65,7 +65,7 @@
 
 
 
-/obj/item/mecha_parts/mecha_tracking
+/obj/item/part/mecha/mecha_tracking
 	name = "Exosuit tracking beacon"
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
@@ -118,14 +118,14 @@
 		return M.get_log_html()
 
 
-/obj/item/weapon/storage/box/mechabeacons
+/obj/item/storage/box/mechabeacons
 	name = "Exosuit Tracking Beacons"
 	New()
 		..()
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)
+		new /obj/item/part/mecha/mecha_tracking(src)

@@ -7,7 +7,7 @@
 /*
  * Locator
  */
-/obj/item/weapon/locator
+/obj/item/device/locator
 	name = "locator"
 	desc = "Used to track those with locater implants."
 	icon = 'icons/obj/device.dmi'
@@ -24,7 +24,7 @@
 	m_amt = 400
 	origin_tech = "magnets=1"
 
-/obj/item/weapon/locator/attack_self(mob/user as mob)
+/obj/item/device/locator/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
@@ -43,7 +43,7 @@ Frequency:
 	onclose(user, "radio")
 	return
 
-/obj/item/weapon/locator/Topic(href, href_list)
+/obj/item/device/locator/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained())
 		return
@@ -78,7 +78,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
+				for (var/obj/item/medical/implant/tracking/W in world)
 					if (!W.implanted || !ismob(W.loc))
 						continue
 					else
@@ -122,7 +122,7 @@ Frequency:
 /*
  * Hand-tele
  */
-/obj/item/weapon/hand_tele
+/obj/item/device/teleporter
 	name = "hand tele"
 	desc = "A portable item using blue-space technology."
 	icon = 'icons/obj/device.dmi'
@@ -136,7 +136,7 @@ Frequency:
 	origin_tech = "magnets=1;bluespace=3"
 	var/active_portals = 0
 
-/obj/item/weapon/hand_tele/attack_self(mob/user as mob)
+/obj/item/device/teleporter/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
 		user << "<span class='notice'>\The [src] is malfunctioning.</span>"

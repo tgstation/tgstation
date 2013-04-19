@@ -1,4 +1,4 @@
-/obj/item/stack/tile/light
+/obj/item/part/stack/tile/light
 	name = "light tiles"
 	singular_name = "light floor tile"
 	desc = "A floor tile, made out off glass. It produces light."
@@ -14,7 +14,7 @@
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
-/obj/item/stack/tile/light/New(var/loc, var/amount=null)
+/obj/item/part/stack/tile/light/New(var/loc, var/amount=null)
 	..()
 	if(prob(5))
 		state = 3 //broken
@@ -25,12 +25,12 @@
 	else
 		state = 0 //fine
 
-/obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/part/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
-	if(istype(O,/obj/item/weapon/crowbar))
-		new/obj/item/stack/sheet/metal(user.loc)
+	if(istype(O,/obj/item/tool/crowbar))
+		new/obj/item/part/stack/sheet/metal(user.loc)
 		amount--
-		new/obj/item/stack/light_w(user.loc)
+		new/obj/item/part/stack/light_w(user.loc)
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)

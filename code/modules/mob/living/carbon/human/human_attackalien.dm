@@ -10,7 +10,7 @@
 			if(M == src)	return
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
+			var/obj/item/effect/grab/G = new /obj/item/effect/grab(M, src)
 
 			M.put_in_active_hand(G)
 

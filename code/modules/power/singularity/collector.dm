@@ -11,7 +11,7 @@ var/global/list/rad_collectors = list()
 	directwired = 1
 	req_access = list(access_engine_equip)
 //	use_power = 0
-	var/obj/item/weapon/tank/plasma/P = null
+	var/obj/item/clothing/tank/plasma/P = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
@@ -51,10 +51,10 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/analyzer))
+	if(istype(W, /obj/item/device/scanner/atmospheric))
 		user << "\blue The [W.name] detects that [last_power]W were recently produced."
 		return 1
-	else if(istype(W, /obj/item/weapon/tank/plasma))
+	else if(istype(W, /obj/item/clothing/tank/plasma))
 		if(!src.anchored)
 			user << "\red The [src] needs to be secured to the floor first."
 			return 1
@@ -65,11 +65,11 @@ var/global/list/rad_collectors = list()
 		src.P = W
 		W.loc = src
 		update_icons()
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/tool/crowbar))
 		if(P && !src.locked)
 			eject()
 			return 1
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/tool/wrench))
 		if(P)
 			user << "\blue Remove the plasma tank first."
 			return 1
@@ -82,7 +82,7 @@ var/global/list/rad_collectors = list()
 			connect_to_network()
 		else
 			disconnect_from_network()
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/security/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			if(active)
 				src.locked = !src.locked
@@ -107,7 +107,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/plasma/Z = src.P
+	var/obj/item/clothing/tank/plasma/Z = src.P
 	if (!Z)
 		return
 	Z.loc = get_turf(src)

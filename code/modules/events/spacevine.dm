@@ -46,23 +46,23 @@
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
 	switch(W.type)
-		if(/obj/item/weapon/circular_saw) del src
-		if(/obj/item/weapon/kitchen/utensil/knife) del src
-		if(/obj/item/weapon/scalpel) del src
+		if(/obj/item/medical/saw) del src
+		if(/obj/item/kitchen/utensil/knife) del src
+		if(/obj/item/medical/scalpel) del src
 		if(/obj/item/weapon/twohanded/fireaxe) del src
-		if(/obj/item/weapon/hatchet) del src
+		if(/obj/item/botany/hatchet) del src
 		if(/obj/item/weapon/melee/energy) del src
 
 		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
+		if(/obj/item/part/wirecutters)
 			if(prob(25)) del src
-		if(/obj/item/weapon/shard)
+		if(/obj/item/trash/shard)
 			if(prob(25)) del src
 
 		else //weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) del src
-			else if(istype(W, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = W
+			else if(istype(W, /obj/item/tool/welder))
+				var/obj/item/tool/welder/WT = W
 				if(WT.remove_fuel(0, user)) del src
 			else
 				manual_unbuckle(user)

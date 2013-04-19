@@ -1,6 +1,7 @@
-/obj/item/device/flash
+/obj/item/security/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "flash"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	throwforce = 5
@@ -14,14 +15,14 @@
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
 
-/obj/item/device/flash/proc/clown_check(mob/user)
+/obj/item/security/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		user << "\red [src] slips out of your hand."
 		user.drop_item()
 		return 0
 	return 1
 
-/obj/item/device/flash/proc/flash_recharge()
+/obj/item/security/flash/proc/flash_recharge()
 	//capacitor recharges over time
 	for(var/i=0, i<3, i++)
 		if(last_used+600 > world.time)
@@ -32,7 +33,7 @@
 	times_used = max(0,round(times_used)) //sanity
 
 
-/obj/item/device/flash/attack(mob/living/M, mob/user)
+/obj/item/security/flash/attack(mob/living/M, mob/user)
 	if(!user || !M)	return	//sanity
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
@@ -75,7 +76,7 @@
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							var/revsafe = 0
-							for(var/obj/item/weapon/implant/loyalty/L in M)
+							for(var/obj/item/medical/implant/loyalty/L in M)
 								if(L && L.implanted)
 									revsafe = 1
 									break
@@ -127,7 +128,7 @@
 
 
 
-/obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+/obj/item/security/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user || !clown_check(user)) 	return
 	if(broken)
 		user.show_message("<span class='warning'>[src] is broken!</span>", 2)
@@ -163,8 +164,8 @@
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		if(prob(50))
-			if (locate(/obj/item/weapon/cloaking_device, M))
-				for(var/obj/item/weapon/cloaking_device/S in M)
+			if (locate(/obj/item/device/cloaking, M))
+				for(var/obj/item/device/cloaking/S in M)
 					S.active = 0
 					S.icon_state = "shield0"
 		var/safety = M:eyecheck()
@@ -174,7 +175,7 @@
 
 	return
 
-/obj/item/device/flash/emp_act(severity)
+/obj/item/security/flash/emp_act(severity)
 	if(broken)	return
 	flash_recharge()
 	switch(times_used)
@@ -194,7 +195,7 @@
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
 	..()
 
-/obj/item/device/flash/synthetic
+/obj/item/security/flash/synthetic
 	name = "synthetic flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
@@ -202,14 +203,14 @@
 	var/construction_cost = list("metal"=750, "glass"=750)
 	var/construction_time=100
 
-/obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)
+/obj/item/security/flash/synthetic/attack(mob/living/M, mob/user)
 	..()
 	if(!broken)
 		broken = 1
 		user << "<span class='warning'>The bulb has burnt out!</span>"
 		icon_state = "flashburnt"
 
-/obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+/obj/item/security/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	..()
 	if(!broken)
 		broken = 1

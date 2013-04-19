@@ -1,6 +1,7 @@
-/obj/item/device/taperecorder
+/obj/item/security/recorder
 	desc = "A device that can record up to an hour of dialogue and play it back. It automatically translates the content in playback."
 	name = "universal recorder"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = 1.0
@@ -19,7 +20,7 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
+/obj/item/security/recorder/hear_talk(mob/living/M as mob, msg)
 	if(recording)
 		var/ending = copytext(msg, length(msg))
 		timestamp+= timerecorded
@@ -38,9 +39,9 @@
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] says, \"[msg]\""
 		return
 
-/obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/security/recorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/card/emag))
+	if(istype(W, /obj/item/security/card/emag))
 		if(emagged == 0)
 			emagged = 1
 			recording = 0
@@ -49,7 +50,7 @@
 		else
 			user << "<span class='warning'>It is already emagged!</span>"
 
-/obj/item/device/taperecorder/proc/explode()
+/obj/item/security/recorder/proc/explode()
 	var/turf/T = get_turf(loc)
 	if(ismob(loc))
 		var/mob/M = loc
@@ -60,7 +61,7 @@
 	del(src)
 	return
 
-/obj/item/device/taperecorder/verb/record()
+/obj/item/security/recorder/verb/record()
 	set name = "Start Recording"
 	set category = "Object"
 
@@ -87,7 +88,7 @@
 		usr << "<span class='notice'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>"
 
 
-/obj/item/device/taperecorder/verb/stop()
+/obj/item/security/recorder/verb/stop()
 	set name = "Stop"
 	set category = "Object"
 
@@ -111,7 +112,7 @@
 		return
 
 
-/obj/item/device/taperecorder/verb/clear_memory()
+/obj/item/security/recorder/verb/clear_memory()
 	set name = "Clear Memory"
 	set category = "Object"
 
@@ -131,7 +132,7 @@
 		return
 
 
-/obj/item/device/taperecorder/verb/playback_memory()
+/obj/item/security/recorder/verb/playback_memory()
 	set name = "Playback Memory"
 	set category = "Object"
 
@@ -190,7 +191,7 @@
 		explode()
 
 
-/obj/item/device/taperecorder/verb/print_transcript()
+/obj/item/security/recorder/verb/print_transcript()
 	set name = "Print Transcript"
 	set category = "Object"
 
@@ -206,7 +207,7 @@
 		usr << "<span class='notice'>You can't print the transcript while playing or recording!</span>"
 		return
 	usr << "<span class='notice'>Transcript printed.</span>"
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
+	var/obj/item/office/paper/P = new /obj/item/office/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i=1,storedinfo.len >= i,i++)
 		t1 += "[storedinfo[i]]<BR>"
@@ -217,7 +218,7 @@
 	canprint = 1
 
 
-/obj/item/device/taperecorder/attack_self(mob/user)
+/obj/item/security/recorder/attack_self(mob/user)
 	if(recording == 0 && playing == 0)
 		if(usr.stat)
 			return

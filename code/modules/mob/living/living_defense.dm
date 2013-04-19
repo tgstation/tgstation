@@ -36,8 +36,8 @@
 	return 0
 
 
-/mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
+/mob/living/bullet_act(obj/item/weapon/projectile/P, def_zone)
+	var/obj/item/device/cloaking/C = locate((/obj/item/device/cloaking) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		update_icons()

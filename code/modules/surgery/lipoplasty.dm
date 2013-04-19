@@ -7,7 +7,7 @@
 
 //cut fat
 /datum/surgery_step/cut_fat
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/butch = 25)
+	implements = list(/obj/item/medical/saw = 100, /obj/item/botany/hatchet = 35, /obj/item/kitchen/butch = 25)
 	time = 64
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -19,7 +19,7 @@
 
 //remove fat
 /datum/surgery_step/remove_fat
-	implements = list(/obj/item/weapon/retractor = 100, /obj/item/weapon/screwdriver = 45, /obj/item/weapon/wirecutters = 35)
+	implements = list(/obj/item/medical/retractor = 100, /obj/item/tool/screwdriver = 45, /obj/item/part/wirecutters = 35)
 	time = 32
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -31,7 +31,7 @@
 	var/removednutriment = target.nutrition
 	target.nutrition = 450
 	removednutriment -= 450 //whatever was removed goes into the meat
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
+	var/obj/item/chem/food/snacks/meat/human/newmeat = new
 	newmeat.name = "fatty meat"
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
 	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment

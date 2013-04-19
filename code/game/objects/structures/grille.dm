@@ -87,12 +87,12 @@
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/weapon/projectile))
 			return prob(30)
 		else
 			return !density
 
-/obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/grille/bullet_act(var/obj/item/weapon/projectile/Proj)
 	if(!Proj)	return
 	src.health -= Proj.damage*0.2
 	healthcheck()
@@ -102,7 +102,7 @@
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			new /obj/item/stack/rods(loc)
+			new /obj/item/part/stack/rods(loc)
 			del(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -113,7 +113,7 @@
 			return
 
 //window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+	else if( istype(W,/obj/item/part/stack/sheet/rglass) || istype(W,/obj/item/part/stack/sheet/glass) )
 		var/dir_to_set = 1
 		if(loc == user.loc)
 			dir_to_set = user.dir
@@ -144,7 +144,7 @@
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
 			var/obj/structure/window/WD
-			if(istype(W,/obj/item/stack/sheet/rglass))
+			if(istype(W,/obj/item/part/stack/sheet/rglass))
 				WD = new/obj/structure/window(loc,1) //reinforced window
 			else
 				WD = new/obj/structure/window(loc,0) //normal window
@@ -152,13 +152,13 @@
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0
 			WD.state = 0
-			var/obj/item/stack/ST = W
+			var/obj/item/part/stack/ST = W
 			ST.use(1)
 			user << "<span class='notice'>You place the [WD] on [src].</span>"
 		return
 //window placing end
 
-	else if(istype(W, /obj/item/weapon/shard))
+	else if(istype(W, /obj/item/trash/shard))
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -178,11 +178,11 @@
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			new /obj/item/stack/rods(loc)
+			new /obj/item/part/stack/rods(loc)
 
 		else
 			if(health <= -6)
-				new /obj/item/stack/rods(loc)
+				new /obj/item/part/stack/rods(loc)
 				del(src)
 				return
 	return

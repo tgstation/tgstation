@@ -6,13 +6,13 @@
 	anchored = 1
 	var/metal_amount = 0
 	var/operating = 0
-	var/obj/item/robot_parts/being_built = null
+	var/obj/item/part/cyborg/being_built = null
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
 
 /obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/stack/sheet/metal))
+	if (istype(O, /obj/item/part/stack/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			src.overlays += "fab-load-metal"
@@ -88,37 +88,37 @@ Please wait until completion...</TT><BR>
 
 			switch (part_type)
 				if (1)
-					build_type = "/obj/item/robot_parts/l_arm"
+					build_type = "/obj/item/part/cyborg/l_arm"
 					build_time = 200
 					build_cost = 25000
 
 				if (2)
-					build_type = "/obj/item/robot_parts/r_arm"
+					build_type = "/obj/item/part/cyborg/r_arm"
 					build_time = 200
 					build_cost = 25000
 
 				if (3)
-					build_type = "/obj/item/robot_parts/l_leg"
+					build_type = "/obj/item/part/cyborg/l_leg"
 					build_time = 200
 					build_cost = 25000
 
 				if (4)
-					build_type = "/obj/item/robot_parts/r_leg"
+					build_type = "/obj/item/part/cyborg/r_leg"
 					build_time = 200
 					build_cost = 25000
 
 				if (5)
-					build_type = "/obj/item/robot_parts/chest"
+					build_type = "/obj/item/part/cyborg/chest"
 					build_time = 350
 					build_cost = 50000
 
 				if (6)
-					build_type = "/obj/item/robot_parts/head"
+					build_type = "/obj/item/part/cyborg/head"
 					build_time = 350
 					build_cost = 50000
 
 				if (7)
-					build_type = "/obj/item/robot_parts/robot_suit"
+					build_type = "/obj/item/part/cyborg/robot_suit"
 					build_time = 600
 					build_cost = 75000
 

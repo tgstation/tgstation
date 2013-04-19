@@ -13,7 +13,7 @@
 /obj/structure/lamarr/ex_act(severity)
 	switch(severity)
 		if (1)
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/trash/shard( src.loc )
 			Break()
 			del(src)
 		if (2)
@@ -26,7 +26,7 @@
 				src.healthcheck()
 
 
-/obj/structure/lamarr/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/lamarr/bullet_act(var/obj/item/weapon/projectile/Proj)
 	health -= Proj.damage
 	..()
 	src.healthcheck()
@@ -35,13 +35,13 @@
 
 /obj/structure/lamarr/blob_act()
 	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/trash/shard( src.loc )
 		Break()
 		del(src)
 
 
 /obj/structure/lamarr/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/trash/shard( src.loc )
 		Break()
 		del(src)
 
@@ -51,7 +51,7 @@
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/trash/shard( src.loc )
 			playsound(src, "shatter", 70, 1)
 			Break()
 	else

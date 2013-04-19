@@ -41,7 +41,7 @@
 
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
+	meat_type = /obj/item/chem/food/snacks/cracker/
 
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
@@ -256,7 +256,7 @@
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
-	if(!stat && !client && !istype(O, /obj/item/stack/medical))
+	if(!stat && !client && !istype(O, /obj/item/part/stack/medical))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -268,7 +268,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(var/obj/item/weapon/projectile/Proj)
 	..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
