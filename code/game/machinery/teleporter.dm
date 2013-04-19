@@ -1,5 +1,5 @@
 /obj/machinery/computer/teleporter
-	name = "Teleporter"
+	name = "teleporter control console"
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_state = "teleport"
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
@@ -112,6 +112,7 @@
 		src.id = t
 	return
 
+
 /proc/find_loc(obj/R as obj)
 	if (!R)	return null
 	var/turf/T = R.loc
@@ -151,13 +152,28 @@
 		return
 	if (!com.locked)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\red Failure: Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.")
+			O.show_message("<span class='warning'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
-		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
-			do_teleport(M, locate(rand((2*TRANSITIONEDGE), world.maxx - (2*TRANSITIONEDGE)), rand((2*TRANSITIONEDGE), world.maxy - (2*TRANSITIONEDGE)), 3), 2)
+		if(prob(10) && !accurate) //oh dear a problem
+			do_teleport(M, com.locked)
+			if(ishuman(M))//don't remove people from the round randomly you jerks
+				var/mob/living/carbon/human/human = M
+				if(human.dna.mutantrace == null)
+					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
+					human.dna.mutantrace = "fly"
+					human.update_mutantrace()
+				human.apply_effect((rand(90, 150)), IRRADIATE, 0)
+				randmutb(human)
+				domutcheck(human, null)
 		else
 			do_teleport(M, com.locked) //dead-on precision
+			if(prob(30) && accurate)//the gate will need recalibration after some use.
+				for(var/mob/B in hearers(src, null))
+					B.show_message("<span class='warning'>[src] has become uncalibrated.</span>")
+				accurate = 0
+				playsound(src.loc, 'sound/effects/EMPulse.ogg', 30, 0)
+
 
 		if(com.one_time_use) //Make one-time-use cards only usable one time!
 			com.one_time_use = 0
@@ -167,7 +183,17 @@
 		s.set_up(5, 1, src)
 		s.start()
 		for(var/mob/B in hearers(src, null))
-			B.show_message("\blue Test fire completed.")
+			B.show_message("<span class='notice'>Test fire completed.</span>")
+			accurate = 1
+	return
+
+/obj/machinery/teleport/hub/examine()
+	set src in view()
+	..()
+	if(accurate)
+		usr << "<span class='notice'>[src] is fully calibrated.</span>"
+	else
+		usr << "<span class='warning'>[src] is uncalibrated!</span>"
 	return
 /*
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
@@ -258,7 +284,7 @@
 
 /obj/machinery/teleport/station
 	name = "station"
-	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
+	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
 	icon_state = "controller"
 	var/active = 0
 	var/engaged = 0
@@ -291,7 +317,7 @@
 		com.icon_state = "tele1"
 		use_power(5000)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Teleporter engaged!", 2)
+			O.show_message("<span class='notice'>Teleporter engaged!</span>", 2)
 	src.add_fingerprint(usr)
 	src.engaged = 1
 	return
@@ -305,7 +331,7 @@
 	if (com)
 		com.icon_state = "tele0"
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Teleporter disengaged!", 2)
+			O.show_message("<span class='notice'>Teleporter disengaged!</span>", 2)
 	src.add_fingerprint(usr)
 	src.engaged = 0
 	return
@@ -323,7 +349,7 @@
 	if (com && !active)
 		active = 1
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Test firing!", 2)
+			O.show_message("<span class='notice'>Test firing!</span>", 2)
 		com.teleport()
 		use_power(5000)
 
