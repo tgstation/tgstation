@@ -550,7 +550,7 @@
 		switch(screen)
 			if("main")
 				left_part = output_available_resources()+"<hr>"
-				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a> | <a href='?src=\ref[src];auto_sync=1'>[sync?"Dis":"En"]able auto sync</a><hr>"
+				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>" // | <a href='?src=\ref[src];auto_sync=1'>[sync?"Dis":"En"]able auto sync</a><hr>"
 				for(var/part_set in part_sets)
 					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
 			if("parts")
@@ -646,8 +646,8 @@
 		queue = list()
 		src.sync()
 		return update_queue_on_page()
-	if(href_list["auto_sync"])
-		src.sync = !src.sync
+	/*if(href_list["auto_sync"])
+		src.sync = !src.sync*/
 		//pr_auto_sync.toggle()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
@@ -664,9 +664,9 @@
 /obj/machinery/mecha_part_fabricator/process()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	if(sync)
+	/*if(sync)		 YOU'RE A BAD PERSON AND I HOPE YOU BURN IN HELL
 		spawn(-1)
-			sync(1)
+			sync(1)*/
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
