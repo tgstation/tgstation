@@ -49,10 +49,10 @@
 //all air alarms in area are connected via magic
 /area
 	var/obj/machinery/alarm/master_air_alarm
-	var/list/air_vent_names
-	var/list/air_scrub_names
-	var/list/air_vent_info
-	var/list/air_scrub_info
+	var/list/air_vent_names = list()
+	var/list/air_scrub_names = list()
+	var/list/air_vent_info = list()
+	var/list/air_scrub_info = list()
 
 /obj/machinery/alarm
 	name = "alarm"
@@ -192,11 +192,6 @@
 			for (var/obj/machinery/alarm/AA in A)
 				if (!(AA.stat & (NOPOWER|BROKEN)))
 					alarm_area.master_air_alarm = AA
-					if (!alarm_area.air_vent_names)
-						alarm_area.air_vent_names = new
-						alarm_area.air_scrub_names = new
-						alarm_area.air_vent_info = new
-						alarm_area.air_scrub_info = new
 					return 1
 		return 0
 
