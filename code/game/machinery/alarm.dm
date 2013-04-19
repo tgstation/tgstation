@@ -31,7 +31,7 @@
 #define AALARM_MODE_SCRUBBING	1
 #define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
 #define AALARM_MODE_PANIC		3 //constantly sucks all air
-#define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and switches to scrubbing
 #define AALARM_MODE_FILL		5 //emergency fill
 
 #define AALARM_SCREEN_MAIN		1
@@ -45,6 +45,9 @@
 #define RCON_NO		1
 #define RCON_AUTO	2
 #define RCON_YES	3
+
+//1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
+#define MAX_ENERGY_CHANGE 2000
 
 //all air alarms in area are connected via magic
 /area
@@ -82,6 +85,9 @@
 	var/area/alarm_area
 	var/danger_level = 0
 
+	var/target_temperature = T0C+20
+	var/regulating_temperature = 0
+
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list()
@@ -95,6 +101,7 @@
 		TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 		TLV["pressure"] =		list(0,ONE_ATMOSPHERE*0.10,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60) /* kpa */
 		TLV["temperature"] =	list(20, 40, 140, 160) // K
+		target_temperature = 90
 
 	New()
 		..()
@@ -111,7 +118,7 @@
 		TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 		TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 		TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
-		TLV["temperature"] =	list(T0C, T0C+10, T0C+40, T0C+66) // K
+		TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
 
 	initialize()
 		set_frequency(frequency)
@@ -150,6 +157,41 @@
 
 		current_settings = TLV["temperature"]
 		var/temperature_dangerlevel = get_danger_level(environment.temperature, current_settings)
+
+		//Handle temperature adjustment here.
+		if(temperature_dangerlevel || regulating_temperature)
+			//If it goes too far, we should adjust ourselves back before stopping.
+			if(!regulating_temperature)
+				regulating_temperature = 1
+				visible_message("\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
+				"You hear a click and a faint electronic hum.")
+
+			if(target_temperature > T0C + 90)
+				target_temperature = T0C + 90
+
+			if(target_temperature < T0C - 40)
+				target_temperature = T0C - 40
+
+			var/datum/gas_mixture/gas = location.remove_air(0.25*environment.total_moles)
+			var/heat_capacity = gas.heat_capacity()
+			var/energy_used = max( abs( heat_capacity*(gas.temperature - target_temperature) ), MAX_ENERGY_CHANGE)
+
+			//Use power.  Assuming that each power unit represents 1000 watts....
+			use_power(energy_used/1000, ENVIRON)
+
+			//We need to cool ourselves.
+			if(environment.temperature > target_temperature)
+				gas.temperature -= energy_used/heat_capacity
+			else
+				gas.temperature -= energy_used/heat_capacity
+
+			environment.merge(gas)
+
+			if(abs(environment.temperature - target_temperature) <= 0.5)
+				regulating_temperature = 0
+				visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
+				"You hear a click as a faint electronic humming stops.")
+
 
 		var/old_danger_level = danger_level
 		danger_level = max(pressure_dangerlevel,
@@ -513,11 +555,16 @@
 //END HACKING//
 ///////////////
 
+	attack_ai(mob/user)
+		return interact(user)
 
 	attack_hand(mob/user)
 		. = ..()
 		if (.)
 			return
+		return interact(user)
+
+	interact(mob/user)
 		user.set_machine(src)
 
 		if ( (get_dist(src, user) > 1 ))
@@ -900,6 +947,11 @@ table tr:first-child th:first-child { border: none;}
 							selected[2] = selected[4]
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
+
+					//Sets the temperature the built-in heater/cooler tries to maintain.
+					if(env == "temperature")
+						target_temperature = (selected[2] + selected[3])/2
+
 					apply_mode()
 
 		if(href_list["screen"])
