@@ -2011,6 +2011,11 @@
 				feedback_add_details("admin_secrets_fun_used","OO")
 				usr.client.only_one()
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+			if("energeticflux")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FLUX")
+				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
+				E = new /datum/round_event/energetic_flux()
 		if(E)
 			E.processing = 0
 			if(E.announceWhen>0)
