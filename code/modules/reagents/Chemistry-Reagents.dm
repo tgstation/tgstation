@@ -318,6 +318,9 @@ datum
 					if(human.dna.mutantrace == null)
 						M << "\red Your flesh rapidly mutates!"
 						human.dna.mutantrace = "slime"
+						human.r_hair = 50 //start blue
+						human.g_hair = 150
+						human.b_hair = 255
 						human.update_mutantrace()
 				..()
 				return
