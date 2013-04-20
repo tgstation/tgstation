@@ -48,7 +48,7 @@ var/list/ai_list = list()
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
-	
+
 	var/last_paper_seen = null
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
@@ -114,11 +114,14 @@ var/list/ai_list = list()
 
 			job = "AI"
 	ai_list += src
+	shuttle_caller_list += src
 	..()
 	return
 
 /mob/living/silicon/ai/Del()
 	ai_list -= src
+	shuttle_caller_list -= src
+	emergency_shuttle.autoshuttlecall()
 	..()
 
 
