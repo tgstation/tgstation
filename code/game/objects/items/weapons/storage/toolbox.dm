@@ -32,7 +32,7 @@
 			new /obj/item/device/flashlight(src)
 		else
 			new /obj/item/device/flashlight/flare(src)
-		new /obj/item/device/radio(src)
+		new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
