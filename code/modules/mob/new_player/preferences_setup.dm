@@ -135,37 +135,34 @@ datum/preferences
 
 		var/g = "m"
 		if(gender == FEMALE)	g = "f"
-		if(species == "Tajaran")
-			preview_icon = new /icon('icons/effects/species.dmi', "tajaran_[g]_s")
-			preview_icon.Blend(new /icon('icons/effects/species.dmi', "tajtail_s"), ICON_OVERLAY)
-		else if(species == "Unathi")
-			preview_icon = new /icon('icons/effects/species.dmi', "lizard_[g]_s")
-			preview_icon.Blend(new /icon('icons/effects/species.dmi', "sogtail_s"), ICON_OVERLAY)
-		else if(species == "Skrell")
-			preview_icon = new /icon('icons/effects/species.dmi', "skrell_[g]_s")
-		else
-			preview_icon = new /icon('human.dmi', "torso_[g]_s")
 
-			preview_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
+		var/icon/icobase
+		switch(species)
+			if("Tajaran")
+				icobase = 'icons/mob/human_races/r_tajaran.dmi'
+			if("Unathi")
+				icobase = 'icons/mob/human_races/r_lizard.dmi'
+			if("Skrell")
+				icobase = 'icons/mob/human_races/r_skrell.dmi'
+			else
+				icobase = 'icons/mob/human_races/r_human.dmi'
+		preview_icon = new /icon(icobase, "torso_[g]")
+		preview_icon.Blend(new /icon(icobase, "groin_[g]"), ICON_OVERLAY)
+		preview_icon.Blend(new /icon(icobase, "head_[g]"), ICON_OVERLAY)
 
-			if(organ_data["head"] != "amputated")
-				preview_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
+		for(var/name in list("l_arm","r_arm","l_leg","r_leg","l_foot","r_foot","l_hand","r_hand"))
+			// make sure the organ is added to the list so it's drawn
+			if(organ_data[name] == null)
+				organ_data[name] = null
 
-			for(var/name in list("l_arm","r_arm","l_leg","r_leg","l_foot","r_foot","l_hand","r_hand"))
-				// make sure the organ is added to the list so it's drawn
-				if(organ_data[name] == null)
-					organ_data[name] = null
+		for(var/name in organ_data)
+			if(organ_data[name] == "amputated") continue
 
-			for(var/name in organ_data)
-				if(organ_data[name] == "amputated") continue
+			var/icon/temp = new /icon(icobase, "[name]")
+			if(organ_data[name] == "cyborg")
+				temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 
-				var/icon/temp = new /icon('human.dmi', "[name]_s")
-				if(organ_data[name] == "cyborg")
-					temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-
-				preview_icon.Blend(temp, ICON_OVERLAY)
-
-			preview_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
+			preview_icon.Blend(temp, ICON_OVERLAY)
 
 		// Skin tone
 		if(species == "Human")
@@ -302,7 +299,7 @@ datum/preferences
 						if(4)
 							clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 				if(LAWYER)
-					clothes_s = new /icon('icons/mob/uniform.dmi', "lawyer_blue_s")
+					clothes_s = new /icon('icons/mob/uniform.dmi', "internalaffairs_s")
 					clothes_s.Blend(new /icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
 					clothes_s.Blend(new /icon('icons/mob/items_righthand.dmi', "briefcase"), ICON_UNDERLAY)
 

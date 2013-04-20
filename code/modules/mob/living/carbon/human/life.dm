@@ -84,6 +84,8 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		handle_virus_updates()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
@@ -562,6 +564,9 @@
 					pressure_alert = -2
 				else
 					pressure_alert = -1
+
+		if(environment.toxins > MOLES_PLASMA_VISIBLE)
+			pl_effects()
 		return
 
 	/*
@@ -775,6 +780,12 @@
 
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
+		var/total_plasmaloss = 0
+		for(var/obj/item/I in src)
+			if(I.contaminated)
+				total_plasmaloss += vsc.plc.CONTAMINATION_LOSS
+
+		adjustToxLoss(total_plasmaloss)
 
 //		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 		if(PLANT in mutations)
@@ -1262,6 +1273,7 @@
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
+			if(virus2)	virus2.cure(src)
 		if(!virus2)
 			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
 				if(B.virus2 && get_infection_chance())

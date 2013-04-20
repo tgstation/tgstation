@@ -194,6 +194,13 @@ hi
 	icon_state = "orangecamera"
 	pictures_left = 30
 
+/obj/item/device/camera/fluff/oldcamera //magmaram: Maria Crash
+	name = "Old Camera"
+	icon = 'custom_items.dmi'
+	desc = "An old, slightly beat-up digital camera, with a cheap photo printer taped on. It's a nice shade of blue."
+	icon_state = "oldcamera"
+	pictures_left = 30
+
 /obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
@@ -459,6 +466,11 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "edvin_telephosphor_1"
 
+/obj/item/clothing/head/hardhat/fluff/neil_patterson_1 //superboredguy: Neil Patterson
+	name = "Engineering Cap"
+	desc = "Much safer than a hard helmet."
+	icon = 'custom_items.dmi'
+	icon_state = "neilpatterson0_hat"
 //////////// Suits ////////////
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
@@ -697,12 +709,12 @@ hi
 
 ///// Colt Peacemaker - Ana Ka'Rimah - SueTheCake
 
-/obj/item/weapon/gun/energy/stunrevolver/fluff/ana_peacemaker
+//obj/item/weapon/gun/energy/stunrevolver/fluff/ana_peacemaker
 
-	name = "Peacemaker"
+/*	name = "Peacemaker"
 	desc = "A nickel-plated revolver with pearl grips. It has a certain Old West flair!"
 	icon = 'custom_items.dmi'
-	icon_state = "peacemaker"
+	icon_state = "peacemaker"*/
 
 ///// Well-used baton - Oen'g Issek - Donofnyc3
 

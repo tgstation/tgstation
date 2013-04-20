@@ -103,7 +103,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -122,11 +122,14 @@ datum
 							M.contract_disease(D)
 						else //injected
 							M.contract_disease(D, 1, 0)
-				if(self.data && self.data["virus2"])
+				if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
 					if(method == TOUCH)
 						infect_virus2(M,self.data["virus2"])
 					else
 						infect_virus2(M,self.data["virus2"],1)
+				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
+					var/mob/living/carbon/C = M
+					C.antibodies |= self.data["antibodies"]
 
 
 
@@ -498,6 +501,23 @@ datum
 						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
+				return
+
+		holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
+			reagent_state = LIQUID
+			color = "#0064C8" // rgb: 0, 100, 200
+
+			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					if((M.mind in ticker.mode.cult) && prob(10))
+						M << "\blue A cooling sensation from inside you brings you an untold calmness."
+						ticker.mode.remove_cultist(M.mind)
+						for(var/mob/O in viewers(M, null))
+							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
+				holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
 				return
 
 		serotrotium
@@ -1101,26 +1121,15 @@ datum
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 
-//Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
-/*
+
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 15
-				napalm.trace_gases += fuel
-				the_turf.assume_air(napalm)
+				new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
 			reaction_turf(var/turf/T, var/volume)
-				src = null
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 15
-				napalm.trace_gases += fuel
-				T.assume_air(napalm)
-				return*/
+				new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
+				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1)
@@ -1675,6 +1684,13 @@ datum
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
+			reagent_state = LIQUID
+			color = "#535E66" // rgb: 83, 94, 102
 
 		nanites
 			name = "Nanomachines"

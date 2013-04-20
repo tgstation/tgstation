@@ -68,6 +68,12 @@
 	permeability_coefficient = 0.01
 	color = "white"
 
+/obj/item/clothing/shoes/leather
+	name = "leather shoes"
+	desc = "A sturdy pair of leather shoes."
+	icon_state = "leather"
+	color = "leather"
+
 /obj/item/clothing/shoes/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."

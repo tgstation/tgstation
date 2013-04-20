@@ -22,6 +22,7 @@
 
 	var/bees_in_hive = 0
 	var/list/owned_bee_swarms = list()
+	var/hydrotray_type = /obj/machinery/hydroponics
 
 //overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/New()
@@ -69,7 +70,7 @@
 		else
 			user << "\blue You begin to dislodge the dead apiary from the tray."
 		if(do_after(user, 50))
-			new /obj/machinery/hydroponics(src.loc)
+			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
 			user << "\red You dislodge the apiary from the tray."
 			del(src)
@@ -112,11 +113,11 @@
 	if(swarming > 0)
 		swarming -= 1
 		if(swarming <= 0)
-			for(var/obj/effect/bee/B in src.loc)
+			for(var/mob/living/simple_animal/bee/B in src.loc)
 				bees_in_hive += B.strength
 				del(B)
 	else if(bees_in_hive < 10)
-		for(var/obj/effect/bee/B in src.loc)
+		for(var/mob/living/simple_animal/bee/B in src.loc)
 			bees_in_hive += B.strength
 			del(B)
 
@@ -144,7 +145,7 @@
 			health += max(nutrilevel - 1, round(-health / 2))
 			bees_in_hive += max(nutrilevel - 1, round(-bees_in_hive / 2))
 			if(owned_bee_swarms.len)
-				var/obj/effect/bee/B = pick(owned_bee_swarms)
+				var/mob/living/simple_animal/bee/B = pick(owned_bee_swarms)
 				B.target_turf = get_turf(src)
 
 		//clear out some toxins
@@ -161,7 +162,7 @@
 
 		//make some new bees
 		if(bees_in_hive >= 10 && prob(bees_in_hive * 10))
-			var/obj/effect/bee/B = new(get_turf(src), src)
+			var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
 			owned_bee_swarms.Add(B)
 			B.mut = mut
 			B.toxic = toxic
@@ -193,7 +194,7 @@
 
 /obj/machinery/apiary/proc/die()
 	if(owned_bee_swarms.len)
-		var/obj/effect/bee/B = pick(owned_bee_swarms)
+		var/mob/living/simple_animal/bee/B = pick(owned_bee_swarms)
 		B.target_turf = get_turf(src)
 		B.strength -= 1
 		if(B.strength <= 0)
@@ -204,7 +205,7 @@
 	health = 0
 
 /obj/machinery/apiary/proc/angry_swarm(var/mob/M)
-	for(var/obj/effect/bee/B in owned_bee_swarms)
+	for(var/mob/living/simple_animal/bee/B in owned_bee_swarms)
 		B.feral = 50
 		B.target_mob = M
 
@@ -215,7 +216,7 @@
 		if(bees_in_hive >= 5)
 			spawn_strength = 6
 
-		var/obj/effect/bee/B = new(get_turf(src), src)
+		var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
 		B.target_mob = M
 		B.strength = spawn_strength
 		B.feral = 5

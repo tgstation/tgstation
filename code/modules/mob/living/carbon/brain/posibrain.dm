@@ -1,4 +1,4 @@
-/obj/item/device/posibrain
+/obj/item/device/mmi/posibrain
 	name = "positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
@@ -6,17 +6,18 @@
 	w_class = 3
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
-	var/list/construction_cost = list("metal"=500,"glass"=500,"silver"=200,"gold"=200,"plasma"=100,"diamond"=10)
-	var/construction_time = 75
+	construction_cost = list("metal"=500,"glass"=500,"silver"=200,"gold"=200,"plasma"=100,"diamond"=10)
+	construction_time = 75
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
-	var/mob/living/carbon/brain/brainmob = null
+	mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
-	var/locked = 0
-	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	locked = 0
+	mecha = null//This does not appear to be used outside of reference in mecha.dm.
+
 
 	attack_self(mob/user as mob)
-		if(!brainmob.key && searching == 0)
+		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
 			icon_state = "posibrain-searching"
@@ -64,7 +65,7 @@
 
 	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
-		if(brainmob) return
+		if(src.brainmob && src.brainmob.key) return
 
 		src.searching = 0
 		icon_state = "posibrain"
@@ -73,7 +74,7 @@
 		for (var/mob/M in viewers(T))
 			M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 
-/obj/item/device/posibrain/examine()
+/obj/item/device/mmi/posibrain/examine()
 
 	set src in oview()
 
@@ -85,7 +86,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
-	if(src.brainmob.key)
+	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
@@ -97,20 +98,20 @@
 	usr << msg
 	return
 
-/obj/item/device/posibrain/emp_act(severity)
-	if(!brainmob)
+/obj/item/device/mmi/posibrain/emp_act(severity)
+	if(!src.brainmob)
 		return
 	else
 		switch(severity)
 			if(1)
-				brainmob.emp_damage += rand(20,30)
+				src.brainmob.emp_damage += rand(20,30)
 			if(2)
-				brainmob.emp_damage += rand(10,20)
+				src.brainmob.emp_damage += rand(10,20)
 			if(3)
-				brainmob.emp_damage += rand(0,10)
+				src.brainmob.emp_damage += rand(0,10)
 	..()
 
-/obj/item/device/posibrain/New()
+/obj/item/device/mmi/posibrain/New()
 
 	src.brainmob = new(src)
 	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"

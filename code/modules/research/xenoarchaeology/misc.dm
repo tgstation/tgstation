@@ -53,6 +53,7 @@
 		new /obj/item/weapon/book/manual/materials_chemistry_analysis(src)
 		new /obj/item/weapon/book/manual/anomaly_testing(src)
 		new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
+		new /obj/item/weapon/book/manual/stasis(src)
 		update_icon()
 
 //---- Lockers and closets
@@ -82,6 +83,8 @@
 /obj/structure/closet/excavation
 	name = "Excavation tools"
 	icon_state = "toolcloset"
+	icon_closed = "toolcloset"
+	icon_opened = "toolclosetopen"
 
 	New()
 		..()
@@ -96,6 +99,7 @@
 		new /obj/item/device/radio/beacon(src)
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/weapon/pickaxe(src)
+		new /obj/item/device/measuring_tape(src)
 		return
 
 //---- Isolation room air alarms
