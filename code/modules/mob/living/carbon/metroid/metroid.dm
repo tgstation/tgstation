@@ -731,6 +731,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	origin_tech = "biotech=4"
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 //has it been enhanced before?
+	var/color_r = 165 //Defines RGB colors for a slime core to give to slime people
+	var/color_g = 165
+	var/color_b = 165
 
 	attackby(obj/item/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/slimesteroid2))
@@ -745,6 +748,26 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			enhanced = 1
 			del (O)
 
+	attack(mob/living/carbon/human/M as mob, mob/user as mob) //changing slime people colors
+		if(M.dna.mutantrace != "slime" || M != user)
+			return
+		else
+			if(M.r_hair != color_r)//I had a more elegant solution to this, but it saved me all of 1 line and barely worked -Incoming
+				M.r_hair = round(M.r_hair * 0.4 + color_r * 0.6)
+				if(abs(M.r_hair - color_r) <= 5) //without this M.x_hair would never reach color_x
+					M.r_hair = color_r
+			if(M.g_hair != color_g)
+				M.g_hair = round(M.g_hair * 0.4 + color_g * 0.6)
+				if(abs(M.g_hair - color_g) <= 5)
+					M.g_hair = color_g
+			if(M.b_hair != color_b)
+				M.b_hair = round(M.b_hair * 0.4 + color_b * 0.6)
+				if(abs(M.b_hair - color_b) <= 5)
+					M.b_hair = color_b
+			user <<"You absorb the core and your color shifts!"
+			M.update_mutantrace()
+			del(src) //Finally a tidy way to remove all the used cores lying about
+
 /obj/item/slime_extract/New()
 		..()
 		var/datum/reagents/R = new/datum/reagents(100)
@@ -754,86 +777,149 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
 	icon_state = "grey slime extract"
+	color_r = 165
+	color_g = 165
+	color_b = 165
 
 /obj/item/slime_extract/gold
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
+	color_r = 240
+	color_g = 175
+	color_b = 10
 
 /obj/item/slime_extract/silver
 	name = "silver slime extract"
 	icon_state = "silver slime extract"
+	color_r = 200
+	color_g = 200
+	color_b = 200
 
 /obj/item/slime_extract/metal
 	name = "metal slime extract"
 	icon_state = "metal slime extract"
+	color_r = 130
+	color_g = 130
+	color_b = 130
 
 /obj/item/slime_extract/purple
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
+	color_r = 160
+	color_g = 60
+	color_b = 190
 
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
+	color_r = 100
+	color_g = 55
+	color_b = 165
 
 /obj/item/slime_extract/orange
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
+	color_r = 215
+	color_g = 145
+	color_b = 40
 
 /obj/item/slime_extract/yellow
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
+	color_r = 215
+	color_g = 215
+	color_b = 40
 
 /obj/item/slime_extract/red
 	name = "red slime extract"
 	icon_state = "red slime extract"
+	color_r = 215
+	color_g = 40
+	color_b = 40
 
 /obj/item/slime_extract/blue
 	name = "blue slime extract"
 	icon_state = "blue slime extract"
+	color_r = 40
+	color_g = 215
+	color_b = 215
 
 /obj/item/slime_extract/darkblue
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
+	color_r = 40
+	color_g = 135
+	color_b = 215
 
 /obj/item/slime_extract/pink
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
+	color_r = 215
+	color_g = 70
+	color_b = 160
 
 /obj/item/slime_extract/green
 	name = "green slime extract"
 	icon_state = "green slime extract"
+	color_r = 60
+	color_g = 190
+	color_b = 70
 
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
 	icon_state = "light pink slime extract"
+	color_r = 240
+	color_g = 200
+	color_b = 230
 
 /obj/item/slime_extract/black
 	name = "black slime extract"
 	icon_state = "black slime extract"
+	color_r = 0
+	color_g = 0
+	color_b = 0
 
 /obj/item/slime_extract/oil
 	name = "oil slime extract"
 	icon_state = "oil slime extract"
+	color_r = 60
+	color_g = 60
+	color_b = 60
 
 /obj/item/slime_extract/adamantine
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
+	color_r = 125
+	color_g = 200
+	color_b = 175
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
+	color_r = 255
+	color_g = 255
+	color_b = 255
 
 /obj/item/slime_extract/pyrite
 	name = "pyrite slime extract"
 	icon_state = "pyrite slime extract"
+	color_r = 240
+	color_g = 220
+	color_b = 60
 
 /obj/item/slime_extract/cerulean
 	name = "cerulean slime extract"
 	icon_state = "cerulean slime extract"
+	color_r = 60
+	color_g = 100
+	color_b = 150
 
 /obj/item/slime_extract/sepia
 	name = "sepia slime extract"
 	icon_state = "sepia slime extract"
+	color_r = 120
+	color_g = 100
+	color_b = 90
 
 
 ////Pet Slime Creation///

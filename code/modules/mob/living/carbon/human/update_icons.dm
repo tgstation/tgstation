@@ -348,7 +348,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(dna)
 		switch(dna.mutantrace)
-			if("lizard","golem","slime","shadow","adamantine", "fly")
+			if("lizard","golem","shadow","adamantine", "fly")
 				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l", "layer" = -MUTANTRACE_LAYER)
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s", "layer" = -MUTANTRACE_LAYER)
 			if("plant")
@@ -357,6 +357,13 @@ Please contact me on #coderbus IRC. ~Carn x
 				else
 					overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l", "layer" = -MUTANTRACE_LAYER)
 					overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s", "layer" = -MUTANTRACE_LAYER)
+			if ("slime")
+				var/icon/slime_s = new/icon("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
+				var/icon/slime_l = new/icon("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l")
+				slime_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+				slime_l.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+				overlays_lying[MUTANTRACE_LAYER]	= image(slime_l, "layer" = -MUTANTRACE_LAYER)
+				overlays_standing[MUTANTRACE_LAYER]	= image(slime_s, "layer" = -MUTANTRACE_LAYER)
 			else
 				overlays -= overlays_lying[MUTANTRACE_LAYER]
 				overlays -= overlays_standing[MUTANTRACE_LAYER]
