@@ -132,7 +132,7 @@ var/list/mechtoys = list(
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/plasma_per_point = 5 // 2 plasma for 1 point
+	var/plasma_per_point = 25 // 5 exported objects for 1 point, -500 points if it's a bananium coin because that bananium should of gone to the clown you chucklefuck
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -252,11 +252,53 @@ var/list/mechtoys = list(
 							find_slip = 0
 						continue
 
-					// Sell plasma
-					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/sheet/mineral/plasma/P = A
-						plasma_count += P.amount
-			del(MA)
+					// Selling coins, and the various types of coins.
+					if(istype(A, /obj/item/weapon/coin/iron))
+						plasma_count += 1
+						del(MA)
+					else if(istype(A, /obj/item/weapon/coin/plasma))
+						plasma_count += 2
+						del(MA)
+					else if(istype(A, /obj/item/weapon/coin/silver))
+						plasma_count += 4
+						del(MA)
+					else if(istype(A, /obj/item/weapon/coin/gold))
+						plasma_count += 5
+						del(MA)
+					else if(istype(A, /obj/item/weapon/coin/uranium))
+						plasma_count += 10
+						del(MA)
+					else if(istype(A, /obj/item/weapon/coin/clown))
+						plasma_count += 15
+						del(MA)
+					else if(istype(A, /obj/item/weapon/coin/diamond))
+						plasma_count += 30
+						del(MA)
+					// Selling AI circutboards
+					else if(istype(A, /obj/item/weapon/aiModule/))
+						plasma_count += 10
+						del(MA)
+					//Selling circutboards
+					else if(istype(A, /obj/item/weapon/circuitboard/))
+						plasma_count += 5
+						del(MA)
+					// Selling mecha parts
+					else if(istype(A, /obj/item/mecha_parts/))
+						plasma_count += 5
+						del(MA)
+					//Selling Subspace parts
+					else if(istype(A, /obj/item/weapon/stock_parts/subspace/))
+						plasma_count += 5
+						del(MA)
+					//Selling a Temperature Gun
+					else if(istype(A, /obj/item/weapon/gun/energy/temperature))
+						plasma_count += 10
+						del(MA)
+					//Selling a Bag Of Holding
+					else if(istype(A, /obj/item/weapon/storage/backpack/holding))
+						plasma_count += 40
+						del(MA)
+
 
 		if(plasma_count)
 			points += Floor(plasma_count / plasma_per_point)
