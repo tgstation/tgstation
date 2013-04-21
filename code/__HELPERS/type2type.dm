@@ -9,78 +9,55 @@
  *			worldtime2text
  */
 
-//Returns an integer given a hex input
+//Returns an integer given a hex input, supports negative values "-ff"
+//skips preceding invalid characters
+//breaks when hittin invalid characters thereafter
 /proc/hex2num(hex)
-	if (!( istext(hex) ))
-		return
+	. = 0
+	if(istext(hex))
+		var/negative = 0
+		var/len = length(hex)
+		for(var/i=1, i<=len, i++)
+			var/num = text2ascii(hex,i)
+			switch(num)
+				if(48 to 57)	num -= 48	//0-9
+				if(97 to 102)	num -= 87	//a-f
+				if(65 to 70)	num -= 55	//A-F
+				if(45)			negative = 1//-
+				else
+					if(num)		break
+					else		continue
+			. *= 16
+			. += num
+		if(negative)
+			. *= -1
+	return .
 
-	var/num = 0
-	var/power = 0
-	var/i = null
-	i = length(hex)
-	while(i > 0)
-		var/char = copytext(hex, i, i + 1)
-		switch(char)
-			if("0")
-				//Apparently, switch works with empty statements, yay! If that doesn't work, blame me, though. -- Urist
-			if("9", "8", "7", "6", "5", "4", "3", "2", "1")
-				num += text2num(char) * 16 ** power
-			if("a", "A")
-				num += 16 ** power * 10
-			if("b", "B")
-				num += 16 ** power * 11
-			if("c", "C")
-				num += 16 ** power * 12
-			if("d", "D")
-				num += 16 ** power * 13
-			if("e", "E")
-				num += 16 ** power * 14
-			if("f", "F")
-				num += 16 ** power * 15
-			else
-				return
-		power++
-		i--
-	return num
-
-//Returns the hex value of a number given a value assumed to be a base-ten value
-/proc/num2hex(num, placeholder)
-
-	if (placeholder == null)
-		placeholder = 2
-	if (!( isnum(num) ))
-		return
-	if (!( num ))
-		return "0"
-	var/hex = ""
-	var/i = 0
-	while(16 ** i < num)
+//Returns the hex value of a decimal number
+//len == length of returned string
+//if len < 0 then the returned string will be as long as it needs to be to contain the data
+//Only supports positive numbers
+//if an invalid number is provided, it assumes num==0
+/proc/num2hex(num, len=2)
+	if(!isnum(num))
+		num = 0
+	num = round(abs(num))
+	. = ""
+	var/i=0
+	while(1)
+		if(len<0)
+			if(!num)	break
+		else
+			if(i>=len)	break
+		var/remainder = num/16
+		num = round(remainder)
+		remainder = (remainder - num) * 16
+		switch(remainder)
+			if(9,8,7,6,5,4,3,2,1)	. = "[remainder]" + .
+			if(10,11,12,13,14,15)	. = ascii2text(remainder+87) + .
+			else					. = "0" + .
 		i++
-	var/power = null
-	power = i - 1
-	while(power >= 0)
-		var/val = round(num / 16 ** power)
-		num -= val * 16 ** power
-		switch(val)
-			if(9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0)
-				hex += text("[]", val)
-			if(10.0)
-				hex += "A"
-			if(11.0)
-				hex += "B"
-			if(12.0)
-				hex += "C"
-			if(13.0)
-				hex += "D"
-			if(14.0)
-				hex += "E"
-			if(15.0)
-				hex += "F"
-			else
-		power--
-	while(length(hex) < placeholder)
-		hex = text("0[]", hex)
-	return hex
+	return .
 
 
 //Attaches each element of a list to a single string seperated by 'seperator'.

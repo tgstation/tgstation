@@ -7088,7 +7088,7 @@
 "cGp" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor,/area/derelict/arrival)
 "cGq" = (/obj/machinery/light/small,/turf/simulated/floor{icon_state = "dark"},/area/derelict/medical/chapel)
 "cGr" = (/obj/item/weapon/storage/box/lights/mixed,/turf/simulated/floor/plating/airless,/area/derelict/singularity_engine)
-"cGs" = (/obj/item/weapon/disk/data/demo,/turf/simulated/floor/plating/airless,/area)
+"cGs" = (/turf/simulated/floor/plating/airless,/area)
 "cGt" = (/turf/simulated/floor/airless{icon_state = "damaged4"},/area)
 "cGu" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor,/area/derelict/arrival)
 "cGv" = (/obj/structure/stool/bed/chair{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor,/area/derelict/arrival)
