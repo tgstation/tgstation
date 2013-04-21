@@ -41,6 +41,9 @@ datum/shuttle_controller
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(timeleft >= 600)
+				online = 0
+				direction = 1
+				endtime = null
 				return
 			captain_announce("The emergency shuttle has been recalled.")
 			world << sound('sound/AI/shuttlerecalled.ogg')
@@ -75,6 +78,30 @@ datum/shuttle_controller
 		var/ticksleft = endtime - world.timeofday
 		endtime = world.timeofday + (SHUTTLEARRIVETIME*10 - ticksleft)
 		return
+
+	//calls the shuttle if there's no AI or comms console,
+	proc/autoshuttlecall()
+		var/callshuttle = 1
+		for(var/SC in shuttle_caller_list)
+			if(istype(SC,/mob/living/silicon/ai))
+				var/mob/living/silicon/ai/AI = SC
+				if(AI.stat && !AI.client)
+					continue
+			var/turf/T = get_turf(SC)
+			if(T && T.z == 1)
+				callshuttle = 0 //if there's an alive AI or a communication console on the station z level, we don't call the shuttle
+				break
+
+		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction")
+			callshuttle = 0
+
+		if(callshuttle)
+			if(!online && direction == 1) //we don't call the shuttle if it's already coming
+				incall(2.5) //25 minutes! If they want to recall, they have 20 minutes to do so
+				log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+				message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
+				captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+				world << sound('sound/AI/shuttlecalled.ogg')
 
 	proc/process()
 
