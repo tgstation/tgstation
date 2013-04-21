@@ -273,6 +273,38 @@
 
 		//We are now going to move
 		moving = 1
+		//Something with pulling things
+		if(locate(/obj/item/weapon/grab, mob))
+			move_delay = max(move_delay, world.time + 7)
+			var/list/L = mob.ret_grab()
+			if(istype(L, /list))
+				if(L.len == 2)
+					L -= mob
+					var/mob/M = L[1]
+					if(M)
+						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+							var/turf/T = mob.loc
+							. = ..()
+							if (isturf(M.loc))
+								var/diag = get_dir(mob, M)
+								if ((diag - 1) & diag)
+								else
+									diag = null
+								if ((get_dist(mob, M) > 1 || diag))
+									step(M, get_dir(M.loc, T))
+				else
+					for(var/mob/M in L)
+						M.other_mobs = 1
+						if(mob != M)
+							M.animate_movement = 3
+					for(var/mob/M in L)
+						spawn( 0 )
+							step(M, direct)
+							return
+						spawn( 1 )
+							M.other_mobs = null
+							M.animate_movement = 2
+							return
 
 		if(mob.confused && IsEven(world.time))
 			step(mob, pick(cardinal))
