@@ -1,11 +1,8 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
 	icon_state = "alien_s"
-
-	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
-	var/obj/item/clothing/head/head = null			//
-	var/obj/item/weapon/r_store = null
-	var/obj/item/weapon/l_store = null
+	var/obj/item/r_store = null
+	var/obj/item/l_store = null
 	var/caste = ""
 	update_icon = 1
 
@@ -62,8 +59,6 @@
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
-	if(wear_suit) wear_suit.emp_act(severity)
-	if(head) head.emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
 	if(l_store) l_store.emp_act(severity)
 	..()
@@ -407,20 +402,38 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/humanoid/var/co2overloadtime = null
 /mob/living/carbon/alien/humanoid/var/temperature_resistance = T0C+75
 
-/mob/living/carbon/alien/humanoid/show_inv(mob/user)
 
+/mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[l_hand		? l_hand : "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[r_hand		? r_hand : "Nothing"]</A>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[head		? head		: "Nothing"]</A>
-	<BR><B>Suit:</B> <A href='?src=\ref[src];item=suit'>[wear_suit	? wear_suit	: "Nothing"]</A>
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
+	<HR>
+	<B><FONT size=3>[name]</FONT></B>
+	<HR>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>
+	<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"}
+
+	if(handcuffed)
+		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
+	if(legcuffed)
+		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
+
+	dat += {"
+	<BR>
+	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
+	"}
+	user << browse(dat, "window=mob[name];size=325x500")
 	onclose(user, "mob[name]")
 
 
+/mob/living/carbon/alien/humanoid/Topic(href, href_list)
+	..()
+	//strip panel
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+		if(href_list["pouches"])
+			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
+							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
+			if(do_mob(usr, src, STRIP_DELAY * 0.5))
+				u_equip(r_store)
+				u_equip(l_store)

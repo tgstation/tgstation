@@ -355,7 +355,6 @@
 
 
 /mob/living/carbon/human/show_inv(mob/user)
-
 	user.set_machine(src)
 	var/dat = {"
 	<HR>
@@ -368,17 +367,24 @@
 	<BR><B>Eyes:</B> <A href='?src=\ref[src];item=[slot_glasses]'>			[glasses	? glasses	: "Nothing"]</A>
 	<BR><B>Ears:</B> <A href='?src=\ref[src];item=[slot_ears]'>				[ears		? ears		: "Nothing"]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[head		? head		: "Nothing"]</A>
-	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=[slot_shoes]'>			[shoes		? shoes		: "Nothing"]</A>
-	<BR><B>Belt:</B> <A href='?src=\ref[src];item=[slot_belt]'>				[belt		? belt		: "Nothing"]</A>
-	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=[slot_w_uniform]'>		[w_uniform	? w_uniform	: "Nothing"]</A>
-	<BR><B>Exosuit:</B> <A href='?src=\ref[src];item=[slot_wear_suit]'>		[wear_suit	? wear_suit	: "Nothing"]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>				[back		? back		: "Nothing"]</A>
-	<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>			[wear_id	? wear_id	: "Nothing"]</A>
-	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=[slot_s_store]'>	[s_store	? s_store	: "Nothing"]</A>
-	"}
+	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=[slot_shoes]'>			[shoes		? shoes		: "Nothing"]</A>"}
+
+	dat += "<BR><B>Uniform:</B> <A href='?src=\ref[src];item=[slot_w_uniform]'>	 [w_uniform ? w_uniform : "Nothing"]</A>"
+	if(w_uniform)
+		dat += "<BR><B>Belt:</B> <A href='?src=\ref[src];item=[slot_belt]'> [belt ? belt : "Nothing"]</A>"
+
+	dat += "<BR><B>Exosuit:</B> <A href='?src=\ref[src];item=[slot_wear_suit]'> [wear_suit ? wear_suit : "Nothing"]</A>"
+	if(wear_suit)
+		dat += "<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=[slot_s_store]'>[s_store ? s_store : "Nothing"]</A>"
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
 
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+
+	if(w_uniform)	//we checked already, but a different place.
+		dat += "<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[wear_id ? wear_id : "Nothing"]</A>"
+
 	if(handcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
 	if(legcuffed)
@@ -485,59 +491,15 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["refresh"])
-		if(machine && in_range(src, usr))
-			show_inv(machine)
-
-	if(href_list["mach_close"])
-		var/t1 = "window=[href_list["mach_close"]]"
-		unset_machine()
-		src << browse(null, t1)
-
+	..()
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
-		if(href_list["item"])
-			var/slot = text2num(href_list["item"])
-			var/obj/item/what = get_item_by_slot(slot)
-
-			if(what && what.canremove)
-				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
-								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
-				what.add_fingerprint(usr)
-				if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-					if(what)
-						u_equip(what)
-			else
-				what = usr.get_active_hand()
-				if(what && what.mob_can_equip(src, slot, 1))
-					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
-					if(do_mob(usr, src, HUMAN_STRIP_DELAY * 0.5))
-						if(what)
-							usr.u_equip(what)
-							equip_to_slot_if_possible(what, slot, 0, 1)
-
 		if(href_list["pockets"])
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>")
-			if(do_mob(usr, src, HUMAN_STRIP_DELAY * 0.5))
+			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				u_equip(r_store)
 				u_equip(l_store)
-
-		if(href_list["internal"])
-			visible_message("<span class='danger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>", \
-							"<span class='userdanger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>")
-			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-				if(internal)
-					internal = null
-					if(internals)
-						internals.icon_state = "internal0"
-				else if(back && istype(back, /obj/item/weapon/tank))
-					internal = back
-					if(internals)
-						internals.icon_state = "internal1"
-
-				visible_message("<span class='danger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>", \
-								"<span class='userdanger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>")
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
@@ -586,8 +548,6 @@
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."
-	..()
-	return
 
 
 ///eyecheck()

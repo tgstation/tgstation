@@ -55,16 +55,6 @@
 	var/damage = 0.0
 	var/range = 10.0
 
-
-/obj/effect/list_container
-	name = "list container"
-
-/obj/effect/list_container/mobl
-	name = "mobl"
-	var/master = null
-
-	var/list/container = list(  )
-
 /obj/effect/projection
 	name = "Projection"
 	desc = "This looks like a projection of something."

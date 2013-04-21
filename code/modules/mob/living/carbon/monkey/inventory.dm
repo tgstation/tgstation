@@ -4,8 +4,10 @@
 	if(!slot)	return
 	if(!istype(I))	return
 
-	if(I == get_active_hand())
-		u_equip(I)
+	if(I == l_hand)
+		l_hand = null
+	else if(I == r_hand)
+		r_hand = null
 
 	switch(slot)
 		if(slot_back)
@@ -32,9 +34,14 @@
 			I.equipped(src, slot)
 			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
-			I.loc = src.back
+			if(I == get_active_hand())
+				u_equip(I)
+			I.loc = back
+			return
 		else
 			usr << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder."
 			return
 
+	I.loc = src
+	I.equipped(src, slot)
 	I.layer = 20

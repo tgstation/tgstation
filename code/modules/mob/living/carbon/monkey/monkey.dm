@@ -9,8 +9,6 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
-
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -92,18 +90,6 @@
 			now_pushing = null
 		return
 	return
-
-/mob/living/carbon/monkey/Topic(href, href_list)
-	..()
-	if(href_list["mach_close"])
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
-	if(href_list["item"] && !usr.stat && !usr.restrained() && in_range(src, usr))
-		return
-		//EQUIP_E MARKER
-
-	..()
 
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
@@ -417,10 +403,6 @@
 
 /mob/living/carbon/monkey/var/co2overloadtime = null
 /mob/living/carbon/monkey/var/temperature_resistance = T0C+75
-
-/mob/living/carbon/monkey/emp_act(severity)
-	if(wear_id) wear_id.emp_act(severity)
-	..()
 
 /mob/living/carbon/monkey/ex_act(severity)
 	if(!blinded)

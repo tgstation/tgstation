@@ -88,6 +88,14 @@
 	inv_box.layer = 19
 	adding += inv_box
 
+	inv_box = new /obj/screen()
+	inv_box.name = "equip"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "act_equip"
+	inv_box.screen_loc = ui_equip
+	inv_box.layer = 19
+	adding += inv_box
+
 	mymob.throw_icon = new /obj/screen()
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
