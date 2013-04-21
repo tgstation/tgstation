@@ -958,8 +958,10 @@
 */
 	var/passed
 	if(src.dna)
-		if(usr.dna.unique_enzymes==src.dna)
-			passed = 1
+		if(check_dna_integrity(usr))
+			var/mob/living/carbon/C = usr
+			if(C.dna.unique_enzymes==src.dna)
+				passed = 1
 	else if(src.operation_allowed(usr))
 		passed = 1
 	if(!passed)

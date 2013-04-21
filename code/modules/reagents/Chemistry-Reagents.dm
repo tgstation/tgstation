@@ -1302,21 +1302,19 @@ datum
 			color = "#13BC5E" // rgb: 19, 188, 94
 			toxpwr = 0
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/living/carbon/M, var/method=TOUCH, var/volume)
 				if(!..())	return
-				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+				if(!istype(M) || !M.dna)	return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 				src = null
 				if((method==TOUCH && prob(33)) || method==INGEST)
 					randmuti(M)
-					if(prob(98))
-						randmutb(M)
-					else
-						randmutg(M)
+					if(prob(98))	randmutb(M)
+					else			randmutg(M)
 					domutcheck(M, null)
-					updateappearance(M,M.dna.uni_identity)
+					updateappearance(M)
 				return
-			on_mob_life(var/mob/living/M as mob)
-				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+			on_mob_life(var/mob/living/carbon/M)
+				if(!istype(M))	return
 				if(!M) M = holder.my_atom
 				M.apply_effect(10,IRRADIATE,0)
 				..()

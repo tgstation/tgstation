@@ -78,8 +78,8 @@
 	flag = "energy"
 
 	on_hit(var/atom/target, var/blocked = 0)
-		var/mob/living/M = target
-		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+		var/mob/living/carbon/M = target
+		if(check_dna_integrity(M) && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
 				M.Weaken(5)
@@ -99,12 +99,10 @@
 				M.show_message("\red The radiation beam singes you!")
 			//	for (var/mob/V in viewers(src))
 			//		V.show_message("\red [M] is singed by the radiation beam.", 3, "\red You hear the crackle of burning leaves.", 2)
-		else if(istype(target, /mob/living/carbon/))
+		else
 		//	for (var/mob/V in viewers(src))
 		//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
 			M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
-		else
-			return 1
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
@@ -114,13 +112,12 @@
 	nodamage = 1
 	flag = "energy"
 
-	on_hit(var/atom/target, var/blocked = 0)
-		var/mob/M = target
-		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
-			if(M.nutrition < 500) //sanity check
-				M.nutrition += 30
-		else if (istype(target, /mob/living/carbon/))
-			M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
+	on_hit(mob/living/carbon/target, var/blocked = 0)
+		if(iscarbon(target))
+			if(ishuman(target) && target.dna && target.dna.mutantrace == "plant")	//These rays make plantmen fat.
+				target.nutrition = min(target.nutrition+30, 500)
+			else
+				target.show_message("\blue The radiation beam dissipates harmlessly through your body.")
 		else
 			return 1
 

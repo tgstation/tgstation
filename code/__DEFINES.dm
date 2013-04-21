@@ -433,3 +433,18 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA
 	)
+
+//DNA - Because fuck you and your magic numbers being all over the codebase.
+#define DNA_BLOCK_SIZE				3
+
+#define DNA_UNI_IDENTITY_BLOCKS		7
+#define DNA_HAIR_COLOR_BLOCK		1
+#define DNA_FACIAL_HAIR_COLOR_BLOCK	2
+#define DNA_SKIN_TONE_BLOCK			3
+#define DNA_EYE_COLOR_BLOCK			4
+#define DNA_GENDER_BLOCK			5
+#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
+#define DNA_HAIR_STYLE_BLOCK		7
+
+#define DNA_STRUC_ENZYMES_BLOCKS	14
+#define DNA_UNIQUE_ENZYMES_LEN		32
