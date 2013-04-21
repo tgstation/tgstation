@@ -162,8 +162,8 @@ CREATE TABLE `erro_legacy_population` (
 --
 -- Table structure for table `erro_library`
 --
-delimiter $$
 
+DROP TABLE IF EXISTS `erro_library`;
 CREATE TABLE `erro_library` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` varchar(45) NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE `erro_library` (
   `ckey` varchar(45) DEFAULT 'LEGACY',
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5370 DEFAULT CHARSET=latin1$$
+) ENGINE=InnoDB AUTO_INCREMENT=5370 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `erro_player`
