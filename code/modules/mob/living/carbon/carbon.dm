@@ -177,21 +177,22 @@
 			if(SKELETON in H.mutations && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
-			if(istype(src, /mob/living/carbon/human) && src:w_uniform)
+			if(ishuman(src))
 				var/mob/living/carbon/human/H = src
-				H.w_uniform.add_fingerprint(M)
+				if(H.wear_suit)
+					H.wear_suit.add_fingerprint(M)
+				else if(H.w_uniform)
+					H.w_uniform.add_fingerprint(M)
 
 			if(lying)
 				sleeping = max(0, sleeping - 5)
 				if(sleeping == 0)
 					resting = 0
-				M.visible_message( \
-					"<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
-					"<span class='notice'>You shake [src] trying to get \him up!</span>")
+				M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
+								"<span class='notice'>You shake [src] trying to get \him up!</span>")
 			else
-				M.visible_message( \
-					"<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
-					"<span class='notice'>You hug [src] to make \him feel better!</span>")
+				M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
+								"<span class='notice'>You hug [src] to make \him feel better!</span>")
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -464,24 +465,23 @@
 	return loc_temp
 
 
-/mob/living/carbon/show_inv(mob/living/carbon/user as mob)
+/mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
 	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR>[handcuffed	? "<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>"		: "<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"]
+	<BR>[internal	? "<A href='?src=\ref[src];item=internal'>Remove Internal</A>"	: ""]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
-	return
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user)

@@ -372,7 +372,7 @@
 // slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
-/obj/item/proc/equipped(var/mob/user, var/slot)
+/obj/item/proc/equipped(mob/user, slot)
 	return
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.

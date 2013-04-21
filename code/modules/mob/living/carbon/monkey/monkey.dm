@@ -95,24 +95,16 @@
 
 /mob/living/carbon/monkey/Topic(href, href_list)
 	..()
-	if (href_list["mach_close"])
+	if(href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
-	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
-		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-		O.source = usr
-		O.target = src
-		O.item = usr.get_active_hand()
-		O.s_loc = usr.loc
-		O.t_loc = loc
-		O.place = href_list["item"]
-		requests += O
-		spawn( 0 )
-			O.process()
-			return
+	if(href_list["item"] && !usr.stat && !usr.restrained() && in_range(src, usr))
+		return
+		//EQUIP_E MARKER
+
 	..()
-	return
+
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))

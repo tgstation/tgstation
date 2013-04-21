@@ -288,23 +288,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			if (health > 0)
-				help_shake_act(M)
-			else
-				if (M.health >= -75.0)
-					if (((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32 ))))))
-						M << "\blue <B>Remove that mask!</B>"
-						return
-					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-					O.source = M
-					O.target = src
-					O.s_loc = M.loc
-					O.t_loc = loc
-					O.place = "CPR"
-					requests += O
-					spawn( 0 )
-						O.process()
-						return
+			help_shake_act(M)
 
 		if ("grab")
 			if (M == src)
@@ -423,21 +407,20 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/humanoid/var/co2overloadtime = null
 /mob/living/carbon/alien/humanoid/var/temperature_resistance = T0C+75
 
-/mob/living/carbon/alien/humanoid/show_inv(mob/user as mob)
+/mob/living/carbon/alien/humanoid/show_inv(mob/user)
 
 	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? text("[]", l_hand) : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? text("[]", r_hand) : "Nothing")]</A>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? text("[]", head) : "Nothing")]</A>
-	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? text("[]", wear_suit) : "Nothing")]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[l_hand		? l_hand : "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[r_hand		? r_hand : "Nothing"]</A>
+	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[head		? head		: "Nothing"]</A>
+	<BR><B>Suit:</B> <A href='?src=\ref[src];item=suit'>[wear_suit	? wear_suit	: "Nothing"]</A>
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
-	return
 
 
