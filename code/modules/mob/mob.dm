@@ -213,7 +213,6 @@ var/list/slot_equipment_priority = list( \
 	<HR>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	"}
 	user << browse(dat, "window=mob[name];size=325x500")
@@ -473,6 +472,9 @@ var/list/slot_equipment_priority = list( \
 						if(what)
 							usr.u_equip(what)
 							equip_to_slot_if_possible(what, slot, 0, 1)
+
+	if(usr.machine == src && in_range(src, usr))
+		show_inv(usr)
 
 
 /mob/MouseDrop(mob/M)

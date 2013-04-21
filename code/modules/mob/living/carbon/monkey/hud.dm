@@ -57,7 +57,7 @@
 	using = new /obj/screen()
 	using.name = "hand"
 	using.icon = ui_style
-	using.icon_state = "swap_1"
+	using.icon_state = "swap_1_m"	//extra wide!
 	using.screen_loc = ui_swaphand1
 	using.layer = 19
 	adding += using
@@ -85,14 +85,6 @@
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
 	inv_box.slot_id = slot_back
-	inv_box.layer = 19
-	adding += inv_box
-
-	inv_box = new /obj/screen()
-	inv_box.name = "equip"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "act_equip"
-	inv_box.screen_loc = ui_equip
 	inv_box.layer = 19
 	adding += inv_box
 

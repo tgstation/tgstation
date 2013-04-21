@@ -420,7 +420,6 @@ In all, this is a lot like the monkey code. /N
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	"}
 	user << browse(dat, "window=mob[name];size=325x500")
