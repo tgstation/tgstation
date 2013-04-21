@@ -28,7 +28,6 @@
 
 ////////////////////////
 
-/*
 /client/proc/mimespeak()
 	set category = "Mime"
 	set name = "Speech"
@@ -45,5 +44,3 @@
 		spawn(3000)
 			H.miming = 1
 	return
-
-	*/
