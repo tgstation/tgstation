@@ -24,7 +24,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/loaded/New()
+/obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
 	update_icon()
@@ -32,23 +32,12 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
-		if(bcell.rigged)
-			bcell.explode()//exploding baton of justice
-			update_icon()
-			return
+		if(bcell.use(chrgdeductamt+5))//Gotta remove a little extra or the Else here gives you +1 hit for not exceeding the capacity.
+			return 1
 		else
-			bcell.charge -= max(chrgdeductamt,0)
-			if(bcell.charge < hitcost)
-				status = 0
-				update_icon()
-
-/obj/item/weapon/melee/baton/examine()
-	set src in view(1)
-	..()
-	if(bcell)
-		usr <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
-	if(!bcell)
-		usr <<"<span class='warning'>The baton does not have a power source installed.</span>"
+			status = 0
+			update_icon()
+			return 0
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
@@ -57,6 +46,14 @@
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
+
+/obj/item/weapon/melee/baton/examine()
+	set src in view(1)
+	..()
+	if(bcell)
+		usr <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+	if(!bcell)
+		usr <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
@@ -82,7 +79,7 @@
 	return
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
-	if(bcell && bcell.charge)
+	if(bcell && bcell.charge > hitcost)
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
@@ -105,9 +102,9 @@
 	if(isrobot(M))
 		..()
 		return
-
 	if(!isliving(M))
 		return
+
 	var/mob/living/L = M
 
 	if(user.a_intent == "harm")
@@ -143,10 +140,6 @@
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
 		L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [name]</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [L.name] ([L.ckey]) with [name]</font>" )
-
-		if(bcell.charge < hitcost)
-			status = 0
-			update_icon()
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	if(bcell)
