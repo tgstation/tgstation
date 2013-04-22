@@ -90,6 +90,19 @@
 /obj/item/weapon/handcuffs/cable/white
 	icon_state = "cuff_white"
 
+/obj/item/weapon/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
+		R.use(1)
+
+		user.before_take_item(src)
+
+		user.put_in_hands(W)
+		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+
+		del(src)
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
