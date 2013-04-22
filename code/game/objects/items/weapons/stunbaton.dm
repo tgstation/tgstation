@@ -12,12 +12,17 @@
 	attack_verb = list("beaten")
 	var/stunforce = 10
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = 0
+	var/obj/item/weapon/cell/high/bcell = null
 	var/hitcost = 1000
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
 		return (FIRELOSS)
+
+/obj/item/weapon/melee/baton/New()
+	..()
+	update_icon()
+	return
 
 /obj/item/weapon/melee/baton/loaded/New()
 	..()
@@ -48,6 +53,8 @@
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
+	else if(!bcell)
+		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
 
@@ -159,11 +166,3 @@
 	stunforce = 5
 	hitcost = 2500
 	slot_flags = null
-
-/obj/item/weapon/melee/baton/update_icon()
-	if(status)
-		icon_state = "[initial(name)]_active"
-	else if(!bcell)
-		icon_state = "[initial(name)]_nocell"
-	else
-		icon_state = "[initial(name)]"
