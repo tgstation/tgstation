@@ -388,7 +388,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for(var/mob/living/silicon/ai/A in active)
 		if(!selected || (selected.connected_robots > A.connected_robots))
 			selected = A
-
 	return selected
 
 /proc/select_active_ai(var/mob/user)
@@ -504,11 +503,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(!ckey)
 		include_link = 0
-	
+
 	if(key)
 		if(include_link)
 			. += "<a href='?priv_msg=[ckey]'>"
-		
+
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
 		else

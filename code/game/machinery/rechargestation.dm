@@ -121,7 +121,6 @@
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O
 								LR.Charge(R)
-
 						if(R)
 							if(R.module)
 								R.module.respawn_consumable(R)
@@ -132,9 +131,8 @@
 								var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
 								if(S.name == "Polyacid spray")
 									S.reagents.add_reagent("pacid", 2)
-								else if(S.name == "Lube spray")
+								if(S.name == "Lube spray")
 									S.reagents.add_reagent("lube", 2)
-
 
 	verb
 		move_eject()
