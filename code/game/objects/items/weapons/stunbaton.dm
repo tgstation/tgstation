@@ -32,9 +32,9 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
-		if(bcell.use(chrgdeductamt+5))//Gotta remove a little extra or the Else here gives you +1 hit for not exceeding the capacity.
-			return 1
-		else
+		bcell.use(chrgdeductamt)
+
+		if(bcell.charge < chrgdeductamt)
 			status = 0
 			update_icon()
 			return 0
