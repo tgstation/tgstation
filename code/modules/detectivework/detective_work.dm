@@ -89,11 +89,8 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
-		if(!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
-			if(!istype(H.dna, /datum/dna))
-				H.dna = new /datum/dna(null)
-				H.dna.real_name = H.real_name
-		H.check_dna()
+		if(!istype(H.dna, /datum/dna))
+			new /datum/dna(H)	//sets up dna and its variables if it was missing
 
 		//Now, deal with gloves.
 		if(!ignoregloves)

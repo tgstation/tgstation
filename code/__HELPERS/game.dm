@@ -1,14 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/proc/dopage(src,target = null)
-	var/href_list
-	var/href
-	href_list = params2list("src=\ref[src][target ? "&[target]" : ""]")
-	href = "src=\ref[src];[target]"
-	src:temp_html = null
-	src:Topic(href, href_list)
-	return null
-
 /proc/get_area(O)
 	var/atom/location = O
 	var/i

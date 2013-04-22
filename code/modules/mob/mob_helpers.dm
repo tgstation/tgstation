@@ -269,9 +269,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/findname(msg)
+	if(!istext(msg))
+		msg = "[msg]"
 	for(var/mob/M in mob_list)
-		if (M.real_name == text("[msg]"))
-			return 1
+		if(M.real_name == msg)
+			return M
 	return 0
 
 

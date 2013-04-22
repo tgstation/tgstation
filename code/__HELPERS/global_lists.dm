@@ -65,3 +65,10 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 				. += "    has: [t]\n"
 	world << .
 */
+
+/proc/init_subtypes(prototype, list/L)
+	if(!istype(L))	L = list()
+	for(var/path in typesof(prototype))
+		if(path == prototype)	continue
+		L += new path()
+	return L

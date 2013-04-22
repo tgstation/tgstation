@@ -744,21 +744,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			// -- End mode specific stuff
 
 		podman.gender = ghost.gender
-		if(podman.gender in list(NEUTER, PLURAL))	//Sanity check, which should never actually happen.
-			podman.gender = pick(MALE,FEMALE)
 
-		if(!podman.dna)
-			podman.dna = new /datum/dna()
-			podman.dna.real_name = podman.real_name
-		if(ui)
-			podman.dna.uni_identity = ui
-			updateappearance(podman, ui)
-		if(se)
-			podman.dna.struc_enzymes = se
-		if(!prob(potency)) //if it fails, plantman!
-			if(podman.dna)
-				podman.dna.mutantrace = "plant"
-		podman.update_mutantrace()
+		//dna stuff
+		hardset_dna(podman, ui, se, null, !prob(potency) ? "plant" : null)	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
