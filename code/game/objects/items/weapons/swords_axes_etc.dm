@@ -54,13 +54,18 @@
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
 	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword))
-		user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-		new /obj/item/weapon/twohanded/dualsaber(user.loc)
-		del(W)
-		del(src)
+		if(W == src)
+			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
+			if(ishuman(user))
+				user.adjustBrainLoss(10)
+		else
+			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
+			new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			del(W)
+			del(src)
 
 /*
  * Classic Baton
