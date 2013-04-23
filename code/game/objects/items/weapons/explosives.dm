@@ -20,7 +20,7 @@
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
 	. = (BRUTELOSS)
 	viewers(user) << "\red <b>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</b>"
-	var/message_say = "ALALALALALALALALALALALALALA"
+	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
 			var/role = lowertext(user.mind.special_role)
