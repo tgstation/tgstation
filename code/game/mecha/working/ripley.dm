@@ -121,4 +121,3 @@
     user.drop_item()
     del(W)
     return
-  else
