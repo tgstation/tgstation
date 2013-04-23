@@ -14,6 +14,20 @@
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
+/obj/structure/closet/pcrate
+	name = "plastic crate"
+	desc = "A rectangular plastic crate."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "plasticcrate"
+	density = 1
+	icon_opened = "plasticcrateopen"
+	icon_closed = "plasticcrate"
+	req_access = null
+	opened = 0
+	flags = FPRINT
+//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
+	var/rigged = 0
+
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
 	name = "Internals crate"

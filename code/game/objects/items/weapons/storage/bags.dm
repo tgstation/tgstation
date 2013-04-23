@@ -38,7 +38,6 @@
 	can_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
-
 /obj/item/weapon/storage/bag/trash/update_icon()
 	if(contents.len == 0)
 		icon_state = "trashbag0"
@@ -47,6 +46,24 @@
 	else if(contents.len < 21)
 		icon_state = "trashbag2"
 	else icon_state = "trashbag3"
+
+
+// -----------------------------
+//        Plastic Bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/plasticbag
+	name = "plastic bag"
+	desc = "It's a very flimsy, very noisy alternative to a bag."
+	icon = 'icons/obj/trash.dmi'
+	icon_state = "plasticbag"
+	item_state = "plasticbag"
+
+	w_class = 4
+	max_w_class = 2
+	storage_slots = 21
+	can_hold = list() // any
+	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
 // -----------------------------
 //        Mining Satchel

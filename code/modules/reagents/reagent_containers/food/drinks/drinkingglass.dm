@@ -82,6 +82,10 @@
 					icon_state = "ginvodkaglass"
 					name = "Glass of vodka"
 					desc = "The glass contain wodka. Xynta."
+				if("sake")
+					icon_state = "ginvodkaglass"
+					name = "Glass of Sake"
+					desc = "A glass of Sake."
 				if("goldschlager")
 					icon_state = "ginvodkaglass"
 					name = "Glass of goldschlager"

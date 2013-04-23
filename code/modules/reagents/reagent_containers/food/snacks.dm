@@ -1566,6 +1566,26 @@
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/boiledrice
+	name = "Boiled Rice"
+	desc = "A boring dish of boring rice."
+	icon_state = "boiledrice"
+	trash = /obj/item/trash/snack_bowl
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/ricepudding
+	name = "Rice Pudding"
+	desc = "Where's the Jam!"
+	icon_state = "rpudding"
+	trash = /obj/item/trash/snack_bowl
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "Spagetti"
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"

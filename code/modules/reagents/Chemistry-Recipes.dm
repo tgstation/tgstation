@@ -385,10 +385,8 @@ datum
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
 					var/datum/gas_mixture/napalm = new
-					var/datum/gas/volatile_fuel/fuel = new
-					fuel.moles = created_volume
-					napalm.trace_gases += fuel
 
+					napalm.toxins = created_volume*10
 					napalm.temperature = 400+T0C
 					napalm.update_values()
 
@@ -482,6 +480,19 @@ datum
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/stack/sheet/mineral/plasma(location)
 				return
+
+		plastication
+			name = "Plastic"
+			id = "solidplastic"
+			result = null
+			required_reagents = list("pacid" = 10, "plasticide" = 20)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/mineral/plastic
+				M.amount = 10
+				M.loc = get_turf_loc(holder.my_atom)
+				return
+
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -1459,6 +1470,13 @@ datum
 			id = "vodka"
 			result = "vodka"
 			required_reagents = list("potato" = 10)
+			required_catalysts = list("enzyme" = 5)
+			result_amount = 10
+		sake
+			name = "Sake"
+			id = "sake"
+			result = "sake"
+			required_reagents = list("rice" = 10)
 			required_catalysts = list("enzyme" = 5)
 			result_amount = 10
 
