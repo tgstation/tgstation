@@ -75,3 +75,4 @@ vinceluk: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
 zuhayr: Jane Doe: /obj/item/clothing/under/fluff/jane_sidsuit
+mordeth221: Sven Fjeltson: /obj/item/weapon/fluff/sven_fjeltson_1
