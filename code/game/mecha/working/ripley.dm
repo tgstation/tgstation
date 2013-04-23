@@ -110,4 +110,14 @@
 	return
 
 
+/obj/mecha/working/ripley/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
+  if(istype(W, /obj/item/weapon/fluff/sven_fjeltson_1))
+    src.icon_state = "earth"
+    src.initial_icon = "earth"
+    src.name = "APLU \"Strike the Earth!\""
+    src.desc = "Looks like an over worked, under maintained Ripley with some horrific damage."
+    user << "You pick up your old \"Strike the Earth!\" APLU."
+    user.drop_item()
+    del(W)
+    return

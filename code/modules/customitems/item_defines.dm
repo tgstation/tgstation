@@ -360,6 +360,14 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "royce_kit"
 
+////// Ripley customisation kit - Sven Fjeltson - Mordeth221
+
+/obj/item/weapon/fluff/sven_fjeltson_1
+  name = "Mercenary APLU kit"
+  desc = "A kit containing all the needed tools and parts to turn an APLU Ripley into an old Mercenaries APLU."
+  icon = 'custom_items.dmi'
+  icon_state = "sven_kit"
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
