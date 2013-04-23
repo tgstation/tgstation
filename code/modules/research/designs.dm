@@ -176,6 +176,24 @@ datum/design/teleconsole
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/teleporter"
 
+datum/design/telestation
+	name = "Circuit Design (Teleporter Station)"
+	desc = "Allows for the construction of circuit boards used to build a teleporter station."
+	id = "telestation"
+	req_tech = list("programming" = 3, "bluespace" = 3, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/teleporter/station"
+
+datum/design/telehub
+	name = "Circuit Design (Teleporter Hub)"
+	desc = "Allows for the construction of circuit boards used to build a teleporter hub."
+	id = "telehub"
+	req_tech = list("programming" = 3, "bluespace" = 4, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/teleporter/hub"
+
 datum/design/secdata
 	name = "Circuit Design (Security Records Console)"
 	desc = "Allows for the construction of circuit boards used to build a security records console."

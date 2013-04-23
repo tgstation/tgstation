@@ -52,9 +52,6 @@
 /obj/machinery/computer/teleporter/attack_paw()
 	src.attack_hand()
 
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
-
 /obj/machinery/computer/teleporter/attack_hand()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -112,7 +109,6 @@
 		src.id = t
 	return
 
-
 /proc/find_loc(obj/R as obj)
 	if (!R)	return null
 	var/turf/T = R.loc
@@ -127,6 +123,7 @@
 	density = 1
 	anchored = 1.0
 	var/lockeddown = 0
+	var/construct_op = 0
 
 
 /obj/machinery/teleport/hub
@@ -137,6 +134,78 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+	var/obj/machinery/teleport/station/stati = 0
+	var/obj/machinery/computer/teleporter/com
+
+/obj/machinery/teleport/hub/New() //adds the parts to its components_parts variable
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/teleporter/hub(src)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter(src)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
+	RefreshParts()
+	connect()
+
+/obj/machinery/teleport/hub/attackby(var/obj/item/P as obj, var/mob/user as mob)
+	switch(construct_op)
+		if(0)
+			if(istype(P, /obj/item/weapon/screwdriver))
+				user << "You unfasten the bolts."
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				disconnect()
+				stat |= BROKEN // make sure the machine won't work during deconstruction.
+				construct_op ++
+			return
+		if(1)
+			if(istype(P, /obj/item/weapon/screwdriver))
+				user << "You fasten the bolts."
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				construct_op --
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "You dislodge the external plating."
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				stat &= ~BROKEN
+				construct_op ++
+			return
+		if(2)
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "You secure the external plating."
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				construct_op --
+			if(istype(P, /obj/item/weapon/wirecutters))
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				user << "You remove the cables."
+				construct_op ++
+				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+				A.amount = 5
+			return
+		if(3)
+			if(istype(P, /obj/item/weapon/cable_coil))
+				var/obj/item/weapon/cable_coil/A = P
+				if(A.amount >= 5)
+					user << "You insert the cables."
+					A.amount -= 5
+					if(A.amount <= 0)
+						user.drop_item()
+						del(A)
+					construct_op --
+			if(istype(P, /obj/item/weapon/crowbar))
+				user << "You begin prying out the circuit board other components..."
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				if(do_after(user,60))
+					user << "You finish prying out the components."
+
+					// Drop all the component stuff
+					for(var/obj/x in src)
+						x.loc = user.loc
+					var/obj/machinery/constructable_frame/machine_frame/F = new
+					F.loc = src.loc
+					del(src)
+			return
+	return ..()
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -146,34 +215,18 @@
 	return
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj)
-	var/atom/l = src.loc
-	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
+	connect()
 	if (!com)
 		return
 	if (!com.locked)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='warning'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
+			O.show_message("\red Failure: Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.")
 		return
 	if (istype(M, /atom/movable))
-		if(prob(10) && !accurate) //oh dear a problem
-			do_teleport(M, com.locked)
-			if(ishuman(M))//don't remove people from the round randomly you jerks
-				var/mob/living/carbon/human/human = M
-				if(human.dna.mutantrace == null)
-					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
-					human.dna.mutantrace = "fly"
-					human.update_mutantrace()
-				human.apply_effect((rand(90, 150)), IRRADIATE, 0)
-				randmutb(human)
-				domutcheck(human, null)
+		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
+			do_teleport(M, locate(rand((2*TRANSITIONEDGE), world.maxx - (2*TRANSITIONEDGE)), rand((2*TRANSITIONEDGE), world.maxy - (2*TRANSITIONEDGE)), 3), 2)
 		else
 			do_teleport(M, com.locked) //dead-on precision
-			if(prob(30) && accurate)//the gate will need recalibration after some use.
-				for(var/mob/B in hearers(src, null))
-					B.show_message("<span class='warning'>[src] has become uncalibrated.</span>")
-				accurate = 0
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 30, 0)
-
 
 		if(com.one_time_use) //Make one-time-use cards only usable one time!
 			com.one_time_use = 0
@@ -183,17 +236,30 @@
 		s.set_up(5, 1, src)
 		s.start()
 		for(var/mob/B in hearers(src, null))
-			B.show_message("<span class='notice'>Test fire completed.</span>")
-			accurate = 1
+			B.show_message("\blue Test fire completed.")
 	return
 
-/obj/machinery/teleport/hub/examine()
-	set src in view()
-	..()
-	if(accurate)
-		usr << "<span class='notice'>[src] is fully calibrated.</span>"
-	else
-		usr << "<span class='warning'>[src] is uncalibrated!</span>"
+/obj/machinery/teleport/hub/verb/connect()
+	set name = "Connect hub"
+	set category = "Object"
+	set src in oview(1)
+	var/sta = 0
+
+	for(dir in cardinal)
+		sta = get_step(src,dir)
+		stati = locate(/obj/machinery/teleport/station, get_step(src,dir))
+		com = locate(/obj/machinery/computer/teleporter, get_step(sta, dir))
+		if ((com) && (stati))
+			break
+	return
+
+/obj/machinery/teleport/hub/verb/disconnect()
+	set name = "Disconnect"
+	set category = "Object"
+	com = null
+	icon_state = "tele0"
+	if (stati)
+		stati.engaged = 0
 	return
 /*
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
@@ -211,9 +277,9 @@
 			return
 	var/disky = 0
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		if (istype(O, /obj/item/weapon/storage))
+		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
-				if (istype(OO, /obj/item/weapon/storage))
+				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
 					for (var/obj/OOO in OO.contents)
 						if (istype(OOO, /obj/item/weapon/disk/nuclear))
 							disky = 1
@@ -239,9 +305,9 @@
 	if (istype(M, /obj/item/weapon/storage/backpack/holding))
 		precision = rand(1,100)
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		if (istype(O, /obj/item/weapon/storage))
+		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
-				if (istype(OO, /obj/item/weapon/storage))
+				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
 					for (var/obj/OOO in OO.contents)
 						if (istype(OOO, /obj/item/weapon/storage/backpack/holding))
 							precision = rand(1,100)
@@ -284,16 +350,85 @@
 
 /obj/machinery/teleport/station
 	name = "station"
-	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
+	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
 	var/active = 0
 	var/engaged = 0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+	var/obj/machinery/teleport/hub/hub = 0
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W)
-	src.attack_hand()
+/obj/machinery/teleport/station/New() //adds the parts to its components_parts variable
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/teleporter/station(src)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter(src)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
+	RefreshParts()
+	connect()
+
+/obj/machinery/teleport/station/attackby(var/obj/item/P as obj, var/mob/user as mob)
+	switch(construct_op)
+		if(0)
+			if(istype(P, /obj/item/weapon/screwdriver))
+				if (engaged)
+					src.disengage()
+				disconnect()
+				user << "You unfasten the bolts."
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				stat |= BROKEN //prevents it from working while being deconstructed
+				construct_op ++
+			return
+		if(1)
+			if(istype(P, /obj/item/weapon/screwdriver))
+				user << "You fasten the bolts."
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				construct_op --
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "You dislodge the external plating."
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				stat &= ~BROKEN // the machine's not borked anymore!
+				construct_op ++
+			return
+		if(2)
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "You secure the external plating."
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				construct_op --
+				return
+			if(istype(P, /obj/item/weapon/wirecutters))
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				user << "You remove the cables."
+				construct_op ++
+				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+				A.amount = 5
+			return
+		if(3)
+			if(istype(P, /obj/item/weapon/cable_coil))
+				var/obj/item/weapon/cable_coil/A = P
+				if(A.amount >= 5)
+					user << "You insert the cables."
+					A.amount -= 5
+					if(A.amount <= 0)
+						user.drop_item()
+						del(A)
+					construct_op --
+			if(istype(P, /obj/item/weapon/crowbar))
+				user << "You begin prying out the circuit boards other components..."
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				if(do_after(user,60))
+					user << "You finish prying out the components."
+
+					// Drop all the component stuff
+					for(var/obj/x in src)
+						x.loc = user.loc
+					var/obj/machinery/constructable_frame/machine_frame/F = new
+					F.loc = src.loc
+					del(src)
+				return
+	return ..()
 
 /obj/machinery/teleport/station/attack_paw()
 	src.attack_hand()
@@ -310,14 +445,12 @@
 /obj/machinery/teleport/station/proc/engage()
 	if(stat & (BROKEN|NOPOWER))
 		return
-
-	var/atom/l = src.loc
-	var/atom/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
-	if (com)
-		com.icon_state = "tele1"
+	connect()
+	if (hub)
+		hub.icon_state = "tele1"
 		use_power(5000)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='notice'>Teleporter engaged!</span>", 2)
+			O.show_message("\blue Teleporter engaged!", 2)
 	src.add_fingerprint(usr)
 	src.engaged = 1
 	return
@@ -326,12 +459,12 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/atom/l = src.loc
-	var/atom/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
-	if (com)
-		com.icon_state = "tele0"
+	connect()
+
+	if (hub)
+		hub.icon_state = "tele0"
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='notice'>Teleporter disengaged!</span>", 2)
+			O.show_message("\blue Teleporter disengaged!", 2)
 	src.add_fingerprint(usr)
 	src.engaged = 0
 	return
@@ -344,13 +477,13 @@
 	if(stat & (BROKEN|NOPOWER) || !istype(usr,/mob/living))
 		return
 
-	var/atom/l = src.loc
-	var/obj/machinery/teleport/hub/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
-	if (com && !active)
+	connect()
+
+	if (hub && !active)
 		active = 1
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='notice'>Test firing!</span>", 2)
-		com.teleport()
+			O.show_message("\blue Test firing!", 2)
+		hub.teleport()
 		use_power(5000)
 
 		spawn(30)
@@ -363,12 +496,28 @@
 	..()
 	if(stat & NOPOWER)
 		icon_state = "controller-p"
-		var/obj/machinery/teleport/hub/com = locate(/obj/machinery/teleport/hub, locate(x + 1, y, z))
-		if(com)
-			com.icon_state = "tele0"
+		connect()
+		if(hub)
+			hub.icon_state = "tele0"
 	else
 		icon_state = "controller"
 
+/obj/machinery/teleport/station/verb/connect()
+	set name = "Connect station"
+	set category = "Object"
+	set src in oview(1)
+	for (dir in cardinal)
+		hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
+		if (hub)
+			break
+	return
+
+/obj/machinery/teleport/station/verb/disconnect()
+	set name = "Disconnect"
+	set category = "Object"
+	hub = null
+	active = 0
+	return
 
 /obj/effect/laser/Bump()
 	src.range--

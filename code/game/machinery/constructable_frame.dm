@@ -324,6 +324,26 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
 
+//Teleporter parts//
 
+/obj/item/weapon/circuitboard/teleporter/station
+	name = "Circuit Board (Teleporter Station)"
+	build_path = "/obj/machinery/teleport/station"
+	board_type = "machine"
+	origin_tech = "programming=3;bluespace=3,engineering=2"
+	frame_desc = "Requires 2 transmitters, 1 phasic scanning module, and 2 cable coils."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/subspace/transmitter" = 2,
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module/phasic" = 1)
 
-
+/obj/item/weapon/circuitboard/teleporter/hub
+	name = "Circuit Board (Teleporter Hub)"
+	build_path = "/obj/machinery/teleport/hub"
+	board_type = "machine"
+	origin_tech = "programming=3;bluespace=4,engineering=2"
+	frame_desc = "Requires 2 transmitters, 2 ultra-high powered micro-lasers, and 1 cable coil."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/subspace/transmitter" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser/ultra" = 3,
+							"/obj/item/weapon/cable_coil" = 1)
