@@ -366,7 +366,7 @@ hi
   name = "Mercenary APLU kit"
   desc = "A kit containing all the needed tools and parts to turn an APLU Ripley into an old Mercenaries APLU."
   icon = 'custom_items.dmi'
-  icon_state = "sven-kit"
+  icon_state = "sven_kit"
 
 //////////////////////////////////
 //////////// Clothing ////////////
