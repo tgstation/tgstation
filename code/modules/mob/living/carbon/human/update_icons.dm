@@ -798,8 +798,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays -= overlays_standing[LEGCUFF_LAYER]
 		overlays_lying[LEGCUFF_LAYER]		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff2", "layer" = -LEGCUFF_LAYER)
 		overlays_standing[LEGCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff1", "layer" = -LEGCUFF_LAYER)
-		overlays += overlays_lying[LEGCUFF_LAYER]
-		overlays += overlays_standing[LEGCUFF_LAYER]
+		if(src.lying)
+			overlays += overlays_lying[LEGCUFF_LAYER]
+		else
+			overlays += overlays_standing[LEGCUFF_LAYER]
 		if(src.m_intent != "walk")
 			src.m_intent = "walk"
 			if(src.hud_used && src.hud_used.move_intent)
