@@ -164,16 +164,16 @@ CREATE TABLE `erro_legacy_population` (
 --
 
 DROP TABLE IF EXISTS `erro_library`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `erro_library` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `author` text NOT NULL,
-  `title` text NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL,
   `content` text NOT NULL,
-  `category` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `category` varchar(45) NOT NULL,
+  `ckey` varchar(45) DEFAULT 'LEGACY',
+  `datetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5370 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `erro_player`
