@@ -331,6 +331,21 @@ datum
 				..()
 				return
 
+		plasticide
+			name = "Plasticide"
+			id = "plasticide"
+			description = "Liquid plastic, do not eat."
+			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.01
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				// Toxins are really weak, but without being treated, last very long.
+				M.adjustToxLoss(0.2)
+				..()
+				return
+
 		cyanide
 			// Fast and lethal
 			name = "Cyanide"
@@ -1121,15 +1136,26 @@ datum
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 
-
+//Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
+/*
 			reaction_obj(var/obj/O, var/volume)
+				src = null
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-				new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
+				var/datum/gas_mixture/napalm = new
+				var/datum/gas/volatile_fuel/fuel = new
+				fuel.moles = 15
+				napalm.trace_gases += fuel
+				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
-				new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
-				return
+				src = null
+				var/datum/gas_mixture/napalm = new
+				var/datum/gas/volatile_fuel/fuel = new
+				fuel.moles = 15
+				napalm.trace_gases += fuel
+				T.assume_air(napalm)
+				return*/
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1)
@@ -2277,6 +2303,19 @@ datum
 				if(!istype(T, /turf/space))
 					new /obj/effect/decal/cleanable/flour(T)
 
+		rice
+			name = "Rice"
+			id = "rice"
+			description = "Enjoy the great taste of nothing."
+			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#FFFFFF" // rgb: 0, 0, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
 		cherryjelly
 			name = "Cherry Jelly"
 			id = "cherryjelly"
@@ -2790,6 +2829,12 @@ datum
 				name = "Vodka"
 				id = "vodka"
 				description = "Number one drink AND fueling choice for Russians worldwide."
+				color = "#664300" // rgb: 102, 67, 0
+
+			sake
+				name = "Sake"
+				id = "sake"
+				description = "Anime's favorite drink."
 				color = "#664300" // rgb: 102, 67, 0
 
 			tequilla
