@@ -83,7 +83,7 @@
 	pixel_y = rand(0,8)-8
 
 	icon_state = "coin_[cmineral]_heads"
-	if(mineral)
+	if(cmineral)
 		name = "[cmineral] coin"
 
 /obj/item/weapon/coin/gold
