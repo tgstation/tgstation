@@ -232,6 +232,17 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium
+	seed = "/obj/item/seeds/plastiseed"
+	name = "clump of plastellium"
+	desc = "Hmm, needs some processing"
+	icon_state = "plastellium"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("plasticide", 1+round((potency / 10), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	seed = "/obj/item/seeds/glowberryseed"
 	name = "bunch of glow-berries"
@@ -642,6 +653,18 @@
 	desc = "Sigh... wheat... a-grain?"
 	gender = PLURAL
 	icon_state = "wheat"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk
+	seed = "/obj/item/seeds/riceseed"
+	name = "rice stalk"
+	desc = "Rice to see you."
+	gender = PLURAL
+	icon_state = "rice"
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops

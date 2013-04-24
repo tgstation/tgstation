@@ -780,7 +780,10 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
+
 
 		//archaeology!
 		/obj/item/weapon/rocksliver = list("ground_rock" = 50),

@@ -819,6 +819,14 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
 
+/datum/recipe/boiledrice
+	reagents = list("water" = 5, "rice" = 10)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledrice
+
+/datum/recipe/ricepudding
+	reagents = list("milk" = 5, "rice" = 10)
+	result = /obj/item/weapon/reagent_containers/food/snacks/ricepudding
+
 /datum/recipe/pastatomato
 	reagents = list("water" = 5)
 	items = list(
