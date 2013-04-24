@@ -61,8 +61,11 @@
 		var/turf/T = null
 		if(istype(loc,/turf))
 			T = loc
-		else if (holder && istype(holder.loc,/turf))
-			T = holder.loc
+		else if (holder)
+			if (istype(holder.loc,/turf))
+				T = holder.loc
+			else if (istype(holder.loc.loc,/turf)) //for onetankbombs and other tertiary builds with assemblies
+				T = holder.loc.loc
 		else if(istype(loc,/obj/item/weapon/grenade) && istype(loc.loc,/turf))
 			T = loc.loc
 		if(T)

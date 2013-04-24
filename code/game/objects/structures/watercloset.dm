@@ -374,20 +374,21 @@
 
 	else if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if(B.charges > 0 && B.status == 1)
-			flick("baton_active", src)
-			user.Stun(10)
-			user.stuttering = 10
-			user.Weaken(10)
-			if(isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= 20
-			else
-				B.charges--
-			user.visible_message( \
-				"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
-				"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
-			return
+		if(B.bcell)
+			if(B.bcell.charge > 0 && B.status == 1)
+				flick("baton_active", src)
+				user.Stun(10)
+				user.stuttering = 10
+				user.Weaken(10)
+				if(isrobot(user))
+					var/mob/living/silicon/robot/R = user
+					R.cell.charge -= 20
+				else
+					B.deductcharge(B.hitcost)
+				user.visible_message( \
+					"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
+					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
+				return
 
 	var/turf/location = user.loc
 	if(!isturf(location)) return

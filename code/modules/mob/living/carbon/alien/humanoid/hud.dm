@@ -32,22 +32,12 @@
 	l_hand_hud_object = inv_box
 	adding += inv_box
 
-//suit
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "o_clothing"
-	inv_box.icon = 'icons/mob/screen_alien.dmi'
-	inv_box.icon_state = "suit"
-	inv_box.screen_loc = ui_alien_oclothing
-	inv_box.slot_id = slot_wear_suit
-	inv_box.layer = 19
-	adding += inv_box
-
 //pocket 1
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "storage1"
 	inv_box.icon = 'icons/mob/screen_alien.dmi'
 	inv_box.icon_state = "pocket"
-	inv_box.screen_loc = ui_storage1
+	inv_box.screen_loc = ui_alien_storage_l
 	inv_box.slot_id = slot_l_store
 	inv_box.layer = 19
 	adding += inv_box
@@ -57,18 +47,8 @@
 	inv_box.name = "storage2"
 	inv_box.icon = 'icons/mob/screen_alien.dmi'
 	inv_box.icon_state = "pocket"
-	inv_box.screen_loc = ui_storage2
+	inv_box.screen_loc = ui_alien_storage_r
 	inv_box.slot_id = slot_r_store
-	inv_box.layer = 19
-	adding += inv_box
-
-//head
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "head"
-	inv_box.icon = 'icons/mob/screen_alien.dmi'
-	inv_box.icon_state = "head"
-	inv_box.screen_loc = ui_alien_head
-	inv_box.slot_id = slot_head
 	inv_box.layer = 19
 	adding += inv_box
 
