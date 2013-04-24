@@ -324,13 +324,6 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
 
-/obj/item/weapon/card/id/fluff/ian_colm_1 //Roaper: Ian Colm
-	name = "Technician"
-	desc = "An old ID with the words 'Ian Colm's Technician ID' printed on it.."
-	icon = 'custom_items.dmi'
-	icon_state = "technician_id"
-
-
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
 	name = "McReary's journal"
 	desc = "A journal with a warning sticker on the front cover. The initials \"J.M.\" are written on the back."
@@ -416,12 +409,6 @@ hi
 	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
 	icon = 'custom_items.dmi'
 	icon_state = "uzenwa_sissra_1"
-
-/obj/item/clothing/glasses/welding/fluff/ian_colm_2 //roaper: Ian Colm
-	name = "Ian's Goggles"
-	desc = "A pair of goggles used in the application of welding."
-	icon = 'custom_items.dmi'
-	icon_state = "ian_colm_1"
 
 ////// Medical eyepatch - Thysse Ezinwa - Jadepython
 /obj/item/clothing/glasses/eyepatch/fluff/thysse_1
@@ -556,6 +543,14 @@ hi
 	icon_state = "ara_bar_uniform"
 	item_state = "ara_bar_uniform"
 	color = "ara_bar_uniform"
+
+/obj/item/clothing/under/fluff/callum_suit //roaper: Callum Leamus
+	name = "knockoff suit"
+	desc = "A knockoff of a suit commonly worn by the upper class."
+	icon = 'custom_items.dmi'
+	icon_state = "callum_suit"
+	item_state = "callum_suit"
+	color = "callum_suit"
 
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
