@@ -243,23 +243,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			if (health > 0)
-				help_shake_act(M)
-			else
-				if (M.health >= -75.0)
-					if ((M.head && M.head.flags & 4) || (M.wear_mask && !( M.wear_mask.flags & 32 )) )
-						M << "\blue <B>Remove that mask!</B>"
-						return
-					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-					O.source = M
-					O.target = src
-					O.s_loc = M.loc
-					O.t_loc = loc
-					O.place = "CPR"
-					requests += O
-					spawn( 0 )
-						O.process()
-						return
+			help_shake_act(M)
 
 		if ("grab")
 			if (M == src)
@@ -352,17 +336,9 @@
 // now constructs damage icon for each organ from mask * damage field
 
 
-/mob/living/carbon/alien/larva/show_inv(mob/user as mob)
-
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR><BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
-	onclose(user, "mob[name]")
+/mob/living/carbon/alien/larva/show_inv(mob/user)
 	return
+
 
 /* Commented out because it's duplicated in life.dm
 /mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE

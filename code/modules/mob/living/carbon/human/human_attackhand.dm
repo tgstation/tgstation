@@ -11,8 +11,8 @@
 			if(health >= 0)
 				help_shake_act(M)
 				return 1
-			if(M.health < -75)	return 0
 
+			//CPR
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 				M << "<span class='notice'>Remove your mask!</span>"
 				return 0
@@ -20,16 +20,17 @@
 				M << "<span class='notice'>Remove their mask!</span>"
 				return 0
 
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-			O.source = M
-			O.target = src
-			O.s_loc = M.loc
-			O.t_loc = loc
-			O.place = "CPR"
-			requests += O
-			spawn(0)
-				O.process()
-			return 1
+			if(cpr_time < world.time + 30)
+				visible_message("<span class='notice'>[M] is trying to perform CPR on [src]!</span>")
+				if(!do_mob(M, src))
+					return 0
+				if((health >= -99 && health <= 0))
+					cpr_time = world.time
+					var/suff = min(getOxyLoss(), 7)
+					adjustOxyLoss(-suff)
+					updatehealth()
+					M.visible_message("[M] performs CPR on [src]!")
+					src << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
 			if(M == src)
