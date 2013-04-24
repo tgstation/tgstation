@@ -11,6 +11,6 @@
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
 
 //inventory slots
-	var/obj/item/weapon/back = null
+	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/weapon/tank/internal = null
