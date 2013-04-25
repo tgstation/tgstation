@@ -271,8 +271,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	//Applies the debrained overlay if there is no brain
 	if(!getbrain(src))
-		stand_icon.Blend(new /icon('icons/mob/human_face.dmi', "debrained_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('icons/mob/human_face.dmi', "debrained_l"), ICON_OVERLAY)
+		face_standing.Blend(new /icon('icons/mob/human_face.dmi', "debrained_s"), ICON_OVERLAY)
+		face_lying.Blend(new /icon('icons/mob/human_face.dmi', "debrained_l"), ICON_OVERLAY)
 		h_style = "Bald"
 
 	else if(h_style)
