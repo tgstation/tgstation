@@ -136,39 +136,16 @@
 	if(blocknumber < (length(input)/blocksize))
 		return copytext(input,blocksize*blocknumber+1,length(input)+1)
 
-/*
-/proc/getblockstring(input,block,subblock,blocksize,src,ui) // src is probably used here just for urls; ui is 1 when requesting for the unique identifier screen, 0 for structural enzymes screen
-	. = "<div class='getblockstring'><div class='blockString'>"
-	var/subpos = 1 // keeps track of the current sub block
-	var/blockpos = 1 // keeps track of the current block
-
-	for(var/i = 1, i <= length(input), i++) // loop through each letter
-		if(subpos == subblock && blockpos == block) // if the current block/subblock is selected, mark it
-			. += "<span class='linkOn'>[copytext(input, i, i+1)]</span>"
-		else
-			. += "<a href='?src=\ref[src];[ui ? "ui" : "se"]menuset=[num2text(blockpos)];uimenusubset=[num2text(subpos)]'>[copytext(input, i, i+1)]</a>"
-
-		if(subpos >= blocksize) // add a line break for every block
-			. += "</div><div class='blockString'>"
-			subpos = 0
-			blockpos++
-		subpos++
-
-	. += "</div></div>"
-	return .
-*/
-
-
 /proc/getblock(input, blocknumber, blocksize=DNA_BLOCK_SIZE)
 	return copytext(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
-
+/*
 /proc/getblockbuffer(input,blocknumber,blocksize)
 	var/result[blocksize]
 	var/start = (blocksize*blocknumber)-blocksize
 	for(var/i=1, i<=blocksize, i++)
 		result[i] = copytext(input, start+i, start+i+1)
 	return result
-
+*/
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
 	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
@@ -539,12 +516,7 @@
 	usr.loc = src
 	occupant = usr
 	icon_state = "scanner_1"
-	/*
-	for(var/obj/O in src)    // THIS IS P. STUPID -- LOVE, DOOHL
-		//O = null
-		del(O)
-		//Foreach goto(124)
-	*/
+
 	add_fingerprint(usr)
 	return
 
@@ -588,13 +560,7 @@
 /obj/machinery/dna_scannernew/proc/go_out()
 	if(!occupant || locked)
 		return
-/*
-//	it's like this was -just- here to break constructed dna scanners -Pete
-//	if that's not the case, slap my shit and uncomment this.
-//	for(var/obj/O in src)
-//		O.loc = loc
-*/
-		//Foreach goto(30)
+
 	if(occupant.client)
 		occupant.client.eye = occupant.client.mob
 		occupant.client.perspective = MOB_PERSPECTIVE
@@ -609,8 +575,6 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = loc
 				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
 			del(src)
 			return
 		if(2.0)
@@ -618,8 +582,6 @@
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = loc
 					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
 				del(src)
 				return
 		if(3.0)
@@ -627,8 +589,6 @@
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = loc
 					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
 				del(src)
 				return
 		else
@@ -707,12 +667,10 @@
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			del(src)
 			return
 		if(2.0)
 			if(prob(50))
-				//SN src = null
 				del(src)
 				return
 		else
@@ -892,10 +850,15 @@
 			temp_html += "</span></div></div>"
 			
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><span class='highlight'>"
+			var/max_line_len = DNA_BLOCK_SIZE * 10
 			if(viable_occupant)
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
+					if((i % max_line_len) == 0)
+						temp_html += "<br>"
+					else if((i % DNA_BLOCK_SIZE) == 0)
+						temp_html += " "
 			else
 				temp_html += " - "
 			temp_html += "</span></div></div>"
@@ -905,6 +868,10 @@
 				var/len = length(viable_occupant.dna.struc_enzymes)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
+					if((i % max_line_len) == 0)
+						temp_html += "<br>"
+					else if((i % DNA_BLOCK_SIZE) == 0)
+						temp_html += " "
 			else
 				temp_html += " - "
 			temp_html += "</span></div></div>"
