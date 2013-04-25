@@ -117,12 +117,18 @@ datum/hSB
 				if("hsbwatertank")
 					//var/obj/hsb = new/obj/watertank
 					//hsb.loc = usr.loc
-				if("hsbtoolbox")
-					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
-					for(var/obj/item/device/radio/T in hsb)
-						del(T)
-					new/obj/item/weapon/crowbar (hsb)
-					hsb.loc = usr.loc
+				if("hsbtoolbox")//SOMEPOTATTO MODIFICATION
+					var/list/selectable = list()
+					for(var/B in typesof(/obj/item/weapon/storage/toolbox/))
+						if(istype(B, /obj/item/weapon/storage/toolbox))
+							continue
+						selectable += B
+
+					var/hsbitem = input(usr, "Choose a toolbox to spawn.", "Sandbox:") in selectable + "Cancel"
+					if(hsbitem != "Cancel")
+						var/obj/item/weapon/storage/hsb = new hsbitem(usr.loc)
+						for(var/obj/item/device/radio/T in hsb)
+							del(T)
 				if("hsbmedkit")
 					var/obj/item/weapon/storage/firstaid/hsb = new/obj/item/weapon/storage/firstaid/regular
 					hsb.loc = usr.loc
