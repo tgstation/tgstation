@@ -16,29 +16,36 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female)
+	if(!istype(L))		L = list()
+	if(!istype(male))	male = list()
+	if(!istype(female))	female = list()
+
+	for(var/path in typesof(prototype))
+		if(path == prototype)	continue
+		var/datum/sprite_accessory/D = new path()
+
+		if(D.icon_state)	L[D.name] = D
+		else				L += D.name
+
+		switch(D.gender)
+			if(MALE)	male += D.name
+			if(FEMALE)	female += D.name
+			else
+				male += D.name
+				female += D.name
+	return L
 
 /datum/sprite_accessory
+	var/icon			//the icon file the accessory is located in
+	var/icon_state		//the icon_state of the accessory
+	var/name			//the preview name of the accessory
+	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 
-	var/icon			// the icon file the accessory is located in
-	var/icon_state		// the icon_state of the accessory
-	var/preview_state	// a custom preview state for whatever reason
-
-	var/name			// the preview name of the accessory
-
-	// Determines if the accessory will be skipped or included in random hair generations
-	var/gender = NEUTER
-
-
-/*
-////////////////////////////
-/  =--------------------=  /
-/  == Hair Definitions ==  /
-/  =--------------------=  /
-////////////////////////////
-*/
-
+//////////////////////
+// Hair Definitions //
+//////////////////////
 /datum/sprite_accessory/hair
-
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 	short
@@ -263,25 +270,19 @@
 
 	bald
 		name = "Bald"
-		icon_state = "bald"
+		icon_state = null
 		gender = MALE
 
-/*
-///////////////////////////////////
-/  =---------------------------=  /
-/  == Facial Hair Definitions ==  /
-/  =---------------------------=  /
-///////////////////////////////////
-*/
-
+/////////////////////////////
+// Facial Hair Definitions //
+/////////////////////////////
 /datum/sprite_accessory/facial_hair
-
 	icon = 'icons/mob/human_face.dmi'
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix /w beards :P)
 
 	shaved
 		name = "Shaved"
-		icon_state = "bald"
+		icon_state = null
 		gender = NEUTER
 
 	watson
@@ -347,3 +348,138 @@
 	dwarf
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
+
+	fiveoclock
+		name = "Five o Clock Shadow"
+		icon_state = "facial_fiveoclock"
+
+///////////////////////////
+// Underwear Definitions //
+///////////////////////////
+/datum/sprite_accessory/underwear
+	icon = 'icons/mob/underwear.dmi'
+
+	nude
+		name = "Nude"
+		icon_state = null
+		gender = NEUTER
+
+	male_white
+		name = "Mens White"
+		icon_state = "male_white"
+		gender = MALE
+
+	male_grey
+		name = "Mens Grey"
+		icon_state = "male_grey"
+		gender = MALE
+
+	male_green
+		name = "Mens Green"
+		icon_state = "male_green"
+		gender = MALE
+
+	male_blue
+		name = "Mens Blue"
+		icon_state = "male_blue"
+		gender = MALE
+
+	male_black
+		name = "Mens Black"
+		icon_state = "male_black"
+		gender = MALE
+
+	male_mankini
+		name = "Mankini"
+		icon_state = "male_mankini"
+		gender = MALE
+
+	male_hearts
+		name = "Mens Hearts Boxer"
+		icon_state = "male_hearts"
+		gender = MALE
+
+	male_blackalt
+		name = "Mens Black Boxer"
+		icon_state = "male_blackalt"
+		gender = MALE
+
+	male_greyalt
+		name = "Mens Grey Boxer"
+		icon_state = "male_greyalt"
+		gender = MALE
+
+	male_stripe
+		name = "Mens Striped Boxer"
+		icon_state = "male_stripe"
+		gender = MALE
+
+	male_kinky
+		name = "Mens Kinky"
+		icon_state = "male_kinky"
+		gender = MALE
+
+	male_red
+		name = "Mens Red"
+		icon_state = "male_red"
+		gender = MALE
+
+	female_red
+		name = "Ladies Red"
+		icon_state = "female_red"
+		gender = FEMALE
+
+	female_white
+		name = "Ladies White"
+		icon_state = "female_white"
+		gender = FEMALE
+
+	female_yellow
+		name = "Ladies Yellow"
+		icon_state = "female_yellow"
+		gender = FEMALE
+
+	female_blue
+		name = "Ladies Blue"
+		icon_state = "female_blue"
+		gender = FEMALE
+
+	female_black
+		name = "Ladies Black"
+		icon_state = "female_black"
+		gender = FEMALE
+
+	female_thong
+		name = "Ladies Thong"
+		icon_state = "female_thong"
+		gender = FEMALE
+
+	female_babydoll
+		name = "Babydoll"
+		icon_state = "female_babydoll"
+		gender = FEMALE
+
+	female_babyblue
+		name = "Ladies Baby-Blue"
+		icon_state = "female_babyblue"
+		gender = FEMALE
+
+	female_green
+		name = "Ladies Green"
+		icon_state = "female_green"
+		gender = FEMALE
+
+	female_pink
+		name = "Ladies Pink"
+		icon_state = "female_pink"
+		gender = FEMALE
+
+	female_kinky
+		name = "Ladies Kinky"
+		icon_state = "female_kinky"
+		gender = FEMALE
+
+	female_tankini
+		name = "Tankini"
+		icon_state = "female_tankini"
+		gender = FEMALE

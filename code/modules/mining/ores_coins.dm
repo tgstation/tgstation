@@ -139,7 +139,7 @@
 
 		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
 		CC.amount = 1
-		CC.updateicon()
+		CC.update_icon()
 		overlays = list()
 		string_attached = null
 		user << "\blue You detach the string from the coin."

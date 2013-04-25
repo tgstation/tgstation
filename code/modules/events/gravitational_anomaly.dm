@@ -1,28 +1,28 @@
-/datum/event_control/gravitational_anomaly
+/datum/round_event_control/gravitational_anomaly
 	name = "Gravitational Anomaly"
-	typepath = /datum/event/gravitational_anomaly
+	typepath = /datum/round_event/gravitational_anomaly
 	max_occurrences = 5
 	weight = 2
 
-/datum/event/gravitational_anomaly
+/datum/round_event/gravitational_anomaly
 	startWhen = 10
 
 	var/obj/effect/bhole/blackhole
 
-/datum/event/gravitational_anomaly/announce()
+/datum/round_event/gravitational_anomaly/announce()
 	command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
 			M << sound('sound/AI/granomalies.ogg')
 
-/datum/event/gravitational_anomaly/setup()
+/datum/round_event/gravitational_anomaly/setup()
 	endWhen = rand(50, 200)
 
-/datum/event/gravitational_anomaly/start()
+/datum/round_event/gravitational_anomaly/start()
 	var/turf/T = pick(blobstart)
 	blackhole = new /obj/effect/bhole( T.loc, 30 )
 
-/datum/event/gravitational_anomaly/end()
+/datum/round_event/gravitational_anomaly/end()
 	del(blackhole)
 
 

@@ -56,6 +56,7 @@
 /datum/supply_packs/paper
 	name = "Bureaucracy crate"
 	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
+					/obj/item/device/camera_film,
 					/obj/item/weapon/hand_labeler,
 					/obj/item/hand_labeler_refill,
 					/obj/item/hand_labeler_refill,
@@ -68,7 +69,7 @@
 					/obj/item/weapon/folder/yellow,
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/clipboard)
-	cost = 25
+	cost = 15
 	containertype = /obj/structure/closet/crate
 	containername = "Bureaucracy crate"
 
@@ -78,23 +79,6 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "monkey crate"
-
-
-/datum/supply_packs/beanbagammo
-	name = "Beanbag shells"
-	contains = list(/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag)
-	cost = 10
-	containertype = /obj/structure/closet/crate
-	containername = "beanbag shells"
 
 /datum/supply_packs/toner
 	name = "Toner Cartridges"
@@ -539,14 +523,14 @@
 
 /datum/supply_packs/weapons
 	name = "Weapons crate"
-	contains = list(/obj/item/weapon/melee/baton,
-					/obj/item/weapon/melee/baton,
+	contains = list(/obj/item/weapon/melee/baton/loaded,
+					/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/flashbangs)
+					/obj/item/weapon/storage/box/teargas)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "weapons crate"
@@ -579,25 +563,18 @@
 
 /datum/supply_packs/riot
 	name = "Riot gear crate"
-	contains = list(/obj/item/weapon/melee/baton,
-					/obj/item/weapon/melee/baton,
-					/obj/item/weapon/melee/baton,
-					/obj/item/weapon/shield/riot,
+	contains = list(/obj/item/weapon/melee/baton/loaded,
+					/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/handcuffs,
-					/obj/item/weapon/handcuffs,
-					/obj/item/weapon/handcuffs,
+					/obj/item/weapon/storage/box/teargas,
+					/obj/item/weapon/storage/box/handcuffs,
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/head/helmet/riot,
-					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/head/helmet/riot,
-					/obj/item/clothing/suit/armor/riot)
-	cost = 60
+					/obj/item/clothing/suit/armor/riot,)
+	cost = 45
 	containertype = /obj/structure/closet/crate/secure
 	containername = "riot gear crate"
 	access = access_armory
@@ -653,7 +630,7 @@
 	containertype = /obj/structure/closet/crate/secure/gear
 	containername = "security barriers crate"
 
-/datum/supply_packs/securitybarriers
+/datum/supply_packs/shieldwalls
 	name = "Shield Generators"
 	contains = list(/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen,

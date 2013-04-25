@@ -20,35 +20,30 @@
 	R.my_atom = src
 
 
-obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
-	reagents.reaction(A,1,10)
+obj/item/weapon/mop/proc/clean(turf/simulated/A)
+	reagents.reaction(A, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
+	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 	A.clean_blood()
 	for(var/obj/effect/O in A)
-		if( istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay) )
+		if(istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
 			del(O)
 
 
-/obj/effect/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/mop))
-		return
-	..()
-
-
-/obj/item/weapon/mop/afterattack(atom/A, mob/user as mob)
-	if(reagents.total_volume < 1 || mopcount >= 5)
-		user << "<span class='notice'>Your mop is dry!</span>"
-		return
-
+/obj/item/weapon/mop/afterattack(atom/A, mob/user)
 	if(istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
+		if(reagents.total_volume < 1)
+			user << "<span class='notice'>Your mop is dry!</span>"
+			return
+
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
+
 		if(do_after(user, 40))
 			if(A)
 				clean(get_turf(A))
 			user << "<span class='notice'>You have finished mopping!</span>"
-			mopcount++
 
-	if(mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
-		spawn(5)
-			reagents.clear_reagents()
-			mopcount = 0
-	return
+
+/obj/effect/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap))
+		return
+	..()

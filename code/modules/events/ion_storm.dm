@@ -1,18 +1,18 @@
-/datum/event_control/ion_storm
+/datum/round_event_control/ion_storm
 	name = "Ion Storm"
-	typepath = /datum/event/ion_storm
+	typepath = /datum/round_event/ion_storm
 	weight = 15
 
-/datum/event/ion_storm
+/datum/round_event/ion_storm
 	var/botEmagChance = 10
 
-/datum/event/ion_storm/announce()
+/datum/round_event/ion_storm/announce()
 	if(prob(33))
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 		world << sound('sound/AI/ionstorm.ogg')
 
 
-/datum/event/ion_storm/start()
+/datum/round_event/ion_storm/start()
 	//AI laws
 	for(var/mob/living/silicon/ai/M in living_mob_list)
 		if(M.stat != 2 && M.see_in_dark != 0)

@@ -22,3 +22,6 @@
 		return "declares, \"[text]\"";
 
 	return "states, \"[text]\"";
+
+/mob/living/silicon/robot/IsVocal()
+	return !config.silent_borg

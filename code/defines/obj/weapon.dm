@@ -193,16 +193,6 @@
 	w_class = 5.0
 */
 
-/obj/item/weapon/gift
-	name = "gift"
-	desc = "A wrapped item."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "gift3"
-	var/size = 3.0
-	var/obj/item/gift = null
-	item_state = "gift"
-	w_class = 4.0
-
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
 	desc = "Use this to keep prisoners in line."
@@ -399,21 +389,6 @@
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
-
-/obj/item/weapon/wire
-	desc = "This is just a simple piece of regular insulated wire."
-	name = "wire"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "item_wire"
-	var/amount = 1.0
-	var/laying = 0.0
-	var/old_lay = null
-	m_amt = 40
-	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
-
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (OXYLOSS)
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'

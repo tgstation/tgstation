@@ -5,8 +5,9 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
+	w_class = 2
 
-	attack_self(mob/user)
+/obj/item/bodybag/attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
 		R.add_fingerprint(user)
 		del(src)
@@ -14,8 +15,9 @@
 
 /obj/item/weapon/storage/box/bodybags
 	name = "body bags"
-	desc = "This box contains body bags."
+	desc = "The label indicates that it contains body bags."
 	icon_state = "bodybags"
+
 	New()
 		..()
 		new /obj/item/bodybag(src)
@@ -37,47 +39,48 @@
 	density = 0
 
 
-	attackby(W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/pen))
-			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
-			if (user.get_active_hand() != W)
-				return
-			if (!in_range(src, user) && src.loc != user)
-				return
-			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-			if (t)
-				src.name = "body bag - "
-				src.name += t
-				src.overlays += image(src.icon, "bodybag_label")
-			else
-				src.name = "body bag"
-		//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
+/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
+	if (istype(I, /obj/item/weapon/pen))
+		var/t = input(user, "What would you like the label to be?", name, null) as text
+		if(user.get_active_hand() != I)
 			return
-		else if(istype(W, /obj/item/weapon/wirecutters))
-			user << "You cut the tag off the bodybag"
-			src.name = "body bag"
-			src.overlays.Cut()
+		if(!in_range(src, user) && loc != user)
 			return
+		t = copytext(sanitize(t), 1, 53)	//max length of 64 - "body bag - " instead of MAX_MESSAGE_LEN, as per the hand labeler
+		if(t)
+			name = "body bag - "
+			name += t
+			overlays += "bodybag_label"
+		else
+			name = "body bag"
+		return
+	else if(istype(I, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You cut the tag off of [src].</span>"
+		name = "body bag"
+		overlays.Cut()
 
 
-	close()
-		if(..())
-			density = 0
-			return 1
-		return 0
+/obj/structure/closet/body_bag/close()
+	if(..())
+		density = 0
+		return 1
+	return 0
 
 
-	MouseDrop(over_object, src_location, over_location)
-		..()
-		if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-			if(!ishuman(usr))	return
-			if(opened)	return 0
-			if(contents.len)	return 0
-			visible_message("[usr] folds up the [src.name]")
-			new/obj/item/bodybag(get_turf(src))
-			spawn(0)
-				del(src)
-			return
+/obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
+	..()
+	if(over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
+		if(!ishuman(usr))
+			return 0
+		if(opened)
+			return 0
+		if(contents.len)
+			return 0
+		visible_message("<span class='notice'>[usr] folds up [src].</span>")
+		var/obj/item/bodybag/B = new /obj/item/bodybag(get_turf(src))
+		usr.put_in_hands(B)
+		del(src)
+
 
 /obj/structure/closet/bodybag/update_icon()
 	if(!opened)

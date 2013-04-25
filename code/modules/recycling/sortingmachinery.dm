@@ -102,8 +102,7 @@
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
 		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag) \
-		|| istype(target, /obj/structure/closet/body_bag))
+		|| istype(target, /obj/item/weapon/evidencebag) || istype(target, /obj/structure/closet/body_bag))
 			return
 		if(target.anchored)
 			return

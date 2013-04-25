@@ -141,6 +141,7 @@
 				if(ismob(target) && target == user)
 					reagents.reaction(target, INGEST)
 				spawn(5)
+					target.add_fingerprint(user)
 					var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "<span class='notice'>You inject [trans] unit\s of the solution. [src] now contains [reagents.total_volume] unit\s.</span>"
 					if(reagents.total_volume <= 0 && mode == SYRINGE_INJECT)

@@ -5,9 +5,9 @@
 	flags = FPRINT | TABLEPASS
 
 	cold_protection = CHEST|GROIN
-	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
-	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
 
 /obj/item/clothing/suit/armor/vest
@@ -21,14 +21,16 @@
 
 
 /obj/item/clothing/suit/armor/vest/warden
-	name = "Warden's jacket"
+	name = "warden's jacket"
 	desc = "An armoured jacket with silver rank pips and livery."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS|HANDS
+	heat_protection = CHEST|GROIN|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/riot
-	name = "Riot Suit"
+	name = "riot suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
@@ -36,10 +38,11 @@
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/bulletproof
-	name = "Bulletproof Vest"
+	name = "bulletproof vest"
 	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
 	icon_state = "bulletproof"
 	item_state = "armor"
@@ -48,7 +51,7 @@
 
 
 /obj/item/clothing/suit/armor/laserproof
-	name = "Ablative Armor Vest"
+	name = "ablative armor vest"
 	desc = "A vest that excels in protecting the wearer against energy projectiles."
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
@@ -70,8 +73,9 @@
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
-
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -91,7 +95,7 @@
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive
-	name = "Reactive Teleport Armor"
+	name = "reactive teleport armor"
 	desc = "Someone seperated our Research Director from his own head!"
 	var/active = 0.0
 	icon_state = "reactiveoff"
@@ -109,11 +113,11 @@
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The reactive armor is now active."
+		user << "<span class='notice'>[src] is now active.</span>"
 		src.icon_state = "reactive"
 		src.item_state = "reactive"
 	else
-		user << "\blue The reactive armor is now inactive."
+		user << "<span class='notice'>[src] is now inactive.</span>"
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
 		src.add_fingerprint(user)
@@ -130,7 +134,7 @@
 
 
 /obj/item/clothing/suit/armor/centcomm
-	name = "Cent. Com. armor"
+	name = "\improper Centcomm armor"
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
@@ -139,7 +143,9 @@
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -155,15 +161,17 @@
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/tdome/red
-	name = "Thunderdome suit (red)"
+	name = "thunderdome suit"
 	desc = "Reddish armor."
 	icon_state = "tdred"
 	item_state = "tdred"
 
 /obj/item/clothing/suit/armor/tdome/green
-	name = "Thunderdome suit (green)"
-	desc = "Pukish armor."
+	name = "thunderdome suit"
+	desc = "Pukish armor."	//classy.
 	icon_state = "tdgreen"
 	item_state = "tdgreen"

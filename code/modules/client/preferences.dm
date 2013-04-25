@@ -24,7 +24,6 @@ datum/preferences
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/savefile_version = 0
 
 	//non-preference stuff
 	var/warns = 0
@@ -45,7 +44,7 @@ datum/preferences
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/underwear = 1					//underwear type
+	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
@@ -91,11 +90,17 @@ datum/preferences
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			if(load_preferences())
-				if(load_character())
-					return
-	gender = pick(MALE, FEMALE)
+	var/loaded_preferences_successfully = load_preferences()
+	if(loaded_preferences_successfully)
+		if(load_character())
+			return
+	//we couldn't load character data so just randomize the character appearance + name
+	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = random_name(gender)
+	if(!loaded_preferences_successfully)
+		save_preferences()
+	save_character()		//let's save this new random character so it doesn't keep generating new ones.
+	return
 
 /datum/preferences
 	proc/ShowChoices(mob/user)
@@ -132,8 +137,10 @@ datum/preferences
 
 				dat += "<center><h2>Occupation Choices</h2>"
 				dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
-				dat += "<h2>Indentity</h2>"
+				dat += "<h2>Identity</h2>"
 				dat += "<table width='100%'><tr><td width='75%' valign='top'>"
+				if(appearance_isbanned(user))
+					dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 				dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 				dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
 
@@ -157,12 +164,7 @@ datum/preferences
 
 				dat += "<b>Blood Type:</b> [b_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a><BR>"
-
-				if(gender == MALE)
-					dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><BR>"
-				else
-					dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><BR>"
-
+				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
 
@@ -497,7 +499,7 @@ datum/preferences
 					if("f_style")
 						f_style = random_facial_hair_style(gender)
 					if("underwear")
-						underwear = rand(1,underwear_m.len)
+						underwear = random_underwear(gender)
 					if("eyes")
 						r_eyes = rand(0,255)
 						g_eyes = rand(0,255)
@@ -507,7 +509,7 @@ datum/preferences
 					if("bag")
 						backbag = rand(1,3)
 					if("all")
-						randomize_appearance_for()	//no params needed
+						random_character()
 
 			if("input")
 				switch(href_list["preference"])
@@ -536,7 +538,11 @@ datum/preferences
 							b_hair = hex2num(copytext(new_hair, 6, 8))
 
 					if("h_style")
-						var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_list
+						var/new_h_style
+						if(gender == MALE)
+							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
+						else
+							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
 						if(new_h_style)
 							h_style = new_h_style
 
@@ -548,20 +554,22 @@ datum/preferences
 							b_facial = hex2num(copytext(new_facial, 6, 8))
 
 					if("f_style")
-						var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_list
+						var/new_f_style
+						if(gender == MALE)
+							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
+						else
+							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
 						if(new_f_style)
 							f_style = new_f_style
 
 					if("underwear")
-						var/list/underwear_options
+						var/new_underwear
 						if(gender == MALE)
-							underwear_options = underwear_m
+							new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_m
 						else
-							underwear_options = underwear_f
-
-						var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
+							new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_f
 						if(new_underwear)
-							underwear = underwear_options.Find(new_underwear)
+							underwear = new_underwear
 
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
@@ -591,6 +599,9 @@ datum/preferences
 							gender = FEMALE
 						else
 							gender = MALE
+						underwear = random_underwear(gender)
+						f_style = random_facial_hair_style(gender)
+						h_style = random_hair_style(gender)
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
@@ -636,7 +647,10 @@ datum/preferences
 						load_character()
 
 					if("changeslot")
-						load_character(text2num(href_list["num"]))
+						if(!load_character(text2num(href_list["num"])))
+							random_character()
+							real_name = random_name(gender)
+							save_character()
 
 					if("tab")
 						if (href_list["tab"])
@@ -645,9 +659,9 @@ datum/preferences
 		ShowChoices(user)
 		return 1
 
-	proc/copy_to(mob/living/carbon/human/character, safety = 0)
+	proc/copy_to(mob/living/carbon/human/character)
 		if(be_random_name)
-			real_name = random_name()
+			real_name = random_name(gender)
 
 		if(config.humans_need_surnames)
 			var/firstspace = findtext(real_name, " ")
@@ -679,21 +693,19 @@ datum/preferences
 		character.b_facial = b_facial
 
 		character.s_tone = s_tone
-
 		character.h_style = h_style
 		character.f_style = f_style
-
-		if(underwear > underwear_m.len || underwear < 1)
-			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
 		character.underwear = underwear
 
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
+		/*
 		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 		if(character.gender in list(PLURAL, NEUTER))
 			if(isliving(src)) //Ghosts get neuter by default
 				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 				character.gender = MALE
+		*/
 

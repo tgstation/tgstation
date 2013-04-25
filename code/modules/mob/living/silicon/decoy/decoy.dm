@@ -6,6 +6,7 @@
 	canmove = 0
 
 /mob/living/silicon/decoy/New()
+	..()
 	src.icon = 'icons/mob/AI.dmi'
 	src.icon_state = "ai"
 	src.anchored = 1

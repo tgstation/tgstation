@@ -6,20 +6,6 @@
 
 var/datum/controller/supply_shuttle/supply_shuttle = new()
 
-var/list/mechtoys = list(
-	/obj/item/toy/prize/ripley,
-	/obj/item/toy/prize/fireripley,
-	/obj/item/toy/prize/deathripley,
-	/obj/item/toy/prize/gygax,
-	/obj/item/toy/prize/durand,
-	/obj/item/toy/prize/honk,
-	/obj/item/toy/prize/marauder,
-	/obj/item/toy/prize/seraph,
-	/obj/item/toy/prize/mauler,
-	/obj/item/toy/prize/odysseus,
-	/obj/item/toy/prize/phazon
-)
-
 /area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
 	icon_state = "shuttle3"
@@ -36,10 +22,10 @@ var/list/mechtoys = list(
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
-/obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
-	name = "\improper Plastic flaps"
-	desc = "I definitely cant get past those. No way."
-	icon = 'icons/obj/stationobjs.dmi' //Change this.
+/obj/structure/plasticflaps	//HOW DO YOU CALL THOSE THINGS ANYWAY
+	name = "plastic flaps"
+	desc = "Definitely can't get past those. No way."
+	icon = 'icons/obj/stationobjs.dmi'	//Change this.
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
@@ -72,7 +58,7 @@ var/list/mechtoys = list(
 				del(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
-	name = "\improper Airtight plastic flaps"
+	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
 	New() //set the turf below the flaps to block air
@@ -89,7 +75,7 @@ var/list/mechtoys = list(
 		..()
 
 /obj/machinery/computer/supplycomp
-	name = "Supply shuttle console"
+	name = "supply shuttle console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
@@ -100,7 +86,7 @@ var/list/mechtoys = list(
 	var/can_order_contraband = 0
 
 /obj/machinery/computer/ordercomp
-	name = "Supply ordering console"
+	name = "supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"

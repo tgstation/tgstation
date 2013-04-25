@@ -276,7 +276,7 @@ AI MODULES
 	target.add_supplied_law(lawpos, law)
 	lawchanges.Add("The law was '[newFreeFormLaw]'")
 	message_admins("[key_name_admin(sender)] used freeform module on [key_name_admin(target)]. The law was '[newFreeFormLaw].'")
-	log_law("[sender.key]/([sender.name]) used freeform module on [sender.key]/([sender.name]): '[newFreeFormLaw].'")
+	log_law("[sender.key]/([sender.name]) used freeform module on [target.key]/([target.name]): '[newFreeFormLaw].'")
 
 /obj/item/weapon/aiModule/freeform/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
@@ -432,6 +432,8 @@ AI MODULES
 	target << "\red BZZZZT"
 	var/law = "[newFreeFormLaw]"
 	target.add_ion_law(law)
+	message_admins("[key_name_admin(sender)] used hacked module on [key_name_admin(target)]. The law was '[newFreeFormLaw].'")
+	log_law("[sender.key]/([sender.name]) used hacked module on [sender.key]/([sender.name]): '[newFreeFormLaw].'")
 
 /obj/item/weapon/aiModule/syndicate/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)

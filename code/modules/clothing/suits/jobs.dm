@@ -72,9 +72,11 @@
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|LEGS|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 
 //Engineering
 /obj/item/clothing/suit/hazardvest
@@ -86,7 +88,7 @@
 
 //Lawyer
 /obj/item/clothing/suit/lawyer/bluejacket
-	name = "Blue Suit Jacket"
+	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
 	item_state = "suitjacket_blue_open"
@@ -94,8 +96,8 @@
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/lawyer/purpjacket
-	name = "Purple Suit Jacket"
-	desc = "A snappy dress jacket."
+	name = "purple suit jacket"
+	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
 	blood_overlay_type = "coat"

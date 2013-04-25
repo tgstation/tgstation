@@ -35,12 +35,17 @@
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
-/client/proc/cmd_admin_pm(var/client/C, var/msg)
+/client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
-
-	if(!istype(C,/client))
+	
+	var/client/C
+	if(istext(whom))
+		C = directory[whom]
+	else if(istype(whom,/client))
+		C = whom
+	if(!C)
 		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return

@@ -173,13 +173,13 @@
 		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		if(signal.data["power"] != null)
+		if("power" in signal.data)
 			on = text2num(signal.data["power"])
-		if(signal.data["power_toggle"] != null)
+		if("power_toggle" in signal.data)
 			on = !on
 
-		if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
-			panic = text2num(signal.data["panic_siphon"] != null)
+		if("panic_siphon" in signal.data) //must be before if("scrubbing" thing
+			panic = text2num(signal.data["panic_siphon"])
 			if(panic)
 				on = 1
 				scrubbing = 0
@@ -187,7 +187,7 @@
 			else
 				scrubbing = 1
 				volume_rate = initial(volume_rate)
-		if(signal.data["toggle_panic_siphon"] != null)
+		if("toggle_panic_siphon" in signal.data)
 			panic = !panic
 			if(panic)
 				on = 1
@@ -197,31 +197,31 @@
 				scrubbing = 1
 				volume_rate = initial(volume_rate)
 
-		if(signal.data["scrubbing"] != null)
+		if("scrubbing" in signal.data)
 			scrubbing = text2num(signal.data["scrubbing"])
-		if(signal.data["toggle_scrubbing"])
+		if("toggle_scrubbing" in signal.data)
 			scrubbing = !scrubbing
 
-		if(signal.data["co2_scrub"] != null)
+		if("co2_scrub" in signal.data)
 			scrub_CO2 = text2num(signal.data["co2_scrub"])
-		if(signal.data["toggle_co2_scrub"])
+		if("toggle_co2_scrub" in signal.data)
 			scrub_CO2 = !scrub_CO2
 
-		if(signal.data["tox_scrub"] != null)
+		if("tox_scrub" in signal.data)
 			scrub_Toxins = text2num(signal.data["tox_scrub"])
-		if(signal.data["toggle_tox_scrub"])
+		if("toggle_tox_scrub" in signal.data)
 			scrub_Toxins = !scrub_Toxins
 
-		if(signal.data["n2o_scrub"] != null)
+		if("n2o_scrub" in signal.data)
 			scrub_N2O = text2num(signal.data["n2o_scrub"])
-		if(signal.data["toggle_n2o_scrub"])
+		if("toggle_n2o_scrub" in signal.data)
 			scrub_N2O = !scrub_N2O
 
-		if(signal.data["init"] != null)
+		if("init" in signal.data)
 			name = signal.data["init"]
 			return
 
-		if(signal.data["status"] != null)
+		if("status" in signal.data)
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon

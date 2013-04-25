@@ -1,12 +1,13 @@
 /obj/structure/mopbucket
-	desc = "Fill it with water, but don't forget a mop!"
 	name = "mop bucket"
+	desc = "Fill it with water, but don't forget a mop!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
 	pressure_resistance = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+	var/amount_per_transfer_from_this = 5	//shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+
 
 /obj/structure/mopbucket/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -16,29 +17,14 @@
 
 /obj/structure/mopbucket/examine()
 	set src in usr
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
+	usr << "[src] \icon[src] contains [reagents.total_volume] unit\s of water!"
 	..()
 
-/obj/structure/mopbucket/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/mop))
-		if (src.reagents.total_volume >= 2)
-			src.reagents.trans_to(W, 2)
-			user << "\blue You wet the mop"
-			playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
-		if (src.reagents.total_volume < 1)
-			user << "\blue Out of water!"
-	return
-
-/obj/structure/mopbucket/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			del(src)
-			return
-		if(2.0)
-			if (prob(50))
-				del(src)
-				return
-		if(3.0)
-			if (prob(5))
-				del(src)
-				return
+/obj/structure/mopbucket/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/mop))
+		if(reagents.total_volume < 1)
+			user << "[src] is out of water!</span>"
+		else
+			reagents.trans_to(I, 5)
+			user << "<span class='notice'>You wet [I] in [src].</span>"
+			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)

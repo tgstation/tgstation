@@ -95,6 +95,23 @@
 				if(!banckey || !banreason || !banjob || !banduration)
 					usr << "Not enough parameters (Requires ckey, reason and job)"
 					return
+			if(BANTYPE_APPEARANCE)
+				if(!banckey || !banreason)
+					usr << "Not enough parameters (Requires ckey and reason)"
+					return
+				banduration = null
+				banjob = null
+			if(BANTYPE_ADMIN_PERMA)
+				if(!banckey || !banreason)
+					usr << "Not enough parameters (Requires ckey and reason)"
+					return
+				banduration = null
+				banjob = null
+			if(BANTYPE_ADMIN_TEMP)
+				if(!banckey || !banreason || !banduration)
+					usr << "Not enough parameters (Requires ckey, reason and duration)"
+					return
+				banjob = null
 
 		var/mob/playermob
 
@@ -360,9 +377,56 @@
 
 	/////////////////////////////////////new ban stuff
 
-	else if(href_list["jobban2"])
-//		if(!check_rights(R_BAN))	return
+	else if(href_list["appearanceban"])
+		if(!check_rights(R_BAN))
+			return
+		var/mob/M = locate(href_list["appearanceban"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(!M.ckey)	//sanity
+			usr << "This mob has no ckey"
+			return
 
+		var/banreason = appearance_isbanned(M)
+		if(banreason)
+	/*		if(!config.ban_legacy_system)
+				usr << "Unfortunately, database based unbanning cannot be done through this panel"
+				DB_ban_panel(M.ckey)
+				return	*/
+			switch(alert("Reason: '[banreason]' Remove appearance ban?","Please Confirm","Yes","No"))
+				if("Yes")
+					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban")
+					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban")
+					feedback_inc("ban_appearance_unban", 1)
+					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
+					appearance_unban(M)
+					message_admins("\blue [key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban", 1)
+					M << "\red<BIG><B>[usr.client.ckey] has removed your appearance ban.</B></BIG>"
+
+		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
+			if("Yes")
+				var/reason = input(usr,"Reason?","reason","Metafriender") as text|null
+				if(!reason)
+					return
+				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
+				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
+				feedback_inc("ban_appearance",1)
+				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
+				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
+				notes_add(M.ckey, "Appearance banned - [reason]")
+				message_admins("\blue [key_name_admin(usr)] appearance banned [key_name_admin(M)]", 1)
+				M << "\red<BIG><B>You have been appearance banned by [usr.client.ckey].</B></BIG>"
+				M << "\red <B>The reason is: [reason]</B>"
+				M << "\red Appearance ban can be lifted only upon request."
+				if(config.banappeals)
+					M << "\red To try to resolve this matter head to [config.banappeals]"
+				else
+					M << "\red No ban appeals URL has been set."
+			if("No")
+				return
+
+	else if(href_list["jobban2"])
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"
@@ -781,11 +845,6 @@
 	//Player Notes
 	else if(href_list["notes"])
 		var/ckey = href_list["ckey"]
-		if(!ckey)
-			var/mob/M = locate(href_list["mob"])
-			if(ismob(M))
-				ckey = M.ckey
-
 		switch(href_list["notes"])
 			if("show")
 				notes_show(ckey)
@@ -886,16 +945,7 @@
 
 	else if(href_list["mute"])
 		if(!check_rights(R_ADMIN))	return
-
-		var/mob/M = locate(href_list["mute"])
-		if(!ismob(M))	return
-		if(!M.client)	return
-
-		var/mute_type = href_list["mute_type"]
-		if(istext(mute_type))	mute_type = text2num(mute_type)
-		if(!isnum(mute_type))	return
-
-		cmd_admin_mute(M, mute_type)
+		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
 	else if(href_list["c_mode"])
 		if(!check_rights(R_ADMIN))	return
@@ -1296,7 +1346,7 @@
 		src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 		src.owner << "Location = [location_description];"
 		src.owner << "[special_role_description]"
-		src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+		src.owner << "(<a href='?priv_msg=[M.ckey]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
 
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
@@ -1581,11 +1631,7 @@
 
 	else if(href_list["secretsfun"])
 		if(!check_rights(R_FUN))	return
-
-		var/list/overrides = list()
-		if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
-			overrides["announceWhen"] = -1
-
+		var/datum/round_event/E
 		var/ok = 0
 		switch(href_list["secretsfun"])
 			if("monkey")
@@ -1614,7 +1660,7 @@
 				feedback_add_details("admin_secrets_fun_used","TriAI")
 			if("gravity")
 				alert("WIP - event unavailable")
-/*				new /datum/event/weightless(overrides)
+/*				E = new /datum/round_event/weightless()
 				log_admin("[key_name(usr)] triggered a gravity-failure event.", 1)
 				message_admins("\blue [key_name_admin(usr)] triggered a gravity-failure event.", 1)
 				feedback_inc("admin_secrets_fun_used",1)
@@ -1763,44 +1809,44 @@
 			if("wave")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","MW")
-				new /datum/event/meteor_wave(overrides)
+				E = new /datum/round_event/meteor_wave()
 
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
-				new /datum/event/gravitational_anomaly(overrides)
+				E = new /datum/round_event/gravitational_anomaly()
 
 			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","STA")
-				new /datum/event/wormholes(overrides)
+				E = new /datum/round_event/wormholes()
 
 			if("goblob")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BL")
 				message_admins("[key_name_admin(usr)] has spawned blob", 1)
-				new /datum/event/blob(overrides)
+				E = new /datum/round_event/blob()
 			if("aliens")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","AL")
 				message_admins("[key_name_admin(usr)] has spawned aliens", 1)
-				new /datum/event/alien_infestation(overrides)
+				E = new /datum/round_event/alien_infestation()
 			if("alien_silent")								//replaces the spawn_xeno verb
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ALS")
 				create_xeno()
 			if("spiders")
-				new /datum/event/spider_infestation(overrides)
+				E = new /datum/round_event/spider_infestation()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SL")
 				message_admins("[key_name_admin(usr)] has spawned spiders", 1)
 			if("bluespaceanomaly")
-				new /datum/event/bluespace_anomaly(overrides)
+				E = new /datum/round_event/bluespace_anomaly()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BA")
 				message_admins("[key_name_admin(usr)] has triggered a bluespace anomaly", 1)
 			if("comms_blackout")
-				new /datum/event/communications_blackout(overrides)
+				E = new /datum/round_event/communications_blackout()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","CB")
 				message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
@@ -1808,9 +1854,9 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SN")
 				message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
-				new /datum/event/ninja(list(overrides))
+				E = new /datum/round_event/ninja()
 			if("carp")
-				new /datum/event/carp_migration(overrides)
+				E = new /datum/round_event/carp_migration()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","C")
 				message_admins("[key_name_admin(usr)] has spawned carp.", 1)
@@ -1818,35 +1864,34 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","R")
 				message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
-				new /datum/event/radiation_storm(overrides)
+				E = new /datum/round_event/radiation_storm()
 			if("immovable")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","IR")
 				message_admins("[key_name_admin(usr)] has sent an immovable rod to the station", 1)
-				new /datum/event/immovable_rod(overrides)
+				E = new /datum/round_event/immovable_rod()
 			if("prison_break")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PB")
 				message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
-				new /datum/event/prison_break(overrides)
+				E = new /datum/round_event/prison_break()
 			if("lightsout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","LO")
 				message_admins("[key_name_admin(usr)] has broke a lot of lights", 1)
-				overrides["lightsoutAmount"]=2
-				new /datum/event/electrical_storm(overrides)
+				E = new /datum/round_event/electrical_storm{lightsoutAmount = 2}()
 			if("blackout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BO")
 				message_admins("[key_name_admin(usr)] broke all lights", 1)
-				overrides["lightsoutAmount"]=0
-				new /datum/event/electrical_storm(overrides)
+				for(var/obj/machinery/light/L in world)
+					L.broken()
 			if("whiteout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","WO")
+				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 				for(var/obj/machinery/light/L in world)
 					L.fix()
-				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 			if("friendai")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FA")
@@ -1922,10 +1967,12 @@
 					if("Make Your Own")
 						AdminCreateVirus(usr.client)
 					if("Random")
-						new /datum/event/disease_outbreak(overrides)
+						E = new /datum/round_event/disease_outbreak()
 					if("Choose")
-						overrides["virus_type"] = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
-						new /datum/event/disease_outbreak(overrides)
+						var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
+						E = new /datum/round_event/disease_outbreak{}()
+						var/datum/round_event/disease_outbreak/DO = E
+						DO.virus_type = virus
 			if("retardify")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","RET")
@@ -1953,17 +2000,28 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","I")
 				message_admins("[key_name_admin(usr)] triggered an ion storm")
-				new /datum/event/ion_storm(overrides)
+				E = new /datum/round_event/ion_storm()
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
-				new /datum/event/spacevine(overrides)
+				E = new /datum/round_event/spacevine()
 			if("onlyone")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","OO")
 				usr.client.only_one()
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+			if("energeticflux")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FLUX")
+				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
+				E = new /datum/round_event/energetic_flux()
+		if(E)
+			E.processing = 0
+			if(E.announceWhen>0)
+				if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
+					E.announceWhen = -1
+			E.processing = 1
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)

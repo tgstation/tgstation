@@ -9,8 +9,6 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
-
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -93,26 +91,6 @@
 		return
 	return
 
-/mob/living/carbon/monkey/Topic(href, href_list)
-	..()
-	if (href_list["mach_close"])
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
-	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
-		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-		O.source = usr
-		O.target = src
-		O.item = usr.get_active_hand()
-		O.s_loc = usr.loc
-		O.t_loc = loc
-		O.place = href_list["item"]
-		requests += O
-		spawn( 0 )
-			O.process()
-			return
-	..()
-	return
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
@@ -179,27 +157,9 @@
 	if(..())	//To allow surgery to return properly.
 		return
 
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
-					Weaken(5)
-					if (stuttering < 5)
-						stuttering = 5
-					Stun(5)
-
-					for(var/mob/O in viewers(src, null))
-						if (O.client)
-							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
-					return
-				else
-					M << "\red Not enough charge! "
-					return
-
 	if (M.a_intent == "help")
 		help_shake_act(M)
+
 	else
 		if (M.a_intent == "harm")
 			if ((prob(75) && health > 0))
@@ -425,10 +385,6 @@
 
 /mob/living/carbon/monkey/var/co2overloadtime = null
 /mob/living/carbon/monkey/var/temperature_resistance = T0C+75
-
-/mob/living/carbon/monkey/emp_act(severity)
-	if(wear_id) wear_id.emp_act(severity)
-	..()
 
 /mob/living/carbon/monkey/ex_act(severity)
 	if(!blinded)

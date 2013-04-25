@@ -24,7 +24,9 @@
 	flags = FPRINT|TABLEPASS
 	flags_inv = 0
 	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood

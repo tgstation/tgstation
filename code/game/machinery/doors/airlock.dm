@@ -1,4 +1,3 @@
-
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -20,7 +19,7 @@
 
 
 /obj/machinery/door/airlock
-	name = "Airlock"
+	name = "airlock"
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door_closed"
 	power_channel = ENVIRON
@@ -40,133 +39,127 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	autoclose = 1
 	var/doortype = 0
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
+	var/autoclose = 1
 
 /obj/machinery/door/airlock/command
-	name = "Airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	doortype = 1
 
 /obj/machinery/door/airlock/security
-	name = "Airlock"
 	icon = 'icons/obj/doors/Doorsec.dmi'
 	doortype = 2
 
 /obj/machinery/door/airlock/engineering
-	name = "Airlock"
 	icon = 'icons/obj/doors/Dooreng.dmi'
 	doortype = 3
 
 /obj/machinery/door/airlock/medical
-	name = "Airlock"
 	icon = 'icons/obj/doors/Doormed.dmi'
 	doortype = 4
 
 /obj/machinery/door/airlock/maintenance
-	name = "Maintenance Access"
+	name = "maintenance access"
 	icon = 'icons/obj/doors/Doormaint.dmi'
 	doortype = 5
 
 /obj/machinery/door/airlock/external
-	name = "External Airlock"
+	name = "external airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
 	doortype = 6
 
 /obj/machinery/door/airlock/glass
-	name = "Glass Airlock"
+	name = "glass airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	doortype = 7
 	glass = 1
 
 /obj/machinery/door/airlock/centcom
-	name = "Airlock"
 	icon = 'icons/obj/doors/Doorele.dmi'
 	opacity = 0
 	doortype = 8
 
 /obj/machinery/door/airlock/vault
-	name = "Vault"
+	name = "vault"
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	doortype = 9
 
 /obj/machinery/door/airlock/glass_large
-	name = "Glass Airlock"
+	name = "glass airlock"
 	icon = 'icons/obj/doors/Door2x1glassfull.dmi'
 	opacity = 0
 	doortype = 10
 	glass = 1
 
 /obj/machinery/door/airlock/freezer
-	name = "Freezer Airlock"
+	name = "freezer airlock"
 	icon = 'icons/obj/doors/Doorfreezer.dmi'
 	opacity = 1
 	doortype = 11
 
 /obj/machinery/door/airlock/hatch
-	name = "Airtight Hatch"
+	name = "airtight hatch"
 	icon = 'icons/obj/doors/Doorhatchele.dmi'
 	opacity = 1
 	doortype = 12
 
 /obj/machinery/door/airlock/maintenance_hatch
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorhatchmaint2.dmi'
 	opacity = 1
 	doortype = 13
 
 /obj/machinery/door/airlock/glass_command
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorcomglass.dmi'
 	opacity = 0
 	doortype = 14
 	glass = 1
 
 /obj/machinery/door/airlock/glass_engineering
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorengglass.dmi'
 	opacity = 0
 	doortype = 15
 	glass = 1
 
 /obj/machinery/door/airlock/glass_security
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorsecglass.dmi'
 	opacity = 0
 	doortype = 16
 	glass = 1
 
 /obj/machinery/door/airlock/glass_medical
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doormedglass.dmi'
 	opacity = 0
 	doortype = 17
 	glass = 1
 
 /obj/machinery/door/airlock/mining
-	name = "Mining Airlock"
+	name = "mining airlock"
 	icon = 'icons/obj/doors/Doormining.dmi'
 	doortype = 18
 
 /obj/machinery/door/airlock/atmos
-	name = "Atmospherics Airlock"
+	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/Dooratmo.dmi'
 	doortype = 19
 
 /obj/machinery/door/airlock/research
-	name = "Airlock"
 	icon = 'icons/obj/doors/Doorresearch.dmi'
 	doortype = 20
 
 /obj/machinery/door/airlock/glass_research
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorresearchglass.dmi'
 	opacity = 0
 	doortype = 21
@@ -174,39 +167,39 @@
 	heat_proof = 1
 
 /obj/machinery/door/airlock/glass_mining
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorminingglass.dmi'
 	opacity = 0
 	doortype = 22
 	glass = 1
 
 /obj/machinery/door/airlock/glass_atmos
-	name = "Maintenance Hatch"
+	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Dooratmoglass.dmi'
 	opacity = 0
 	doortype = 23
 	glass = 1
 
 /obj/machinery/door/airlock/gold
-	name = "Gold Airlock"
+	name = "gold airlock"
 	icon = 'icons/obj/doors/Doorgold.dmi'
 	var/mineral = "gold"
 	doortype = 24
 
 /obj/machinery/door/airlock/silver
-	name = "Silver Airlock"
+	name = "silver airlock"
 	icon = 'icons/obj/doors/Doorsilver.dmi'
 	var/mineral = "silver"
 	doortype = 25
 
 /obj/machinery/door/airlock/diamond
-	name = "Diamond Airlock"
+	name = "diamond airlock"
 	icon = 'icons/obj/doors/Doordiamond.dmi'
 	var/mineral = "diamond"
 	doortype = 26
 
 /obj/machinery/door/airlock/uranium
-	name = "Uranium Airlock"
+	name = "uranium airlock"
 	desc = "And they said I was crazy."
 	icon = 'icons/obj/doors/Dooruranium.dmi'
 	var/mineral = "uranium"
@@ -226,7 +219,7 @@
 	return
 
 /obj/machinery/door/airlock/plasma
-	name = "Plasma Airlock"
+	name = "plasma airlock"
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/Doorplasma.dmi'
 	var/mineral = "plasma"
@@ -262,32 +255,31 @@
 	del (src)
 
 /obj/machinery/door/airlock/clown
-	name = "Bananium Airlock"
+	name = "bananium airlock"
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
 	var/mineral = "clown"
 	doortype = 29
 
 /obj/machinery/door/airlock/sandstone
-	name = "Sandstone Airlock"
+	name = "sandstone airlock"
 	icon = 'icons/obj/doors/Doorsand.dmi'
 	var/mineral = "sandstone"
 	doortype = 30
 
 /obj/machinery/door/airlock/science
-	name = "Airlock"
 	icon = 'icons/obj/doors/Doorsci.dmi'
 	doortype = 31
 
 /obj/machinery/door/airlock/glass_science
-	name = "Glass Airlocks"
+	name = "glass airlock"
 	icon = 'icons/obj/doors/Doorsciglass.dmi'
 	opacity = 0
 	doortype = 32
 	glass = 1
 
 /obj/machinery/door/airlock/highsecurity
-	name = "High Tech Security Airlock"
+	name = "high tech security airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
 	doortype = 33
 
@@ -904,6 +896,10 @@ About the new airlock wires panel:
 					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
 					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
 					if(7) new/obj/structure/door_assembly/door_assembly_glass( src.loc )
+					//8 is centcomm
+					if(9) new/obj/structure/door_assembly/door_assembly_vault(loc)
+					//10 is double glass door (2x1)
+					//11 is freezer
 					if(12) new/obj/structure/door_assembly/door_assembly_hatch( src.loc )
 					if(13) new/obj/structure/door_assembly/door_assembly_mhatch( src.loc )
 					if(14) new/obj/structure/door_assembly/door_assembly_com/glass( src.loc )
@@ -986,7 +982,16 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
+
+	if(autoclose  && normalspeed)
+		spawn(150)
+			autoclose()
+	else if(autoclose && !normalspeed)
+		spawn(5)
+			autoclose()
+
 	return ..()
+
 
 /obj/machinery/door/airlock/close(var/forced=0)
 	if(operating || welded || locked)
@@ -1023,8 +1028,9 @@ About the new airlock wires panel:
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
+
 	..()
-	return
+
 
 /obj/machinery/door/airlock/New()
 	..()
@@ -1042,3 +1048,8 @@ About the new airlock wires panel:
 	src.open()
 	src.locked = 1
 	return
+
+
+/obj/machinery/door/airlock/proc/autoclose()
+	if(!density && !operating && !locked && !welded && autoclose)
+		close()

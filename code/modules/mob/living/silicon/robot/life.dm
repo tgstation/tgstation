@@ -42,11 +42,7 @@
 			uneq_all()
 			src.stat = 1
 		else if (src.cell.charge <= 100)
-			src.module_active = null
-			src.module_state_1 = null
-			src.module_state_2 = null
-			src.module_state_3 = null
-			src.sight_mode = 0
+			uneq_all()
 			src.cell.use(1)
 		else
 			if(src.module_state_1)
