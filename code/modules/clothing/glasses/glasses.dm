@@ -114,6 +114,13 @@
 
 		usr.update_inv_glasses()
 
+/obj/item/clothing/glasses/welding/superior
+	name = "superior welding goggles"
+	desc = "Welding goggles made from more expensive materials."
+	icon_state = "rwelding-g"
+	item_state = "rwelding-g"
+	icon_action_button = "action_welding_g"
+
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight."

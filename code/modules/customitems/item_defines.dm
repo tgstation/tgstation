@@ -263,6 +263,14 @@ hi
 	body_parts_covered = null
 	flags = FPRINT|TABLEPASS
 
+/obj/item/weapon/lighter/fluff //Dragor23: Michael Guess
+	name = "engraved lighter"
+	desc = "A golden lighter, engraved with some ornaments and a G.."
+	icon_state = "guessip"
+	item_state = "guessip"
+	icon_on = "guessipon"
+	icon_off = "guessip"
+
 //Strange penlight, Nerezza: Asher Spock
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1
@@ -466,6 +474,12 @@ hi
 	desc = "Much safer than a hard helmet."
 	icon = 'custom_items.dmi'
 	icon_state = "neilpatterson0_hat"
+
+/obj/item/clothing/head/fluff/krinnhat //Shirotyrant: Krinn Seeskale
+	name = "saucepan hat"
+	desc = "This hat is the shiniest shiny Krinn has ever owned."
+	icon = 'custom_items.dmi'
+	icon_state = "krinn_hat"
 //////////// Suits ////////////
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
@@ -502,6 +516,13 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "deus_blueshield"
 	item_state = "deus_blueshield"
+
+/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Sharik Israa
+	name = "old scarf"
+	desc = "An old looking scarf, it seems to be fairly worn."
+	icon_state = "mantle-unathi"
+	item_state = "mantle-unathi"
+	body_parts_covered = UPPER_TORSO
 
 //////////// Uniforms ////////////
 
