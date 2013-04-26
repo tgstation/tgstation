@@ -111,11 +111,11 @@
 	icon_state = "fireaxe0"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
+	force = 15
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
-	force_wielded = 18
+	force_wielded = 28
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
