@@ -52,6 +52,8 @@
 	if(camera)
 		camera.status = 0
 
+	uneq_all() // particularly to ensure sight modes are cleared
+
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
 		RC.go_out()
