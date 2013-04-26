@@ -24,6 +24,9 @@
 		B.loc = get_turf(target)
 		B.transfer_identity(target)
 		target.internal_organs -= B
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.update_hair(0)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
