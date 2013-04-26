@@ -5,7 +5,7 @@
 	step_in = 6
 	max_temperature = 20000
 	health = 200
-	wreckage = /obj/effect/decal/mecha_wreckage/ripley
+	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
 	var/cargo_capacity = 15
 
@@ -23,7 +23,7 @@
 	health = 250
 	lights_power = 8
 	damage_absorption = list("fire"=0.5,"bullet"=0.8,"bomb"=0.5)
-	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
+	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
@@ -32,7 +32,7 @@
 	step_in = 2
 	opacity=0
 	lights_power = 60
-	wreckage = /obj/effect/decal/mecha_wreckage/ripley/deathripley
+	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
 
 /obj/mecha/working/ripley/deathripley/New()
