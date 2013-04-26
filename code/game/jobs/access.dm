@@ -80,6 +80,9 @@
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
 
+	//MONEY
+/var/const/access_crate_cash = 200
+
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null
