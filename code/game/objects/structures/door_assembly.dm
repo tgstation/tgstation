@@ -290,21 +290,23 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "sandstone"
 
-	door_assembly_sandstone
-		name = "Sandstone Airlock Assembly"
-		icon_state = "door_as_sandstone1"
-		airlock_type = /obj/machinery/door/airlock/sandstone
-		anchored = 1
-		density = 1
-		state = 1
-		mineral = "sandstone"
-
 	door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
 		name = "High Tech Security Assembly"
 		icon_state = "door_as_highsec1"
 		typetext = "highsecurity"
 		icontext = "highsec"
 		airlock_type = /obj/machinery/door/airlock/highsecurity
+		anchored = 1
+		density = 1
+		state = 1
+		glass = 0
+
+	door_assembly_vault
+		name = "Vault Door Assembly"
+		icon_state = "door_as_vault1"
+		typetext = "vault"
+		icontext = "vault"
+		airlock_type = /obj/machinery/door/airlock/vault
 		anchored = 1
 		density = 1
 		state = 1

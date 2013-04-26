@@ -27,7 +27,7 @@ Doesn't work on other aliens/AI.*/
 		adjustToxLoss(-50)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
-		new /obj/effect/alien/weeds/node(loc)
+		new /obj/structure/alien/weeds/node(loc)
 	return
 
 /*
@@ -105,7 +105,7 @@ Doesn't work on other aliens/AI.*/
 				return
 
 			adjustToxLoss(-200)
-			new /obj/effect/alien/acid(get_turf(O), O)
+			new /obj/effect/acid(get_turf(O), O)
 			visible_message("\green <B>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>")
 		else
 			src << "\green Target is too far away."
@@ -166,9 +166,9 @@ Doesn't work on other aliens/AI.*/
 			if("resin door")
 				new /obj/structure/mineral_door/resin(loc)
 			if("resin wall")
-				new /obj/effect/alien/resin/wall(loc)
+				new /obj/structure/alien/resin/wall(loc)
 			if("resin membrane")
-				new /obj/effect/alien/resin/membrane(loc)
+				new /obj/structure/alien/resin/membrane(loc)
 			if("resin nest")
 				new /obj/structure/stool/bed/nest(loc)
 	return

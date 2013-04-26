@@ -896,6 +896,10 @@ About the new airlock wires panel:
 					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
 					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
 					if(7) new/obj/structure/door_assembly/door_assembly_glass( src.loc )
+					//8 is centcomm
+					if(9) new/obj/structure/door_assembly/door_assembly_vault(loc)
+					//10 is double glass door (2x1)
+					//11 is freezer
 					if(12) new/obj/structure/door_assembly/door_assembly_hatch( src.loc )
 					if(13) new/obj/structure/door_assembly/door_assembly_mhatch( src.loc )
 					if(14) new/obj/structure/door_assembly/door_assembly_com/glass( src.loc )
