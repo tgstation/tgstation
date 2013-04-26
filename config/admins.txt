@@ -5,7 +5,7 @@
 # Ranks can be anything defined in admin_ranks.txt           ~Carn   #
 ######################################################################
 
-quarxink - Game Master
+iamgoofball - Game Master
 tle - Game Master
 xsi - Game Master
 scaredofshadows - Game Master
