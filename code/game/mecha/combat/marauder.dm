@@ -15,7 +15,7 @@
 	var/smoke_cooldown = 100
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke_system = new
 	operation_req_access = list(access_cent_specops)
-	wreckage = /obj/effect/decal/mecha_wreckage/marauder
+	wreckage = /obj/structure/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
 	force = 45
@@ -28,7 +28,7 @@
 	operation_req_access = list(access_cent_creed)
 	step_in = 3
 	health = 550
-	wreckage = /obj/effect/decal/mecha_wreckage/seraph
+	wreckage = /obj/structure/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	force = 55
 	max_equip = 5
@@ -38,7 +38,7 @@
 	name = "Mauler"
 	icon_state = "mauler"
 	operation_req_access = list(access_syndicate)
-	wreckage = /obj/effect/decal/mecha_wreckage/mauler
+	wreckage = /obj/structure/mecha_wreckage/mauler
 
 /obj/mecha/combat/marauder/New()
 	..()

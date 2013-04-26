@@ -540,7 +540,7 @@
 				explosion(T, 0, 0, 1, 3)
 			spawn(0)
 				if(wreckage)
-					var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
+					var/obj/structure/mecha_wreckage/WR = new wreckage(T)
 					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 						if(E.salvageable && prob(30))
 							WR.crowbar_salvage += E
