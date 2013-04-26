@@ -29,6 +29,7 @@ mob
 			if(sandbox)
 				sandbox.update()
 
+
 datum/hSB
 	var/owner = null
 	var/admin = 0

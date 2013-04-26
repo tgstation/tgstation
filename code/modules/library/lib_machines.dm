@@ -98,7 +98,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
+		SQLquery = "SELECT author, title, category, id FROM [sqlfdbprefix]library WHERE "
 		if(category == "Any")
 			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
 		else
@@ -201,7 +201,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
-				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM erro_library")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM [sqlfdbprefix]library")
 				query.Execute()
 
 				while(query.NextRow())
@@ -351,7 +351,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_library (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
+						var/DBQuery/query = dbcon.NewQuery("INSERT INTO [sqlfdbprefix]library (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
 						if(!query.Execute())
 							usr << query.ErrorMsg()
 						else
@@ -370,7 +370,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id=[sqlid]")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [sqlfdbprefix]library WHERE id=[sqlid]")
 			query.Execute()
 
 			while(query.NextRow())
