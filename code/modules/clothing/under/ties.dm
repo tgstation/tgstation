@@ -64,13 +64,42 @@
 				return
 	return ..(M,user)
 
+//////////
+//Medals//
+//////////
 
-//Medals
 /obj/item/clothing/tie/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	color = "bronze"
+
+//Pinning medals on people
+/obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
+	if(ishuman(M) && (user.a_intent == "help"))
+
+		if(M.wear_suit)
+			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
+				user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+				return
+
+		if(M.w_uniform)
+			var/obj/item/clothing/under/U = M.w_uniform
+			if(!U.hastie) //Check if he is not already wearing an accessory
+				user.drop_item()
+				U.hastie = src
+				src.loc = U
+
+				if(user == M)
+					user << "<span class='notice'>You attach [src] to [U].</span>"
+				else
+					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
+										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
+
+			else user << "<span class='warning'>[M] is already wearing an accessory.</span>"
+
+		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+	else ..()
 
 /obj/item/clothing/tie/medal/conduct
 	name = "distinguished conduct medal"
@@ -113,7 +142,10 @@
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
-//Armbands
+////////////
+//Armbands//
+////////////
+
 /obj/item/clothing/tie/armband
 	name = "red armband"
 	desc = "An fancy red armband!"
