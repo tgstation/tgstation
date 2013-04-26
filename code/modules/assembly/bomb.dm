@@ -73,6 +73,14 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
+/obj/item/device/onetankbomb/HasEntered(atom/movable/AM as mob|obj) //for mousetraps
+	if(bombassembly)
+		bombassembly.HasEntered(AM)
+
+/obj/item/device/onetankbomb/on_found(mob/finder as mob) //for mousetraps
+	if(bombassembly)
+		bombassembly.on_found(finder)
+
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
 /obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
