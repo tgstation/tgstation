@@ -15,7 +15,7 @@
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo"
 	icon_state = "deagle"
-	force = 14.0
+	force = INFINITY
 	max_shells = 7
 	caliber = ".50"
 	ammo_type ="/obj/item/ammo_casing/a50"

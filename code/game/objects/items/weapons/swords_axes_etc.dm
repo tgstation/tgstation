@@ -32,8 +32,8 @@
 		user.take_organ_damage(5,5)
 	active = !active
 	if (active)
-		force = 30
-		throwforce = 20
+		force = INFINITY
+		throwforce = INFINITY
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
@@ -42,8 +42,8 @@
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = 3
-		throwforce = 5.0
+		force = INFINITY
+		throwforce = INFINITY
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else
@@ -78,7 +78,7 @@
 	item_state = "classic_baton"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	force = 10
+	force = INFINITY
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	add_fingerprint(user)
@@ -153,12 +153,12 @@
 	active = !active
 	if(active)
 		user << "<span class='notice'>[src] is now energised.</span>"
-		force = 150
+		force = INFINITY
 		icon_state = "axe1"
 		w_class = 5
 	else
 		user << "<span class='notice'>[src] can now be concealed.</span>"
-		force = 40
+		force = INFINITY
 		icon_state = "axe0"
 		w_class = 5
 	add_fingerprint(user)
@@ -180,13 +180,13 @@
 	active = !active
 
 	if(active)
-		force = 10
+		force = INFINITY
 		icon_state = "eshield[active]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = 3
+		force = INFINITY
 		icon_state = "eshield[active]"
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)

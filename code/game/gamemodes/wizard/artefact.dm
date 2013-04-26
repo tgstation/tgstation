@@ -110,8 +110,8 @@
 	icon_state = "render"
 	item_state = "render"
 	flags = FPRINT | TABLEPASS
-	force = 15
-	throwforce = 10
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	var/charged = 1
 
@@ -186,9 +186,9 @@
 	icon_state ="bluespace"
 	throw_speed = 7
 	throw_range = 15
-	throwforce = 15
+	throwforce = INFINITY
 	damtype = BURN
-	force = 15
+	force = INFINITY
 	flags = FPRINT | TABLEPASS
 	hitsound = 'sound/items/welder2.ogg'
 

@@ -216,7 +216,7 @@
 	var/amount = MAXCOIL
 	color = "red"
 	desc = "A coil of power cable."
-	throwforce = 10
+	throwforce = INFINITY
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5

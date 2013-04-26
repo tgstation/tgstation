@@ -10,7 +10,7 @@
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
-	force = 4.0
+	force = INFINITY
 	var/list/syringes = new/list()
 	var/max_syringes = 1
 	m_amt = 2000

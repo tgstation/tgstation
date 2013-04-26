@@ -2,7 +2,7 @@
 	name = "bomb"
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
-	throwforce = 5
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 4

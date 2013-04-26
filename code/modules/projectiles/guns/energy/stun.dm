@@ -100,7 +100,7 @@
 	name = "Energy Crossbow"
 	desc = "A weapon favored by syndicate infiltration teams."
 	w_class = 4.0
-	force = 10
+	force = INFINITY
 	m_amt = 200000
 	projectile_type = "/obj/item/projectile/energy/bolt/large"
 

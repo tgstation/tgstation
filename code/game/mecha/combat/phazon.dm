@@ -14,7 +14,7 @@
 	add_req_access = 1
 	//operation_req_access = list()
 	internal_damage_threshold = 25
-	force = 15
+	force = INFINITY
 	var/phasing = 0
 	var/phasing_energy_drain = 200
 	max_equip = 4

@@ -6,7 +6,7 @@
 	item_state = "cleaner"
 	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
 	slot_flags = SLOT_BELT
-	throwforce = 3
+	throwforce = INFINITY
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
@@ -126,7 +126,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
-	throwforce = 3
+	throwforce = INFINITY
 	w_class = 3.0
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"

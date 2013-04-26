@@ -5,10 +5,10 @@
 	icon_state = "mjollnir0"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BACK
-	force = 5
+	force = INFINITY
 	force_unwielded = 5
 	force_wielded = 20
-	throwforce = 15
+	throwforce = INFINITY
 	throw_range = 1
 	w_class = 5
 	var/charged = 5
@@ -77,10 +77,10 @@
 	icon_state = "mjollnir0"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BACK
-	force = 5
+	force = INFINITY
 	force_unwielded = 5
 	force_wielded = 20
-	throwforce = 30
+	throwforce = INFINITY
 	throw_range = 10
 	w_class = 5
 	//var/charged = 5

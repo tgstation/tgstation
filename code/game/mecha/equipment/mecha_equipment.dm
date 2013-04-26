@@ -6,7 +6,7 @@
 	name = "mecha equipment"
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
-	force = 5
+	force = INFINITY
 	origin_tech = "materials=2"
 	construction_time = 100
 	construction_cost = list("metal"=10000)

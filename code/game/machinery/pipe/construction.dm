@@ -27,7 +27,7 @@ Buildable meters
 	var/pipe_type = 0
 	//var/pipe_dir = 0
 	var/pipename
-	force = 7
+	force = INFINITY
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"

@@ -189,8 +189,8 @@ proc/move_mining_shuttle()
 	icon_state = "pickaxe"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 15.0
-	throwforce = 4.0
+	force = INFINITY
+	throwforce = INFINITY
 	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
@@ -277,8 +277,8 @@ proc/move_mining_shuttle()
 	icon_state = "shovel"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 8.0
-	throwforce = 4.0
+	force = INFINITY
+	throwforce = INFINITY
 	item_state = "shovel"
 	w_class = 3.0
 	m_amt = 50
@@ -290,8 +290,8 @@ proc/move_mining_shuttle()
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	item_state = "spade"
-	force = 5.0
-	throwforce = 7.0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 2.0
 
 

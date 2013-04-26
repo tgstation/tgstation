@@ -93,9 +93,9 @@
 	..()
 	for(var/mob/O in viewers(src, null))
 		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
-	var/tforce = 0
+	var/tforce = INFINITY
 	if(ismob(AM))
-		tforce = 10
+		tforce = INFINITY
 	else
 		tforce = AM:throwforce
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

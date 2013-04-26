@@ -95,8 +95,8 @@
 	density = 0
 	anchored = 0
 	w_class = 1.0
-	force = 0.0
-	throwforce = 0.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 20
 	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT

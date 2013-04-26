@@ -56,7 +56,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
-	throwforce = 100
+	throwforce = INFINITY
 	density = 1
 	anchored = 1
 	var/z_original = 0

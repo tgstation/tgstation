@@ -3,8 +3,8 @@
 	desc = "" //todo
 	icon_state = "latexballon"
 	item_state = "lgloves"
-	force = 0
-	throwforce = 0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 15

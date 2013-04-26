@@ -155,9 +155,9 @@
 
 	..()
 	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
-	var/tforce = 0
+	var/tforce = INFINITY
 	if(ismob(AM))
-		tforce = 40
+		tforce = INFINITY
 	else
 		tforce = AM:throwforce
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)

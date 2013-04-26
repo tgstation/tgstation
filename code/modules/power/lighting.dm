@@ -606,8 +606,8 @@
 /obj/item/weapon/light
 	icon = 'icons/obj/lighting.dmi'
 	flags = FPRINT | TABLEPASS
-	force = 2
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 1
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
@@ -711,6 +711,6 @@
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
 		status = LIGHT_BROKEN
-		force = 5
+		force = INFINITY
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()

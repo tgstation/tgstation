@@ -698,9 +698,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	flags = TABLEPASS | FPRINT
-	force = 1.0
+	force = INFINITY
 	w_class = 1.0
-	throwforce = 1.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=4"
@@ -1070,9 +1070,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	flags = TABLEPASS
-	force = 1.0
+	force = INFINITY
 	w_class = 1.0
-	throwforce = 1.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=4"

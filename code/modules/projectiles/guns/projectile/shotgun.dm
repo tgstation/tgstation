@@ -5,7 +5,7 @@
 	item_state = "shotgun"
 	max_shells = 4
 	w_class = 4.0
-	force = 10
+	force = INFINITY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
@@ -67,7 +67,7 @@
 	item_state = "shotgun"
 	max_shells = 2
 	w_class = 4.0
-	force = 10
+	force = INFINITY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"

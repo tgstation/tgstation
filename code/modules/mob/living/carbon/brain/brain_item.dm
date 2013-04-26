@@ -4,9 +4,9 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain"
 	flags = TABLEPASS
-	force = 1.0
+	force = INFINITY
 	w_class = 2.0
-	throwforce = 1.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "biotech=3"

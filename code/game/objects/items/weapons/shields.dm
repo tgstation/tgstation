@@ -8,8 +8,8 @@
 	icon_state = "riot"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BACK
-	force = 5.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0
@@ -37,8 +37,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 4
 	w_class = 1
@@ -54,7 +54,7 @@
 	var/active = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
-	throwforce = 10.0
+	throwforce = INFINITY
 	throw_speed = 2
 	throw_range = 10
 	w_class = 2.0

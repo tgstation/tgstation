@@ -49,7 +49,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
-	throwforce = 14.0
+	throwforce = INFINITY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
 
@@ -59,7 +59,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 0
-	throwforce = 14.0
+	throwforce = INFINITY
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
@@ -81,7 +81,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
-	throwforce = 15.0
+	throwforce = INFINITY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
 

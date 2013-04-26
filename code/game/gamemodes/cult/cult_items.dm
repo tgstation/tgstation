@@ -5,8 +5,8 @@
 	item_state = "cultblade"
 	flags = FPRINT | TABLEPASS
 	w_class = 4
-	force = 30
-	throwforce = 10
+	force = INFINITY
+	throwforce = INFINITY
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 

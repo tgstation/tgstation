@@ -4,8 +4,8 @@
 	name = "tiles and toolbox"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3.0
-	throwforce = 10.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
@@ -17,8 +17,8 @@
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
-	force = 3.0
-	throwforce = 10.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0

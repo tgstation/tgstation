@@ -17,9 +17,9 @@
  * Utensils
  */
 /obj/item/weapon/kitchen/utensil
-	force = 5.0
+	force = INFINITY
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -78,8 +78,8 @@
 	name = "knife"
 	desc = "Can cut through any food."
 	icon_state = "knife"
-	force = 10.0
-	throwforce = 10.0
+	force = INFINITY
+	throwforce = INFINITY
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
@@ -104,9 +104,9 @@
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 10.0
+	force = INFINITY
 	w_class = 3.0
-	throwforce = 6.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
@@ -134,9 +134,9 @@
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 15.0
+	force = INFINITY
 	w_class = 2.0
-	throwforce = 8.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
@@ -152,8 +152,8 @@
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
-	force = 8.0
-	throwforce = 10.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 2
 	throw_range = 7
 	w_class = 3.0
@@ -201,8 +201,8 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
-	throwforce = 12.0
-	throwforce = 10.0
+	throwforce = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0

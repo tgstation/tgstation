@@ -4,8 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 3.0
-	throwforce = 2.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 4
 	w_class = 2
@@ -35,8 +35,8 @@
 	opacity = 0
 	density = 0
 	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
@@ -79,7 +79,7 @@
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
 	w_class = 1.0
-	throwforce = 0
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
 
@@ -90,7 +90,7 @@
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = 1.0
-	throwforce = 0
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
 
@@ -101,7 +101,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
 	w_class = 1.0
-	throwforce = 0
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
 
@@ -123,7 +123,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	throwforce = 3
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 15
@@ -136,7 +136,7 @@
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
-	throwforce = 1
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 5
@@ -149,8 +149,8 @@
 	icon_state = "cane"
 	item_state = "stick"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
-	throwforce = 7.0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 2.0
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
@@ -200,7 +200,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	throwforce = 0
+	throwforce = INFINITY
 	w_class = 3.0
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -253,8 +253,8 @@
 	name = "wet floor sign"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "caution"
-	force = 1.0
-	throwforce = 3.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
@@ -280,8 +280,8 @@
 	icon_state = "large"
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
-	force = 5.0
-	throwforce = 15.0
+	force = INFINITY
+	throwforce = INFINITY
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
@@ -327,7 +327,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "radio"
-	throwforce = 5
+	throwforce = INFINITY
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 20
@@ -339,8 +339,8 @@
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
-	force = 3.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
@@ -359,8 +359,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
 	item_state = "stick"
-	force = 3.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
@@ -474,9 +474,9 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 12.0
+	force = INFINITY
 	w_class = 1.0
-	throwforce = 15.0
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000
@@ -491,8 +491,8 @@
 	icon_state = "scythe0"
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
-	force = 13.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
@@ -516,7 +516,7 @@
 	icon_state = "cigarpacket"
 	item_state = "cigarpacket"
 	w_class = 1
-	throwforce = 2
+	throwforce = INFINITY
 	var/cigarcount = 6
 	flags = ONBELT | TABLEPASS */
 

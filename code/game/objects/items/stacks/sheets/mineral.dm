@@ -46,8 +46,8 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 /obj/item/stack/sheet/mineral/diamond
 	name = "diamond"
 	icon_state = "sheet-diamond"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_range = 3
 	origin_tech = "materials=6"
@@ -70,8 +70,8 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 /obj/item/stack/sheet/mineral/uranium
 	name = "uranium"
 	icon_state = "sheet-uranium"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -95,8 +95,8 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 /obj/item/stack/sheet/mineral/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -120,8 +120,8 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 /obj/item/stack/sheet/mineral/gold
 	name = "gold"
 	icon_state = "sheet-gold"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -145,8 +145,8 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 /obj/item/stack/sheet/mineral/silver
 	name = "silver"
 	icon_state = "sheet-silver"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -170,8 +170,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/clown
 	name = "bananium"
 	icon_state = "sheet-clown"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -193,8 +193,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/enruranium
 	name = "enriched uranium"
 	icon_state = "sheet-enruranium"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -207,8 +207,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
@@ -221,8 +221,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/mythril
 	name = "mythril"
 	icon_state = "sheet-mythril"
-	force = 5.0
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3

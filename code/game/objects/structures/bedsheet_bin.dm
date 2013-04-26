@@ -11,7 +11,7 @@ LINEN BINS
 	icon_state = "sheet"
 	item_state = "bedsheet"
 	layer = 4.0
-	throwforce = 1
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0

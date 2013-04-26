@@ -5,12 +5,12 @@
 	item_state = "baton"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	force = 10
-	throwforce = 7
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	var/stunforce = 10
+	var/stunforce = INFINITY
 	var/status = 0
 	var/obj/item/weapon/cell/high/bcell = null
 	var/hitcost = 1000
@@ -154,8 +154,8 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
-	force = 3
-	throwforce = 5
-	stunforce = 5
+	force = INFINITY
+	throwforce = INFINITY
+	stunforce = INFINITY
 	hitcost = 2500
 	slot_flags = null
