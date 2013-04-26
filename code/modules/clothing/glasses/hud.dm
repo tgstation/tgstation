@@ -45,22 +45,31 @@
 		if(!M)	return
 		if(!M.client)	return
 		var/client/C = M.client
-		var/icon/tempHud = 'icons/mob/hud.dmi'
+		var/image/holder
 		for(var/mob/living/carbon/human/patient in view(M))
 			var/foundVirus = 0
 			for(var/datum/disease/D in patient.viruses)
 				if(!D.hidden[SCANNER])
 					foundVirus++
 			if(!C) continue
-			C.images += image(tempHud, patient, "hud[RoundHealth(patient.health)]")
+
+			holder = patient.hud_list[HEALTH_HUD]
 			if(patient.stat == 2)
-				C.images += image(tempHud, patient, "huddead")
-			else if(patient.status_flags & XENO_HOST)
-				C.images += image(tempHud, patient, "hudxeno")
-			else if(foundVirus)
-				C.images += image(tempHud, patient, "hudill")
+				holder.icon_state = "hudhealth-100"
 			else
-				C.images += image(tempHud, patient, "hudhealthy")
+				holder.icon_state = "hud[RoundHealth(patient.health)]"
+			C.images += holder
+
+			holder = patient.hud_list[STATUS_HUD]
+			if(patient.stat == 2)
+				holder.icon_state = "huddead"
+			else if(patient.status_flags & XENO_HOST)
+				holder.icon_state = "hudxeno"
+			else if(foundVirus)
+				holder.icon_state = "hudill"
+			else
+				holder.icon_state = "hudhealthy"
+			C.images += holder
 
 
 /obj/item/clothing/glasses/hud/security
@@ -80,42 +89,57 @@
 	if(!M)	return
 	if(!M.client)	return
 	var/client/C = M.client
-	var/icon/tempHud = 'icons/mob/hud.dmi'
+	var/image/holder
 	for(var/mob/living/carbon/human/perp in view(M))
 		if(!C) continue
 		var/perpname = "wot"
+		holder = perp.hud_list[ID_HUD]
 		if(perp.wear_id)
 			var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
 			if(I)
-				C.images += image(tempHud, perp, "hud[ckey(I.GetJobName())]")
 				perpname = I.registered_name
+				holder.icon_state = "hud[ckey(I.GetJobName())]"
+				C.images += holder
 			else
 				perpname = perp.name
-				C.images += image(tempHud, perp, "hudunknown")
+				holder.icon_state = "hudunknown"
+				C.images += holder
 		else
 			perpname = perp.name
-			C.images += image(tempHud, perp, "hudunknown")
+			holder.icon_state = "hudunknown"
+			C.images += holder
 
 		for(var/datum/data/record/E in data_core.general)
 			if(E.fields["name"] == perpname)
+				holder = perp.hud_list[WANTED_HUD]
 				for (var/datum/data/record/R in data_core.security)
 					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-						C.images += image(tempHud, perp, "hudwanted")
+						holder.icon_state = "hudwanted"
+						C.images += holder
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-						C.images += image(tempHud, perp, "hudprisoner")
+						holder.icon_state = "hudprisoner"
+						C.images += holder
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
-						C.images += image(tempHud, perp, "hudparolled")
+						holder.icon_state = "hudparolled"
+						C.images += holder
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
-						C.images += image(tempHud, perp, "hudreleased")
+						holder.icon_state = "hudreleased"
+						C.images += holder
 						break
 		for(var/obj/item/weapon/implant/I in perp)
 			if(I.implanted)
 				if(istype(I,/obj/item/weapon/implant/tracking))
-					C.images += image(tempHud, perp, "hud_imp_tracking")
+					holder = perp.hud_list[IMPTRACK_HUD]
+					holder.icon_state = "hud_imp_tracking"
+					C.images += holder
 				if(istype(I,/obj/item/weapon/implant/loyalty))
-					C.images += image(tempHud, perp, "hud_imp_loyal")
+					holder = perp.hud_list[IMPLOYAL_HUD]
+					holder.icon_state = "hud_imp_loyal"
+					C.images += holder
 				if(istype(I,/obj/item/weapon/implant/chem))
-					C.images += image(tempHud, perp, "hud_imp_chem")
+					holder = perp.hud_list[IMPCHEM_HUD]
+					holder.icon_state = "hud_imp_chem"
+					C.images += holder

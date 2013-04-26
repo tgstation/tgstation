@@ -106,8 +106,9 @@
 								else
 									O:charge_tick = 0
 							if(istype(O,/obj/item/weapon/melee/baton))
-								if(O:charges < 10)
-									O:charges += 1
+								var/obj/item/weapon/melee/baton/B = O
+								if(B.bcell)
+									B.bcell.charge = B.bcell.maxcharge
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)

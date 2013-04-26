@@ -412,7 +412,7 @@
 "hV" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated,/area/awaymission/BMPship3)
 "hW" = (/obj/effect/gibspawner/robot,/turf/simulated,/area/awaymission/BMPship3)
 "hX" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission)
-"hY" = (/obj/effect/decal/mecha_wreckage/ripley,/turf/simulated/floor/plating/airless,/area/awaymission)
+"hY" = (/obj/structure/mecha_wreckage/ripley,/turf/simulated/floor/plating/airless,/area/awaymission)
 "hZ" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating/airless/asteroid,/area/awaymission)
 "ia" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission)
 "ib" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating/airless,/area/awaymission)

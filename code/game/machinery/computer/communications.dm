@@ -33,6 +33,9 @@
 	var/stat_msg2
 
 
+/obj/machinery/computer/communications/New()
+	shuttle_caller_list += src
+	..()
 
 /obj/machinery/computer/communications/process()
 	if(..())
@@ -498,51 +501,7 @@
 
 
 /obj/machinery/computer/communications/Del()
-
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(istype(commconsole.loc,/turf) && commconsole != src)
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
-		return ..()
-
-	emergency_shuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
+	shuttle_caller_list -= src
+	emergency_shuttle.autoshuttlecall()
 	..()
 
-/obj/item/weapon/circuitboard/communications/Del()
-
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(istype(commconsole.loc,/turf))
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" /* DEATH SQUADS || sent_strike_team*/)
-		return ..()
-
-	emergency_shuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
-	..()

@@ -18,7 +18,7 @@
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 
 
-/obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)
+/obj/item/weapon/contraband/poster/New(turf/loc, given_serial = 0)
 	if(given_serial == 0)
 		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
 		resulting_poster = new(serial_number)
@@ -74,8 +74,7 @@ obj/structure/sign/poster
 	var/ruined = 0
 
 
-obj/structure/sign/poster/New(var/serial)
-
+obj/structure/sign/poster/New(serial)
 	serial_number = serial
 
 	if(serial_number == loc)
@@ -119,8 +118,8 @@ obj/structure/sign/poster/New(var/serial)
 			desc = "Why are you still here?"
 	..()
 
-obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wirecutters))
+obj/structure/sign/poster/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
 			user << "<span class='notice'>You remove the remnants of the poster.</span>"
@@ -131,7 +130,7 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
 
 
-/obj/structure/sign/poster/attack_hand(mob/user as mob)
+/obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)
 		return
 	var/temp_loc = user.loc
@@ -149,15 +148,15 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if("No")
 			return
 
-/obj/structure/sign/poster/proc/roll_and_drop(turf/loc)
+/obj/structure/sign/poster/proc/roll_and_drop(turf/location)
 	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
 	P.resulting_poster = src
-	P.loc = loc
+	P.loc = location
 	loc = P
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/simulated/wall/proc/place_poster(var/obj/item/weapon/contraband/poster/P, var/mob/user)
+/turf/simulated/wall/proc/place_poster(obj/item/weapon/contraband/poster/P, mob/user)
 	if(!P.resulting_poster)	return
 
 	var/stuff_on_wall = 0
@@ -170,7 +169,7 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
 			return
 
-	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
+	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 	var/obj/structure/sign/poster/D = P.resulting_poster
@@ -184,7 +183,7 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	sleep(17)
 	if(!D)	return
 
-	if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)//Let's check if everything is still there
+	if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
 		user << "<span class='notice'>You place the poster!</span>"
 	else
 		D.roll_and_drop(temp_loc)

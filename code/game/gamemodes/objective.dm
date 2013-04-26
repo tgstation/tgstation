@@ -270,29 +270,33 @@ datum/objective/steal
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
-		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
 		"an unused sample of slime extract" = /obj/item/slime_extract,
 		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"the medal of captaincy" = /obj/item/clothing/tie/medal/gold/captain,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
+		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
+		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
+/*
+Nobody takes these seriously anyways -- Ikki
+		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
 		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
 		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
 		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
 		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
-		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
+*/
 	)
 
 	var/global/possible_items_special[] = list(
-	//	"nuclear authentication disk" = /obj/item/weapon/disk/nuclear, //Broken with the change to nuke disk making it respawn on z level change.
-		"advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
-		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
-		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
-		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
+		"the nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
+		"an advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
+		"a diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
+		"a bag of holding" = /obj/item/weapon/storage/backpack/holding,
+		"a hyper-capacity cell" = /obj/item/weapon/cell/hyper,
 		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
 		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
 		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,

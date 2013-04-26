@@ -151,14 +151,23 @@
 	return
 
 
-/mob/proc/u_equip(W as obj)
-	if (W == r_hand)
+/mob/proc/u_equip(obj/item/I)
+	if(!I)	return 0
+
+	if(I == r_hand)
 		r_hand = null
 		update_inv_r_hand(0)
-	else if (W == l_hand)
+	else if(I == l_hand)
 		l_hand = null
 		update_inv_l_hand(0)
-	return
+
+	if(I)
+		if(client)
+			client.screen -= I
+		I.loc = loc
+		I.dropped(src)
+		if(I)
+			I.layer = initial(I.layer)
 
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.

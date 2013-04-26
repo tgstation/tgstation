@@ -102,7 +102,46 @@ var/next_mob_id = 0
 //		organStructure.ProcessOrgans()
 	return
 
-/mob/proc/get_item_by_slot(var/slot_id)
+/mob/proc/get_item_by_slot(slot_id)
+	switch(slot_id)
+		if(slot_l_hand)
+			return l_hand
+		if(slot_r_hand)
+			return r_hand
+	return null
+
+/mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
+	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
+		if (!( L ))
+			return null
+		else
+			return L.container
+	else
+		if (!( L ))
+			L = new /obj/effect/list_container/mobl( null )
+			L.container += src
+			L.master = src
+		if (istype(l_hand, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = l_hand
+			if (!( L.container.Find(G.affecting) ))
+				L.container += G.affecting
+				if (G.affecting)
+					G.affecting.ret_grab(L, 1)
+		if (istype(r_hand, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = r_hand
+			if (!( L.container.Find(G.affecting) ))
+				L.container += G.affecting
+				if (G.affecting)
+					G.affecting.ret_grab(L, 1)
+		if (!( flag ))
+			if (L.master == src)
+				var/list/temp = list(  )
+				temp += L.container
+				//L = null
+				del(L)
+				return temp
+			else
+				return L.container
 	return
 
 /mob/proc/restrained()
@@ -200,54 +239,19 @@ var/list/slot_equipment_priority = list( \
 	return
 
 
-/mob/proc/show_inv(mob/user as mob)
+/mob/proc/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<HR>
+	<B><FONT size=3>[name]</FONT></B>
+	<HR>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	"}
+	user << browse(dat, "window=mob[name];size=325x500")
 	onclose(user, "mob[name]")
-	return
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
-		if (!( L ))
-			return null
-		else
-			return L.container
-	else
-		if (!( L ))
-			L = new /obj/effect/list_container/mobl( null )
-			L.container += src
-			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (!( flag ))
-			if (L.master == src)
-				var/list/temp = list(  )
-				temp += L.container
-				//L = null
-				del(L)
-				return temp
-			else
-				return L.container
-	return
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -477,17 +481,43 @@ var/list/slot_equipment_priority = list( \
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
-//	..()
-	return
+
+	if(href_list["refresh"])
+		if(machine && in_range(src, usr))
+			show_inv(machine)
+
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+		if(href_list["item"])
+			var/slot = text2num(href_list["item"])
+			var/obj/item/what = get_item_by_slot(slot)
+
+			if(what && what.canremove)
+				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
+								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
+				what.add_fingerprint(usr)
+				if(do_mob(usr, src, STRIP_DELAY))
+					if(what)
+						u_equip(what)
+			else
+				what = usr.get_active_hand()
+				if(what && what.mob_can_equip(src, slot, 1))
+					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
+					if(do_mob(usr, src, STRIP_DELAY * 0.5))
+						if(what)
+							usr.u_equip(what)
+							equip_to_slot_if_possible(what, slot, 0, 1)
+
+	if(usr.machine == src && in_range(src, usr))
+		show_inv(usr)
 
 
-/mob/MouseDrop(mob/M as mob)
+/mob/MouseDrop(mob/M)
 	..()
-	if(M != usr) return
-	if(usr == src) return
-	if(get_dist(usr,src) > 1) return
-	if(istype(M,/mob/living/silicon/ai)) return
-	if(LinkBlocked(usr.loc,loc)) return
+	if(M != usr)	return
+	if(usr == src)	return
+	if(!in_range(usr, src))	return
+	if(istype(M, /mob/living/silicon/ai))	return
+	if(LinkBlocked(usr.loc, loc))			return
 	show_inv(usr)
 
 
