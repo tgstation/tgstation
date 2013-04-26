@@ -10,7 +10,7 @@
 	damage_absorption = list("brute"=0.7,"fire"=0.7,"bullet"=0.7,"laser"=0.7,"energy"=0.7,"bomb"=0.7)
 	max_temperature = 25000
 	infra_luminosity = 3
-	wreckage = /obj/effect/decal/mecha_wreckage/phazon
+	wreckage = /obj/structure/mecha_wreckage/phazon
 	add_req_access = 1
 	//operation_req_access = list()
 	internal_damage_threshold = 25
