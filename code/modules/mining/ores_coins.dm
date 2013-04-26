@@ -5,7 +5,6 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 
-
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
 	icon_state = "Uranium ore"
@@ -67,54 +66,58 @@
 /*****************************Coin********************************/
 
 /obj/item/weapon/coin
-	icon = 'icons/obj/items.dmi'
-	name = "Coin"
+	icon = 'icons/obj/economy.dmi'
+	name = "coin"
 	icon_state = "coin"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 0.0
-	throwforce = 0.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 1
+	throwforce = 3
 	w_class = 1.0
 	var/string_attached
+	var/list/sideslist = list("heads","tails")
+	var/cmineral = null
+	var/cooldown = 0
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
+	icon_state = "coin_[cmineral]_heads"
+	if(cmineral)
+		name = "[cmineral] coin"
+
 /obj/item/weapon/coin/gold
-	name = "Gold coin"
-	icon_state = "coin_gold"
+	cmineral = "gold"
 
 /obj/item/weapon/coin/silver
-	name = "Silver coin"
-	icon_state = "coin_silver"
+	cmineral = "silver"
 
 /obj/item/weapon/coin/diamond
-	name = "Diamond coin"
-	icon_state = "coin_diamond"
+	cmineral = "diamond"
 
 /obj/item/weapon/coin/iron
-	name = "Iron coin"
-	icon_state = "coin_iron"
+	cmineral = "iron"
 
 /obj/item/weapon/coin/plasma
-	name = "Solid plasma coin"
-	icon_state = "coin_plasma"
+	cmineral = "plasma"
 
 /obj/item/weapon/coin/uranium
-	name = "Uranium coin"
-	icon_state = "coin_uranium"
+	cmineral = "uranium"
 
 /obj/item/weapon/coin/clown
-	name = "Bananaium coin"
-	icon_state = "coin_clown"
+	cmineral = "bananium"
 
 /obj/item/weapon/coin/adamantine
-	name = "Adamantine coin"
-	icon_state = "coin_adamantine"
+	cmineral = "adamantine"
 
 /obj/item/weapon/coin/mythril
-	name = "Mythril coin"
-	icon_state = "coin_mythril"
+	cmineral = "mythril"
+
+/obj/item/weapon/coin/twoheaded
+	cmineral = "iron"
+	desc = "Hey, this coin's the same on both sides!"
+	sideslist = list("heads")
+
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/cable_coil) )
@@ -128,19 +131,31 @@
 			del(CC)
 			return
 
-		overlays += image('icons/obj/items.dmi',"coin_string_overlay")
+		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
 		string_attached = 1
 		user << "\blue You attach a string to the coin."
 		CC.use(1)
-	else if(istype(W,/obj/item/weapon/wirecutters) )
+	else if(istype(W,/obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()
 			return
 
 		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
 		CC.amount = 1
-		CC.updateicon()
+		CC.update_icon()
 		overlays = list()
 		string_attached = null
 		user << "\blue You detach the string from the coin."
 	else ..()
+
+/obj/item/weapon/coin/attack_self(mob/user as mob)
+	if(cooldown < world.time - 15)
+		var/coinflip = pick(sideslist)
+		cooldown = world.time
+		flick("coin_[cmineral]_flip", src)
+		icon_state = "coin_[cmineral]_[coinflip]"
+		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
+		if(do_after(user, 15))
+			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
+								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+								 "<span class='notice'>You hear the clattering of loose change.</span>")

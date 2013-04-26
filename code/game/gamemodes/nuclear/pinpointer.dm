@@ -23,24 +23,32 @@
 			icon_state = "pinoff"
 			usr << "\blue You deactivate the pinpointer"
 
+	proc/point_at(atom/target)
+		if(!active)
+			return
+		if(!target)
+			icon_state = "pinonnull"
+			return
+		if(target.z != loc.z)
+			icon_state = "pinonnull"
+		else
+			dir = get_dir(src, target)
+			switch(get_dist(src, target))
+				if(0)
+					icon_state = "pinondirect"
+				if(1 to 8)
+					icon_state = "pinonclose"
+				if(9 to 16)
+					icon_state = "pinonmedium"
+				if(16 to INFINITY)
+					icon_state = "pinonfar"
+		spawn(5)
+			.()
+
 	proc/workdisk()
-		if(!active) return
 		if(!the_disk)
 			the_disk = locate()
-			if(!the_disk)
-				icon_state = "pinonnull"
-				return
-		dir = get_dir(src,the_disk)
-		switch(get_dist(src,the_disk))
-			if(0)
-				icon_state = "pinondirect"
-			if(1 to 8)
-				icon_state = "pinonclose"
-			if(9 to 16)
-				icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				icon_state = "pinonfar"
-		spawn(5) .()
+		point_at(the_disk)
 
 	examine()
 		..()
@@ -63,52 +71,15 @@
 			if(mode == 0)
 				workdisk()
 			if(mode == 1)
-				worklocation()
+				point_at(location)
 			if(mode == 2)
-				workobj()
+				point_at(target)
 			usr << "\blue You activate the pinpointer"
 		else
 			active = 0
 			icon_state = "pinoff"
 			usr << "\blue You deactivate the pinpointer"
 
-
-	proc/worklocation()
-		if(!active)
-			return
-		if(!location)
-			icon_state = "pinonnull"
-			return
-		dir = get_dir(src,location)
-		switch(get_dist(src,location))
-			if(0)
-				icon_state = "pinondirect"
-			if(1 to 8)
-				icon_state = "pinonclose"
-			if(9 to 16)
-				icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				icon_state = "pinonfar"
-		spawn(5) .()
-
-
-	proc/workobj()
-		if(!active)
-			return
-		if(!target)
-			icon_state = "pinonnull"
-			return
-		dir = get_dir(src,target)
-		switch(get_dist(src,target))
-			if(0)
-				icon_state = "pinondirect"
-			if(1 to 8)
-				icon_state = "pinonclose"
-			if(9 to 16)
-				icon_state = "pinonmedium"
-			if(16 to INFINITY)
-				icon_state = "pinonfar"
-		spawn(5) .()
 
 /obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()
 	set category = "Object"
@@ -231,7 +202,8 @@
 
 
 /obj/item/weapon/pinpointer/nukeop/proc/worklocation()
-	if(!active)	return
+	if(!active)
+		return
 	if(!mode)
 		workdisk()
 		return

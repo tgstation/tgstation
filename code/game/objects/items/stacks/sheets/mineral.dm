@@ -17,6 +17,10 @@ Mineral Sheets
 /*
  * Sandstone
  */
+
+/obj/item/stack/sheet/mineral
+	icon = 'icons/obj/mining.dmi'
+
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone bricks"
 	desc = "This appears to be a combination of both sand and stone."

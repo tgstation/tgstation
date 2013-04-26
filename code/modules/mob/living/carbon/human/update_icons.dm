@@ -269,7 +269,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 			face_lying.Blend(facial_l, ICON_OVERLAY)
 
-	if(h_style)
+	//Applies the debrained overlay if there is no brain
+	if(!getbrain(src))
+		face_standing.Blend(new /icon('icons/mob/human_face.dmi', "debrained_s"), ICON_OVERLAY)
+		face_lying.Blend(new /icon('icons/mob/human_face.dmi', "debrained_l"), ICON_OVERLAY)
+		h_style = "Bald"
+
+	else if(h_style)
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
@@ -798,8 +804,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays -= overlays_standing[LEGCUFF_LAYER]
 		overlays_lying[LEGCUFF_LAYER]		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff2", "layer" = -LEGCUFF_LAYER)
 		overlays_standing[LEGCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff1", "layer" = -LEGCUFF_LAYER)
-		overlays += overlays_lying[LEGCUFF_LAYER]
-		overlays += overlays_standing[LEGCUFF_LAYER]
+		if(src.lying)
+			overlays += overlays_lying[LEGCUFF_LAYER]
+		else
+			overlays += overlays_standing[LEGCUFF_LAYER]
 		if(src.m_intent != "walk")
 			src.m_intent = "walk"
 			if(src.hud_used && src.hud_used.move_intent)

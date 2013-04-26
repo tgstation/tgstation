@@ -662,11 +662,12 @@ Auto Patrol: []"},
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
 /obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp as mob)
+	if(!istype(perp) || emagged == 2)
+		return 10
+
 	var/threatcount = 0
 
-	if(src.emagged == 2) return 10 //Everyone is a criminal!
-
-	if((src.idcheck) || (isnull(perp:wear_id)) || (istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)))
+	if((src.idcheck) || (isnull(perp.wear_id)) || (istype(perp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate)))
 
 		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
 			if(!istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
@@ -680,7 +681,7 @@ Auto Patrol: []"},
 			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 4
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+		if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
 			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
 			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
 			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))

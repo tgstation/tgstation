@@ -47,7 +47,7 @@
 
 	New()
 		..()
-		modules += new /obj/item/weapon/melee/baton(src)
+		modules += new /obj/item/weapon/melee/baton/loaded(src)
 		modules += new /obj/item/weapon/extinguisher(src)
 		modules += new /obj/item/weapon/wrench(src)
 		modules += new /obj/item/weapon/crowbar(src)
@@ -83,7 +83,6 @@
 		emag = new /obj/item/borg/stun(src)
 		modules += new /obj/item/weapon/rcd/borg(src)
 		modules += new /obj/item/weapon/extinguisher(src)
-//		modules += new /obj/item/device/flashlight(src)
 		modules += new /obj/item/weapon/weldingtool/largetank(src)
 		modules += new /obj/item/weapon/screwdriver(src)
 		modules += new /obj/item/weapon/wrench(src)
@@ -127,7 +126,7 @@
 		..()
 		modules += new /obj/item/borg/sight/hud/sec(src)
 		modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		modules += new /obj/item/weapon/melee/baton(src)
+		modules += new /obj/item/weapon/melee/baton/loaded(src)
 		modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
@@ -188,7 +187,6 @@
 		modules += new /obj/item/weapon/storage/bag/ore(src)
 		modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
-//		modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
 
 
 /obj/item/weapon/robot_module/syndicate

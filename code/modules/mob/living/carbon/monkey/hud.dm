@@ -57,7 +57,7 @@
 	using = new /obj/screen()
 	using.name = "hand"
 	using.icon = ui_style
-	using.icon_state = "swap_1"
+	using.icon_state = "swap_1_m"	//extra wide!
 	using.screen_loc = ui_swaphand1
 	using.layer = 19
 	adding += using
