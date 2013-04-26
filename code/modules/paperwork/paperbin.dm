@@ -3,7 +3,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
-	throwforce = 1
+	throwforce = INFINITY
 	w_class = 3
 	throw_speed = 3
 	throw_range = 7

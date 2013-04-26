@@ -1,5 +1,5 @@
 /obj/mecha/combat
-	force = 30
+	force = INFINITY
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/window, /obj/structure/grille, /turf/simulated/wall)

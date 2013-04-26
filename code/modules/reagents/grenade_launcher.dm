@@ -7,7 +7,7 @@
 	w_class = 4.0
 	throw_speed = 2
 	throw_range = 10
-	force = 5.0
+	force = INFINITY
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	m_amt = 2000

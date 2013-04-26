@@ -14,8 +14,8 @@
 	desc = "A patch of grass like they often use on golf courses"
 	icon_state = "tile_grass"
 	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -31,8 +31,8 @@
 	desc = "an easy to fit wood floor tile"
 	icon_state = "tile-wood"
 	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -47,8 +47,8 @@
 	desc = "A piece of carpet. It is the same size as a floor tile"
 	icon_state = "tile-carpet"
 	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT

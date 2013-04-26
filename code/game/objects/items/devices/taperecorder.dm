@@ -15,7 +15,7 @@
 	var/list/timestamp = new/list()
 	var/canprint = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
-	throwforce = 2
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
 

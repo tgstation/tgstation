@@ -21,8 +21,8 @@
 	icon_state = "wrench"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	throwforce = 7.0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 2.0
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
@@ -39,9 +39,9 @@
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
+	force = INFINITY
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	g_amt = 0
@@ -99,7 +99,7 @@
 	icon_state = "cutters"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 6.0
+	force = INFINITY
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2.0
@@ -131,8 +131,8 @@
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 3
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2
@@ -183,7 +183,7 @@
 	switch(welding)
 		if(0)
 			if(icon_state != "welder")	//Check that the sprite is correct, if it isnt, it means toggle() was not called
-				force = 3
+				force = INFINITY
 				damtype = "brute"
 				icon_state = "welder"
 				welding = 0
@@ -192,7 +192,7 @@
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
 			if(icon_state != "welder1")	//Check that the sprite is correct, if it isnt, it means toggle() was not called
-				force = 15
+				force = INFINITY
 				damtype = "fire"
 				icon_state = "welder1"
 			if(prob(5))
@@ -285,7 +285,7 @@
 	if(welding)
 		if(remove_fuel(1))
 			user << "<span class='notice'>You switch [src] on.</span>"
-			force = 15
+			force = INFINITY
 			damtype = "fire"
 			icon_state = "welder1"
 			processing_objects.Add(src)
@@ -297,7 +297,7 @@
 			user << "<span class='notice'>You switch [src] off.</span>"
 		else
 			user << "<span class='notice'>[src] shuts off!</span>"
-		force = 3
+		force = INFINITY
 		damtype = "brute"
 		icon_state = "welder"
 		welding = 0
@@ -386,8 +386,8 @@
 	icon_state = "crowbar"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	throwforce = 7.0
+	force = INFINITY
+	throwforce = INFINITY
 	item_state = "crowbar"
 	w_class = 2.0
 	m_amt = 50

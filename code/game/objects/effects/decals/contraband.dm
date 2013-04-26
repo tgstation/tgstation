@@ -7,7 +7,7 @@
 	name = "contraband item"
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
-	force = 0
+	force = INFINITY
 
 
 /obj/item/weapon/contraband/poster

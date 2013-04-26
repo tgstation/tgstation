@@ -5,8 +5,8 @@
 	item_state = "chain"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
-	force = 10
-	throwforce = 7
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")

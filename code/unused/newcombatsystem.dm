@@ -25,7 +25,7 @@
 	name = "training axe"
 	icon_state = "training_axe"
 	/*combat stats*/
-	force = 15
+	force = INFINITY
 	chance_parry = 5
 	chance_weaken = 10
 	chance_stun = 5
@@ -37,7 +37,7 @@
 	name = "training sword"
 	icon_state = "training_sword"
 	/*combat stats*/
-	force = 10
+	force = INFINITY
 	chance_parry = 15
 	chance_weaken = 5
 	chance_stun = 0
@@ -49,7 +49,7 @@
 	name = "training staff"
 	icon_state = "training_staff"
 	/*combat stats*/
-	force = 10
+	force = INFINITY
 	chance_parry = 15
 	chance_weaken = 5
 	chance_stun = 0
@@ -61,7 +61,7 @@
 	name = "training mace"
 	icon_state = "training_mace"
 	/*combat stats*/
-	force = 5
+	force = INFINITY
 	chance_parry = 0
 	chance_weaken = 15
 	chance_stun = 10

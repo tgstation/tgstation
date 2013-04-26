@@ -444,10 +444,10 @@
 /obj/item/weapon/holo/esword
 	desc = "May the force be within you. Sorta"
 	icon_state = "sword0"
-	force = 3.0
+	force = INFINITY
 	throw_speed = 1
 	throw_range = 5
-	throwforce = 0
+	throwforce = INFINITY
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	var/active = 0
@@ -474,13 +474,13 @@
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
-		force = 30
+		force = INFINITY
 		icon_state = "sword[color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
 	else
-		force = 3
+		force = INFINITY
 		icon_state = "sword0"
 		w_class = 2
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)

@@ -2746,9 +2746,9 @@ It is possible to destroy the net by the occupant or someone else.
 		..()
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
-		var/tforce = 0
+		var/tforce = INFINITY
 		if(ismob(AM))
-			tforce = 10
+			tforce = INFINITY
 		else
 			tforce = AM:throwforce
 		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)

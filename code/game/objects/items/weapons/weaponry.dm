@@ -5,7 +5,7 @@
 	icon_state = "toyhammer"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	throwforce = 0
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15
@@ -22,10 +22,10 @@
 	item_state = "nullrod"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	force = 15
+	force = INFINITY
 	throw_speed = 1
 	throw_range = 4
-	throwforce = 10
+	throwforce = INFINITY
 	w_class = 1
 
 	suicide_act(mob/user)
@@ -39,8 +39,8 @@
 	item_state = "sord"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	force = 2
-	throwforce = 1
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -56,8 +56,8 @@
 	item_state = "claymore"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
-	force = 40
-	throwforce = 10
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -79,8 +79,8 @@
 	item_state = "katana"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 40
-	throwforce = 10
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -98,8 +98,8 @@ obj/item/weapon/wirerod
 	icon_state = "wiredrod"
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 9
-	throwforce = 10
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")

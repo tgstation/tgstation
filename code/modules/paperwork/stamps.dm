@@ -5,7 +5,7 @@
 	icon_state = "stamp-qm"
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
-	throwforce = 0
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15

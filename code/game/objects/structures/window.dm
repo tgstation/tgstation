@@ -78,9 +78,9 @@
 /obj/structure/window/hitby(AM as mob|obj)
 	..()
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
-	var/tforce = 0
+	var/tforce = INFINITY
 	if(ismob(AM))
-		tforce = 40
+		tforce = INFINITY
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce

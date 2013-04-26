@@ -5,8 +5,8 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
-	throwforce = 10.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 7
 	w_class = 4.0
@@ -72,7 +72,7 @@
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
-	force = 7.0
+	force = INFINITY
 
 	New()
 		..()

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "violin"
 	item_state = "violin"
-	force = 10
+	force = INFINITY
 	var/datum/song/handheld/song
 
 /obj/item/device/violin/New()

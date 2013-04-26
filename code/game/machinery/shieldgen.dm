@@ -145,9 +145,9 @@
 	visible_message("\red <B>[src] was hit by [AM].</B>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
-	var/tforce = 0
+	var/tforce = INFINITY
 	if(ismob(AM))
-		tforce = 40
+		tforce = INFINITY
 	else
 		tforce = AM:throwforce
 

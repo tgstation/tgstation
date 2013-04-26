@@ -5,8 +5,8 @@
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
 	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY // USEDELAY flag needed in order to use afterattack() for things that are not in reach. I.E: Shooting flames.
-	force = 3.0
-	throwforce = 10.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0

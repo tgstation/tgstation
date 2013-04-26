@@ -13,10 +13,10 @@
 
 
 /obj/item/toy
-	throwforce = 0
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
-	force = 0
+	force = INFINITY
 
 
 /*
@@ -85,10 +85,10 @@
 /obj/item/toy/syndicateballoon
 	name = "syndicate balloon"
 	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
-	throwforce = 0
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
-	force = 0
+	force = INFINITY
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
@@ -346,8 +346,8 @@
 	item_state = "katana"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 5
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 

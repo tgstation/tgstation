@@ -71,8 +71,8 @@
 	name = "Coin"
 	icon_state = "coin"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 0.0
-	throwforce = 0.0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 1.0
 	var/string_attached
 

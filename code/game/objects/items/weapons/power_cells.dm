@@ -6,8 +6,8 @@
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0

@@ -3,7 +3,7 @@
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 8.0
+	force = INFINITY
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0

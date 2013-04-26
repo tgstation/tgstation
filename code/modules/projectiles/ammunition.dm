@@ -5,7 +5,7 @@
 	icon_state = "s-casing"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 1
+	throwforce = INFINITY
 	w_class = 1.0
 	var/caliber = ""							//Which kind of guns it can be loaded into
 	var/projectile_type = ""//The bullet type to create when New() is called
@@ -32,7 +32,7 @@
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
 	m_amt = 50000
-	throwforce = 2
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10

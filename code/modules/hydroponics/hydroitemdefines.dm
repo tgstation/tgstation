@@ -22,7 +22,7 @@
 	item_state = "spray"
 	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
 	slot_flags = SLOT_BELT
-	throwforce = 4
+	throwforce = INFINITY
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
@@ -41,7 +41,7 @@
 	item_state = "spray"
 	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
 	slot_flags = SLOT_BELT
-	throwforce = 4
+	throwforce = INFINITY
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
@@ -59,8 +59,8 @@
 	icon_state = "hoe"
 	item_state = "hoe"
 	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	force = 5.0
-	throwforce = 7.0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 2.0
 	m_amt = 50
 	attack_verb = list("slashed", "sliced", "cut", "clawed")

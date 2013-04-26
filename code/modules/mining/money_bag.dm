@@ -5,8 +5,8 @@
 	name = "Money bag"
 	icon_state = "moneybag"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 10.0
-	throwforce = 2.0
+	force = INFINITY
+	throwforce = INFINITY
 	w_class = 4.0
 
 /obj/item/weapon/moneybag/attack_hand(user as mob)

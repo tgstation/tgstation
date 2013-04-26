@@ -18,7 +18,7 @@ effective or pretty fucking useless.
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
 	icon_state = "batterer"
-	throwforce = 5
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10

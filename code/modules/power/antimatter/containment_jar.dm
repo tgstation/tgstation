@@ -5,8 +5,8 @@
 	icon_state = "jar"
 	density = 0
 	anchored = 0
-	force = 8
-	throwforce = 10
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 2
 

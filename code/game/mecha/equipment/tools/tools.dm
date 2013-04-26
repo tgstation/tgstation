@@ -3,7 +3,7 @@
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 10
-	var/dam_force = 20
+	var/dam_force = INFINITY
 	var/obj/mecha/working/ripley/cargo_holder
 
 	can_attach(obj/mecha/working/ripley/M as obj)
@@ -69,7 +69,7 @@
 	icon_state = "mecha_drill"
 	equip_cooldown = 30
 	energy_drain = 10
-	force = 15
+	force = INFINITY
 
 	action(atom/target)
 		if(!action_checks(target)) return
@@ -126,7 +126,7 @@
 	origin_tech = "materials=4;engineering=3"
 	construction_cost = list("metal"=10000,"diamond"=6500)
 	equip_cooldown = 20
-	force = 15
+	force = INFINITY
 
 	action(atom/target)
 		if(!action_checks(target)) return
@@ -995,7 +995,7 @@
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 0
-	var/dam_force = 0
+	var/dam_force = INFINITY
 	var/obj/mecha/working/ripley/cargo_holder
 
 	can_attach(obj/mecha/working/ripley/M as obj)

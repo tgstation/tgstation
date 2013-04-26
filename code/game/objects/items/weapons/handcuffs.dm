@@ -6,7 +6,7 @@
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 5
+	throwforce = INFINITY
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5

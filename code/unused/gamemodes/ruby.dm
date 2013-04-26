@@ -261,10 +261,10 @@
 	name = "wepon"
 	icon_state = "wepon"
 	w_class = 3.0
-	throwforce = 60.0
+	throwforce = INFINITY
 	throw_speed = 2
 	throw_range = 20
-	force = 24.0
+	force = INFINITY
 	var/mob/owner
 
 	proc/check_owner()

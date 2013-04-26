@@ -41,7 +41,7 @@
 		return ..()
 
 
-	force = 15 //Smashing bottles over someoen's head hurts.
+	force = INFINITY //Smashing bottles over someoen's head hurts.
 
 	var/datum/limb/affecting = user.zone_sel.selecting //Find what the player is aiming at
 
@@ -119,8 +119,8 @@
 	desc = "A bottle with a sharp broken bottom."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
-	force = 9.0
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	item_state = "beer"

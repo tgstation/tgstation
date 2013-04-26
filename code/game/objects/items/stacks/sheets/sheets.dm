@@ -2,8 +2,8 @@
 	name = "sheet"
 	flags = FPRINT | TABLEPASS
 	w_class = 3.0
-	force = 5
-	throwforce = 5
+	force = INFINITY
+	throwforce = INFINITY
 	max_amount = 50
 	throw_speed = 3
 	throw_range = 3

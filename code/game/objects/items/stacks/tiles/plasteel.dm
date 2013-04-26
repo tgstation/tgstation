@@ -4,9 +4,9 @@
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
-	force = 6.0
+	force = INFINITY
 	m_amt = 937.5
-	throwforce = 15.0
+	throwforce = INFINITY
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT

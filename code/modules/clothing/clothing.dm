@@ -5,7 +5,7 @@
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
-	throwforce = 2
+	throwforce = INFINITY
 	slot_flags = SLOT_EARS
 
 /obj/item/clothing/ears/earmuffs

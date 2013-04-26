@@ -67,7 +67,7 @@ MASS SPECTROMETER
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 3
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 5
 	throw_range = 10
@@ -152,7 +152,7 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 5
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 30
@@ -222,7 +222,7 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS| CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
-	throwforce = 5
+	throwforce = INFINITY
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 30

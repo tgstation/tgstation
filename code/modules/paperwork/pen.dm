@@ -17,7 +17,7 @@
 	item_state = "pen"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT | SLOT_EARS
-	throwforce = 0
+	throwforce = INFINITY
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15

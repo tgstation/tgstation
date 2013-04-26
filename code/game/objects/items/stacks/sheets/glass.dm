@@ -235,9 +235,9 @@
 
 	spawn( 0 )
 		if (prob(20))
-			src.force = 15
+			src.force = INFINITY
 		else
-			src.force = 4
+			src.force = INFINITY
 		..()
 		return
 	return

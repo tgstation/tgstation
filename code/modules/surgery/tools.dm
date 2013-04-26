@@ -45,7 +45,7 @@
 	m_amt = 15000
 	g_amt = 10000
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 15.0
+	force = INFINITY
 	w_class = 3.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
@@ -62,9 +62,9 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 10.0
+	force = INFINITY
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -86,9 +86,9 @@
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 15.0
+	force = INFINITY
 	w_class = 3.0
-	throwforce = 9.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 20000

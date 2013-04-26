@@ -10,14 +10,14 @@
 	item_state = "scrap-metal"
 	desc = "A piece of scrap"
 	var/classtext = ""
-	throwforce = 14.0
+	throwforce = INFINITY
 	m_amt = 0
 	g_amt = 0
 	w_amt = 0
 	var/size = 1		// 1=piece, 2= few pieces, 3=small pile, 4=large pile
 	var/blood = 0		// 0=none, 1=blood-stained, 2=bloody
 
-	throwforce = 8.0
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 4
 	w_class = 1

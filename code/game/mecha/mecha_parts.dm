@@ -404,9 +404,9 @@
 	item_state = "electronic"
 	board_type = "other"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5.0
+	force = INFINITY
 	w_class = 2.0
-	throwforce = 5.0
+	throwforce = INFINITY
 	throw_speed = 3
 	throw_range = 15
 

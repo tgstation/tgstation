@@ -111,7 +111,7 @@
 	icon_state = "fireaxe0"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
+	force = INFINITY
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
@@ -144,8 +144,8 @@
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
-	force = 3
-	throwforce = 5.0
+	force = INFINITY
+	throwforce = INFINITY
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
@@ -201,12 +201,12 @@
 	icon_state = "spearglass0"
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-	force = 10
+	force = INFINITY
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 13
-	throwforce = 15
+	throwforce = INFINITY
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
