@@ -149,17 +149,21 @@ BLIND     // can't see anything
 	var/obj/item/clothing/tie/hastie = null
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(!hastie && istype(I, /obj/item/clothing/tie))
-		user.drop_item()
-		hastie = I
-		I.loc = src
-		user << "<span class='notice'>You attach [I] to [src].</span>"
+	if(istype(I, /obj/item/clothing/tie))
+		if(hastie)
+			user << "<span class='warning'>[src] already has an accessory.</span>"
+			return
+		else
+			user.drop_item()
+			hastie = I
+			I.loc = src
+			user << "<span class='notice'>You attach [I] to [src].</span>"
 
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform(0)
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_w_uniform(0)
 
-		return
+			return
 
 	..()
 
