@@ -65,19 +65,8 @@
 
 	var/list/container = list(  )
 
-/obj/effect/projection
-	name = "Projection"
-	desc = "This looks like a projection of something."
-	anchored = 1.0
-
-
-/obj/effect/shut_controller
-	name = "shut controller"
-	var/moving = null
-	var/list/parts = list(  )
-
 /obj/structure/showcase
-	name = "Showcase"
+	name = "showcase"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
