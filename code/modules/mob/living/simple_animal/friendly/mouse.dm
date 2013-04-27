@@ -74,6 +74,9 @@
 
 //	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
 //		return
+
+	if(src.stat != CONSCIOUS)	return
+
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/welded = 0
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
