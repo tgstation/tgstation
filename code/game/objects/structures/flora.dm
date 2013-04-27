@@ -189,3 +189,13 @@
 /obj/structure/flora/ausbushes/fullgrass/New()
 	icon_state = "fullgrass_[rand(1, 3)]"
 	..()
+
+/obj/structure/flora/kirbyplants
+	name = "Potted plant"
+	icon = 'icons/obj/flora/plants.dmi'
+	icon_state = "plant-01"
+
+/obj/structure/flora/kirbyplants/dead
+	name = "RD's potted plant"
+	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
+	icon_state = "plant-25"
