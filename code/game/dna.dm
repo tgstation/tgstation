@@ -64,7 +64,7 @@
 		. += md5(character.real_name)
 		reg_dna[.] = real_name
 	else
-		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "000")
+		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
@@ -238,7 +238,7 @@
 	for(var/i in good_se_blocks)	//good mutations
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
 	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
+		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
 	
 	if(blocks[NEARSIGHTEDBLOCK])
 		M.disabilities |= NEARSIGHTED

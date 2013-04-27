@@ -34,7 +34,7 @@
 				if(ishuman(M) && (deconstruct_block(getblock(M.dna.struc_enzymes, RACEBLOCK), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY))	//check for monkeying people.
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 					log_msg += " (MONKEY)"
-				domutcheck(M, null)
+				domutcheck(M, null,(type != /obj/item/weapon/dnainjector))	//admin-spawnable-injectors always work
 			log_attack(log_msg)
 	else
 		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"
@@ -227,9 +227,6 @@
 /obj/item/weapon/dnainjector/telemut/darkbundle
 	name = "\improper DNA injector"
 	desc = "Good. Let the hate flow through you."
-/obj/item/weapon/dnainjector/telemut/darkbundle/attack(mob/M, mob/user)
-	..()
-	domutcheck(M,null) //guarantees that it works instead of getting a dud injector.
 
 /obj/item/weapon/dnainjector/deafmut
 	name = "\improper DNA injector (Deaf)"

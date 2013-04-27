@@ -340,15 +340,10 @@ var/list/binary = list("0","1")
 	for(var/i=1, i<=length, i++)
 		. += pick(characters)
 
-/proc/repeat_string(length, string="")
-	var/len = length(string)
-	if(!len)	return string
-	while(len<length)
-		string += string
-		len *= 2
-	if(len == length)
-		return string
-	return copytext(string, 1, length+1)
+/proc/repeat_string(times, string="")
+	. = ""
+	for(var/i=1, i<=times, i++)
+		. += string
 
 /proc/random_short_color()
 	return random_string(3, hex_characters)

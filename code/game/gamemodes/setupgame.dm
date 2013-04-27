@@ -29,8 +29,8 @@
 	good_se_blocks = list(FIREBLOCK,XRAYBLOCK)
 	op_se_blocks = list(HULKBLOCK,TELEBLOCK)
 	
-	NULLED_SE = repeat_string(DNA_STRUC_ENZYMES_BLOCKS, "___")
-	NULLED_UI = repeat_string(DNA_UNI_IDENTITY_BLOCKS, "___")
+	NULLED_SE = repeat_string(DNA_STRUC_ENZYMES_BLOCKS, repeat_string(DNA_BLOCK_SIZE, "_"))
+	NULLED_UI = repeat_string(DNA_UNI_IDENTITY_BLOCKS, repeat_string(DNA_BLOCK_SIZE, "_"))
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 
 /*
