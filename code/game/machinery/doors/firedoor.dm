@@ -22,6 +22,7 @@
 	power_change()
 		if(powered(power_channel))
 			stat &= ~NOPOWER
+			latetoggle()
 		else
 			stat |= NOPOWER
 		return
@@ -48,19 +49,6 @@
 				return
 		return
 
-
-	process()
-		if(operating || stat & NOPOWER || !nextstate)
-			return
-		switch(nextstate)
-			if(OPEN)
-				open()
-			if(CLOSED)
-				close()
-		nextstate = null
-		return
-
-
 	animate(animation)
 		switch(animation)
 			if("opening")
@@ -82,6 +70,27 @@
 				overlays += "welded_open"
 		return
 
+	open()
+		..()
+		latetoggle()
+		return
+
+	close()
+		..()
+		latetoggle()
+		return
+
+	proc/latetoggle()
+		if(operating || stat & NOPOWER || !nextstate)
+			return
+		switch(nextstate)
+			if(OPEN)
+				nextstate = null
+				open()
+			if(CLOSED)
+				nextstate = null
+				close()
+		return
 
 
 /obj/machinery/door/firedoor/border_only
