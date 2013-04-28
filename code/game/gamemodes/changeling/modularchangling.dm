@@ -34,6 +34,23 @@ var/list/datum/power/changeling/powerinstances = list()
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_fakedeath
 
+// memory/voices related powers
+/datum/power/changeling/kickvoice
+	name = "Purge Memory"
+	desc = "We permanently silence the voice of one of our victims."
+	helptext = "Permanently removes a living memory from your mind."
+	genomecost = 0
+	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_kickvoice
+
+/datum/power/changeling/togglevoice
+	name = "Memory Absorption"
+	desc = "The memory of our victims joins our conciousness."
+	helptext = "Toggles memories being absorbed with the victims DNA."
+	genomecost = 0
+	allowduringlesserform = 0
+	verbpath = /mob/proc/changeling_togglevoice
+
 // Hivemind
 
 /datum/power/changeling/hive_upload

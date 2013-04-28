@@ -154,6 +154,10 @@
 	changeling.absorbedcount++
 	changeling.isabsorbing = 0
 
+	if (T.mind && (changeling.acceptvoices == 1))
+		var/mob/living/voices/P = T.becomevoice(src, "memory")
+		src << "<span class='notice'>The [P.fluff_title] of [P.real_name] is now with us. We can use 'say :v' to communicate with it.</span>"
+		P << "<span class='notice'>You are now a part of the changeling's mind. Type 'Ghost' to escape this existence.</span>"
 	T.death(0)
 	T.Drain()
 	return 1
@@ -767,4 +771,39 @@ var/list/datum/dna/hivemind_bank = list()
 	changeling.absorbed_dna |= T.dna
 
 	feedback_add_details("changeling_powers","ED")
+	return 1
+
+//permanently ghosts a voice from the mind of the ling
+/mob/proc/changeling_kickvoice()
+	set category = "Changeling"
+	set name = "Purge Memory"
+	set desc="Remove an unwanted voice from your mind."
+
+	var/list/voices = list()
+	var/list/voices_ref = list()
+	for(var/mob/living/voices/V in src.contents)
+		voices += "[V.real_name]"
+		voices_ref += V
+
+	var/mob/living/voices/S = input("Select the voice you want to remove: ", "Target voice", null) as null|anything in voices
+	if(!S)	return
+	var/index = voices.Find(S)
+	var/mob/living/voices/Svoice = voices_ref[index]
+	Svoice << "<span class='notice'>Your memories fade from [src]'s mind!</span>"
+	call(Svoice,/mob/proc/ghostize)(1,Svoice.old_mind)
+	del(Svoice)
+	src << "<span class='notice'>[S] will no longer bother us.</span>"
+	return 1
+
+/mob/proc/changeling_togglevoice()
+	set category = "Changeling"
+	set name = "Toggle Memory Absorption"
+	set desc="Turns absorbing living memories with DNA on or off."
+
+	var/datum/changeling/changeling = changeling_power()
+	changeling.acceptvoices = !(changeling.acceptvoices)
+	if (changeling.acceptvoices==1)
+		src << "<span class='notice'>We will now absorb the memories of our victims.</span>"
+	else
+		src << "<span class='notice'>We will no longer absorb the memories of our victims.</span>"
 	return 1

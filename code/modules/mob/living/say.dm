@@ -15,6 +15,7 @@ var/list/department_radio_keys = list(
 	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
+	  ":v" = "voices",		"#v" = "voices",		".v" = "voices",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -31,6 +32,7 @@ var/list/department_radio_keys = list(
 	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
+	  ":V" = "voices",		"#V" = "voices",		".V" = "voices",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -49,6 +51,7 @@ var/list/department_radio_keys = list(
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
+	  //":v" = "voices",		"#v" = "voices",		".v" = "voices",	Needs to be added still
 )
 
 /mob/living/proc/binarycheck()
@@ -247,6 +250,20 @@ var/list/department_radio_keys = list(
 				for(var/mob/Changeling in mob_list)
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
 						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+				return
+
+		if("voices")
+			var/saidsomething = 0
+			var/formated = "<i><font color=#643200> <b>[src.real_name] </b>thinks: [message]</font></i>"
+			for(var/mob/living/voices/V in src.contents)	// talk to the voices
+				V << formated
+				saidsomething = 1
+			if (saidsomething)
+				src << formated								// talk to yourself
+				for(var/mob/M in mob_list)				// talk to the ghosts
+					if (istype(M, /mob/dead/observer))
+						M <<  formated
+
 				return
 ////SPECIAL HEADSETS START
 		else
