@@ -96,7 +96,7 @@
 					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-			else user << "<span class='warning'>[M] is already wearing an accessory.</span>"
+			else user << "<span class='warning'>\The [U] already has an accessory.</span>"
 
 		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
 	else ..()
