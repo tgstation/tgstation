@@ -2687,11 +2687,40 @@ datum
 					color = "#AEE5E4" // rgb" 174, 229, 228
 					adj_temp = -9
 
+					on_mob_life(var/mob/living/M as mob)
+						if(!M) M = holder.my_atom
+						if(!data) data = 1
+						switch(data)
+							if(1 to 15)
+								M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(holder.has_reagent("capsaicin"))
+									holder.remove_reagent("capsaicin", 5)
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(5,20)
+							if(15 to 25)
+								M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(10,20)
+							if(25 to INFINITY)
+								M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(prob(1)) M.emote("shiver")
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(15,20)
+						data++
+						holder.remove_reagent(src.id, FOOD_METABOLISM)
+						..()
+						return
+
 				rewriter
 					name = "Rewriter"
 					description = "The secert of the sanctuary of the Libarian..."
 					id = "rewriter"
 					color = "#485000" // rgb:72, 080, 0
+
+					on_mob_life(var/mob/living/M as mob)
+						..()
+						M.make_jittery(5)
+						return
 
 		hippies_delight
 			name = "Hippie's Delight"

@@ -1935,8 +1935,8 @@ datum
 
 		rewriter
 			name = "Rewriter"
-			id = "milkshake"
-			result = "milkshake"
+			id = "rewriter"
+			result = "rewriter"
 			required_reagents = list("spacemountainwind" = 1, "coffee" = 1)
 			result_amount = 2
 
