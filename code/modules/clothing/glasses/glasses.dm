@@ -8,7 +8,7 @@
 	//var/vision_flags = 0
 	//var/darkness_view = 0//Base human is 2
 	//var/invisa_view = 0
-	var/prescription = 0
+	//var/prescription = 0
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -61,6 +61,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
+	prescription = 1
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
