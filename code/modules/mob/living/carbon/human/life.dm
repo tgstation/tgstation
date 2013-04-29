@@ -1223,7 +1223,7 @@
 				if(blinded)		blind.layer = 18
 				else			blind.layer = 0
 
-			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
+			if( disabilities & NEARSIGHTED && ((glasses && !glasses.prescription) || !glasses))
 				client.screen += global_hud.vimpaired
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy

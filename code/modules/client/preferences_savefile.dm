@@ -237,6 +237,7 @@
 	S["sec_record"]			<< sec_record
 	S["player_alt_titles"]		<< player_alt_titles
 	S["be_special"]			<< be_special
+	S["disabilities"]		<< disabilities
 	S["used_skillpoints"]	<< used_skillpoints
 	S["skills"]				<< skills
 	S["skill_specialization"] << skill_specialization

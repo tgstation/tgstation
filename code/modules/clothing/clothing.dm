@@ -1,5 +1,9 @@
+/obj/item
+	var/prescription = 0
+
 /obj/item/clothing
 	name = "clothing"
+
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
