@@ -60,7 +60,7 @@
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
-	if(locate(/obj/effect/alien/egg) in get_turf(src))
+	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		src << "There's already an egg here."
 		return
 
@@ -68,7 +68,7 @@
 		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/effect/alien/egg(loc)
+		new /obj/structure/alien/egg(loc)
 	return
 
 
