@@ -238,9 +238,9 @@
 		color = param_color
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
-	update_icon()
+	updateicon()
 
-/obj/item/weapon/cable_coil/update_icon()
+/obj/item/weapon/cable_coil/proc/updateicon()
 	if (!color)
 		color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
@@ -287,7 +287,7 @@
 		src.amount--
 		new/obj/item/weapon/cable_coil(user.loc, 1,color)
 		user << "You cut a piece off the cable coil."
-		src.update_icon()
+		src.updateicon()
 		return
 
 	else if( istype(W, /obj/item/weapon/cable_coil) )
@@ -312,14 +312,13 @@
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
-		//handle mob icon update
-		if(ismob(loc))
+		if(istype(loc, /mob))
 			var/mob/M = loc
-			M.drop_item(src)
+			M.remove_from_mob(src)
 		del(src)
 	else
 		amount -= used
-		update_icon()
+		updateicon()
 		return 1
 
 /obj/item/weapon/cable_coil/proc/give(var/extra)
@@ -579,7 +578,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
-	update_icon()
+	updateicon()
 
 /obj/item/weapon/cable_coil/yellow
 	color = "yellow"
