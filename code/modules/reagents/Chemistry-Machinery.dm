@@ -757,6 +757,9 @@
 
 		//Sheets
 		/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
+		/obj/item/stack/sheet/metal = list("iron" = 20),
+		/obj/item/stack/sheet/wood = list("carbon" = 20),
+		/obj/item/stack/sheet/glass = list("silicon" = 20),
 		/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
 		/obj/item/stack/sheet/mineral/clown = list("banana" = 20),
 		/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
