@@ -28,6 +28,7 @@
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
 
 Admin Observer
+Retired Admin		+MOD +ADMIN
 Moderator		+MOD
 Admin Candidate	+ADMIN
 Trial Admin		+@ +SPAWN +REJUV +VAREDIT +BAN
