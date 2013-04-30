@@ -30,6 +30,7 @@
 	SetParalysis(min(paralysis, 30))
 //	SetWeakened(min(weakened, 20))
 	sleeping = 0
+	resting = 0
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
@@ -70,13 +71,6 @@
 	health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
 
 	if(getOxyLoss() > 50) Paralyse(3)
-
-	if(src.sleeping)
-		Paralyse(3)
-		src.sleeping--
-
-	if(src.resting)
-		Weaken(5)
 
 	if(health < config.health_threshold_dead && src.stat != 2) //die only once
 		death()
