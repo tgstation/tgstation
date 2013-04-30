@@ -517,7 +517,7 @@ hi
 	icon_state = "deus_blueshield"
 	item_state = "deus_blueshield"
 
-/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Sharik Israa
+/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Javaria Zara
 	name = "old scarf"
 	desc = "An old looking scarf, it seems to be fairly worn."
 	icon_state = "mantle-unathi"
