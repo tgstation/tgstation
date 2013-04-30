@@ -4,6 +4,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
+	var/list/hud_list = list()
 
 
 /mob/living/carbon/human/dummy
@@ -25,6 +26,9 @@
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
+
+	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
+		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
 	..()
 

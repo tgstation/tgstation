@@ -267,7 +267,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 			face_lying.Blend(facial_l, ICON_OVERLAY)
 
-	if(h_style)
+	//Applies the debrained overlay if there is no brain
+	if(!getbrain(src))
+		face_standing.Blend(new /icon('icons/mob/human_face.dmi', "debrained_s"), ICON_OVERLAY)
+		face_lying.Blend(new /icon('icons/mob/human_face.dmi', "debrained_l"), ICON_OVERLAY)
+		h_style = "Bald"
+
+	else if(h_style)
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")

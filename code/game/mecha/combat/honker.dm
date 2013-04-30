@@ -10,7 +10,7 @@
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(access_clown)
-	wreckage = /obj/effect/decal/mecha_wreckage/honker
+	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
 	var/squeak = 0
