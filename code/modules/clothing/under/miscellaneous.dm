@@ -295,6 +295,12 @@
 	icon_state = "dress_hop"
 	color = "dress_hop"
 
+/obj/item/clothing/under/dress/dress_resource
+	name = "human resources director uniform"
+	desc = "Stylish class for the nosy H.R. director."
+	icon_state = "huresource"
+	color = "huresource"
+
 /obj/item/clothing/under/dress/plaid_blue
 	name = "blue plaid skirt"
 	desc = "A preppy blue skirt with a white blouse."
