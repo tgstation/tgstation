@@ -3756,7 +3756,7 @@
 "bul" = (/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/quartermaster/qm)
 "bum" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/quartermaster/qm)
 "bun" = (/obj/structure/table,/obj/item/weapon/folder/yellow,/obj/item/weapon/pen{pixel_x = 4; pixel_y = 4},/obj/item/weapon/pen/red,/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/quartermaster/qm)
-"buo" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/stamp-qm{pixel_x = 0; pixel_y = 0},/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/quartermaster/qm)
+"buo" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/stamp/qm{pixel_x = 0; pixel_y = 0},/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/quartermaster/qm)
 "bup" = (/obj/structure/filingcabinet,/obj/machinery/light_switch{pixel_y = -25},/turf/simulated/floor{dir = 6; icon_state = "brown"},/area/quartermaster/qm)
 "buq" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/quartermaster/miningdock)
 "bur" = (/obj/machinery/light_switch{pixel_y = -25},/obj/structure/closet/secure_closet/security/cargo,/turf/simulated/floor{icon_state = "red"; dir = 10},/area/security/checkpoint/supply)
