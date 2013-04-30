@@ -609,6 +609,7 @@
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_investigate.dm"
 #include "code\modules\admin\admin_memo.dm"
+#include "code\modules\admin\admin_poll.dm"
 #include "code\modules\admin\admin_ranks.dm"
 #include "code\modules\admin\admin_verbs.dm"
 #include "code\modules\admin\banappearance.dm"

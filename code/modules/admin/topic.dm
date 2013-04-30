@@ -2350,3 +2350,80 @@
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
+
+/*************************************** POLL PANEL STUFF *****************************************/
+	
+	else if(href_list["create_poll_panel"])
+		create_poll_panel()
+
+	else if(href_list["manage_poll_panel"])
+		manage_poll_panel()
+
+	else if(href_list["view_poll"])
+		var/pollid = sql_sanitize_text(href_list["view_poll"])
+		view_poll_panel(pollid)		
+
+	else if(href_list["remove_poll"])
+		var/pollid = sql_sanitize_text(href_list["remove_poll"])
+		remove_poll(pollid)
+		return
+
+
+	else if(href_list["create_new_poll"])
+	
+		if(!href_list["polltype"])
+			usr << "Couldn't read poll type!"
+			return
+		if(!href_list["timelength"])
+			usr << "Couldn't read poll length!"
+			return
+		if(!href_list["question"])
+			usr << "Couldn't read poll question!"
+			return
+
+		var/polltype
+		var/timelength = text2num(href_list["timelength"])
+		var/question = sql_sanitize_text(href_list["question"])
+		var/polloptions[0];
+		var/adminonly = 0;
+		var/multilimit = 1;
+		var/maxval = 5;
+		var/minval = 1;
+		var/descmax = "NULL";
+		var/descmin = "NULL";
+		var/descmed = "NULL";
+
+		if(href_list["adminonly"])
+			adminonly = 1;
+
+		if(text2num(href_list["polltype"]) == 1)
+			polltype = "OPTION"
+			polloptions += href_list["polloptions"]
+		else if(text2num(href_list["polltype"]) == 2)
+			polltype = "MULTICHOICE"
+			multilimit = text2num(href_list["multilimit"])
+			polloptions += href_list["polloptions"]
+		else if(text2num(href_list["polltype"]) == 3)
+			polltype = "TEXT"
+		else if(text2num(href_list["polltype"]) == 4)
+			polltype = "NUMVAL"
+			polloptions += href_list["polloptions"]
+			if(href_list["maxval"])
+				maxval = text2num(href_list["maxval"])
+			else
+				maxval = 5;
+			if(href_list["minval"])
+				minval = text2num(href_list["minval"])
+			else
+				minval = 1;
+			if(href_list["descmax"])
+				descmax = sql_sanitize_text(href_list["descmax"])
+			if(href_list["descmin"])
+				descmin = sql_sanitize_text(href_list["descmin"])
+			if(href_list["descmed"])
+				descmed = sql_sanitize_text(href_list["descmed"])
+		else
+			usr << "Unrecognized polltype!"
+			return
+
+		create_new_poll(polltype,timelength,question,polloptions,adminonly,multilimit,maxval,minval,descmax,descmin,descmed)
