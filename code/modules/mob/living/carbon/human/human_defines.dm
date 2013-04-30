@@ -54,3 +54,5 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
+
+	var/slime_color = "blue" //For slime people this defines their color, it's blue by default to pay tribute to the old icons
