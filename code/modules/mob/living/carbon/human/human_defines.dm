@@ -1,22 +1,16 @@
 /mob/living/carbon/human
 	//Hair colour and style
-	var/r_hair = 0
-	var/g_hair = 0
-	var/b_hair = 0
+	var/h_color = "000"
 	var/h_style = "Bald"
 
 	//Facial hair colour and style
-	var/r_facial = 0
-	var/g_facial = 0
-	var/b_facial = 0
+	var/f_color = "000"
 	var/f_style = "Shaved"
 
 	//Eye colour
-	var/r_eyes = 0
-	var/g_eyes = 0
-	var/b_eyes = 0
+	var/eye_color = "000"
 
-	var/s_tone = 0	//Skin tone
+	var/s_tone = "caucasian"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
