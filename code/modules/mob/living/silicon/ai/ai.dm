@@ -234,16 +234,12 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_roster()
 	set category = "AI Commands"
 	set name = "Show Crew Manifest"
-	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+	var/dat
 
-	var/list/L = list()
-	for (var/datum/data/record/t in data_core.general)
-		var/R = t.fields["name"] + " - " + t.fields["rank"]
-		L += R
-	for(var/R in sortList(L))
-		dat += "[R]<br>"
-	dat += "</body></html>"
-
+	dat += "<h4>Crew Manifest</h4>"
+	if(data_core)
+		dat += data_core.get_manifest(0) // make it monochrome
+	dat += "<br>"
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
