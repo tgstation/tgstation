@@ -387,8 +387,8 @@
 	update_icons()
 	//if(src.client)
 		//src.client.screen -= item
-
-	//item.loc = src.loc
+	if (istype(user, /mob/living/carbon/monkey))
+		item.loc = src.loc
 
 	//if(istype(item, /obj/item))
 		//item:dropped(src) // let it know it's been dropped
