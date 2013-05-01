@@ -158,7 +158,7 @@
 			module = new /obj/item/weapon/robot_module/butler(src)
 			if (is_light_cyborg)
 				hands.icon_state = "standard"
-				icon_state = "light_robot"
+				icon_state = "light_service"
 			else
 				hands.icon_state = "service"
 				var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
