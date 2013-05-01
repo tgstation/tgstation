@@ -231,16 +231,12 @@
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
-/obj/item/weapon/shard/Bump()
+/obj/item/weapon/shard/pickup()
 
-	spawn( 0 )
-		if (prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
+	if (prob(20))
+		src.throwforce = 15
+	else
+		src.throwforce = 4
 
 /obj/item/weapon/shard/New()
 
@@ -290,3 +286,16 @@
 					H.UpdateDamageIcon(0)
 				H.updatehealth()
 	..()
+
+/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/living/carbon/user as mob)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.gloves)
+			H << "<span class='warning'>\The [src] cuts into your hand!</span>"
+			var/organ = ((H.hand ? "l_":"r_") + "arm")
+			var/datum/limb/affecting = H.get_organ(organ)
+			if(affecting.take_damage(force/2))
+				H.UpdateDamageIcon(0)
+	else
+		user << "<span class='warning'>\The [src] cuts into your hand!</span>"
+		user.take_organ_damage(force/2)
