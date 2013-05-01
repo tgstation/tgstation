@@ -8,6 +8,10 @@
 	var/sight_mode = 0
 	var/custom_name = ""
 
+//A var to check if thc cyborg is a light cyborg
+
+	var/is_light_cyborg = 0
+
 //Hud stuff
 
 	var/obj/screen/cells = null
@@ -57,6 +61,15 @@
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 
+//adds the Light Cyborg -ShadowLordAlpha
+/mob/living/silicon/robot/light
+	name = "Light Cyborg"
+	real_name = "Light Cyborg"
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "light_robot"
+	maxHealth = 200
+	health = 200
+	is_light_cyborg = 1
 
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
@@ -82,8 +95,12 @@
 		cell.maxcharge = 25000
 		cell.charge = 25000
 		module = new /obj/item/weapon/robot_module/syndicate(src)
-		hands.icon_state = "standard"
-		icon_state = "secborg"
+		if (is_light_cyborg)
+			hands.icon_state = "standard"
+			icon_state = "light_secborg"
+		else
+			hands.icon_state = "standard"
+			icon_state = "secborg"
 		modtype = "Synd"
 	else
 		laws = new /datum/ai_laws/asimov()
@@ -127,38 +144,54 @@
 		if("Standard")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/standard(src)
-			hands.icon_state = "standard"
-			icon_state = "robot"
+			if (is_light_cyborg)
+				hands.icon_state = "standard"
+				icon_state = "light_robot"
+			else
+				hands.icon_state = "standard"
+				icon_state = "robot"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/butler(src)
-			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
-			switch(icontype)
-				if("Waitress")	icon_state = "Service"
-				if("Kent")		icon_state = "toiletbot"
-				if("Bro")		icon_state = "Brobot"
-				if("Rich")		icon_state = "maximillion"
-				else				icon_state = "Service2"
+			if (is_light_cyborg)
+				hands.icon_state = "standard"
+				icon_state = "light_robot"
+			else
+				hands.icon_state = "service"
+				var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
+				switch(icontype)
+					if("Waitress")	icon_state = "Service"
+					if("Kent")		icon_state = "toiletbot"
+					if("Bro")		icon_state = "Brobot"
+					if("Rich")		icon_state = "maximillion"
+					else				icon_state = "Service2"
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
-			hands.icon_state = "miner"
-			icon_state = "Miner"
+			if (is_light_cyborg)
+				hands.icon_state = "miner"
+				icon_state = "light_miner"
+			else
+				hands.icon_state = "miner"
+				icon_state = "Miner"
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
 		if("Medical")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
-			hands.icon_state = "medical"
-			icon_state = "surgeon"
+			if (is_light_cyborg)
+				hands.icon_state = "medical"
+				icon_state = "light_medbot"
+			else
+				hands.icon_state = "medical"
+				icon_state = "surgeon"
 			modtype = "Med"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
@@ -166,8 +199,12 @@
 		if("Security")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
-			hands.icon_state = "security"
-			icon_state = "bloodhound"
+			if (is_light_cyborg)
+				hands.icon_state = "security"
+				icon_state = "light_security"
+			else
+				hands.icon_state = "security"
+				icon_state = "bloodhound"
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
@@ -176,16 +213,24 @@
 		if("Engineering")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/engineering(src)
-			hands.icon_state = "engineer"
-			icon_state = "landmate"
+			if (is_light_cyborg)
+				hands.icon_state = "engineer"
+				icon_state = "light_engineer"
+			else
+				hands.icon_state = "engineer"
+				icon_state = "landmate"
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 
 		if("Janitor")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/janitor(src)
-			hands.icon_state = "janitor"
-			icon_state = "mopgearrex"
+			if (is_light_cyborg)
+				hands.icon_state = "janitor"
+				icon_state = "light_janbot"
+			else
+				hands.icon_state = "janitor"
+				icon_state = "mopgearrex"
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
