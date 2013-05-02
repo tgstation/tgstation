@@ -65,10 +65,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 	density = 1
 
 	var/m_amount = 0.0
-	var/max_m_amount = 150000.0
+	var/max_m_amount = 0.0  //--This is determined by the matter bins in the machine and not by this variable setting.  Go to RefreshParts() for these settings.
 
 	var/g_amount = 0.0
-	var/max_g_amount = 75000.0
+	var/max_g_amount = 0.0  //--This is determined by the matter bins in the machine and not by this variable setting.  Go to RefreshParts() for these settings.
 
 	var/operating = 0.0
 	var/opened = 0.0
