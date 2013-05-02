@@ -135,6 +135,14 @@ hi
 	icon_on = "bluezippoon"
 	icon_off = "bluezippo"
 
+/obj/item/weapon/lighter/zippo/fluff/michael_guess_1 //Dragor23: Michael Guess
+	name = "engraved lighter"
+	desc = "A golden lighter, engraved with some ornaments and a G."
+	icon = 'custom_items.dmi'
+	icon_state = "guessip"
+	icon_on = "guessipon"
+	icon_off = "guessip"
+
 /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1 //rawrtaicho: Riley Rohtin
 	name = "Riley's black zippo"
 	desc = "A black zippo lighter, which holds some form of sentimental value."
@@ -262,14 +270,6 @@ hi
 	w_class = 1
 	body_parts_covered = null
 	flags = FPRINT|TABLEPASS
-
-/obj/item/weapon/lighter/fluff //Dragor23: Michael Guess
-	name = "engraved lighter"
-	desc = "A golden lighter, engraved with some ornaments and a G.."
-	icon_state = "guessip"
-	item_state = "guessip"
-	icon_on = "guessipon"
-	icon_off = "guessip"
 
 //Strange penlight, Nerezza: Asher Spock
 
@@ -517,7 +517,7 @@ hi
 	icon_state = "deus_blueshield"
 	item_state = "deus_blueshield"
 
-/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Sharik Israa
+/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Javaria Zara
 	name = "old scarf"
 	desc = "An old looking scarf, it seems to be fairly worn."
 	icon_state = "mantle-unathi"
