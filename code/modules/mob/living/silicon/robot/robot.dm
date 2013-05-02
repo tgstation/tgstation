@@ -147,18 +147,20 @@
 			if (is_light_cyborg)
 				hands.icon_state = "standard"
 				icon_state = "light_robot"
+				feedback_inc("light_cyborg_standard",1)
 			else
 				hands.icon_state = "standard"
 				icon_state = "robot"
+				feedback_inc("cyborg_standard",1)
 			modtype = "Stand"
-			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/butler(src)
 			if (is_light_cyborg)
 				hands.icon_state = "standard"
-				icon_state = "light_robot"
+				icon_state = "light_service"
+				feedback_inc("light_cyborg_service",1)
 			else
 				hands.icon_state = "service"
 				var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
@@ -168,8 +170,8 @@
 					if("Bro")		icon_state = "Brobot"
 					if("Rich")		icon_state = "maximillion"
 					else				icon_state = "Service2"
+					feedback_inc("cyborg_service",1)
 			modtype = "Butler"
-			feedback_inc("cyborg_service",1)
 
 		if("Miner")
 			updatename(mod)
@@ -177,11 +179,12 @@
 			if (is_light_cyborg)
 				hands.icon_state = "miner"
 				icon_state = "light_miner"
+				feedback_inc("light_cyborg_miner",1)
 			else
 				hands.icon_state = "miner"
 				icon_state = "Miner"
+				feedback_inc("cyborg_miner",1)
 			modtype = "Miner"
-			feedback_inc("cyborg_miner",1)
 
 		if("Medical")
 			updatename(mod)
@@ -189,12 +192,13 @@
 			if (is_light_cyborg)
 				hands.icon_state = "medical"
 				icon_state = "light_medbot"
+				feedback_inc("light_cyborg_medical",1)
 			else
 				hands.icon_state = "medical"
 				icon_state = "surgeon"
+				feedback_inc("cyborg_medical",1)
 			modtype = "Med"
 			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_medical",1)
 
 		if("Security")
 			updatename(mod)
@@ -202,13 +206,14 @@
 			if (is_light_cyborg)
 				hands.icon_state = "security"
 				icon_state = "light_security"
+				feedback_inc("light_cyborg_security",1)
 			else
 				hands.icon_state = "security"
 				icon_state = "bloodhound"
+				feedback_inc("cyborg_security",1)
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_security",1)
 
 		if("Engineering")
 			updatename(mod)
@@ -216,11 +221,12 @@
 			if (is_light_cyborg)
 				hands.icon_state = "engineer"
 				icon_state = "light_engineer"
+				feedback_inc("light_cyborg_engineering",1)
 			else
 				hands.icon_state = "engineer"
 				icon_state = "landmate"
+				feedback_inc("cyborg_engineering",1)
 			modtype = "Eng"
-			feedback_inc("cyborg_engineering",1)
 
 		if("Janitor")
 			updatename(mod)
@@ -228,11 +234,12 @@
 			if (is_light_cyborg)
 				hands.icon_state = "janitor"
 				icon_state = "light_janbot"
+				feedback_inc("light_cyborg_janitor",1)
 			else
 				hands.icon_state = "janitor"
 				icon_state = "mopgearrex"
+				feedback_inc("cyborg_janitor",1)
 			modtype = "Jan"
-			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
