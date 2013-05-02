@@ -77,7 +77,7 @@ coming soon, for now ask in our IRC channel.
 
 ---
 
-## IRC Bot Setup
+### IRC Bot Setup
 
 Included in the repo is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).  Instructions for bot setup are
