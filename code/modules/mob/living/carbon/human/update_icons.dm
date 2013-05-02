@@ -211,19 +211,17 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	//Skin tone
 	if(!skeleton)
-		if(s_tone >= 0)
-			stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-			lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-		else
-			stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-			lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+		var/color = skin_tones[s_tone]
+		if(color)
+			color = "#" + color
+			stand_icon.Blend(color, ICON_MULTIPLY)
+			lying_icon.Blend(color, ICON_MULTIPLY)
 
 	//Eyes
-	if(!skeleton)
 		var/icon/eyes_s = new/icon('icons/mob/human_face.dmi', "eyes_s")
 		var/icon/eyes_l = new/icon('icons/mob/human_face.dmi', "eyes_l")
-		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
-		eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+		eyes_s.Blend("#[eye_color]", ICON_ADD)
+		eyes_l.Blend("#[eye_color]", ICON_ADD)
 		stand_icon.Blend(eyes_s, ICON_OVERLAY)
 		lying_icon.Blend(eyes_l, ICON_OVERLAY)
 
@@ -264,8 +262,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(facial_hair_style)
 			var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
 			var/icon/facial_l = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_l")
-			facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
-			facial_l.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+			facial_s.Blend("#[f_color]", ICON_ADD)
+			facial_l.Blend("#[f_color]", ICON_ADD)
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 			face_lying.Blend(facial_l, ICON_OVERLAY)
 
@@ -280,8 +278,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(hair_style)
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			var/icon/hair_l = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
-			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
-			hair_l.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+			hair_s.Blend("#[h_color]", ICON_ADD)
+			hair_l.Blend("#[h_color]", ICON_ADD)
 			face_standing.Blend(hair_s, ICON_OVERLAY)
 			face_lying.Blend(hair_l, ICON_OVERLAY)
 

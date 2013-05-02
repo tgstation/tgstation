@@ -1,3 +1,17 @@
+/proc/random_blood_type()
+	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+
+/proc/random_eye_color()
+	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
+		if("brown")		return "630"
+		if("hazel")		return "542"
+		if("grey")		return pick("666","777","888","999","aaa","bbb","ccc")
+		if("blue")		return "36c"
+		if("green")		return "060"
+		if("amber")		return "fc0"
+		if("albino")	return pick("c","d","e","f") + pick("0","1","2","3","4","5","6","7","8","9") + pick("0","1","2","3","4","5","6","7","8","9")
+		else			return "000"
+
 /proc/random_underwear(gender)
 	switch(gender)
 		if(MALE)	return pick(underwear_m)
@@ -16,31 +30,29 @@ proc/random_facial_hair_style(gender)
 		if(FEMALE)	return pick(facial_hair_styles_female_list)
 		else		return pick(facial_hair_styles_list)
 
-proc/random_name(gender)
-	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
-	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+proc/random_name(gender, attempts_to_find_unique_name=10)
+	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+		if(gender==FEMALE)	. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+		else				. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+		
+		if(i != attempts_to_find_unique_name && !findname(.))
+			break		
 
 proc/random_skin_tone()
-	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
-		if("caucasian")		. = -10
-		if("afroamerican")	. = -115
-		if("african")		. = -165
-		if("latino")		. = -55
-		if("albino")		. = 34
-		else				. = rand(-185,34)
-	return min(max( .+rand(-25, 25), -185),34)
+	return pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino", 20;"oriental", 10;"mediteranian")
 
-proc/skintone2racedescription(tone)
-	switch (tone)
-		if(30 to INFINITY)		return "albino"
-		if(20 to 30)			return "pale"
-		if(5 to 15)				return "light skinned"
-		if(-10 to 5)			return "white"
-		if(-25 to -10)			return "tan"
-		if(-45 to -25)			return "darker skinned"
-		if(-65 to -45)			return "brown"
-		if(-INFINITY to -65)	return "black"
-		else					return "unknown"
+var/list/skin_tones = list(
+	"caucasian" = "fdc",
+	"afroamerican" = "963",
+	"african" = "630",
+	"latino" = "c90",
+	"albino" = "fff",
+	"oriental" = "ff6",
+	"mediteranian" = "cc0"
+	)
+/proc/skin_tone2color(skin_tone)
+	. = skin_tones[skin_tone]
+	if(!.)	. = "fdc"
 
 proc/age2agedescription(age)
 	switch(age)

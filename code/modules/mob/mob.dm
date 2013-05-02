@@ -87,19 +87,10 @@ var/next_mob_id = 0
 	if(I && istype(I))	//The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
 		I.attack(src, user)
 
-
-/mob/proc/findname(msg)
-	for(var/mob/M in mob_list)
-		if (M.real_name == text("[]", msg))
-			return M
-	return 0
-
 /mob/proc/movement_delay()
 	return 0
 
 /mob/proc/Life()
-//	if(organStructure)
-//		organStructure.ProcessOrgans()
 	return
 
 /mob/proc/get_item_by_slot(slot_id)

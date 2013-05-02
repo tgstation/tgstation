@@ -27,24 +27,9 @@
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = 1.0
-	var/data = ""
-	var/ue = 0
-	var/data_type = "ui" //ui|se
-	var/owner = "God Emperor of Mankind"
+	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
 
-/obj/item/weapon/disk/data/demo
-	name = "data disk - 'God Emperor of Mankind'"
-	data = "066000033000000000AF00330660FF4DB002690"
-	//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
-	ue = 1
-	read_only = 1
-
-/obj/item/weapon/disk/data/monkey
-	name = "data disk - 'Mr. Muggles'"
-	data_type = "se"
-	data = "0983E840344C39F4B059D5145FC5785DC6406A4FFF"
-	read_only = 1
 
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key)
@@ -68,17 +53,16 @@
 //Disk stuff.
 /obj/item/weapon/disk/data/New()
 	..()
-	var/diskcolor = pick(0,1,2)
-	src.icon_state = "datadisk[diskcolor]"
+	icon_state = "datadisk[pick(0,1,2)]"
 
 /obj/item/weapon/disk/data/attack_self(mob/user as mob)
-	src.read_only = !src.read_only
+	read_only = !read_only
 	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
 
 /obj/item/weapon/disk/data/examine()
 	set src in oview(5)
 	..()
-	usr << text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+	usr << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 	return
 
 //Health Tracker Implant
@@ -178,22 +162,12 @@
 
 	// -- End mode specific stuff
 
-	if(!H.dna)
-		H.dna = new /datum/dna()
-		H.dna.real_name = H.real_name
-	if(ui)
-		H.dna.uni_identity = ui
-		updateappearance(H, ui)
-	if(se)
-		H.dna.struc_enzymes = se
-		randmutb(H) //Sometimes the clones come out wrong.
+	hardset_dna(H, ui, se, null, mrace)
+	randmutb(H) //Sometimes the clones come out wrong.
 
 	H.f_style = "Shaved"
 	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
-	if(H.dna)
-		H.dna.mutantrace = mrace
-		H.update_mutantrace()
 	H.suiciding = 0
 	src.attempting = 0
 	return 1

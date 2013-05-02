@@ -160,19 +160,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]				>> gender
 	S["age"]				>> age
-	//colors to be consolidated into hex strings (requires some work with dna code)
-	S["hair_red"]			>> r_hair
-	S["hair_green"]			>> g_hair
-	S["hair_blue"]			>> b_hair
-	S["facial_red"]			>> r_facial
-	S["facial_green"]		>> g_facial
-	S["facial_blue"]		>> b_facial
+	S["hair_color"]			>> h_color
+	S["facial_hair_color"]	>> f_color
+	S["eye_color"]			>> eye_color
 	S["skin_tone"]			>> s_tone
 	S["hair_style_name"]	>> h_style
 	S["facial_style_name"]	>> f_style
-	S["eyes_red"]			>> r_eyes
-	S["eyes_green"]			>> g_eyes
-	S["eyes_blue"]			>> b_eyes
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
 
@@ -207,16 +200,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		f_style			= sanitize_inlist(f_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
-	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
-	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
-	r_facial		= sanitize_integer(r_facial, 0, 255, initial(r_facial))
-	g_facial		= sanitize_integer(g_facial, 0, 255, initial(g_facial))
-	b_facial		= sanitize_integer(b_facial, 0, 255, initial(b_facial))
-	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
-	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
-	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
-	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
+	h_color			= sanitize_hexcolor(h_color, 3, 0)
+	f_color			= sanitize_hexcolor(f_color, 3, 0)
+	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
+	s_tone			= sanitize_inlist(s_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
@@ -246,18 +233,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] << be_random_name
 	S["gender"]				<< gender
 	S["age"]				<< age
-	S["hair_red"]			<< r_hair
-	S["hair_green"]			<< g_hair
-	S["hair_blue"]			<< b_hair
-	S["facial_red"]			<< r_facial
-	S["facial_green"]		<< g_facial
-	S["facial_blue"]		<< b_facial
+	S["hair_color"]			<< h_color
+	S["facial_hair_color"]	<< f_color
+	S["eye_color"]			<< eye_color
 	S["skin_tone"]			<< s_tone
 	S["hair_style_name"]	<< h_style
 	S["facial_style_name"]	<< f_style
-	S["eyes_red"]			<< r_eyes
-	S["eyes_green"]			<< g_eyes
-	S["eyes_blue"]			<< b_eyes
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
 

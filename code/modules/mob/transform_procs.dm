@@ -26,9 +26,7 @@
 	O.name = "monkey"
 	O.dna = dna
 	dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	//O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	O.dna.struc_enzymes = "[copytext(O.dna.struc_enzymes,1,1+3*13)]BB8"
+	O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
 	O.loc = loc
 	O.viruses = viruses
 	viruses = list()
