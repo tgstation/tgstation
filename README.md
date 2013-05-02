@@ -1,8 +1,6 @@
 # baystation12
 
-Website: http://baystation12.net/
-Code: http://github.com/Baystation12/Baystation12/
-IRC: irc://irc.sorcery.net/bs12
+[Website](http://baystation12.net/) - [Code](http://github.com/Baystation12/Baystation12/) - [IRC](irc://irc.sorcery.net/bs12)
 
 ---
 
@@ -16,9 +14,9 @@ Open baystation12.dme by double-clicking it, open the Build menu, and click
 compile.  This'll take a little while, and if everything's done right you'll get
 a message like this:
 
-saving baystation12.dmb (DEBUG mode)
-
-baystation12.dmb - 0 errors, 0 warnings
+    saving baystation12.dmb (DEBUG mode)
+    
+    baystation12.dmb - 0 errors, 0 warnings
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
 download or the files extracted wrong.
@@ -38,7 +36,7 @@ You'll also want to edit admins.txt to remove the default admins and add your
 own.  "Game Master" is the highest level of access, and the other recommended
 admin level for now is "Game Admin".  The format is:
 
-byondkey - Rank
+    byondkey - Rank
 
 where the BYOND key must be in lowercase and the admin rank must be properly
 capitalised.  There are a bunch more admin ranks, but these two should be
@@ -46,7 +44,7 @@ enough for most servers, assuming you have trustworthy admins.
 
 Additionally, you can set up moderators in moderators.txt, with this format:
 
-byondkey
+    byondkey
 
 Moderators have access to player notes and a few other low-level commands.
 
