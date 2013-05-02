@@ -150,9 +150,8 @@
 	if(src.head)
 		src.overlays += "head+o"
 
-//Changes procs to be able to do both normal
 /obj/item/robot_parts/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm || src.light_l_arm && src.light_r_arm)
+	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
 				feedback_inc("cyborg_frames_built",1)
