@@ -888,8 +888,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 	return
 
-/obj/item/device/pda/attack(mob/living/C as mob, mob/living/user as mob)
-	if (istype(C, /mob/living/carbon))
+/obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user as mob)
+	if(istype(C))
 		switch(scanmode)
 			if(1)
 
@@ -918,13 +918,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 
 			if(2)
-				if (!istype(C:dna, /datum/dna))
+				if(!istype(C.dna))
 					user << "\blue No fingerprints found on [C]"
 				else if(!istype(C, /mob/living/carbon/monkey))
 					if(!isnull(C:gloves))
 						user << "\blue No fingerprints found on [C]"
 				else
-					user << text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]")
+					user << text("\blue [C]'s Fingerprints: [md5(C.dna.uni_identity)]")
 				if ( !(C:blood_DNA) )
 					user << "\blue No blood found on [C]"
 					if(C:blood_DNA)

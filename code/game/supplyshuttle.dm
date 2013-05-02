@@ -245,7 +245,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 			del(MA)
 
 		if(plasma_count)
-			points += Floor(plasma_count / plasma_per_point)
+			points += round(plasma_count / plasma_per_point)
 
 	//Buyin
 	proc/buy()

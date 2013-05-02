@@ -1,4 +1,4 @@
-/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
+/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
 	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
 /proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)

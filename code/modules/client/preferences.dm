@@ -47,17 +47,11 @@ datum/preferences
 	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
-	var/r_hair = 0						//Hair color
-	var/g_hair = 0						//Hair color
-	var/b_hair = 0						//Hair color
+	var/h_color = "000"					//Hair color
 	var/f_style = "Shaved"				//Face hair type
-	var/r_facial = 0					//Face hair color
-	var/g_facial = 0					//Face hair color
-	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin color
-	var/r_eyes = 0						//Eye color
-	var/g_eyes = 0						//Eye color
-	var/b_eyes = 0						//Eye color
+	var/f_color = "000"					//Facial hair color
+	var/s_tone = "caucasian"			//Skin color
+	var/eye_color = "000"				//Eye color
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -86,7 +80,7 @@ datum/preferences
 	var/metadata = ""
 
 /datum/preferences/New(client/C)
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -163,7 +157,7 @@ datum/preferences
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 				dat += "<b>Blood Type:</b> [b_type]<BR>"
-				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a><BR>"
+				dat += "<b>Skin Tone:</b><BR><span style='border:1px solid #161616; background-color: #[skin_tones[s_tone]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=s_tone;task=input'>[s_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
@@ -173,7 +167,7 @@ datum/preferences
 				dat += "<h3>Hair Style</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: rgb([r_hair],[g_hair],[b_hair]);'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[h_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top' width='28%'>"
@@ -181,14 +175,14 @@ datum/preferences
 				dat += "<h3>Facial Hair Style</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: rgb([r_facial],[g_facial],[b_facial]);'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[f_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top'>"
 
 				dat += "<h3>Eye Color</h3>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: rgb([r_eyes],[g_eyes],[b_eyes]);'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 
 				dat += "</td></tr></table>"
@@ -487,23 +481,17 @@ datum/preferences
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
-						r_hair = rand(0,255)
-						g_hair = rand(0,255)
-						b_hair = rand(0,255)
+						h_color = random_short_color()
 					if("h_style")
 						h_style = random_hair_style(gender)
 					if("facial")
-						r_facial = rand(0,255)
-						g_facial = rand(0,255)
-						b_facial = rand(0,255)
+						f_color = random_short_color()
 					if("f_style")
 						f_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = random_underwear(gender)
 					if("eyes")
-						r_eyes = rand(0,255)
-						g_eyes = rand(0,255)
-						b_eyes = rand(0,255)
+						eye_color = random_eye_color()
 					if("s_tone")
 						s_tone = random_skin_tone()
 					if("bag")
@@ -531,11 +519,10 @@ datum/preferences
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 					if("hair")
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
+						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 						if(new_hair)
-							r_hair = hex2num(copytext(new_hair, 2, 4))
-							g_hair = hex2num(copytext(new_hair, 4, 6))
-							b_hair = hex2num(copytext(new_hair, 6, 8))
+							h_color = sanitize_hexcolor(new_hair)
+							
 
 					if("h_style")
 						var/new_h_style
@@ -547,11 +534,9 @@ datum/preferences
 							h_style = new_h_style
 
 					if("facial")
-						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
+						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
 						if(new_facial)
-							r_facial = hex2num(copytext(new_facial, 2, 4))
-							g_facial = hex2num(copytext(new_facial, 4, 6))
-							b_facial = hex2num(copytext(new_facial, 6, 8))
+							f_color = sanitize_hexcolor(new_facial)
 
 					if("f_style")
 						var/new_f_style
@@ -574,14 +559,12 @@ datum/preferences
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 						if(new_eyes)
-							r_eyes = hex2num(copytext(new_eyes, 2, 4))
-							g_eyes = hex2num(copytext(new_eyes, 4, 6))
-							b_eyes = hex2num(copytext(new_eyes, 6, 8))
+							eye_color = sanitize_hexcolor(new_eyes)
 
 					if("s_tone")
-						var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 						if(new_s_tone)
-							s_tone = 35 - max(min( round(new_s_tone), 220),1)
+							s_tone = new_s_tone
 
 					if("ooccolor")
 						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
@@ -680,17 +663,9 @@ datum/preferences
 		character.age = age
 		character.b_type = b_type
 
-		character.r_eyes = r_eyes
-		character.g_eyes = g_eyes
-		character.b_eyes = b_eyes
-
-		character.r_hair = r_hair
-		character.g_hair = g_hair
-		character.b_hair = b_hair
-
-		character.r_facial = r_facial
-		character.g_facial = g_facial
-		character.b_facial = b_facial
+		character.eye_color = eye_color
+		character.h_color = h_color
+		character.f_color = f_color
 
 		character.s_tone = s_tone
 		character.h_style = h_style
