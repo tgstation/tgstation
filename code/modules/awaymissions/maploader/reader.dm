@@ -88,7 +88,7 @@ dmm_suite{
 						}
 					}
 				//Construct attributes associative list
-				var/list/fields = new(0)
+				var/list/fields = list()
 				for(var/index=1;index<=attributes.len;index++){
 					var/trim_left = trim_text(copytext(attributes[index],1,findtext(attributes[index],"=")))
 					var/trim_right = trim_text(copytext(attributes[index],findtext(attributes[index],"=")+1,0))
@@ -164,7 +164,7 @@ dmm_suite{
 						}
 					}
 				//Construct attributes associative list
-				var/list/fields = new(0)
+				var/list/fields = list()
 				for(var/index=1;index<=attributes.len;index++){
 					var/trim_left = trim_text(copytext(attributes[index],1,findtext(attributes[index],"=")))
 					var/trim_right = trim_text(copytext(attributes[index],findtext(attributes[index],"=")+1,0))

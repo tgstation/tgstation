@@ -1,7 +1,6 @@
 // READ: Don't use the apostrophe in name or desc. Causes script errors.
 
-var/list/powers = typesof(/datum/power/changeling) - /datum/power/changeling	//needed for the badmin verb for now
-var/list/datum/power/changeling/powerinstances = list()
+var/list/powerinstances
 
 /datum/power			//Could be used by other antags too
 	var/name = "Power"
@@ -18,13 +17,13 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Absorb DNA"
 	desc = "Permits us to syphon the DNA from a human. They become one with us, and we become stronger."
 	genomecost = 0
-	verbpath = /mob/proc/changeling_absorb_dna
+	verbpath = /mob/living/carbon/proc/changeling_absorb_dna
 
 /datum/power/changeling/transform
 	name = "Transform"
-	desc = "We take on the apperance and voice of one we have absorbed."
+	desc = "We take on the appearance and voice of one we have absorbed."
 	genomecost = 0
-	verbpath = /mob/proc/changeling_transform
+	verbpath = /mob/living/carbon/proc/changeling_transform
 
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
@@ -32,7 +31,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Can be used before or after death. Duration varies greatly."
 	genomecost = 0
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_fakedeath
+	verbpath = /mob/living/carbon/proc/changeling_fakedeath
 
 // Hivemind
 
@@ -41,34 +40,34 @@ var/list/datum/power/changeling/powerinstances = list()
 	desc = "We can channel a DNA into the airwaves, allowing our fellow changelings to absorb it and transform into it as if they acquired the DNA themselves."
 	helptext = "Allows other changelings to absorb the DNA you channel from the airwaves. Will not help them towards their absorb objectives."
 	genomecost = 0
-	verbpath = /mob/proc/changeling_hiveupload
+	verbpath = /mob/living/carbon/proc/changeling_hiveupload
 
 /datum/power/changeling/hive_download
 	name = "Hive Absorb"
 	desc = "We can absorb a single DNA from the airwaves, allowing us to use more disguises with help from our fellow changelings."
 	helptext = "Allows you to absorb a single DNA and use it. Does not count towards your absorb objective."
 	genomecost = 0
-	verbpath = /mob/proc/changeling_hivedownload
+	verbpath = /mob/living/carbon/proc/changeling_hivedownload
 
 /datum/power/changeling/lesser_form
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser.  We become a monkey."
 	genomecost = 1
-	verbpath = /mob/proc/changeling_lesser_form
+	verbpath = /mob/living/carbon/proc/changeling_lesser_form
 
 /datum/power/changeling/deaf_sting
 	name = "Deaf Sting"
 	desc = "We silently sting a human, completely deafening them for a short time."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_deaf_sting
+	verbpath = /mob/living/carbon/proc/changeling_deaf_sting
 
 /datum/power/changeling/blind_sting
 	name = "Blind Sting"
 	desc = "We silently sting a human, completely blinding them for a short time."
 	genomecost = 2
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_blind_sting
+	verbpath = /mob/living/carbon/proc/changeling_blind_sting
 
 /datum/power/changeling/silence_sting
 	name = "Silence Sting"
@@ -76,14 +75,14 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Does not provide a warning to a victim that they have been stung, until they try to speak and cannot."
 	genomecost = 2
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_silence_sting
+	verbpath = /mob/living/carbon/proc/changeling_silence_sting
 
 /datum/power/changeling/mimicvoice
 	name = "Mimic Voice"
 	desc = "We shape our vocal glands to sound like a desired voice."
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this"
 	genomecost = 3
-	verbpath = /mob/proc/changeling_mimicvoice
+	verbpath = /mob/living/carbon/proc/changeling_mimicvoice
 
 /datum/power/changeling/extractdna
 	name = "Extract DNA"
@@ -91,53 +90,53 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Will give you the DNA of your target, allowing you to transform into them. Does not count towards absorb objectives."
 	genomecost = 4
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_extract_dna_sting
+	verbpath = /mob/living/carbon/proc/changeling_extract_dna_sting
 
 /datum/power/changeling/transformation_sting
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform into another."
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	genomecost = 3
-	verbpath = /mob/proc/changeling_transformation_sting
+	verbpath = /mob/living/carbon/proc/changeling_transformation_sting
 
 /datum/power/changeling/paralysis_sting
 	name = "Paralysis Sting"
 	desc = "We silently sting a human, paralyzing them for a short time."
 	genomecost = 3
-	verbpath = /mob/proc/changeling_paralysis_sting
+	verbpath = /mob/living/carbon/proc/changeling_paralysis_sting
 
 /datum/power/changeling/LSDSting
 	name = "Hallucination Sting"
-	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
+	desc = "We evolve the ability to sting a target with a powerful hallucinogenic chemical."
 	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	genomecost = 3
-	verbpath = /mob/proc/changeling_lsdsting
+	verbpath = /mob/living/carbon/proc/changeling_lsdsting
 
 /datum/power/changeling/DeathSting
 	name = "Death Sting"
 	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
 	genomecost = 10
-	verbpath = /mob/proc/changeling_DEATHsting
+	verbpath = /mob/living/carbon/proc/changeling_DEATHsting
 
 /datum/power/changeling/unfat_sting
 	name = "Unfat Sting"
-	desc = "We silently sting a human, forcing them to rapidly metobolize their fat."
+	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
 	genomecost = 1
-	verbpath = /mob/proc/changeling_unfat_sting
+	verbpath = /mob/living/carbon/proc/changeling_unfat_sting
 
 /datum/power/changeling/boost_range
 	name = "Boost Range"
 	desc = "We evolve the ability to shoot our stingers at humans, with some preperation."
 	genomecost = 2
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_boost_range
+	verbpath = /mob/living/carbon/proc/changeling_boost_range
 
 /datum/power/changeling/Epinephrine
 	name = "Epinephrine sacs"
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "Gives the ability to instantly recover from stuns.  High chemical cost."
 	genomecost = 4
-	verbpath = /mob/proc/changeling_unstun
+	verbpath = /mob/living/carbon/proc/changeling_unstun
 
 /datum/power/changeling/ChemicalSynth
 	name = "Rapid Chemical-Synthesis"
@@ -153,7 +152,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Doubles the rate at which we naturally recharge chemicals."
 	genomecost = 8
 	isVerb = 0
-	verbpath = /mob/proc/changeling_fastchemical
+	verbpath = /mob/living/carbon/proc/changeling_fastchemical
 */
 /datum/power/changeling/EngorgedGlands
 	name = "Engorged Chemical Glands"
@@ -169,14 +168,14 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "We cannot be tracked by camera while using this skill.  However, humans looking at us will find us.. uncanny.  We must constantly expend chemicals to maintain our form like this."
 	genomecost = 3
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_digitalcamo
+	verbpath = /mob/living/carbon/proc/changeling_digitalcamo
 
 /datum/power/changeling/rapidregeneration
 	name = "Rapid Regeneration"
 	desc = "We evolve the ability to rapidly regenerate, negating the need for stasis."
 	helptext = "Heals a moderate amount of damage every tick."
 	genomecost = 8
-	verbpath = /mob/proc/changeling_rapidregen
+	verbpath = /mob/living/carbon/proc/changeling_rapidregen
 
 
 
@@ -188,9 +187,8 @@ var/list/datum/power/changeling/powerinstances = list()
 	if(!usr || !usr.mind || !usr.mind.changeling)	return
 	src = usr.mind.changeling
 
-	if(!powerinstances.len)
-		for(var/P in powers)
-			powerinstances += new P()
+	if(!powerinstances)
+		powerinstances = init_subtypes(/datum/power/changeling)
 
 	var/dat = "<html><head><title>Changling Evolution Menu</title></head>"
 
@@ -463,9 +461,10 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 /datum/changeling/proc/purchasePower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
-	if(!M || !M.changeling)
+	if(!M || !M.changeling || !istype(M.current, /mob/living/carbon))
 		return
 
+	var/mob/living/carbon/C = M.current
 	var/datum/power/changeling/Thepower = Pname
 
 
@@ -477,16 +476,16 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 	if(Thepower == null)
-		M.current << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
+		C << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
 		return
 
 	if(Thepower in purchasedpowers)
-		M.current << "We have already evolved this ability!"
+		C << "We have already evolved this ability!"
 		return
 
 
 	if(geneticpoints < Thepower.genomecost)
-		M.current << "We cannot evolve this... yet.  We must acquire more DNA."
+		C << "We cannot evolve this... yet.  We must acquire more DNA."
 		return
 
 	geneticpoints -= Thepower.genomecost
@@ -494,7 +493,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	purchasedpowers += Thepower
 
 	if(!Thepower.isVerb && Thepower.verbpath)
-		call(M.current, Thepower.verbpath)()
+		call(C, Thepower.verbpath)()
 	else if(remake_verbs)
-		M.current.make_changeling()
+		C.make_changeling()
 

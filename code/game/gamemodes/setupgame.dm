@@ -1,48 +1,36 @@
 /proc/setupgenetics()
+//	if (prob(50))
+//		BLOCKADD = rand(-300,300)
+//	if (prob(75))
+//		DIFFMUT = rand(0,20)
 
-	if (prob(50))
-		BLOCKADD = rand(-300,300)
-	if (prob(75))
-		DIFFMUT = rand(0,20)
+	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
+	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
+		avnums[i] = i
+	
+	HULKBLOCK = pick_n_take(avnums)
+	TELEBLOCK = pick_n_take(avnums)
+	
+	FIREBLOCK = pick_n_take(avnums)
+	XRAYBLOCK = pick_n_take(avnums)
+	
+	CLUMSYBLOCK = pick_n_take(avnums)
+	STRANGEBLOCK = pick_n_take(avnums)
+	DEAFBLOCK = pick_n_take(avnums)
+	BLINDBLOCK = pick_n_take(avnums)
+	NEARSIGHTEDBLOCK = pick_n_take(avnums)
+	EPILEPSYBLOCK = pick_n_take(avnums)
+	COUGHBLOCK = pick_n_take(avnums)
+	TOURETTESBLOCK = pick_n_take(avnums)
+	NERVOUSBLOCK = pick_n_take(avnums)
+	RACEBLOCK = pick_n_take(avnums)
 
-	var/list/avnums = new/list()
-	var/tempnum
-
-	avnums.Add(2)
-	avnums.Add(12)
-	avnums.Add(10)
-	avnums.Add(8)
-	avnums.Add(4)
-	avnums.Add(11)
-	avnums.Add(13)
-	avnums.Add(6)
-
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	HULKBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	TELEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FIREBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	XRAYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	CLUMSYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FAKEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	DEAFBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	BLINDBLOCK = tempnum
-
-
+	bad_se_blocks = list(RACEBLOCK,NEARSIGHTEDBLOCK,EPILEPSYBLOCK,STRANGEBLOCK,COUGHBLOCK,CLUMSYBLOCK,TOURETTESBLOCK,NERVOUSBLOCK,DEAFBLOCK,BLINDBLOCK)
+	good_se_blocks = list(FIREBLOCK,XRAYBLOCK)
+	op_se_blocks = list(HULKBLOCK,TELEBLOCK)
+	
+	NULLED_SE = repeat_string(DNA_STRUC_ENZYMES_BLOCKS, repeat_string(DNA_BLOCK_SIZE, "_"))
+	NULLED_UI = repeat_string(DNA_UNI_IDENTITY_BLOCKS, repeat_string(DNA_BLOCK_SIZE, "_"))
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 
 /*

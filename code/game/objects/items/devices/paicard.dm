@@ -68,13 +68,12 @@
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
-			var/mob/M = usr
-			if(!istype(M, /mob/living/carbon))
+			if(!istype(usr, /mob/living/carbon))
 				usr << "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>"
 			else
-				var/datum/dna/dna = usr.dna
+				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
-				pai.master_dna = dna.unique_enzymes
+				pai.master_dna = M.dna.unique_enzymes
 				pai << "<font color = red><h3>You have been bound to a new master.</h3></font>"
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
