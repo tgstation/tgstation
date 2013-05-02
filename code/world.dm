@@ -10,10 +10,10 @@
 /world/New()
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	if(revdata && istext(revdata.revision) && length(revdata.revision)>7)
-		log = file("data/logs/runtime/[copytext(revdata.revision,1,8)].log")
-	else
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
+//	if(revdata && istext(revdata.revision) && length(revdata.revision)>7)
+//		log = file("data/logs/runtime/[copytext(revdata.revision,1,8)].log")
+//	else
+//		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
