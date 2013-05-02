@@ -1,12 +1,12 @@
-baystation12
+# baystation12
 
 Website: http://baystation12.net/
 Code: http://github.com/Baystation12/Baystation12/
 IRC: irc://irc.sorcery.net/bs12
 
-================================================================================
-INSTALLATION
-================================================================================
+---
+
+### INSTALLATION
 
 First-time installation should be fairly straightforward.  First, you'll need
 BYOND installed.  You can get it from http://www.byond.com/.  Once you've done 
@@ -55,9 +55,9 @@ compiled baystation12.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Trusted'.  Then press
 GO and the server should start up and be ready to join.
 
-================================================================================
-UPDATING
-================================================================================
+---
+
+### UPDATING
 
 To update an existing installation, first back up your /config and /data folders
 as these store your server configuration, player preferences and banlist.
@@ -68,19 +68,19 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
-================================================================================
-SQL Setup
-================================================================================
+---
+
+### SQL Setup
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
 schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are
 coming soon, for now ask in our IRC channel.
 
-================================================================================
-IRC Bot Setup
-================================================================================
+---
 
-Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
+## IRC Bot Setup
+
+Included in the repo is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).  Instructions for bot setup are
 included in the /bot/ folder along with the bot/relay script itself.
