@@ -1008,11 +1008,9 @@ datum/preferences
 							gender = FEMALE
 						else
 							gender = MALE
-					if("disabilities")
-						if(disabilities == 0)
-							disabilities = 1
-						else
-							disabilities = 0
+
+					if("disabilities")				//please note: current code only allows nearsightedness as a disability
+						disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP

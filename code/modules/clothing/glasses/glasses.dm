@@ -8,7 +8,7 @@
 	//var/vision_flags = 0
 	//var/darkness_view = 0//Base human is 2
 	//var/invisa_view = 0
-	//var/prescription = 0
+	var/prescription = 0
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -19,6 +19,8 @@
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/meson/prescription
+	name = "prescription mesons"
+	desc = "Optical Meson Scanner with prescription lenses."
 	prescription = 1
 
 /obj/item/clothing/glasses/science
@@ -123,6 +125,7 @@
 	vision_flags = BLIND
 
 /obj/item/clothing/glasses/sunglasses/prescription
+	name = "prescription sunglasses"
 	prescription = 1
 
 /obj/item/clothing/glasses/sunglasses/big

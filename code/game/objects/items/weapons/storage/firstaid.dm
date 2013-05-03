@@ -106,6 +106,7 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice")
 	allow_quick_gather = 1
 	use_to_pickup = 1
+	storage_slots = 14
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
