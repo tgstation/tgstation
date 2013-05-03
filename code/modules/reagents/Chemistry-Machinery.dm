@@ -258,7 +258,7 @@
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
 	else if(href_list["close"])
-		usr << browse(null, "window=chemmaster")
+		usr << browse(null, "window=chem_master")
 		usr.unset_machine()
 		return
 
