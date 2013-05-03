@@ -1227,8 +1227,14 @@
 				if(blinded)		blind.layer = 18
 				else			blind.layer = 0
 
-			if( disabilities & NEARSIGHTED && ((glasses && !glasses.prescription) || !glasses))
-				client.screen += global_hud.vimpaired
+			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
+				if(glasses)					//to every /obj/item
+					var/obj/item/clothing/glasses/G = glasses
+					if(!G.prescription)
+						client.screen += global_hud.vimpaired
+				else
+					client.screen += global_hud.vimpaired
+
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 

@@ -558,6 +558,9 @@ datum/preferences
 					else if(backbag == 3 || backbag == 4)
 						clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
+		if(disabilities & NEARSIGHTED)
+			clothes_s.Blend(new /icon('icons/mob/eyes.dmi', "glasses"), ICON_OVERLAY)
+
 		preview_icon.Blend(eyes_s, ICON_OVERLAY)
 		if(clothes_s)
 			preview_icon.Blend(clothes_s, ICON_OVERLAY)

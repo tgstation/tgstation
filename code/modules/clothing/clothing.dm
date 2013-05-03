@@ -1,6 +1,3 @@
-/obj/item
-	var/prescription = 0
-
 /obj/item/clothing
 	name = "clothing"
 
