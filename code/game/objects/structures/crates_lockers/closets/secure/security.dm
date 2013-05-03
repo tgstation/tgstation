@@ -30,7 +30,7 @@
 
 
 /obj/structure/closet/secure_closet/hop
-	name = "lieutenant's locker"
+	name = "head of personnel's locker"
 	req_access = list(access_hop)
 	icon_state = "hopsecure1"
 	icon_closed = "hopsecure"
