@@ -280,6 +280,7 @@ datum/objective/steal
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
+		"the reactive teleport armor" = /obj/item/clothing/suit/armor/reactive,
 /*
 Nobody takes these seriously anyways -- Ikki
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,

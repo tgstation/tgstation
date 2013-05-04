@@ -45,5 +45,6 @@
 		new /obj/item/device/radio/headset/heads/rd(src)
 		new /obj/item/weapon/tank/air(src)
 		new /obj/item/clothing/mask/gas(src)
+		new /obj/item/clothing/suit/armor/reactive(src)
 		new /obj/item/device/flash(src)
 		return
