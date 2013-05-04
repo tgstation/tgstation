@@ -1,12 +1,12 @@
 #Files and folders specified here will never be tracked.
 
-data/appearance_full.ban
-data/banlist.bdb
-data/job_full.ban
-data/job_fullnew.bdb
-data/logs/
-data/memo.sav
-data/player_saves/
-tgstation.dmb
-tgstation.dyn.rsc
-tgstation.rsc
+*.ban
+*.bdb
+*.log
+*.sav
+
+#Compiled files and other files generated during compilation.
+*.dmb
+*.rsc
+*.lk
+*.int
