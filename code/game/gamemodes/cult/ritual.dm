@@ -193,6 +193,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return itemport(src.word3)
 		if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 			return runestun()
+		if(word1 == wordtech && word2 == wordjoin && word3 == wordself)
+			return craft()
 		else
 			return fizzle()
 
@@ -289,9 +291,14 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			if(word1 == wordtravel && word2 == wordother)
 				icon_state = "1"
 				src.icon += rgb(200, 0, 0)
+				return
 			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 				icon_state = "2"
 				src.icon += rgb(100, 0, 100)
+				return
+			if(word1 == wordtech && word2 == wordjoin && word3 == wordself)
+				icon_state = "3"
+				src.icon += rgb(100, 0, 0)
 				return
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
 			src.icon -= rgb(255,255,255)
@@ -336,13 +343,13 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<b>Raise dead: </b>Blood Join Hell<br>
 				<b>Hide runes: </b>Hide See Blood<br>
 				<b>Reveal hidden runes: </b>Blood See Hide<br>
-				<b>Leave your body: </b>Hell travel self<br>
+				<b>Leave your body: </b>Hell Travel Self<br>
 				<b>Ghost Manifest: </b>Blood See Travel<br>
 				<b>Imbue a talisman: </b>Hell Technology Join<br>
 				<b>Sacrifice: </b>Hell Blood Join<br>
 				<b>Create a wall: </b>Destroy Travel Self<br>
 				<b>Summon cultist: </b>Join Other Self<br>
-				<b>Free a cultist: </b>Travel technology other<br>
+				<b>Free a cultist: </b>Travel Technology Other<br>
 				<b>Deafen: </b>Hide Other See<br>
 				<b>Blind: </b>Destroy See Other<br>
 				<b>Blood Boil: </b>Destroy See Blood<br>
@@ -350,6 +357,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<b>Stun: </b>Join Hide Technology<br>
 				<b>Summon Cultist Armor: </b>Hell Destroy Other<br>
 				<b>See Invisible: </b>See Hell Join<br>
+				<b>Craft arcane device: </b>Technology Join Self<br>
 				</p>
 				<h2>Rune Descriptions</h2>
 				<h3>Teleport self</h3>
@@ -399,7 +407,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<h3>Equip Armor</h3>
 				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
 				<h3>See Invisible</h3>
-				When invoked when standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
+				When invoked while standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
+				<h3>Craft arcane device</h3>
+				Creates a soul stone shard from solid plasma or a construct shell from plasteel.<br>
 				</body>
 				</html>
 				"}
@@ -614,7 +624,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/r
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
-			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
+			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "craft")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))
@@ -774,3 +784,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word3=wordtech
 					R.loc = user.loc
 					R.check_icon()
+				if("craft")
+					R.word1=wordtech
+					R.word2=wordjoin
+					R.word3=wordself
+					R.loc = user.loc
+					R.check_icon()
+

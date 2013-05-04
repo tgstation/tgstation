@@ -1034,3 +1034,39 @@ var/list/sacrificed = list()
 
 			del(src)
 			return
+
+
+/////////////////////////////////////////TWENTY-SIXTH RUNE
+
+		craft()
+			var/mob/living/user = usr
+			var/obj/item/stack/sheet/mineral/consumed
+			var/type = 0			// 0: none | 1: plasma/soulstone | 2: plasteel/construct shell
+			var/cost_ss_p = 10		// plasma cost of soul stone
+			var/cost_cs_s = 20		// plasteel cost of construct shell
+			for(var/obj/item/stack/sheet/iterate in src.loc)
+				if((iterate.amount >= cost_ss_p) && (istype(iterate,/obj/item/stack/sheet/mineral/plasma)))
+					consumed = iterate
+					type = 1
+					break
+				else if ((iterate.amount >= cost_cs_s) && (istype(iterate,/obj/item/stack/sheet/plasteel)))
+					consumed = iterate
+					type = 2
+					break
+			if (!consumed)
+				return fizzle()
+			else
+				if (type == 1)
+					new /obj/item/device/soulstone(src.loc)
+					consumed.amount -= cost_ss_p
+				else if (type == 2)
+					new /obj/structure/constructshell(src.loc)
+					consumed.amount -= cost_cs_s
+				usr.visible_message("\red Blood flows from [usr] into the [consumed], the material glows and twists into a new shape!", \
+			"\red The blood starts flowing from your frail mortal body into the [consumed], the material glows and twists into a new shape!", \
+			"\red You hear a liquid flowing and an uncanny screech.")
+				user.take_overall_damage(25, 0)
+				usr.whisper("C'af tan a'x gath ru, noth tua sha ru'ga!")
+				if (consumed.amount <= 0)
+					del(consumed)
+			return
