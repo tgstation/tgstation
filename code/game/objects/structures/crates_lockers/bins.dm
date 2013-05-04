@@ -59,7 +59,7 @@
 			if(!..(O, user, 0, 0))
 				return
 			user.visible_message("<span class='notice'>[user] stuffs [O] into the [src].</span>", \
-							 	 "<span class='notice'>You stuff [user] into the [src].</span>", \
+							 	 "<span class='notice'>You stuff [O] into the [src].</span>", \
 							 	 "<span class='notice'>You hear a loud metal bang.</span>")
 		insert(O, 1, !opened)
 		if(opened)
