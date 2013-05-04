@@ -16,11 +16,10 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
-/obj/structure/closet/New()
+/obj/structure/closet/initialize()
 	..()
-	spawn(1)
-		if(!opened)		// if closed, any item at the crate's loc is put in the contents
-			take_contents()
+	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+		take_contents()
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -89,7 +88,8 @@
 			L.client.eye = src
 	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 		return 0
-
+	else if(AM.density || AM.anchored)
+		return 0
 	AM.loc = src
 	return 1
 
