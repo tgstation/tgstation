@@ -22,7 +22,7 @@
 			user << "\red You need at least two rods to do this."
 			return
 
-		if(WT.remove_fuel(1,user))
+		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
 			for (var/mob/M in viewers(src))
