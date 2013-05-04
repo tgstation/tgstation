@@ -18,15 +18,11 @@
 	reagents = R
 	R.my_atom = src
 
-	if(!dna)
-		dna = new /datum/dna(null)
-
 	//initialise organs
 	organs = newlist(/datum/limb/chest, /datum/limb/head, /datum/limb/l_arm,
 					 /datum/limb/r_arm, /datum/limb/r_leg, /datum/limb/l_leg)
 	for(var/datum/limb/O in organs)
 		O.owner = src
-
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
@@ -35,12 +31,6 @@
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
 	..()
-
-	if(dna)
-		dna.real_name = real_name
-
-	prev_gender = gender // Debug for plural genders
-
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -98,7 +88,7 @@
 	now_pushing = 0
 	spawn(0)
 		..()
-		if (!istype(AM, /atom/movable))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!now_pushing)
 			now_pushing = 1
@@ -585,11 +575,6 @@
 		return 1
 
 	return 0
-
-
-/mob/living/carbon/human/proc/check_dna()
-	dna.check_integrity(src)
-
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)

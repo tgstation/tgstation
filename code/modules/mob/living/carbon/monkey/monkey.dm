@@ -21,23 +21,7 @@
 	if(name == "monkey")
 		name = text("monkey ([rand(1, 1000)])")
 	real_name = name
-	if (!(dna))
-		if(gender == NEUTER)
-			gender = pick(MALE, FEMALE)
-		dna = new /datum/dna( null )
-		dna.real_name = real_name
-		dna.uni_identity = "00600200A00E0110148FC01300B009"
-		dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-		dna.unique_enzymes = md5(name)
-				//////////blah
-		var/gendervar
-		if (gender == MALE)
-			gendervar = add_zero2(num2hex((rand(1,2049)),1), 3)
-		else
-			gendervar = add_zero2(num2hex((rand(2051,4094)),1), 3)
-		dna.uni_identity += gendervar
-		dna.uni_identity += "12C"
-		dna.uni_identity += "4E2"
+	gender = pick(MALE, FEMALE)
 
 	..()
 
@@ -75,7 +59,7 @@
 			tmob.LAssailant = src
 		now_pushing = 0
 		..()
-		if (!( istype(AM, /atom/movable) ))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!( now_pushing ))
 			now_pushing = 1

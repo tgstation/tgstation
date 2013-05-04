@@ -65,3 +65,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 				. += "    has: [t]\n"
 	world << .
 */
+
+//creates every subtype of prototype (excluding prototype) and adds it to list L.
+//if no list/L is provided, one is created.
+/proc/init_subtypes(prototype, list/L)
+	if(!istype(L))	L = list()
+	for(var/path in typesof(prototype))
+		if(path == prototype)	continue
+		L += new path()
+	return L

@@ -258,7 +258,7 @@
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
 	else if(href_list["close"])
-		usr << browse(null, "window=chemmaster")
+		usr << browse(null, "window=chem_master")
 		usr.unset_machine()
 		return
 
@@ -757,6 +757,11 @@
 
 		//Sheets
 		/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
+		/obj/item/stack/sheet/metal = list("iron" = 20),
+		/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
+		/obj/item/stack/sheet/wood = list("carbon" = 20),
+		/obj/item/stack/sheet/glass = list("silicon" = 20),
+		/obj/item/stack/sheet/rglass = list("silicon" = 20, "iron" = 20),
 		/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
 		/obj/item/stack/sheet/mineral/clown = list("banana" = 20),
 		/obj/item/stack/sheet/mineral/silver = list("silver" = 20),

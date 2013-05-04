@@ -768,7 +768,7 @@ var/global/datum/tension/tension_master
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
 
-		new_character.dna.ready_dna(new_character)
+		ready_dna(new_character)
 		new_character.key = G_found.key
 
 		return new_character
@@ -787,8 +787,7 @@ var/global/datum/tension/tension_master
 			A.real_name = "[syndicate_commando_rank] [syndicate_commano_name]"
 		A.copy_to(new_syndicate_commando)
 		
-
-		new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
+		ready_dna(new_syndicate_commando)
 
 		//Creates mind stuff.
 		new_syndicate_commando.mind_initialize()

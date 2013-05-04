@@ -111,7 +111,7 @@ var/global/sent_strike_team = 0
 	A.real_name = "[!leader_selected ? commando_rank : 
 	A.copy_to(new_commando)
 
-	new_commando.dna.ready_dna(new_commando)//Creates DNA.
+	ready_dna(new_commando)
 
 	//Creates mind stuff.
 	new_commando.mind_initialize()

@@ -7,7 +7,6 @@
 	opened = 0
 	var/locked = 1
 	var/broken = 0
-	var/large = 1
 	icon_closed = "secure"
 	var/icon_locked = "secure1"
 	icon_opened = "secureopen"
@@ -56,19 +55,15 @@
 	else
 		user << "<span class='notice'>Access Denied</span>"
 
+/obj/structure/closet/secure_closet/place(var/mob/user, var/obj/item/I)
+	if(!src.opened)
+		togglelock(user)
+		return 1
+	return 0
+
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(issilicon(user))
-		return
-	if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
-			if(src.large)
-				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
-			else
-				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
-		user.drop_item()
-		if(W)
-			W.loc = src.loc
-	else if(src.broken)
+
+	if(!src.opened && src.broken)
 		user << "<span class='notice'>The locker appears to be broken.</span>"
 		return
 	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
@@ -89,32 +84,14 @@
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
 	else
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0,user))
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-				return
-			src.welded =! src.welded
-			src.update_icon()
-			for(var/mob/M in viewers(src))
-				M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
-		else
-			togglelock(user)
+		..(W, user)
 
 /obj/structure/closet/secure_closet/relaymove(mob/user as mob)
 	if(user.stat || !isturf(src.loc))
 		return
 
 	if(!(src.locked))
-		for(var/obj/item/I in src)
-			I.loc = src.loc
-		for(var/mob/M in src)
-			M.loc = src.loc
-			if(M.client)
-				M.client.eye = M.client.mob
-				M.client.perspective = MOB_PERSPECTIVE
-		src.icon_state = src.icon_opened
-		src.opened = 1
+		open()
 	else
 		user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)
