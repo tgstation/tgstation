@@ -262,7 +262,7 @@
 	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.remove_fuel(1, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
 			for (var/obj/item/stack/sheet/glass/G in user.loc)
 				if(G==NG)
