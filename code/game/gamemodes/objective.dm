@@ -278,7 +278,7 @@ datum/objective/steal
 		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
 		"the medal of captaincy" = /obj/item/clothing/tie/medal/gold/captain,
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
+		"the nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 		"the reactive teleport armor" = /obj/item/clothing/suit/armor/reactive,
 /*
@@ -293,7 +293,7 @@ Nobody takes these seriously anyways -- Ikki
 	)
 
 	var/global/possible_items_special[] = list(
-		"the nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
+		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"a diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"a bag of holding" = /obj/item/weapon/storage/backpack/holding,
