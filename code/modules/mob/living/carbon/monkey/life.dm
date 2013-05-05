@@ -157,7 +157,7 @@
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath
-		if(health < 0)
+		if(health <= 0)
 			losebreath++
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
