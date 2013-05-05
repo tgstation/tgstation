@@ -343,6 +343,7 @@ var/global/datum/controller/occupations/job_master
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		H << "<b> A guide for your job can be found at:</b> [job.wiki_guide]"
 		spawnId(H,rank)
 
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)

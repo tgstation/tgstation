@@ -96,6 +96,7 @@
 		grant_runeword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
+		cult_mind.current << "A guide to being a cultist can be found at: http://wiki.nanotrasen.com/index.php?title=Cult_magic"
 		memoize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
 

@@ -118,6 +118,7 @@
 	var/obj_count = 1
 	if (you_are)
 		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "A guide to overthrowing command can be found at: http://wiki.nanotrasen.com/index.php?title=Revolution"
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		rev_mind.special_role = "Head Revolutionary"

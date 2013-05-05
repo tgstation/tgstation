@@ -7,6 +7,7 @@
 	spawn_positions = -1
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.nanotrasen.com/index.php?title=Assistant"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 
