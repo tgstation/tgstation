@@ -68,6 +68,69 @@
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
 
+//Light Cyborg Parts -ShadowLordAlpha
+/obj/item/robot_parts/light_l_arm
+	name = "Light Cyborg Left Arm"
+	desc = "A light skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "l_arm"
+	construction_time = 100
+	construction_cost = list("metal"=9000)
+
+/obj/item/robot_parts/light_r_arm
+	name = "Light Cyborg Right Arm"
+	desc = "A light skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "r_arm"
+	construction_time = 100
+	construction_cost = list("metal"=9000)
+
+/obj/item/robot_parts/light_l_leg
+	name = "Light Cyborg Left Leg"
+	desc = "A light skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "l_leg"
+	construction_time = 100
+	construction_cost = list("metal"=7500)
+
+/obj/item/robot_parts/light_r_leg
+	name = "Light Cyborg Right Leg"
+	desc = "A light skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	icon_state = "r_leg"
+	construction_time = 100
+	construction_cost = list("metal"=7500)
+
+/obj/item/robot_parts/light_chest
+	name = "Light Cyborg Torso"
+	desc = "A light case containing cyborg logic boards, with space for a standard power cell."
+	icon_state = "chest"
+	construction_time = 175
+	construction_cost = list("metal"=20000)
+	var/wires = 0.0
+	var/obj/item/weapon/cell/cell = null
+
+/obj/item/robot_parts/light_head
+	name = "Light Cyborg Head"
+	desc = "A light cyborg braincase, with spine-plugged neural socket and sensor gimbals."
+	icon_state = "head"
+	construction_time = 175
+	construction_cost = list("metal"=12500)
+	var/obj/item/device/flash/flash1 = null
+	var/obj/item/device/flash/flash2 = null
+
+/obj/item/robot_parts/light_robot_suit
+	name = "Light Cyborg Endoskeleton"
+	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
+	icon_state = "robo_suit"
+	construction_time = 450
+	construction_cost = list("metal"=30000)
+	var/obj/item/robot_parts/light_l_arm/light_l_arm = null
+	var/obj/item/robot_parts/light_r_arm/light_r_arm = null
+	var/obj/item/robot_parts/light_l_leg/light_l_leg = null
+	var/obj/item/robot_parts/light_r_leg/light_r_leg = null
+	var/obj/item/robot_parts/light_chest/light_chest = null
+	var/obj/item/robot_parts/light_head/light_head = null
+	var/created_name = ""
+//end new parts
+
+
 /obj/item/robot_parts/robot_suit/New()
 	..()
 	src.updateicon()
@@ -266,3 +329,203 @@
 			user << "\blue You insert the flash into the eye socket!"
 	return
 
+//The light cyborg meathods to add parts -ShadowLordAlpha
+//These are basicly a copy of the ones above with a few changes
+
+/obj/item/robot_parts/light_robot_suit/New()
+	..()
+	src.updateicon()
+
+/obj/item/robot_parts/light_robot_suit/proc/updateicon()
+	src.overlays.Cut()
+	if(src.light_l_arm)
+		src.overlays += "l_arm+o"
+	if(src.light_r_arm)
+		src.overlays += "r_arm+o"
+	if(src.light_chest)
+		src.overlays += "chest+o"
+	if(src.light_l_leg)
+		src.overlays += "l_leg+o"
+	if(src.light_r_leg)
+		src.overlays += "r_leg+o"
+	if(src.light_head)
+		src.overlays += "head+o"
+
+/obj/item/robot_parts/light_robot_suit/proc/check_completion()
+	if(src.light_l_arm && src.light_r_arm)
+		if(src.light_l_leg && src.light_r_leg)
+			if(src.light_chest && src.light_head)
+				feedback_inc("light_cyborg_frames_built",1)
+				return 1
+	return 0
+
+/obj/item/robot_parts/light_robot_suit/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/stack/sheet/metal) && !light_l_arm && !light_r_arm && !light_l_leg && !light_r_leg && !light_chest && !light_head)
+		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+		B.loc = get_turf(src)
+		user << "You armed the robot frame"
+		W:use(1)
+		if (user.get_inactive_hand()==src)
+			user.before_take_item(src)
+			user.put_in_inactive_hand(B)
+		del(src)
+	if(istype(W, /obj/item/robot_parts/light_l_leg))
+		if(src.light_l_leg)	return
+		user.drop_item()
+		W.loc = src
+		src.light_l_leg = W
+		src.updateicon()
+
+	if(istype(W, /obj/item/robot_parts/light_r_leg))
+		if(src.light_r_leg)	return
+		user.drop_item()
+		W.loc = src
+		src.light_r_leg = W
+		src.updateicon()
+
+	if(istype(W, /obj/item/robot_parts/light_l_arm))
+		if(src.light_l_arm)	return
+		user.drop_item()
+		W.loc = src
+		src.light_l_arm = W
+		src.updateicon()
+
+	if(istype(W, /obj/item/robot_parts/light_r_arm))
+		if(src.light_r_arm)	return
+		user.drop_item()
+		W.loc = src
+		src.light_r_arm = W
+		src.updateicon()
+
+	if(istype(W, /obj/item/robot_parts/light_chest))
+		if(src.light_chest)	return
+		if(W:wires && W:cell)
+			user.drop_item()
+			W.loc = src
+			src.light_chest = W
+			src.updateicon()
+		else if(!W:wires)
+			user << "\blue You need to attach wires to it first!"
+		else
+			user << "\blue You need to attach a cell to it first!"
+
+	if(istype(W, /obj/item/robot_parts/light_head))
+		if(src.light_head)	return
+		if(W:flash2 && W:flash1)
+			user.drop_item()
+			W.loc = src
+			src.light_head = W
+			src.updateicon()
+		else
+			user << "\blue You need to attach a flash to it first!"
+
+	if(istype(W, /obj/item/device/mmi))
+		var/obj/item/device/mmi/M = W
+		if(check_completion())
+			if(!istype(loc,/turf))
+				user << "\red You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise."
+				return
+			if(!M.brainmob)
+				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
+				return
+			if(!M.brainmob.key)
+				var/ghost_can_reenter = 0
+				if(M.brainmob.mind)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
+							ghost_can_reenter = 1
+							break
+				if(!ghost_can_reenter)
+					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
+					return
+
+			if(M.brainmob.stat == DEAD)
+				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
+				return
+
+			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
+				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI."
+				return
+
+			if(jobban_isbanned(M.brainmob, "Cyborg"))
+				user << "\red This MMI does not seem to fit."
+				return
+
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/light(get_turf(loc))
+			if(!O)	return
+
+			user.drop_item()
+
+			O.invisibility = 0
+			O.custom_name = created_name
+			O.updatename("Default")
+
+			M.brainmob.mind.transfer_to(O)
+
+			if(O.mind && O.mind.special_role)
+				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+
+			O.job = "Cyborg"
+
+			O.cell = light_chest.cell
+			O.cell.loc = O
+			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			O.mmi = W
+
+			feedback_inc("light_cyborg_birth",1)
+
+			del(src)
+		else
+			user << "\blue The MMI must go in after everything else!"
+
+	if (istype(W, /obj/item/weapon/pen))
+		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name, MAX_NAME_LEN)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
+
+		src.created_name = t
+
+	return
+
+/obj/item/robot_parts/light_chest/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/cell))
+		if(src.cell)
+			user << "\blue You have already inserted a cell!"
+			return
+		else
+			user.drop_item()
+			W.loc = src
+			src.cell = W
+			user << "\blue You insert the cell!"
+	if(istype(W, /obj/item/weapon/cable_coil))
+		if(src.wires)
+			user << "\blue You have already inserted wire!"
+			return
+		else
+			var/obj/item/weapon/cable_coil/coil = W
+			coil.use(1)
+			src.wires = 1.0
+			user << "\blue You insert the wire!"
+	return
+
+/obj/item/robot_parts/light_head/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/device/flash))
+		if(src.flash1 && src.flash2)
+			user << "\blue You have already inserted the eyes!"
+			return
+		else if(src.flash1)
+			user.drop_item()
+			W.loc = src
+			src.flash2 = W
+			user << "\blue You insert the flash into the eye socket!"
+		else
+			user.drop_item()
+			W.loc = src
+			src.flash1 = W
+			user << "\blue You insert the flash into the eye socket!"
+	return

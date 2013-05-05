@@ -65,6 +65,13 @@ Please wait until completion...</TT><BR>
 <A href='?src=\ref[src];make=5'>Chest (50,000 cc metal).<BR>
 <A href='?src=\ref[src];make=6'>Head (50,000 cc metal).<BR>
 <A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
+<A href='?src=\ref[src];make=8'>Light Left Arm (12,500 cc metal.)<BR>
+<A href='?src=\ref[src];make=9'>Light Right Arm (12,500 cc metal.)<BR>
+<A href='?src=\ref[src];make=10'>Light Left Leg (12,500 cc metal.)<BR>
+<A href='?src=\ref[src];make=11'>Light Right Leg (12,500 cc metal).<BR>
+<A href='?src=\ref[src];make=12'>Light Chest (25,000 cc metal).<BR>
+<A href='?src=\ref[src];make=13'>Light Head (25,000 cc metal).<BR>
+<A href='?src=\ref[src];make=14'>Light Robot Frame (37,500 cc metal).<BR>
 "}
 
 	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=robot_fabricator")
@@ -121,6 +128,37 @@ Please wait until completion...</TT><BR>
 					build_type = "/obj/item/robot_parts/robot_suit"
 					build_time = 600
 					build_cost = 75000
+
+//This is where the light parts are
+				if (8)
+					build_type = "/obj/item/robot_parts/light_l_arm"
+					build_time = 100
+					build_cost = 9000
+				if (9)
+					build_type = "/obj/item/robot_parts/light_r_arm"
+					build_time = 100
+					build_cost = 9000
+				if (10)
+					build_type = "/obj/item/robot_parts/light_l_leg"
+					build_time = 100
+					build_cost = 9000
+				if (11)
+					build_type = "/obj/item/robot_parts/light_r_leg"
+					build_time = 100
+					build_cost = 9000
+				if (12)
+					build_type = "/obj/item/robot_parts/light_head"
+					build_time = 100
+					build_cost = 9000
+				if (13)
+					build_type = "/obj/item/robot_parts/light_chest"
+					build_time = 100
+					build_cost = 9000
+				if (14)
+					build_type = "/obj/item/robot_parts/light_robot_suit"
+					build_time = 100
+					build_cost = 9000
+//End of the light parts
 
 			var/building = text2path(build_type)
 			if (!isnull(building))

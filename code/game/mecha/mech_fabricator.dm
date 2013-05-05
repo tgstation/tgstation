@@ -46,6 +46,16 @@
 						/obj/item/robot_parts/l_leg,
 						/obj/item/robot_parts/r_leg
 					),
+//Adds the Light Cyborg parts -ShadowLordAlpha
+	"Light Cyborg"=list(
+						/obj/item/robot_parts/light_robot_suit,
+						/obj/item/robot_parts/light_chest,
+						/obj/item/robot_parts/light_head,
+						/obj/item/robot_parts/light_l_arm,
+						/obj/item/robot_parts/light_r_arm,
+						/obj/item/robot_parts/light_l_leg,
+						/obj/item/robot_parts/light_r_leg
+					),
 	"Ripley"=list(
 						/obj/item/mecha_parts/chassis/ripley,
 						/obj/item/mecha_parts/part/ripley_torso,
