@@ -8,7 +8,7 @@
 	recommended_enemies = 3
 
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
-	var/const/changeling_scaling_coeff = 18 //how much does the amount of players get divided by to determine changelings
+	var/const/changeling_scaling_coeff = 25 //how much does the amount of players get divided by to determine changelings
 
 /datum/game_mode/traitor/changeling/announce()
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"

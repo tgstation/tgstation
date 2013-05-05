@@ -37,7 +37,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
-	var/const/changeling_scaling_coeff = 8 //how much does the amount of players get divided by to determine changelings
+	var/const/changeling_scaling_coeff = 10 //how much does the amount of players get divided by to determine changelings
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
