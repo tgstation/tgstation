@@ -245,8 +245,8 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 								if(slip.stamped[i] == /obj/item/weapon/stamp/denied)
 									denied = 1
 							if(slip.erroneous && denied) // Caught a mistake by CentComm (IDEA: maybe CentComm rarely gets offended by this)
-								points += slip.points-5 // For now, give a full refund for paying attention (minus the crate cost)
-								centcomm_message += "<font color=green>+[slip.points-5]</font>: Station correctly denied package [slip.ordernumber]: "
+								points += slip.points-points_per_crate // For now, give a full refund for paying attention (minus the crate cost)
+								centcomm_message += "<font color=green>+[slip.points-points_per_crate]</font>: Station correctly denied package [slip.ordernumber]: "
 								if(slip.erroneous & MANIFEST_ERROR_NAME)
 									centcomm_message += "Destination station incorrect. "
 								else if(slip.erroneous & MANIFEST_ERROR_COUNT)
