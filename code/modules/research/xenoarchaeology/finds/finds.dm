@@ -348,7 +348,8 @@
 			//revolver
 			var/obj/item/weapon/gun/projectile/new_gun = new /obj/item/weapon/gun/projectile(src.loc)
 			new_item = new_gun
-			//new_item.icon_state = "gun[rand(1,4)]" comenting this out because there aren't sprites named like that
+			new_item.icon_state = "gun[rand(1,4)]"
+			new_item.icon = 'xenoarchaeology.dmi'
 
 			//33% chance to be able to reload the gun with human ammunition
 			if(prob(66))
