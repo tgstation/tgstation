@@ -348,7 +348,7 @@
 			//revolver
 			var/obj/item/weapon/gun/projectile/new_gun = new /obj/item/weapon/gun/projectile(src.loc)
 			new_item = new_gun
-			new_item.icon_state = "gun[rand(1,4)]"
+			//new_item.icon_state = "gun[rand(1,4)]" comenting this out because there aren't sprites named like that
 
 			//33% chance to be able to reload the gun with human ammunition
 			if(prob(66))
@@ -359,8 +359,10 @@
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.max_shells)
 				if(num_bullets < new_gun.loaded.len)
-					for(var/i = num_bullets, i <= new_gun.loaded.len, i++)
-						new_gun.loaded += new new_gun.ammo_type(src)
+					new_gun.loaded.Cut()
+					for(var/i = 1, i <= num_bullets, i++)
+						var/A = text2path(new_gun.ammo_type)
+						new_gun.loaded += new A(new_gun)
 				else
 					for(var/obj/item/I in new_gun)
 						if(new_gun.loaded.len > num_bullets)
