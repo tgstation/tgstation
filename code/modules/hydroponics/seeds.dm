@@ -766,7 +766,39 @@
 	potency = 5
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/ambrosiadeusseed)
+	mutatelist = list(/obj/item/seeds/ambrosiadeusseed, /obj/item/seeds/ambrosiacrystalseed, /obj/item/seeds/ambrosiadeadlyseed)
+
+/obj/item/seeds/ambrosiacrystalseed
+	name = "pack of ambrosia vulgaris seeds"
+	desc = "These seeds grow into ambrosia crystal, a plant grown for 'a good time'."
+	icon_state = "seed-ambrosiacrystal"
+	species = "ambrosiacrystal"
+	plantname = "Ambrosia Crystal"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiacrystal
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 6
+	potency = 5
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/ambrosiadeadlyseed
+	name = "pack of poison-brosia seeds"
+	desc = "These seeds grow into poison-brosia, a plant often grown by those seeking 'a good time' by accident."
+	icon_state = "seed-ambrosiadeadly"
+	species = "ambrosiadeadly"
+	plantname = "Poison-brosia"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeadly
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 6
+	potency = 5
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/ambrosiadeusseed
 	name = "pack of ambrosia deus seeds"
