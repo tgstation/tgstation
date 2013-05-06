@@ -297,15 +297,16 @@
 			return
 
 		if( (C.amount + src.amount <= MAXCOIL) )
-			src.use(src.amount) // make sure this one cleans up right
-			C.give(src.amount) // give it cable
 			user << "You join the cable coils together."
+			C.give(src.amount) // give it cable
+			src.use(src.amount) // make sure this one cleans up right
 			return
 
 		else
-			user << "You transfer [MAXCOIL - C.amount] length\s of cable from one coil to the other."
-			src.use(MAXCOIL - C.amount)
-			C.give(MAXCOIL - C.amount)
+			var/amt = MAXCOIL - C.amount
+			user << "You transfer [amt] length\s of cable from one coil to the other."
+			C.give(amt)
+			src.use(amt)
 			return
 
 /obj/item/weapon/cable_coil/proc/use(var/used)
