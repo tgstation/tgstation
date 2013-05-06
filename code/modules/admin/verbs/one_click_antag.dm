@@ -11,7 +11,7 @@ client/proc/one_click_antag()
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"<B>One-click Antagonist</B><br>
-		<a href='?src=\ref[src];makeAntag=1'>Make Tratiors</a><br>
+		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
@@ -53,7 +53,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/datum/admins/proc/makeTratiors()
+/datum/admins/proc/makeTraitors()
 	var/datum/game_mode/traitor/temp = new
 
 	if(config.protect_roles_from_antagonist)
