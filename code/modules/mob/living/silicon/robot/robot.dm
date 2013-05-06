@@ -340,7 +340,7 @@
 		if (istype(AM, /obj/machinery/recharge_station))
 			var/obj/machinery/recharge_station/F = AM
 			F.move_inside()
-		if (!istype(AM, /atom/movable))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!now_pushing)
 			now_pushing = 1
