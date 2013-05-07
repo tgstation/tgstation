@@ -196,7 +196,7 @@
 			if((src.authenticated==2) && (src.emagged))
 				var/cooldown = check_cooldown()
 				if(cooldown)
-					usr << "Please wait [cooldown] seconds while the equipment calibrates and the arrays recylce."
+					usr << "Please wait [cooldown] seconds while the equipment calibrates and the arrays recycle."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
