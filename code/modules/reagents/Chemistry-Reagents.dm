@@ -1576,7 +1576,7 @@ datum
 			reagent_state = LIQUID
 			color = "#DB5008" // rgb: 219, 80, 8
 			toxpwr = 1
-			var/meltprob = 5
+			var/meltprob = 10
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//magic numbers everywhere
 				if(!istype(M, /mob/living))
