@@ -53,7 +53,7 @@ datum/hSB
 					"Spawn Airlock"						= "hsbairlock",
 
 					"Miscellaneous",
-					"Spawn Air Scrubber"				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/scrubber]",
+					"Spawn Air Scrubber"				= "hsbscrubber",
 					"Spawn Canister"					= "hsbcanister",
 					"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
 					"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
@@ -151,6 +151,10 @@ datum/hSB
 					if(P.internals)
 						P.internals.icon_state = "internal1"
 
+				if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
+					var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)
+					hsb.update_icon() // hackish but it wasn't meant to be spawned I guess?
+
 				if("hsbmetal")
 					new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
 
@@ -165,6 +169,7 @@ datum/hSB
 					ID.registered_name = usr.real_name
 					ID.assignment = "Sandbox"
 					ID.access = get_all_accesses()
+					ID.name = "[ID.registered_name]'s ID Card ([ID.assignment])"
 
 				if("hsbrcd")
 					new/obj/item/weapon/rcd{matter=30;canRwall=1}(usr.loc)
