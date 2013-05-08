@@ -49,7 +49,7 @@
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
-	maxcharge = 10000
+	maxcharge = 15000
 	g_amt = 60
 
 /obj/item/weapon/cell/high/empty/New()
