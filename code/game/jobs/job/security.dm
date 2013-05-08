@@ -56,7 +56,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court)
+	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court) //But see /datum/job/warden/get_access()
 	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
@@ -84,7 +84,12 @@
 		L.implanted = 1
 		return 1
 
-
+/datum/job/warden/get_access()
+	if(config.jobs_have_maint_access & 2) //Config has sec maint access set
+		. = ..()
+		. |= list(access_maint_tunnels)
+	else
+		return ..()
 
 /datum/job/detective
 	title = "Detective"
@@ -142,7 +147,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court)
+	minimal_access = list(access_security, access_sec_doors, access_brig, access_court) //But see /datum/job/warden/get_access()
 	minimal_player_age = 7
 
 
@@ -168,3 +173,10 @@
 		L.imp_in = H
 		L.implanted = 1
 		return 1
+
+/datum/job/officer/get_access()
+	if(config.jobs_have_maint_access & 2) //Config has sec maint access set
+		. = ..()
+		. |= list(access_maint_tunnels)
+	else
+		return ..()

@@ -44,6 +44,7 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  1 = assistants, 2 = security, 3 = assistants and sec, 4 = everyone
 
 	var/server
 	var/banappeals
@@ -101,7 +102,6 @@
 
 	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
 
-	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
@@ -297,8 +297,12 @@
 					config.alert_desc_green			= value
 				if("alert_delta")
 					config.alert_desc_delta			= value
-				if("assistant_maint")
-					config.assistant_maint			= 1
+				if("assistants_have_maint_access")
+					config.jobs_have_maint_access	|= 1
+				if("security_has_maint_access")
+					config.jobs_have_maint_access	|= 2
+				if("everyone_has_maint_access")
+					config.jobs_have_maint_access	|= 4
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_rounds")
