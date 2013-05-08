@@ -268,7 +268,8 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 										centcomm_message += "We found unshipped items on our dock."
 									centcomm_message += "  Be more vigilant.<BR>"
 								else
-									centcomm_message += "<font color=red>+0</font>: Station denied package [slip.ordernumber].  Our records show no fault on our part.<BR>"
+									points -= slip.points-points_per_crate
+									centcomm_message += "<font color=red>-[slip.points-points_per_crate]</font>: Station denied package [slip.ordernumber].  Our records show no fault on our part.<BR>"
 							find_slip = 0
 						continue
 
