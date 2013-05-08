@@ -87,7 +87,7 @@
 	else
 		. = src.access.Copy()
 
-	if(config.jobs_have_maint_access & 4) //Config has universal maint access set
+	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
 		. |= list(access_maint_tunnels)
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1

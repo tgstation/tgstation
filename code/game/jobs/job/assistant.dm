@@ -17,7 +17,7 @@
 	return 1
 
 /datum/job/assistant/get_access()
-	if(config.jobs_have_maint_access & 1) //Config has assistant maint access set
+	if(config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) //Config has assistant maint access set
 		. = ..()
 		. |= list(access_maint_tunnels)
 	else

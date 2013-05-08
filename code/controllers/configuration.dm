@@ -1,3 +1,10 @@
+//Configuraton defines //TODO: Move all yes/no switches into bitflags
+
+//Used by jobs_have_maint_access
+#define ASSISTANTS_HAVE_MAINT_ACCESS 1
+#define SECURITY_HAS_MAINT_ACCESS 2
+#define EVERYONE_HAS_MAINT_ACCESS 4
+
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
@@ -44,7 +51,7 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  1 = assistants, 2 = security, 3 = assistants and sec, 4 = everyone
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
 
 	var/server
 	var/banappeals
@@ -298,11 +305,11 @@
 				if("alert_delta")
 					config.alert_desc_delta			= value
 				if("assistants_have_maint_access")
-					config.jobs_have_maint_access	|= 1
+					config.jobs_have_maint_access	|= ASSISTANTS_HAVE_MAINT_ACCESS
 				if("security_has_maint_access")
-					config.jobs_have_maint_access	|= 2
+					config.jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
 				if("everyone_has_maint_access")
-					config.jobs_have_maint_access	|= 4
+					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_rounds")

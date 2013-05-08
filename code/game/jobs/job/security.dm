@@ -85,7 +85,7 @@
 		return 1
 
 /datum/job/warden/get_access()
-	if(config.jobs_have_maint_access & 2) //Config has sec maint access set
+	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS) //Config has sec maint access set
 		. = ..()
 		. |= list(access_maint_tunnels)
 	else
@@ -175,7 +175,7 @@
 		return 1
 
 /datum/job/officer/get_access()
-	if(config.jobs_have_maint_access & 2) //Config has sec maint access set
+	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS) //Config has sec maint access set
 		. = ..()
 		. |= list(access_maint_tunnels)
 	else
