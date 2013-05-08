@@ -39,7 +39,7 @@
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.h_color)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.f_style), facial_hair_styles_list.len)
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.f_color)
-			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.s_tone), skin_tones.len)
+			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
 			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
 		
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
@@ -98,11 +98,11 @@
 	
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!istype(character))
-		return 0
+		return
 	if(!character.dna)
 		if(ready_dna(character))
-			return 1
-		return 0
+			return character.dna
+		return
 	
 	if(length(character.dna.uni_identity) != DNA_UNI_IDENTITY_BLOCKS*DNA_BLOCK_SIZE)
 		character.dna.uni_identity = character.dna.generate_uni_identity(character)	
@@ -110,11 +110,11 @@
 		character.dna.struc_enzymes = character.dna.generate_struc_enzymes()
 	if(!character.dna.real_name || length(character.dna.unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
 		character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
-	return 1
+	return character.dna
 
 /proc/ready_dna(mob/living/carbon/character, blood_type)
 	if(!istype(character, /mob/living/carbon/monkey) && !istype(character, /mob/living/carbon/human))
-		return 0
+		return
 	if(!character.dna)
 		character.dna = new /datum/dna()
 	if(blood_type)
@@ -123,7 +123,7 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
-	return 1
+	return character.dna
 
 /////////////////////////// DNA DATUM
 
@@ -211,7 +211,7 @@
 	var/structure = H.dna.uni_identity
 	H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
 	H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	H.s_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+	H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
 	H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
 	H.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
 	H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
