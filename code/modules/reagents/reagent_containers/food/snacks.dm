@@ -2325,3 +2325,14 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/friedbanana
+	name = "Fried Banana"
+	desc = "Goreng Pisang, also known as fried bananas."
+	icon_state = "friedbanana"
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("sugar", 5)
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("cornoil", 4)
