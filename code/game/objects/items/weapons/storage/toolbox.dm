@@ -5,7 +5,7 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 12.0
+	force = 11.0
 	throwforce = 15.0
 	throw_speed = 1
 	throw_range = 7
