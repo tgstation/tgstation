@@ -1138,3 +1138,11 @@ I said no!
 /datum/recipe/cracker
 	reagents = list("flour" = 5, "sodiumchloride" = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cracker
+
+/datum/recipe/friedbanana
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	)
+	/obj/item/weapon/
+	reagents = list("flour" = 10, "sugar" = 10, "cornoil" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/friedbanana
