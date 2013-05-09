@@ -277,7 +277,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 
-/obj/structure/device/piano
+/obj/structure/piano
 	name = "space minimoog"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "minimoog"
@@ -286,7 +286,7 @@
 	var/datum/song/song
 
 
-/obj/structure/device/piano/New()
+/obj/structure/piano/New()
 	song = new("piano", src)
 
 	if(prob(50))
@@ -298,17 +298,17 @@
 		desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
 		icon_state = "piano"
 
-/obj/structure/device/piano/attack_hand(mob/user as mob)
+/obj/structure/piano/attack_hand(mob/user as mob)
 	interact(user)
 
-/obj/structure/device/piano/interact(mob/user as mob)
+/obj/structure/piano/interact(mob/user as mob)
 	if(!user || !anchored)
 		return
 
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
