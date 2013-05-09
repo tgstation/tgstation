@@ -2330,7 +2330,7 @@
 	name = "Fried Banana"
 	desc = "Goreng Pisang, also known as fried bananas."
 	icon_state = "friedbanana"
-
+	bitesize = 4
 	New()
 		..()
 		reagents.add_reagent("sugar", 5)
