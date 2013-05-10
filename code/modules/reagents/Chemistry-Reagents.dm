@@ -1136,26 +1136,15 @@ datum
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 
-//Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
-/*
+
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 15
-				napalm.trace_gases += fuel
-				the_turf.assume_air(napalm)
+				new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
 			reaction_turf(var/turf/T, var/volume)
-				src = null
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 15
-				napalm.trace_gases += fuel
-				T.assume_air(napalm)
-				return*/
+				new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
+				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1)
@@ -2660,6 +2649,67 @@ datum
 					id = "lemon_lime"
 					color = "#878F00" // rgb: 135, 40, 0
 					adj_temp = -8
+
+				lemonade
+					name = "Lemonade"
+					description = "Oh the nostalgia..."
+					id = "lemonade"
+					color = "#FFFF00" // rgb: 255, 255, 0
+
+				kiraspecial
+					name = "Kira Special"
+					description = "Long live the guy who everyone had mistaken for a girl. Baka!"
+					id = "kiraspecial"
+					color = "#CCCC99" // rgb: 204, 204, 153
+
+				brownstar
+					name = "Brown Star"
+					description = "Its not what it sounds like..."
+					id = "brownstar"
+					color = "#9F3400" // rgb: 159, 052, 000
+					adj_temp = - 2
+
+				milkshake
+					name = "Milkshake"
+					description = "Glorious brainfreezing mixture."
+					id = "milkshake"
+					color = "#AEE5E4" // rgb" 174, 229, 228
+					adj_temp = -9
+
+					on_mob_life(var/mob/living/M as mob)
+						if(!M) M = holder.my_atom
+						if(!data) data = 1
+						switch(data)
+							if(1 to 15)
+								M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(holder.has_reagent("capsaicin"))
+									holder.remove_reagent("capsaicin", 5)
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(5,20)
+							if(15 to 25)
+								M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(10,20)
+							if(25 to INFINITY)
+								M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(prob(1)) M.emote("shiver")
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(15,20)
+						data++
+						holder.remove_reagent(src.id, FOOD_METABOLISM)
+						..()
+						return
+
+				rewriter
+					name = "Rewriter"
+					description = "The secert of the sanctuary of the Libarian..."
+					id = "rewriter"
+					color = "#485000" // rgb:72, 080, 0
+
+					on_mob_life(var/mob/living/M as mob)
+						..()
+						M.make_jittery(5)
+						return
 
 		hippies_delight
 			name = "Hippie's Delight"

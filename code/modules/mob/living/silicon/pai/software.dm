@@ -413,14 +413,9 @@
 /mob/living/silicon/pai/proc/softwareManifest()
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><br><br>"
-	var/list/L = list()
-	if(!isnull(data_core.general))
-		for (var/datum/data/record/t in sortRecord(data_core.general))
-			var/R = t.fields["name"] + " - " + t.fields["rank"]
-			L += R
-	for(var/R in sortList(L))
-		dat += "[R]<br>"
-	dat += "</body></html>"
+	if(data_core)
+		dat += data_core.get_manifest(0) // make it monochrome
+	dat += "<br>"
 	return dat
 
 // Medical Records

@@ -135,6 +135,14 @@ hi
 	icon_on = "bluezippoon"
 	icon_off = "bluezippo"
 
+/obj/item/weapon/lighter/zippo/fluff/michael_guess_1 //Dragor23: Michael Guess
+	name = "engraved lighter"
+	desc = "A golden lighter, engraved with some ornaments and a G."
+	icon = 'custom_items.dmi'
+	icon_state = "guessip"
+	icon_on = "guessipon"
+	icon_off = "guessip"
+
 /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1 //rawrtaicho: Riley Rohtin
 	name = "Riley's black zippo"
 	desc = "A black zippo lighter, which holds some form of sentimental value."
@@ -466,6 +474,12 @@ hi
 	desc = "Much safer than a hard helmet."
 	icon = 'custom_items.dmi'
 	icon_state = "neilpatterson0_hat"
+
+/obj/item/clothing/head/fluff/krinnhat //Shirotyrant: Krinn Seeskale
+	name = "saucepan hat"
+	desc = "This hat is the shiniest shiny Krinn has ever owned."
+	icon = 'custom_items.dmi'
+	icon_state = "krinn_hat"
 //////////// Suits ////////////
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
@@ -502,6 +516,13 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "deus_blueshield"
 	item_state = "deus_blueshield"
+
+/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Javaria Zara
+	name = "old scarf"
+	desc = "An old looking scarf, it seems to be fairly worn."
+	icon_state = "mantle-unathi"
+	item_state = "mantle-unathi"
+	body_parts_covered = UPPER_TORSO
 
 //////////// Uniforms ////////////
 

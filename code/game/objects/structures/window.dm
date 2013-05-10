@@ -105,12 +105,12 @@
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
 	else if (usr.a_intent == "hurt")
-		playsound(src.loc, 'Glassknock.ogg', 80, 1)
+		playsound(src.loc, 'glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
 							"\red You bang against the [src.name]!", \
 							"You hear a banging sound.")
 	else
-		playsound(src.loc, 'Glassknock.ogg', 80, 1)
+		playsound(src.loc, 'glassknock.ogg', 80, 1)
 		usr.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")

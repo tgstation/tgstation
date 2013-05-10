@@ -450,6 +450,7 @@
 				SA.moles = 0
 
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
+			if(status_flags & GODMODE)	return 1	//godmode
 			if(breath.temperature < 260.15)
 				if(prob(20))
 					src << "\red You feel your face freezing and an icicle forming in your lungs!"
@@ -518,6 +519,7 @@
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 			//Body temperature is too hot.
 			fire_alert = max(fire_alert, 1)
+			if(status_flags & GODMODE)	return 1	//godmode
 			switch(bodytemperature)
 				if(360 to 400)
 					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN, used_weapon = "High Body Temperature")
@@ -531,6 +533,7 @@
 
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			fire_alert = max(fire_alert, 1)
+			if(status_flags & GODMODE)	return 1	//godmode
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				switch(bodytemperature)
 					if(200 to 260)
@@ -548,6 +551,7 @@
 
 		var/pressure = environment.return_pressure()
 		var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+		if(status_flags & GODMODE)	return 1	//godmode
 		switch(adjusted_pressure)
 			if(HAZARD_HIGH_PRESSURE to INFINITY)
 				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
@@ -784,7 +788,7 @@
 		for(var/obj/item/I in src)
 			if(I.contaminated)
 				total_plasmaloss += vsc.plc.CONTAMINATION_LOSS
-
+		if(status_flags & GODMODE)	return 0	//godmode
 		adjustToxLoss(total_plasmaloss)
 
 //		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
@@ -1223,8 +1227,14 @@
 				if(blinded)		blind.layer = 18
 				else			blind.layer = 0
 
-			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
-				client.screen += global_hud.vimpaired
+			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
+				if(glasses)					//to every /obj/item
+					var/obj/item/clothing/glasses/G = glasses
+					if(!G.prescription)
+						client.screen += global_hud.vimpaired
+				else
+					client.screen += global_hud.vimpaired
+
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
@@ -1270,6 +1280,7 @@
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()
+		if(status_flags & GODMODE)	return 0	//godmode
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
@@ -1319,7 +1330,7 @@
 
 	handle_shock()
 		..()
-
+		if(status_flags & GODMODE)	return 0	//godmode
 		if(analgesic) return // analgesic avoids all traumatic shock temporarily
 
 		if(health < 0)// health 0 makes you immediately collapse

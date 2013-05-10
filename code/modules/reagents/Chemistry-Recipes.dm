@@ -385,8 +385,10 @@ datum
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
 					var/datum/gas_mixture/napalm = new
+					var/datum/gas/volatile_fuel/fuel = new
+					fuel.moles = created_volume
+					napalm.trace_gases += fuel
 
-					napalm.toxins = created_volume*10
 					napalm.temperature = 400+T0C
 					napalm.update_values()
 
@@ -1904,4 +1906,41 @@ datum
 			result = "driestmartini"
 			required_reagents = list("nothing" = 1, "gin" = 1)
 			result_amount = 2
+
+		lemonade
+			name = "Lemonade"
+			id = "lemonade"
+			result = "lemonade"
+			required_reagents = list("lemonjuice" = 1, "sugar" = 1, "water" = 1)
+			result_amount = 3
+
+		kiraspecial
+			name = "Kira Special"
+			id = "kiraspecial"
+			result = "kiraspecial"
+			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "sodawater" = 1)
+			result_amount = 2
+
+		brownstar
+			name = "Brown Star"
+			id = "brownstar"
+			result = "brownstar"
+			required_reagents = list("orangejuice" = 2, "cola" = 1)
+			result_amount = 2
+
+		milkshake
+			name = "Milkshake"
+			id = "milkshake"
+			result = "milkshake"
+			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2)
+			result_amount = 5
+
+		rewriter
+			name = "Rewriter"
+			id = "rewriter"
+			result = "rewriter"
+			required_reagents = list("spacemountainwind" = 1, "coffee" = 1)
+			result_amount = 2
+
+
 

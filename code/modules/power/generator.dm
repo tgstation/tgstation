@@ -5,10 +5,10 @@
 	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
 	density = 1
-	use_power = 0
 	anchored = 0
-	idle_power_usage = 50
-	active_power_usage = 1000
+
+	use_power = 1
+	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
 	var/obj/machinery/atmospherics/binary/circulator/circ2
@@ -57,7 +57,7 @@
 		if(lastgenlev != 0)
 			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
 
-#define GENRATE 800		// generator output coefficient from Q
+
 
 /obj/machinery/power/generator/process()
 
@@ -87,13 +87,9 @@
 		//world << "delta_temperature = [delta_temperature]; air1_heat_capacity = [air1_heat_capacity]; air2_heat_capacity = [air2_heat_capacity]"
 
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
-			use_power = 2
 			var/efficiency = 0.65
 			var/energy_transfer = delta_temperature*air2_heat_capacity*air1_heat_capacity/(air2_heat_capacity+air1_heat_capacity)
 			var/heat = energy_transfer*(1-efficiency)
-			lastgen = energy_transfer*efficiency
-
-			//world << "lastgen = [lastgen]; heat = [heat]; delta_temperature = [delta_temperature]; air2_heat_capacity = [air2_heat_capacity]; air1_heat_capacity = [air1_heat_capacity];"
 
 			if(air2.temperature > air1.temperature)
 				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
@@ -102,28 +98,20 @@
 				air2.temperature = air2.temperature + heat/air2_heat_capacity
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
-			//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [air1_heat_capacity], [air2_heat_capacity]"
+	lastgen = circ1.ReturnPowerGeneration() + circ2.ReturnPowerGeneration()
+	if(lastgen > 0)
+		add_avail(lastgen)
 
-			add_avail(lastgen)
-
-	if(air1)
-		circ1.air2.merge(air1)
-
-	if(air2)
-		circ2.air2.merge(air2)
+	else
+		add_load(-lastgen)
 
 	// update icon overlays and power usage only if displayed level has changed
 	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
 	if(genlev != lastgenlev)
 		lastgenlev = genlev
-		active_power_usage = lastgenlev * 1000
-		if(lastgenlev > 0)
-			use_power = 2
-		else
-			use_power = 1
 		updateicon()
 
-	src.updateDialog()
+	updateDialog()
 
 /obj/machinery/power/generator/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER)) return
@@ -162,12 +150,15 @@
 		t += "Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K<BR>"
 		t += "Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
 		t += "Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>"
+		t += "Turbine Status: <A href='?src=\ref[src];turbine1=1'>[circ1.turbine_pumping ? "Pumping" : "Generating"]</a><br><br>"
 
 		t += "<B>Secondary Circulator (bottom/left)</B><BR>"
 		t += "Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>"
 		t += "Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K<BR>"
 		t += "Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
 		t += "Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"
+		t += "Turbine Status: <A href='?src=\ref[src];turbine2=1'>[circ2.turbine_pumping ? "Pumping" : "Generating"]</a><br>"
+
 	else
 		t += "Unable to connect to circulators.<br>"
 		t += "Ensure both are in position and wrenched into place."
@@ -187,6 +178,15 @@
 		usr << browse(null, "window=teg")
 		usr.unset_machine()
 		return 0
+
+	if( href_list["turbine2"] )
+		if(circ2)
+			circ2.turbine_pumping = !circ2.turbine_pumping
+
+	if( href_list["turbine1"] )
+		if(circ1)
+			circ1.turbine_pumping = !circ1.turbine_pumping
+
 	updateDialog()
 	return 1
 
@@ -196,12 +196,22 @@
 	updateicon()
 
 
-/obj/machinery/power/generator/verb/rotate()
+/obj/machinery/power/generator/verb/rotate_clock()
 	set category = "Object"
-	set name = "Rotate Generator"
+	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
+
+/obj/machinery/power/generator/verb/rotate_anticlock()
+	set category = "Object"
+	set name = "Rotate Generator (Counterclockwise)"
+	set src in view(1)
+
+	if (usr.stat || usr.restrained()  || anchored)
+		return
+
+	src.dir = turn(src.dir, -90)

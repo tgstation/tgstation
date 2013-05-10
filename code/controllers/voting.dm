@@ -132,6 +132,9 @@ datum/controller/vote
 							restart = 1
 						else
 							master_mode = .
+					if(!going)
+						going = 1
+						world << "<font color='red'><b>The round will start soon.</b></font>"
 				if("crew_transfer")
 					if(. == "Initiate Crew Transfer")
 						init_shift_change(null, 1)
@@ -194,9 +197,14 @@ datum/controller/vote
 			var/text = "[capitalize(mode)] vote started by [initiator]."
 			if(mode == "custom")
 				text += "\n[question]"
+
 			log_vote(text)
 			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 			world << sound('misc/bloblarm.ogg')
+			if(mode == "gamemode" && going)
+				going = 0
+				world << "<font color='red'><b>Round start has been delayed.</b></font>"
+
 			time_remaining = round(config.vote_period/10)
 			return 1
 		return 0
