@@ -1913,7 +1913,7 @@
 "aKO" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/secure/briefcase,/turf/simulated/floor{icon_state = "blue"; dir = 10},/area/bridge)
 "aKP" = (/obj/machinery/computer/communications,/turf/simulated/floor{dir = 0; icon_state = "blue"},/area/bridge)
 "aKQ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/table/reinforced,/obj/item/weapon/storage/box/PDAs{pixel_x = 4; pixel_y = 4},/obj/item/weapon/storage/box/ids,/turf/simulated/floor{icon_state = "blue"; dir = 6},/area/bridge)
-"aKR" = (/obj/machinery/computer/teleporter,/turf/simulated/floor{dir = 10; icon_state = "brown"},/area/bridge)
+"aKR" = (/obj/machinery/computer/mining_shuttle,/turf/simulated/floor{dir = 10; icon_state = "brown"},/area/bridge)
 "aKS" = (/obj/machinery/computer/ordercomp,/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/bridge)
 "aKT" = (/obj/machinery/computer/security/mining,/turf/simulated/floor{dir = 6; icon_state = "brown"},/area/bridge)
 "aKU" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/toolbox/emergency,/turf/simulated/floor,/area/bridge)
