@@ -649,6 +649,20 @@ client
 			if("left")	A.dir = turn(A.dir, 45)
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
+	else if(href_list["makehuman"])
+		if(!check_rights(0))	return
+
+		var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"])
+		if(!istype(Mo))
+			usr << "This can only be done to instances of type /mob/living/carbon/monkey"
+			return
+
+		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(!Mo)
+			usr << "Mob doesn't exist anymore"
+			return
+		holder.Topic(href, list("humanone"=href_list["makehuman"]))
+
 	else if(href_list["makemonkey"])
 		if(!check_rights(0))	return
 

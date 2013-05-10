@@ -3,7 +3,7 @@
 	if(!mind)				return
 	if(!mind.changeling)	mind.changeling = new /datum/changeling(gender)
 	if(!iscarbon(src))		return
-	
+
 	verbs += /datum/changeling/proc/EvolutionMenu
 
 	var/lesser_form = !ishuman(src)
@@ -66,7 +66,7 @@
 /mob/living/carbon/proc/changeling_absorb_dna()
 	set category = "Changeling"
 	set name = "Absorb DNA"
-	
+
 	var/datum/changeling/changeling = changeling_power(0,0,100)
 	if(!changeling)	return
 
@@ -205,47 +205,7 @@
 	changeling.geneticdamage = 30
 	src << "<span class='warning'>Our genes cry out!</span>"
 
-	//TODO replace with monkeyize proc
-	var/list/implants = list() //Try to preserve implants.
-	for(var/obj/item/weapon/implant/W in src)
-		implants += W
-
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	overlays.Cut()
-	invisibility = 101
-
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("h2monkey", animation)
-	sleep(48)
-	del(animation)
-
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
-	O.dna = dna
-	dna = null
-
-	for(var/obj/item/W in src)
-		drop_from_inventory(W)
-	for(var/obj/T in src)
-		del(T)
-
-	O.loc = loc
-	O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
-	O.setToxLoss(getToxLoss())
-	O.adjustBruteLoss(getBruteLoss())
-	O.setOxyLoss(getOxyLoss())
-	O.adjustFireLoss(getFireLoss())
-	O.stat = stat
-	O.a_intent = "harm"
-	for(var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
-
-	mind.transfer_to(O)
+	var/mob/living/carbon/monkey/O = monkeyize(TR_KEEPITEMS | TR_HASHNAME | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSE)
 
 	O.make_changeling(1)
 	O.verbs += /mob/living/carbon/proc/changeling_lesser_transform
@@ -256,10 +216,12 @@
 
 //Transform into a human
 /mob/living/carbon/proc/changeling_lesser_transform()
+
 	set category = "Changeling"
 	set name = "Transform (1)"
 
 	var/datum/changeling/changeling = changeling_power(1,1,0)
+
 	if(!changeling)	return
 
 	var/list/names = list()
@@ -278,57 +240,8 @@
 	visible_message("<span class='warning'>[src] transforms!</span>")
 	dna = chosen_dna
 
-	var/list/implants = list()
-	for (var/obj/item/weapon/implant/I in src) //Still preserving implants
-		implants += I
-
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	overlays.Cut()
-	invisibility = 101
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("monkey2h", animation)
-	sleep(48)
-	del(animation)
-
-	for(var/obj/item/W in src)
-		u_equip(W)
-		if (client)
-			client.screen -= W
-		if (W)
-			W.loc = loc
-			W.dropped(src)
-			W.layer = initial(W.layer)
-
-	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
-	O.dna = dna
-	dna = null
-	O.real_name = chosen_dna.real_name
-
-	for(var/obj/T in src)
-		del(T)
-
-	O.loc = loc
-
-	updateappearance(O)
-	domutcheck(O, null)
-	O.setToxLoss(getToxLoss())
-	O.adjustBruteLoss(getBruteLoss())
-	O.setOxyLoss(getOxyLoss())
-	O.adjustFireLoss(getFireLoss())
-	O.stat = stat
-	for (var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
-
-	mind.transfer_to(O)
+	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE),chosen_dna.real_name)
 	O.make_changeling()
-
 	feedback_add_details("changeling_powers","LFT")
 	del(src)
 	return 1
@@ -338,7 +251,7 @@
 /mob/living/carbon/proc/changeling_fakedeath()
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"
-	
+
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
 

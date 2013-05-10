@@ -41,7 +41,7 @@
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.f_color)
 			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.s_tone), skin_tones.len)
 			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-		
+
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])	. += L[i]
 		else		. += random_string(DNA_BLOCK_SIZE,hex_characters)
@@ -72,30 +72,30 @@
 		return
 	if(!owner.dna)
 		owner.dna = new /datum/dna()
-	
+
 	if(real_name)
 		owner.real_name = real_name
 		owner.dna.generate_unique_enzymes(owner)
-	
+
 	if(blood_type)
 		owner.dna.b_type = blood_type
-	
+
 	if(ui)
 		owner.dna.uni_identity = ui
 		updateappearance(owner)
-	
+
 	var/update_mutantrace = (mutantrace != owner.dna.mutantrace)
 	owner.dna.mutantrace = mutantrace
 	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
 		H.update_mutantrace()
-	
+
 	if(se)
 		owner.dna.struc_enzymes = se
 		domutcheck(owner)
-	
+
 	check_dna_integrity(owner)
-	
+
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!istype(character))
 		return 0
@@ -103,9 +103,9 @@
 		if(ready_dna(character))
 			return 1
 		return 0
-	
+
 	if(length(character.dna.uni_identity) != DNA_UNI_IDENTITY_BLOCKS*DNA_BLOCK_SIZE)
-		character.dna.uni_identity = character.dna.generate_uni_identity(character)	
+		character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	if(length(character.dna.struc_enzymes)!= DNA_STRUC_ENZYMES_BLOCKS*DNA_BLOCK_SIZE)
 		character.dna.struc_enzymes = character.dna.generate_struc_enzymes()
 	if(!character.dna.real_name || length(character.dna.unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
@@ -239,7 +239,7 @@
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
 	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
-	
+
 	if(blocks[NEARSIGHTEDBLOCK])
 		M.disabilities |= NEARSIGHTED
 		M << "\red Your eyes feel strange."
@@ -301,136 +301,25 @@
 //////////////////////////////////////////////////////////// Monkey Block
 	if(blocks[RACEBLOCK])
 		if(istype(M, /mob/living/carbon/human))	// human > monkey
-			var/mob/living/carbon/human/H = M
-			H.monkeyizing = 1
-			var/list/implants = list() //Try to preserve implants.
-			for(var/obj/item/weapon/implant/W in H)
-				implants += W
-				W.loc = null
-
-			if(!connected)
-				for(var/obj/item/W in (H.contents-implants))
-					if(W==H.w_uniform) // will be teared
-						continue
-					H.drop_from_inventory(W)
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/atom/movable/overlay/animation = new( M.loc )
-				animation.icon_state = "blank"
-				animation.icon = 'icons/mob/mob.dmi'
-				animation.master = src
-				flick("h2monkey", animation)
-				sleep(48)
-				del(animation)
-
-			var/mob/living/carbon/monkey/O = new(src)
-
-			if(M)
-				if(M.dna)
-					O.dna = M.dna
-					M.dna = null
-
-				if(M.suiciding)
-					O.suiciding = M.suiciding
-					M.suiciding = null
-
-
-			for(var/datum/disease/D in M.viruses)
-				O.viruses += D
-				D.affected_mob = O
-				M.viruses -= D
-
-
-			for(var/obj/T in (M.contents-implants))
-				del(T)
-
-			O.loc = M.loc
-
-			if(M.mind)
-				M.mind.transfer_to(O)	//transfer our mind to the cute little monkey
-
+			var/mob/living/carbon/monkey/O = M.monkeyize(TR_KEEPITEMS | TR_HASHNAME | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
+			O.take_overall_damage(40, 0)
+			O.adjustToxLoss(20)
 			if(connected) //inside dna thing
 				var/obj/machinery/dna_scannernew/C = connected
 				O.loc = C
 				C.occupant = O
 				connected = null
-			O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
-			O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
-			O.adjustToxLoss(M.getToxLoss() + 20)
-			O.adjustOxyLoss(M.getOxyLoss())
-			O.stat = M.stat
-			O.a_intent = "harm"
-			for (var/obj/item/weapon/implant/I in implants)
-				I.loc = O
-				I.implanted = O
-	//		O.update_icon = 1	//queue a full icon update at next life() call
-			del(M)
 			return 1
 	else
 		if(istype(M, /mob/living/carbon/monkey))	// monkey > human,
-			var/mob/living/carbon/monkey/Mo = M
-			Mo.monkeyizing = 1
-			var/list/implants = list() //Still preserving implants
-			for(var/obj/item/weapon/implant/W in Mo)
-				implants += W
-				W.loc = null
-			if(!connected)
-				for(var/obj/item/W in (Mo.contents-implants))
-					Mo.drop_from_inventory(W)
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/atom/movable/overlay/animation = new( M.loc )
-				animation.icon_state = "blank"
-				animation.icon = 'icons/mob/mob.dmi'
-				animation.master = src
-				flick("monkey2h", animation)
-				sleep(48)
-				del(animation)
-
-			var/mob/living/carbon/human/O = new( src )
-			O.gender = (deconstruct_block(getblock(M.dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
-
-			if(M)
-				if(M.dna)
-					O.dna = M.dna
-					M.dna = null
-
-				if(M.suiciding)
-					O.suiciding = M.suiciding
-					M.suiciding = null
-
-			O.viruses = M.viruses.Copy()
-			M.viruses.Cut()
-			for(var/datum/disease/D in O.viruses)
-				D.affected_mob = O
-
-			O.loc = M.loc
-
-			if(M.mind)
-				M.mind.transfer_to(O)	//transfer our mind to the human
-
+			var/mob/living/carbon/human/O = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
+			O.take_overall_damage(40, 0)
+			O.adjustToxLoss(20)
 			if(connected) //inside dna thing
 				var/obj/machinery/dna_scannernew/C = connected
 				O.loc = C
 				C.occupant = O
 				connected = null
-
-			O.real_name = random_name(O.gender)
-			
-			updateappearance(O)
-			O.take_overall_damage(M.getBruteLoss(), M.getFireLoss())
-			O.adjustToxLoss(M.getToxLoss())
-			O.adjustOxyLoss(M.getOxyLoss())
-			O.stat = M.stat
-			for (var/obj/item/weapon/implant/I in implants)
-				I.loc = O
-				I.implanted = O
-	//		O.update_icon = 1	//queue a full icon update at next life() call
-			del(M)
 			return 1
 //////////////////////////////////////////////////////////// Monkey Block
 	if(M)
@@ -610,7 +499,7 @@
 	density = 1
 	var/radduration = 2
 	var/radstrength = 1
-	
+
 	var/list/buffer[NUMBER_OF_BUFFERS]
 
 	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
@@ -751,7 +640,7 @@
 				occupant_status = "<span class='bad'>Invalid DNA structure</span>"
 		else
 			occupant_status = "<span class='bad'>No subject detected</span>"
-		
+
 		if(connected.locked)
 			scanner_status = "<span class='bad'>Locked</span>"
 		else
@@ -760,7 +649,7 @@
 		occupant_status = "<span class='bad'>Error: Undefined</span>"
 		scanner_status = "<span class='bad'>Error: No scanner detected</span>"
 	var/status = "<div class='statusDisplay'>Scanner Status: [scanner_status]<br>Subject Status: [occupant_status]<br>Emitter Array Output Level: [radstrength]<br>Emitter Array Pulse Duration: [radduration]</div>"
-	
+
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)		buttons += "<a href='?src=\ref[src];task=togglelock;'>Toggle Bolts</a> "
 	else				buttons += "<span class='linkOff'>Toggle Bolts</span> "
@@ -772,7 +661,7 @@
 	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffers</a> "
 	buttons += "<br><a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Emitter Array Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
 	buttons += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Emitter Array Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
-	
+
 	switch(current_screen)
 		if("working")
 			temp_html += "<h3>System Busy</h3>"
@@ -782,7 +671,7 @@
 			temp_html += "<h3>Buffer Menu</h3>"
 			temp_html += status
 			temp_html += buttons
-			
+
 			if(istype(buffer))
 				for(var/i=1, i<=buffer.len, i++)
 					temp_html += "<br>Slot [i]: "
@@ -841,14 +730,14 @@
 			temp_html += "<h3>Main Menu</h3>"
 			temp_html += status
 			temp_html += buttons
-			
+
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>"
 			if(viable_occupant)
 				temp_html += "[viable_occupant.dna.unique_enzymes]"
 			else
 				temp_html += " - "
 			temp_html += "</span></div></div>"
-			
+
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><span class='highlight'>"
 			var/max_line_len = DNA_BLOCK_SIZE * 10
 			if(viable_occupant)
@@ -862,7 +751,7 @@
 			else
 				temp_html += " - "
 			temp_html += "</span></div></div>"
-			
+
 			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><span class='highlight'>"
 			if(viable_occupant)
 				var/len = length(viable_occupant.dna.struc_enzymes)
@@ -878,7 +767,7 @@
 
 	popup.set_content(temp_html)
 	popup.open()
-	
+
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
@@ -892,7 +781,7 @@
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
-	
+
 	var/mob/living/carbon/viable_occupant
 	if(connected)
 		viable_occupant = connected.occupant
@@ -1012,13 +901,13 @@
 
 				var/locked_state = connected.locked
 				connected.locked = 1
-				
+
 				current_screen = "working"
 				ShowInterface(usr)
-				
+
 				sleep(radduration*10)
 				current_screen = "mainmenu"
-				
+
 				if(viable_occupant && connected && connected.occupant==viable_occupant)
 					viable_occupant.radiation += RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength
 					switch(href_list["task"])
@@ -1026,30 +915,30 @@
 							var/len = length(viable_occupant.dna.uni_identity)
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
-							
+
 							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
 							hex = scramble(hex, radstrength, radduration)
-							
+
 							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
 							updateappearance(viable_occupant)
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
-							
+
 							var/hex = copytext(viable_occupant.dna.struc_enzymes, num, num+1)
 							hex = scramble(hex, radstrength, radduration)
-							
+
 							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
 							domutcheck(viable_occupant, connected)
 				else
 					current_screen = "mainmenu"
-				
+
 				if(connected)
 					connected.locked = locked_state
 
 	ShowInterface(usr)
-	
+
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT
