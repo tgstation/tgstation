@@ -63,12 +63,6 @@
 		O.setOxyLoss(getOxyLoss())
 		O.adjustFireLoss(getFireLoss())
 
-	//handle client key and mob so mind.transfer_to doesn't ghostize
-	if (client)
-		client.mob = O
-	if (key)
-		O.key = key
-
 	//re-add implants to new mob
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
@@ -79,11 +73,11 @@
 		mind.transfer_to(O)
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
 	updateappearance(O)
-	return O
-
+	. = O
+	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
+		del(src)
+	return
 
 
 
@@ -166,11 +160,6 @@
 		O.setOxyLoss(getOxyLoss())
 		O.adjustFireLoss(getFireLoss())
 
-	if (client)
-		client.mob = O
-	if (key)
-		O.key = key
-
 	//re-add implants to new mob
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
@@ -181,10 +170,11 @@
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
 	updateappearance(O)
-	return O
+	. = O
+	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
+		del(src)
+	return
 
 /mob/new_player/AIize()
 	spawning = 1
@@ -267,6 +257,7 @@
 	O.rename_self("ai",1)
 	. = O
 	del(src)
+	return
 
 
 //human -> robot
@@ -308,10 +299,8 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return O
+	. = O
+	del(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -341,9 +330,8 @@
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_xeno
+	del(src)
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
 	if (monkeyizing)
@@ -377,9 +365,8 @@
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_slime
+	del(src)
 
 /mob/living/carbon/human/proc/corgize()
 	if (monkeyizing)
@@ -399,9 +386,8 @@
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_corgi
+	del(src)
 
 /mob/living/carbon/human/proc/blobize() // Oh boy, this is for you Int - Summoner
 	if (monkeyizing)
@@ -421,9 +407,8 @@
 	new_blob.key = key
 
 	new_blob << "<B>You are now a Blob Fragment. You can now sacrifice yourself to spawn blobs!</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_blob
+	del(src)
 
 /mob/living/carbon/human/Animalize()
 
@@ -455,9 +440,8 @@
 
 
 	new_mob << "You suddenly feel more... animalistic."
-	spawn()
-		del(src)
-	return
+	. = new_mob
+	del(src)
 
 /mob/proc/Animalize()
 
@@ -474,6 +458,7 @@
 	new_mob.a_intent = "harm"
 	new_mob << "You feel more... animalistic"
 
+	. = new_mob
 	del(src)
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.

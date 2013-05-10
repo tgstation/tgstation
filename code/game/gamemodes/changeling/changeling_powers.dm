@@ -205,13 +205,14 @@
 	changeling.geneticdamage = 30
 	src << "<span class='warning'>Our genes cry out!</span>"
 
-	var/mob/living/carbon/monkey/O = monkeyize(TR_KEEPITEMS | TR_HASHNAME | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSE)
+	var/mob/living/carbon/monkey/O = monkeyize(TR_KEEPITEMS | TR_HASHNAME | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSE | TR_KEEPSRC)
 
 	O.make_changeling(1)
 	O.verbs += /mob/living/carbon/proc/changeling_lesser_transform
 	feedback_add_details("changeling_powers","LF")
+	. = 1
 	del(src)
-	return 1
+	return
 
 
 //Transform into a human
@@ -240,11 +241,13 @@
 	visible_message("<span class='warning'>[src] transforms!</span>")
 	dna = chosen_dna
 
-	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE),chosen_dna.real_name)
+	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
+
 	O.make_changeling()
 	feedback_add_details("changeling_powers","LFT")
+	. = 1
 	del(src)
-	return 1
+	return
 
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
