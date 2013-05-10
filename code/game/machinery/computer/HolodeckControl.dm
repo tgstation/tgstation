@@ -24,7 +24,7 @@
 
 		var/dat = "<h3>Current Loaded Programs</h3>"
 		dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
-		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Boxing Court)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Dodgeball Arena)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
@@ -363,25 +363,8 @@
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
 
-
-
-
-
-
-
-
-
-
 /obj/structure/table/holotable
 	name = "table"
-	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "table"
-	density = 1
-	anchored = 1.0
-	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.
-
 
 /obj/structure/table/holotable/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -414,14 +397,6 @@
 
 	if(isrobot(user))
 		return
-
-
-
-/obj/item/clothing/gloves/boxing/hologlove
-	name = "boxing gloves"
-	desc = "Because you really needed another excuse to punch your crewmates."
-	icon_state = "boxing"
-	item_state = "boxing"
 
 /obj/structure/holowindow
 	name = "reinforced window"
@@ -491,16 +466,31 @@
 //BASKETBALL OBJECTS
 
 /obj/item/weapon/beach_ball/holoball
+	name = "basketball"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
-	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = 4 //Stops people from hiding it in their bags/pockets
 
+/obj/item/weapon/beach_ball/holoball/dodgeball
+	name = "dodgeball"
+	icon_state = "dodgeball"
+	item_state = "dodgeball"
+	desc = "Used for playing the most violent and degrading of childhood games."
+
+/obj/item/weapon/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+	if((ishuman(hit_atom)))
+		var/mob/living/carbon/M = hit_atom
+		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
+		M.apply_damage(10, HALLOSS)
+		if(prob(5))
+			M.Weaken(3)
+			visible_message("\red [M] is knocked right off \his feet!", 3)
+
 /obj/structure/holohoop
 	name = "basketball hoop"
-	desc = "Boom, Shakalaka!."
+	desc = "Boom, shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
 	anchored = 1
