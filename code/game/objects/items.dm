@@ -640,7 +640,7 @@
 	if(istype(M, /mob/living/carbon/human))
 		var/datum/limb/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:UpdateDamageIcon(0)
+			M:update_damage_overlays(0)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)

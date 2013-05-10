@@ -88,7 +88,8 @@
 	owner.dna.mutantrace = mutantrace
 	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
-		H.update_mutantrace()
+		H.update_body()
+		H.update_hair()
 	
 	if(se)
 		owner.dna.struc_enzymes = se
@@ -217,7 +218,7 @@
 	H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
 	H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 
-	H.update_body(0)
+	H.update_body()
 	H.update_hair()
 	return 1
 

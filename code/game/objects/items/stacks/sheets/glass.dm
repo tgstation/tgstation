@@ -287,6 +287,6 @@
 				var/datum/limb/affecting = H.get_organ(pick("l_leg", "r_leg"))
 				H.Weaken(3)
 				if(affecting.take_damage(5, 0))
-					H.UpdateDamageIcon(0)
+					H.update_damage_overlays(0)
 				H.updatehealth()
 	..()

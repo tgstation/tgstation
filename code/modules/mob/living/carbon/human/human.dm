@@ -204,7 +204,7 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 			if("r_leg")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-	if(update)	UpdateDamageIcon(0)
+	if(update)	update_damage_overlays(0)
 
 
 /mob/living/carbon/human/blob_act()
@@ -224,10 +224,10 @@
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 		else
 			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 		updatehealth()
 	return
 
