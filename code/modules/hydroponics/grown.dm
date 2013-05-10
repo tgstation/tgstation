@@ -328,6 +328,33 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiacrystal
+	seed = "/obj/item/seeds/ambrosiacrystal"
+	name = "ambrosia crystal branch"
+	desc = "This is, like, a plant, or something, with like, some totally radical drugs, maaaan."
+	icon_state = "ambrosiacrystal"
+	potency = 10
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
+			reagents.add_reagent("mindbreaker", 1+round(potency / 10, 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeadly
+	seed = "/obj/item/seeds/ambrosiadeadly"
+	name = "poison-brosia branch"
+	desc = "This is a plant related to Ambrosia Vulgaris, that looks very similar, but is very, VERY deadly."
+	icon_state = "ambrosiavulgaris"
+	potency = 10
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("toxin", 15)
+			reagents.add_reagent("cyanide", 30)
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
