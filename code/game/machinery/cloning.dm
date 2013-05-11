@@ -165,7 +165,10 @@
 	hardset_dna(H, ui, se, null, mrace)
 	randmutb(H) //Sometimes the clones come out wrong.
 
-	H.f_style = "Shaved"
+	if(H.gender == MALE)
+		H.f_style = "Full Beard"
+	else
+		H.f_style = "Shaved"
 	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	H.suiciding = 0
