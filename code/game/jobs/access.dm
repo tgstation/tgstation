@@ -425,7 +425,8 @@
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
 
-	if((jobName in get_all_jobs()) || (jobName == "Prisoner"))
+	if(jobName in get_all_jobs()) //Check station jobs
 		return jobName
-	else
-		return "Unknown"
+	if(jobName == "Prisoner") //Check for Prisoner
+		return "Prisoner"
+	return "Unknown" //Return unknown if none of the above apply
