@@ -131,7 +131,7 @@
 			return
 
 		var/turf/simulated/location = loc
-		ASSERT(istype(location))
+		if(!istype(location))	return//returns if loc is not simulated
 
 		var/datum/gas_mixture/environment = location.return_air()
 		var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
