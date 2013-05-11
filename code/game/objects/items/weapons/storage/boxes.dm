@@ -325,15 +325,13 @@
 		new /obj/item/weapon/card/id(src)
 		new /obj/item/weapon/card/id(src)
 
-/obj/item/weapon/storage/box/ids/prisoner
+/obj/item/weapon/storage/box/prisoner
 	name = "prisoner IDs"
 	desc = "Take away their last shred of dignity, their name."
 	icon_state = "id"
 
 	New()
 		..()
-		contents = list()
-		sleep(1)
 		new /obj/item/weapon/card/id/prisoner/one(src)
 		new /obj/item/weapon/card/id/prisoner/two(src)
 		new /obj/item/weapon/card/id/prisoner/three(src)
