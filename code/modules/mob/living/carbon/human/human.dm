@@ -499,18 +499,22 @@
 			var/mob/living/carbon/human/H = usr
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
 
-				/* // Uncomment if you want sechuds to need security access
+				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/allowed_access = 0
-				if(H.wear_id)
-					var/list/access = H.wear_id.GetAccess()
-					if(access_security in access)
-						allowed_access = 1
-						return
+				var/obj/item/clothing/glasses/G = H.glasses
+				if (!G.emagged)
+					if(H.wear_id)
+						var/list/access = H.wear_id.GetAccess()
+						if(access_sec_doors in access)
+							allowed_access = 1
+				else
+					allowed_access = 1
+
 
 				if(!allowed_access)
 					H << "<span class='warning'>ERROR: Invalid Access</span>"
 					return
-				*/
+
 
 				var/modified = 0
 				var/perpname = "wot"
