@@ -67,7 +67,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
-		grant_changeling_powers(changeling.current)
+		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
@@ -151,10 +151,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		else
 			return ..()
 	return 0*/
-
-/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/changeling_mob)
-	if(!istype(changeling_mob))	return
-	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)

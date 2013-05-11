@@ -170,12 +170,6 @@
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
-/mob/living/carbon/alien/getDNA()
-	return null
-
-/mob/living/carbon/alien/setDNA()
-	return
-
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.

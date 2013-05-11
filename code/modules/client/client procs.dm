@@ -255,5 +255,16 @@
 		'icons/spideros_icons/sos_11.png',
 		'icons/spideros_icons/sos_12.png',
 		'icons/spideros_icons/sos_13.png',
-		'icons/spideros_icons/sos_14.png'
+		'icons/spideros_icons/sos_14.png',
+		'icons/stamp_icons/large_stamp-clown.png',
+		'icons/stamp_icons/large_stamp-deny.png',
+		'icons/stamp_icons/large_stamp-ok.png',
+		'icons/stamp_icons/large_stamp-hop.png',
+		'icons/stamp_icons/large_stamp-cmo.png',
+		'icons/stamp_icons/large_stamp-ce.png',
+		'icons/stamp_icons/large_stamp-hos.png',
+		'icons/stamp_icons/large_stamp-rd.png',
+		'icons/stamp_icons/large_stamp-cap.png',
+		'icons/stamp_icons/large_stamp-qm.png',
+		'icons/stamp_icons/large_stamp-law.png'
 		)

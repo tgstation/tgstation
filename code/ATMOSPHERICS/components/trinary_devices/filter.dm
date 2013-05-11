@@ -34,9 +34,9 @@ Filter types:
 				radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 	New()
+		..()
 		if(radio_controller)
 			initialize()
-		..()
 
 	update_icon()
 		if(stat & NOPOWER)

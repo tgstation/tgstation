@@ -292,23 +292,21 @@
 
 	else if( istype(W, /obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount == MAXCOIL)
+		if(C.amount >= MAXCOIL)
 			user << "The coil is too long, you cannot add any more cable to it."
 			return
 
 		if( (C.amount + src.amount <= MAXCOIL) )
-			C.amount += src.amount
 			user << "You join the cable coils together."
-			C.update_icon()
-			del(src)
+			C.give(src.amount) // give it cable
+			src.use(src.amount) // make sure this one cleans up right
 			return
 
 		else
-			user << "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other."
-			src.amount -= (MAXCOIL-C.amount)
-			src.update_icon()
-			C.amount = MAXCOIL
-			C.update_icon()
+			var/amt = MAXCOIL - C.amount
+			user << "You transfer [amt] length\s of cable from one coil to the other."
+			C.give(amt)
+			src.use(amt)
 			return
 
 /obj/item/weapon/cable_coil/proc/use(var/used)
@@ -324,6 +322,13 @@
 		amount -= used
 		update_icon()
 		return 1
+
+/obj/item/weapon/cable_coil/proc/give(var/extra)
+	if(amount + extra > MAXCOIL)
+		amount = MAXCOIL
+	else
+		amount += extra
+	update_icon()
 
 // called when cable_coil is clicked on a turf/simulated/floor
 

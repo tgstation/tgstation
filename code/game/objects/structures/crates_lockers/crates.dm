@@ -13,6 +13,8 @@
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
+	var/sound_effect_open = 'sound/machines/click.ogg'
+	var/sound_effect_close = 'sound/machines/click.ogg'
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
@@ -99,15 +101,6 @@
 			newgas.temperature = target_temp
 		return newgas
 
-
-/obj/structure/closet/crate/bin
-	desc = "A large bin."
-	name = "Large bin"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "largebin"
-	density = 1
-	icon_opened = "largebinopen"
-	icon_closed = "largebin"
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
@@ -236,36 +229,45 @@
 	new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/open()
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src.loc, sound_effect_open, 15, 1, -3)
 
-	for(var/obj/O in src)
-		O.loc = get_turf(src)
+	dump_contents()
 
 	icon_state = icon_opened
 	src.opened = 1
+	return 1
 
 /obj/structure/closet/crate/close()
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src.loc, sound_effect_close, 15, 1, -3)
 
-	var/itemcount = 0
-
-	for(var/obj/O in get_turf(src))
-		if(itemcount >= storage_capacity)
-			break
-
-		if(O.density || O.anchored || istype(O,/obj/structure/closet))
-			continue
-
-		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-			var/obj/structure/stool/bed/B = O
-			if(B.buckled_mob)
-				continue
-
-		O.loc = src
-		itemcount++
+	take_contents()
 
 	icon_state = icon_closed
 	src.opened = 0
+	return 1
+
+/obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
+
+	if(contents.len >= storage_capacity)
+		return -1
+
+	if(include_mobs && isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled)
+			return 0
+	else if(isobj(AM))
+		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
+			return 0
+	else
+		return 0
+
+	if(istype(AM, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/stool/bed/B = AM
+		if(B.buckled_mob)
+			return 0
+
+	AM.loc = src
+	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
 	if(opened)
@@ -349,7 +351,8 @@
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			rigged = 0
 			return
-	else return attack_hand(user)
+	else if(!place(user, W))
+		return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)

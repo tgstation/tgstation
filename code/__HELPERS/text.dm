@@ -330,3 +330,64 @@
 	for(var/i = length(text); i > 0; i--)
 		new_text += copytext(text, i, i+1)
 	return new_text
+
+var/list/zero_character_only = list("0")
+var/list/hex_characters = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
+var/list/alphabet = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+var/list/binary = list("0","1")
+/proc/random_string(length, list/characters)
+	. = ""
+	for(var/i=1, i<=length, i++)
+		. += pick(characters)
+
+/proc/repeat_string(times, string="")
+	. = ""
+	for(var/i=1, i<=times, i++)
+		. += string
+
+/proc/random_short_color()
+	return random_string(3, hex_characters)
+
+/proc/add_zero2(t, u)
+	var/temp1
+	while (length(t) < u)
+		t = "0[t]"
+	temp1 = t
+	if (length(t) > u)
+		temp1 = copytext(t,2,u+1)
+	return temp1
+
+//merges non-null characters (3rd argument) from "from" into "into". Returns result
+//e.g. into = "Hello World"
+//     from = "Seeya______"
+//     returns"Seeya World"
+//The returned text is always the same length as into
+//This was coded to handle DNA gene-splicing.
+/proc/merge_text(into, from, null_char="_")
+	. = ""
+	if(!istext(into))	into = ""
+	if(!istext(from))	from = ""
+	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
+	
+	var/previous = 0
+	var/start = 1
+	var/end = length(into) + 1
+	
+	for(var/i=1, i<end, i++)
+		var/ascii = text2ascii(from, i)
+		if(ascii == null_ascii)
+			if(previous != 1)
+				. += copytext(from, start, i)
+				start = i
+				previous = 1
+		else
+			if(previous != 0)
+				. += copytext(into, start, i)
+				start = i
+				previous = 0
+	
+	if(previous == 0)
+		. += copytext(from, start, end)
+	else
+		. += copytext(into, start, end)
+		

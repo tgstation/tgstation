@@ -25,7 +25,9 @@
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
+
 	New()
+		..()
 		initial_loc = get_area(loc)
 		if (initial_loc.master)
 			initial_loc = initial_loc.master
@@ -36,7 +38,6 @@
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
 			src.broadcast_status()
-		..()
 
 	update_icon()
 		if(node && on && !(stat & (NOPOWER|BROKEN)))
