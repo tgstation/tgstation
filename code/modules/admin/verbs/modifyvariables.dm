@@ -132,7 +132,7 @@ var/list/forbidden_varedit_object_types = list(
 
     var/list/locked = list("vars", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo")
     var/list/ckey_edit = list("key", "ckey")
-    var/list/icon_edit = list("icon", "icon_state")
+    var/list/icon_edit = list("icon", "icon_state", "overlays", "underlays")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
@@ -151,9 +151,9 @@ var/list/forbidden_varedit_object_types = list(
 	if(variable in locked)
 		if(!check_rights(R_DEBUG))	return
 	if(variable in ckey_edit)
-		if(!check_rights(R_SPAWN) && !check_rights(R_DEBUG)) return
+		if(!check_rights(R_SPAWN|R_DEBUG)) return
 	if(variable in icon_edit)
-        if(!check_rights(R_FUN) && !check_rights(R_DEBUG)) return
+        if(!check_rights(R_FUN|R_DEBUG)) return
 
 	if(isnull(variable))
 		usr << "Unable to determine variable type."
@@ -276,7 +276,7 @@ var/list/forbidden_varedit_object_types = list(
 
     var/list/locked = list("vars", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "mutantrace")
     var/list/ckey_edit = list("key", "ckey")
-    var/list/icon_edit = list("icon", "icon_state")
+    var/list/icon_edit = list("icon", "icon_state", "overlays", "underlays")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -299,9 +299,9 @@ var/list/forbidden_varedit_object_types = list(
 		if(param_var_name == "holder" || (param_var_name in locked))
 			if(!check_rights(R_DEBUG))	return
 		if(param_var_name in ckey_edit)
-		    if(!check_rights(R_SPAWN) && !check_rights(R_DEBUG)) return
+		    if(!check_rights(R_SPAWN|R_DEBUG)) return
         if(param_var_name in icon_edit)
-            if(!check_rights(R_FUN) && !check_rights(R_DEBUG)) return
+            if(!check_rights(R_FUN|R_DEBUG)) return
 
 		variable = param_var_name
 
@@ -361,9 +361,9 @@ var/list/forbidden_varedit_object_types = list(
         if(variable == "holder" || (variable in locked))
         	if(!check_rights(R_DEBUG)) return
         if(variable in ckey_edit)
-        	if(!check_rights(R_SPAWN) && !check_rights(R_DEBUG)) return
+        	if(!check_rights(R_SPAWN|R_DEBUG)) return
         if(variable in icon_edit)
-        	if(!check_rights(R_FUN) && !check_rights(R_DEBUG)) return
+        	if(!check_rights(R_FUN|R_DEBUG)) return
 
 	if(!autodetect_class)
 
