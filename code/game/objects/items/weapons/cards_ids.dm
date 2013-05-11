@@ -172,6 +172,8 @@
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
+	icon_state = "orange"
+	item_state = "orange_id"
 	assignment = "Prisoner"
 	registered_name = "Scum"
 
