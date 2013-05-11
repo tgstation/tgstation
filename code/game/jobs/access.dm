@@ -177,13 +177,11 @@
 	switch(job)
 		if("VIP Guest")
 			return list(access_cent_general)
-		if("Prisoner")
-			return
 		if("Custodian")
 			return list(access_cent_general, access_cent_living, access_cent_storage)
 		if("Thunderdome Overseer")
 			return list(access_cent_general, access_cent_thunder)
-		if("Intel Officer")
+		if("CentCom Official")
 			return list(access_cent_general, access_cent_living)
 		if("Medical Officer")
 			return list(access_cent_general, access_cent_living, access_cent_medical)
@@ -191,9 +189,11 @@
 			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
-		if("BlackOps Commander")
+		if("Special Ops Officer")
 			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
-		if("Supreme Commander")
+		if("Admiral")
+			return get_all_centcom_access()
+		if("CentCom Commander")
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
@@ -408,10 +408,10 @@
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
+				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","CentCom Commander")
 
 /obj/proc/GetJobName()
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
@@ -427,6 +427,6 @@
 
 	if(jobName in get_all_jobs()) //Check station jobs
 		return jobName
-	if(jobName == "Prisoner") //Check for Prisoner
-		return "Prisoner"
+	if(jobName in get_all_centcom_jobs()) //Check for Prisoner
+		return "Centcom"
 	return "Unknown" //Return unknown if none of the above apply
