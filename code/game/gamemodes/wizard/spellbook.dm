@@ -18,11 +18,10 @@
 		if(contract.used)
 			user << "The contract has been used, you can't get your points back now."
 		else
-			user.drop_item()
 			user << "You feed the contract back into the spellbook, refunding your points."
 			src.max_uses++
 			src.uses++
-			del(O)
+			del (O)
 
 
 
