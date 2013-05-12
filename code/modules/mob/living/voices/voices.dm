@@ -33,6 +33,16 @@
 		NP.key = key
 	return NP
 
+/mob/living/voices/proc/transfer(mob/newhost)
+	if (newhost)
+		current_host = newhost
+		loc = current_host
+		if (client)
+			client.eye = current_host
+		return 1
+	else
+		return 0
+
 /mob/living/voices/ghost()	//a way for a voice to become a ghost
 	set category = "OOC"
 	set name = "Ghost"

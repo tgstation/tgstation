@@ -11,7 +11,7 @@
 		return
 
 	log_say("Voice/[src.key] inside [src.current_host]: [message]")
-	var/tdisplay = "<i><font color=#643200> [utitle] of <b>[src.real_name]:</b> [message]</font></i>"
+	var/tdisplay = "<i><font color=#643200>[utitle] of <b>[src.real_name]:</b> [message]</font></i>"
 
 	for(var/mob/M in mob_list)		//speak to your host, and dead guys
 		if ( (M==src.current_host) || (istype(M, /mob/dead/observer)) )
