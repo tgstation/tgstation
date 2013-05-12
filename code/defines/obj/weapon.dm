@@ -25,51 +25,47 @@
 	flags = TABLEPASS
 	w_class = 3.0
 
-
 /obj/item/weapon/spacecash
 	name = "space cash"
 	desc = "It's worth 1 credit."
 	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	opacity = 0
 	density = 0
 	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	force = 0
+	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
-	var/access = list()
-	access = access_crate_cash
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
-	access = access_crate_cash
 	desc = "It's worth 10 credits."
+
 /obj/item/weapon/spacecash/c20
 	icon_state = "spacecash20"
-	access = access_crate_cash
 	desc = "It's worth 20 credits."
+
 /obj/item/weapon/spacecash/c50
 	icon_state = "spacecash50"
-	access = access_crate_cash
 	desc = "It's worth 50 credits."
+
 /obj/item/weapon/spacecash/c100
 	icon_state = "spacecash100"
-	access = access_crate_cash
 	desc = "It's worth 100 credits."
+
 /obj/item/weapon/spacecash/c200
 	icon_state = "spacecash200"
-	access = access_crate_cash
 	desc = "It's worth 200 credits."
+
 /obj/item/weapon/spacecash/c500
 	icon_state = "spacecash500"
-	access = access_crate_cash
 	desc = "It's worth 500 credits."
+
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
-	access = access_crate_cash
 	desc = "It's worth 1000 credits."
 
 /obj/item/weapon/bananapeel
@@ -389,21 +385,6 @@
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
-
-/obj/item/weapon/wire
-	desc = "This is just a simple piece of regular insulated wire."
-	name = "wire"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "item_wire"
-	var/amount = 1.0
-	var/laying = 0.0
-	var/old_lay = null
-	m_amt = 40
-	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
-
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (OXYLOSS)
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'

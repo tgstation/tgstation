@@ -58,6 +58,7 @@
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 
 
+
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -339,7 +340,7 @@
 		if (istype(AM, /obj/machinery/recharge_station))
 			var/obj/machinery/recharge_station/F = AM
 			F.move_inside()
-		if (!istype(AM, /atom/movable))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!now_pushing)
 			now_pushing = 1
@@ -903,6 +904,7 @@
 		else
 			src << "Module isn't activated"
 		installed_modules()
+
 	return
 
 /mob/living/silicon/robot/proc/radio_menu()
@@ -994,3 +996,11 @@
 		state = 1
 	lockcharge = state
 	update_canmove()
+
+
+
+/mob/living/silicon/robot/verb/outputlaws()
+	set category = "Robot Commands"
+	set name = "State Laws"
+
+	checklaws()

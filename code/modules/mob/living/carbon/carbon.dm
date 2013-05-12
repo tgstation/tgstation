@@ -177,21 +177,22 @@
 			if(SKELETON in H.mutations && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
-			if(istype(src, /mob/living/carbon/human) && src:w_uniform)
+			if(ishuman(src))
 				var/mob/living/carbon/human/H = src
-				H.w_uniform.add_fingerprint(M)
+				if(H.wear_suit)
+					H.wear_suit.add_fingerprint(M)
+				else if(H.w_uniform)
+					H.w_uniform.add_fingerprint(M)
 
 			if(lying)
 				sleeping = max(0, sleeping - 5)
 				if(sleeping == 0)
 					resting = 0
-				M.visible_message( \
-					"<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
-					"<span class='notice'>You shake [src] trying to get \him up!</span>")
+				M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
+								"<span class='notice'>You shake [src] trying to get \him up!</span>")
 			else
-				M.visible_message( \
-					"<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
-					"<span class='notice'>You hug [src] to make \him feel better!</span>")
+				M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
+								"<span class='notice'>You hug [src] to make \him feel better!</span>")
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -202,15 +203,6 @@
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
-
-// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
-// Stop! ... Hammertime! ~Carn
-
-/mob/living/carbon/proc/getDNA()
-	return dna
-
-/mob/living/carbon/proc/setDNA(var/datum/dna/newDNA)
-	dna = newDNA
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
@@ -415,27 +407,37 @@
 		return 1
 	return
 
-/mob/living/carbon/u_equip(obj/item/W as obj)
-	if(!W)	return 0
 
-	else if(W == back)
+/mob/living/carbon/u_equip(obj/item/I)
+	if(!I)	return 0
+
+	if(I == r_hand)
+		r_hand = null
+		update_inv_r_hand(0)
+	else if(I == l_hand)
+		l_hand = null
+		update_inv_l_hand(0)
+	if(I == back)
 		back = null
 		update_inv_back(0)
-
-	else if(W == wear_mask)
+	else if(I == wear_mask)
 		wear_mask = null
 		update_inv_wear_mask(0)
-
-	else if(W == handcuffed)
+	else if(I == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed(0)
-
-	else if(W == legcuffed)
+	else if(I == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed(0)
 
-	else
-		..()
+	if(I)
+		if(client)
+			client.screen -= I
+		I.loc = loc
+		I.dropped(src)
+		if(I)
+			I.layer = initial(I.layer)
+
 
 /mob/living/carbon/proc/get_temperature(var/datum/gas_mixture/environment)
 	var/loc_temp = T0C
@@ -464,24 +466,53 @@
 	return loc_temp
 
 
-/mob/living/carbon/show_inv(mob/living/carbon/user as mob)
+/mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<HR>
+	<B><FONT size=3>[name]</FONT></B>
+	<HR>
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[wear_mask	? wear_mask	: "Nothing"]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>"}
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
+
+	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
+		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+
+	if(handcuffed)
+		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
+	if(legcuffed)
+		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
+
+	dat += {"
+	<BR>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	"}
+	user << browse(dat, "window=mob[name];size=325x500")
 	onclose(user, "mob[name]")
-	return
+
+/mob/living/carbon/Topic(href, href_list)
+	..()
+	//strip panel
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+		if(href_list["internal"])
+			if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+				visible_message("<span class='danger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>", \
+								"<span class='userdanger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>")
+				if(do_mob(usr, src, STRIP_DELAY))
+					if(internal)
+						internal = null
+						if(internals)
+							internals.icon_state = "internal0"
+					else if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+						internal = back
+						if(internals)
+							internals.icon_state = "internal1"
+
+					visible_message("<span class='danger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>", \
+									"<span class='userdanger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>")
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user)

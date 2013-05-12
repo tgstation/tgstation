@@ -59,7 +59,8 @@
 				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
 				return
 		if(ishuman(user))
-			if(user.dna && user.dna.mutantrace == "adamantine")
+			var/mob/living/carbon/human/H = user
+			if(H.dna && H.dna.mutantrace == "adamantine")
 				user << "<span class='notice'>Your metal fingers don't fit in the trigger guard!</span>"
 				return
 

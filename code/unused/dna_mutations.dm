@@ -94,8 +94,8 @@ mob/verb/checkmuts()
 			src << "Required ID: [R.reqID]"
 			src << ""
 
-mob/verb/editSE(t as text)
-	src:dna:struc_enzymes = t
+mob/living/carbon/verb/editSE(t as text)
+	dna.struc_enzymes = t
 	domutcheck(src)
 
 */

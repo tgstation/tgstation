@@ -540,7 +540,7 @@
 				explosion(T, 0, 0, 1, 3)
 			spawn(0)
 				if(wreckage)
-					var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
+					var/obj/structure/mecha_wreckage/WR = new wreckage(T)
 					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 						if(E.salvageable && prob(30))
 							WR.crowbar_salvage += E
@@ -958,8 +958,10 @@
 */
 	var/passed
 	if(src.dna)
-		if(usr.dna.unique_enzymes==src.dna)
-			passed = 1
+		if(check_dna_integrity(usr))
+			var/mob/living/carbon/C = usr
+			if(C.dna.unique_enzymes==src.dna)
+				passed = 1
 	else if(src.operation_allowed(usr))
 		passed = 1
 	if(!passed)

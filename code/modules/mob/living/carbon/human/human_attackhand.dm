@@ -6,64 +6,13 @@
 		visible_message("<span class='warning'>[M] attempted to touch [src]!</span>")
 		return 0
 
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == "harm")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
-					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>")
-					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
-					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-
-
-					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
-
-
-					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-					apply_effects(5,5,0,0,5,0,0,armorblock)
-					return 1
-				else
-					M << "<span class='notice'>Not enough charge!</span>"
-					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", \
-									"<span class='userdanger>[src] has been touched with the stun gloves by [M]!</span>")
-				return
-
-		if(istype(M.gloves , /obj/item/clothing/gloves/boxing/hologlove))	//HAHAHA FUCK THIS SHIT	//oh wow this is terrible i am realising this again
-
-			var/damage = rand(0, 9)
-			if(!damage)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='warning'>[M] has attempted to punch [src]!</span>")
-				return 0
-			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
-
-			if(HULK in M.mutations)
-				damage += 5
-
-			playsound(loc, "punch", 25, 1, -1)
-
-			visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-							"<span class='userdanger'>[M] has punched [src]!</span>")
-
-			apply_damage(damage, HALLOSS, affecting, armor_block)
-			if(damage >= 9)
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
-								"<span class='userdanger'>[M] has weakened [src]!</span>")
-				apply_effect(4, WEAKEN, armor_block)
-				forcesay(hit_appends)
-			return
-
-
 	switch(M.a_intent)
 		if("help")
 			if(health >= 0)
 				help_shake_act(M)
 				return 1
-			if(M.health < -75)	return 0
 
+			//CPR
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 				M << "<span class='notice'>Remove your mask!</span>"
 				return 0
@@ -71,16 +20,17 @@
 				M << "<span class='notice'>Remove their mask!</span>"
 				return 0
 
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-			O.source = M
-			O.target = src
-			O.s_loc = M.loc
-			O.t_loc = loc
-			O.place = "CPR"
-			requests += O
-			spawn(0)
-				O.process()
-			return 1
+			if(cpr_time < world.time + 30)
+				visible_message("<span class='notice'>[M] is trying to perform CPR on [src]!</span>")
+				if(!do_mob(M, src))
+					return 0
+				if((health >= -99 && health <= 0))
+					cpr_time = world.time
+					var/suff = min(getOxyLoss(), 7)
+					adjustOxyLoss(-suff)
+					updatehealth()
+					M.visible_message("[M] performs CPR on [src]!")
+					src << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
 			if(M == src)

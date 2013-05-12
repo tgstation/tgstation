@@ -200,6 +200,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(isWireCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		return
 
+	if(!M.IsVocal())
+		return
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
 
@@ -771,3 +773,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
+
+
+
+/obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
+	listening = 0			// And it's nice to have a subtype too for future features.

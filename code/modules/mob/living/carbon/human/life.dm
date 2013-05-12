@@ -225,7 +225,7 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath
 		// HACK NEED CHANGING LATER
-		if(health < 0)
+		if(health <= config.health_threshold_crit)
 			losebreath++
 
 		if(losebreath>0) //Suffocating so do not take a breath
@@ -313,7 +313,7 @@
 				failed_last_breath = 1
 				oxygen_alert = max(oxygen_alert, 1)
 				return 0
-			if(health > 0)
+			if(health >= config.health_threshold_crit)
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
 			else
@@ -818,7 +818,7 @@
 
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
 				Paralyse(3)
 
 				/* Done by handle_breath()
@@ -925,7 +925,7 @@
 
 		if(stat == UNCONSCIOUS)
 			//Critical damage passage overlay
-			if(health <= 0)
+			if(health <= config.health_threshold_crit)
 				var/image/I
 				switch(health)
 					if(-20 to -10)

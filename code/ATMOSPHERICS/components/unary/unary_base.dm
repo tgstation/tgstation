@@ -40,7 +40,10 @@
 		..()
 
 	initialize()
-		if(node) return
+		if(node)
+			node.disconnect(src)
+			del(network)
+			node = null
 
 		var/node_connect = dir
 

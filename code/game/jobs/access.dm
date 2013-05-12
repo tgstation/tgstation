@@ -80,9 +80,6 @@
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
 
-	//MONEY
-/var/const/access_crate_cash = 200
-
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null
@@ -180,6 +177,8 @@
 	switch(job)
 		if("VIP Guest")
 			return list(access_cent_general)
+		if("Prisoner")
+			return
 		if("Custodian")
 			return list(access_cent_general, access_cent_living, access_cent_storage)
 		if("Thunderdome Overseer")
@@ -426,7 +425,8 @@
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
 
-	if(jobName in get_all_jobs())
+	if(jobName in get_all_jobs()) //Check station jobs
 		return jobName
-	else
-		return "Unknown"
+	if(jobName == "Prisoner") //Check for Prisoner
+		return "Prisoner"
+	return "Unknown" //Return unknown if none of the above apply

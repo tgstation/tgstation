@@ -27,3 +27,6 @@
 		return "declares, \"[text]\"";
 
 	return "states, \"[text]\"";
+
+/mob/living/silicon/ai/IsVocal()
+	return !config.silent_ai

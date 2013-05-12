@@ -73,12 +73,14 @@
 			return
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
-			if(B.charges < initial(B.charges))
-				B.charges++
-				icon_state = "recharger1"
-				use_power(150)
+			if(B.bcell)
+				if(B.bcell.give(175))
+					icon_state = "recharger1"
+					use_power(200)
+				else
+					icon_state = "recharger2"
 			else
-				icon_state = "recharger2"
+				icon_state = "recharger3"
 
 
 /obj/machinery/recharger/emp_act(severity)
@@ -93,7 +95,8 @@
 
 	else if(istype(charging, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = charging
-		B.charges = 0
+		if(B.bcell)
+			B.bcell.charge = 0
 	..(severity)
 
 

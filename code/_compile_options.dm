@@ -32,7 +32,7 @@
 #define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
 #define SHOES_SLOWDOWN		-1	//How much shoes slow you down by default. Negative values speed you up
-#define HUMAN_STRIP_DELAY	40	//time taken (in deciseconds) to strip somebody
+#define STRIP_DELAY			40	//time taken (in deciseconds) to strip somebody
 #define DOOR_CRUSH_DAMAGE	10	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
@@ -117,19 +117,25 @@
 #define BODYTEMP_HEAT_DAMAGE_LIMIT			360.15 // The limit the human body can take before it starts taking damage from heat.
 #define BODYTEMP_COLD_DAMAGE_LIMIT			260.15 // The limit the human body can take before it starts taking damage from coldness.
 
-#define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE	2.0		//what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
-#define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE		2.0		//what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
-#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE		30000	//what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
-#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE		30000	//for fire helmet quality items (red and white hardhats)
-#define HELMET_MIN_COLD_PROTECITON_TEMPERATURE			160		//For normal helmets
-#define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE			600		//For normal helmets
-#define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE			160		//For armor
-#define ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE			600		//For armor
+#define SPACE_HELM_MIN_TEMP_PROTECT			2.0		//what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
+#define SPACE_HELM_MAX_TEMP_PROTECT			1500	//Thermal insulation works both ways /Malkevin
+#define SPACE_SUIT_MIN_TEMP_PROTECT			2.0		//what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
+#define SPACE_SUIT_MAX_TEMP_PROTECT			1500
 
-#define GLOVES_MIN_COLD_PROTECITON_TEMPERATURE			2.0		//For some gloves (black and)
-#define GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE			1500	//For some gloves
-#define SHOE_MIN_COLD_PROTECITON_TEMPERATURE			2.0		//For gloves
-#define SHOE_MAX_HEAT_PROTECITON_TEMPERATURE			1500	//For gloves
+#define FIRE_SUIT_MIN_TEMP_PROTECT			60		//Cold protection for firesuits
+#define FIRE_SUIT_MAX_TEMP_PROTECT			30000	//what max_heat_protection_temperature is set to for firesuit quality suits. MUST NOT BE 0.
+#define FIRE_HELM_MIN_TEMP_PROTECT			60		//Cold protection for fire helmets
+#define FIRE_HELM_MAX_TEMP_PROTECT			30000	//for fire helmet quality items (red and white hardhats)
+
+#define HELMET_MIN_TEMP_PROTECT				160		//For normal helmets
+#define HELMET_MAX_TEMP_PROTECT				600		//For normal helmets
+#define ARMOR_MIN_TEMP_PROTECT				160		//For armor
+#define ARMOR_MAX_TEMP_PROTECT				600		//For armor
+
+#define GLOVES_MIN_TEMP_PROTECT				2.0		//For some gloves (black and)
+#define GLOVES_MAX_TEMP_PROTECT				1500	//For some gloves
+#define SHOES_MIN_TEMP_PROTECT				2.0		//For gloves
+#define SHOES_MAX_TEMP_PROTECT				1500	//For gloves
 
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE

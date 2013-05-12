@@ -433,3 +433,27 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA
 	)
+
+// for secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list of humans.
+#define HEALTH_HUD		1 // dead, alive, sick, health status
+#define STATUS_HUD		2 // a simple line rounding the mob's number health
+#define ID_HUD			3 // the job asigned to your ID
+#define WANTED_HUD		4 // wanted, released, parroled, security status
+#define IMPLOYAL_HUD	5 // loyality implant
+#define IMPCHEM_HUD		6 // chemical implant
+#define IMPTRACK_HUD	7 // tracking implant
+
+//DNA - Because fuck you and your magic numbers being all over the codebase.
+#define DNA_BLOCK_SIZE				3
+
+#define DNA_UNI_IDENTITY_BLOCKS		7
+#define DNA_HAIR_COLOR_BLOCK		1
+#define DNA_FACIAL_HAIR_COLOR_BLOCK	2
+#define DNA_SKIN_TONE_BLOCK			3
+#define DNA_EYE_COLOR_BLOCK			4
+#define DNA_GENDER_BLOCK			5
+#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
+#define DNA_HAIR_STYLE_BLOCK		7
+
+#define DNA_STRUC_ENZYMES_BLOCKS	14
+#define DNA_UNIQUE_ENZYMES_LEN		32

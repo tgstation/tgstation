@@ -66,7 +66,7 @@
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
-	if(locate(/obj/effect/alien/weeds) in loc)
+	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth - getCloneLoss())
 			adjustToxLoss(plasma_rate)
 		else
@@ -168,12 +168,6 @@
 	else
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
-	return
-
-/mob/living/carbon/alien/getDNA()
-	return null
-
-/mob/living/carbon/alien/setDNA()
 	return
 
 /*----------------------------------------

@@ -29,7 +29,7 @@
 /obj/machinery/computer/crew/update_icon()
 
 	if(stat & BROKEN)
-		icon_state = "broken"
+		icon_state = "crewb"
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "c_unpowered"
