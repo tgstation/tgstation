@@ -1575,7 +1575,7 @@ datum
 			description = "A strong mineral acid with the molecular formula H2SO4."
 			reagent_state = LIQUID
 			color = "#DB5008" // rgb: 219, 80, 8
-			toxpwr = 1.5
+			toxpwr = 1
 			var/meltprob = 10
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//magic numbers everywhere
@@ -1585,56 +1585,64 @@ datum
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 
-						if(H.wear_mask)
-							if(!H.wear_mask.unacidable)
-								del (H.wear_mask)
-								H.update_inv_wear_mask(0)
-								H << "\red Your mask melts away but protects you from the acid!"
-							else
-								H << "\red Your mask protects you from the acid!"
-							return
-
 						if(H.head)
-							if(prob(10) && !H.head.unacidable)
+							if(prob(meltprob) && !H.head.unacidable)
+								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
 								del(H.head)
 								H.update_inv_head(0)
-								H << "\red Your helmet melts away but protects you from the acid"
+								H.update_hair(0)
 							else
-								H << "\red Your helmet protects you from the acid!"
+								H << "<span class='warning'>Your headgear protects you from the acid.</span>"
 							return
+
+						if(H.wear_mask)
+							if(prob(meltprob) && !H.wear_mask.unacidable)
+								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
+								del (H.wear_mask)
+								H.update_inv_wear_mask(0)
+								H.update_hair(0)
+							else
+								H << "<span class='warning'>Your mask protects you from the acid.</span>"
+							return
+
+						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
+							if(prob(meltprob) && !H.glasses.unacidable)
+								H << "<span class='danger'>Your glasses melts away!</span>"
+								del (H.glasses)
+								H.update_inv_glasses(0)
 
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
+								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
 								del (MK.wear_mask)
 								MK.update_inv_wear_mask(0)
-								MK << "\red Your mask melts away but protects you from the acid!"
 							else
-								MK << "\red Your mask protects you from the acid!"
+								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
 							return
 
 					if(!M.unacidable)
-						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
+						if(istype(M, /mob/living/carbon/human) && volume >= 3)
 							var/mob/living/carbon/human/H = M
 							var/datum/limb/affecting = H.get_organ("head")
 							if(affecting)
-								if(affecting.take_damage(10*toxpwr, 5*toxpwr))
+								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
 									H.UpdateDamageIcon(0)
-								if(prob(meltprob))
+								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream")
 									H.f_style = "Shaved"
 									H.h_style = "Bald"
 									H.update_hair(0)
 									H.status_flags |= DISFIGURED
 						else
-							M.take_organ_damage(min(10*toxpwr, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+							M.take_organ_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
-						M.take_organ_damage(min(10*toxpwr, volume * 2))
+						M.take_organ_damage(min(6*toxpwr, volume * toxpwr))
 
 			reaction_obj(var/obj/O, var/volume)
-				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob))
+				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 					if(!O.unacidable)
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
@@ -1649,7 +1657,7 @@ datum
 			reagent_state = LIQUID
 			color = "#8E18A9" // rgb: 142, 24, 169
 			toxpwr = 2
-			meltprob = 100
+			meltprob = 30
 
 /////////////////////////Food Reagents////////////////////////////
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
