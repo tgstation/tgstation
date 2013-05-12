@@ -266,8 +266,10 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+	var/nai = 0
 
 /mob/living/simple_animal/corgi/Ian/Life()
+
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD

@@ -97,7 +97,7 @@
 	item_state = "syringe_kit"
 	w_class = 3
 	max_w_class = 2
-	storage_slots = 5
+	storage_slots = 11
 	req_access = list(access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -105,8 +105,14 @@
 
 	New()
 		..()
+		new /obj/item/clothing/tie/medal/gold/captain(src)
+		new /obj/item/clothing/tie/medal/silver/security(src)
+		new /obj/item/clothing/tie/medal/silver/security(src)
 		new /obj/item/clothing/tie/medal/silver/valor(src)
 		new /obj/item/clothing/tie/medal/bronze_heart(src)
 		new /obj/item/clothing/tie/medal/conduct(src)
 		new /obj/item/clothing/tie/medal/conduct(src)
 		new /obj/item/clothing/tie/medal/conduct(src)
+		new /obj/item/clothing/tie/medal/conduct(src)
+		new /obj/item/clothing/tie/medal/nobel_science(src)
+		new /obj/item/clothing/tie/medal/nobel_science(src)

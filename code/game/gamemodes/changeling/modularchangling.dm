@@ -56,6 +56,12 @@ var/list/datum/power/changeling/powerinstances = list()
 	genomecost = 1
 	verbpath = /mob/proc/changeling_lesser_form
 
+/datum/power/changeling/greater_form
+	name = "Greater Form"
+	desc = "We become the pinnicle of evolution. We will show the humans what happens when they leave their isle of ignorance."
+	genomecost = 0
+	verbpath = /mob/proc/changeling_greater_form
+
 /datum/power/changeling/deaf_sting
 	name = "Deaf Sting"
 	desc = "We silently sting a human, completely deafening them for a short time."

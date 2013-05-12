@@ -179,3 +179,10 @@
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/sombrero
+	name = "sombrero"
+	icon_state = "sombrero"
+	item_state = "sombrero"
+	desc = "<i>¡Arriba!</i>"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
