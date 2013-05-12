@@ -68,7 +68,7 @@
 	return .
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
-	if(!istype(owner))
+	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
 		owner.dna = new /datum/dna()
@@ -96,6 +96,7 @@
 		domutcheck(owner)
 	
 	check_dna_integrity(owner)
+	return owner.dna
 	
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!istype(character))
@@ -205,21 +206,23 @@
 /////////////////////////// DNA HELPER-PROCS
 
 /////////////////////////// DNA MISC-PROCS
-/proc/updateappearance(mob/living/carbon/human/H)
-	if(!istype(H) || !istype(H.dna))
+/proc/updateappearance(mob/living/carbon/C)
+	if(!check_dna_integrity(C))
 		return 0
-	check_dna_integrity()
-	var/structure = H.dna.uni_identity
-	H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
-	H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
-	H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	H.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
-	H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
-	H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+	
+	var/structure = C.dna.uni_identity
+	C.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+	if(istype(C, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = C
+		H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
+		H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
+		H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+		H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
+		H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+		H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 
-	H.update_body()
-	H.update_hair()
+		H.update_body()
+		H.update_hair()
 	return 1
 
 /proc/domutcheck(mob/living/carbon/M, connected, inj)
@@ -393,7 +396,7 @@
 				del(animation)
 
 			var/mob/living/carbon/human/O = new( src )
-			O.gender = (deconstruct_block(getblock(M.dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
+			O.gender = (deconstruct_block(getblock(M.dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 
 			if(M)
 				if(M.dna)
