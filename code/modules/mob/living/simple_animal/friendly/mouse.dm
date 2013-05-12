@@ -31,10 +31,14 @@
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
-	src.stat = DEAD
 	src.icon_dead = "mouse_[color]_splat"
-	src.icon_state = "mouse_[color]_splat"
+	Die()
 
+/mob/living/simple_animal/mouse/Die()
+	..()
+	var/obj/item/trash/deadmouse/M = new(src.loc)
+	M.icon_state = src.icon_dead
+	del (src)
 
 /mob/living/simple_animal/mouse/HasEntered(AM as mob|obj)
 	if( ishuman(AM) )
@@ -67,3 +71,9 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+/obj/item/trash/deadmouse
+	name = "dead mouse"
+	desc = "It looks like somebody dropped the bass on it."
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "mouse_gray_dead"
