@@ -21,11 +21,17 @@ datum/hSB
 	var/owner = null
 	var/admin = 0
 
+	var/clothinfo = null
+	var/reaginfo = null
 	var/objinfo = null
 	var/canisterinfo = null
 	var/hsbinfo = null
 
-	var/global/list/spawn_forbidden = list(/obj/item/weapon/grab, /obj/item/tk_grab, /obj/item/weapon/dummy, /obj/item/assembly,/obj/item/device/onetankbomb)
+	var/global/list/spawn_forbidden = list(
+		/obj/item/weapon/grab, /obj/item/tk_grab, /obj/item/weapon/dummy, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
+		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
+		/obj/item/device/uplink/hidden, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
+		/obj/item/borg/sight,/obj/item/borg/overdrive,/obj/item/borg/stun)
 
 	proc
 		update()
@@ -39,8 +45,6 @@ datum/hSB
 					"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/device/flashlight]",
 					"Spawn Toolbox"						= "hsbspawn&path=[/obj/item/weapon/storage/toolbox/mechanical]",
 					"Spawn Light Replacer"				= "hsbspawn&path=[/obj/item/device/lightreplacer]",
-					"Spawn Rapid Construction Device"	= "hsbrcd",
-					"Spawn RCD Ammo"					= "hsbspawn&path=[/obj/item/weapon/rcd_ammo]",
 					"Spawn Medical Kit"					= "hsbspawn&path=[/obj/item/weapon/storage/firstaid/regular]",
 					"Spawn All-Access ID"				= "hsbaaid",
 
@@ -50,17 +54,21 @@ datum/hSB
 					"Spawn 50 Glass"					= "hsbglass",
 					"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/weapon/cable_coil]",
 					"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/cell/hyper]",
+					"Spawn Rapid Construction Device"	= "hsbrcd",
+					"Spawn RCD Ammo"					= "hsb_safespawn&path=[/obj/item/weapon/rcd_ammo]",
 					"Spawn Airlock"						= "hsbairlock",
 
 					"Miscellaneous",
 					"Spawn Air Scrubber"				= "hsbscrubber",
-					"Spawn Canister"					= "hsbcanister",
+					"Spawn Canister..."					= "hsbcanister",
 					"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
 					"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 					"Bots",
+					"Spawn Cleanbot"					= "hsbspawn&path=[/obj/machinery/bot/cleanbot]",
 					"Spawn Floorbot"					= "hsbspawn&path=[/obj/machinery/bot/floorbot]",
 					"Spawn Medbot"						= "hsbspawn&path=[/obj/machinery/bot/medbot]")
+
 
 			if(!hsbinfo)
 				hsbinfo = "<center><b>Sandbox Panel</b></center><hr>"
@@ -68,14 +76,18 @@ datum/hSB
 					hsbinfo += "<b>Administration</b><br>"
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><hr>"
+				else
+					hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
 				for(var/T in hrefs)
 					var/href = hrefs[T]
 					if(href)
-						hsbinfo += "- <a href=\"?\ref[src];hsb=[hrefs[T]]\">[T]</a><br>"
+						hsbinfo += "- <a href='?\ref[src];hsb=[hrefs[T]]'>[T]</a><br>"
 					else
 						hsbinfo += "<br><b>[T]</b><br>"
-				if(hsboxspawn)
-					hsbinfo += "<hr>- <a href=\"?\ref[src];hsb=hsbobj\">Spawn Other Item</a><br><br>"
+				hsbinfo += "<hr>"
+				hsbinfo += "- <a href='?\ref[src];hsb=hsbcloth'>Spawn Clothing...</a><br>"
+				hsbinfo += "- <a href='?\ref[src];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
+				hsbinfo += "- <a href='?\ref[src];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
 
 			usr << browse(hsbinfo, "window=hsbpanel")
 
@@ -164,6 +176,9 @@ datum/hSB
 				if("hsbglass")
 					new/obj/item/stack/sheet/glass{amount=50}(usr.loc)
 
+				//
+				// All access ID
+				//
 				if("hsbaaid")
 					var/obj/item/weapon/card/id/gold/ID = new(usr.loc)
 					ID.registered_name = usr.real_name
@@ -171,7 +186,13 @@ datum/hSB
 					ID.access = get_all_accesses()
 					ID.name = "[ID.registered_name]'s ID Card ([ID.assignment])"
 
+				//
+				// RCD - starts with full clip
+				// Spawn check due to grief potential (destroying floors, walls, etc)
+				//
 				if("hsbrcd")
+					if(!hsboxspawn) return
+
 					new/obj/item/weapon/rcd{matter=30;canRwall=1}(usr.loc)
 
 				//
@@ -193,25 +214,52 @@ datum/hSB
 				//
 				// Object spawn window
 				//
+
+				// Clothing
+				if("hsbcloth")
+					if(!hsboxspawn) return
+
+					if(!clothinfo)
+						clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
+						var/list/all_items = typesof(/obj/item/clothing) - /obj/item/clothing
+						for(var/typekey in spawn_forbidden)
+							all_items -= typesof(typekey)
+						for(var/O in reverselist(all_items))
+							clothinfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+
+					usr << browse(clothinfo,"window=sandbox")
+
+				// Reagent containers
+				if("hsbreag")
+					if(!hsboxspawn) return
+
+					if(!reaginfo)
+						reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
+						var/list/all_items = typesof(/obj/item/weapon/reagent_containers) - /obj/item/weapon/reagent_containers
+						for(var/typekey in spawn_forbidden)
+							all_items -= typesof(typekey)
+						for(var/O in reverselist(all_items))
+							reaginfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+
+					usr << browse(reaginfo,"window=sandbox")
+
+				// Other items
 				if("hsbobj")
 					if(!hsboxspawn) return
 
 					if(!objinfo)
-						objinfo = "Items:<hr><br>"
-						for(var/O in reverselist(typesof(/obj/item/)))
-							var/allow = 1
-							for(var/typekey in spawn_forbidden)
-								if(ispath(O,typekey))
-									allow = 0
-									break
-							if(!allow)
-								continue
+						objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
+						var/list/all_items = typesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/weapon/reagent_containers) - /obj/item
+						for(var/typekey in spawn_forbidden)
+							all_items -= typesof(typekey)
+
+						for(var/O in reverselist(all_items))
 							objinfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 					usr << browse(objinfo,"window=sandbox")
 
 				//
-				// For the object spawn specifically, checks to see if it is turned off
+				// Safespawn checks to see if spawning is disabled.
 				//
 				if("hsb_safespawn")
 					if(!hsboxspawn)
