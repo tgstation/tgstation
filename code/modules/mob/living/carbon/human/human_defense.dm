@@ -117,7 +117,7 @@ emp_act
 	if(!target_zone)
 		visible_message("\red <B>[user] misses [src] with \the [I]!")
 		return
-		
+
 	var/datum/organ/external/affecting = get_organ(target_zone)
 	if (!affecting)
 		return
@@ -152,7 +152,7 @@ emp_act
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(get_dist(H, src) > 1) //people with TK won't get smeared with blood
+				if(get_dist(H, src) <= 1) //people with TK won't get smeared with blood
 					H.bloody_body(src)
 					H.bloody_hands(src)
 
