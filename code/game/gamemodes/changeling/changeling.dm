@@ -117,6 +117,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if (you_are)
 		changeling.current << "<B>\red You are a changeling!</B>"
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
+	changeling.current << "A guide to playing changeling can be found at: http://wiki.nanotrasen.com/index.php?title=Changeling"
 	changeling.current << "<B>You must complete the following tasks:</B>"
 
 	if (changeling.current.mind)
