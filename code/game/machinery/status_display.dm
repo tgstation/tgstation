@@ -164,6 +164,8 @@
 	proc/get_supply_shuttle_timer()
 		if(supply_shuttle.moving)
 			var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
+			if(timeleft < 0)
+				return "Late"
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 		return ""
 
