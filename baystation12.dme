@@ -1291,6 +1291,7 @@
 #include "code\WorkInProgress\Mini\ATM.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
 #include "code\WorkInProgress\Ported\policetape.dm"
+#include "code\WorkInProgress\SkyMarshal\officer_stuff.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
 #include "code\WorkInProgress\Susan\susan_desert_turfs.dm"
 #include "code\WorkInProgress\virus2\analyser.dm"
