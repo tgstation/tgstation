@@ -184,7 +184,7 @@ var/sqlport = "3306"
 var/sqlfdbkdb = "test"
 var/sqlfdbklogin = "root"
 var/sqlfdbkpass = ""
-
+var/sqlfdbprefix = "erro_"
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 var/fileaccess_timer = 0

@@ -380,6 +380,8 @@
 				sqlfdbklogin = value
 			if("feedback_password")
 				sqlfdbkpass = value
+			if("feedback_prefix")
+				sqlfdbprefix = value
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 

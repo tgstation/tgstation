@@ -4,45 +4,133 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 /proc/load_admin_ranks()
 	admin_ranks.Cut()
 
-	var/previous_rights = 0
+	if(config.admin_legacy_system)
+		var/previous_rights = 0
+		world.log << "Loading ranks via legacy loader.."
+		//load text from file
+		var/list/Lines = file2list("config/admin_ranks.txt")
 
-	//load text from file
-	var/list/Lines = file2list("config/admin_ranks.txt")
+		//process each line seperately
+		for(var/line in Lines)
+			if(!length(line))				continue
+			if(copytext(line,1,2) == "#")	continue
 
-	//process each line seperately
-	for(var/line in Lines)
-		if(!length(line))				continue
-		if(copytext(line,1,2) == "#")	continue
+			var/list/List = text2list(line,"+")
+			if(!List.len)					continue
 
-		var/list/List = text2list(line,"+")
-		if(!List.len)					continue
+			var/rank = ckeyEx(List[1])
+			switch(rank)
+				if(null,"")		continue
+				if("Removed")	continue				//Reserved
 
-		var/rank = ckeyEx(List[1])
-		switch(rank)
-			if(null,"")		continue
-			if("Removed")	continue				//Reserved
+			var/rights = 0
 
-		var/rights = 0
-		for(var/i=2, i<=List.len, i++)
-			switch(ckey(List[i]))
-				if("@","prev")					rights |= previous_rights
-				if("buildmode","build")			rights |= R_BUILDMODE
-				if("admin")						rights |= R_ADMIN
-				if("ban")						rights |= R_BAN
-				if("fun")						rights |= R_FUN
-				if("server")					rights |= R_SERVER
-				if("debug")						rights |= R_DEBUG
-				if("permissions","rights")		rights |= R_PERMISSIONS
-				if("possess")					rights |= R_POSSESS
-				if("stealth")					rights |= R_STEALTH
-				if("rejuv","rejuvinate")		rights |= R_REJUVINATE
-				if("varedit")					rights |= R_VAREDIT
-				if("everything","host","all")	rights |= R_HOST
-				if("sound","sounds")			rights |= R_SOUNDS
-				if("spawn","create")			rights |= R_SPAWN
+			for(var/i=2, i<=List.len, i++)
+				switch(ckey(List[i]))
+					if("@","prev")					rights |= previous_rights
+					if("buildmode","build")			rights |= R_BUILDMODE
+					if("admin")						rights |= R_ADMIN
+					if("ban")						rights |= R_BAN
+					if("fun")						rights |= R_FUN
+					if("server")					rights |= R_SERVER
+					if("debug")						rights |= R_DEBUG
+					if("permissions","rights")		rights |= R_PERMISSIONS
+					if("possess")					rights |= R_POSSESS
+					if("stealth")					rights |= R_STEALTH
+					if("rejuv","rejuvinate")		rights |= R_REJUVINATE
+					if("varedit")					rights |= R_VAREDIT
+					if("everything","host","all")	rights |= R_HOST
+					if("sound","sounds")			rights |= R_SOUNDS
+					if("spawn","create")			rights |= R_SPAWN
 
-		admin_ranks[rank] = rights
-		previous_rights = rights
+			admin_ranks[rank] = rights
+			previous_rights = rights
+	else
+		establish_db_connection()
+		if(!dbcon.IsConnected())
+			world.log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+			diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+			config.admin_legacy_system = 1
+			load_admin_ranks()
+			return
+		world.log << "Loading ranks via SQL.."
+
+		var/list/admin_ranks_derive_tmp = list()
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT id, rank, permissions, derive FROM [sqlfdbprefix]admin_ranks ORDER BY id")
+		query.Execute()
+
+		world.log << "SQL error, if any: [query.ErrorMsg()]"
+
+		var/foundRank = 0
+
+		while(query.NextRow())
+			//var/id = query.item[1]
+			var/rank = query.item[2]
+			var/rights = query.item[3]
+			var/derive = query.item[4]
+
+			if(istext(rights))	rights = text2num(rights)
+			if(derive != "")
+				admin_ranks_derive_tmp[rank] = derive
+
+			admin_ranks[rank] = rights
+
+			world.log << "Loaded rank [rank], derives from '[derive]'"
+
+			foundRank = 1
+
+		if(!foundRank)
+			world.log << "No ranks received, uploading legacy system's ranks..(This should only happen once!)"
+			diary << "No ranks received, uploading legacy system's ranks..(This should only happen once!)"
+			var/previous_rights = 0
+			var/previous = ""
+
+			//load text from file
+			var/list/Lines = file2list("config/admin_ranks.txt")
+
+			//process each line seperately
+			for(var/line in Lines)
+				if(!length(line))				continue
+				if(copytext(line,1,2) == "#")	continue
+
+				var/list/List = text2list(line,"+")
+				if(!List.len)					continue
+
+				var/rank = ckeyEx(List[1])
+				switch(rank)
+					if(null,"")		continue
+					if("Removed")	continue				//Reserved
+
+				var/rights = 0
+
+				for(var/i=2, i<=List.len, i++)
+					switch(ckey(List[i]))
+						if("@","prev")
+							rights |= previous_rights
+							previous = rank
+						if("buildmode","build")			rights |= R_BUILDMODE
+						if("admin")						rights |= R_ADMIN
+						if("ban")						rights |= R_BAN
+						if("fun")						rights |= R_FUN
+						if("server")					rights |= R_SERVER
+						if("debug")						rights |= R_DEBUG
+						if("permissions","rights")		rights |= R_PERMISSIONS
+						if("possess")					rights |= R_POSSESS
+						if("stealth")					rights |= R_STEALTH
+						if("rejuv","rejuvinate")		rights |= R_REJUVINATE
+						if("varedit")					rights |= R_VAREDIT
+						if("everything","host","all")	rights |= R_HOST
+						if("sound","sounds")			rights |= R_SOUNDS
+						if("spawn","create")			rights |= R_SPAWN
+
+				admin_ranks[rank] = rights
+				var/sql = "INSERT INTO [sqlfdbprefix]admin_ranks(rank, permissions, derive) VALUES ('[sql_sanitize_text(rank)]', [rights], '[sql_sanitize_text(previous)]')"
+				var/DBQuery/query_insert = dbcon.NewQuery(sql)
+				query_insert.Execute()
+		else
+			for(var/i in admin_ranks_derive_tmp)
+				admin_ranks[i]=admin_ranks[i] | admin_ranks[admin_ranks_derive_tmp[i]]
 
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
@@ -59,9 +147,10 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		C.remove_admin_verbs()
 		C.holder = null
 	admins.Cut()
+	load_admin_ranks()
 
 	if(config.admin_legacy_system)
-		load_admin_ranks()
+
 
 		//load text from file
 		var/list/Lines = file2list("config/admins.txt")
@@ -104,7 +193,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM [sqlfdbprefix]admin")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = query.item[1]

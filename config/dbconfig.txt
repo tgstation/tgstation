@@ -20,3 +20,6 @@ FEEDBACK_LOGIN username
 
 ## Password used to access the database.
 FEEDBACK_PASSWORD password
+
+## Uncomment to change the DB prefix
+# feedback_prefix erro_
