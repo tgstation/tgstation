@@ -246,9 +246,23 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		var/jobname // the mob's "job"
 
-		// --- Human: use their actual job ---
+
+		// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 		if (ishuman(M))
-			jobname = M:get_assignment()
+			var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
+			var/datum/data/record/findjob
+			for (var/datum/data/record/t in data_core.general)
+				if(t.fields["name"] == voice)
+					findjob = t
+					break
+
+			if(voice != real_name)
+				displayname = voice
+				voicemask = 1
+			if(findjob)
+				jobname = findjob.fields["rank"]
+			else
+				jobname = "Unknown"
 
 		// --- Carbon Nonhuman ---
 		else if (iscarbon(M)) // Nonhuman carbon mob
@@ -269,15 +283,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Unidentifiable mob ---
 		else
 			jobname = "Unknown"
-
-
-		// --- Modifications to the mob's identity ---
-
-		// The mob is disguising their identity:
-		if (ishuman(M) && M.GetVoice() != real_name)
-			displayname = M.GetVoice()
-			jobname = "Unknown"
-			voicemask = 1
 
 
 
