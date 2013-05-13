@@ -443,6 +443,9 @@ var/list/be_special_flags = list(
 #define IMPCHEM_HUD		6 // chemical implant
 #define IMPTRACK_HUD	7 // tracking implant
 
+#define MANIFEST_ERROR_NAME		1
+#define MANIFEST_ERROR_COUNT	2
+#define MANIFEST_ERROR_ITEM		4
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 

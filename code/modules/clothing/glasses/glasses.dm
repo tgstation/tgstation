@@ -122,6 +122,22 @@
 		src.hud = new/obj/item/clothing/glasses/hud/security(src)
 		return
 
+/* /obj/item/clothing/glasses/sunglasses/sechud/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			user << "<span class='warning'>PZZTTPFFFT</span>"
+			desc = desc + " The display flickers slightly."
+		else
+			user << "<span class='warning'>It is already emagged!</span>" */ //Fuck emags
+
+/obj/item/clothing/glasses/sunglasses/sechud/emp_act(severity)
+	if(emagged == 0)
+		emagged = 1
+		desc = desc + " The display flickers slightly."
+
+
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
 	desc = "Thermals in the shape of glasses."
