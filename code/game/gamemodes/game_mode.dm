@@ -205,27 +205,31 @@ Implants;
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
-	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
+	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B>"
 
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	//possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
 
-	if(!intercept_hacked)
-		possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	shuffle(possible_modes)
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		if(modePlayer.len == 0)
-			intercepttext += i_text.build(A)
-		else
-			intercepttext += i_text.build(A, pick(modePlayer))
+	var/list/suspects = list()
+	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
+		// NT relation option
+		var/special_role = man.mind.special_role
+		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
+		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
+			suspects += man
+		// Antags
+		else if(special_role == "traitor" && prob(20) || \
+		   special_role == "Changeling" && prob(100) || \
+		   special_role == "Cultist" && prob(10) || \
+		   special_role == "Head Revolutionary" && prob(10))
+			suspects += man
+		// Some poor people who were just in the wrong place at the wrong time..
+		else if(prob(5))
+			suspects += man
+	for(var/mob/M in suspects)
+		switch(rand(1, 100))
+			if(1 to 50)
+				intercepttext += "Someone with the job of <b>[M.mind.assigned_role]</b> <br>"
+			else
+				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
