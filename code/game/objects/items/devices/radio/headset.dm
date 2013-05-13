@@ -156,6 +156,13 @@
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
 
+/obj/item/device/radio/headset/headset_service
+	name = "service radio headset"
+	desc = "Headset used by the foodservice and entertainment staff. To access the service channel, use :q."
+	icon_state = "srv_headset"
+	item_state = "headset"
+	keyslot2 = new /obj/item/device/encryptionkey/headset_service
+
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
 	user.set_machine(src)
