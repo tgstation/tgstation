@@ -41,7 +41,6 @@
 			user.take_organ_damage(5, 0)
 			if(src && src.imbue!="supply" && src.imbue!="runestun")
 				if(delete)
-					user.drop_item(src)
 					del(src)
 			return
 		else
@@ -54,7 +53,6 @@
 			if(imbue == "runestun")
 				user.take_organ_damage(5, 0)
 				call(/obj/effect/rune/proc/runestun)(T)
-				user.drop_item(src)
 				del(src)
 			else
 				..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
