@@ -38,7 +38,7 @@
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
 	else if(istype(I, /obj/item/weapon/mop))
-		if(I.reagents.total_volume < 5)	//if it's not completely soaked we assume they want to wet it, otherwise store it
+		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
 			if(reagents.total_volume < 1)
 				user << "[src] is out of water!</span>"
 			else
