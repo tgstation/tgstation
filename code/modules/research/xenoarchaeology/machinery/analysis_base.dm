@@ -110,7 +110,7 @@
 		dat += "Scan in progress<br><br><br>"
 	else
 		dat += "[held_container ? "<A href='?src=\ref[src];eject_beaker=1'>Eject beaker</a>" : "No beaker inserted."]<br>"
-		dat += "[fuel_container ? "<A href='?src=\ref[src];eject_fuel=1'>Eject fuel tank</a>" : "No fuel tank inserted."]<br>"
+		//dat += "[fuel_container ? "<A href='?src=\ref[src];eject_fuel=1'>Eject fuel tank</a>" : "No fuel tank inserted."]<br>"
 		dat += "[held_container ? "<A href='?src=\ref[src];begin=1'>Begin scanning</a>" : ""]"
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</a><BR>"
@@ -130,7 +130,7 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			held_container.loc = src
 			updateDialog()
 
-	else if(istype(W, /obj/item/weapon/tank))
+	/*else if(istype(W, /obj/item/weapon/tank))
 		//var/obj/item/weapon/reagent_containers/glass/G = W
 		if(fuel_container)
 			user << "\red You must remove the [fuel_container] first."
@@ -139,7 +139,7 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			user.drop_item(W)
 			fuel_container.loc = src
 			fuel_container = W
-			updateDialog()
+			updateDialog()*/
 	else
 		return ..()
 
