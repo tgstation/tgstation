@@ -130,7 +130,7 @@
 		else
 			if(check_access(scan))
 			// EDIT SPECIFIC JOB
-				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
+				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"	
 				dat += "<h1>[j.title]: [j.current_positions]/[j.total_positions]</h1><hr>"
 				//Make sure antags can't completely ruin rounds
 
@@ -147,8 +147,8 @@
 						dat += "<b>You have to wait [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"] minutes before you can open this position.</b>"
 					if(0)
 						dat += "<b>You cannot open positions for this job.</b><br>"
-
-
+	
+				
 				switch(can_close_job(j))
 					if(1)
 						dat += "<a href='?src=\ref[src];choice=make_job_unavailable'>Close Position</a>"
@@ -349,8 +349,6 @@
 					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
 					if(temp_t)
 						t1 = temp_t
-				else if(t1 == "Prisoner")
-					modify.access = null
 				else
 					var/datum/job/jobdatum
 					for(var/jobtype in typesof(/datum/job))
