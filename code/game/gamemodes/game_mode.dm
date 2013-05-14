@@ -217,7 +217,7 @@ Implants;
 			suspects += man
 		// Antags
 		else if(special_role == "traitor" && prob(20) || \
-		   special_role == "Changeling" && prob(100) || \
+		   special_role == "Changeling" && prob(40) || \
 		   special_role == "Cultist" && prob(10) || \
 		   special_role == "Head Revolutionary" && prob(10))
 			suspects += man
