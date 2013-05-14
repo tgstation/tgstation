@@ -49,7 +49,7 @@ rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 rawrtaicho: Wyatt Engstrom: /obj/item/clothing/under/fluff/wyatt_1
 roaper: Ian Colm: /obj/item/weapon/card/id/fluff/ian_colm_1
 roaper: Ian Colm: /obj/item/clothing/glasses/welding/fluff/ian_colm_2
-rukral: Nashida Bisha'ra: /obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1
+rukral: Nashida Bishara: /obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1
 searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/welding/fluff/yuki_matsuda_1
 searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
 serithi: Altair An-Nasaqan: /obj/item/clothing/tie/fluff/altair_locket
