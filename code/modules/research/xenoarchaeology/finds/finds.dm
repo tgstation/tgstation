@@ -9,7 +9,7 @@
 	var/view_range = 20				//how close excavation has to come to show an overlay on the turf
 	var/clearance_range = 3			//how close excavation has to come to extract the item
 									//if excavation hits var/excavation_required exactly, it's contained find is extracted cleanly without the ore
-	var/prob_delicate = 75			//probability it requires an active suspension field to not insta-crumble
+	var/prob_delicate = 90			//probability it requires an active suspension field to not insta-crumble
 	var/dissonance_spread = 1		//proportion of the tile that is affected by this find
 									//used in conjunction with analysis machines to determine correct suspension field type
 
@@ -276,6 +276,7 @@
 		if(19)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/claymore(src.loc)
+			new_item.force = 10
 			item_type = new_item.name
 		if(20)
 			//arcane clothing
@@ -318,6 +319,7 @@
 		if(25)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/katana(src.loc)
+			new_item.force = 10
 			item_type = new_item.name
 		if(26)
 			//energy gun
