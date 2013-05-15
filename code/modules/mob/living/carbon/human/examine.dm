@@ -199,7 +199,9 @@
 		else
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
 
+	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
+		appears_dead = 1
 		if(getbrain(src))//Only perform these checks if there is no brain
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
@@ -252,18 +254,19 @@
 
 	msg += "</span>"
 
-	if(stat == UNCONSCIOUS)
-		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-	else if(getBrainLoss() >= 60)
-		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+	if(!appears_dead)
+		if(stat == UNCONSCIOUS)
+			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
+		else if(getBrainLoss() >= 60)
+			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && getbrain(src) && stat != DEAD)
-		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && getbrain(src) && stat != DEAD)
-		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+		if(!key && getbrain(src))
+			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+		else if(!client && getbrain(src))
+			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
-	if(digitalcamo)
-		msg += "[t_He] [t_is] repulsively uncanny!\n"
+		if(digitalcamo)
+			msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 
 	if(istype(usr, /mob/living/carbon/human))
