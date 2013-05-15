@@ -39,9 +39,9 @@
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
-					dat += "<font color=blue>"
+					dat += "<font color=green>"
 				if (1)
-					dat += "<font color=yellow>"
+					dat += "<font color=blue>"
 				if (2)
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
