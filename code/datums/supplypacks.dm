@@ -662,6 +662,24 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_armory
 	group = "Security"
 
+/datum/supply_packs/shotgunammo
+	name = "Shotgun shells"
+	contains = list(/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun,
+					/obj/item/ammo_casing/shotgun)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Shotgun shells"
+	access = access_armory
+	group = "Security"
+
 /datum/supply_packs/expenergy
 	name = "Experimental energy gear crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,

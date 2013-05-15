@@ -63,6 +63,10 @@ proc/FloodFill(turf/simulated/start)
 
 
 proc/ZMerge(zone/A,zone/B)
+
+	if(!istype(A) || !istype(B))
+		return
+
 	//Merges two zones so that they are one.
 	var
 		a_size = A.air.group_multiplier
@@ -109,6 +113,7 @@ proc/ZMerge(zone/A,zone/B)
 proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	//Connects two zones by forming a connection object representing turfs A and B.
 
+
 	//Make sure that if it's space, it gets added to unsimulated_tiles instead.
 	if(!istype(B))
 		if(A.zone)
@@ -125,8 +130,6 @@ proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	//Make some preliminary checks to see if the connection is valid.
 	if(!A.zone || !B.zone) return
 	if(A.zone == B.zone) return
-
-	if(!A.CanPass(null,B,0,0)) return
 
 	if(A.CanPass(null,B,0,1))
 		return ZMerge(A.zone,B.zone)

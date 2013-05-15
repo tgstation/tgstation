@@ -7,6 +7,13 @@
 	flags = FPRINT|TABLEPASS
 	item_state = "centhat"
 
+/obj/item/clothing/head/hairflower
+	name = "hair flower pin"
+	icon_state = "hairflower"
+	desc = "Smells nice."
+	item_state = "hairflower"
+	flags = FPRINT|TABLEPASS
+
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."

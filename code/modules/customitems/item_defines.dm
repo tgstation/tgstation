@@ -135,6 +135,14 @@ hi
 	icon_on = "bluezippoon"
 	icon_off = "bluezippo"
 
+/obj/item/weapon/lighter/zippo/fluff/michael_guess_1 //Dragor23: Michael Guess
+	name = "engraved lighter"
+	desc = "A golden lighter, engraved with some ornaments and a G."
+	icon = 'custom_items.dmi'
+	icon_state = "guessip"
+	icon_on = "guessipon"
+	icon_off = "guessip"
+
 /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1 //rawrtaicho: Riley Rohtin
 	name = "Riley's black zippo"
 	desc = "A black zippo lighter, which holds some form of sentimental value."
@@ -192,6 +200,13 @@ hi
 	icon = 'custom_items.dmi'
 	desc = "A modified detective's camera, painted in bright orange. On the back you see \"Have fun\" written in small accurate letters with something black."
 	icon_state = "orangecamera"
+	pictures_left = 30
+
+/obj/item/device/camera/fluff/oldcamera //magmaram: Maria Crash
+	name = "Old Camera"
+	icon = 'custom_items.dmi'
+	desc = "An old, slightly beat-up digital camera, with a cheap photo printer taped on. It's a nice shade of blue."
+	icon_state = "oldcamera"
 	pictures_left = 30
 
 /obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
@@ -317,13 +332,6 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
 
-/obj/item/weapon/card/id/fluff/ian_colm_1 //Roaper: Ian Colm
-	name = "Technician"
-	desc = "An old ID with the words 'Ian Colm's Technician ID' printed on it.."
-	icon = 'custom_items.dmi'
-	icon_state = "technician_id"
-
-
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
 	name = "McReary's journal"
 	desc = "A journal with a warning sticker on the front cover. The initials \"J.M.\" are written on the back."
@@ -352,6 +360,14 @@ hi
 	desc = "A kit containing all the needed tools and parts to turn an APLU Ripley into a Titan's Fist worker mech."
 	icon = 'custom_items.dmi'
 	icon_state = "royce_kit"
+
+////// Ripley customisation kit - Sven Fjeltson - Mordeth221
+
+/obj/item/weapon/fluff/sven_fjeltson_1
+  name = "Mercenary APLU kit"
+  desc = "A kit containing all the needed tools and parts to turn an APLU Ripley into an old Mercenaries APLU."
+  icon = 'custom_items.dmi'
+  icon_state = "sven_kit"
 
 //////////////////////////////////
 //////////// Clothing ////////////
@@ -401,12 +417,6 @@ hi
 	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
 	icon = 'custom_items.dmi'
 	icon_state = "uzenwa_sissra_1"
-
-/obj/item/clothing/glasses/welding/fluff/ian_colm_2 //roaper: Ian Colm
-	name = "Ian's Goggles"
-	desc = "A pair of goggles used in the application of welding."
-	icon = 'custom_items.dmi'
-	icon_state = "ian_colm_1"
 
 ////// Medical eyepatch - Thysse Ezinwa - Jadepython
 /obj/item/clothing/glasses/eyepatch/fluff/thysse_1
@@ -459,6 +469,17 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "edvin_telephosphor_1"
 
+/obj/item/clothing/head/hardhat/fluff/neil_patterson_1 //superboredguy: Neil Patterson
+	name = "Engineering Cap"
+	desc = "Much safer than a hard helmet."
+	icon = 'custom_items.dmi'
+	icon_state = "neilpatterson0_hat"
+
+/obj/item/clothing/head/fluff/krinnhat //Shirotyrant: Krinn Seeskale
+	name = "saucepan hat"
+	desc = "This hat is the shiniest shiny Krinn has ever owned."
+	icon = 'custom_items.dmi'
+	icon_state = "krinn_hat"
 //////////// Suits ////////////
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
@@ -495,6 +516,13 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "deus_blueshield"
 	item_state = "deus_blueshield"
+
+/obj/item/clothing/suit/fluff/oldscarf //Writerer2: Javaria Zara
+	name = "old scarf"
+	desc = "An old looking scarf, it seems to be fairly worn."
+	icon_state = "mantle-unathi"
+	item_state = "mantle-unathi"
+	body_parts_covered = UPPER_TORSO
 
 //////////// Uniforms ////////////
 
@@ -536,6 +564,14 @@ hi
 	icon_state = "ara_bar_uniform"
 	item_state = "ara_bar_uniform"
 	color = "ara_bar_uniform"
+
+/obj/item/clothing/under/fluff/callum_suit //roaper: Callum Leamus
+	name = "knockoff suit"
+	desc = "A knockoff of a suit commonly worn by the upper class."
+	icon = 'custom_items.dmi'
+	icon_state = "callum_suit"
+	item_state = "callum_suit"
+	color = "callum_suit"
 
 /////// NT-SID Suit //Zuhayr: Jane Doe
 

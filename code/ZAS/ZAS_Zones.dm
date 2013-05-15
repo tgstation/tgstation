@@ -12,6 +12,7 @@ zone
 		list/connections // /connection objects which refer to connections with other zones, e.g. through a door.
 		list/connected_zones //Parallels connections, but lists zones to which this one is connected and the number
 							//of points they're connected at.
+		list/closed_connection_zones //Same as connected_zones, but for zones where the door or whatever is closed.
 		list/unsimulated_tiles // Any space tiles in this list will cause air to flow out.
 		last_update = 0
 		progress = "nothing"
@@ -244,9 +245,11 @@ zone/proc/process()
 			//Do merging if conditions are met. Specifically, if there's a non-door connection
 			//to somewhere with space, the zones are merged regardless of equilibrium, to speed
 			//up spacing in areas with double-plated windows.
-			if(C && C.indirect == 2 && C.A.zone && C.B.zone) //indirect = 2 is a direct connection.
-				if(C.A.zone.air.compare(C.B.zone.air) || unsimulated_tiles)
-					ZMerge(C.A.zone,C.B.zone)
+			if(C && C.A.zone && C.B.zone)
+				//indirect = 2 is a direct connection.
+				if(C.indirect == 2 )
+					if(C.A.zone.air.compare(C.B.zone.air) || unsimulated_tiles)
+						ZMerge(C.A.zone,C.B.zone)
 
 		progress = "problem with: ShareRatio(), Airflow(), a couple of misc procs"
 
@@ -269,13 +272,18 @@ zone/proc/process()
 						Airflow(src,Z)
 					ShareRatio( air , Z.air , connected_zones[Z] )
 
+		for(var/zone/Z in closed_connection_zones)
+			if(air && Z.air)
+				if( abs(air.temperature - Z.air.temperature) > 10 )
+					ShareHeat(air, Z.air, closed_connection_zones[Z])
+
 	progress = "all components completed successfully, the problem is not here"
 
   ////////////////
  //Air Movement//
 ////////////////
 
-var/list/sharing_lookup_table = list(0.08, 0.15, 0.21, 0.26, 0.30, 0.33)
+var/list/sharing_lookup_table = list(0.15, 0.20, 0.24, 0.27, 0.30, 0.33)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
@@ -407,6 +415,29 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 	return abs(old_pressure - A.return_pressure())
 
+
+proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
+	//Shares a specific ratio of gas between mixtures using simple weighted averages.
+	var
+		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+		ratio = 0.33
+		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+
+		full_heat_capacity = A.heat_capacity()
+
+		s_full_heat_capacity = B.heat_capacity()
+
+		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
+
+	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
+		ratio = sharing_lookup_table[connecting_tiles]
+	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+
+	A.temperature = max(0, (A.temperature - temp_avg) * (1- (ratio / max(1,A.group_multiplier)) ) + temp_avg )
+	B.temperature = max(0, (B.temperature - temp_avg) * (1- (ratio / max(1,B.group_multiplier)) ) + temp_avg )
+
+
   ///////////////////
  //Zone Rebuilding//
 ///////////////////
@@ -486,6 +517,7 @@ zone/proc/Rebuild()
 				var/turf/simulated/T = get_step(S,direction)
 				if(istype(T) && T.zone && S.CanPass(null, T, 0, 0))
 					T.zone.AddTurf(S)
+
 
 proc/play_wind_sound(var/turf/random_border, var/n)
 	if(random_border)

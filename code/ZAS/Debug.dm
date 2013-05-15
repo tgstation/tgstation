@@ -1,5 +1,5 @@
 
-client/verb/Zone_Info(turf/T as null|turf)
+client/proc/Zone_Info(turf/T as null|turf)
 	set category = "Debug"
 	if(T)
 		if(T.zone)
@@ -14,7 +14,7 @@ client/verb/Zone_Info(turf/T as null|turf)
 
 
 
-client/verb/Test_ZAS_Connection(var/turf/simulated/T as turf)
+client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
 	set category = "Debug"
 	if(!istype(T))
 		return
