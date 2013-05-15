@@ -104,7 +104,7 @@ datum/airlock_maker
 			var/target_type = "/obj/machinery/door/airlock"
 			if(glassdoor)
 				if(paintjob != "none")
-					if(paintjob in list("external","highsecurity")) // no glass version
+					if(paintjob in list("external","highsecurity","maintenance")) // no glass version
 						target_type += "/[paintjob]"
 					else
 						target_type += "/glass_[paintjob]"
