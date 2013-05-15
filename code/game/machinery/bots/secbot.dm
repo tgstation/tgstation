@@ -583,7 +583,6 @@ Auto Patrol: []"},
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(var/turf/avoid = null)
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
-	src.path = reverselist(src.path)
 
 
 // look for a criminal in view of the bot
