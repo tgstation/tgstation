@@ -67,7 +67,7 @@
 		else
 			src.camera.status = 1
 
-	health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
+	health = maxHealth - (getOxyLoss() + getFireLoss() + getBruteLoss())
 
 	if(getOxyLoss() > 50) Paralyse(3)
 
@@ -80,6 +80,11 @@
 
 	if(health < config.health_threshold_dead && src.stat != 2) //die only once
 		death()
+
+	if(health < config.health_threshold_crit) //Borg enters 'critically damaged' state
+		if(src.module_state_1 || src.module_state_2 || src.module_state_3)
+			uneq_all()
+			src << "<span class='warning'>SYSTEM ERROR: Critical damage sustained - Modules are unresponsive.</span>"
 
 	if (src.stat != 2) //Alive.
 		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
@@ -167,15 +172,15 @@
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
-				if(200 to INFINITY)
+				if(100 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(150 to 200)
+				if(75 to 100)
 					src.healths.icon_state = "health1"
-				if(100 to 150)
+				if(50 to 75)
 					src.healths.icon_state = "health2"
-				if(50 to 100)
+				if(25 to 50)
 					src.healths.icon_state = "health3"
-				if(0 to 50)
+				if(0 to 25)
 					src.healths.icon_state = "health4"
 				if(config.health_threshold_dead to 0)
 					src.healths.icon_state = "health5"
