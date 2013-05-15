@@ -60,7 +60,7 @@
 			var/mob/living/simple_animal/mouse/M = target
 			visible_message("\red <b>SPLAT!</b>")
 			M.splat()
-		playsound(target.loc, 'sound/effects/snap.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 		armed = 0
 		update_icon()
 		pulse(0)
