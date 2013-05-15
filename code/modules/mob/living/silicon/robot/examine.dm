@@ -18,7 +18,7 @@
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
-	if (src.health < config.health_threshold_crit)
+	if (src.health < -50)
 		msg += "It looks barely operational.\n"
 	msg += "</span>"
 

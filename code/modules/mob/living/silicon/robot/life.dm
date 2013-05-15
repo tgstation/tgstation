@@ -78,15 +78,41 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != 2) //die only once
+	if(health <= config.health_threshold_dead && src.stat != 2) //die only once
 		death()
 
-	if(health < config.health_threshold_crit) //Borg enters 'critically damaged' state
-		if(src.module_state_1 || src.module_state_2 || src.module_state_3)
-			uneq_all()
-			src << "<span class='warning'>SYSTEM ERROR: Critical damage sustained - Modules are unresponsive.</span>"
-
 	if (src.stat != 2) //Alive.
+		if(health < 50) //Gradual break down of modules as more damage is sustained
+			if(module_state_3)
+				if(istype(module_state_3,/obj/item/borg/sight))
+					sight_mode &= ~module_state_3:sight_mode
+				if (client)
+					client.screen -= module_state_3
+				contents -= module_state_3
+				module_state_3 = null
+				inv3.icon_state = "inv3"
+				src << "<span class='warning'>SYSTEM ERROR: Module III OFFLINE.</span>"
+			if(health < 0)
+				if(module_state_2)
+					if(istype(module_state_2,/obj/item/borg/sight))
+						sight_mode &= ~module_state_2:sight_mode
+					if (client)
+						client.screen -= module_state_2
+					contents -= module_state_2
+					module_state_2 = null
+					inv2.icon_state = "inv2"
+					src << "<span class='warning'>SYSTEM ERROR: Module II OFFLINE.</span>"
+				if(health < -50)
+					if(module_state_1)
+						if(istype(module_state_1,/obj/item/borg/sight))
+							sight_mode &= ~module_state_1:sight_mode
+						if (client)
+							client.screen -= module_state_1
+						contents -= module_state_1
+						module_state_1 = null
+						inv1.icon_state = "inv1"
+						src << "<span class='warning'>CRITICAL ERROR: All Modules OFFLINE.</span>"
+
 		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
 			src.stat = 1
 			if (src.stunned > 0)
@@ -178,11 +204,11 @@
 					src.healths.icon_state = "health1"
 				if(50 to 75)
 					src.healths.icon_state = "health2"
-				if(25 to 50)
+				if(0 to 50)
 					src.healths.icon_state = "health3"
-				if(0 to 25)
+				if(-50 to 0)
 					src.healths.icon_state = "health4"
-				if(config.health_threshold_dead to 0)
+				if(config.health_threshold_dead to -50)
 					src.healths.icon_state = "health5"
 				else
 					src.healths.icon_state = "health6"

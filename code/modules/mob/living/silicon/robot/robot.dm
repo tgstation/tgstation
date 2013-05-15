@@ -406,11 +406,11 @@
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if (src.health >= src.maxHealth)
-			user << "<span class='warning'>[src] is already in good condition.</span>"
-			return
 		if (src == user)
 			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
+			return
+		if (src.health >= src.maxHealth)
+			user << "<span class='warning'>[src] is already in good condition.</span>"
 			return
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
