@@ -183,7 +183,7 @@
 			if(environment.temperature > target_temperature)
 				gas.temperature -= energy_used/heat_capacity
 			else
-				gas.temperature -= energy_used/heat_capacity
+				gas.temperature += energy_used/heat_capacity
 
 			environment.merge(gas)
 
