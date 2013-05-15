@@ -307,6 +307,7 @@
 
 
 /obj/item/weapon/storage/dropped(mob/user)
+	..()
 	return
 
 

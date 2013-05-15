@@ -13,9 +13,10 @@
 		return 1
 	return ..()
 
-/mob/living/silicon/pai/say_quote(var/text)
+/mob/living/silicon/pai/say_quote(var/text,var/ital)
 	var/ending = copytext(text, length(text))
-
+	if(ital)
+		text = "<i>[text]</i>"
 	if (ending == "?")
 		return "[src.speakQuery], \"[text]\"";
 	else if (ending == "!")
