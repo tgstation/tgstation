@@ -109,8 +109,13 @@
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(target.loc == C)
-					log_message("Drilled through [target]")
-					target.ex_act(2)
+					if(istype(target, /mob/living/carbon))
+						var/mob/living/carbon/CM = target
+						log_message("Drilled through [target]")
+						CM.gib()
+					else
+						log_message("Drilled through [target]")
+						target.ex_act(2)
 		return 1
 
 	can_attach(obj/mecha/M as obj)
@@ -166,8 +171,13 @@
 							for(var/obj/item/weapon/ore/ore in range(target,1))
 								ore.Move(ore_box)
 				else if(target.loc == C)
-					log_message("Drilled through [target]")
-					target.ex_act(2)
+					if(istype(target, /mob/living/carbon))
+						var/mob/living/carbon/CM = target
+						log_message("Drilled through [target]")
+						CM.gib()
+					else
+						log_message("Drilled through [target]")
+						target.ex_act(2)
 		return 1
 
 	can_attach(obj/mecha/M as obj)
