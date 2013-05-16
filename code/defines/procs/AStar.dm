@@ -65,9 +65,9 @@ adjacent_proc:		The proc used to find adjacent tiles. When called, id is provide
 					For the best path to be found, it must only output tiles that could be reached in
 					one move AND aren't occupied by something else, like a wall.
 distance_proc:		Formula to use for calculating distance.
-maxnodes:			Not used. Maximum number of nodes to examine; values for it were never provided.
-					To avoid an (unlikely) infinite loop, a cutoff occurs at somewhat less than it took
-					the old algorithm to path across the station.
+maxnodes:			Maximum _depth_ of nodes to examine; currently used only by disease.
+					Not equal to the number of nodes to examine (lpct, internal) or the maximum path
+					length returned (max_length below).
 max_length:			If the path is longer, return only this many elements of it (starting from the front).
 					It can only be shortened after finding the whole path, so doesn't save any time,
 					but as different values were provided throughout the code it's kept for compatibility.
@@ -95,16 +95,20 @@ proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnod
 
 	//sanity check to avoid a huge waste of CPU time on impossible tasks
 	for(var/obj/O in dest_turf)
-		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
+		if (O.density && (!istype(O, /obj/machinery/door) || !(O.flags & ON_BORDER)))
 			var/list/path = new						//something is blocking the destination
 			return path
 
 	pq.insert(new /pathnode(start_turf, null, call(start_turf,distance_proc)(dest_turf),0))	//add the starting turf and manhattan distance to the queue!
 
-	while (!pq.nodes.len || lpct < 1500)			//maximum for DEPTH_BIAS=0.5 is 958 loops to Research Division (originally 2743)
-		lpct++
+	for (lpct = 0; lpct < 1800; lpct++)				//maximum for DEPTH_BIAS=0.5 is 958 loops to Research Division (originally 2743)
+		if (!pq.nodes.len) break
+
 		current = pq.extract_last()
 		checked.Add(current)
+
+		next_g = current.g_score + DEPTH_BIAS
+		//if (maxnodes && next_g > (maxnodes*DEPTH_BIAS)) continue
 
 		if (!current)								//no more possibilities, or an unhandled error
 			//world << "Impossible path"
@@ -126,7 +130,6 @@ proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnod
 				path.Cut(max_length,0)
 			return path								//SUCCESS
 
-		next_g = current.g_score + DEPTH_BIAS
 		var/adjacent = call(current.me,adjacent_proc)(id)
 		for (var/next_turf in adjacent)
 			//evaluations++
