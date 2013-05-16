@@ -18,16 +18,13 @@ obj/machinery/anomaly/gas_chromatography/ScanResults()
 		num_reagents++
 
 	if(num_reagents == 2 && scanned_sample)
-
-		var/specifity = 0.15
-		if(carrier)
-			specifity = GetResultSpecifity(scanned_sample, carrier)
-		results = "Chromatography partitioning analysis over carrier ([carrier]) indicates the following elements present ([110 * (specifity / (specifity + 0.1))]% accuracy):<br><br>"
+		var/specifity = GetResultSpecifity(scanned_sample, carrier)
+		results = "Chromatography partitioning analysis over carrier ([carrier]) indicates the following elements present ([100 * specifity]% accuracy):<br><br>"
 
 		var/num_found = 0
 		for(var/index=1,index <= scanned_sample.find_presence.len, index++)
 			var/find = scanned_sample.find_presence[index]
-			if(find && prob( 110 * (specifity / (specifity + 0.1)) ))
+			if(find && prob(100 * specifity))
 				results += " - " + finds_as_strings[index] + "<br>"
 				num_found++
 
