@@ -83,35 +83,14 @@
 
 	if (src.stat != 2) //Alive.
 		if(health < 50) //Gradual break down of modules as more damage is sustained
-			if(module_state_3)
-				if(istype(module_state_3,/obj/item/borg/sight))
-					sight_mode &= ~module_state_3:sight_mode
-				if (client)
-					client.screen -= module_state_3
-				contents -= module_state_3
-				module_state_3 = null
-				inv3.icon_state = "inv3"
-				src << "<span class='warning'>SYSTEM ERROR: Module III OFFLINE.</span>"
+			if(uneq_module(module_state_3))
+				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
 			if(health < 0)
-				if(module_state_2)
-					if(istype(module_state_2,/obj/item/borg/sight))
-						sight_mode &= ~module_state_2:sight_mode
-					if (client)
-						client.screen -= module_state_2
-					contents -= module_state_2
-					module_state_2 = null
-					inv2.icon_state = "inv2"
-					src << "<span class='warning'>SYSTEM ERROR: Module II OFFLINE.</span>"
+				if(uneq_module(module_state_2))
+					src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
 				if(health < -50)
-					if(module_state_1)
-						if(istype(module_state_1,/obj/item/borg/sight))
-							sight_mode &= ~module_state_1:sight_mode
-						if (client)
-							client.screen -= module_state_1
-						contents -= module_state_1
-						module_state_1 = null
-						inv1.icon_state = "inv1"
-						src << "<span class='warning'>CRITICAL ERROR: All Modules OFFLINE.</span>"
+					if(uneq_module(module_state_1))
+						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
 		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
 			src.stat = 1
@@ -200,9 +179,7 @@
 			switch(health)
 				if(100 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(75 to 100)
-					src.healths.icon_state = "health1"
-				if(50 to 75)
+				if(50 to 100)
 					src.healths.icon_state = "health2"
 				if(0 to 50)
 					src.healths.icon_state = "health3"

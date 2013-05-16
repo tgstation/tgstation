@@ -100,7 +100,7 @@
 		G.amount = 50
 		modules += G
 
-		var/obj/item/stack/rods/R = new /obj/item/stack/rods(src)
+		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
 		R.amount = 50
 		modules += R
 
