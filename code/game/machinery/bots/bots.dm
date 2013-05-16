@@ -178,8 +178,7 @@
 // Returns true if a link between A and B is blocked
 // Movement through doors allowed if ID has access
 /proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID)
-
-	if (A == null || B == null) return 1
+	if (!A || !B) return 1
 	if (get_dist(A,B) > 1) return 1
 
 	for (var/obj/O in B)
@@ -201,20 +200,20 @@
 
 		//windows
 		if (istype(D, /obj/machinery/door/window))
-			if(dir && D.dir)
-				passable = !D.check_access(ID)
+			if((dir & D.dir) && !D.check_access(ID))
+				return 1
 		//doors
 		else
 			if (D.stat && D.density)	//door is broken and shut, so the bot can't open it
 				return 1
 			else if (istype(D, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/A = D
-				if (A.locked || A.welded)
+				if (A.locked || A.welded || !A.check_access(ID))
 					return 1			//bots can't open bolted/welded airlocks
 				else passable = D.check_access(ID)
-			else if (istype(D, /obj/machinery/door/firedoor))
-				if(dir && D.dir)
-					passable = !D.density	//bots can't open closed firedoors. Doesn't matter if they're welded.
-			else if (istype(D, /obj/machinery/door/poddoor)) //blast door in-game
-				passable = !D.density
-	return passable
+			else if (istype(D, /obj/machinery/door/firedoor) && D.density)
+				if (!(istype(D, /obj/machinery/door/firedoor/border_only) && !(dir & D.dir)))
+					return 1	//bots can't open closed firedoors. Doesn't matter if they're welded.
+			else if (istype(D, /obj/machinery/door/poddoor) && D.density) //blast door in-game
+				return 1
+	return 0
