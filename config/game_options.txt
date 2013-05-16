@@ -142,3 +142,10 @@ JOBS_HAVE_MINIMAL_ACCESS
 ## Uncomment to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI
 #SILENT_BORG
+
+### SANDBOX PANEL AUTOCLOSE ###
+## The sandbox panel's item spawning dialog now stays open even after you click an option.
+## If you find that your players are abusing the sandbox panel, this option may slow them down
+## without preventing people from using it properly.
+## Only functions in sandbox game mode.
+#SANDBOX_AUTOCLOSE
