@@ -33,10 +33,8 @@
 	sprite_name = "miniFE"
 
 /obj/item/weapon/extinguisher/New()
-	var/datum/reagents/R = new/datum/reagents(max_water)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", max_water)
+	create_reagents(max_water)
+	reagents.add_reagent("water", max_water)
 
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
