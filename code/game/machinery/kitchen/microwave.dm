@@ -26,22 +26,20 @@
 ********************/
 
 /obj/machinery/microwave/New()
-	//..() //do not need this
-	reagents = new/datum/reagents(100)
-	reagents.my_atom = src
-	if (!available_recipes)
+	create_reagents(100)
+	if(!available_recipes)
 		available_recipes = new
-		for (var/type in (typesof(/datum/recipe)-/datum/recipe))
-			available_recipes+= new type
+		for(var/type in (typesof(/datum/recipe) - /datum/recipe))
+			available_recipes += new type
 		acceptable_items = new
 		acceptable_reagents = new
-		for (var/datum/recipe/recipe in available_recipes)
-			for (var/item in recipe.items)
+		for(var/datum/recipe/recipe in available_recipes)
+			for(var/item in recipe.items)
 				acceptable_items |= item
-			for (var/reagent in recipe.reagents)
+			for(var/reagent in recipe.reagents)
 				acceptable_reagents |= reagent
-			if (recipe.items)
-				max_n_of_items = max(max_n_of_items,recipe.items.len)
+			if(recipe.items)
+				max_n_of_items = max(max_n_of_items, recipe.items.len)
 
 /*******************
 *   Item Adding

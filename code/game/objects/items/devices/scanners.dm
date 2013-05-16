@@ -233,9 +233,7 @@ MASS SPECTROMETER
 
 /obj/item/device/mass_spectrometer/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	create_reagents(5)
 
 /obj/item/device/mass_spectrometer/on_reagent_change()
 	if(reagents.total_volume)
