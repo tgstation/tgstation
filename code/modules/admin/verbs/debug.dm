@@ -858,7 +858,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.name = "[M.real_name]'s ID Card"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()//They get full station access.
-			W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
+			W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
 			W.assignment = "Death Commando"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -887,8 +887,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card (CentCom Official)"
 			W.icon_state = "centcom"
-			W.access = get_all_accesses()
-			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
+			W.access = get_centcom_access("CentCom Official")
 			W.assignment = "CentCom Official"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -910,7 +909,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.name = "[M.real_name]'s ID Card (CentCom Commander)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
+			W.access += get_centcom_access("CentCom Commander")
 			W.assignment = "CentCom Commander"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -932,7 +931,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.name = "[M.real_name]'s ID Card (Special Ops Officer)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
+			W.access += get_centcom_access("Special Ops Officer")
 			W.assignment = "Special Ops Officer"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -986,7 +985,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.name = "[M.real_name]'s ID Card (Admiral)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
+			W.access += get_centcom_access("Admiral")
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
