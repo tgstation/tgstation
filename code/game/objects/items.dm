@@ -706,4 +706,7 @@
 		var/obj/item/weapon/storage/objectS = object
 		for(var/obj/item/O in objectS.contents)
 			update_holder(O)
+		var/obj/item/weapon/storage/objectS = object
+		for(var/obj/item/O in objectS.contents)
+			update_holder(O)
 	return
