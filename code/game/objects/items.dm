@@ -38,6 +38,7 @@
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
+	var/mob/held_by = null //The mob holding/containing the item
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -349,6 +350,7 @@
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
+	update_holder(src)
 	..()
 
 // called just as an item is picked up (loc is not yet changed)
@@ -357,10 +359,12 @@
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S as obj)
+	update_holder(src)
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+	update_holder(src)
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -373,6 +377,7 @@
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	update_holder(src)
 	return
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -679,3 +684,29 @@
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
+
+//get the holder of an object, be it turf or mob
+//Thanks to Nodrak for his help!
+/obj/item/proc/get_holder(obj/item/object)
+	if(istype(object.loc,/mob))
+		return object.loc
+	if(istype(object,/obj/item))
+		return get_holder(object.loc)
+	return null
+
+//updates the held_by variable
+/obj/item/proc/update_holder(obj/item/object)
+	var/obj/newholder = get_holder(object)
+	if(newholder == 0)
+		object.held_by = null //Not held by anyone anymore
+		return
+	object.held_by = newholder
+	//if its a storage container, update the contents as well
+	if(istype(object,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/objectS = object
+		for(var/obj/item/O in objectS.contents)
+			update_holder(O)
+		var/obj/item/weapon/storage/objectS = object
+		for(var/obj/item/O in objectS.contents)
+			update_holder(O)
+	return

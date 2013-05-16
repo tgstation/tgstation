@@ -209,6 +209,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(fon)
 		user.SetLuminosity(user.luminosity - f_lum)
 		SetLuminosity(f_lum)
+	..()
 
 /obj/item/device/pda/New()
 	..()
