@@ -5,7 +5,7 @@
 
 	var/antibodies = 0
 
-	var/silent = null 		//Can't talk. Value goes down every life proc.
+//moved var/silent to /mob/living
 
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
@@ -14,5 +14,5 @@
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/weapon/tank/internal = null
-	
+
 	var/datum/dna/dna = null//Carbon

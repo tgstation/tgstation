@@ -6,7 +6,6 @@
 
 /mob/living/carbon/slime/say_quote(var/text)
 	var/ending = copytext(text, length(text))
-
 	if (ending == "?")
 		return "telepathically asks, \"[text]\"";
 	else if (ending == "!")
