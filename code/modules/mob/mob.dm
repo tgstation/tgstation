@@ -821,12 +821,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	return
-
-//Returns the mob holding the object, otherwise returns null
-//Thanks to Nodrak for his help!
-/mob/proc/get_holder()
-	if(istype(src.loc,/mob))
-		return src.loc
-	if(istype(src.loc,/obj/item))
-		return get_holder(src.loc)
-	return null

@@ -125,12 +125,3 @@
 		mo.show_message(rendered, 2)
 		*/
 	return
-
-//Returns the mob holding the object, otherwise returns null
-//Thanks to Nodrak for his help!
-/obj/proc/get_holder()
-	if(istype(src.loc,/mob))
-		return src.loc
-	if(istype(src.loc,/obj/item))
-		return get_holder(src.loc)
-	return null
