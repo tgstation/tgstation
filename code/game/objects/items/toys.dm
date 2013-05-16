@@ -30,9 +30,7 @@
 	item_state = "balloon-empty"
 
 /obj/item/toy/balloon/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
+	create_reagents(10)
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -419,10 +417,8 @@
 	flags =  USEDELAY
 
 /obj/item/toy/waterflower/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", 10)
+	create_reagents(10)
+	reagents.add_reagent("water", 10)
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return

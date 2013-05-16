@@ -185,8 +185,7 @@
 	range = MELEE|RANGED
 
 	New()
-		reagents = new/datum/reagents(200)
-		reagents.my_atom = src
+		create_reagents(200)
 		reagents.add_reagent("water", 200)
 		..()
 		return
