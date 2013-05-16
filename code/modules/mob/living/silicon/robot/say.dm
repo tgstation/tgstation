@@ -14,8 +14,8 @@
 	return ..()
 
 /mob/living/silicon/robot/say_quote(var/text)
-	var/ending = copytext(text, length(text))
-
+	var/base_text = strip_html_full(text)
+	var/ending = copytext(base_text, length(base_text))
 	if (ending == "?")
 		return "queries, \"[text]\"";
 	else if (ending == "!")

@@ -2,6 +2,7 @@
 	name = "pAI"
 	icon = 'icons/obj/status_display.dmi' //invisibility!
 	mouse_opacity
+	can_whisper = 1
 	density = 0
 
 	robot_talk_understand = 0
@@ -225,3 +226,5 @@
 	card.setPersonality(pai)
 
 */
+/mob/living/silicon/pai/get_holder()
+ return card.get_holder()

@@ -68,7 +68,8 @@
 /mob/proc/say_quote(var/text)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	var/ending = copytext(text, length(text))
+	var/base_text = strip_html_full(text)
+	var/ending = copytext(base_text, length(base_text))
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
 	if(isliving(src))

@@ -1246,3 +1246,14 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	usr << "[dummies.len] found!"
 */
 
+
+
+//Returns the mob holding the object, otherwise returns null
+//Thanks to Nodrak for his help!
+/atom/proc/get_holder()
+	if(istype(src.loc,/mob))
+		return src.loc
+	if(istype(src.loc,/obj/item))
+		var/obj/item/l = src.loc
+		return l.get_holder()
+	return null

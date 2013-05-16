@@ -34,6 +34,22 @@
 			index = findtext(t, char)
 	return t
 
+//Completely remvoes html tags and limits the length of the message
+/proc/strip_html_full(var/t,var/limit=MAX_MESSAGE_LEN)
+	var/start_char = "<"
+	var/end_char = ">"
+	t = copytext(t,1,limit)
+	var/index = findtext(t, start_char)
+	var/index2 = findtext(t, end_char)
+	while(index&&index2)
+		if(index>1)
+			t = copytext(t,1,index) + copytext(t, index2+1,limit)
+		else
+			t = copytext(t, index2+1,limit)
+		index = findtext(t, start_char)
+		index2 = findtext(t, end_char)
+	return t
+
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
 	for(var/char in repl_chars)
@@ -368,11 +384,11 @@ var/list/binary = list("0","1")
 	if(!istext(into))	into = ""
 	if(!istext(from))	from = ""
 	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
-	
+
 	var/previous = 0
 	var/start = 1
 	var/end = length(into) + 1
-	
+
 	for(var/i=1, i<end, i++)
 		var/ascii = text2ascii(from, i)
 		if(ascii == null_ascii)
@@ -385,9 +401,8 @@ var/list/binary = list("0","1")
 				. += copytext(into, start, i)
 				start = i
 				previous = 0
-	
+
 	if(previous == 0)
 		. += copytext(from, start, end)
 	else
 		. += copytext(into, start, end)
-		
