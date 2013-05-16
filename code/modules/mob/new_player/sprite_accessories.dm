@@ -353,10 +353,6 @@
 		name = "Five o Clock Shadow"
 		icon_state = "facial_fiveoclock"
 
-	fu
-		name = "Fu Manchu"
-		icon_state = "facial_fumanchu"
-
 ///////////////////////////
 // Underwear Definitions //
 ///////////////////////////
