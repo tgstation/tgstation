@@ -179,45 +179,42 @@
 // Movement through doors allowed if ID has access
 /proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID)
 
-	if(A == null || B == null) return 1
-	var/adir = get_dir(A,B)
-	var/rdir = get_dir(B,A)
-	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
-		var/iStep = get_step(A,adir&(NORTH|SOUTH))
-		if(!LinkBlockedWithAccess(A,iStep, ID) && !LinkBlockedWithAccess(iStep,B,ID))
-			return 0
+	if (A == null || B == null) return 1
+	if (get_dist(A,B) > 1) return 1
 
-		var/pStep = get_step(A,adir&(EAST|WEST))
-		if(!LinkBlockedWithAccess(A,pStep,ID) && !LinkBlockedWithAccess(pStep,B,ID))
-			return 0
-		return 1
-
-	if(DirBlockedWithAccess(A,adir, ID))
-		return 1
-
-	if(DirBlockedWithAccess(B,rdir, ID))
-		return 1
-
-	for(var/obj/O in B)
-		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
+	for (var/obj/O in B)
+		if (O.density && !(istype(O, /obj/machinery/door) || istype(O, /obj/structure/window)) && !(O.flags & ON_BORDER))
 			return 1
 
-	return 0
+	return (DirBlockedWithAccess(A,get_dir(A,B), ID))
 
 // Returns true if direction is blocked from loc
 // Checks doors against access with given ID
 /proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
 	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
-		if(D.dir == dir)		return 1
+		if (D.density)
+			return 1
 
+	var/passable = TRUE
 	for(var/obj/machinery/door/D in loc)
-		if(!D.density)			continue
-		if(istype(D, /obj/machinery/door/window))
-			if( dir & D.dir )	return !D.check_access(ID)
+		if (!passable) return 1		//check EVERY door, but give up when one is blocked
 
-			//if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return !D.check_access(ID)
-			//if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return !D.check_access(ID)
-		else return !D.check_access(ID)	// it's a real, air blocking door
-	return 0
+		//windows
+		if (istype(D, /obj/machinery/door/window))
+			if(dir && D.dir)
+				passable = !D.check_access(ID)
+		//doors
+		else
+			if (D.stat && D.density)	//door is broken and shut, so the bot can't open it
+				return 1
+			else if (istype(D, /obj/machinery/door/airlock))
+				var/obj/machinery/door/airlock/A = D
+				if (A.locked || A.welded)
+					return 1			//bots can't open bolted/welded airlocks
+				else passable = D.check_access(ID)
+			else if (istype(D, /obj/machinery/door/firedoor))
+				if(dir && D.dir)
+					passable = !D.density	//bots can't open closed firedoors. Doesn't matter if they're welded.
+			else if (istype(D, /obj/machinery/door/poddoor)) //blast door in-game
+				passable = !D.density
+	return passable
