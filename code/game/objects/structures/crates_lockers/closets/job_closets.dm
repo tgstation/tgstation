@@ -18,6 +18,8 @@
 	..()
 	sleep(2)
 	new /obj/item/clothing/head/that(src)
+	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/sl_suit(src)

@@ -156,7 +156,7 @@
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
 
-/obj/item/device/radio/headset/headset_service
+/obj/item/device/radio/headset/headset_srv
 	name = "service radio headset"
 	desc = "Headset used by the foodservice staff, tasked with keeping the station full and happy. To access the service channel, use :v."
 	icon_state = "srv_headset"
