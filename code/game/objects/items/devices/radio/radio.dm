@@ -473,8 +473,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					freq_text = "Engineering"
 				if(SEC_FREQ)
 					freq_text = "Security"
-//				if(1349)
-//					freq_text = "Mining"
+				if(1349)
+					freq_text = "Service"
 				if(1347)
 					freq_text = "Supply"
 			//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
@@ -521,7 +521,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					if(1213)
 						blackbox.msg_syndicate += blackbox_msg
 					if(1349)
-						blackbox.msg_mining += blackbox_msg
+						blackbox.msg_service += blackbox_msg
 					if(1347)
 						blackbox.msg_cargo += blackbox_msg
 					else
