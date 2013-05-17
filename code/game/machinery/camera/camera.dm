@@ -16,7 +16,7 @@
 	anchored = 1.0
 	var/panel_open = 0 // 0 = Closed / 1 = Open
 	var/invuln = null
-	var/bugged = 0
+	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 
 	//OTHER
@@ -42,6 +42,11 @@
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
+	..()
+
+/obj/machinery/camera/Del()
+	if(istype(bug))
+		bug.bugged_cameras -= src.c_tag
 	..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -150,12 +155,14 @@
 		if (!src.can_use())
 			user << "\blue Camera non-functional"
 			return
-		if (src.bugged)
+		if(istype(src.bug))
 			user << "\blue Camera bug removed."
-			src.bugged = 0
+			src.bug.bugged_cameras -= src.c_tag
+			src.bug = null
 		else
 			user << "\blue Camera bugged."
-			src.bugged = 1
+			src.bug = W
+			src.bug.bugged_cameras[src.c_tag] = src
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
