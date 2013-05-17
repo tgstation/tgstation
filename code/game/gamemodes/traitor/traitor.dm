@@ -56,7 +56,9 @@
 		var/datum/mind/traitor = pick(possible_traitors)
 		traitors += traitor
 		traitor.special_role = "traitor"
+		log_game("[traitor.key] (ckey) has been selected as a traitor")
 		possible_traitors.Remove(traitor)
+
 
 	if(!traitors.len)
 		return 0

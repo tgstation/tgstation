@@ -63,6 +63,7 @@
 		var/datum/mind/lenin = pick(possible_headrevs)
 		possible_headrevs -= lenin
 		head_revolutionaries += lenin
+		log_game("[lenin.key] (ckey) has been selected as a head rev")
 
 	if((head_revolutionaries.len==0)||(!head_check))
 		return 0
