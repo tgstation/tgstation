@@ -6,7 +6,6 @@
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	can_whisper = 1
-	whisper_text = "quietly chimpers"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon

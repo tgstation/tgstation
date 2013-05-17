@@ -2,7 +2,6 @@
 	gender = NEUTER
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
-	whisper_text = "quietly"
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()

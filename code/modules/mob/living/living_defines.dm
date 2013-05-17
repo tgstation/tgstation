@@ -39,5 +39,4 @@
 	var/tod = null // Time of death
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
-	var/whisper_text = "whispers" //text to put into front of whispered message. defaults to 'whispers,' Only shown when to mobs that hear and understand the message otherwise they get the default <XXX> whispers something
 	var/can_whisper = null //set this to 1 if the mob should have whispering capability
