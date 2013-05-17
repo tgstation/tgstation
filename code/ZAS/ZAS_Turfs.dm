@@ -198,6 +198,9 @@ turf
 									else
 										zone.RemoveTurf(NT) //Not adjacent to anything, and unsimulated.  Goodbye~
 
+								//To make a closed connection through closed door.
+								ZConnect(T, src)
+
 							if(T.zone && !T.zone.rebuild) //I block air.
 								var/turf/NT = get_step(src, reverse_direction(direction))
 								if(istype(NT,/turf/simulated) && (NT in T.zone.contents || (NT.zone && T in NT.zone.contents)))

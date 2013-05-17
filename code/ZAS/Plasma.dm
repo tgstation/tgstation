@@ -155,6 +155,8 @@ turf/Entered(obj/item/I)
 	//Items that are in plasma, but not on a mob, can still be contaminated.
 	if(istype(I) && vsc.plc.CLOTH_CONTAMINATION)
 		var/datum/gas_mixture/env = return_air(1)
+		if(!env)
+			return
 		if(env.toxins > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()

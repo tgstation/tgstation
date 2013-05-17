@@ -133,7 +133,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/air_report,
 	/client/proc/reload_admins,
 	/client/proc/restart_controller,
-	/client/proc/enable_debug_verbs
+	/client/proc/enable_debug_verbs,
+	/client/proc/callproc
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
