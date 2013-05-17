@@ -58,16 +58,11 @@
 
 	var/mob/held_by = src.get_holder()
 	var/list/listening = hearers(message_range, src)
-	listening -= src
-	listening += src
 	if(held_by)
-		listening -= held_by
 		listening += held_by
 	var/list/eavesdropping = hearers(2, src)
-	eavesdropping -= src
 	eavesdropping -= listening
 	var/list/watching  = hearers(5, src)
-	watching  -= src
 	watching  -= listening
 	watching  -= eavesdropping
 
