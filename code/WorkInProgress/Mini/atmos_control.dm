@@ -302,8 +302,8 @@ Nitrous Oxide
 					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
 					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
 					AALARM_MODE_CYCLE		= "<font color='red'>CYCLE</font>",
-					AALARM_MODE_FILL = "<font color='red'>FILL</font>",
-			)
+					AALARM_MODE_FILL = "<font color='red'>FILL</font>",\
+					AALARM_MODE_OFF         = "<font color='blue'>OFFF</font>",)
 			for (var/m=1,m<=modes.len,m++)
 				if (current.mode==m)
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
