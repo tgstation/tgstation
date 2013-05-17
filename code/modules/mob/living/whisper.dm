@@ -82,19 +82,23 @@
 
 	var/rendered = null
 
+	var/w_far = "whispers"  //for when the whispered message is not clearly heard or the hearer does not understand
+	if(src.say_message)
+		w_far = "quietly [src.say_message]" //if a specifc voice_message its set make it look unique
+
 	if(isquote)
 		w_text = "quietly"
 	else
 		if(!src.voice_message)
 			w_text = "whispers,"
 		else
-			w_text = "quietly [src.voice_message],"
+			w_text = "quietly [src.say_message],"
 
 	for (var/mob/M in watching)
 		if (M.say_understands(src))
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> [w_text] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.name]</span> [w_far] something.</span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_text] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far] something.</span>"
 		M.show_message(rendered, 2)
 
 	if (length(heard_a))
@@ -113,13 +117,11 @@
 		var/message_b
 
 		if (src.voice_message)
-			message_b = src.voice_message
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far] something.</span>"
 		else
 			message_b = stars(message)
-
-		message_b = "\"<i>[message_b]</i>\""
-
-		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_text] <span class='message'>[message_b]</span></span>"
+			message_b = "\"<i>[message_b]</i>\""
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far], <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
@@ -128,17 +130,17 @@
 		if (M.say_understands(src))
 			var/message_c
 			message_c = "\"<i>[stars(message)]<\i>\""
-			rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_text] <span class='message'>[message_c]</span></span>"
+			rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_far], <span class='message'>[message_c]</span></span>"
 			M.show_message(rendered, 2)
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_text] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far] something.</span>"
 			M.show_message(rendered, 2)
 
 	if(isquote)
 		message = src.say_quote("<i>[message]</i>")
 	else
 		message = "\"<i>[message]</i>\""
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_text] <span class='message'>[message]</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_text], <span class='message'>[message]</span></span>"
 
 	for (var/mob/M in dead_mob_list)
 		if (!(M.client))
