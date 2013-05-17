@@ -33,6 +33,7 @@
 #define AALARM_MODE_PANIC		3 //constantly sucks all air
 #define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and switches to scrubbing
 #define AALARM_MODE_FILL		5 //emergency fill
+#define AALARM_MODE_OFF			6 //Shuts it all down.
 
 #define AALARM_SCREEN_MAIN		1
 #define AALARM_SCREEN_VENT		2
@@ -183,7 +184,7 @@
 			if(environment.temperature > target_temperature)
 				gas.temperature -= energy_used/heat_capacity
 			else
-				gas.temperature -= energy_used/heat_capacity
+				gas.temperature += energy_used/heat_capacity
 
 			environment.merge(gas)
 
@@ -238,9 +239,9 @@
 		return 0
 
 	proc/get_danger_level(var/current_value, var/list/danger_levels)
-		if(current_value >= danger_levels[4] || current_value <= danger_levels[1])
+		if((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
 			return 2
-		if(current_value >= danger_levels[3] || current_value <= danger_levels[2])
+		if((current_value >= danger_levels[3] && danger_levels[3] > 0) || current_value <= danger_levels[2])
 			return 1
 		return 0
 
@@ -339,9 +340,9 @@
 		switch(mode)
 			if(AALARM_MODE_SCRUBBING)
 				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 1, "scrubbing"= 1, "panic_siphon"= 0) )
+					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "scrubbing"= 1, "panic_siphon"= 0) )
 				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 1, "set_external_pressure"= target_pressure) )
+					send_signal(device_id, list("power"= 1, "checks"= 1, "set_external_pressure"= target_pressure) )
 
 			if(AALARM_MODE_PANIC, AALARM_MODE_CYCLE)
 				for(var/device_id in alarm_area.air_scrub_names)
@@ -351,15 +352,21 @@
 
 			if(AALARM_MODE_REPLACEMENT)
 				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 3, "scrubbing"= 1, "panic_siphon"= 0) )
+					send_signal(device_id, list("power"= 1, "panic_siphon"= 1) )
 				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 3, "set_external_pressure"= target_pressure) )
+					send_signal(device_id, list("power"= 1, "checks"= 1, "set_external_pressure"= target_pressure) )
 
 			if(AALARM_MODE_FILL)
 				for(var/device_id in alarm_area.air_scrub_names)
 					send_signal(device_id, list("power"= 0) )
 				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 3, "set_external_pressure"= target_pressure) )
+					send_signal(device_id, list("power"= 1, "checks"= 1, "set_external_pressure"= target_pressure) )
+
+			if(AALARM_MODE_OFF)
+				for(var/device_id in alarm_area.air_scrub_names)
+					send_signal(device_id, list("power"= 0) )
+				for(var/device_id in alarm_area.air_vent_names)
+					send_signal(device_id, list("power"= 0) )
 
 	proc/apply_danger_level(var/new_danger_level)
 		alarm_area.atmosalm = new_danger_level
@@ -817,7 +824,8 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 					AALARM_MODE_REPLACEMENT = "<font color='blue'>REPLACE AIR</font>",\
 					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",\
 					AALARM_MODE_CYCLE       = "<font color='red'>CYCLE</font>",\
-					AALARM_MODE_FILL        = "<font color='red'>FILL</font>",)
+					AALARM_MODE_FILL        = "<font color='green'>FILL</font>",\
+					AALARM_MODE_OFF         = "<font color='blue'>OFFF</font>",)
 				for (var/m=1,m<=modes.len,m++)
 					if (mode==m)
 						output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
