@@ -84,16 +84,19 @@
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
 
+
+	var/picked_event = pickweight(possibleEvents)
+
 	// Debug code below here, very useful for testing so don't delete please.
-	/*var/debug_message = "Firing random event. "
+	var/debug_message = "Firing random event. "
 	for(var/V in active_with_role)
 		debug_message += "#[V]:[active_with_role[V]] "
 	debug_message += "||| "
 	for(var/V in possibleEvents)
 		debug_message += "[V]:[possibleEvents[V]]"
-	message_admins(debug_message)*/
+	debug_message += "|||Picked:[picked_event]"
+	log_debug(debug_message)
 
-	var/picked_event = pickweight(possibleEvents)
 	if(!picked_event)
 		return
 
