@@ -32,6 +32,28 @@
 			round_time = 60*20
 			message = "The new field of research trying to explain several interesting spacetime oddities, also known as \"Bluespace Research\", has reached new heights. Of the several hundred space stations now orbiting in Tau Ceti, fifteen are now specially equipped to experiment with and research Bluespace effects. Rumours have it some of these stations even sport functional \"travel gates\" that can instantly move a whole research team to an alternate reality."
 
+	random_junk
+		cheesy_honkers
+			author = "Assistant Editor Carl Ritz"
+			channel_name = "Gibson Gazzette"
+			message = "Do cheesy honkers increase risk of having a miscarriage? Several health administrations say so!"
+			round_time = 60 * 15
+
+		net_block
+			author = "Assistant Editor Carl Ritz"
+			channel_name = "Gibson Gazzette"
+			message = "Several corporations banding together to block access to 'wetskrell.nt', site administrators claiming violation of net laws."
+			round_time = 60 * 15
+
+	lotus_tree
+		explosions
+			channel_name = "Tau Ceti Daily"
+			author = "Reporter Leland H. Howards"
+
+			message = "The newly-christened civillian transport Lotus Tree suffered two very large explosions near the bridge today, and there are unconfirmed reports that the death toll has passed 50. The cause of the explosions remain unknown, but there is speculation that it might have something to do with the recent change of regulation in the Moore-Lee Corporation, a major funder of the ship, when M-L announced that they were officially acknowledging inter-species marriage and providing couples with marriage tax-benefits."
+			round_time = 60 * 30
+
+var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk)
 
 proc/process_newscaster()
 	check_for_newscaster_updates(ticker.mode.newscaster_announcements)
