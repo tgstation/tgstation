@@ -69,11 +69,12 @@
 		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
 
-	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 25
+	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 100
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 100
-		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 75
-		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 5
+		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 150
+		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 10
+		possibleEvents[/datum/event/organ_failure] = active_with_role["Medical"] * 50
 
 	possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 	if(active_with_role["Security"] > 0)
