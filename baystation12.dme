@@ -1040,6 +1040,7 @@
 #include "code\modules\events\spontaneous_appendicitis.dm"
 #include "code\modules\events\viral_infection.dm"
 #include "code\modules\events\viral_outbreak.dm"
+#include "code\modules\events\wallrot.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"

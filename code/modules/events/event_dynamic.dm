@@ -61,6 +61,7 @@
 	possibleEvents[/datum/event/ionstorm] = 25 + active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
 	possibleEvents[/datum/event/grid_check] = 25 + 10 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/electrical_storm] = 75 + 25 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/wallrot] = 50 * active_with_role["Engineer"] + 100 * active_with_role["Botanist"]
 
 	if(!spacevines_spawned)
 		possibleEvents[/datum/event/spacevine] = 5 + 10 * active_with_role["Engineer"]
@@ -180,6 +181,7 @@
 	active_with_role["AI"] = 0
 	active_with_role["Cyborg"] = 0
 	active_with_role["Janitor"] = 0
+	active_with_role["Botanist"] = 0
 
 	for(var/mob/M in player_list)
 		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
@@ -211,5 +213,8 @@
 
 		if(M.mind.assigned_role == "Janitor")
 			active_with_role["Janitor"]++
+
+		if(M.mind.assigned_role == "Botanist")
+			active_with_role["Botanist"]++
 
 	return active_with_role

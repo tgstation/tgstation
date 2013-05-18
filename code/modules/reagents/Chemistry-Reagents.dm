@@ -1214,6 +1214,17 @@ datum
 				..()
 				return
 
+			// Clear off wallrot fungi
+			reaction_turf(var/turf/T, var/volume)
+				if(istype(T, /turf/simulated/wall))
+					var/turf/simulated/wall/W = T
+					if(W.rotting)
+						W.rotting = 0
+						for(var/obj/effect/E in W) if(E.name == "Wallrot") del E
+
+						for(var/mob/O in viewers(W, null))
+							O.show_message(text("\blue The fungi are completely dissolved by the solution!"), 1)
+
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/alien/weeds/))
 					var/obj/effect/alien/weeds/alien_weeds = O
