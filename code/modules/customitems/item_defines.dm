@@ -200,6 +200,8 @@ hi
 	icon = 'custom_items.dmi'
 	desc = "A modified detective's camera, painted in bright orange. On the back you see \"Have fun\" written in small accurate letters with something black."
 	icon_state = "orangecamera"
+	icon_on = "orangecamera"
+	icon_off = "camera_off"
 	pictures_left = 30
 
 /obj/item/device/camera/fluff/oldcamera //magmaram: Maria Crash
@@ -207,6 +209,8 @@ hi
 	icon = 'custom_items.dmi'
 	desc = "An old, slightly beat-up digital camera, with a cheap photo printer taped on. It's a nice shade of blue."
 	icon_state = "oldcamera"
+	icon_on = "oldcamera"
+	icon_off = "oldcamera_off"
 	pictures_left = 30
 
 /obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
