@@ -1061,6 +1061,7 @@
 #include "code\modules\mining\ores_coins.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mob\death.dm"
+#include "code\modules\mob\emote.dm"
 #include "code\modules\mob\inventory.dm"
 #include "code\modules\mob\login.dm"
 #include "code\modules\mob\logout.dm"

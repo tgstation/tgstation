@@ -75,31 +75,32 @@
 		//tcomms code is still runtiming somewhere here
 	var/ending = copytext(text, length(text))
 	if (is_speaking_soghun)
-		return "hisses, \"<span class='soghun'>[text]</span>\"";
+		return "<span class='say_quote'>hisses</span>, \"<span class='soghun'>[text]</span>\"";
 	if (is_speaking_skrell)
-		return "warbles, \"<span class='skrell'>[text]</span>\"";
+		return "<span class='say_quote'>warbles</span>, \"<span class='skrell'>[text]</span>\"";
 	if (is_speaking_tajaran)
-		return "mrowls, \"<span class='tajaran'>[text]</span>\"";
+		return "<span class='say_quote'>mrowls</span>, \"<span class='tajaran'>[text]</span>\"";
 //Needs Virus2
 //	if (src.disease_symptoms & DISEASE_HOARSE)
 //		return "rasps, \"[text]\"";
 	if (src.stuttering)
-		return "stammers, \"[text]\"";
+		return "<span class='say_quote'>stammers</span>, \"[text]\"";
 	if (src.slurring)
-		return "slurrs, \"[text]\"";
+		return "<span class='say_quote'>slurrs</span>, \"[text]\"";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
-			return "gibbers, \"[text]\"";
+			return "<span class='say_quote'>gibbers</span>, \"[text]\"";
 	if (ending == "?")
-		return "asks, \"[text]\"";
+		return "<span class='say_quote'>asks</span>, \"[text]\"";
 	if (ending == "!")
-		return "exclaims, \"[text]\"";
+		return "<span class='say_quote'>exclaims</span>, \"[text]\"";
 
-	return "says, \"[text]\"";
+	return "<span class='say_quote'>says</span>, \"[text]\"";
 
-/mob/proc/emote(var/act)
-	return
+/mob/proc/emote(var/act, var/type, var/message)
+	if(act == "me")
+		return custom_emote(type, message)
 
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this
