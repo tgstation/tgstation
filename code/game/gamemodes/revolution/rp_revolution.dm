@@ -8,6 +8,8 @@
 	required_enemies = 3
 	recommended_enemies = 3
 
+	newscaster_announcements = /datum/news_announcement/revolution_inciting_event
+
 	var/list/heads = list()
 	var/tried_to_add_revheads = 0
 
