@@ -49,8 +49,11 @@ proc/handle_quote(var/text,var/star)
 	if (stat)
 		return
 	// handle alt_name if one is passed, mainly whena  human is (as XXXX)
+	if (src.name != GetVoice() && !alt_name)
+		alt_name = GetVoice()
+
 	if(alt_name)
-		alt_name = "as [alt_name]"
+		alt_name = "(as [alt_name])"
 	else
 		alt_name = ""
 	// Mute disability
@@ -108,7 +111,7 @@ proc/handle_quote(var/text,var/star)
 
 	for (var/mob/M in watching)
 		if (M.say_understands(src))
-			rendered = "<span class='game say'><span class='name'>[name]</span> [w_far] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.name]</span> [w_far] something.</span>"
 		else
 			rendered = "<span class='game say'><span class='name'>[voice_name]</span> [w_far] something.</span>"
 		M.show_message(rendered, 2)

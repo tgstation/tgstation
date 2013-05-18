@@ -1,4 +1,4 @@
-/mob/living/carbon/whisper(message as text)
+/mob/living/carbon/whisper(message as text, quote as text,alt_name as text, held_by as mob)
 
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
@@ -21,4 +21,5 @@
 			message = replacetext(message, "s", "§")
 			message = replacetext(message, "u", "µ")
 			message = replacetext(message, "b", "ß")
-	..(message)
+	var/list/L = list(message=message,quote=quote,alt_name=alt_name,held_by=held_by)
+	..(arglist(L))

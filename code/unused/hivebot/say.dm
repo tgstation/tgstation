@@ -8,6 +8,7 @@
 	return ..()
 
 /mob/living/silicon/hivebot/say_quote(var/text)
+	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "queries, \"[text]\"";
 	else if (ending == "!")

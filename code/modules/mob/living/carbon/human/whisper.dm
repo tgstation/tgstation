@@ -2,6 +2,6 @@
 	if (src.name != GetVoice())
 		var/alt_name = src.get_id_name("Unknown")
 		var/list/L = list(message=message,alt_name=alt_name)
-		..(L)
+		..(arglist(L))
 	else
 		..(message)
