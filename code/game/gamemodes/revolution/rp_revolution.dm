@@ -10,6 +10,7 @@
 
 	newscaster_announcements = /datum/news_announcement/revolution_inciting_event
 
+	var/last_command_report = 0
 	var/list/heads = list()
 	var/tried_to_add_revheads = 0
 
@@ -185,8 +186,7 @@
 				active_revs++
 
 		if(active_revs == 0)
-			log_admin("There are zero active head revolutionists, trying to add some..")
-			message_admins("There are zero active head revolutionists, trying to add some..")
+			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = 0
 			for(var/mob/living/carbon/human/H in world) if(H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
 				head_revolutionaries += H.mind
@@ -211,6 +211,16 @@
 				log_admin("Unable to add new heads of revolution.")
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 6000 // wait 10 minutes
+
+	if(last_command_report == 0 && world.time >= 60 * 10)
+		command_alert("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		last_command_report = 1
+	else if(last_command_report == 1 && world.time >= 60 * 30)
+		command_alert("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
+		last_command_report = 2
+	else if(last_command_report == 2 && world.time >= 60 * 60)
+		command_alert("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+		last_command_report = 3
 
 	return ..()
 
