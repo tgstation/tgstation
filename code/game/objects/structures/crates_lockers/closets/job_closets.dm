@@ -18,6 +18,8 @@
 	..()
 	sleep(2)
 	new /obj/item/clothing/head/that(src)
+	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/sl_suit(src)
@@ -27,6 +29,27 @@
 	new /obj/item/clothing/suit/wcoat(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+
+/*
+ * Chef
+ */
+/obj/structure/closet/chefcloset
+	name = "chef's closet"
+	desc = "It's a storage unit for foodservice garments."
+	icon_state = "black"
+	icon_closed = "black"
+
+/obj/structure/closet/chefcloset/New()
+	..()
+	sleep(2)
+	new /obj/item/clothing/under/waiter(src)
+	new /obj/item/clothing/under/waiter(src)
+	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/weapon/storage/box/mousetraps(src)
+	new /obj/item/weapon/storage/box/mousetraps(src)
+	new /obj/item/clothing/under/rank/chef(src)
+	new /obj/item/clothing/head/chefhat(src)
 
 /*
  * Janitor
