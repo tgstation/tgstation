@@ -226,5 +226,3 @@
 	card.setPersonality(pai)
 
 */
-/mob/living/silicon/pai/get_holder()
- return card.get_holder()

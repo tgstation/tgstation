@@ -1,7 +1,22 @@
-//Lallander was here
 //moved to /mob/living from /mob/living/carbon/human
-/mob/living/whisper(message as text, isquote = 0 as num) //set isquote to 1 for things that whisper in quotes like /mob/living/silicon/*
+/*
+	 quote is the output of your mobs say_quote function for mobs that always speak in quotes like  /mob/living/silicon
+	 alt_name is for times when a mob is impersonating another eg "XXXX as YYYY" since XXXX stol the others ID but does not ahve a voice changer
+	 held_by is for when a derrived proc for some reasons needs to define the /mob is holding it on its own or in a different way.
+	 its a lot of arguments, but argslist will make your life easier, and your code easier to read.
+	 and it means we can have our core whisper in one file. if core whisper mechanics change  need to change we only need to edit one proc.
 
+*/
+proc/handle_quote(var/text,var/star)
+	var/beginquote = findtext(text,"\"",1)
+	var/begin = copytext(text,1,beginquote)
+	var/quote = copytext(text,beginquote+1,length(text))
+	if(star)
+		quote = stars(quote)
+	quote = "\"<i>[quote]</i>\""
+	return begin + quote
+
+/mob/living/whisper(message as text, quote as text,alt_name as text, held_by as mob)
 	if(!src.can_whisper)
 		usr << "\red This mob cannot whisper! Try something else!"
 		return
@@ -17,29 +32,29 @@
 	if (!message || silent)
 		return
 
-	log_whisper("[src.name]/[src.key] : [message]")
+	log_whisper("[name]/[key] : [message]")
 
-	if (src.client)
-		if (src.client.prefs.muted & MUTE_IC)
+	if (client)
+		if (client.prefs.muted & MUTE_IC)
 			src << "\red You cannot whisper (muted)."
 			return
 
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 
-	if (src.stat == 2)
-		return src.say_dead(message)
+	if (stat == 2)
+		return say_dead(message)
 
-	if (src.stat)
+	if (stat)
 		return
-
-	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && src.name != GetVoice())
-		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_id_name("Unknown")])"
+	// handle alt_name if one is passed, mainly whena  human is (as XXXX)
+	if(alt_name)
+		alt_name = "as [alt_name]"
+	else
+		alt_name = ""
 	// Mute disability
-	if (src.sdisabilities & MUTE)
+	if (sdisabilities & MUTE)
 		return
 
 	//removed italic var as its kinda pointless, it will only change if whisper is overriden or the base code was changed.
@@ -48,17 +63,19 @@
 
 	//moved mask code to /mob/living/carbon/whisper.dm
 
-	if (src.stuttering)
+	if (stuttering)
 		message = stutter(message)
 
 	for (var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)
+	if(!held_by)
+		held_by = get(loc,/mob/living)
 
-	var/mob/held_by = src.get_holder()
 	var/list/listening = hearers(message_range, src)
 	if(held_by)
+		listening -= held_by //for when we are already in the list. make sure we dont show twice..this is not always the case hence the needed -=
 		listening += held_by
 	var/list/eavesdropping = hearers(2, src)
 	eavesdropping -= listening
@@ -78,30 +95,30 @@
 	var/rendered = null
 
 	var/w_far = "whispers"  //for when the whispered message is not clearly heard or the hearer does not understand
-	if(src.say_message)
-		w_far = "quietly [src.say_message]" //if a specifc voice_message its set make it look unique
+	if(say_message)
+		w_far = "quietly [say_message]" //if a specifc voice_message its set make it look unique
 
-	if(isquote)
+	if(quote)
 		w_text = "quietly"
 	else
-		if(!src.voice_message)
+		if(!voice_message)
 			w_text = "whispers,"
 		else
-			w_text = "quietly [src.say_message],"
+			w_text = "quietly [say_message],"
 
 	for (var/mob/M in watching)
 		if (M.say_understands(src))
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> [w_far] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[name]</span> [w_far] something.</span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[voice_name]</span> [w_far] something.</span>"
 		M.show_message(rendered, 2)
 
 	if (length(heard_a))
 		var/message_a = message
-		if(isquote)
-			message_a = src.say_quote("<i>[message]</i>")
-		else
+		if(!quote)
 			message_a = "\"<i>[message]</i>\""
+		else
+			message_a = handle_quote(quote)
 		//This appears copied from carbon/living say.dm so the istype check for mob is probably not needed. Appending for src is also not needed as the game will check that automatically.
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_text] <span class='message'>[message_a]</span></span>"
 
@@ -111,12 +128,15 @@
 	if (length(heard_b))
 		var/message_b
 
-		if (src.voice_message)
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far] something.</span>"
+		if (voice_message)
+			rendered = "<span class='game say'><span class='name'>[voice_name]</span> [w_far] something.</span>"
 		else
-			message_b = stars(message)
-			message_b = "\"<i>[message_b]</i>\""
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far], <span class='message'>[message_b]</span></span>"
+			if(!quote)
+				message_b = stars(message)
+				message_b = "\"<i>[message_b]</i>\""
+			else
+				message_b = handle_quote(quote,1)
+			rendered = "<span class='game say'><span class='name'>[voice_name]</span> [w_far], <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
@@ -124,17 +144,21 @@
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src))
 			var/message_c
-			message_c = "\"<i>[stars(message)]<\i>\""
+			if(!quote)
+				message_c = stars(message)
+				message_c = "\"<i>[message_c]<\i>\""
+			else
+				message_c = handle_quote(quote,1)
 			rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_far], <span class='message'>[message_c]</span></span>"
 			M.show_message(rendered, 2)
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [w_far] something.</span>"
+			rendered = "<span class='game say'><span class='name'>[voice_name]</span> [w_far] something.</span>"
 			M.show_message(rendered, 2)
 
-	if(isquote)
-		message = src.say_quote("<i>[message]</i>")
-	else
+	if(!quote)
 		message = "\"<i>[message]</i>\""
+	else
+		message = handle_quote(quote)
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [w_text], <span class='message'>[message]</span></span>"
 
 	for (var/mob/M in dead_mob_list)
