@@ -32,13 +32,17 @@ obj/machinery/anomaly/hyperspectral/ScanResults()
 		var/specifity = GetResultSpecifity(scanned_sample, carrier)
 		results = "Spectral signature over carrier ([carrier]):<br>"
 		if(specifity <= 0.25)
-			results += "<img src=\"http://i.imgur.com/TAQHn.jpg\"></img><br>"
+			//results += "<img src=\"http://i.imgur.com/TAQHn.jpg\"></img><br>"
+			results += "<img src=chart1.jpg>"
 		else if(specifity <= 0.5)
-			results += "<img src=\"http://i.imgur.com/EwOZ7.jpg\"></img><br>"
+			//results += "<img src=\"http://i.imgur.com/EwOZ7.jpg\"></img><br>"
+			results += "<img src=chart2.jpg>"
 		else if(specifity <= 0.75)
-			results += "<img src=\"http://i.imgur.com/1qCae.jpg\"></img><br>"
+			//results += "<img src=\"http://i.imgur.com/1qCae.jpg\"></img><br>"
+			results += "<img src=chart3.jpg>"
 		else
-			results += "<img src=\"http://i.imgur.com/9T9nc.jpg\"></img><br>"
+			//results += "<img src=\"http://i.imgur.com/9T9nc.jpg\"></img><br>"
+			results += "<img src=chart4.jpg>"
 
 		results += "<br>"
 		if(scanned_sample.artifact_id)

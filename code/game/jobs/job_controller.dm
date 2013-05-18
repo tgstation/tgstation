@@ -389,6 +389,13 @@ var/global/datum/controller/occupations/job_master
 
 		spawnId(H, rank, alt_title)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
+
+		//Gives glasses to the vision impaired
+		if(H.disabilities & NEARSIGHTED)
+			var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
+			if(equipped != 1)
+				var/obj/item/clothing/glasses/G = H.glasses
+				G.prescription = 1
 //		H.update_icons()
 		return 1
 

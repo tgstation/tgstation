@@ -16,7 +16,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_cap(src)
 		new /obj/item/clothing/suit/captunic(src)
-		new /obj/item/clothing/suit/captunic/trek(src)
+		new /obj/item/clothing/suit/captunic/capjacket(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/armor/vest(src)
@@ -72,16 +72,15 @@
 		sleep(2)
 		new /obj/item/clothing/under/rank/head_of_personnel(src)
 		new /obj/item/clothing/under/dress/dress_hop(src)
+		new /obj/item/clothing/under/dress/dress_hr(src)
 		new /obj/item/clothing/under/lawyer/female(src)
 		new /obj/item/clothing/under/lawyer/black(src)
 		new /obj/item/clothing/under/lawyer/red(src)
-		new /obj/item/clothing/under/dress/dress_resource(src)
 		new /obj/item/clothing/under/lawyer/oldman(src)
-		new /obj/item/clothing/under/suit_jacket/really_black(src)
 		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/clothing/shoes/white(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/shoes/leather(src)
+		new /obj/item/clothing/shoes/white(src)
 		return
 
 

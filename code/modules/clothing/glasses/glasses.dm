@@ -19,6 +19,8 @@
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/meson/prescription
+	name = "prescription mesons"
+	desc = "Optical Meson Scanner with prescription lenses."
 	prescription = 1
 
 /obj/item/clothing/glasses/science
@@ -61,6 +63,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
+	prescription = 1
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
@@ -129,6 +132,7 @@
 	vision_flags = BLIND
 
 /obj/item/clothing/glasses/sunglasses/prescription
+	name = "prescription sunglasses"
 	prescription = 1
 
 /obj/item/clothing/glasses/sunglasses/big

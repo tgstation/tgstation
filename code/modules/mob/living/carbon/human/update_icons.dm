@@ -560,9 +560,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
 	if(wear_id)
-		overlays_lying[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id2")
-		overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
 		wear_id.screen_loc = ui_id	//TODO
+		if(w_uniform && w_uniform:displays_id)
+			overlays_lying[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id2")
+			overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
+		else
+			overlays_lying[ID_LAYER]	= null
+			overlays_standing[ID_LAYER]	= null
 	else
 		overlays_lying[ID_LAYER]	= null
 		overlays_standing[ID_LAYER]	= null

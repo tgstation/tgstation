@@ -63,6 +63,10 @@ proc/FloodFill(turf/simulated/start)
 
 
 proc/ZMerge(zone/A,zone/B)
+
+	if(!istype(A) || !istype(B))
+		return
+
 	//Merges two zones so that they are one.
 	var
 		a_size = A.air.group_multiplier

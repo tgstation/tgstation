@@ -150,6 +150,7 @@
 
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key
+		src.ckey = M.brainmob.ckey
 		src.name = "Spider-bot ([M.brainmob.name])"
 
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
@@ -162,12 +163,13 @@
 
 /mob/living/simple_animal/spiderbot/proc/update_icon()
 	if(mmi)
-		if (istype(mmi,/obj/item/device/mmi))
+		if(istype(mmi,/obj/item/device/mmi))
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
-		else
+		if(istype(mmi, /obj/item/device/mmi/posibrain))
 			icon_state = "spiderbot-chassis-posi"
 			icon_living = "spiderbot-chassis-posi"
+
 	else
 		icon_state = "spiderbot-chassis"
 		icon_living = "spiderbot-chassis"
@@ -326,6 +328,7 @@
 				visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
 				return held_item
 		src << "\red \The [selection] is too far away."
+		return 0
 
 	src << "\red There is nothing of interest to take."
 	return 0

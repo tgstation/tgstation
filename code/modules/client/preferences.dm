@@ -252,6 +252,7 @@ datum/preferences
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
+		dat += "Needs Glasses: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
 		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
 
 		//display limbs below
@@ -1007,6 +1008,9 @@ datum/preferences
 							gender = FEMALE
 						else
 							gender = MALE
+
+					if("disabilities")				//please note: current code only allows nearsightedness as a disability
+						disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP

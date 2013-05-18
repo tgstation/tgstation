@@ -556,6 +556,7 @@
 	name = "toy phazon"
 	desc = "Mini-Mecha action figure! Collect them all! 11/11."
 	icon_state = "phazonprize"
+
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
