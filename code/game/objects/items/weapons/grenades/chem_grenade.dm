@@ -14,9 +14,7 @@
 	var/obj/item/device/assembly/trigger = null // Grenade assemblies by Sayu
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		create_reagents(1000)
 		verbs -= /obj/item/weapon/grenade/chem_grenade/verb/rotate // only used for infrared beam grenades
 
 	// When constructing a grenade in code rather than by hand
