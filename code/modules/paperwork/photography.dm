@@ -122,6 +122,8 @@
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
+	var/icon_on = "camera"
+	var/icon_off = "camera_off"
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
@@ -130,9 +132,9 @@
 /obj/item/device/camera/attack_self(mob/user as mob)
 	on = !on
 	if(on)
-		src.icon_state = "camera"
+		src.icon_state = icon_on
 	else
-		src.icon_state = "camera_off"
+		src.icon_state = icon_off
 	user << "You switch the camera [on ? "on" : "off"]."
 	return
 
@@ -253,8 +255,8 @@
 	pictures_left--
 	desc = "A polaroid camera. It has [pictures_left] photos left."
 	user << "<span class='notice'>[pictures_left] photos left.</span>"
-	icon_state = "camera_off"
+	icon_state = icon_off
 	on = 0
 	spawn(64)
-		icon_state = "camera"
+		icon_state = icon_on
 		on = 1
