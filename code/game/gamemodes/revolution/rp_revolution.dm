@@ -57,7 +57,7 @@
 			var/datum/objective/mutiny/rp/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate or capture [head_mind.name], the [head_mind.assigned_role]."
+			rev_obj.explanation_text = "Assassinate, convert or capture [head_mind.name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
 		update_rev_icons_added(rev_mind)
@@ -211,3 +211,17 @@
 				tried_to_add_revheads = world.time + 6000 // wait 10 minutes
 
 	return ..()
+
+
+/datum/game_mode/revolution/rp_revolution/latespawn(mob/M)
+	if(M.mind.assigned_role in command_positions)
+		log_debug("Adding head kill/capture/convert objective for [M.name]")
+		heads += M
+
+		for(var/datum/mind/rev_mind in head_revolutionaries)
+			var/datum/objective/mutiny/rp/rev_obj = new
+			rev_obj.owner = rev_mind
+			rev_obj.target = M.mind
+			rev_obj.explanation_text = "Assassinate, convert or capture [M.name], the [M.mind.assigned_role]."
+			rev_mind.objectives += rev_obj
+			rev_mind.current << "\red A new Head of Staff, [M.name], the [M.mind.assigned_role] has appeared. Your objectives have been updated."
