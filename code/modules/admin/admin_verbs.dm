@@ -64,6 +64,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
+	/client/proc/toggledebuglogs,
 	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity
 )
@@ -722,3 +723,14 @@ var/list/admin_verbs_mod = list(
 		usr << "You now will get attack log messages"
 	else
 		usr << "You now won't get attack log messages"
+
+
+/client/proc/toggledebuglogs()
+	set name = "Toggle Debug Log Messages"
+	set category = "Preferences"
+
+	prefs.toggles ^= CHAT_DEBUGLOGS
+	if (prefs.toggles & CHAT_DEBUGLOGS)
+		usr << "You now will get debug log messages"
+	else
+		usr << "You now won't get debug log messages"
