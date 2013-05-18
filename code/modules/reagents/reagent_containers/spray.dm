@@ -49,7 +49,7 @@
 
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
-	var/A_turf = get_turf(A)
+	var/turf/A_turf = get_turf(A)
 
 	spawn(0)
 		for(var/i=0, i<3, i++)
