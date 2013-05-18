@@ -216,13 +216,24 @@ Implants;
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
 		// Antags
-		else if(special_role == "traitor" && prob(20) || \
-		   special_role == "Changeling" && prob(40) || \
-		   special_role == "Cultist" && prob(10) || \
-		   special_role == "Head Revolutionary" && prob(10))
+		else if(special_role == "traitor" && prob(40) || \
+		   special_role == "Changeling" && prob(50) || \
+		   special_role == "Cultist" && prob(30) || \
+		   special_role == "Head Revolutionary" && prob(30))
 			suspects += man
+
+			// If they're a traitor or likewise, give them extra TC in exchange.
+			var/obj/item/device/uplink/hidden/suplink = man.mind.find_syndicate_uplink()
+			if(suplink)
+				var/extra = 4
+				suplink.uses += extra
+				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+			else
+				// Give them a warning!
+				man << "\red They are on to you!"
+
 		// Some poor people who were just in the wrong place at the wrong time..
-		else if(prob(5))
+		else if(prob(10))
 			suspects += man
 	for(var/mob/M in suspects)
 		switch(rand(1, 100))
