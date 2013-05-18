@@ -69,11 +69,12 @@
 		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
 
-	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 25
+	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 100
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 100
-		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 75
-		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 5
+		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 150
+		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 10
+		possibleEvents[/datum/event/organ_failure] = active_with_role["Medical"] * 50
 
 	possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 	if(active_with_role["Security"] > 0)
@@ -84,16 +85,19 @@
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
 
+
+	var/picked_event = pickweight(possibleEvents)
+
 	// Debug code below here, very useful for testing so don't delete please.
-	/*var/debug_message = "Firing random event. "
+	var/debug_message = "Firing random event. "
 	for(var/V in active_with_role)
 		debug_message += "#[V]:[active_with_role[V]] "
 	debug_message += "||| "
 	for(var/V in possibleEvents)
 		debug_message += "[V]:[possibleEvents[V]]"
-	message_admins(debug_message)*/
+	debug_message += "|||Picked:[picked_event]"
+	log_debug(debug_message)
 
-	var/picked_event = pickweight(possibleEvents)
 	if(!picked_event)
 		return
 
