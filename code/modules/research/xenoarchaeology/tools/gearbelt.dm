@@ -22,4 +22,6 @@
 		"/obj/item/weapon/folder",
 		"/obj/item/weapon/clipboard",
 		"/obj/item/weapon/anodevice",
+		"/obj/item/clothing/glasses",
+		"/obj/item/weapon/wrench",
 		"/obj/item/weapon/anobattery")
