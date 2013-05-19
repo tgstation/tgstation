@@ -277,10 +277,10 @@ var/list/solars_list = list()
 	var/cdir = 0
 	var/gen = 0
 	var/lastgen = 0
-	var/track = 0			// 0= off  1=timed  2=auto (tracker)
-	var/trackrate = 600		// 300-900 seconds
-	var/trackdir = 1		// 0 =CCW, 1=CW
-	var/nexttime = 0
+	var/track = 0			// 0=off  1=manual  2=automatic
+	var/trackrate = 60		// Measured in tenths of degree per minute (i.e. defaults to 6.0 deg/min)
+	var/trackdir = 1		// -1=CCW, 1=CW
+	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
 
 /obj/machinery/power/solar_control/New()
@@ -371,9 +371,11 @@ var/list/solars_list = list()
 		return
 
 	use_power(250)
-	if(track==1 && nexttime < world.timeofday && trackrate)
-		nexttime = world.timeofday + 3600/abs(trackrate)
-		cdir = (cdir+trackrate/abs(trackrate)+360)%360
+	if(track==1 && nexttime < world.time && trackdir*trackrate)
+		// Increments nexttime using itself and not world.time to prevent drift
+		nexttime = nexttime + 6000/trackrate
+		// Nudges array 1 degree in desired direction
+		cdir = (cdir+trackdir+360)%360
 		set_panels(cdir)
 		update_icon()
 
@@ -402,19 +404,28 @@ var/list/solars_list = list()
 	user.set_machine(src)
 
 	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
-	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR><BR><BR>"
-	t += "<BR><HR><BR><BR>"
+	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
+	t += "Station Rotational Period: [60/abs(sun.rate)] minutes<BR>"
+	t += "Station Rotational Direction: [sun.rate<0 ? "CCW" : "CW"]<BR>"
+	t += "Star Orientation: [sun.angle]&deg ([angle2text(sun.angle)])<BR>"
+	t += "Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])<BR>"
+	t += "<BR><HR><BR>"
 	t += "Tracking: "
 	switch(track)
 		if(0)
-			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Timed</A> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
+			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Manual</A> <A href='?src=\ref[src];track=2'>Automatic</A><BR>"
 		if(1)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <B>Timed</B> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
+			t += "<A href='?src=\ref[src];track=0'>Off</A> <B>Manual</B> <A href='?src=\ref[src];track=2'>Automatic</A><BR>"
 		if(2)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <B>Auto</B><BR>"
+			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Manual</A> <B>Automatic</B><BR>"
 
-	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]<BR><BR>"
+	t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
+	t += "Manual Tracking Direction: "
+	switch(trackdir)
+		if(-1)
+			t += "<A href='?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"
+		if(1)
+			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 	user << browse(t, "window=solcon")
 	onclose(user, "solcon")
@@ -443,17 +454,20 @@ var/list/solars_list = list()
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+			src.trackrate = dd_range(0,360,src.trackrate+text2num(href_list["tdir"]))
+			if(src.trackrate) nexttime = world.time + 6000/trackrate
 
 	if(href_list["track"])
-		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
 					cdir = T.sun_angle
 					break
+
+	if(href_list["trackdir"])
+		trackdir = text2num(href_list["trackdir"])
 
 	set_panels(cdir)
 	update_icon()

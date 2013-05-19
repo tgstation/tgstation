@@ -70,6 +70,24 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
+/obj/item/clothing/under/rank/nurse
+	desc = "A dress commonly worn by the nursing staff in the medical department."
+	name = "nurse's dress"
+	icon_state = "nurse"
+	item_state = "nurse"
+	color = "nurse"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/rank/orderly
+	desc = "A white suit to be worn by orderly people who love orderly things."
+	name = "orderly's uniform"
+	icon_state = "orderly"
+	item_state = "orderly"
+	color = "orderly"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+
 /obj/item/clothing/under/rank/medical
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
 	name = "medical doctor's jumpsuit"

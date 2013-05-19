@@ -331,6 +331,21 @@ datum
 				..()
 				return
 
+		plasticide
+			name = "Plasticide"
+			id = "plasticide"
+			description = "Liquid plastic, do not eat."
+			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.01
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				// Toxins are really weak, but without being treated, last very long.
+				M.adjustToxLoss(0.2)
+				..()
+				return
+
 		cyanide
 			// Fast and lethal
 			name = "Cyanide"
@@ -2277,6 +2292,19 @@ datum
 				if(!istype(T, /turf/space))
 					new /obj/effect/decal/cleanable/flour(T)
 
+		rice
+			name = "Rice"
+			id = "rice"
+			description = "Enjoy the great taste of nothing."
+			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#FFFFFF" // rgb: 0, 0, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
 		cherryjelly
 			name = "Cherry Jelly"
 			id = "cherryjelly"
@@ -2622,6 +2650,67 @@ datum
 					color = "#878F00" // rgb: 135, 40, 0
 					adj_temp = -8
 
+				lemonade
+					name = "Lemonade"
+					description = "Oh the nostalgia..."
+					id = "lemonade"
+					color = "#FFFF00" // rgb: 255, 255, 0
+
+				kiraspecial
+					name = "Kira Special"
+					description = "Long live the guy who everyone had mistaken for a girl. Baka!"
+					id = "kiraspecial"
+					color = "#CCCC99" // rgb: 204, 204, 153
+
+				brownstar
+					name = "Brown Star"
+					description = "Its not what it sounds like..."
+					id = "brownstar"
+					color = "#9F3400" // rgb: 159, 052, 000
+					adj_temp = - 2
+
+				milkshake
+					name = "Milkshake"
+					description = "Glorious brainfreezing mixture."
+					id = "milkshake"
+					color = "#AEE5E4" // rgb" 174, 229, 228
+					adj_temp = -9
+
+					on_mob_life(var/mob/living/M as mob)
+						if(!M) M = holder.my_atom
+						if(!data) data = 1
+						switch(data)
+							if(1 to 15)
+								M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(holder.has_reagent("capsaicin"))
+									holder.remove_reagent("capsaicin", 5)
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(5,20)
+							if(15 to 25)
+								M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(10,20)
+							if(25 to INFINITY)
+								M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+								if(prob(1)) M.emote("shiver")
+								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(15,20)
+						data++
+						holder.remove_reagent(src.id, FOOD_METABOLISM)
+						..()
+						return
+
+				rewriter
+					name = "Rewriter"
+					description = "The secert of the sanctuary of the Libarian..."
+					id = "rewriter"
+					color = "#485000" // rgb:72, 080, 0
+
+					on_mob_life(var/mob/living/M as mob)
+						..()
+						M.make_jittery(5)
+						return
+
 		hippies_delight
 			name = "Hippie's Delight"
 			id = "hippiesdelight"
@@ -2790,6 +2879,12 @@ datum
 				name = "Vodka"
 				id = "vodka"
 				description = "Number one drink AND fueling choice for Russians worldwide."
+				color = "#664300" // rgb: 102, 67, 0
+
+			sake
+				name = "Sake"
+				id = "sake"
+				description = "Anime's favorite drink."
 				color = "#664300" // rgb: 102, 67, 0
 
 			tequilla
