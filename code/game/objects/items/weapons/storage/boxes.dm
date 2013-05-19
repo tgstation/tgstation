@@ -325,6 +325,21 @@
 		new /obj/item/weapon/card/id(src)
 		new /obj/item/weapon/card/id(src)
 
+/obj/item/weapon/storage/box/prisoner
+	name = "prisoner IDs"
+	desc = "Take away their last shred of dignity, their name."
+	icon_state = "id"
+
+	New()
+		..()
+		new /obj/item/weapon/card/id/prisoner/one(src)
+		new /obj/item/weapon/card/id/prisoner/two(src)
+		new /obj/item/weapon/card/id/prisoner/three(src)
+		new /obj/item/weapon/card/id/prisoner/four(src)
+		new /obj/item/weapon/card/id/prisoner/five(src)
+		new /obj/item/weapon/card/id/prisoner/six(src)
+		new /obj/item/weapon/card/id/prisoner/seven(src)
+
 /obj/item/weapon/storage/box/seccarts
 	name = "Spare R.O.B.U.S.T. Cartridges"
 	desc = "A box full of R.O.B.U.S.T. Cartridges, used by Security."
