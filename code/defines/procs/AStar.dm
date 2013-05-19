@@ -1,25 +1,5 @@
-priorityqueue
-	var/pathnode/nodes[]	//list of pathnodes, sorted descending by f_score
-	New()
-		nodes = new()
-
-priorityqueue/proc/insert(pathnode/n)
-	if (!nodes.len)
-		nodes.Add(n)
-	else
-		//linear search - slower than binary but guaranteed to work!
-		var/pos = nodes.len
-		while (pos > 0 && compare(n,nodes[pos]) > 0)
-			pos--
-		nodes.Insert(pos+1,n)
-
-priorityqueue/proc/extract_last()
-	var/pathnode/t = nodes[nodes.len]
-	nodes.Cut(nodes.len)
-	return t
-
-priorityqueue/proc/compare(pathnode/a, pathnode/b)
-	return (a.f_score - b.f_score)
+/proc/cmp_pathnodes(pathnode/A, pathnode/B)
+	return (A.f_score - B.f_score)
 
 pathnode
 	var/turf/me				//turf
@@ -81,87 +61,80 @@ near a target, but not right to it - for an AI mob with a gun, for example."
 length to avoid portals or something i guess?? Not that they're counted right now but w/e."
 *********************/
 proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnodes, max_length, id=null, var/turf/exclude=null)
-	set background=1								//don't hog the CPU
+	set background=1								//allows proc to sleep should it take more than a single frame to complete
+	
 	var/const/DEPTH_BIAS = 0.5						//preference of discovered paths. decrease with extreme caution and don't set >1!
 	//var/evaluations = 0							//Total number of tiles examined, including discards and duplicates. Used for debugging
 	var/lpct = 0									//Loop counter - turfs properly examined. Debugging and infinite loop prevention.
-	var/pathnode/checked[] = new()					//list of pathnodes already examined
-	var/priorityqueue/pq = new /priorityqueue()		//list of pathnodes not yet examined, sorted descending by f_score
+	var/list/checked = list()						//list of pathnodes already examined
+	var/list/priorityqueue = list()					//list of pathnodes not yet examined, sorted descending by f_score
 	var/pathnode/current							//current pathnode being examined
 	var/next_g										//calculated g_score of a potential turf
 	var/next_f										//calculated f_score of a potential turf
 	var/skip										//used for internal logic branching, don't touch.
 	var/pathnode/temp								//temporary pathnode used for comparison, don't touch.
+	
+	var/list/path = list()							//return value
 
 	//sanity check to avoid a huge waste of CPU time on impossible tasks
 	for(var/obj/O in dest_turf)
-		if (O.density && (!istype(O, /obj/machinery/door) || !(O.flags & ON_BORDER)))
-			var/list/path = new						//something is blocking the destination
+		if(O.density && (!istype(O, /obj/machinery/door) || !(O.flags & ON_BORDER)))	//something is blocking the destination
 			return path
+	
+	priorityqueue += new /pathnode(start_turf, null, call(start_turf,distance_proc)(dest_turf), 0)//add the starting turf and manhattan distance to the queue!
 
-	pq.insert(new /pathnode(start_turf, null, call(start_turf,distance_proc)(dest_turf),0))	//add the starting turf and manhattan distance to the queue!
+	for(lpct=0, lpct<1800, lpct++)				//maximum for DEPTH_BIAS=0.5 is 958 loops to Research Division (originally 2743)
+		if(!priorityqueue.len) break
 
-	for (lpct = 0; lpct < 1800; lpct++)				//maximum for DEPTH_BIAS=0.5 is 958 loops to Research Division (originally 2743)
-		if (!pq.nodes.len) break
-
-		current = pq.extract_last()
+		current = pop(priorityqueue)
 		checked.Add(current)
 
 		next_g = current.g_score + DEPTH_BIAS
-		//if (maxnodes && next_g > (maxnodes*DEPTH_BIAS)) continue
+		//if(maxnodes && next_g > (maxnodes*DEPTH_BIAS)) continue
 
-		if (!current)								//no more possibilities, or an unhandled error
+		if(!current)								//no more possibilities, or an unhandled error
 			//world << "Impossible path"
-			var/list/path = new						//returning 0 will get runtime errors
 			return path								//FAILURE
 
-		if (current.me == dest_turf)				//reached the destination
-			var/list/path = new()
-			path.Add(current.me)
-			while (current.parent)					//recreate path by looping through parents
+		if(current.me == dest_turf)				//reached the destination
+			while(current)						//recreate path by looping through parents
+				path.Insert(1, current.me)
 				current = current.parent
-				path.Add(current.me)
 			//world << "Path found! ([path.len] steps, [lpct] loops, [evaluations] evaluations)"
 
-			for(var/i = 1; i <= path.len/2; i++)	//reverse path
-				path.Swap(i,path.len-i+1)
-
-			if (path.len > max_length)				//Truncate list at max_length (if necessary)
-				path.Cut(max_length,0)
+			path.len = min(path.len, max_length-1)
 			return path								//SUCCESS
 
 		var/adjacent = call(current.me,adjacent_proc)(id)
-		for (var/next_turf in adjacent)
+		for(var/next_turf in adjacent)
 			//evaluations++
-			if (next_turf == exclude)
+			if(next_turf == exclude)
 				continue
 			skip = 0
 			next_f = next_g + call(next_turf,distance_proc)(dest_turf)
 			var/i = 0
-			while ( i < checked.len && !skip)
+			while(i < checked.len && !skip)
 				i++
 				temp = checked[i]
-				if (temp.me == next_turf)			//if this turf has already been checked
+				if(temp.me == next_turf)			//if this turf has already been checked
 					skip = 1
-					if (temp.f_score > next_f)		//BUT the current path to it is better
+					if(temp.f_score > next_f)		//BUT the current path to it is better
 						checked[i] = new /pathnode(next_turf, current, next_f, next_g)
 													//then update it
-			if (!skip)								//if it hasn't been checked
+			if(!skip)								//if it hasn't been checked
 				i = 0
-				while (i < pq.nodes.len && !skip)
+				while(i < priorityqueue.len && !skip)
 					i++
-					temp = pq.nodes[i]
-					if (temp.me == next_turf)		//if this turf was already on the openlist
-						if (temp.f_score > next_f)	//BUT the current path to it is better
-							pq.nodes.Cut(i,i+1)		//then remove it
+					temp = priorityqueue[i]
+					if(temp.me == next_turf)		//if this turf was already on the openlist
+						if(temp.f_score > next_f)	//BUT the current path to it is better
+							priorityqueue.Cut(i,i+1)		//then remove it
 							skip = 2
 						else
 							skip = 1				//otherwise leave it and don't add this version
-			if (!(skip % 2))
-				pq.insert(new /pathnode(next_turf, current, next_f, next_g))
-
+			if(!(skip % 2))
+				sorted_insert(priorityqueue, new /pathnode(next_turf, current, next_f, next_g), /proc/cmp_pathnodes)
 
 	//world << "Didn't find a path within [evaluations] evaluations and [lpct] loops."
-	var/list/path = new								//prevents runtime errors
 	return path										//FAILURE
 	//This return should only be reached if the path is too long, and the while loop gives up.
