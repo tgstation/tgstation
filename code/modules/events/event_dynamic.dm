@@ -61,6 +61,7 @@
 	possibleEvents[/datum/event/ionstorm] = 25 + active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
 	possibleEvents[/datum/event/grid_check] = 25 + 10 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/electrical_storm] = 75 + 25 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/wallrot] = 50 * active_with_role["Engineer"] + 100 * active_with_role["Botanist"]
 
 	if(!spacevines_spawned)
 		possibleEvents[/datum/event/spacevine] = 5 + 10 * active_with_role["Engineer"]
@@ -69,11 +70,12 @@
 		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
 		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
 
-	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 25
+	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 100
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 100
-		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 75
-		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 5
+		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 150
+		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 10
+		possibleEvents[/datum/event/organ_failure] = active_with_role["Medical"] * 50
 
 	possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 	if(active_with_role["Security"] > 0)
@@ -84,16 +86,19 @@
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
 
+
+	var/picked_event = pickweight(possibleEvents)
+
 	// Debug code below here, very useful for testing so don't delete please.
-	/*var/debug_message = "Firing random event. "
+	var/debug_message = "Firing random event. "
 	for(var/V in active_with_role)
 		debug_message += "#[V]:[active_with_role[V]] "
 	debug_message += "||| "
 	for(var/V in possibleEvents)
 		debug_message += "[V]:[possibleEvents[V]]"
-	message_admins(debug_message)*/
+	debug_message += "|||Picked:[picked_event]"
+	log_debug(debug_message)
 
-	var/picked_event = pickweight(possibleEvents)
 	if(!picked_event)
 		return
 
@@ -176,6 +181,7 @@
 	active_with_role["AI"] = 0
 	active_with_role["Cyborg"] = 0
 	active_with_role["Janitor"] = 0
+	active_with_role["Botanist"] = 0
 
 	for(var/mob/M in player_list)
 		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
@@ -207,5 +213,8 @@
 
 		if(M.mind.assigned_role == "Janitor")
 			active_with_role["Janitor"]++
+
+		if(M.mind.assigned_role == "Botanist")
+			active_with_role["Botanist"]++
 
 	return active_with_role

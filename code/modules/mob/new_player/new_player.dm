@@ -277,6 +277,8 @@
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
 
+		ticker.mode.latespawn(character)
+
 		//ticker.mode.latespawn(character)
 
 		if(character.mind.assigned_role != "Cyborg")

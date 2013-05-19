@@ -1327,6 +1327,7 @@ proc/is_hot(obj/item/W as obj)
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
+	if(W.sharp) return 1
 	return ( \
 		istype(W, /obj/item/weapon/screwdriver)                   || \
 		istype(W, /obj/item/weapon/pen)                           || \

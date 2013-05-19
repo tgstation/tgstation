@@ -165,7 +165,7 @@ datum/controller/vote
 
 	proc/initiate_vote(var/vote_type, var/initiator_key)
 		if(!mode)
-			if(started_time != null)
+			if(started_time != null && !check_rights(R_ADMIN))
 				var/next_allowed_time = (started_time + config.vote_delay)
 				if(next_allowed_time > world.time)
 					return 0
@@ -200,7 +200,13 @@ datum/controller/vote
 
 			log_vote(text)
 			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
-			world << sound('weapons/smg_empty_alarm.ogg')
+			switch(vote_type)
+				if("crew_transfer")
+					world << sound('sound/voice/Serithi/Shuttlehere.ogg')
+				if("gamemode")
+					world << sound('sound/voice/Serithi/pretenddemoc.ogg')
+				if("custom")
+					world << sound('sound/voice/Serithi/weneedvote.ogg')
 			if(mode == "gamemode" && going)
 				going = 0
 				world << "<font color='red'><b>Round start has been delayed.</b></font>"

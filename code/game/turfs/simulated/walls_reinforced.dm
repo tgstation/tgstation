@@ -11,7 +11,7 @@
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
-		if (prob(10))
+		if (prob(10) || rotting)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -19,6 +19,10 @@
 		else
 			usr << text("\blue You punch the wall.")
 			return
+
+	if(rotting)
+		user << "\blue This wall feels rather unstable."
+		return
 
 	user << "\blue You push the wall but nothing happens!"
 	playsound(src.loc, 'sound/weapons/Genhit.ogg', 25, 1)
@@ -35,6 +39,20 @@
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
 
+	if(rotting)
+		if(istype(W, /obj/item/weapon/weldingtool) )
+			var/obj/item/weapon/weldingtool/WT = W
+			if( WT.remove_fuel(0,user) )
+				user << "<span class='notice'>You burn away the fungi with \the [WT].</span>"
+				playsound(src.loc, 'sound/items/Welder.ogg', 10, 1)
+				for(var/obj/effect/E in src) if(E.name == "Wallrot")
+					del E
+				rotting = 0
+				return
+		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
+			src.dismantle_wall()
+			return
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
