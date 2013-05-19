@@ -126,7 +126,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/overlays_lying[TOTAL_LAYERS]
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
-	var/race_icon
+	var/icon/race_icon
+	var/icon/deform_icon
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
@@ -239,7 +240,6 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(husk)
 			stand_icon.ColorTone(husk_color_mod)
 		else if(hulk)
-//			stand_icon.ColorTone(hulk_color_mod)
 			var/list/TONE = ReadRGB(hulk_color_mod)
 			stand_icon.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
 		else if(plant)
@@ -254,29 +254,19 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	for(var/datum/organ/external/part in organs)
 		if(!istype(part, /datum/organ/external/chest) && !(part.status & ORGAN_DESTROYED))
-			var/icon/temp
-			if(istype(part, /datum/organ/external/groin))
-				if(skeleton)
-					temp = new /icon(race_icon, "groin")
-				else
-					temp = new /icon(race_icon, "groin_[g]")
-			else if(istype(part, /datum/organ/external/head))
-				if(skeleton)
-					temp = new /icon(race_icon, "head")
-				else
-					temp = new /icon(race_icon, "head_[g]")
-			else
-				temp = new /icon(race_icon, "[part.icon_name]")
+			var/icon/temp = part.get_icon()
+
 			if(part.status & ORGAN_ROBOT)
 				temp.GrayScale()
+
 			if(part.status & ORGAN_DEAD)
 				temp.ColorTone(necrosis_color_mod)
 				temp.SetIntensity(0.7)
+
 			else if(!skeleton)
 				if(husk)
 					temp.ColorTone(husk_color_mod)
 				else if(hulk)
-//					temp.ColorTone(hulk_color_mod)
 					var/list/TONE = ReadRGB(hulk_color_mod)
 					temp.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
 				else if(plant)
@@ -442,12 +432,16 @@ proc/get_damage_icon_part(damage_state, body_part)
 		switch(dna.mutantrace)
 			if("tajaran")
 				race_icon = 'icons/mob/human_races/r_tajaran.dmi'
+				deform_icon = 'icons/mob/human_races/r_def_tajaran.dmi'
 			if("lizard")
 				race_icon = 'icons/mob/human_races/r_lizard.dmi'
+				deform_icon = 'icons/mob/human_races/r_def_lizard.dmi'
 			if("skrell")
 				race_icon = 'icons/mob/human_races/r_skrell.dmi'
+				deform_icon = 'icons/mob/human_races/r_def_skrell.dmi'
 			else
 				race_icon = 'icons/mob/human_races/r_human.dmi'
+				deform_icon = 'icons/mob/human_races/r_def_human.dmi'
 	else
 		icon = 'icons/mob/human_races/r_human.dmi'
 
