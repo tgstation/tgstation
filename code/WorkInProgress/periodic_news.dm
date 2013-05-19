@@ -43,7 +43,14 @@
 			author = "Assistant Editor Carl Ritz"
 			channel_name = "Gibson Gazzette"
 			message = "Several corporations banding together to block access to 'wetskrell.nt', site administrators claiming violation of net laws."
-			round_time = 60 * 15
+			round_time = 60 * 50
+
+		found_ssd
+			channel_name = "Tau Ceti Daily"
+			author = "Doctor Eric Hanfield"
+
+			message = "Several people have been found unconscious at their terminals. It is thought that it was due to a lack of sleep or of simply migraines from staring at the screen too long. Camera footage reveals that many of them were playing games instead of working and their pay has been docked accordingly."
+			round_time = 60 * 90
 
 	lotus_tree
 		explosions
@@ -53,7 +60,23 @@
 			message = "The newly-christened civillian transport Lotus Tree suffered two very large explosions near the bridge today, and there are unconfirmed reports that the death toll has passed 50. The cause of the explosions remain unknown, but there is speculation that it might have something to do with the recent change of regulation in the Moore-Lee Corporation, a major funder of the ship, when M-L announced that they were officially acknowledging inter-species marriage and providing couples with marriage tax-benefits."
 			round_time = 60 * 30
 
-var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk)
+	food_riots
+		breaking_news
+			channel_name = "Tau Ceti Daily"
+			author = "Reporter Ro'kii Ar-Raqis"
+
+			message = "Breaking news: Food riots have broken out throughout the Refuge asteroid colony in the Tenebrae Lupus system. This comes only hours after NanoTrasen officials announced they will no longer trade with the colony, citing the increased presence of \"hostile factions\" on the colony has made trade too dangerous to continue. NanoTrasen officials have not given any details about said factions. More on that at the top of the hour."
+			round_time = 60 * 10
+
+		more
+			channel_name = "Tau Ceti Daily"
+			author = "Reporter Ro'kii Ar-Raqis"
+
+			message = "More on the Refuge food riots: The Refuge Council has condemned NanoTrasen's withdrawal from the colony, claiming \"there has been no increase in anti-NanoTrasen activity\", and \"\[the only] reason NanoTrasen withdrew was because the \[Tenebrae Lupus] system's Plasma deposits have been completely mined out. We have little to trade with them now\". NanoTrasen officials have denied these allegations, calling them \"further proof\" of the colony's anti-NanoTrasen stance. Meanwhile, Refuge Security has been unable to quell the riots. More on this at 6."
+			round_time = 60 * 60
+
+
+var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk,  /datum/news_announcement/lotus_tree)
 
 proc/process_newscaster()
 	check_for_newscaster_updates(ticker.mode.newscaster_announcements)
