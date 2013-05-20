@@ -38,3 +38,5 @@
 
 	var/tod = null // Time of death
 	var/update_slimes = 1
+	var/silent = null 		//Can't talk. Value goes down every life proc.
+	var/can_whisper = null //set this to 1 if the mob should have whispering capability

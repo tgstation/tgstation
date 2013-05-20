@@ -15,7 +15,6 @@
 
 /mob/living/silicon/pai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
-
 	if (ending == "?")
 		return "[src.speakQuery], \"[text]\"";
 	else if (ending == "!")

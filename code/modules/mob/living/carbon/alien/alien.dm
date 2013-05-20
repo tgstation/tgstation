@@ -8,6 +8,7 @@
 	voice_message = "hisses"
 	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
+	can_whisper = 1
 	gender = NEUTER
 	dna = null
 

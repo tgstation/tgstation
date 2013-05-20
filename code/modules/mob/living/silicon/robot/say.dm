@@ -15,7 +15,6 @@
 
 /mob/living/silicon/robot/say_quote(var/text)
 	var/ending = copytext(text, length(text))
-
 	if (ending == "?")
 		return "queries, \"[text]\"";
 	else if (ending == "!")

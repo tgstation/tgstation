@@ -1245,4 +1245,3 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		dummies += D
 	usr << "[dummies.len] found!"
 */
-

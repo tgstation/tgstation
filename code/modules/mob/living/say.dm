@@ -1,4 +1,3 @@
-
 var/list/department_radio_keys = list(
 	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
 	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
