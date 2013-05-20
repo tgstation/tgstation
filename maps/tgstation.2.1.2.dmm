@@ -63,7 +63,7 @@
 "abk" = (/obj/structure/rack,/obj/item/weapon/shield/riot{pixel_x = -3; pixel_y = 3},/obj/item/weapon/shield/riot,/obj/item/weapon/shield/riot{pixel_x = 3; pixel_y = -3},/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/security/warden)
 "abl" = (/obj/structure/rack,/obj/item/clothing/mask/gas{pixel_x = 3; pixel_y = 3},/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas{pixel_x = -3; pixel_y = -3},/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/security/warden)
 "abm" = (/obj/structure/closet/l3closet/security,/turf/simulated/floor{icon_state = "dark"},/area/security/warden)
-"abn" = (/obj/structure/closet/bombcloset,/turf/simulated/floor{icon_state = "dark"},/area/security/warden)
+"abn" = (/obj/structure/closet/bombclosetsecurity,/turf/simulated/floor{icon_state = "dark"},/area/security/warden)
 "abo" = (/obj/structure/table/woodentable,/obj/item/weapon/book/manual/security_space_law,/obj/item/weapon/cartridge/detective,/obj/machinery/requests_console{announcementConsole = 1; department = "Head of Security's Desk"; departmentType = 5; name = "Head of Security RC"; pixel_x = 0; pixel_y = 30},/turf/simulated/floor/carpet,/area/security/hos)
 "abp" = (/obj/machinery/computer/secure_data,/turf/simulated/floor/carpet,/area/security/hos)
 "abq" = (/obj/machinery/computer/security,/turf/simulated/floor/carpet,/area/security/hos)
