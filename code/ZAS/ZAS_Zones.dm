@@ -371,7 +371,14 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		unsim_co2 += T.carbon_dioxide
 		unsim_nitrogen += T.nitrogen
 		unsim_plasma += T.toxins
-		unsim_heat_capacity += T.heat_capacity
+
+		// Make sure it actually has gas in it, and use the heat capacity of that.
+		// Space and unsimulated tiles do NOT have a heat capacity. Thus we don't
+		// add them. This means "space is not cold", which turns out just fine in
+		// gameplay terms.
+		if(istype(T, /turf/simulated))
+			unsim_heat_capacity += T:air.heat_capacity()
+
 		unsim_temperature += T.temperature/unsimulated_tiles.len
 
 	var
@@ -380,7 +387,14 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		old_pressure = A.return_pressure()
 
 		size = max(1,A.group_multiplier)
-		share_size = max(1,unsimulated_tiles.len)
+
+		// We use the same size for the potentially single space tile
+		// as we use for the entire room. Why is this?
+		// Short answer: We do not want larger rooms to depressurize more
+		// slowly than small rooms, preserving our good old "hollywood-style"
+		// oh-shit effect when large rooms get breached, but still having small
+		// rooms remain pressurized for long enough to make escape possible.
+		share_size = max(1,size - 5 + unsimulated_tiles.len)
 
 		full_oxy = A.oxygen * size
 		full_nitro = A.nitrogen * size
