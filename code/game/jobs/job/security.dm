@@ -1,3 +1,9 @@
+//Warden and regular officers add this result to their get_access()
+/datum/job/proc/check_config_for_sec_maint()
+	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS)
+		return list(access_maint_tunnels)
+	return list()
+
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
@@ -85,11 +91,9 @@
 		return 1
 
 /datum/job/warden/get_access()
-	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS) //Config has sec maint access set
-		. = ..()
-		. |= list(access_maint_tunnels)
-	else
-		return ..()
+	var/list/L = list()
+	L = ..() | check_config_for_sec_maint()
+	return L
 
 /datum/job/detective
 	title = "Detective"
@@ -175,8 +179,6 @@
 		return 1
 
 /datum/job/officer/get_access()
-	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS) //Config has sec maint access set
-		. = ..()
-		. |= list(access_maint_tunnels)
-	else
-		return ..()
+	var/list/L = list()
+	L = ..() | check_config_for_sec_maint()
+	return L
