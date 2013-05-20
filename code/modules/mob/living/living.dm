@@ -41,7 +41,7 @@
 		for(var/datum/limb/affecting in H.organs)
 			if(!affecting)	continue
 			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
-				H.UpdateDamageIcon(0)
+				H.update_damage_overlays(0)
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -260,7 +260,7 @@
 	..()
 	return
 
-/mob/living/proc/UpdateDamageIcon()
+/mob/living/proc/update_damage_overlays()
 	return
 
 

@@ -278,7 +278,7 @@ var/list/sacrificed = list()
 //				corpse_to_raise.update_inv_handcuffed(0)
 			corpse_to_raise.stat = CONSCIOUS
 			corpse_to_raise.updatehealth()
-			corpse_to_raise.UpdateDamageIcon(0)
+			corpse_to_raise.update_damage_overlays(0)
 
 			corpse_to_raise.key = ghost.key	//the corpse will keep its old mind! but a new player takes ownership of it (they are essentially possessed)
 											//This means, should that player leave the body, the original may re-enter
