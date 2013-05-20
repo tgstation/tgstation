@@ -39,7 +39,7 @@
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.h_color)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.f_style), facial_hair_styles_list.len)
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.f_color)
-			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.s_tone), skin_tones.len)
+			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
 			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
 		
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
@@ -68,7 +68,7 @@
 	return .
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
-	if(!istype(owner))
+	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
 		owner.dna = new /datum/dna()
@@ -88,21 +88,23 @@
 	owner.dna.mutantrace = mutantrace
 	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
-		H.update_mutantrace()
+		H.update_body()
+		H.update_hair()
 	
 	if(se)
 		owner.dna.struc_enzymes = se
 		domutcheck(owner)
 	
 	check_dna_integrity(owner)
+	return owner.dna
 	
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!istype(character))
-		return 0
+		return
 	if(!character.dna)
 		if(ready_dna(character))
-			return 1
-		return 0
+			return character.dna
+		return
 	
 	if(length(character.dna.uni_identity) != DNA_UNI_IDENTITY_BLOCKS*DNA_BLOCK_SIZE)
 		character.dna.uni_identity = character.dna.generate_uni_identity(character)	
@@ -110,11 +112,11 @@
 		character.dna.struc_enzymes = character.dna.generate_struc_enzymes()
 	if(!character.dna.real_name || length(character.dna.unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
 		character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
-	return 1
+	return character.dna
 
 /proc/ready_dna(mob/living/carbon/character, blood_type)
 	if(!istype(character, /mob/living/carbon/monkey) && !istype(character, /mob/living/carbon/human))
-		return 0
+		return
 	if(!character.dna)
 		character.dna = new /datum/dna()
 	if(blood_type)
@@ -123,7 +125,7 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
-	return 1
+	return character.dna
 
 /////////////////////////// DNA DATUM
 
@@ -204,21 +206,23 @@
 /////////////////////////// DNA HELPER-PROCS
 
 /////////////////////////// DNA MISC-PROCS
-/proc/updateappearance(mob/living/carbon/human/H)
-	if(!istype(H) || !istype(H.dna))
+/proc/updateappearance(mob/living/carbon/C)
+	if(!check_dna_integrity(C))
 		return 0
-	check_dna_integrity()
-	var/structure = H.dna.uni_identity
-	H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
-	H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	H.s_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
-	H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	H.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
-	H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
-	H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+	
+	var/structure = C.dna.uni_identity
+	C.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+	if(istype(C, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = C
+		H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
+		H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
+		H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+		H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
+		H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+		H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 
-	H.update_body(0)
-	H.update_hair()
+		H.update_body()
+		H.update_hair()
 	return 1
 
 /proc/domutcheck(mob/living/carbon/M, connected, inj)
@@ -392,7 +396,7 @@
 				del(animation)
 
 			var/mob/living/carbon/human/O = new( src )
-			O.gender = (deconstruct_block(getblock(M.dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
+			O.gender = (deconstruct_block(getblock(M.dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 
 			if(M)
 				if(M.dna)

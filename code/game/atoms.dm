@@ -304,69 +304,57 @@ its easier to just keep the beam vertical.
 	if(!istype(W, /obj/item/weapon/grab) && !istype(W, /obj/item/weapon/plastique) && !istype(W, /obj/item/weapon/reagent_containers/spray) && !istype(W, /obj/item/weapon/packageWrap) && !istype(W, /obj/item/device/detective_scanner))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
+var/list/blood_splatter_icons = list()
 
+/atom/proc/blood_splatter_index()
+	return "\ref[initial(icon)]-[initial(icon_state)]"
 
 //returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/human/M as mob)
-	if (!( istype(M, /mob/living/carbon/human) ))
+/atom/proc/add_blood(mob/living/carbon/M)
+	if(!initial(icon) || !initial(icon_state))
 		return 0
-	check_dna_integrity(M)		//check dna is valid and create/setup if necessary
-	if (!( src.flags ) & FPRINT)
+	if(!istype(M))
 		return 0
-	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
+		return 0					//no dna!
+	if(!(flags & FPRINT))
+		return 0
+	if(!istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 
 	//adding blood to items
-	if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
-		var/obj/item/O = src
-
-		//if we haven't made our blood_overlay already
-		if( !O.blood_overlay )
-			var/icon/I = new /icon(O.icon, O.icon_state)
-			I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-			I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-			//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-			for(var/obj/item/A in world)
-				if(A.type == O.type && !A.blood_overlay)
-					A.blood_overlay = I
-
+	if(istype(src, /obj/item))
 		//apply the blood-splatter overlay if it isn't already in there
 		if(!blood_DNA.len)
-			O.overlays += O.blood_overlay
-
+			//try to find a pre-processed blood-splatter. otherwise, make a new one
+			var/index = blood_splatter_index()
+			var/icon/blood_splatter_icon = blood_splatter_icons[index]
+			if(!blood_splatter_icon )
+				blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
+				blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
+				blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+				blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
+				blood_splatter_icons[index] = blood_splatter_icon
+			overlays += blood_splatter_icon
+			
 		//if this blood isn't already in the list, add it
-
 		if(blood_DNA[M.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
 		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		return 1 //we applied blood to the item
 
 	//adding blood to turfs
-	else if (istype(src, /turf/simulated))
+	else if(istype(src, /turf/simulated))
 		var/turf/simulated/T = src
 
 		//get one blood decal and infect it with virus from M.viruses
-		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
-			if(!B.blood_DNA[M.dna.unique_enzymes])
-				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			/*for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = D.Copy(1)
-				B.viruses += newDisease
-				newDisease.holder = B*/
-			return 1 //we bloodied the floor
-
-		//if there isn't a blood decal already, make one.
-		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
-		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			newblood.viruses += newDisease
-			newDisease.holder = newblood*/
+		var/obj/effect/decal/cleanable/blood/B = locate() in T.contents
+		if(!B)	B = new /obj/effect/decal/cleanable/blood(T)
+		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		return 1 //we bloodied the floor
 
 	//adding blood to humans
-	else if (istype(src, /mob/living/carbon/human))
+	else if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		//if this blood isn't already in the list, add it
 		if(blood_DNA[H.dna.unique_enzymes])
@@ -391,34 +379,22 @@ its easier to just keep the beam vertical.
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
-	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
-		if( istype(src, /turf/simulated) )
-			var/turf/simulated/source1 = src
-			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
-			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			/*for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = D.Copy(1)
-				this.viruses += newDisease
-				newDisease.holder = this*/
-
-	else if( istype(M, /mob/living/carbon/alien ))
-		if( istype(src, /turf/simulated) )
-			var/turf/simulated/source2 = src
-			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
-			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
-			/*for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = D.Copy(1)
-				this.viruses += newDisease
-				newDisease.holder = this*/
-
-	else if( istype(M, /mob/living/silicon/robot ))
-		if( istype(src, /turf/simulated) )
-			var/turf/simulated/source2 = src
-			new /obj/effect/decal/cleanable/oil(source2)
+	if(istype(src, /turf/simulated))
+		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
+			var/obj/effect/decal/cleanable/blood/B = locate() in contents
+			if(!B)	B = new(src)
+			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+		else if(istype(M, /mob/living/carbon/alien))
+			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
+			if(!B)	B = new(src)
+			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
+		else if(istype(M, /mob/living/silicon/robot))
+			var/obj/effect/decal/cleanable/oil/B = locate() in contents
+			if(!B)	B = new(src)
 
 /atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))
-		del(blood_DNA)
+		blood_DNA = null
 		return 1
 
 

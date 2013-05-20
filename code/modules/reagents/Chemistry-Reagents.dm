@@ -315,10 +315,11 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
-					if(human.dna.mutantrace == null)
+					if(human.dna && !human.dna.mutantrace)
 						M << "\red Your flesh rapidly mutates!"
 						human.dna.mutantrace = "slime"
-						human.update_mutantrace()
+						human.update_body()
+						human.update_hair()
 				..()
 				return
 
@@ -1628,7 +1629,7 @@ datum
 							var/datum/limb/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
-									H.UpdateDamageIcon(0)
+									H.update_damage_overlays(0)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream")
 									H.f_style = "Shaved"

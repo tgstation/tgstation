@@ -163,7 +163,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			>> h_color
 	S["facial_hair_color"]	>> f_color
 	S["eye_color"]			>> eye_color
-	S["skin_tone"]			>> s_tone
+	S["skin_tone"]			>> skin_tone
 	S["hair_style_name"]	>> h_style
 	S["facial_style_name"]	>> f_style
 	S["underwear"]			>> underwear
@@ -203,7 +203,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	h_color			= sanitize_hexcolor(h_color, 3, 0)
 	f_color			= sanitize_hexcolor(f_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
-	s_tone			= sanitize_inlist(s_tone, skin_tones)
+	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
@@ -236,7 +236,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			<< h_color
 	S["facial_hair_color"]	<< f_color
 	S["eye_color"]			<< eye_color
-	S["skin_tone"]			<< s_tone
+	S["skin_tone"]			<< skin_tone
 	S["hair_style_name"]	<< h_style
 	S["facial_style_name"]	<< f_style
 	S["underwear"]			<< underwear
