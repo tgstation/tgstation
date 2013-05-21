@@ -126,7 +126,7 @@
 	del(animation)
 
 
-	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
+	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	O.dna = dna
 	dna = null
 	if (newname) //if there's a name as an argument, always take that one over the current name
