@@ -215,6 +215,10 @@ connection
 		if(ref_A != "\ref[A]" || ref_B != "\ref[B]")
 			del src
 
+		//Handle zones changing on a turf.
+		if((A.zone && A.zone != zone_A) || (B.zone && B.zone != zone_B))
+			Sanitize()
+
 		//Manage sudden loss of a turfs zone. (e.g. a wall being built)
 		if(!A.zone || !B.zone)
 			no_zone_count++
@@ -222,10 +226,6 @@ connection
 				//world.log << "Connection removed: [A] or [B] missing a zone."
 				del src
 			return 0
-
-		//Handle zones changing on a turf.
-		if((A.zone && A.zone != zone_A) || (B.zone && B.zone != zone_B))
-			Sanitize()
 
 		return 1
 
