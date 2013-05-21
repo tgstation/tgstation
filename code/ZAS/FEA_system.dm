@@ -106,7 +106,6 @@ datum
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
 			var/failed_ticks = 0 //How many ticks have runtimed?
-			var/next_stat_check = 10
 
 			var/tick_progress = 0
 
@@ -137,7 +136,10 @@ datum
 
 				var/start_time = world.timeofday
 
+				var/simulated_turf_count = 0
+
 				for(var/turf/simulated/S in world)
+					simulated_turf_count++
 					if(!S.zone && !S.blocks_air)
 						if(S.CanPass(null, S, 0, 0))
 							new/zone(S)
@@ -145,8 +147,12 @@ datum
 				for(var/turf/simulated/S in world)
 					S.update_air_properties()
 
-				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
-//				spawn start()
+				world << {"<font color='red'><b>Geometry initialized in [round(0.1*(world.timeofday-start_time),0.1)] seconds.</b>
+	Total Simulated Turfs: [simulated_turf_count]
+	Total Zones: [zones.len]
+	Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]</font>"}
+				/*
+				spawn start()
 
 			proc/start()
 				//Purpose: This is kicked off by the master controller, and controls the processing of all atmosphere.
@@ -154,7 +160,7 @@ datum
 				//Inputs: None.
 				//Outputs: None.
 
-				/*
+
 				set background = 1
 
 				while(1)
@@ -171,13 +177,6 @@ datum
 
 			proc/tick()
 				. = 1 //Set the default return value, for runtime detection.
-
-				tick_progress = "next_stat_check (atmos statistics)"
-				if(current_cycle >= next_stat_check)
-					var/zone/z = pick(zones)
-					var/log_file = file("[time2text(world.timeofday, "statistics/DD-MM-YYYY-air.txt")]")
-					log_file << "\"\The [get_area(pick(z.contents))]\",[z.air.oxygen],[z.air.nitrogen],[z.air.carbon_dioxide],[z.air.toxins],[z.air.temperature],[z.air.group_multiplier * z.air.volume]"
-					next_stat_check = current_cycle + (rand(5,7)*60)
 
 				tick_progress = "update_air_properties"
 				if(tiles_to_update.len) //If there are tiles to update, do so.
