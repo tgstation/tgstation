@@ -48,7 +48,7 @@
 		t_is = "are"
 	else
 		if(icon)
-			msg += "\icon[icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
+			msg += "\icon[src] " //note, should we ever go back to runtime-generated icons (please don't), you will need to change this to \icon[icon] to prevent crashes.
 		switch(gender)
 			if(MALE)
 				t_He = "He"
