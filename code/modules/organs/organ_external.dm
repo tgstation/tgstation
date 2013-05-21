@@ -549,7 +549,10 @@
 
 /datum/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
-	owner << "<span class = 'notice'>Something is not right with your [display_name]...</span>"
+	owner.update_body()
+
+/datum/organ/external/proc/unmutate()
+	src.status &= ~ORGAN_MUTATED
 	owner.update_body()
 
 /datum/organ/external/proc/get_damage()	//returns total damage
@@ -561,11 +564,12 @@
 			return 1
 	return 0
 
-/datum/organ/external/get_icon()
+/datum/organ/external/get_icon(gender="")
 	if (status & ORGAN_MUTATED)
-		. = new /icon(owner.deform_icon, "[icon_name]")
+		return new /icon(owner.deform_icon, "[icon_name][gender ? "_[gender]" : ""]")
 	else
-		. = new /icon(owner.race_icon, "[icon_name]")
+		return new /icon(owner.race_icon, "[icon_name][gender ? "_[gender]" : ""]")
+
 
 /datum/organ/external/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
@@ -576,27 +580,20 @@
 
 /datum/organ/external/chest
 	name = "chest"
-	icon_name = "chest"
+	icon_name = "torso"
 	display_name = "chest"
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
 
+
 /datum/organ/external/groin
 	name = "groin"
-	icon_name = "diaper"
+	icon_name = "groin"
 	display_name = "groin"
 	max_damage = 115
 	min_broken_damage = 70
 	body_part = LOWER_TORSO
-
-/datum/organ/external/groin/get_icon()
-	var/g = "m"
-	if(owner.gender == FEMALE)	g = "f"
-	if (status & ORGAN_MUTATED)
-		. = new /icon(owner.deform_icon, "[icon_name]_[g]")
-	else
-		. = new /icon(owner.race_icon, "[icon_name]_[g]")
 
 /datum/organ/external/l_arm
 	name = "l_arm"

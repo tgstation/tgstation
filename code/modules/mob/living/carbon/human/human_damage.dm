@@ -63,6 +63,35 @@
 	if(HULK in mutations)	return
 	..()
 
+/mob/living/carbon/human/adjustCloneLoss(var/amount)
+	..()
+	var/heal_prob = max(0, 80 - getCloneLoss())
+	var/mut_prob = min(80, getCloneLoss()+10)
+	if (amount > 0)
+		if (prob(mut_prob))
+			var/list/datum/organ/external/candidates = list()
+			for (var/datum/organ/external/O in organs)
+				if(!(O.status & ORGAN_MUTATED))
+					candidates |= O
+			if (candidates.len)
+				var/datum/organ/external/O = pick(candidates)
+					O.mutate()
+					src << "<span class = 'notice'>Something is not right with your [O.display_name]...</span>"
+					return
+	else
+		if (prob(heal_prob))
+			for (var/datum/organ/external/O in organs)
+				if (O.status & ORGAN_MUTATED)
+					O.unmutate()
+					src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
+					return
+
+	if (getCloneLoss() < 1)
+		for (var/datum/organ/external/O in organs)
+			world << "[O.display_name]!"
+			if (O.status & ORGAN_MUTATED)
+				O.unmutate()
+				src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs

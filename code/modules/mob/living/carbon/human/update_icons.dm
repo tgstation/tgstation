@@ -235,8 +235,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
 
+	var/datum/organ/external/chest = get_organ("chest")
+	stand_icon = chest.get_icon(g)
 	if(!skeleton)
-		stand_icon = new /icon(race_icon, "torso_[g][fat?"_fat":""]")
 		if(husk)
 			stand_icon.ColorTone(husk_color_mod)
 		else if(hulk)
@@ -244,8 +245,6 @@ proc/get_damage_icon_part(damage_state, body_part)
 			stand_icon.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
 		else if(plant)
 			stand_icon.ColorTone(plant_color_mod)
-	else
-		stand_icon = new /icon(race_icon, "torso")
 
 	var/datum/organ/external/head = get_organ("head")
 	var/has_head = 0
@@ -254,7 +253,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	for(var/datum/organ/external/part in organs)
 		if(!istype(part, /datum/organ/external/chest) && !(part.status & ORGAN_DESTROYED))
-			var/icon/temp = part.get_icon()
+			var/icon/temp
+			if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
+				temp = part.get_icon(g)
+			else
+				temp = part.get_icon()
 
 			if(part.status & ORGAN_ROBOT)
 				temp.GrayScale()
