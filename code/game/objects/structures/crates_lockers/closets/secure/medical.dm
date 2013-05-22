@@ -94,7 +94,7 @@
 		new /obj/item/clothing/under/rank/nurse(src)
 		new /obj/item/clothing/under/rank/orderly(src)
 		new /obj/item/clothing/suit/storage/labcoat(src)
-		new /obj/item/clothing/suit/fr_jacket(src)
+		new /obj/item/clothing/suit/storage/fr_jacket(src)
 		new /obj/item/clothing/shoes/white(src)
 //		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)

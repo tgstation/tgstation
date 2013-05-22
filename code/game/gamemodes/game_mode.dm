@@ -27,6 +27,7 @@
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
+	var/newscaster_announcements = null
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -290,6 +291,7 @@ Implants;
 			if(player.client.prefs.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+					log_debug("[player.key] had [roletext] enabled, so drafting them.")
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
@@ -317,6 +319,7 @@ Implants;
 			applicant = pick(drafted)
 			if(applicant)
 				candidates += applicant
+				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
 				drafted.Remove(applicant)
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
@@ -342,7 +345,7 @@ Implants;
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
-				message_admins("[applicant.key] drafted into antagonist role against their preferences.")
+				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
@@ -351,9 +354,10 @@ Implants;
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-/*
+
 /datum/game_mode/proc/latespawn(var/mob)
 
+/*
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
@@ -387,6 +391,9 @@ Implants;
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
+
+/datum/game_mode/New()
+	newscaster_announcements = pick(newscaster_standard_feeds)
 
 //////////////////////////
 //Reports player logouts//

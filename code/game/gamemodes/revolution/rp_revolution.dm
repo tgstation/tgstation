@@ -8,6 +8,12 @@
 	required_enemies = 3
 	recommended_enemies = 3
 
+	uplink_welcome = "Revolutionary Uplink Console:"
+	uplink_uses = 5
+
+	newscaster_announcements = /datum/news_announcement/revolution_inciting_event
+
+	var/last_command_report = 0
 	var/list/heads = list()
 	var/tried_to_add_revheads = 0
 
@@ -57,7 +63,7 @@
 			var/datum/objective/mutiny/rp/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate or capture [head_mind.name], the [head_mind.assigned_role]."
+			rev_obj.explanation_text = "Assassinate, convert or capture [head_mind.name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
 		update_rev_icons_added(rev_mind)
@@ -65,6 +71,8 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
+		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+
 	modePlayer += head_revolutionaries
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -183,8 +191,7 @@
 				active_revs++
 
 		if(active_revs == 0)
-			log_admin("There are zero active head revolutionists, trying to add some..")
-			message_admins("There are zero active head revolutionists, trying to add some..")
+			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = 0
 			for(var/mob/living/carbon/human/H in world) if(H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
 				head_revolutionaries += H.mind
@@ -210,4 +217,28 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 6000 // wait 10 minutes
 
+	if(last_command_report == 0 && world.time >= 60 * 10)
+		command_alert("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		last_command_report = 1
+	else if(last_command_report == 1 && world.time >= 60 * 30)
+		command_alert("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
+		last_command_report = 2
+	else if(last_command_report == 2 && world.time >= 60 * 60)
+		command_alert("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+		last_command_report = 3
+
 	return ..()
+
+
+/datum/game_mode/revolution/rp_revolution/latespawn(mob/M)
+	if(M.mind.assigned_role in command_positions)
+		log_debug("Adding head kill/capture/convert objective for [M.name]")
+		heads += M
+
+		for(var/datum/mind/rev_mind in head_revolutionaries)
+			var/datum/objective/mutiny/rp/rev_obj = new
+			rev_obj.owner = rev_mind
+			rev_obj.target = M.mind
+			rev_obj.explanation_text = "Assassinate, convert or capture [M.name], the [M.mind.assigned_role]."
+			rev_mind.objectives += rev_obj
+			rev_mind.current << "\red A new Head of Staff, [M.name], the [M.mind.assigned_role] has appeared. Your objectives have been updated."

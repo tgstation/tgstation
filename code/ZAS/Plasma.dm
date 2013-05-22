@@ -68,8 +68,9 @@ obj/item/proc
 	if(!pl_head_protected())
 		if(prob(1)) suit_contamination() //Plasma can sometimes get through such an open suit.
 
-	if(istype(back,/obj/item/weapon/storage/backpack))
-		back.contaminate()
+//Cannot wash backpacks currently.
+//	if(istype(back,/obj/item/weapon/storage/backpack))
+//		back.contaminate()
 
 /mob/proc/pl_effects()
 

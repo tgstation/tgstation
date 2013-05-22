@@ -76,9 +76,9 @@
 
 	M.updatehealth()
 /obj/item/stack/medical/bruise_pack
-	name = "bruise pack"
-	singular_name = "bruise pack"
-	desc = "A pack designed to treat blunt-force trauma."
+	name = "roll of gauze"
+	singular_name = "gauze length"
+	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "brutepack"
 	heal_brute = 60
 	origin_tech = "biotech=1"
