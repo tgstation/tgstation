@@ -119,7 +119,7 @@
 	return brute_dam + burn_dam
 
 
-//Updates an organ's brute/burn states for use by updateDamageIcon()
+//Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /datum/limb/proc/update_icon()
 	var/tbrute	= round( (brute_dam/max_damage)*3, 1 )

@@ -201,7 +201,7 @@ var/global/mulebot_count = 0
 			if(5,6)
 				dat += "<span class='average'>Calculating navigation path</span>"
 			if(7)
-				dat += "<span class='bad'>Unable to locate destination</span>"
+				dat += "<span class='bad'>Unable to reach destination</span>"
 		dat += "</div>"
 
 		dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
@@ -225,7 +225,7 @@ var/global/mulebot_count = 0
 
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
-			dat += "<div class='notice'>The maintenance hatch is closed</div>"
+			dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
 	else
 		if(!ai)
@@ -590,7 +590,7 @@ var/global/mulebot_count = 0
 						blockcount++
 						mode = 4
 						if(blockcount == 3)
-							src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
+							src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 						if(blockcount > 5)	// attempt 5 times before recomputing
@@ -608,7 +608,7 @@ var/global/mulebot_count = 0
 							return
 						return
 				else
-					src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
+					src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					//world << "Bad turf."
 					mode = 5

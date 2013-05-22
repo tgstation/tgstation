@@ -23,7 +23,7 @@
 					if (istype(organ, /datum/limb))
 						var/datum/limb/temp = organ
 						if(temp.take_damage(d, 0))
-							H.UpdateDamageIcon(0)
+							H.update_damage_overlays(0)
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -174,7 +174,7 @@
 				if(status == "")
 					status = "OK"
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
-			if(SKELETON in H.mutations && !H.w_uniform && !H.wear_suit)
+			if(dna && (dna.mutantrace == "skeleton") && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			if(ishuman(src))
