@@ -14,9 +14,9 @@
 	maxHealth = 5
 	health = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "splats the"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "splats"
 	density = 0
 	var/color //brown, gray and white, leave blank for random
 
