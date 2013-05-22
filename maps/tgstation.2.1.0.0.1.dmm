@@ -480,7 +480,7 @@
 "ajl" = (/turf/simulated/floor/plating,/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/simulated/shuttle/wall{tag = "icon-swall_f6"; icon_state = "swall_f6"; dir = 2},/area/shuttle/escape_pod3/station)
 "ajm" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"; dir = 2},/area/shuttle/escape_pod3/station)
 "ajn" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s10"; icon_state = "swall_s10"; dir = 2},/area/shuttle/escape_pod3/station)
-"ajo" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/junction{dir = 8; icon_state = "pipe-j2"; tag = "icon-pipe-j1 (WEST)"},/turf/simulated/floor,/area/hallway/primary/fore)
+"ajo" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/junction{tag = "icon-pipe-y"; icon_state = "pipe-y"; dir = 2},/turf/simulated/floor,/area/hallway/primary/fore)
 "ajp" = (/obj/structure/stool,/turf/simulated/floor{icon_state = "white"},/area/security/brig)
 "ajq" = (/turf/simulated/floor{icon_state = "white"},/area/security/brig)
 "ajr" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor{tag = "icon-whitehall (WEST)"; icon_state = "whitehall"; dir = 8},/area/security/brig)
