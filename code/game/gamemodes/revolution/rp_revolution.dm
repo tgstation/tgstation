@@ -8,6 +8,9 @@
 	required_enemies = 3
 	recommended_enemies = 3
 
+	uplink_welcome = "Revolutionary Uplink Console:"
+	uplink_uses = 5
+
 	newscaster_announcements = /datum/news_announcement/revolution_inciting_event
 
 	var/last_command_report = 0
@@ -68,6 +71,8 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
+		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+
 	modePlayer += head_revolutionaries
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
