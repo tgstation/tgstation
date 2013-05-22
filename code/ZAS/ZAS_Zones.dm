@@ -20,6 +20,7 @@ zone
 		// To make sure you're not spammed to death by airflow sound effects
 		tmp/playsound_cooldown = 0
 
+
 //CREATION AND DELETION
 	New(turf/start)
 		. = ..()
@@ -53,6 +54,7 @@ zone
 		//Add this zone to the global list.
 		zones.Add(src)
 
+
 	//LEGACY, DO NOT USE.  Use the SoftDelete proc.
 	Del()
 		//Ensuring the zone list doesn't get clogged with null values.
@@ -68,24 +70,26 @@ zone
 		air = null
 		. = ..()
 
+
 	//Handles deletion via garbage collection.
 	proc/SoftDelete()
 		zones.Remove(src)
 		air = null
+
 		//Ensuring the zone list doesn't get clogged with null values.
 		for(var/turf/simulated/T in contents)
 			RemoveTurf(T)
 			air_master.tiles_to_reconsider_zones += T
+
+		//Removing zone connections and scheduling connection cleanup
 		for(var/zone/Z in connected_zones)
 			if(src in Z.connected_zones)
 				Z.connected_zones.Remove(src)
 		for(var/connection/C in connections)
-			if(C.zone_A == src)
-				C.zone_A = null
-			if(C.zone_B == src)
-				C.zone_B = null
 			air_master.connections_to_check += C
+
 		return 1
+
 
 //ZONE MANAGEMENT FUNCTIONS
 	proc/AddTurf(turf/T)
@@ -270,7 +274,13 @@ zone/proc/process()
 				if(moles_delta > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 						Airflow(src,Z)
-					ShareRatio( air , Z.air , connected_zones[Z] )
+					var/unsimulated_boost = 0
+					if(unsimulated_tiles)
+						unsimulated_boost += unsimulated_tiles.len
+					if(Z.unsimulated_tiles)
+						unsimulated_boost += Z.unsimulated_tiles.len
+					unsimulated_boost = min(3, unsimulated_boost)
+					ShareRatio( air , Z.air , connected_zones[Z] + unsimulated_boost)
 
 		for(var/zone/Z in closed_connection_zones)
 			if(air && Z.air)

@@ -83,12 +83,12 @@ connection
 			if(A.zone && A.zone.connections)
 				A.zone.connections.Remove(src)
 				if(!A.zone.connections.len)
-					del A.zone.connections
+					A.zone.connections = null
 		if(B)
 			if(B.zone && B.zone.connections)
 				B.zone.connections.Remove(src)
 				if(!B.zone.connections.len)
-					del B.zone.connections
+					B.zone.connections = null
 
 		//Disconnect zones while handling unusual conditions.
 		//	e.g. loss of a zone on a turf
@@ -333,7 +333,7 @@ connection
 				if(zone_A.connections)
 					zone_A.connections.Remove(src)
 					if(!zone_A.connections.len)
-						del zone_A.connections
+						zone_A.connections = null
 
 			if(A.zone)
 				if(!A.zone.connections)
@@ -360,7 +360,7 @@ connection
 				if(zone_B.connections)
 					zone_B.connections.Remove(src)
 					if(!zone_B.connections.len)
-						del zone_B.connections
+						zone_B.connections = null
 
 			if(B.zone)
 				if(!B.zone.connections)

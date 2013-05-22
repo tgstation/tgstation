@@ -130,11 +130,8 @@
 	desc = "a mysterious and ancient piece of machinery"
 	var/list/animal_spawners = list()
 
-	New()
-		..()
-		Initialise()
 
-/obj/machinery/jungle_controller/proc/Initialise()
+/obj/machinery/jungle_controller/proc/initialise()
 	world << "\red \b Setting up jungle, this may take a bleeding eternity..."
 
 	//crash dat shuttle
