@@ -276,8 +276,6 @@
 #define FILE_DIR "sound/violin"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
-#define FILE_DIR "tools"
-#define FILE_DIR "tools/Redirector"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
