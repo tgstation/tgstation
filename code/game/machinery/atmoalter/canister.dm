@@ -18,7 +18,7 @@
 	use_power = 0
 	var/release_log = ""
 
-/obj/machinery/portable_atmospherics/canister/New()
+/obj/machinery/portable_atmospherics/initialize()
 	. = ..()
 	spawn()
 		var/obj/machinery/atmospherics/portables_connector/connector = locate() in loc
