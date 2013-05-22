@@ -49,15 +49,15 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red This animal is wearing too much armor. You can't cause any damage."
+				usr << "\red [src] is wearing too much armor. You can't cause \him any damage."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach its skin."
+				usr << "\red [src] is wearing too much armor. You can't reach \his skin."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with [O]. ")
-			if(prob(15))
-				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on \his face.")
+			if(health>0 && prob(15))
+				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression")
 			return
 	..()
 

@@ -68,7 +68,7 @@
 			health -= O.force
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message(capitalize("\red \b [src] has been attacked with [O] by [user]. "))
+					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
 			usr << "\red This weapon is ineffective, it does no damage."
 			for(var/mob/M in viewers(src, null))
