@@ -67,7 +67,7 @@
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON
-	req_access = list(access_atmospherics, access_engine_equip)
+	req_one_access = list(access_atmospherics, access_engine_equip)
 	var/frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
