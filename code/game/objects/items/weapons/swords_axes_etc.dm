@@ -120,8 +120,8 @@
 /obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
 	on = !on
 	if(on)
-		user.visible_message("\red You extend the baton.",\
-		"\red With a flick of their wrist, [user] extends their telescopic baton.",\
+		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
+		"\red You extend the baton.",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton_1"
@@ -129,8 +129,8 @@
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
-		user.visible_message("\blue You collapse the baton.",\
-		"\blue [user] collapses their telescopic baton.",\
+		user.visible_message("\blue [user] collapses their telescopic baton.",\
+		"\blue You collapse the baton.",\
 		"You hear a click.")
 		icon_state = "telebaton_0"
 		item_state = "telebaton_0"
