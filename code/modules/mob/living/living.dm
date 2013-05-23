@@ -17,10 +17,10 @@
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
-	else
-		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		return
+	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
