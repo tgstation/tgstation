@@ -18,6 +18,29 @@
 	src.pixel_y = rand(1, 14)
 	return
 
+/obj/item/stack/tile/plasteel/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+
+		if(amount < 4)
+			user << "\red You need at least four tiles to do this."
+			return
+
+		if(WT.remove_fuel(0,user))
+			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
+			new_item.add_to_stacks(usr)
+			for (var/mob/M in viewers(src))
+				M.show_message("\red [src] is shaped into metal by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
+			var/obj/item/stack/rods/R = src
+			src = null
+			var/replace = (user.get_inactive_hand()==R)
+			R.use(4)
+			if (!R && replace)
+				user.put_in_hands(new_item)
+		return
+	..()
+
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
 	if (usr.stat)

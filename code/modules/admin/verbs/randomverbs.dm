@@ -326,13 +326,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.
-		new_character.dna = new()//Let's first give them a new DNA.
-		new_character.dna.unique_enzymes = record_found.fields["b_dna"]//Enzymes are based on real name but we'll use the record for conformity.
-		new_character.dna.struc_enzymes = record_found.fields["enzymes"]//This is the default of enzymes so I think it's safe to go with.
-		new_character.dna.uni_identity = record_found.fields["identity"]//DNA identity is carried over.
-		updateappearance(new_character,new_character.dna.uni_identity)//Now we configure their appearance based on their unique identity, same as with a DNA machine or somesuch.
+		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], null, record_found.fields["b_type"])
 	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
-		new_character.dna.ready_dna(new_character)
+		ready_dna(new_character)
 
 	new_character.key = G_found.key
 

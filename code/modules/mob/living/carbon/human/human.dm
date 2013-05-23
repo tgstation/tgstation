@@ -3,7 +3,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "body_m_s"
+	icon_state = "caucasian1_m_s"
 	var/list/hud_list = list()
 
 
@@ -14,19 +14,13 @@
 
 
 /mob/living/carbon/human/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
-
-	if(!dna)
-		dna = new /datum/dna(null)
+	create_reagents(1000)
 
 	//initialise organs
 	organs = newlist(/datum/limb/chest, /datum/limb/head, /datum/limb/l_arm,
 					 /datum/limb/r_arm, /datum/limb/r_leg, /datum/limb/l_leg)
 	for(var/datum/limb/O in organs)
 		O.owner = src
-
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
@@ -35,12 +29,6 @@
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
 	..()
-
-	if(dna)
-		dna.real_name = real_name
-
-	prev_gender = gender // Debug for plural genders
-
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -76,11 +64,6 @@
 					slime.UpdateFeed()
 			return
 
-		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-			if(prob(40) && !(FAT in src.mutations))
-				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-				now_pushing = 0
-				return
 		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
 			if(prob(99))
 				now_pushing = 0
@@ -98,7 +81,7 @@
 	now_pushing = 0
 	spawn(0)
 		..()
-		if (!istype(AM, /atom/movable))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!now_pushing)
 			now_pushing = 1
@@ -219,7 +202,7 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 			if("r_leg")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-	if(update)	UpdateDamageIcon(0)
+	if(update)	update_damage_overlays(0)
 
 
 /mob/living/carbon/human/blob_act()
@@ -239,10 +222,10 @@
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 		else
 			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 		updatehealth()
 	return
 
@@ -509,18 +492,22 @@
 			var/mob/living/carbon/human/H = usr
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
 
-				/* // Uncomment if you want sechuds to need security access
+				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/allowed_access = 0
-				if(H.wear_id)
-					var/list/access = H.wear_id.GetAccess()
-					if(access_security in access)
-						allowed_access = 1
-						return
+				var/obj/item/clothing/glasses/G = H.glasses
+				if (!G.emagged)
+					if(H.wear_id)
+						var/list/access = H.wear_id.GetAccess()
+						if(access_sec_doors in access)
+							allowed_access = 1
+				else
+					allowed_access = 1
+
 
 				if(!allowed_access)
 					H << "<span class='warning'>ERROR: Invalid Access</span>"
 					return
-				*/
+
 
 				var/modified = 0
 				var/perpname = "wot"
@@ -585,11 +572,6 @@
 		return 1
 
 	return 0
-
-
-/mob/living/carbon/human/proc/check_dna()
-	dna.check_integrity(src)
-
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)

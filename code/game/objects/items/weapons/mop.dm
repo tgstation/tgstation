@@ -15,9 +15,7 @@
 
 
 /obj/item/weapon/mop/New()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	create_reagents(5)
 
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A)

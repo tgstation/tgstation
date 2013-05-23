@@ -51,9 +51,6 @@
 					return
 
 				if(ismob(target))	//Blood!
-					if(istype(target, /mob/living/carbon/slime))
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
-						return
 					if(reagents.has_reagent("blood"))
 						user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
 						return
@@ -61,8 +58,8 @@
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
 						var/datum/reagent/B = new /datum/reagent/blood
-						if(!T.dna)
-							user << "<span class='notice'>You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum- report this to an admin.)</span>"
+						if(!check_dna_integrity(T))
+							user << "<span class='notice'>You are unable to locate any blood.</span>"
 							return
 						if(NOCLONE in T.mutations)	//target done been et, no more blood in him
 							user << "<span class='notice'>You are unable to locate any blood.</span>"
@@ -137,8 +134,27 @@
 					if(!do_mob(user, target)) return
 					target.visible_message("<span class='danger'>[user] injects [target] with the syringe!", \
 									"<span class='userdanger'>[user] injects [target] with the syringe!")
+					//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
+					var/list/rinject = list()
+					for(var/datum/reagent/R in src.reagents.reagent_list)
+						rinject += R.name
+					var/contained = english_list(rinject)
+					var/mob/M = target
+					log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected ([contained]) with [src.name] by [user.name] ([user.ckey])</font>")
+					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey]) with [contained]</font>")
+
 					reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)
+					//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
+					var/list/rinject = list()
+					for(var/datum/reagent/R in src.reagents.reagent_list)
+						rinject += R.name
+					var/contained = english_list(rinject)
+					var/mob/M = target
+					log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>")
+
 					reagents.reaction(target, INGEST)
 				spawn(5)
 					target.add_fingerprint(user)

@@ -34,7 +34,7 @@
 							client.images += holder
 							break
 						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-							holder.icon_state = "hudprisoner"
+							holder.icon_state = "hudincarcerated"
 							client.images += holder
 							break
 						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))

@@ -225,7 +225,7 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath
 		// HACK NEED CHANGING LATER
-		if(health < 0)
+		if(health <= config.health_threshold_crit)
 			losebreath++
 
 		if(losebreath>0) //Suffocating so do not take a breath
@@ -313,7 +313,7 @@
 				failed_last_breath = 1
 				oxygen_alert = max(oxygen_alert, 1)
 				return 0
-			if(health > 0)
+			if(health >= config.health_threshold_crit)
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
 			else
@@ -755,17 +755,13 @@
 		if(FAT in mutations)
 			if(overeatduration < 100)
 				src << "\blue You feel fit again!"
-				mutations.Remove(FAT)
-				update_mutantrace(0)
-				update_mutations(0)
+				mutations -= FAT
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500)
 				src << "\red You suddenly feel blubbery!"
-				mutations.Add(FAT)
-				update_mutantrace(0)
-				update_mutations(0)
+				mutations |= FAT
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
 
@@ -818,7 +814,7 @@
 
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
 				Paralyse(3)
 
 				/* Done by handle_breath()
@@ -925,7 +921,7 @@
 
 		if(stat == UNCONSCIOUS)
 			//Critical damage passage overlay
-			if(health <= 0)
+			if(health <= config.health_threshold_crit)
 				var/image/I
 				switch(health)
 					if(-20 to -10)

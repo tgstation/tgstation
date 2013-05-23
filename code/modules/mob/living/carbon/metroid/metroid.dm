@@ -62,9 +62,7 @@
 
 
 /mob/living/carbon/slime/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 	name = text("[colour] baby slime ([rand(1, 1000)])")
 	real_name = name
 	spawn (1)
@@ -157,7 +155,7 @@
 
 		now_pushing = 0
 		..()
-		if (!( istype(AM, /atom/movable) ))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!( now_pushing ))
 			now_pushing = 1
@@ -722,9 +720,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/slime_extract/New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+		create_reagents(100)
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
@@ -1082,9 +1078,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/slime_core/New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+		create_reagents(100)
 		POWERFLAG = rand(1,10)
 		Uses = rand(7, 25)
 		//flags |= NOREACT

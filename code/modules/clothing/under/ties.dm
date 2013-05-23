@@ -95,6 +95,7 @@
 				else
 					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
+				M.update_inv_w_uniform(0)
 
 			else user << "<span class='warning'>\The [U] already has an accessory.</span>"
 

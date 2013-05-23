@@ -8,9 +8,7 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
@@ -23,7 +21,7 @@
 			return
 		now_pushing = 0
 		..()
-		if (!istype(AM, /atom/movable))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 
 		if (ismob(AM))

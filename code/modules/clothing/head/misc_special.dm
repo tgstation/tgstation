@@ -168,8 +168,8 @@
 	if(!istype(user)) return
 	mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
 	mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
-	mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
-	mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+	mob.Blend("#[user.h_color]", ICON_ADD)
+	mob2.Blend("#[user.h_color]", ICON_ADD)
 
 	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
 	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")

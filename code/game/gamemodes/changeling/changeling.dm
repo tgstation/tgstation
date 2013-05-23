@@ -36,7 +36,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/const/changeling_amount = 4
+	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
+	var/const/changeling_scaling_coeff = 10 //how much does the amount of players get divided by to determine changelings
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
@@ -49,13 +50,20 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
+	var/num_changelings = 1
+
+	if(config.traitor_scaling)
+		num_changelings = max(1, round((num_players())/(changeling_scaling_coeff)))
+	else
+		num_changelings = max(1, min(num_players(), changeling_amount))
+
 	for(var/datum/mind/player in possible_changelings)
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
 				possible_changelings -= player
 
 	if(possible_changelings.len>0)
-		for(var/i = 0, i < changeling_amount, i++)
+		for(var/i = 0, i < num_changelings, i++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
 			possible_changelings -= changeling
@@ -67,7 +75,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
-		grant_changeling_powers(changeling.current)
+		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
@@ -151,10 +159,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		else
 			return ..()
 	return 0*/
-
-/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/changeling_mob)
-	if(!istype(changeling_mob))	return
-	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)
