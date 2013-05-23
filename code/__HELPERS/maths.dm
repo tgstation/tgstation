@@ -114,6 +114,9 @@ var/const/Sqrt2	= 1.41421356
 //since this method produces two random numbers, one is saved for subsequent calls
 //(making the cost negligble for every second call)
 //This will return +/- decimals, situated about mean with standard deviation stddev
+//68% chance that the number is within 1stddev
+//95% chance that the number is within 2stddev
+//98% chance that the number is within 3stddev...etc
 var/gaussian_next
 #define ACCURACY 10000
 /proc/gaussian(mean, stddev)
@@ -126,9 +129,9 @@ var/gaussian_next
 			R1 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			R2 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			working = R1*R1 + R2*R2
-		while(working >= 1)
+		while(working >= 1 || working==0)
+		working = sqrt(-2 * log(working) / working)
 		R1 *= working
-		R2 *= working	
-		gaussian_next = R2
+		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
