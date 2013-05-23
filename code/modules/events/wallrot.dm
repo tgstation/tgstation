@@ -5,7 +5,7 @@ datum/event/wallrot
 	var/severity = 1
 
 datum/event/wallrot/setup()
-	announceWhen = rand(0, 3000)
+	announceWhen = rand(0, 300)
 	endWhen = announceWhen + 1
 	severity = rand(5, 10)
 

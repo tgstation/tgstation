@@ -12,7 +12,7 @@
 
 		sleep(200)
 
-		command_alert("The station has entered the radiation belt. Please report to medbay if you experience any unusual symptoms.", "Anomaly Alert")
+		command_alert("The station has entered the radiation belt. Please remain in a sheltered area until we have passed the radiation belt.", "Anomaly Alert")
 		for(var/i = 0, i < 10, i++)
 			for(var/mob/living/carbon/human/H in living_mob_list)
 				var/turf/T = get_turf(H)
@@ -42,4 +42,4 @@
 			sleep(50)
 
 
-		command_alert("The station has passed the radiation belt", "Anomaly Alert")
+		command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms.", "Anomaly Alert")
