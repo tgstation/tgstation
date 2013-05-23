@@ -187,10 +187,7 @@
 			else
 				icon_state = basestate
 		else if (opened == 2)
-			if ((stat & BROKEN) || malfhack )
-				icon_state = "[basestate]-b-nocover"
-			else /* if (emagged)*/
-				icon_state = "[basestate]-nocover"
+			icon_state = "[basestate]-nocover"
 	else if (stat & BROKEN)
 		icon_state = "apc-b"
 	else if(emagged || malfai)
