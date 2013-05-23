@@ -107,6 +107,7 @@
 /obj/item/device/powersink/process()
 	if(!attached)
 		set_mode(DISCONNECTED)
+		return
 
 	var/datum/powernet/PN = attached.get_powernet()
 	if(PN)
