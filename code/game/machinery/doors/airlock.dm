@@ -1169,7 +1169,7 @@ About the new airlock wires panel:
 		return
 
 	src.add_fingerprint(user)
-	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
+	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating > 0 ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0,user))
 			if(!src.welded)
@@ -1245,6 +1245,7 @@ About the new airlock wires panel:
 					ae.loc = src.loc
 				if(operating == -1)
 					ae.icon_state = "door_electronics_smoked"
+					operating = 0
 
 				del(src)
 				return

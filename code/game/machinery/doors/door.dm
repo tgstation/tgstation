@@ -219,7 +219,7 @@
 
 /obj/machinery/door/proc/close()
 	if(density)	return 1
-	if(operating)	return
+	if(operating > 0)	return
 	operating = 1
 
 	animate("closing")
