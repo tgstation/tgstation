@@ -75,9 +75,9 @@
 					candidates |= O
 			if (candidates.len)
 				var/datum/organ/external/O = pick(candidates)
-					O.mutate()
-					src << "<span class = 'notice'>Something is not right with your [O.display_name]...</span>"
-					return
+				O.mutate()
+				src << "<span class = 'notice'>Something is not right with your [O.display_name]...</span>"
+				return
 	else
 		if (prob(heal_prob))
 			for (var/datum/organ/external/O in organs)
