@@ -30,7 +30,9 @@ var/scheduledEvent = null
 				playercount_modifier = 0.9
 			if(36 to 100000)
 				playercount_modifier = 0.8
-		scheduledEvent = world.timeofday + rand(eventTimeLower, eventTimeUpper) * playercount_modifier
+		var/next_event_delay = rand(eventTimeLower, eventTimeUpper) * playercount_modifier
+		scheduledEvent = world.timeofday + next_event_delay
+		log_debug("Next event in [next_event_delay/600] minutes.")
 
 	else if(world.timeofday > scheduledEvent)
 		spawn_dynamic_event()

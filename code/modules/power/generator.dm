@@ -1,5 +1,4 @@
 
-//updated by cael_aislinn on 5/3/2013 to be rotateable, moveable and generally more flexible
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
@@ -57,39 +56,26 @@
 		if(lastgenlev != 0)
 			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
 
-
-
 /obj/machinery/power/generator/process()
-
-	//world << "Generator process ran"
-
 	if(!circ1 || !circ2 || !anchored || stat & (BROKEN|NOPOWER))
 		return
 
-	//world << "circ1 and circ2 pass"
+	updateDialog()
 
 	var/datum/gas_mixture/air1 = circ1.return_transfer_air()
 	var/datum/gas_mixture/air2 = circ2.return_transfer_air()
-
 	lastgen = 0
 
-	//world << "hot_air = [hot_air]; cold_air = [cold_air];"
-
 	if(air1 && air2)
-
-		//world << "hot_air = [hot_air] temperature = [air2.temperature]; cold_air = [cold_air] temperature = [air2.temperature];"
-
-		//world << "coldair and hotair pass"
 		var/air1_heat_capacity = air1.heat_capacity()
 		var/air2_heat_capacity = air2.heat_capacity()
 		var/delta_temperature = abs(air2.temperature - air1.temperature)
-
-		//world << "delta_temperature = [delta_temperature]; air1_heat_capacity = [air1_heat_capacity]; air2_heat_capacity = [air2_heat_capacity]"
 
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
 			var/efficiency = 0.65
 			var/energy_transfer = delta_temperature*air2_heat_capacity*air1_heat_capacity/(air2_heat_capacity+air1_heat_capacity)
 			var/heat = energy_transfer*(1-efficiency)
+			lastgen = energy_transfer*efficiency*0.05
 
 			if(air2.temperature > air1.temperature)
 				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
@@ -98,20 +84,29 @@
 				air2.temperature = air2.temperature + heat/air2_heat_capacity
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
-	lastgen = circ1.ReturnPowerGeneration() + circ2.ReturnPowerGeneration()
-	if(lastgen > 0)
-		add_avail(lastgen)
+			//Transfer the air
+			circ1.air2.merge(air1)
+			circ2.air2.merge(air2)
 
-	else
-		add_load(-lastgen)
+			//Update the gas networks
+			if(circ1.network2)
+				circ1.network2.update = 1
+			if(circ2.network2)
+				circ2.network2.update = 1
 
 	// update icon overlays and power usage only if displayed level has changed
-	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
+	if(lastgen > 250000 && prob(10))
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		lastgen *= 0.5
+	var/genlev = max(0, min( round(11*lastgen / 250000), 11))
+	if(lastgen > 100 && genlev == 0)
+		genlev = 1
 	if(genlev != lastgenlev)
 		lastgenlev = genlev
 		updateicon()
-
-	updateDialog()
+	add_avail(lastgen)
 
 /obj/machinery/power/generator/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER)) return
@@ -145,19 +140,17 @@
 	if(circ1 && circ2)
 		t += "Output : [round(lastgen)] W<BR><BR>"
 
-		t += "<B>Primary Circulator (top/right)</B><BR>"
+		t += "<B>Primary Circulator (top or right)</B><BR>"
 		t += "Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa<BR>"
 		t += "Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K<BR>"
 		t += "Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
 		t += "Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>"
-		t += "Turbine Status: <A href='?src=\ref[src];turbine1=1'>[circ1.turbine_pumping ? "Pumping" : "Generating"]</a><br><br>"
 
-		t += "<B>Secondary Circulator (bottom/left)</B><BR>"
+		t += "<B>Secondary Circulator (bottom or left)</B><BR>"
 		t += "Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>"
 		t += "Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K<BR>"
 		t += "Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
 		t += "Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"
-		t += "Turbine Status: <A href='?src=\ref[src];turbine2=1'>[circ2.turbine_pumping ? "Pumping" : "Generating"]</a><br>"
 
 	else
 		t += "Unable to connect to circulators.<br>"
@@ -178,14 +171,6 @@
 		usr << browse(null, "window=teg")
 		usr.unset_machine()
 		return 0
-
-	if( href_list["turbine2"] )
-		if(circ2)
-			circ2.turbine_pumping = !circ2.turbine_pumping
-
-	if( href_list["turbine1"] )
-		if(circ1)
-			circ1.turbine_pumping = !circ1.turbine_pumping
 
 	updateDialog()
 	return 1

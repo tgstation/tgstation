@@ -49,12 +49,20 @@
 
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
+	var/turf/A_turf = get_turf(A)
+
 	spawn(0)
 		for(var/i=0, i<3, i++)
 			step_towards(D,A)
 			D.reagents.reaction(get_turf(D))
 			for(var/atom/T in get_turf(D))
 				D.reagents.reaction(T)
+
+				// When spraying against the wall, also react with the wall, but
+				// not its contents.
+				if(get_dist(D, A_turf) == 1 && A_turf.density)
+					D.reagents.reaction(A_turf)
+				sleep(2)
 			sleep(3)
 		del(D)
 
