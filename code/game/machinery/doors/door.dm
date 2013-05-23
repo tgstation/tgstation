@@ -18,6 +18,7 @@
 	var/glass = 0
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
+	var/air_properties_vary_with_direction = 0
 
 /obj/machinery/door/New()
 	..()
@@ -218,7 +219,7 @@
 
 /obj/machinery/door/proc/close()
 	if(density)	return 1
-	if(operating)	return
+	if(operating > 0)	return
 	operating = 1
 
 	animate("closing")
