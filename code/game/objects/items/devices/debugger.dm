@@ -5,9 +5,10 @@
  */
 
 /obj/item/device/debugger
-	name = "multitool"
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
-	icon_state = "multitool"
+	icon = 'icon/obj/hacktool.dmi'
+	name = "debugger"
+	desc = "Used to debug electronic equipment."
+	icon_state = "hacktool-g"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	w_class = 2.0
@@ -24,21 +25,21 @@
 	if(istype(O, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/A = O
 		if(A.emagged || A.malfhack)
-			usr << "\red There is a software error with the device."
+			user << "\red There is a software error with the device."
 		else
-			usr << "\blue The device's software appears to be fine."
+			user << "\blue The device's software appears to be fine."
 		return 1
 	if(istype(O, /obj/machinery/door))
 		var/obj/machinery/door/D = O
 		if(D.operating == -1)
-			usr << "\red There is a software error with the device."
+			user << "\red There is a software error with the device."
 		else
-			usr << "\blue The device's software appears to be fine."
+			user << "\blue The device's software appears to be fine."
 		return 1
 	else if(istype(O, /obj/machinery))
 		var/obj/machinery/A = O
 		if(A.emagged)
-			usr << "\red There is a software error with the device."
+			user << "\red There is a software error with the device."
 		else
-			usr << "\blue The device's software appears to be fine."
+			user << "\blue The device's software appears to be fine."
 		return 1
