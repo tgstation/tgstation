@@ -7,7 +7,7 @@
 #define XENOARCH_MAX_ENERGY_TRANSFER 4000
 
 //How many joules of electrical energy produce how many joules of heat energy?
-#define XENOARCH_HEAT_COEFFICIENT 10
+#define XENOARCH_HEAT_COEFFICIENT 3
 
 
 /obj/machinery/anomaly
@@ -29,6 +29,7 @@
 	var/temperature = 273	//measured in kelvin, if this exceeds 1200, the machine is damaged and requires repairs
 							//if this exceeds 600 and safety is enabled it will shutdown
 							//temp greater than 600 also requires a safety prompt to initiate scanning
+	var/max_temp = 450
 
 /obj/machinery/anomaly/New()
 	..()
@@ -66,35 +67,37 @@
 
 	auto_use_power()
 
-	//Add 200 joules when idle, or 3000 when active.  This is about 0.6 degrees per tick.
+	//Add 3000 joules when active.  This is about 0.6 degrees per tick.
 	//May need adjustment
-	var/heat_added = ( use_power == 1 ? active_power_usage : idle_power_usage )*XENOARCH_HEAT_COEFFICIENT
+	if(use_power == 1)
+		var/heat_added = active_power_usage *XENOARCH_HEAT_COEFFICIENT
 
-	temperature += heat_added/XENOARCH_HEAT_CAPACITY
+		if(temperature < max_temp)
+			temperature += heat_added/XENOARCH_HEAT_CAPACITY
 
-	var/temperature_difference = abs(environmental_temp-temperature)
-	var/datum/gas_mixture/removed = loc.remove_air(env.total_moles*0.25)
-	var/heat_capacity = removed.heat_capacity()
+		var/temperature_difference = abs(environmental_temp-temperature)
+		var/datum/gas_mixture/removed = loc.remove_air(env.total_moles*0.25)
+		var/heat_capacity = removed.heat_capacity()
 
-	heat_added = max(temperature_difference*heat_capacity, XENOARCH_MAX_ENERGY_TRANSFER)
+		heat_added = max(temperature_difference*heat_capacity, XENOARCH_MAX_ENERGY_TRANSFER)
 
-	if(temperature > environmental_temp)
-		//cool down to match the air
-		temperature = max(TCMB, temperature - heat_added/XENOARCH_HEAT_CAPACITY)
-		removed.temperature = max(TCMB, removed.temperature + heat_added/heat_capacity)
+		if(temperature > environmental_temp)
+			//cool down to match the air
+			temperature = max(TCMB, temperature - heat_added/XENOARCH_HEAT_CAPACITY)
+			removed.temperature = max(TCMB, removed.temperature + heat_added/heat_capacity)
 
-		if(temperature_difference > 10 && prob(5))
-			src.visible_message("\blue \icon[src] hisses softly.", 2)
+			if(temperature_difference > 10 && prob(5))
+				src.visible_message("\blue \icon[src] hisses softly.", 2)
 
-	else
-		//heat up to match the air
-		temperature = max(TCMB, temperature + heat_added/XENOARCH_HEAT_CAPACITY)
-		removed.temperature = max(TCMB, removed.temperature - heat_added/heat_capacity)
+		else
+			//heat up to match the air
+			temperature = max(TCMB, temperature + heat_added/XENOARCH_HEAT_CAPACITY)
+			removed.temperature = max(TCMB, removed.temperature - heat_added/heat_capacity)
 
-		if(temperature_difference > 10 && prob(5))
-			src.visible_message("\blue \icon[src] plinks quietly.", 2)
+			if(temperature_difference > 10 && prob(5))
+				src.visible_message("\blue \icon[src] plinks quietly.", 2)
 
-	env.merge(removed)
+		env.merge(removed)
 
 
 //this proc should be overriden by each individual machine
