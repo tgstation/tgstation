@@ -145,7 +145,7 @@ emp_act
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(get_dist(H, src) > 1)	//people with TK won't get smeared with blood
+				if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
 					if(H.wear_suit)
 						H.wear_suit.add_blood(src)
 						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)

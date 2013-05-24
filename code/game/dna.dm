@@ -39,9 +39,9 @@
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.h_color)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.f_style), facial_hair_styles_list.len)
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.f_color)
-			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.s_tone), skin_tones.len)
+			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
 			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-
+		
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])	. += L[i]
 		else		. += random_string(DNA_BLOCK_SIZE,hex_characters)
@@ -68,53 +68,55 @@
 	return .
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
-	if(!istype(owner))
+	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
 		owner.dna = new /datum/dna()
-
+	
 	if(real_name)
 		owner.real_name = real_name
 		owner.dna.generate_unique_enzymes(owner)
-
+	
 	if(blood_type)
 		owner.dna.b_type = blood_type
-
+	
 	if(ui)
 		owner.dna.uni_identity = ui
 		updateappearance(owner)
-
+	
 	var/update_mutantrace = (mutantrace != owner.dna.mutantrace)
 	owner.dna.mutantrace = mutantrace
 	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
-		H.update_mutantrace()
-
+		H.update_body()
+		H.update_hair()
+	
 	if(se)
 		owner.dna.struc_enzymes = se
 		domutcheck(owner)
-
+	
 	check_dna_integrity(owner)
-
+	return owner.dna
+	
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!istype(character))
-		return 0
+		return
 	if(!character.dna)
 		if(ready_dna(character))
-			return 1
-		return 0
-
+			return character.dna
+		return
+	
 	if(length(character.dna.uni_identity) != DNA_UNI_IDENTITY_BLOCKS*DNA_BLOCK_SIZE)
-		character.dna.uni_identity = character.dna.generate_uni_identity(character)
+		character.dna.uni_identity = character.dna.generate_uni_identity(character)	
 	if(length(character.dna.struc_enzymes)!= DNA_STRUC_ENZYMES_BLOCKS*DNA_BLOCK_SIZE)
 		character.dna.struc_enzymes = character.dna.generate_struc_enzymes()
 	if(!character.dna.real_name || length(character.dna.unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
 		character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
-	return 1
+	return character.dna
 
 /proc/ready_dna(mob/living/carbon/character, blood_type)
 	if(!istype(character, /mob/living/carbon/monkey) && !istype(character, /mob/living/carbon/human))
-		return 0
+		return
 	if(!character.dna)
 		character.dna = new /datum/dna()
 	if(blood_type)
@@ -123,7 +125,7 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
-	return 1
+	return character.dna
 
 /////////////////////////// DNA DATUM
 
@@ -204,21 +206,23 @@
 /////////////////////////// DNA HELPER-PROCS
 
 /////////////////////////// DNA MISC-PROCS
-/proc/updateappearance(mob/living/carbon/human/H)
-	if(!istype(H) || !istype(H.dna))
+/proc/updateappearance(mob/living/carbon/C)
+	if(!check_dna_integrity(C))
 		return 0
-	check_dna_integrity()
-	var/structure = H.dna.uni_identity
-	H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
-	H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	H.s_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
-	H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	H.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
-	H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
-	H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+	
+	var/structure = C.dna.uni_identity
+	C.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+	if(istype(C, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = C
+		H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
+		H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
+		H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+		H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
+		H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+		H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 
-	H.update_body(0)
-	H.update_hair()
+		H.update_body()
+		H.update_hair()
 	return 1
 
 /proc/domutcheck(mob/living/carbon/M, connected, inj)
@@ -239,7 +243,7 @@
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
 	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
-
+	
 	if(blocks[NEARSIGHTEDBLOCK])
 		M.disabilities |= NEARSIGHTED
 		M << "\red Your eyes feel strange."
@@ -499,7 +503,7 @@
 	density = 1
 	var/radduration = 2
 	var/radstrength = 1
-
+	
 	var/list/buffer[NUMBER_OF_BUFFERS]
 
 	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
@@ -640,7 +644,7 @@
 				occupant_status = "<span class='bad'>Invalid DNA structure</span>"
 		else
 			occupant_status = "<span class='bad'>No subject detected</span>"
-
+		
 		if(connected.locked)
 			scanner_status = "<span class='bad'>Locked</span>"
 		else
@@ -649,7 +653,7 @@
 		occupant_status = "<span class='bad'>Error: Undefined</span>"
 		scanner_status = "<span class='bad'>Error: No scanner detected</span>"
 	var/status = "<div class='statusDisplay'>Scanner Status: [scanner_status]<br>Subject Status: [occupant_status]<br>Emitter Array Output Level: [radstrength]<br>Emitter Array Pulse Duration: [radduration]</div>"
-
+	
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)		buttons += "<a href='?src=\ref[src];task=togglelock;'>Toggle Bolts</a> "
 	else				buttons += "<span class='linkOff'>Toggle Bolts</span> "
@@ -661,7 +665,7 @@
 	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffers</a> "
 	buttons += "<br><a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Emitter Array Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
 	buttons += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Emitter Array Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
-
+	
 	switch(current_screen)
 		if("working")
 			temp_html += "<h3>System Busy</h3>"
@@ -671,7 +675,7 @@
 			temp_html += "<h3>Buffer Menu</h3>"
 			temp_html += status
 			temp_html += buttons
-
+			
 			if(istype(buffer))
 				for(var/i=1, i<=buffer.len, i++)
 					temp_html += "<br>Slot [i]: "
@@ -730,14 +734,14 @@
 			temp_html += "<h3>Main Menu</h3>"
 			temp_html += status
 			temp_html += buttons
-
+			
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>"
 			if(viable_occupant)
 				temp_html += "[viable_occupant.dna.unique_enzymes]"
 			else
 				temp_html += " - "
 			temp_html += "</span></div></div>"
-
+			
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><span class='highlight'>"
 			var/max_line_len = DNA_BLOCK_SIZE * 10
 			if(viable_occupant)
@@ -751,7 +755,7 @@
 			else
 				temp_html += " - "
 			temp_html += "</span></div></div>"
-
+			
 			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><span class='highlight'>"
 			if(viable_occupant)
 				var/len = length(viable_occupant.dna.struc_enzymes)
@@ -767,7 +771,7 @@
 
 	popup.set_content(temp_html)
 	popup.open()
-
+	
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
@@ -781,7 +785,7 @@
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
-
+	
 	var/mob/living/carbon/viable_occupant
 	if(connected)
 		viable_occupant = connected.occupant
@@ -901,13 +905,13 @@
 
 				var/locked_state = connected.locked
 				connected.locked = 1
-
+				
 				current_screen = "working"
 				ShowInterface(usr)
-
+				
 				sleep(radduration*10)
 				current_screen = "mainmenu"
-
+				
 				if(viable_occupant && connected && connected.occupant==viable_occupant)
 					viable_occupant.radiation += RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength
 					switch(href_list["task"])
@@ -915,30 +919,30 @@
 							var/len = length(viable_occupant.dna.uni_identity)
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
-
+							
 							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
 							hex = scramble(hex, radstrength, radduration)
-
+							
 							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
 							updateappearance(viable_occupant)
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
-
+							
 							var/hex = copytext(viable_occupant.dna.struc_enzymes, num, num+1)
 							hex = scramble(hex, radstrength, radduration)
-
+							
 							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
 							domutcheck(viable_occupant, connected)
 				else
 					current_screen = "mainmenu"
-
+				
 				if(connected)
 					connected.locked = locked_state
 
 	ShowInterface(usr)
-
+	
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

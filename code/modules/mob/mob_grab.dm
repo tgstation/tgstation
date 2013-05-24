@@ -122,12 +122,6 @@
 		icon_state = "grabbed1"
 	else
 		if(state < GRAB_NECK)
-			if(istype(affecting, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = affecting
-				if(FAT in H.mutations)
-					assailant << "<span class='notice'>You can't strangle [affecting] through all that fat!</span>"
-					return
-
 			if(isslime(affecting))
 				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
 				return

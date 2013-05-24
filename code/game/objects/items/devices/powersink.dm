@@ -18,103 +18,120 @@
 	var/max_power = 1e8		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 
+	var/const/DISCONNECTED = 0
+	var/const/CLAMPED_OFF = 1
+	var/const/OPERATING = 2
 
 	var/obj/structure/cable/attached		// the attached cable
 
-	attackby(var/obj/item/I, var/mob/user)
-		if(istype(I, /obj/item/weapon/screwdriver))
-			if(mode == 0)
-				var/turf/T = loc
-				if(isturf(T) && !T.intact)
-					attached = locate() in T
-					if(!attached)
-						user << "No exposed cable here to attach to."
-						return
-					else
-						anchored = 1
-						mode = 1
-						user << "You attach the device to the cable."
-						for(var/mob/M in viewers(user))
-							if(M == user) continue
-							M << "[user] attaches the power sink to the cable."
-						return
-				else
-					user << "Device must be placed over an exposed cable to attach to it."
-					return
-			else
-				if (mode == 2)
-					processing_objects.Remove(src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
-				anchored = 0
-				mode = 0
-				user << "You detach	the device from the cable."
-				for(var/mob/M in viewers(user))
-					if(M == user) continue
-					M << "[user] detaches the power sink from the cable."
-				SetLuminosity(0)
-				icon_state = "powersink0"
+/obj/item/device/powersink/update_icon()
+	icon_state = "powersink[mode == OPERATING]"
 
+/obj/item/device/powersink/proc/set_mode(value)
+	if(value == mode)
+		return
+	switch(value)
+		if(DISCONNECTED)
+			attached = null
+			if(mode == OPERATING)
+				processing_objects.Remove(src)
+			anchored = 0
+
+		if(CLAMPED_OFF)
+			if(!attached)
 				return
+			if(mode == OPERATING)
+				processing_objects.Remove(src)
+			anchored = 1
+
+		if(OPERATING)
+			if(!attached)
+				return
+			processing_objects.Add(src)
+			anchored = 1
+
+	mode = value
+	update_icon()
+	SetLuminosity(0)
+
+/obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(mode == DISCONNECTED)
+			var/turf/T = loc
+			if(isturf(T) && !T.intact)
+				attached = locate() in T
+				if(!attached)
+					user << "No exposed cable here to attach to."
+				else
+					set_mode(CLAMPED_OFF)
+					user.visible_message( \
+						"[user] attaches \the [src] to the cable.", \
+						"You attach \the [src] to the cable.",
+						"You hear some wires being connected to something.")
+			else
+				user << "Device must be placed over an exposed cable to attach to it."
 		else
+			set_mode(DISCONNECTED)
+			user.visible_message( \
+				"[user] detaches \the [src] from the cable.", \
+				"You detach \the [src] from the cable.",
+				"You hear some wires being disconnected from something.")
+	else
+		..()
+
+/obj/item/device/powersink/attack_paw()
+	return
+
+/obj/item/device/powersink/attack_ai()
+	return
+
+/obj/item/device/powersink/attack_hand(var/mob/user)
+	switch(mode)
+		if(DISCONNECTED)
 			..()
 
+		if(CLAMPED_OFF)
+			user.visible_message( \
+				"[user] activates \the [src]!", \
+				"You activate \the [src]!",
+				"You hear a click.")
+			set_mode(OPERATING)
 
+		if(OPERATING)
+			user.visible_message( \
+				"[user] deactivates \the [src]!", \
+				"You deactivate \the [src]!",
+				"You hear a click.")
+			set_mode(CLAMPED_OFF)
 
-	attack_paw()
+/obj/item/device/powersink/process()
+	if(!attached)
+		set_mode(DISCONNECTED)
 		return
 
-	attack_ai()
-		return
+	var/datum/powernet/PN = attached.get_powernet()
+	if(PN)
+		SetLuminosity(5)
 
-	attack_hand(var/mob/user)
-		switch(mode)
-			if(0)
-				..()
+		// found a powernet, so drain up to max power from it
 
-			if(1)
-				user << "You activate the device!"
-				for(var/mob/M in viewers(user))
-					if(M == user) continue
-					M << "[user] activates the power sink!"
-				mode = 2
-				icon_state = "powersink1"
-				processing_objects.Add(src)
+		var/drained = min ( drain_rate, PN.avail )
+		PN.newload += drained
+		power_drained += drained
 
-			if(2)  //This switch option wasn't originally included. It exists now. --NeoFite
-				user << "You deactivate the device!"
-				for(var/mob/M in viewers(user))
-					if(M == user) continue
-					M << "[user] deactivates the power sink!"
-				mode = 1
-				SetLuminosity(0)
-				icon_state = "powersink0"
-				processing_objects.Remove(src)
+		// if tried to drain more than available on powernet
+		// now look for APCs and drain their cells
+		if(drained < drain_rate)
+			for(var/obj/machinery/power/terminal/T in PN.nodes)
+				if(istype(T.master, /obj/machinery/power/apc))
+					var/obj/machinery/power/apc/A = T.master
+					if(A.operating && A.cell)
+						A.cell.charge = max(0, A.cell.charge - 50)
+						power_drained += 50
 
-	process()
-		if(attached)
-			var/datum/powernet/PN = attached.get_powernet()
-			if(PN)
-				SetLuminosity(5)
-
-				// found a powernet, so drain up to max power from it
-
-				var/drained = min ( drain_rate, PN.avail )
-				PN.newload += drained
-				power_drained += drained
-
-				// if tried to drain more than available on powernet
-				// now look for APCs and drain their cells
-				if(drained < drain_rate)
-					for(var/obj/machinery/power/terminal/T in PN.nodes)
-						if(istype(T.master, /obj/machinery/power/apc))
-							var/obj/machinery/power/apc/A = T.master
-							if(A.operating && A.cell)
-								A.cell.charge = max(0, A.cell.charge - 50)
-								power_drained += 50
-
-
-			if(power_drained > max_power * 0.95)
-				playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
-			if(power_drained >= max_power)
-				processing_objects.Remove(src)
-				explosion(src.loc, 3,6,9,12)
-				del(src)
+	if(power_drained > max_power * 0.95)
+		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
+	if(power_drained >= max_power)
+		processing_objects.Remove(src)
+		explosion(src.loc, 3,6,9,12)
+		del(src)
