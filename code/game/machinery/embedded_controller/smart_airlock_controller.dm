@@ -252,7 +252,7 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 
 	name = "Cycling Airlock Console"
 	density = 0
-
+	unacidable = 1
 	frequency = 1449
 	power_channel = ENVIRON
 
