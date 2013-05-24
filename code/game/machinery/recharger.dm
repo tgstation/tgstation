@@ -100,3 +100,8 @@ obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to 
 		icon_state = "recharger1"
 	else
 		icon_state = "recharger0"
+
+obj/machinery/recharger/wallcharger
+	name = "wall recharger"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "wrecharger0"
