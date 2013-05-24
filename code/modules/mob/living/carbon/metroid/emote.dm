@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/emote(var/act)
+/mob/living/carbon/slime/emote(var/act, var/type, var/desc)
 
 
 	if (findtext(act, "-", 1, null))
@@ -13,6 +13,10 @@
 	var/message
 
 	switch(act)
+		if ("me")
+			return custom_emote(m_type, desc)
+		if ("custom")
+			return custom_emote(m_type, desc)
 		if("moan")
 			message = "<B>The [src.name]</B> moans."
 			m_type = 2

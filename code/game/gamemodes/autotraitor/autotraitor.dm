@@ -142,7 +142,7 @@
 		traitorcheckloop()
 
 
-/*
+
 /datum/game_mode/traitor/autotraitor/latespawn(mob/living/carbon/human/character)
 	..()
 	if(emergency_shuttle.departed)
@@ -192,6 +192,5 @@
 				//message_admins("New traitor roll failed.  No new traitor.")
 	//else
 		//message_admins("Late Joiner does not have Be Syndicate")
-*/
 
 
