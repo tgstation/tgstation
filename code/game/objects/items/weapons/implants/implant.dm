@@ -24,6 +24,10 @@
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
+/obj/item/weapon/implant/dropped(mob/user as mob)
+	. = 1
+	del src
+	return .
 
 /obj/item/weapon/implant/tracking
 	name = "tracking"
@@ -100,9 +104,7 @@
 
 /obj/item/weapon/implant/chem/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(50)
-	reagents = R
-	R.my_atom = src
+	create_reagents(50)
 
 /obj/item/weapon/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")

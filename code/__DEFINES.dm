@@ -200,9 +200,6 @@ var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference whe
 #define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
 
-	//2spooky
-#define SKELETON 29
-
 //disabilities
 #define NEARSIGHTED		1
 #define EPILEPSY		2
@@ -443,6 +440,9 @@ var/list/be_special_flags = list(
 #define IMPCHEM_HUD		6 // chemical implant
 #define IMPTRACK_HUD	7 // tracking implant
 
+#define MANIFEST_ERROR_NAME		1
+#define MANIFEST_ERROR_COUNT	2
+#define MANIFEST_ERROR_ITEM		4
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 

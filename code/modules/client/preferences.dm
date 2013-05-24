@@ -50,7 +50,7 @@ datum/preferences
 	var/h_color = "000"					//Hair color
 	var/f_style = "Shaved"				//Face hair type
 	var/f_color = "000"					//Facial hair color
-	var/s_tone = "caucasian"			//Skin color
+	var/skin_tone = "caucasian"			//Skin color
 	var/eye_color = "000"				//Eye color
 
 		//Mob preview
@@ -157,7 +157,7 @@ datum/preferences
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 				dat += "<b>Blood Type:</b> [b_type]<BR>"
-				dat += "<b>Skin Tone:</b><BR><span style='border:1px solid #161616; background-color: #[skin_tones[s_tone]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=s_tone;task=input'>[s_tone]</a><BR>"
+				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
@@ -493,7 +493,7 @@ datum/preferences
 					if("eyes")
 						eye_color = random_eye_color()
 					if("s_tone")
-						s_tone = random_skin_tone()
+						skin_tone = random_skin_tone()
 					if("bag")
 						backbag = rand(1,3)
 					if("all")
@@ -564,7 +564,7 @@ datum/preferences
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 						if(new_s_tone)
-							s_tone = new_s_tone
+							skin_tone = new_s_tone
 
 					if("ooccolor")
 						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
@@ -667,7 +667,7 @@ datum/preferences
 		character.h_color = h_color
 		character.f_color = f_color
 
-		character.s_tone = s_tone
+		character.skin_tone = skin_tone
 		character.h_style = h_style
 		character.f_style = f_style
 		character.underwear = underwear

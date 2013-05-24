@@ -248,17 +248,11 @@ datum
 							if(!C.required_other)
 								matching_other = 1
 
-							else
-								/*if(istype(my_atom, /obj/item/slime_core))
-									var/obj/item/slime_core/M = my_atom
+							else if(istype(my_atom, /obj/item/slime_extract))
+								var/obj/item/slime_extract/M = my_atom
 
-									if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-										matching_other = 1*/
-								if(istype(my_atom, /obj/item/slime_extract))
-									var/obj/item/slime_extract/M = my_atom
-
-									if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-										matching_other = 1
+								if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+									matching_other = 1
 
 
 
@@ -278,13 +272,6 @@ datum
 								for(var/mob/M in seen)
 									M << "\blue \icon[my_atom] The solution begins to bubble."
 
-							/*	if(istype(my_atom, /obj/item/slime_core))
-									var/obj/item/slime_core/ME = my_atom
-									ME.Uses--
-									if(ME.Uses <= 0) // give the notification that the slime core is dead
-										for(var/mob/M in viewers(4, get_turf(my_atom)) )
-											M << "\blue \icon[my_atom] The innards begin to boil!"
-								*/
 								if(istype(my_atom, /obj/item/slime_extract))
 									var/obj/item/slime_extract/ME2 = my_atom
 									ME2.Uses--

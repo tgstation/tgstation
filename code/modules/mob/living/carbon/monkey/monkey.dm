@@ -10,9 +10,7 @@
 	update_icon = 0		///no need to call regenerate_icon
 
 /mob/living/carbon/monkey/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
@@ -47,11 +45,6 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (HULK in tmob.mutations))
-				if(prob(70))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
 			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return

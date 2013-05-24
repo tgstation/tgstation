@@ -6,7 +6,7 @@ datum/preferences
 		else
 			gender = pick(MALE,FEMALE)
 		underwear = random_underwear(gender)
-		s_tone = random_skin_tone()
+		skin_tone = random_skin_tone()
 		h_style = random_hair_style(gender)
 		f_style = random_facial_hair_style(gender)
 		h_color = random_short_color()
@@ -23,10 +23,7 @@ datum/preferences
 		var/g = "m"
 		if(gender == FEMALE)	g = "f"
 
-		preview_icon = new /icon('icons/mob/human.dmi', "body_[g]_s")
-
-		// Skin tone
-		preview_icon.Blend("#[skin_tones[s_tone]]", ICON_MULTIPLY)
+		preview_icon = new /icon('icons/mob/human.dmi', "[skin_tone]_[g]_s")
 
 		if(underwear)
 			var/datum/sprite_accessory/underwear/U = underwear_all[underwear]

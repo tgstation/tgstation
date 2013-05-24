@@ -159,10 +159,11 @@
 			do_teleport(M, com.locked)
 			if(ishuman(M))//don't remove people from the round randomly you jerks
 				var/mob/living/carbon/human/human = M
-				if(human.dna.mutantrace == null)
+				if(human.dna && !human.dna.mutantrace)
 					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
 					human.dna.mutantrace = "fly"
-					human.update_mutantrace()
+					human.update_body()
+					human.update_hair()
 				human.apply_effect((rand(90, 150)), IRRADIATE, 0)
 				randmutb(human)
 				domutcheck(human, null)

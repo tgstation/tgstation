@@ -1,7 +1,6 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
 	var/r_speed = 1.0
@@ -385,14 +384,6 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
-
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
-				if(!(flags & ONESIZEFITSALL))
-					if(!disable_warning)
-						H << "\red You're too fat to wear the [name]."
-					return 0
-
 		switch(slot)
 			if(slot_l_hand)
 				if(H.l_hand)
@@ -649,7 +640,7 @@
 	if(istype(M, /mob/living/carbon/human))
 		var/datum/limb/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:UpdateDamageIcon(0)
+			M:update_damage_overlays(0)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
@@ -674,8 +665,14 @@
 
 /obj/item/clean_blood()
 	. = ..()
-	if(blood_overlay)
-		overlays.Remove(blood_overlay)
-	if(istype(src, /obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+	if(.)
+		if(initial(icon) && initial(icon_state))
+			var/index = blood_splatter_index()
+			var/icon/blood_splatter_icon = blood_splatter_icons[index]
+			if(blood_splatter_icon)
+				overlays -= blood_splatter_icon
+
+/obj/item/clothing/gloves/clean_blood()
+	. = ..()
+	if(.)
+		transfer_blood = 0

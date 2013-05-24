@@ -51,9 +51,6 @@
 					return
 
 				if(ismob(target))	//Blood!
-					if(istype(target, /mob/living/carbon/slime))
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
-						return
 					if(reagents.has_reagent("blood"))
 						user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
 						return
@@ -61,8 +58,8 @@
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
 						var/datum/reagent/B = new /datum/reagent/blood
-						if(!T.dna)
-							user << "<span class='notice'>You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum- report this to an admin.)</span>"
+						if(!check_dna_integrity(T))
+							user << "<span class='notice'>You are unable to locate any blood.</span>"
 							return
 						if(NOCLONE in T.mutations)	//target done been et, no more blood in him
 							user << "<span class='notice'>You are unable to locate any blood.</span>"

@@ -8,6 +8,20 @@
 	proc
 		process_hud(var/mob/M)	return
 
+/* /obj/item/clothing/glasses/hud/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			user << "<span class='warning'>PZZTTPFFFT</span>"
+			desc = desc+ " The display flickers slightly."
+		else
+			user << "<span class='warning'>It is already emagged!</span>" */ //No emags allowed
+
+/obj/item/clothing/glasses/hud/emp_act(severity)
+	if(emagged == 0)
+		emagged = 1
+		desc = desc + " The display flickers slightly."
 
 
 /obj/item/clothing/glasses/hud/health
@@ -118,7 +132,7 @@
 						C.images += holder
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-						holder.icon_state = "hudprisoner"
+						holder.icon_state = "hudincarcerated"
 						C.images += holder
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))

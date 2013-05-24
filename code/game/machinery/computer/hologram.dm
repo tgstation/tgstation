@@ -27,14 +27,13 @@
 	return
 
 /obj/machinery/computer/hologram_comp/proc/render()
-	var/icon/I = new /icon('icons/mob/human.dmi', "body_m_s")
+	var/icon/I = new /icon('icons/mob/human.dmi', "[skin_tones[1]]_m_s")
 
 	if (src.lumens >= 0)
 		I.Blend(rgb(src.lumens, src.lumens, src.lumens), ICON_ADD)
 	else
 		I.Blend(rgb(- src.lumens,  -src.lumens,  -src.lumens), ICON_SUBTRACT)
 
-	I.Blend(new /icon('icons/mob/human.dmi', "mouth_m_s"), ICON_OVERLAY)
 	I.Blend(new /icon('icons/mob/underwear.dmi', "Mens White"), ICON_OVERLAY)
 
 	var/icon/U = new /icon('icons/mob/human_face.dmi', "hair_a_s")
