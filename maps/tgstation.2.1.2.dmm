@@ -3565,7 +3565,7 @@
 "bqC" = (/obj/item/weapon/book/manual/security_space_law,/obj/structure/table,/turf/simulated/floor{icon_state = "red"; dir = 1},/area/security/checkpoint/supply)
 "bqD" = (/obj/machinery/recharger{pixel_y = 4},/obj/structure/table,/turf/simulated/floor{icon_state = "red"; dir = 1},/area/security/checkpoint/supply)
 "bqE" = (/obj/machinery/computer/secure_data,/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 24},/turf/simulated/floor{icon_state = "red"; dir = 5},/area/security/checkpoint/supply)
-"bqF" = (/obj/machinery/door/airlock/command{name = "Head of Personnel"; req_access = null; req_access_txt = "57"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/crew_quarters/heads)
+"bqF" = (/obj/machinery/door/airlock/command{name = "Head of Personnel"; req_access = null; req_access_txt = "57"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment,/turf/simulated/floor,/area/crew_quarters/heads)
 "bqG" = (/obj/machinery/ai_status_display,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/turret_protected/ai_upload_foyer)
 "bqH" = (/obj/machinery/door/airlock/highsecurity{icon_state = "door_closed"; locked = 0; name = "AI Upload Access"; req_access_txt = "16"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "vault"},/area/turret_protected/ai_upload_foyer)
 "bqI" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/turret_protected/ai_upload_foyer)
