@@ -120,7 +120,6 @@
 
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	changeling.absorbed_dna |= T.dna
-	T.real_name = "Unknown"
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2
