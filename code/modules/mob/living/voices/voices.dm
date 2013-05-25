@@ -43,13 +43,16 @@
 	else
 		return 0
 
+/mob/living/voices/Del()
+	ghostize(1, src.old_mind)			//they can re-enter their original body
+	src.current_host << "<span class='notice'>The [src.fluff_title] of [src.real_name] fades away.</span>" // tell the host he ghosted
+	..()
+
 /mob/living/voices/ghost()	//a way for a voice to become a ghost
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Enter the land of the dead."
 
-	ghostize(1, src.old_mind)			//they can re-enter their original body
-	src.current_host << "<span class='notice'>The [src.fluff_title] of [src.real_name] fades away.</span>" // tell the host he ghosted
 	del(src)
 	return
 
