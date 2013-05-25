@@ -20,6 +20,8 @@
 			sleep(2400)
 			*/
 
+var/list/event_last_fired = list()
+
 //Always triggers an event when called, dynamically chooses events based on job population
 /proc/spawn_dynamic_event()
 	if(!config.allow_random_events)
@@ -86,8 +88,14 @@
 		if(!sent_ninja_to_station && toggle_space_ninja)
 			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
 
+	for(var/event_type in event_last_fired) if(possibleEvents[event_type])
+		var/time_passed = world.time - event_last_fired[event_type]
+		var/weight_modifier = max(0, 60 * 60 - time_passed / 100)
+		
+		possibleEvents[event_type] = max(possibleEvents[event_type] - weight_modifier, 0)
 
 	var/picked_event = pickweight(possibleEvents)
+	event_last_fired[picked_event] = world.time
 
 	// Debug code below here, very useful for testing so don't delete please.
 	var/debug_message = "Firing random event. "
