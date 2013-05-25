@@ -138,8 +138,8 @@
 				else
 					changeling.purchasedpowers += Tp
 
-					if(!Tp.isVerb)
-						call(Tp.verbpath)()
+					if(!Tp.isVerb && (Tp.verbpath.len == 1))
+						call(Tp.verbpath[1])()
 					else
 						make_changeling()
 
@@ -661,7 +661,21 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
-//permanently ghosts a voice from the mind of the ling
+//Voices/living memory related verbs
+
+/mob/proc/changeling_toggle_memoryabsorb()
+	set category = "Changeling"
+	set name = "Toggle Memory Absorption"
+	set desc="Turns absorbing living memories along with DNA on or off."
+
+	var/datum/changeling/changeling = changeling_power()
+	changeling.acceptvoices = !(changeling.acceptvoices)
+	if (changeling.acceptvoices==1)
+		src << "<span class='notice'>We will now absorb the memories of our victims.</span>"
+	else
+		src << "<span class='notice'>We will no longer absorb the memories of our victims.</span>"
+	return 1
+
 /mob/proc/changeling_kickvoice()
 	set category = "Changeling"
 	set name = "Purge Memory"
@@ -683,15 +697,4 @@ var/list/datum/dna/hivemind_bank = list()
 	src << "<span class='notice'>[S] will no longer bother us.</span>"
 	return 1
 
-/mob/proc/changeling_togglevoice()
-	set category = "Changeling"
-	set name = "Toggle Memory Absorption"
-	set desc="Turns absorbing living memories with DNA on or off."
 
-	var/datum/changeling/changeling = changeling_power()
-	changeling.acceptvoices = !(changeling.acceptvoices)
-	if (changeling.acceptvoices==1)
-		src << "<span class='notice'>We will now absorb the memories of our victims.</span>"
-	else
-		src << "<span class='notice'>We will no longer absorb the memories of our victims.</span>"
-	return 1

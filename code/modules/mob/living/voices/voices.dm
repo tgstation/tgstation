@@ -5,6 +5,7 @@
 	density = 0
 	canmove = 0
 	blinded = 0
+	cantalk = 1
 	anchored = 1
 	see_in_dark = 0
 	mind = null
