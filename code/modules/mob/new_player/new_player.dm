@@ -264,8 +264,10 @@
 			AnnounceArrival(character, rank)
 		else
 			character.Robotize()
-		del(src)
 
+		if(config.allow_latejoin_antagonists && emergency_shuttle.timeleft() > 300) //Don't make them antags if the station is evacuating
+			ticker.mode.make_antag_chance(character)
+		del(src)
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
@@ -324,7 +326,7 @@
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 		new_character.name = real_name
-		
+
 		ready_dna(new_character, client.prefs.b_type)
 
 		new_character.key = key		//Manually transfer the key to log them in

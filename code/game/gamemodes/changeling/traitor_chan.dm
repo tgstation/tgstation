@@ -52,3 +52,11 @@
 		greet_changeling(changeling)
 	..()
 	return
+
+/datum/game_mode/traitor/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+	if (prob(100/changeling_scaling_coeff))
+		if(character.client.prefs.be_special & BE_CHANGELING)
+			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+				if(!(character.job in ticker.mode.restricted_jobs))
+					character.mind.make_Changling()
+	..()

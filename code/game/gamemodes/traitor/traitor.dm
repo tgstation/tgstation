@@ -75,6 +75,13 @@
 	..()
 	return 1
 
+/datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
+	if (prob(100/traitor_scaling_coeff))
+		if(character.client.prefs.be_special & BE_TRAITOR)
+			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
+				if(!(character.job in ticker.mode.restricted_jobs))
+					character.mind.make_Tratior()
+	..()
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
