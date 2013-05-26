@@ -197,6 +197,7 @@
 	if(H.dna)
 		H.dna.mutantrace = mrace
 		H.update_mutantrace()
+		H.update_mutantrace_languages()
 	H.suiciding = 0
 	src.attempting = 0
 	return 1

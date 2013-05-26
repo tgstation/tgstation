@@ -42,9 +42,9 @@
 					icon_state  = "chocolateglass"
 					name = "Glass of chocolate"
 					desc = "Tasty"
-				if("lemon")
+				if("lemonjuice")
 					icon_state  = "lemonglass"
-					name = "Glass of lemon"
+					name = "Glass of lemonjuice"
 					desc = "Sour..."
 				if("cola")
 					icon_state  = "glass_brown"

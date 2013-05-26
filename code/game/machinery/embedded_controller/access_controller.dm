@@ -153,6 +153,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	name = "Access Console"
 	density = 0
 	power_channel = ENVIRON
+	unacidable = 1
 
 	frequency = 1449
 
