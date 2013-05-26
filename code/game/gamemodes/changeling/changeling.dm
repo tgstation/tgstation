@@ -86,6 +86,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return
 
 /datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+	if(changelings.len >= round(joined_player_list.len / changeling_scaling_coeff) + 1) //Caps number of latejoin antagonists
+		return
 	if (prob(100/changeling_scaling_coeff))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))

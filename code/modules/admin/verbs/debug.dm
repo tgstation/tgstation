@@ -1053,7 +1053,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
 			usr << dd_list2text(player_list,",")
 		if("Admins")
@@ -1066,3 +1066,5 @@ var/global/list/g_fancy_list_of_safe_types = null
 			usr << dd_list2text(dead_mob_list,",")
 		if("Clients")
 			usr << dd_list2text(clients,",")
+		if("Joined Clients")
+			usr << dd_list2text(joined_player_list,",")
