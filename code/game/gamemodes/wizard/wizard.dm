@@ -87,7 +87,7 @@
 				escape_objective.owner = wizard
 				wizard.objectives += escape_objective
 
-		if(61 to 85)
+		if(61 to 100)
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = wizard
 			kill_objective.find_target()

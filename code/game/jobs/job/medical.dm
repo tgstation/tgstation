@@ -62,7 +62,7 @@
 			switch(H.mind.role_alt_title)
 				if("Emergency Physician")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/fr_jacket(H), slot_wear_suit)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
 				if("Surgeon")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)

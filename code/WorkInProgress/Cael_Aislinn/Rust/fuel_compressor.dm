@@ -4,7 +4,7 @@ var/const/max_assembly_amount = 300
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "fuel_compressor1"
 	name = "Fuel Compressor"
-	var/list/new_assembly_quantities = list("Deuterium" = 200,"Tritium" = 100,"Helium-3" = 0,"Lithium-6" = 0,"Silver" = 0)
+	var/list/new_assembly_quantities = list("Deuterium" = 150,"Tritium" = 150,"Rodinium-6" = 0,"Stravium-7" = 0, "Pergium" = 0, "Dilithium" = 0)
 	var/compressed_matter = 0
 	anchored = 1
 	layer = 2.9
@@ -79,12 +79,16 @@ var/const/max_assembly_amount = 300
 		var/fail = 0
 		var/old_matter = compressed_matter
 		for(var/reagent in new_assembly_quantities)
-			var/req_matter = new_assembly_quantities[reagent] / 30
+			var/req_matter = round(new_assembly_quantities[reagent] / 30)
 			//world << "[reagent] matter: [req_matter]/[compressed_matter]"
 			if(req_matter <= compressed_matter)
 				F.rod_quantities[reagent] = new_assembly_quantities[reagent]
 				compressed_matter -= req_matter
+				if(compressed_matter < 1)
+					compressed_matter = 0
 			else
+				/*world << "bad reagent: [reagent], [req_matter > compressed_matter ? "req_matter > compressed_matter"\
+				 : (req_matter < compressed_matter ? "req_matter < compressed_matter" : "req_matter == compressed_matter")]"*/
 				fail = 1
 				break
 			//world << "\blue	[reagent]: new_assembly_quantities[reagent]<br>"
@@ -93,7 +97,7 @@ var/const/max_assembly_amount = 300
 			compressed_matter = old_matter
 			usr << "\red \icon[src] [src] flashes red: \'Out of matter.\'"
 		else
-			F.loc = get_step(get_turf(src), src.dir)
+			F.loc = src.loc//get_step(get_turf(src), src.dir)
 			F.percent_depleted = 0
 			if(compressed_matter < 0.034)
 				compressed_matter = 0

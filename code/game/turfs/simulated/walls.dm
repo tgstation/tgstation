@@ -3,6 +3,7 @@
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
+	var/rotting = 0
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -59,9 +60,11 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
+
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
+	if(rotting) severity = 1.0
 	switch(severity)
 		if(1.0)
 			//SN src = null
@@ -84,7 +87,7 @@
 	return
 
 /turf/simulated/wall/blob_act()
-	if(prob(50))
+	if(prob(50) || rotting)
 		dismantle_wall()
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
@@ -103,11 +106,11 @@
 
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.wall_smash)
-		if (istype(src, /turf/simulated/wall/r_wall))
+		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
 			M << text("\blue This wall is far too strong for you to destroy.")
 			return
 		else
-			if (prob(40))
+			if (prob(40) || rotting)
 				M << text("\blue You smash through the wall.")
 				dismantle_wall(1)
 				return
@@ -120,7 +123,7 @@
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
-		if (prob(40))
+		if (prob(40) || rotting)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -128,6 +131,11 @@
 		else
 			usr << text("\blue You punch the wall.")
 			return
+
+	if(rotting)
+		user << "\blue The wall crumbles under your touch."
+		dismantle_wall()
+		return
 
 	user << "\blue You push the wall but nothing happens!"
 	playsound(src.loc, 'sound/weapons/Genhit.ogg', 25, 1)
@@ -142,6 +150,21 @@
 
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+
+	if(rotting)
+		if(istype(W, /obj/item/weapon/weldingtool) )
+			var/obj/item/weapon/weldingtool/WT = W
+			if( WT.remove_fuel(0,user) )
+				user << "<span class='notice'>You burn away the fungi with \the [WT].</span>"
+				playsound(src.loc, 'sound/items/Welder.ogg', 10, 1)
+				for(var/obj/effect/E in src) if(E.name == "Wallrot")
+					del E
+				rotting = 0
+				return
+		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
+			src.dismantle_wall(1)
+			return
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
@@ -284,6 +307,24 @@
 		return attack_hand(user)
 	return
 
+// Wall-rot effect, a nasty fungus that destroys walls.
+/turf/simulated/wall/proc/rot()
+	if(!rotting)
+		rotting = 1
+
+		var/number_rots = rand(2,3)
+		for(var/i=0, i<number_rots, i++)
+			var/obj/effect/overlay/O = new/obj/effect/overlay( src )
+			O.name = "Wallrot"
+			O.desc = "Ick..."
+			O.icon = 'icons/effects/wallrot.dmi'
+			O.pixel_x += rand(-10, 10)
+			O.pixel_y += rand(-10, 10)
+			O.anchored = 1
+			O.density = 1
+			O.layer = 5
+			O.mouse_opacity = 0
+
 /turf/simulated/wall/proc/thermitemelt(mob/user as mob)
 	if(mineral == "diamond")
 		return
@@ -307,10 +348,18 @@
 	return
 
 /turf/simulated/wall/meteorhit(obj/M as obj)
-	if (prob(15))
+	if (prob(15) && !rotting)
 		dismantle_wall()
-	else if(prob(70))
+	else if(prob(70) && !rotting)
 		ChangeTurf(/turf/simulated/floor/plating)
 	else
 		ReplaceWithLattice()
 	return 0
+
+/turf/simulated/wall/Del()
+	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	..()
+
+/turf/simulated/wall/ChangeTurf(var/newtype)
+	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	..(newtype)

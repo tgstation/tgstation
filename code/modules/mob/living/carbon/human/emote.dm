@@ -53,27 +53,17 @@
 			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
 			if (!input)
 				return
-			if(copytext(input,1,5) == "says")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(input,1,9) == "exclaims")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(input,1,5) == "asks")
-				src << "\red Invalid emote."
-				return
-			else
-				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-				if (input2 == "Visible")
-					m_type = 1
-				else if (input2 == "Hearable")
-					if (src.miming)
-						return
-					m_type = 2
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
+			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
+			if (input2 == "Visible")
+				m_type = 1
+			else if (input2 == "Hearable")
+				if (src.miming)
 					return
-				message = "<B>[src]</B> [input]"
+				m_type = 2
+			else
+				alert("Unable to use this emote, must be either hearable or visible.")
+				return
+			message = "<B>[src]</B> [input]"
 
 		if ("me")
 			if(silent)
@@ -88,17 +78,7 @@
 				return
 			if(!(message))
 				return
-			if(copytext(message,1,5) == "says")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(message,1,9) == "exclaims")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(message,1,5) == "asks")
-				src << "\red Invalid emote."
-				return
-			else
-				message = "<B>[src]</B> [message]"
+			message = "<B>[src]</B> [message]"
 
 		if ("salute")
 			if (!src.buckled)

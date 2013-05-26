@@ -117,6 +117,7 @@ datum/controller/game_controller/proc/process()
 				controller_iteration++
 
 				vote.process()
+				process_newscaster()
 
 				//AIR
 
@@ -132,11 +133,12 @@ datum/controller/game_controller/proc/process()
 					air_master.current_cycle++
 					var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 					if(!success) //Runtimed.
-						log_adminwarn("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
 						air_master.failed_ticks++
 						if(air_master.failed_ticks > 5)
 							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
-							kill_air = 1
+							message_admins("ZASALERT: unable run [air_master.tick_progress], tell someone about this!")
+							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
+							air_processing_killed = 1
 							air_master.failed_ticks = 0
 				air_cost = (world.timeofday - timer) / 10
 

@@ -9,6 +9,12 @@
 		act = copytext(act,1,length(act))
 
 	switch(act)
+		if ("me")
+			return custom_emote(m_type, message)
+
+		if ("custom")
+			return custom_emote(m_type, message)
+
 		if ("salute")
 			if (!src.buckled)
 				var/M = null
@@ -55,20 +61,6 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps his wings ANGRILY!"
 				m_type = 2
-
-		if ("custom")
-			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
-			if (!input)
-				return
-			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-			if (input2 == "Visible")
-				m_type = 1
-			else if (input2 == "Hearable")
-				m_type = 2
-			else
-				alert("Unable to use this emote, must be either hearable or visible.")
-				return
-			message = "<B>[src]</B> [input]"
 
 		if ("me")
 			if (src.client)
