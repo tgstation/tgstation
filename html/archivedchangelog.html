@@ -1,6 +1,567 @@
 <!--
 Stick old posts here to prevent cluttering of main changelog.
 -->
+
+<div class="commit sansserif">
+	<h2 class="date">December 28nd</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Updated server to tgstation r5067, see <a href="https://code.google.com/p/tgstation13/source/list">https://code.google.com/p/tgstation13/source/list</a> for tg's changelog.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">November 2012 - January 2013</h2>
+	<h3 class="author">chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Several cargo crates from pre-merge were ported.</li>
+		<li class="tweak">Contraband crate is no longer labeled as such.</li>
+		<li class="rscadd">In space, no one can hear you scream now.</li>
+    </ul>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Airflow produces subtle sound effects now.</li>
+		<li class="tweak">Events are now adjusted based on department activity.</li>
+		<li class="tweak">The virus event will spawn BS12 vira.</li>
+		<li class="tweak">Two new traitor objectives: Brig and Harm</li>
+		<li class="tweak">Space no longer makes rooms cold.</li>
+		<li class="rscadd">Gibbing creates actual limbs you can pick up, if you're lucky a complete head with brain.</li>
+		<li class="rscadd">It's now possible to miss in combat(melee and guns), instead of just hitting the torso rather than the head. This makes targetting the head much riskier than before.</li>
+		<li class="tweak">Chemicals now last 10x as long in the blood, but their effect is also reduced equally.</li>
+		<li class="rscadd">IV drips now have a right-click option to take blood rather than give it.</li>
+		<li class="rscadd">Everyone gets a crew manifest.</li>
+    </ul>
+	<h3 class="author">CaelAislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">There now is a client-toggle for whether to become a space-ninja.</li>
+		<li class="tweak">Reduced startup lag by removing a vermin-related proc.</li>
+		<li class="tweak">Several alien balance fixes.</li>
+    </ul>
+	<h3 class="author">Ravensdale updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Ported station-wide explosion sounds.</li>
+    </ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">December 3rd</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+        <li class="tweak">Aliens have been significantly nerfed: neurotoxin is affected by bio protection suits, tackle stuns for much shorter time and facehuggers have a chance to fail when leaping.</li>
+    </ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">23.11.12</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Cryo now temporarily stops bleeding, meaning you can shove the patient in there while you prepare IV and surgery.</li>
+    </ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">14.11.12</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Virologist are now alt title of Medical Doctor, like Surgeon or EMT. All medical jobs now have virology access.</li>
+		<li class="rscadd">Added scientist alt titles.</li>
+	</ul>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Lungs can now rupture from exposure to low oxygen environments. Use alien-surgery, and then scalpel instead of hemostat, to fix.</li>
+        <li class="tweak">Bandage/ointment healing sped up by a factor 10.</li>
+        <li class="rscadd">Ported autopsy.</li>
+    </ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">November 12th</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Wounds can now get infected in surgery if the surgeon doesn't wash his hands first. Infected wounds can be treated with ointment(though it'll take a while to take effect).</li>
+        <li class="tweak">Large amounts of damage can now trigger internal bleeding. Internal bleeding can be recognized in the stationary body scanner, and can be treated through surgery with VeinOFix.</li>
+    </ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">November 11th</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">DNA injectors now have a small chance(5%) to trigger a genetic side-effect. See the paper in the genetics lobby for recognition and treatment.</li>
+    </ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">November 9th</h2>
+	<h3 class="author">AterIgnis updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Chemistry explosions try to damage their holder first - potassium-water mixes and nitroglycerol tend to gib human if injected instead of creating crater around them</li>
+		<li class="tweak">Reagents mix and react inside humans, but they don't bubble in that case (try not to give patient water and potassium at the same time)</li>
+		<li class="tweak">Ethanol-based drinks (alcohol) is treated like ethanol now and can be used in reactions. Ethanol->water reaction now properly makes drunk people sober by removing alcohol, not just temporarily sobering them.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">6.11.2012</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Crew Transfer shuttles are back.</li>
+		<li class="rscadd">Readded pre-merge photo system. Instead of one picture as icon, now photo can be examined to see 3x3 screenshot.</li>
+		<li class="rscadd">Custom items system is back. If your item is not spawning or is missing icon, report it.</li>
+		<li class="rscadd">Alt job titles system is back. For noe medical titles (MD/Surgeon/EMT) and Detective/Foreniscs Tech.</li>
+		<li class="experiment">ROBUSTING CHANGE:  Disarming someone with gun in hand has chance that said gun will go off in random direction. With veruy real posibility of you getting shot.</li>
+		<li class="experiment">FLYING BATON OF JUSTICE: Turned on stunbaton has 50% chance of stunning if thrown at someone. </li>
+		<li class="rscadd">Character medical and security records can again be set on char setup.</li>
+		<li class="bugfix">Vote window now will go away (thanks TG for fix)</li>
+		<li class="experiment">Maybe something else, play and you will find.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">November 4th</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Changed Grenade behavior to how it used to be.</li>
+		<li class="bugfix">Security HUDs now properly display job info.</li>
+		<li class="tweak">PolyAcid is now slightly buffed, as it no longer has a pitiful 15% change of melting a helmet. (Guaranteed helmet-removal.)</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 24th</h2>
+	<h3 class="author">Mij updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="wip">Get ready for some xenoarch love! Re-added artifact and strange rock spawning at world gen.</li>
+		<li class="wip">Strange rocks react to fire only now, until I can hammer out how acid works. Technically acid does do something to them.... ;)</li>
+		<li class="imageadd">Re-added a number of mining/xenoarch related icons. Changed ore boxes to look prettier, like they used to.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 22nd</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Updated server to tgstation r4953, see <a href="https://code.google.com/p/tgstation13/source/list">https://code.google.com/p/tgstation13/source/list</a> for tg's changelog. </li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 18th</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added a new type of wound, internal wounds. These should later be treated with surgery, though for now bicardine works.</li>
+        <li class="tweak">Appendicitis now has a fourth stage in which the appendix burst and an internal wound is inflicted.</li>
+        <li class="rscadd">The full body scanner is back.</li>
+	</ul>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Buffed up welder fuel tanks for all your nefarious needs.</li>
+		<li class="tweak">Replaced evac hallway lights with less.. party ones.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">17.10.2012</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Ported limb selection on startup. Note that this may still be bugged, so use at own risk.</li>
+        <li class="tweak">You can now select opposite gender hairstyles.</li>
+	</ul>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Fixed arrivals announcment.</li>
+		<li class="bugfix">Slur will properly fade away with time now.</li>
+		<li class="bugfix">Anti-alco chem will get rid of slur now.</li>
+		<li class="tweak">Throwing metal item at eletrified grilles and doors will cause them to spark.</li>
+		<li class="rscadd">Added forensics tech jackets.</li>
+		<li class="rscadd">Ported some hairstyles from pre-merge code.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 13th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Moderators are now being loaded correctly, and all broken admin and mod verbs should be functioning correctly. Misc other fixes and improvements.</li>
+	</ul>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Medical stack items(ointment, bandages) aren't instant anymore, but instead stop bleeding and speed up healing.</li>
+        <li class="bugfix">Cyborgs can now use :h to use their department channel.</li>
+        <li class="tweak">Ported BS12 medbots. This means you now have to load them with a chemical, or otherwise they only have inaprovaline.</li>
+        <li class="tweak">Ported the BS12 player info features.</li>
+        <li class="tweak">Examine now only reveals whether someone is breathing(need to be 3 tiles away or closer). Check pulse from 1 tile distance.</li>
+        <li class="tweak">Ported bleeding. Bleeding can be stopped by applying a bandage.</li>
+        <li class="tweak">Small delay for chloral hydrate and sleep toxin to take effect.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 12th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Merge current BS12 code with /tg/station's rev4847. Thanks for everyone who's been posting issues and bugs to the PiratePad <a href="http://piratepad.net/YO3Dig6L2N">issue tracker</a> (see also <a href="http://piratepad.net/9CwFobI4lZ">here</a> for general discussion and criticisms).</li>
+		<li class="tgs">See <a href="https://code.google.com/p/tgstation13/source/list">https://code.google.com/p/tgstation13/source/list</a> for tg's changelog. This is recommended reading for anyone interested in any changes, be warned there's a lot of them. </li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 9th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">The merge code is now stable and playable (diag click only has been fixed, among other things). Hopefully, more playtesting will be taking place over the next few weeks.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">September 26th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Multiple bugfixes and tweaks in response to the testing session a few days ago have been put in place. For more details, see the piratepad tracker (TG also has broken underwear, we're awaiting a fix from them for it).</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">September 24th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Engineering depressurisation during the test run was due to the singularity EMPing doors open. This is not a bug.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">September 23nd, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">The server map has now officially branched to tgstation2.0.9.1.dmm.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">August 22, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">This server is in the process of running a merge of BS12 and up to date TGcode. This is a significant update, and there will likely be several bugs coming with it. 
+		See <a href="https://github.com/Baystation12/Baystation12/pull/1671">https://github.com/Baystation12/Baystation12/pull/1671</a> for more information.</li>
+		<li class="tgs">The server is now running tgstation2.0.9.dmm. The station layout is functionally the same, but with significant additions from tg. Hopefully, the Antiqua will be ready soon.</li>
+		<li class="tgs">Please report all bugs immediately, both in OOC and by making an issue at: <a href="https://github.com/Baystation12/Baystation12/issues/new">https://github.com/Baystation12/Baystation12/issues/new</a></li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">15th August 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Readded changeling and traitorchan (traitor + changeling) to secret rounds, lowered probability of cult being chosen during secret rounds.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">7th August 2012</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Wound descriptions now again are in sync with actual damage.</li>
+		<li class="tweak">Bandages no longer are instant, but rather only stop bleeding and speed up the healing process.</li>
+		<li class="tweak">Bleeding and regeneration speeds have been balanced, so that now it is possible to bleed out.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">4 August 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Ghosts and observers can now possess mice and inhabit the station as mortals once more. Be warned, in this form you will be unable to be cloned! (you can, however, jump back into ghost form as you like)</li>
+	</ul>
+
+	<h3 class="author">FireFishie updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="imageadd">Added Flashkirby99's tajaran sprites, but the accompanying hairstyles will have to wait for a tweak to genetics before being usable in-game. Apologies for not logging this change sooner.</li>
+		<li class="tweak">By vote, the captain's armor is again space capable and the memo on his desk updated to reflect this.</li>
+		<li class="tweak">The Captain now starts wearing matching gloves, jackboots, and a cap. The old Napoleonic hat can still be found in the secure locker.</li>
+		<li class="tweak">The Head of Personnel now starts with a clipboard, but without body armor and a helmet. Both items can still be found in the secure locker for emergencies.</li>
+		<li class="tweak">Cargo tech and shaft miner wardrobes now include fingerless gloves. Janitor wardrobes now includes a portalathe. Warden wardrobes now includes a jacket.</li>
+		<li class="tweak">Medical, security, and tool-belts may now hold any lighter. Medical belts may now hold latex gloves and sterile masks. Security belts may now hold gas masks. Tool-belts may now hold cigarette packs.</li>
+	</ul>	
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2 August 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Vermin such as mice and roaches will periodically spawn in maintenance and toilet areas across the station. Cats will hunt the mice, roaches can be stepped on and mousetraps will deal with both.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">10 July 2012</h2>
+	<h3 class="author">Abi79 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscdel">Removed the stun effect from artifacts.</li>
+		<li class="bugfix">Fixed the bug where helmets would not turn off when placed into backpacks.</li>
+		<li class="tweak">Added more "cancel" buttons to various dialogs.</li>
+	</ul>
+    
+    <h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Fixed the bug where the preview image in the character creation panel was broken.</li>
+		<li class="bugfix">Fixed the bug where you could only see if a player had no pulse when that player was ghosted or logged off.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">9 July 2012</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Maintenance shafts are now safe places in the event of a radiation belt. This feature may be temporary until a better solution is found.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">5 July 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+			<li class="rscadd">The Mining North Outpost has been repurposed as a research outpost, with a shuttle going back to the research division on the main station. The pneumatic transport chute is still available to transfer ore between this outpost and the mining one.</li>
+			<li class="bugfix">Shield generators now have circuitboards, and the capacitors should actually rotate now (both still have placeholder sprites though).</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">3 July 2012</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">You can now select amputated and robot limbs in the character preferences. Note, though, that amputated limbs don't work properly yet.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">29 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+			<li class="tweak">Raises job limits for Botanists, Atmospheric Technicians, Roboticists, Chemists, and Geneticists.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">28 June 2012</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">'Rename' function for clipboards</li>
+		<li class="rscadd">Can add photos to clipboards</li>
+		<li class="bugfix">Fixed troubles with formatting when reading from clipboard (linebreaks not being properly placed)</li>
+		<li class="bugfix">Fixed photocopiers not copying photos properly</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">27 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Simple animals (like constructs) can properly emote using the Me verb now.</li>
+		<li class="rscadd">Body scanners now show a much more detailed readout on patients.</li>
+		<li class="tweak">Wizard 'Mind Transfer' spell now requires full wizard garb to work.</li>
+		<li class="tweak">Chairs without wheel will no longer move with fire extinguishers. BECAUSE I HATE FUN.</li>
+		<li class="tweak">Gauze/kits/ointment now heal wounds instantly again. Gauze and ointment don't work below 50 health, advanced kits don't work below 0. This may be tweaked as necessary in future.</li>
+		<li class="rscdel">Stepping in pools of blood no longer leaves footprints due to lag issues.</li>
+		<li class="bugfix">Fixed batons hitting on all non-help intents. It'll now only do it on harm intent.</li>
+		<li class="bugfix">Fixed tape recorders not recording holopad speech.</li>
+		<li class="bugfix">Fixed random " on his head" messages in examine.</li>
+		<li class="bugfix">Fixed surgery, all surgical procedures should work again.</li>
+		<li class="bugfix">Fixes medical items. Gauze/kits/ointment can now be applied correctly again.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">26 June 2012</h2>
+	<h3 class="author">TG updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Fixed silicon mobs not being able to access newscaster.</li>
+		<li class="bugfix">Fixed harmbatons on everything other than harm, now it is the opposite way round.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">25 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment"><b>People in critical (less than -50 health) from external trauma (100+ damage from brute and/or burn) bleeding, and with unsplinted limbs, will send a message to anyone trying to drag them, to warn them it would be a bad idea trying to move them. They will suffer a lot more damage if dragged while lying down.<br>The correct procedure is therefore, A) Bring a roller bed, or B) Splint all limbs, stop all bleeding with gauze, and then drag them.</b></li>
+		<li class="rscadd">Dragging someone while injured (brute) will have a small chance of injuring them further that increases depending on how damaged they are. This coincides with the blood spatters that are already generated.</li>
+		<li class="rscadd">Added splints that can be applied to broken arms and legs, and will reduce effects of broken limbs. These can be removed the same way as handcuffs. They show up on the mob and on examine.</li>
+		<li class="rscadd">Added an autoinjector that can only hold five units, but acts like a hypospray.</li>
+		<li class="rscadd"> Added an advanced medical kit that Medical Doctors spawn with that has Advanced Trauma Kits, Advanced Burn Kits, autoinjectors, and splints.</li>
+		<li class="tweak">Health Scanners now show unsplinted fractures ONLY in arms or legs.</li>
+		<li class="tweak">Blood is now actually lost from the person being dragged.</li>
+		<li class="bugfix">Fixed CPR being performed at weird health levels.</li>
+	</ul>
+	<h3 class="author">Watermelon Storm updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added a medbay (with rolling beds) and a holding cell to the destination of the escape shuttle.</li>
+	</ul>
+	<h3 class="author">Drieden updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">The cargo bay now has a supply depot to store, sort, and dispense raw materials, and print shipping manifests.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">23 June 2012</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">ZAS now has different thresholds to move mobs and dense objects.  A depressurising room at normal pressure will no longer turn lockers deadly.</li>
+		<li class="bugfix">ZAS now properly rebuilds zones, and connect/merge adjacent zones.  This should be the final real bugfix to the system.</li>
+		<li class="wip">I have removed the aspects of the wound system causing the instant healing and, very likely, lag.  This will result in wounds healing instantly again, but the computational overhead being significantly less.</li>
+		<li class="tweak">The auto-targeting-mode for guns will now provide a different type of flavor text when it makes you fire, to make the situations that it occurs in to be less ambiguous.</li>
+		<li class="experiment">UltraLight is in, but has some lighting bugs still remaining.  This is the next thing I intend to tackle, bare with it please.</li>
+	</ul>
+	<h3 class="author">TG updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Updated toilets. You can now crowbar open the cistern and hide stuff in there.</li>
+		<li class="rscadd">Omni-directional PA console! Never have to worry about rotating it again, because now it does it itself!</li>
+		<li class="rscadd">Players can fill their cigarettes with various chemicals and smoke them.</li>
+		<li class="rscadd">You can now click blocks to select them.</li>
+		<li class="tweak">Areas have been redefined and renamed to make more logical sense (eg "Arrivals North Maintenance" instead of "Secondary Fore Port Maintenance"). Same has been done with Solars.</li>
+		<li class="tweak">Scientists no longer start with gas masks and o2 tanks (Still available from the lockers).</li>
+		<li class="tweak">Hydroponics trays are now unwrenchable.</li>
+		<li class="tweak">The Experimental Welding Tool, rather than having a larger tank, will refill itself over time.</li>
+		<li class="bugfix">Borg diamond drills now properly dig sand.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">22 June 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">A research laboratory has been constructed to store and catalogue xeno-archaelogical relics. Savvy anomalists are advised to supervise recovery efforts themselves, as unsubtle miners may damage delicate samples through not using the proper tools.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">18 June 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">A discovery on a nearby asteroid has brought xeno-archaelogists flocking to the NSS Exodus in search of ancient treasures. Miners beware, these artifacts may be helpful or deadly! There is talk of establishing a permanent research position on the station in an attempt to study them (thanks to ISaidNo for original code).</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">16 June 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Recent breakthroughs have brought shield generation technology to the NSS Exodus. External (hull) shield generators and capacitors may now be built, with appropriate circuitboards available from RnD.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">09 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Blobs have evolved! Their weaknesses/strengths are now randomised. Experimentation ahoy!</li>
+		<li class="bugfix">Meteors have been fixed, and will therefore appear again. Meteor mode works too.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">07 June 2012</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">ZAS now works properly.  No perpetually leaking doors, no walls that hold air like a seive.</li>
+		<li class="experiment"><font color='red'><b>ZAS airflow is now enabled</b>, and will move objects (AND PEOPLE!) when air moves with enough force.  <b>AIRLOCKS ARE NOW DEADLY DANGEROUS!</b></font></li>
+		<li class="rscadd">Packages will now reflect the size of what they contain</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">06 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Tajaran's are more vulnerable to high temperatures and get hungry faster, but deal well with colder temperatures. Soghun's are more susceptible to cold temperatures, but get hungry much slower.</li>
+		<li class="rscadd">Skrell update! Adds Skrell as a whitelisted race. They have their own language which can be used by typing :k</li>
+		<li class="rscadd">Soghun get their own language by typing :o</li>
+		<li class="rscadd">Skintone and eye colour of most species can now be changed, The preview picture should be a fairly accurate representation of what you'll get in-game.</li>
+		<li class="tweak">All valves in atmosperics now start off, instead of having to turn them off, then on again.</li>
+		<li class="tweak">Soy sauce recipe change to soymilk + water pending better ideas.</li>
+		<li class="bugfix">Fixes pAI's universal translator not being universal.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">04 June 2012</h2>
+	<h3 class="author">TG updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added "Toggle Open" verb to all closets and crates</li>
+		<li class="rscadd">Added "Toggle Lock" verb to all lockable closets</li>
+		<li class="rscadd">Window doors are now breakable. They can still be emagged and hacktooled, and they have fairly high health.</li>
+		<li class="rscadd">Windoors are now constructable. See here for how to build them: http://baystation12.net/wiki/index.php/Construction#Window-door_.28Windoor.29</li>
+		<li class="rscadd">Lawyers can now access security records with their PDAs (read-only)</li>
+		<li class="tweak">RIG suits have been renamed to hardsuits. </li>
+	</ul>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added the capability for the security PDA to scan items in like the detectives scanner, and for it to be loaded into the database in the same manner.</li>
+	</ul>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">You can now only build 2 cleanbots.</li>
+		<li class="bugfix">Fixed flavour text, it should now be possible to have it longer than 40 characters, and should stay properly formatted.</li>
+		<li class="bugfix">Fixes AI's not being able to talk through holopads.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">01 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added character records. You can now add medical and security records to your character through Character Setup. These are official NanoTrasen records, and should be written as such. These will show up in-game on the medical and security records computers. Admins can 'jobban' people from records, so use them sensibly!</li>
+		<li class="rscadd">Added a megaphone to each Head's office. These broadcast messages in slightly larger font so you can be noticed. Please don't spam them.</li>
+		<li class="tweak">Added Flashkirby's ERT suit sprites. Also tweaked ERT's loadout.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">29 May 2012</h2>
+	<h3 class="author">Aryn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Airflow works on a room-by-room basis rather than on individual tiles. Rooms will depressurize much faster than they did, though not too fast for balance reasons.</li>
+		<li class="tweak">Fire now works on a logarithmic scale based on oxygen and fuel content. This is a far more complex tweak under the hood than it is in game.</li>
+		<li class="rscadd">Plasma now has increased toxicity and can burn exposed skin and eyes. In addition, because of the new air, it fills the room instantaneously. Try not to spill any.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">28 May 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Surgeons spawn with scrubs, Emergency Physicians spawn with first responder jackets.</li>
+		<li class="rscadd">Added water bottles to cola vending machines.</li>
+		<li class="tweak">More HUD changes: https://dl.dropbox.com/u/4911517/ShareX/2012-05/2012-05-28_20-40-50.png</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">27 May 2012</h2>
+    <h3 class="author">Abi79 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Money withdrawn from the ATM will now be worth the proper value.</li>
+	</ul>
+    <h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+        <li class="bugfix">Fixed PDA light not turning off when exploded by a detomax.</li>
+		<li class="bugfix">Fixes food not disappearing from hands when finished.</li>
+		<li class="bugfix">Fixed the bug where traitors would get an empty objectives list. Credit: thvortex.</li>
+		<li class="imageadd">New portalathe sprite, thanks to dezzmont and Furlucis.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">26 May 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added Flashkirby's RIG and cow sprites!</li>
+		<li class="tweak">Removed and added some new AI Ion laws, credit: Ispil.</li>
+	</ul>
+    
+    <h3 class="author">Abi79 updated:</h3>
+    <ul class="changes bgimages16">
+		<li class="bugfix">Everyone should now be able to see the properly formatted changelog.</li>
+	</ul>
+</div>
+
 <div class="commit sansserif">
 	<h2 class="date">25 May 2012</h2>
 	<h3 class="author">Erthilo updated:</h3>
