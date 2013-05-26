@@ -55,7 +55,7 @@
 				icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "<span class='notice'>You unrwench the frame.</span>"
+				user << "<span class='notice'>You unwrench the frame.</span>"
 				anchored = 0
 				state = 0
 
