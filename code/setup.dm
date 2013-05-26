@@ -304,6 +304,7 @@ var/MAX_EXPLOSION_RANGE = 14
 // mob/var/list/mutations
 
 #define STRUCDNASIZE 27
+#define UNIDNASIZE 13
 
 	// Generic mutations:
 #define	TK				1
