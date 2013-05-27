@@ -109,7 +109,7 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 8
-	w_class = 4
+	w_class = 3
 	can_hold = list("/obj/item/weapon/pickaxe/brush",\
 	"/obj/item/weapon/pickaxe/one_pick",\
 	"/obj/item/weapon/pickaxe/two_pick",\
@@ -118,7 +118,7 @@
 	"/obj/item/weapon/pickaxe/five_pick",\
 	"/obj/item/weapon/pickaxe/six_pick",\
 	"/obj/item/weapon/pickaxe/hand")
-	max_combined_w_class = 20
+	max_combined_w_class = 11
 	max_w_class = 4
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 

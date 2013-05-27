@@ -402,7 +402,7 @@ var/list/department_radio_keys = list(
 				var/deaf_message = ""
 				var/deaf_type = 1
 				if(M != src)
-					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
+					deaf_message = "<span class='name'>[name]</span>[alt_name] talks but you cannot hear them."
 				else
 					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
 					deaf_type = 2 // Since you should be able to hear yourself without looking
@@ -416,12 +416,12 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message_b)
+			message_b = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
+		rendered = "<span class='game say'><span class='name'>[name]</span>[alt_name] <span class='message'>[message_b]</span></span>" //Voice_name isn't too useful. You'd be able to tell who was talking presumably.
 
 
 		for (var/M in heard_b)

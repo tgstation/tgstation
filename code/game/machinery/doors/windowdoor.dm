@@ -11,6 +11,7 @@
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
+	air_properties_vary_with_direction = 1
 
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)

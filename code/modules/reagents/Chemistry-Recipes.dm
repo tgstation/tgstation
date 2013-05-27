@@ -482,6 +482,19 @@ datum
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/stack/sheet/mineral/plasma(location)
 				return
+
+		plastication
+			name = "Plastic"
+			id = "solidplastic"
+			result = null
+			required_reagents = list("pacid" = 10, "plasticide" = 20)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/mineral/plastic
+				M.amount = 10
+				M.loc = get_turf_loc(holder.my_atom)
+				return
+
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -1461,6 +1474,13 @@ datum
 			required_reagents = list("potato" = 10)
 			required_catalysts = list("enzyme" = 5)
 			result_amount = 10
+		sake
+			name = "Sake"
+			id = "sake"
+			result = "sake"
+			required_reagents = list("rice" = 10)
+			required_catalysts = list("enzyme" = 5)
+			result_amount = 10
 
 		kahlua
 			name = "Kahlua"
@@ -1886,4 +1906,41 @@ datum
 			result = "driestmartini"
 			required_reagents = list("nothing" = 1, "gin" = 1)
 			result_amount = 2
+
+		lemonade
+			name = "Lemonade"
+			id = "lemonade"
+			result = "lemonade"
+			required_reagents = list("lemonjuice" = 1, "sugar" = 1, "water" = 1)
+			result_amount = 3
+
+		kiraspecial
+			name = "Kira Special"
+			id = "kiraspecial"
+			result = "kiraspecial"
+			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "sodawater" = 1)
+			result_amount = 2
+
+		brownstar
+			name = "Brown Star"
+			id = "brownstar"
+			result = "brownstar"
+			required_reagents = list("orangejuice" = 2, "cola" = 1)
+			result_amount = 2
+
+		milkshake
+			name = "Milkshake"
+			id = "milkshake"
+			result = "milkshake"
+			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2)
+			result_amount = 5
+
+		rewriter
+			name = "Rewriter"
+			id = "rewriter"
+			result = "rewriter"
+			required_reagents = list("spacemountainwind" = 1, "coffee" = 1)
+			result_amount = 2
+
+
 

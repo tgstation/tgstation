@@ -50,6 +50,7 @@
 		src.searching = 0
 		src.brainmob.mind = candidate.mind
 		src.brainmob.key = candidate.key
+		src.brainmob.ckey = candidate.ckey
 		src.name = "positronic brain ([src.brainmob.name])"
 
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"

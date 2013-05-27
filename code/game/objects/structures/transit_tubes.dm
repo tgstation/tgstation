@@ -150,6 +150,17 @@ obj/structure/ex_act(severity)
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
+
+				//reverse directions for automated cycling
+				var/turf/next_loc = get_step(loc, pod.dir)
+				var/obj/structure/transit_tube/nexttube
+				for(var/obj/structure/transit_tube/tube in next_loc)
+					if(tube.has_entrance(pod.dir))
+						nexttube = tube
+						break
+				if(!nexttube)
+					pod.dir = turn(pod.dir, 180)
+
 				if(icon_state == "closed" && pod)
 					pod.follow_tube()
 

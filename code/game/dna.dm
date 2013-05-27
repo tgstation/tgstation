@@ -331,7 +331,7 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = rand(1,STRUCDNASIZE-1)
+	num = rand(1,UNIDNASIZE)
 	M.dna.check_integrity()
 	newdna = setblock(M.dna.uni_identity,num,add_zero2(num2hex(rand(1,4095),1),3),3)
 	M.dna.uni_identity = newdna

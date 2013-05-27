@@ -64,14 +64,14 @@
 
 /obj/machinery/rust_fuel_assembly_port/proc/eject_assembly()
 	if(cur_assembly)
-		cur_assembly.loc = get_step(get_turf(src), src.dir)
+		cur_assembly.loc = src.loc//get_step(get_turf(src), src.dir)
 		cur_assembly = null
 		icon_state = "port0"
 		return 1
 
 /obj/machinery/rust_fuel_assembly_port/proc/try_draw_assembly()
 	var/success = 0
-	if(cur_assembly)
+	if(!cur_assembly)
 		var/turf/check_turf = get_step(get_turf(src), src.dir)
 		check_turf = get_step(check_turf, src.dir)
 		for(var/obj/machinery/power/rust_fuel_injector/I in check_turf)
@@ -89,31 +89,14 @@
 			I.cur_assembly = null
 			icon_state = "port1"
 			success = 1
+			break
 
 	return success
 
-/*
-/obj/machinery/rust_fuel_assembly_port/verb/try_insert_assembly_verb()
-	set name = "Attempt to insert assembly from port into injector"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!busy)
-		try_insert_assembly()
-
 /obj/machinery/rust_fuel_assembly_port/verb/eject_assembly_verb()
-	set name = "Attempt to eject assembly from port"
+	set name = "Eject assembly from port"
 	set category = "Object"
 	set src in oview(1)
 
-	if(!busy)
-		eject_assembly()
+	eject_assembly()
 
-/obj/machinery/rust_fuel_assembly_port/verb/try_draw_assembly_verb()
-	set name = "Draw assembly from injector"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!busy)
-		try_draw_assembly()
-*/

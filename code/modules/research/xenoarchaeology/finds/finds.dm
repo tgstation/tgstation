@@ -9,7 +9,7 @@
 	var/view_range = 20				//how close excavation has to come to show an overlay on the turf
 	var/clearance_range = 3			//how close excavation has to come to extract the item
 									//if excavation hits var/excavation_required exactly, it's contained find is extracted cleanly without the ore
-	var/prob_delicate = 75			//probability it requires an active suspension field to not insta-crumble
+	var/prob_delicate = 90			//probability it requires an active suspension field to not insta-crumble
 	var/dissonance_spread = 1		//proportion of the tile that is affected by this find
 									//used in conjunction with analysis machines to determine correct suspension field type
 
@@ -276,6 +276,7 @@
 		if(19)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/claymore(src.loc)
+			new_item.force = 10
 			item_type = new_item.name
 		if(20)
 			//arcane clothing
@@ -318,6 +319,7 @@
 		if(25)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/katana(src.loc)
+			new_item.force = 10
 			item_type = new_item.name
 		if(26)
 			//energy gun
@@ -349,6 +351,7 @@
 			var/obj/item/weapon/gun/projectile/new_gun = new /obj/item/weapon/gun/projectile(src.loc)
 			new_item = new_gun
 			new_item.icon_state = "gun[rand(1,4)]"
+			new_item.icon = 'xenoarchaeology.dmi'
 
 			//33% chance to be able to reload the gun with human ammunition
 			if(prob(66))
@@ -359,8 +362,10 @@
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.max_shells)
 				if(num_bullets < new_gun.loaded.len)
-					for(var/i = num_bullets, i <= new_gun.loaded.len, i++)
-						new_gun.loaded += new new_gun.ammo_type(src)
+					new_gun.loaded.Cut()
+					for(var/i = 1, i <= num_bullets, i++)
+						var/A = text2path(new_gun.ammo_type)
+						new_gun.loaded += new A(new_gun)
 				else
 					for(var/obj/item/I in new_gun)
 						if(new_gun.loaded.len > num_bullets)

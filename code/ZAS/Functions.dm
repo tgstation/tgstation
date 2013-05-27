@@ -1,35 +1,44 @@
 //Global Functions
 //Contents: FloodFill, ZMerge, ZConnect
 
+//Floods outward from an initial turf to fill everywhere it's zone would reach.
 proc/FloodFill(turf/simulated/start)
+
 	if(!istype(start))
 		return list()
-	var
-		list
-			open = list(start)
-			closed = list()
 
+	//The list of tiles waiting to be evaulated.
+	var/list/open = list(start)
+	//The list of tiles which have been evaulated.
+	var/list/closed = list()
+
+	//Loop through the turfs in the open list in order to find which adjacent turfs should be added to the zone.
 	while(open.len)
 		var/turf/simulated/T = pick(open)
 
+		//sanity!
 		if(!istype(T))
 			open -= T
 			continue
 
+		//Check all cardinal directions
 		for(var/d in cardinal)
 			var/turf/simulated/O = get_step(T,d)
 
+			//Ensure the turf is of proper type, that it is not in either list, and that air can reach it.
 			if(istype(O) && !(O in open) && !(O in closed) && O.ZCanPass(T))
 
+				//Handle connections from a tile with a door.
 				if(T.HasDoor())
-					//If they both have doors, then they are nto able to connect period.
+					//If they both have doors, then they are not able to connect period.
 					if(O.HasDoor())
 						continue
 
-					//connect first to north and west
+					//Connect first to north and west
 					if(d == NORTH || d == WEST)
 						open += O
 
+					//If that fails, and north/west cannot be connected to, see if west or south can be connected instead.
 					else
 						var/turf/simulated/W = get_step(O, WEST)
 						var/turf/simulated/N = get_step(O, NORTH)
@@ -38,9 +47,11 @@ proc/FloodFill(turf/simulated/start)
 							//If it cannot connect either to the north or west, connect it!
 							open += O
 
+				//If no doors are involved, add it immediately.
 				else if(!O.HasDoor())
 					open += O
 
+				//Handle connecting to a tile with a door.
 				else
 					if(d == SOUTH || d == EAST)
 						//doors prefer connecting to zones to the north  or west
@@ -56,19 +67,25 @@ proc/FloodFill(turf/simulated/start)
 							//If it cannot connect either to the north or west, connect it!
 							closed += O
 
+		//This tile is now evaluated, and can be moved to the list of evaluated tiles.
 		open -= T
 		closed += T
 
 	return closed
 
 
+//Procedure to merge two zones together.
 proc/ZMerge(zone/A,zone/B)
+
+	//Sanity~
+	if(!istype(A) || !istype(B))
+		return
+
 	//Merges two zones so that they are one.
-	var
-		a_size = A.air.group_multiplier
-		b_size = B.air.group_multiplier
-		c_size = a_size + b_size
-		new_contents = A.contents + B.contents
+	var/a_size = A.air.group_multiplier
+	var/b_size = B.air.group_multiplier
+	var/c_size = a_size + b_size
+	var/new_contents = A.contents + B.contents
 
 	//Set air multipliers to one so air represents gas per tile.
 	A.air.group_multiplier = 1
@@ -82,32 +99,28 @@ proc/ZMerge(zone/A,zone/B)
 	A.air.merge(B.air)
 	A.air.group_multiplier = c_size
 
-	//Check for connections to merge into the new zone.
-	for(var/connection/C in B.connections)
-		if((C.A in new_contents) && (C.B in new_contents))
-			del C
-			continue
-		if(!A.connections) A.connections = list()
-		A.connections += C
-
-	//Add space tiles.
-	A.unsimulated_tiles += B.unsimulated_tiles
-
-	//Add contents.
-	A.contents = new_contents
-
 	//Set all the zone vars.
 	for(var/turf/simulated/T in B.contents)
 		T.zone = A
 
-	for(var/connection/C in A.connections)
+	//Check for connections to merge into the new zone.
+	for(var/connection/C in B.connections)
+		//The Cleanup proc will delete the connection if the zones are the same.
+		//	It will also set the zone variables correctly.
 		C.Cleanup()
 
+	//Add space tiles.
+	A.unsimulated_tiles |= B.unsimulated_tiles
+
+	//Add contents.
+	A.contents = new_contents
+
+	//Remove the "B" zone, finally.
 	B.SoftDelete()
 
 
+//Connects two zones by forming a connection object representing turfs A and B.
 proc/ZConnect(turf/simulated/A,turf/simulated/B)
-	//Connects two zones by forming a connection object representing turfs A and B.
 
 	//Make sure that if it's space, it gets added to unsimulated_tiles instead.
 	if(!istype(B))
@@ -126,8 +139,6 @@ proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	if(!A.zone || !B.zone) return
 	if(A.zone == B.zone) return
 
-	if(!A.CanPass(null,B,0,0)) return
-
 	if(A.CanPass(null,B,0,1))
 		return ZMerge(A.zone,B.zone)
 
@@ -138,83 +149,5 @@ proc/ZConnect(turf/simulated/A,turf/simulated/B)
 			if(C && (C.B == B || C.A == B))
 				return
 
+	//Make the connection.
 	new /connection(A,B)
-
-/*
-proc/ZDisconnect(turf/A,turf/B)
-	//Removes a zone connection. Can split zones in the case of a permanent barrier.
-
-	//If one of them doesn't have a zone, it might be space, so check for that.
-	if(A.zone && B.zone)
-		//If the two zones are different, just remove a connection.
-		if(A.zone != B.zone)
-			for(var/connection/C in A.zone.connections)
-				if((C.A == A && C.B == B) || (C.A == B && C.B == A))
-					del C
-				if(C)
-					C.Cleanup()
-		//If they're the same, split the zone at this line.
-		else
-			//Preliminary checks to prevent stupidity.
-			if(A == B) return
-			if(A.CanPass(0,B,0,0)) return
-			if(A.HasDoor(B) || B.HasDoor(A)) return
-
-			//Do a test fill. If turf B is still in the floodfill, then the zone isn't really split.
-			var/zone/oldzone = A.zone
-			var/list/test = FloodFill(A)
-			if(B in test) return
-
-			else
-				var/zone/Z = new(test,oldzone.air) //Create a new zone based on the old air and the test fill.
-
-				//Add connections from the old zone.
-				for(var/connection/C in oldzone.connections)
-					if((C.A in Z.contents) || (C.B in Z.contents))
-						if(!Z.connections) Z.connections = list()
-						Z.connections += C
-						C.Cleanup()
-
-				//Check for space.
-				for(var/turf/T in test)
-					T.check_for_space()
-
-				//Make a new, identical air mixture for the other zone.
-				var/datum/gas_mixture/Y_Air = new
-				Y_Air.copy_from(oldzone.air)
-
-				var/zone/Y = new(B,Y_Air) //Make a new zone starting at B and using Y_Air.
-
-				//Add relevant connections from old zone.
-				for(var/connection/C in oldzone.connections)
-					if((C.A in Y.contents) || (C.B in Y.contents))
-						if(!Y.connections) Y.connections = list()
-						Y.connections += C
-						C.Cleanup()
-
-				//Add the remaining space tiles to this zone.
-				for(var/turf/space/T in oldzone.unsimulated_tiles)
-					if(!(T in Z.unsimulated_tiles))
-						Y.AddSpace(T)
-
-				oldzone.air = null
-				del oldzone
-	else
-		if(B.zone)
-			if(istype(A,/turf/space))
-				B.zone.RemoveSpace(A)
-			else
-				for(var/connection/C in B.zone.connections)
-					if((C.A == A && C.B == B) || (C.A == B && C.B == A))
-						del C
-					if(C)
-						C.Cleanup()
-		if(A.zone)
-			if(istype(B,/turf/space))
-				A.zone.RemoveSpace(B)
-			else
-				for(var/connection/C in A.zone.connections)
-					if((C.A == A && C.B == B) || (C.A == B && C.B == A))
-						del C
-					if(C)
-						C.Cleanup()*/

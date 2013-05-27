@@ -344,14 +344,13 @@ commented out in r5061, I left it because of the shroom thingies
 
 		user << "\red You start [P.drill_verb][fail_message ? fail_message : ""]."
 
-		if(fail_message)
-			if(prob(50))
-				if(prob(25))
-					excavate_find(5, src.finds[1])
-				else if(prob(50))
-					src.finds.Remove(src.finds[1])
-					if(prob(50))
-						artifact_debris()
+		if(fail_message && prob(90))
+			if(prob(25))
+				excavate_find(5, src.finds[1])
+			else if(prob(50))
+				src.finds.Remove(src.finds[1])
+				if(prob(50))
+					artifact_debris()
 
 		if(do_after(user,P.digspeed))
 			user << "\blue You finish [P.drill_verb] the rock."
@@ -425,8 +424,6 @@ commented out in r5061, I left it because of the shroom thingies
 			//extract pesky minerals while we're excavating
 			while(excavation_minerals.len && src.excavation_level > excavation_minerals[excavation_minerals.len])
 				drop_mineral()
-				//have a 50% chance to extract bonus minerals this way
-				//if(prob(50))
 				pop(excavation_minerals)
 				mineralAmt--
 
@@ -456,13 +453,6 @@ commented out in r5061, I left it because of the shroom thingies
 		O = new /obj/item/weapon/ore/plasma(src)
 	if (src.mineralName == "Diamond")
 		O = new /obj/item/weapon/ore/diamond(src)
-	/*if (src.mineralName == "Archaeo")
-		//new /obj/item/weapon/archaeological_find(src)
-		//if(prob(10) || delicate)
-		if(prob(50)) //Don't have delicate tools (hand pick/excavation tool) yet, temporarily change to 50% instead of 10% -Mij
-			O = new /obj/item/weapon/ore/strangerock(src)
-		else
-			destroyed = 1*/
 	if (src.mineralName == "Clown")
 		O = new /obj/item/weapon/ore/clown(src)
 	if(O)
@@ -496,14 +486,9 @@ commented out in r5061, I left it because of the shroom thingies
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	/*if (prob(src.artifactChance))
-		//spawn a rare artifact here
-		new /obj/machinery/artifact(src)*/
 	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
 	N.fullUpdateMineralOverlays()
 
-	/*if(destroyed)  //Display message about being a terrible miner
-		usr << "\red You destroy some of the rocks!"*/
 	return
 
 /turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)

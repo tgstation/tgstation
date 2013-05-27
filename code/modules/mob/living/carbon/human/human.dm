@@ -439,7 +439,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name )	//disfigured. use id-name if possible
+	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -822,6 +822,15 @@
 			return "Skrell"
 		else if(src.dna.mutantrace == "tajaran")
 			return "Tajaran"
+
+/mob/living/carbon/proc/update_mutantrace_languages()
+	if(src.dna)
+		if(src.dna.mutantrace == "lizard")
+			src.soghun_talk_understand = 1
+		else if(src.dna.mutantrace == "skrell")
+			src.skrell_talk_understand = 1
+		else if(src.dna.mutantrace == "tajaran")
+			src.tajaran_talk_understand = 1
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
