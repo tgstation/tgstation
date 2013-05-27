@@ -823,6 +823,15 @@
 		else if(src.dna.mutantrace == "tajaran")
 			return "Tajaran"
 
+/mob/living/carbon/proc/update_mutantrace_languages()
+	if(src.dna)
+		if(src.dna.mutantrace == "lizard")
+			src.soghun_talk_understand = 1
+		else if(src.dna.mutantrace == "skrell")
+			src.skrell_talk_understand = 1
+		else if(src.dna.mutantrace == "tajaran")
+			src.tajaran_talk_understand = 1
+
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
 		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
