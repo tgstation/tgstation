@@ -74,7 +74,7 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/get_area()
-	var/turf/T = get_turf_loc(usr)
+	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
 	A = A.master
 	return A
@@ -101,7 +101,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/create_area()
 	//world << "DEBUG: create_area"
-	var/res = detect_room(get_turf_loc(usr))
+	var/res = detect_room(get_turf(usr))
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)

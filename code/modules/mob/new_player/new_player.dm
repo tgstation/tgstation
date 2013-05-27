@@ -18,12 +18,7 @@
 		tag = "mob_[next_mob_id++]"
 		mob_list += src
 
-	verb/new_player_panel()
-		set src = usr
-		new_player_panel_proc()
-
-
-	proc/new_player_panel_proc()
+	proc/new_player_panel()
 
 		var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -100,7 +95,7 @@
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
-			new_player_panel_proc()
+			new_player_panel()
 
 		if(href_list["observe"])
 

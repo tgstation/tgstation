@@ -31,29 +31,28 @@
 		return "[output][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
-proc/listgetindex(var/list/list,index)
-	if(istype(list) && list.len)
+proc/listgetindex(list/L, index)
+	if(istype(L))
 		if(isnum(index))
-			if(InRange(index,1,list.len))
-				return list[index]
-		else if(index in list)
-			return list[index]
+			if(IsInRange(index,1,L.len))
+				return L[index]
+		else if(index in L)
+			return L[index]
 	return
 
-proc/islist(list/list)
-	if(istype(list))
+proc/islist(list/L)
+	if(istype(L))
 		return 1
 	return 0
 
 //Return either pick(list) or null if list is not of type /list or is empty
-proc/safepick(list/list)
-	if(!islist(list) || !list.len)
-		return
-	return pick(list)
+proc/safepick(list/L)
+	if(istype(L) && L.len)
+		return pick(L)
 
 //Checks if the list is empty
-proc/isemptylist(list/list)
-	if(!list.len)
+proc/isemptylist(list/L)
+	if(!L.len)
 		return 1
 	return 0
 
