@@ -76,7 +76,7 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	if(traitors.len >= round(joined_player_list.len / traitor_scaling_coeff) + 2) //Caps number of latejoin antagonists
+	if(traitors.len >= round(joined_player_list.len / traitor_scaling_coeff) + 1) //Caps number of latejoin antagonists
 		return
 	if (prob(100/traitor_scaling_coeff))
 		if(character.client.prefs.be_special & BE_TRAITOR)
