@@ -803,6 +803,7 @@
 #include "code\modules\mob\living\say.dm"
 #include "code\modules\mob\living\blob\blob.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
+#include "code\modules\mob\living\carbon\carbon_defense.dm"
 #include "code\modules\mob\living\carbon\carbon_defines.dm"
 #include "code\modules\mob\living\carbon\inventory.dm"
 #include "code\modules\mob\living\carbon\alien\alien.dm"
