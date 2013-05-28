@@ -416,7 +416,7 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
+			message_b = say_quote(message_b,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
