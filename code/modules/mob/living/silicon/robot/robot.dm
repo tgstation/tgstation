@@ -236,13 +236,14 @@
 	if(custom_name)
 		return 0
 
-	var/newname
-	newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
-	if (newname != "")
-		custom_name = newname
+	spawn(0)
+		var/newname
+		newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
+		if (newname != "")
+			custom_name = newname
 
-	updatename("Default")
-	updateicon()
+		updatename("Default")
+		updateicon()
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
