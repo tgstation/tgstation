@@ -7,9 +7,9 @@
 	icon_gib = "syndicate_gib"
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "pokes the"
-	response_disarm = "shoves the"
-	response_harm = "hits the"
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
 	speed = -1
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
@@ -65,12 +65,12 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
+			visible_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
-			visible_message("\red \b [src] blocks the [O] with its shield! ")
+			visible_message("\red \b [src] blocks [O] with its shield! ")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
-		visible_message("\red [user] gently taps [src] with the [O]. ")
+		visible_message("\red [user] gently taps [src] with [O]. ")
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)

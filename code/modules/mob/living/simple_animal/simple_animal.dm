@@ -238,7 +238,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("\red <B>\The [M]</B> [M.attacktext] [src]!", 1)
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -258,7 +258,7 @@
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\blue [M] [response_help] [src]")
+						O.show_message("\blue [M] [response_help] [src].")
 
 		if("grab")
 			if (M == src)
@@ -283,7 +283,7 @@
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]")
+					O.show_message("\red [M] [response_harm] [src]!")
 
 	return
 
@@ -346,7 +346,7 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	visible_message("\red <B>The [M.name] glomps [src]!</B>")
+	visible_message("\red <B>[M.name] glomps [src]!</B>")
 
 	var/damage = rand(1, 3)
 
@@ -374,9 +374,9 @@
 						del(MED)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies the [MED] on [src]")
+							M.show_message("\blue [user] applies [MED] on [src]")
 		else
-			user << "\blue this [src] is dead, medical items won't bring it back to life."
+			user << "\blue [src] is dead, medical items won't bring it back to life."
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
@@ -392,12 +392,12 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("\red \b "+"[src] has been attacked with [O] by [user]. ")
 		else
 			usr << "\red This weapon is ineffective, it does no damage."
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+					M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
 
