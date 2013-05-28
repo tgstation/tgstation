@@ -8,70 +8,42 @@
 
 
 /*-------TODOOOOOOOOOO--------*/
-/mob/living/silicon/robot/proc/uneq_active()
-	if(isnull(module_active))
-		return
+/mob/living/silicon/robot/proc/uneq_module(obj/item/O)
+	if(!O)
+		return 0
 
-	if(istype(module_active, /obj/item/borg/sight))
-		var/obj/item/borg/sight/S = module_active
+	if(istype(O,/obj/item/borg/sight))
+		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
-
-	else if(istype(module_active, /obj/item/device/flashlight))
-		var/obj/item/device/flashlight/F = module_active
+	else if(istype(O, /obj/item/device/flashlight))
+		var/obj/item/device/flashlight/F = O
 		if(F.on)
 			F.on = 0
 			F.update_brightness(src)
+	if(client)
+		client.screen -= O
+	contents -= O
 
-	if(module_active == module_state_1)
-		if (client)
-			client.screen -= module_state_1
-		contents -= module_state_1
-		module_state_1 = null
+	if(module_active == O)
+		module_active = null
+	if(module_state_1 == O)
 		inv1.icon_state = "inv1"
-	else if(module_active == module_state_2)
-		if (client)
-			client.screen -= module_state_2
-		contents -= module_state_2
-		module_state_2 = null
+		module_state_1 = null
+	else if(module_state_2 == O)
 		inv2.icon_state = "inv2"
-	else if(module_active == module_state_3)
-		if (client)
-			client.screen -= module_state_3
-		contents -= module_state_3
+		module_state_2 = null
+	else if(module_state_3 == O)
 		module_state_3 = null
 		inv3.icon_state = "inv3"
+	return 1
 
-	module_active = null
-
+/mob/living/silicon/robot/proc/uneq_active()
+	uneq_module(module_active)
 
 /mob/living/silicon/robot/proc/uneq_all()
-	module_active = null
-
-	if(module_state_1)
-		if(istype(module_state_1,/obj/item/borg/sight))
-			sight_mode &= ~module_state_1:sight_mode
-		if (client)
-			client.screen -= module_state_1
-		contents -= module_state_1
-		module_state_1 = null
-		inv1.icon_state = "inv1"
-	if(module_state_2)
-		if(istype(module_state_2,/obj/item/borg/sight))
-			sight_mode &= ~module_state_2:sight_mode
-		if (client)
-			client.screen -= module_state_2
-		contents -= module_state_2
-		module_state_2 = null
-		inv2.icon_state = "inv2"
-	if(module_state_3)
-		if(istype(module_state_3,/obj/item/borg/sight))
-			sight_mode &= ~module_state_3:sight_mode
-		if (client)
-			client.screen -= module_state_3
-		contents -= module_state_3
-		module_state_3 = null
-		inv3.icon_state = "inv3"
-
+	uneq_module(module_state_1)
+	uneq_module(module_state_2)
+	uneq_module(module_state_3)
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)
 	if(module_state_1 == O)
