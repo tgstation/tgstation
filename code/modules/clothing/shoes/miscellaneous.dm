@@ -6,7 +6,6 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
-	var/list/clothing_choices = list()
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
@@ -16,7 +15,7 @@
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
-	icon_state = "swat"
+	icon_state = "jackboots"
 	item_state = "jackboots"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
