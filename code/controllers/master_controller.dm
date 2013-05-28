@@ -287,7 +287,7 @@ datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	for(var/varname in master_controller.vars)
 		switch(varname)
-			if("tag","bestF","type","parent_type","vars")	continue
+			if("tag","type","parent_type","vars")	continue
 			else
 				var/varval = master_controller.vars[varname]
 				if(istype(varval,/datum))

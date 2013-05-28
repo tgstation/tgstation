@@ -80,7 +80,7 @@
 	if(!parts.len)	return
 	var/datum/limb/picked = pick(parts)
 	if(picked.heal_damage(brute,burn))
-		UpdateDamageIcon(0)
+		update_damage_overlays(0)
 	updatehealth()
 
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
@@ -91,7 +91,7 @@
 	if(!parts.len)	return
 	var/datum/limb/picked = pick(parts)
 	if(picked.take_damage(brute,burn))
-		UpdateDamageIcon(0)
+		update_damage_overlays(0)
 	updatehealth()
 
 
@@ -113,7 +113,7 @@
 
 		parts -= picked
 	updatehealth()
-	if(update)	UpdateDamageIcon(0)
+	if(update)	update_damage_overlays(0)
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
@@ -134,7 +134,7 @@
 
 		parts -= picked
 	updatehealth()
-	if(update)	UpdateDamageIcon(0)
+	if(update)	update_damage_overlays(0)
 
 
 ////////////////////////////////////////////
@@ -143,7 +143,7 @@
 	var/datum/limb/E = get_organ(zone)
 	if(istype(E, /datum/limb))
 		if (E.heal_damage(brute, burn))
-			UpdateDamageIcon(0)
+			update_damage_overlays(0)
 	else
 		return 0
 	return
@@ -179,11 +179,11 @@
 		if(BRUTE)
 			damageoverlaytemp = 20
 			if(organ.take_damage(damage, 0))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(organ.take_damage(0, damage))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 

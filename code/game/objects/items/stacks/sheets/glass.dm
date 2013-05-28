@@ -287,6 +287,19 @@
 				var/datum/limb/affecting = H.get_organ(pick("l_leg", "r_leg"))
 				H.Weaken(3)
 				if(affecting.take_damage(5, 0))
-					H.UpdateDamageIcon(0)
+					H.update_damage_overlays(0)
 				H.updatehealth()
 	..()
+
+/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/living/carbon/user as mob)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.gloves)
+			H << "<span class='warning'>\The [src] cuts into your hand!</span>"
+			var/organ = ((H.hand ? "l_":"r_") + "arm")
+			var/datum/limb/affecting = H.get_organ(organ)
+			if(affecting.take_damage(force/2))
+				H.update_damage_overlays(0)
+	else
+		user << "<span class='warning'>\The [src] cuts into your hand!</span>"
+		user.take_organ_damage(force/2)

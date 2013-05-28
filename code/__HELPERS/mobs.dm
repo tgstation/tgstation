@@ -39,20 +39,22 @@ proc/random_name(gender, attempts_to_find_unique_name=10)
 			break		
 
 proc/random_skin_tone()
-	return pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino", 20;"oriental", 10;"mediteranian")
+	return pick(skin_tones)
 
 var/list/skin_tones = list(
-	"caucasian" = "fdc",
-	"afroamerican" = "963",
-	"african" = "630",
-	"latino" = "c90",
-	"albino" = "fff",
-	"oriental" = "ff6",
-	"mediteranian" = "cc0"
+	"albino",
+	"caucasian1",
+	"caucasian2",
+	"caucasian3",
+	"latino",
+	"mediterranean",
+	"asian1",
+	"asian2",
+	"arab",
+	"indian",
+	"african1",
+	"african2"
 	)
-/proc/skin_tone2color(skin_tone)
-	. = skin_tones[skin_tone]
-	if(!.)	. = "fdc"
 
 proc/age2agedescription(age)
 	switch(age)

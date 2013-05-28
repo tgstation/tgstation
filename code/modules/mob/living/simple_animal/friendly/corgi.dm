@@ -122,12 +122,14 @@
 						item_to_add.afterattack(src,usr,1)
 						return
 
-					//Corgis are supposed to be simpler, so only a select few objects can actually be put
-					//to be compatible with them. The objects are below.
-
+					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
-						/obj/item/device/radio
+						/obj/item/device/radio,
+						/obj/item/clothing/suit/cardborg,
+						/obj/item/weapon/tank/oxygen,
+						/obj/item/weapon/tank/air,
+						/obj/item/weapon/extinguisher
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -201,7 +203,7 @@
 		if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
 			name = "Hoppy"
 			emote_see = list("twitches its nose", "hops around a bit")
-			desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
+			desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit"
 			valid = 1
 
 		if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
@@ -245,6 +247,13 @@
 		if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
 			name = "Grandwizard [real_name]"
 			speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+			valid = 1
+
+		if(/obj/item/clothing/head/cardborg)
+			name = "Borgi"
+			speak = list("Ping!","Beep!","Woof!")
+			emote_see = list("goes rogue", "sniffs out non-humans")
+			desc = "Result of robotics budget cuts."
 			valid = 1
 
 		if(/obj/item/weapon/bedsheet)
@@ -360,11 +369,6 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-				if(prob(70))
-					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
 			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return

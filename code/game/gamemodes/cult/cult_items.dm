@@ -20,7 +20,7 @@
 		var/organ = ((user.hand ? "l_":"r_") + "arm")
 		var/datum/limb/affecting = user.get_organ(organ)
 		if(affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
-			user.UpdateDamageIcon(0)
+			user.update_damage_overlays(0)
 	return
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)

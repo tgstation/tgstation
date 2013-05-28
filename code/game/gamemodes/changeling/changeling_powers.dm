@@ -75,8 +75,8 @@
 		src << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
 		return
 
-	var/mob/living/carbon/human/T = G.affecting
-	if(!istype(T))
+	var/mob/living/carbon/T = G.affecting
+	if(!check_dna_integrity(T))
 		src << "<span class='warning'>[T] is not compatible with our biology.</span>"
 		return
 
@@ -305,7 +305,7 @@
 			W.layer = initial(W.layer)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? MALE : FEMALE
+	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	O.dna = dna
 	dna = null
 	O.real_name = chosen_dna.real_name
@@ -695,7 +695,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	var/mob/living/carbon/T = changeling_sting(40,/mob/living/carbon/proc/changeling_transformation_sting)
 	if(!T)	return 0
-	if((HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
+	if((HUSK in T.mutations) || !check_dna_integrity(T))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
@@ -704,19 +704,6 @@ var/list/datum/dna/hivemind_bank = list()
 	updateappearance(T)
 	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")
-	return 1
-
-/mob/living/carbon/proc/changeling_unfat_sting()
-	set category = "Changeling"
-	set name = "Unfat sting (5)"
-	set desc = "Sting target"
-
-	var/mob/living/carbon/T = changeling_sting(5,/mob/living/carbon/proc/changeling_unfat_sting)
-	if(!T)	return 0
-	T << "<span class='danger'>you feel a small prick as stomach churns violently and you become to feel skinnier.</span>"
-	T.overeatduration = 0
-	T.nutrition -= 100
-	feedback_add_details("changeling_powers","US")
 	return 1
 
 /mob/living/carbon/proc/changeling_DEATHsting()

@@ -41,7 +41,7 @@
 		for(var/datum/limb/affecting in H.organs)
 			if(!affecting)	continue
 			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
-				H.UpdateDamageIcon(0)
+				H.update_damage_overlays(0)
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -171,6 +171,8 @@
 		L += src.contents
 		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
+		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
+			L += U.contents
 		return L
 
 /mob/living/proc/check_contents_for(A)
@@ -260,7 +262,7 @@
 	..()
 	return
 
-/mob/living/proc/UpdateDamageIcon()
+/mob/living/proc/update_damage_overlays()
 	return
 
 
