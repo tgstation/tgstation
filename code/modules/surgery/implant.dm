@@ -31,8 +31,11 @@
 		return ""
 
 /datum/surgery_step/cavity/make_space
-	required_tool = /obj/item/weapon/surgicaldrill
-	allowed_tools = list(/obj/item/weapon/pen,/obj/item/stack/rods)
+	allowed_tools = list(
+	/obj/item/weapon/surgicaldrill = 100,	\
+	/obj/item/weapon/pen = 75,	\
+	/obj/item/stack/rods = 50
+	)
 
 	min_duration = 60
 	max_duration = 80
@@ -62,8 +65,12 @@
 
 /datum/surgery_step/cavity/close_space
 	priority = 2
-	required_tool = /obj/item/weapon/cautery
-	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
+	allowed_tools = list(
+	/obj/item/weapon/cautery = 100,			\
+	/obj/item/clothing/mask/cigarette = 75,	\
+	/obj/item/weapon/lighter = 50,			\
+	/obj/item/weapon/weldingtool = 25
+	)
 
 	min_duration = 60
 	max_duration = 80
@@ -93,7 +100,7 @@
 
 /datum/surgery_step/cavity/place_item
 	priority = 0
-	required_tool = /obj/item
+	allowed_tools = list(/obj/item = 100)
 
 	min_duration = 80
 	max_duration = 100
@@ -136,8 +143,11 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/cavity/implant_removal
-	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100,	\
+	/obj/item/weapon/wirecutters = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -159,8 +169,6 @@
 				find_prob +=60
 			else
 				find_prob +=40
-			if (isright(tool))
-				find_prob +=20
 			if (prob(find_prob))
 				user.visible_message("\blue [user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].", \
 				"\blue You take something out of incision on [target]'s [affected.display_name]s with \the [tool]." )
@@ -189,8 +197,7 @@
 		affected.createwound(CUT, 20)
 		if (affected.implants.len)
 			var/fail_prob = 10
-			if (!isright(tool))
-				fail_prob += 30
+			fail_prob += 100 - tool_quality(tool)
 			if (prob(fail_prob))
 				var/obj/item/weapon/implant/imp = affected.implants[1]
 				user.visible_message("\red Something beeps inside [target]'s [affected.display_name]!")
