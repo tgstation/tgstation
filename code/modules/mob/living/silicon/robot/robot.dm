@@ -123,7 +123,10 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
-			icon_state = "robot"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Standard")
+			switch(icontype)
+				if("Basic")	icon_state = "robot_old"
+				else		icon_state = "robot"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
 
@@ -145,7 +148,11 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "Miner"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Advanced Droid", "Treadhead")
+			switch(icontype)
+				if("Basic")	icon_state = "Miner_old"
+				if("Advanced Droid")	icon_state = "droid-miner"
+				else		icon_state = "Miner"
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 			channels = list("Mining" = 1)
@@ -154,7 +161,12 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			icon_state = "surgeon"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Advanced Droid", "Needles", "Hoverbot")
+			switch(icontype)
+				if("Basic")	icon_state = "Medbot"
+				if("Advanced Droid")	icon_state = "droid-medical"
+				if("Needles")	icon_state = "medicalrobot"
+				else		icon_state = "surgeon"
 			modtype = "Med"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
@@ -164,7 +176,12 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			icon_state = "bloodhound"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Red Knight", "Black Knight", "Bloodhound")
+			switch(icontype)
+				if("Basic")	icon_state = "secborg"
+				if("Red Knight")	icon_state = "Security"
+				if("Black Knight")	icon_state = "securityrobot"
+				else		icon_state = "bloodhound"
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
@@ -175,7 +192,11 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			icon_state = "landmate"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Antique", "Landmate")
+			switch(icontype)
+				if("Basic")	icon_state = "Engineering"
+				if("Antique") icon_state = "Engineerrobot"
+				else		icon_state = "landmate"
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 			channels = list("Engineering" = 1)
@@ -184,7 +205,11 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
-			icon_state = "mopgearrex"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Mopbot", "Zamboni")
+			switch(icontype)
+				if("Basic")	icon_state = "JanBot2"
+				if("Mopbot") icon_state = "janitorrobot"
+				else		icon_state = "mopgearrex"
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
@@ -210,14 +235,14 @@
 /mob/living/silicon/robot/verb/Namepick()
 	if(custom_name)
 		return 0
-	spawn(0)
-		var/newname
-		newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
-		if (newname != "")
-			custom_name = newname
 
-		updatename("Default")
-		updateicon()
+	var/newname
+	newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
+	if (newname != "")
+		custom_name = newname
+
+	updatename("Default")
+	updateicon()
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
