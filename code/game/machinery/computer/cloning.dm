@@ -351,6 +351,7 @@
 	R.fields["UE"] = subject.dna.unique_enzymes
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
+	R.fields["b_type"] = subject.dna.b_type
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
