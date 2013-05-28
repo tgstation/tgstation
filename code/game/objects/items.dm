@@ -566,7 +566,7 @@
 	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(src, usr))
 		return
 
-	if(ishuman(usr))
+	if(ishuman(usr) || ismonkey(usr))
 		if(usr.get_active_hand() == null)
 			src.Click() // Let me know if this has any problems -Giacom
 		/*
@@ -576,7 +576,7 @@
 			usr << "\red You already have something in your hand."
 		*/
 	else
-		usr << "\red This mob type can't use this verb."
+		usr << "<span class='notice'>This mob type can't use this verb.</span>"
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
