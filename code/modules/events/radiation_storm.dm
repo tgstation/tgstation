@@ -24,9 +24,9 @@
 				if(istype(T.loc, /area/maintenance) || istype(T.loc, /area/crew_quarters))
 					continue
 				if(istype(H,/mob/living/carbon/human))
-					H.apply_effect((rand(5,25)),IRRADIATE,0)
+					H.apply_effect((rand(2,15)),IRRADIATE,0)
 					if(prob(5))
-						H.apply_effect((rand(30,50)),IRRADIATE,0)
+						H.apply_effect((rand(10,30)),IRRADIATE,0)
 						if (prob(75))
 							randmutb(H)
 							domutcheck(H,null,1)
