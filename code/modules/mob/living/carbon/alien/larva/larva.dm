@@ -265,8 +265,8 @@
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 4.9)
+						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
+				if ((stat != DEAD) && (damage > 4.9))
 					Weaken(rand(10,15))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
@@ -277,7 +277,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has attempted to kick []!</B>", M, src), 1)
 	return
 
 /mob/living/carbon/alien/larva/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
