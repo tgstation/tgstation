@@ -45,6 +45,7 @@
 		user.visible_message("\blue [user] has made an incision on [target]'s [affected.display_name] with \the [tool].", \
 		"\blue You have made an incision on [target]'s [affected.display_name] with \the [tool].",)
 		affected.open = 1
+		affected.status |= ORGAN_BLEEDING
 		affected.createwound(CUT, 1)
 		if (target_zone == "head")
 			target.brain_op_stage = 1
