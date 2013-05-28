@@ -118,12 +118,6 @@ var/list/powerinstances
 	genomecost = 10
 	verbpath = /mob/living/carbon/proc/changeling_DEATHsting
 
-/datum/power/changeling/unfat_sting
-	name = "Unfat Sting"
-	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
-	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_unfat_sting
-
 /datum/power/changeling/boost_range
 	name = "Boost Range"
 	desc = "We evolve the ability to shoot our stingers at humans, with some preperation."

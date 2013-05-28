@@ -15,9 +15,7 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 	if(name == "alien larva")
 		name = "alien larva ([rand(1, 1000)])"
 	real_name = name
@@ -33,14 +31,6 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-				if(prob(70))
-					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
-				if(!(tmob.status_flags & CANPUSH))
-					now_pushing = 0
-					return
 			tmob.LAssailant = src
 
 		now_pushing = 0
@@ -275,8 +265,8 @@
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 4.9)
+						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
+				if ((stat != DEAD) && (damage > 4.9))
 					Weaken(rand(10,15))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
@@ -287,7 +277,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has attempted to kick []!</B>", M, src), 1)
 	return
 
 /mob/living/carbon/alien/larva/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

@@ -7,7 +7,7 @@
 	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
-	response_harm   = "punches the"
+	response_harm   = "punches"
 	icon_dead = "shade_dead"
 	speed = -1
 	a_intent = "harm"
@@ -32,7 +32,7 @@
 		new /obj/item/weapon/ectoplasm (src.loc)
 		for(var/mob/M in viewers(src, null))
 			if((M.client && !( M.blinded )))
-				M.show_message("\red [src] collapses in a shattered heap ")
+				M.show_message("\red [src] collapses in a shattered heap. ")
 				ghostize()
 		del src
 		return
@@ -60,11 +60,6 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-				if(prob(5))
-					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
 			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
@@ -92,7 +87,7 @@
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		health += 5
-		M.emote("mends some of \the <EM>[src]'s</EM> wounds")
+		M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
 	else
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
@@ -114,12 +109,12 @@
 		health -= damage
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+				M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
 
@@ -136,7 +131,7 @@
 	icon_living = "behemoth"
 	maxHealth = 250
 	health = 250
-	response_harm   = "harmlessly punches the"
+	response_harm   = "harmlessly punches"
 	harm_intent_damage = 0
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -155,16 +150,16 @@
 			health -= damage
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
+					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
 
@@ -229,7 +224,7 @@
 	maxHealth = 750
 	health = 750
 	speak_emote = list("rumbles")
-	response_harm   = "harmlessly punches the"
+	response_harm   = "harmlessly punches"
 	harm_intent_damage = 0
 	melee_damage_lower = 50
 	melee_damage_upper = 50
@@ -249,16 +244,16 @@
 			health -= damage
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
+					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
 

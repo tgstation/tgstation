@@ -17,9 +17,9 @@
 	turns_per_move = 5
 	see_in_dark = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "pokes the"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "pokes"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 200
 	health = 200

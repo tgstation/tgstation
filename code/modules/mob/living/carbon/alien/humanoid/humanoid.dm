@@ -8,9 +8,7 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
@@ -296,7 +294,7 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
+				if ((stat != DEAD) && (damage > 9||prob(5)))//Regular humans have a very small chance of weakening an alien.
 					Weaken(1,5)
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))

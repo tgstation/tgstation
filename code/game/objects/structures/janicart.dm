@@ -16,14 +16,12 @@
 
 
 /obj/structure/janitorialcart/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 
 
 /obj/structure/janitorialcart/examine()
 	set src in usr
-	usr << "[src] \icon[src] contains [reagents.total_volume] unit\s of water!"
+	usr << "[src] \icon[src] contains [reagents.total_volume] unit\s of liquid!"
 	..()
 	//everything else is visible, so doesn't need to be mentioned
 
@@ -38,7 +36,7 @@
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
 	else if(istype(I, /obj/item/weapon/mop))
-		if(I.reagents.total_volume < 1)	//if it's at all wet, we assume they want to store the mop.
+		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
 			if(reagents.total_volume < 1)
 				user << "[src] is out of water!</span>"
 			else
@@ -174,10 +172,7 @@
 
 /obj/structure/stool/bed/chair/janicart/New()
 	handle_rotation()
-
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 
 
 /obj/structure/stool/bed/chair/janicart/examine()

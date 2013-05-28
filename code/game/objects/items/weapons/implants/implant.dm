@@ -100,9 +100,7 @@
 
 /obj/item/weapon/implant/chem/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(50)
-	reagents = R
-	R.my_atom = src
+	create_reagents(50)
 
 /obj/item/weapon/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")

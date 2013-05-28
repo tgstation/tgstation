@@ -1,14 +1,14 @@
 /mob/living/simple_animal/hostile/faithless
-	name = "Faithless"
+	name = "The Faithless"
 	desc = "The Wish Granter's faith in humanity, incarnate"
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "passes through the"
+	response_help = "passes through"
 	response_disarm = "shoves"
-	response_harm = "hits the"
+	response_harm = "hits"
 	speed = -1
 	maxHealth = 80
 	health = 80

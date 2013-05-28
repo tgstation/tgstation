@@ -489,7 +489,7 @@ Doing this because FindTurfs() isn't even used
 			e.update_icon()
 		if(src.type == /mob/living/carbon/human)
 			var/mob/living/carbon/human/H = src
-			H.UpdateDamageIcon()
+			H.update_damage_overlays()
 	else
 		alert("Debugging off")
 		return

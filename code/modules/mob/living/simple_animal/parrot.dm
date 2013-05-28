@@ -26,7 +26,7 @@
 
 
 /mob/living/simple_animal/parrot
-	name = "\improper Parrot"
+	name = "parrot"
 	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
@@ -43,9 +43,9 @@
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 
-	response_help  = "pets the"
-	response_disarm = "gently moves aside the"
-	response_harm   = "swats the"
+	response_help  = "pets"
+	response_disarm = "gently moves aside"
+	response_harm   = "swats"
 	stop_automated_movement = 1
 
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -425,7 +425,7 @@
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.loc = src
-					visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
+					visible_message("[src] grabs [held_item]!", "\blue You grab [held_item]!", "You hear the sounds of wings flapping furiously.")
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -608,7 +608,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		src << "\red You are already holding [held_item]"
 		return 1
 
 	for(var/obj/item/I in view(1,src))
@@ -621,7 +621,7 @@
 
 			held_item = I
 			I.loc = src
-			visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
+			visible_message("[src] grabs [held_item]!", "\blue You grab [held_item]!", "You hear the sounds of wings flapping furiously.")
 			return held_item
 
 	src << "\red There is nothing of interest to take."
@@ -636,7 +636,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		src << "\red You are already holding [held_item]"
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -652,7 +652,7 @@
 			C.u_equip(stolen_item)
 			held_item = stolen_item
 			stolen_item.loc = src
-			visible_message("[src] grabs the [held_item] out of [C]'s hand!", "\blue You snag the [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
+			visible_message("[src] grabs [held_item] out of [C]'s hand!", "\blue You snag [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
 			return held_item
 
 	src << "\red There is nothing of interest to take."
@@ -688,11 +688,11 @@
 			var/obj/item/weapon/grenade/G = held_item
 			G.loc = src.loc
 			G.prime()
-			src << "You let go of the [held_item]!"
+			src << "You let go of [held_item]!"
 			held_item = null
 			return 1
 
-	src << "You drop the [held_item]."
+	src << "You drop [held_item]."
 
 	held_item.loc = src.loc
 	held_item = null

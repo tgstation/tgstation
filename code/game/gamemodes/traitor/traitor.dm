@@ -24,7 +24,7 @@
 
 /datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
-	world << "<B>There is a syndicate traitor on the station. Do not let the traitor succeed!</B>"
+	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
 
 
 /datum/game_mode/traitor/pre_setup()

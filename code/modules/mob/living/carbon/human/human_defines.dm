@@ -10,7 +10,7 @@
 	//Eye colour
 	var/eye_color = "000"
 
-	var/s_tone = "caucasian"	//Skin tone
+	var/skin_tone = "caucasian1"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
@@ -34,9 +34,7 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-
-	var/icon/stand_icon = null
-	var/icon/lying_icon = null
+	var/base_icon_state = "caucasian1_m"
 
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 

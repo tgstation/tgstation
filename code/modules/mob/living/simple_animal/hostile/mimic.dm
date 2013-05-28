@@ -10,9 +10,9 @@
 	icon_living = "crate"
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
-	response_help = "touches the"
-	response_disarm = "pushes the"
-	response_harm = "hits the"
+	response_help = "touches"
+	response_disarm = "pushes"
+	response_harm = "hits"
 	speed = -1
 	maxHealth = 250
 	health = 250

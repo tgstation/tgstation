@@ -134,12 +134,16 @@ proc/listclearnulls(list/list)
 		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
-/proc/pop(list/listfrom)
-	if (listfrom.len > 0)
-		var/picked = listfrom[listfrom.len]
-		listfrom.len--
-		return picked
-	return null
+/proc/pop(list/L)
+	if(L.len)
+		. = L[L.len]
+		L.len--
+
+/proc/sorted_insert(list/L, thing, comparator)
+	var/pos = L.len
+	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
+		pos--
+	L.Insert(pos+1, thing)
 
 /*
  * Sorting
