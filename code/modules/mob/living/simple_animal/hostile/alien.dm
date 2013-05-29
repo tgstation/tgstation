@@ -6,9 +6,9 @@
 	icon_living = "alienh_running"
 	icon_dead = "alien_l"
 	icon_gib = "syndicate_gib"
-	response_help = "pokes the"
-	response_disarm = "shoves the"
-	response_harm = "hits the"
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
 	speed = -1
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	maxHealth = 100

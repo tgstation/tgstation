@@ -20,10 +20,10 @@
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
-	else
-		health = 100 - getBruteLoss() - getFireLoss()
+		return
+	health = maxHealth - getBruteLoss() - getFireLoss()
 
 /mob/living/silicon/pai/proc/follow_pai()
 	while(card)

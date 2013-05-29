@@ -236,12 +236,12 @@ RCD
 /obj/item/weapon/rcd/borg/useResource(var/amount, var/mob/user)
 	if(!isrobot(user))
 		return 0
-	return user:cell:use(amount * 30)
+	return user:cell:use(amount * 160)
 
 /obj/item/weapon/rcd/borg/checkResource(var/amount, var/mob/user)
 	if(!isrobot(user))
 		return 0
-	return user:cell:charge >= (amount * 30)
+	return user:cell:charge >= (amount * 160)
 
 /obj/item/weapon/rcd/borg/New()
 	..()

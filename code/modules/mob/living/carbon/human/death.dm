@@ -40,9 +40,6 @@
 
 
 /mob/living/carbon/human/death(gibbed)
-	if(halloss > 0 && !gibbed)
-		halloss = 0
-		return
 	if(stat == DEAD)	return
 	if(healths)		healths.icon_state = "health5"
 	stat = DEAD
