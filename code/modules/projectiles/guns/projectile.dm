@@ -92,6 +92,7 @@
 				loaded -= AC
 			AM.loc = get_turf(src)
 			empty_mag = null
+			update_icon()
 			user << "\blue You unload magazine from \the [src]!"
 	else
 		user << "\red Nothing loaded in \the [src]!"
