@@ -7,7 +7,7 @@
 	if(miming)
 		if(length(message) >= 2)
 			if(mind && mind.changeling)
-				if(copytext(message, 1, 2) != "*" && copytext(message, 1, 3) != ":g" && copytext(message, 1, 3) != ":G" && copytext(message, 1, 3) != ":ï")
+				if(copytext(message, 1, 2) != "*" && department_radio_keys[copytext(message, 1, 3)] != "changeling")
 					return
 				else
 					return ..(message)
@@ -93,7 +93,7 @@
 		else if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
 			var/obj/item/clothing/mask/horsehead/hoers = wear_mask
 			if(hoers.voicechange)
-				if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && (copytext(message, 1, 3) == ":g" || copytext(message, 1, 3) == ":G" || copytext(message, 1, 3) == ":ï"))))
+				if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
 					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
 	if ((HULK in mutations) && health >= 25 && length(message))

@@ -54,7 +54,10 @@ var/list/department_radio_keys = list(
 	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
+	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling",
+	  ":ë" = "skrell",		"#ë" = "skrell",		".ë" = "skrell",
+	  ":î" = "tajaran",		"#î" = "tajaran",		".î" = "tajaran",
+	  ":ù" = "soghun",		"#ù" = "soghun",		".ù" = "soghun"
 )
 
 /mob/living/proc/binarycheck()
