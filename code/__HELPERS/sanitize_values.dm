@@ -31,10 +31,11 @@
 	return default
 
 
-/proc/sanitize_hexcolor(color, desired_format=3, include_bang=0)
+/proc/sanitize_hexcolor(color, desired_format=3, include_bang=0, default)
 	var/bang = include_bang ? "#" : ""
 	if(!istext(color))
-		return bang + random_string(desired_format, zero_character_only)
+		if(default)	return default
+		return bang + repeat_string(desired_format, "0")
 	
 	var/start = 1 + (text2ascii(color,1)==35)
 	var/len = length(color)
@@ -47,6 +48,8 @@
 			if(48 to 57)	. += ascii2text(ascii)		//numbers 0 to 9
 			if(97 to 102)	. += ascii2text(ascii)		//letters a to f
 			if(65 to 70)	. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
-			else			return bang + random_string(desired_format, zero_character_only)
+			else
+				if(default)	return default
+				return bang + repeat_string(desired_format, "0")
 	
 	return .

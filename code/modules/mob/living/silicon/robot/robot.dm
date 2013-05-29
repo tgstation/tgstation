@@ -3,8 +3,8 @@
 	real_name = "Cyborg"
 	icon = 'icons/mob/robots.dmi'//
 	icon_state = "robot"
-	maxHealth = 300
-	health = 300
+	maxHealth = 100
+	health = 100
 	var/sight_mode = 0
 	var/custom_name = ""
 
@@ -401,6 +401,12 @@
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		if (src == user)
+			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
+			return
+		if (src.health >= src.maxHealth)
+			user << "<span class='warning'>[src] is already in good condition.</span>"
+			return
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
 			updatehealth()

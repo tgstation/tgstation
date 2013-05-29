@@ -96,7 +96,7 @@
 							"<span class='userdanger'>[M] has [attack_verb]ed [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if(damage >= 9)
+			if((stat != DEAD) && damage >= 9)
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)

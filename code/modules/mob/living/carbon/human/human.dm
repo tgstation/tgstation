@@ -1,7 +1,7 @@
 /mob/living/carbon/human
-	name = "unknown"
-	real_name = "unknown"
-	voice_name = "unknown"
+	name = "Unknown"
+	real_name = "Unknown"
+	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
 	var/list/hud_list = list()
