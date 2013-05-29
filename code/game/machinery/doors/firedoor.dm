@@ -234,6 +234,7 @@
 	glass = 1 //There is a glass window so you can see through the door
 			  //This is needed due to BYOND limitations in controlling visibility
 	heat_proof = 1
+	air_properties_vary_with_direction = 1
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if(istype(mover) && mover.checkpass(PASSGLASS))

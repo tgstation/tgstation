@@ -68,8 +68,9 @@ obj/item/proc
 	if(!pl_head_protected())
 		if(prob(1)) suit_contamination() //Plasma can sometimes get through such an open suit.
 
-	if(istype(back,/obj/item/weapon/storage/backpack))
-		back.contaminate()
+//Cannot wash backpacks currently.
+//	if(istype(back,/obj/item/weapon/storage/backpack))
+//		back.contaminate()
 
 /mob/proc/pl_effects()
 
@@ -155,6 +156,8 @@ turf/Entered(obj/item/I)
 	//Items that are in plasma, but not on a mob, can still be contaminated.
 	if(istype(I) && vsc.plc.CLOTH_CONTAMINATION)
 		var/datum/gas_mixture/env = return_air(1)
+		if(!env)
+			return
 		if(env.toxins > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()

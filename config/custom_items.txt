@@ -29,6 +29,7 @@ leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/fla
 lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
 lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
 madmalicemccrea: Alice McCrea: /obj/item/clothing/head/welding/fluff/alice_mccrea_1
+magmaram: Maria Crash: /obj/item/device/camera/fluff/oldcamera
 mangled: Li Matsuda: /obj/item/weapon/lighter/zippo/fluff/li_matsuda_1
 maximumbob: Maurice Bedford: /obj/item/fluff/maurice_bedford_1
 mcgulliver: Wox Derax: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/lithiumflask
@@ -48,7 +49,7 @@ rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 rawrtaicho: Wyatt Engstrom: /obj/item/clothing/under/fluff/wyatt_1
 roaper: Ian Colm: /obj/item/weapon/card/id/fluff/ian_colm_1
 roaper: Ian Colm: /obj/item/clothing/glasses/welding/fluff/ian_colm_2
-rukral: Nashida Bisha'ra: /obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1
+rukral: Nashida Bishara: /obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1
 searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/welding/fluff/yuki_matsuda_1
 searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
 serithi: Altair An-Nasaqan: /obj/item/clothing/tie/fluff/altair_locket
@@ -60,6 +61,7 @@ spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/s
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 sparklysheep: Uzenwa Sissra: /obj/item/clothing/glasses/fluff/uzenwa_sissra_1
 suethecake: Ana Ka'Rimah: /obj/item/weapon/gun/energy/stunrevolver/fluff/ana_peacemaker
+superboredguy: Neil Patterson: /obj/item/clothing/head/hardhat/fluff/neil_patterson_1
 staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 thatoneguy: Hugo Cinderbatch: /obj/item/weapon/fluff/hugo_cinderbacth_1
@@ -72,3 +74,4 @@ vinceluk: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
 zuhayr: Jane Doe: /obj/item/clothing/under/fluff/jane_sidsuit
+mordeth221: Sven Fjeltson: /obj/item/weapon/fluff/sven_fjeltson_1

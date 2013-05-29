@@ -1,5 +1,5 @@
 
-client/verb/Zone_Info(turf/T as null|turf)
+client/proc/Zone_Info(turf/T as null|turf)
 	set category = "Debug"
 	if(T)
 		if(T.zone)
@@ -14,7 +14,7 @@ client/verb/Zone_Info(turf/T as null|turf)
 
 
 
-client/verb/Test_ZAS_Connection(var/turf/simulated/T as turf)
+client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
 	set category = "Debug"
 	if(!istype(T))
 		return
@@ -40,7 +40,7 @@ client/verb/Test_ZAS_Connection(var/turf/simulated/T as turf)
 	if(!istype(other_turf))
 		return
 
-	var/pass_directions = T.CanPass(null, other_turf, 0, 0) + 2*other_turf.CanPass(null, T, 0, 0)
+	var/pass_directions = T.CanPass(null, other_turf, 0, 0) + 2 * other_turf.CanPass(null, T, 0, 0)
 
 	switch(pass_directions)
 		if(0)
@@ -80,12 +80,9 @@ zone/proc
 			M << "<u>Connections: [length(connections)]</u>"
 
 			for(var/connection/C in connections)
-				M << "[C.A] --> [C.B] [(C.indirect?"Indirect":"Direct")]"
+				M << "[C.A] --> [C.B] [(C.indirect?"Open":"Closed")]"
 				C.A.overlays += 'debug_connect.dmi'
 				C.B.overlays += 'debug_connect.dmi'
-				spawn(50)
-					C.A.overlays -= 'debug_connect.dmi'
-					C.B.overlays -= 'debug_connect.dmi'
 			for(var/C in connections)
 				if(!istype(C,/connection))
 					M << "[C] (Not Connection!)"

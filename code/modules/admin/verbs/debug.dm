@@ -547,13 +547,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"assassin",
 		"death commando",
 		"syndicate commando",
-		"centcom official",
-		"centcom commander",
 		"special ops officer",
 		"blue wizard",
 		"red wizard",
 		"marisa wizard",
 		"emergency rescue team",
+		"nanotrasen representative",
+		"nanotrasen officer",
+		"nanotrasen captain"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -742,54 +743,79 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("syndicate commando")
 			M.equip_syndicate_commando()
 
-		if("centcom official")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hop(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/weapon/pen(M), slot_l_store)
+		if("nanotrasen representative")
+			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom/representative(M), slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/gloves/white(M), slot_gloves)
+			M.equip_if_possible(new /obj/item/device/radio/headset/heads/hop(M), slot_ears)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "CentCom Review Official"
+			pda.ownjob = "NanoTrasen Navy Representative"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
-			M.equip_to_slot_or_del(pda, slot_r_store)
-
-			M.equip_to_slot_or_del(new /obj/item/weapon/clipboard(M), slot_l_hand)
+			M.equip_if_possible(pda, slot_r_store)
+			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/clipboard(M), slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
 			W.icon_state = "centcom"
+			W.item_state = "id_inv"
 			W.access = get_all_accesses()
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
-			W.assignment = "CentCom Review Official"
+			W.assignment = "NanoTrasen Navy Representative"
 			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, slot_wear_id)
+			M.equip_if_possible(W, slot_wear_id)
 
-		if("centcom commander")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_commander(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/centhat(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/mateba(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(M), slot_l_store)
+		if("nanotrasen officer")
+			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom/officer(M), slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/gloves/white(M), slot_gloves)
+			M.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/head/beret/centcom/officer(M), slot_head)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/device/pda/heads/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "NanoTrasen Navy Officer"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_if_possible(pda, slot_r_store)
+			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), slot_belt)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
-			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "CentCom Commanding Officer"
+			W.assignment = "NanoTrasen Navy Officer"
 			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, slot_wear_id)
+			M.equip_if_possible(W, slot_wear_id)
+
+
+		if("nanotrasen captain")
+			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom/captain(M), slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/gloves/white(M), slot_gloves)
+			M.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/head/beret/centcom/captain(M), slot_head)
+
+			var/obj/item/device/pda/heads/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "NanoTrasen Navy Captain"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_if_possible(pda, slot_r_store)
+			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), slot_belt)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.assignment = "NanoTrasen Navy Captain"
+			W.registered_name = M.real_name
+			M.equip_if_possible(W, slot_wear_id)
 
 		if("emergency rescue team")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)

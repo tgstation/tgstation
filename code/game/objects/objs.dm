@@ -16,6 +16,8 @@
 	var/damtype = "brute"
 	var/force = 0
 
+/obj/item/proc/is_used_on(obj/O, mob/user)
+
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0
