@@ -31,3 +31,10 @@ var/const/WIRE_RECORD = 2
 		T.stop()
 	else
 		T.record()
+
+//helpers
+/datum/wires/taperecorder/proc/get_play()
+	return !(wires_status & WIRE_PLAY)
+
+/datum/wires/taperecorder/proc/get_record()
+	return !(wires_status & WIRE_RECORD)

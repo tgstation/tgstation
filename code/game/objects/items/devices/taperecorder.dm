@@ -15,6 +15,7 @@
 	var/obj/item/device/tape/mytape
 	var/open_panel = 0
 	var/datum/wires/taperecorder/wires = null
+	var/canprint = 1
 
 
 /obj/item/device/taperecorder/New()
@@ -119,6 +120,8 @@
 		return
 	if(playing)
 		return
+	if(!wires.get_record())
+		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		usr << "<span class='notice'>Recording started.</span>"
@@ -130,6 +133,8 @@
 		var/max = mytape.max_capacity
 		for(used, used < max)
 			if(recording == 0)
+				break
+			if(!wires.get_record())
 				break
 			mytape.used_capacity++
 			used++
@@ -172,6 +177,8 @@
 		return
 	if(playing)
 		return
+	if(!wires.get_play())
+		return
 
 	playing = 1
 	update_icon()
@@ -180,6 +187,8 @@
 	var/max = mytape.max_capacity
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
 		if(!mytape)
+			break
+		if(!wires.get_play())
 			break
 		if(playing == 0)
 			break
@@ -212,6 +221,33 @@
 		stop()
 	else
 		record()
+
+
+/obj/item/device/taperecorder/verb/print_transcript()
+	set name = "Print Transcript"
+	set category = "Object"
+
+	if(usr.stat)
+		return
+	if(!mytape)
+		return
+	if(!canprint)
+		usr << "<span class='notice'>The recorder can't print that fast!</span>"
+		return
+	if(recording || playing)
+		return
+
+	usr << "<span class='notice'>Transcript printed.</span>"
+	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
+	var/t1 = "<B>Transcript:</B><BR><BR>"
+	for(var/i = 1, mytape.storedinfo.len >= i, i++)
+		t1 += "[mytape.storedinfo[i]]<BR>"
+	P.info = t1
+	P.name = "paper- 'Transcript'"
+	usr.put_in_hands(P)
+	canprint = 0
+	sleep(300)
+	canprint = 1
 
 
 //empty tape recorders
@@ -265,15 +301,3 @@
 //Random colour tapes
 /obj/item/device/tape/random/New()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
-
-
-
-/*
-/obj/item/device/taperecorder/proc/print_transcript()
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
-	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i=1,storedinfo.len >= i,i++)
-		t1 += "[storedinfo[i]]<BR>"
-	P.info = t1
-	P.name = "paper- 'Transcript'"
-*/
