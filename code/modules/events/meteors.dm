@@ -21,7 +21,7 @@
 
 //
 /datum/event/meteor_shower
-	startWhen		= 6
+	startWhen		= 5
 	endWhen 		= 7
 	var/next_meteor = 6
 	var/waves = 1
