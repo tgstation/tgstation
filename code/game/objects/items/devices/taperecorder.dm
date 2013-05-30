@@ -1,18 +1,32 @@
 /obj/item/device/taperecorder
 	name = "universal recorder"
-	desc = "A device that can record up to an hour of dialogue and play it back. It automatically translates the content in playback."
+	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
 	w_class = 2
 	m_amt = 60
 	g_amt = 30
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 2
 	throwforce = 2
 	var/recording = 0
 	var/playing = 0
 	var/playsleepseconds = 0
 	var/obj/item/device/tape/mytape
+	var/open_panel = 0
+	var/datum/wires/taperecorder/wires = null
+
+
+/obj/item/device/taperecorder/New()
+	wires = new(src)
+	mytape = new /obj/item/device/tape/random(src)
+	update_icon()
+
+
+/obj/item/device/taperecorder/examine()
+	set src in view(1)
+	..()
+	usr << "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user)
@@ -22,6 +36,13 @@
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		update_icon()
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		open_panel = !open_panel
+		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		if(open_panel)
+			wires.Interact(user)
+	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
+		wires.Interact(user)
 
 
 /obj/item/device/taperecorder/proc/eject(mob/user)
@@ -53,7 +74,7 @@
 	if(!mytape)
 		return
 
-	eject()
+	eject(usr)
 
 
 /obj/item/device/taperecorder/update_icon()
@@ -193,6 +214,12 @@
 		record()
 
 
+//empty tape recorders
+/obj/item/device/taperecorder/empty/New()
+	wires = new(src)
+	return
+
+
 /obj/item/device/tape
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content."
@@ -201,7 +228,7 @@
 	w_class = 1
 	m_amt = 20
 	g_amt = 5
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 1
 	throwforce = 1
 	var/max_capacity = 600
@@ -228,7 +255,7 @@
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in.</span>"
 		if(do_after(user, 120))
 			user << "<span class='notice'>You wound the tape back in!</span>"
