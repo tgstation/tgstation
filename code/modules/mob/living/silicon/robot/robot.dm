@@ -48,8 +48,6 @@
 
 	var/killswitch = 0
 	var/killswitch_time = 60
-	var/weapon_lock = 0
-	var/weaponlock_time = 120
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/lockcharge //Boolean of whether the borg is locked down or not
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
@@ -765,10 +763,10 @@
 			return 0
 	return 1
 
-/mob/living/silicon/robot/proc/updateicon()
 
+/mob/living/silicon/robot/proc/updateicon()
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == CONSCIOUS && !resting)
 		overlays += "eyes"
 		if(icon_state == "robot")
 			overlays.Cut()
@@ -798,15 +796,9 @@
 			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
-	return
-
 
 
 /mob/living/silicon/robot/proc/installed_modules()
-	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
-		return
-
 	if(!module)
 		pick_module()
 		return
@@ -1005,3 +997,13 @@
 	set name = "State Laws"
 
 	checklaws()
+
+
+/mob/living/silicon/robot/lay_down()
+	set name = "Rest"
+	set category = "IC"
+
+	resting = !resting
+	var/txt = resting ? "going into standby mode" : "waking up from standby mode"
+	visible_message("<span class='notice'>[src] is [txt].</span>", "<span class='notice'>You are now [txt].</span>")
+	updateicon()

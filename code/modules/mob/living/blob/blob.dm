@@ -39,7 +39,6 @@
 		AdjustStunned(0)
 		AdjustParalysis(0)
 		AdjustWeakened(0)
-		sleeping = 0
 		if(stat)
 			stat = CONSCIOUS
 		return

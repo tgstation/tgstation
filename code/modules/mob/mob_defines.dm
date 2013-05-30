@@ -62,8 +62,7 @@
 	var/confused = 0		//Carbon
 	var/antitoxs = null
 	var/plasma = null
-	var/sleeping = 0		//Carbon
-	var/resting = 0			//Carbon
+	var/resting = 0
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1

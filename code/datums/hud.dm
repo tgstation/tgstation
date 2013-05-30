@@ -21,16 +21,29 @@
 #define ui_storage1 "9:18,1:5"
 #define ui_storage2 "10:20,1:5"
 
-#define ui_inv1 "6:16,1:5"			//borgs
-#define ui_inv2 "7:16,1:5"			//borgs
-#define ui_inv3 "8:16,1:5"			//borgs
-#define ui_borg_store "9:16,1:5"	//borgs
 
-#define ui_monkey_mask "5:14,1:5"	//monkey
-#define ui_monkey_back "6:15,1:5"	//monkey
+//cyborgs
+#define ui_inv1 "6:16,1:5"
+#define ui_inv2 "7:16,1:5"
+#define ui_inv3 "8:16,1:5"
+#define ui_borg_store "9:16,1:5"
+#define ui_borg_cell "14:28,8:13"	//just above health
+#define ui_borg_health "14:28,6:13"
+#define ui_borg_pull "12:24,2:7"
+#define ui_borg_module "13:26,2:7"
+#define ui_borg_panel "14:28,2:7"
 
+//monkey
+#define ui_monkey_mask "5:14,1:5"
+#define ui_monkey_back "6:15,1:5"
+
+//aliens
 #define ui_alien_storage_l "6:14,1:5"
 #define ui_alien_storage_r "9:18,1:5"
+#define ui_alien_toxin "14:28,13:25"
+#define ui_alien_fire "14:28,12:25"
+#define ui_alien_oxygen "14:28,11:25"
+
 
 //Lower right, persistant menu
 #define ui_drop_throw "14:28,2:7"
@@ -40,9 +53,6 @@
 #define ui_zonesel "14:28,1:5"
 #define ui_acti_alt "14:28,1:5"	//alternative intent switcher for when the interface is hidden (F12)
 
-#define ui_borg_pull "12:24,2:7"
-#define ui_borg_module "13:26,2:7"
-#define ui_borg_panel "14:28,2:7"
 
 //Upper-middle right (damage indicators)
 #define ui_toxin "14:28,13:27"
@@ -50,18 +60,13 @@
 #define ui_oxygen "14:28,11:23"
 #define ui_pressure "14:28,10:21"
 
-#define ui_alien_toxin "14:28,13:25"
-#define ui_alien_fire "14:28,12:25"
-#define ui_alien_oxygen "14:28,11:25"
 
 //Middle right (status indicators)
 #define ui_nutrition "14:28,5:11"
 #define ui_temp "14:28,6:13"
 #define ui_health "14:28,7:15"
 #define ui_internal "14:28,8:17"
-										//borgs
-#define ui_borg_health "14:28,6:13"		//borgs have the health display where humans have the pressure damage indicator.
-#define ui_alien_health "14:28,6:13"	//aliens have the health display where humans have the pressure damage indicator.
+#define ui_alien_health "14:28,6:13"
 
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"

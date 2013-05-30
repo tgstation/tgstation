@@ -54,7 +54,7 @@ var/next_mob_id = 0
 				if ((type & 1 && sdisabilities & BLIND))
 					return
 	// Added voice muffling for Issue 41.
-	if(stat == UNCONSCIOUS || sleeping > 0)
+	if(stat == UNCONSCIOUS)
 		src << "<I>... You can almost hear someone talking ...</I>"
 	else
 		src << msg
@@ -685,7 +685,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			lying = 0
 		else
 			lying = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
+	else if( stat || weakened || paralysis || resting || (status_flags & FAKEDEATH) )
 		lying = 1
 		canmove = 0
 	else if( stunned )
@@ -799,15 +799,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 
 /mob/proc/Sleeping(amount)
-	sleeping = max(max(sleeping,amount),0)
 	return
 
 /mob/proc/SetSleeping(amount)
-	sleeping = max(amount,0)
 	return
 
 /mob/proc/AdjustSleeping(amount)
-	sleeping = max(sleeping + amount,0)
 	return
 
 /mob/proc/Resting(amount)

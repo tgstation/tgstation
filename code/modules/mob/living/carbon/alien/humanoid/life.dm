@@ -280,7 +280,7 @@
 			drowsyness--
 			eye_blurry = max(2, eye_blurry)
 			if (prob(5))
-				sleeping += 1
+				AdjustSleeping(1)
 				Paralyse(5)
 
 		confused = max(0, confused - 1)
@@ -325,7 +325,7 @@
 				blinded = 1
 				stat = UNCONSCIOUS
 			else if(sleeping)
-				sleeping = max(sleeping-1, 0)
+				AdjustSleeping(-1)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(10) && health )

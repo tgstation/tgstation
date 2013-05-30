@@ -179,9 +179,9 @@
 
 		if ("faint")
 			message = "<B>[src]</B> faints."
-			if(src.sleeping)
-				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
+			if(sleeping)
+				return			//Can't faint while asleep
+			AdjustSleeping(10)	//Short-short nap
 			m_type = 1
 
 		if ("cough")

@@ -60,7 +60,7 @@
 	mymob:cells.icon = 'icons/mob/screen_cyborg.dmi'
 	mymob:cells.icon_state = "charge-empty"
 	mymob:cells.name = "cell"
-	mymob:cells.screen_loc = ui_toxin
+	mymob:cells.screen_loc = ui_borg_cell
 
 //Health
 	mymob.healths = new /obj/screen()
@@ -99,18 +99,6 @@
 	mymob.bodytemp.screen_loc = ui_temp
 
 
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
-
 	mymob.pullin = new /obj/screen()
 	mymob.pullin.icon = 'icons/mob/screen_cyborg.dmi'
 	mymob.pullin.icon_state = "pull0"
@@ -137,7 +125,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash)
 	mymob.client.screen += adding + other
 
 	return

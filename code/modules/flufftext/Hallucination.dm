@@ -166,12 +166,12 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(71 to 72)
 				//Fake death
 //				src.sleeping_willingly = 1
-				src.sleeping = 20
+				SetSleeping(20)
 				hal_crit = 1
 				hal_screwyhud = 1
 				spawn(rand(50,100))
 //					src.sleeping_willingly = 0
-					src.sleeping = 0
+					SetSleeping(0)
 					hal_crit = 0
 					hal_screwyhud = 0
 	handling_hal = 0

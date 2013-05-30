@@ -185,8 +185,8 @@
 					H.w_uniform.add_fingerprint(M)
 
 			if(lying)
-				sleeping = max(0, sleeping - 5)
-				if(sleeping == 0)
+				AdjustSleeping(-5)
+				if(sleeping <= 0)
 					resting = 0
 				M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
 								"<span class='notice'>You shake [src] trying to get \him up!</span>")
@@ -531,3 +531,27 @@
 		return
 
 	..(message)
+
+
+/mob/living/carbon/Sleeping(amount)
+	sleeping = max(max(sleeping,amount),0)
+	return
+
+/mob/living/carbon/SetSleeping(amount)
+	sleeping = max(amount,0)
+	return
+
+/mob/living/carbon/AdjustSleeping(amount)
+	sleeping = max(sleeping + amount,0)
+	return
+
+
+/mob/living/carbon/verb/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(sleeping)
+		src << "<span class='notice'>You are already sleeping.</span>"
+	else
+		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+			AdjustSleeping(20)	//Short nap
