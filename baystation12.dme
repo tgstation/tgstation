@@ -1013,7 +1013,7 @@
 #include "code\modules\DetectiveWork\detective_work.dm"
 #include "code\modules\DetectiveWork\evidence.dm"
 #include "code\modules\DetectiveWork\footprints_and_rag.dm"
-#include "code\modules\detectivework\scanner.dm"
+#include "code\modules\DetectiveWork\scanner.dm"
 #include "code\modules\events\alien_infestation.dm"
 #include "code\modules\events\blob.dm"
 #include "code\modules\events\brand_intelligence.dm"
