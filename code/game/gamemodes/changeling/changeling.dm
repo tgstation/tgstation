@@ -220,6 +220,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
 	var/mimicing = ""
+	var/acceptvoices = 1
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
