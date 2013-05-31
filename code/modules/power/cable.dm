@@ -227,7 +227,10 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		if(locate(/obj/structure/stool) in user.loc)
+			viewers(user) << "\red <b>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		else
+			viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
 
