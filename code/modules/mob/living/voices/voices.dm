@@ -17,7 +17,7 @@
 /mob/living/voices/New(mob/body, mob/host, title)
 	if (title)
 		fluff_title = title
-	stat = DEAD
+	stat = 0
 	attack_log = body.attack_log	//preserve attack log
 	gender = body.gender
 	loc = host						//new voices go into the host

@@ -154,7 +154,7 @@
 
 	if (T.mind && (changeling.acceptvoices == 1))
 		var/mob/living/voices/P = T.becomevoice(src, "memory")
-		src << "<span class='notice'>The [P.fluff_title] of [P.real_name] is now with us. We can use 'say :v' to communicate with it.</span>"
+		src << "<span class='notice'>The [P.fluff_title] of [P.real_name] is now with us. We can use 'say :p' to communicate with it.</span>"
 		P << "<span class='notice'>You are now a part of the changeling's mind. Type 'Ghost' to escape this existence.</span>"
 	T.death(0)
 	T.Drain()
@@ -342,7 +342,7 @@
 /mob/living/carbon/proc/changeling_fakedeath()
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"
-	
+
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
 

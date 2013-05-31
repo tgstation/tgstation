@@ -16,7 +16,7 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":v" = "Service",		"#v" = "Service",		".v" = "Service",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
-	  ":v" = "voices",		"#v" = "voices",		".v" = "voices",
+	  ":p" = "voices",		"#p" = "voices",		".p" = "voices",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -34,7 +34,7 @@ var/list/department_radio_keys = list(
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":V" = "Service",		"#V" = "Service",		".V" = "Service",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
-	  ":V" = "voices",		"#V" = "voices",		".V" = "voices",
+	  ":p" = "voices",		"#p" = "voices",		".p" = "voices",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -53,7 +53,7 @@ var/list/department_radio_keys = list(
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
-	  //":v" = "voices",		"#v" = "voices",		".v" = "voices",	Needs to be added still
+	  //":p" = "voices",		"#p" = "voices",		".p" = "voices",	Needs to be added still
 )
 
 /mob/living/proc/binarycheck()
