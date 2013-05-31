@@ -9,14 +9,9 @@
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
-	//then voices
-	var/list/voices = list()
-	for(var/mob/living/voices/V in src)
-		voices += V
-
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in ((src.contents-implants)-voices))
+		for(var/obj/item/W in ((src.contents-implants)))
 			drop_from_inventory(W)
 
 	//Make mob invisible and spawn animation
@@ -73,10 +68,6 @@
 		I.loc = O
 		I.implanted = O
 
-	//re-add voices to new mob
-	for(var/mob/living/voices/Vo in voices)
-		Vo.transfer(O)
-
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
@@ -103,11 +94,6 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
-
-	//then voices
-	var/list/voices = list()
-	for(var/mob/living/voices/V in src)
-		voices += V
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -178,10 +164,6 @@
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
-
-	//re-add voices to new mob
-	for(var/mob/living/voices/Vo in voices)
-		Vo.transfer(O)
 
 	if(mind)
 		mind.transfer_to(O)
@@ -431,7 +413,7 @@
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a #+") in mobtypes
 
 	if(!safe_animal(mobpath))
 		usr << "\red Sorry but this mob type is currently unavailable."

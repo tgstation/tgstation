@@ -5,7 +5,6 @@
 	density = 0
 	canmove = 0
 	blinded = 0
-	cantalk = 1
 	anchored = 1
 	see_in_dark = 0
 	mind = null
@@ -13,6 +12,7 @@
 	var/fluff_title = "voice"			//what do you call these things in your specific context (e.g. for changelings: memory)
 	var/current_host = null
 	var/old_mind = null
+	//var/cantalk = 1	//unused right now, intended for a mute verb
 
 /mob/living/voices/New(mob/body, mob/host, title)
 	if (title)
@@ -21,6 +21,8 @@
 	attack_log = body.attack_log	//preserve attack log
 	gender = body.gender
 	loc = host						//new voices go into the host
+	for(var/mob/living/voices/V in body.contents) //as do voices that belonged to him (e.g. ling absorbing a ling)
+		V.transfer(host)
 	if (!mind)
 		name = body.name
 	old_mind = body.mind
@@ -35,7 +37,7 @@
 	return NP
 
 /mob/living/voices/proc/transfer(mob/newhost)
-	if (newhost)
+	if (newhost && !istype(newhost, /mob/living/voices) ) //don't allow voices to have voices
 		current_host = newhost
 		loc = current_host
 		if (client)
