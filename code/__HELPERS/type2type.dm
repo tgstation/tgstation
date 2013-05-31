@@ -38,6 +38,7 @@
 //if len < 0 then the returned string will be as long as it needs to be to contain the data
 //Only supports positive numbers
 //if an invalid number is provided, it assumes num==0
+//Note, unlike previous versions, this one works from low to high <-- that way
 /proc/num2hex(num, len=2)
 	if(!isnum(num))
 		num = 0
@@ -45,7 +46,7 @@
 	. = ""
 	var/i=0
 	while(1)
-		if(len<0)
+		if(len<=0)
 			if(!num)	break
 		else
 			if(i>=len)	break

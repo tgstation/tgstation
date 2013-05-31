@@ -42,8 +42,10 @@
 
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	add_fingerprint(user)
+	if(issilicon(user))
+		return
 
+	add_fingerprint(user)
 	if(charging)
 		charging.update_icon()
 		charging.loc = loc

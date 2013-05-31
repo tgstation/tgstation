@@ -446,9 +446,9 @@
 			H << "<span class='notice'>You are not holding anything to equip.</span>"
 			return
 
+		H.drop_from_inventory(I)
 		H.equip_to_appropriate_slot(I)
-		H.update_inv_l_hand(0)
-		H.update_inv_r_hand(0)
+		H.update_hud()
 
 
 /mob/living/verb/resist()

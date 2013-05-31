@@ -20,15 +20,9 @@
 	var/r = hex2num(textr)
 	var/g = hex2num(textg)
 	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
-	if (length(textr) < 2)
-		textr = text("0[]", textr)
-	if (length(textg) < 2)
-		textr = text("0[]", textg)
-	if (length(textb) < 2)
-		textr = text("0[]", textb)
+	textr = num2hex(255 - r, 2)
+	textg = num2hex(255 - g, 2)
+	textb = num2hex(255 - b, 2)
 	return text("#[][][]", textr, textg, textb)
 	return
 
