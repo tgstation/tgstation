@@ -251,6 +251,7 @@ client/proc/one_click_antag()
 				candidates.Remove(theghost)
 				chosen += theghost
 				agentcount++
+				break
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
 			return 0
