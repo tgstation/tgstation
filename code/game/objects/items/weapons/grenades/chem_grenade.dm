@@ -23,7 +23,7 @@
 /obj/item/weapon/grenade/chem_grenade/examine()
 	set src in usr
 	..()
-	if(stage == READY && ! nadeassembly)
+	if(stage == READY && !nadeassembly)
 		usr << "The timer is set to [det_time/10] second\s."
 
 
@@ -95,6 +95,24 @@
 		stage = WIRED
 		icon_state = initial(icon_state) + "_ass"
 		user << "<span class='notice'>You rig [src].</span>"
+
+	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You unlock the assembly.</span>"
+		icon_state = initial(icon_state) + "_ass"
+		stage = WIRED
+
+	else if(stage == WIRED && istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You open the grenade and remove the contents.</span>"
+		icon_state = initial(icon_state)
+		stage = EMPTY
+		if(nadeassembly)
+			nadeassembly.loc = get_turf(src)
+			nadeassembly.master = null
+			nadeassembly = null
+		if(beakers.len)
+			for(var/obj/O in beakers)
+				O.loc = get_turf(src)
+			beakers = list()
 
 
 //assembly stuff
