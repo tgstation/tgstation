@@ -528,6 +528,18 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
+	seed = "/obj/item/seeds/koiseed"
+	name = "koibean"
+	desc = "Something about these seems fishy."
+	icon_state = "koibeans"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 30), 1))
+			reagents.add_reagent("carpotoxin", 1+round((potency / 20), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
 	seed = "/obj/item/seeds/moonflowerseed"
 	name = "moonflower"
