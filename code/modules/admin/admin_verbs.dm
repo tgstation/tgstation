@@ -64,6 +64,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
+	/client/proc/toggledebuglogs,
 	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity
 )
@@ -134,7 +135,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
-	/client/proc/callproc
+	/client/proc/callproc,
+	/client/proc/toggledebuglogs
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -222,6 +224,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
+	/client/proc/toggledebuglogs,
 	/datum/admins/proc/PlayerNotes,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/cmd_mod_say,
@@ -722,3 +725,14 @@ var/list/admin_verbs_mod = list(
 		usr << "You now will get attack log messages"
 	else
 		usr << "You now won't get attack log messages"
+
+
+/client/proc/toggledebuglogs()
+	set name = "Toggle Debug Log Messages"
+	set category = "Preferences"
+
+	prefs.toggles ^= CHAT_DEBUGLOGS
+	if (prefs.toggles & CHAT_DEBUGLOGS)
+		usr << "You now will get debug log messages"
+	else
+		usr << "You now won't get debug log messages"

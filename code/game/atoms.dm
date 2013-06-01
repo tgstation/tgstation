@@ -704,7 +704,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if (in_range)
 			if (!( human.restrained() || human.lying ))
 				if (W)
-					attackby(W,human)
+					var/was_used = 0
+					if(W)
+						was_used = W.is_used_on(src, human)
+					if(!was_used)
+						attackby(W,human)
 					if (W)
 						W.afterattack(src, human)
 				else

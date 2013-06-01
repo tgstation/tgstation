@@ -262,6 +262,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 
 	name = "Airlock Console"
 	density = 0
+	unacidable = 1
 
 	frequency = 1449
 	power_channel = ENVIRON

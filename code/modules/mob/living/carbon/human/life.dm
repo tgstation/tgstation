@@ -28,6 +28,7 @@
 	var/pressure_alert = 0
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
+	var/in_stasis = 0
 
 
 /mob/living/carbon/human/Life()
@@ -59,8 +60,11 @@
 	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
 
+	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
+	if(in_stasis) loc:used++
+
 	//No need to update all of these procs if the guy is dead.
-	if(stat != DEAD)
+	if(stat != DEAD && !in_stasis)
 		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
@@ -86,17 +90,19 @@
 
 		handle_virus_updates()
 
+		//stuff in the stomach
+		handle_stomach()
+
+		handle_shock()
+
+		handle_pain()
+
+		handle_medical_side_effects()
+
+	handle_stasis_bag()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
-
-	//stuff in the stomach
-	handle_stomach()
-
-	handle_shock()
-
-	handle_pain()
-
-	handle_medical_side_effects()
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
@@ -195,6 +201,16 @@
 				if(10 <= rn && rn <= 12) if(!lying)
 					src << "\red Your legs won't respond properly, you fall down."
 					lying = 1
+
+	proc/handle_stasis_bag()
+		// Handle side effects from stasis bag
+		if(in_stasis)
+			// First off, there's no oxygen supply, so the mob will slowly take brain damage
+			adjustBrainLoss(0.1)
+
+			// Next, the method to induce stasis has some adverse side-effects, manifesting
+			// as cloneloss
+			adjustCloneLoss(0.1)
 
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
@@ -886,8 +902,10 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			handle_organs()
-			handle_blood()
+			if(!in_stasis)
+				handle_organs()
+				handle_blood()
+
 			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
