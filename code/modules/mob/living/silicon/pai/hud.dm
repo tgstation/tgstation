@@ -19,10 +19,10 @@
 					client.images += holder
 				else
 					perpname = perp.name
-					holder.icon_state = "hudunknown"
+					holder.icon_state = "hudno_id"
 					client.images += holder
 			else
-				holder.icon_state = "hudunknown"
+				holder.icon_state = "hudno_id"
 				client.images += holder
 
 			for(var/datum/data/record/E in data_core.general)
