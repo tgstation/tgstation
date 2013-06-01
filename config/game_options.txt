@@ -102,6 +102,8 @@ PROBABILITY SANDBOX 0
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
+## If late-joining players have a chance to become a traitor/changeling
+ALLOW_LATEJOIN_ANTAGONISTS
 
 ### RANDOM EVENTS ###
 
