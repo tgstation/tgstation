@@ -34,6 +34,31 @@
 				else
 					playsound(src, "clownstep", 20, 1)
 
+			var/list/bloodDNA = null
+			if(H.shoes)
+				var/obj/item/clothing/shoes/S = H.shoes
+				if(S.track_blood && S.blood_DNA)
+					bloodDNA = S.blood_DNA
+					S.track_blood--
+			else
+				if(H.track_blood && H.feet_blood_DNA)
+					bloodDNA = H.feet_blood_DNA
+					H.track_blood--
+
+			if (bloodDNA)
+				var/obj/effect/decal/cleanable/blood/footprints/here = new(src)
+				here.icon_state = "blood1"
+				here.dir = H.dir
+				here.blood_DNA |= bloodDNA.Copy()
+				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
+				if(from)
+					var/obj/effect/decal/cleanable/blood/footprints/there = new(from)
+					there.icon_state = "blood2"
+					there.dir = H.dir
+					there.blood_DNA |= bloodDNA.Copy()
+
+			bloodDNA = null
+
 		switch (src.wet)
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
@@ -73,3 +98,32 @@
 					M.Weaken(10)
 
 	..()
+
+//returns 1 if made bloody, returns 0 otherwise
+/turf/simulated/add_blood(mob/living/carbon/human/M as mob)
+	if (!..())
+		return 0
+
+	for(var/obj/effect/decal/cleanable/blood/B in contents)
+		if(!B.blood_DNA[M.dna.unique_enzymes])
+			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+		return 1 //we bloodied the floor
+
+	//if there isn't a blood decal already, make one.
+	var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(src)
+	newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	return 1 //we bloodied the floor
+
+
+// Only adds blood on the floor -- Skie
+/turf/simulated/proc/add_blood_floor(mob/living/carbon/M as mob)
+	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
+		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
+		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+
+	else if( istype(M, /mob/living/carbon/alien ))
+		var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(src)
+		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
+
+	else if( istype(M, /mob/living/silicon/robot ))
+		new /obj/effect/decal/cleanable/oil(src)

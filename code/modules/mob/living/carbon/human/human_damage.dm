@@ -88,7 +88,6 @@
 
 	if (getCloneLoss() < 1)
 		for (var/datum/organ/external/O in organs)
-			world << "[O.display_name]!"
 			if (O.status & ORGAN_MUTATED)
 				O.unmutate()
 				src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
