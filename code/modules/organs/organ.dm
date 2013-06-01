@@ -82,7 +82,7 @@
 
 		//Moving around with fractured ribs won't do you any good
 		if (broken && internal_organs && prob(15))
-			 if (!lying && world.timeofday - l_move_time < 15)
+			if (!lying && world.timeofday - l_move_time < 15)
 				var/datum/organ/internal/I = pick(E.internal_organs)
 				custom_pain("You feel broken bones moving in your [E.display_name]!", 1)
 				I.take_damage(rand(3,5))
