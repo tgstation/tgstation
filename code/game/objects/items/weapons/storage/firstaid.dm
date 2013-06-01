@@ -103,7 +103,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	w_class = 2.0
-	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice")
+	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	storage_slots = 14
