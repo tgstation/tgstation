@@ -28,6 +28,7 @@
 	var/pressure_alert = 0
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
+	var/in_stasis = 0
 
 
 /mob/living/carbon/human/Life()
@@ -59,8 +60,11 @@
 	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
 
+	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
+	if(in_stasis) loc:used++
+
 	//No need to update all of these procs if the guy is dead.
-	if(stat != DEAD)
+	if(stat != DEAD && !in_stasis)
 		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
@@ -84,17 +88,21 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		handle_virus_updates()
+
+		//stuff in the stomach
+		handle_stomach()
+
+		handle_shock()
+
+		handle_pain()
+
+		handle_medical_side_effects()
+
+	handle_stasis_bag()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
-
-	//stuff in the stomach
-	handle_stomach()
-
-	handle_shock()
-
-	handle_pain()
-
-	handle_medical_side_effects()
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
@@ -193,6 +201,16 @@
 				if(10 <= rn && rn <= 12) if(!lying)
 					src << "\red Your legs won't respond properly, you fall down."
 					lying = 1
+
+	proc/handle_stasis_bag()
+		// Handle side effects from stasis bag
+		if(in_stasis)
+			// First off, there's no oxygen supply, so the mob will slowly take brain damage
+			adjustBrainLoss(0.1)
+
+			// Next, the method to induce stasis has some adverse side-effects, manifesting
+			// as cloneloss
+			adjustCloneLoss(0.1)
 
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
@@ -448,6 +466,7 @@
 				SA.moles = 0
 
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
+			if(status_flags & GODMODE)	return 1	//godmode
 			if(breath.temperature < 260.15)
 				if(prob(20))
 					src << "\red You feel your face freezing and an icicle forming in your lungs!"
@@ -516,6 +535,7 @@
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 			//Body temperature is too hot.
 			fire_alert = max(fire_alert, 1)
+			if(status_flags & GODMODE)	return 1	//godmode
 			switch(bodytemperature)
 				if(360 to 400)
 					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN, used_weapon = "High Body Temperature")
@@ -529,6 +549,7 @@
 
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			fire_alert = max(fire_alert, 1)
+			if(status_flags & GODMODE)	return 1	//godmode
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				switch(bodytemperature)
 					if(200 to 260)
@@ -546,6 +567,7 @@
 
 		var/pressure = environment.return_pressure()
 		var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+		if(status_flags & GODMODE)	return 1	//godmode
 		switch(adjusted_pressure)
 			if(HAZARD_HIGH_PRESSURE to INFINITY)
 				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
@@ -562,6 +584,9 @@
 					pressure_alert = -2
 				else
 					pressure_alert = -1
+
+		if(environment.toxins > MOLES_PLASMA_VISIBLE)
+			pl_effects()
 		return
 
 	/*
@@ -775,6 +800,12 @@
 
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
+		var/total_plasmaloss = 0
+		for(var/obj/item/I in src)
+			if(I.contaminated)
+				total_plasmaloss += vsc.plc.CONTAMINATION_LOSS
+		if(status_flags & GODMODE)	return 0	//godmode
+		adjustToxLoss(total_plasmaloss)
 
 //		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 		if(PLANT in mutations)
@@ -871,8 +902,10 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			handle_organs()
-			handle_blood()
+			if(!in_stasis)
+				handle_organs()
+				handle_blood()
+
 			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
@@ -1088,7 +1121,7 @@
 				see_in_dark = 8
 				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-			if(seer)
+			if(seer==1)
 				var/obj/effect/rune/R = locate() in loc
 				if(R && R.word1 == cultwords["see"] && R.word2 == cultwords["hell"] && R.word3 == cultwords["join"])
 					see_invisible = SEE_INVISIBLE_OBSERVER
@@ -1152,7 +1185,7 @@
 						see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
-			else
+			else if(!seer)
 				see_invisible = SEE_INVISIBLE_LIVING
 
 			if(healths)
@@ -1212,8 +1245,14 @@
 				if(blinded)		blind.layer = 18
 				else			blind.layer = 0
 
-			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
-				client.screen += global_hud.vimpaired
+			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
+				if(glasses)					//to every /obj/item
+					var/obj/item/clothing/glasses/G = glasses
+					if(!G.prescription)
+						client.screen += global_hud.vimpaired
+				else
+					client.screen += global_hud.vimpaired
+
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
@@ -1259,9 +1298,11 @@
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()
+		if(status_flags & GODMODE)	return 0	//godmode
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
+			if(virus2)	virus2.cure(src)
 		if(!virus2)
 			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
 				if(B.virus2 && get_infection_chance())
@@ -1307,7 +1348,7 @@
 
 	handle_shock()
 		..()
-
+		if(status_flags & GODMODE)	return 0	//godmode
 		if(analgesic) return // analgesic avoids all traumatic shock temporarily
 
 		if(health < 0)// health 0 makes you immediately collapse

@@ -80,6 +80,15 @@
 	flags = FPRINT | TABLEPASS
 
 
+/obj/item/clothing/under/rank/internalaffairs
+	desc = "The plain, professional attire of an Internal Affairs Agent. The collar is <i>immaculately</i> starched."
+	name = "Internal Affairs uniform"
+	icon_state = "internalaffairs"
+	item_state = "internalaffairs"
+	color = "internalaffairs"
+	flags = FPRINT | TABLEPASS
+
+
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
@@ -132,6 +141,13 @@
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	color = "lawyer_purp"
+
+/obj/item/clothing/under/lawyer/oldman
+	name = "Old Man's Suit"
+	desc = "A classic suit for the older gentleman with built in back support."
+	icon_state = "oldman"
+	item_state = "oldman"
+	color = "oldman"
 
 
 /obj/item/clothing/under/librarian

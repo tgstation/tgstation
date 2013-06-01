@@ -10,7 +10,7 @@
 		switch(href_list["makeAntag"])
 			if("1")
 				log_admin("[key_name(usr)] has spawned a traitor.")
-				if(!src.makeTratiors())
+				if(!src.makeTraitors())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("2")
 				log_admin("[key_name(usr)] has spawned a changeling.")
@@ -2421,6 +2421,15 @@
 	else if(href_list["populate_inactive_customitems"])
 		if(check_rights(R_ADMIN|R_SERVER))
 			populate_inactive_customitems_list(src.owner)
+
+	else if(href_list["vsc"])
+		if(check_rights(R_ADMIN|R_SERVER))
+			if(href_list["vsc"] == "airflow")
+				vsc.ChangeSettingsDialog(usr,vsc.settings)
+			if(href_list["vsc"] == "plasma")
+				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+			if(href_list["vsc"] == "default")
+				vsc.SetDefault(usr)
 
 	// player info stuff
 

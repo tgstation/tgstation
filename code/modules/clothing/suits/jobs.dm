@@ -21,6 +21,14 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/captunic/capjacket
+	name = "captain's uniform jacket"
+	desc = "A less formal jacket for everyday captain use."
+	icon_state = "capjacket"
+	item_state = "bio_suit"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
 	name = "chaplain hoodie"
@@ -113,6 +121,35 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+//Internal Affairs
+/obj/item/clothing/suit/storage/internalaffairs
+	name = "Internal Affairs Jacket"
+	desc = "A smooth black jacket."
+	icon_state = "ia_jacket_open"
+	item_state = "ia_jacket"
+	blood_overlay_type = "coat"
+	body_parts_covered = UPPER_TORSO|ARMS
+
+	verb/toggle()
+		set name = "Toggle Coat Buttons"
+		set category = "Object"
+		set src in usr
+
+		if(!usr.canmove || usr.stat || usr.restrained())
+			return 0
+
+		switch(icon_state)
+			if("ia_jacket_open")
+				src.icon_state = "ia_jacket"
+				usr << "You button up the jacket."
+			if("ia_jacket")
+				src.icon_state = "ia_jacket_open"
+				usr << "You unbutton the jacket."
+			else
+				usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
+				return
+		usr.update_inv_wear_suit()	//so our overlays update
+
 //Mime
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
@@ -121,7 +158,7 @@
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 
-/obj/item/clothing/suit/fr_jacket
+/obj/item/clothing/suit/storage/fr_jacket
 	name = "first responder jacket"
 	desc = "A high-visibility jacket worn by medical first responders."
 	icon_state = "fr_jacket_open"

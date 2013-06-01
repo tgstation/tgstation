@@ -550,8 +550,16 @@ its easier to just keep the beam vertical.
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
-	if(!istype(src,/obj/item/weapon/gun))
+	var/acting_bad = 1	//Check for gun targeting code.
+	if (istype(src,/obj/item/weapon/gun))	//Allow people to lower weapon
+		acting_bad = 0
+	if (istype(src, /turf) && istype(usr,/mob/living/carbon/human))	//Allow people to turn around
+		var/mob/living/carbon/human/H = usr
+		if (!H.equipped())
+			acting_bad = 0
+	if(acting_bad)
 		usr.last_target_click = world.time
+
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
@@ -696,7 +704,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if (in_range)
 			if (!( human.restrained() || human.lying ))
 				if (W)
-					attackby(W,human)
+					var/was_used = 0
+					if(W)
+						was_used = W.is_used_on(src, human)
+					if(!was_used)
+						attackby(W,human)
 					if (W)
 						W.afterattack(src, human)
 				else

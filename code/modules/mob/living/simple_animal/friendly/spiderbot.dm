@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/spiderbot/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
-	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/posibrain))
+	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
 			user << "\red There's already a brain in [src]!"
@@ -150,6 +150,7 @@
 
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key
+		src.ckey = M.brainmob.ckey
 		src.name = "Spider-bot ([M.brainmob.name])"
 
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
@@ -162,12 +163,13 @@
 
 /mob/living/simple_animal/spiderbot/proc/update_icon()
 	if(mmi)
-		if (istype(mmi,/obj/item/device/mmi))
+		if(istype(mmi,/obj/item/device/mmi))
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
-		else
+		if(istype(mmi, /obj/item/device/mmi/posibrain))
 			icon_state = "spiderbot-chassis-posi"
 			icon_living = "spiderbot-chassis-posi"
+
 	else
 		icon_state = "spiderbot-chassis"
 		icon_living = "spiderbot-chassis"
@@ -202,6 +204,9 @@
 
 	if(camera)
 		camera.status = 0
+
+	held_item.loc = src.loc
+	held_item = null
 
 	robogibs(src.loc, viruses)
 	src.Del()
@@ -281,14 +286,14 @@
 		return 0
 
 	if(istype(held_item, /obj/item/weapon/grenade))
-		visible_message("\red [src] launches the [held_item]!", "\red You launch the [held_item]!", "You hear a skittering noise and a thump!")
+		visible_message("\red [src] launches \the [held_item]!", "\red You launch \the [held_item]!", "You hear a skittering noise and a thump!")
 		var/obj/item/weapon/grenade/G = held_item
 		G.loc = src.loc
 		G.prime()
 		held_item = null
 		return 1
 
-	visible_message("\blue [src] drops the [held_item]!", "\blue You drop the [held_item]!", "You hear a skittering noise and a soft thump.")
+	visible_message("\blue [src] drops \the [held_item]!", "\blue You drop \the [held_item]!", "You hear a skittering noise and a soft thump.")
 
 	held_item.loc = src.loc
 	held_item = null
@@ -305,7 +310,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		src << "\red You are already holding \the [held_item]"
 		return 1
 
 	var/list/items = list()
@@ -316,10 +321,19 @@
 	var/obj/selection = input("Select an item.", "Pickup") in items
 
 	if(selection)
-		held_item = selection
-		selection.loc = src
-		visible_message("\blue [src] scoops up the [held_item]!", "\blue You grab the [held_item]!", "You hear a skittering noise and a clink.")
-		return held_item
+		for(var/obj/item/I in view(1, src))
+			if(selection == I)
+				held_item = selection
+				selection.loc = src
+				visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
+				return held_item
+		src << "\red \The [selection] is too far away."
+		return 0
 
 	src << "\red There is nothing of interest to take."
 	return 0
+
+/mob/living/simple_animal/spiderbot/examine()
+	..()
+	if(src.held_item)
+		usr << "It is carrying \a [src.held_item] \icon[src.held_item]."

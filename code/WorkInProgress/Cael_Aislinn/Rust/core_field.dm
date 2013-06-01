@@ -163,11 +163,11 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	React()
 
 	//forcibly radiate any excess energy
-	var/energy_max = transfer_ratio * 100000
+	/*var/energy_max = transfer_ratio * 100000
 	if(mega_energy > energy_max)
 		var/energy_lost = rand( 1.5 * (mega_energy - energy_max), 2.5 * (mega_energy - energy_max) )
 		mega_energy -= energy_lost
-		radiation += energy_lost
+		radiation += energy_lost*/
 
 	//change held plasma temp according to energy levels
 	//SPECIFIC_HEAT_TOXIN
@@ -200,12 +200,14 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//held_plasma.update_values()
 
 	//handle some reactants formatting
-	//helium-4 has no use at the moment, but a buttload of it is produced
-	if(dormant_reactant_quantities["Helium-4"] > 1000)
-		dormant_reactant_quantities["Helium-4"] = rand(0,dormant_reactant_quantities["Helium-4"])
 	for(var/reactant in dormant_reactant_quantities)
-		if(!dormant_reactant_quantities[reactant])
+		var/amount = dormant_reactant_quantities[reactant]
+		if(amount < 1)
 			dormant_reactant_quantities.Remove(reactant)
+		else if(amount >= 1000000)
+			var/radiate = rand(3 * amount / 4, amount / 4)
+			dormant_reactant_quantities[reactant] -= radiate
+			radiation += radiate
 
 	return 1
 
@@ -235,6 +237,10 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		energy_loss_ratio = 1 / abs(a_frequency - src.frequency)
 	energy += a_energy - a_energy * energy_loss_ratio
 	mega_energy += a_mega_energy - a_mega_energy * energy_loss_ratio
+
+	while(energy > 100000)
+		energy -= 100000
+		mega_energy += 0.1
 
 /obj/effect/rust_em_field/proc/AddParticles(var/name, var/quantity = 1)
 	if(name in dormant_reactant_quantities)
@@ -296,9 +302,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	return changed
 
 //the !!fun!! part
-//reactions have to be individually hardcoded, see AttemptReaction() below this
 /obj/effect/rust_em_field/proc/React()
-	//world << "React()"
 	//loop through the reactants in random order
 	var/list/reactants_reacting_pool = dormant_reactant_quantities.Copy()
 	/*
@@ -316,8 +320,8 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			if(!reactants_reacting_pool[reactant])
 				reactants_reacting_pool -= reactant
 
-		var/list/produced_reactants = new/list
 		//loop through all the reacting reagents, picking out random reactions for them
+		var/list/produced_reactants = new/list
 		var/list/primary_reactant_pool = reactants_reacting_pool.Copy()
 		while(primary_reactant_pool.len)
 			//pick one of the unprocessed reacting reagents randomly
@@ -331,95 +335,80 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			possible_secondary_reactants[cur_primary_reactant] -= 1
 			if(possible_secondary_reactants[cur_primary_reactant] < 1)
 				possible_secondary_reactants.Remove(cur_primary_reactant)
-			var/list/possible_reactions = new/list
 
 			//loop through and work out all the possible reactions
-			while(possible_secondary_reactants.len)
-				var/cur_secondary_reactant = pick(possible_secondary_reactants)
+			var/list/possible_reactions = new/list
+			for(var/cur_secondary_reactant in possible_secondary_reactants)
 				if(possible_secondary_reactants[cur_secondary_reactant] < 1)
-					possible_secondary_reactants.Remove(cur_secondary_reactant)
 					continue
-				possible_secondary_reactants.Remove(cur_secondary_reactant)
-				var/list/reaction_products = AttemptReaction(cur_primary_reactant, cur_secondary_reactant)
-				if(reaction_products.len)
+				var/datum/fusion_reaction/cur_reaction = get_fusion_reaction(cur_primary_reactant, cur_secondary_reactant)
+				if(cur_reaction)
 					//world << "\blue	secondary reactant: [cur_secondary_reactant], [reaction_products.len]"
-					possible_reactions[cur_secondary_reactant] = reaction_products
+					possible_reactions.Add(cur_reaction)
+
 			//if there are no possible reactions here, abandon this primary reactant and move on
 			if(!possible_reactions.len)
 				//world << "\blue	no reactions"
 				continue
 
 			//split up the reacting atoms between the possible reactions
-			//the problem is in this while statement below
 			while(possible_reactions.len)
-				//pick another substance to react with
-				var/cur_secondary_reactant = pick(possible_reactions)
-				if(!reactants_reacting_pool[cur_secondary_reactant])
-					possible_reactions.Remove(cur_secondary_reactant)
-					continue
-				var/list/cur_reaction_products = possible_reactions[cur_secondary_reactant]
+				//pick a random substance to react with
+				var/datum/fusion_reaction/cur_reaction = pick(possible_reactions)
+				possible_reactions.Remove(cur_reaction)
 
 				//set the randmax to be the lower of the two involved reactants
-				var/max_num_reactants = reactants_reacting_pool[cur_primary_reactant] > reactants_reacting_pool[cur_secondary_reactant] ? reactants_reacting_pool[cur_secondary_reactant] : reactants_reacting_pool[cur_primary_reactant]
+				var/max_num_reactants = reactants_reacting_pool[cur_reaction.primary_reactant] > reactants_reacting_pool[cur_reaction.secondary_reactant] ? \
+				reactants_reacting_pool[cur_reaction.secondary_reactant] : reactants_reacting_pool[cur_reaction.primary_reactant]
+				if(max_num_reactants < 1)
+					continue
 
 				//make sure we have enough energy
-				if( mega_energy < max_num_reactants*cur_reaction_products["consumption"])
-					max_num_reactants = round(mega_energy / cur_reaction_products["consumption"])
+				if(mega_energy < max_num_reactants * cur_reaction.energy_consumption)
+					max_num_reactants = round(mega_energy / cur_reaction.energy_consumption)
+					if(max_num_reactants < 1)
+						continue
 
 				//randomly determined amount to react
 				var/amount_reacting = rand(1, max_num_reactants)
 
 				//removing the reacting substances from the list of substances that are primed to react this cycle
 				//if there aren't enough of that substance (there should be) then modify the reactant amounts accordingly
-				if( reactants_reacting_pool[cur_primary_reactant] - amount_reacting > -1 )
-					reactants_reacting_pool[cur_primary_reactant] -= amount_reacting
+				if( reactants_reacting_pool[cur_reaction.primary_reactant] - amount_reacting >= 0 )
+					reactants_reacting_pool[cur_reaction.primary_reactant] -= amount_reacting
 				else
-					amount_reacting = reactants_reacting_pool[cur_primary_reactant]
-					reactants_reacting_pool[cur_primary_reactant] = 0
-				//
-				if( reactants_reacting_pool[cur_secondary_reactant] - amount_reacting > -1 )
-					reactants_reacting_pool[cur_secondary_reactant] -= amount_reacting
+					amount_reacting = reactants_reacting_pool[cur_reaction.primary_reactant]
+					reactants_reacting_pool[cur_reaction.primary_reactant] = 0
+				//same again for secondary reactant
+				if( reactants_reacting_pool[cur_reaction.secondary_reactant] - amount_reacting >= 0 )
+					reactants_reacting_pool[cur_reaction.secondary_reactant] -= amount_reacting
 				else
-					reactants_reacting_pool[cur_primary_reactant] += amount_reacting - reactants_reacting_pool[cur_primary_reactant]
-					amount_reacting = reactants_reacting_pool[cur_secondary_reactant]
-					reactants_reacting_pool[cur_secondary_reactant] = 0
+					reactants_reacting_pool[cur_reaction.primary_reactant] += amount_reacting - reactants_reacting_pool[cur_reaction.primary_reactant]
+					amount_reacting = reactants_reacting_pool[cur_reaction.secondary_reactant]
+					reactants_reacting_pool[cur_reaction.secondary_reactant] = 0
 
 				//remove the consumed energy
-				if(cur_reaction_products["consumption"])
-					mega_energy -= max_num_reactants * cur_reaction_products["consumption"]
-					cur_reaction_products.Remove("consumption")
+				mega_energy -= max_num_reactants * cur_reaction.energy_consumption
 
-				//grab any radiation and put it separate
-				//var/new_radiation = 0
-				if("production" in cur_reaction_products)
-					mega_energy += max_num_reactants * cur_reaction_products["production"]
-					cur_reaction_products.Remove("production")
-					/*for(var/i=0, i<dormant_reactant_quantities["proton_quantity"], i++)
-						radiation.Add("proton")
-						radiation_charge.Add(dormant_reactant_quantities["proton_charge"])
-					dormant_reactant_quantities.Remove("proton_quantity")
-					dormant_reactant_quantities.Remove("proton_charge")
-					new_radiation = 1*/
-				//
-				if("radiation" in cur_reaction_products)
-					radiation += max_num_reactants * cur_reaction_products["radiation"]
-					cur_reaction_products.Remove("radiation")
-					/*for(var/i=0, i<dormant_reactant_quantities["neutron_quantity"], i++)
-						radiation.Add("neutron")
-						radiation_charge.Add(dormant_reactant_quantities["neutron_charge"])
-					dormant_reactant_quantities.Remove("neutron_quantity")
-					dormant_reactant_quantities.Remove("neutron_charge")
-					new_radiation = 1*/
+				//add any produced energy
+				mega_energy += max_num_reactants * cur_reaction.energy_production
+
+				//add any produced radiation
+				radiation += max_num_reactants * cur_reaction.radiation
 
 				//create the reaction products
-				for(var/reactant in cur_reaction_products)
-					if(produced_reactants[reactant])
-						produced_reactants[reactant] += cur_reaction_products[reactant] * amount_reacting
-					else
-						produced_reactants[reactant] = cur_reaction_products[reactant] * amount_reacting
+				for(var/reactant in cur_reaction.products)
+					var/success = 0
+					for(var/check_reactant in produced_reactants)
+						if(check_reactant == reactant)
+							produced_reactants[reactant] += cur_reaction.products[reactant] * amount_reacting
+							success = 1
+							break
+					if(!success)
+						produced_reactants[reactant] = cur_reaction.products[reactant] * amount_reacting
 
 				//this reaction is done, and can't be repeated this sub-cycle
-				possible_reactions.Remove(cur_secondary_reactant)
+				possible_reactions.Remove(cur_reaction.secondary_reactant)
 
 		//
 		/*if(new_radiation)
@@ -431,220 +420,13 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//var/list/neutronic_radiation = new
 		//var/list/protonic_radiation = new
 		for(var/reactant in produced_reactants)
-			AddParticles(reactant, dormant_reactant_quantities[reactant])
+			AddParticles(reactant, produced_reactants[reactant])
 			//world << "produced: [reactant], [dormant_reactant_quantities[reactant]]"
 
 		//check whether there are reactants left, and add them back to the pool
 		for(var/reactant in reactants_reacting_pool)
 			AddParticles(reactant, reactants_reacting_pool[reactant])
 			//world << "retained: [reactant], [reactants_reacting_pool[reactant]]"
-
-//default fuel assembly quantities
-/*
-//new_assembly_quantities["Helium-3"] = 0
-//new_assembly_quantities["Deuterium"] = 200
-//new_assembly_quantities["Tritium"] = 100
-//new_assembly_quantities["Lithium-6"] = 0
-//new_assembly_quantities["Silver"] = 0
-*/
-
-//reactions involving D-T (hydrogen) need 0.1 MeV of core energy
-//reactions involving helium require 0.4 MeV of energy
-//reactions involving lithium require 0.6 MeV of energy
-//reactions involving boron require 1 MeV of energy
-//returns a list of products, or an empty list if no reaction possible
-/obj/effect/rust_em_field/proc/AttemptReaction(var/reactant_one, var/reactant_two)
-	//any charge on the atomic reactants / protons produced is abstracted away to enter the core energy pool straightaway
-	//atomic products remain in the core and produce more reactions next cycle
-	//any charged neutrons escape as radiation
-	var/check = 1
-	recheck_reactions:
-	var/list/products = new/list
-	switch(reactant_one)
-		if("Tritium")
-			switch(reactant_two)
-				if("Tritium")
-					if(mega_energy > 0.1)
-						products["Helium-4"] = 1
-						//
-						products["production"] = 11.3
-						products["radiation"] = 1
-						/*products["photon"] = 11.3
-						//
-						products["neutron_quantity"] = 1
-						products["neutron_charge"] = 0*/
-						//
-						mega_energy -= 0.1
-				if("Deuterium")
-					if(mega_energy > 0.1)
-						products["Helium-4"] = 1
-						//
-						products["production"] = 3.5
-						products["radiation"] = 14.1
-						/*products["photon"] = 3.5
-						//
-						products["neutron_quantity"] = 1
-						products["neutron_charge"] = 14.1
-						//
-						products["consumption"] = 0.1*/
-				if("Helium-3")
-					if(mega_energy > 0.4)
-						if(prob(51))
-							products["Helium-4"] = 1
-							//
-							products["production"] = 13.1
-							products["radiation"] = 1
-							/*products["photon"] = 12.1
-							//
-							products["proton_quantity"] = 1
-							products["proton_charge"] = 0
-							//
-							products["neutron_quantity"] = 1
-							products["neutron_charge"] = 0*/
-						else if (prob(43))
-							products["Helium-4"] = 1
-							products["Deuterium"] = 1
-							//
-							products["production"] = 14.3
-							/*products["photon"] = 4.8 + 9.5//14.3
-							*/
-						else
-							products["Helium-4"] = 1
-							products["production"] = 2.4
-							products["radiation"] = 11.9
-							/*products["photon"] = 0.5//12.4
-							//
-							products["proton_quantity"] = 1
-							products["proton_charge"] = 1.9
-							//
-							products["neutron_quantity"] = 1
-							products["neutron_charge"] = 11.9*/
-						//
-						products["consumption"] = 0.4
-		if("Deuterium")
-			switch(reactant_two)
-				if("Deuterium")
-					if(mega_energy > 0.1)
-						if(prob(50))
-							products["Tritium"] = 1
-							//
-							products["production"] = 4.03
-							/*products["photon"] = 1.01
-							//
-							products["proton_quantity"] = 1
-							products["proton_charge"] = 3.02*/
-						else
-							products["Helium-3"] = 1
-							//
-							products["production"] = 0.82
-							products["radiation"] = 2.45
-							/*products["photon"] = 0.82
-							//
-							products["neutron_quantity"] = 1
-							products["neutron_charge"] = 2.45*/
-						//
-						products["consumption"] = 0.1
-				if("Helium-3")
-					if(mega_energy > 0.4)
-						products["Helium-4"] = 1
-						//
-						products["production"] = 18.3
-						/*products["photon"] = 3.6
-						//
-						products["proton_quantity"] = 1
-						products["proton_charge"] = 14.7*/
-						//
-						products["consumption"] = 0.4
-				if("Lithium-6")
-					if(mega_energy > 0.6)
-						if(prob(25))
-							products["Helium-4"] = 2
-							products["production"] = 1
-							/*products["photon"] = 22.4*/
-						else if(prob(33))
-							products["Helium-3"] = 1
-							products["Helium-4"] = 1
-							//
-							products["radiation"] = 1
-							/*products["neutron_quantity"] = 1
-							products["neutron_charge"] = 0*/
-						else if(prob(50))
-							products["Lithium-7"] = 1
-							//
-							products["production"] = 1
-							/*products["proton_quantity"] = 1
-							products["proton_charge"] = 0*/
-						else
-							products["Beryllium-7"] = 1
-							products["production"] = 3.4
-							products["radiation"] = 1
-							/*products["photon"] = 3.4
-							//
-							products["neutron_quantity"] = 1
-							products["neutron_charge"] = 0*/
-						//
-						products["consumption"] = 0.6
-		if("Helium-3")
-			switch(reactant_two)
-				if("Helium-3")
-					if(mega_energy > 0.4)
-						products["Helium-4"] = 1
-						products["production"] = 14.9
-						/*products["photon"] = 12.9
-						//
-						products["proton_quantity"] = 2
-						products["proton_charge"] = 0*/
-						//
-						products["consumption"] = 0.4
-				if("Lithium-6")
-					if(mega_energy > 0.6)
-						products["Helium-4"] = 2
-						//
-						products["production"] = 17.9
-						/*products["photon"] = 16.9
-						//
-						products["proton_quantity"] = 1
-						products["proton_charge"] = 0*/
-						//
-						products["consumption"] = 0.6
-		/*
-		if("proton")
-			switch(reactant_two)
-				if("Lithium-6")
-					if(mega_energy > 0.6)
-						products["Helium-4"] = 1
-						products["Helium-3"] = 1
-						products["photon"] = 4
-						//
-						mega_energy -= 0.6
-				if("Boron-11")
-					if(mega_energy > 1)
-						products["Helium-4"] = 3
-						products["photon"] = 8.7
-						//
-						mega_energy -= 1
-		*/
-
-	//if no reaction happened, switch the two reactants and try again
-	if(!products.len && check)
-		check = 0
-		var/temp = reactant_one
-		reactant_one = reactant_two
-		reactant_two = temp
-		goto recheck_reactions
-	/*if(products.len)
-		world << "\blue	[reactant_one] + [reactant_two] reaction occured"
-		for(var/reagent in products)
-			world << "\blue	[reagent]: [products[reagent]]"*/
-	/*if(products["neutron"])
-		products -= "neutron"
-	if(products["proton"])
-		products -= "proton"
-	if(products["photon"])
-		products -= "photon"
-	if(products["radiated charge"])
-		products -= "radiated charge"*/
-	return products
 
 /obj/effect/rust_em_field/Del()
 	//radiate everything in one giant burst

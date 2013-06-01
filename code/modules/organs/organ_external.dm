@@ -555,6 +555,14 @@
 		if(T)
 			T.robotize()
 
+/datum/organ/external/proc/mutate()
+	src.status |= ORGAN_MUTATED
+	owner.update_body()
+
+/datum/organ/external/proc/unmutate()
+	src.status &= ~ORGAN_MUTATED
+	owner.update_body()
+
 /datum/organ/external/proc/get_damage()	//returns total damage
 	return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?
 
@@ -564,21 +572,32 @@
 			return 1
 	return 0
 
+/datum/organ/external/get_icon(gender="")
+	if (status & ORGAN_MUTATED)
+		return new /icon(owner.deform_icon, "[icon_name][gender ? "_[gender]" : ""]")
+	else
+		return new /icon(owner.race_icon, "[icon_name][gender ? "_[gender]" : ""]")
+
+
+/datum/organ/external/proc/is_usable()
+	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
+
 /****************************************************
 			   ORGAN DEFINES
 ****************************************************/
 
 /datum/organ/external/chest
 	name = "chest"
-	icon_name = "chest"
+	icon_name = "torso"
 	display_name = "chest"
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
 
+
 /datum/organ/external/groin
 	name = "groin"
-	icon_name = "diaper"
+	icon_name = "groin"
 	display_name = "groin"
 	max_damage = 115
 	min_broken_damage = 70
@@ -661,27 +680,37 @@
 	body_part = HEAD
 	var/disfigured = 0
 
-	take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
-		..(brute, burn, sharp, used_weapon, forbidden_limbs)
-		if (!disfigured)
-			if (brute_dam > 40)
-				if (prob(50))
-					disfigure("brute")
-			if (burn_dam > 40)
-				disfigure("burn")
+/datum/organ/external/head/get_icon()
+	if (!owner)
+	 return ..()
+	var/g = "m"
+	if(owner.gender == FEMALE)	g = "f"
+	if (status & ORGAN_MUTATED)
+		. = new /icon(owner.deform_icon, "[icon_name]_[g]")
+	else
+		. = new /icon(owner.race_icon, "[icon_name]_[g]")
 
-	proc/disfigure(var/type = "brute")
-		if (disfigured)
-			return
-		if(type == "brute")
-			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
-			"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
-			"\red You hear a sickening crack.")
-		else
-			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
-			"\red <b>Your face melts off!</b>",	\
-			"\red You hear a sickening sizzle.")
-		disfigured = 1
+/datum/organ/external/head/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
+	..(brute, burn, sharp, used_weapon, forbidden_limbs)
+	if (!disfigured)
+		if (brute_dam > 40)
+			if (prob(50))
+				disfigure("brute")
+		if (burn_dam > 40)
+			disfigure("burn")
+
+/datum/organ/external/head/proc/disfigure(var/type = "brute")
+	if (disfigured)
+		return
+	if(type == "brute")
+		owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
+		"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
+		"\red You hear a sickening crack.")
+	else
+		owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
+		"\red <b>Your face melts off!</b>",	\
+		"\red You hear a sickening sizzle.")
+	disfigured = 1
 
 /****************************************************
 			   EXTERNAL ORGAN ITEMS

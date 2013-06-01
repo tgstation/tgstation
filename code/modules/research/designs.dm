@@ -595,7 +595,7 @@ datum/design/posibrain
 
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
-	build_path = "/obj/item/device/posibrain"
+	build_path = "/obj/item/device/mmi/posibrain"
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////
@@ -1323,7 +1323,7 @@ datum/design/synthetic_flash
 
 datum/design/nanopaste
 	name = "nanopaste"
-	desc = "A tube of paste containing swarms of repair nanties. Very effective in repairing robotic machinery."
+	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
 	id = "nanopaste"
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_type = PROTOLATHE

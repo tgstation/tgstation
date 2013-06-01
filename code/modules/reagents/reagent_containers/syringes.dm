@@ -158,7 +158,7 @@
 	update_icon()
 		if(mode == SYRINGE_BROKEN)
 			icon_state = "broken"
-			overlays = null //dirty fix
+			overlays.Cut()
 			return
 		var/rounded_vol = round(reagents.total_volume,5)
 		overlays.Cut()
@@ -207,15 +207,15 @@
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("\red <B>[user] tries to stab [target] in the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
+					O.show_message(text("\red <B>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
 				user.u_equip(src)
 				del(src)
 				return
 
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red <B>[user] stabs [target] in the [hit_area] with [src.name]!</B>"), 1)
+				O.show_message(text("\red <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B>"), 1)
 
-			if(affecting.take_damage(7))
+			if(affecting.take_damage(3))
 				target:UpdateDamageIcon()
 
 		else

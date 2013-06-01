@@ -225,7 +225,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 					next_dest_loc = closest_loc
 				if (next_dest_loc)
 					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=null)
-					src.patrol_path = reverselist(src.patrol_path)
 		else
 			patrol_move()
 
@@ -235,7 +234,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		spawn(0)
 			if(!src || !target) return
 			src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 0, 30)
-			src.path = reverselist(src.path)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				src.target = null

@@ -95,7 +95,7 @@
 	//is_blocked_turf(var/turf/T)
 		usr << "\blue You finish placing the [src]."	//Git Test
 
-/obj/item/taperoll/police/afterattack(var/atom/A, mob/user as mob)
+/obj/item/taperoll/afterattack(var/atom/A, mob/user as mob)
 	if (istype(A, /obj/machinery/door/airlock))
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)

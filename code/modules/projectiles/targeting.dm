@@ -25,6 +25,13 @@
 		user.client.remove_gun_icons()
 	return ..()
 
+/obj/item/weapon/gun/equipped(var/mob/user, var/slot)
+	if (slot != slot_l_hand && slot != slot_r_hand)
+		stop_aim()
+		if (user.client)
+			user.client.remove_gun_icons()
+	return ..()
+
 //Removes lock fro mall targets
 /obj/item/weapon/gun/proc/stop_aim()
 	if(target)
@@ -69,9 +76,10 @@
 	if(!istype(M)) return
 	if(src != M.equipped())
 		stop_aim()
+		return
 	M.last_move_intent = world.time
-	if(load_into_chamber())
-		var/firing_check = in_chamber.check_fire(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
+	if(can_fire())
+		var/firing_check = can_hit(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
 		if(firing_check > 0)
 			if(firing_check == 1)
 				Fire(T,usr, reflex = 1)
@@ -155,7 +163,7 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	targeted_by += I
 	I.lock_time = world.time + 20 //Target has 2 second to realize they're targeted and stop (or target the opponent).
 	src << "((\red <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> \black While targeted, they may \
-	drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map, their items \
+	drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map objects (floors and walls are fine), their items \
 	 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
 	 so try not to get on their bad side.\black ))"
 

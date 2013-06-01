@@ -140,7 +140,24 @@
 
 	return t_out
 
-
+//checks text for html tags
+//if tag is not in whitelist (var/list/paper_tag_whitelist in global.dm)
+//relpaces < with &lt;
+proc/checkhtml(var/t)
+	t = sanitize_simple(t, list("&#"="."))
+	var/p = findtext(t,"<",1)
+	while (p)	//going through all the tags
+		var/start = p++
+		var/tag = copytext(t,p, p+1)
+		if (tag != "/")
+			while (reject_bad_text(copytext(t, p, p+1), 1))
+				tag = copytext(t,start, p)
+				p++
+			tag = copytext(t,start+1, p)
+			if (!(tag in paper_tag_whitelist))	//if it's unkown tag, disarming it
+				t = copytext(t,1,start-1) + "&lt;" + copytext(t,start+1)
+		p = findtext(t,"<",p)
+	return t
 /*
  * Text searches
  */

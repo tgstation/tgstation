@@ -38,12 +38,6 @@ datum/controller/game_controller/New()
 			del(master_controller)
 		master_controller = src
 
-	createRandomZlevel()
-
-	if(!air_master)
-		air_master = new /datum/controller/air_system()
-		air_master.setup()
-
 	if(!job_master)
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
@@ -52,12 +46,19 @@ datum/controller/game_controller/New()
 
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
-	if(!ticker)						ticker = new /datum/controller/gameticker()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
-
 
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
+
+	createRandomZlevel()
+
+	if(!air_master)
+		air_master = new /datum/controller/air_system()
+		air_master.setup()
+
+	if(!ticker)
+		ticker = new /datum/controller/gameticker()
 
 	setup_objects()
 	setupgenetics()
@@ -70,6 +71,9 @@ datum/controller/game_controller/proc/setup()
 	spawn(0)
 		if(ticker)
 			ticker.pregame()
+
+	lighting_controller.Initialize()
+
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
@@ -113,6 +117,7 @@ datum/controller/game_controller/proc/process()
 				controller_iteration++
 
 				vote.process()
+				process_newscaster()
 
 				//AIR
 
@@ -128,11 +133,12 @@ datum/controller/game_controller/proc/process()
 					air_master.current_cycle++
 					var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 					if(!success) //Runtimed.
-						log_adminwarn("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
 						air_master.failed_ticks++
 						if(air_master.failed_ticks > 5)
 							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
-							kill_air = 1
+							message_admins("ZASALERT: unable run [air_master.tick_progress], tell someone about this!")
+							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
+							air_processing_killed = 1
 							air_master.failed_ticks = 0
 				air_cost = (world.timeofday - timer) / 10
 

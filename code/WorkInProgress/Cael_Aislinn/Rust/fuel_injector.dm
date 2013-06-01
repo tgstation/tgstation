@@ -3,17 +3,19 @@
 	name = "Fuel Injector"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "injector0"
+
 	density = 1
-	var/state = 2
+	anchored = 0
+	var/state = 0
 	var/locked = 0
+	req_access = list(access_engine)
+
 	var/obj/item/weapon/fuel_assembly/cur_assembly
 	var/fuel_usage = 0.0001			//percentage of available fuel to use per cycle
 	var/id_tag = "One"
 	var/injecting = 0
 	var/trying_to_swap_fuel = 0
-	//
-	req_access = list(access_engine)
-	//
+
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 500
@@ -177,11 +179,7 @@
 		id_tag = input("Enter new ID tag", "Modifying ID tag") as text|null
 
 	if( href_list["fuel_assembly"] )
-		if(!trying_to_swap_fuel)
-			trying_to_swap_fuel = 1
-			spawn(50)
-				attempt_fuel_swap()
-				trying_to_swap_fuel = 0
+		attempt_fuel_swap()
 
 	if( href_list["emergency_fuel_assembly"] )
 		if(cur_assembly)
@@ -288,3 +286,23 @@
 		updateDialog()
 	else
 		src.visible_message("\red \icon[src] a red light flashes on [src].")
+
+/obj/machinery/power/rust_fuel_injector/verb/rotate_clock()
+	set category = "Object"
+	set name = "Rotate Generator (Clockwise)"
+	set src in view(1)
+
+	if (usr.stat || usr.restrained()  || anchored)
+		return
+
+	src.dir = turn(src.dir, 90)
+
+/obj/machinery/power/rust_fuel_injector/verb/rotate_anticlock()
+	set category = "Object"
+	set name = "Rotate Generator (Counterclockwise)"
+	set src in view(1)
+
+	if (usr.stat || usr.restrained()  || anchored)
+		return
+
+	src.dir = turn(src.dir, -90)

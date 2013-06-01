@@ -1,6 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
 
+
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
@@ -155,6 +156,7 @@ BLIND     // can't see anything
 		3 = Report location
 		*/
 	var/obj/item/clothing/tie/hastie = null
+	var/displays_id = 1
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(!hastie && istype(I, /obj/item/clothing/tie))

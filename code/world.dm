@@ -78,14 +78,16 @@
 
 	src.update_status()
 
+	. = ..()
+
+	sleep_offline = 1
+
 	master_controller = new /datum/controller/game_controller()
-	spawn(-1)
+	spawn(1)
 		master_controller.setup()
-		lighting_controller.Initialize()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
-	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
@@ -153,9 +155,9 @@
 
 
 /world/Reboot(var/reason)
-	spawn(0)
+	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
-
+		*/
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")

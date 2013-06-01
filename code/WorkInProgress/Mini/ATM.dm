@@ -206,10 +206,12 @@ log transactions
 		switch(href_list["choice"])
 			if("transfer")
 				if(authenticated_account && linked_db)
-					var/target_account_number = text2num(href_list["target_acc_number"])
 					var/transfer_amount = text2num(href_list["funds_amount"])
-					var/transfer_purpose = href_list["purpose"]
-					if(transfer_amount <= authenticated_account.money)
+					if(transfer_amount <= 0)
+						alert("That is not a valid amount.")
+					else if(transfer_amount <= authenticated_account.money)
+						var/target_account_number = text2num(href_list["target_acc_number"])
+						var/transfer_purpose = href_list["purpose"]
 						if(linked_db.charge_to_account(target_account_number, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
 							usr << "\icon[src]<span class='info'>Funds transfer successful.</span>"
 							authenticated_account.money -= transfer_amount
@@ -284,7 +286,9 @@ log transactions
 					previous_account_number = tried_account_num
 			if("withdrawal")
 				var/amount = max(text2num(href_list["funds_amount"]),0)
-				if(authenticated_account && amount > 0)
+				if(amount <= 0)
+					alert("That is not a valid amount.")
+				else if(authenticated_account && amount > 0)
 					if(amount <= authenticated_account.money)
 						playsound(src, 'chime.ogg', 50, 1)
 

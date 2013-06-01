@@ -18,6 +18,7 @@
 	var/glass = 0
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
+	var/air_properties_vary_with_direction = 0
 
 /obj/machinery/door/New()
 	..()
@@ -78,6 +79,8 @@
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if(operating)	return
+	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
+		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
@@ -216,7 +219,7 @@
 
 /obj/machinery/door/proc/close()
 	if(density)	return 1
-	if(operating)	return
+	if(operating > 0)	return
 	operating = 1
 
 	animate("closing")
@@ -229,6 +232,11 @@
 		SetOpacity(1)	//caaaaarn!
 	operating = 0
 	update_nearby_tiles()
+
+	//I shall not add a check every x ticks if a door has closed over some fire.
+	var/obj/fire/fire = locate() in loc
+	if(fire)
+		del fire
 	return
 
 /obj/machinery/door/proc/requiresID()

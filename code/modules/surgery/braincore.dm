@@ -102,7 +102,7 @@
 //				BRAIN DAMAGE FIXING								//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/brain/cut_brain
+/datum/surgery_step/brain/bone_chips
 	required_tool =  /obj/item/weapon/hemostat
 	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
 
@@ -113,22 +113,48 @@
 		return ..() && target.brain_op_stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("[user] starts mending ruptured vessels in [target]'s brain with \the [tool].", \
-		"You start mending [target]'s brainwith \the [tool].")
+		user.visible_message("[user] starts taking out bone chips and out of [target]'s brain with \the [tool].", \
+		"You start taking out bone chips and out of [target]'s brain with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] mends [target]'s brain hematoma with \the [tool].",	\
-		"\blue You mend ruptured vessels to [target]'s brain hematoma with \the [tool].")
+		user.visible_message("\blue [user] takes out all bone chips out of [target]'s brain with \the [tool].",	\
+		"\blue You take out all bone chips out of [target]'s brain with \the [tool].")
+		target.brain_op_stage = 3
+
+
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("\red [user]'s hand slips, jabbing \the [tool] in [target]'s brain!", \
+		"\red Your hand slips, jabbing \the [tool] in [target]'s brain!")
+		target.apply_damage(30, BRUTE, "head", 1)
+
+/datum/surgery_step/brain/hematoma
+	required_tool =  /obj/item/weapon/FixOVein
+	allowed_tools = list(/obj/item/weapon/cable_coil)
+
+	min_duration = 90
+	max_duration = 110
+
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return ..() && target.brain_op_stage == 3
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("[user] starts mending hematoma in [target]'s brain with \the [tool].", \
+		"You start mending hematoma in [target]'s brain with \the [tool].")
+		..()
+
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
+		"\blue You mend hematoma in [target]'s brain with \the [tool].")
 		var/datum/organ/internal/brain/sponge = target.internal_organs["brain"]
 		if (sponge)
 			sponge.damage = 0
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
-		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-		target.apply_damage(50, BRUTE, "head", 1)
+		user.visible_message("\red [user]'s hand slips, bruising [target]'s brain with \the [tool]!", \
+		"\red Your hand slips, bruising [target]'s brain with \the [tool]!")
+		target.apply_damage(20, BRUTE, "head", 1)
 
 //////////////////////////////////////////////////////////////////
 //				SLIME CORE EXTRACTION							//

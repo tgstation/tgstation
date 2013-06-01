@@ -136,6 +136,9 @@
 	else
 		can_label = 0
 
+	if(air_contents.temperature > PLASMA_FLASHPOINT)
+		air_contents.zburn()
+
 	src.updateDialog()
 	return
 
