@@ -242,6 +242,8 @@ var/global/datum/controller/gameticker/ticker
 				else
 					player.create_character()
 					del(player)
+			else
+				player.new_player_panel()
 
 
 	proc/collect_minds()

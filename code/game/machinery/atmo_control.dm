@@ -255,7 +255,7 @@ Rate: [volume_rate] L/sec<BR>"}
 
 			if(href_list["adj_pressure"])
 				var/change = text2num(href_list["adj_pressure"])
-				pressure_setting = between(0, pressure_setting + change, 50*ONE_ATMOSPHERE)
+				pressure_setting = Clamp(pressure_setting + change, 0, 50*ONE_ATMOSPHERE)
 				spawn(1)
 					src.updateDialog()
 				return

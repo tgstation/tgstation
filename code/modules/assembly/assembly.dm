@@ -110,7 +110,7 @@
 			if((!A.secured) && (!secured))
 				attach_assembly(A,user)
 				return
-		if(isscrewdriver(W))
+		if(istype(W, /obj/item/weapon/screwdriver))
 			if(toggle_secure())
 				user << "\blue \The [src] is ready!"
 			else

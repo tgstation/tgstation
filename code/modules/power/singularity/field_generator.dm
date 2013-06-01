@@ -44,7 +44,7 @@ field_generator power level display
 	// Scale % power to % num_power_levels and truncate value
 	var/level = round(num_power_levels * power / field_generator_max_power)
 	// Clamp between 0 and num_power_levels for out of range power values
-	level = between(0, level, num_power_levels)
+	level = Clamp(level, 0, num_power_levels)
 	if(level)
 		overlays += "+p[level]"
 
