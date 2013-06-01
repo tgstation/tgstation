@@ -172,7 +172,6 @@
 
 
 		danger_level = overall_danger_level()
-		log_debug("Processing [name] : level - [danger_level]")
 
 		if (alarm_area.master_air_alarm == src)
 			refresh_danger_level()
