@@ -75,6 +75,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
+		log_game("[changeling.key] (ckey) has been selected as a changeling")
 		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)

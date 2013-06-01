@@ -31,6 +31,7 @@
 	for(var/mob/new_player/player in player_list)
 		if(player.mind && player.mind.assigned_role == "AI")
 			malf_ai+=player.mind
+			log_game("[malf_ai.key] (ckey) has been selected as a malf AI")
 	if(malf_ai.len)
 		return 1
 	return 0
