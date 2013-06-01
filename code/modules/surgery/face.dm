@@ -15,8 +15,11 @@
 		return target_zone == "mouth"
 
 /datum/surgery_step/generic/cut_face
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 90
 	max_duration = 110
@@ -42,8 +45,11 @@
 		target.losebreath += 10
 
 /datum/surgery_step/face/mend_vocal
-	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100, 	\
+	/obj/item/weapon/cable_coil = 75, 	\
+	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
+	)
 
 	min_duration = 70
 	max_duration = 90
@@ -67,8 +73,10 @@
 		target.losebreath += 10
 
 /datum/surgery_step/face/fix_face
-	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 55,	\
+	/obj/item/weapon/kitchen/utensil/fork = 75)
 
 	min_duration = 80
 	max_duration = 100
@@ -93,8 +101,12 @@
 		target.apply_damage(10, BRUTE, affected)
 
 /datum/surgery_step/face/cauterize
-	required_tool = /obj/item/weapon/cautery
-	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
+	allowed_tools = list(
+	/obj/item/weapon/cautery = 100,			\
+	/obj/item/clothing/mask/cigarette = 75,	\
+	/obj/item/weapon/lighter = 50,			\
+	/obj/item/weapon/weldingtool = 25
+	)
 
 	min_duration = 70
 	max_duration = 100
