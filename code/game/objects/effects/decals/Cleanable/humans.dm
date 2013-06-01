@@ -1,3 +1,4 @@
+#define DRYING_TIME 5 * 60*10			//for 1 unit of depth in puddle (amount var)
 /obj/effect/decal/cleanable/blood
 	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
@@ -11,6 +12,7 @@
 	var/list/viruses = list()
 	blood_DNA = list()
 	var/datum/disease2/disease/virus2 = null
+	var/amount = 5
 
 /obj/effect/decal/cleanable/blood/Del()
 	for(var/datum/disease/D in viruses)
@@ -26,15 +28,33 @@
 			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
 				if(B != src)
 					del(B)
+	spawn(DRYING_TIME * (amount+1))
+		dry()
+
+/obj/effect/decal/cleanable/blood/proc/dry()
+	name = "dried [src]"
+	desc = "It's dark red and crusty. Someone is not doing their job."
+	var/icon/I = icon(icon,icon_state)
+	I.SetIntensity(0.5)
+	icon = I
+	amount = 0
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
+	amount = 2
 
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	gender = PLURAL
 	random_icon_states = null
+
+/obj/effect/decal/cleanable/blood/drip
+	name = "drips of blood"
+	desc = "It's red."
+	gender = PLURAL
+	icon = 'drip.dmi'
+	icon_state = "1"
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
