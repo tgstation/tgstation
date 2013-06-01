@@ -25,6 +25,13 @@
 		user.client.remove_gun_icons()
 	return ..()
 
+/obj/item/weapon/gun/equipped(var/mob/user, var/slot)
+	if (slot != slot_l_hand && slot != slot_r_hand)
+		stop_aim()
+		if (user.client)
+			user.client.remove_gun_icons()
+	return ..()
+
 //Removes lock fro mall targets
 /obj/item/weapon/gun/proc/stop_aim()
 	if(target)
@@ -69,6 +76,7 @@
 	if(!istype(M)) return
 	if(src != M.equipped())
 		stop_aim()
+		return
 	M.last_move_intent = world.time
 	if(load_into_chamber())
 		var/firing_check = in_chamber.check_fire(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
