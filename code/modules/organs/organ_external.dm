@@ -42,7 +42,7 @@
 	var/germ_level = 0
 
 	// how often wounds should be updated, a higher number means less often
-	var/wound_update_accuracy = 20 // update every 20 ticks(roughly every minute)
+	var/wound_update_accuracy = 1
 
 /datum/organ/external/New(var/datum/organ/external/P)
 	if(P)
@@ -305,7 +305,7 @@
 						parent.germ_level += round(GERM_TRANSFER_AMOUNT)
 */
 
-//Updating wounds. Handles wound natural healing, internal bleedings and infections
+//Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
 	for(var/datum/wound/W in wounds)
 		// wounds can disappear after 10 minutes at the earliest
@@ -320,20 +320,28 @@
 			if(prob(1 * wound_update_accuracy))
 				owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
 
-		if(W.bandaged || W.salved)
-			// slow healing
-			var/amount = 0.2
-			if(W.is_treated())
-				amount += 10
-			// amount of healing is spread over all the wounds
-			W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
+		// slow healing
+		var/heal_amt = 0.2
+		if (W.damage > 20)	//this thing's edges are not in day's travel of each other, what healing?
+			heal_amt = 0
+
+		if(W.is_treated())
+			heal_amt += 0.3
+
+		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
+		heal_amt = heal_amt * wound_update_accuracy
+		//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
+		heal_amt = heal_amt * config.organ_regeneration_multiplier
+		// amount of healing is spread over all the wounds
+		heal_amt = heal_amt / (wounds.len + 1)
+		// making it look prettier on scanners
+		heal_amt = round(heal_amt,0.1)
+		W.heal_damage(heal_amt)
 
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))
 			W.germ_level = 0
 			W.disinfected = 1
-
-
 
 	// sync the organ's damage with its wounds
 	src.update_damages()
