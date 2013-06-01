@@ -7,6 +7,7 @@
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
+	siemens_coefficient = 0
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
@@ -19,6 +20,7 @@
 	icon_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
+	siemens_coefficient = 0
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
@@ -26,6 +28,7 @@
 	icon_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
+	siemens_coefficient = 0
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
@@ -39,6 +42,7 @@
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	siemens_coefficient = 0
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
@@ -78,6 +82,7 @@
 	icon_state = "jackboots"
 	item_state = "jackboots"
 	color = "hosred"
+	siemens_coefficient = 0
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -85,6 +90,7 @@
 	icon_state = "cult"
 	item_state = "cult"
 	color = "cult"
+	siemens_coefficient = 0
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
