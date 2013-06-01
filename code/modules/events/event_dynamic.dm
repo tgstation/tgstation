@@ -60,21 +60,21 @@ var/list/event_last_fired = list()
 	possibleEvents[/datum/event/infestation] = 50 + 25 * active_with_role["Janitor"]
 
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
-	possibleEvents[/datum/event/ionstorm] = 25 + active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
-	possibleEvents[/datum/event/grid_check] = 25 + 10 * active_with_role["Engineer"]
-	possibleEvents[/datum/event/electrical_storm] = 75 + 25 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
-	possibleEvents[/datum/event/wallrot] = 50 * active_with_role["Engineer"] + 100 * active_with_role["Botanist"]
+	possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
+	possibleEvents[/datum/event/grid_check] = 25 + 20 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/electrical_storm] = 10 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
+	possibleEvents[/datum/event/wallrot] = 30 * active_with_role["Engineer"] + 50 * active_with_role["Botanist"]
 
 	if(!spacevines_spawned)
-		possibleEvents[/datum/event/spacevine] = 5 + 10 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/spacevine] = 5 + 5 * active_with_role["Engineer"]
 	if(minutes_passed >= 30) // Give engineers time to set up engine
-		possibleEvents[/datum/event/meteor_wave] = 20 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/meteor_shower] = 80 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/blob] = 30 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/meteor_wave] = 10 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/meteor_shower] = 40 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/blob] = 20 * active_with_role["Engineer"]
 
 	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 100
 	if(active_with_role["Medical"] > 0)
-		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 100
+		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 50
 		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 150
 		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 10
 		possibleEvents[/datum/event/organ_failure] = active_with_role["Medical"] * 50
@@ -90,7 +90,8 @@ var/list/event_last_fired = list()
 
 	for(var/event_type in event_last_fired) if(possibleEvents[event_type])
 		var/time_passed = world.time - event_last_fired[event_type]
-		var/weight_modifier = max(0, 60 * 60 - time_passed / 100)
+		var/full_recharge_after = 60 * 60 * 10 * 3 // 3 hours
+		var/weight_modifier = max(0, (full_recharge_after - time_passed) / 300)
 		
 		possibleEvents[event_type] = max(possibleEvents[event_type] - weight_modifier, 0)
 

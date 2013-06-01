@@ -54,7 +54,10 @@ var/list/department_radio_keys = list(
 	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
+	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling",
+	  ":ë" = "skrell",		"#ë" = "skrell",		".ë" = "skrell",
+	  ":î" = "tajaran",		"#î" = "tajaran",		".î" = "tajaran",
+	  ":ù" = "soghun",		"#ù" = "soghun",		".ù" = "soghun"
 )
 
 /mob/living/proc/binarycheck()
@@ -416,7 +419,7 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
+			message_b = say_quote(message_b,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"

@@ -25,6 +25,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	siemens_coefficient = 0
 
 //Deathsquad suit
 /obj/item/clothing/head/helmet/space/deathsquad
@@ -33,6 +34,7 @@
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
 	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
+	siemens_coefficient = 0
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"

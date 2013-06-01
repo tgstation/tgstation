@@ -71,6 +71,7 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+	siemens_coefficient = 0
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"

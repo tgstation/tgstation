@@ -75,6 +75,7 @@
 	color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 0
 
 
 /obj/item/clothing/head/helmet/HoS
@@ -85,6 +86,7 @@
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags_inv = 0
 	flags_inv = HIDEEARS
+	siemens_coefficient = 0
 
 
 /obj/item/clothing/suit/armor/hos
@@ -95,6 +97,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0
 
 
 /obj/item/clothing/head/helmet/HoS/dermal
@@ -110,6 +113,7 @@
 	icon_state = "jensen"
 	item_state = "jensen"
 	color = "jensen"
+	siemens_coefficient = 0
 
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchcoat"
@@ -117,3 +121,4 @@
 	icon_state = "jensencoat"
 	item_state = "jensencoat"
 	flags_inv = 0
+	siemens_coefficient = 0
