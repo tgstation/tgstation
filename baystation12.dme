@@ -53,6 +53,9 @@
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/Serithi"
 #define FILE_DIR "sound/weapons"
+#define FILE_DIR "tools"
+#define FILE_DIR "tools/AddToChangelog"
+#define FILE_DIR "tools/AddToChangelog/AddToChangelog"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
@@ -492,6 +495,7 @@
 #include "code\game\objects\items\devices\transfer_valve.dm"
 #include "code\game\objects\items\devices\uplinks.dm"
 #include "code\game\objects\items\devices\violin.dm"
+#include "code\game\objects\items\devices\whistle.dm"
 #include "code\game\objects\items\devices\PDA\cart.dm"
 #include "code\game\objects\items\devices\PDA\chatroom.dm"
 #include "code\game\objects\items\devices\PDA\PDA.dm"
