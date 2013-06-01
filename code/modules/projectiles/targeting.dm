@@ -78,8 +78,8 @@
 		stop_aim()
 		return
 	M.last_move_intent = world.time
-	if(load_into_chamber())
-		var/firing_check = in_chamber.check_fire(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
+	if(can_fire())
+		var/firing_check = can_hit(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
 		if(firing_check > 0)
 			if(firing_check == 1)
 				Fire(T,usr, reflex = 1)
