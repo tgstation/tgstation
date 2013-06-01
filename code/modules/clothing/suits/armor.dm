@@ -8,6 +8,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE
+	siemens_coefficient = 0
 
 
 /obj/item/clothing/suit/armor/vest
@@ -171,9 +172,11 @@
 	desc = "Reddish armor."
 	icon_state = "tdred"
 	item_state = "tdred"
+	siemens_coefficient = 1
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "Thunderdome suit (green)"
 	desc = "Pukish armor."
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
+	siemens_coefficient = 1
