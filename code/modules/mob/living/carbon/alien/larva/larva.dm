@@ -294,7 +294,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			sleeping = max(0,sleeping-5)
+			AdjustSleeping(-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)

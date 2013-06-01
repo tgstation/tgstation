@@ -2,11 +2,10 @@
 	set invisibility = 0
 	set background = 1
 
-	if (src.monkeyizing)
+	if(monkeyizing)
 		return
 
-
-	src.blinded = null
+	blinded = null
 
 	//Status updates, death etc.
 	clamp_values()
@@ -15,74 +14,63 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
-	if (src.stat != DEAD) //still using power
-		use_power()
+
+	if(stat != DEAD)
 		process_killswitch()
-		process_locks()
+		if(!resting)
+			use_power()
+
 	update_canmove()
 
 
-
-
 /mob/living/silicon/robot/proc/clamp_values()
-
-//	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
-//	SetWeakened(min(weakened, 20))
-	sleeping = 0
-	adjustBruteLoss(0)
+	adjustBruteLoss(0)	//WHY
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
 	adjustFireLoss(0)
 
-/mob/living/silicon/robot/proc/use_power()
 
-	if (src.cell)
-		if(src.cell.charge <= 0)
+/mob/living/silicon/robot/proc/use_power()
+	if(cell)
+		if(cell.charge <= 0)
 			uneq_all()
-			src.stat = 1
-		else if (src.cell.charge <= 100)
+			stat = UNCONSCIOUS
+		else if(cell.charge <= 100)
 			uneq_all()
-			src.cell.use(1)
+			cell.use(1)
 		else
-			if(src.module_state_1)
-				src.cell.use(5)
-			if(src.module_state_2)
-				src.cell.use(5)
-			if(src.module_state_3)
-				src.cell.use(5)
-			src.cell.use(1)
-			src.blinded = 0
-			src.stat = 0
+			if(module_state_1)
+				cell.use(5)
+			if(module_state_2)
+				cell.use(5)
+			if(module_state_3)
+				cell.use(5)
+			cell.use(1)
+			blinded = 0
+			stat = CONSCIOUS
 	else
 		uneq_all()
-		src.stat = 1
+		stat = UNCONSCIOUS
 
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
-
-	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || wires.IsCameraCut())
-			src.camera.status = 0
+	if(camera && !scrambledcodes)
+		if(stat == DEAD || wires.IsCameraCut())
+			camera.status = 0
 		else
-			src.camera.status = 1
+			camera.status = 1
 
 	health = maxHealth - (getOxyLoss() + getFireLoss() + getBruteLoss())
 
-	if(getOxyLoss() > 50) Paralyse(3)
-
-	if(src.sleeping)
+	if(getOxyLoss() > 50)
 		Paralyse(3)
-		src.sleeping--
 
-	if(src.resting)
-		Weaken(5)
-
-	if(health <= config.health_threshold_dead && src.stat != 2) //die only once
+	if(health <= config.health_threshold_dead && stat != DEAD) //die only once
 		death()
 
-	if (src.stat != 2) //Alive.
-		if(health < 50) //Gradual break down of modules as more damage is sustained
+	if(stat != DEAD)	//Alive.
+		if(health < 50)	//Gradual break down of modules as more damage is sustained
 			if(uneq_module(module_state_3))
 				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
 			if(health < 0)
@@ -92,136 +80,137 @@
 					if(uneq_module(module_state_1))
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
-		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
-			src.stat = 1
-			if (src.stunned > 0)
+		if(paralysis || stunned || weakened)	//Stunned etc.
+			stat = 1
+			if(stunned > 0)
 				AdjustStunned(-1)
-			if (src.weakened > 0)
+			if(weakened > 0)
 				AdjustWeakened(-1)
-			if (src.paralysis > 0)
+			if(paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 1
+				blinded = 1
 			else
-				src.blinded = 0
+				blinded = 0
 
 		else	//Not stunned.
-			src.stat = 0
+			stat = 0
 
-	else //Dead.
-		src.blinded = 1
-		src.stat = 2
+	else	//Dead.
+		blinded = 1
+		stat = DEAD
 
-	if (src.stuttering) src.stuttering--
+	if(stuttering)
+		stuttering--
 
-	if (src.eye_blind)
-		src.eye_blind--
-		src.blinded = 1
+	if(eye_blind)
+		eye_blind--
+		blinded = 1
 
-	if (src.ear_deaf > 0) src.ear_deaf--
-	if (src.ear_damage < 25)
-		src.ear_damage -= 0.05
-		src.ear_damage = max(src.ear_damage, 0)
+	if(ear_deaf > 0)
+		ear_deaf--
+	if(ear_damage < 25)
+		ear_damage -= 0.05
+		ear_damage = max(ear_damage, 0)
 
-	src.density = !( src.lying )
+	if(sdisabilities & BLIND)
+		blinded = 1
+	if(sdisabilities & DEAF)
+		ear_deaf = 1
 
-	if ((src.sdisabilities & BLIND))
-		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
-		src.ear_deaf = 1
+	if(eye_blurry > 0)
+		eye_blurry--
+		eye_blurry = max(0, eye_blurry)
 
-	if (src.eye_blurry > 0)
-		src.eye_blurry--
-		src.eye_blurry = max(0, src.eye_blurry)
-
-	if (src.druggy > 0)
-		src.druggy--
-		src.druggy = max(0, src.druggy)
+	if(druggy > 0)
+		druggy--
+		druggy = max(0, druggy)
 
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.sight |= SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
+/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+	if(stat == DEAD || XRAY in mutations || sight_mode & BORGXRAY)
+		sight |= SEE_TURFS
+		sight |= SEE_MOBS
+		sight |= SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else if(sight_mode & BORGMESON && sight_mode & BORGTHERM)
+		sight |= SEE_TURFS
+		sight |= SEE_MOBS
+		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON)
-		src.sight |= SEE_TURFS
-		src.see_in_dark = 8
+	else if(sight_mode & BORGMESON)
+		sight |= SEE_TURFS
+		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGTHERM)
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != 2)
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_TURFS
-		src.sight &= ~SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else if(sight_mode & BORGTHERM)
+		sight |= SEE_MOBS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else if(stat != 2)
+		sight &= ~SEE_MOBS
+		sight &= ~SEE_TURFS
+		sight &= ~SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
+		if(copytext(hud.icon_state,1,4) == "hud")	//ugly, but icon comparison is worse, I believe
 			client.images.Remove(hud)
 
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
+	var/obj/item/borg/sight/hud/hud = locate(/obj/item/borg/sight/hud) in src
+	if(hud && hud.hud)
+		hud.hud.process_hud(src)
 
-	if (src.healths)
-		if (src.stat != 2)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(100 to INFINITY)
-					src.healths.icon_state = "health0"
+					healths.icon_state = "health0"
 				if(50 to 100)
-					src.healths.icon_state = "health2"
+					healths.icon_state = "health2"
 				if(0 to 50)
-					src.healths.icon_state = "health3"
+					healths.icon_state = "health3"
 				if(-50 to 0)
-					src.healths.icon_state = "health4"
+					healths.icon_state = "health4"
 				if(config.health_threshold_dead to -50)
-					src.healths.icon_state = "health5"
+					healths.icon_state = "health5"
 				else
-					src.healths.icon_state = "health6"
+					healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health7"
+			healths.icon_state = "health7"
 
-	if (src.syndicate && src.client)
+	if(syndicate && client)
 		if(ticker.mode.name == "traitor")
 			for(var/datum/mind/tra in ticker.mode.traitors)
 				if(tra.current)
 					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor")
-					src.client.images += I
-		if(src.connected_ai)
-			src.connected_ai.connected_robots -= src
-			src.connected_ai = null
-		if(src.mind)
-			if(!src.mind.special_role)
-				src.mind.special_role = "traitor"
-				ticker.mode.traitors += src.mind
+					client.images += I
+		if(connected_ai)
+			connected_ai.connected_robots -= src
+			connected_ai = null
+		if(mind)
+			if(!mind.special_role)
+				mind.special_role = "traitor"
+				ticker.mode.traitors += mind
 
-	if (src.cells)
-		if (src.cell)
-			var/cellcharge = src.cell.charge/src.cell.maxcharge
+	if(cells)
+		if(cell)
+			var/cellcharge = cell.charge/cell.maxcharge
 			switch(cellcharge)
 				if(0.75 to INFINITY)
-					src.cells.icon_state = "charge4"
+					cells.icon_state = "charge4"
 				if(0.5 to 0.75)
-					src.cells.icon_state = "charge3"
+					cells.icon_state = "charge3"
 				if(0.25 to 0.5)
-					src.cells.icon_state = "charge2"
+					cells.icon_state = "charge2"
 				if(0 to 0.25)
-					src.cells.icon_state = "charge1"
+					cells.icon_state = "charge1"
 				else
-					src.cells.icon_state = "charge0"
+					cells.icon_state = "charge0"
 		else
-			src.cells.icon_state = "charge-empty"
+			cells.icon_state = "charge-empty"
 
 	if(bodytemp)
 		switch(bodytemperature) //310.055 optimal body temp
@@ -242,71 +231,60 @@
 			else
 				pullin.icon_state = "pull0"
 
-//Oxygen and fire does nothing yet!!
-//	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
-//	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
+	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired)
 
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-	if ((src.blind && src.stat != 2))
-		if(src.blinded)
-			src.blind.layer = 18
+	if(blind && stat != DEAD)
+		if(blinded || resting)
+			blind.layer = 18
 		else
-			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
-				src.client.screen += global_hud.vimpaired
+			blind.layer = 0
+			if(disabilities & NEARSIGHTED)
+				client.screen += global_hud.vimpaired
 
-			if (src.eye_blurry)
-				src.client.screen += global_hud.blurry
+			if(eye_blurry)
+				client.screen += global_hud.blurry
 
-			if (src.druggy)
-				src.client.screen += global_hud.druggy
+			if(druggy)
+				client.screen += global_hud.druggy
 
-	if (src.stat != 2)
-		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
-				src.reset_view(null)
+	if(stat != DEAD)
+		if(machine)
+			if(!machine.check_eye(src))
+				reset_view(null)
 		else
 			if(!client.adminobs)
 				reset_view(null)
 
 	return 1
 
+
 /mob/living/silicon/robot/proc/update_items()
-	if (src.client)
-		src.client.screen -= src.contents
-		for(var/obj/I in src.contents)
+	if(client)
+		client.screen -= contents
+		for(var/obj/I in contents)
 			if(I && !(istype(I,/obj/item/weapon/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
-				src.client.screen += I
-	if(src.module_state_1)
-		src.module_state_1:screen_loc = ui_inv1
-	if(src.module_state_2)
-		src.module_state_2:screen_loc = ui_inv2
-	if(src.module_state_3)
-		src.module_state_3:screen_loc = ui_inv3
+				client.screen += I
+	if(module_state_1)
+		module_state_1:screen_loc = ui_inv1
+	if(module_state_2)
+		module_state_2:screen_loc = ui_inv2
+	if(module_state_3)
+		module_state_3:screen_loc = ui_inv3
 
 
 /mob/living/silicon/robot/proc/process_killswitch()
 	if(killswitch)
 		killswitch_time --
 		if(killswitch_time <= 0)
-			if(src.client)
-				src << "\red <B>Killswitch Activated"
+			src << "<span class='userdanger'>Killswitch activated.</span>"
 			killswitch = 0
 			spawn(5)
 				gib()
 
-/mob/living/silicon/robot/proc/process_locks()
-	if(weapon_lock)
-		uneq_all()
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
-			weapon_lock = 0
-			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-	else canmove = 1
+	if(paralysis || stunned || weakened || buckled || lockcharge || resting)
+		canmove = 0
+	else
+		canmove = 1
 	return canmove

@@ -378,7 +378,7 @@ datum
 					if(15 to 25)
 						M.drowsyness  = max(M.drowsyness, 20)
 					if(25 to INFINITY)
-						M.sleeping += 1
+						M.AdjustSleeping(1)
 						M.adjustOxyLoss(-M.getOxyLoss())
 						M.SetWeakened(0)
 						M.SetStunned(0)
@@ -1019,7 +1019,7 @@ datum
 				M.drowsyness = 0
 				M.stuttering = 0
 				M.confused = 0
-				M.sleeping = 0
+				M.SetSleeping(0)
 				M.jitteriness = 0
 				for(var/datum/disease/D in M.viruses)
 					D.spread = "Remissive"
@@ -1431,7 +1431,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustOxyLoss(3*REM)
-				M.sleeping += 1
+				M.AdjustSleeping(1)
 				..()
 				return
 
@@ -1569,9 +1569,9 @@ datum
 						M.confused += 2
 						M.drowsyness += 2
 					if(10 to 50)
-						M.sleeping += 1
+						M.AdjustSleeping(1)
 					if(51 to INFINITY)
-						M.sleeping += 1
+						M.AdjustSleeping(1)
 						M.adjustToxLoss((data - 50)*REM)
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
@@ -1589,9 +1589,9 @@ datum
 				if(!data) data = 1
 				switch(data)
 					if(1 to 50)
-						M.sleeping += 1
+						M.AdjustSleeping(1)
 					if(51 to INFINITY)
-						M.sleeping += 1
+						M.AdjustSleeping(1)
 						M.adjustToxLoss(data - 50)
 				data++
 				..()
@@ -2340,7 +2340,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = max(0,M.sleeping - 2)
+				M.AdjustSleeping(-2)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
@@ -2361,7 +2361,7 @@ datum
 				M.dizziness = max(0,M.dizziness-2)
 				M.drowsyness = max(0,M.drowsyness-1)
 				M.jitteriness = max(0,M.jitteriness-3)
-				M.sleeping = max(0,M.sleeping-1)
+				M.AdjustSleeping(-1)
 				if(M.getToxLoss() && prob(20))
 					M.adjustToxLoss(-1)
 				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
@@ -2380,7 +2380,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = max(0,M.sleeping-2)
+				M.AdjustSleeping(-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
@@ -2398,7 +2398,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-2)
 				M.drowsyness = max(0,M.drowsyness-1)
-				M.sleeping = max(0,M.sleeping-2)
+				M.AdjustSleeping(-2)
 				if(M.getToxLoss() && prob(20))
 					M.adjustToxLoss(-1)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
@@ -2432,7 +2432,7 @@ datum
 				M.druggy = max(M.druggy, 30)
 				M.dizziness +=5
 				M.drowsyness = 0
-				M.sleeping = max(0,M.sleeping-2)
+				M.AdjustSleeping(-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += 1
@@ -2448,7 +2448,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M.drowsyness = max(0,M.drowsyness-7)
-				M.sleeping = max(0,M.sleeping-1)
+				M.AdjustSleeping(-1)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
@@ -2524,7 +2524,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = max(0,M.sleeping-2)
+				M.AdjustSleeping(-2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
@@ -2554,7 +2554,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = 0
+				M.SetSleeping(0)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
@@ -2574,7 +2574,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = 0
+				M.SetSleeping(0)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
@@ -2620,7 +2620,7 @@ datum
 				data++
 				switch(data)
 					if(51 to INFINITY)
-						M.sleeping += 1
+						M.AdjustSleeping(1)
 				..()
 				return
 
@@ -2757,7 +2757,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
-				M.sleeping = max(0,M.sleeping-2)
+				M.AdjustSleeping(-2)
 				M.make_jittery(5)
 				..()
 				return
@@ -2776,7 +2776,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M.drowsyness = max(0,M.drowsyness-7)
-				M.sleeping = max(0,M.sleeping-2)
+				M.AdjustSleeping(-2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
