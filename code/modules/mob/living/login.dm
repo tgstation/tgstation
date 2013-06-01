@@ -8,8 +8,6 @@
 	//Round specific stuff like hud updates
 	if(ticker && ticker.mode)
 		switch(ticker.mode.name)
-			if("sandbox")
-				CanBuild()
 			if("revolution")
 				if((mind in ticker.mode.revolutionaries) || (src.mind in ticker.mode:head_revolutionaries))
 					ticker.mode.update_rev_icons_added(src.mind)
