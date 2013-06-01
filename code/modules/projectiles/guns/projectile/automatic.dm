@@ -19,7 +19,7 @@
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	max_shells = 16
-	caliber = "			.45"
+	caliber = ".45"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/c45"
 

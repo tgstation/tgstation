@@ -135,30 +135,7 @@
 		if(!istype(location))	return//returns if loc is not simulated
 
 		var/datum/gas_mixture/environment = location.return_air()
-		var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
-
-		var/list/current_settings = TLV["pressure"]
-		var/environment_pressure = environment.return_pressure()
-		var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
-
-		current_settings = TLV["oxygen"]
-		var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, current_settings)
-
-		current_settings = TLV["carbon dioxide"]
-		var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, current_settings)
-
-		current_settings = TLV["plasma"]
-		var/plasma_dangerlevel = get_danger_level(environment.toxins*partial_pressure, current_settings)
-
-		current_settings = TLV["other"]
-		var/other_moles = 0.0
-		for(var/datum/gas/G in environment.trace_gases)
-			other_moles+=G.moles
-		var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, current_settings)
-
-		current_settings = TLV["temperature"]
-		var/temperature_dangerlevel = get_danger_level(environment.temperature, current_settings)
-
+		var/temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
 		//Handle temperature adjustment here.
 		if(temperature_dangerlevel || regulating_temperature)
 			//If it goes too far, we should adjust ourselves back before stopping.
@@ -194,18 +171,14 @@
 				"You hear a click as a faint electronic humming stops.")
 
 
-		var/old_danger_level = danger_level
-		danger_level = max(pressure_dangerlevel,
-			oxygen_dangerlevel,
-			co2_dangerlevel,
-			plasma_dangerlevel,
-			other_dangerlevel,
-			temperature_dangerlevel)
+		danger_level = overall_danger_level()
+		log_debug("Processing [name] : level - [danger_level]")
 
-		if (old_danger_level != danger_level)
-			apply_danger_level(danger_level)
+		if (alarm_area.master_air_alarm == src)
+			refresh_danger_level()
+			update_icon()
 
-		if (mode==AALARM_MODE_CYCLE && environment_pressure<ONE_ATMOSPHERE*0.05)
+		if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
 			mode=AALARM_MODE_FILL
 			apply_mode()
 
@@ -225,6 +198,33 @@
 		updateDialog()
 		return
 
+	proc/overall_danger_level()
+		var/turf/simulated/location = loc
+		if(!istype(location))	return//returns if loc is not simulated
+
+		var/datum/gas_mixture/environment = location.return_air()
+
+		var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
+		var/environment_pressure = environment.return_pressure()
+		var/other_moles = 0.0
+		for(var/datum/gas/G in environment.trace_gases)
+			other_moles+=G.moles
+
+		var/pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
+		var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, TLV["oxygen"])
+		var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, TLV["carbon dioxide"])
+		var/plasma_dangerlevel = get_danger_level(environment.toxins*partial_pressure, TLV["plasma"])
+		var/temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
+		var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, TLV["other"])
+
+		return max(
+			pressure_dangerlevel,
+			oxygen_dangerlevel,
+			co2_dangerlevel,
+			plasma_dangerlevel,
+			other_dangerlevel,
+			temperature_dangerlevel
+			)
 
 	proc/master_is_operating()
 		return alarm_area.master_air_alarm && !(alarm_area.master_air_alarm.stat & (NOPOWER|BROKEN))
@@ -382,6 +382,15 @@
 			air_doors_open(0)
 
 		update_icon()
+
+	proc/refresh_danger_level()
+		var/level = 0
+		for (var/area/A in alarm_area.related)
+			for (var/obj/machinery/alarm/AA in A)
+				if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+					if (AA.danger_level > level)
+						level = AA.danger_level
+		apply_danger_level(level)
 
 	proc/air_doors_close(manual)
 		var/area/A = get_area(src)

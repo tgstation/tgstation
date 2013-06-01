@@ -18,14 +18,6 @@
 	use_power = 0
 	var/release_log = ""
 
-/obj/machinery/portable_atmospherics/initialize()
-	. = ..()
-	spawn()
-		var/obj/machinery/atmospherics/portables_connector/connector = locate() in loc
-		if(connector)
-			connected_port = connector
-			update_icon()
-
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"

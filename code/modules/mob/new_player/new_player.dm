@@ -65,6 +65,10 @@
 	Stat()
 		..()
 
+		statpanel("Status")
+		if (client.statpanel == "Status" && ticker)
+			if (ticker.current_state != GAME_STATE_PREGAME)
+				stat(null, "Station Time: [worldtime2text()]")
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.hide_mode)
@@ -380,7 +384,7 @@
 		dat += "<h4>Crew Manifest</h4>"
 		dat += data_core.get_manifest()
 
-		src << browse(dat, "window=manifest;size=300x420;can_close=1")
+		src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 	Move()
 		return 0

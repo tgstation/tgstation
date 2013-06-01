@@ -18,17 +18,14 @@
 		return
 
 	if (length(message) >= 2)
-		if ((copytext(message, 1, 3) == ":b") || (copytext(message, 1, 3) == ":B") || \
-			(copytext(message, 1, 3) == "#b") || (copytext(message, 1, 3) == "#B") || \
-			(copytext(message, 1, 3) == ".b") || (copytext(message, 1, 3) == ".B"))
+		var/prefix = copytext(message, 1, 3)
+		if (department_radio_keys[prefix] == "binary")
 			if(istype(src, /mob/living/silicon/pai))
 				return ..(message)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			robot_talk(message)
-		else if ((copytext(message, 1, 3) == ":h") || (copytext(message, 1, 3) == ":H") || \
-				(copytext(message, 1, 3) == "#h") || (copytext(message, 1, 3) == "#H") || \
-				(copytext(message, 1, 3) == ".h") || (copytext(message, 1, 3) == ".H"))
+		else if (department_radio_keys[prefix] == "department")
 			if(isAI(src)&&client)//For patching directly into AI holopads.
 				var/mob/living/silicon/ai/U = src
 				message = copytext(message, 3)

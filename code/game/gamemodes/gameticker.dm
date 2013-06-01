@@ -39,7 +39,8 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick(\
 	'sound/music/space.ogg',\
-	'sound/music/traitor.ogg')
+	'sound/music/traitor.ogg',\
+	'sound/music/space_oddity.ogg') //Ground Control to Major Tom, this song is cool, what's going on?
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -264,6 +265,8 @@ var/global/datum/controller/gameticker/ticker
 				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()
 					player.AIize()
+				else if(!player.mind.assigned_role)
+					continue
 				else
 					player.create_character()
 					del(player)

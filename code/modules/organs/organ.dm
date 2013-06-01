@@ -11,6 +11,9 @@
 	proc/receive_chem(chemical as obj)
 		return 0
 
+/datum/organ/proc/get_icon()
+	return icon('icons/mob/human.dmi',"blank")
+
 //Handles chem traces
 /mob/living/carbon/human/proc/handle_trace_chems()
 	//New are added for reagents to random organs.

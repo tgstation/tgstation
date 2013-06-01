@@ -9,10 +9,15 @@
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	nodamage = 1
+	/* - Old taser bit
+	nodamage = 0
 	stun = 10
 	weaken = 10
 	stutter = 10
+	*/
+	damage = 40
+	damage_type = HALLOSS
+
 
 
 /obj/item/projectile/energy/declone
