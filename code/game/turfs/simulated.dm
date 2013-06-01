@@ -73,3 +73,32 @@
 					M.Weaken(10)
 
 	..()
+
+//returns 1 if made bloody, returns 0 otherwise
+/turf/simulated/add_blood(mob/living/carbon/human/M as mob)
+	if (!..())
+		return 0
+
+	for(var/obj/effect/decal/cleanable/blood/B in contents)
+		if(!B.blood_DNA[M.dna.unique_enzymes])
+			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+		return 1 //we bloodied the floor
+
+	//if there isn't a blood decal already, make one.
+	var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(src)
+	newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	return 1 //we bloodied the floor
+
+
+// Only adds blood on the floor -- Skie
+/turf/simulated/proc/add_blood_floor(mob/living/carbon/M as mob)
+	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
+		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
+		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+
+	else if( istype(M, /mob/living/carbon/alien ))
+		var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(src)
+		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
+
+	else if( istype(M, /mob/living/silicon/robot ))
+		new /obj/effect/decal/cleanable/oil(src)
