@@ -785,6 +785,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(!isnull(source.mind))
 				mind = source.mind
 
+			if(!source.client && source.mind)
+				for(var/mob/dead/observer/ghost in player_list)
+					if(ghost.mind == source.mind)
+						ghost << "<b><font color = #330033><font size = 3>Your blood has been injected into a replica pod. Remain in your body until harvest if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+
 		W:reagents.clear_reagents()
 	else
 		return ..()
