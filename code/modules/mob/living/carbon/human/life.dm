@@ -1128,6 +1128,15 @@
 					if(260 to 280)			bodytemp.icon_state = "temp-3"
 					else					bodytemp.icon_state = "temp-4"
 
+			var/tint = tintcheck()				// Welding mask overlay check
+			if(tint >= 2 )
+				if(tinted_weldhelh)
+					if(tint >= 3)
+						blinded = 1				// You get the sudden urge to learn to play keyboard
+						client.screen += global_hud.darkMask
+					else
+						client.screen += global_hud.darkMask
+
 			if(blind)
 				if(blinded)		blind.layer = 18
 				else			blind.layer = 0
@@ -1137,18 +1146,6 @@
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
-			var/masked = 0
-
-			if( istype(head, /obj/item/clothing/head/welding) )
-				var/obj/item/clothing/head/welding/O = head
-				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
-					masked = 1
-
-			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
-				var/obj/item/clothing/glasses/welding/O = glasses
-				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
 
 			if(eye_stat > 20)
 				if(eye_stat > 30)	client.screen += global_hud.darkMask

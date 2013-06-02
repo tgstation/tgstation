@@ -65,6 +65,8 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+	flash_protect = 1
+	tint = 1
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -73,6 +75,8 @@
 	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
+	flash_protect = 2
+	tint = 2
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
@@ -90,12 +94,16 @@
 			flags_inv |= HIDEEYES
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
+			flash_protect = 2
+			tint = 2
 		else
 			src.up = !src.up
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~HIDEEYES
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
+			flash_protect = 0
+			tint = 0
 
 		usr.update_inv_glasses(0)
 
@@ -146,6 +154,7 @@
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
+	flash_protect = -1
 
 	emp_act(severity)
 		if(istype(src.loc, /mob/living/carbon/human))
