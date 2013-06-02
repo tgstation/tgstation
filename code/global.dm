@@ -76,8 +76,8 @@ var/blobevent = 0
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
-var/station_name = "NSS Exodus"
-var/game_version = "Baystation12"
+var/station_name = null
+var/game_version = "adsfasdfasdf"
 var/changelog_hash = ""
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
@@ -87,7 +87,7 @@ var/secret_force_mode = "secret" // if this is anything but "secret", the secret
 
 var/datum/engine_eject/engine_eject_control = null
 var/host = null
-var/aliens_allowed = 0
+var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/dooc_allowed = 1
 var/traitor_scaling = 1

@@ -44,7 +44,7 @@ proc/explosion_rec(turf/epicenter, power)
 	epicenter = get_turf(epicenter)
 	if(!epicenter) return
 
-	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>)")
 	log_game("Explosion with size ([power]) in area [epicenter.loc.name] ")
 
 	playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(power*2,1) )

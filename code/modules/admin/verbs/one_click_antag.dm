@@ -17,17 +17,17 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
-		"}
+
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
 	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
-
+*/
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
-*/
+
 	usr << browse(dat, "window=oneclickantag;size=400x400")
 	return
 
@@ -217,6 +217,7 @@ client/proc/one_click_antag()
 
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
+	var/list/mob/dead/observer/picked = list()
 	var/time_passed = world.time
 
 	for(var/mob/dead/observer/G in player_list)
@@ -245,19 +246,26 @@ client/proc/one_click_antag()
 					candidates.Remove(j)
 					continue
 
-				theghost = candidates
+				theghost = j
 				candidates.Remove(theghost)
-
+/* Seeing if we have enough agents before we make the nuke team
+				var/mob/living/carbon/human/new_character=makeBody(theghost)
+				new_character.mind.make_Nuke()
+*/
+				picked += theghost
+				agentcount++
+				break
+//This is so we don't get a nuke team with only 1 or 2 people
+		if(agentcount < 3)
+			return 0
+		else
+			for(var/mob/j in picked)
+				theghost = j
 				var/mob/living/carbon/human/new_character=makeBody(theghost)
 				new_character.mind.make_Nuke()
 
-				agentcount++
-
-		if(agentcount < 1)
-			return 0
-
 		var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-		var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
+		var/obj/effect/landmark/closet_spawn = locate("landmark*Syndicate-Uplink")
 
 		var/nuke_code = "[rand(10000, 99999)]"
 
@@ -298,7 +306,6 @@ client/proc/one_click_antag()
 
 		for (var/obj/machinery/nuclearbomb/bomb in world)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
-
 	return 1
 
 

@@ -309,7 +309,7 @@
 /datum/organ/external/proc/update_wounds()
 	for(var/datum/wound/W in wounds)
 		// wounds can disappear after 10 minutes at the earliest
-		if(W.damage == 0 && W.created + 10 * 10 * 60 <= world.time)
+		if(W.damage == 0 && W.created + 3.25 * 10 * 60 <= world.time)
 			wounds -= W
 			// let the GC handle the deletion of the wound
 
@@ -648,7 +648,7 @@
 	name = "head"
 	icon_name = "head"
 	display_name = "head"
-	max_damage = 75
+	max_damage = 130
 	min_broken_damage = 40
 	body_part = HEAD
 	var/disfigured = 0

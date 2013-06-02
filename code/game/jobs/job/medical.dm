@@ -11,10 +11,10 @@
 	req_admin_notify = 1
 	access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist)
+			access_keycard_auth, access_sec_doors, access_paramedic)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist)
+			access_keycard_auth, access_sec_doors, access_paramedic)
 	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
@@ -183,7 +183,7 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		return 1*/
+		return 1
 
 /datum/job/psychiatrist
 	title = "Psychiatrist"
@@ -197,7 +197,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_psychiatrist)
 	minimal_access = list(access_medical, access_psychiatrist)
 	alt_titles = list("Psychologist")
-
+*/
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

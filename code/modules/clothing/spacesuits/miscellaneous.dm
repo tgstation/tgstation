@@ -41,6 +41,20 @@
 	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
 
+//Paramedic EVA suit
+/obj/item/clothing/head/helmet/space/paramedic
+	name = "Paramedic EVA helmet"
+	desc = "A paramedic space helmet. Used in the recovery of bodies from space."
+	icon_state = "paramedic-eva-helmet"
+	item_state = "paramedic-eva-helmet"
+
+/obj/item/clothing/suit/space/paramedic
+	name = "Paramedic EVA suit"
+	icon_state = "paramedic-eva"
+	item_state = "paramedic-eva"
+	desc = "A paramedic space suit. Used in the recovery of bodies from space."
+	slowdown = 1
+
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"

@@ -196,7 +196,7 @@
 
 
 //Griff //BS12 EDIT
-/*
+
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
@@ -267,7 +267,7 @@
 		H.mind.special_verbs += /client/proc/mimewall
 		H.miming = 1
 		return 1
-*/
+
 
 
 /datum/job/janitor
@@ -349,7 +349,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/internalaffairs(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/internalaffairs(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/big(H), slot_glasses)
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
 		if(H.backbag == 1)

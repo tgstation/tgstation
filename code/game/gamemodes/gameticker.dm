@@ -113,6 +113,11 @@ var/global/datum/controller/gameticker/ticker
 				centcomm_account_db = check_db
 				break
 
+	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
+	master_controller.process()		//Start master_controller.process()
+	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+
+	sleep(10)
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -121,6 +126,8 @@ var/global/datum/controller/gameticker/ticker
 
 	//here to initialize the random events nicely at round start
 	setup_economy()
+
+
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
@@ -143,11 +150,6 @@ var/global/datum/controller/gameticker/ticker
 			admins_number++
 	if(admins_number == 0)
 		send2irc("Server", "Round just started with no admins online!")
-
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
-	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
-
 
 	if(config.sql_enabled)
 		spawn(3000)

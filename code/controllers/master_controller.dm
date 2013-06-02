@@ -51,6 +51,11 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
+	socket_talk = new /datum/socket_talk()
+// notify the other process that we started up
+	socket_talk.send_raw("type=startup")
+
+
 	createRandomZlevel()
 
 	if(!air_master)
@@ -67,6 +72,8 @@ datum/controller/game_controller/proc/setup()
 
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
+
+	if(config.socket_talk) spawn keepalive()
 
 	spawn(0)
 		if(ticker)
@@ -100,6 +107,20 @@ datum/controller/game_controller/proc/setup_objects()
 	sleep(-1)
 
 
+datum/controller/game_controller/proc/set_ticker_state(var/state)
+	if(socket_talk)
+		socket_talk.set_ticker_state("AIR")
+	else
+		if(config.socket_talk)
+			socket_talk = new /datum/socket_talk()
+
+
+datum/controller/game_controller/proc/keepalive()
+	spawn while(1)
+		sleep(10)
+// Notify the other process that we're still there
+		socket_talk.send_keepalive()
+
 datum/controller/game_controller/proc/process()
 	processing = 1
 	spawn(0)
@@ -122,6 +143,7 @@ datum/controller/game_controller/proc/process()
 				//AIR
 
 				if(!air_processing_killed)
+					set_ticker_state("AIR")
 					timer = world.timeofday
 					last_thing_processed = air_master.type
 					air_master.tick()
@@ -145,6 +167,7 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//SUN
+				set_ticker_state("SUN")
 				timer = world.timeofday
 				last_thing_processed = sun.type
 				sun.calc_position()
@@ -153,6 +176,7 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//MOBS
+				set_ticker_state("MOBS")
 				timer = world.timeofday
 				process_mobs()
 				mobs_cost = (world.timeofday - timer) / 10
@@ -160,6 +184,7 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//DISEASES
+				set_ticker_state("DISEASES")
 				timer = world.timeofday
 				process_diseases()
 				diseases_cost = (world.timeofday - timer) / 10
@@ -167,6 +192,7 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//MACHINES
+				set_ticker_state("MACHINES")
 				timer = world.timeofday
 				process_machines()
 				machines_cost = (world.timeofday - timer) / 10
@@ -174,6 +200,7 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//OBJECTS
+				set_ticker_state("OBJECTS")
 				timer = world.timeofday
 				process_objects()
 				objects_cost = (world.timeofday - timer) / 10
@@ -182,6 +209,7 @@ datum/controller/game_controller/proc/process()
 
 				//PIPENETS
 				if(!pipe_processing_killed)
+					set_ticker_state("PIPENETS")
 					timer = world.timeofday
 					process_pipenets()
 					networks_cost = (world.timeofday - timer) / 10
@@ -189,6 +217,7 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//POWERNETS
+				set_ticker_state("POWERNETS")
 				timer = world.timeofday
 				process_powernets()
 				powernets_cost = (world.timeofday - timer) / 10
@@ -196,11 +225,13 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//EVENTS
+				set_ticker_state("EVENTS")
 				timer = world.timeofday
 				process_events()
 				events_cost = (world.timeofday - timer) / 10
 
 				//TICKER
+				set_ticker_state("TIMING")
 				timer = world.timeofday
 				last_thing_processed = ticker.type
 				ticker.process()

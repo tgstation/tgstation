@@ -71,9 +71,10 @@
 	message = say_quote(message)
 
 	rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
-
+	var/rendered2 = null
 	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1)
-			M.show_message(rendered, 2)
+		if (M.stat > 1 && istype(M, /mob/dead/observer))
+			rendered2 = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
+			M.show_message(rendered2, 2)

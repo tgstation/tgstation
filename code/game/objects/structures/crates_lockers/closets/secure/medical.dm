@@ -195,3 +195,22 @@
 				icon_state = icon_closed
 		else
 			icon_state = icon_opened
+
+/obj/structure/closet/secure_closet/paramedic
+	name = "Paramedic EVA gear"
+	desc = "A locker with a Paramedic EVA suit."
+	icon_state = "medical1"
+	icon_closed = "medical"
+	icon_locked = "medical1"
+	icon_opened = "medicalopen"
+	icon_broken = "medicalbroken"
+	icon_off = "medicaloff"
+	req_access = list(access_paramedic)
+
+
+	New()
+		..()
+		sleep(2)
+		new /obj/item/clothing/suit/space/paramedic(src)
+		new /obj/item/clothing/head/helmet/space/paramedic(src)
+		return

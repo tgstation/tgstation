@@ -84,6 +84,9 @@
 	//MONEY
 /var/const/access_crate_cash = 200
 
+// /VG/ SPECIFIC SHIT
+/var/const/access_paramedic = 500
+
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null
@@ -209,7 +212,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway)
+	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -224,7 +227,7 @@
 		if(1) //security
 			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(2) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo)
+			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
 		if(3) //research
 			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
@@ -342,10 +345,10 @@
 			return "Chief Medical Officer"
 		if(access_qm)
 			return "Quartermaster"
-/*		if(access_clown)
+		if(access_clown)
 			return "HONK! Access"
 		if(access_mime)
-			return "Silent Access"*/
+			return "Silent Access"
 		if(access_surgery)
 			return "Surgery"
 		if(access_theatre)
@@ -386,6 +389,9 @@
 			return "Gateway"
 		if(access_sec_doors)
 			return "Brig"
+// /vg/ shit
+		if(access_paramedic)
+			return "Paramedic Station"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -410,7 +416,7 @@
 
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", /*"Clown", "Mime", */"Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 

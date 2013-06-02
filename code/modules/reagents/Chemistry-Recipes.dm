@@ -966,7 +966,24 @@ datum
 					O.show_message(text("\red Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!"), 1)
 				var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 				S.loc = get_turf_loc(holder.my_atom)
+				var/message = "A grey slime reaction has occured"
 
+				var/atom/A = holder.my_atom
+				if(A)
+					var/turf/T = get_turf(A)
+					var/area/my_area = get_area(T)
+					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+
+					var/mob/M = get(A, /mob)
+					if(M)
+						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
+					else
+						message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
+				else
+					message += "."
+
+				message_admins(message, 0, 1)
 
 		slimemonkey
 			name = "Slime Monkey"
@@ -1018,6 +1035,10 @@ datum
 			required_container = /obj/item/slime_extract/gold
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+				sleep(50)
 
 				var/blocked = list(/mob/living/simple_animal/hostile,
 					/mob/living/simple_animal/hostile/pirate,
@@ -1035,6 +1056,26 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
+				var/message = "A gold slime reaction has occured"
+
+				var/atom/A = holder.my_atom
+				if(A)
+					var/turf/T = get_turf(A)
+					var/area/my_area = get_area(T)
+					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+
+					var/mob/M = get(A, /mob)
+					if(M)
+						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
+						log_game("A gold slime reaction has occured in [my_area.name] ([T.x],[T.y],[T.z]) - Carried by [M.real_name] ([M.key])")
+					else
+						message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
+						log_game("A gold slime reaction has occured in [my_area.name] ([T.x],[T.y],[T.z]) - last fingerprint  [(A.fingerprintslast ? A.fingerprintslast : "N/A")]")
+				else
+					message += "."
+
+				message_admins(message, 0, 1)
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))

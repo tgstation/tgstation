@@ -330,23 +330,23 @@ Auto Patrol: []"},
 
 
 		if(SECBOT_START_PATROL)	// start a patrol
-
-			if(path.len > 0 && patrol_target)	// have a valid path, so just resume
-				mode = SECBOT_PATROL
-				return
-
-			else if(patrol_target)		// has patrol target already
-				spawn(0)
-					calc_path()		// so just find a route to it
-					if(path.len == 0)
-						patrol_target = 0
-						return
+			if(path != null)
+				if(path.len > 0 && patrol_target)	// have a valid path, so just resume
 					mode = SECBOT_PATROL
+					return
+
+				else if(patrol_target)		// has patrol target already
+					spawn(0)
+						calc_path()		// so just find a route to it
+						if(path.len == 0)
+							patrol_target = 0
+							return
+						mode = SECBOT_PATROL
 
 
-			else					// no patrol target, so need a new one
-				find_patrol_target()
-				speak("Engaging patrol mode.")
+				else					// no patrol target, so need a new one
+					find_patrol_target()
+					speak("Engaging patrol mode.")
 
 
 		if(SECBOT_PATROL)		// patrol mode
