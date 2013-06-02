@@ -240,7 +240,6 @@
 #define FILE_DIR "config"
 #define FILE_DIR "config/names"
 #define FILE_DIR "data"
-#define FILE_DIR "data/logs"
 #define FILE_DIR "DLLSocket"
 #define FILE_DIR "html"
 #define FILE_DIR "icons"
