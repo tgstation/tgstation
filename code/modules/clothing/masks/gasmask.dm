@@ -9,51 +9,6 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
-// **** Welding gas mask ****
-
-/obj/item/clothing/mask/gas/welding
-	name = "welding mask"
-	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
-	icon_state = "death"
-	item_state = "death"
-	m_amt = 3000
-	g_amt = 1000
-	var/up = 0
-	flash_protect = 2
-	tint = 2
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	action_button_name = "Toggle Welding Helmet"
-
-/obj/item/clothing/mask/gas/welding/attack_self()
-	toggle()
-
-
-/obj/item/clothing/mask/gas/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding mask"
-	set src in usr
-
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= (MASKCOVERSEYES)
-			flags_inv |= (HIDEEYES)
-		//	icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
-			flash_protect = 2
-			tint = 2
-		else
-			src.up = !src.up
-			src.flags &= ~(MASKCOVERSEYES)
-			flags_inv &= ~(HIDEEYES)
-		//	icon_state = "[initial(icon_state)]up"						// i hab only placeholder sprites oh noooess!!!
-			usr << "You push the [src] up out of your face."
-			flash_protect = 0
-			tint = 0
-		usr.update_inv_wear_mask(0)	//so our mob-overlays update
-
-// ********************************************************************
-
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
 	name = "plague doctor mask"
