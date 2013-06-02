@@ -21,6 +21,9 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define TINT_IMPAIR 2
+#define TINT_BLIND 3
+
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
@@ -28,6 +31,8 @@
 	var/pressure_alert = 0
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
+	var/tinttotal = 0				// Total level of visualy impairing items
+
 
 
 /mob/living/carbon/human/Life()
@@ -45,6 +50,8 @@
 	//to find it.
 	blinded = null
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
+	tinttotal = tintcheck() //here as both hud updates and status updates call it
+
 
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -871,9 +878,9 @@
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
+			else if(tinttotal >= TINT_BLIND)		//covering your eyes heals blurry eyes faster
 				eye_blurry = max(eye_blurry-3, 0)
-				blinded = 1
+			//	blinded = 1				//now handled under /handle_regular_hud_updates()
 			else if(eye_blurry)	//blurry eyes heal slowly
 				eye_blurry = max(eye_blurry-1, 0)
 
@@ -1128,11 +1135,11 @@
 					if(260 to 280)			bodytemp.icon_state = "temp-3"
 					else					bodytemp.icon_state = "temp-4"
 
-			var/tint = tintcheck()				// Welding mask overlay check
-			if(tint >= 2 )
+//	This checks how much the mob's eyewear impairs their vision
+			if(tinttotal >= TINT_IMPAIR)
 				if(tinted_weldhelh)
-					if(tint >= 3)
-						blinded = 1				// You get the sudden urge to learn to play keyboard
+					if(tinttotal >= TINT_BLIND)
+						blinded = 1								// You get the sudden urge to learn to play keyboard
 						client.screen += global_hud.darkMask
 					else
 						client.screen += global_hud.darkMask

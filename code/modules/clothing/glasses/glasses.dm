@@ -112,7 +112,9 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	vision_flags = BLIND
+//	vision_flags = BLIND	//handled in life.dm/handle_regular_hud_updates()
+	flash_protect = 2
+	tint = 3			// to make them blind
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
