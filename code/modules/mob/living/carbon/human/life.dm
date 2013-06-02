@@ -21,8 +21,8 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-#define TINT_IMPAIR 2
-#define TINT_BLIND 3
+#define TINT_IMPAIR 2			//Threshold of tint level to apply weld mask overlay
+#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
 
 /mob/living/carbon/human
 	var/oxygen_alert = 0
