@@ -27,7 +27,11 @@
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
 	hide = 1
-	toggled = 0
+	toggled = 1
+	//anchored = 1
+	//use_power = 0
+	//idle_power_usage = 0
+	heatgen = 0
 	autolinkers = list("c_relay")
 
 //HUB
