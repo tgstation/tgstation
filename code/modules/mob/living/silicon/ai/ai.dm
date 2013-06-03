@@ -133,6 +133,8 @@ var/list/ai_list = list()
 		icons += "M00X-BC"
 	if (src.name == "Skuld" && src.ckey == "ravensdale")
 		icons += "Skuld"
+	if (src.name == "REMNANT" && src.ckey == "serithi")
+		icons += "REMNANT"
 	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
@@ -170,6 +172,8 @@ var/list/ai_list = list()
 		icon_state = "ai-triumvirate-malf"
 	else if(icontype == "Skuld")
 		icon_state = "ai-ravensdale"
+	else if(icontype == "REMNANT")
+		icon_state = "ai-serithi"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
