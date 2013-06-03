@@ -12,7 +12,7 @@
 		return
 
 
-	var/permitted = 0
+	var/permitted = 1
 	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
 	for(var/T in allowed)
 		if(mind.special_role == T)
