@@ -145,9 +145,10 @@ var/list/department_radio_keys = list(
 			// Check changed so that parrots can use headsets. Other simple animals do not have ears and will cause runtimes.
 			// And borgs -Sieve
 
+/* /vg/ removals
 	if(src.stunned > 2 || (traumatic_shock > 61 && prob(50)))
 		message_mode = "" //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
-
+*/
 	if (!message)
 		return
 
@@ -400,12 +401,21 @@ var/list/department_radio_keys = list(
 			message_a = "<i>[message_a]</i>"
 
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
-		for (var/M in heard_a)
+		var/rendered2 = null
+
+		for (var/mob/M in heard_a)
+		//BEGIN TELEPORT CHANGES
+			if(!istype(M, /mob/new_player))
+				if(M && M.stat == DEAD)
+					rendered2 = "<span class='game say'><span class='name'>[GetVoice()]</span></span> [alt_name] <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span>"
+					M:show_message(rendered2, 2)
+					continue
+	//END CHANGES
 			if(hascall(M,"show_message"))
 				var/deaf_message = ""
 				var/deaf_type = 1
 				if(M != src)
-					deaf_message = "<span class='name'>[name]</span>[alt_name] talks but you cannot hear them."
+					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
 				else
 					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
 					deaf_type = 2 // Since you should be able to hear yourself without looking
@@ -419,15 +429,23 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message_b,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
+			message_b = say_quote(message_b)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game say'><span class='name'>[name]</span>[alt_name] <span class='message'>[message_b]</span></span>" //Voice_name isn't too useful. You'd be able to tell who was talking presumably.
-
+		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
+		var/rendered2 = null
 
 		for (var/M in heard_b)
+			var/mob/MM
+			if(istype(M, /mob))
+				MM = M
+			if(!istype(MM, /mob/new_player) && MM)
+				if(MM && MM.stat == DEAD)
+					rendered2 = "<span class='game say'><span class='name'>[voice_name]</span></span> <a href='byond://?src=\ref[MM];follow2=\ref[MM];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_b]</span></span>"
+					MM:show_message(rendered2, 2)
+					continue
 			if(hascall(M,"show_message"))
 				M:show_message(rendered, 2)
 				M << speech_bubble

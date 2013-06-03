@@ -155,9 +155,9 @@
 
 
 /world/Reboot(var/reason)
-	/*spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
-		*/
+	spawn(0)
+		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
+
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -307,6 +307,7 @@ proc/setup_database_connection()
 	if ( . )
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
+		world.log << "Error: [dbcon.ErrorMsg()]"
 		failed_db_connections++		//If it failed, increase the failed connections counter.
 
 	return .
@@ -316,6 +317,12 @@ proc/establish_db_connection()
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
+	var/DBQuery/q
+	if(dbcon)
+		q = dbcon.NewQuery("show global variables like 'wait_timeout'")
+		q.Execute()
+	if(q.ErrorMsg())
+		dbcon.Disconnect()
 	if(!dbcon || !dbcon.IsConnected())
 		return setup_database_connection()
 	else

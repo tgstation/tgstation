@@ -72,6 +72,8 @@
 		winset(user, "chemdispenser.eject", "text=\"Eject beaker\"")
 	else
 		winset(user, "chemdispenser.eject", "text=\"\[Insert beaker\]\"")
+
+/*Old
 /obj/machinery/chem_dispenser/proc/initWindow(mob/user as mob)
 	var/i = 0
 	var/list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;type;image;image-mode"))
@@ -92,6 +94,35 @@
 			winset(user, "chemdispenser_reagent_dispense[i]", list2params(newparams2))
 			i++
 	winset(user, "chemdispenser_reagents", "size=340x[8 + 40 * i]")
+*/
+
+//New
+/obj/machinery/chem_dispenser/proc/initWindow(mob/user as mob)
+	var/i = 0
+	var/chemC = 0
+	var/j = 0
+	//var/selectedChemical = null
+	var/list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;background-color;text-color;type;"))
+	for(var/re in dispensable_reagents)
+		var/datum/reagent/temp = chemical_reagents_list[re]
+		if(temp)
+			var/list/newparams1 = nameparams.Copy()
+			//var/list/newparams2 = buttonparams.Copy()
+			var/posy = 8 + 40 * i
+			var/posx = 16 + 176 * j
+			newparams1["pos"] = text("[posx],[posy]")
+			newparams1["font-size"] = "13"
+			//newparams1["font-style"] = "bold"
+			newparams1["parent"] = "chemdispenser_reagents"
+			newparams1["text"] = temp.name //+ " " + "[chemC]"
+			newparams1["command"] = text("skincmd \"chemdispenser;[temp.id]\"")
+			winset(user, "chemdispenser_reagent_name[chemC]", list2params(newparams1))
+			j++
+			chemC = chemC + 1
+			if(j>=3)
+				j = 0
+				i++
+	winset(user, "chemdispenser_reagents", "size=340x[8 + 32 * (i-2)]")
 
 /obj/machinery/chem_dispenser/SkinCmd(mob/user as mob, var/data as text)
 	if(stat & (BROKEN|NOPOWER)) return
@@ -121,7 +152,7 @@
 			R.add_reagent(data, min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
-	amount = round(amount, 10) // Chem dispenser doesnt really have that much prescion
+	amount = round(amount, 5) // Chem dispenser doesnt really have that much prescion
 	if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
 		amount = 0
 	if (amount > 100)

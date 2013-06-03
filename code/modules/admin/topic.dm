@@ -34,17 +34,17 @@
 					usr << "\red Unfortunatly there were no candidates available"
 			if("7")
 				log_admin("[key_name(usr)] has spawned a nuke team.")
-				if(!src.makeNukeTeam())
+				if(!makeNukeTeam())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("8")
 				log_admin("[key_name(usr)] has spawned a ninja.")
-				src.makeSpaceNinja()
+				makeSpaceNinja()
 			if("9")
 				log_admin("[key_name(usr)] has spawned aliens.")
-				src.makeAliens()
+				makeAliens()
 			if("10")
 				log_admin("[key_name(usr)] has spawned a death squad.")
-				if(!src.makeDeathsquad())
+				if(!makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -1963,6 +1963,12 @@
 						var/obj/machinery/status_display/A = M
 						A.friendc = 1
 				message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
+			if("aliens")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","AL")
+				message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+				//makeAliens()
+				new /datum/event/alien_infestation
 			if("floorlava")
 				if(floorIsLava)
 					usr << "The floor is lava already."

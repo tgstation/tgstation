@@ -2,6 +2,14 @@
  * Job related
  */
 
+//Paramedic
+/obj/item/clothing/suit/storage/paramedic
+	name = "paramedic vest"
+	desc = "A hazard vest used in the recovery of bodies."
+	icon_state = "paramedic-vest"
+	item_state = "paramedic-vest"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 10)
+
 //Botonist
 /obj/item/clothing/suit/apron
 	name = "apron"

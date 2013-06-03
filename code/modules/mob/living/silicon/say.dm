@@ -90,6 +90,9 @@
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
 				S.show_message(renderedAI, 2)
+			else if(istype(S , /mob/dead/observer) && S.stat == DEAD)
+				var/rendered2 = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[S];follow2=\ref[S];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
+				S.show_message(rendered2, 2)
 			else
 				S.show_message(rendered, 2)
 
@@ -98,6 +101,9 @@
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
 				S.show_message(renderedAI, 2)
+			else if(istype(S , /mob/dead/observer) && S.stat == DEAD)
+				var/rendered2 = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[S];follow2=\ref[S];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
+				S.show_message(rendered2, 2)
 			else
 				S.show_message(rendered, 2)
 
@@ -124,8 +130,9 @@
 
 	message = say_quote(message)
 
-	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
+	rendered = null
 
 	for (var/mob/M in dead_mob_list)
 		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping
+			rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
 			M.show_message(rendered, 2)

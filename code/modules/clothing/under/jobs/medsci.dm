@@ -119,6 +119,17 @@
 	color = "scrubspurple"
 	flags = FPRINT | TABLEPASS
 
+//paramedic
+/obj/item/clothing/under/rank/medical/paramedic
+	desc = "It's made of a special fiber that provides minor protection against biohazards and radiation. It has a cross on the chest denoting that the wearer is trained medical personnel."
+	name = "paramedic's jumpsuit"
+	icon_state = "paramedic"
+	item_state = "paramedic"
+	color = "paramedic"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 10)
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
 
 
 

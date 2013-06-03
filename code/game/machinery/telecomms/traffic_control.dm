@@ -189,7 +189,7 @@
 					SelectedServer.autoruncode = !(SelectedServer.autoruncode)
 
 		if(href_list["network"])
-
+			world.log << "diddly widdly scrub fuck nigger [issilicon(usr)] [istype(usr, /mob/living/silicon)]"
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
 			if(newnet && ((usr in range(1, src) || issilicon(usr))))

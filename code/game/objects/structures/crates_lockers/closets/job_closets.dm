@@ -76,3 +76,36 @@
 	new /obj/item/clothing/suit/storage/lawyer/purpjacket(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/black(src)
+
+	//Paramedic
+
+/obj/structure/closet/paramedic
+	name = "Paramedic Wardrobe"
+	desc = "It's a storage unit for paramedic equipment."
+	icon_state = "blue"
+	icon_closed = "blue"
+
+
+/obj/structure/closet/paramedic/New()
+	new /obj/item/clothing/under/rank/medical/paramedic(src)
+	new /obj/item/clothing/under/rank/medical/paramedic(src)
+	new /obj/item/device/radio/headset/headset_med(src)
+	new /obj/item/device/radio/headset/headset_med(src)
+	new /obj/item/clothing/head/soft/blue(src)
+	new /obj/item/clothing/head/soft/blue(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/head/soft/blue(src)
+	new /obj/item/clothing/head/soft/blue(src)
+	new /obj/item/clothing/suit/storage/paramedic(src)
+	new /obj/item/clothing/suit/storage/paramedic(src)
+	new /obj/item/clothing/suit/storage/paramedic(src)
+	new /obj/item/clothing/suit/storage/paramedic(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)

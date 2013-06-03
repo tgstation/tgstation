@@ -230,6 +230,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 		return
 
+	if(!path)
+		path = new()
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return

@@ -421,6 +421,10 @@ Alien plants should do something if theres a lot of poison
 			status = BURSTING
 			spawn(15)
 				status = BURST
+				if(!child)
+					src.visible_message("\red The egg bursts apart revealing nothing")
+					status = "GROWN"
+					new /obj/effect/decal/cleanable/xenoblood(src)
 				loc.contents += child//need to write the code for giving it to the alien later
 				if(kill && istype(child))
 					child.Die()
