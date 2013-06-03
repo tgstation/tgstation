@@ -299,7 +299,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-		ratio = 0.33
+		ratio = sharing_lookup_table[6]
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 		size = max(1,A.group_multiplier)
@@ -376,23 +376,18 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		unsim_plasma = 0
 		unsim_heat_capacity = 0
 		unsim_temperature = 0
+
 	for(var/turf/T in unsimulated_tiles)
 		unsim_oxygen += T.oxygen
 		unsim_co2 += T.carbon_dioxide
 		unsim_nitrogen += T.nitrogen
 		unsim_plasma += T.toxins
-
-		// Make sure it actually has gas in it, and use the heat capacity of that.
-		// Space and unsimulated tiles do NOT have a heat capacity. Thus we don't
-		// add them. This means "space is not cold", which turns out just fine in
-		// gameplay terms.
-		if(istype(T, /turf/simulated))
-			unsim_heat_capacity += T:air.heat_capacity()
-
 		unsim_temperature += T.temperature/unsimulated_tiles.len
 
+	unsim_heat_capacity = HEAT_CAPACITY_CALCULATION(unsim_oxygen,unsim_co2,unsim_nitrogen,unsim_plasma)
+
 	var
-		ratio = 0.33
+		ratio = sharing_lookup_table[6]
 
 		old_pressure = A.return_pressure()
 
@@ -404,7 +399,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		// slowly than small rooms, preserving our good old "hollywood-style"
 		// oh-shit effect when large rooms get breached, but still having small
 		// rooms remain pressurized for long enough to make escape possible.
-		share_size = max(1,size - 5 + unsimulated_tiles.len)
+		share_size = max(1, unsimulated_tiles.len)
 
 		full_oxy = A.oxygen * size
 		full_nitro = A.nitrogen * size
@@ -444,7 +439,7 @@ proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-		ratio = 0.33
+		ratio = sharing_lookup_table[6]
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 		full_heat_capacity = A.heat_capacity()

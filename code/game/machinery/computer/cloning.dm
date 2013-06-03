@@ -202,9 +202,9 @@
 
 				dat += "Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a><br>"
 
-			if (!isnull(src.pod1))
+/*			if (!isnull(src.pod1))
 				dat += "Biomass: <i>[src.pod1.biomass]</i><br>"
-
+*/
 			// Database
 			dat += "<h4>Database Functions</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"
@@ -248,10 +248,8 @@
 				dat += {"<b>UI:</b> [src.active_record.fields["UI"]]<br>
 				<b>SE:</b> [src.active_record.fields["SE"]]<br><br>"}
 
-				if(pod1 && pod1.biomass >= CLONE_BIOMASS)
+				if(pod1)
 					dat += {"<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"}
-				else
-					dat += {"<b>Unsufficient biomass</b><br>"}
 
 		if(4)
 			if (!src.active_record)
@@ -385,8 +383,6 @@
 				temp = "Error: No Clonepod detected."
 			else if(pod1.occupant)
 				temp = "Error: Clonepod is currently occupied."
-			else if(pod1.biomass < CLONE_BIOMASS)
-				temp = "Error: Not enough biomass."
 			else if(pod1.mess)
 				temp = "Error: Clonepod malfunction."
 			else if(!config.revival_cloning)

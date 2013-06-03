@@ -46,11 +46,17 @@
 /obj/item/taperoll/attack_self(mob/user as mob)
 	if(icon_state == "[icon_base]_start")
 		start = get_turf(src)
+		if(istype(start,/turf/space))
+			usr << "\red You can't place tape in space"
+			return
 		usr << "\blue You place the first end of the [src]."
 		icon_state = "[icon_base]_stop"
 	else
 		icon_state = "[icon_base]_start"
 		end = get_turf(src)
+		if(istype(end,/turf/space))
+			usr << "\red You can't place tape in space"
+			return
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
 			usr << "\blue [src] can only be laid horizontally or vertically."
 			return
