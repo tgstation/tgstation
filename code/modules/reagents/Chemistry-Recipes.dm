@@ -1546,6 +1546,70 @@ datum
 				if(P)
 					P.loc = get_turf(holder.my_atom)
 
+//Rainbow
+
+		slimebananium
+			name = "Slime Bananium"
+			id = "m_bananium"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/rainbow
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/mineral/clown
+				M.amount = 10
+				M.loc = get_turf(holder.my_atom)
+				playsound(get_turf(holder.my_atom), 'sound/items/bikehorn.ogg', 100, 1)
+
+		slimehonk
+			name = "Slime Honk"
+			id = "m_honk"
+			result = null
+			required_reagents = list("banana" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/rainbow
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
+					O.show_message(text("\red The slime extract begins to honk violently !"), 1)
+				sleep(50)
+
+				var/message = "A rainbow slime reaction has occured"
+
+				var/atom/A = holder.my_atom
+				if(A)
+					var/turf/T = get_turf(A)
+					var/area/my_area = get_area(T)
+					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+
+					var/mob/M = get(A, /mob)
+					if(M)
+						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
+					else
+						message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
+				else
+					message += "."
+
+				message_admins(message, 0, 1)
+
+				playsound(get_turf(holder.my_atom), 'sound/items/bikehorn.ogg', 100, 1)
+
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
+					if(M:eyecheck() <= 0)
+						flick("e_flash", M.flash)
+
+				for(var/i = 1, i <= 5, i++)
+					var/chosen = /mob/living/simple_animal/hostile/retaliate/clown
+					var/mob/living/simple_animal/hostile/C = new chosen
+					C.faction = "slimesummon"
+					C.loc = get_turf(holder.my_atom)
+					if(prob(50))
+						for(var/j = 1, j <= rand(1, 3), j++)
+							step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
