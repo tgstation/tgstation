@@ -114,6 +114,8 @@ emp_act
 	if(!I || !user)	return 0
 
 	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
+	if(user == src) // Attacking yourself can't miss
+		target_zone = user.zone_sel.selecting
 	if(!target_zone)
 		visible_message("\red <B>[user] misses [src] with \the [I]!")
 		return

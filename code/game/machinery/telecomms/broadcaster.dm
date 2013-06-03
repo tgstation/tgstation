@@ -148,15 +148,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], list(0), connection.frequency)
-
-		if(connection.frequency == ERT_FREQ)
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], list(0), connection.frequency)
-
-
 		else
 			if(intercept)
 				Broadcast_Message(signal.data["connection"], signal.data["mob"],
@@ -354,6 +345,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 //				freq_text = "Mining"
 			if(1347)
 				freq_text = "Supply"
+			if(1441)
+				freq_text = "Death Squad"
+			if(1443)
+				freq_text = "Response Team"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
