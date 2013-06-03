@@ -195,7 +195,7 @@
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Basic", "Antique", "Landmate")
 			switch(icontype)
 				if("Basic")	icon_state = "Engineering"
-				if("Antique") icon_state = "Engineerrobot"
+				if("Antique") icon_state = "engineerrobot"
 				else		icon_state = "landmate"
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
