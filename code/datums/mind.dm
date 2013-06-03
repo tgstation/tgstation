@@ -765,7 +765,7 @@ datum/mind
 				return
 			switch(href_list["monkey"])
 				if("healthy")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -780,7 +780,7 @@ datum/mind
 								D.cure(0)
 							sleep(0) //because deleting of virus is done through spawn(0)
 				if("infected")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN, 0))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -793,7 +793,7 @@ datum/mind
 						else if (istype(M))
 							current.contract_disease(new /datum/disease/jungle_fever,1,0)
 				if("human")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN, 0))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(M))
