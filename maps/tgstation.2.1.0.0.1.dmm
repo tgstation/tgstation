@@ -4642,7 +4642,7 @@
 "bLn" = (/obj/structure/disposalpipe/sortjunction{dir = 1; icon_state = "pipe-j2s"; sortType = 2},/turf/simulated/wall,/area/maintenance/asmaint)
 "bLo" = (/obj/structure/table,/obj/item/weapon/hemostat{pixel_y = 4},/obj/item/weapon/cautery{pixel_y = 4},/obj/item/weapon/surgicaldrill,/turf/simulated/floor{icon_state = "showroomfloor"},/area/maintenance/asmaint)
 "bLp" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/camera{c_tag = "Medical Freezer Storage"; dir = 1; network = list("SS13"); pixel_x = 22},/obj/structure/table,/obj/item/weapon/retractor{pixel_x = 0; pixel_y = 6},/obj/item/weapon/scalpel,/obj/item/weapon/circular_saw,/turf/simulated/floor{icon_state = "showroomfloor"},/area/maintenance/asmaint)
-"bLq" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/light/small,/obj/machinery/optable,/turf/simulated/floor{icon_state = "showroomfloor"},/area/maintenance/asmaint)
+"bLq" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/optable,/obj/machinery/light,/turf/simulated/floor{icon_state = "showroomfloor"},/area/maintenance/asmaint)
 "bLr" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/computer/operating,/turf/simulated/floor{icon_state = "showroomfloor"},/area/maintenance/asmaint)
 "bLs" = (/obj/structure/closet/wardrobe/pjs,/turf/simulated/floor,/area/medical/sleeper)
 "bLt" = (/obj/machinery/alarm{dir = 1; icon_state = "alarm0"; pixel_y = -22},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "whitehall"; dir = 1},/area/medical/sleeper)
