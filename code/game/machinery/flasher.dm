@@ -78,11 +78,6 @@
 	src.last_flash = world.time
 	use_power(1000)
 
-	if(prob(5))	//Small chance to burn out on use
-		bulb.broken = 1
-		bulb.icon_state = "flashburnt"
-		src.power_change()
-
 	for (var/mob/O in viewers(src, null))
 		if (get_dist(src, O) > src.range)
 			continue
@@ -121,6 +116,13 @@
 		var/mob/living/carbon/M = AM
 		if ((M.m_intent != "walk") && (src.anchored))
 			src.flash()
+
+/obj/machinery/flasher/portable/flash()
+	..()
+	if(prob(5))	//Small chance to burn out on use
+		bulb.broken = 1
+		bulb.icon_state = "flashburnt"
+		src.power_change()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
