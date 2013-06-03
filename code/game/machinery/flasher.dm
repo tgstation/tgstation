@@ -28,15 +28,14 @@
 
 /obj/machinery/flasher/power_change()
 	if ( powered() && bulb && anchored)
-		if(bulb.broken)
-			return
 		stat &= ~NOPOWER
-		icon_state = "[base_state]1"
-//		src.sd_SetLuminosity(2)
+		if(bulb.broken)
+			icon_state = "[base_state]1-p"
+		else
+			icon_state = "[base_state]1"
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
-//		src.sd_SetLuminosity(0)
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -47,7 +46,7 @@
 			user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
 			bulb.loc = src.loc
 			bulb = null
-			src.icon_state = "[base_state]1-p"
+			src.power_change()
 
 	if (istype(W, /obj/item/device/flash))
 		add_fingerprint(user)
@@ -56,8 +55,7 @@
 			user.drop_item()
 			W.loc = src
 			bulb = W
-			if (!bulb.broken && src.anchored)
-				src.icon_state = "[base_state]1"
+			src.power_change()
 		else
 			user << "<span class='notice'>A flashbulb is already installed in [src].</span>"
 
@@ -83,7 +81,7 @@
 	if(prob(5))	//Small chance to burn out on use
 		bulb.broken = 1
 		bulb.icon_state = "flashburnt"
-		src.icon_state = "[base_state]1-p"
+		src.power_change()
 
 	for (var/mob/O in viewers(src, null))
 		if (get_dist(src, O) > src.range)
