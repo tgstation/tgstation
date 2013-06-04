@@ -338,6 +338,10 @@
 	O.layer = 5
 
 	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
+	if(!F)
+		if(O)
+			del(O)
+			user << "<span class='warning'>The thermite melts through the wall.</span>"
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
 	user << "<span class='warning'>The thermite melts through the wall.</span>"

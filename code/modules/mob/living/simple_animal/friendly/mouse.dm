@@ -99,6 +99,8 @@
 				var/atom/a = get_turf(vent)
 				choices.Add(a.loc)
 			var/turf/startloc = loc
+			if(!choices)
+				src << "\red This vent isn't connected to anything."
 			var/obj/selection = input("Select a destination.", "Duct System") in choices
 			var/selection_position = choices.Find(selection)
 			if(loc==startloc)

@@ -258,7 +258,7 @@ turf
 
 							//The unsimulated turf is adjacent to another one of our zone's turfs,
 							//  better rebuild to be sure we didn't get cut in twain
-							if(consider_rebuild)
+							if(consider_rebuild && NT.zone)
 								NT.zone.rebuild = 1
 
 							//Not adjacent to anything, and unsimulated.  Goodbye~

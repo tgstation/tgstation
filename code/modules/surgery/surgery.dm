@@ -64,7 +64,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
-	if(!istype(M,/mob/living/carbon))
+	if(!istype(M,/mob/living/carbon/human))
 		return 0
 	if (user.a_intent == "harm")	//check for Hippocratic Oath
 		return 0

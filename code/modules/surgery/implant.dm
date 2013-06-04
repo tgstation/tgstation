@@ -99,6 +99,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!istype(target, /mob/living/carbon/human)) return
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		var/can_fit = !affected.hidden && affected.cavity && tool.w_class <= get_max_wclass(affected)
 		return ..() && can_fit

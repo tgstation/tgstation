@@ -134,7 +134,10 @@
 				continue
 			mundane++
 			break
-
+		if(!analysed)
+			var/message = "<b>[src]</b> states, \"Cannot harvest, unable to analyse.\""
+			src.visible_message(message)
+			return
 		if(analysed.being_used)
 			var/message = "<b>[src]</b> states, \"Cannot harvest. Too much interference.\""
 			src.visible_message(message)
