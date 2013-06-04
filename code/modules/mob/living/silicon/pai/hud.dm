@@ -28,15 +28,15 @@
 			for(var/datum/data/record/E in data_core.general)
 				if(E.fields["name"] == perpname)
 					holder = perp.hud_list[WANTED_HUD]
-						for (var/datum/data/record/R in data_core.security)
+					for(var/datum/data/record/R in data_core.security)
 						if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							holder.icon_state = "hudwanted"
 							client.images += holder
-								break
-							else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
+							break
+						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
 							holder.icon_state = "hudprisoner"
 							client.images += holder
-								break
+							break
 						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
 							holder.icon_state = "hudparolled"
 							client.images += holder

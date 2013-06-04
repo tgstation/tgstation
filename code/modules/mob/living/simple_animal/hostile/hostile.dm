@@ -40,8 +40,6 @@
 					T = L
 					break
 
-		else
-			if (can_see(src, A, 10))
 		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			if (M.occupant)

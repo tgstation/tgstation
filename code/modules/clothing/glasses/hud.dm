@@ -97,7 +97,6 @@
 		if(perp.wear_id)
 			var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
 			if(I)
-				C.images += image(tempHud, perp, "hud[ckey(I.GetJobRealName())]")
 				perpname = I.registered_name
 				holder.icon_state = "hud[ckey(I.GetJobName())]"
 				C.images += holder
