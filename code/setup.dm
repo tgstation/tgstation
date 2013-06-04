@@ -122,6 +122,7 @@
 
 //Plasma fire properties
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+#define PLASMA_FLASHPOINT 					246+T0C
 #define PLASMA_UPPER_TEMPERATURE			1370+T0C
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	20
@@ -303,6 +304,7 @@ var/MAX_EXPLOSION_RANGE = 14
 // mob/var/list/mutations
 
 #define STRUCDNASIZE 27
+#define UNIDNASIZE 13
 
 	// Generic mutations:
 #define	TK				1
@@ -581,6 +583,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define ORGAN_SPLINTED 256
 #define SALVED 512
 #define ORGAN_DEAD 1024
+#define ORGAN_MUTATED 2048
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -619,6 +622,8 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define CHAT_PRAYER		256
 #define CHAT_RADIO		512
 #define CHAT_ATTACKLOGS	1024
+#define CHAT_DEBUGLOGS	2048
+
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS)
 

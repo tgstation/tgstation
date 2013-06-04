@@ -8,62 +8,60 @@
 	icon_state = "circ-off"
 	anchored = 0
 
-	//var/side = 1 // 1=left 2=right
-	var/status = 0
-
+	var/recent_moles_transferred = 0
+	var/last_heat_capacity = 0
+	var/last_temperature = 0
 	var/last_pressure_delta = 0
+	var/last_worldtime_transfer = 0
 
 	density = 1
 
 /obj/machinery/atmospherics/binary/circulator/New()
 	..()
-	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
+	desc = initial(desc) + "  Its outlet port is to the [dir2text(dir)]."
 
 /obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
-	if(!anchored)
-		return null
+	var/datum/gas_mixture/removed
+	if(anchored && !(stat&BROKEN) )
+		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = air2.return_pressure()
+		last_pressure_delta = max(input_starting_pressure - output_starting_pressure + 10, 0)
 
-	var/output_starting_pressure = air2.return_pressure()
-	var/input_starting_pressure = air1.return_pressure()
+		//only circulate air if there is a pressure difference (plus 10 kPa to represent friction in the machine)
+		if(air1.temperature > 0 && last_pressure_delta > 0)
 
-	if(output_starting_pressure >= input_starting_pressure-10)
-		//Need at least 10 KPa difference to overcome friction in the mechanism
-		last_pressure_delta = 0
-		return null
+			//Calculate necessary moles to transfer using PV = nRT
+			recent_moles_transferred = last_pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-	//Calculate necessary moles to transfer using PV = nRT
-	if(air1.temperature>0)
-		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
+			//Actually transfer the gas
+			removed = air1.remove(recent_moles_transferred)
+			if(removed)
+				last_heat_capacity = removed.heat_capacity()
+				last_temperature = removed.temperature
 
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+				//Update the gas networks.
+				if(network1)
+					network1.update = 1
 
-		last_pressure_delta = pressure_delta
+				last_worldtime_transfer = world.time
+		else
+			recent_moles_transferred = 0
 
-		//world << "pressure_delta = [pressure_delta]; transfer_moles = [transfer_moles];"
-
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-
-		if(network1)
-			network1.update = 1
-
-		if(network2)
-			network2.update = 1
-
+		update_icon()
 		return removed
-
-	else
-		last_pressure_delta = 0
 
 /obj/machinery/atmospherics/binary/circulator/process()
 	..()
-	update_icon()
+
+	if(last_worldtime_transfer < world.time - 50)
+		recent_moles_transferred = 0
+		update_icon()
 
 /obj/machinery/atmospherics/binary/circulator/update_icon()
 	if(stat & (BROKEN|NOPOWER) || !anchored)
 		icon_state = "circ-p"
-	else if(last_pressure_delta > 0)
-		if(last_pressure_delta > ONE_ATMOSPHERE)
+	else if(last_pressure_delta > 0 && recent_moles_transferred > 0)
+		if(last_pressure_delta > 5*ONE_ATMOSPHERE)
 			icon_state = "circ-run"
 		else
 			icon_state = "circ-slow"
@@ -105,13 +103,25 @@
 	else
 		..()
 
-/obj/machinery/atmospherics/binary/circulator/verb/rotate()
+/obj/machinery/atmospherics/binary/circulator/verb/rotate_clockwise()
 	set category = "Object"
-	set name = "Rotate Circulator"
+	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained() || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
+	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
+
+
+/obj/machinery/atmospherics/binary/circulator/verb/rotate_anticlockwise()
+	set category = "Object"
+	set name = "Rotate Circulator (Counterclockwise)"
+	set src in view(1)
+
+	if (usr.stat || usr.restrained() || anchored)
+		return
+
+	src.dir = turn(src.dir, -90)
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."

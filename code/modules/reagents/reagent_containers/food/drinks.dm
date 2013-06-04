@@ -384,6 +384,18 @@
 	icon_state = "flask"
 	volume = 60
 
+/obj/item/weapon/reagent_containers/food/drinks/flask/detflask
+	name = "Detective's Flask"
+	desc = "A metal flask with a leather band and golden badge belonging to the detective."
+	icon_state = "detflask"
+	volume = 60
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/barflask
+	name = "flask"
+	desc = "For those who can't be bothered to hang out at the bar to drink."
+	icon_state = "barflask"
+	volume = 60
+
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."

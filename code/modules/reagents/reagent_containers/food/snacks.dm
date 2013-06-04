@@ -16,6 +16,7 @@
 	if(!reagents.total_volume)
 		if(M == usr)
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
+		usr.visible_message("<span class='notice'>[usr] finishes eating \the [src].</span>")
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -1563,6 +1564,26 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledrice
+	name = "Boiled Rice"
+	desc = "A boring dish of boring rice."
+	icon_state = "boiledrice"
+	trash = /obj/item/trash/snack_bowl
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/ricepudding
+	name = "Rice Pudding"
+	desc = "Where's the Jam!"
+	icon_state = "rpudding"
+	trash = /obj/item/trash/snack_bowl
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato

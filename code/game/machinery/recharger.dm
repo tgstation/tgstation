@@ -100,3 +100,31 @@ obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to 
 		icon_state = "recharger1"
 	else
 		icon_state = "recharger0"
+
+obj/machinery/recharger/wallcharger
+	name = "wall recharger"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "wrecharger0"
+
+obj/machinery/recharger/wallcharger/process()
+	if(stat & (NOPOWER|BROKEN) || !anchored)
+		return
+
+	if(charging)
+		if(istype(charging, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/E = charging
+			if(E.power_supply.charge < E.power_supply.maxcharge)
+				E.power_supply.give(100)
+				icon_state = "wrecharger1"
+				use_power(250)
+			else
+				icon_state = "wrecharger2"
+			return
+		if(istype(charging, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = charging
+			if(B.charges < initial(B.charges))
+				B.charges++
+				icon_state = "wrecharger1"
+				use_power(150)
+			else
+				icon_state = "wrecharger2"

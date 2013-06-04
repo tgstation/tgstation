@@ -65,6 +65,10 @@
 	Stat()
 		..()
 
+		statpanel("Status")
+		if (client.statpanel == "Status" && ticker)
+			if (ticker.current_state != GAME_STATE_PREGAME)
+				stat(null, "Station Time: [worldtime2text()]")
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.hide_mode)
@@ -277,6 +281,8 @@
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
 
+		ticker.mode.latespawn(character)
+
 		//ticker.mode.latespawn(character)
 
 		if(character.mind.assigned_role != "Cyborg")
@@ -291,6 +297,8 @@
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
+			if(character.mind.role_alt_title)
+				rank = character.mind.role_alt_title
 			a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
 			del(a)
 
@@ -330,15 +338,15 @@
 		new_character.lastarea = get_area(loc)
 
 		if(client.prefs.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
-			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
+			if(is_alien_whitelisted(src, "Tajaran"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "tajaran"
 				new_character.tajaran_talk_understand = 1
 		if(client.prefs.species == "Unathi")
-			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
+			if(is_alien_whitelisted(src, "Soghun"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "lizard"
 				new_character.soghun_talk_understand = 1
 		if(client.prefs.species == "Skrell")
-			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
+			if(is_alien_whitelisted(src, "Skrell"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "skrell"
 				new_character.skrell_talk_understand = 1
 
@@ -363,6 +371,10 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = client.prefs.b_type
 
+		if(client.prefs.disabilities)
+			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,GLASSESBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,GLASSESBLOCK,3)),3)
+			new_character.disabilities |= NEARSIGHTED
+
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
@@ -372,7 +384,7 @@
 		dat += "<h4>Crew Manifest</h4>"
 		dat += data_core.get_manifest()
 
-		src << browse(dat, "window=manifest;size=300x420;can_close=1")
+		src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 	Move()
 		return 0

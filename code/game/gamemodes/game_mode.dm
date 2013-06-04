@@ -27,6 +27,7 @@
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
+	var/newscaster_announcements = null
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -205,27 +206,42 @@ Implants;
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
-	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
+	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"
 
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	//possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
 
-	if(!intercept_hacked)
-		possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
+	var/list/suspects = list()
+	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
+		// NT relation option
+		var/special_role = man.mind.special_role
+		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
+		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
+			suspects += man
+		// Antags
+		else if(special_role == "traitor" && prob(40) || \
+		   special_role == "Changeling" && prob(50) || \
+		   special_role == "Cultist" && prob(30) || \
+		   special_role == "Head Revolutionary" && prob(30))
+			suspects += man
 
-	shuffle(possible_modes)
+			// If they're a traitor or likewise, give them extra TC in exchange.
+			var/obj/item/device/uplink/hidden/suplink = man.mind.find_syndicate_uplink()
+			if(suplink)
+				var/extra = 4
+				suplink.uses += extra
+				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+			else
+				// Give them a warning!
+				man << "\red They are on to you!"
 
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		if(modePlayer.len == 0)
-			intercepttext += i_text.build(A)
-		else
-			intercepttext += i_text.build(A, pick(modePlayer))
+		// Some poor people who were just in the wrong place at the wrong time..
+		else if(prob(10))
+			suspects += man
+	for(var/mob/M in suspects)
+		switch(rand(1, 100))
+			if(1 to 50)
+				intercepttext += "Someone with the job of <b>[M.mind.assigned_role]</b> <br>"
+			else
+				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
@@ -275,6 +291,7 @@ Implants;
 			if(player.client.prefs.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+					log_debug("[player.key] had [roletext] enabled, so drafting them.")
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
@@ -302,6 +319,7 @@ Implants;
 			applicant = pick(drafted)
 			if(applicant)
 				candidates += applicant
+				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
 				drafted.Remove(applicant)
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
@@ -327,7 +345,7 @@ Implants;
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
-				message_admins("[applicant.key] drafted into antagonist role against their preferences.")
+				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
@@ -336,9 +354,10 @@ Implants;
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-/*
+
 /datum/game_mode/proc/latespawn(var/mob)
 
+/*
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
@@ -372,6 +391,9 @@ Implants;
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
+
+/datum/game_mode/New()
+	newscaster_announcements = pick(newscaster_standard_feeds)
 
 //////////////////////////
 //Reports player logouts//

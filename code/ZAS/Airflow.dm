@@ -248,8 +248,8 @@ atom/movable
 				if(src:buckled)
 					return
 				if(src:shoes)
-					if(src:shoes.type == /obj/item/clothing/shoes/magboots)
-						if(src:shoes.flags & NOSLIP)
+					if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
+						if(src:shoes:magpulse)
 							return
 			src << "\red You are sucked away by airflow!"
 		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
@@ -303,7 +303,6 @@ atom/movable
 		if(airflow_speed)
 			airflow_speed = n/max(get_dist(src,airflow_dest),1)
 			return
-		last_airflow = world.time
 		if(airflow_dest == loc)
 			step_away(src,loc)
 		if(ismob(src))
@@ -317,6 +316,7 @@ atom/movable
 						if(src:shoes.flags & NOSLIP)
 							return
 			src << "\red You are pushed away by airflow!"
+			last_airflow = world.time
 		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 		if(airflow_falloff < 1)
 			airflow_dest = null

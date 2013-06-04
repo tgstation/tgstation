@@ -10,7 +10,10 @@
 		return target_zone == "head" && hasorgans(target)
 
 /datum/surgery_step/brain/saw_skull
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70
@@ -31,11 +34,14 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cracking [target]'s skull with \the [tool]!" , \
 		"\red Your hand slips, cracking [target]'s skull with \the [tool]!" )
-		target.apply_damage(10, BRUTE, "head")
+		target.apply_damage(max(10, tool.force), BRUTE, "head")
 
 /datum/surgery_step/brain/cut_brain
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -59,7 +65,10 @@
 		target.apply_damage(50, BRUTE, "head", 1)
 
 /datum/surgery_step/brain/saw_spine
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70
@@ -102,9 +111,12 @@
 //				BRAIN DAMAGE FIXING								//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/brain/fix_brain
-	required_tool =  /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
+/datum/surgery_step/brain/bone_chips
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100, 		\
+	/obj/item/weapon/wirecutters = 75, 		\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -113,22 +125,50 @@
 		return ..() && target.brain_op_stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("[user] starts mending ruptured vessels in [target]'s brain with \the [tool].", \
-		"You start mending [target]'s brain with \the [tool].")
+		user.visible_message("[user] starts taking out bone chips and out of [target]'s brain with \the [tool].", \
+		"You start taking out bone chips and out of [target]'s brain with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] mends [target]'s brain hematoma with \the [tool].",	\
-		"\blue You mend ruptured vessels to [target]'s brain hematoma with \the [tool].")
+		user.visible_message("\blue [user] takes out all bone chips out of [target]'s brain with \the [tool].",	\
+		"\blue You take out all bone chips out of [target]'s brain with \the [tool].")
+		target.brain_op_stage = 3
+
+
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("\red [user]'s hand slips, jabbing \the [tool] in [target]'s brain!", \
+		"\red Your hand slips, jabbing \the [tool] in [target]'s brain!")
+		target.apply_damage(30, BRUTE, "head", 1)
+
+/datum/surgery_step/brain/hematoma
+	allowed_tools = list(
+	/obj/item/weapon/FixOVein ,	\
+	/obj/item/weapon/cable_coil
+	)
+
+	min_duration = 90
+	max_duration = 110
+
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return ..() && target.brain_op_stage == 3
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("[user] starts mending hematoma in [target]'s brain with \the [tool].", \
+		"You start mending hematoma in [target]'s brain with \the [tool].")
+		..()
+
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
+		"\blue You mend hematoma in [target]'s brain with \the [tool].")
 		var/datum/organ/internal/brain/sponge = target.internal_organs["brain"]
 		if (sponge)
 			sponge.damage = 0
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
-		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-		target.apply_damage(50, BRUTE, "head", 1)
+		user.visible_message("\red [user]'s hand slips, bruising [target]'s brain with \the [tool]!", \
+		"\red Your hand slips, bruising [target]'s brain with \the [tool]!")
+		target.apply_damage(20, BRUTE, "head", 1)
 
 //////////////////////////////////////////////////////////////////
 //				SLIME CORE EXTRACTION							//
@@ -139,8 +179,11 @@
 		return istype(target, /mob/living/carbon/slime/) && target.stat == 2
 
 /datum/surgery_step/slime/cut_flesh
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 30
 	max_duration = 50
@@ -162,8 +205,11 @@
 		"\red Your hand slips, tearing [target]'s flesh with \the [tool]!")
 
 /datum/surgery_step/slime/cut_innards
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 30
 	max_duration = 50
@@ -185,7 +231,10 @@
 		"\red Your hand slips, tearing [target]'s innards with \the [tool]!")
 
 /datum/surgery_step/slime/saw_core
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70

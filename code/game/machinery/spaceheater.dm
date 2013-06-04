@@ -83,6 +83,10 @@
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
+		interact(user)
+
+	interact(mob/user as mob)
+
 		if(open)
 
 			var/dat
@@ -127,7 +131,7 @@
 					var/value = text2num(href_list["val"])
 
 					// limit to 20-90 degC
-					set_temperature = dd_range(20, 90, set_temperature + value)
+					set_temperature = dd_range(0, 90, set_temperature + value)
 
 				if("cellremove")
 					if(open && cell && !usr.get_active_hand())
@@ -164,7 +168,7 @@
 				var/turf/simulated/L = loc
 				if(istype(L))
 					var/datum/gas_mixture/env = L.return_air()
-					if(env.temperature < (set_temperature+T0C))
+					if(env.temperature != set_temperature + T0C)
 
 						var/transfer_moles = 0.25 * env.total_moles()
 
@@ -176,10 +180,12 @@
 
 							var/heat_capacity = removed.heat_capacity()
 							//world << "heating ([heat_capacity])"
-							if(heat_capacity == 0 || heat_capacity == null) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
-								heat_capacity = 1
-							removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
-							cell.use(heating_power/20000)
+							if(heat_capacity) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
+								if(removed.temperature < set_temperature + T0C)
+									removed.temperature = min(removed.temperature + heating_power/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
+								else
+									removed.temperature = max(removed.temperature - heating_power/heat_capacity, TCMB)
+								cell.use(heating_power/20000)
 
 							//world << "now at [removed.temperature]"
 

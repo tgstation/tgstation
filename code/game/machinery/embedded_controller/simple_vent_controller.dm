@@ -44,6 +44,7 @@
 
 	name = "Vent Controller"
 	density = 0
+	unacidable = 1
 
 	frequency = 1229
 	power_channel = ENVIRON

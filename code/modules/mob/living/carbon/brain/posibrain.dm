@@ -17,7 +17,7 @@
 
 
 	attack_self(mob/user as mob)
-		if(!brainmob.key && searching == 0)
+		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
 			icon_state = "posibrain-searching"
@@ -37,7 +37,7 @@
 		spawn(0)
 			if(!C)	return
 			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
-			if(!C || brainmob.key)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+			if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 			if(response == "Yes")
 				transfer_personality(C.mob)
 			else if (response == "Never for this round")
@@ -49,7 +49,8 @@
 
 		src.searching = 0
 		src.brainmob.mind = candidate.mind
-		src.brainmob.key = candidate.key
+		//src.brainmob.key = candidate.key
+		src.brainmob.ckey = candidate.ckey
 		src.name = "positronic brain ([src.brainmob.name])"
 
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
@@ -65,7 +66,7 @@
 
 	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
-		if(brainmob) return
+		if(src.brainmob && src.brainmob.key) return
 
 		src.searching = 0
 		icon_state = "posibrain"
@@ -86,7 +87,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
-	if(src.brainmob.key)
+	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk

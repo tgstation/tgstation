@@ -159,6 +159,8 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/kill_air_processing
 	src.verbs += /client/proc/disable_communication
 	src.verbs += /client/proc/disable_movement
+	src.verbs += /client/proc/Zone_Info
+	src.verbs += /client/proc/Test_ZAS_Connection
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

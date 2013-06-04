@@ -192,7 +192,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 	var/datum/reagent/blood/our = get_blood(vessel)
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
-
+	if (!injected)
+		return
 	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
 		reagents.add_reagent("toxin",amount * 0.5)
 		reagents.update_total()
@@ -218,3 +219,21 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(D.data["donor"] == src)
 					return D
 	return res
+
+proc/blood_incompatible(donor,receiver)
+	if(!donor || !receiver) return 0
+	var
+		donor_antigen = copytext(donor,1,lentext(donor))
+		receiver_antigen = copytext(receiver,1,lentext(receiver))
+		donor_rh = (findtext(donor,"+")>0)
+		receiver_rh = (findtext(receiver,"+")>0)
+	if(donor_rh && !receiver_rh) return 1
+	switch(receiver_antigen)
+		if("A")
+			if(donor_antigen != "A" && donor_antigen != "O") return 1
+		if("B")
+			if(donor_antigen != "B" && donor_antigen != "O") return 1
+		if("O")
+			if(donor_antigen != "O") return 1
+		//AB is a universal receiver.
+	return 0

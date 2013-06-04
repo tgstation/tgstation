@@ -867,6 +867,24 @@ proc/process_ghost_teleport_locs()
 /area/holodeck/source_wildlife
 	name = "\improper Holodeck - Wildlife Simulation"
 
+/area/holodeck/source_meetinghall
+	name = "\improper Holodeck - Meeting Hall"
+
+/area/holodeck/source_theatre
+	name = "\improper Holodeck - Theatre"
+
+/area/holodeck/source_picnicarea
+	name = "\improper Holodeck - Picnic Area"
+
+/area/holodeck/source_snowfield
+	name = "\improper Holodeck - Snow Field"
+
+/area/holodeck/source_desert
+	name = "\improper Holodeck - Desert"
+
+/area/holodeck/source_space
+	name = "\improper Holodeck - Space"
+
 
 
 
@@ -1136,6 +1154,10 @@ proc/process_ghost_teleport_locs()
 	icon_state = "checkpoint1"
 
 /area/security/vacantoffice
+	name = "\improper Vacant Office"
+	icon_state = "security"
+
+/area/security/vacantoffice2
 	name = "\improper Vacant Office"
 	icon_state = "security"
 

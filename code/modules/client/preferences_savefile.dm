@@ -1,5 +1,5 @@
 #define SAVEFILE_VERSION_MIN	8
-#define SAVEFILE_VERSION_MAX	8
+#define SAVEFILE_VERSION_MAX	9
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -119,9 +119,10 @@
 	S["eyes_blue"]			>> b_eyes
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
+	S["b_type"]				>> b_type
 
 	//Jobs
-	S["userandomjob"]		>> userandomjob
+	S["alternate_option"]	>> alternate_option
 	S["job_civilian_high"]	>> job_civilian_high
 	S["job_civilian_med"]	>> job_civilian_med
 	S["job_civilian_low"]	>> job_civilian_low
@@ -170,8 +171,9 @@
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
 	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	b_type			= sanitize_text(b_type, initial(b_type))
 
-	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
+	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
 	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
@@ -218,9 +220,10 @@
 	S["eyes_blue"]			<< b_eyes
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
+	S["b_type"]				<< b_type
 
 	//Jobs
-	S["userandomjob"]		<< userandomjob
+	S["alternate_option"]	<< alternate_option
 	S["job_civilian_high"]	<< job_civilian_high
 	S["job_civilian_med"]	<< job_civilian_med
 	S["job_civilian_low"]	<< job_civilian_low
@@ -237,6 +240,7 @@
 	S["sec_record"]			<< sec_record
 	S["player_alt_titles"]		<< player_alt_titles
 	S["be_special"]			<< be_special
+	S["disabilities"]		<< disabilities
 	S["used_skillpoints"]	<< used_skillpoints
 	S["skills"]				<< skills
 	S["skill_specialization"] << skill_specialization

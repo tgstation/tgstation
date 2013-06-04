@@ -10,6 +10,7 @@
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
+	siemens_coefficient = 0
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
@@ -46,6 +47,7 @@
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	siemens_coefficient = 1
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
@@ -54,3 +56,4 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	siemens_coefficient = 1

@@ -107,7 +107,7 @@ var/list/sacrificed = list()
 				M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
 				"\red AAAAAAHHHH!.", \
 				"\red You hear an anguished scream.")
-				if(is_convertable_to_cult(M.mind))
+				if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, "cultist"))//putting jobban check here because is_convertable uses mind as argument
 					ticker.mode.add_cultist(M.mind)
 					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
@@ -202,13 +202,20 @@ var/list/sacrificed = list()
 
 		seer()
 			if(usr.loc==src.loc)
-				usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-				if(usr.see_invisible!=0 && usr.see_invisible!=15)
+				if(usr.seer==1)
+					usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium viortia.")
+					usr << "\red The world beyond fades from your vision."
+					usr.see_invisible = SEE_INVISIBLE_LIVING
+					usr.seer = 0
+				else if(usr.see_invisible!=SEE_INVISIBLE_LIVING)
 					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
+					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.seer = 0
 				else
+					usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
 					usr << "\red The world beyond opens to your eyes."
-				usr.see_invisible = SEE_INVISIBLE_OBSERVER
-				usr.seer = 1
+					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.seer = 1
 				return
 			return fizzle()
 
@@ -310,7 +317,7 @@ var/list/sacrificed = list()
 			var/S=0
 			for(var/obj/effect/rune/R in orange(rad,src))
 				if(R!=src)
-					R:visibility=0
+					R.invisibility=INVISIBILITY_OBSERVER
 				S=1
 			if(S)
 				if(istype(src,/obj/effect/rune))
@@ -369,6 +376,8 @@ var/list/sacrificed = list()
 				ghost = O
 				break
 			if(!ghost)
+				return this_rune.fizzle()
+			if(jobban_isbanned(ghost, "cultist"))
 				return this_rune.fizzle()
 
 			usr.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")

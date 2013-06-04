@@ -5,7 +5,7 @@ pl_control/var
 	PLASMA_DMG_NAME = "Plasma Damage Amount"
 	PLASMA_DMG_DESC = "Self Descriptive"
 
-	CLOTH_CONTAMINATION = 0
+	CLOTH_CONTAMINATION = 1
 	CLOTH_CONTAMINATION_NAME = "Cloth Contamination"
 	CLOTH_CONTAMINATION_DESC = "If this is on, plasma does damage by getting into cloth."
 
@@ -17,7 +17,7 @@ pl_control/var
 	GENETIC_CORRUPTION_NAME = "Genetic Corruption Chance"
 	GENETIC_CORRUPTION_DESC = "Chance of genetic corruption as well as toxic damage, X in 10,000."
 
-	SKIN_BURNS = 1
+	SKIN_BURNS = 0
 	SKIN_BURNS_DESC = "Plasma has an effect similar to mustard gas on the un-suited."
 	SKIN_BURNS_NAME = "Skin Burns"
 
@@ -25,7 +25,7 @@ pl_control/var
 	EYE_BURNS_NAME = "Eye Burns"
 	EYE_BURNS_DESC = "Plasma burns the eyes of anyone not wearing eye protection."
 
-	CONTAMINATION_LOSS = 0.01
+	CONTAMINATION_LOSS = 0.02
 	CONTAMINATION_LOSS_NAME = "Contamination Loss"
 	CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing" //Per tick?  ASK ARYN
 
@@ -42,11 +42,10 @@ obj/var/contaminated = 0
 
 obj/item/proc
 	can_contaminate()
-		return 0
 		//Clothing and backpacks can be contaminated.
 		if(flags & PLASMAGUARD) return 0
+		else if(istype(src,/obj/item/weapon/storage/backpack)) return 0 //Cannot be washed :(
 		else if(istype(src,/obj/item/clothing)) return 1
-		else if(istype(src,/obj/item/weapon/storage/backpack)) return 1
 
 	contaminate()
 		//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
@@ -69,8 +68,9 @@ obj/item/proc
 	if(!pl_head_protected())
 		if(prob(1)) suit_contamination() //Plasma can sometimes get through such an open suit.
 
-	if(istype(back,/obj/item/weapon/storage/backpack))
-		back.contaminate()
+//Cannot wash backpacks currently.
+//	if(istype(back,/obj/item/weapon/storage/backpack))
+//		back.contaminate()
 
 /mob/proc/pl_effects()
 
@@ -156,6 +156,8 @@ turf/Entered(obj/item/I)
 	//Items that are in plasma, but not on a mob, can still be contaminated.
 	if(istype(I) && vsc.plc.CLOTH_CONTAMINATION)
 		var/datum/gas_mixture/env = return_air(1)
+		if(!env)
+			return
 		if(env.toxins > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()

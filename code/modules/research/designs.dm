@@ -595,7 +595,7 @@ datum/design/posibrain
 
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
-	build_path = "/obj/item/device/posibrain"
+	build_path = "/obj/item/device/mmi/posibrain"
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////

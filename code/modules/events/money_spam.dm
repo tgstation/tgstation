@@ -36,7 +36,7 @@
 
 			var/sender
 			var/message
-			switch(pick(1,2,3,4,5))
+			switch(pick(1,2,3,4,5,6,7))
 				if(1)
 					sender = pick("MaxBet","MaxBet Online Casino","There is no better time to register","I'm excited for you to join us")
 					message = pick("Triple deposits are waiting for you at MaxBet Online when you register to play with us.",\
@@ -68,11 +68,23 @@
 					sender = pick("Dr","Crown prince","King Regent","Professor","Captain")
 					sender += " " + pick("Robert","Alfred","Josephat","Kingsley","Sehi","Zbahi")
 					sender += " " + pick("Mugawe","Nkem","Gbatokwia","Nchekwube","Ndim","Ndubisi")
-					message = pick("YOUR FUND HAS BEEN MOVED TO [pick("Salusa","Segunda","Cepheus","Andromeda","Gruis","Corona","Aquila","Asellus")] DEVELOPMENTARY BANK FOR ONWARD REMITTANCE.",\
+					message = pick("YOUR FUND HAS BEEN MOVED TO [pick("Salusa","Segunda","Cepheus","Andromeda","Gruis","Corona","Aquila","ARES","Asellus")] DEVELOPMENTARY BANK FOR ONWARD REMITTANCE.",\
 					"We are happy to inform you that due to the delay, we have been instructed to IMMEDIATELY deposit all funds into your account",\
 					"Dear fund beneficiary, We have please to inform you that overdue funds payment has finally been approved and released for payment",\
 					"Due to my lack of agents I require an off-world financial account to immediately deposit the sum of 1 POINT FIVE MILLION credits.",\
 					"Greetings sir, I regretfully to inform you that as I lay dying here due to my lack ofheirs I have chosen you to recieve the full sum of my lifetime savings of 1.5 billion credits")
+				if(6)
+					sender = pick("NanoTrasen Morale Divison","Feeling Lonely?","Bored?","www.wetskrell.nt")
+					message = pick("The NanoTrasen Morale Division wishes to provide you with quality entertainment sites.",\
+					"WetSkrell.nt is a xenophillic website endorsed by NT for the use of male crewmembers among it's many stations and outposts.",\
+					"Wetskrell.nt only provides the higest quality of male entertaiment to NanoTrasen Employees.",\
+					"Simply enter your NanoTrasen Bank account system number and pin. With three easy steps this service could be yours!")
+				if(7)
+					sender = pick("You have won free tickets!","Click here to claim your prize!","You are the 1000th vistor!","You are our lucky grand prize winner!")
+					message = pick("You have won tickets to the newest ACTION JAXSON MOVIE!",\
+					"You have won tickets to the newest crime drama DETECTIVE MYSTERY IN THE CLAMITY CAPER!",\
+					"You have won tickets to the newest romantic comedy 16 RULES OF LOVE!",\
+					"You have won tickets to the newest thriller THE CULT OF THE SLEEPING ONE!")
 
 			useMS.send_pda_message("[P.owner]", sender, message)
 

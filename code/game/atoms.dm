@@ -420,6 +420,7 @@ its easier to just keep the beam vertical.
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
+	.=1
 	if (!( istype(M, /mob/living/carbon/human) ))
 		return 0
 	if (!istype(M.dna, /datum/dna))
@@ -430,55 +431,6 @@ its easier to just keep the beam vertical.
 		return 0
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-
-	//adding blood to items
-	if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
-		var/obj/item/O = src
-
-		//if we haven't made our blood_overlay already
-		if( !O.blood_overlay )
-			var/icon/I = new /icon(O.icon, O.icon_state)
-			I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-			I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-			//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-			for(var/obj/item/A in world)
-				if(A.type == O.type && !A.blood_overlay)
-					A.blood_overlay = I
-
-		//apply the blood-splatter overlay if it isn't already in there
-		if(!blood_DNA.len)
-			O.overlays += O.blood_overlay
-
-		//if this blood isn't already in the list, add it
-
-		if(blood_DNA[M.dna.unique_enzymes])
-			return 0 //already bloodied with this blood. Cannot add more.
-		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		return 1 //we applied blood to the item
-
-	//adding blood to turfs
-	else if (istype(src, /turf/simulated))
-		var/turf/simulated/T = src
-
-		//get one blood decal and infect it with virus from M.viruses
-		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
-			if(!B.blood_DNA[M.dna.unique_enzymes])
-				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			/*for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = D.Copy(1)
-				B.viruses += newDisease
-				newDisease.holder = B*/
-			return 1 //we bloodied the floor
-
-		//if there isn't a blood decal already, make one.
-		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
-		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			newblood.viruses += newDisease
-			newDisease.holder = newblood*/
-		return 1 //we bloodied the floor
 
 	//adding blood to humans
 	else if (istype(src, /mob/living/carbon/human))
@@ -499,37 +451,6 @@ its easier to just keep the beam vertical.
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
 
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			this.viruses += newDisease
-			newDisease.holder = this*/
-
-// Only adds blood on the floor -- Skie
-/atom/proc/add_blood_floor(mob/living/carbon/M as mob)
-	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
-		if( istype(src, /turf/simulated) )
-			var/turf/simulated/source1 = src
-			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
-			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			/*for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = D.Copy(1)
-				this.viruses += newDisease
-				newDisease.holder = this*/
-
-	else if( istype(M, /mob/living/carbon/alien ))
-		if( istype(src, /turf/simulated) )
-			var/turf/simulated/source2 = src
-			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
-			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
-			/*for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = D.Copy(1)
-				this.viruses += newDisease
-				newDisease.holder = this*/
-
-	else if( istype(M, /mob/living/silicon/robot ))
-		if( istype(src, /turf/simulated) )
-			var/turf/simulated/source2 = src
-			new /obj/effect/decal/cleanable/oil(source2)
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -550,8 +471,16 @@ its easier to just keep the beam vertical.
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
-	if(!istype(src,/obj/item/weapon/gun))
+	var/acting_bad = 1	//Check for gun targeting code.
+	if (istype(src,/obj/item/weapon/gun))	//Allow people to lower weapon
+		acting_bad = 0
+	if (istype(src, /turf) && istype(usr,/mob/living/carbon/human))	//Allow people to turn around
+		var/mob/living/carbon/human/H = usr
+		if (!H.equipped())
+			acting_bad = 0
+	if(acting_bad)
 		usr.last_target_click = world.time
+
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
@@ -696,7 +625,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if (in_range)
 			if (!( human.restrained() || human.lying ))
 				if (W)
-					attackby(W,human)
+					var/was_used = 0
+					if(W)
+						was_used = W.is_used_on(src, human)
+					if(!was_used)
+						attackby(W,human)
 					if (W)
 						W.afterattack(src, human)
 				else

@@ -1,5 +1,5 @@
 
-client/verb/Zone_Info(turf/T as null|turf)
+client/proc/Zone_Info(turf/T as null|turf)
 	set category = "Debug"
 	if(T)
 		if(T.zone)
@@ -11,6 +11,50 @@ client/verb/Zone_Info(turf/T as null|turf)
 			T.overlays -= 'debug_space.dmi'
 			T.overlays -= 'debug_group.dmi'
 			T.overlays -= 'debug_connect.dmi'
+
+
+
+client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
+	set category = "Debug"
+	if(!istype(T))
+		return
+
+	var/direction_list = list(\
+	"North" = NORTH,\
+	"South" = SOUTH,\
+	"East" = EAST,\
+	"West" = WEST,\
+	"None" = null)
+	var/direction = input("What direction do you wish to test?","Set direction") as null|anything in direction_list
+	if(!direction)
+		return
+
+	if(direction == "None")
+		if(T.CanPass(null, T, 0,0))
+			mob << "The turf can pass air! :D"
+		else
+			mob << "No air passage :x"
+		return
+
+	var/turf/simulated/other_turf = get_step(T, direction_list[direction])
+	if(!istype(other_turf))
+		return
+
+	var/pass_directions = T.CanPass(null, other_turf, 0, 0) + 2 * other_turf.CanPass(null, T, 0, 0)
+
+	switch(pass_directions)
+		if(0)
+			mob << "Neither turf can connect. :("
+
+		if(1)
+			mob << "The initial turf only can connect. :\\"
+
+		if(2)
+			mob << "The other turf can connect, but not the initial turf. :/"
+
+		if(3)
+			mob << "Both turfs can connect! :)"
+
 
 zone/proc
 	DebugDisplay(mob/M)
@@ -36,12 +80,9 @@ zone/proc
 			M << "<u>Connections: [length(connections)]</u>"
 
 			for(var/connection/C in connections)
-				M << "[C.A] --> [C.B] [(C.indirect?"Indirect":"Direct")]"
+				M << "[C.A] --> [C.B] [(C.indirect?"Open":"Closed")]"
 				C.A.overlays += 'debug_connect.dmi'
 				C.B.overlays += 'debug_connect.dmi'
-				spawn(50)
-					C.A.overlays -= 'debug_connect.dmi'
-					C.B.overlays -= 'debug_connect.dmi'
 			for(var/C in connections)
 				if(!istype(C,/connection))
 					M << "[C] (Not Connection!)"

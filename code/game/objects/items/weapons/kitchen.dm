@@ -40,6 +40,12 @@
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
 
+/obj/item/weapon/kitchen/utensil/pspoon
+	name = "plastic spoon"
+	desc = "Super dull action!"
+	icon_state = "pspoon"
+	attack_verb = list("attacked", "poked")
+
 /*
  * Forks
  */
@@ -49,6 +55,34 @@
 	icon_state = "fork"
 
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M))
+		return ..()
+
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+		return ..()
+
+	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+		if(M == user)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
+				M.reagents.add_reagent("nutriment", 1)
+		else
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
+				M.reagents.add_reagent("nutriment", 1)
+		src.icon_state = "fork"
+		return
+	else
+		if((CLUMSY in user.mutations) && prob(50))
+			M = user
+		return eyestab(M,user)
+
+/obj/item/weapon/kitchen/utensil/pfork
+	name = "plastic fork"
+	desc = "Yay, no washing up to do."
+	icon_state = "pfork"
+
+/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
 
@@ -90,6 +124,21 @@
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
+		user.take_organ_damage(20)
+		return
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
+
+/obj/item/weapon/kitchen/utensil/pknife
+	name = "plastic knife"
+	desc = "The bluntest of blades."
+	icon_state = "pknife"
+	force = 10.0
+	throwforce = 10.0
+
+/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+	if ((CLUMSY in user.mutations) && prob(50))
+		user << "\red You somehow managed to cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
