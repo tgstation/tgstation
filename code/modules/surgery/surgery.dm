@@ -68,14 +68,16 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 		return 0
 	if (user.a_intent == "harm")	//check for Hippocratic Oath
 		return 0
+	var/obj/item/T = tool
+	var/def_zone = user.zone_sel.selecting
 	for(var/datum/surgery_step/S in surgery_steps)
-		if( (S.isright(tool) || S.isacceptable(tool)) && \
-		S.can_use(user, M, user.zone_sel.selecting, tool))	 	//check if tool is right or close enough and if this step is possible
-			S.begin_step(user, M, user.zone_sel.selecting, tool)			//start on it
+		if( (S.isright(T) || S.isacceptable(T)) && \
+		S.can_use(user, M, def_zone, T))	 	//check if tool is right or close enough and if this step is possible
+			S.begin_step(user, M, def_zone, T)			//start on it
 			if(do_mob(user, M, rand(S.min_duration, S.max_duration)))	//if user did nto move or changed hands
-				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
+				S.end_step(user, M, def_zone, T)						//finish successfully
 			else														//or
-				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+				S.fail_step(user, M, def_zone, T)						//malpractice~
 			return	1	  												//don't want to do weapony things after surgery
 	return 0
 
