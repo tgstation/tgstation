@@ -40,7 +40,7 @@
 					T = L
 					break
 
-		if(istype(A, /obj/mecha))
+		else if(istype(A, /obj/mecha)) // Our line of sight stuff was already done in ListTargets().
 			var/obj/mecha/M = A
 			if (M.occupant)
 				stance = HOSTILE_STANCE_ATTACK

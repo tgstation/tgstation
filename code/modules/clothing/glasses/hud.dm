@@ -105,6 +105,7 @@
 				holder.icon_state = "hudunknown"
 				C.images += holder
 		else
+			perpname = perp.name
 			holder.icon_state = "hudunknown"
 			C.images += holder
 
