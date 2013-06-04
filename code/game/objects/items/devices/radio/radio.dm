@@ -663,6 +663,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else return
 
 /obj/item/device/radio/emp_act(severity)
+	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
+		loc << "<span class='warning'>\The [src] overloads.</span>"
 	broadcasting = 0
 	listening = 0
 	frequency += pick(-1,1)*2*rand(1,5) // shift the frequency a bit
