@@ -348,8 +348,7 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sprinkles", 1)
 		bitesize = 10
-		var/chaosselect = pick(1,2,3,4,5,6,7,8,9,10)
-		switch(chaosselect)
+		switch(rand(1,10))
 			if(1)
 				reagents.add_reagent("nutriment", 3)
 			if(2)
@@ -502,13 +501,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
-/*/obj/item/weapon/reagent_containers/food/snacks/flour //Has been converted into a reagent. Use that instead of the item!
-	name = "flour"
-	desc = "Some flour"
-	icon_state = "flour"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)*/
+// /obj/item/weapon/reagent_containers/food/snacks/flour //Has been converted into a reagent. Use that instead of the item!
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "tofu"
@@ -518,7 +511,6 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 3
-
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
@@ -530,6 +522,10 @@
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
+	name = "imitation carp fillet"
+	desc = "Almost just like the real thing, kinda."
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "fish fingers"
@@ -754,12 +750,22 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "muffin"
-	desc = "A delicious and spongy little cake"
+	desc = "A delicious and spongy little cake."
 	icon_state = "muffin"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin/berry
+	name = "berry muffin"
+	icon_state = "berrymuffin"
+	desc = "A delicious and spongy little cake, with berries."
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
+	name = "booberry muffin"
+	icon_state = "booberrymuffin"
+	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "banana cream pie"
@@ -1079,7 +1085,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "meat steak"
 	desc = "A piece of hot spicy meat."
-	icon_state = "meatstake"
+	icon_state = "meatsteak"
 	trash = /obj/item/trash/plate
 	New()
 		..()
@@ -1120,7 +1126,6 @@
 		..()
 		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
-
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
 	name = "meatball soup"
@@ -1171,7 +1176,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 	name = "vegetable soup"
-	desc = "A true vegan meal" //TODO
+	desc = "A true vegan meal"
 	icon_state = "vegetablesoup"
 	trash = /obj/item/trash/snack_bowl
 	New()
@@ -1202,8 +1207,7 @@
 	New()
 		..()
 		eatverb = pick("slurp","sip","suck","inhale","drink")
-		var/mysteryselect = pick(1,2,3,4,5,6,7,8,9,10)
-		switch(mysteryselect)
+		switch(rand(1,10))
 			if(1)
 				reagents.add_reagent("nutriment", 6)
 				reagents.add_reagent("capsaicin", 3)
@@ -1361,7 +1365,6 @@
 	name = "enchiladas"
 	desc = "Viva La Mexico!"
 	icon_state = "enchiladas"
-	trash = /obj/item/trash/tray
 	New()
 		..()
 		reagents.add_reagent("nutriment",8)
@@ -1370,9 +1373,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 	name = "monkey's delight"
-	desc = "Eeee Eee!"
+	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
-	trash = /obj/item/trash/tray
+	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -1460,6 +1463,7 @@
 	name = "stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
+	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
 		eatverb = pick("slurp","sip","suck","inhale","drink")
