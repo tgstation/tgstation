@@ -106,6 +106,9 @@
 		return
 	if(prob(75/severity))
 		flash()
+		bulb.broken = 1
+		bulb.icon_state = "flashburnt"
+		src.power_change()
 	..(severity)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
@@ -119,7 +122,7 @@
 
 /obj/machinery/flasher/portable/flash()
 	..()
-	if(prob(5))	//Small chance to burn out on use
+	if(prob(4))	//Small chance to burn out on use
 		bulb.broken = 1
 		bulb.icon_state = "flashburnt"
 		src.power_change()
