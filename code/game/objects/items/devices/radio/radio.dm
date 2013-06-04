@@ -116,8 +116,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
-			<B>[chan_name]</B><br>
-			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
+			<B>[chan_name]</B>: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
 			"}
 
 /obj/item/device/radio/Topic(href, href_list)
@@ -223,6 +222,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
 				channel = channels[1]
 			connection = secure_radio_connections[channel]
+			if (!channels[channel]) // if the channel is turned off, don't broadcast
+				return
 		else
 			connection = radio_connection
 			channel = null
@@ -664,6 +665,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/emp_act(severity)
 	broadcasting = 0
 	listening = 0
+	frequency += pick(-1,1)*2*rand(1,5) // shift the frequency a bit
+	set_frequency(sanitize_frequency(frequency))
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	..()
