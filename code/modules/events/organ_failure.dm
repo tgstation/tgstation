@@ -20,7 +20,7 @@ datum/event/organ_failure/start()
 
 	while(severity > 0 && candidates.len)
 		var/mob/living/carbon/human/C = candidates[1]
-
+		if(!C) continue
 		// Bruise one of their organs
 		var/datum/organ/internal/I = pick(C.internal_organs)
 		I.damage = I.min_bruised_damage
