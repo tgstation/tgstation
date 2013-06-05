@@ -759,6 +759,7 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	spawn(5)
 	if(brainmob && brainmob.client)
 		brainmob.client.screen.len = null //clear the hud
+		brainmob.stat = DEAD
 	if(ishuman(H))
 		if(H.gender == FEMALE)
 			H.icon_state = "head_f"
@@ -822,6 +823,7 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				message_admins("ATTACK: [brainmob] ([brainmob.ckey]) debrained [user] ([user.ckey]).")
 
 				var/obj/item/brain/B = new(loc)
+				brainmob.stat=0
 				B.transfer_identity(brainmob)
 
 				brain_op_stage = 4.0

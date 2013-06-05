@@ -236,9 +236,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		spawn(0)
 			if(!src || !target) return
 			src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 0, 30)
-			if(src.path.len == 0)
-				src.oldtarget = src.target
-				src.target = null
+			if(src.path)
+				if(src.path.len == 0)
+					src.oldtarget = src.target
+					src.target = null
 		return
 	if(src.path.len > 0 && src.target && (src.target != null))
 		step_to(src, src.path[1])
