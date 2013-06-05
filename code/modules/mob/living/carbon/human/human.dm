@@ -4,6 +4,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
+	var/list/hud_list = list()
 
 
 /mob/living/carbon/human/dummy
@@ -19,6 +20,9 @@
 
 	if(!dna)
 		dna = new /datum/dna(null)
+
+	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
+		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
 	..()
 
@@ -807,6 +811,8 @@
 				return "Tajaran"
 			if("skrell")
 				return "Skrell"
+			if("vox")
+				return "Vox"
 			if("plant")
 				return "Mobile vegetation"
 			if("golem")
@@ -822,6 +828,8 @@
 			return "Skrell"
 		else if(src.dna.mutantrace == "tajaran")
 			return "Tajaran"
+		else if(src.dna.mutantrace == "vox")
+			return "vox"
 
 /mob/living/carbon/proc/update_mutantrace_languages()
 	if(src.dna)
@@ -831,6 +839,8 @@
 			src.skrell_talk_understand = 1
 		else if(src.dna.mutantrace == "tajaran")
 			src.tajaran_talk_understand = 1
+		else if(src.dna.mutantrace == "vox")
+			src.vox_talk_understand = 1
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
