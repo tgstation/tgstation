@@ -65,7 +65,7 @@
 	name = "surgical cap"
 	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
 
 /obj/item/clothing/head/surgery/purple
 	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is deep purple."

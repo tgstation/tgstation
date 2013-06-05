@@ -512,7 +512,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
 				if(isturf(M.loc) && !istype(M.loc, /turf/space))
-					if(M.canmove)
+					if(M.canmove && !M.restrained())
 						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
@@ -642,7 +642,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M.canmove && istype(M.loc, /turf/space))
+				if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5)) M.emote(pick("twitch","drool","moan"))
 				..()
@@ -728,7 +728,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M.canmove && istype(M.loc, /turf/space))
+				if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5)) M.emote(pick("twitch","drool","moan"))
 				..()
@@ -927,6 +927,13 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.apply_effect(2*REM,IRRADIATE,0)
+				// radium may increase your chances to cure a disease
+				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+					if(M:virus2 && prob(5))
+						if(prob(50))
+							M.radiation += 50 // curing it that way may kill you instead
+							M.adjustToxLoss(100)
+						M:antibodies |= M:virus2.antigen
 				..()
 				return
 
