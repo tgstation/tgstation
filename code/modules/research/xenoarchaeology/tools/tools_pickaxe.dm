@@ -118,7 +118,7 @@
 	"/obj/item/weapon/pickaxe/five_pick",\
 	"/obj/item/weapon/pickaxe/six_pick",\
 	"/obj/item/weapon/pickaxe/hand")
-	max_combined_w_class = 11
+	max_combined_w_class = 17
 	max_w_class = 4
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 

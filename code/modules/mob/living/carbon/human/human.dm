@@ -1089,3 +1089,20 @@
 			world << "Reached stage 3 in [ticks] ticks"
 	world << "Mob took [tdamage] tox damage"
 */
+//returns 1 if made bloody, returns 0 otherwise
+
+/mob/living/carbon/human/add_blood(mob/living/carbon/human/M as mob)
+	if (!..())
+		return 0
+	//if this blood isn't already in the list, add it
+	if(blood_DNA[M.dna.unique_enzymes])
+		return 0 //already bloodied with this blood. Cannot add more.
+	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	return 1 //we applied blood to the item
+
+/mob/living/carbon/human/clean_blood()
+	.=..()
+	if(istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
+		del(feet_blood_DNA)
+		return 1

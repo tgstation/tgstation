@@ -15,8 +15,11 @@
 		return target_zone == "eyes"
 
 /datum/surgery_step/eye/cut_open
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 90
 	max_duration = 110
@@ -41,8 +44,10 @@
 		affected.createwound(CUT, 10)
 
 /datum/surgery_step/eye/lift_eyes
-	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(
+	/obj/item/weapon/retractor = 100,	\
+	/obj/item/weapon/kitchen/utensil/fork = 50
+	)
 
 	min_duration = 30
 	max_duration = 40
@@ -67,8 +72,11 @@
 		target.apply_damage(10, BRUTE, affected)
 
 /datum/surgery_step/eye/mend_eyes
-	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100, 	\
+	/obj/item/weapon/cable_coil = 75, 	\
+	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -93,8 +101,12 @@
 		target.apply_damage(10, BRUTE, affected)
 
 /datum/surgery_step/eye/cauterize
-	required_tool = /obj/item/weapon/cautery
-	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
+	allowed_tools = list(
+	/obj/item/weapon/cautery = 100,			\
+	/obj/item/clothing/mask/cigarette = 75,	\
+	/obj/item/weapon/lighter = 50,			\
+	/obj/item/weapon/weldingtool = 25
+	)
 
 	min_duration = 70
 	max_duration = 100

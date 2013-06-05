@@ -32,6 +32,12 @@
 		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];desert=1'>((Desert)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];space=1'>((Space)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];picnicarea=1'>((Picnic Area)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];snowfield=1'>((Snow Field)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];theatre=1'>((Theatre)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];meetinghall=1'>((Meeting Hall)</font>)</A><BR>"
 //		dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
 
 		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
@@ -417,6 +423,11 @@
 	if(isrobot(user))
 		return
 
+/obj/structure/table/holotable/wood
+	name = "table"
+	desc = "A square piece of wood standing on four wooden legs. It can not move."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "wood_table"
 
 
 /obj/item/clothing/gloves/boxing/hologlove

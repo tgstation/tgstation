@@ -20,8 +20,11 @@
 		return 1
 
 /datum/surgery_step/generic/cut_open
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 90
 	max_duration = 110
@@ -42,6 +45,7 @@
 		user.visible_message("\blue [user] has made an incision on [target]'s [affected.display_name] with \the [tool].", \
 		"\blue You have made an incision on [target]'s [affected.display_name] with \the [tool].",)
 		affected.open = 1
+		affected.status |= ORGAN_BLEEDING
 		affected.createwound(CUT, 1)
 		if (target_zone == "head")
 			target.brain_op_stage = 1
@@ -53,8 +57,11 @@
 		affected.createwound(CUT, 10)
 
 /datum/surgery_step/generic/clamp_bleeders
-	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100,	\
+	/obj/item/weapon/cable_coil = 75, 	\
+	/obj/item/device/assembly/mousetrap = 20
+	)
 
 	min_duration = 40
 	max_duration = 60
@@ -84,8 +91,11 @@
 		affected.createwound(CUT, 10)
 
 /datum/surgery_step/generic/retract_skin
-	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/crowbar,/obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 50
+	)
 
 	min_duration = 30
 	max_duration = 40
@@ -135,8 +145,12 @@
 		target.apply_damage(12, BRUTE, affected)
 
 /datum/surgery_step/generic/cauterize
-	required_tool = /obj/item/weapon/cautery
-	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
+	allowed_tools = list(
+	/obj/item/weapon/cautery = 100,			\
+	/obj/item/clothing/mask/cigarette = 75,	\
+	/obj/item/weapon/lighter = 50,			\
+	/obj/item/weapon/weldingtool = 25
+	)
 
 	min_duration = 70
 	max_duration = 100
@@ -167,7 +181,10 @@
 		target.apply_damage(3, BURN, affected)
 
 /datum/surgery_step/generic/cut_limb
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 110
 	max_duration = 160
