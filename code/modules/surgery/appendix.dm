@@ -18,8 +18,11 @@
 		return 1
 
 /datum/surgery_step/appendectomy/cut_appendix
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 70
 	max_duration = 90
@@ -45,8 +48,11 @@
 		groin.createwound(CUT, 50, 1)
 
 /datum/surgery_step/appendectomy/remove_appendix
-	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/wirecutters)
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100,	\
+	/obj/item/weapon/wirecutters = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
 
 	min_duration = 60
 	max_duration = 80
