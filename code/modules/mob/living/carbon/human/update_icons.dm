@@ -313,6 +313,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 		//Eyes
 		if(!skeleton)
 			var/icon/eyes_s = new/icon('icons/mob/human_face.dmi', "eyes_s")
+			if(src.get_species()=="Vox")
+				eyes_s = new/icon('icons/mob/human_face.dmi', "vox_eyes_s")
 			eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 			stand_icon.Blend(eyes_s, ICON_OVERLAY)
 
@@ -442,6 +444,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 			if("skrell")
 				race_icon = 'icons/mob/human_races/r_skrell.dmi'
 				deform_icon = 'icons/mob/human_races/r_def_skrell.dmi'
+			if("vox")
+				race_icon = 'icons/mob/human_races/r_vox.dmi'
+				deform_icon = 'icons/mob/human_races/r_def_vox.dmi'
 			else
 				race_icon = 'icons/mob/human_races/r_human.dmi'
 				deform_icon = 'icons/mob/human_races/r_def_human.dmi'

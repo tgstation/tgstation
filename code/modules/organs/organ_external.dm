@@ -740,6 +740,8 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 				base = new('icons/mob/human_races/r_lizard.dmi')
 			if("skrell")
 				base = new('icons/mob/human_races/r_skrell.dmi')
+			if("vox")
+				base = new('icons/mob/human_races/r_vox.dmi')
 			else
 				base = new('icons/mob/human_races/r_human.dmi')
 		if(base)

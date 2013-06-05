@@ -15,7 +15,7 @@ proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 		pulse.name = "emp pulse"
 		pulse.anchored = 1
 		spawn(20)
-			del(pulse)
+			pulse.delete()
 
 	if(heavy_range > light_range)
 		light_range = heavy_range
