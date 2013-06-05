@@ -14,16 +14,24 @@ emp_act
 	if(istype(P, /obj/item/projectile/energy/electrode))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
+		// var/deflectchance=90 //Is it a CRITICAL HIT with that taser?
 		for(var/bp in body_parts) //Make an unregulated var to pass around.
 			if(!bp)
 				continue //Does this thing we're shooting even exist?
 			if(bp && istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
+					P.agony=P.agony*C.siemens_coefficient
+					visible_message("\red [src]'s [C.name] absorbs some of the shock from the [P.name]!</B></red>")
+					apply_effect(P.agony,AGONY,0)
+					del P
+					/* Commenting out new-old taser nerf.
 					if(C.siemens_coefficient == 0) //If so, is that clothing shock proof?
-						visible_message("\red <B>The [P.name] gets deflected by [src]'s [C.name]!</B>") //DEFLECT!
-						del P
-
+						if(prob(deflectchance))
+							visible_message("\red <B>The [P.name] gets deflected by [src]'s [C.name]!</B>") //DEFLECT!
+							visible_message("\red <B> Taser hit for [P.damage] damage!</B>")
+							del P
+*/
 /* Commenting out old Taser nerf
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor))
 		if(istype(P, /obj/item/projectile/energy/electrode))
@@ -32,6 +40,7 @@ emp_act
 		return -1
 */
 // END TASER NERF
+
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			var/reflectchance = 40 - round(P.damage/3)

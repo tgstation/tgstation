@@ -10,7 +10,7 @@
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
-	siemens_coefficient = 0
+	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
@@ -26,6 +26,7 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
+	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
@@ -37,6 +38,7 @@
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	siemens_coefficient = 0.5
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"

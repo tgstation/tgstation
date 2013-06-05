@@ -48,6 +48,7 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/agony = 0
 
 
 	proc/on_hit(var/atom/target, var/blocked = 0)
@@ -55,7 +56,7 @@
 		if(!isliving(target))	return 0
 		if(isanimal(target))	return 0
 		var/mob/living/L = target
-		L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
+		L.apply_effects(stun, weaken, paralyze, agony, irradiate, stutter, eyeblur, drowsy, blocked) // add in AGONY!
 		return 1
 
 	proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
@@ -114,6 +115,7 @@
 					msg_admin_attack("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
 
 		spawn(0)
+
 			if(A)
 				if (!forcedodge)
 					forcedodge = A.bullet_act(src, def_zone) // searches for return value
@@ -125,7 +127,6 @@
 						loc = A.loc
 					permutated.Add(A)
 					return 0
-
 				if(istype(A,/turf))
 					for(var/obj/O in A)
 						O.bullet_act(src)
