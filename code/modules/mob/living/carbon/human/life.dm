@@ -392,6 +392,7 @@
 		var/SA_para_min = 1
 		var/SA_sleep_min = 5
 		var/oxygen_used = 0
+		var/nitrogen_used = 0
 		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 		//Partial pressure of the O2 in our breath
@@ -401,8 +402,10 @@
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
 		//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
+		// Nitrogen, for Vox.
+		var/Nitrogen_pp = (breath.nitrogen/breath.total_moles())*breath_pressure
 
-		if(O2_pp < safe_oxygen_min) 			// Too little oxygen
+		if(O2_pp < safe_oxygen_min && src.dna.mutantrace!="vox") 	// Too little oxygen
 			if(prob(20))
 				spawn(0) emote("gasp")
 			if(O2_pp > 0)
@@ -420,6 +423,19 @@
 			oxyloss += 5*ratio
 			oxygen_used = breath.oxygen*ratio/6
 			oxygen_alert = max(oxygen_alert, 1)*/
+		else if(Nitrogen_pp < safe_oxygen_min && src.dna.mutantrace=="vox")  //Vox breathe nitrogen, not oxygen.
+
+			if(prob(20))
+				spawn(0) emote("gasp")
+			if(Nitrogen_pp > 0)
+				var/ratio = safe_oxygen_min/Nitrogen_pp
+				adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS))
+				failed_last_breath = 1
+				nitrogen_used = breath.nitrogen*ratio/6
+			else
+				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+				failed_last_breath = 1
+			oxygen_alert = max(oxygen_alert, 1)
 		else								// We're in safe limits
 			failed_last_breath = 0
 			adjustOxyLoss(-5)
@@ -427,6 +443,7 @@
 			oxygen_alert = 0
 
 		breath.oxygen -= oxygen_used
+		breath.nitrogen -= nitrogen_used
 		breath.carbon_dioxide += oxygen_used
 
 		//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
