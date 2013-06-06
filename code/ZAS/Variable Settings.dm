@@ -1,22 +1,22 @@
 var/global/vs_control/vsc = new
 
 vs_control/var
-	IgnitionLevel = 1 //default 0.4
+	IgnitionLevel = 0.5 //default 0.5
 	IgnitionLevel_DESC = "Determines point at which fire can ignite"
 
-	fire_consuption_rate = 0.25
+	fire_consuption_rate = 0.025 //default .25
 	fire_consuption_rate_NAME = "Fire - Air Consumption Ratio"
 	fire_consuption_rate_DESC = "Ratio of air removed and combusted per tick."
 
-	fire_firelevel_multiplier = 25
+	fire_firelevel_multiplier = 80 //default 25
 	fire_firelevel_multiplier_NAME = "Fire - Firelevel Constant"
 	fire_firelevel_multiplier_DESC = "Multiplied by the equation for firelevel, affects the combustion and ignition of gas mixes."
 
-	fire_temperature_multiplier = 1700
+	fire_temperature_multiplier = 10000 //default 1700
 	fire_temperature_multiplier_NAME = "Fire - Temperature Multiplier"
 	fire_temperature_multiplier_DESC = "Base value for fire temperatures."
 
-	fire_gas_combustion_ratio = 0.25
+	fire_gas_combustion_ratio = 0.1 //default .25
 	fire_gas_combustion_ratio_NAME = "Fire - Gas Conversion Ratio"
 	fire_gas_combustion_ratio_DESC = "The rate at which oxygen and plasma are converted to CO2, expressed in terms of the firelevel."
 
