@@ -487,6 +487,9 @@
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				u_equip(r_store)
 				u_equip(l_store)
+			else
+				// Display a warning if the user mocks up
+				src << "<span class='warning'>You feel your pockets being fumbled with!</span>"
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
