@@ -961,19 +961,21 @@
 					del a
 
 				if(halloss > 100)
-					src << "<span class='notice'>You're too tired to keep going...</span>"
+					src << "<span class='notice'>You're in too much pain to keep going...</span>"
 					for(var/mob/O in oviewers(src, null))
-						O.show_message("<B>[src]</B> slumps to the ground panting, too weak to continue fighting.", 1)
-					Paralyse(3)
+						O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+					Paralyse(10)
 					setHalLoss(99)
 
 			if(paralysis)
 				AdjustParalysis(-1)
 				blinded = 1
 				stat = UNCONSCIOUS
+				if(halloss > 0)
+					adjustHalLoss(-6)
 			else if(sleeping)
 				handle_dreams()
-				adjustHalLoss(-5)
+				adjustHalLoss(-6)
 				if (mind)
 					if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 						sleeping = max(sleeping-1, 0)
@@ -982,9 +984,14 @@
 				if( prob(10) && health && !hal_crit )
 					spawn(0)
 						emote("snore")
+			else if(resting)
+				if(halloss > 0)
+					adjustHalLoss(-6)
 			//CONSCIOUS
 			else
 				stat = CONSCIOUS
+				if(halloss > 0)
+					adjustHalLoss(-2)
 
 			//Eyes
 			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own

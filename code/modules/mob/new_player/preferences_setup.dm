@@ -144,8 +144,10 @@ datum/preferences
 				icobase = 'icons/mob/human_races/r_lizard.dmi'
 			if("Skrell")
 				icobase = 'icons/mob/human_races/r_skrell.dmi'
+				/*
 			if("Vox")
 				icobase = 'icons/mob/human_races/r_vox.dmi'
+				*/
 			else
 				icobase = 'icons/mob/human_races/r_human.dmi'
 		preview_icon = new /icon(icobase, "torso_[g]")
