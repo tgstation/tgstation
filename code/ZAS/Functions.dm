@@ -111,13 +111,14 @@ proc/ZMerge(zone/A,zone/B)
 
 	//Add space tiles.
 	if(B)
-		A.unsimulated_tiles |= B.unsimulated_tiles
+		if(istype(B.unsimulated_tiles, A.unsimulated_tiles))
+			A.unsimulated_tiles |= B.unsimulated_tiles
 
-		//Add contents.
-		A.contents = new_contents
+			//Add contents.
+			A.contents = new_contents
 
-	//Remove the "B" zone, finally.
-		B.SoftDelete()
+			//Remove the "B" zone, finally.
+			B.SoftDelete()
 
 
 //Connects two zones by forming a connection object representing turfs A and B.

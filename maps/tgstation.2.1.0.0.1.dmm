@@ -4881,7 +4881,7 @@
 "bPS" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/medical/research{name = "Research Division"})
 "bPT" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; external_pressure_bound = 0; frequency = 1442; icon_state = "in"; id_tag = "chamber_vent"; initialize_directions = 1; internal_pressure_bound = 4000; name = "Chamber Vent"; on = 0; pressure_checks = 2; pump_direction = 0},/turf/simulated/floor/engine/vacuum,/area/toxins/mixing)
 "bPU" = (/turf/simulated/floor/engine/vacuum,/area/toxins/mixing)
-"bPV" = (/obj/machinery/door/airlock/glass_research{autoclose = 0; frequency = 1449; glass = 1; icon_state = "door_locked"; id_tag = "tox_airlock_exterior"; locked = 1; name = "Mixing Room Exterior Airlock"; req_access_txt = "8"},/turf/simulated/floor/engine,/area/toxins/mixing)
+"bPV" = (/obj/machinery/door/airlock/glass_research{autoclose = 0; frequency = 1449; glass = 1; icon_state = "door_locked"; id_tag = "tox_airlock_exterior"; locked = 1; name = "Mixing Room Exterior Airlock"; req_access_txt = "8"},/turf/simulated/floor/engine{blocks_air = 1},/area/toxins/mixing)
 "bPW" = (/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume{dir = 2; frequency = 1449; id = "tox_airlock_pump"},/turf/simulated/floor/engine,/area/toxins/mixing)
 "bPX" = (/obj/machinery/door/airlock/glass_research{autoclose = 0; frequency = 1449; glass = 1; icon_state = "door_locked"; id_tag = "tox_airlock_interior"; locked = 1; name = "Mixing Room Interior Airlock"; req_access_txt = "8"},/turf/simulated/floor/engine,/area/toxins/mixing)
 "bPY" = (/turf/simulated/floor{dir = 8; icon_state = "warnwhite"; tag = "icon-warnwhite (NORTH)"},/area/toxins/mixing)
