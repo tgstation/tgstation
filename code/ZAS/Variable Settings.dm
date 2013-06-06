@@ -25,35 +25,35 @@ vs_control/var
 	airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
 	airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
 
-	airflow_light_pressure = 40 //default 35
+	airflow_light_pressure = 35 //default 35
 	airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
 	airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
 
-	airflow_medium_pressure = 75 //default 50
+	airflow_medium_pressure = 55 //default 50
 	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
 
-	airflow_heavy_pressure = 85 //default 65
+	airflow_heavy_pressure = 70 //default 65
 	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
 	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
 
-	airflow_dense_pressure = 135 //default 85
+	airflow_dense_pressure = 80 //default 85
 	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
 
-	airflow_stun_pressure = 95 //default 60
+	airflow_stun_pressure = 60 //default 60
 	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
 	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 
-	airflow_stun_cooldown = 90 //default 60
+	airflow_stun_cooldown = 60 //default 60
 	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
 	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
 
-	airflow_stun = 0.5 //default 1
+	airflow_stun = 0.75 //default 1
 	airflow_stun_NAME = "Airflow Impact - Stunning"
 	airflow_stun_DESC = "How much a mob is stunned when hit by an object."
 
-	airflow_damage = 1 //default 2
+	airflow_damage = 2 //default 2
 	airflow_damage_NAME = "Airflow Impact - Damage"
 	airflow_damage_DESC = "Damage from airflow impacts."
 
