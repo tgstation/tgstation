@@ -110,7 +110,10 @@ proc/ZMerge(zone/A,zone/B)
 		C.Cleanup()
 
 	//Add space tiles.
-	A.unsimulated_tiles |= B.unsimulated_tiles
+	if(A.unsimulated_tiles && B.unsimulated_tiles)
+		A.unsimulated_tiles |= B.unsimulated_tiles
+	else if (B.unsimulated_tiles)
+		A.unsimulated_tiles = B.unsimulated_tiles
 
 	//Add contents.
 	A.contents = new_contents
