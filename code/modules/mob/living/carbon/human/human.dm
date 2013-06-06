@@ -481,8 +481,8 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["pockets"])
-			visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
-							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>")
+			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
+							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				u_equip(r_store)
 				u_equip(l_store)
