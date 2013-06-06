@@ -1,8 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/security
-	name = "Security Cameras"
+	name = "security cameras"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
 	circuit = "/obj/item/weapon/circuitboard/security"

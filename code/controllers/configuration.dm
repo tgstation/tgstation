@@ -1,3 +1,10 @@
+//Configuraton defines //TODO: Move all yes/no switches into bitflags
+
+//Used by jobs_have_maint_access
+#define ASSISTANTS_HAVE_MAINT_ACCESS 1
+#define SECURITY_HAS_MAINT_ACCESS 2
+#define EVERYONE_HAS_MAINT_ACCESS 4
+
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
@@ -44,6 +51,7 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
 
 	var/server
 	var/banappeals
@@ -70,6 +78,7 @@
 
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
+	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
 	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -101,7 +110,6 @@
 
 	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
 
-	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
@@ -299,8 +307,12 @@
 					config.alert_desc_green			= value
 				if("alert_delta")
 					config.alert_desc_delta			= value
-				if("assistant_maint")
-					config.assistant_maint			= 1
+				if("assistants_have_maint_access")
+					config.jobs_have_maint_access	|= ASSISTANTS_HAVE_MAINT_ACCESS
+				if("security_has_maint_access")
+					config.jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
+				if("everyone_has_maint_access")
+					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_rounds")
@@ -326,6 +338,8 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
+				if("allow_latejoin_antagonists")
+					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
 				if("jobs_have_minimal_access")

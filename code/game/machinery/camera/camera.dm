@@ -103,7 +103,7 @@
 /obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
 
 	// DECONSTRUCTION
-	if(isscrewdriver(W))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
@@ -111,10 +111,10 @@
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
+	else if((istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool)) && panel_open)
 		wires.Interact(user)
 
-	else if(iswelder(W) && wires.CanDeconstruct())
+	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
 			if(assembly)
 				assembly.loc = src.loc

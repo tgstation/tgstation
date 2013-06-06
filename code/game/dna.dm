@@ -4,12 +4,10 @@
 #define NUMBER_OF_BUFFERS 3
 
 #define RADIATION_STRENGTH_MAX 15
-#define RADIATION_STRENGTH_MULTIPLIER 5			//larger has a more range
-#define RADIATION_STRENGTH_BIAS 0				//skews the randomisation based on radstrength*num
+#define RADIATION_STRENGTH_MULTIPLIER 1			//larger has a more range
 
 #define RADIATION_DURATION_MAX 30
-#define RADIATION_ACCURACY_MULTIPLIER 12		//larger is less accurate
-#define RADIATION_ACCURACY_BIAS 0				//skews the randomisation based on radduration*num
+#define RADIATION_ACCURACY_MULTIPLIER 4			//larger is less accurate
 
 #define RADIATION_IRRADIATION_MULTIPLIER 0.3	//multiplier for how much radiation a test subject recieves
 
@@ -140,26 +138,21 @@
 
 /proc/getblock(input, blocknumber, blocksize=DNA_BLOCK_SIZE)
 	return copytext(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
-/*
-/proc/getblockbuffer(input,blocknumber,blocksize)
-	var/result[blocksize]
-	var/start = (blocksize*blocknumber)-blocksize
-	for(var/i=1, i<=blocksize, i++)
-		result[i] = copytext(input, start+i, start+i+1)
-	return result
-*/
+
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
 	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
 /proc/scramble(input,rs,rd)
 	var/length = length(input)
-	var/num = hex2num(input)
-	num = round(num + gaussian(rs*RADIATION_STRENGTH_BIAS, rs*RADIATION_STRENGTH_MULTIPLIER), 1)
-	return num2hex(Wrap(num, 0, 16**length), length)
+	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
+	if(ran == 0)		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-change makes people mad though
+	else if(ran < 0)	ran = round(ran)	//negative, so floor it
+	else				ran = -round(-ran)	//positive, so ceiling it
+	return num2hex(Wrap(hex2num(input)+ran, 0, 16**length), length)
 
 /proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
-	return Wrap(round(position_we_were_supposed_to_hit + gaussian(radduration*RADIATION_ACCURACY_BIAS, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
+	return Wrap(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
 
 /proc/randmutb(mob/living/carbon/M)
 	if(!check_dna_integrity(M))	return
@@ -710,7 +703,7 @@
 	return
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
-	if((istype(W, /obj/item/weapon/disk/data)) && (!diskette))
+	if(istype(W, /obj/item/weapon/disk/data) && !diskette)
 		user.drop_item()
 		W.loc = src
 		diskette = W
@@ -728,9 +721,9 @@
 		return
 	ShowInterface(user)
 
-/obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user)
+/obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
-	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 450) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 470) // Set up the popup browser window
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
@@ -744,12 +737,13 @@
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)	occupant_status = "<span class='good'>Conscious</span>"
 					if(UNCONSCIOUS)	occupant_status = "<span class='average'>Unconscious</span>"
-					else			occupant_status = "<span class='bad'>DEAD</span>"
+					else			occupant_status = "<span class='bad'>DEAD - Cannot Operate</span>"
 				occupant_status = "[viable_occupant.name] => [occupant_status]<br />"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div>"
 				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("inaprovaline")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div> [last_change]</div>"
 			else
 				viable_occupant = null
 				occupant_status = "<span class='bad'>Invalid DNA structure</span>"
@@ -763,7 +757,18 @@
 	else
 		occupant_status = "<span class='bad'>Error: Undefined</span>"
 		scanner_status = "<span class='bad'>Error: No scanner detected</span>"
-	var/status = "<div class='statusDisplay'>Scanner Status: [scanner_status]<br>Subject Status: [occupant_status]<br>Emitter Array Output Level: [radstrength]<br>Emitter Array Pulse Duration: [radduration]</div>"
+	
+	var/status = "<div class='statusDisplay'>Scanner Status: [scanner_status]<br>Subject Status: [occupant_status]<br>"
+	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
+	status += "Emitter Array Output Level: [radstrength] <i>Mutation: (-[stddev]<->+[stddev])=68% (-[2*stddev]<->+[2*stddev])=95%</i><br>"
+	stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
+	var/chance_to_hit
+	switch(stddev)	//hardcoded values from a z-table for a normal distribution
+		if(0 to 0.25)			chance_to_hit = ">95%"
+		if(0.25 to 0.5)			chance_to_hit = "68-95%"
+		if(0.5 to 0.75)			chance_to_hit = "55-68%"
+		else					chance_to_hit = "<38%"
+	status += "Emitter Array Pulse Duration: [radduration] <i>Accuracy: ([chance_to_hit])</i></div>"
 	
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)		buttons += "<a href='?src=\ref[src];task=togglelock;'>Toggle Bolts</a> "
@@ -846,15 +851,16 @@
 			temp_html += status
 			temp_html += buttons
 			
+			var/max_line_len = 10*DNA_BLOCK_SIZE
+			
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>"
 			if(viable_occupant)
 				temp_html += "[viable_occupant.dna.unique_enzymes]"
 			else
 				temp_html += " - "
-			temp_html += "</span></div></div>"
+			temp_html += "</span></div></div><br>"
 			
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><span class='highlight'>"
-			var/max_line_len = DNA_BLOCK_SIZE * 10
 			if(viable_occupant)
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
@@ -865,7 +871,7 @@
 						temp_html += " "
 			else
 				temp_html += " - "
-			temp_html += "</span></div></div>"
+			temp_html += "</span></div></div><br>"
 			
 			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><span class='highlight'>"
 			if(viable_occupant)
@@ -905,6 +911,7 @@
 
 	//Basic Tasks///////////////////////////////////////////
 	var/num = round(text2num(href_list["num"]))
+	var/last_change
 	switch(href_list["task"])
 		if("togglelock")
 			if(connected)	connected.locked = !connected.locked
@@ -1010,7 +1017,7 @@
 				diskette.loc = get_turf(src)
 				diskette = null
 		if("pulseui","pulsese")
-			if(num && viable_occupant && connected)
+			if(num && viable_occupant && connected && viable_occupant.stat != DEAD)
 				radduration = Wrap(radduration, 1, RADIATION_DURATION_MAX+1)
 				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
 
@@ -1031,8 +1038,14 @@
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
 							
+							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
+							var/subblock = num - block*DNA_BLOCK_SIZE
+							last_change = "UI #[block]-[subblock]; "
+							
 							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
+							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
+							last_change += "->[hex]"
 							
 							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
 							updateappearance(viable_occupant)
@@ -1041,8 +1054,14 @@
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
 							
+							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
+							var/subblock = num - block*DNA_BLOCK_SIZE
+							last_change = "SE #[block]-[subblock]; "
+							
 							var/hex = copytext(viable_occupant.dna.struc_enzymes, num, num+1)
+							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
+							last_change += "->[hex]"
 							
 							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
 							domutcheck(viable_occupant, connected)
@@ -1052,7 +1071,7 @@
 				if(connected)
 					connected.locked = locked_state
 
-	ShowInterface(usr)
+	ShowInterface(usr,last_change)
 	
 
 /////////////////////////// DNA MACHINES
@@ -1063,11 +1082,9 @@
 
 #undef RADIATION_STRENGTH_MAX
 #undef RADIATION_STRENGTH_MULTIPLIER
-#undef RADIATION_STRENGTH_BIAS
 
 #undef RADIATION_DURATION_MAX
 #undef RADIATION_ACCURACY_MULTIPLIER
-#undef RADIATION_ACCURACY_BIAS
 
 #undef RADIATION_IRRADIATION_MULTIPLIER
 

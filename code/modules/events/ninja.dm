@@ -1640,7 +1640,7 @@ ________________________________________________________________________________
 			dat += "</ul>"
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
-			var/turf/T = get_turf_or_move(U.loc)
+			var/turf/T = get_turf(U.loc)
 			if (isnull(T))
 				dat += "Unable to obtain a reading."
 			else

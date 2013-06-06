@@ -424,6 +424,13 @@ datum
 			required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
 			result_amount = 2
 
+		rezadone
+			name = "Rezadone"
+			id = "rezadone"
+			result = "rezadone"
+			required_reagents = list("carpotoxin" = 1, "cryptobiolin" = 1, "copper" = 1)
+			result_amount = 3
+
 		mindbreaker
 			name = "Mindbreaker Toxin"
 			id = "mindbreaker"
@@ -757,8 +764,8 @@ datum
 				if(chosen)
 				// Calculate previous position for transition
 
-					var/turf/FROM = get_turf_loc(holder.my_atom) // the turf of origin we're travelling FROM
-					var/turf/TO = get_turf_loc(chosen)			 // the turf of origin we're travelling TO
+					var/turf/FROM = get_turf(holder.my_atom) // the turf of origin we're travelling FROM
+					var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 					playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
 
@@ -819,16 +826,16 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(critters)
 					var/mob/living/simple_animal/hostile/C = new chosen
-					C.loc = get_turf_loc(holder.my_atom)
+					C.loc = get_turf(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))
@@ -845,9 +852,9 @@ datum
 				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
 				// BORK BORK BORK
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
@@ -855,7 +862,7 @@ datum
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
 					if(B)
-						B.loc = get_turf_loc(holder.my_atom)
+						B.loc = get_turf(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -926,10 +933,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!"), 1)
 				var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
-				S.loc = get_turf_loc(holder.my_atom)
+				S.loc = get_turf(holder.my_atom)
 
 
 		slimemonkey
@@ -944,7 +951,7 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/i = 1, i <= 3, i++)
 					var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
-					M.loc = get_turf_loc(holder.my_atom)
+					M.loc = get_turf(holder.my_atom)
 
 //Green
 		slimemutate
@@ -971,10 +978,10 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
 				M.amount = 15
-				M.loc = get_turf_loc(holder.my_atom)
+				M.loc = get_turf(holder.my_atom)
 				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
 				P.amount = 5
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 //Gold
 		slimecrit
@@ -987,7 +994,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
 
@@ -1026,9 +1033,9 @@ datum
 
 				message_admins(message, 0, 1)
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
@@ -1036,7 +1043,7 @@ datum
 					var/chosen = pick(critters)
 					var/mob/living/simple_animal/hostile/C = new chosen
 					C.faction = "slimesummon"
-					C.loc = get_turf_loc(holder.my_atom)
+					C.loc = get_turf(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))
@@ -1051,7 +1058,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
 
@@ -1090,16 +1097,16 @@ datum
 
 				message_admins(message, 0, 1)
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
 				C.faction = "neutral"
-				C.loc = get_turf_loc(holder.my_atom)
+				C.loc = get_turf(holder.my_atom)
 
 //Silver
 		slimebork
@@ -1117,9 +1124,9 @@ datum
 				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
 				// BORK BORK BORK
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
@@ -1127,7 +1134,7 @@ datum
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
 					if(B)
-						B.loc = get_turf_loc(holder.my_atom)
+						B.loc = get_turf(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -1148,9 +1155,9 @@ datum
 				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
 				// BORK BORK BORK
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
@@ -1158,7 +1165,7 @@ datum
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
 					if(B)
-						B.loc = get_turf_loc(holder.my_atom)
+						B.loc = get_turf(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -1187,11 +1194,11 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-				for(var/mob/living/M in range (get_turf_loc(holder.my_atom), 7))
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 240
 					M << "\blue You feel a chill!"
 
@@ -1217,7 +1224,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
 				var/turf/location = get_turf(holder.my_atom.loc)
@@ -1244,7 +1251,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				empulse(get_turf_loc(holder.my_atom), 3, 7)
+				empulse(get_turf(holder.my_atom), 3, 7)
 
 
 		slimecell
@@ -1258,7 +1265,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 		slimeglow
 			name = "Slime Glow"
@@ -1270,10 +1277,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime begins to emit a soft light. Squeezing it will cause it to grow brightly."), 1)
 				var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
-				F.loc = get_turf_loc(holder.my_atom)
+				F.loc = get_turf(holder.my_atom)
 
 //Purple
 
@@ -1288,7 +1295,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 		slimejam
 			name = "Slime Jam"
@@ -1315,7 +1322,7 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/stack/sheet/mineral/plasma/P = new /obj/item/stack/sheet/mineral/plasma
 				P.amount = 10
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 //Red
 		slimeglycerol
@@ -1340,10 +1347,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
 					slime.tame = 0
 					slime.rabid = 1
-					for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 						O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
 
 //Pink
@@ -1358,7 +1365,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/slimepotion/P = new /obj/item/weapon/slimepotion
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 
 //Black
@@ -1384,10 +1391,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
-				explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
+				explosion(get_turf(holder.my_atom), 1 ,3, 6)
 //Light Pink
 		slimepotion2
 			name = "Slime Potion 2"
@@ -1400,7 +1407,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 //Adamantine
 		slimegolem
 			name = "Slime Golem"
@@ -1413,7 +1420,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
-				Z.loc = get_turf_loc(holder.my_atom)
+				Z.loc = get_turf(holder.my_atom)
 				Z.announce_to_ghosts()
 
 
@@ -1441,8 +1448,8 @@ datum
 				if(chosen)
 				// Calculate previous position for transition
 
-					var/turf/FROM = get_turf_loc(holder.my_atom) // the turf of origin we're travelling FROM
-					var/turf/TO = get_turf_loc(chosen)			 // the turf of origin we're travelling TO
+					var/turf/FROM = get_turf(holder.my_atom) // the turf of origin we're travelling FROM
+					var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 					playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
 
@@ -1491,7 +1498,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 //Sepia
 		slimecamera
@@ -1505,7 +1512,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/device/camera/P = new /obj/item/device/camera
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 		slimefilm
 			name = "Slime Film"
@@ -1518,7 +1525,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 
 //Pyrite
@@ -1537,7 +1544,7 @@ datum
 				var/chosen = pick(paints)
 				var/obj/P = new chosen
 				if(P)
-					P.loc = get_turf_loc(holder.my_atom)
+					P.loc = get_turf(holder.my_atom)
 
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////

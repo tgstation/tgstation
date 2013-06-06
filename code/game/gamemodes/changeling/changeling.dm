@@ -75,6 +75,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
+		log_game("[changeling.key] (ckey) has been selected as a changeling")
 		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
@@ -85,6 +86,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 	return
 
+/datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+	if(changelings.len >= round(joined_player_list.len / changeling_scaling_coeff) + 1) //Caps number of latejoin antagonists
+		return
+	if (prob(100/changeling_scaling_coeff))
+		if(character.client.prefs.be_special & BE_CHANGELING)
+			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+				if(!(character.job in ticker.mode.restricted_jobs))
+					character.mind.make_Changling()
+	..()
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
 	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.

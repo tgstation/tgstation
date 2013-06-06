@@ -260,10 +260,10 @@
 		last_relay = world.time
 		var/speed_change = 0
 		if(direction & NORTH)
-			pr_inertial_movement.desired_delay = between(pr_inertial_movement.min_delay, pr_inertial_movement.desired_delay-1, pr_inertial_movement.max_delay)
+			pr_inertial_movement.desired_delay = Clamp(pr_inertial_movement.desired_delay-1, pr_inertial_movement.min_delay, pr_inertial_movement.max_delay)
 			speed_change = 1
 		else if (direction & SOUTH)
-			pr_inertial_movement.desired_delay = between(pr_inertial_movement.min_delay, pr_inertial_movement.desired_delay+1, pr_inertial_movement.max_delay)
+			pr_inertial_movement.desired_delay = Clamp(pr_inertial_movement.desired_delay+1, pr_inertial_movement.min_delay, pr_inertial_movement.max_delay)
 			speed_change = 1
 		else if (src.can_rotate && direction & 4)
 			src.dir = turn(src.dir, -90.0)

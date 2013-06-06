@@ -79,7 +79,7 @@
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isscrewdriver(W))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(det_time)
 			if ("1")
 				det_time = 10

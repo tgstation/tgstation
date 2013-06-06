@@ -177,13 +177,11 @@
 	switch(job)
 		if("VIP Guest")
 			return list(access_cent_general)
-		if("Prisoner")
-			return
 		if("Custodian")
 			return list(access_cent_general, access_cent_living, access_cent_storage)
 		if("Thunderdome Overseer")
 			return list(access_cent_general, access_cent_thunder)
-		if("Intel Officer")
+		if("CentCom Official")
 			return list(access_cent_general, access_cent_living)
 		if("Medical Officer")
 			return list(access_cent_general, access_cent_living, access_cent_medical)
@@ -191,9 +189,11 @@
 			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
-		if("BlackOps Commander")
+		if("Special Ops Officer")
 			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
-		if("Supreme Commander")
+		if("Admiral")
+			return get_all_centcom_access()
+		if("CentCom Commander")
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
@@ -410,10 +410,13 @@
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
-/proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
+proc/get_all_job_icons() //For all existing HUD icons
+	return get_all_jobs() + list("Prisoner")
 
-/obj/proc/GetJobName()
+/proc/get_all_centcom_jobs()
+	return list("VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","CentCom Commander")
+
+/obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
 		return
 
@@ -425,8 +428,8 @@
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
 
-	if(jobName in get_all_jobs()) //Check station jobs
+	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
-	if(jobName == "Prisoner") //Check for Prisoner
-		return "Prisoner"
+	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
+		return "Centcom"
 	return "Unknown" //Return unknown if none of the above apply
