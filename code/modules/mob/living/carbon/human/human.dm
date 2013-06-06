@@ -483,6 +483,7 @@
 		if(href_list["pockets"])
 			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
+			usr << "<span class='notice'>You try to empty [src]'s pockets.</span>"
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				u_equip(r_store)
 				u_equip(l_store)
