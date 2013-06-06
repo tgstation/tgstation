@@ -51,6 +51,9 @@ var/const/VOX_CHANNEL = 200
 	if(words.len > 32)
 		words.len = 32
 	for(var/word in words)
+		word = trim(word)
+		if(!word)
+			continue
 		if(!play_vox_word(word, src.z)) // If the word isn't speakable
 			incorrect_words += word
 
