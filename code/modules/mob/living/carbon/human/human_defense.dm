@@ -23,8 +23,8 @@ emp_act
 				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
 					P.agony=P.agony*C.siemens_coefficient
 					visible_message("\red [src]'s [C.name] absorbs some of the shock from the [P.name]!</B></red>")
-					apply_effect(P.agony,AGONY,0)
-					del P
+		apply_effect(P.agony,AGONY,0)
+		del P
 					/* Commenting out new-old taser nerf.
 					if(C.siemens_coefficient == 0) //If so, is that clothing shock proof?
 						if(prob(deflectchance))

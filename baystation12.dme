@@ -492,6 +492,7 @@
 #include "code\game\objects\items\devices\transfer_valve.dm"
 #include "code\game\objects\items\devices\uplinks.dm"
 #include "code\game\objects\items\devices\violin.dm"
+#include "code\game\objects\items\devices\whistle.dm"
 #include "code\game\objects\items\devices\PDA\cart.dm"
 #include "code\game\objects\items\devices\PDA\chatroom.dm"
 #include "code\game\objects\items\devices\PDA\PDA.dm"
