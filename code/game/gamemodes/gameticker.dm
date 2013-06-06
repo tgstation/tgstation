@@ -264,6 +264,8 @@ var/global/datum/controller/gameticker/ticker
 				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()
 					player.AIize()
+				else if(!player.mind.assigned_role)
+					continue
 				else
 					player.create_character()
 					del(player)
