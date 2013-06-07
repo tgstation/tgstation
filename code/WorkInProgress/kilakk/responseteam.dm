@@ -55,17 +55,42 @@ var/sent_emergency_team = 0
 			nuke_code = N.r_code
 			break
 
-	// Time to pick people!
-	var/list/candidates = list() // ghosts who can be picked
+/*	var/list/candidates = list() // ghosts who can be picked
 	var/list/members = list() // ghosts who have been picked
 	for(var/mob/dead/observer/G in player_list)
 		if(!G.client.holder && !G.client.is_afk())
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 				candidates += G.key
 	for(var/i=members_possible,(i>0&&candidates.len), i--)
-		var/candidate = input("Choose characters to spawn as response team members. This will go on until there are no more ghosts to pick from or until all slots are full.", "Active Players") as null|anything in candidates
-		candidates -= candidate
-		members += candidate
+		var/candidate = input("Choose characters to spawn as response team members. This will go on until there are no more ghosts to pick from or until all slots are full.", "Active Players") as null|anything in candidates */
+
+	// I tried doing this differently. Ghosts get a pop-up box similar to pAIs and one-click-antag
+	// Biggest diff here is in how the candidates list is updated
+	alert(usr, "Active ghosts are currently being given a chance to be considered to join the emergency response team. Please wait about 30 seconds.") // There's probably a better way to do this, with a fancy count-down timer or something
+
+	var/list/candidates = list()
+	var/list/members = list()
+	var/time_passed = world.time
+
+	for(var/mob/dead/observer/G in player_list)
+		if(!jobban_isbanned(G, "Syndicate") || !jobban_isbanned(G, "Emergency Response Team") || !jobban_isbanned(G, "Security Officer"))
+			spawn(0)
+				switch(alert(G, "Do you want to be considered for the Emergency Response Team? Please answer in 30 seconds!",,"Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)
+							return
+						candidates += G.key
+					if("No")
+						return
+					else
+						return
+
+	sleep(300)
+
+	for(var/i=members_possible,(i>0&&candidates.len), i--) // The rest of the choosing process is just an input with a list of candidates on it
+		var/chosen = input("Time's up! Choose characters to spawn as reponse team members. This will go on until there are no more ghosts to pick from or until all slots are full.", "Considered Players") as null|anything in candidates
+		candidates -= chosen
+		members += chosen
 
 	command_alert("Sensors indicate that [station_name()] has entered Code Red and is in need of assistance. We will prepare and dispatch an emergency response team to deal with the situation.", "NMV Icarus Command")
 
@@ -101,22 +126,19 @@ var/sent_emergency_team = 0
 				new_member.name = new_name
 
 			new_member.dna.ready_dna(new_member)
-			updateappearance(new_member, new_member.dna.uni_identity) // This is supposed to make you look like a girl if you happened to choose "female". Dunno if there's a better way to do it?
+			new_member.update_body(1)
 
 			new_member.mind_initialize()
 			new_member.mind.assigned_role = "Emergency Response Team"
 			new_member.mind.special_role = "Emergency Response Team"
 			ticker.mode.traitors += new_member.mind // ERTs will show up at the end of the round on the "traitor" list
 
+			new_member << "\blue You are the <b>Emergency Response Team[!leader_selected?"!</b>":" Leader!</b>"] \nAs a response team [!leader_selected?"member":"<b>leader</b>"] you answer directly to [!leader_selected?"your team leader.":"Central Command."] \nYou have been deployed by NanoTrasen Central Command in Tau Ceti to resolve a Code Red alert aboard [station_name()], and have been provided with the following instructions and information regarding your mission: \red [situation]"
 			new_member.mind.store_memory("<b>Mission Parameters:</b> \red [situation].")
 
 			if(leader_selected)
-				new_member.mind.store_memory("<b>Nuclear Authentication Code:</b> \red [nuke_code]")
-
-			new_member << "\blue You are the <b>Emergency Response Team[!leader_selected?"!</b>":" Leader!</b>"] \nAs a response team [!leader_selected?"member":"<b>leader</b>"] you answer directly to [!leader_selected?"your team leader.":"Central Command."] \nYou have been deployed by NanoTrasen Central Command in Tau Ceti to resolve a Code Red alert aboard [station_name()], and have been provided with the following instructions and information regarding your mission: \red [situation]"
-
-			if(leader_selected)
 				new_member << "\red The Nuclear Authentication Code is: <b> [nuke_code]</b>. You are instructed not to detonate the nuclear device aboard [station_name()] unless <u>absolutely necessary</u>."
+				new_member.mind.store_memory("<b>Nuclear Authentication Code:</b> \red [nuke_code]")
 
 			new_member.equip_response_team(leader_selected) // Start equipping them
 
@@ -128,17 +150,6 @@ var/sent_emergency_team = 0
 	var/mob/living/carbon/human/new_member = new(spawn_location.loc)
 
 	return new_member
-/* // Couldn't how to figure out how to make fancy do-it-yourself input boxes with all this stuff down
-	new_member.age = !leader_selected ? rand(23,35) : rand(35,45)
-	new_member.dna.ready_dna(new_member)
-
-	// Minds
-	new_member.mind_initialize()
-	new_member.mind.assigned_role = "Emergency Response Team"
-	new_member.mind.special_role = "Emergency Response Team"
-//	ticker.mode.traitors += new_member.mind
-
-	return new_member*/
 
 // Equip mob
 /mob/living/carbon/human/proc/equip_response_team(leader_selected = 0)
