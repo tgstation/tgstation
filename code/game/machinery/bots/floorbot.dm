@@ -237,7 +237,8 @@
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 		return
-
+	if(!src.path)
+		src.path = new()
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
