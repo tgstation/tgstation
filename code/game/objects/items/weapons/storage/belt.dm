@@ -108,6 +108,7 @@
 	item_state = "security"//Could likely use a better one.
 	storage_slots = 7
 	max_w_class = 3
+	max_combined_w_class = 21
 	can_hold = list(
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
