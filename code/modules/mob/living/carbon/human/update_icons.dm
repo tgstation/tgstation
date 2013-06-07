@@ -444,11 +444,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 			if("skrell")
 				race_icon = 'icons/mob/human_races/r_skrell.dmi'
 				deform_icon = 'icons/mob/human_races/r_def_skrell.dmi'
-				/*
+
 			if("vox")
 				race_icon = 'icons/mob/human_races/r_vox.dmi'
 				deform_icon = 'icons/mob/human_races/r_def_vox.dmi'
-				*/
+
 			else
 				race_icon = 'icons/mob/human_races/r_human.dmi'
 				deform_icon = 'icons/mob/human_races/r_def_human.dmi'
