@@ -3,6 +3,8 @@
 	stat = DEAD
 	if (src.name == "Skuld" && src.ckey == "ravensdale")//checks ID of AI and player to see if it needs to pull the custom death sprite and goes to blue-screen if it doesn't
 		icon_state = "ai-ravensdale-crash"
+	else if (src.name == "REMNANT" && src.ckey == "serithi")
+		icon_state = "ai-serithi-crash"
 	else icon_state = "ai-crash"
 	update_canmove()
 	if(src.eyeobj)
