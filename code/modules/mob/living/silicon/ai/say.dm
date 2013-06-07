@@ -34,6 +34,26 @@
 var/announcing_vox = 0
 var/const/VOX_CHANNEL = 200
 
+/mob/living/silicon/ai/verb/announcement_help()
+	set name = "Announcement Help"
+	set category = "AI Commands"
+
+
+	var/dat = "Here is a list of words you can type into the Announcement button to create sentences to vocally announce.<BR> \
+	Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.<BR>"
+
+	var/index = 0
+	for(var/word in vox_sounds)
+		index++
+		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
+		if(index != vox_sounds.len)
+			dat += " / "
+
+	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
+	popup.set_content(dat)
+	popup.open()
+
+
 /mob/living/silicon/ai/verb/announcement(var/message as text)
 	set name = "Announcement"
 	set category = "AI Commands"

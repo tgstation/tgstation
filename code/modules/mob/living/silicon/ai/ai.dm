@@ -331,6 +331,10 @@ var/list/ai_list = list()
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
 
+	if(href_list["say_word"])
+		src.announcement(href_list["say_word"])
+		return
+
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
 		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
