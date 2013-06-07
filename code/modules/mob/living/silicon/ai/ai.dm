@@ -174,28 +174,17 @@ var/list/ai_list = list()
 			//usr <<"You can only change your display once!"
 			//return
 
-/mob/living/silicon/ai/Stat()
-	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		stat(null, "Station Time: [worldtime2text()]")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-		if(ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			for (var/datum/mind/malfai in malf.malf_ai)
-				if (mind == malfai)
-					if (malf.apcs >= 3)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+// displays the malf_ai information if the AI is the malf
+/mob/living/silicon/ai/show_malf_ai()
+	if(ticker.mode.name == "AI malfunction")
+		var/datum/game_mode/malfunction/malf = ticker.mode
+		for (var/datum/mind/malfai in malf.malf_ai)
+			if (mind == malfai) // are we the evil one?
+				if (malf.apcs >= 3)
+					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 
-		if(!stat)
-			stat(null, text("System integrity: [(health+100)/2]%"))
-		else
-			stat(null, text("Systems nonfunctional"))
-
+					
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
 	set name = "Show Alerts"
@@ -232,17 +221,11 @@ var/list/ai_list = list()
 	viewalerts = 1
 	src << browse(dat, "window=aialerts&can_close=0")
 
+// this verb lets the ai see the stations manifest
 /mob/living/silicon/ai/proc/ai_roster()
 	set category = "AI Commands"
 	set name = "Show Crew Manifest"
-	var/dat
-
-	dat += "<h4>Crew Manifest</h4>"
-	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
-	dat += "<br>"
-	src << browse(dat, "window=airoster")
-	onclose(src, "airoster")
+	show_station_manifest()
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	set category = "AI Commands"
