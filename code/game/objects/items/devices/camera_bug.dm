@@ -311,17 +311,23 @@
 	var/static/list/expandables = list(
 		/obj/item/weapon/research = ADMIN_BUG, // could have been anything spawn-only
 
-		// these are so hackish I am sorry
-		/obj/item/weapon/card/emag = UNIVERSAL_BUG,
-		/obj/item/weapon/cell = SABOTAGE_BUG,
-		/obj/item/device/analyzer = NETWORK_BUG,
-		/obj/item/device/pda = ADVANCED_BUG,
+		// these are all so hackish I am sorry
 
+		/obj/item/device/analyzer = UNIVERSAL_BUG,
 		/obj/item/weapon/stock_parts/subspace/analyzer = UNIVERSAL_BUG,
+
+		/obj/item/device/assembly/igniter = SABOTAGE_BUG,
+		/obj/item/device/assembly/infra = SABOTAGE_BUG, // ir blaster to disable camera
 		/obj/item/weapon/stock_parts/subspace/amplifier = SABOTAGE_BUG,
+
+		/obj/item/device/radio = NETWORK_BUG,
+		/obj/item/device/assembly/signaler = NETWORK_BUG,
 		/obj/item/weapon/stock_parts/subspace/transmitter = NETWORK_BUG,
+
+		/obj/item/device/detective_scanner = ADVANCED_BUG,
+		/obj/item/device/paicard = ADVANCED_BUG,
 		/obj/item/weapon/stock_parts/scanning_module = ADVANCED_BUG
-	)
+		)
 
 	for(var/entry in expandables)
 		if(istype(W,entry))
