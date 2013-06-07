@@ -66,7 +66,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggleattacklogs,
 	/client/proc/toggledebuglogs,
 	/datum/admins/proc/show_skills,
-	/client/proc/check_customitem_activity
+	/client/proc/check_customitem_activity,
+	/client/proc/response_team
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
