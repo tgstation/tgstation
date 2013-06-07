@@ -105,6 +105,8 @@ var/const/VOX_CHANNEL = 200
 		return 1
 	return 0
 
+// List is required to compile the resources into the game when it loads.
+// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.
 
 var/list/vox_sounds = list("," = 'sound/vox/,.wav',
 "." = 'sound/vox/..wav',
