@@ -35,7 +35,9 @@ var/announcing_vox = 0
 var/const/VOX_CHANNEL = 200
 
 /mob/living/silicon/ai/verb/announcement_help()
+
 	set name = "Announcement Help"
+	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
 
@@ -55,13 +57,17 @@ var/const/VOX_CHANNEL = 200
 
 
 /mob/living/silicon/ai/verb/announcement(var/message as text)
+
 	set name = "Announcement"
+	set desc = "Create a vocal announcement by typing in the available words to create a setence. More help is available in 'Announcement Help'"
 	set category = "AI Commands"
 
 	if(!message)
 		return
 	//if(!announcing_vox > world.time)
 	//	return
+
+	log_game("[key_name_admin(src)] made a vocal announcement with the following message: [message].")
 
 	announcing_vox = world.time + 30
 
