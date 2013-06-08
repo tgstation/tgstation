@@ -183,14 +183,73 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-gene"
 
+
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
 	detonate = 0
 
+
+/obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text)
+	owner = newname
+	ownjob = newjob
+	name = newname + " (" + ownjob + ")"
+
+
+//AI verb and proc for sending PDA messages.
+/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+	set category = "AI IM"
+	set name = "Send Message"
+	set src in usr
+	if(usr.stat == 2)
+		usr << "You can't send PDA messages because you are dead!"
+		return
+	var/list/plist = available_pdas()
+	if (plist)
+		var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
+		if (!c) // if the user hasn't selected a PDA file we can't send a message
+			return
+		var/selected = plist[c]
+		create_message(usr, selected)
+
+
+/obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
+	set category = "AI IM"
+	set name = "Toggle Sender/Receiver"
+	set src in usr
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	toff = !toff
+	usr << "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>"
+
+
+/obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
+	set category = "AI IM"
+	set name = "Toggle Ringer"
+	set src in usr
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	silent=!silent
+	usr << "<span class='notice'>PDA ringer toggled [(silent ? "Off" : "On")]!</span>"
+
+
+/obj/item/device/pda/ai/verb/cmd_show_message_log()
+	set category = "AI IM"
+	set name = "Show Message Log"
+	set src in usr
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[tnote]</body></html>"
+	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+
+
 /obj/item/device/pda/ai/can_use()
 	return 1
+
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -198,8 +257,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return
 
+
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
+
 
 /*
  *	The Actual PDA
@@ -832,6 +893,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
+
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
@@ -1071,21 +1133,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		M.Stun(8)
 		M.Weaken(5)
 
-
-//AI verb and proc for sending PDA messages.
-
-/mob/living/silicon/ai/verb/cmd_send_pdamesg()
-	set category = "AI Commands"
-	set name = "PDA - Send Message"
+/obj/item/device/pda/proc/available_pdas()
 	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if(usr.stat == 2)
-		usr << "You can't send PDA messages because you are dead!"
-		return
-
-	if(src.aiPDA.toff)
+	if (toff)
 		usr << "Turn on your receiver in order to send messages."
 		return
 
@@ -1098,8 +1151,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			continue
 		else if (P.toff)
 			continue
-		else if (P == src.aiPDA)
-			continue
 
 		var/name = P.owner
 		if (name in names)
@@ -1110,52 +1161,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			namecounts[name] = 1
 
 		plist[text("[name]")] = P
-
-	var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
-
-	if (!c)
-		return
-
-	var/selected = plist[c]
-	src.aiPDA.create_message(src, selected)
-
-
-/mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
-		return
-	if(!isnull(aiPDA))
-		aiPDA.toff = !aiPDA.toff
-		usr << "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>"
-	else
-		usr << "You do not have a PDA. You should make an issue report about this."
-
-/mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Ringer"
-	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
-		return
-	if(!isnull(aiPDA))
-		//0
-		aiPDA.silent = !aiPDA.silent
-		usr << "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>"
-	else
-		usr << "You do not have a PDA. You should make an issue report about this."
-
-/mob/living/silicon/ai/verb/cmd_show_message_log()
-	set category = "AI Commands"
-	set name = "PDA - Show Message Log"
-	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
-		return
-	if(!isnull(aiPDA))
-		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
-		usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
-	else
-		usr << "You do not have a PDA. You should make an issue report about this."
+	return plist
+	
 
 //Some spare PDAs in a box
 /obj/item/weapon/storage/box/PDAs

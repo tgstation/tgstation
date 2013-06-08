@@ -75,23 +75,20 @@
 	..()
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
 
-
+	
+// this function shows the information about being silenced as a pAI in the Status panel
+/mob/living/silicon/pai/proc/show_silenced()
+	if(src.silence_time)
+		var/timeleft = round((silence_time - world.timeofday)/10 ,1)
+		stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		
+		
 /mob/living/silicon/pai/Stat()
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-		if(src.silence_time)
-			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
-			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-		if(!src.stat)
-			stat(null, text("System integrity: [(src.health+100)/2]%"))
-		else
-			stat(null, text("Systems nonfunctional"))
-
+		show_silenced()
+		
 	if (proc_holder_list.len)//Generic list for proc_holder objects.
 		for(var/obj/effect/proc_holder/P in proc_holder_list)
 			statpanel("[P.panel]","",P)

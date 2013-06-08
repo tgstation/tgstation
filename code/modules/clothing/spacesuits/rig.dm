@@ -86,7 +86,7 @@
 	item_state = "syndie_helm"
 	color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
-	siemens_coefficient = 0
+	siemens_coefficient = 0.6
 
 
 /obj/item/clothing/suit/space/rig/syndi
@@ -98,7 +98,7 @@
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	siemens_coefficient = 0
+	siemens_coefficient = 0.6
 
 
 //Wizard Rig
@@ -110,7 +110,7 @@
 	color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
-	siemens_coefficient = 0
+	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -121,7 +121,7 @@
 	w_class = 3
 	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
-	siemens_coefficient = 0
+	siemens_coefficient = 0.7
 
 
 //Medical Rig
@@ -148,7 +148,7 @@
 	item_state = "sec_helm"
 	color = "sec"
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
-	siemens_coefficient = 0
+	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
@@ -157,7 +157,7 @@
 	item_state = "sec_hardsuit"
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/baton)
-	siemens_coefficient = 0
+	siemens_coefficient = 0.7
 
 
 //Atmospherics Rig (BS12)

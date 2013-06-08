@@ -186,7 +186,7 @@
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/taperoll/police(src)
-		new /obj/item/device/hailer
+		new /obj/item/device/hailer(src)
 		return
 
 

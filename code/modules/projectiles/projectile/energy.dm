@@ -9,14 +9,15 @@
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	/* - Old taser bit
-	nodamage = 0
+	nodamage = 1
+	/*
 	stun = 10
 	weaken = 10
 	stutter = 10
 	*/
-	damage = 40
+	agony = 40
 	damage_type = HALLOSS
+	//Damage will be handled on the MOB side, to prevent window shattering.
 
 
 
