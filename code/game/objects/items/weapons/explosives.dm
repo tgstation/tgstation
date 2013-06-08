@@ -107,13 +107,13 @@
 	icon = 'icons/obj/assemblies.dmi'
 	name = "Syndicate Bomb"
 	icon_state = "syndicate-bomb-inactive"
-	item_state = "electronic"
+	item_state = "bomb"
 	desc = "A large and menacing device capable of terrible destruction"
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 	w_class = 4.0
 	unacidable = 1
 	var/datum/wires/syndicatebomb/wires = null
-	var/timer = 15
+	var/timer = 60
 	var/open_panel = 0 	//are the wires exposed?
 	var/active = 0		//is the bomb counting down?
 	var/defused = 0		//is the bomb capable of exploding?
@@ -123,7 +123,7 @@
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
 		active = 0
-		timer = 15
+		timer = 60
 		processing_objects.Remove(src)
 		explosion(src.loc,2,5,11)
 		del(src)
@@ -191,10 +191,11 @@
 
 /obj/item/weapon/syndicatebomb/proc/settings(var/mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 10, 60000)
-	timer = newtime
-	src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
-	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes")
+	newtime = Clamp(newtime, 30, 60000)
+	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
+		timer = newtime
+		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
+	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
 		if(defused || active)
 			if(defused)
 				src.loc.visible_message("\blue \icon[src] Device error: User intervention required")
