@@ -15,7 +15,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 		if(WIRE_BOOM)
 			if (P.active)
 				P.loc.visible_message("\red \icon[holder] An alarm sounds! It's go-")
-				explode()
+				P.timer = 0
 		if(WIRE_UNBOLT)
 			P.loc.visible_message("\blue \icon[holder] The bolts spin in place for a moment.")
 		if(WIRE_DELAY)
@@ -52,7 +52,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 			if(!mended)
 				if(P.active)
 					P.loc.visible_message("\red \icon[holder] An alarm sounds! It's go-")
-					explode()
+					P.timer = 0
 				else
 					P.defused = 1
 			if(mended)
@@ -65,16 +65,10 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 		if(WIRE_PROCEED)
 			if(!mended && P.active)
 				P.loc.visible_message("\red \icon[holder] An alarm sounds! It's go-")
-				explode()
+				P.timer = 0
 		if(WIRE_ACTIVATE)
 			if (!mended && P.active)
 				P.loc.visible_message("\blue \icon[holder] The timer stops! The bomb has been defused!")
 				P.icon_state = "syndicate-bomb-inactive-wires" //no cutting possible with the panel closed
 				P.active = 0
 				P.defused = 1
-
-/datum/wires/syndicatebomb/proc/explode()
-	var/obj/item/weapon/syndicatebomb/P = holder
-	processing_objects.Remove(P)
-	explosion(P.loc,2,5,11)
-	del(P)
