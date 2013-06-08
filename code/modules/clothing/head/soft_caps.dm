@@ -6,6 +6,7 @@
 	item_state = "helmet"
 	color = "cargo"
 	var/flipped = 0
+	siemens_coefficient = 0.9
 
 	dropped()
 		src.icon_state = "[color]soft"

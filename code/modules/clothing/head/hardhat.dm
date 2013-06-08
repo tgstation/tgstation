@@ -10,6 +10,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
 	icon_action_button = "action_hardhat"
+	siemens_coefficient = 0.9
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
