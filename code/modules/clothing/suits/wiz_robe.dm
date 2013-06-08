@@ -29,6 +29,11 @@
 	item_state = "magus"
 	siemens_coefficient = 0.8
 
+/obj/item/clothing/head/wizard/amp
+	name = "psychic amplifier"
+	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
+	icon_state = "amp"
+	siemens_coefficient = 0.8
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -68,6 +73,11 @@
 	icon_state = "magusred"
 	item_state = "magusred"
 
+/obj/item/clothing/suit/wizrobe/psypurple
+	name = "purple robes"
+	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
+	icon_state = "psyamp"
+	item_state = "psyamp"
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"

@@ -131,6 +131,13 @@
 	icon_state = "cloud"
 	color = "cloud"
 
+/obj/item/clothing/under/psysuit
+	name = "dark undersuit"
+	desc = "A thick, layered grey undersuit lined with power cables. Feels a little like wearing an electrical storm."
+	icon_state = "psysuit"
+	item_state = "psysuit"
+	color = "psysuit"
+
 /obj/item/clothing/under/gimmick/rank/captain/suit
 	name = "captain's suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
