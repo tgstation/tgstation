@@ -122,10 +122,10 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 			icobase = 'icons/mob/human_races/r_lizard.dmi'
 		if("Skrell")
 			icobase = 'icons/mob/human_races/r_skrell.dmi'
-			/*
+
 		if("Vox")
 			icobase = 'icons/mob/human_races/r_vox.dmi'
-			*/
+
 		else
 			icobase = 'icons/mob/human_races/r_human.dmi'
 

@@ -312,6 +312,8 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 //swimsuit
+/obj/item/clothing/under/swimsuit/
+	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
