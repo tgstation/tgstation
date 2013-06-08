@@ -103,6 +103,9 @@
 	icon_state = "hazard"
 	item_state = "hazard"
 	blood_overlay_type = "armor"
+	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/radio, /obj/item/device/t_scanner, \
+	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, \
+	/obj/item/weapon/tank/emergency_oxygen)
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket
@@ -150,6 +153,33 @@
 				return
 		usr.update_inv_wear_suit()	//so our overlays update
 
+//Medical
+/obj/item/clothing/suit/storage/fr_jacket
+	name = "first responder jacket"
+	desc = "A high-visibility jacket worn by medical first responders."
+	icon_state = "fr_jacket_open"
+	item_state = "fr_jacket"
+	blood_overlay_type = "armor"
+	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe, \
+	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
+
+	verb/toggle()
+		set name = "Toggle Jacket Buttons"
+		set category = "Object"
+		set src in usr
+
+		if(!usr.canmove || usr.stat || usr.restrained())
+			return 0
+
+		switch(icon_state)
+			if("fr_jacket_open")
+				src.icon_state = "fr_jacket"
+				usr << "You button up the jacket."
+			if("fr_jacket")
+				src.icon_state = "fr_jacket_open"
+				usr << "You unbutton the jacket."
+		usr.update_inv_wear_suit()	//so our overlays update
+
 //Mime
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
@@ -157,9 +187,3 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
-
-/obj/item/clothing/suit/storage/fr_jacket
-	name = "first responder jacket"
-	desc = "A high-visibility jacket worn by medical first responders."
-	icon_state = "fr_jacket_open"
-	item_state = "fr_jacket"

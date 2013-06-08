@@ -170,10 +170,10 @@
 				visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
 				"You hear a click as a faint electronic humming stops.")
 
-
+		var/old_level = danger_level
 		danger_level = overall_danger_level()
 
-		if (alarm_area.master_air_alarm == src)
+		if (old_level != danger_level)
 			refresh_danger_level()
 			update_icon()
 

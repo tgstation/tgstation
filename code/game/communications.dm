@@ -104,15 +104,15 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
+	"Response Team" = 1443,
 	"Deathsquad" = 1441,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 )
 //depenging helpers
-var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441,1347)
+var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213, 1443, 1441,1347)
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
-var/const/ERT_FREQ = 1439
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1

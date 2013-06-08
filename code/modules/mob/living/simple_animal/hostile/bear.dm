@@ -61,7 +61,7 @@
 			stop_automated_movement = 1
 			stance_step++
 			if(stance_step >= 10) //rests for 10 ticks
-				if(target_mob && target_mob in ListTargets())
+				if(target_mob && target_mob in ListTargets(10))
 					stance = HOSTILE_STANCE_ATTACK //If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
 				else
 					stance = HOSTILE_STANCE_IDLE
@@ -69,7 +69,7 @@
 		if(HOSTILE_STANCE_ALERT)
 			stop_automated_movement = 1
 			var/found_mob = 0
-			if(target_mob && target_mob in ListTargets())
+			if(target_mob && target_mob in ListTargets(10))
 				if(!(SA_attackable(target_mob)))
 					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++

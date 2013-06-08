@@ -730,7 +730,7 @@ client
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow","tajaran","skrell")
+		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow","tajaran","skrell","vox")
 		switch(new_mutantrace)
 			if(null)
 				return
