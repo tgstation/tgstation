@@ -284,7 +284,7 @@
 		slime_mutation[1] = /mob/living/carbon/slime/lightpink
 		slime_mutation[2] = /mob/living/carbon/slime/lightpink
 		slime_mutation[3] = /mob/living/carbon/slime/lightpink
-		slime_mutation[4] = /mob/living/carbon/slime/lightpink
+		slime_mutation[4] = /mob/living/carbon/slime/rainbow
 
 /mob/living/carbon/slime/oil
 	icon_state = "oil baby slime"
@@ -305,7 +305,7 @@
 		slime_mutation[1] = /mob/living/carbon/slime/oil
 		slime_mutation[2] = /mob/living/carbon/slime/oil
 		slime_mutation[3] = /mob/living/carbon/slime/oil
-		slime_mutation[4] = /mob/living/carbon/slime/oil
+		slime_mutation[4] = /mob/living/carbon/slime/rainbow
 
 /mob/living/carbon/slime/black
 	icon_state = "black baby slime"
@@ -326,7 +326,7 @@
 		slime_mutation[1] = /mob/living/carbon/slime/black
 		slime_mutation[2] = /mob/living/carbon/slime/black
 		slime_mutation[3] = /mob/living/carbon/slime/black
-		slime_mutation[4] = /mob/living/carbon/slime/black
+		slime_mutation[4] = /mob/living/carbon/slime/rainbow
 
 /mob/living/carbon/slime/adamantine
 	icon_state = "adamantine baby slime"
@@ -347,7 +347,7 @@
 		slime_mutation[1] = /mob/living/carbon/slime/adamantine
 		slime_mutation[2] = /mob/living/carbon/slime/adamantine
 		slime_mutation[3] = /mob/living/carbon/slime/adamantine
-		slime_mutation[4] = /mob/living/carbon/slime/adamantine
+		slime_mutation[4] = /mob/living/carbon/slime/rainbow
 
 ////////// Even in death I still code Tier //////////////
 
@@ -434,3 +434,26 @@
 		slime_mutation[2] = /mob/living/carbon/slime/sepia
 		slime_mutation[3] = /mob/living/carbon/slime/sepia
 		slime_mutation[4] = /mob/living/carbon/slime/sepia
+
+//Tier Honk
+/mob/living/carbon/slime/rainbow
+	colour = "rainbow"
+	icon_state = "rainbow baby slime"
+	primarytype = /mob/living/carbon/slime/rainbow
+	adulttype = /mob/living/carbon/slime/adult/rainbow
+	coretype = /obj/item/slime_extract/rainbow
+
+
+/mob/living/carbon/slime/adult/rainbow
+	icon_state = "rainbow adult slime"
+	colour = "rainbow"
+	primarytype = /mob/living/carbon/slime/rainbow
+	adulttype = /mob/living/carbon/slime/adult/rainbow
+	coretype = /obj/item/slime_extract/rainbow
+
+	New()
+		..()
+		slime_mutation[1] = /mob/living/carbon/slime/grey
+		slime_mutation[2] = /mob/living/carbon/slime/grey
+		slime_mutation[3] = /mob/living/carbon/slime/grey
+		slime_mutation[4] = /mob/living/carbon/slime/grey
