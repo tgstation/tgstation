@@ -92,7 +92,10 @@ PROBABILITY SANDBOX 0
 ## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
 ## the shuttle is called or the station is nuked.
 ## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUNDS
+#CONTINUOUS_ROUND_REV
+#CONTINUOUS_ROUND_WIZ
+#CONTINUOUS_ROUND_MALF
+
 
 ## Uncomment to scale the number of antagonists to crew population. Doesn't
 ## affect all gamemodes.

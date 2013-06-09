@@ -79,7 +79,9 @@
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
-	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/continuous_round_wiz = 0
+	var/continuous_round_malf = 0
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -315,8 +317,12 @@
 					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
-				if("continuous_rounds")
-					config.continous_rounds			= 1
+				if("continuous_round_rev")
+					config.continuous_round_rev			= 1
+				if("continuous_round_wiz")
+					config.continuous_round_wiz			= 1
+				if("continuous_round_malf")
+					config.continuous_round_malf			= 1
 				if("ghost_interaction")
 					config.ghost_interaction		= 1
 				if("traitor_scaling")
