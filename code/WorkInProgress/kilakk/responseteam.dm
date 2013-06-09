@@ -40,7 +40,7 @@ var/sent_emergency_team = 0
 		return
 
 	sent_emergency_team = 1
-	message_admins("[key_name_admin(usr)] has dispatched an Emergency Response Team.", 1)
+	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
 
 	var/member_number = members_possible
@@ -66,14 +66,14 @@ var/sent_emergency_team = 0
 
 	// I tried doing this differently. Ghosts get a pop-up box similar to pAIs and one-click-antag
 	// Biggest diff here is in how the candidates list is updated
-	alert(usr, "Active ghosts are currently being given a chance to be considered to join the emergency response team. Please wait about 30 seconds.") // There's probably a better way to do this, with a fancy count-down timer or something
+	alert(usr, "Active ghosts will be given a chance to choose whether or not they want to be considered for the emergency reponse team. This will take about 30 seconds.") // There's probably a better way to do this, with a fancy count-down timer or something
 
 	var/list/candidates = list()
 	var/list/members = list()
 	var/time_passed = world.time
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, "Syndicate") || !jobban_isbanned(G, "Emergency Response Team") || !jobban_isbanned(G, "Security Officer"))
+		if(!jobban_isbanned(G, "Syndicate") && !jobban_isbanned(G, "Emergency Response Team") && !jobban_isbanned(G, "Security Officer"))
 			spawn(0)
 				switch(alert(G, "Do you want to be considered for the Emergency Response Team? Please answer in 30 seconds!",,"Yes","No"))
 					if("Yes")
@@ -110,37 +110,79 @@ var/sent_emergency_team = 0
 				del(new_member)
 				break
 
-			switch(alert(new_member, "You are an Emergency Response Team member! Are you a boy or a girl?",,"Male","Female"))
-				if("Male")
-					new_member.gender = MALE
-				if("Female")
-					new_member.gender = FEMALE
+			spawn(0)
+				switch(alert(new_member, "You are an Emergency Response Team member! Are you a boy or a girl?",,"Male","Female"))
+					if("Male")
+						new_member.gender = MALE
+					if("Female")
+						new_member.gender = FEMALE
 
-			var/new_name = input(new_member, "...Erm, what was your name again?", "Choose your name") as text
+				var/new_name = input(new_member, "...Erm, what was your name again?", "Choose your name") as text
 
-			if(!new_name)
-				new_member.real_name = "Agent [pick("Red","Yellow","Orange","Silver","Gold", "Pink", "Purple", "Rainbow")]" // Choose a "random" agent name
-				new_member.name = usr.real_name
-			else
-				new_member.real_name = new_name
-				new_member.name = new_name
+				if(!new_name)
+					new_member.real_name = "Agent [pick("Red","Yellow","Orange","Silver","Gold", "Pink", "Purple", "Rainbow")]" // Choose a "random" agent name
+					new_member.name = usr.real_name
+				else
+					new_member.real_name = new_name
+					new_member.name = new_name
 
-			new_member.dna.ready_dna(new_member)
-			new_member.update_body(1)
+				// -- CHANGE APPEARANCE --
+				var/new_tone = input(new_member, "Please select your new skin tone: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation") as num
 
-			new_member.mind_initialize()
-			new_member.mind.assigned_role = "Emergency Response Team"
-			new_member.mind.special_role = "Emergency Response Team"
-			ticker.mode.traitors += new_member.mind // ERTs will show up at the end of the round on the "traitor" list
+				if(new_tone)
+					new_member.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+					new_member.s_tone =  -new_member.s_tone + 35
 
-			new_member << "\blue You are the <b>Emergency Response Team[!leader_selected?"!</b>":" Leader!</b>"] \nAs a response team [!leader_selected?"member":"<b>leader</b>"] you answer directly to [!leader_selected?"your team leader.":"Central Command."] \nYou have been deployed by NanoTrasen Central Command in Tau Ceti to resolve a Code Red alert aboard [station_name()], and have been provided with the following instructions and information regarding your mission: \red [situation]"
-			new_member.mind.store_memory("<b>Mission Parameters:</b> \red [situation].")
+				var/new_hair = input(new_member, "Please select your new hair color.","Character Generation") as color
 
-			if(leader_selected)
-				new_member << "\red The Nuclear Authentication Code is: <b> [nuke_code]</b>. You are instructed not to detonate the nuclear device aboard [station_name()] unless <u>absolutely necessary</u>."
-				new_member.mind.store_memory("<b>Nuclear Authentication Code:</b> \red [nuke_code]")
+				if(new_hair)
+					new_member.r_hair = hex2num(copytext(new_hair, 2, 4))
+					new_member.g_hair = hex2num(copytext(new_hair, 4, 6))
+					new_member.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-			new_member.equip_response_team(leader_selected) // Start equipping them
+				var/new_facial = input(new_member, "Please select your new facial hair color.","Character Generation") as color
+
+				if(new_facial)
+					new_member.r_facial = hex2num(copytext(new_facial, 2, 4))
+					new_member.g_facial = hex2num(copytext(new_facial, 4, 6))
+					new_member.b_facial = hex2num(copytext(new_facial, 6, 8))
+
+				var/new_eyes = input(new_member, "Please select eye color.", "Character Generation") as color
+
+				if(new_eyes)
+					new_member.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+					new_member.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+					new_member.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+
+				var/new_hstyle = input(new_member, "Please select your new hair style!", "Grooming") as null|anything in hair_styles_list
+
+				if(new_hstyle)
+					new_member.h_style = new_hstyle
+
+				var/new_fstyle = input(new_member, "Please select your new facial hair style!", "Grooming") as null|anything in facial_hair_styles_list
+
+				if(new_fstyle)
+					new_member.f_style = new_fstyle
+
+				// -- END --
+
+				new_member.dna.ready_dna(new_member)
+				new_member.update_body(1)
+				new_member.update_hair(1)
+
+				new_member.mind_initialize()
+				new_member.mind.assigned_role = "Emergency Response Team"
+				new_member.mind.special_role = "Emergency Response Team"
+				ticker.mode.traitors += new_member.mind // ERTs will show up at the end of the round on the "traitor" list
+
+				new_member << "\blue You are the <b>Emergency Response Team[!leader_selected?"!</b>":" Leader!</b>"] \nAs a response team [!leader_selected?"member":"<b>leader</b>"] you answer directly to [!leader_selected?"your team leader.":"Central Command."] \nYou have been deployed by NanoTrasen Central Command in Tau Ceti to resolve a Code Red alert aboard [station_name()], and have been provided with the following instructions and information regarding your mission: \red [situation]"
+				new_member.mind.store_memory("<b>Mission Parameters:</b> \red [situation].")
+
+				if(leader_selected)
+					new_member << "\red The Nuclear Authentication Code is: <b> [nuke_code]</b>. You are instructed not to detonate the nuclear device aboard [station_name()] unless <u>absolutely necessary</u>."
+					new_member.mind.store_memory("<b>Nuclear Authentication Code:</b> \red [nuke_code]")
+
+				new_member.equip_response_team(leader_selected) // Start equipping them
 
 			member_number--
 	return 1
