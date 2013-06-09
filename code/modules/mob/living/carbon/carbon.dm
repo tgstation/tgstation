@@ -204,6 +204,9 @@
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
+/mob/living/carbon/proc/tintcheck()
+	return 0
+
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
 /mob/living/carbon/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
