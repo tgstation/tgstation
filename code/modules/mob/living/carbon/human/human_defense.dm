@@ -22,7 +22,6 @@ emp_act
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
 					P.agony=P.agony*C.siemens_coefficient
-					visible_message("\red [src]'s [C.name] absorbs some of the shock from the [P.name]!</B></red>")
 		apply_effect(P.agony,AGONY,0)
 		del P
 					/* Commenting out new-old taser nerf.
