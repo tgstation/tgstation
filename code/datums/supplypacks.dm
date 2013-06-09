@@ -532,7 +532,10 @@
 					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/teargas)
+					/obj/item/weapon/storage/box/teargas,
+					/obj/item/device/flash,
+					/obj/item/device/flash,
+					/obj/item/device/flash)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "weapons crate"
