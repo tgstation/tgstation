@@ -42,7 +42,7 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (!getbrain(M))
+		if (ishuman(M) && !getbrain(M))
 			continue
 
 		if (M.ckey == find_key)
