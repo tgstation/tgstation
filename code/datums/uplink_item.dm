@@ -167,6 +167,10 @@ var/list/uplink_items = list()
 	item = /obj/item/device/chameleon
 	cost = 4
 
+/datum/uplink_item/stealthy_tools/camera_bug
+	name = "Camera Bug"
+	item = /obj/item/device/camera_bug
+	cost = 2
 
 // DEVICE AND TOOLS
 
