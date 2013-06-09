@@ -36,7 +36,8 @@
 			if(clown_check(user))
 				trigger.activate()
 				user << "<span class='warning'>You prime the [name]!  [trigger.describe()]</span>"
-
+				message_admins("[user] has primed a [name] for detonation")
+				log_game("[user] primed a [name] for detonation")
 				active = 1
 				icon_state = initial(icon_state) + "_active"
 				add_fingerprint(user)
