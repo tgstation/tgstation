@@ -12,6 +12,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/g_amount = 0
 	var/gold_amount = 0
 	var/diamond_amount = 0
+	var/uranium_amount = 0
 	var/max_material_amount = 75000.0
 
 	New()
@@ -46,7 +47,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	proc/TotalMaterials()
-		return g_amount + gold_amount + diamond_amount
+		return g_amount + gold_amount + diamond_amount + uranium_amount
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (shocked)
@@ -85,19 +86,23 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				if(diamond_amount >= 2000)
 					var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
 					G.amount = round(diamond_amount / 2000)
+				if(uranium_amount >= 2000)
+					var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
+					G.amount = round(uranium_amount / 2000)
 				del(src)
 				return 1
 			else
 				user << "\red You can't load the [src.name] while it's opened."
 				return 1
 		if (disabled)
+			user << "\The [name] appears to not be working!"
 			return
 		if (!linked_console)
 			user << "\The [name] must be linked to an R&D console first!"
 			return 1
 		if (O.is_open_container())
 			return 1
-		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
+		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond) && !istype(O, /obj/item/stack/sheet/mineral/uranium))
 			user << "\red You cannot insert this item into the [name]!"
 			return 1
 		if (stat)
@@ -128,6 +133,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				gold_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
 				diamond_amount += amount * 2000
+			else if(istype(stack, /obj/item/stack/sheet/mineral/uranium))
+				uranium_amount += amount * 2000
 			stack.use(amount)
 			busy = 0
 			src.updateUsrDialog()
