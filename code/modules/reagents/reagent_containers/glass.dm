@@ -43,8 +43,23 @@
 				usr << "\blue [R.volume] units of [R.name]"
 		else
 			usr << "\blue Nothing."
+		if (!is_open_container())
+			usr << "\blue Airtight lid seals it completely."
+
+	attack_self()
+		..()
+		if (is_open_container())
+			usr << "<span class = 'notice'>You put the lid on \the [src]."
+			flags ^= OPENCONTAINER
+		else
+			usr << "<span class = 'notice'>You take the lid off \the [src]."
+			flags |= OPENCONTAINER
+		update_icon()
 
 	afterattack(obj/target, mob/user , flag)
+		if (!is_open_container())
+			return
+
 		for(var/type in src.can_be_placed_into)
 			if(istype(target, type))
 				return
@@ -148,6 +163,10 @@
 
 			filling.icon += mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
+
+		if (!is_open_container())
+			var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
+			overlays += lid
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"

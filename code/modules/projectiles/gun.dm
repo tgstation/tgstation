@@ -143,6 +143,12 @@
 	else
 		user.update_inv_r_hand()
 
+/obj/item/weapon/gun/proc/can_fire()
+	return load_into_chamber()
+
+/obj/item/weapon/gun/proc/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
+	return in_chamber.check_fire(target,user)
+
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
 		user.visible_message("*click click*", "\red <b>*click*</b>")
@@ -168,7 +174,7 @@
 				playsound(user, fire_sound, 50, 1)
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
-				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
+				user.apply_damage(in_chamber.damage*100, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
 			else
 				user << "<span class = 'notice'>You feel dumb for trying this...</span>"
 			del(in_chamber)

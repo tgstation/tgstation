@@ -18,6 +18,7 @@ var/list/department_radio_keys = list(
 	  ":k" = "skrell",		"#k" = "skrell",		".k" = "skrell",
 	  ":j" = "tajaran",		"#j" = "tajaran",		".j" = "tajaran",
 	  ":o" = "soghun",		"#o" = "soghun",		".o" = "soghun",
+	  ":v" = "vox",			"#v" = "vox",			".v" = "vox",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -37,6 +38,7 @@ var/list/department_radio_keys = list(
 	  ":K" = "skrell",		"#K" = "skrell",		".K" = "skrell",
 	  ":J" = "tajaran",		"#J" = "tajaran",		".J" = "tajaran",
 	  ":O" = "soghun",		"#O" = "soghun",		".O" = "soghun",
+	  ":V" = "vox",			"#V" = "vox",			".V" = "vox",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -186,6 +188,7 @@ var/list/department_radio_keys = list(
 	var/is_speaking_skrell = 0
 	var/is_speaking_soghun = 0
 	var/is_speaking_taj = 0
+	var/is_speaking_vox = 0
 	var/is_speaking_radio = 0
 
 	switch (message_mode)
@@ -284,6 +287,10 @@ var/list/department_radio_keys = list(
 			if(skrell_talk_understand || universal_speak)
 				is_speaking_skrell = 1
 
+		if ("vox")
+			if(vox_talk_understand || universal_speak)
+				is_speaking_vox = 1
+
 		if("changeling")
 			if(mind && mind.changeling)
 				for(var/mob/Changeling in mob_list)
@@ -371,7 +378,7 @@ var/list/department_radio_keys = list(
 
 	for (var/M in listening)
 		if(hascall(M,"say_understands"))
-			if (M:say_understands(src) && !is_speaking_skrell && !is_speaking_soghun && !is_speaking_taj)
+			if (M:say_understands(src) && !is_speaking_skrell && !is_speaking_soghun && !is_speaking_vox && !is_speaking_taj)
 				heard_a += M
 			else if(ismob(M))
 				if(is_speaking_skrell && (M:skrell_talk_understand || M:universal_speak))
@@ -379,6 +386,8 @@ var/list/department_radio_keys = list(
 				else if(is_speaking_soghun && (M:soghun_talk_understand || M:universal_speak))
 					heard_a += M
 				else if(is_speaking_taj && (M:tajaran_talk_understand || M:universal_speak))
+					heard_a += M
+				else if(is_speaking_vox && (M:vox_talk_understand || M:universal_speak))
 					heard_a += M
 				else
 					heard_b += M
@@ -395,7 +404,7 @@ var/list/department_radio_keys = list(
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
+		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj,is_speaking_vox)
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
@@ -434,7 +443,7 @@ var/list/department_radio_keys = list(
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
+		rendered = "<span class='game say'><span class='name'>[name]</span>[alt_name] <span class='message'>[message_b]</span></span>" //Voice_name isn't too useful. You'd be able to tell who was talking presumably.
 		var/rendered2 = null
 
 		for (var/M in heard_b)

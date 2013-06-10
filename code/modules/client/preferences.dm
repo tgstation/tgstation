@@ -792,6 +792,10 @@ datum/preferences
 							if(is_alien_whitelisted(user, "Skrell")) //Check for Skrell and admins
 								new_species += "Skrell"
 								whitelisted = 1
+							if(is_alien_whitelisted(user, "Vox")) //Check for Skrell and admins
+								new_species += "Vox"
+								whitelisted = 1
+
 
 							if(!whitelisted)
 								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
@@ -799,6 +803,7 @@ datum/preferences
 							new_species += "Tajaran"
 							new_species += "Unathi"
 							new_species += "Skrell"
+							new_species += "Vox"
 						species = input("Please select a species", "Character Generation", null) in new_species
 
 						if(prev_species != species)

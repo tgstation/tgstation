@@ -349,6 +349,10 @@
 			if(is_alien_whitelisted(src, "Skrell"|| !config.usealienwhitelist))
 				new_character.dna.mutantrace = "skrell"
 				new_character.skrell_talk_understand = 1
+		if(client.prefs.species == "Vox")
+			if(is_alien_whitelisted(src, "Vox"|| !config.usealienwhitelist))
+				new_character.dna.mutantrace = "vox"
+				new_character.vox_talk_understand = 1
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
@@ -384,7 +388,7 @@
 		dat += "<h4>Crew Manifest</h4>"
 		dat += data_core.get_manifest()
 
-		src << browse(dat, "window=manifest;size=300x420;can_close=1")
+		src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 	Move()
 		return 0

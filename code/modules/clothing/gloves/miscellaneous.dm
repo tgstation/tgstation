@@ -3,7 +3,7 @@
 	name = "ninja gloves"
 	icon_state = "s-ninja"
 	item_state = "s-ninja"
-	siemens_coefficient = 0
+	siemens_coefficient = 0.2
 	var/draining = 0
 	var/candrain = 0
 	var/mindrain = 200
@@ -32,7 +32,7 @@
 	name = "\improper SWAT Gloves"
 	icon_state = "black"
 	item_state = "swat_gl"
-	siemens_coefficient = 0
+	siemens_coefficient = 0.6
 	permeability_coefficient = 0.05
 
 	cold_protection = HANDS
@@ -70,3 +70,4 @@
 	icon_state = "leather"
 	item_state = "ggloves"
 	permeability_coefficient = 0.9
+	siemens_coefficient = 0.9

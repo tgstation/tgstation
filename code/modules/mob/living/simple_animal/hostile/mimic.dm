@@ -77,7 +77,7 @@
 
 /mob/living/simple_animal/hostile/mimic/crate/ListTargets()
 	if(attempt_open)
-		return view(src, 10)
+		return ..()
 	return view(src, 1)
 
 /mob/living/simple_animal/hostile/mimic/crate/FindTarget()
@@ -149,7 +149,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
 	// Return a list of targets that isn't the creator
-	return view(src, 7) - creator
+	. = ..()
+	return . - creator
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(var/obj/O, var/mob/living/creator)
 

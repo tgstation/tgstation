@@ -74,7 +74,7 @@
 
 				var/mob/living/carbon/human/H = new_mob
 				if(H.dna)
-					H.dna.mutantrace = pick("lizard","tajaran","skrell","golem","slime","plant",4;"")
+					H.dna.mutantrace = pick("lizard","tajaran","skrell","golem","slime","plant","vox",4;"")
 			else
 				return
 

@@ -6,6 +6,7 @@
 	desc = "It's good to be emperor."
 	flags = FPRINT|TABLEPASS
 	item_state = "centhat"
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/hairflower
 	name = "hair flower pin"
@@ -26,6 +27,7 @@
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
@@ -45,6 +47,7 @@
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS
 	permeability_coefficient = 0.01
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
@@ -57,6 +60,7 @@
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	flags = FPRINT|TABLEPASS
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
@@ -65,6 +69,7 @@
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
@@ -81,6 +86,7 @@
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
 	flags_inv = 0
+
 
 /obj/item/clothing/head/greenbandana
 	name = "green bandana"
@@ -132,6 +138,7 @@
 	desc = "A working man's cap."
 	icon_state = "flat_cap"
 	item_state = "detective"
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
@@ -210,6 +217,7 @@
 	icon_state = "witch"
 	item_state = "witch"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
@@ -217,6 +225,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -224,6 +233,7 @@
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -232,3 +242,4 @@
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	siemens_coefficient = 2.0

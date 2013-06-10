@@ -2,11 +2,12 @@
 
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
-	// type path referencing the required tool for this step
-	var/required_tool = null
 
-	// type path referencing tools that can be used as substitude for this step
+	// type path referencing tools that can be used for this step, and how well are they suited for it
 	var/list/allowed_tools = null
+	// type paths referencing mutantraces that this step applies to.
+	var/list/allowed_species = null
+	var/list/disallowed_species = null
 
 	// duration of the step
 	var/min_duration = 0
@@ -17,17 +18,27 @@
 	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
 	var/blood_level = 0
 
-	//is it is a required surgical tool for this step
-	proc/isright(obj/item/tool)
-		return (istype(tool,required_tool))
-
-	//is it is an accepted replacement tool for this step
-	proc/isacceptable(obj/item/tool)
-		if (allowed_tools)
-			for (var/T in allowed_tools)
-				if (istype(tool,T))
-					return 1
+	//returns how well tool is suited for this step
+	proc/tool_quality(obj/item/tool)
+		for (var/T in allowed_tools)
+			if (istype(tool,T))
+				return allowed_tools[T]
 		return 0
+
+	// Checks if this step applies to the mutantrace of the user.
+	proc/is_valid_mutantrace(mob/living/carbon/human/target)
+
+		if(allowed_species)
+			for(var/species in allowed_species)
+				if(target.dna.mutantrace == species)
+					return 1
+
+		if(disallowed_species)
+			for(var/species in disallowed_species)
+				if (target.dna.mutantrace == species)
+					return 0
+
+		return 1
 
 	// checks whether this step can be applied with the given user and target
 	proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -69,10 +80,11 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 	if (user.a_intent == "harm")	//check for Hippocratic Oath
 		return 0
 	for(var/datum/surgery_step/S in surgery_steps)
-		if( (S.isright(tool) || S.isacceptable(tool)) && \
-		S.can_use(user, M, user.zone_sel.selecting, tool))	 	//check if tool is right or close enough and if this step is possible
-			S.begin_step(user, M, user.zone_sel.selecting, tool)			//start on it
-			if(do_mob(user, M, rand(S.min_duration, S.max_duration)))	//if user did nto move or changed hands
+		//check if tool is right or close enough and if this step is possible
+		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
+			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
+			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
+			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
 			else														//or
 				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~

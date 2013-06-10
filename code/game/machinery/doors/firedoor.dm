@@ -57,6 +57,13 @@
 			return
 		if(!density)
 			return ..()
+		if(istype(AM, /obj/mecha))
+			var/obj/mecha/mecha = AM
+			if (mecha.occupant)
+				var/mob/M = mecha.occupant
+				if(world.time - M.last_bumped <= 10) return //Can bump-open one airlock per second. This is to prevent popup message spam.
+				M.last_bumped = world.time
+				attack_hand(M)
 		return 0
 
 
@@ -154,8 +161,7 @@
 			if(check_access(ID))
 				access_granted = 1
 
-		var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density && !access_granted ? "\nNote that by doing so, you acknowledge any damages from opening this\n[src.name] as being your own fault, and you will be held accountable under the law." : ""]",\
-		"\The [src]", "Yes, [density ? "open" : "close"]", "No")
+		var/answer = "Yes"
 		if(answer == "No")
 			return
 		if(user.stat || !user.canmove || user.stunned || user.weakened || user.paralysis || get_dist(src, user) > 1)
@@ -163,7 +169,7 @@
 			return
 
 		if(alarmed && density && !access_granted && !( users_name in users_to_open ) )
-			user.visible_message("\red \The [src] opens for \the [user], but only after they acknowledged responsibility for the consequences.",\
+			user.visible_message("\red \The [src] opens for \the [user]",\
 			"\The [src] opens after you acknowledge the consequences.",\
 			"You hear a beep, and a door opening.")
 			if(!users_to_open)
