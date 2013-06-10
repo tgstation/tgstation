@@ -63,6 +63,7 @@
 		var/datum/mind/lenin = pick(possible_headrevs)
 		possible_headrevs -= lenin
 		head_revolutionaries += lenin
+		log_game("[lenin.key] (ckey) has been selected as a head rev")
 
 	if((head_revolutionaries.len==0)||(!head_check))
 		return 0
@@ -167,7 +168,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(config.continous_rounds)
+	if(config.continuous_round_rev)
 		if(finished != 0)
 			if(emergency_shuttle)
 				emergency_shuttle.always_fake_recall = 0

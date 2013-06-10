@@ -17,12 +17,13 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
 	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
 
-		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
+
 		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
@@ -216,6 +217,7 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeNukeTeam()
 
 	var/list/mob/dead/observer/candidates = list()
+	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 	var/time_passed = world.time
 
@@ -245,18 +247,20 @@ client/proc/one_click_antag()
 					candidates.Remove(j)
 					continue
 
-				theghost = candidates
+				theghost = j
 				candidates.Remove(theghost)
-
-				var/mob/living/carbon/human/new_character=makeBody(theghost)
+				chosen += theghost
+				agentcount++
+				break
+		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
+		if(agentcount < 3)
+			return 0
+		else
+			for(var/mob/c in chosen)
+				var/mob/living/carbon/human/new_character=makeBody(c)
 				new_character.mind.make_Nuke()
 
-				agentcount++
-
-		if(agentcount < 1)
-			return 0
-
-		var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
+		var/obj/effect/landmark/nuke_spawn = locate("landmark*Syndicate-Uplink")
 		var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 		var/nuke_code = "[rand(10000, 99999)]"

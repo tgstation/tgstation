@@ -70,6 +70,10 @@
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	return 1
 
+///make_antag_chance()
+///Handles late-join antag assignments
+/datum/game_mode/proc/make_antag_chance(var/mob/living/carbon/human/character)
+	return
 
 ///process()
 ///Called by the gameticker
@@ -301,7 +305,6 @@
 	for(var/mob/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
-
 
 ///////////////////////////////////
 //Keeps track of all living heads//

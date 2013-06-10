@@ -8,7 +8,6 @@
 	recommended_enemies = 3
 
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
-	var/const/changeling_scaling_coeff = 25 //how much does the amount of players get divided by to determine changelings
 
 /datum/game_mode/traitor/changeling/announce()
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"
@@ -23,8 +22,8 @@
 
 	var/num_changelings = 1
 
-	if(config.traitor_scaling)
-		num_changelings = max(1, round((num_players())/(changeling_scaling_coeff)))
+	if(config.changeling_scaling_coeff)
+		num_changelings = max(1, round((num_players())/(config.changeling_scaling_coeff*2)))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
@@ -52,3 +51,13 @@
 		greet_changeling(changeling)
 	..()
 	return
+
+/datum/game_mode/traitor/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+	if(changelings.len >= round(joined_player_list.len / (config.changeling_scaling_coeff*2)) + 1) //Caps number of latejoin antagonists
+		return
+	if (prob(100/(config.changeling_scaling_coeff*2)))
+		if(character.client.prefs.be_special & BE_CHANGELING)
+			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+				if(!(character.job in ticker.mode.restricted_jobs))
+					character.mind.make_Changling()
+	..()

@@ -26,6 +26,9 @@
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
 	var/emagged = 0
+	var/flash_protect = 0		//Mal: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Mal: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+								//	   but seperated to allow items to protect but not impair vision, like space helmets
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -60,7 +63,8 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-
+	var/flash_protect = 0
+	var/tint = 0
 
 //Mask
 /obj/item/clothing/mask
@@ -68,6 +72,8 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
+	var/flash_protect = 0
+	var/tint = 0
 
 //Shoes
 /obj/item/clothing/shoes
@@ -110,6 +116,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flash_protect = 2
 
 /obj/item/clothing/suit/space
 	name = "space suit"

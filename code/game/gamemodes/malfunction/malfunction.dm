@@ -31,6 +31,7 @@
 	for(var/mob/new_player/player in player_list)
 		if(player.mind && player.mind.assigned_role == "AI")
 			malf_ai+=player.mind
+			log_game("[malf_ai.key] (ckey) has been selected as a malf AI")
 	if(malf_ai.len)
 		return 1
 	return 0
@@ -133,7 +134,7 @@
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
 	if (is_malf_ai_dead())
-		if(config.continous_rounds)
+		if(config.continuous_round_malf)
 			if(emergency_shuttle)
 				emergency_shuttle.always_fake_recall = 0
 			malf_mode_declared = 0

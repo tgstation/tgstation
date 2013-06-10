@@ -262,7 +262,7 @@
 			if(href_list["cancel"])
 				src.hackdoor = null
 			if(href_list["cable"])
-				var/turf/T = get_turf_or_move(src.loc)
+				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				for (var/mob/M in viewers(T))
 					M.show_message("\red A port on [src] opens to reveal [src.cable], which promptly falls to the floor.", 3, "\red You hear the soft click of something light and hard falling to the ground.", 2)
@@ -370,7 +370,7 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		var/turf/T = get_turf_or_move(P.loc)
+		var/turf/T = get_turf(P.loc)
 		for (var/mob/v in viewers(T))
 			v.show_message("\blue [M] presses \his thumb against [P].", 3, "\blue [P] makes a sharp clicking sound as it extracts DNA material from [M].", 2)
 		if(!check_dna_integrity(M))
@@ -531,7 +531,7 @@
 /mob/living/silicon/pai/proc/softwareAtmo()
 	var/dat = "<h3>Atmospheric Sensor</h4>"
 
-	var/turf/T = get_turf_or_move(src.loc)
+	var/turf/T = get_turf(src.loc)
 	if (isnull(T))
 		dat += "Unable to obtain a reading.<br>"
 	else
@@ -608,7 +608,7 @@
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
-	var/turf/T = get_turf_or_move(src.loc)
+	var/turf/T = get_turf(src.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
 			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"

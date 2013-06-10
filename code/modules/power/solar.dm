@@ -63,7 +63,7 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
-	if(iscrowbar(W))
+	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
@@ -218,13 +218,13 @@ var/list/solars_list = list()
 /obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
 
 	if(!anchored && isturf(loc))
-		if(iswrench(W))
+		if(istype(W, /obj/item/weapon/wrench))
 			anchored = 1
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 	else
-		if(iswrench(W))
+		if(istype(W, /obj/item/weapon/wrench))
 			anchored = 0
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -251,7 +251,7 @@ var/list/solars_list = list()
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
 			return 1
 	else
-		if(iscrowbar(W))
+		if(istype(W, /obj/item/weapon/crowbar))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
