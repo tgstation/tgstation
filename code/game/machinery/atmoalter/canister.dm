@@ -170,6 +170,28 @@
 	healthcheck()
 	return
 
+/obj/machinery/portable_atmospherics/canister/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			if(destroyed || prob(30))
+				del(src)
+			else
+				src.health = 0
+				healthcheck()
+			return
+		if(2.0)
+			if(destroyed)
+				del(src)
+			else
+				src.health -= rand(40, 100)
+				healthcheck()
+			return
+		if(3.0)
+			src.health -= rand(15,40)
+			healthcheck()
+			return
+	return
+
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("\red [user] hits the [src] with a [W]!")
