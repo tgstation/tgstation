@@ -338,8 +338,8 @@
 
 					M.take_organ_damage(power)
 					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
+						var/turf/simulated/location = M.loc
+						if (istype(location))
 							location.add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
@@ -645,7 +645,7 @@
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-
+	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 	src.add_fingerprint(user)
@@ -700,3 +700,39 @@
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
+
+
+/obj/item/add_blood(mob/living/carbon/human/M as mob)
+	if (!..())
+		return 0
+
+	if(istype(src, /obj/item/weapon/melee/energy))
+		return
+
+	//if we haven't made our blood_overlay already
+	if( !blood_overlay )
+		generate_blood_overlay()
+
+	//apply the blood-splatter overlay if it isn't already in there
+	if(!blood_DNA.len)
+		overlays += blood_overlay
+
+	//if this blood isn't already in the list, add it
+
+	if(blood_DNA[M.dna.unique_enzymes])
+		return 0 //already bloodied with this blood. Cannot add more.
+	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	return 1 //we applied blood to the item
+
+/obj/item/proc/generate_blood_overlay()
+	if(blood_overlay)
+		return
+
+	var/icon/I = new /icon(icon, icon_state)
+	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+
+	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
+	for(var/obj/item/A in world)
+		if(A.type == type && !A.blood_overlay)
+			A.blood_overlay = I

@@ -392,7 +392,9 @@
 		var/SA_para_min = 1
 		var/SA_sleep_min = 5
 		var/oxygen_used = 0
+		var/nitrogen_used = 0
 		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/vox_oxygen_max = 1 // For vox.
 
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
@@ -401,8 +403,10 @@
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
 		//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
+		// Nitrogen, for Vox.
+		var/Nitrogen_pp = (breath.nitrogen/breath.total_moles())*breath_pressure
 
-		if(O2_pp < safe_oxygen_min) 			// Too little oxygen
+		if(O2_pp < safe_oxygen_min && src.dna.mutantrace!="vox") 	// Too little oxygen
 			if(prob(20))
 				spawn(0) emote("gasp")
 			if(O2_pp > 0)
@@ -420,6 +424,20 @@
 			oxyloss += 5*ratio
 			oxygen_used = breath.oxygen*ratio/6
 			oxygen_alert = max(oxygen_alert, 1)*/
+		else if(Nitrogen_pp < safe_oxygen_min && src.dna.mutantrace=="vox")  //Vox breathe nitrogen, not oxygen.
+
+			if(prob(20))
+				spawn(0) emote("gasp")
+			if(Nitrogen_pp > 0)
+				var/ratio = safe_oxygen_min/Nitrogen_pp
+				adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS))
+				failed_last_breath = 1
+				nitrogen_used = breath.nitrogen*ratio/6
+			else
+				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+				failed_last_breath = 1
+			oxygen_alert = max(oxygen_alert, 1)
+
 		else								// We're in safe limits
 			failed_last_breath = 0
 			adjustOxyLoss(-5)
@@ -427,6 +445,7 @@
 			oxygen_alert = 0
 
 		breath.oxygen -= oxygen_used
+		breath.nitrogen -= nitrogen_used
 		breath.carbon_dioxide += oxygen_used
 
 		//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
@@ -449,6 +468,10 @@
 			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			if(reagents)
 				reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+			toxins_alert = max(toxins_alert, 1)
+		else if(O2_pp > vox_oxygen_max && src.dna.mutantrace=="vox") //Oxygen is toxic to vox.
+			var/ratio = (breath.oxygen/vox_oxygen_max) * 10
+			adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 			toxins_alert = max(toxins_alert, 1)
 		else
 			toxins_alert = 0
@@ -579,7 +602,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				if( !(COLD_RESISTANCE in mutations) )
+				if( !(COLD_RESISTANCE in mutations) && src.dna.mutantrace!="vox")
 					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 					pressure_alert = -2
 				else
@@ -944,19 +967,21 @@
 					del a
 
 				if(halloss > 100)
-					src << "<span class='notice'>You're too tired to keep going...</span>"
+					src << "<span class='notice'>You're in too much pain to keep going...</span>"
 					for(var/mob/O in oviewers(src, null))
-						O.show_message("<B>[src]</B> slumps to the ground panting, too weak to continue fighting.", 1)
-					Paralyse(3)
+						O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+					Paralyse(10)
 					setHalLoss(99)
 
 			if(paralysis)
 				AdjustParalysis(-1)
 				blinded = 1
 				stat = UNCONSCIOUS
+				if(halloss > 0)
+					adjustHalLoss(-6)
 			else if(sleeping)
 				handle_dreams()
-				adjustHalLoss(-5)
+				adjustHalLoss(-6)
 				if (mind)
 					if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 						sleeping = max(sleeping-1, 0)
@@ -965,9 +990,14 @@
 				if( prob(10) && health && !hal_crit )
 					spawn(0)
 						emote("snore")
+			else if(resting)
+				if(halloss > 0)
+					adjustHalLoss(-6)
 			//CONSCIOUS
 			else
 				stat = CONSCIOUS
+				if(halloss > 0)
+					adjustHalLoss(-2)
 
 			//Eyes
 			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
@@ -1121,7 +1151,7 @@
 				see_in_dark = 8
 				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-			if(seer)
+			if(seer==1)
 				var/obj/effect/rune/R = locate() in loc
 				if(R && R.word1 == cultwords["see"] && R.word2 == cultwords["hell"] && R.word3 == cultwords["join"])
 					see_invisible = SEE_INVISIBLE_OBSERVER
@@ -1185,7 +1215,7 @@
 						see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
-			else
+			else if(!seer)
 				see_invisible = SEE_INVISIBLE_LIVING
 
 			if(healths)

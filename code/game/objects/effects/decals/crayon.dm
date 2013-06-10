@@ -5,7 +5,6 @@
 	layer = 2.1
 	anchored = 1
 
-
 	examine()
 		set src in view(2)
 		..()
@@ -33,3 +32,5 @@
 
 		overlays += mainOverlay
 		overlays += shadeOverlay
+
+		add_hiddenprint(usr)

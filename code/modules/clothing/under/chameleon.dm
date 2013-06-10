@@ -6,6 +6,7 @@
 	color = "black"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
+	siemens_coefficient = 0.8
 	var/list/clothing_choices = list()
 
 	New()

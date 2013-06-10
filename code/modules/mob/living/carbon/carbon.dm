@@ -54,8 +54,8 @@
 		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
 		if (M.hand)
 			temp = M:organs_by_name["l_hand"]
-		if(temp && temp.status & ORGAN_DESTROYED)
-			M << "\red Yo- wait a minute."
+		if(temp && !temp.is_usable())
+			M << "\red You can't use your [temp.display_name]"
 			return
 
 	for(var/datum/disease/D in viruses)
@@ -75,14 +75,6 @@
 
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
-
-	if (hasorgans(M))
-		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
-		if (M.hand)
-			temp = M:organs_by_name["l_hand"]
-		if(temp && temp.status & ORGAN_DESTROYED)
-			M << "\red Yo- wait a minute."
-			return
 
 	for(var/datum/disease/D in viruses)
 
@@ -187,6 +179,8 @@
 					status += "numb"
 				if(org.status & ORGAN_DESTROYED)
 					status = "MISSING!"
+				if(org.status & ORGAN_MUTATED)
+					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)

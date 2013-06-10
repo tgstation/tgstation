@@ -10,7 +10,10 @@
 		return target_zone == "chest"
 
 /datum/surgery_step/ribcage/saw_ribcage
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70
@@ -41,8 +44,11 @@
 
 
 /datum/surgery_step/ribcage/retract_ribcage
-	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/crowbar)
+	allowed_tools = list(
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
 
 	min_duration = 30
 	max_duration = 40
@@ -77,8 +83,12 @@
 		affected.fracture()
 
 /datum/surgery_step/ribcage/close_ribcage
-	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/crowbar)
+	allowed_tools = list(
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
+
 
 	min_duration = 20
 	max_duration = 40
@@ -112,7 +122,10 @@
 			target.rupture_lung()
 
 /datum/surgery_step/ribcage/mend_ribcage
-	required_tool = /obj/item/weapon/bonegel
+	allowed_tools = list(
+	/obj/item/weapon/bonegel = 100,	\
+	/obj/item/weapon/screwdriver = 75
+	)
 
 	min_duration = 20
 	max_duration = 40
@@ -127,7 +140,6 @@
 		target.custom_pain("Something hurts horribly in your chest!",1)
 		..()
 
-
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "\blue [user] applied \the [tool] to [target]'s ribcage."
 		var/self_msg = "\blue You applied \the [tool] to [target]'s ribcage."
@@ -139,7 +151,11 @@
 //					ALIEN EMBRYO SURGERY						//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/remove_embryo
-	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100,	\
+	/obj/item/weapon/wirecutters = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
 	blood_level = 2
 
 	min_duration = 80
@@ -171,8 +187,11 @@
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/fix_chest_internal
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 70
 	max_duration = 90

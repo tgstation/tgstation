@@ -10,7 +10,10 @@
 		return target_zone == "head" && hasorgans(target)
 
 /datum/surgery_step/brain/saw_skull
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70
@@ -31,11 +34,14 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cracking [target]'s skull with \the [tool]!" , \
 		"\red Your hand slips, cracking [target]'s skull with \the [tool]!" )
-		target.apply_damage(10, BRUTE, "head")
+		target.apply_damage(max(10, tool.force), BRUTE, "head")
 
 /datum/surgery_step/brain/cut_brain
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -59,7 +65,10 @@
 		target.apply_damage(50, BRUTE, "head", 1)
 
 /datum/surgery_step/brain/saw_spine
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70
@@ -103,8 +112,11 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/bone_chips
-	required_tool =  /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(
+	/obj/item/weapon/hemostat = 100, 		\
+	/obj/item/weapon/wirecutters = 75, 		\
+	/obj/item/weapon/kitchen/utensil/fork = 20
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -129,8 +141,10 @@
 		target.apply_damage(30, BRUTE, "head", 1)
 
 /datum/surgery_step/brain/hematoma
-	required_tool =  /obj/item/weapon/FixOVein
-	allowed_tools = list(/obj/item/weapon/cable_coil)
+	allowed_tools = list(
+	/obj/item/weapon/FixOVein ,	\
+	/obj/item/weapon/cable_coil
+	)
 
 	min_duration = 90
 	max_duration = 110
@@ -165,8 +179,11 @@
 		return istype(target, /mob/living/carbon/slime/) && target.stat == 2
 
 /datum/surgery_step/slime/cut_flesh
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 30
 	max_duration = 50
@@ -188,8 +205,11 @@
 		"\red Your hand slips, tearing [target]'s flesh with \the [tool]!")
 
 /datum/surgery_step/slime/cut_innards
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 30
 	max_duration = 50
@@ -211,7 +231,10 @@
 		"\red Your hand slips, tearing [target]'s innards with \the [tool]!")
 
 /datum/surgery_step/slime/saw_core
-	required_tool = /obj/item/weapon/circular_saw
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
+	)
 
 	min_duration = 50
 	max_duration = 70

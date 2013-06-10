@@ -1,5 +1,9 @@
 var/global/datum/controller/occupations/job_master
 
+#define GET_RANDOM_JOB 0
+#define BE_ASSISTANT 1
+#define RETURN_TO_LOBBY 2
+
 /datum/controller/occupations
 		//List of all jobs
 	var/list/occupations = list()
@@ -130,7 +134,40 @@ var/global/datum/controller/occupations/job_master
 				if(!job)	continue
 				var/list/candidates = FindOccupationCandidates(job, level)
 				if(!candidates.len)	continue
-				var/mob/new_player/candidate = pick(candidates)
+				
+				// Build a weighted list, weight by age.
+				var/list/weightedCandidates = list()
+
+				// Different head positions have different good ages.
+				var/good_age_minimal = 25
+				var/good_age_maximal = 60
+				if(command_position == "Captain")
+					good_age_minimal = 30
+					good_age_maximal = 70 // Old geezer captains ftw
+				
+				for(var/mob/V in candidates)
+					// Log-out during round-start? What a bad boy, no head position for you!
+					if(!V.client) continue
+					var/age = V.client.prefs.age
+					switch(age)
+						if(good_age_minimal - 10 to good_age_minimal)
+							weightedCandidates[V] = 3 // Still a bit young.
+						if(good_age_minimal to good_age_minimal + 10)
+							weightedCandidates[V] = 6 // Better.
+						if(good_age_minimal + 10 to good_age_maximal - 10)
+							weightedCandidates[V] = 10 // Great.
+						if(good_age_maximal - 10 to good_age_maximal)
+							weightedCandidates[V] = 6 // Still good.
+						if(good_age_maximal to good_age_maximal + 10)
+							weightedCandidates[V] = 6 // Bit old, don't you think?
+						if(good_age_maximal to good_age_maximal + 50)
+							weightedCandidates[V] = 3 // Geezer.
+						else
+							// If there's ABSOLUTELY NOBODY ELSE
+							if(candidates.len == 1) weightedCandidates[V] = 1 
+							
+				
+				var/mob/new_player/candidate = pickweight(weightedCandidates)
 				if(AssignRole(candidate, command_position))
 					return 1
 		return 0
@@ -270,9 +307,8 @@ var/global/datum/controller/occupations/job_master
 		// Hand out random jobs to the people who didn't get any in the last check
 		// Also makes sure that they got their preference correct
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.userandomjob)
+			if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 				GiveRandomJob(player)
-
 		/*
 		Old job system
 		for(var/level = 1 to 3)
@@ -297,8 +333,14 @@ var/global/datum/controller/occupations/job_master
 
 		// For those who wanted to be assistant if their preferences were filled, here you go.
 		for(var/mob/new_player/player in unassigned)
-			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
+			if(player.client.prefs.alternate_option == BE_ASSISTANT)
+				Debug("AC2 Assistant located, Player: [player]")
+				AssignRole(player, "Assistant")
+
+		//For ones returning to lobby
+		for(var/mob/new_player/player in unassigned)
+			if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+				unassigned -= player
 		return 1
 
 

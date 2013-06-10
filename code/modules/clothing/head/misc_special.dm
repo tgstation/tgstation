@@ -23,6 +23,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	icon_action_button = "action_welding"
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -158,6 +159,7 @@
 	flags = FPRINT | TABLEPASS
 	var/icon/mob
 	var/icon/mob2
+	siemens_coefficient = 1.5
 
 	update_icon(var/mob/living/carbon/human/user)
 		if(!istype(user)) return
