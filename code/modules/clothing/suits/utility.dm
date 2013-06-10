@@ -50,6 +50,7 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	siemens_coefficient = 0
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -67,6 +68,7 @@
 	flags_inv = HIDEJUMPSUIT
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE
+	siemens_coefficient = 0
 
 
 /obj/item/clothing/head/bomb_hood/security
