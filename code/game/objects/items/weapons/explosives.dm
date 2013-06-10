@@ -206,6 +206,11 @@
 			icon_state = "syndicate-bomb-active"
 			active = 1
 			add_fingerprint(user)
-			message_admins("[usr] has primed a [name] for detonation")
-			log_game("[usr] primed a [name] for detonation")
+
+			var/turf/bombturf = get_turf(src)
+			var/area/A = get_area(bombturf)
+			var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+			bombers += log_str
+			message_admins(log_str)
+			log_game(log_str)
 			processing_objects.Add(src) //Ticking down

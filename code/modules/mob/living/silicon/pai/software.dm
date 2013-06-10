@@ -329,7 +329,7 @@
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
-	dat += "<h2>CentComm pAI Module Subversion Network</h2><br>"
+	dat += "<h2>Centcom pAI Module Subversion Network</h2><br>"
 	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 

@@ -170,7 +170,7 @@
 				teleatom.visible_message("\red <B>The [teleatom] bounces off of the portal!</B>")
 			return 0
 
-		if(destination.z == 2) //centcomm z-level
+		if(destination.z == 2) //centcom z-level
 			if(istype(teleatom, /obj/mecha))
 				var/obj/mecha/MM = teleatom
 				MM.occupant << "\red <B>The mech would not survive the jump to a location so far away!</B>"

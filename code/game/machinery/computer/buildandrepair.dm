@@ -67,7 +67,7 @@
 	name = "Circuit board (ID Console)"
 	build_path = "/obj/machinery/computer/card"
 /obj/item/weapon/circuitboard/card/centcom
-	name = "Circuit board (CentCom ID Console)"
+	name = "Circuit board (Centcom ID Console)"
 	build_path = "/obj/machinery/computer/card/centcom"
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"

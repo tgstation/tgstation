@@ -858,7 +858,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.name = "[M.real_name]'s ID Card"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()//They get full station access.
-			W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
+			W.access += get_centcom_access("Death Commando")//Let's add their alloted Centcom access.
 			W.assignment = "Death Commando"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -877,7 +877,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "CentCom Official"
+			pda.ownjob = "Centcom Official"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
 			M.equip_to_slot_or_del(pda, slot_r_store)
@@ -885,10 +885,10 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/clipboard(M), slot_l_hand)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card (CentCom Official)"
+			W.name = "[M.real_name]'s ID Card (Centcom Official)"
 			W.icon_state = "centcom"
-			W.access = get_centcom_access("CentCom Official")
-			W.assignment = "CentCom Official"
+			W.access = get_centcom_access("Centcom Official")
+			W.assignment = "Centcom Official"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -906,11 +906,11 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(M), slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card (CentCom Commander)"
+			W.name = "[M.real_name]'s ID Card (Centcom Commander)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_centcom_access("CentCom Commander")
-			W.assignment = "CentCom Commander"
+			W.access += get_centcom_access("Centcom Commander")
+			W.assignment = "Centcom Commander"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 

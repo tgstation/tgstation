@@ -144,8 +144,8 @@
 //All of the armor below is mostly unused
 
 
-/obj/item/clothing/suit/armor/centcomm
-	name = "\improper Centcomm armor"
+/obj/item/clothing/suit/armor/centcom
+	name = "\improper Centcom armor"
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"

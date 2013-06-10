@@ -286,8 +286,8 @@
 		var/dat = "<html><body><center>"
 		dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
-		if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-			if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
+		if(emergency_shuttle) //In case Nanotrasen decides reposess Centcom's shuttles.
+			if(emergency_shuttle.direction == 2) //Shuttle is going to centcom, not recalled
 				dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
 			if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
 				dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"

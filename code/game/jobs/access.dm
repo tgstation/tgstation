@@ -181,7 +181,7 @@
 			return list(access_cent_general, access_cent_living, access_cent_storage)
 		if("Thunderdome Overseer")
 			return list(access_cent_general, access_cent_thunder)
-		if("CentCom Official")
+		if("Centcom Official")
 			return list(access_cent_general, access_cent_living)
 		if("Medical Officer")
 			return list(access_cent_general, access_cent_living, access_cent_medical)
@@ -193,7 +193,7 @@
 			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
 		if("Admiral")
 			return get_all_centcom_access()
-		if("CentCom Commander")
+		if("Centcom Commander")
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
@@ -414,7 +414,7 @@ proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","CentCom Commander")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
