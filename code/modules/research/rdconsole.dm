@@ -429,6 +429,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
 							if("$diamond")
 								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
+							if("$uranium")
+								linked_imprinter.uranium_amount = max(0, (linked_imprinter.uranium_amount-being_built.materials[M]))
 							else
 								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
 					var/obj/new_item = new being_built.build_path(src)
@@ -500,6 +502,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if("diamond")
 				type = /obj/item/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
+			if("uranium")
+				type = /obj/item/stack/sheet/mineral/uranium
+				res_amount = "uranium_amount"
 		if(ispath(type) && hasvar(linked_imprinter, res_amount))
 			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
 			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/sheet.perunit)
@@ -851,6 +856,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								if(D.materials[M] > linked_imprinter.gold_amount) check_materials = 0
 							if("$diamond")
 								if(D.materials[M] > linked_imprinter.diamond_amount) check_materials = 0
+							if("$uranium")
+								if(D.materials[M] > linked_imprinter.uranium_amount) check_materials = 0
 					else if (!linked_imprinter.reagents.has_reagent(M, D.materials[M]))
 						check_materials = 0
 				if (check_materials)
@@ -891,6 +898,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
 			if(linked_imprinter.diamond_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
 			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
+			dat += "<BR>"
+			//Uranium
+			dat += "* [linked_imprinter.uranium_amount] cm<sup>3</sup> of Uranium || "
+			dat += "Eject: "
+			if(linked_imprinter.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
+			if(linked_imprinter.uranium_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
+			if(linked_imprinter.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
 
 	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=575x400")
 	onclose(user, "rdconsole")
