@@ -167,16 +167,18 @@
 			mouthshoot = 0
 			return
 		if (load_into_chamber())
-			user.visible_message("<span class = 'warning'>[user] pulls the trigger. Ow.</span>")
+			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
 				playsound(user, fire_sound, 10, 1)
 			else
 				playsound(user, fire_sound, 50, 1)
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
-				user.apply_damage(in_chamber.damage*100, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
+				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
+				user.death()
 			else
-				user << "<span class = 'notice'>You feel dumb for trying this...</span>"
+				user << "<span class = 'notice'>Ow...</span>"
+				user.apply_effect(110,AGONY,0)
 			del(in_chamber)
 			mouthshoot = 0
 			return

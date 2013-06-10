@@ -1,6 +1,20 @@
 /obj/item/clothing/head/helmet/space/unathi
 
 	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
+	mob_can_equip(M as mob, slot)
+		var/mob/living/carbon/human/U = M
+		if(U.dna.mutantrace != "lizard")
+			U << "<span class='warning'>This clearly isn't designed for your species!</span>"
+			return 0
+		return ..()
+
+/obj/item/clothing/suit/space/unathi/mob_can_equip(M as mob, slot)
+	var/mob/living/carbon/human/U = M
+	if(U.dna.mutantrace != "lizard")
+		U << "<span class='warning'>This clearly isn't designed for your species!</span>"
+		return 0
+
+	return ..()
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 	name = "NT breacher helmet"
