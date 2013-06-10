@@ -394,6 +394,7 @@
 		var/oxygen_used = 0
 		var/nitrogen_used = 0
 		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/vox_oxygen_max = 1 // For vox.
 
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
@@ -436,6 +437,7 @@
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
 			oxygen_alert = max(oxygen_alert, 1)
+
 		else								// We're in safe limits
 			failed_last_breath = 0
 			adjustOxyLoss(-5)
@@ -466,6 +468,10 @@
 			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			if(reagents)
 				reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+			toxins_alert = max(toxins_alert, 1)
+		else if(O2_pp > vox_oxygen_max && src.dna.mutantrace=="vox") //Oxygen is toxic to vox.
+			var/ratio = (breath.oxygen/vox_oxygen_max) * 10
+			adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 			toxins_alert = max(toxins_alert, 1)
 		else
 			toxins_alert = 0
@@ -596,7 +602,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				if( !(COLD_RESISTANCE in mutations) )
+				if( !(COLD_RESISTANCE in mutations) && src.dna.mutantrace!="vox")
 					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 					pressure_alert = -2
 				else
