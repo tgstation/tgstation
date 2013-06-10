@@ -89,21 +89,27 @@ proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnod
 	for(var/obj/O in dest_turf)
 		if(O.density && (!istype(O, /obj/machinery/door) || !(O.flags & ON_BORDER)))	//something is blocking the destination
 			return path
-	
-	priorityqueue += new /pathnode(start_turf, null, call(start_turf,distance_proc)(dest_turf), 0)//add the starting turf and manhattan distance to the queue!
+
+	priorityqueue[start_turf] = new /pathnode(start_turf, null, call(start_turf,distance_proc)(dest_turf), 0)//add the starting turf and manhattan distance to the queue!
 
 	for(lpct=0, lpct<1800, lpct++)				//maximum for DEPTH_BIAS=0.5 is 958 loops to Research Division (originally 2743)
 		if(!priorityqueue.len) break
 
-		current = pop(priorityqueue)
+		if(priorityqueue.len)
+			current = priorityqueue[priorityqueue[priorityqueue.len]]	//double indexing in order to go from numeric key -> turf key -> pathnode value
+			priorityqueue.len--
+		else
+			current = null
+
+		if(!current)
+			//no more possibilities, or an unhandled error
+			//world << "Impossible path"
+			return path								//FAILURE
+
 		checked.Add(current)
 
 		next_g = current.g_score + DEPTH_BIAS
 		//if(maxnodes && next_g > (maxnodes*DEPTH_BIAS)) continue
-
-		if(!current)								//no more possibilities, or an unhandled error
-			//world << "Impossible path"
-			return path								//FAILURE
 
 		if(current.me == dest_turf)				//reached the destination
 			while(current)						//recreate path by looping through parents
@@ -121,28 +127,25 @@ proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnod
 				continue
 			skip = 0
 			next_f = next_g + call(next_turf,distance_proc)(dest_turf)
-			var/i = 0
-			while(i < checked.len && !skip)
-				i++
-				temp = checked[i]
-				if(temp.me == next_turf)			//if this turf has already been checked
-					skip = 1
-					if(temp.f_score > next_f)		//BUT the current path to it is better
-						checked[i] = new /pathnode(next_turf, current, next_f, next_g)
-													//then update it
+			if(checked.Find(next_turf))			//if this turf has already been checked
+				skip = 1
+				temp = checked[next_turf]
+				if(temp.f_score > next_f)		//BUT the current path to it is better
+					//checked[next_turf] = new /pathnode(next_turf, current, next_f, next_g)
+					temp.me = next_turf
+					temp.parent = current
+					temp.f_score = next_f
+					temp.g_score = next_g
 			if(!skip)								//if it hasn't been checked
-				i = 0
-				while(i < priorityqueue.len && !skip)
-					i++
-					temp = priorityqueue[i]
-					if(temp.me == next_turf)		//if this turf was already on the openlist
-						if(temp.f_score > next_f)	//BUT the current path to it is better
-							priorityqueue.Cut(i,i+1)		//then remove it
-							skip = 2
-						else
-							skip = 1				//otherwise leave it and don't add this version
+				if(priorityqueue.Find(next_turf))
+					temp = priorityqueue[next_turf]
+					if(temp.f_score > next_f)	//BUT the current path to it is better
+						priorityqueue.Remove(temp)		//then remove it
+						skip = 2
+					else
+						skip = 1				//otherwise leave it and don't add this version
 			if(!(skip % 2))
-				sorted_insert(priorityqueue, new /pathnode(next_turf, current, next_f, next_g), /proc/cmp_pathnodes)
+				priorityqueue[next_turf] = new /pathnode(next_turf, current, next_f, next_g)
 
 	//world << "Didn't find a path within [evaluations] evaluations and [lpct] loops."
 	return path										//FAILURE
