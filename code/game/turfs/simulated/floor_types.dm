@@ -87,7 +87,7 @@
 	name = "vacuum floor"
 	icon_state = "engine"
 	oxygen = 0
-	nitrogen = 0
+	nitrogen = 0.001
 	temperature = TCMB
 
 /turf/simulated/floor/plating

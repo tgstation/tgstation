@@ -96,6 +96,36 @@
 				if(target)
 					loadProgram(target)
 
+			else if(href_list["desert"])
+				target = locate(/area/holodeck/source_desert)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["space"])
+				target = locate(/area/holodeck/source_space)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["picnicarea"])
+				target = locate(/area/holodeck/source_picnicarea)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["snowfield"])
+				target = locate(/area/holodeck/source_snowfield)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["theatre"])
+				target = locate(/area/holodeck/source_theatre)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["meetinghall"])
+				target = locate(/area/holodeck/source_meetinghall)
+				if(target)
+					loadProgram(target)
+
 			else if(href_list["turnoff"])
 				target = locate(/area/holodeck/source_plating)
 				if(target)
