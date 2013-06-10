@@ -54,7 +54,7 @@
 	return absorb
 
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM,/obj/))
+	if(istype(AM, /obj/))
 		var/obj/O = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
