@@ -457,3 +457,13 @@ var/list/be_special_flags = list(
 
 #define DNA_STRUC_ENZYMES_BLOCKS	14
 #define DNA_UNIQUE_ENZYMES_LEN		32
+
+//Transformation proc stuff
+#define TR_KEEPITEMS	1
+#define TR_KEEPVIRUS	2
+#define TR_KEEPDAMAGE	4
+#define TR_HASHNAME		8	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+#define TR_KEEPIMPLANTS	16
+#define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
+#define TR_DEFAULTMSG	64
+#define TR_KEEPSRC		128
