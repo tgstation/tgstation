@@ -115,6 +115,10 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/emps
 	cost = 3
 
+/datum/uplink_item/dangerous/syndicate_minibomb
+	name = "Syndicate Minibomb"
+	item = /obj/item/weapon/grenade/syndieminibomb
+	cost = 3
 
 // STEALTHY WEAPONS
 
@@ -221,6 +225,11 @@ var/list/uplink_items = list()
 	name = "Singularity Beacon (DANGER!)"
 	item = /obj/item/device/sbeacondrop
 	cost = 7
+
+/datum/uplink_item/device_tools/syndicate_bomb
+	name = "Syndicate Bomb (DANGER!)"
+	item = /obj/item/weapon/syndicatebomb
+	cost = 5
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
