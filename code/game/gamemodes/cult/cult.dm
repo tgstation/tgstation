@@ -74,6 +74,7 @@
 		var/datum/mind/cultist = pick(cultists_possible)
 		cultists_possible -= cultist
 		cult += cultist
+		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
 	return (cult.len>0)
 

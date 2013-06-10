@@ -17,10 +17,10 @@
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
-	else
-		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		return
+	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -171,6 +171,8 @@
 		L += src.contents
 		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
+		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
+			L += U.contents
 		return L
 
 /mob/living/proc/check_contents_for(A)

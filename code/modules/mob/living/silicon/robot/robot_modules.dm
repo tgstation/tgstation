@@ -100,6 +100,10 @@
 		G.amount = 50
 		modules += G
 
+		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+		R.amount = 50
+		modules += R
+
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
 		modules += W
@@ -109,6 +113,7 @@
 		var/list/what = list (
 			/obj/item/stack/sheet/metal,
 			/obj/item/stack/sheet/rglass,
+			/obj/item/stack/rods,
 			/obj/item/weapon/cable_coil,
 		)
 		for(var/T in what)

@@ -203,7 +203,9 @@
 		var/target_z = targloc.z
 		targloc = null
 		for(var/i=1 to min(projectiles, projectiles_per_shot))
-			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
+			var/dx = round(gaussian(0,deviation),1)
+			var/dy = round(gaussian(0,deviation),1)
+			targloc = locate(target_x+dx, target_y+dy, target_z)
 			if(!targloc || targloc == curloc)
 				break
 			playsound(chassis, fire_sound, 80, 1)
@@ -242,7 +244,9 @@
 		spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
 			if(!chassis) break
 			var/turf/curloc = get_turf(chassis)
-			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
+			var/dx = round(gaussian(0,deviation),1)
+			var/dy = round(gaussian(0,deviation),1)
+			targloc = locate(target_x+dx, target_y+dy, target_z)
 			if (!targloc || !curloc)
 				continue
 			if (targloc == curloc)

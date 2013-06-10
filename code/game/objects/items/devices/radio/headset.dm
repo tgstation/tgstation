@@ -130,25 +130,11 @@
 
 /obj/item/device/radio/headset/heads/hop
 	name = "head of personnel's headset"
-	desc = "The headset of the guy who will one day be captain. Channels are as follows: :u - supply, :v - service, :c - command, :s - security"
+	desc = "The headset of the guy who will one day be captain. Channels are as follows: :u - supply, :v - service, :c - command."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/hop
-/*
-/obj/item/device/radio/headset/headset_mine
-	name = "mining radio headset"
-	desc = "Headset used by miners. How useless. To access the mining channel, use :d."
-	icon_state = "mine_headset"
-	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_mine
 
-/obj/item/device/radio/headset/heads/qm
-	name = "quartermaster's headset"
-	desc = "The headset of the man who control your toiletpaper supply. To access the cargo channel, use :q. For mining, use :d."
-	icon_state = "cargo_headset"
-	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/qm
-*/
 /obj/item/device/radio/headset/headset_cargo
 	name = "supply radio headset"
 	desc = "A headset used by the QM and his slaves. To access the supply channel, use :u."
@@ -162,6 +148,13 @@
 	icon_state = "srv_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_service
+
+/obj/item/device/radio/headset/headset_cent
+	name = "centcom headset"
+	desc = "A headset used by the upper echelons of Nanotrasen. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	icon_state = "cent_headset"
+	item_state = "headset"
+	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()

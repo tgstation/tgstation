@@ -14,7 +14,7 @@
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
-	w_class = 4//bulky item
+	w_class = 4
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -34,11 +34,10 @@
 
 
 /obj/item/clothing/suit/fire/heavy
-	name = "firesuit"
-	desc = "A suit that protects against extreme fire and heat."
-	//icon_state = "thermal"
+	name = "heavy firesuit"
+	desc = "An old, bulky thermal protection suit."
+	icon_state = "thermal"
 	item_state = "ro_suit"
-	w_class = 4//bulky item
 	slowdown = 1.5
 
 /*

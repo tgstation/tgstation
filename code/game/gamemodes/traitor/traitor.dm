@@ -56,7 +56,9 @@
 		var/datum/mind/traitor = pick(possible_traitors)
 		traitors += traitor
 		traitor.special_role = "traitor"
+		log_game("[traitor.key] (ckey) has been selected as a traitor")
 		possible_traitors.Remove(traitor)
+
 
 	if(!traitors.len)
 		return 0
@@ -75,6 +77,15 @@
 	..()
 	return 1
 
+/datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
+	if(traitors.len >= round(joined_player_list.len / traitor_scaling_coeff) + 1) //Caps number of latejoin antagonists
+		return
+	if (prob(100/traitor_scaling_coeff))
+		if(character.client.prefs.be_special & BE_TRAITOR)
+			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
+				if(!(character.job in ticker.mode.restricted_jobs))
+					character.mind.make_Tratior()
+	..()
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))

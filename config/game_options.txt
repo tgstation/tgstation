@@ -102,6 +102,8 @@ PROBABILITY SANDBOX 0
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
+## If late-joining players have a chance to become a traitor/changeling
+ALLOW_LATEJOIN_ANTAGONISTS
 
 ### RANDOM EVENTS ###
 
@@ -131,7 +133,13 @@ GATEWAY_DELAY 18000
 JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
-#ASSISTANT_MAINT
+#ASSISTANTS_HAVE_MAINT_ACCESS
+
+## Uncoment to give security maint access. Note that if you comment JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+#SECURITY_HAS_MAINT_ACCESS
+
+## Uncomment to give everyone maint access.
+#EVERYONE_HAS_MAINT_ACCESS
 
 
 ### GHOST INTERACTION ###

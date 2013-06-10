@@ -34,7 +34,7 @@
  */
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
-	desc = "You can be totally screwwy with this."
+	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -171,9 +171,11 @@
 		var/obj/item/stack/rods/R = I
 		R.use(1)
 		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
+		user.drop_from_inventory(src)
 		loc = F
 		F.weldtool = src
 		add_fingerprint(user)
+		user.put_in_hands(F)
 		return
 
 	..()

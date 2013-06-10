@@ -9,15 +9,17 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
-		if (src.getBruteLoss() < 75)
+		if (src.getBruteLoss() < 60)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 	if (src.getFireLoss())
-		if (src.getFireLoss() < 75)
+		if (src.getFireLoss() < 60)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
+	if (src.health < -50)
+		msg += "It looks barely operational.\n"
 	msg += "</span>"
 
 	if(opened)

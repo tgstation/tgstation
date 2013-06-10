@@ -99,12 +99,12 @@
 	return 0
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(iswirecutter(W))
+	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			new /obj/item/stack/rods(loc)
 			del(src)
-	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
+	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
@@ -159,6 +159,7 @@
 //window placing end
 
 	else if(istype(W, /obj/item/weapon/shard))
+		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)

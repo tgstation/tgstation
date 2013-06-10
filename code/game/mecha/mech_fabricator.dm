@@ -642,7 +642,7 @@
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
 		if(isnum(index) && isnum(new_index))
-			if(InRange(new_index,1,queue.len))
+			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 	if(href_list["clear_queue"])

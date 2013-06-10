@@ -163,10 +163,9 @@
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
-	else
-		if(fire_res_on_core)
-			health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
-		else
-			health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+		return
+	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
+	if(!fire_res_on_core)
+		health -= getFireLoss()

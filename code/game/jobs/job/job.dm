@@ -80,10 +80,15 @@
 	if(!config)	//Needed for robots.
 		return src.minimal_access.Copy()
 
+	. = list()
+
 	if(config.jobs_have_minimal_access)
-		return src.minimal_access.Copy()
+		. = src.minimal_access.Copy()
 	else
-		return src.access.Copy()
+		. = src.access.Copy()
+
+	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
+		. |= list(access_maint_tunnels)
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)

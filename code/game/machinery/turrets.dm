@@ -555,7 +555,7 @@
 					if(src)
 						src.process()
 		if(href_list["scan_range"])
-			src.scan_range = between(1,src.scan_range+text2num(href_list["scan_range"]),8)
+			src.scan_range = Clamp(src.scan_range+text2num(href_list["scan_range"]), 1, 8)
 		if(href_list["scan_for"])
 			if(href_list["scan_for"] in scan_for)
 				scan_for[href_list["scan_for"]] = !scan_for[href_list["scan_for"]]
@@ -626,20 +626,23 @@
 		var/target_y = targloc.y
 		var/target_z = targloc.z
 		targloc = null
-		spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
-			if(!src) break
-			var/turf/curloc = get_turf(src)
-			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
-			if (!targloc || !curloc)
-				continue
-			if (targloc == curloc)
-				continue
-			playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
-			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
-			src.projectiles--
-			A.current = curloc
-			A.yo = targloc.y - curloc.y
-			A.xo = targloc.x - curloc.x
-			A.process()
-			sleep(2)
+		spawn(-1)
+			for(var/i=1 to min(projectiles, projectiles_per_shot))
+				if(!src) break
+				var/turf/curloc = get_turf(src)
+				var/dx = round(gaussian(0,deviation),1)
+				var/dy = round(gaussian(0,deviation),1)
+				targloc = locate(target_x+dx, target_y+dy, target_z)
+				if (!targloc || !curloc)
+					continue
+				if (targloc == curloc)
+					continue
+				playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
+				var/obj/item/projectile/A = new /obj/item/projectile(curloc)
+				src.projectiles--
+				A.current = curloc
+				A.yo = targloc.y - curloc.y
+				A.xo = targloc.x - curloc.x
+				A.process()
+				sleep(2)
 		return

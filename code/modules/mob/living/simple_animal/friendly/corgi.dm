@@ -14,9 +14,9 @@
 	turns_per_move = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
-	response_help  = "pets the"
-	response_disarm = "bops the"
-	response_harm   = "kicks the"
+	response_help  = "pets"
+	response_disarm = "bops"
+	response_harm   = "kicks"
 	see_in_dark = 5
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
@@ -49,15 +49,15 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red This animal is wearing too much armor. You can't cause /him any damage."
+				usr << "\red [src] is wearing too much armor. You can't cause \him any damage."
 				for (var/mob/M in viewers(src, null))
-					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
+					M.show_message("\red \b [user] hits [src] with [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach its skin."
+				usr << "\red [src] is wearing too much armor. You can't reach \his skin."
 				for (var/mob/M in viewers(src, null))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
-			if(prob(15))
-				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on \his face")
+					M.show_message("\red [user] gently taps [src] with [O]. ")
+			if(health>0 && prob(15))
+				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression")
 			return
 	..()
 
@@ -122,12 +122,14 @@
 						item_to_add.afterattack(src,usr,1)
 						return
 
-					//Corgis are supposed to be simpler, so only a select few objects can actually be put
-					//to be compatible with them. The objects are below.
-
+					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
-						/obj/item/device/radio
+						/obj/item/device/radio,
+						/obj/item/clothing/suit/cardborg,
+						/obj/item/weapon/tank/oxygen,
+						/obj/item/weapon/tank/air,
+						/obj/item/weapon/extinguisher
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -201,7 +203,7 @@
 		if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
 			name = "Hoppy"
 			emote_see = list("twitches its nose", "hops around a bit")
-			desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
+			desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit"
 			valid = 1
 
 		if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
@@ -245,6 +247,13 @@
 		if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
 			name = "Grandwizard [real_name]"
 			speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+			valid = 1
+
+		if(/obj/item/clothing/head/cardborg)
+			name = "Borgi"
+			speak = list("Ping!","Beep!","Woof!")
+			emote_see = list("goes rogue", "sniffs out non-humans")
+			desc = "Result of robotics budget cuts."
 			valid = 1
 
 		if(/obj/item/weapon/bedsheet)
