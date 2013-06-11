@@ -143,7 +143,7 @@
 			icon_state = "statuette"
 			additional_desc = "It depicts a [pick("small","ferocious","wild","pleasing","hulking")] \
 			[pick("alien figure","rodent-like creature","reptilian alien","primate","unidentifiable object")] \
-			[pick("performing unspeakable acts","posing heroically","in a feotal position","cheering","sobbing","making a plaintive gesture","making a rude gesture")]."
+			[pick("performing unspeakable acts","posing heroically","in a fetal position","cheering","sobbing","making a plaintive gesture","making a rude gesture")]."
 		if(5)
 			item_type = "instrument"
 			icon_state = "instrument"

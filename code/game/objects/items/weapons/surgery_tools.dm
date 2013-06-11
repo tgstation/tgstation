@@ -365,8 +365,8 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("drilled")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("/red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"/red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS)
 
 /*
