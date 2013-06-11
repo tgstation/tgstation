@@ -264,8 +264,8 @@ proc/trigger_armed_response_team(var/force = 0)
 
 	return 1
 
-//debug verb
+/*//debug verb
 client/verb/ResponseTeam()
 	set category = "Admin"
 	if(!send_emergency_team)
-		send_emergency_team = 1
+		send_emergency_team = 1*/
