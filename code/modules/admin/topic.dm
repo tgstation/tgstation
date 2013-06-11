@@ -1012,6 +1012,18 @@
 		message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]", 1)
 		H.monkeyize()
 
+	else if(href_list["humanone"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
+		if(!istype(Mo))
+			usr << "This can only be used on instances of type /mob/living/carbon/monkey"
+			return
+
+		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)]")
+		message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)]", 1)
+		Mo.humanize()
+
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))	return
 
