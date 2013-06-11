@@ -88,7 +88,8 @@
 			if (!lying && world.timeofday - l_move_time < 15)
 				var/datum/organ/internal/I = pick(E.internal_organs)
 				custom_pain("You feel broken bones moving in your [E.display_name]!", 1)
-				I.take_damage(rand(3,5))
+				if(I)
+					I.take_damage(rand(3,5))
 
 		//Special effects for limbs.
 		if(E.name in list("l_hand","l_arm","r_hand","r_arm"))

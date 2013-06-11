@@ -23,6 +23,7 @@ datum/event/organ_failure/start()
 		if(!C) continue
 		// Bruise one of their organs
 		var/datum/organ/internal/I = pick(C.internal_organs)
+		if(!I) continue
 		I.damage = I.min_bruised_damage
 		candidates.Remove(C)
 		severity--
