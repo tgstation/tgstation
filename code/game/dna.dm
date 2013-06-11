@@ -298,136 +298,25 @@
 //////////////////////////////////////////////////////////// Monkey Block
 	if(blocks[RACEBLOCK])
 		if(istype(M, /mob/living/carbon/human))	// human > monkey
-			var/mob/living/carbon/human/H = M
-			H.monkeyizing = 1
-			var/list/implants = list() //Try to preserve implants.
-			for(var/obj/item/weapon/implant/W in H)
-				implants += W
-				W.loc = null
-
-			if(!connected)
-				for(var/obj/item/W in (H.contents-implants))
-					if(W==H.w_uniform) // will be teared
-						continue
-					H.drop_from_inventory(W)
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/atom/movable/overlay/animation = new( M.loc )
-				animation.icon_state = "blank"
-				animation.icon = 'icons/mob/mob.dmi'
-				animation.master = src
-				flick("h2monkey", animation)
-				sleep(48)
-				del(animation)
-
-			var/mob/living/carbon/monkey/O = new(src)
-
-			if(M)
-				if(M.dna)
-					O.dna = M.dna
-					M.dna = null
-
-				if(M.suiciding)
-					O.suiciding = M.suiciding
-					M.suiciding = null
-
-
-			for(var/datum/disease/D in M.viruses)
-				O.viruses += D
-				D.affected_mob = O
-				M.viruses -= D
-
-
-			for(var/obj/T in (M.contents-implants))
-				del(T)
-
-			O.loc = M.loc
-
-			if(M.mind)
-				M.mind.transfer_to(O)	//transfer our mind to the cute little monkey
-
+			var/mob/living/carbon/monkey/O = M.monkeyize(TR_KEEPITEMS | TR_HASHNAME | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
+			O.take_overall_damage(40, 0)
+			O.adjustToxLoss(20)
 			if(connected) //inside dna thing
 				var/obj/machinery/dna_scannernew/C = connected
 				O.loc = C
 				C.occupant = O
 				connected = null
-			O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
-			O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
-			O.adjustToxLoss(M.getToxLoss() + 20)
-			O.adjustOxyLoss(M.getOxyLoss())
-			O.stat = M.stat
-			O.a_intent = "harm"
-			for (var/obj/item/weapon/implant/I in implants)
-				I.loc = O
-				I.implanted = O
-	//		O.update_icon = 1	//queue a full icon update at next life() call
-			del(M)
 			return 1
 	else
 		if(istype(M, /mob/living/carbon/monkey))	// monkey > human,
-			var/mob/living/carbon/monkey/Mo = M
-			Mo.monkeyizing = 1
-			var/list/implants = list() //Still preserving implants
-			for(var/obj/item/weapon/implant/W in Mo)
-				implants += W
-				W.loc = null
-			if(!connected)
-				for(var/obj/item/W in (Mo.contents-implants))
-					Mo.drop_from_inventory(W)
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/atom/movable/overlay/animation = new( M.loc )
-				animation.icon_state = "blank"
-				animation.icon = 'icons/mob/mob.dmi'
-				animation.master = src
-				flick("monkey2h", animation)
-				sleep(48)
-				del(animation)
-
-			var/mob/living/carbon/human/O = new( src )
-			O.gender = (deconstruct_block(getblock(M.dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
-
-			if(M)
-				if(M.dna)
-					O.dna = M.dna
-					M.dna = null
-
-				if(M.suiciding)
-					O.suiciding = M.suiciding
-					M.suiciding = null
-
-			O.viruses = M.viruses.Copy()
-			M.viruses.Cut()
-			for(var/datum/disease/D in O.viruses)
-				D.affected_mob = O
-
-			O.loc = M.loc
-
-			if(M.mind)
-				M.mind.transfer_to(O)	//transfer our mind to the human
-
+			var/mob/living/carbon/human/O = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
+			O.take_overall_damage(40, 0)
+			O.adjustToxLoss(20)
 			if(connected) //inside dna thing
 				var/obj/machinery/dna_scannernew/C = connected
 				O.loc = C
 				C.occupant = O
 				connected = null
-
-			O.real_name = random_name(O.gender)
-			
-			updateappearance(O)
-			O.take_overall_damage(M.getBruteLoss(), M.getFireLoss())
-			O.adjustToxLoss(M.getToxLoss())
-			O.adjustOxyLoss(M.getOxyLoss())
-			O.stat = M.stat
-			for (var/obj/item/weapon/implant/I in implants)
-				I.loc = O
-				I.implanted = O
-	//		O.update_icon = 1	//queue a full icon update at next life() call
-			del(M)
 			return 1
 //////////////////////////////////////////////////////////// Monkey Block
 	if(M)

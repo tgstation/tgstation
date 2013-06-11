@@ -24,6 +24,10 @@
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
+/obj/item/weapon/implant/dropped(mob/user as mob)
+	. = 1
+	del src
+	return .
 
 /obj/item/weapon/implant/tracking
 	name = "tracking"
