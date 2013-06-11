@@ -34,5 +34,6 @@ client/verb/showrevinfo()
 	var/output = revdata.showinfo
 	output += "<b>Current Infomational Settings:</b><br>"
 	output += "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]<br>"
+	output += "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]<br>"
 	usr << browse(output,"window=revdata");
 	return
