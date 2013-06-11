@@ -20,8 +20,11 @@
 
 
 /datum/surgery_step/limb/cut
-	required_tool = /obj/item/weapon/scalpel
-	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
+	allowed_tools = list(
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -48,8 +51,10 @@
 
 
 /datum/surgery_step/limb/mend
-	required_tool = /obj/item/weapon/retractor
-	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
+	allowed_tools = list(
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75,	\
+	/obj/item/weapon/kitchen/utensil/fork = 50)
 
 	min_duration = 80
 	max_duration = 100
@@ -80,8 +85,12 @@
 
 
 /datum/surgery_step/limb/prepare
-	required_tool = /obj/item/weapon/cautery
-	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
+	allowed_tools = list(
+	/obj/item/weapon/cautery = 100,			\
+	/obj/item/clothing/mask/cigarette = 75,	\
+	/obj/item/weapon/lighter = 50,			\
+	/obj/item/weapon/weldingtool = 25
+	)
 
 	min_duration = 60
 	max_duration = 70
@@ -115,7 +124,7 @@
 
 
 /datum/surgery_step/limb/attach
-	required_tool = /obj/item/robot_parts
+	allowed_tools = list(/obj/item/robot_parts = 100)
 	can_infect = 0
 
 	min_duration = 80
