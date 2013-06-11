@@ -42,7 +42,7 @@
 	var/germ_level = 0
 
 	// how often wounds should be updated, a higher number means less often
-	var/wound_update_accuracy = 20 // update every 20 ticks(roughly every minute)
+	var/wound_update_accuracy = 1
 
 /datum/organ/external/New(var/datum/organ/external/P)
 	if(P)
@@ -305,7 +305,7 @@
 						parent.germ_level += round(GERM_TRANSFER_AMOUNT)
 */
 
-//Updating wounds. Handles wound natural healing, internal bleedings and infections
+//Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
 	for(var/datum/wound/W in wounds)
 		// wounds can disappear after 10 minutes at the earliest
@@ -320,20 +320,28 @@
 			if(prob(1 * wound_update_accuracy))
 				owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
 
-		if(W.bandaged || W.salved)
-			// slow healing
-			var/amount = 0.2
-			if(W.is_treated())
-				amount += 10
-			// amount of healing is spread over all the wounds
-			W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
+		// slow healing
+		var/heal_amt = 0.2
+		if (W.damage > 20)	//this thing's edges are not in day's travel of each other, what healing?
+			heal_amt = 0
+
+		if(W.is_treated())
+			heal_amt += 0.3
+
+		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
+		heal_amt = heal_amt * wound_update_accuracy
+		//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
+		heal_amt = heal_amt * config.organ_regeneration_multiplier
+		// amount of healing is spread over all the wounds
+		heal_amt = heal_amt / (wounds.len + 1)
+		// making it look prettier on scanners
+		heal_amt = round(heal_amt,0.1)
+		W.heal_damage(heal_amt)
 
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))
 			W.germ_level = 0
 			W.disinfected = 1
-
-
 
 	// sync the organ's damage with its wounds
 	src.update_damages()
@@ -547,6 +555,14 @@
 		if(T)
 			T.robotize()
 
+/datum/organ/external/proc/mutate()
+	src.status |= ORGAN_MUTATED
+	owner.update_body()
+
+/datum/organ/external/proc/unmutate()
+	src.status &= ~ORGAN_MUTATED
+	owner.update_body()
+
 /datum/organ/external/proc/get_damage()	//returns total damage
 	return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?
 
@@ -556,21 +572,32 @@
 			return 1
 	return 0
 
+/datum/organ/external/get_icon(gender="")
+	if (status & ORGAN_MUTATED)
+		return new /icon(owner.deform_icon, "[icon_name][gender ? "_[gender]" : ""]")
+	else
+		return new /icon(owner.race_icon, "[icon_name][gender ? "_[gender]" : ""]")
+
+
+/datum/organ/external/proc/is_usable()
+	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
+
 /****************************************************
 			   ORGAN DEFINES
 ****************************************************/
 
 /datum/organ/external/chest
 	name = "chest"
-	icon_name = "chest"
+	icon_name = "torso"
 	display_name = "chest"
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
 
+
 /datum/organ/external/groin
 	name = "groin"
-	icon_name = "diaper"
+	icon_name = "groin"
 	display_name = "groin"
 	max_damage = 115
 	min_broken_damage = 70
@@ -653,27 +680,37 @@
 	body_part = HEAD
 	var/disfigured = 0
 
-	take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
-		..(brute, burn, sharp, used_weapon, forbidden_limbs)
-		if (!disfigured)
-			if (brute_dam > 40)
-				if (prob(50))
-					disfigure("brute")
-			if (burn_dam > 40)
-				disfigure("burn")
+/datum/organ/external/head/get_icon()
+	if (!owner)
+	 return ..()
+	var/g = "m"
+	if(owner.gender == FEMALE)	g = "f"
+	if (status & ORGAN_MUTATED)
+		. = new /icon(owner.deform_icon, "[icon_name]_[g]")
+	else
+		. = new /icon(owner.race_icon, "[icon_name]_[g]")
 
-	proc/disfigure(var/type = "brute")
-		if (disfigured)
-			return
-		if(type == "brute")
-			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
-			"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
-			"\red You hear a sickening crack.")
-		else
-			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
-			"\red <b>Your face melts off!</b>",	\
-			"\red You hear a sickening sizzle.")
-		disfigured = 1
+/datum/organ/external/head/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
+	..(brute, burn, sharp, used_weapon, forbidden_limbs)
+	if (!disfigured)
+		if (brute_dam > 40)
+			if (prob(50))
+				disfigure("brute")
+		if (burn_dam > 40)
+			disfigure("burn")
+
+/datum/organ/external/head/proc/disfigure(var/type = "brute")
+	if (disfigured)
+		return
+	if(type == "brute")
+		owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
+		"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
+		"\red You hear a sickening crack.")
+	else
+		owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
+		"\red <b>Your face melts off!</b>",	\
+		"\red You hear a sickening sizzle.")
+	disfigured = 1
 
 /****************************************************
 			   EXTERNAL ORGAN ITEMS
@@ -703,6 +740,10 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 				base = new('icons/mob/human_races/r_lizard.dmi')
 			if("skrell")
 				base = new('icons/mob/human_races/r_skrell.dmi')
+
+			if("vox")
+				base = new('icons/mob/human_races/r_vox.dmi')
+
 			else
 				base = new('icons/mob/human_races/r_human.dmi')
 		if(base)

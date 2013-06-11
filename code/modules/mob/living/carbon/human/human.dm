@@ -811,6 +811,8 @@
 				return "Tajaran"
 			if("skrell")
 				return "Skrell"
+			if("vox")
+				return "Vox"
 			if("plant")
 				return "Mobile vegetation"
 			if("golem")
@@ -826,6 +828,8 @@
 			return "Skrell"
 		else if(src.dna.mutantrace == "tajaran")
 			return "Tajaran"
+		else if(src.dna.mutantrace == "vox")
+			return "vox"
 
 /mob/living/carbon/proc/update_mutantrace_languages()
 	if(src.dna)
@@ -835,6 +839,8 @@
 			src.skrell_talk_understand = 1
 		else if(src.dna.mutantrace == "tajaran")
 			src.tajaran_talk_understand = 1
+		else if(src.dna.mutantrace == "vox")
+			src.vox_talk_understand = 1
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
@@ -1089,3 +1095,20 @@
 			world << "Reached stage 3 in [ticks] ticks"
 	world << "Mob took [tdamage] tox damage"
 */
+//returns 1 if made bloody, returns 0 otherwise
+
+/mob/living/carbon/human/add_blood(mob/living/carbon/human/M as mob)
+	if (!..())
+		return 0
+	//if this blood isn't already in the list, add it
+	if(blood_DNA[M.dna.unique_enzymes])
+		return 0 //already bloodied with this blood. Cannot add more.
+	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	return 1 //we applied blood to the item
+
+/mob/living/carbon/human/clean_blood()
+	.=..()
+	if(istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
+		del(feet_blood_DNA)
+		return 1

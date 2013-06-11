@@ -202,13 +202,20 @@ var/list/sacrificed = list()
 
 		seer()
 			if(usr.loc==src.loc)
-				usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-				if(usr.see_invisible!=0 && usr.see_invisible!=15)
+				if(usr.seer==1)
+					usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium viortia.")
+					usr << "\red The world beyond fades from your vision."
+					usr.see_invisible = SEE_INVISIBLE_LIVING
+					usr.seer = 0
+				else if(usr.see_invisible!=SEE_INVISIBLE_LIVING)
 					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
+					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.seer = 0
 				else
+					usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
 					usr << "\red The world beyond opens to your eyes."
-				usr.see_invisible = SEE_INVISIBLE_OBSERVER
-				usr.seer = 1
+					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.seer = 1
 				return
 			return fizzle()
 
@@ -310,7 +317,7 @@ var/list/sacrificed = list()
 			var/S=0
 			for(var/obj/effect/rune/R in orange(rad,src))
 				if(R!=src)
-					R:visibility=0
+					R.invisibility=INVISIBILITY_OBSERVER
 				S=1
 			if(S)
 				if(istype(src,/obj/effect/rune))

@@ -427,6 +427,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define WEAKEN		"weaken"
 #define PARALYZE	"paralize"
 #define IRRADIATE	"irradiate"
+#define AGONY		"agony" // Added in PAIN!
 #define STUTTER		"stutter"
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
@@ -583,6 +584,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define ORGAN_SPLINTED 256
 #define SALVED 512
 #define ORGAN_DEAD 1024
+#define ORGAN_MUTATED 2048
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 

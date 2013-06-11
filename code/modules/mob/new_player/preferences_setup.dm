@@ -144,6 +144,10 @@ datum/preferences
 				icobase = 'icons/mob/human_races/r_lizard.dmi'
 			if("Skrell")
 				icobase = 'icons/mob/human_races/r_skrell.dmi'
+
+			if("Vox")
+				icobase = 'icons/mob/human_races/r_vox.dmi'
+
 			else
 				icobase = 'icons/mob/human_races/r_human.dmi'
 		preview_icon = new /icon(icobase, "torso_[g]")
@@ -172,6 +176,9 @@ datum/preferences
 				preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s")
+		if(species=="Vox")
+			eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "vox_eyes_s")
+
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]

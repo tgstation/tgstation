@@ -4,9 +4,10 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/glue_bone
-	priority = 2
-	required_tool = /obj/item/weapon/bonegel
-	allowed_tools = list(/obj/item/weapon/screwdriver)
+	allowed_tools = list(
+	/obj/item/weapon/bonegel = 100,	\
+	/obj/item/weapon/screwdriver = 75
+	)
 	can_infect = 1
 	blood_level = 1
 
@@ -37,8 +38,10 @@
 		"\red Your hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!")
 
 /datum/surgery_step/set_bone
-	required_tool = /obj/item/weapon/bonesetter
-	allowed_tools = list(/obj/item/weapon/wrench)
+	allowed_tools = list(
+	/obj/item/weapon/bonesetter = 100,	\
+	/obj/item/weapon/wrench = 75		\
+	)
 
 	min_duration = 60
 	max_duration = 70
@@ -72,8 +75,10 @@
 		affected.createwound(BRUISE, 5)
 
 /datum/surgery_step/mend_skull
-	required_tool = /obj/item/weapon/bonesetter
-	allowed_tools = list(/obj/item/weapon/wrench)
+	allowed_tools = list(
+	/obj/item/weapon/bonesetter = 100,	\
+	/obj/item/weapon/wrench = 75		\
+	)
 
 	min_duration = 60
 	max_duration = 70
@@ -102,8 +107,10 @@
 		h.disfigured = 1
 
 /datum/surgery_step/finish_bone
-	required_tool = /obj/item/weapon/bonegel
-	allowed_tools = list(/obj/item/weapon/screwdriver)
+	allowed_tools = list(
+	/obj/item/weapon/bonegel = 100,	\
+	/obj/item/weapon/screwdriver = 75
+	)
 	can_infect = 1
 	blood_level = 1
 

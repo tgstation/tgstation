@@ -163,42 +163,46 @@ connection
 
 			//If there are more than one connection, decrement the number of connections
 			//Otherwise, remove all connections between the zones.
-			if(zone_1.connected_zones[zone_2] > 1)
-				zone_1.connected_zones[zone_2]--
-			else
-				zone_1.connected_zones -= zone_2
-				//remove the list if it is empty
-				if(!zone_1.connected_zones.len)
-					zone_1.connected_zones = null
+			if(zone_2 in zone_1.connected_zones)
+				if(zone_1.connected_zones[zone_2] > 1)
+					zone_1.connected_zones[zone_2]--
+				else
+					zone_1.connected_zones -= zone_2
+					//remove the list if it is empty
+					if(!zone_1.connected_zones.len)
+						zone_1.connected_zones = null
 
 			//Then do the same for the other zone.
-			if(zone_2.connected_zones[zone_1] > 1)
-				zone_2.connected_zones[zone_1]--
-			else
-				zone_2.connected_zones -= zone_1
-				if(!zone_2.connected_zones.len)
-					zone_2.connected_zones = null
+			if(zone_1 in zone_2.connected_zones)
+				if(zone_2.connected_zones[zone_1] > 1)
+					zone_2.connected_zones[zone_1]--
+				else
+					zone_2.connected_zones -= zone_1
+					if(!zone_2.connected_zones.len)
+						zone_2.connected_zones = null
 
 		//Handle disconnection of closed zones.
 		if( (zone_1 in zone_2.closed_connection_zones) || (zone_2 in zone_1.closed_connection_zones) )
 
 			//If there are more than one connection, decrement the number of connections
 			//Otherwise, remove all connections between the zones.
-			if(zone_1.closed_connection_zones[zone_2] > 1)
-				zone_1.closed_connection_zones[zone_2]--
-			else
-				zone_1.closed_connection_zones -= zone_2
-				//remove the list if it is empty
-				if(!zone_1.closed_connection_zones.len)
-					zone_1.closed_connection_zones = null
+			if(zone_2 in zone_1.connected_zones)
+				if(zone_1.closed_connection_zones[zone_2] > 1)
+					zone_1.closed_connection_zones[zone_2]--
+				else
+					zone_1.closed_connection_zones -= zone_2
+					//remove the list if it is empty
+					if(!zone_1.closed_connection_zones.len)
+						zone_1.closed_connection_zones = null
 
 			//Then do the same for the other zone.
-			if(zone_2.closed_connection_zones[zone_1] > 1)
-				zone_2.closed_connection_zones[zone_1]--
-			else
-				zone_2.closed_connection_zones -= zone_1
-				if(!zone_2.closed_connection_zones.len)
-					zone_2.closed_connection_zones = null
+			if(zone_1 in zone_2.connected_zones)
+				if(zone_2.closed_connection_zones[zone_1] > 1)
+					zone_2.closed_connection_zones[zone_1]--
+				else
+					zone_2.closed_connection_zones -= zone_1
+					if(!zone_2.closed_connection_zones.len)
+						zone_2.closed_connection_zones = null
 
 
 	proc/Cleanup()

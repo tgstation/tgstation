@@ -103,6 +103,7 @@
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	siemens_coefficient = 0
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -129,6 +130,13 @@
 	desc = "cloud"
 	icon_state = "cloud"
 	color = "cloud"
+
+/obj/item/clothing/under/psysuit
+	name = "dark undersuit"
+	desc = "A thick, layered grey undersuit lined with power cables. Feels a little like wearing an electrical storm."
+	icon_state = "psysuit"
+	item_state = "psysuit"
+	color = "psysuit"
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
 	name = "captain's suit"
