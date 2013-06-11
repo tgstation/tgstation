@@ -96,15 +96,15 @@ proc/trigger_armed_response_team(var/force = 0)
 
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
-	usr << "\red ERT has been temporarily disabled. Talk to a coder."
-	return
+	//usr << "\red ERT has been temporarily disabled. Talk to a coder."
+	//return
 
 	var/mob/living/carbon/human/M = new(null)
 	response_team_members |= M
 
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	/*var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
 		M.r_facial = hex2num(copytext(new_facial, 2, 4))
 		M.g_facial = hex2num(copytext(new_facial, 4, 6))
@@ -139,16 +139,25 @@ proc/trigger_armed_response_team(var/force = 0)
 		hairs.Add(H.name) // add hair name to hairs
 		del(H) // delete the hair after it's all done
 
-	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+//	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+//hair
+	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+	if(new_hstyle)
+		M.h_style = new_hstyle
+
+	// facial hair
+	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+	if(new_fstyle)
+		M.f_style = new_fstyle
 
 	// if new style selected (not cancel)
-	if (new_style)
+/*	if (new_style)
 		M.h_style = new_style
 
 		for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
 			var/datum/sprite_accessory/hair/H = new x // create new hair datum
 			if(H.name == new_style)
-				M.hair_style = H // assign the hair_style variable a new hair datum
+				M.h_style = H // assign the hair_style variable a new hair datum
 				break
 			else
 				del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
@@ -169,19 +178,21 @@ proc/trigger_armed_response_team(var/force = 0)
 		for(var/x in all_fhairs)
 			var/datum/sprite_accessory/facial_hair/H = new x
 			if(H.name == new_style)
-				M.facial_hair_style = H
+				M.f_style = H
 				break
 			else
 				del(H)
-
+*/
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.rebuild_appearance()
-	M.update_body()*/
+	//M.rebuild_appearance()
+	M.update_hair()
+	M.update_body()
+	M.check_dna(M)
 
 	M.real_name = commando_name
 	M.name = commando_name
@@ -233,21 +244,28 @@ proc/trigger_armed_response_team(var/force = 0)
 	//Backpack
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card (Emergency Response Team)"
 	W.icon_state = "centcom"
 	if(leader_selected)
 		W.name = "[real_name]'s ID Card (Emergency Response Team Leader)"
-		W.access = get_access("Captain")
-		W.access += list(access_cent_teleporter)
+		W.access = get_all_accesses()
+		W.access += get_all_centcom_access()
 		W.assignment = "Emergency Response Team Leader"
 	else
-		W.access = get_access("Head of Personnel")
+		W.access = get_all_accesses()
+		W.access += get_all_centcom_access()
 		W.assignment = "Emergency Response Team"
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	return 1
+
+/*//debug verb
+client/verb/ResponseTeam()
+	set category = "Admin"
+	if(!send_emergency_team)
+		send_emergency_team = 1*/
