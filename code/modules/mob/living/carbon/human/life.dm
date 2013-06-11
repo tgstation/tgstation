@@ -602,7 +602,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				if( !(COLD_RESISTANCE in mutations) )
+				if( !(COLD_RESISTANCE in mutations) && src.dna.mutantrace!="vox")
 					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 					pressure_alert = -2
 				else
