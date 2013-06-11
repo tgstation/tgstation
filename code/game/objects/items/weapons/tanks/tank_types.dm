@@ -162,3 +162,28 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
 	volume = 10
+
+/*
+ * Nitrogen
+ */
+/obj/item/weapon/tank/nitrogen
+	name = "nitrogen tank"
+	desc = "A tank of nitrogen."
+	icon_state = "oxygen_fr"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+
+
+/obj/item/weapon/tank/nitrogen/New()
+	..()
+
+	src.air_contents.nitrogen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+	//
+	src.air_contents.update_values()
+	return
+
+/obj/item/weapon/tank/nitrogen/examine()
+	set src in usr
+	..()
+	if(air_contents.nitrogen < 10)
+		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+		playsound(usr, 'sound/effects/alert.ogg', 50, 1)

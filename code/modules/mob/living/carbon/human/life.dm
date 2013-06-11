@@ -394,6 +394,7 @@
 		var/oxygen_used = 0
 		var/nitrogen_used = 0
 		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/safe_oxygen_max = 1 // For vox.
 
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
@@ -436,6 +437,12 @@
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
 			oxygen_alert = max(oxygen_alert, 1)
+
+			if(O2_pp > safe_oxygen_max) //Oxygen is toxic to vox.
+				var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+				adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+				toxins_alert = max(toxins_alert, 1)
+
 		else								// We're in safe limits
 			failed_last_breath = 0
 			adjustOxyLoss(-5)
