@@ -809,3 +809,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		for (var/ch_name in op)
 			secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 	return
+
+/obj/item/device/radio/off
+	listening = 0
