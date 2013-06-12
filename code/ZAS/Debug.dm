@@ -95,6 +95,10 @@ zone/proc
 
 			for(var/turf/space/S in unsimulated_tiles)
 				S.overlays -= 'debug_space.dmi'
+
+			for(var/connection/C in connections)
+				C.A.overlays -= 'debug_connect.dmi'
+				C.B.overlays -= 'debug_connect.dmi'
 		for(var/zone/Z in zones)
 			if(Z.air == air && Z != src)
 				var/turf/zloc = pick(Z.contents)

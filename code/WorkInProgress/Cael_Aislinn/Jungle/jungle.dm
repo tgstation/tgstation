@@ -37,6 +37,9 @@
 		var/list/waypoints = list()
 		for(var/obj/effect/landmark/temple/destination/T in world)
 			waypoints.Add(T)
+			if(!T)
+				return
+			else continue
 		var/obj/effect/landmark/temple/destination/dest_temple = pick(waypoints)
 		dest_temple.init()
 

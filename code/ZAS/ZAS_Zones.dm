@@ -279,7 +279,7 @@ zone/proc/process()
 						unsimulated_boost += unsimulated_tiles.len
 					if(Z.unsimulated_tiles)
 						unsimulated_boost += Z.unsimulated_tiles.len
-					unsimulated_boost = min(3, unsimulated_boost)
+					unsimulated_boost = max(0, min(3, unsimulated_boost))
 					ShareRatio( air , Z.air , connected_zones[Z] + unsimulated_boost)
 
 		for(var/zone/Z in closed_connection_zones)
@@ -364,7 +364,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	if(A.compare(B)) return 1
 	else return 0
 
-proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
+proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
 	if(!unsimulated_tiles || !unsimulated_tiles.len)
 		return 0
@@ -377,20 +377,6 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		unsim_heat_capacity = 0
 		unsim_temperature = 0
 
-	for(var/turf/T in unsimulated_tiles)
-		unsim_oxygen += T.oxygen
-		unsim_co2 += T.carbon_dioxide
-		unsim_nitrogen += T.nitrogen
-		unsim_plasma += T.toxins
-		unsim_temperature += T.temperature/unsimulated_tiles.len
-
-	unsim_heat_capacity = HEAT_CAPACITY_CALCULATION(unsim_oxygen,unsim_co2,unsim_nitrogen,unsim_plasma)
-
-	var
-		ratio = sharing_lookup_table[6]
-
-		old_pressure = A.return_pressure()
-
 		size = max(1,A.group_multiplier)
 
 		// We use the same size for the potentially single space tile
@@ -399,7 +385,27 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		// slowly than small rooms, preserving our good old "hollywood-style"
 		// oh-shit effect when large rooms get breached, but still having small
 		// rooms remain pressurized for long enough to make escape possible.
-		share_size = max(1, unsimulated_tiles.len)
+		share_size = max(1, max(size - 5, 1) + unsimulated_tiles.len)
+		correction_ratio = share_size / unsimulated_tiles.len
+
+	for(var/turf/T in unsimulated_tiles)
+		unsim_oxygen += T.oxygen
+		unsim_co2 += T.carbon_dioxide
+		unsim_nitrogen += T.nitrogen
+		unsim_plasma += T.toxins
+		unsim_temperature += T.temperature/unsimulated_tiles.len
+
+	//These values require adjustment in order to properly represent a room of the specified size.
+	unsim_oxygen *= correction_ratio
+	unsim_co2 *= correction_ratio
+	unsim_nitrogen *= correction_ratio
+	unsim_plasma *= correction_ratio
+	unsim_heat_capacity = HEAT_CAPACITY_CALCULATION(unsim_oxygen,unsim_co2,unsim_nitrogen,unsim_plasma)
+
+	var
+		ratio = sharing_lookup_table[6]
+
+		old_pressure = A.return_pressure()
 
 		full_oxy = A.oxygen * size
 		full_nitro = A.nitrogen * size
@@ -419,16 +425,16 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
 	ratio *= 2
 
-	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
-	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
-	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
-	A.toxins = max(0, (A.toxins - plasma_avg) * (1-ratio) + plasma_avg )
+	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1 - ratio) + oxy_avg )
+	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1 - ratio) + nit_avg )
+	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1 - ratio) + co2_avg )
+	A.toxins = max(0, (A.toxins - plasma_avg) * (1 - ratio) + plasma_avg )
 
-	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
+	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1 - ratio) + temp_avg )
 
 	for(var/datum/gas/G in A.trace_gases)
-		var/G_avg = (G.moles*size + 0) / (size+share_size)
-		G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
+		var/G_avg = (G.moles * size) / (size + share_size)
+		G.moles = (G.moles - G_avg) * (1 - ratio) + G_avg
 
 	A.update_values()
 
