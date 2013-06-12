@@ -174,7 +174,7 @@ obj/item/weapon/gun/energy/staff/focus
 	icon_state = "focus"
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
-	/*
+/*Unfinished
 	attack_self(mob/living/user as mob)
 		if(projectile_type == "/obj/item/projectile/forcebolt")
 			charge_cost = 200
@@ -184,4 +184,4 @@ obj/item/weapon/gun/energy/staff/focus
 			charge_cost = 100
 			user << "\red The [src.name] will now strike only a single person."
 			projectile_type = "/obj/item/projectile/forcebolt"
-	*/
+*/
