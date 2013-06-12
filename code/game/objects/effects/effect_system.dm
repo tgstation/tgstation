@@ -210,7 +210,8 @@ steam.start() -- spawns the effect
 					sleep(5)
 					step(sparks,direction)
 				spawn(20)
-					sparks.delete()
+					if(sparks)
+						sparks.delete()
 					src.total_sparks--
 
 
