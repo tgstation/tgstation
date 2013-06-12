@@ -169,19 +169,19 @@ obj/item/weapon/gun/energy/staff
 
 obj/item/weapon/gun/energy/staff/focus
 	name = "mental focus"
-	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
+	desc = "An artifact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out.\n Has two modes: Single and AoE"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "focus"
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
-/*Unfinished
+	charge_cost = 100
+
 	attack_self(mob/living/user as mob)
 		if(projectile_type == "/obj/item/projectile/forcebolt")
-			charge_cost = 200
+			charge_cost = 250
 			user << "\red The [src.name] will now strike a small area."
 			projectile_type = "/obj/item/projectile/forcebolt/strong"
 		else
 			charge_cost = 100
 			user << "\red The [src.name] will now strike only a single person."
 			projectile_type = "/obj/item/projectile/forcebolt"
-*/
