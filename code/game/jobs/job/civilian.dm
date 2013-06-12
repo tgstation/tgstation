@@ -51,7 +51,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
-	minimal_access = list(access_kitchen)
+	minimal_access = list(access_kitchen, access_morgue, access_bar)
 	alt_titles = list("Cook")
 
 
