@@ -262,16 +262,14 @@ turf/simulated
 						//See what kind of border it is
 						if(istype(T,/turf/space))
 							if(parent.space_borders)
-								parent.space_borders -= src
-								parent.space_borders += src
+								parent.space_borders |= src
 							else
 								parent.space_borders = list(src)
 							length_space_border++
 
 						else
 							if(parent.borders)
-								parent.borders -= src
-								parent.borders += src
+								parent.borders |= src
 							else
 								parent.borders = list(src)
 
