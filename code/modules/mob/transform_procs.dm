@@ -1,47 +1,180 @@
-/mob/living/carbon/human/proc/monkeyize()
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
 	if (monkeyizing)
 		return
-	for(var/obj/item/W in src)
-		if (W==w_uniform) // will be torn
-			continue
-		drop_from_inventory(W)
+	//Handle items on mob
+
+	//first implants
+	var/list/implants = list()
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/W in src)
+			implants += W
+
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants))
+			drop_from_inventory(W)
+
+	//Make mob invisible and spawn animation
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	stunned = 1
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		del(t)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("h2monkey", animation)
-	sleep(48)
+	sleep(22)
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 	del(animation)
 
-	O.name = "monkey"
+	// hash the original name?
+	if	(tr_flags & TR_HASHNAME)
+		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
+		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
+	if (newname) //if there's a name as an argument, always take that one over the current name
+		O.name = newname
+		O.real_name = newname
+
+	//handle DNA and other attributes
 	O.dna = dna
 	dna = null
-	O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
+	if (!(tr_flags & TR_KEEPSE))
+		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
+	if(suiciding)
+		O.suiciding = suiciding
 	O.loc = loc
-	O.viruses = viruses
-	viruses = list()
-	for(var/datum/disease/D in O.viruses)
-		D.affected_mob = O
+	O.a_intent = "harm"
 
-	if (client)
-		client.mob = O
+	//keep viruses?
+	if (tr_flags & TR_KEEPVIRUS)
+		O.viruses = viruses
+		viruses = list()
+		for(var/datum/disease/D in O.viruses)
+			D.affected_mob = O
+
+	//keep damage?
+	if (tr_flags & TR_KEEPDAMAGE)
+		O.setToxLoss(getToxLoss())
+		O.adjustBruteLoss(getBruteLoss())
+		O.setOxyLoss(getOxyLoss())
+		O.adjustFireLoss(getFireLoss())
+
+	//re-add implants to new mob
+	for(var/obj/item/weapon/implant/I in implants)
+		I.loc = O
+		I.implanted = O
+
+	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
-	O.a_intent = "harm"
-	O << "<B>You are now a monkey.</B>"
-	spawn(0)//To prevent the proc from returning null.
+	if (tr_flags & TR_DEFAULTMSG)
+		O << "<B>You are now a monkey.</B>"
+	updateappearance(O)
+	. = O
+	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
 		del(src)
-	return O
+	return
+
+
+
+//////////////////////////           Humanize               //////////////////////////////
+//Could probably be merged with monkeyize but other transformations got their own procs, too
+
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
+	if (monkeyizing)
+		return
+	//Handle items on mob
+
+	//first implants
+	var/list/implants = list()
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/W in src)
+			implants += W
+
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants))
+			u_equip(W)
+			if (client)
+				client.screen -= W
+			if (W)
+				W.loc = loc
+				W.dropped(src)
+				W.layer = initial(W.layer)
+
+	//	for(var/obj/item/W in src)
+	//		drop_from_inventory(W)
+
+	//Make mob invisible and spawn animation
+	regenerate_icons()
+	monkeyizing = 1
+	canmove = 0
+	stunned = 1
+	icon = null
+	invisibility = 101
+	var/atom/movable/overlay/animation = new( loc )
+	animation.icon_state = "blank"
+	animation.icon = 'icons/mob/mob.dmi'
+	animation.master = src
+	flick("monkey2h", animation)
+	sleep(22)
+	var/mob/living/carbon/human/O = new( loc )
+	del(animation)
+
+
+	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+	O.dna = dna
+	dna = null
+	if (newname) //if there's a name as an argument, always take that one over the current name
+		O.real_name = newname
+	else
+		if ( !(cmptext 	("monkey",copytext(O.dna.real_name,1,7))  ) )
+			O.real_name = O.dna.real_name
+		else
+			O.real_name = random_name(O.gender)
+	O.name = O.real_name
+
+	if (!(tr_flags & TR_KEEPSE))
+		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(1,BAD_MUTATION_DIFFICULTY))
+
+	if(suiciding)
+		O.suiciding = suiciding
+
+	O.loc = loc
+
+	//keep viruses?
+	if (tr_flags & TR_KEEPVIRUS)
+		O.viruses = viruses
+		viruses = list()
+		for(var/datum/disease/D in O.viruses)
+			D.affected_mob = O
+
+	//keep damage?
+	if (tr_flags & TR_KEEPDAMAGE)
+		O.setToxLoss(getToxLoss())
+		O.adjustBruteLoss(getBruteLoss())
+		O.setOxyLoss(getOxyLoss())
+		O.adjustFireLoss(getFireLoss())
+
+	//re-add implants to new mob
+	for(var/obj/item/weapon/implant/I in implants)
+		I.loc = O
+		I.implanted = O
+
+	if(mind)
+		mind.transfer_to(O)
+	O.a_intent = "help"
+	if (tr_flags & TR_DEFAULTMSG)
+		O << "<B>You are now a human.</B>"
+	updateappearance(O)
+	. = O
+	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
+		del(src)
+	return
 
 /mob/new_player/AIize()
 	spawning = 1
@@ -124,6 +257,7 @@
 	O.rename_self("ai",1)
 	. = O
 	del(src)
+	return
 
 
 //human -> robot
@@ -165,10 +299,8 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return O
+	. = O
+	del(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -198,9 +330,8 @@
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_xeno
+	del(src)
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
 	if (monkeyizing)
@@ -234,9 +365,8 @@
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_slime
+	del(src)
 
 /mob/living/carbon/human/proc/corgize()
 	if (monkeyizing)
@@ -256,9 +386,8 @@
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_corgi
+	del(src)
 
 /mob/living/carbon/human/proc/blobize() // Oh boy, this is for you Int - Summoner
 	if (monkeyizing)
@@ -278,9 +407,8 @@
 	new_blob.key = key
 
 	new_blob << "<B>You are now a Blob Fragment. You can now sacrifice yourself to spawn blobs!</B>"
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	return
+	. = new_blob
+	del(src)
 
 /mob/living/carbon/human/Animalize()
 
@@ -312,9 +440,8 @@
 
 
 	new_mob << "You suddenly feel more... animalistic."
-	spawn()
-		del(src)
-	return
+	. = new_mob
+	del(src)
 
 /mob/proc/Animalize()
 
@@ -331,6 +458,7 @@
 	new_mob.a_intent = "harm"
 	new_mob << "You feel more... animalistic"
 
+	. = new_mob
 	del(src)
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.
