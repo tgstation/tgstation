@@ -29,7 +29,7 @@ datum
 				if(!istype(M, /mob/living))	return 0
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
-
+				if(!self.holder) return 1
 				if(!istype(self.holder.my_atom, /obj/effect/effect/chem_smoke))
 					// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
 
