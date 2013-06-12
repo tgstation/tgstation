@@ -30,18 +30,6 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
-	meat2
-		input = /obj/item/weapon/syntiflesh
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-/*
-	monkeymeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-
-	humanmeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-*/
 	potato
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 		output = /obj/item/weapon/reagent_containers/food/snacks/fries
@@ -73,7 +61,7 @@
 					return
 				for(var/i = 1, i <= C, i++)
 					new S.coretype(loc)
-					feedback_add_details("slime_core_harvested","[S.colour]")
+					feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 				..()
 			input = /mob/living/carbon/slime
 			output = null

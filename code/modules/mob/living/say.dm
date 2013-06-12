@@ -14,6 +14,7 @@ var/list/department_radio_keys = list(
 	  ":a" = "alientalk",	"#a" = "alientalk",		".a" = "alientalk",
 	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
+	  ":v" = "Service",		"#v" = "Service",		".v" = "Service",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
@@ -30,6 +31,7 @@ var/list/department_radio_keys = list(
 	  ":A" = "alientalk",	"#A" = "alientalk",		".A" = "alientalk",
 	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
+	  ":V" = "Service",		"#V" = "Service",		".V" = "Service",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 
 	  //kinda localization -- rastaf0
@@ -63,6 +65,9 @@ var/list/department_radio_keys = list(
 		var/obj/item/device/radio/headset/dongle = H.ears
 		if(!istype(dongle)) return
 		if(dongle.translate_binary) return 1
+
+/mob/living/proc/IsVocal()
+	return 1
 
 /mob/living/proc/hivecheck()
 	if (isalien(src)) return 1
@@ -261,6 +266,9 @@ var/list/department_radio_keys = list(
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
+
+	if(!IsVocal())
+		return
 
 	var/list/listening
 

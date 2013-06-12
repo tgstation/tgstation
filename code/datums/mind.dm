@@ -76,8 +76,9 @@ datum/mind
 		current = new_character								//associate ourself with our new body
 		new_character.mind = src							//and associate our new body with ourself
 
-		if(changeling)										//if we are a changeling mind, re-add any powers
-			new_character.make_changeling()
+		if(changeling && istype(new_character, /mob/living/carbon))										//if we are a changeling mind, re-add any powers
+			var/mob/living/carbon/C = new_character
+			C.make_changeling()
 
 		if(active)
 			new_character.key = key		//now transfer the key to link the client to our new body
@@ -659,7 +660,7 @@ datum/mind
 				if("changeling")
 					if(!(src in ticker.mode.changelings))
 						ticker.mode.changelings += src
-						ticker.mode.grant_changeling_powers(current)
+						current.make_changeling()
 						special_role = "Changeling"
 						current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
 						log_admin("[key_name_admin(usr)] has changeling'ed [current].")
@@ -668,13 +669,14 @@ datum/mind
 					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
 
 				if("initialdna")
-					if( !changeling || !changeling.absorbed_dna.len )
+					if( !changeling || !changeling.absorbed_dna.len || !istype(current, /mob/living/carbon))
 						usr << "\red Resetting DNA failed!"
 					else
-						current.dna = changeling.absorbed_dna[1]
-						current.real_name = current.dna.real_name
-						updateappearance(current, current.dna.uni_identity)
-						domutcheck(current, null)
+						var/mob/living/carbon/C = current
+						C.dna = changeling.absorbed_dna[1]
+						C.real_name = C.dna.real_name
+						updateappearance(C)
+						domutcheck(C, null)
 
 		else if (href_list["nuclear"])
 			switch(href_list["nuclear"])
@@ -763,7 +765,7 @@ datum/mind
 				return
 			switch(href_list["monkey"])
 				if("healthy")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -778,7 +780,7 @@ datum/mind
 								D.cure(0)
 							sleep(0) //because deleting of virus is done through spawn(0)
 				if("infected")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN, 0))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -791,21 +793,18 @@ datum/mind
 						else if (istype(M))
 							current.contract_disease(new /datum/disease/jungle_fever,1,0)
 				if("human")
-					var/mob/living/carbon/monkey/M = current
-					if (istype(M))
-						for(var/datum/disease/D in M.viruses)
-							if (istype(D,/datum/disease/jungle_fever))
-								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
-						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-						src = null
-						m2h.inject(M)
-						src = mobfinder.loc:mind
-						del(mobfinder)
-						current.radiation -= 50
+					if (check_rights(R_ADMIN, 0))
+						var/mob/living/carbon/human/H = current
+						var/mob/living/carbon/monkey/M = current
+						if (istype(M))
+							for(var/datum/disease/D in M.viruses)
+								if (istype(D,/datum/disease/jungle_fever))
+									D.cure(0)
+									sleep(0) //because deleting of virus is doing throught spawn(0)
+							log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
+							message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
+							H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
+							src = H.mind
 
 		else if (href_list["silicon"])
 			switch(href_list["silicon"])
@@ -1001,7 +1000,7 @@ datum/mind
 	proc/make_Changling()
 		if(!(src in ticker.mode.changelings))
 			ticker.mode.changelings += src
-			ticker.mode.grant_changeling_powers(current)
+			current.make_changeling()
 			special_role = "Changeling"
 			ticker.mode.forge_changeling_objectives(src)
 			ticker.mode.greet_changeling(src)

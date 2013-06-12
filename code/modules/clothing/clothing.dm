@@ -25,6 +25,10 @@
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
+	var/emagged = 0
+	var/flash_protect = 0		//Mal: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Mal: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+								//	   but seperated to allow items to protect but not impair vision, like space helmets
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -44,8 +48,6 @@ BLIND     // can't see anything
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.50
-	var/wired = 0
-	var/obj/item/weapon/cell/cell = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -55,23 +57,14 @@ BLIND     // can't see anything
 	..()
 	return
 
-/obj/item/clothing/gloves/emp_act(severity)
-	if(cell)
-		cell.charge -= 1000 / severity
-		if (cell.charge < 0)
-			cell.charge = 0
-		if(cell.reliability != 100 && prob(50/severity))
-			cell.reliability -= 10 / severity
-	..()
-
-
 //Head
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-
+	var/flash_protect = 0
+	var/tint = 0
 
 //Mask
 /obj/item/clothing/mask
@@ -79,6 +72,8 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
+	var/flash_protect = 0
+	var/tint = 0
 
 //Shoes
 /obj/item/clothing/shoes
@@ -118,7 +113,10 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flash_protect = 2
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -135,7 +133,9 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 
 
 //Under clothing
@@ -157,17 +157,21 @@ BLIND     // can't see anything
 	var/obj/item/clothing/tie/hastie = null
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(!hastie && istype(I, /obj/item/clothing/tie))
-		user.drop_item()
-		hastie = I
-		I.loc = src
-		user << "<span class='notice'>You attach [I] to [src].</span>"
+	if(istype(I, /obj/item/clothing/tie))
+		if(hastie)
+			user << "<span class='warning'>[src] already has an accessory.</span>"
+			return
+		else
+			user.drop_item()
+			hastie = I
+			I.loc = src
+			user << "<span class='notice'>You attach [I] to [src].</span>"
 
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform(0)
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_w_uniform(0)
 
-		return
+			return
 
 	..()
 

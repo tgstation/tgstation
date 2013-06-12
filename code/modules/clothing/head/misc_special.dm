@@ -20,6 +20,8 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
+	flash_protect = 2
+	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	action_button_name = "Toggle Welding Helmet"
@@ -40,12 +42,16 @@
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
+			flash_protect = 2
+			tint = 2
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
+			flash_protect = 0
+			tint = 0
 		usr.update_inv_head(0)	//so our mob-overlays update
 
 
@@ -159,14 +165,19 @@
 	var/icon/mob
 	var/icon/mob2
 
-	update_icon(var/mob/living/carbon/human/user)
-		if(!istype(user)) return
-		mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
-		mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
-		mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
-		mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+/obj/item/clothing/head/kitty/equipped(mob/user, slot)
+	if(user && slot == slot_head)
+		update_icon(user)
 
-		var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
-		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
-		mob.Blend(earbit, ICON_OVERLAY)
-		mob2.Blend(earbit2, ICON_OVERLAY)
+//ffffuck you kitty ears. this proc is a) retarded and b) seems to fail around fifty percent of the time. idgaf tbh
+/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
+	if(!istype(user)) return
+	mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
+	mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
+	mob.Blend("#[user.h_color]", ICON_ADD)
+	mob2.Blend("#[user.h_color]", ICON_ADD)
+
+	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
+	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
+	mob.Blend(earbit, ICON_OVERLAY)
+	mob2.Blend(earbit2, ICON_OVERLAY)

@@ -447,9 +447,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/chem_smoke/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(500)
-	reagents = R
-	R.my_atom = src
+	create_reagents(500)
 
 	spawn (200+rand(10,30))
 		delete()

@@ -275,7 +275,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 
 /area/centcom/control
-	name = "\improper Centcom Control"
+	name = "\improper Centcom Docks"
 
 /area/centcom/evac
 	name = "\improper Centcom Emergency Shuttle"
@@ -285,6 +285,9 @@ proc/process_ghost_teleport_locs()
 
 /area/centcom/ferry
 	name = "\improper Centcom Transport Shuttle"
+
+/area/centcom/prison
+	name = "\improper Admin Prison"
 
 /area/centcom/holding
 	name = "\improper Holding Facility"
@@ -1549,9 +1552,6 @@ proc/process_ghost_teleport_locs()
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.s_tone > -55)
-				H.s_tone--
-				H.update_body()
 			if(H.client)
 				mysound.status = SOUND_UPDATE
 				H << mysound
@@ -1669,9 +1669,6 @@ var/list/the_station_areas = list (
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)
-//			if(H.s_tone > -55)	//ugh...nice/novel idea but please no.
-//				H.s_tone--
-//				H.update_body()
 			if(H.client)
 				mysound.status = SOUND_UPDATE
 				H << mysound

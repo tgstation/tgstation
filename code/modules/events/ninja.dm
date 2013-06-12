@@ -347,7 +347,7 @@ ________________________________________________________________________________
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
-	new_ninja.dna.ready_dna(new_ninja)
+	ready_dna(new_ninja)
 	new_ninja.equip_space_ninja()
 	return new_ninja
 
@@ -1640,7 +1640,7 @@ ________________________________________________________________________________
 			dat += "</ul>"
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
-			var/turf/T = get_turf_or_move(U.loc)
+			var/turf/T = get_turf(U.loc)
 			if (isnull(T))
 				dat += "Unable to obtain a reading."
 			else

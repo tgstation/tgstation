@@ -129,7 +129,7 @@ emp_act
 		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
 						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 
-	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened hit to your [hit_area].</span>")
+	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
@@ -145,7 +145,7 @@ emp_act
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(get_dist(H, src) > 1)	//people with TK won't get smeared with blood
+				if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
 					if(H.wear_suit)
 						H.wear_suit.add_blood(src)
 						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)

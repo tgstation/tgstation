@@ -18,6 +18,7 @@
 		on = !on
 		icon_state = "rig[on]-[color]"
 //		item_state = "rig[on]-[color]"
+		user.update_inv_head()	//so our mob-overlays update
 
 		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
 		else	user.SetLuminosity(user.luminosity - brightness_on)
@@ -52,6 +53,8 @@
 	item_state = "ce_helm"
 	color = "white"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 90)
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
@@ -59,6 +62,8 @@
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 90)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 
 //Mining rig

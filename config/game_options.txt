@@ -92,16 +92,23 @@ PROBABILITY SANDBOX 0
 ## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
 ## the shuttle is called or the station is nuked.
 ## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUNDS
+#CONTINUOUS_ROUND_REV
+#CONTINUOUS_ROUND_WIZ
+#CONTINUOUS_ROUND_MALF
 
-## Uncomment to scale the number of antagonists to crew population. Doesn't
-## affect all gamemodes.
-#TRAITOR_SCALING
+
+## Variables calculate how number of antagonists will scale to population.
+## Used as (Antagonists = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+TRAITOR_SCALING_COEFF 6
+CHANGELING_SCALING_COEFF 10
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
+## If late-joining players have a chance to become a traitor/changeling
+ALLOW_LATEJOIN_ANTAGONISTS
 
 ### RANDOM EVENTS ###
 
@@ -131,9 +138,27 @@ GATEWAY_DELAY 18000
 JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
-#ASSISTANT_MAINT
+#ASSISTANTS_HAVE_MAINT_ACCESS
+
+## Uncoment to give security maint access. Note that if you comment JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+#SECURITY_HAS_MAINT_ACCESS
+
+## Uncomment to give everyone maint access.
+#EVERYONE_HAS_MAINT_ACCESS
 
 
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
+
+### NON-VOCAL SILICONS ###
+## Uncomment to stop the AI, or cyborgs, from having vocal communication.
+#SILENT_AI
+#SILENT_BORG
+
+### SANDBOX PANEL AUTOCLOSE ###
+## The sandbox panel's item spawning dialog now stays open even after you click an option.
+## If you find that your players are abusing the sandbox panel, this option may slow them down
+## without preventing people from using it properly.
+## Only functions in sandbox game mode.
+#SANDBOX_AUTOCLOSE

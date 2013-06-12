@@ -17,12 +17,13 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
 	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
 
-		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
+
 		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
@@ -216,6 +217,7 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeNukeTeam()
 
 	var/list/mob/dead/observer/candidates = list()
+	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 	var/time_passed = world.time
 
@@ -245,18 +247,20 @@ client/proc/one_click_antag()
 					candidates.Remove(j)
 					continue
 
-				theghost = candidates
+				theghost = j
 				candidates.Remove(theghost)
-
-				var/mob/living/carbon/human/new_character=makeBody(theghost)
+				chosen += theghost
+				agentcount++
+				break
+		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
+		if(agentcount < 3)
+			return 0
+		else
+			for(var/mob/c in chosen)
+				var/mob/living/carbon/human/new_character=makeBody(c)
 				new_character.mind.make_Nuke()
 
-				agentcount++
-
-		if(agentcount < 1)
-			return 0
-
-		var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
+		var/obj/effect/landmark/nuke_spawn = locate("landmark*Syndicate-Uplink")
 		var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 		var/nuke_code = "[rand(10000, 99999)]"
@@ -393,36 +397,7 @@ client/proc/one_click_antag()
 	var/datum/preferences/A = new()
 	A.copy_to(new_character)
 
-	new_character.dna.ready_dna(new_character)
+	ready_dna(new_character)
 	new_character.key = G_found.key
 
 	return new_character
-/* DEATH SQUADS
-/datum/admins/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
-	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
-	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
-	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
-	var/syndicate_commando_name = pick(last_names)
-
-	new_syndicate_commando.gender = pick(MALE, FEMALE)
-
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_syndicate_commando)
-
-	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
-	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
-
-	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
-
-	//Creates mind stuff.
-	new_syndicate_commando.mind_initialize()
-	new_syndicate_commando.mind.assigned_role = "MODE"
-	new_syndicate_commando.mind.special_role = "Syndicate Commando"
-
-	//Adds them to current traitor list. Which is really the extra antagonist list.
-	ticker.mode.traitors += new_syndicate_commando.mind
-	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
-
-	return new_syndicate_commando
-	*/

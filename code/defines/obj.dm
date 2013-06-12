@@ -65,19 +65,8 @@
 
 	var/list/container = list(  )
 
-/obj/effect/projection
-	name = "Projection"
-	desc = "This looks like a projection of something."
-	anchored = 1.0
-
-
-/obj/effect/shut_controller
-	name = "shut controller"
-	var/moving = null
-	var/list/parts = list(  )
-
 /obj/structure/showcase
-	name = "Showcase"
+	name = "showcase"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
@@ -99,7 +88,7 @@
 	throwforce = 0.0
 	throw_speed = 1
 	throw_range = 20
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
+	flags = FPRINT | USEDELAY | TABLEPASS
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)

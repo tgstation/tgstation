@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/mint
 	name = "Coin press"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = 1
 	anchored = 1.0
@@ -146,7 +146,7 @@
 	if(href_list["choose"])
 		chosen = href_list["choose"]
 	if(href_list["chooseAmt"])
-		coinsToProduce = between(0, coinsToProduce + text2num(href_list["chooseAmt"]), 1000)
+		coinsToProduce = Clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
 		if (src.output)

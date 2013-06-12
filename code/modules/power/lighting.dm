@@ -34,7 +34,7 @@
 	var/ndir = get_dir(usr,on_wall)
 	if (!(ndir in cardinal))
 		return
-	var/turf/loc = get_turf_loc(usr)
+	var/turf/loc = get_turf(usr)
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "\red [src.name] cannot be placed on this spot."
 		return
@@ -497,7 +497,7 @@
 			var/datum/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 
 			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
-				H.UpdateDamageIcon(0)
+				H.update_damage_overlays(0)
 			H.updatehealth()
 			return				// if burned, don't remove the light
 

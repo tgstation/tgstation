@@ -36,7 +36,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/const/changeling_amount = 4
+	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
@@ -49,13 +49,20 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
+	var/num_changelings = 1
+
+	if(config.changeling_scaling_coeff)
+		num_changelings = max(1, round((num_players())/(config.changeling_scaling_coeff)))
+	else
+		num_changelings = max(1, min(num_players(), changeling_amount))
+
 	for(var/datum/mind/player in possible_changelings)
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
 				possible_changelings -= player
 
 	if(possible_changelings.len>0)
-		for(var/i = 0, i < changeling_amount, i++)
+		for(var/i = 0, i < num_changelings, i++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
 			possible_changelings -= changeling
@@ -67,7 +74,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
-		grant_changeling_powers(changeling.current)
+		log_game("[changeling.key] (ckey) has been selected as a changeling")
+		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
@@ -77,6 +85,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 	return
 
+/datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+	if(changelings.len >= round(joined_player_list.len / config.changeling_scaling_coeff) + 1) //Caps number of latejoin antagonists
+		return
+	if (prob(100/config.changeling_scaling_coeff))
+		if(character.client.prefs.be_special & BE_CHANGELING)
+			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+				if(!(character.job in ticker.mode.restricted_jobs))
+					character.mind.make_Changling()
+	..()
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
 	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
@@ -151,10 +168,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		else
 			return ..()
 	return 0*/
-
-/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/changeling_mob)
-	if(!istype(changeling_mob))	return
-	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)

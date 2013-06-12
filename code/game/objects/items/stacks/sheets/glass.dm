@@ -228,65 +228,90 @@
 
 	return 0
 
-/*
- * Glass shards - TODO: Move this into code/game/object/item/weapons
- */
-/obj/item/weapon/shard/Bump()
 
-	spawn( 0 )
-		if (prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
+/obj/item/weapon/shard
+	name = "shard"
+	desc = "A nasty looking shard of glass."
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "large"
+	w_class = 1.0
+	force = 5.0
+	throwforce = 15.0
+	item_state = "shard-glass"
+	g_amt = 3750
+	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+
+	suicide_act(mob/user)
+		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/shard/New()
-
-	src.icon_state = pick("large", "medium", "small")
-	switch(src.icon_state)
+	icon_state = pick("large", "medium", "small")
+	switch(icon_state)
 		if("small")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
 		if("medium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
 		if("large")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
-/obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+/obj/item/weapon/shard/attack(mob/M, mob/user)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	..()
-	if ( istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+
+
+/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user)
+	if(isturf(A))
+		return
+	if(istype(A, /obj/item/weapon/storage))
+		return
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.gloves)
+			H << "<span class='warning'>[src] cuts into your hand!</span>"
+			var/organ = (H.hand ? "l_" : "r_") + "arm"
+			var/datum/limb/affecting = H.get_organ(organ)
+			if(affecting.take_damage(force / 2))
+				H.update_damage_overlays(0)
+	else if(isliving(user))
+		var/mob/living/L = user
+		L << "<span class='warning'>[src] cuts into your hand!</span>"
+		L.adjustBruteLoss(force / 2)
+
+
+/obj/item/weapon/shard/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/G in user.loc)
-				if(G==NG)
+			for(var/obj/item/stack/sheet/glass/G in user.loc)
+				if(G == NG)
 					continue
-				if(G.amount>=G.max_amount)
+				if(G.amount >= G.max_amount)
 					continue
 				G.attackby(NG, user)
-				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
-			//SN src = null
+				user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
 			del(src)
-			return
-	return ..()
+	..()
+
 
 /obj/item/weapon/shard/HasEntered(AM as mob|obj)
 	if(ismob(AM))
-		var/mob/M = AM
-		M << "\red <B>You step in the broken glass!</B>"
-		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
 			if(!H.shoes)
+				H << "<span class='userdanger'>You step in the broken glass!</span>"
 				var/datum/limb/affecting = H.get_organ(pick("l_leg", "r_leg"))
 				H.Weaken(3)
 				if(affecting.take_damage(5, 0))
-					H.UpdateDamageIcon(0)
+					H.update_damage_overlays(0)
 				H.updatehealth()
 	..()

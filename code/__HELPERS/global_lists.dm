@@ -9,6 +9,7 @@ var/global/list/player_list = list()				//List of all mobs **with clients attach
 var/global/list/mob_list = list()					//List of all mobs, including clientless
 var/global/list/living_mob_list = list()			//List of all alive mobs, including clientless. Excludes /mob/new_player
 var/global/list/dead_mob_list = list()				//List of all dead mobs, including clientless. Excludes /mob/new_player
+var/global/list/joined_player_list = list()			//List of all clients that have joined the game at round-start or as a latejoin.
 
 var/global/list/cable_list = list()					//Index for all cables, so that powernets don't have to look through the entire world all the time
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
@@ -16,6 +17,7 @@ var/global/list/chemical_reagents_list				//list of all /datum/reagent datums in
 var/global/list/landmarks_list = list()				//list of all landmarks created
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 var/global/list/mechas_list = list()				//list of all mechs. Used by hostile mobs target tracking.
+var/global/list/shuttle_caller_list = list()  		//list of all communication consoles and AIs, for automatic shuttle calls when there are none.
 
 var/global/list/portals = list()					//for use by portals
 
@@ -44,8 +46,8 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 	//facial hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)	
-	
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)
+
 	//Surgeries
 	for(var/path in typesof(/datum/surgery))
 		if(path == /datum/surgery)
@@ -64,3 +66,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 				. += "    has: [t]\n"
 	world << .
 */
+
+//creates every subtype of prototype (excluding prototype) and adds it to list L.
+//if no list/L is provided, one is created.
+/proc/init_subtypes(prototype, list/L)
+	if(!istype(L))	L = list()
+	for(var/path in typesof(prototype))
+		if(path == prototype)	continue
+		L += new path()
+	return L

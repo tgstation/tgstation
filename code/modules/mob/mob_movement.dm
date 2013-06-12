@@ -208,7 +208,7 @@
 	if(!mob)
 		return 0
 	if(mob.monkeyizing)
-		return 0//This is sota the goto stop mobs from moving var
+		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(isobserver(mob))
@@ -223,7 +223,7 @@
 		return AIMove(n,direct,mob)
 	if(isliving(mob))
 		var/mob/living/L = mob
-		if(L.incorporeal_move)//Move though walls
+		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
 			return 0
 
@@ -243,13 +243,13 @@
 			return 0
 
 
-	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
+	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
 	if(isturf(mob.loc))
 
-		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
+		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob && !M.restrained() && M.stat == 0 && M.canmove)
 					src << "\blue You're restrained! You can't move!"
@@ -261,18 +261,15 @@
 			if("run")
 				if(mob.drowsyness > 0)
 					move_delay += 6
-				move_delay += 1+config.run_speed
+				move_delay += 1 + config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
+				move_delay += 7 + config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
-			var/tickcomp = ((1/(world.tick_lag))*1.3)
+			var/tickcomp = (1 / (world.tick_lag)) * 1.3
 			move_delay = move_delay + tickcomp
-
-
-
 
 		//We are now going to move
 		moving = 1
@@ -309,7 +306,7 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused)
+		if(mob.confused && IsEven(world.time))
 			step(mob, pick(cardinal))
 		else
 			. = ..()
@@ -317,8 +314,6 @@
 		moving = 0
 
 		return .
-
-	return
 
 
 ///Process_Grab()

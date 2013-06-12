@@ -1012,6 +1012,18 @@
 		message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]", 1)
 		H.monkeyize()
 
+	else if(href_list["humanone"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
+		if(!istype(Mo))
+			usr << "This can only be used on instances of type /mob/living/carbon/monkey"
+			return
+
+		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)]")
+		message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)]", 1)
+		Mo.humanize()
+
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))	return
 
@@ -1879,18 +1891,19 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","LO")
 				message_admins("[key_name_admin(usr)] has broke a lot of lights", 1)
-				E = new /datum/round_event/electrical_storm{lightsoutAmount=2}()
+				E = new /datum/round_event/electrical_storm{lightsoutAmount = 2}()
 			if("blackout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BO")
 				message_admins("[key_name_admin(usr)] broke all lights", 1)
-				E = new /datum/round_event/electrical_storm{lightsoutAmount=0}()
+				for(var/obj/machinery/light/L in world)
+					L.broken()
 			if("whiteout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","WO")
+				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 				for(var/obj/machinery/light/L in world)
 					L.fix()
-				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 			if("friendai")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FA")
@@ -2010,6 +2023,11 @@
 				feedback_add_details("admin_secrets_fun_used","OO")
 				usr.client.only_one()
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+			if("energeticflux")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FLUX")
+				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
+				E = new /datum/round_event/energetic_flux()
 		if(E)
 			E.processing = 0
 			if(E.announceWhen>0)
@@ -2070,9 +2088,8 @@
 			if("manifest")
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-				for(var/mob/living/carbon/human/H in mob_list)
-					if(H.ckey)
-						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
+				for(var/datum/data/record/t in data_core.general)
+					dat += text("<tr><td>[]</td><td>[]</td></tr>", t.fields["name"], t.fields["rank"])
 				dat += "</table>"
 				usr << browse(dat, "window=manifest;size=440x410")
 			if("DNA")

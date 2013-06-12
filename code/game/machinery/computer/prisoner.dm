@@ -1,7 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/prisoner
-	name = "Prisoner Management Comsole"
+	name = "prisoner management console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_armory)
@@ -49,7 +47,7 @@
 				var/loc_display = "Unknown"
 				var/mob/living/carbon/M = T.imp_in
 				if(M.z == 1 && !istype(M.loc, /turf/space))
-					var/turf/mob_loc = get_turf_loc(M)
+					var/turf/mob_loc = get_turf(M)
 					loc_display = mob_loc.loc
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"

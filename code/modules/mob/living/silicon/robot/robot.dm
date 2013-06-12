@@ -3,8 +3,8 @@
 	real_name = "Cyborg"
 	icon = 'icons/mob/robots.dmi'//
 	icon_state = "robot"
-	maxHealth = 300
-	health = 300
+	maxHealth = 100
+	health = 100
 	var/sight_mode = 0
 	var/custom_name = ""
 
@@ -56,6 +56,7 @@
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
+
 
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
@@ -200,6 +201,9 @@
 		changed_name = "[(prefix ? "[prefix] " : "")]Cyborg-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -326,11 +330,6 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-				if(prob(20))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
 			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
@@ -339,7 +338,7 @@
 		if (istype(AM, /obj/machinery/recharge_station))
 			var/obj/machinery/recharge_station/F = AM
 			F.move_inside()
-		if (!istype(AM, /atom/movable))
+		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
 			return
 		if (!now_pushing)
 			now_pushing = 1
@@ -405,6 +404,12 @@
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		if (src == user)
+			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
+			return
+		if (src.health >= src.maxHealth)
+			user << "<span class='warning'>[src] is already in good condition.</span>"
+			return
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
 			updatehealth()
@@ -903,6 +908,7 @@
 		else
 			src << "Module isn't activated"
 		installed_modules()
+
 	return
 
 /mob/living/silicon/robot/proc/radio_menu()
@@ -994,3 +1000,11 @@
 		state = 1
 	lockcharge = state
 	update_canmove()
+
+
+
+/mob/living/silicon/robot/verb/outputlaws()
+	set category = "Robot Commands"
+	set name = "State Laws"
+
+	checklaws()

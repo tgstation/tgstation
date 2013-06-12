@@ -47,7 +47,7 @@
 
 	New()
 		..()
-		modules += new /obj/item/weapon/melee/baton(src)
+		modules += new /obj/item/weapon/melee/baton/loaded(src)
 		modules += new /obj/item/weapon/extinguisher(src)
 		modules += new /obj/item/weapon/wrench(src)
 		modules += new /obj/item/weapon/crowbar(src)
@@ -83,7 +83,6 @@
 		emag = new /obj/item/borg/stun(src)
 		modules += new /obj/item/weapon/rcd/borg(src)
 		modules += new /obj/item/weapon/extinguisher(src)
-//		modules += new /obj/item/device/flashlight(src)
 		modules += new /obj/item/weapon/weldingtool/largetank(src)
 		modules += new /obj/item/weapon/screwdriver(src)
 		modules += new /obj/item/weapon/wrench(src)
@@ -101,6 +100,10 @@
 		G.amount = 50
 		modules += G
 
+		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+		R.amount = 50
+		modules += R
+
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
 		modules += W
@@ -110,6 +113,7 @@
 		var/list/what = list (
 			/obj/item/stack/sheet/metal,
 			/obj/item/stack/sheet/rglass,
+			/obj/item/stack/rods,
 			/obj/item/weapon/cable_coil,
 		)
 		for(var/T in what)
@@ -127,7 +131,7 @@
 		..()
 		modules += new /obj/item/borg/sight/hud/sec(src)
 		modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		modules += new /obj/item/weapon/melee/baton(src)
+		modules += new /obj/item/weapon/melee/baton/loaded(src)
 		modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
@@ -155,6 +159,7 @@
 		modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 		modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 		modules += new /obj/item/weapon/pen(src)
+		modules += new /obj/item/weapon/razor(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
@@ -187,7 +192,6 @@
 		modules += new /obj/item/weapon/storage/bag/ore(src)
 		modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
-//		modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
 
 
 /obj/item/weapon/robot_module/syndicate

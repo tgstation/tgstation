@@ -90,7 +90,7 @@
 						// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 						for(var/obj/O in um)
 							// Engineering
-							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/weapon/cable_coil))
+							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/rods) || istype(O,/obj/item/weapon/cable_coil))
 								if(O:amount < 50)
 									O:amount += 1
 							// Security
@@ -106,8 +106,9 @@
 								else
 									O:charge_tick = 0
 							if(istype(O,/obj/item/weapon/melee/baton))
-								if(O:charges < 10)
-									O:charges += 1
+								var/obj/item/weapon/melee/baton/B = O
+								if(B.bcell)
+									B.bcell.charge = B.bcell.maxcharge
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)

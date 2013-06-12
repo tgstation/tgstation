@@ -25,51 +25,47 @@
 	flags = TABLEPASS
 	w_class = 3.0
 
-
 /obj/item/weapon/spacecash
 	name = "space cash"
 	desc = "It's worth 1 credit."
 	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	opacity = 0
 	density = 0
 	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	force = 0
+	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
-	var/access = list()
-	access = access_crate_cash
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
-	access = access_crate_cash
 	desc = "It's worth 10 credits."
+
 /obj/item/weapon/spacecash/c20
 	icon_state = "spacecash20"
-	access = access_crate_cash
 	desc = "It's worth 20 credits."
+
 /obj/item/weapon/spacecash/c50
 	icon_state = "spacecash50"
-	access = access_crate_cash
 	desc = "It's worth 50 credits."
+
 /obj/item/weapon/spacecash/c100
 	icon_state = "spacecash100"
-	access = access_crate_cash
 	desc = "It's worth 100 credits."
+
 /obj/item/weapon/spacecash/c200
 	icon_state = "spacecash200"
-	access = access_crate_cash
 	desc = "It's worth 200 credits."
+
 /obj/item/weapon/spacecash/c500
 	icon_state = "spacecash500"
-	access = access_crate_cash
 	desc = "It's worth 500 credits."
+
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
-	access = access_crate_cash
 	desc = "It's worth 1000 credits."
 
 /obj/item/weapon/bananapeel
@@ -274,27 +270,6 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
 
-/obj/item/weapon/shard
-	name = "shard"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "large"
-	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 15.0
-	item_state = "shard-glass"
-	g_amt = 3750
-	attack_verb = list("stabbed", "slashed", "sliced", "cut")
-
-	suicide_act(mob/user)
-		viewers(user) << pick("/red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS)
-
-/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
 	desc = "Remain silent about this..."
@@ -390,21 +365,6 @@
 	icon_state = "wood_tableparts"
 	flags = null
 
-/obj/item/weapon/wire
-	desc = "This is just a simple piece of regular insulated wire."
-	name = "wire"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "item_wire"
-	var/amount = 1.0
-	var/laying = 0.0
-	var/old_lay = null
-	m_amt = 40
-	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
-
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (OXYLOSS)
-
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
@@ -437,42 +397,6 @@
 	name = "power cell charger module"
 	icon_state = "power_mod"
 	desc = "Charging circuits for power cells."
-
-
-/obj/item/device/camera_bug
-	name = "camera bug"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "flash"
-	w_class = 1.0
-	item_state = "electronic"
-	throw_speed = 4
-	throw_range = 20
-
-/obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
-	var/list/cameras = new/list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		if (C.bugged && C.status)
-			cameras.Add(C)
-	if (length(cameras) == 0)
-		usr << "\red No bugged functioning cameras found."
-		return
-
-	var/list/friendly_cameras = new/list()
-
-	for (var/obj/machinery/camera/C in cameras)
-		friendly_cameras.Add(C.c_tag)
-
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
-	if (!target)
-		return
-	for (var/obj/machinery/camera/C in cameras)
-		if (C.c_tag == target)
-			target = C
-			break
-	if (usr.stat == 2) return
-
-	usr.client.eye = target
-
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"

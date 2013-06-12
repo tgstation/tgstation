@@ -21,16 +21,16 @@
 #define ui_storage1 "9:18,1:5"
 #define ui_storage2 "10:20,1:5"
 
-#define ui_alien_head "4:12,1:5"		//aliens
-#define ui_alien_oclothing "5:14,1:5"	//aliens
-
 #define ui_inv1 "6:16,1:5"			//borgs
 #define ui_inv2 "7:16,1:5"			//borgs
 #define ui_inv3 "8:16,1:5"			//borgs
 #define ui_borg_store "9:16,1:5"	//borgs
 
 #define ui_monkey_mask "5:14,1:5"	//monkey
-#define ui_monkey_back "6:14,1:5"	//monkey
+#define ui_monkey_back "6:15,1:5"	//monkey
+
+#define ui_alien_storage_l "6:14,1:5"
+#define ui_alien_storage_r "9:18,1:5"
 
 //Lower right, persistant menu
 #define ui_drop_throw "14:28,2:7"
@@ -175,7 +175,7 @@ var/datum/global_hud/global_hud = new()
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
 
-	var/list/obj/screen/item_action/item_action_list //Used for the item action ui buttons.
+	var/list/obj/screen/item_action/item_action_list	//Used for the item action ui buttons.
 
 
 datum/hud/New(mob/owner)
@@ -191,7 +191,7 @@ datum/hud/New(mob/owner)
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
 		if(H.handcuffed)
-			H.handcuffed.screen_loc = null //no handcuffs in my UI!
+			H.handcuffed.screen_loc = null	//no handcuffs in my UI!
 		if(inventory_shown && hud_shown)
 			if(H.shoes)		H.shoes.screen_loc = ui_shoes
 			if(H.gloves)	H.gloves.screen_loc = ui_gloves

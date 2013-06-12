@@ -141,9 +141,8 @@
 	attack_generic(user, rand(10, 15))
 
 
-/obj/structure/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(!istype(W)) return//I really wish I did not need this
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/structure/window/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
@@ -158,13 +157,13 @@
 			update_nearby_icons()
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
-	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
+	else if(istype(I, /obj/item/weapon/crowbar) && reinf && state <= 1)
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 	else
-		if(W.damtype == BRUTE || W.damtype == BURN)
-			hit(W.force)
+		if(I.damtype == BRUTE || I.damtype == BURN)
+			hit(I.force)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()

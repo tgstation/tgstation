@@ -14,7 +14,7 @@
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
-	w_class = 4//bulky item
+	w_class = 4
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -23,7 +23,9 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 
 /obj/item/clothing/suit/fire/firefighter
@@ -32,11 +34,10 @@
 
 
 /obj/item/clothing/suit/fire/heavy
-	name = "firesuit"
-	desc = "A suit that protects against extreme fire and heat."
-	//icon_state = "thermal"
+	name = "heavy firesuit"
+	desc = "An old, bulky thermal protection suit."
+	icon_state = "thermal"
 	item_state = "ro_suit"
-	w_class = 4//bulky item
 	slowdown = 1.5
 
 /*
@@ -47,8 +48,12 @@
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	cold_protection = HEAD
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -62,10 +67,13 @@
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
-	heat_protection = CHEST|GROIN
-	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+
 
 
 /obj/item/clothing/head/bomb_hood/security

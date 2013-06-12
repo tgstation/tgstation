@@ -40,9 +40,6 @@
 
 
 /mob/living/carbon/human/death(gibbed)
-	if(halloss > 0 && !gibbed)
-		halloss = 0
-		return
 	if(stat == DEAD)	return
 	if(healths)		healths.icon_state = "health5"
 	stat = DEAD
@@ -70,36 +67,26 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(SKELETON in src.mutations)	return
-
-	if(f_style)
-		f_style = "Shaved"
-	if(h_style)
-		h_style = "Bald"
-	update_hair(0)
-
-	mutations.Add(SKELETON)
+	if(!check_dna_integrity(src) || (dna.mutantrace == "skeleton"))	return
+	dna.mutantrace = "skeleton"
 	status_flags |= DISFIGURED
-	update_body(0)
-	update_mutantrace()
-	return
+	update_hair()
+	update_body()
+	return 1
 
-/mob/living/carbon/human/proc/ChangeToHusk()
+/mob/living/carbon/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
-
-	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-	if(h_style)
-		h_style = "Bald"
-	update_hair(0)
-
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
-	update_body(0)
-	update_mutantrace()
-	return
+	return 1
 
-/mob/living/carbon/human/proc/Drain()
+/mob/living/carbon/human/ChangeToHusk()
+	. = ..()
+	if(.)
+		update_hair()
+		update_body()
+
+/mob/living/carbon/proc/Drain()
 	ChangeToHusk()
 	mutations |= NOCLONE
-	return
+	return 1

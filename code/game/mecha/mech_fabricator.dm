@@ -496,9 +496,12 @@
 		temp = "Updating local R&D database..."
 		src.updateUsrDialog()
 		sleep(30) //only sleep if called by user
-	for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
+
+	var/found = 0
+	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
 		if(!RDC.sync)
 			continue
+		found = 1
 		for(var/datum/tech/T in RDC.files.known_tech)
 			files.AddTech2Known(T)
 		for(var/datum/design/D in RDC.files.known_designs)
@@ -513,6 +516,9 @@
 			src.updateUsrDialog()
 		if(i || tech_output)
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
+	if(!silent && !found)
+		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+		src.updateUsrDialog()
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
@@ -550,7 +556,7 @@
 		switch(screen)
 			if("main")
 				left_part = output_available_resources()+"<hr>"
-				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a> | <a href='?src=\ref[src];auto_sync=1'>[sync?"Dis":"En"]able auto sync</a><hr>"
+				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
 				for(var/part_set in part_sets)
 					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
 			if("parts")
@@ -636,7 +642,7 @@
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
 		if(isnum(index) && isnum(new_index))
-			if(InRange(new_index,1,queue.len))
+			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 	if(href_list["clear_queue"])
@@ -646,9 +652,6 @@
 		queue = list()
 		src.sync()
 		return update_queue_on_page()
-	if(href_list["auto_sync"])
-		src.sync = !src.sync
-		//pr_auto_sync.toggle()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
 		if(part)
@@ -659,14 +662,6 @@
 	if(href_list["remove_mat"] && href_list["material"])
 		temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()
-	return
-
-/obj/machinery/mecha_part_fabricator/process()
-	if (stat & (NOPOWER|BROKEN))
-		return
-	if(sync)
-		spawn(-1)
-			sync(1)
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)

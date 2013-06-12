@@ -57,7 +57,7 @@
 	using = new /obj/screen()
 	using.name = "hand"
 	using.icon = ui_style
-	using.icon_state = "swap_1"
+	using.icon_state = "swap_1_m"	//extra wide!
 	using.screen_loc = ui_swaphand1
 	using.layer = 19
 	adding += using
@@ -91,7 +91,7 @@
 	mymob.throw_icon = new /obj/screen()
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw"
+	mymob.throw_icon.name = "throw/catch"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
 	mymob.oxygen = new /obj/screen()

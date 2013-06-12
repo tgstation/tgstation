@@ -744,21 +744,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			// -- End mode specific stuff
 
 		podman.gender = ghost.gender
-		if(podman.gender in list(NEUTER, PLURAL))	//Sanity check, which should never actually happen.
-			podman.gender = pick(MALE,FEMALE)
 
-		if(!podman.dna)
-			podman.dna = new /datum/dna()
-			podman.dna.real_name = podman.real_name
-		if(ui)
-			podman.dna.uni_identity = ui
-			updateappearance(podman, ui)
-		if(se)
-			podman.dna.struc_enzymes = se
-		if(!prob(potency)) //if it fails, plantman!
-			if(podman.dna)
-				podman.dna.mutantrace = "plant"
-		podman.update_mutantrace()
+		//dna stuff
+		hardset_dna(podman, ui, se, null, !prob(potency) ? "plant" : null)	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
@@ -777,27 +765,29 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers))
+		if(ckey == null)
+			user << "You inject the contents of the syringe into the seeds."
 
-		user << "You inject the contents of the syringe into the seeds."
+			for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
+				var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
+				if(!istype(source))
+					continue
+				//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
+				ui = source.dna.uni_identity
+				se = source.dna.struc_enzymes
+				if(source.ckey)
+					ckey = source.ckey
+				else if(source.mind)
+					ckey = ckey(source.mind.key)
+				realName = source.real_name
+				gender = source.gender
 
-		for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
-			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
-			if(!istype(source))
-				continue
-			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-			ui = source.dna.uni_identity
-			se = source.dna.struc_enzymes
-			if(source.ckey)
-				ckey = source.ckey
-			else if(source.mind)
-				ckey = ckey(source.mind.key)
-			realName = source.real_name
-			gender = source.gender
+				if(!isnull(source.mind))
+					mind = source.mind
 
-			if(!isnull(source.mind))
-				mind = source.mind
-
-		W:reagents.clear_reagents()
+			W:reagents.clear_reagents()
+		else
+			user << "There is already a genetic sample in these seeds."
 	else
 		return ..()
 

@@ -591,7 +591,8 @@ var/global/list/g_fancy_list_of_safe_types = null
 		return
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
-		"strip",
+		"naked",
+		"assistant grey",
 		"standard space gear",
 		"tournament standard red",
 		"tournament standard green",
@@ -605,7 +606,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 		"masked killer",
 		"assassin",
 		"death commando",
-		"syndicate commando",
+//		"syndicate commando",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
@@ -622,8 +623,29 @@ var/global/list/g_fancy_list_of_safe_types = null
 			continue
 		del(I)
 	switch(dresscode)
-		if ("strip")
+		if ("naked")
 			//do nothing
+
+		if ("assistant grey")
+			var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(M)
+			new /obj/item/weapon/storage/box/survival(BPK)
+			M.equip_to_slot_or_del(BPK, slot_back,1)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
+
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card (Assistant)"
+			W.assignment = "Assistant"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+			var/obj/item/device/pda/P = new(M)
+			P.owner = M.real_name
+			P.ownjob = "Assistant"
+			P.name = "PDA-[M.real_name] (Assistant)"
+			M.equip_to_slot_or_del(P, slot_belt)
+
+
 		if ("standard space gear")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 
@@ -795,10 +817,52 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.assignment = "Reaper"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-/* DEATH SQUADS
+// DEATH SQUADS
 		if("death commando")//Was looking to add this for a while.
-			M.equip_death_commando()
 
+			var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+			R.set_frequency(1441)
+			M.equip_to_slot_or_del(R, slot_ears)
+
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(M), slot_glasses)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/plastique(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/flashbang(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(M), slot_s_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/mateba(M), slot_belt)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(M), slot_r_hand)
+
+
+			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)//Here you go Deuryn
+			L.imp_in = M
+			L.implanted = 1
+
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()//They get full station access.
+			W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
+			W.assignment = "Death Commando"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+/*
 		if("syndicate commando")
 			M.equip_syndicate_commando()
 */
@@ -806,14 +870,14 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hop(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_com(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/pen(M), slot_l_store)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "CentCom Review Official"
+			pda.ownjob = "CentCom Official"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
 			M.equip_to_slot_or_del(pda, slot_r_store)
@@ -821,11 +885,10 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/clipboard(M), slot_l_hand)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.name = "[M.real_name]'s ID Card (CentCom Official)"
 			W.icon_state = "centcom"
-			W.access = get_all_accesses()
-			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
-			W.assignment = "CentCom Review Official"
+			W.access = get_centcom_access("CentCom Official")
+			W.assignment = "CentCom Official"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -834,7 +897,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/centhat(M), slot_head)
@@ -843,20 +906,20 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(M), slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.name = "[M.real_name]'s ID Card (CentCom Commander)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.assignment = "CentCom Commanding Officer"
+			W.access += get_centcom_access("CentCom Commander")
+			W.assignment = "CentCom Commander"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("special ops officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/combat(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat/officer(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
@@ -865,11 +928,11 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.name = "[M.real_name]'s ID Card (Special Ops Officer)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.assignment = "Special Operations Officer"
+			W.access += get_centcom_access("Special Ops Officer")
+			W.assignment = "Special Ops Officer"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -910,19 +973,19 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 		if("soviet admiral")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/hgpirate(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/mateba(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.name = "[M.real_name]'s ID Card (Admiral)"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
+			W.access += get_centcom_access("Admiral")
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -989,7 +1052,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
 			usr << dd_list2text(player_list,",")
 		if("Admins")
@@ -1002,3 +1065,5 @@ var/global/list/g_fancy_list_of_safe_types = null
 			usr << dd_list2text(dead_mob_list,",")
 		if("Clients")
 			usr << dd_list2text(clients,",")
+		if("Joined Clients")
+			usr << dd_list2text(joined_player_list,",")

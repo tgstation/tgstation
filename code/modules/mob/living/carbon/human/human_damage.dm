@@ -1,7 +1,7 @@
 //Updates the mob's health from organs and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 		return
 	var/total_burn	= 0
@@ -9,9 +9,9 @@
 	for(var/datum/limb/O in organs)	//hardcoded to streamline things a bit
 		total_brute	+= O.brute_dam
 		total_burn	+= O.burn_dam
-	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	//TODO: fix husking
-	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
 	return
 
@@ -80,7 +80,7 @@
 	if(!parts.len)	return
 	var/datum/limb/picked = pick(parts)
 	if(picked.heal_damage(brute,burn))
-		UpdateDamageIcon(0)
+		update_damage_overlays(0)
 	updatehealth()
 
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
@@ -91,7 +91,7 @@
 	if(!parts.len)	return
 	var/datum/limb/picked = pick(parts)
 	if(picked.take_damage(brute,burn))
-		UpdateDamageIcon(0)
+		update_damage_overlays(0)
 	updatehealth()
 
 
@@ -113,7 +113,7 @@
 
 		parts -= picked
 	updatehealth()
-	if(update)	UpdateDamageIcon(0)
+	if(update)	update_damage_overlays(0)
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
@@ -134,7 +134,7 @@
 
 		parts -= picked
 	updatehealth()
-	if(update)	UpdateDamageIcon(0)
+	if(update)	update_damage_overlays(0)
 
 
 ////////////////////////////////////////////
@@ -143,7 +143,7 @@
 	var/datum/limb/E = get_organ(zone)
 	if(istype(E, /datum/limb))
 		if (E.heal_damage(brute, burn))
-			UpdateDamageIcon(0)
+			update_damage_overlays(0)
 	else
 		return 0
 	return
@@ -179,11 +179,11 @@
 		if(BRUTE)
 			damageoverlaytemp = 20
 			if(organ.take_damage(damage, 0))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(organ.take_damage(0, damage))
-				UpdateDamageIcon(0)
+				update_damage_overlays(0)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 

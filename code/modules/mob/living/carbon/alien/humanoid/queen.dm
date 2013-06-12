@@ -10,9 +10,7 @@
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
@@ -60,7 +58,7 @@
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
-	if(locate(/obj/effect/alien/egg) in get_turf(src))
+	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		src << "There's already an egg here."
 		return
 
@@ -68,7 +66,7 @@
 		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/effect/alien/egg(loc)
+		new /obj/structure/alien/egg(loc)
 	return
 
 
