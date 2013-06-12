@@ -60,7 +60,7 @@
 			on = 0
 		else
 			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
+			if(!A || !isarea(A) || !A.master || emped)
 				on = 0
 			else
 				on = A.master.powered(EQUIP) // set "on" to the power status
