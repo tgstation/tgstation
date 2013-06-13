@@ -117,6 +117,7 @@
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W) return
+					if(!W.reagents) return
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
