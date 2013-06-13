@@ -217,6 +217,7 @@ datum
 				update_total()
 
 			handle_reactions()
+				if(!my_atom) return //sanity check
 				if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 				var/reaction_occured = 0
