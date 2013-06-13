@@ -63,7 +63,12 @@
 				user.adjustBrainLoss(10)
 		else
 			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			if(src.emagged) // That's right, we'll only check the "original" esword.
+				newSaber.emagged = 1
+				newSaber.color = "rainbow"
+			user.drop_l_hand()
+			user.drop_r_hand()
 			del(W)
 			del(src)
 
@@ -130,6 +135,20 @@
 /obj/item/weapon/melee/energy/sword/red
 	New()
 		color = "red"
+
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/card/emag))
+		if(active)
+			user << "<span class='warning'>While it's on?  You crazy?</span>"
+		else if(emagged == 0)
+			emagged = 1
+			user << "<span class='warning'>RNBW_ENGAGE</span>"
+			color = "rainbow"
+			
+			add_fingerprint(user)
+		else
+			user << "<span class='warning'>It's already fabulous!</span>"
 
 /obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effect/effect/system/spark_spread()
