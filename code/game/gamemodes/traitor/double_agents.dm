@@ -38,3 +38,6 @@
 	escape_objective.owner = traitor
 	traitor.objectives += escape_objective
 	return
+
+/datum/game_mode/traitor/dobule_agents/make_antag_chance(var/mob/living/carbon/human/character)
+	return // TODO: Have late joining double agents.
