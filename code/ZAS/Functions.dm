@@ -78,7 +78,7 @@ proc/FloodFill(turf/simulated/start)
 proc/ZMerge(zone/A,zone/B)
 
 	//Sanity~
-	if(!istype(A) || !istype(B))
+	if(!istype(A) || !istype(B) || !istype(B.air) || !istype(A.air))
 		return
 
 	//Merges two zones so that they are one.
