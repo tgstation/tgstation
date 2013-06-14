@@ -142,8 +142,8 @@
 
 /datum/surgery_step/brain/hematoma
 	allowed_tools = list(
-	/obj/item/weapon/FixOVein ,	\
-	/obj/item/weapon/cable_coil
+	/obj/item/weapon/FixOVein = 100, \
+	/obj/item/weapon/cable_coil = 75
 	)
 
 	min_duration = 90
