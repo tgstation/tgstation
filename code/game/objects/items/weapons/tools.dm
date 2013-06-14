@@ -168,6 +168,8 @@
 		return
 
 	if(!status && istype(I, /obj/item/stack/rods))
+		if(istype(I, /obj/item/stack/rods/cyborg))
+			return
 		var/obj/item/stack/rods/R = I
 		R.use(1)
 		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
