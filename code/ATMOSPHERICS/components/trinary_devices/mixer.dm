@@ -2,10 +2,6 @@ obj/machinery/atmospherics/trinary/mixer
 	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
 	density = 1
-obj/machinery/atmospherics/trinary/mixer
-	icon = 'icons/obj/atmospherics/mixer.dmi'
-	icon_state = "intact_off"
-	density = 1
 
 	name = "Gas mixer"
 
