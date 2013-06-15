@@ -31,14 +31,6 @@
 	var/def_zone
 	pass_flags = PASSTABLE
 
-
-/obj/effect/begin
-	name = "begin"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "begin"
-	anchored = 1.0
-	unacidable = 1
-
 /obj/effect/datacore
 	name = "datacore"
 	var/medical[] = list()
@@ -46,14 +38,6 @@
 	var/security[] = list()
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
-
-
-/obj/effect/laser
-	name = "laser"
-	desc = "IT BURNS!!!"
-	icon = 'icons/obj/projectiles.dmi'
-	var/damage = 0.0
-	var/range = 10.0
 
 
 /obj/effect/list_container
