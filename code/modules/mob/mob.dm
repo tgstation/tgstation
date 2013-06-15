@@ -525,12 +525,14 @@ var/list/slot_equipment_priority = list( \
 	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if (!( AM.anchored ))
+
+		// If we're pulling something then drop what we're currently pulling and pull this instead.
 		if(pulling)
-			var/pulling_old = pulling
-			stop_pulling()
-			// Are we pulling the same thing twice? Just stop pulling.
-			if(pulling_old == AM)
+			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+			if(AM == pulling)
 				return
+			stop_pulling()
+
 		src.pulling = AM
 		AM.pulledby = src
 		if(ismob(AM))
