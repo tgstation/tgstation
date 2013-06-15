@@ -481,11 +481,15 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["pockets"])
-			visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
-							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>")
+			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
+							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
+			usr << "<span class='notice'>You try to empty [src]'s pockets.</span>"
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				u_equip(r_store)
 				u_equip(l_store)
+			else
+				// Display a warning if the user mocks up
+				src << "<span class='warning'>You feel your pockets being fumbled with!</span>"
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
@@ -544,21 +548,32 @@
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head/welding))
-		if(!src.head:up)
-			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
-		number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
-		number -= 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
-		number += 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = src.glasses
-		if(!W.up)
-			number += 2
+	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
+		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
+		number += HFP.flash_protect
+	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
+		var/obj/item/clothing/glasses/GFP = src.glasses
+		number += GFP.flash_protect
+	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
+		var/obj/item/clothing/mask/MFP = src.wear_mask
+		number += MFP.flash_protect
 	return number
 
+///tintcheck()
+///Checks eye covering items for visually impairing tinting, such as welding masks
+///Checked in life.dm. 0 & 1 = no impairment, 2 = welding mask overlay, 3 = You can see jack, but you can't see shit.
+/mob/living/carbon/human/tintcheck()
+	var/tinted = 0
+	if(istype(src.head, /obj/item/clothing/head))
+		var/obj/item/clothing/head/HT = src.head
+		tinted += HT.tint
+	if(istype(src.glasses, /obj/item/clothing/glasses))
+		var/obj/item/clothing/glasses/GT = src.glasses
+		tinted += GT.tint
+	if(istype(src.wear_mask, /obj/item/clothing/mask))
+		var/obj/item/clothing/mask/MT = src.wear_mask
+		tinted += MT.tint
+	return tinted
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such

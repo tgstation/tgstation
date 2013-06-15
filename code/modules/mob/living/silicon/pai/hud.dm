@@ -7,7 +7,7 @@
 /mob/living/silicon/pai/proc/securityHUD()
 	if(client)
 		var/image/holder
-		var/turf/T = get_turf_or_move(src.loc)
+		var/turf/T = get_turf(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
 			var/perpname = "wot"
 			holder = perp.hud_list[ID_HUD]
@@ -19,10 +19,10 @@
 					client.images += holder
 				else
 					perpname = perp.name
-					holder.icon_state = "hudunknown"
+					holder.icon_state = "hudno_id"
 					client.images += holder
 			else
-				holder.icon_state = "hudunknown"
+				holder.icon_state = "hudno_id"
 				client.images += holder
 
 			for(var/datum/data/record/E in data_core.general)
@@ -49,7 +49,7 @@
 /mob/living/silicon/pai/proc/medicalHUD()
 	if(client)
 		var/image/holder
-		var/turf/T = get_turf_or_move(src.loc)
+		var/turf/T = get_turf(src.loc)
 		for(var/mob/living/carbon/human/patient in view(T))
 
 			var/foundVirus = 0

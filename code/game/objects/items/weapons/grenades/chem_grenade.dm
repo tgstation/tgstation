@@ -29,6 +29,8 @@
 
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == READY &&  !active)
+		message_admins("[user] has primed a [name] for detonation")
+		log_game("[user] primed a [name] for detonation")
 		if(nadeassembly)
 			nadeassembly.attack_self(user)
 		else if(clown_check(user))

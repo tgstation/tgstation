@@ -20,6 +20,8 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
+	flash_protect = 2
+	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	action_button_name = "Toggle Welding Helmet"
@@ -40,12 +42,16 @@
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
+			flash_protect = 2
+			tint = 2
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
+			flash_protect = 0
+			tint = 0
 		usr.update_inv_head(0)	//so our mob-overlays update
 
 

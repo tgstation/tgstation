@@ -76,6 +76,15 @@ proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnod
 	
 	var/list/path = list()							//return value
 
+	//check to see if we can run a faster proc
+	if(maxnodes == 1 || max_length == 1)
+		return pathfind_adjacent(start_turf, dest_turf, adjacent_proc, id)
+	var/dist = get_dist(start_turf, dest_turf)
+	if(dist == 1)
+		return pathfind_adjacent(start_turf, dest_turf, adjacent_proc, id)
+	else if(dist == 2)
+		return pathfind_directmove(start_turf, dest_turf, adjacent_proc, max_length, id, exclude)
+
 	//sanity check to avoid a huge waste of CPU time on impossible tasks
 	for(var/obj/O in dest_turf)
 		if(O.density && (!istype(O, /obj/machinery/door) || !(O.flags & ON_BORDER)))	//something is blocking the destination
@@ -138,3 +147,67 @@ proc/AStar(turf/start_turf, turf/dest_turf, adjacent_proc, distance_proc, maxnod
 	//world << "Didn't find a path within [evaluations] evaluations and [lpct] loops."
 	return path										//FAILURE
 	//This return should only be reached if the path is too long, and the while loop gives up.
+
+//Use this proc to check if a turf 1 tile away is reachable
+//There are a few things that appear to use AStar just to check if something is within reach
+//Untested
+proc/pathfind_adjacent(turf/start_turf, turf/dest_turf, adjacent_proc, id)
+	var/adjacent = call(start_turf,adjacent_proc)(id)
+	if(dest_turf in adjacent)
+		return list(dest_turf)
+	return list()
+
+//Pathfind directly towards the target, with obstacle avoidance best described as "dodging"
+//This is a relatively crude algorithm, but it should work well for very short distances (1-2), or across areas with minimal obstacles
+//It has a high bias in certain directions, and has a high chance to fail if there is a concurrent series of obstacles
+//Untested
+proc/pathfind_directmove(turf/start_turf, turf/dest_turf, adjacent_proc, max_length, id=null, var/turf/exclude=null)
+	var/list/path = list()
+	var/turf/current_turf = start_turf
+	var/turf/priority_candidate
+
+	for(var/current_iteration = 0, current_iteration < max_length, current_iteration++)
+		if(current_turf == dest_turf)
+			return path
+
+		//populate candidates list from current location
+		var/target_dir = get_dir(current_turf, dest_turf)
+		var/list/adjacent = call(current_turf,adjacent_proc)(id)
+		var/list/candidates = list()
+
+		//check straight forward and diagonally forward only
+		for(var/try_dir in alldirs)
+			if(try_dir&target_dir)
+				//grab the turf, and check that it's reachable
+				var/turf/try_turf = get_step(current_turf, try_dir)
+
+				//A further optimisation could be made here by ripping out the guts to adjacent_proc and only running it's checks on check_turf
+				if(try_turf in adjacent)
+					candidates += try_turf
+					if(try_dir == target_dir)
+						priority_candidate = try_turf
+
+		if(exclude && priority_candidate == exclude)
+			priority_candidate = null
+
+		//the priority candidate turf moves us directly towards the destination
+		if(priority_candidate)
+			current_turf = priority_candidate
+			priority_candidate = null
+		else
+			//this should have at most 2 turfs in it
+			while(candidates.len)
+				current_turf = candidates[1]
+				if(current_turf == exclude)
+					exclude = null
+					candidates.Remove(exclude)
+				else
+					break
+
+		if(current_turf)
+			path += current_turf
+		else
+			break
+
+	//we failed, so return an empty list
+	return list()
