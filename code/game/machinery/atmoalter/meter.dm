@@ -113,7 +113,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return 1
 	else
-		var/t = null
 		usr << status()
 		return 1
 
