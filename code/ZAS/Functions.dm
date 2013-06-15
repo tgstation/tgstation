@@ -81,27 +81,42 @@ proc/ZMerge(zone/A,zone/B)
 	if(!istype(A) || !istype(B) || !istype(B.air) || !istype(A.air))
 		return
 
-	//Merges two zones so that they are one.
-	var/a_size = A.air.group_multiplier
-	var/b_size = B.air.group_multiplier
-	var/c_size = a_size + b_size
 	var/new_contents = A.contents + B.contents
-
-	//Set air multipliers to one so air represents gas per tile.
-	A.air.group_multiplier = 1
-	B.air.group_multiplier = 1
-
-	//Remove some air proportional to the size of this zone.
-	A.air.remove_ratio(a_size/c_size)
-	B.air.remove_ratio(b_size/c_size)
-
-	//Merge the gases and set the multiplier to the sum of the old ones.
-	A.air.merge(B.air)
-	A.air.group_multiplier = c_size
 
 	//Set all the zone vars.
 	for(var/turf/simulated/T in B.contents)
 		T.zone = A
+
+	if(istype(A.air) && istype(B.air))
+		//Merges two zones so that they are one.
+		var/a_size = A.air.group_multiplier
+		var/b_size = B.air.group_multiplier
+		var/c_size = a_size + b_size
+
+		//Set air multipliers to one so air represents gas per tile.
+		A.air.group_multiplier = 1
+		B.air.group_multiplier = 1
+
+		//Remove some air proportional to the size of this zone.
+		A.air.remove_ratio(a_size/c_size)
+		B.air.remove_ratio(b_size/c_size)
+
+		//Merge the gases and set the multiplier to the sum of the old ones.
+		A.air.merge(B.air)
+		A.air.group_multiplier = c_size
+
+	//I hate when the air datum somehow disappears.
+	//  Try to make it sorta work anyways.  Fakit
+	else if(istype(B.air))
+		A.air = B.air
+		A.air.group_multiplier = A.contents.len
+
+	else if(istype(A.air))
+		A.air.group_multiplier = A.contents.len
+
+	//Doublefakit.
+	else
+		A.air = new
 
 	//Check for connections to merge into the new zone.
 	for(var/connection/C in B.connections)
