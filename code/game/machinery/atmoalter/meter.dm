@@ -88,34 +88,33 @@
 	usr << t
 
 
+/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user << "\blue You begin to unfasten \the [src]..."
+		if (do_after(user, 40))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"\blue You have unfastened \the [src].", \
+				"You hear ratchet.")
+			new /obj/item/pipe_meter(src.loc)
+			del(src)
+		return
+	..()
 
-/obj/machinery/meter/Click()
+/obj/machinery/meter/attack_ai(var/mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/meter/attack_paw(var/mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/meter/attack_hand(var/mob/user as mob)
 
 	if(stat & (NOPOWER|BROKEN))
 		return 1
-
-	var/t = null
-	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
-		t += status()
 	else
-		usr << "\blue <B>You are too far away.</B>"
+		usr << status()
 		return 1
-
-	usr << t
-	return 1
-
-/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You begin to unfasten \the [src]..."
-	if (do_after(user, 40))
-		user.visible_message( \
-			"[user] unfastens \the [src].", \
-			"\blue You have unfastened \the [src].", \
-			"You hear ratchet.")
-		new /obj/item/pipe_meter(src.loc)
-		del(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 
@@ -129,5 +128,3 @@
 	if (!target)
 		src.target = loc
 
-/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	return

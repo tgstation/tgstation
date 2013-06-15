@@ -12,12 +12,8 @@
 	var/secured = 0
 	var/obj/item/device/assembly/a_left = null
 	var/obj/item/device/assembly/a_right = null
-	var/obj/special_assembly = null
 
 	proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
-		return
-
-	proc/attach_special(var/obj/O, var/mob/user)
 		return
 
 	proc/process_activation(var/obj/item/device/D)
@@ -47,18 +43,6 @@
 		return 1
 
 
-	attach_special(var/obj/O, var/mob/user)
-		if(!O)	return
-		if(!O.IsSpecialAssembly())	return 0
-
-/*		if(O:Attach_Holder())
-			special_assembly = O
-			update_icon()
-			src.name = "[a_left.name] [a_right.name] [special_assembly.name] assembly"
-*/
-		return
-
-
 	update_icon()
 		overlays.Cut()
 		if(a_left)
@@ -72,13 +56,6 @@
 		if(master)
 			master.update_icon()
 
-/*		if(special_assembly)
-			special_assembly.update_icon()
-			if(special_assembly:small_icon_state)
-				src.overlays += special_assembly:small_icon_state
-				for(var/O in special_assembly:small_icon_state_overlays)
-					src.overlays += O
-*/
 
 	examine()
 		set src in view()
@@ -96,8 +73,6 @@
 			a_left.HasProximity(AM)
 		if(a_right)
 			a_right.HasProximity(AM)
-		if(special_assembly)
-			special_assembly.HasProximity(AM)
 
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -105,28 +80,25 @@
 			a_left.HasEntered(AM)
 		if(a_right)
 			a_right.HasEntered(AM)
-		if(special_assembly)
-			special_assembly.HasEntered(AM)
-
 
 	on_found(mob/finder as mob)
 		if(a_left)
 			a_left.on_found(finder)
 		if(a_right)
 			a_right.on_found(finder)
-		if(special_assembly)
-			if(istype(special_assembly, /obj/item))
-				var/obj/item/S = special_assembly
-				S.on_found(finder)
 
+
+	hear_talk(mob/living/M as mob, msg)
+		if(a_left)
+			a_left.hear_talk(M, msg)
+		if(a_right)
+			a_right.hear_talk(M, msg)
 
 	Move()
 		..()
 		if(a_left && a_right)
 			a_left.holder_movement()
 			a_right.holder_movement()
-//		if(special_assembly)
-//			special_assembly:holder_movement()
 		return
 
 
@@ -134,8 +106,6 @@
 		if(a_left && a_right)
 			a_left.holder_movement()
 			a_right.holder_movement()
-//		if(special_assembly)
-//			special_assembly:Holder_Movement()
 		..()
 		return
 
@@ -154,8 +124,6 @@
 				user << "\blue \The [src] can now be taken apart!"
 			update_icon()
 			return
-		else if(W.IsSpecialAssembly())
-			attach_special(W, user)
 		else
 			..()
 		return
@@ -198,9 +166,6 @@
 				a_left.pulsed(0)
 		if(master)
 			master.receive_signal()
-//		if(special && special_assembly)
-//			if(!special_assembly == D)
-//				special_assembly.dothings()
 		return 1
 
 
