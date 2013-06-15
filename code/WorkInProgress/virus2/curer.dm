@@ -120,6 +120,7 @@
 		if (href_list["antibody"])
 			curing = 10
 		else if(href_list["eject"])
+			if(!container || !src) return
 			container.loc = src.loc
 			container = null
 
