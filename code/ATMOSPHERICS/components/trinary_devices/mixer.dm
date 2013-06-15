@@ -16,13 +16,21 @@ obj/machinery/atmospherics/trinary/mixer
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 	update_icon()
-		if(node2 && node3 && node1)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node2 && node3 && node1)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
 			icon_state = "intact_off"
 			on = 0
 
 		return
+
+	power_change()
+		var/old_stat = stat
+		..()
+		if(old_stat != stat)
+			update_icon()
 
 	New()
 		..()
@@ -55,8 +63,13 @@ obj/machinery/atmospherics/trinary/mixer
 		var/air2_moles = air2.total_moles()
 
 		if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
-			if(!transfer_moles1 || !transfer_moles2) return
-			var/ratio = min(air1_moles/transfer_moles1, air2_moles/transfer_moles2)
+			var/ratio = 0
+			if (( transfer_moles1 > 0 ) && (transfer_moles2 >0 ))
+				ratio = min(air1_moles/transfer_moles1, air2_moles/transfer_moles2)
+			if (( transfer_moles2 == 0 ) && ( transfer_moles1 > 0 ))
+				ratio = air1_moles/transfer_moles1
+			if (( transfer_moles1 == 0 ) && ( transfer_moles2 > 0 ))
+				ratio = air2_moles/transfer_moles2
 
 			transfer_moles1 *= ratio
 			transfer_moles2 *= ratio
