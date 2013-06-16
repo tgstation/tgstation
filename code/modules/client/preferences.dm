@@ -415,7 +415,21 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-		SetJobPreferenceLevel(job, GetJobLevel(job) + upOrDown)
+
+		var/targetLvl = GetJobLevel(job)
+		if (upOrDown == 1) // increasing from low to high, i.e. lowering the level value
+			if (targetLvl == 0)
+				targetLvl = 3 // low
+			else
+				targetLvl = targetLvl - 1
+		else // decreasing from high to low, i.e. raising the level value
+			if (targetLvl == 3)
+				targetLvl = 0
+			else
+				targetLvl = targetLvl + 1
+
+
+		SetJobPreferenceLevel(job, targetLvl)
 		SetChoices(user)
 
 		return 1
@@ -481,9 +495,9 @@ datum/preferences
 					userandomjob = !userandomjob
 					SetChoices(user)
 				if("increaseJobLevel")
-					UpdateJobPreference(user, href_list["text"], -1)
-				if ("decreaseJobLevel")
 					UpdateJobPreference(user, href_list["text"], 1)
+				if ("decreaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], -1)
 				else
 					SetChoices(user)
 			return 1
