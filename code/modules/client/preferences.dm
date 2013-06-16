@@ -388,7 +388,7 @@ datum/preferences
 		return 0
 
 	proc/GetJobLevel(var/datum/job/job)
-		if (!job || !level) return 0
+		if (!job) return 0
 
 		if (job.flag & (job_civilian_high | job_engsec_high | job_medsci_high))
 			return 1
