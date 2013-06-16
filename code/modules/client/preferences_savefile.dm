@@ -15,21 +15,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
 	respective update_preferences() or update_character() proc.
 	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
-	
+
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
 /datum/preferences/proc/savefile_needs_update(savefile/S)
 	var/savefile_version
 	S["version"] >> savefile_version
-	
+
 	if(savefile_version < SAVEFILE_VERSION_MIN)
 		S.dir.Cut()
 		return -2
 	if(savefile_version < SAVEFILE_VERSION_MAX)
 		return savefile_version
 	return -1
-	
+
 /datum/preferences/proc/update_preferences(current_version)
 	return
 
@@ -71,7 +71,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
 				if(13)	underwear = "Nude"
-	
+
 	/*
 	if(current_version < 10)	//would be the step to upgrade 9 to 10
 		//do stuff
@@ -92,7 +92,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
 	S.cd = "/"
-	
+
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2)		//fatal, can't load any data
 		return 0
@@ -108,13 +108,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update)		//needs_update = savefile_version if we need an update (positive integer)
-	
+
+
+
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 
 	return 1
@@ -144,11 +146,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!S)					return 0
 	S.cd = "/"
 	if(!slot)	slot = default_slot
-	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot
-	
+
 	S.cd = "/character[slot]"
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2)		//fatal, can't load any data
@@ -184,7 +186,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update)		//needs_update == savefile_version if we need an update (positive integer)
-	
+
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
@@ -224,7 +226,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
 	S.cd = "/character[default_slot]"
-	
+
 	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character

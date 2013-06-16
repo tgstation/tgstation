@@ -17,13 +17,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 )
 
 
-var/const/MAX_SAVE_SLOTS = 3
-
-
 datum/preferences
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
+	var/max_save_slots = 3
 
 	//non-preference stuff
 	var/warns = 0
@@ -33,7 +31,7 @@ datum/preferences
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = "#b82e00"
+	var/ooccolor = "#002eb8"
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
@@ -50,7 +48,7 @@ datum/preferences
 	var/h_color = "000"					//Hair color
 	var/f_style = "Shaved"				//Face hair type
 	var/f_color = "000"					//Facial hair color
-	var/skin_tone = "caucasian"			//Skin color
+	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 
 		//Mob preview
@@ -81,9 +79,12 @@ datum/preferences
 
 /datum/preferences/New(client/C)
 	b_type = random_blood_type()
+	ooccolor = normal_ooc_colour
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
+			if(C.unlock_content)
+				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -121,12 +122,12 @@ datum/preferences
 					if(S)
 						dat += "<center>"
 						var/name
-						for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
+						for(var/i=1, i<=max_save_slots, i++)
 							S.cd = "/character[i]"
 							S["real_name"] >> name
 							if(!name)	name = "Character[i]"
 							//if(i!=1) dat += " | "
-							dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
+							dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 						dat += "</center>"
 
 				dat += "<center><h2>Occupation Choices</h2>"
@@ -200,11 +201,12 @@ datum/preferences
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
-				if(user.client && user.client.holder)
-					dat += "<b>Adminhelp Sound</b>: "
-					dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
+				if(user.client)
+					if(user.client.holder)
+						dat += "<b>Adminhelp Sound</b>: "
+						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(config.allow_admin_ooccolor && check_rights(R_ADMIN,0))
+					if(user.client.unlock_content || (user.client.holder && (user.client.holder.rights & R_ADMIN)))
 						dat += "<br><b>OOC</b><br>"
 						dat += "<span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
@@ -239,7 +241,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 560)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 580)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -453,7 +455,6 @@ datum/preferences
 
 
 	proc/process_link(mob/user, list/href_list)
-		if(!user)	return
 		if(!istype(user, /mob/new_player))	return
 
 		if(href_list["preference"] == "job")
@@ -522,7 +523,7 @@ datum/preferences
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 						if(new_hair)
 							h_color = sanitize_hexcolor(new_hair)
-							
+
 
 					if("h_style")
 						var/new_h_style
