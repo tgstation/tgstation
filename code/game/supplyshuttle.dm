@@ -612,7 +612,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		var/timeout = world.time + 600
 		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
 		if(world.time > timeout)	return
-		if(!reason)	return
+//		if(!reason)	return
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"

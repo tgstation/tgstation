@@ -204,6 +204,9 @@
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
+/mob/living/carbon/proc/tintcheck()
+	return 0
+
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
 /mob/living/carbon/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
@@ -304,37 +307,40 @@
 	update_icons()	//apply the now updated overlays to the mob
 
 
-//Throwing stuff
 
+//Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
-	var/obj/item/W = get_active_hand()
-	if( !W )//Not holding anything
-		if( client && (TK in mutations) )
+	var/obj/item/I = get_active_hand()
+	if(!I)//Not holding anything
+		if(client && (TK in mutations))
 			var/obj/item/tk_grab/O = new(src)
 			put_in_active_hand(O)
 			O.host = src
-		return
+			return
 
-	if( istype(W,/obj/item/tk_grab) )
+	if(istype(I, /obj/item/tk_grab))
 		if(hand)	del(l_hand)
 		else		del(r_hand)
 		return
 
-	if (src.in_throw_mode)
+	if(in_throw_mode)
 		throw_mode_off()
 	else
 		throw_mode_on()
 
+
 /mob/living/carbon/proc/throw_mode_off()
-	src.in_throw_mode = 0
-	src.throw_icon.icon_state = "act_throw_off"
+	in_throw_mode = 0
+	throw_icon.icon_state = "act_throw_off"
+
 
 /mob/living/carbon/proc/throw_mode_on()
-	src.in_throw_mode = 1
-	src.throw_icon.icon_state = "act_throw_on"
+	in_throw_mode = 1
+	throw_icon.icon_state = "act_throw_on"
+
 
 /mob/living/carbon/proc/throw_item(atom/target)
-	src.throw_mode_off()
+	throw_mode_off()
 	if(usr.stat || !target)
 		return
 	if(target.type == /obj/screen) return
@@ -343,7 +349,7 @@
 
 	if(!item) return
 
-	if (istype(item, /obj/item/weapon/grab))
+	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw() //throw the person instead of the grab
 		del(G)			//We delete the grab, as it needs to stay around until it's returned.
@@ -370,7 +376,7 @@
 		item:dropped(src) // let it know it's been dropped
 
 	//actually throw it!
-	if (item)
+	if(item)
 		item.layer = initial(item.layer)
 		src.visible_message("\red [src] has thrown [item].")
 
@@ -390,6 +396,7 @@
 
 
 		item.throw_at(target, item.throw_range, item.throw_speed)
+
 
 /mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()

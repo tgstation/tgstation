@@ -765,27 +765,29 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers))
+		if(ckey == null)
+			user << "You inject the contents of the syringe into the seeds."
 
-		user << "You inject the contents of the syringe into the seeds."
+			for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
+				var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
+				if(!istype(source))
+					continue
+				//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
+				ui = source.dna.uni_identity
+				se = source.dna.struc_enzymes
+				if(source.ckey)
+					ckey = source.ckey
+				else if(source.mind)
+					ckey = ckey(source.mind.key)
+				realName = source.real_name
+				gender = source.gender
 
-		for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
-			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
-			if(!istype(source))
-				continue
-			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-			ui = source.dna.uni_identity
-			se = source.dna.struc_enzymes
-			if(source.ckey)
-				ckey = source.ckey
-			else if(source.mind)
-				ckey = ckey(source.mind.key)
-			realName = source.real_name
-			gender = source.gender
+				if(!isnull(source.mind))
+					mind = source.mind
 
-			if(!isnull(source.mind))
-				mind = source.mind
-
-		W:reagents.clear_reagents()
+			W:reagents.clear_reagents()
+		else
+			user << "There is already a genetic sample in these seeds."
 	else
 		return ..()
 

@@ -66,7 +66,7 @@
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
-				if(20 in I.access)
+				if((20 in I.access) || src.emagged)
 					authenticated = 2
 		if("logout")
 			authenticated = 0
@@ -264,8 +264,10 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I,/obj/item/weapon/card/emag/))
+	if((istype(I,/obj/item/weapon/card/emag/)) && (!src.emagged))
 		src.emagged = 1
+		if(authenticated == 1)
+			authenticated = 2
 		user << "You scramble the communication routing circuits!"
 	..()
 

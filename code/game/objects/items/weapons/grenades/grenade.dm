@@ -60,6 +60,8 @@
 			active = 1
 			icon_state = initial(icon_state) + "_active"
 			add_fingerprint(user)
+			message_admins("[user] has primed a [name] for detonation")
+			log_game("[user] primed a [name] for detonation")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()

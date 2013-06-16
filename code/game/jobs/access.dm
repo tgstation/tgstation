@@ -259,7 +259,7 @@
 		if(access_cargo)
 			return "Cargo Bay"
 		if(access_cargo_bot)
-			return "Cargo Bot Delivery"
+			return "Delivery Chutes"
 		if(access_security)
 			return "Security"
 		if(access_brig)
@@ -281,7 +281,7 @@
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)
-			return "Research Director"
+			return "RD Office"
 		if(access_bar)
 			return "Bar"
 		if(access_janitor)
@@ -321,7 +321,7 @@
 		if(access_armory)
 			return "Armory"
 		if(access_construction)
-			return "Construction Areas"
+			return "Construction"
 		if(access_kitchen)
 			return "Kitchen"
 		if(access_hydroponics)
@@ -335,7 +335,7 @@
 		if(access_virology)
 			return "Virology"
 		if(access_cmo)
-			return "Chief Medical Officer"
+			return "CMO Office"
 		if(access_qm)
 			return "Quartermaster"
 		if(access_clown)
@@ -367,15 +367,15 @@
 		if(access_xenobiology)
 			return "Xenobiology Lab"
 		if(access_hop)
-			return "Head of Personnel"
+			return "HoP Office"
 		if(access_hos)
-			return "Head of Security"
+			return "HoS Office"
 		if(access_ce)
-			return "Chief Engineer"
+			return "CE Office"
 		if(access_RC_announce)
 			return "RC Announcements"
 		if(access_keycard_auth)
-			return "Keycode Auth. Device"
+			return "Keycode Auth."
 		if(access_tcomsat)
 			return "Telecommunications"
 		if(access_gateway)

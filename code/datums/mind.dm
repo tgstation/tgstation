@@ -765,7 +765,7 @@ datum/mind
 				return
 			switch(href_list["monkey"])
 				if("healthy")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -780,7 +780,7 @@ datum/mind
 								D.cure(0)
 							sleep(0) //because deleting of virus is done through spawn(0)
 				if("infected")
-					if (usr.client.holder.rights & R_ADMIN)
+					if (check_rights(R_ADMIN, 0))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -793,21 +793,18 @@ datum/mind
 						else if (istype(M))
 							current.contract_disease(new /datum/disease/jungle_fever,1,0)
 				if("human")
-					var/mob/living/carbon/monkey/M = current
-					if (istype(M))
-						for(var/datum/disease/D in M.viruses)
-							if (istype(D,/datum/disease/jungle_fever))
-								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
-						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-						src = null
-						m2h.inject(M)
-						src = mobfinder.loc:mind
-						del(mobfinder)
-						current.radiation -= 50
+					if (check_rights(R_ADMIN, 0))
+						var/mob/living/carbon/human/H = current
+						var/mob/living/carbon/monkey/M = current
+						if (istype(M))
+							for(var/datum/disease/D in M.viruses)
+								if (istype(D,/datum/disease/jungle_fever))
+									D.cure(0)
+									sleep(0) //because deleting of virus is doing throught spawn(0)
+							log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
+							message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
+							H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
+							src = H.mind
 
 		else if (href_list["silicon"])
 			switch(href_list["silicon"])

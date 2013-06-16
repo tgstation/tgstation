@@ -24,6 +24,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
+	var/emped = 0	// since radios don't use machinery stat binary flags they get a seperate variable
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = FPRINT | CONDUCT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -83,11 +84,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	var/dat = ""
 
-	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
-		dat += "<b>Microphone:</b> [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
-
-	dat += {"
+	if(!istype(src, /obj/item/device/radio/headset))
+		dat += {"
+				<b>Microphone:</b> [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>
 				<b>Speaker:</b> [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+				"}
+	else	//Headsets dont get a mic button, speaker controls both
+		dat += "<b>Power:</b> [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>"
+	dat += {"
 				<b>Frequency:</b>
 				<A href='byond://?src=\ref[src];freq=-10'>-</A>
 				<A href='byond://?src=\ref[src];freq=-2'>-</A>
@@ -116,8 +120,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
-			<B>[chan_name]</B><br>
-			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
+			<B>[chan_name]</B>: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
 			"}
 
 /obj/item/device/radio/Topic(href, href_list)
@@ -223,6 +226,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
 				channel = channels[1]
 			connection = secure_radio_connections[channel]
+			if (!channels[channel]) // if the channel is turned off, don't broadcast
+				return
 		else
 			connection = radio_connection
 			channel = null
@@ -662,10 +667,20 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else return
 
 /obj/item/device/radio/emp_act(severity)
+	if (emped == 1) //
+		return
+	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
+		loc << "<span class='warning'>\The [src] overloads.</span>"
 	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
+	on = 0
+	spawn(200)
+		emped = 0
+		if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
+			on = 1
+	emped = 1
 	..()
 
 ///////////////////////////////

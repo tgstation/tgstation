@@ -16,7 +16,7 @@
 	anchored = 1.0
 	var/panel_open = 0 // 0 = Closed / 1 = Open
 	var/invuln = null
-	var/bugged = 0
+	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 
 	//OTHER
@@ -44,6 +44,11 @@
 	*/
 	..()
 
+/obj/machinery/camera/Del()
+	if(istype(bug))
+		bug.bugged_cameras -= src.c_tag
+	..()
+
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
@@ -62,12 +67,10 @@
 				if(can_use())
 					cameranet.addCamera(src)
 			for(var/mob/O in mob_list)
-				if (istype(O.machine, /obj/machinery/computer/security))
-					var/obj/machinery/computer/security/S = O.machine
-					if (S.current == src)
-						O.unset_machine()
-						O.reset_view(null)
-						O << "The screen bursts into static."
+				if (O.client && O.client.eye == src)
+					O.unset_machine()
+					O.reset_view(null)
+					O << "The screen bursts into static."
 			..()
 
 
@@ -138,28 +141,28 @@
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "You hold \a [itemname] up to the camera ..."
+		U << "You hold \the [itemname] up to the camera ..."
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = O
 				if(U.name == "Unknown") AI << "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				else AI << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-			else if (istype(O.machine, /obj/machinery/computer/security))
-				var/obj/machinery/computer/security/S = O.machine
-				if (S.current == src)
-					O << "[U] holds \a [itemname] up to one of the cameras ..."
-					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-	else if (istype(W, /obj/item/weapon/camera_bug))
+			else if (O.client && O.client.eye == src)
+				O << "[U] holds \a [itemname] up to one of the cameras ..."
+				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+	else if (istype(W, /obj/item/device/camera_bug))
 		if (!src.can_use())
 			user << "\blue Camera non-functional"
 			return
-		if (src.bugged)
+		if(istype(src.bug))
 			user << "\blue Camera bug removed."
-			src.bugged = 0
+			src.bug.bugged_cameras -= src.c_tag
+			src.bug = null
 		else
 			user << "\blue Camera bugged."
-			src.bugged = 1
+			src.bug = W
+			src.bug.bugged_cameras[src.c_tag] = src
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -198,12 +201,10 @@
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in player_list)
-		if (istype(O.machine, /obj/machinery/computer/security))
-			var/obj/machinery/computer/security/S = O.machine
-			if (S.current == src)
-				O.unset_machine()
-				O.reset_view(null)
-				O << "The screen bursts into static."
+		if (O.client && O.client.eye == src)
+			O.unset_machine()
+			O.reset_view(null)
+			O << "The screen bursts into static."
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1

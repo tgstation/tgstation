@@ -91,7 +91,7 @@
 	mymob.throw_icon = new /obj/screen()
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw"
+	mymob.throw_icon.name = "throw/catch"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
 	mymob.oxygen = new /obj/screen()

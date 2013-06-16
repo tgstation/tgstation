@@ -86,6 +86,9 @@
 			continue
 
 		for(var/turf/t in c.can_see())
+			// Possible optimization: if(turfs[t]) here, rather than &= turfs afterwards.
+			// List associations use a tree or hashmap of some sort (alongside the list itself)
+			//  so are surprisingly fast. (significantly faster than var/thingy/x in list, in testing)
 			newVisibleTurfs[t] = t
 
 	// Removes turf that isn't in turfs.
@@ -141,9 +144,8 @@
 		if(c.can_use())
 			cameras += c
 
-	for(var/turf/t in range(CHUNK_SIZE + (CHUNK_SIZE / 6), locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
-		if(t.x >= x && t.y >= y && t.x < x + CHUNK_SIZE && t.y < y + CHUNK_SIZE)
-			turfs[t] = t
+	for(var/turf/t in block(locate(x, y, z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
+		turfs[t] = t
 
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
@@ -154,6 +156,9 @@
 			continue
 
 		for(var/turf/t in c.can_see())
+			// Possible optimization: if(turfs[t]) here, rather than &= turfs afterwards.
+			// List associations use a tree or hashmap of some sort (alongside the list itself)
+			//  so are surprisingly fast. (significantly faster than var/thingy/x in list, in testing)
 			visibleTurfs[t] = t
 
 	// Removes turf that isn't in turfs.

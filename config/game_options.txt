@@ -92,11 +92,16 @@ PROBABILITY SANDBOX 0
 ## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
 ## the shuttle is called or the station is nuked.
 ## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUNDS
+#CONTINUOUS_ROUND_REV
+#CONTINUOUS_ROUND_WIZ
+#CONTINUOUS_ROUND_MALF
 
-## Uncomment to scale the number of antagonists to crew population. Doesn't
-## affect all gamemodes.
-#TRAITOR_SCALING
+
+## Variables calculate how number of antagonists will scale to population.
+## Used as (Antagonists = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+TRAITOR_SCALING_COEFF 6
+CHANGELING_SCALING_COEFF 10
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
