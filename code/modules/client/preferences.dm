@@ -255,7 +255,7 @@ datum/preferences
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
-		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=lowerInput;text=' + encodeURIComponent(rank); return false; }</script>"
+		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=decreaseJobLevel;text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -295,7 +295,7 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=increaseJobLevel;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -480,10 +480,10 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
-				if("input")
-					SetJob(user, href_list["text"])
-				if ("lowerInput")
-					SetLowerJob(user, href_list["text"])
+				if("increaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], 1)
+				if ("decreaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], -1)
 				else
 					SetChoices(user)
 			return 1
