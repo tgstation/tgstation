@@ -358,27 +358,60 @@ datum/preferences
 		SetChoices(user)
 		return 1
 
-	proc/RemoveJobFromPreferences(role)
-		var/datum/job/job = job_master.GetJob(role)
-
+	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
 		if (!job)
 			return 0
+
+		if (level == 1) // set all current high preferred to medium
+			job_civilian_med |= job_civilian_high
+			job_engsec_med |= job_engsec_high
+			job_medsci_med |= job_medsci_high
+			job_civilian_high = 0
+			job_engsec_high = 0
+			job_medsci_high = 0
 
 		if (job.department_flag == CIVILIAN)
 			job_civilian_low &= ~job.flag
 			job_civilian_med &= ~job.flag
 			job_civilian_high &= ~job.flag
-			return CIVILIAN
+
+			switch(level)
+				if (1)
+					job_civilian_high |= job.flag
+				if (2)
+					job_civilian_med |= job.flag
+				if (3)
+					job_civilian_low |= job.flag
+
+			return 1
 		else if (job.department_flag == ENGSEC)
 			job_engsec_low &= ~job.flag
 			job_engsec_med &= ~job.flag
 			job_engsec_high &= ~job.flag
-			return ENGSEC
+
+			switch(level)
+				if (1)
+					job_engsec_high |= job.flag
+				if (2)
+					job_engsec_med |= job.flag
+				if (3)
+					job_engsec_low |= job.flag
+
+			return 1
 		else if (job.department_flag == MEDSCI)
 			job_medsci_low &= ~job.flag
 			job_medsci_med &= ~job.flag
 			job_medsci_high &= ~job.flag
-			return MEDSCI
+
+			switch(level)
+				if (1)
+					job_medsci_high |= job.flag
+				if (2)
+					job_medsci_med |= job.flag
+				if (3)
+					job_medsci_low |= job.flag
+
+			return 1
 
 		return 0
 
