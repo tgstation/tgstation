@@ -481,9 +481,9 @@ datum/preferences
 					userandomjob = !userandomjob
 					SetChoices(user)
 				if("increaseJobLevel")
-					UpdateJobPreference(user, href_list["text"], 1)
-				if ("decreaseJobLevel")
 					UpdateJobPreference(user, href_list["text"], -1)
+				if ("decreaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], 1)
 				else
 					SetChoices(user)
 			return 1
