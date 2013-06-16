@@ -330,34 +330,6 @@ datum/preferences
 		popup.open(0)
 		return
 
-
-	proc/SetJob(mob/user, role)
-		var/datum/job/job = job_master.GetJob(role)
-		if(!job)
-			user << browse(null, "window=mob_occupation")
-			ShowChoices(user)
-			return
-
-		if(role == "Assistant")
-			if(job_civilian_low & job.flag)
-				job_civilian_low &= ~job.flag
-			else
-				job_civilian_low |= job.flag
-			SetChoices(user)
-			return 1
-
-		if(GetJobDepartment(job, 1) & job.flag)
-			SetJobDepartment(job, 1)
-		else if(GetJobDepartment(job, 2) & job.flag)
-			SetJobDepartment(job, 2)
-		else if(GetJobDepartment(job, 3) & job.flag)
-			SetJobDepartment(job, 3)
-		else//job = Never
-			SetJobDepartment(job, 4)
-
-		SetChoices(user)
-		return 1
-
 	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
 		if (!job)
 			return 0
@@ -415,8 +387,21 @@ datum/preferences
 
 		return 0
 
-	proc/SetLowerJob(mob/user, role)
+	proc/GetJobLevel(var/datum/job/job)
+		if (!job || !level) return 0
+
+		if (job.flag & (job_civilian_high | job_engsec_high | job_medsci_high))
+			return 1
+		else if (job.flag & (job_civilian_med | job_engsec_med | job_medsci_med))
+			return 2
+		else if (job.flag & (job_civilian_low | job_engsec_low | job_medsci_low))
+			return 3
+
+		return 0
+
+	proc/UpdateJobPreference(mob/user, role, upOrDown)
 		var/datum/job/job = job_master.GetJob(role)
+
 		if(!job)
 			user << browse(null, "window=mob_occupation")
 			ShowChoices(user)
@@ -430,16 +415,9 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-		if(GetJobDepartment(job, 1) & job.flag)
-			SetJobPreferenceLevel(job, 2)
-		else if(GetJobDepartment(job, 2) & job.flag)
-			SetJobPreferenceLevel(job, 3)
-		else if(GetJobDepartment(job, 3) & job.flag)
-			SetJobPreferenceLevel(job, 4)
-		else
-			return 1
-
+		SetJobPreferenceLevel(job, GetJobLevel(job) + upOrDown)
 		SetChoices(user)
+
 		return 1
 
 
@@ -486,69 +464,6 @@ datum/preferences
 					if(3)
 						return job_engsec_low
 		return 0
-
-
-	proc/SetJobDepartment(var/datum/job/job, var/level)
-		if(!job || !level)	return 0
-		switch(level)
-			if(1)//Only one of these should ever be active at once so clear them all here
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-				return 1
-			if(2)//Set current highs to med, then reset them
-				job_civilian_med |= job_civilian_high
-				job_medsci_med |= job_medsci_high
-				job_engsec_med |= job_engsec_high
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-
-		switch(job.department_flag)
-			if(CIVILIAN)
-				switch(level)
-					if(2)
-						job_civilian_high = job.flag
-						job_civilian_med &= ~job.flag
-						job_civilian_low &= ~job.flag
-					if(3)
-						job_civilian_med |= job.flag
-						job_civilian_low &= ~job.flag
-						job_civilian_high &= ~job.flag
-					else
-						job_civilian_low |= job.flag
-						job_civilian_med &= ~job.flag
-						job_civilian_high &= ~job.flag
-			if(MEDSCI)
-				switch(level)
-					if(2)
-						job_medsci_high = job.flag
-						job_medsci_med &= ~job.flag
-						job_medsci_low &= ~job.flag
-					if(3)
-						job_medsci_med |= job.flag
-						job_medsci_low &= ~job.flag
-						job_medsci_high &= ~job.flag
-					else
-						job_medsci_low |= job.flag
-						job_medsci_high &= ~job.flag
-						job_medsci_med &= ~job.flag
-			if(ENGSEC)
-				switch(level)
-					if(2)
-						job_engsec_high = job.flag
-						job_engsec_med &= ~job.flag
-						job_engsec_low &= ~job.flag
-					if(3)
-						job_engsec_med |= job.flag
-						job_engsec_low &= ~job.flag
-						job_engsec_high &= ~job.flag
-					else
-						job_engsec_low |= job.flag
-						job_engsec_med &= ~job.flag
-						job_engsec_high &= ~job.flag
-		return 1
-
 
 	proc/process_link(mob/user, list/href_list)
 		if(!user)	return
