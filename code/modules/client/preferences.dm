@@ -255,6 +255,7 @@ datum/preferences
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
+		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=lowerInput;text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -294,7 +295,7 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -356,6 +357,58 @@ datum/preferences
 
 		SetChoices(user)
 		return 1
+
+	proc/RemoveJobFromPreferences(role)
+		var/datum/job/job = job_master.GetJob(role)
+
+		if (!job)
+			return 0
+
+		if (job.department_flag == CIVILIAN)
+			job_civilian_low &= ~job.flag
+			job_civilian_med &= ~job.flag
+			job_civilian_high &= ~job.flag
+			return CIVILIAN
+		else if (job.department_flag == ENGSEC)
+			job_engsec_low &= ~job.flag
+			job_engsec_med &= ~job.flag
+			job_engsec_high &= ~job.flag
+			return ENGSEC
+		else if (job.department_flag == MEDSCI)
+			job_medsci_low &= ~job.flag
+			job_medsci_med &= ~job.flag
+			job_medsci_high &= ~job.flag
+			return MEDSCI
+
+		return 0
+
+	proc/SetLowerJob(mob/user, role)
+		var/datum/job/job = job_master.GetJob(role)
+		if(!job)
+			user << browse(null, "window=mob_occupation")
+			ShowChoices(user)
+			return
+
+		if(role == "Assistant")
+			if(job_civilian_low & job.flag)
+				job_civilian_low &= ~job.flag
+			else
+				job_civilian_low |= job.flag
+			SetChoices(user)
+			return 1
+
+		if(GetJobDepartment(job, 1) & job.flag)
+			SetJobPreferenceLevel(job, 2)
+		else if(GetJobDepartment(job, 2) & job.flag)
+			SetJobPreferenceLevel(job, 3)
+		else if(GetJobDepartment(job, 3) & job.flag)
+			SetJobPreferenceLevel(job, 4)
+		else
+			return 1
+
+		SetChoices(user)
+		return 1
+
 
 	proc/ResetJobs()
 
@@ -424,31 +477,43 @@ datum/preferences
 					if(2)
 						job_civilian_high = job.flag
 						job_civilian_med &= ~job.flag
+						job_civilian_low &= ~job.flag
 					if(3)
 						job_civilian_med |= job.flag
 						job_civilian_low &= ~job.flag
+						job_civilian_high &= ~job.flag
 					else
 						job_civilian_low |= job.flag
+						job_civilian_med &= ~job.flag
+						job_civilian_high &= ~job.flag
 			if(MEDSCI)
 				switch(level)
 					if(2)
 						job_medsci_high = job.flag
 						job_medsci_med &= ~job.flag
+						job_medsci_low &= ~job.flag
 					if(3)
 						job_medsci_med |= job.flag
 						job_medsci_low &= ~job.flag
+						job_medsci_high &= ~job.flag
 					else
 						job_medsci_low |= job.flag
+						job_medsci_high &= ~job.flag
+						job_medsci_med &= ~job.flag
 			if(ENGSEC)
 				switch(level)
 					if(2)
 						job_engsec_high = job.flag
 						job_engsec_med &= ~job.flag
+						job_engsec_low &= ~job.flag
 					if(3)
 						job_engsec_med |= job.flag
 						job_engsec_low &= ~job.flag
+						job_engsec_high &= ~job.flag
 					else
 						job_engsec_low |= job.flag
+						job_engsec_med &= ~job.flag
+						job_engsec_high &= ~job.flag
 		return 1
 
 
@@ -469,6 +534,8 @@ datum/preferences
 					SetChoices(user)
 				if("input")
 					SetJob(user, href_list["text"])
+				if ("lowerInput")
+					SetLowerJob(user, href_list["text"])
 				else
 					SetChoices(user)
 			return 1
@@ -522,7 +589,7 @@ datum/preferences
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 						if(new_hair)
 							h_color = sanitize_hexcolor(new_hair)
-							
+
 
 					if("h_style")
 						var/new_h_style
