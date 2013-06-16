@@ -48,6 +48,7 @@ var/list/ai_list = list()
 	var/datum/trackable/track = null
 
 	var/last_paper_seen = null
+	var/last_announcement = ""
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -330,6 +331,10 @@ var/list/ai_list = list()
 				H.attack_ai(src) //may as well recycle
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
+
+	if(href_list["say_word"])
+		play_vox_word(href_list["say_word"], null, src)
+		return
 
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
