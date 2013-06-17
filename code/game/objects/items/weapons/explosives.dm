@@ -53,7 +53,7 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
+/obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, obj/mecha, flag)
 	if (!flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
@@ -91,6 +91,7 @@
 	if(target)
 		if (istype(target, /turf/simulated/wall))
 			target:dismantle_wall(1)
+			
 		else
 			target.ex_act(1)
 		if (isobj(target))
@@ -209,3 +210,4 @@
 			message_admins("[usr] has primed a [name] for detonation")
 			log_game("[usr] primed a [name] for detonation")
 			processing_objects.Add(src) //Ticking down
+	
