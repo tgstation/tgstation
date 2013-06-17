@@ -105,7 +105,7 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	centcomm_cancast = 0 //prevent people from getting to centcomm
+	centcom_cancast = 0 //prevent people from getting to centcom
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
