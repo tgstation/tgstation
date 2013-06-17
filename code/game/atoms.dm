@@ -414,7 +414,7 @@ its easier to just keep the beam vertical.
 	//A.fingerprintshidden |= fingerprintshidden    //admin
 	if(fingerprints)
 		A.fingerprints |= fingerprints.Copy()            //detective
-	if(fingerprintshidden)
+	if(fingerprintshidden && istype(fingerprintshidden))
 		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
 
 
