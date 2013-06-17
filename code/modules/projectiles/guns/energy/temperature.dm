@@ -8,6 +8,7 @@
 	charge_cost = 100
 	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
 
+//the gun gives the temperature to the projectile in gun.dm under after attack
 	projectile_type = "/obj/item/projectile/temp"
 	cell_type = "/obj/item/weapon/cell/high"
 

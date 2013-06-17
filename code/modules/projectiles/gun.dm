@@ -80,6 +80,11 @@
 		if(!in_chamber)
 			return
 
+		if(istype(src,/obj/item/weapon/gun/energy/temperature))
+			var/obj/item/weapon/gun/energy/temperature/temper = src
+			in_chamber.temperature = temper.temperature
+			//world << "Temperture of bullet is:[in_chamber.temperature]"
+
 		in_chamber.firer = user
 		in_chamber.def_zone = user.zone_sel.selecting
 
