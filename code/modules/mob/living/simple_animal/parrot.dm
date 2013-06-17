@@ -42,16 +42,18 @@
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
-	melee_damage_upper = 0
+	melee_damage_upper = 10
 	melee_damage_lower = 5
 
 	response_help  = "pets"
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
+	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
+	attacktext = "chomps"
+	friendly = "grooms"
 
 	var/parrot_damage_upper = 10
-	var/parrot_mode = "Help"
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
@@ -118,7 +120,7 @@
 /mob/living/simple_animal/parrot/Stat()
 	..()
 	stat("Held Item", held_item)
-	stat("Mode",parrot_mode)
+	stat("Mode",a_intent)
 
 /*
  * Inventory
@@ -302,13 +304,6 @@
 /mob/living/simple_animal/parrot/Life()
 	..()
 
-	//first thing a parrot does is eat its cracker
-	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker))
-		held_item = null
-		if(health < maxHealth)
-			adjustBruteLoss(-10)
-		emote("[src] eagerly downs the cracker")
-
 	//Sprite and AI update for when a parrot gets pulled
 	if(pulledby && stat == CONSCIOUS)
 		icon_state = "parrot_fly"
@@ -321,9 +316,6 @@
 
 	if(!isturf(src.loc) || !canmove || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
-
-	if(parrot_interest == null) //make the parrot friendly if it doesn't have a target
-		melee_damage_upper = 0
 
 
 //-----SPEECH
@@ -501,12 +493,13 @@
 		//If we're attacking a nothing, an object, a turf or a ghost for some stupid reason, switch to wander
 		if(!parrot_interest || !isliving(parrot_interest))
 			parrot_interest = null
-			melee_damage_upper = 0
 			parrot_state = PARROT_WANDER
 			return
 
 		var/mob/living/L = parrot_interest
-		melee_damage_upper = parrot_damage_upper
+		if(melee_damage_upper == 0)
+			melee_damage_upper = parrot_damage_upper
+			a_intent = "harm"
 
 		//If the mob is close enough to interact with
 		if(in_range(src, parrot_interest))
@@ -514,7 +507,6 @@
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
 				parrot_interest = null
-				melee_damage_upper = 0
 				if(!held_item)
 					held_item = steal_from_ground()
 					if(!held_item)
@@ -525,6 +517,7 @@
 					parrot_state = PARROT_WANDER
 				return
 
+			attacktext = pick("claws at", "chomps")
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else
@@ -537,7 +530,6 @@
 		walk(src,0)
 		parrot_interest = null
 		parrot_perch = null
-		melee_damage_upper = 0
 		drop_held_item()
 		parrot_state = PARROT_WANDER
 		return
@@ -700,6 +692,16 @@
 			src << "\red You have nothing to drop!"
 		return 0
 
+
+//parrots will eat crackers instead of dropping them
+	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker))
+		held_item = null
+		if(health < maxHealth)
+			adjustBruteLoss(-10)
+		emote("[src] eagerly downs the cracker")
+		return 1
+
+
 	if(!drop_gently)
 		if(istype(held_item, /obj/item/weapon/grenade))
 			var/obj/item/weapon/grenade/G = held_item
@@ -743,10 +745,10 @@
 
 	if(melee_damage_upper)
 		melee_damage_upper = 0
-		parrot_mode = "Help"
+		a_intent = "help"
 	else
 		melee_damage_upper = parrot_damage_upper
-		parrot_mode = "Harm"
+		a_intent = "harm"
 	return
 
 /*
