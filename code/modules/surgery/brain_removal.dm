@@ -15,7 +15,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","head")
-		user.visible_message("<span class='notice'>[user] saws open [target]'s head!")
+		user.visible_message("<span class='notice'>[user] saws [target]'s skull open!")
 	return 1	
 			
 
