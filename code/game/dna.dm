@@ -330,151 +330,126 @@
 	name = "\improper DNA Scanner"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "scanner_0"
+	icon_state = "scanner"
 	density = 1
-	var/locked = 0.0
+	var/locked = 0
+	var/open = 0
 	var/mob/occupant = null
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
 
 /obj/machinery/dna_scannernew/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonescanner(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/clonescanner,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/cable_coil,
+		/obj/item/weapon/cable_coil
+		)
 	RefreshParts()
 
-/obj/machinery/dna_scannernew/allow_drop()
-	return 0
+/obj/machinery/dna_scannernew/proc/toggle_open()
+	if(open)	return close()
+	else		return open()
+	
+/obj/machinery/dna_scannernew/proc/close()
+	if(open)
+		open = 0
+		density = 1
+		for(var/mob/living/carbon/C in loc)
+			if(C.buckled)	continue
+			if(C.client)
+				C.client.perspective = EYE_PERSPECTIVE
+				C.client.eye = src
+			occupant = C
+			C.loc = src
+			C.stop_pulling()
+			break
+		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
+		
+		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
+		if(occupant)
+			if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
+				|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
+				|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
+				|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
+
+				if(!occupant.key && occupant.mind)
+					for(var/mob/dead/observer/ghost in player_list)
+						if(ghost.mind == occupant.mind)
+							if(ghost.can_reenter_corpse)
+								ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+							break
+		
+		return 1
+		
+/obj/machinery/dna_scannernew/proc/open()
+	if(!open)
+		if(locked)
+			usr << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
+			return
+		var/turf/T = get_turf(src)
+		if(T)
+			open = 1
+			density = 0
+			T.contents += contents
+			if(occupant)
+				if(occupant.client)
+					occupant.client.eye = occupant
+					occupant.client.perspective = MOB_PERSPECTIVE
+				occupant = null
+			icon_state = "[initial(icon_state)]_open"
+		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat)
 		return
-	go_out()
-	return
-
-/obj/machinery/dna_scannernew/verb/eject()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Eject DNA Scanner"
-
-	if(usr.stat != 0)
-		return
-	go_out()
-	for(var/obj/O in src)
-		if((!istype(O,/obj/item/weapon/circuitboard/clonescanner)) && (!istype(O,/obj/item/weapon/stock_parts)) && (!istype(O,/obj/item/weapon/cable_coil)))
-			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components)
-	if(!occupant)
-		for(var/mob/M in src)//Failsafe so you can get mobs out
-			M.loc = get_turf(src)
-	add_fingerprint(usr)
-	return
-
-/obj/machinery/dna_scannernew/verb/move_inside()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Enter DNA Scanner"
-
-	if(usr.stat != 0)
-		return
-	if(!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
-		usr << "<span class='notice'>Try as you might, you can not climb up into the scanner.</span>"
-		return
-	if(occupant)
-		usr << "<span class='notice'>The scanner is already occupied!</span>"
-		return
-	if(locked)
-		usr << "<span class='notice'>The bolts are locked.</span>"
-		return
-	if(usr.abiotic())
-		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
-		return
-	usr.stop_pulling()
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
-	usr.loc = src
-	occupant = usr
-	icon_state = "scanner_1"
-
-	add_fingerprint(usr)
+	open()
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
 	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
 		return
-	if(occupant)
-		user << "<span class='notice'>The scanner is already occupied!</span>"
-		return
-	if(locked)
-		user << "<span class='notice'>The scanner is locked.</span>"
-		return
-	if(G.affecting.abiotic())
-		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
+	if(!open)
+		user << "<span class='notice'>Open the scanner first.</span>"
 		return
 	var/mob/M = G.affecting
-	if(M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
-	M.loc = src
-	occupant = M
+	M.loc = loc
 	user.stop_pulling()
-	icon_state = "scanner_1"
+	del(G)
 
+/obj/machinery/dna_scannernew/attack_hand(mob/user)
+	if(..())	return
+	toggle_open()
 	add_fingerprint(user)
 
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-		|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-		|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-		|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-		if(!M.client && M.mind)
-			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.mind == M.mind)
-					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
-					break
-	del(G)
-	return
-
-/obj/machinery/dna_scannernew/proc/go_out()
-	if(!occupant || locked)
-		return
-
-	if(occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	occupant.loc = loc
-	occupant = null
-	icon_state = "scanner_0"
-	return
 
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
+			for(var/atom/movable/A in src)
 				A.loc = loc
-				ex_act(severity)
+				A.ex_act(severity)
 			del(src)
 			return
 		if(2.0)
 			if(prob(50))
-				for(var/atom/movable/A as mob|obj in src)
+				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					A.ex_act(severity)
 				del(src)
 				return
 		if(3.0)
 			if(prob(25))
-				for(var/atom/movable/A as mob|obj in src)
+				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					A.ex_act(severity)
 				del(src)
 				return
 		else
@@ -483,7 +458,7 @@
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
+		for(var/atom/movable/A in contents)
 			A.loc = loc
 		del(src)
 
@@ -660,8 +635,8 @@
 	status += "Emitter Array Pulse Duration: [radduration] <i>Accuracy: ([chance_to_hit])</i></div>"
 	
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
-	if(connected)		buttons += "<a href='?src=\ref[src];task=togglelock;'>Toggle Bolts</a> "
-	else				buttons += "<span class='linkOff'>Toggle Bolts</span> "
+	if(connected)		buttons += "<a href='?src=\ref[src];task=togglelock;'>Toggle Bolts</a> <a href='?src=\ref[src];task=toggleopen;'>[connected.open ? "Close" : "Open"] Scanner</a> "
+	else				buttons += "<span class='linkOff'>Toggle Bolts</span> <span class='linkOff'>Open Scanner</span> "
 	if(viable_occupant)	buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
 	else				buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
 	if(diskette)		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
@@ -804,6 +779,8 @@
 	switch(href_list["task"])
 		if("togglelock")
 			if(connected)	connected.locked = !connected.locked
+		if("toggleopen")
+			if(connected)	connected.toggle_open()
 		if("setduration")
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
