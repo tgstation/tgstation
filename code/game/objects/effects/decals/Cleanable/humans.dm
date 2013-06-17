@@ -12,7 +12,7 @@
 	var/list/viruses = list()
 	blood_DNA = list()
 	var/datum/disease2/disease/virus2 = null
-	var/amount = 5
+	var/amount = 3
 
 /obj/effect/decal/cleanable/blood/Del()
 	for(var/datum/disease/D in viruses)
