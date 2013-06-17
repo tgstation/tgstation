@@ -410,10 +410,18 @@
 					icon_state = "icedcoffeeglass"
 					name = "Iced Coffee"
 					desc = "A drink to perk you up and refresh you!"
+				if("icetea")
+					icon_state = "icedteaglass"
+					name = "Iced Tea"
+					desc = "All natural, antioxidant-rich flavour sensation."
 				if("coffee")
 					icon_state = "glass_brown"
 					name = "Glass of coffee"
 					desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+				if("tea")
+					icon_state = "teaglass"
+					name = "Glass of tea"
+					desc = "Drinking it from here would not seem right."
 				if("bilk")
 					icon_state = "glass_brown"
 					name = "Glass of bilk"
