@@ -474,7 +474,8 @@ datum
 						update_total()
 						if(!safety)//So it does not handle reactions when it need not to
 							handle_reactions()
-						my_atom.on_reagent_change()
+						if(my_atom)
+							my_atom.on_reagent_change()
 						return 0
 
 				return 1

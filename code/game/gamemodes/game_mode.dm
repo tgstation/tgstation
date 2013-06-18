@@ -237,6 +237,9 @@ Implants;
 		else if(prob(10))
 			suspects += man
 	for(var/mob/M in suspects)
+		if(M.mind.assigned_role == "MODE")
+			intercepttext += "Someone with the job of <b>[pick("Assistant","Station Engineer", "Medical Doctor")]</b> <br>"
+			continue
 		switch(rand(1, 100))
 			if(1 to 50)
 				intercepttext += "Someone with the job of <b>[M.mind.assigned_role]</b> <br>"
