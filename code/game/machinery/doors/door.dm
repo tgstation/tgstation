@@ -199,6 +199,8 @@
 	src.SetOpacity(0)
 	sleep(10)
 	src.layer = 2.7
+	if(istype(src, /obj/machinery/door/firedoor))
+		src.layer = 2.6
 	src.density = 0
 	explosion_resistance = 0
 	update_icon()
@@ -226,6 +228,8 @@
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
+	if(istype(src, /obj/machinery/door/firedoor))
+		src.layer = 3.0
 	sleep(10)
 	update_icon()
 	if(visible && !glass)
