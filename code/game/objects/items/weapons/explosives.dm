@@ -105,7 +105,7 @@
 
 /obj/item/weapon/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
-	name = "Syndicate Bomb"
+	name = "syndicate bomb"
 	icon_state = "syndicate-bomb-inactive"
 	item_state = "bomb"
 	desc = "A large and menacing device capable of terrible destruction"
@@ -135,21 +135,24 @@
 /obj/item/weapon/syndicatebomb/New()
 	wires = new(src)
 	..()
+/obj/item/weapon/syndicatebomb/examine()
+	..()
+	usr << "A digital display on it reads \"[timer]\"."
 
 /obj/item/weapon/syndicatebomb/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
-				user << "<span class='notice'>The bomb must be placed on solid ground to attach it</span>"
+				user << "<span class='notice'>The [src] must be placed on solid ground to attach it</span>"
 			else
-				user << "<span class='notice'>You firmly wrench the bomb to the floor</span>"
+				user << "<span class='notice'>You firmly wrench the [src] to the floor</span>"
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 1
 				if(active)
 					user << "<span class='notice'>The bolts lock in place</span>"
 		else
 			if(!active)
-				user << "<span class='notice'>You wrench the bomb from the floor</span>"
+				user << "<span class='notice'>You wrench the [src] from the floor</span>"
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 0
 			else
@@ -177,7 +180,7 @@
 		else if(!active)
 			settings()
 		else
-			user << "<span class='notice'>The bomb is bolted to the floor, you'll have to unbolt it first!</span>"
+			user << "<span class='notice'>The [src] is bolted to the floor, you'll have to unbolt it first!</span>"
 	else
 		..()
 
@@ -187,17 +190,19 @@
 	else if(!active)
 		settings()
 	else
-		user << "<span class='notice'>The bomb is counting down, the settings can't be changed now!</span>"
+		user << "<span class='notice'>The [src] is counting down, the settings can't be changed now!</span>"
 
 /obj/item/weapon/syndicatebomb/proc/settings(var/mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 30, 60000)
+	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
+	if(!anchored)
+		return
 	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
-		if(defused || active)
-			if(defused)
+		if(defused || active || !anchored)
+			if(defused || !anchored)
 				src.loc.visible_message("\blue \icon[src] Device error: User intervention required")
 			return
 		else
