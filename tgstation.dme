@@ -161,6 +161,7 @@
 #include "code\datums\diseases\advance\symptoms\stimulant.dm"
 #include "code\datums\diseases\advance\symptoms\symptoms.dm"
 #include "code\datums\diseases\advance\symptoms\visionloss.dm"
+#include "code\datums\diseases\advance\symptoms\vitiligo.dm"
 #include "code\datums\diseases\advance\symptoms\voice_change.dm"
 #include "code\datums\diseases\advance\symptoms\vomit.dm"
 #include "code\datums\diseases\advance\symptoms\weight.dm"
