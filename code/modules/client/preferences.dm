@@ -254,6 +254,7 @@ datum/preferences
 
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
+		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=decreaseJobLevel;text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
