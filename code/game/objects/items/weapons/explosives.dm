@@ -194,7 +194,7 @@
 
 /obj/item/weapon/syndicatebomb/proc/settings(var/mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 60, 60000)
+	newtime = Clamp(newtime, 30, 60000)
 	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
