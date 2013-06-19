@@ -16,7 +16,7 @@
 	var/state = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
-	var/centcomm_message_cooldown = 0
+	var/centcom_message_cooldown = 0
 	var/tmp_alertlevel = 0
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
@@ -180,7 +180,7 @@
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
-				if(centcomm_message_cooldown)
+				if(centcom_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
@@ -189,15 +189,15 @@
 				Centcomm_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcomm announcement: [input]")
-				centcomm_message_cooldown = 1
+				centcom_message_cooldown = 1
 				spawn(6000)//10 minute cooldown
-					centcomm_message_cooldown = 0
+					centcom_message_cooldown = 0
 
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
-				if(centcomm_message_cooldown)
+				if(centcom_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
@@ -206,9 +206,9 @@
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
-				centcomm_message_cooldown = 1
+				centcom_message_cooldown = 1
 				spawn(6000)//10 minute cooldown
-					centcomm_message_cooldown = 0
+					centcom_message_cooldown = 0
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"
@@ -449,7 +449,7 @@
 		return
 
 	if(emergency_shuttle.direction == -1)
-		user << "The emergency shuttle may not be called while returning to CentCom."
+		user << "The emergency shuttle may not be called while returning to Centcom."
 		return
 
 	if(emergency_shuttle.online)
@@ -475,7 +475,7 @@
 	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
 		return
 
-	if(emergency_shuttle.direction != -1 && emergency_shuttle.online) //check that shuttle isn't already heading to centcomm
+	if(emergency_shuttle.direction != -1 && emergency_shuttle.online) //check that shuttle isn't already heading to centcom
 		emergency_shuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)

@@ -119,7 +119,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	var/points_per_slip = 2
 	var/points_per_crate = 5
 	var/plasma_per_point = 5 // 2 plasma for 1 point
-	var/centcomm_message = "" // Remarks from CentComm on how well you checked the last order.
+	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -135,7 +135,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	New()
 		ordernum = rand(1,9000)
 
-	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcomm and the station
+	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcom and the station
 	proc/process()
 		for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 			var/datum/supply_packs/P = new typepath()
@@ -194,7 +194,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 
 		return 1
 
-	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
+	//To stop things being sent to centcom which should not be sent to centcom Recursively checks for these types.
 	proc/forbidden_atoms_check(atom/A)
 		if(istype(A,/mob/living))
 			return 1
@@ -222,8 +222,8 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		var/plasma_count = 0
 		var/crate_count = 0
 
-		centcomm_message = ""
-		
+		centcom_message = ""
+
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
@@ -244,32 +244,32 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 							for(var/i=1,i<=slip.stamped.len,i++)
 								if(slip.stamped[i] == /obj/item/weapon/stamp/denied)
 									denied = 1
-							if(slip.erroneous && denied) // Caught a mistake by CentComm (IDEA: maybe CentComm rarely gets offended by this)
+							if(slip.erroneous && denied) // Caught a mistake by Centcom (IDEA: maybe Centcom rarely gets offended by this)
 								points += slip.points-points_per_crate // For now, give a full refund for paying attention (minus the crate cost)
-								centcomm_message += "<font color=green>+[slip.points-points_per_crate]</font>: Station correctly denied package [slip.ordernumber]: "
+								centcom_message += "<font color=green>+[slip.points-points_per_crate]</font>: Station correctly denied package [slip.ordernumber]: "
 								if(slip.erroneous & MANIFEST_ERROR_NAME)
-									centcomm_message += "Destination station incorrect. "
+									centcom_message += "Destination station incorrect. "
 								else if(slip.erroneous & MANIFEST_ERROR_COUNT)
-									centcomm_message += "Packages incorrectly counted. "
+									centcom_message += "Packages incorrectly counted. "
 								else if(slip.erroneous & MANIFEST_ERROR_ITEM)
-									centcomm_message += "Package incomplete. "
-								centcomm_message += "Points refunded.<BR>"
+									centcom_message += "Package incomplete. "
+								centcom_message += "Points refunded.<BR>"
 							else if(!slip.erroneous && !denied) // Approving a proper order awards the relatively tiny points_per_slip
 								points += points_per_slip
-								centcomm_message += "<font color=green>+1</font>: Package [slip.ordernumber] accorded.<BR>"
+								centcom_message += "<font color=green>+1</font>: Package [slip.ordernumber] accorded.<BR>"
 							else // You done goofed.
 								if(slip.erroneous)
-									centcomm_message += "<font color=red>+0</font>: Station approved package [slip.ordernumber] despite error: "
+									centcom_message += "<font color=red>+0</font>: Station approved package [slip.ordernumber] despite error: "
 									if(slip.erroneous & MANIFEST_ERROR_NAME)
-										centcomm_message += "Destination station incorrect."
+										centcom_message += "Destination station incorrect."
 									else if(slip.erroneous & MANIFEST_ERROR_COUNT)
-										centcomm_message += "Packages incorrectly counted."
+										centcom_message += "Packages incorrectly counted."
 									else if(slip.erroneous & MANIFEST_ERROR_ITEM)
-										centcomm_message += "We found unshipped items on our dock."
-									centcomm_message += "  Be more vigilant.<BR>"
+										centcom_message += "We found unshipped items on our dock."
+									centcom_message += "  Be more vigilant.<BR>"
 								else
 									points -= slip.points-points_per_crate
-									centcomm_message += "<font color=red>-[slip.points-points_per_crate]</font>: Station denied package [slip.ordernumber].  Our records show no fault on our part.<BR>"
+									centcom_message += "<font color=red>-[slip.points-points_per_crate]</font>: Station denied package [slip.ordernumber].  Our records show no fault on our part.<BR>"
 							find_slip = 0
 						continue
 
@@ -280,11 +280,11 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 			del(MA)
 
 		if(plasma_count)
-			centcomm_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
+			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
 			points += round(plasma_count / plasma_per_point)
-		
+
 		if(crate_count)
-			centcomm_message += "<font color=green>+[round(crate_count*points_per_crate)]</font>: Received [crate_count] crates.<BR>"
+			centcom_message += "<font color=green>+[round(crate_count*points_per_crate)]</font>: Received [crate_count] crates.<BR>"
 			points += crate_count * points_per_crate
 
 	//Buyin
@@ -324,7 +324,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 			if(prob(5))
 				printed_station_name = new_station_name()
 				slip.erroneous |= MANIFEST_ERROR_NAME // They got our station name wrong.  BASTARDS!
-				// IDEA: Have CentComm accidentally send random low-value crates in large orders, give large bonus for returning them intact.
+				// IDEA: Have Centcom accidentally send random low-value crates in large orders, give large bonus for returning them intact.
 			var printed_packages_amount = supply_shuttle.shoppinglist.len
 			if(prob(5))
 				printed_packages_amount += rand(1,2) // I considered rand(-2,2), but that could be zero.  Heh.
@@ -359,7 +359,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 				if(SP.amount && B2:amount) B2:amount = SP.amount
 				slip.info += "<li>[B2.name]</li>" //add the item to the manifest (even if it was misplaced)
 				// If it has multiple items, there's a 1% of each going missing... Not for secure crates or those large wooden ones, though.
-				if(contains.len > 1 && prob(1) && !findtext(SP.containertype,"/secure/") && !findtext(SP.containertype,"/largecrate/")) 
+				if(contains.len > 1 && prob(1) && !findtext(SP.containertype,"/secure/") && !findtext(SP.containertype,"/largecrate/"))
 					slip.erroneous |= MANIFEST_ERROR_ITEM // This item was not included in the shipment!
 					del(B2) // Lost in space... or the loading dock.
 
@@ -518,7 +518,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
 		\n<A href='?src=\ref[user];mach_close=computer'>Close</A><BR>
-		<HR>\n<B>Central Command messages</B><BR> [supply_shuttle.centcomm_message ? supply_shuttle.centcomm_message : "Glory to Nanotrasen."]"}
+		<HR>\n<B>Central Command messages</B><BR> [supply_shuttle.centcom_message ? supply_shuttle.centcom_message : "Glory to Nanotrasen."]"}
 
 	user << browse(dat, "window=computer;size=700x450")
 	onclose(user, "computer")
