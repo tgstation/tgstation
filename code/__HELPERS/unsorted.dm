@@ -30,12 +30,6 @@
 /proc/dd_range(var/low, var/high, var/num)
 	return max(low,min(high,num))
 
-//Returns whether or not A is the middle most value
-/proc/InRange(var/A, var/lower, var/upper)
-	if(A < lower) return 0
-	if(A > upper) return 0
-	return 1
-
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
@@ -182,9 +176,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(O.density && !istype(O, /obj/structure/window))
 			return 1
 	return 0
-
-/proc/sign(x)
-	return x!=0?x/abs(x):0
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		//starting x
@@ -462,14 +453,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
-//Forces a variable to be posative
-/proc/modulus(var/M)
-	if(M >= 0)
-		return M
-	if(M < 0)
-		return -M
-
-
 /proc/key_name(var/whom, var/include_link = null, var/include_name = 1)
 	var/mob/M
 	var/client/C
@@ -528,15 +511,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
 
-
-//Will return the location of the turf an atom is ultimatly sitting on
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
-	//in case they're in a closet or sleeper or something
-	var/atom/loc = M.loc
-	while(loc && !istype(loc, /turf/))
-		loc = loc.loc
-	return loc
-
 // Returns the atom sitting on the turf.
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(var/atom/movable/M)
@@ -594,27 +568,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-//Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
-/proc/between(var/low, var/middle, var/high)
-	return max(min(middle, high), low)
-
 proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-//returns random gauss number
-proc/GaussRand(var/sigma)
-  var/x,y,rsq
-  do
-    x=2*rand()-1
-    y=2*rand()-1
-    rsq=x*x+y*y
-  while(rsq>1 || !rsq)
-  return sigma*y*sqrt(-2*log(rsq)/rsq)
-
-//returns random gauss number, rounded to 'roundto'
-proc/GaussRandRound(var/sigma,var/roundto)
-	return round(GaussRand(sigma),roundto)
 
 proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
 //This proc throws up either an icon or an animation for a specified amount of time.
@@ -749,10 +706,9 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 //Returns: all the areas in the world
 /proc/return_areas()
-	var/list/area/areas = list()
+	. = list()
 	for(var/area/A in world)
-		areas += A
-	return areas
+		. += A
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
@@ -1149,14 +1105,6 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 			. = orange(distance,center)
 	return
 
-proc/get_mob_with_client_list()
-	var/list/mobs = list()
-	for(var/mob/M in world)
-		if (M.client)
-			mobs += M
-	return mobs
-
-
 /proc/parse_zone(zone)
 	if(zone == "r_hand") return "right hand"
 	else if (zone == "l_hand") return "left hand"
@@ -1169,12 +1117,11 @@ proc/get_mob_with_client_list()
 	else return zone
 
 
-/proc/get_turf(turf/location)
-	while(location)
-		if(isturf(location))
-			return location
-		location = location.loc
-	return null
+/proc/get_turf(atom/movable/AM)
+	if(istype(AM))
+		return locate(/turf) in AM.locs
+	else if(isturf(AM))
+		return AM
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1182,10 +1129,6 @@ proc/get_mob_with_client_list()
 			return loc
 		loc = loc.loc
 	return null
-
-/proc/get_turf_or_move(turf/location)
-	return get_turf(location)
-
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
@@ -1199,46 +1142,6 @@ var/global/list/common_tools = list(
 
 /proc/istool(O)
 	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/iswrench(O)
-	if(istype(O, /obj/item/weapon/wrench))
-		return 1
-	return 0
-
-/proc/iswelder(O)
-	if(istype(O, /obj/item/weapon/weldingtool))
-		return 1
-	return 0
-
-/proc/iscoil(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
-		return 1
-	return 0
-
-/proc/iswirecutter(O)
-	if(istype(O, /obj/item/weapon/wirecutters))
-		return 1
-	return 0
-
-/proc/isscrewdriver(O)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		return 1
-	return 0
-
-/proc/ismultitool(O)
-	if(istype(O, /obj/item/device/multitool))
-		return 1
-	return 0
-
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/weapon/crowbar))
-		return 1
-	return 0
-
-/proc/iswire(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
 		return 1
 	return 0
 

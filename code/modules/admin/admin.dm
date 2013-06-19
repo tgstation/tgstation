@@ -78,6 +78,12 @@ var/global/floorIsLava = 0
 			body += "<b>Transformation:</b>"
 			body += "<br>"
 
+			//Human
+			if(ishuman(M))
+				body += "<B>Human</B> | "
+			else
+				body += "<A href='?_src_=holder;humanone=\ref[M]'>Humanize</A> | "
+
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
@@ -548,7 +554,7 @@ var/global/floorIsLava = 0
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.", 1)
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+/*
 /datum/admins/proc/toggletraitorscaling()
 	set category = "Server"
 	set desc="Toggle traitor scaling"
@@ -557,7 +563,7 @@ var/global/floorIsLava = 0
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
 	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
 	feedback_add_details("admin_verb","TTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 /datum/admins/proc/startnow()
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"

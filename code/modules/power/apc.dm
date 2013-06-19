@@ -320,7 +320,7 @@
 		user << "You start adding cables to the APC frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
-			var/turf/T = get_turf_loc(src)
+			var/turf/T = get_turf(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

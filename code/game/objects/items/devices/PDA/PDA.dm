@@ -392,7 +392,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (3)
 				dat += "<h4><img src=pda_atmos.png> Atmospheric Readings</h4>"
 
-				var/turf/T = get_turf_or_move(user.loc)
+				var/turf/T = get_turf(user.loc)
 				if (isnull(T))
 					dat += "Unable to obtain a reading.<br>"
 				else
@@ -655,7 +655,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if("1")		// Configure pAI device
 							pai.attack_self(U)
 						if("2")		// Eject pAI device
-							var/turf/T = get_turf_or_move(src.loc)
+							var/turf/T = get_turf(src.loc)
 							if(T)
 								pai.loc = T
 

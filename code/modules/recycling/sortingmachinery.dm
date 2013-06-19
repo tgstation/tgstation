@@ -61,7 +61,7 @@
 			if(ishuman(user))
 				user.put_in_hands(wrapped)
 			else
-				wrapped.loc = get_turf_loc(src)
+				wrapped.loc = get_turf(src)
 
 		del(src)
 

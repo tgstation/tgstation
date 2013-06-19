@@ -105,14 +105,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/obj/item/I = L.get_active_hand()
 			holder.add_hiddenprint(L)
 			if(href_list["cut"]) // Toggles the cut/mend status
-				if(iswirecutter(I))
+				if(istype(I, /obj/item/weapon/wirecutters))
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
 				else
 					L << "<span class='error'>You need wirecutters!</span>"
 
 			else if(href_list["pulse"])
-				if(ismultitool(I))
+				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
 				else

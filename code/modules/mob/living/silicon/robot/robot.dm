@@ -201,6 +201,9 @@
 		changed_name = "[(prefix ? "[prefix] " : "")]Cyborg-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"

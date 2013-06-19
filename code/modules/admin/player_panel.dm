@@ -425,7 +425,7 @@
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					var/turf/mob_loc = get_turf_loc(M)
+					var/turf/mob_loc = get_turf(M)
 					dat += "<td>[mob_loc.loc]</td></tr>"
 				else
 					dat += "<tr><td><i>Head not found!</i></td></tr>"

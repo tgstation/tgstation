@@ -18,6 +18,7 @@
 		on = !on
 		icon_state = "rig[on]-[color]"
 //		item_state = "rig[on]-[color]"
+		user.update_inv_head()	//so our mob-overlays update
 
 		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
 		else	user.SetLuminosity(user.luminosity - brightness_on)

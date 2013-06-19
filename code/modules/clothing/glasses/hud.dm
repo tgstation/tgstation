@@ -116,11 +116,11 @@
 				C.images += holder
 			else
 				perpname = perp.name
-				holder.icon_state = "hudunknown"
+				holder.icon_state = "hudno_id"
 				C.images += holder
 		else
 			perpname = perp.name
-			holder.icon_state = "hudunknown"
+			holder.icon_state = "hudno_id"
 			C.images += holder
 
 		for(var/datum/data/record/E in data_core.general)

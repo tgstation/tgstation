@@ -1640,7 +1640,7 @@ ________________________________________________________________________________
 			dat += "</ul>"
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
-			var/turf/T = get_turf_or_move(U.loc)
+			var/turf/T = get_turf(U.loc)
 			if (isnull(T))
 				dat += "Unable to obtain a reading."
 			else
@@ -2359,7 +2359,7 @@ ________________________________________________________________________________
 				spark_system.set_up(5, 0, A.loc)
 
 				var/obj/machinery/power/apc/B = A.loc.loc:get_apc()//Object.turf.area find APC
-				if(B)//If APC exists. Might not if the area is unpowered like CentCom.
+				if(B)//If APC exists. Might not if the area is unpowered like Centcom.
 					var/datum/powernet/PN = B.terminal.powernet
 					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.
 						drain = rand(G.mindrain,G.maxdrain)

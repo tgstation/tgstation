@@ -49,6 +49,7 @@
 
 /datum/game_mode/wizard/post_setup()
 	for(var/datum/mind/wizard in wizards)
+		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		forge_wizard_objectives(wizard)
 		//learn_basic_spells(wizard.current)
 		equip_wizard(wizard.current)
@@ -182,7 +183,7 @@
 
 /datum/game_mode/wizard/check_finished()
 
-	if(config.continous_rounds)
+	if(config.continuous_round_wiz)
 		return ..()
 
 	var/wizards_alive = 0

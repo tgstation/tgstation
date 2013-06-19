@@ -9,7 +9,7 @@
 	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
 
 	projectile_type = "/obj/item/projectile/temp"
-	cell_type = "/obj/item/weapon/cell/crap"
+	cell_type = "/obj/item/weapon/cell/high"
 
 
 	New()

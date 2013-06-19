@@ -1012,6 +1012,18 @@
 		message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]", 1)
 		H.monkeyize()
 
+	else if(href_list["humanone"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
+		if(!istype(Mo))
+			usr << "This can only be used on instances of type /mob/living/carbon/monkey"
+			return
+
+		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)]")
+		message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)]", 1)
+		Mo.humanize()
+
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))	return
 
@@ -1423,7 +1435,7 @@
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
+		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
@@ -1439,7 +1451,8 @@
 
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
+		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
+		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))	return
@@ -2076,9 +2089,8 @@
 			if("manifest")
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-				for(var/mob/living/carbon/human/H in mob_list)
-					if(H.ckey)
-						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
+				for(var/datum/data/record/t in data_core.general)
+					dat += text("<tr><td>[]</td><td>[]</td></tr>", t.fields["name"], t.fields["rank"])
 				dat += "</table>"
 				usr << browse(dat, "window=manifest;size=440x410")
 			if("DNA")

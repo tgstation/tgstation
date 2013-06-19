@@ -5,9 +5,9 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	var/obj/item/device/flash/bulb = null
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
-	var/disable = 0
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
@@ -16,36 +16,48 @@
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
-	icon_state = "pflash1"
+	icon_state = "pflash1-p"
 	strength = 8
 	anchored = 0
 	base_state = "pflash"
 	density = 1
 
-/*
 /obj/machinery/flasher/New()
-	sleep(4)					//<--- What the fuck are you doing? D=
-	src.sd_SetLuminosity(2)
-*/
+	if(isnull(bulb))
+		bulb = new /obj/item/device/flash(src)
+
 /obj/machinery/flasher/power_change()
-	if ( powered() )
+	if ( powered() && bulb && anchored)
 		stat &= ~NOPOWER
-		icon_state = "[base_state]1"
-//		src.sd_SetLuminosity(2)
+		if(bulb.broken)
+			icon_state = "[base_state]1-p"
+		else
+			icon_state = "[base_state]1"
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
-//		src.sd_SetLuminosity(0)
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		add_fingerprint(user)
-		src.disable = !src.disable
-		if (src.disable)
-			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
-		if (!src.disable)
-			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
+		if (bulb)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
+			bulb.loc = src.loc
+			bulb = null
+			src.power_change()
+
+	if (istype(W, /obj/item/device/flash))
+		add_fingerprint(user)
+		if (isnull(bulb))
+			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
+			user.drop_item()
+			W.loc = src
+			bulb = W
+			src.power_change()
+		else
+			user << "<span class='notice'>A flashbulb is already installed in [src].</span>"
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -55,10 +67,10 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!(powered()))
+	if (!(powered()) || (isnull(bulb)))
 		return
 
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if ((bulb.broken) || (src.last_flash && world.time < src.last_flash + 150))
 		return
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
@@ -94,10 +106,13 @@
 		return
 	if(prob(75/severity))
 		flash()
+		bulb.broken = 1
+		bulb.icon_state = "flashburnt"
+		src.power_change()
 	..(severity)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if (src.last_flash && world.time < src.last_flash + 150)
 		return
 
 	if(istype(AM, /mob/living/carbon))
@@ -105,18 +120,30 @@
 		if ((M.m_intent != "walk") && (src.anchored))
 			src.flash()
 
+/obj/machinery/flasher/portable/flash()
+	..()
+	if(prob(4))	//Small chance to burn out on use
+		bulb.broken = 1
+		bulb.icon_state = "flashburnt"
+		src.power_change()
+
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		add_fingerprint(user)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		src.anchored = !src.anchored
 
 		if (!src.anchored)
 			user.show_message(text("\red [src] can now be moved."))
 			src.overlays.Cut()
+			src.power_change()
 
 		else if (src.anchored)
 			user.show_message(text("\red [src] is now secured."))
 			src.overlays += "[base_state]-s"
+			src.power_change()
+	else
+		..()
 
 /obj/machinery/flasher_button/attack_ai(mob/user as mob)
 	return src.attack_hand(user)

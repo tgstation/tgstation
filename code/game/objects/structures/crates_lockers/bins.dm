@@ -38,7 +38,7 @@
 				O.loc = T
 		T.update_icon()
 		animate()
-	else if(iswrench(W))
+	else if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 	else if(istype(W, /obj/item/weapon/grab))

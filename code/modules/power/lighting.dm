@@ -34,7 +34,7 @@
 	var/ndir = get_dir(usr,on_wall)
 	if (!(ndir in cardinal))
 		return
-	var/turf/loc = get_turf_loc(usr)
+	var/turf/loc = get_turf(usr)
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "\red [src.name] cannot be placed on this spot."
 		return

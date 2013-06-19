@@ -57,7 +57,7 @@
 				// Calculate previous position for transition
 
 			var/turf/FROM = T // the turf of origin we're travelling FROM
-			var/turf/TO = get_turf_loc(chosen)			 // the turf of origin we're travelling TO
+			var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 			playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
 

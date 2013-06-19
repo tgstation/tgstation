@@ -9,6 +9,7 @@ var/global/list/player_list = list()				//List of all mobs **with clients attach
 var/global/list/mob_list = list()					//List of all mobs, including clientless
 var/global/list/living_mob_list = list()			//List of all alive mobs, including clientless. Excludes /mob/new_player
 var/global/list/dead_mob_list = list()				//List of all dead mobs, including clientless. Excludes /mob/new_player
+var/global/list/joined_player_list = list()			//List of all clients that have joined the game at round-start or as a latejoin.
 
 var/global/list/cable_list = list()					//Index for all cables, so that powernets don't have to look through the entire world all the time
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions

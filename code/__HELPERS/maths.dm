@@ -3,6 +3,8 @@
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
 
+/proc/sign(x)
+	return x!=0?x/abs(x):0
 
 /proc/Atan2(x, y)
 	if(!x && !y) return 0
@@ -110,7 +112,7 @@ var/const/Sqrt2	= 1.41421356
 	var/t = round((val - min) / d)
 	return val - (t * d)
 
-//polar variant of a gaussian distributed PRNG
+//converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls
 //(making the cost negligble for every second call)
 //This will return +/- decimals, situated about mean with standard deviation stddev
