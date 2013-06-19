@@ -4,6 +4,7 @@
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
 	w_class = 2
+	slot_flags = SLOT_BELT
 	m_amt = 60
 	g_amt = 30
 	flags = FPRINT | TABLEPASS | CONDUCT
