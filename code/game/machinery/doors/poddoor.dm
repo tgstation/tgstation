@@ -63,6 +63,18 @@
 	if(!ignorepower && (stat & NOPOWER))
 		return
 
+	for(var/mob/living/M in get_turf(src))
+		if(isrobot(M))
+			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+		else
+			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			M.SetStunned(5)
+			M.SetWeakened(5)
+			M.emote("scream")
+		var/turf/location = src.loc
+		if(istype(location, /turf/simulated))
+			location.add_blood(M)
+
 	operating = 1
 	flick("closing", src)
 	icon_state = "closed"
