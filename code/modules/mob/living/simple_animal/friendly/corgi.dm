@@ -129,7 +129,9 @@
 						/obj/item/clothing/suit/cardborg,
 						/obj/item/weapon/tank/oxygen,
 						/obj/item/weapon/tank/air,
-						/obj/item/weapon/extinguisher
+						/obj/item/weapon/extinguisher,
+						/obj/item/clothing/suit/space/syndicate,
+						/obj/item/clothing/suit/space
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -255,7 +257,18 @@
 			emote_see = list("goes rogue", "sniffs out non-humans")
 			desc = "Result of robotics budget cuts."
 			valid = 1
-
+		// Start of Ian Spesssuit code.
+		if(/obj/item/clothing/head/helmet/space/syndicate)
+			name = "Syndicate Operative [real_name]"
+			emote_see = list("is nuzzling buttons on a PDA.", "looks around for his target.")
+			desc = "It's here to sabotage your ID computer and nuzzle you...TO DEATH!"
+			valid = 1
+		if(/obj/item/clothing/head/helmet/space)
+			name = "Space Explorer [real_name]"
+			emote_see = list("gazes")
+			desc = "A top quality space explorer, ready for action!"
+			valid = 1
+		// End of Ian Spesssuit code.
 		if(/obj/item/weapon/bedsheet)
 			name = "\improper Ghost"
 			speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
