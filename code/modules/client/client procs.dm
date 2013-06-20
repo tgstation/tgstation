@@ -87,6 +87,8 @@
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
+	unlock_content = IsByondMember()
+
 	clients += src
 	directory[ckey] = src
 

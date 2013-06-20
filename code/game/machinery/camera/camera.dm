@@ -27,6 +27,7 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/busy = 0
+	var/emped = 0  //Number of consecutive EMP's on this camera
 
 /obj/machinery/camera/New()
 	wires = new(src)
@@ -59,13 +60,17 @@
 			stat |= EMPED
 			SetLuminosity(0)
 			triggerCameraAlarm()
+			emped = emped+1  //Increase the number of consecutive EMP's
+			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)
-				network = previous_network
-				icon_state = initial(icon_state)
-				stat &= ~EMPED
-				cancelCameraAlarm()
-				if(can_use())
-					cameranet.addCamera(src)
+				if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
+					network = previous_network
+					icon_state = initial(icon_state)
+					stat &= ~EMPED
+					cancelCameraAlarm()
+					if(can_use())
+						cameranet.addCamera(src)
+					emped = 0 //Resets the consecutive EMP count
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
