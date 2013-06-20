@@ -33,6 +33,7 @@
 	proc/prepare_shot(var/obj/item/projectile/proj) //Transfer properties from the gun to the bullet
 		proj.shot_from = src
 		proj.silenced = silenced
+		return
 
 
 	emp_act(severity)
