@@ -1,7 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
-	var/flash_protect = 0		//Mal: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
-	var/tint = 0				//Mal: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = null
 	var/visor_flags_inv = null
@@ -234,7 +234,7 @@ BLIND     // can't see anything
 	sensor_mode = pick(0,1,2,3)
 	..()
 
-/obj/item/clothing/proc/weldingvisortoggle()			//proc to toggle welding visors on helmets, masks, goggles, etc.
+/obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(up)
 			up = !up
@@ -252,3 +252,10 @@ BLIND     // can't see anything
 			usr << "You push the [src] up out of your face."
 			flash_protect = 0
 			tint = 0
+
+	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
+		usr.update_inv_head(0)
+	if(istype(src, /obj/item/clothing/glasses))
+		usr.update_inv_glasses(0)
+	if(istype(src, /obj/item/clothing/mask))
+		usr.update_inv_wear_mask(0)

@@ -90,7 +90,6 @@
 	set src in usr
 
 	weldingvisortoggle()
-	usr.update_inv_wear_glasses(0)	//so our mob-overlays update
 
 
 /obj/item/clothing/glasses/sunglasses/blindfold

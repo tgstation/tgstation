@@ -38,7 +38,6 @@
 	set src in usr
 
 	weldingvisortoggle()
-	usr.update_inv_head(0)	//so our mob-overlays update
 
 
 /*
