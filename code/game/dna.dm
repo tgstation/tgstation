@@ -827,6 +827,7 @@
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
+					viable_occupant.radiation += rand(15,40)
 					switch(href_list["text"])
 						if("se")
 							if(buffer_slot["SE"])
@@ -843,7 +844,6 @@
 								viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
 								viable_occupant.dna.b_type = buffer_slot["b_type"]
 								updateappearance(viable_occupant)
-					viable_occupant.radiation += rand(15,40)
 		if("injector")
 			if(num && injectorready)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
