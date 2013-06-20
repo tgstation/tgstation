@@ -78,6 +78,12 @@ var/global/floorIsLava = 0
 			body += "<b>Transformation:</b>"
 			body += "<br>"
 
+			//Human
+			if(ishuman(M))
+				body += "<B>Human</B> | "
+			else
+				body += "<A href='?_src_=holder;humanone=\ref[M]'>Humanize</A> | "
+
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "

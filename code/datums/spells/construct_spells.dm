@@ -14,7 +14,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
@@ -27,7 +27,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
@@ -39,7 +39,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 	delay = 50
 
 	summon_type = list(/turf/simulated/wall/r_wall)
@@ -85,4 +85,4 @@
 	include_user = 1
 	phaseshift = 1
 	jaunt_duration = 50 //in deciseconds
-	centcomm_cancast = 0 //Stop people from getting to centcomm
+	centcom_cancast = 0 //Stop people from getting to centcom

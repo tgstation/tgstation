@@ -1,7 +1,7 @@
 
 
 /obj/item/clothing/head/centhat
-	name = "\improper CentComm. hat"
+	name = "\improper Centcom hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	flags = FPRINT|TABLEPASS
