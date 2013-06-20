@@ -8,6 +8,7 @@
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
+	var/lobby_countdown = 120			// In between round countdown.
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -174,6 +175,8 @@
 					config.ban_legacy_system = 1
 				if("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1
+				if("lobby_countdown")
+					config.lobby_countdown = text2num(value)
 				if("log_ooc")
 					config.log_ooc = 1
 				if("log_access")
