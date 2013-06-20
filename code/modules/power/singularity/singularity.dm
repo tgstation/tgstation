@@ -71,6 +71,9 @@ var/global/list/uneatable = list(
 			return
 	return
 
+/obj/machinery/singularity/bullet_act(obj/item/projectile/P)
+	return 0 //Will there be an impact? Who knows.  Will we see it? No.
+
 
 /obj/machinery/singularity/Bump(atom/A)
 	consume(A)
