@@ -150,7 +150,7 @@
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= 5 && prob(50))
+			if(damage >= 9)
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
 
