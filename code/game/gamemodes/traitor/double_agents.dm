@@ -39,5 +39,5 @@
 	traitor.objectives += escape_objective
 	return
 
-/datum/game_mode/traitor/dobule_agents/make_antag_chance(var/mob/living/carbon/human/character)
+/datum/game_mode/traitor/double_agents/make_antag_chance(var/mob/living/carbon/human/character)
 	return // TODO: Have late joining double agents.
