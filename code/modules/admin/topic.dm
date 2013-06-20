@@ -10,7 +10,7 @@
 		switch(href_list["makeAntag"])
 			if("1")
 				log_admin("[key_name(usr)] has spawned a traitor.")
-				if(!src.makeTratiors())
+				if(!src.makeTraitors())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("2")
 				log_admin("[key_name(usr)] has spawned a changeling.")
