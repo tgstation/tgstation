@@ -16,14 +16,15 @@
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
 	icon_state = "weldingmask"
 	item_state = "weldingmask"
-	m_amt = 3000
-	g_amt = 1000
-	var/up = 0
+	m_amt = 4000
+	g_amt = 2000
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = "materials=2;engineering=2"
-	action_button_name = "Toggle Welding Helmet"
+	action_button_name = "Toggle Welding Mask"
+	visor_flags = MASKCOVERSEYES
+	visor_flags_inv = HIDEEYES
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()
@@ -34,24 +35,8 @@
 	set name = "Adjust welding mask"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= (MASKCOVERSEYES)
-			flags_inv |= (HIDEEYES)
-			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
-			flash_protect = 2
-			tint = 2
-		else
-			src.up = !src.up
-			src.flags &= ~(MASKCOVERSEYES)
-			flags_inv &= ~(HIDEEYES)
-			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
-			flash_protect = 0
-			tint = 0
-		usr.update_inv_wear_mask(0)	//so our mob-overlays update
+	weldingvisortoggle()
+	usr.update_inv_wear_mask(0)	//so our mob-overlays update
 
 // ********************************************************************
 
