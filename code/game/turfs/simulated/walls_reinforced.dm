@@ -23,6 +23,7 @@
 	user << "\blue You push the wall but nothing happens!"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
+	..()
 	return
 
 

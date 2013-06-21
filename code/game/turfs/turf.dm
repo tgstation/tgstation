@@ -41,6 +41,9 @@
 	if(!isAI(usr))
 		..()
 
+/turf/attack_hand(mob/user as mob)
+	user.Move_Pulled(src)
+
 /turf/ex_act(severity)
 	return 0
 
