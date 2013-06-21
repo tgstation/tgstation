@@ -39,6 +39,12 @@
 		user << browse(dat, "window=freezegun;size=450x300;can_resize=1;can_close=1;can_minimize=1")
 		onclose(user, "window=freezegun", src)
 
+	prepare_shot(var/obj/item/projectile/temp/proj)
+		proj.temperature = temperature		//Set the temperature of the beam
+		if(proj.temperature > 300)		//If it's not a freeze beam, don't call it one
+			proj.name = "heat beam"
+		..()
+
 
 	Topic(href, href_list)
 		if (..())
