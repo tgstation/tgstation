@@ -58,7 +58,12 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 					A.shock(usr, 50)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
-			if(mended)
+
+			if(!mended)
+				//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
+				A.loseBackupPower()
+				A.shock(usr, 50)
+			else
 				if((!IsIndexCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!IsIndexCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 					A.regainBackupPower()
 					A.shock(usr, 50)
@@ -70,13 +75,6 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				if(A.locked!=1)
 					A.locked = 1
 				A.update_icon()
-
-		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
-
-			if(!mended)
-				//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
-				A.loseBackupPower()
-				A.shock(usr, 50)
 
 		if(AIRLOCK_WIRE_AI_CONTROL)
 
