@@ -9,6 +9,7 @@
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0)
 	src = null	//so we don't abort once src is deleted
+	epicenter = get_turf(epicenter)
 
 	if(!ignorecap)
 		// Clamp all values to MAX_EXPLOSION_RANGE
@@ -28,7 +29,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			return
 
 		var/start = world.timeofday
-		epicenter = get_turf(epicenter)
 		if(!epicenter) return
 
 		if(adminlog)
