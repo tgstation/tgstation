@@ -113,13 +113,7 @@
 						spark_system.attach(M)
 						spark_system.start()
 					if(prob(30))
-						//var/tobehealed = H.getOxyLoss + H.health
 						tobehealed = health + 100
-/*
-						if((H.health - tobehealed > -100))
-							var/tmp/over = H.health - tobehealed
-							tobehealed = H.health + 100
-*/
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
 				else if(uni || armor)
@@ -127,24 +121,12 @@
 						spark_system.attach(M)
 						spark_system.start()
 					if(prob(60))
-						//var/tobehealed = H.getOxyLoss + H.health
 						tobehealed = health + 100
-/*
-						if((H.health - tobehealed > -100))
-							var/tmp/over = H.health - tobehealed
-							tobehealed = H.health + 100
-*/
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
 				else
 					if(prob(90))
-						//var/tobehealed = H.getOxyLoss + H.health
 						tobehealed = health + 100
-/*
-						if((H.health - tobehealed > -100))
-							var/tmp/over = H.health - tobehealed
-							tobehealed = H.health + 100
-*/
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
 				H.adjustBruteLoss(0) //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
