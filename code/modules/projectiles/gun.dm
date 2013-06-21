@@ -89,12 +89,6 @@
 		in_chamber.def_zone = user.zone_sel.selecting
 
 
-		if(targloc == curloc)
-			user.bullet_act(in_chamber)
-			del(in_chamber)
-			update_icon()
-			return
-
 		if(recoil)
 			spawn()
 				shake_camera(user, recoil + 1, recoil)
@@ -107,7 +101,14 @@
 
 		prepare_shot(in_chamber)				//Set the projectile's properties
 		
-		in_chamber.original = target		//Fire the projectile
+
+
+		if(targloc == curloc)			//Fire the projectile
+			user.bullet_act(in_chamber)
+			del(in_chamber)
+			update_icon()
+			return
+		in_chamber.original = target		
 		in_chamber.loc = get_turf(user)
 		in_chamber.starting = get_turf(user)
 		in_chamber.current = curloc
