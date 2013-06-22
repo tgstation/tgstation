@@ -145,7 +145,7 @@
 
 
 	bullet_act(var/obj/item/projectile/Proj)
-		if(!Proj)	return
+		..()
 		switch(Proj.damage_type)
 		 if(BRUTE)
 			 health -= (Proj.damage/brute_resist)
