@@ -1,5 +1,10 @@
 /obj/item/clothing
 	name = "clothing"
+	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = null
+	var/visor_flags_inv = null
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -26,9 +31,6 @@
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
 	var/emagged = 0
-	var/flash_protect = 0		//Mal: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
-	var/tint = 0				//Mal: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-								//	   but seperated to allow items to protect but not impair vision, like space helmets
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -63,8 +65,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-	var/flash_protect = 0
-	var/tint = 0
 
 //Mask
 /obj/item/clothing/mask
@@ -72,8 +72,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
-	var/flash_protect = 0
-	var/tint = 0
 
 //Shoes
 /obj/item/clothing/shoes
@@ -235,3 +233,29 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)
 	..()
+
+/obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(up)
+			up = !up
+			flags |= (visor_flags)
+			flags_inv |= (visor_flags_inv)
+			icon_state = initial(icon_state)
+			usr << "You flip the [src] down to protect your eyes."
+			flash_protect = initial(flash_protect)
+			tint = initial(tint)
+		else
+			up = !up
+			flags &= ~(visor_flags)
+			flags_inv &= ~(visor_flags_inv)
+			icon_state = "[initial(icon_state)]up"
+			usr << "You push the [src] up out of your face."
+			flash_protect = 0
+			tint = 0
+
+	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
+		usr.update_inv_head(0)
+	if(istype(src, /obj/item/clothing/glasses))
+		usr.update_inv_glasses(0)
+	if(istype(src, /obj/item/clothing/mask))
+		usr.update_inv_wear_mask(0)
