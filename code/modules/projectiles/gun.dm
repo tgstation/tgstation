@@ -30,6 +30,11 @@
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 		return 1
 
+	proc/prepare_shot(var/obj/item/projectile/proj) //Transfer properties from the gun to the bullet
+		proj.shot_from = src
+		proj.silenced = silenced
+		return
+
 
 	emp_act(severity)
 		for(var/obj/O in contents)
@@ -84,12 +89,6 @@
 		in_chamber.def_zone = user.zone_sel.selecting
 
 
-		if(targloc == curloc)
-			user.bullet_act(in_chamber)
-			del(in_chamber)
-			update_icon()
-			return
-
 		if(recoil)
 			spawn()
 				shake_camera(user, recoil + 1, recoil)
@@ -100,15 +99,22 @@
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
-		in_chamber.original = target
+		prepare_shot(in_chamber)				//Set the projectile's properties
+		
+
+
+		if(targloc == curloc)			//Fire the projectile
+			user.bullet_act(in_chamber)
+			del(in_chamber)
+			update_icon()
+			return
+		in_chamber.original = target		
 		in_chamber.loc = get_turf(user)
 		in_chamber.starting = get_turf(user)
-		in_chamber.shot_from = src
-		user.next_move = world.time + 4
-		in_chamber.silenced = silenced
 		in_chamber.current = curloc
 		in_chamber.yo = targloc.y - curloc.y
 		in_chamber.xo = targloc.x - curloc.x
+		user.next_move = world.time + 4
 
 		if(params)
 			var/list/mouse_control = params2list(params)
