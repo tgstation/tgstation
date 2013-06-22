@@ -94,9 +94,10 @@
 
 /obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
+	..()
 	src.health -= Proj.damage*0.2
 	healthcheck()
-	return 0
+	return
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wirecutters))
