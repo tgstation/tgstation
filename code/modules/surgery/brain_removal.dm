@@ -11,6 +11,14 @@
 	time = 64
 	var/obj/item/organ/brain/B = null
 
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.apply_damage(75,"brute","head")
+		user.visible_message("<span class='notice'>[user] saws [target]'s skull open!")
+	return 1	
+			
+
 /datum/surgery_step/extract_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	B = getbrain(target)
 	if(B)
@@ -25,8 +33,9 @@
 		B.transfer_identity(target)
 		target.internal_organs -= B
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
+			var/mob/living/carbon/human/H = target	
 			H.update_hair(0)
+			H.apply_damage(25,"brute","head")
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
