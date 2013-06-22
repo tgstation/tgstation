@@ -984,7 +984,7 @@ datum/mind
 			special_role = "malfunction"
 			current.icon_state = "ai-malf"
 
-	proc/make_Tratior()
+	proc/make_Traitor()
 		if(!(src in ticker.mode.traitors))
 			ticker.mode.traitors += src
 			special_role = "traitor"
