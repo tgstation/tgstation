@@ -256,7 +256,9 @@ datum/preferences
 
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
+		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
+		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=decreaseJobLevel;text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -296,7 +298,7 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=increaseJobLevel;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -331,9 +333,78 @@ datum/preferences
 		popup.open(0)
 		return
 
+	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
+		if (!job)
+			return 0
 
-	proc/SetJob(mob/user, role)
+		if (level == 1) // set all current high preferred to medium
+			job_civilian_med |= job_civilian_high
+			job_engsec_med |= job_engsec_high
+			job_medsci_med |= job_medsci_high
+			job_civilian_high = 0
+			job_engsec_high = 0
+			job_medsci_high = 0
+
+		if (job.department_flag == CIVILIAN)
+			job_civilian_low &= ~job.flag
+			job_civilian_med &= ~job.flag
+			job_civilian_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_civilian_high |= job.flag
+				if (2)
+					job_civilian_med |= job.flag
+				if (3)
+					job_civilian_low |= job.flag
+
+			return 1
+		else if (job.department_flag == ENGSEC)
+			job_engsec_low &= ~job.flag
+			job_engsec_med &= ~job.flag
+			job_engsec_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_engsec_high |= job.flag
+				if (2)
+					job_engsec_med |= job.flag
+				if (3)
+					job_engsec_low |= job.flag
+
+			return 1
+		else if (job.department_flag == MEDSCI)
+			job_medsci_low &= ~job.flag
+			job_medsci_med &= ~job.flag
+			job_medsci_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_medsci_high |= job.flag
+				if (2)
+					job_medsci_med |= job.flag
+				if (3)
+					job_medsci_low |= job.flag
+
+			return 1
+
+		return 0
+
+	proc/GetJobLevel(var/datum/job/job)
+		if (!job) return 0
+
+		if (job.flag & (job_civilian_high | job_engsec_high | job_medsci_high))
+			return 1
+		else if (job.flag & (job_civilian_med | job_engsec_med | job_medsci_med))
+			return 2
+		else if (job.flag & (job_civilian_low | job_engsec_low | job_medsci_low))
+			return 3
+
+		return 0
+
+	proc/UpdateJobPreference(mob/user, role, upOrDown)
 		var/datum/job/job = job_master.GetJob(role)
+
 		if(!job)
 			user << browse(null, "window=mob_occupation")
 			ShowChoices(user)
@@ -347,17 +418,25 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-		if(GetJobDepartment(job, 1) & job.flag)
-			SetJobDepartment(job, 1)
-		else if(GetJobDepartment(job, 2) & job.flag)
-			SetJobDepartment(job, 2)
-		else if(GetJobDepartment(job, 3) & job.flag)
-			SetJobDepartment(job, 3)
-		else//job = Never
-			SetJobDepartment(job, 4)
 
+		var/targetLvl = GetJobLevel(job)
+		if (upOrDown == 1) // increasing from low to high, i.e. lowering the level value
+			if (targetLvl == 0)
+				targetLvl = 3 // low
+			else
+				targetLvl = targetLvl - 1
+		else // decreasing from high to low, i.e. raising the level value
+			if (targetLvl == 3)
+				targetLvl = 0
+			else
+				targetLvl = targetLvl + 1
+
+
+		SetJobPreferenceLevel(job, targetLvl)
 		SetChoices(user)
+
 		return 1
+
 
 	proc/ResetJobs()
 
@@ -403,57 +482,6 @@ datum/preferences
 						return job_engsec_low
 		return 0
 
-
-	proc/SetJobDepartment(var/datum/job/job, var/level)
-		if(!job || !level)	return 0
-		switch(level)
-			if(1)//Only one of these should ever be active at once so clear them all here
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-				return 1
-			if(2)//Set current highs to med, then reset them
-				job_civilian_med |= job_civilian_high
-				job_medsci_med |= job_medsci_high
-				job_engsec_med |= job_engsec_high
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-
-		switch(job.department_flag)
-			if(CIVILIAN)
-				switch(level)
-					if(2)
-						job_civilian_high = job.flag
-						job_civilian_med &= ~job.flag
-					if(3)
-						job_civilian_med |= job.flag
-						job_civilian_low &= ~job.flag
-					else
-						job_civilian_low |= job.flag
-			if(MEDSCI)
-				switch(level)
-					if(2)
-						job_medsci_high = job.flag
-						job_medsci_med &= ~job.flag
-					if(3)
-						job_medsci_med |= job.flag
-						job_medsci_low &= ~job.flag
-					else
-						job_medsci_low |= job.flag
-			if(ENGSEC)
-				switch(level)
-					if(2)
-						job_engsec_high = job.flag
-						job_engsec_med &= ~job.flag
-					if(3)
-						job_engsec_med |= job.flag
-						job_engsec_low &= ~job.flag
-					else
-						job_engsec_low |= job.flag
-		return 1
-
-
 	proc/process_link(mob/user, list/href_list)
 		if(!istype(user, /mob/new_player))	return
 
@@ -468,8 +496,10 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
-				if("input")
-					SetJob(user, href_list["text"])
+				if("increaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], 1)
+				if ("decreaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], -1)
 				else
 					SetChoices(user)
 			return 1
