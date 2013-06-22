@@ -71,6 +71,23 @@
 			user.drop_r_hand()
 			del(W)
 			del(src)
+	else if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			color = "rainbow"
+			user << "<span class='warning'>RNBW_ENGAGE</span>"
+			
+			if(active)
+				icon_state = "swordrainbow"
+				// Updating overlays, copied from welder code.  
+				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
+				if(user.r_hand == src)
+					user.update_inv_r_hand(0)
+				else if(user.l_hand == src)
+					user.update_inv_l_hand(0)
+
+		else
+			user << "<span class='warning'>It's already fabulous!</span>"
 
 /*
  * Classic Baton
@@ -135,20 +152,6 @@
 /obj/item/weapon/melee/energy/sword/red
 	New()
 		color = "red"
-
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(active)
-			user << "<span class='warning'>While it's on?  You crazy?</span>"
-		else if(emagged == 0)
-			emagged = 1
-			user << "<span class='warning'>RNBW_ENGAGE</span>"
-			color = "rainbow"
-			
-			add_fingerprint(user)
-		else
-			user << "<span class='warning'>It's already fabulous!</span>"
 
 /obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effect/effect/system/spark_spread()
