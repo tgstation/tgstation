@@ -74,9 +74,11 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
-	var/up = 0
 	flash_protect = 2
 	tint = 2
+	visor_flags = GLASSESCOVERSEYES
+	visor_flags_inv = HIDEEYES
+
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
@@ -87,25 +89,8 @@
 	set name = "Adjust welding goggles"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
-			flags_inv |= HIDEEYES
-			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
-			flash_protect = 2
-			tint = 2
-		else
-			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
-			flags_inv &= ~HIDEEYES
-			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
-			flash_protect = 0
-			tint = 0
+	weldingvisortoggle()
 
-		usr.update_inv_glasses(0)
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"

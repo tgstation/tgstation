@@ -41,6 +41,7 @@
 				M.take_organ_damage(20)
 
 
+
 /atom/proc/assume_air(datum/air_group/giver)
 	del(giver)
 	return null
@@ -99,8 +100,9 @@
 /atom/proc/emp_act(var/severity)
 	return
 
-/atom/proc/bullet_act(var/obj/item/projectile/Proj)
-	return 0
+/atom/proc/bullet_act(obj/item/projectile/P)
+	P.on_hit(src,0)
+	. = 0
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
@@ -336,7 +338,7 @@ var/list/blood_splatter_icons = list()
 				blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
 				blood_splatter_icons[index] = blood_splatter_icon
 			overlays += blood_splatter_icon
-			
+
 		//if this blood isn't already in the list, add it
 		if(blood_DNA[M.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.

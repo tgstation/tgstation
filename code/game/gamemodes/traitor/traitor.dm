@@ -1,5 +1,6 @@
 /datum/game_mode
 	// this includes admin-appointed traitors and multitraitors. Easy!
+	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
 
 /datum/game_mode/traitor
@@ -54,8 +55,8 @@
 			break
 		var/datum/mind/traitor = pick(possible_traitors)
 		traitors += traitor
-		traitor.special_role = "traitor"
-		log_game("[traitor.key] (ckey) has been selected as a traitor")
+		traitor.special_role = traitor_name
+		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		possible_traitors.Remove(traitor)
 
 
@@ -83,7 +84,7 @@
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
-					character.mind.make_Tratior()
+					character.mind.make_Traitor()
 	..()
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
@@ -130,7 +131,7 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -176,7 +177,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
-		var/text = "<FONT size = 2><B>The traitors were:</B></FONT>"
+		var/text = "<FONT size = 2><B>The [traitor_name]s were:</B></FONT>"
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 

@@ -24,7 +24,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
-	var/emped = 0	// since radios don't use machinery stat binary flags they get a seperate variable
+	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = FPRINT | CONDUCT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -667,8 +667,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else return
 
 /obj/item/device/radio/emp_act(severity)
-	if (emped == 1) //
-		return
+	emped++ //There's been an EMP; better count it
+	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
 		loc << "<span class='warning'>\The [src] overloads.</span>"
 	broadcasting = 0
@@ -677,10 +677,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		channels[ch_name] = 0
 	on = 0
 	spawn(200)
-		emped = 0
-		if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
-			on = 1
-	emped = 1
+		if(emped == curremp) //Don't fix it if it's been EMP'd again
+			emped = 0
+			if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
+				on = 1
 	..()
 
 ///////////////////////////////
