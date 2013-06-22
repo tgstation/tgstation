@@ -54,7 +54,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/datum/admins/proc/makeTratiors()
+/datum/admins/proc/makeTraitors()
 	var/datum/game_mode/traitor/temp = new
 
 	if(config.protect_roles_from_antagonist)
@@ -73,11 +73,11 @@ client/proc/one_click_antag()
 								candidates += applicant
 
 	if(candidates.len)
-		var/numTratiors = min(candidates.len, 3)
+		var/numTraitors = min(candidates.len, 3)
 
-		for(var/i = 0, i<numTratiors, i++)
+		for(var/i = 0, i<numTraitors, i++)
 			H = pick(candidates)
-			H.mind.make_Tratior()
+			H.mind.make_Traitor()
 			candidates.Remove(H)
 
 		return 1

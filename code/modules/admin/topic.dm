@@ -11,7 +11,7 @@
 			if("1")
 				message_admins("[key_name_admin(usr)] created traitors.")
 				log_admin("[key_name(usr)] created traitors.")
-				if(!src.makeTratiors())
+				if(!src.makeTraitors())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("2")
 				message_admins("[key_name(usr)] created changelings.")
