@@ -84,7 +84,8 @@
 				for(var/datum/disease/D in O.viruses)
 					if(D.spread_type != SPECIAL)
 						B.data["viruses"] += D.Copy()
-				//if(B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0) //Non-player monkies tend not to have DNA.
+				if(check_dna_integrity(O))
+					B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 
 				if(O.resistances&&O.resistances.len)
 					B.data["resistances"] = O.resistances.Copy()
