@@ -30,13 +30,14 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	var/temperature = 300
+//temperature var is in projectile.dm
 
 
 	on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
 		if(istype(target, /mob/living))
 			var/mob/M = target
 			M.bodytemperature = temperature
+			//world << "temperature hit, [M.bodytemperature]"
 		return 1
 
 /obj/item/projectile/meteor

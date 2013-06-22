@@ -36,6 +36,7 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/temperature = 300 //for temperature rounds, they are special snowflakes
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = "/obj/item/projectile"
