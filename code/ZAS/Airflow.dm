@@ -67,7 +67,6 @@ mob/living/carbon/metroid/airflow_stun()
 	return
 
 mob/living/carbon/human/airflow_stun()
-	if(1) return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(buckled) return 0
 	if(shoes)
@@ -133,9 +132,8 @@ proc/Airflow(zone/A, zone/B)
 				connected_turfs |= C.A
 			else
 				connected_turfs |= C.B
-	return
+
 	//Get lists of things that can be thrown across the room for each zone (assumes air is moving from zone B to zone A)
-	/*
 	var/list/air_sucked = B.movables()
 	var/list/air_repelled = A.movables()
 	if(n < 0)
@@ -190,11 +188,9 @@ proc/Airflow(zone/A, zone/B)
 				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
 				spawn M.RepelAirflowDest(abs(n)/5)
-	*/
 
 proc/AirflowSpace(zone/A)
-	return
-/*
+
 	//The space version of the Airflow(A,B,n) proc.
 
 	var/n = A.air.return_pressure()
@@ -228,7 +224,6 @@ proc/AirflowSpace(zone/A)
 				spawn
 					if(M) M.GotoAirflowDest(n/10)
 					//Sometimes shit breaks, and M isn't there after the spawn.
-*/
 
 atom/movable
 	var/tmp/turf/airflow_dest
@@ -237,8 +232,6 @@ atom/movable
 	var/tmp/last_airflow = 0
 
 	proc/GotoAirflowDest(n)
-		return
-		/*
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - vsc.airflow_delay) return
@@ -301,12 +294,9 @@ atom/movable
 		airflow_time = 0
 		if(od)
 			density = 0
-			*/
 
 
 	proc/RepelAirflowDest(n)
-		return
-	/*
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - vsc.airflow_delay) return
@@ -363,38 +353,30 @@ atom/movable
 		airflow_time = 0
 		if(od)
 			density = 0
-*/
-
 
 	Bump(atom/A)
-	/*
 		if(airflow_speed > 0 && airflow_dest)
 			airflow_hit(A)
 		else
 			airflow_speed = 0
 			airflow_time = 0
-	*/
-		. = ..()
+			. = ..()
 
 atom/movable/proc/airflow_hit(atom/A)
 	airflow_speed = 0
 	airflow_dest = null
 
 mob/airflow_hit(atom/A)
-	/*
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
-	*/
 	. = ..()
 
 obj/airflow_hit(atom/A)
-	/*
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	*/
 	. = ..()
 
 obj/item/airflow_hit(atom/A)
@@ -404,7 +386,6 @@ obj/item/airflow_hit(atom/A)
 mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
 //		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
-	/*
 	playsound(src.loc, "punch", 25, 1, -1)
 	loc:add_blood(src)
 	if (src.wear_suit)
@@ -427,7 +408,6 @@ mob/living/carbon/human/airflow_hit(atom/A)
 		stunned = max(stunned,paralysis + 3)
 	else
 		stunned += round(airflow_speed * vsc.airflow_stun/2)
-	*/
 	. = ..()
 
 zone/proc/movables()
