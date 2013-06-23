@@ -292,7 +292,7 @@
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
-				if(ishuman(usr))
+				if(ishuman(usr) && in_range(src, usr))
 					modify.loc = usr.loc
 					if(!usr.get_active_hand())
 						usr.put_in_hands(modify)
@@ -310,7 +310,7 @@
 
 		if ("scan")
 			if (scan)
-				if(ishuman(usr))
+				if(ishuman(usr) && in_range(src, usr))
 					scan.loc = usr.loc
 					if(!usr.get_active_hand())
 						usr.put_in_hands(scan)
