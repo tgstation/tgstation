@@ -658,8 +658,12 @@
 					icon_state = "turret_frame2"
 					if(I:amount <= 0)
 						del(I)
+						user.update_inv_l_hand()
+						user.update_inv_r_hand()
 					return
-
+				else
+					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+					return
 			else if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user << "<span class='notice'>You unfasten the external bolts.</span>"
@@ -703,6 +707,8 @@
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
 				del(I) //delete the gun :(
+				user.update_inv_l_hand()
+				user.update_inv_r_hand()
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -737,6 +743,11 @@
 					I:amount -= 2
 					if(I:amount <= 0)
 						del(I)
+						user.update_inv_l_hand()
+						user.update_inv_r_hand()
+					return
+				else
+					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 					return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
