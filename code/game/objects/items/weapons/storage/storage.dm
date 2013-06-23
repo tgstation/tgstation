@@ -345,6 +345,11 @@
 				close(M)
 	add_fingerprint(user)
 
+/obj/item/weapon/storage/attack_paw(mob/user)
+	if(ismonkey(user))
+		return attack_hand(user)
+	else
+		return ..()
 
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
