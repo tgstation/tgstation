@@ -83,140 +83,53 @@
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
+	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
 
-	if(icon_y < 2)
-		return
-	if(icon_y < 4)
-		if(icon_x > 9 && icon_x < 16)
-			selecting = "r_leg"
-		else if(icon_x > 15 && icon_x < 23)
-			selecting = "l_leg"
-		else
-			return
-	else if(icon_y < 11)
-		if(icon_x > 11 && icon_x < 21)
-			if(icon_x < 16)
-				selecting = "r_leg"
-			else
-				selecting = "l_leg"
-		else
-			return
-	else if(icon_y < 12)
-		if(icon_x > 7 && icon_x < 12)
-			selecting = "r_arm"
-		else if(icon_x > 11 && icon_x < 14)
-			selecting = "r_leg"
-		else if(icon_x < 19)
-			selecting = "groin"
-		else if(icon_x > 18 && icon_x < 21)
-			selecting = "l_leg"
-		else if(icon_x > 20 && icon_x < 25)
-			selecting = "l_arm"
-		else
-			return
-	else if(icon_y < 13)
-		if(icon_x > 7 && icon_x < 25)
-			if(icon_x < 13)
-				selecting = "r_leg"
-			else if(icon_x < 20)
-				selecting = "groin"
-			else if(icon_x < 21)
-				selecting = "l_leg"
-		else
-			return
-	else if(icon_y < 14)
-		if(icon_x > 11 && icon_x < 21)
-			selecting = "groin"
-		else if(icon_x > 7 && icon_x < 12)
-			selecting = "r_arm"
-		else if(icon_x > 20 && icon_x < 25)
-			selecting = "l_arm"
-		else
-			return
-	else if(icon_y < 16)
-		if(icon_x > 7 && icon_x < 25)
-			if(icon_x < 20)
-				selecting = "chest"
-		else
-			return
-	else if(icon_y < 23)
-		if(icon_x > 7 && icon_x < 25)
-			if(icon_x < 12)
-				selecting = "r_arm"
-			else if(icon_x < 21)
-				selecting = "chest"
-			else
-				selecting = "l_arm"
-		else
-			return
-	else if(icon_y < 24)
-		if(icon_x > 11 && icon_x < 21)
-			selecting = "chest"
-		else
-			return
-	else if(icon_y < 25)
-		if(icon_x > 11 && icon_x < 21)
-			if(icon_x < 16)
+	switch(icon_y)
+		if(1 to 9) //Legs
+			switch(icon_x)
+				if(10 to 15)
+					selecting = "r_leg"
+				if(17 to 22)
+					selecting = "l_leg"
+				else
+					return
+		if(10 to 13) //Hands and groin
+			switch(icon_x)
+				if(8 to 11)
+					selecting = "r_arm"
+				if(12 to 20)
+					selecting = "groin"
+				if(21 to 24)
+					selecting = "l_arm"
+				else
+					return
+		if(14 to 22) //Chest and arms to shoulders
+			switch(icon_x)
+				if(8 to 11)
+					selecting = "r_arm"
+				if(12 to 20)
+					selecting = "chest"
+				if(21 to 24)
+					selecting = "l_arm"
+				else
+					return
+		if(23 to 30) //Head, but we need to check for eye or mouth
+			if(icon_x in 12 to 20)
 				selecting = "head"
-			else if(icon_x < 17)
-				selecting = "mouth"
-			else
-				selecting = "head"
-		else
-			return
-	else if(icon_y < 26)
-		if(icon_x > 11 && icon_x < 21)
-			if(icon_x < 15)
-				selecting = "head"
-			else if(icon_x < 18)
-				selecting = "mouth"
-			else
-				selecting = "head"
-		else
-			return
-	else if(icon_y < 27)
-		if(icon_x > 11 && icon_x < 21)
-			if(icon_x < 15)
-				selecting = "head"
-			else if(icon_x < 16)
-				selecting = "eyes"
-			else if(icon_x < 17)
-				selecting = "mouth"
-			else if(icon_x < 18)
-				selecting = "eyes"
-			else
-				selecting = "head"
-		else
-			return
-	else if(icon_y < 28)
-		if(icon_x > 11 && icon_x < 21)
-			if(icon_x < 14)
-				selecting = "head"
-			else if(icon_x < 19)
-				selecting = "eyes"
-			else
-				selecting = "head"
-		else
-			return
-	else if(icon_y < 29)
-		if(icon_x > 11 && icon_x < 21)
-			if(icon_x < 15)
-				selecting = "head"
-			else if(icon_x < 16)
-				selecting = "eyes"
-			else if(icon_x < 17)
-				selecting = "head"
-			else if(icon_x < 18)
-				selecting = "eyes"
-			else
-				selecting = "head"
-		else
-			return
-	else if(icon_y < 31)
-		if(icon_x > 11 && icon_x < 21)
-			selecting = "head"
+				switch(icon_y)
+					if(23 to 24)
+						if(icon_x in 15 to 17)
+							selecting = "mouth"
+					if(26) //Eyeline, eyes are on 15 and 17
+						if(icon_x in 14 to 18)
+							selecting = "eyes"
+					if(25 to 27)
+						if(icon_x in 15 to 17)
+							selecting = "eyes"
 
-	update_icon()
+	if(old_selecting != selecting)
+		update_icon()
 
 /obj/screen/zone_sel/update_icon()
 	overlays.Cut()

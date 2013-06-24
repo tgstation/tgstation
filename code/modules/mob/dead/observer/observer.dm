@@ -37,10 +37,7 @@
 			if(body.real_name)
 				name = body.real_name
 			else
-				if(gender == MALE)
-					name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-				else
-					name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+				name = random_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
@@ -48,7 +45,7 @@
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
-		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+		name = random_name(gender)
 	real_name = name
 	..()
 
@@ -260,3 +257,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+
+/mob/dead/observer/verb/pick_form()
+	set name = "Pick Ghost Form"
+	set category = "Ghost"
+	set desc = "Choose your ghostly appearance"
+	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND","ghost") as null|anything in list("ghost","ghostking","ghostian2")
+	if(new_form)
+		icon_state = new_form

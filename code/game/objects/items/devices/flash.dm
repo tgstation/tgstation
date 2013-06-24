@@ -75,10 +75,8 @@
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							var/revsafe = 0
-							for(var/obj/item/weapon/implant/loyalty/L in M)
-								if(L && L.implanted)
-									revsafe = 1
-									break
+							if(isloyal(M))
+								revsafe = 1
 							M.mind_initialize()		//give them a mind datum if they don't have one.
 //							if(M.mind.has_been_rev)
 //								revsafe = 2

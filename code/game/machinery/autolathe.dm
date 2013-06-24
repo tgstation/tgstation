@@ -34,7 +34,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
-		new /obj/item/device/taperecorder(), \
+		new /obj/item/device/taperecorder/empty(), \
+		new /obj/item/device/tape(), \
 		new /obj/item/device/assembly/igniter(), \
 		new /obj/item/device/assembly/signaler(), \
 		new /obj/item/device/radio/headset(), \
@@ -59,7 +60,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	)
 
 /obj/machinery/autolathe
-	name = "\improper Autolathe"
+	name = "autolathe"
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = 1
