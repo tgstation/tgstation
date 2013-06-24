@@ -85,6 +85,11 @@
 				holder.icon_state = "hudhealthy"
 			C.images += holder
 
+/obj/item/clothing/glasses/hud/health/old
+	name = "glasses"
+	desc = "On closer inspection, it appears they have an inbuilt health scanner and HUD display."
+	icon_state = "glasses"
+	item_state = "glasses_thin"
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
