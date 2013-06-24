@@ -377,7 +377,8 @@
 	if(legcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
 	if(w_uniform)
-		dat += "<BR><A href='?src=\ref[src];pockets=1'>Empty Pockets</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left [l_store ? "" : "Empty"] Pocket</A>"
+		dat += " - <A href='?src=\ref[src];pockets=right'>Right [r_store ? "" : "Empty"] Pocket</A>"
 
 	dat += {"
 	<BR>
@@ -481,15 +482,38 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["pockets"])
+
+			var/pocket_side = href_list["pockets"]
+			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
+			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
+			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+
 			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
-			usr << "<span class='notice'>You try to empty [src]'s pockets.</span>"
-			if(do_mob(usr, src, STRIP_DELAY * 0.5))
-				u_equip(r_store)
-				u_equip(l_store)
+			if(pocket_item)
+				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
+				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+			else
+				return
+
+			if(do_mob(usr, src, STRIP_DELAY))
+				if(pocket_item)
+					u_equip(pocket_item)
+				else
+					if(place_item)
+						usr.u_equip(place_item)
+						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
+
+				// Update strip window
+				if(usr.machine == src && in_range(src, usr))
+					show_inv(usr)
+
+
+
 			else
 				// Display a warning if the user mocks up
-				src << "<span class='warning'>You feel your pockets being fumbled with!</span>"
+				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
