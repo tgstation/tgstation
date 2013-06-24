@@ -1695,7 +1695,7 @@
 "aGE" = (/turf/simulated/floor/carpet,/area/hallway/secondary/entry)
 "aGF" = (/obj/structure/stool/bed/chair/comfy/beige{dir = 8},/turf/simulated/floor{icon_state = "grimy"},/area/hallway/secondary/entry)
 "aGG" = (/obj/machinery/vending/coffee,/turf/simulated/floor{icon_state = "dark"},/area/hallway/secondary/entry)
-"aGH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."; dir = 4; icon_state = "plaque"; name = "Comemmorative Plaque"; nitrogen = 30; oxygen = 70; temperature = 80},/area/hallway/secondary/entry)
+"aGH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/goonplaque,/area/hallway/secondary/entry)
 "aGI" = (/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/turf/simulated/floor,/area/hallway/secondary/entry)
 "aGJ" = (/obj/machinery/door/firedoor/border_only{dir = 8; name = "Firelock West"},/turf/simulated/floor,/area/hallway/primary/port)
 "aGK" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=CHW"; location = "Lockers"},/turf/simulated/floor,/area/hallway/primary/port)
