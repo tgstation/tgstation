@@ -377,16 +377,16 @@
 	if(legcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
 	if(w_uniform)
-		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left [l_store ? "" : "Empty"] Pocket</A>"
-		dat += " - <A href='?src=\ref[src];pockets=right'>Right [r_store ? "" : "Empty"] Pocket</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([l_store ? "Full" : "Empty"])</A>"
+		dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([r_store ? "Full" : "Empty"])</A>"
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
 
-	user << browse(dat, "window=mob[name];size=340x480")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=340x480")
+	onclose(user, "mob\ref[src]")
 
 
 // called when something steps onto a human
