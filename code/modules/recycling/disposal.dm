@@ -1045,22 +1045,6 @@
 		update()
 		return
 
-	New()
-		..()
-		posdir = dir
-		if(icon_state == "pipe-j1s")
-			sortdir = turn(posdir, -90)
-			negdir = turn(posdir, 180)
-		else
-			icon_state = "pipe-j2s"
-			sortdir = turn(posdir, 90)
-			negdir = turn(posdir, 180)
-		dpdir = sortdir | posdir | negdir
-
-		update()
-		return
-
-
 	// next direction to move
 	// if coming in from negdir, then next is primary dir or sortdir
 	// if coming in from posdir, then flip around and go back to posdir
