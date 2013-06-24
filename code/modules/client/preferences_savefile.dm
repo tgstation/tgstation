@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	9
+#define SAVEFILE_VERSION_MAX	10
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -31,6 +31,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return -1
 
 /datum/preferences/proc/update_preferences(current_version)
+	if(current_version < 10)
+		toggles |= MEMBER_PUBLIC
 	return
 
 //should this proc get fairly long (say 3 versions long),
@@ -71,14 +73,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
 				if(13)	underwear = "Nude"
-
-	/*
-	if(current_version < 10)	//would be the step to upgrade 9 to 10
-		//do stuff
-	if(current_version < 11)	//and so on...
-		//more stuff
-	*/
-
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -104,20 +98,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
+	S["ghost_form"]			>> ghost_form
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update)		//needs_update = savefile_version if we need an update (positive integer)
 
-
-
 	//Sanitize
-	ooccolor		= sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor))
+	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 
 	return 1
 
@@ -136,6 +130,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["ghost_form"]			<< ghost_form
 
 	return 1
 
