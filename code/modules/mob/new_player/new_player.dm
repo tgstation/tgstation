@@ -84,6 +84,9 @@
 					if(player.ready)totalPlayersReady++
 
 	Topic(href, href_list[])
+		if(src != usr)
+			return 0
+
 		if(!client)	return 0
 
 		if(href_list["show_preferences"])
