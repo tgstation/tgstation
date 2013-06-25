@@ -1,4 +1,6 @@
 
+// This machine shows the materials that are present
+
 obj/machinery/anomaly/gas_chromatography
 	name = "Gas Chromatography spectrometer"
 

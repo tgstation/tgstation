@@ -1,4 +1,6 @@
 
+// This machine shows the age for extremely old finds
+
 obj/machinery/anomaly/accelerator
 	name = "Accelerator spectrometer"
 

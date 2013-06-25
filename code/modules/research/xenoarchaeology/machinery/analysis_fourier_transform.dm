@@ -1,4 +1,6 @@
 
+// This machine tells the distance to a nearby artifact, if there is one
+
 obj/machinery/anomaly/fourier_transform
 	name = "Fourier Transform spectroscope"
 

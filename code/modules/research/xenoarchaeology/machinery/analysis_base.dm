@@ -23,7 +23,7 @@
 
 	var/obj/item/weapon/reagent_containers/glass/held_container
 	var/obj/item/weapon/tank/fuel_container
-	var/target_scan_ticks = 60
+	var/target_scan_ticks = 30
 	var/report_num = 0
 	var/scan_process = 0
 	var/temperature = 273	//measured in kelvin, if this exceeds 1200, the machine is damaged and requires repairs
@@ -50,8 +50,10 @@
 	if(scan_process)
 		if(scan_process++ > target_scan_ticks)
 			FinishScan()
-
-		if(temperature > 350 && prob(10))
+		else if(temperature > 400)
+			src.visible_message("\blue \icon[src] shuts down from the heat!", 2)
+			scan_process = 0
+		else if(temperature > 350 && prob(10))
 			src.visible_message("\blue \icon[src] bleets plaintively.", 2)
 			if(temperature > 400)
 				scan_process = 0
@@ -107,7 +109,7 @@
 	user.machine = src
 	var/dat = "<B>[src.name]</B><BR>"
 	dat += "Module heat level: [temperature] kelvin<br>"
-	dat += "Safeties set at 300k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>"
+	dat += "Safeties set at 350k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>"
 	dat += "<hr>"
 	if(scan_process)
 		dat += "Scan in progress<br><br><br>"
@@ -178,7 +180,7 @@ obj/machinery/anomaly/Topic(href, href_list)
 		fuel_container.loc = src.loc
 		fuel_container = null
 	if(href_list["begin"])
-		if(temperature >= 300)
+		if(temperature >= 350)
 			var/proceed = input("Unsafe internal temperature detected, enter YES below to continue.","Warning")
 			if(proceed == "YES" && get_dist(src, usr) <= 1)
 				scan_process = 1
