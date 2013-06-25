@@ -186,7 +186,7 @@ connection
 
 			//If there are more than one connection, decrement the number of connections
 			//Otherwise, remove all connections between the zones.
-			if(zone_1 in zone_2.connected_zones)
+			if(zone_1 in zone_2.closed_connection_zones)
 				if(zone_1.closed_connection_zones[zone_2] > 1)
 					zone_1.closed_connection_zones[zone_2]--
 				else
@@ -196,7 +196,7 @@ connection
 						zone_1.closed_connection_zones = null
 
 			//Then do the same for the other zone.
-			if(zone_2 in zone_1.connected_zones)
+			if(zone_2 in zone_1.closed_connection_zones)
 				if(zone_2.closed_connection_zones[zone_1] > 1)
 					zone_2.closed_connection_zones[zone_1]--
 				else
