@@ -158,51 +158,53 @@ connection
 		if(!istype(zone_1) || !istype(zone_2))
 			return
 
-		//Handle disconnection of indirectly or directly connected zones.
-		if( (zone_1 in zone_2.connected_zones) || (zone_2 in zone_1.connected_zones) )
+		if(indirect != CONNECTION_CLOSED)
+			//Handle disconnection of indirectly or directly connected zones.
+			if( (zone_1 in zone_2.connected_zones) || (zone_2 in zone_1.connected_zones) )
 
-			//If there are more than one connection, decrement the number of connections
-			//Otherwise, remove all connections between the zones.
-			if(zone_1 in zone_2.connected_zones)
-				if(zone_1.connected_zones[zone_2] > 1)
-					zone_1.connected_zones[zone_2]--
-				else
-					zone_1.connected_zones -= zone_2
-					//remove the list if it is empty
-					if(!zone_1.connected_zones.len)
-						zone_1.connected_zones = null
+				//If there are more than one connection, decrement the number of connections
+				//Otherwise, remove all connections between the zones.
+				if(zone_2 in zone_1.connected_zones)
+					if(zone_1.connected_zones[zone_2] > 1)
+						zone_1.connected_zones[zone_2]--
+					else
+						zone_1.connected_zones -= zone_2
+						//remove the list if it is empty
+						if(!zone_1.connected_zones.len)
+							zone_1.connected_zones = null
 
-			//Then do the same for the other zone.
-			if(zone_2 in zone_1.connected_zones)
-				if(zone_2.connected_zones[zone_1] > 1)
-					zone_2.connected_zones[zone_1]--
-				else
-					zone_2.connected_zones -= zone_1
-					if(!zone_2.connected_zones.len)
-						zone_2.connected_zones = null
+				//Then do the same for the other zone.
+				if(zone_1 in zone_2.connected_zones)
+					if(zone_2.connected_zones[zone_1] > 1)
+						zone_2.connected_zones[zone_1]--
+					else
+						zone_2.connected_zones -= zone_1
+						if(!zone_2.connected_zones.len)
+							zone_2.connected_zones = null
 
-		//Handle disconnection of closed zones.
-		if( (zone_1 in zone_2.closed_connection_zones) || (zone_2 in zone_1.closed_connection_zones) )
+		else
+			//Handle disconnection of closed zones.
+			if( (zone_1 in zone_2.closed_connection_zones) || (zone_2 in zone_1.closed_connection_zones) )
 
-			//If there are more than one connection, decrement the number of connections
-			//Otherwise, remove all connections between the zones.
-			if(zone_1 in zone_2.closed_connection_zones)
-				if(zone_1.closed_connection_zones[zone_2] > 1)
-					zone_1.closed_connection_zones[zone_2]--
-				else
-					zone_1.closed_connection_zones -= zone_2
-					//remove the list if it is empty
-					if(!zone_1.closed_connection_zones.len)
-						zone_1.closed_connection_zones = null
+				//If there are more than one connection, decrement the number of connections
+				//Otherwise, remove all connections between the zones.
+				if(zone_2 in zone_1.closed_connection_zones)
+					if(zone_1.closed_connection_zones[zone_2] > 1)
+						zone_1.closed_connection_zones[zone_2]--
+					else
+						zone_1.closed_connection_zones -= zone_2
+						//remove the list if it is empty
+						if(!zone_1.closed_connection_zones.len)
+							zone_1.closed_connection_zones = null
 
-			//Then do the same for the other zone.
-			if(zone_2 in zone_1.closed_connection_zones)
-				if(zone_2.closed_connection_zones[zone_1] > 1)
-					zone_2.closed_connection_zones[zone_1]--
-				else
-					zone_2.closed_connection_zones -= zone_1
-					if(!zone_2.closed_connection_zones.len)
-						zone_2.closed_connection_zones = null
+				//Then do the same for the other zone.
+				if(zone_1 in zone_2.closed_connection_zones)
+					if(zone_2.closed_connection_zones[zone_1] > 1)
+						zone_2.closed_connection_zones[zone_1]--
+					else
+						zone_2.closed_connection_zones -= zone_1
+						if(!zone_2.closed_connection_zones.len)
+							zone_2.closed_connection_zones = null
 
 
 	proc/Cleanup()
@@ -259,9 +261,8 @@ connection
 
 				//The door is instead closed.
 				else if(indirect > CONNECTION_CLOSED)
-					indirect = CONNECTION_CLOSED
-
 					DisconnectZones(A.zone, B.zone)
+					indirect = CONNECTION_CLOSED
 					ConnectZones(A.zone, B.zone)
 
 			//If I can no longer pass air, better delete
@@ -381,7 +382,7 @@ connection
 			//Handle diconnection and reconnection of zones.
 			if(zone_A && zone_B)
 				DisconnectZones(zone_A, zone_B)
-			ConnectZones(A.zone,	B.zone, indirect)
+			ConnectZones(A.zone, B.zone, indirect)
 
 
 #undef CONNECTION_DIRECT

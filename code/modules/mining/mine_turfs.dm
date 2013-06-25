@@ -311,7 +311,7 @@ commented out in r5061, I left it because of the shroom thingies
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
-		if(do_after(user,40))
+		if(do_after(user,25))
 			user << "\blue \icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm."
 		return
 

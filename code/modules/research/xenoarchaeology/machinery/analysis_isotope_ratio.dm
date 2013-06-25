@@ -1,4 +1,6 @@
 
+// This machine shows the age for newer finds
+
 obj/machinery/anomaly/isotope_ratio
 	name = "Isotope ratio spectrometer"
 	desc = "A specialised, complex analysis machine."

@@ -1,4 +1,6 @@
 
+// This machine shows the amount of a certain material that is present
+
 obj/machinery/anomaly/ion_mobility
 	name = "Ion Mobility Spectrometer"
 	desc = "A specialised, complex analysis machine."

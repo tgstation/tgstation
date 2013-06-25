@@ -85,6 +85,7 @@
 		dat += "Anomaly depth: [current.depth] cm<br>"
 		dat += "Clearance above anomaly depth: [current.clearance] cm<br>"
 		dat += "Dissonance spread: [current.dissonance_spread]<br>"
+		dat += "Anomaly material: [current.material]<br>"
 		dat += "<A href='?src=\ref[src];clear=[current.record_index]'>clear entry</a><br>"
 	else
 		dat += "Select an entry from the list<br>"
