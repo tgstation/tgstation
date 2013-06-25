@@ -82,10 +82,11 @@
 			H.visible_message("<span class='danger'>[M.name] has been touched by the defibrilator paddles by [user]!</span>")
 			if(charges >= 2)
 				H.Weaken(10)
-				H.adjustOxyLoss(20)
+				H.adjustOxyLoss(10)
 			else
 				H.Weaken(5)
-				H.adjustOxyLoss(10)
+				H.adjustOxyLoss(5)
+			H.updatehealth() //forces health update before next life tick
 			spark_system.attach(M)
 			spark_system.set_up(5, 0, M)
 			spark_system.start()
@@ -96,6 +97,9 @@
 				status = 0
 			update_icon()
 			playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> Defibrilated [H.name] ([H.ckey]) with [src.name]</font>"
+			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Defibrilated by [user.name] ([user.ckey]) with [src.name]</font>"
+			log_attack("<font color='red'>[user.name] ([user.ckey]) defibrilated [H.name] ([H.ckey]) with [src.name]</font>" )
 			return
 		H.visible_message("\blue [user] places the defibrilator paddles on [M.name]'s chest.", "\blue You place the defibrilator paddles on [M.name]'s chest.")
 		if(do_after(user, 10))
@@ -129,7 +133,7 @@
 						tobehealed = health + 100
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
-				H.adjustBruteLoss(0) //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
+				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
 				if(H.health > -100 && H.afterlife <= 150)
 					H.afterlife = 0
