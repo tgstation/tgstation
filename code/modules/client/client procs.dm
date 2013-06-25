@@ -87,8 +87,6 @@
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
-	unlock_content = IsByondMember()
-
 	clients += src
 	directory[ckey] = src
 
@@ -270,3 +268,9 @@
 		'icons/stamp_icons/large_stamp-qm.png',
 		'icons/stamp_icons/large_stamp-law.png'
 		)
+
+/client/proc/is_content_unlocked()
+	if(!prefs.unlock_content)
+		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+		return 0
+	return 1

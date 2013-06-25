@@ -17,8 +17,6 @@
 	var/adminobs		= null
 	var/area			= null
 
-	var/unlock_content	= 0		//byond-member content
-
 		///////////////
 		//SOUND STUFF//
 		///////////////
