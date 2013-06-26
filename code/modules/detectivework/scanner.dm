@@ -74,28 +74,36 @@
 
 		// Start gathering
 
+		if(A.blood_DNA && A.blood_DNA.len)
+			blood = A.blood_DNA.Copy()
+
+		if(A.suit_fibers && A.suit_fibers.len)
+			fibers = A.suit_fibers.Copy()
+
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
 			if (istype(H.dna, /datum/dna) && !H.gloves)
 				fingerprints += md5(H.dna.uni_identity)
 
-			if(H.blood_DNA && H.blood_DNA.len)
-				blood = H.blood_DNA.Copy()
-		else
+		else if(!ismob(A))
 
 			if(A.fingerprints && A.fingerprints.len)
 				fingerprints = A.fingerprints.Copy()
 
-			if(A.blood_DNA && A.blood_DNA.len)
-				blood = A.blood_DNA.Copy()
+			// Only get reagents from non-mobs.
+			if(A.reagents && A.reagents.reagent_list.len)
 
-		if(A.reagents && A.reagents.reagent_list.len)
-			for(var/datum/reagent/R in A.reagents.reagent_list)
-				reagents[R.name] = R.volume
+				for(var/datum/reagent/R in A.reagents.reagent_list)
+					reagents[R.name] = R.volume
 
-		if(A.suit_fibers && A.suit_fibers.len)
-			fibers = A.suit_fibers.Copy()
+					// Get blood data from the blood reagent.
+					if(istype(R, /datum/reagent/blood))
+
+						if(R.data["blood_DNA"] && R.data["blood_type"])
+							var/blood_DNA = R.data["blood_DNA"]
+							var/blood_type = R.data["blood_type"]
+							blood[blood_DNA] = blood_type
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
