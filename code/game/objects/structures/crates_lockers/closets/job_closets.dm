@@ -2,7 +2,6 @@
  * Contains:
  *		Bartender
  *		Janitor
- *		Lawyer
  */
 
 /*
