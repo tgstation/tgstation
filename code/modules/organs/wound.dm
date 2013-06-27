@@ -145,7 +145,7 @@
 
 	proc/bleeding()
 		// internal wounds don't bleed in the sense of this function
-		return (!(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
+		return (!(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT && damage >= 10) && current_stage <= max_bleeding_stage && !src.internal)
 
 /** CUTS **/
 /datum/wound/cut/small

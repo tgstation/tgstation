@@ -80,6 +80,14 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+/obj/item/weapon/card/id/New()
+	..()
+	spawn(30)
+	if(istype(loc, /mob/living/carbon/human))
+		blood_type = loc:dna:b_type
+		dna_hash = loc:dna:unique_enzymes
+		fingerprint_hash = md5(loc:dna:uni_identity)
+
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)

@@ -515,7 +515,7 @@
 		new_item.name = name
 		new_item.desc = src.desc
 
-		if(talkative)
+		if(talkative && istype(new_item,/obj/item/weapon))
 			new_item.listening_to_players = 1
 			if(prob(25))
 				new_item.speaking_to_players = 1

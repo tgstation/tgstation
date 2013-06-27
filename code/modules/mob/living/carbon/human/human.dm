@@ -1038,6 +1038,9 @@
 			O.status &= ~ORGAN_DESTROYED
 		O.wounds.Cut()
 
+	var/datum/organ/external/head/h = organs_by_name["head"]
+	h.disfigured = 0
+
 	vessel.add_reagent("blood",560-vessel.total_volume)
 	fixblood()
 	for (var/obj/item/weapon/organ/head/H in world)
@@ -1047,7 +1050,8 @@
 					H.brainmob.mind.transfer_to(src)
 					del(H)
 
-	for(var/datum/organ/internal/I in internal_organs)
+	for(var/E in internal_organs)
+		var/datum/organ/internal/I = internal_organs[E]
 		I.damage = 0
 
 	for (var/datum/disease/virus in viruses)
