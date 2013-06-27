@@ -73,6 +73,7 @@
 
 /obj/item/weapon/melee/defibrilator/attack(mob/M as mob, mob/user as mob)
 	var/tobehealed
+	var/threshhold = -config.health_threshold_dead
 	var/mob/living/carbon/human/H = M
 	if(!ishuman(M))
 		..()
@@ -117,7 +118,7 @@
 						spark_system.attach(M)
 						spark_system.start()
 					if(prob(30))
-						tobehealed = health + 100
+						tobehealed = health + threshhold
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
 				else if(uni || armor)
@@ -125,17 +126,18 @@
 						spark_system.attach(M)
 						spark_system.start()
 					if(prob(60))
-						tobehealed = health + 100
+						tobehealed = health + threshhold
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
 				else
 					if(prob(90))
-						tobehealed = health + 100
+						tobehealed = health + threshhold
 						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
 						H.adjustOxyLoss(tobehealed)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
-				if(H.health > -100 && H.afterlife <= 150)
+				var/datum/organ/external/temp = H.get_organ("head")
+				if(H.health > -100 && H.afterlife <= 150 && !(temp.status & ORGAN_DESTROYED))
 					H.afterlife = 0
 					viewers(M) << "\blue [src] beeps: Resuscitation successful."
 					spawn(0)
