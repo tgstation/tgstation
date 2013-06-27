@@ -588,7 +588,7 @@
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 470) // Set up the popup browser window
-	if(!( in_range(src, usr) || istype(usr, /mob/living/silicon) ))
+	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
 		popup.close()
 		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
