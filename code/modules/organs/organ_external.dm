@@ -307,6 +307,10 @@
 
 //Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
+
+	if((status & ORGAN_ROBOT)) //Robotic limbs don't heal or get worse.
+		return
+
 	for(var/datum/wound/W in wounds)
 		// wounds can disappear after 10 minutes at the earliest
 		if(W.damage == 0 && W.created + 3.25 * 10 * 60 <= world.time)
