@@ -151,7 +151,7 @@
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
+		if(!src || !user || !user.canmove || !(user.loc == T) || user.restrained())
 			return 0
 
 	return 1
@@ -944,7 +944,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr))
+	if (usr.stat || !ishuman(usr) || usr.restrained())
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
