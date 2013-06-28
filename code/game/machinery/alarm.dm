@@ -135,9 +135,9 @@
 		if(!istype(location))	return//returns if loc is not simulated
 
 		var/datum/gas_mixture/environment = location.return_air()
-		var/temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
+
 		//Handle temperature adjustment here.
-		if(temperature_dangerlevel || regulating_temperature)
+		if(environment.temperature < target_temperature - 10 || environment.temperature > target_temperature + 10 || regulating_temperature)
 			//If it goes too far, we should adjust ourselves back before stopping.
 			if(!regulating_temperature)
 				regulating_temperature = 1
@@ -194,6 +194,7 @@
 			if(RCON_YES)
 				remote_control = 1
 
+		update_icon()
 		updateDialog()
 		return
 
@@ -368,7 +369,8 @@
 					send_signal(device_id, list("power"= 0) )
 
 	proc/apply_danger_level(var/new_danger_level)
-		alarm_area.atmosalm = new_danger_level
+		if (alarm_area.atmosalert(new_danger_level))
+			post_alert(new_danger_level)
 
 		for (var/area/A in alarm_area.related)
 			for (var/obj/machinery/alarm/AA in A)
@@ -381,6 +383,26 @@
 			air_doors_open(0)
 
 		update_icon()
+
+	proc/post_alert(alert_level)
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
+		if(!frequency)
+			return
+
+		var/datum/signal/alert_signal = new
+		alert_signal.source = src
+		alert_signal.transmission_method = 1
+		alert_signal.data["zone"] = alarm_area.name
+		alert_signal.data["type"] = "Atmospheric"
+
+		if(alert_level==2)
+			alert_signal.data["alert"] = "severe"
+		else if (alert_level==1)
+			alert_signal.data["alert"] = "minor"
+		else if (alert_level==0)
+			alert_signal.data["alert"] = "clear"
+
+		frequency.post_signal(src, alert_signal)
 
 	proc/refresh_danger_level()
 		var/level = 0
@@ -828,12 +850,12 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 
 			if (AALARM_SCREEN_MODE)
 				output += "<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br><b>Air machinery mode for the area:</b><ul>"
-				var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering",\
-					AALARM_MODE_REPLACEMENT = "<font color='blue'>REPLACE AIR</font>",\
-					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",\
-					AALARM_MODE_CYCLE       = "<font color='red'>CYCLE</font>",\
-					AALARM_MODE_FILL        = "<font color='green'>FILL</font>",\
-					AALARM_MODE_OFF         = "<font color='blue'>OFFF</font>",)
+				var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
+					AALARM_MODE_REPLACEMENT = "<font color='blue'>Replace Air - Siphons out air while replacing</font>",\
+					AALARM_MODE_PANIC       = "<font color='red'>Panic - Siphons air out of the room</font>",\
+					AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
+					AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
+					AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
 				for (var/m=1,m<=modes.len,m++)
 					if (mode==m)
 						output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
