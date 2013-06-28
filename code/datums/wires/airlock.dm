@@ -190,3 +190,4 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
+			A.update_icon()
