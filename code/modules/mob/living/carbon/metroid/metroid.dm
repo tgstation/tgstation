@@ -943,7 +943,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	slowdown = SHOES_SLOWDOWN+1
 
 
-/obj/item/clothing/mask/gas/golem
+/obj/item/clothing/mask/breath/golem
 	name = "golem's face"
 	desc = "the imposing face of an adamantine golem"
 	icon_state = "golem"
@@ -952,7 +952,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	siemens_coefficient = 0
 	unacidable = 1
 
-/obj/item/clothing/mask/gas/golem
+/obj/item/clothing/mask/breath/golem
 	name = "golem's face"
 	desc = "the imposing face of an adamantine golem"
 	icon_state = "golem"
@@ -1020,12 +1020,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user << "The rune fizzles uselessly. There is no spirit nearby."
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
-		G.dna.mutantrace = "adamantine"
+		hardset_dna(G, null, null, null, "adamantine")
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
 		G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
 		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-		G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
+		G.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/golem(G), slot_wear_mask)
 		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
 		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
 		G.loc = src.loc
