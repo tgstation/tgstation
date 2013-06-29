@@ -2,7 +2,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	name = "Syndicate Bomb"
 	icon_state = "syndicate-bomb-inactive"
-	desc = "A large and menacing device capable of terrible destruction"
+	desc = "A large and menacing device. Can be bolted down with a wrench."
 
 	anchored = 0
 	density = 0
