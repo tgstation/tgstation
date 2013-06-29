@@ -276,7 +276,7 @@
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 520)
+	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 590)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
