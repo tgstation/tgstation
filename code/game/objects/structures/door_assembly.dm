@@ -408,7 +408,7 @@ obj/structure/door_assembly
 
 			if(do_after(user, 40))
 				if(!src || !WT.isOn()) return
-				user << "\blue You dissasembled the airlock assembly!"
+				user << "\blue You've dissasembled the airlock assembly."
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
 				if (mineral)
 					if (mineral == "glass")
@@ -428,7 +428,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You secured the airlock assembly!"
+			user << "\blue You've secured the airlock assembly."
 			src.name = "Secured Airlock Assembly"
 			src.anchored = 1
 
@@ -437,7 +437,7 @@ obj/structure/door_assembly
 		user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You unsecured the airlock assembly!"
+			user << "\blue You've unsecured the airlock assembly."
 			src.name = "Airlock Assembly"
 			src.anchored = 0
 
@@ -448,7 +448,7 @@ obj/structure/door_assembly
 			if(!src) return
 			coil.use(1)
 			src.state = 1
-			user << "\blue You wire the Airlock!"
+			user << "\blue You've wired the airlock assembly."
 			src.name = "Wired Airlock Assembly"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
@@ -457,7 +457,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You cut the airlock wires.!"
+			user << "\blue You've cut the wires from the airlock assembly."
 			new/obj/item/weapon/cable_coil(get_turf(user), 1)
 			src.state = 0
 			src.name = "Secured Airlock Assembly"
@@ -470,7 +470,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You installed the airlock electronics!"
+			user << "\blue You've installed the airlock electronics."
 			src.state = 2
 			src.name = "Near finished Airlock Assembly"
 			src.electronics = W
@@ -481,11 +481,11 @@ obj/structure/door_assembly
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
+		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You removed the airlock electronics!"
+			user << "\blue You've removed the airlock electronics."
 			src.state = 1
 			src.name = "Wired Airlock Assembly"
 			var/obj/item/weapon/airlock_electronics/ae
@@ -503,7 +503,7 @@ obj/structure/door_assembly
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 					if(do_after(user, 40))
-						user << "\blue You installed reinforced glass windows into the airlock assembly!"
+						user << "\blue You've installed reinforced glass windows into the airlock assembly."
 						G.use(1)
 						src.mineral = "glass"
 						src.name = "Near finished Window Airlock Assembly"
@@ -521,7 +521,7 @@ obj/structure/door_assembly
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 						if(do_after(user, 40))
-							user << "\blue You installed [M] plating into the airlock assembly!"
+							user << "\blue You've installed [M] plating into the airlock assembly."
 							G.use(2)
 							src.mineral = "[M]"
 							src.name = "Near finished [M] Airlock Assembly"
@@ -530,11 +530,11 @@ obj/structure/door_assembly
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-		user << "\blue Now finishing the airlock."
+		user << "\blue You start finishing the airlock."
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You finish the airlock!"
+			user << "\blue You've finished the airlock."
 			var/obj/machinery/door/airlock/door
 			//The below cluster of if-else-statements is a result of the differences between normal
 			//  and mineral doors. |- Ricotez
