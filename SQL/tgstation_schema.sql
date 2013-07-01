@@ -122,7 +122,8 @@ CREATE TABLE `erro_death` (
   `bruteloss` int(11) NOT NULL,
   `brainloss` int(11) NOT NULL,
   `fireloss` int(11) NOT NULL,
-  `oxyloss` int(11) NOT NULL
+  `oxyloss` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,7 +156,8 @@ CREATE TABLE `erro_legacy_population` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `playercount` int(11) DEFAULT NULL,
   `admincount` int(11) DEFAULT NULL,
-  `time` datetime NOT NULL
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
