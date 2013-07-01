@@ -1591,3 +1591,17 @@ datum/design/borg_syndicate_module
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = "/obj/item/borg/upgrade/syndicate"
 	category = "Cyborg Upgrade Modules"
+
+/////////////////////////////////////////
+//////////////////Misc///////////////////
+/////////////////////////////////////////
+
+
+datum/design/welding_mask
+	name = "Welding Gas Mask"
+	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	id = "weldingmask"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 2000)
+	build_path = "/obj/item/clothing/mask/gas/welding"

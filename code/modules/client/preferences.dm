@@ -35,6 +35,7 @@ datum/preferences
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
+	var/ghost_form = "ghost"
 
 	//character preferences
 	var/real_name						//our character's name
@@ -76,6 +77,8 @@ datum/preferences
 
 		// OOC Metadata:
 	var/metadata = ""
+	
+	var/unlock_content = 0
 
 /datum/preferences/New(client/C)
 	b_type = random_blood_type()
@@ -83,7 +86,8 @@ datum/preferences
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			if(C.unlock_content)
+			unlock_content = C.IsByondMember()
+			if(unlock_content)
 				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
@@ -203,12 +207,16 @@ datum/preferences
 
 				if(user.client)
 					if(user.client.holder)
-						dat += "<b>Adminhelp Sound</b>: "
+						dat += "<b>Adminhelp Sound:</b> "
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(user.client.unlock_content || (user.client.holder && (user.client.holder.rights & R_ADMIN)))
-						dat += "<br><b>OOC</b><br>"
-						dat += "<span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					if(unlock_content || (user.client.holder && (user.client.holder.rights & R_ADMIN)))
+						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					
+					if(unlock_content)
+						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
+						dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
+						
 
 				dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -256,7 +264,9 @@ datum/preferences
 
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
+		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
+		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=decreaseJobLevel;text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -296,7 +306,7 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=increaseJobLevel;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -331,9 +341,78 @@ datum/preferences
 		popup.open(0)
 		return
 
+	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
+		if (!job)
+			return 0
 
-	proc/SetJob(mob/user, role)
+		if (level == 1) // set all current high preferred to medium
+			job_civilian_med |= job_civilian_high
+			job_engsec_med |= job_engsec_high
+			job_medsci_med |= job_medsci_high
+			job_civilian_high = 0
+			job_engsec_high = 0
+			job_medsci_high = 0
+
+		if (job.department_flag == CIVILIAN)
+			job_civilian_low &= ~job.flag
+			job_civilian_med &= ~job.flag
+			job_civilian_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_civilian_high |= job.flag
+				if (2)
+					job_civilian_med |= job.flag
+				if (3)
+					job_civilian_low |= job.flag
+
+			return 1
+		else if (job.department_flag == ENGSEC)
+			job_engsec_low &= ~job.flag
+			job_engsec_med &= ~job.flag
+			job_engsec_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_engsec_high |= job.flag
+				if (2)
+					job_engsec_med |= job.flag
+				if (3)
+					job_engsec_low |= job.flag
+
+			return 1
+		else if (job.department_flag == MEDSCI)
+			job_medsci_low &= ~job.flag
+			job_medsci_med &= ~job.flag
+			job_medsci_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_medsci_high |= job.flag
+				if (2)
+					job_medsci_med |= job.flag
+				if (3)
+					job_medsci_low |= job.flag
+
+			return 1
+
+		return 0
+
+	proc/GetJobLevel(var/datum/job/job)
+		if (!job) return 0
+
+		if (job.flag & (job_civilian_high | job_engsec_high | job_medsci_high))
+			return 1
+		else if (job.flag & (job_civilian_med | job_engsec_med | job_medsci_med))
+			return 2
+		else if (job.flag & (job_civilian_low | job_engsec_low | job_medsci_low))
+			return 3
+
+		return 0
+
+	proc/UpdateJobPreference(mob/user, role, upOrDown)
 		var/datum/job/job = job_master.GetJob(role)
+
 		if(!job)
 			user << browse(null, "window=mob_occupation")
 			ShowChoices(user)
@@ -347,17 +426,25 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-		if(GetJobDepartment(job, 1) & job.flag)
-			SetJobDepartment(job, 1)
-		else if(GetJobDepartment(job, 2) & job.flag)
-			SetJobDepartment(job, 2)
-		else if(GetJobDepartment(job, 3) & job.flag)
-			SetJobDepartment(job, 3)
-		else//job = Never
-			SetJobDepartment(job, 4)
 
+		var/targetLvl = GetJobLevel(job)
+		if (upOrDown == 1) // increasing from low to high, i.e. lowering the level value
+			if (targetLvl == 0)
+				targetLvl = 3 // low
+			else
+				targetLvl = targetLvl - 1
+		else // decreasing from high to low, i.e. raising the level value
+			if (targetLvl == 3)
+				targetLvl = 0
+			else
+				targetLvl = targetLvl + 1
+
+
+		SetJobPreferenceLevel(job, targetLvl)
 		SetChoices(user)
+
 		return 1
+
 
 	proc/ResetJobs()
 
@@ -403,57 +490,6 @@ datum/preferences
 						return job_engsec_low
 		return 0
 
-
-	proc/SetJobDepartment(var/datum/job/job, var/level)
-		if(!job || !level)	return 0
-		switch(level)
-			if(1)//Only one of these should ever be active at once so clear them all here
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-				return 1
-			if(2)//Set current highs to med, then reset them
-				job_civilian_med |= job_civilian_high
-				job_medsci_med |= job_medsci_high
-				job_engsec_med |= job_engsec_high
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-
-		switch(job.department_flag)
-			if(CIVILIAN)
-				switch(level)
-					if(2)
-						job_civilian_high = job.flag
-						job_civilian_med &= ~job.flag
-					if(3)
-						job_civilian_med |= job.flag
-						job_civilian_low &= ~job.flag
-					else
-						job_civilian_low |= job.flag
-			if(MEDSCI)
-				switch(level)
-					if(2)
-						job_medsci_high = job.flag
-						job_medsci_med &= ~job.flag
-					if(3)
-						job_medsci_med |= job.flag
-						job_medsci_low &= ~job.flag
-					else
-						job_medsci_low |= job.flag
-			if(ENGSEC)
-				switch(level)
-					if(2)
-						job_engsec_high = job.flag
-						job_engsec_med &= ~job.flag
-					if(3)
-						job_engsec_med |= job.flag
-						job_engsec_low &= ~job.flag
-					else
-						job_engsec_low |= job.flag
-		return 1
-
-
 	proc/process_link(mob/user, list/href_list)
 		if(!istype(user, /mob/new_player))	return
 
@@ -468,8 +504,10 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
-				if("input")
-					SetJob(user, href_list["text"])
+				if("increaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], 1)
+				if ("decreaseJobLevel")
+					UpdateJobPreference(user, href_list["text"], -1)
 				else
 					SetChoices(user)
 			return 1
@@ -502,6 +540,11 @@ datum/preferences
 
 			if("input")
 				switch(href_list["preference"])
+					if("ghostform")
+						if(unlock_content)
+							var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
+							if(new_form)
+								ghost_form = new_form
 					if("name")
 						var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
 						if(new_name)
@@ -570,7 +613,7 @@ datum/preferences
 					if("ooccolor")
 						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
 						if(new_ooccolor)
-							ooccolor = new_ooccolor
+							ooccolor = sanitize_ooccolor(new_ooccolor)
 
 					if("bag")
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
@@ -578,6 +621,9 @@ datum/preferences
 							backbag = backbaglist.Find(new_backbag)
 			else
 				switch(href_list["preference"])
+					if("publicity")
+						if(unlock_content)
+							toggles ^= MEMBER_PUBLIC
 					if("gender")
 						if(gender == MALE)
 							gender = FEMALE

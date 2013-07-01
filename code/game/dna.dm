@@ -7,9 +7,9 @@
 #define RADIATION_STRENGTH_MULTIPLIER 1			//larger has a more range
 
 #define RADIATION_DURATION_MAX 30
-#define RADIATION_ACCURACY_MULTIPLIER 4			//larger is less accurate
+#define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 0.3	//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 0.2	//multiplier for how much radiation a test subject recieves
 
 #define BAD_MUTATION_DIFFICULTY 2
 #define GOOD_MUTATION_DIFFICULTY 4
@@ -588,6 +588,9 @@
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 470) // Set up the popup browser window
+	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+		popup.close()
+		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
@@ -703,7 +706,7 @@
 							else				temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tSE: No Data"
-						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num[i];'>Save to Buffer</a> "
+						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
 						else				temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
 						temp_html += "<a href='?src=\ref[src];task=clearbuffer;num=[i];'>Clear Buffer</a> "
 						if(diskette)		temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
@@ -827,6 +830,7 @@
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
+					viable_occupant.radiation += rand(15,40)
 					switch(href_list["text"])
 						if("se")
 							if(buffer_slot["SE"])
@@ -843,7 +847,6 @@
 								viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
 								viable_occupant.dna.b_type = buffer_slot["b_type"]
 								updateappearance(viable_occupant)
-					viable_occupant.radiation += rand(15,40)
 		if("injector")
 			if(num && injectorready)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
