@@ -63,9 +63,31 @@
 				user.adjustBrainLoss(10)
 		else
 			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			if(src.emagged) // That's right, we'll only check the "original" esword.
+				newSaber.emagged = 1
+				newSaber.color = "rainbow"
+			user.drop_l_hand()
+			user.drop_r_hand()
 			del(W)
 			del(src)
+	else if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			color = "rainbow"
+			user << "<span class='warning'>RNBW_ENGAGE</span>"
+			
+			if(active)
+				icon_state = "swordrainbow"
+				// Updating overlays, copied from welder code.  
+				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
+				if(user.r_hand == src)
+					user.update_inv_r_hand(0)
+				else if(user.l_hand == src)
+					user.update_inv_l_hand(0)
+
+		else
+			user << "<span class='warning'>It's already fabulous!</span>"
 
 /*
  * Classic Baton

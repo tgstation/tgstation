@@ -157,6 +157,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/emagged = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	color = pick("red", "blue", "green", "purple")
@@ -173,7 +174,7 @@
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
 		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
-		user.take_organ_damage(20,25)
+		user.take_organ_damage(force_wielded)
 		return
 	if((wielded) && prob(50))
 		spawn(0)
@@ -194,6 +195,17 @@
 /obj/item/weapon/twohanded/dualsaber/red
 	New()
 		color = "red"
+
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			user << "<span class='warning'>2XRNBW_ENGAGE</span>"
+			color = "rainbow"
+			update_icon()
+		else
+			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
 
 
 //spears
