@@ -128,7 +128,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -145,6 +145,8 @@ var/list/ai_list = list()
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
 		icon_state = "ai-static"
+	else if(icontype == "Red October")
+		icon_state = "ai-redoctober"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -620,7 +622,8 @@ var/list/ai_list = list()
 	else
 		var/icon_list[] = list(
 		"default",
-		"floating face"
+		"floating face",
+		"xeno queen"
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
@@ -630,6 +633,8 @@ var/list/ai_list = list()
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 				if("floating face")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
+				if("xeno queen")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
