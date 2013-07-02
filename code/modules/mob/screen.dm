@@ -358,11 +358,13 @@
 		if(!I)
 			H << "<span class='notice'>You are not holding anything to equip.</span>"
 			return
-
-		H.drop_from_inventory(I)
-		H.equip_to_appropriate_slot(I)
-		H.update_hud()
-
+		if(H.equip_to_appropriate_slot(I))
+			if(hand)
+				update_inv_l_hand(0)
+			else
+				update_inv_r_hand(0)
+		else
+			H << "\red You are unable to equip that."
 
 /mob/living/verb/resist()
 	set name = "Resist"
