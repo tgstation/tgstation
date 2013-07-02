@@ -93,6 +93,8 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	proc/recruitWindow(var/mob/M as mob)
 		var/datum/paiCandidate/candidate
 		for(var/datum/paiCandidate/c in pai_candidates)
+			if(!istype(c) || !istype(M))
+				break
 			if(c.key == M.key)
 				candidate = c
 		if(!candidate)

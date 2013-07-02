@@ -10,6 +10,7 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
+	var/traitor_name = "traitor"
 
 
 	uplink_welcome = "Syndicate Uplink Console:"

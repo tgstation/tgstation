@@ -90,7 +90,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				var/text = "[key_name(usr)] tried to purchase an uplink item that doesn't exist"
 				var/textalt = "[key_name(usr)] tried to purchase an uplink item that doesn't exist [item]"
 				message_admins(text)
-				warning(textalt)
+				log_game(textalt)
 				admin_log.Add(textalt)
 
 
