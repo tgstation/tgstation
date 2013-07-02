@@ -252,11 +252,11 @@
 	alien_slashes += 1
 	visible_message("<span class='danger'>[user] slashes at [src]!</span>")
 	if(istype(src,/obj/structure/table/reinforced))
-		if (alien_slashes >= 4)
+		if (alien_slashes >= 4) // 4 hits for reinforced table
 			visible_message("<span class='danger'>[user] breaks through [src]!</span>")
 			destroy()
 	else
-		if (alien_slashes >= 2)
+		if (alien_slashes >= 2) // 2 hits for normal table
 			visible_message("<span class='danger'>[user] breaks through [src]!</span>")
 			destroy()
 
