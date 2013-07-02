@@ -10,6 +10,11 @@
 	icon_state = "fakewindows"
 	opacity = 0
 
+/turf/unsimulated/wall/fakedoor
+	name = "Centcom Access"
+	icon = 'icons/obj/doors/Doorele.dmi'
+	icon_state = "door_closed"
+
 turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
