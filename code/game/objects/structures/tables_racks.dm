@@ -20,6 +20,7 @@
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/parts = /obj/item/weapon/table_parts
+	var/alien_slashes = 0 //Amount of times table has been slashed by an alien.
 
 /obj/structure/table/New()
 	..()
@@ -248,7 +249,18 @@
 
 
 /obj/structure/table/attack_alien(mob/user)
-	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	alien_slashes += 1
+	visible_message("<span class='danger'>[user] slashes at [src]!</span>")
+	if(istype(src,/obj/structure/table/reinforced)) //6 hits if reinforced table
+		if (alien_slashes >= 8)
+			visible_message("<span class='danger'>[user] breaks through [src]!</span>")
+			destroy()
+	else
+		if (alien_slashes >= 4) //4 hits if normal table
+			visible_message("<span class='danger'>[user] breaks through [src]!</span>")
+			destroy()
+
+
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.wall_smash)
