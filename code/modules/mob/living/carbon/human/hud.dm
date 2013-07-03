@@ -275,6 +275,12 @@
 	mymob.pullin.screen_loc = ui_pull_resist
 	hotkeybuttons += mymob.pullin
 
+	lingchemdisplay = new /obj/screen()
+	lingchemdisplay.name = "chemical storage"
+	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.layer = 20
+
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
@@ -303,7 +309,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	inventory_shown = 0;
 
