@@ -57,7 +57,10 @@
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	sleep(10)
+
+	cover = new /obj/machinery/porta_turret_cover(loc)
+	cover.Parent_Turret = src
+
 	if(!installation)	//if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 		projectile = /obj/item/projectile/energy/electrode	//holder for the projectile, here it is being set
 		eprojectile = /obj/item/projectile/beam				//holder for the projectile when emagged, if it is different
@@ -657,8 +660,11 @@
 					I:amount -= 2
 					icon_state = "turret_frame2"
 					if(I:amount <= 0)
+						user.before_take_item(I)
 						del(I)
-					return
+				else
+					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -702,6 +708,7 @@
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
+				user.before_take_item(I)
 				del(I) //delete the gun :(
 				return
 
@@ -715,6 +722,7 @@
 			if(isprox(I))
 				build_step = 5
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
+				user.before_take_item(I)
 				del(I)
 				return
 
@@ -736,8 +744,11 @@
 					build_step = 7
 					I:amount -= 2
 					if(I:amount <= 0)
+						user.before_take_item(I)
 						del(I)
-					return
+				else
+					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -768,7 +779,6 @@
 //					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
 //					Turret.cover.Parent_Turret=Turret
 //					Turret.cover.name = finish_name
-					Turret.New()
 					del(src)
 
 			else if(istype(I, /obj/item/weapon/crowbar))
