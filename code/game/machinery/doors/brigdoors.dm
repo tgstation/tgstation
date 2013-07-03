@@ -190,7 +190,7 @@
 				//src.closedoor()
 			if(href_list["fc"])
 				for(var/obj/machinery/flasher/F in targets)
-					F.flash()
+					F.activate()
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		src.update_icon()
