@@ -208,6 +208,8 @@
 
 
 	Topic(href, href_list)
+		if(..())
+			return
 		if(href_list["autostart"])
 			autostart = !autostart
 		if(href_list["voltage"])

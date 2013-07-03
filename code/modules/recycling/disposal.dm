@@ -254,6 +254,8 @@
 	// handle machine interaction
 
 	Topic(href, href_list)
+		if(..())
+			return
 		if(usr.loc == src)
 			usr << "\red You cannot reach the controls from inside."
 			return
@@ -262,37 +264,26 @@
 			usr << "\red The disposal units power is disabled."
 			return
 		..()
-		src.add_fingerprint(usr)
-		if(stat & BROKEN)
-			return
-		if(usr.stat || usr.restrained() || src.flushing)
-			return
+		usr.set_machine(src)
 
-		if (in_range(src, usr) && istype(src.loc, /turf))
-			usr.set_machine(src)
-
-			if(href_list["close"])
-				usr.unset_machine()
-				usr << browse(null, "window=disposal")
-				return
-
-			if(href_list["pump"])
-				if(text2num(href_list["pump"]))
-					mode = 1
-				else
-					mode = 0
-				update()
-
-			if(href_list["handle"])
-				flush = text2num(href_list["handle"])
-				update()
-
-			if(href_list["eject"])
-				eject()
-		else
-			usr << browse(null, "window=disposal")
+		if(href_list["close"])
 			usr.unset_machine()
+			usr << browse(null, "window=disposal")
 			return
+
+		if(href_list["pump"])
+			if(text2num(href_list["pump"]))
+				mode = 1
+			else
+				mode = 0
+			update()
+
+		if(href_list["handle"])
+			flush = text2num(href_list["handle"])
+			update()
+
+		if(href_list["eject"])
+			eject()
 		return
 
 	// eject the contents of the disposal unit

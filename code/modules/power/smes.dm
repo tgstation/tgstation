@@ -210,95 +210,81 @@
 
 
 /obj/machinery/power/smes/Topic(href, href_list)
-	..()
-
-	if (usr.stat || usr.restrained() )
+	if(..())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
 
 //world << "[href] ; [href_list[href]]"
 
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if( href_list["close"] )
+		usr << browse(null, "window=smes")
+		usr.unset_machine()
+		return
 
+	else if( href_list["cmode"] )
+		chargemode = !chargemode
+		if(!chargemode)
+			charging = 0
+		updateicon()
 
-		if( href_list["close"] )
-			usr << browse(null, "window=smes")
-			usr.unset_machine()
-			return
+	else if( href_list["online"] )
+		online = !online
+		updateicon()
+	else if( href_list["input"] )
 
-		else if( href_list["cmode"] )
-			chargemode = !chargemode
-			if(!chargemode)
-				charging = 0
-			updateicon()
+		var/i = text2num(href_list["input"])
 
-		else if( href_list["online"] )
-			online = !online
-			updateicon()
-		else if( href_list["input"] )
+		var/d = 0
+		switch(i)
+			if(-4)
+				chargelevel = 0
+			if(4)
+				chargelevel = SMESMAXCHARGELEVEL		//30000
 
-			var/i = text2num(href_list["input"])
+			if(1)
+				d = 100
+			if(-1)
+				d = -100
+			if(2)
+				d = 1000
+			if(-2)
+				d = -1000
+			if(3)
+				d = 10000
+			if(-3)
+				d = -10000
 
-			var/d = 0
-			switch(i)
-				if(-4)
-					chargelevel = 0
-				if(4)
-					chargelevel = SMESMAXCHARGELEVEL		//30000
+		chargelevel += d
+		chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
 
-				if(1)
-					d = 100
-				if(-1)
-					d = -100
-				if(2)
-					d = 1000
-				if(-2)
-					d = -1000
-				if(3)
-					d = 10000
-				if(-3)
-					d = -10000
+	else if( href_list["output"] )
 
-			chargelevel += d
-			chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
+		var/i = text2num(href_list["output"])
 
-		else if( href_list["output"] )
+		var/d = 0
+		switch(i)
+			if(-4)
+				output = 0
+			if(4)
+				output = SMESMAXOUTPUT		//30000
 
-			var/i = text2num(href_list["output"])
+			if(1)
+				d = 100
+			if(-1)
+				d = -100
+			if(2)
+				d = 1000
+			if(-2)
+				d = -1000
+			if(3)
+				d = 10000
+			if(-3)
+				d = -10000
 
-			var/d = 0
-			switch(i)
-				if(-4)
-					output = 0
-				if(4)
-					output = SMESMAXOUTPUT		//30000
-
-				if(1)
-					d = 100
-				if(-1)
-					d = -100
-				if(2)
-					d = 1000
-				if(-2)
-					d = -1000
-				if(3)
-					d = 10000
-				if(-3)
-					d = -10000
-
-			output += d
-			output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
+		output += d
+		output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
 
 		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		src.updateUsrDialog()
-
-	else
-		usr << browse(null, "window=smes")
-		usr.unset_machine()
-	return
 
 
 /obj/machinery/power/smes/proc/ion_act()
