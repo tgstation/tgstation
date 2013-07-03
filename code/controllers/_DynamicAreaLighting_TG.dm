@@ -252,6 +252,12 @@ area
 
 		overlays += lighting_overlay
 
+	proc/SetDynamicLighting()
+
+		src.lighting_use_dynamic = 1
+		for(var/turf/T in src.contents)
+			T.update_lumcount(0)
+
 	proc/InitializeLighting()	//TODO: could probably improve this bit ~Carn
 		if(!tag) tag = "[type]"
 		if(!lighting_use_dynamic)
