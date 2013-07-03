@@ -386,6 +386,7 @@
 #include "code\game\mecha\medical\odysseus.dm"
 #include "code\game\mecha\working\ripley.dm"
 #include "code\game\mecha\working\working.dm"
+#include "code\game\objects\bang.dm"
 #include "code\game\objects\empulse.dm"
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\explosion_recursive.dm"

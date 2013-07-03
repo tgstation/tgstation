@@ -7,14 +7,8 @@
 
 	prime()
 		..()
-		for(var/obj/structure/closet/L in view(get_turf(src), null))
-			if(locate(/mob/living/carbon/, L))
-				for(var/mob/living/carbon/M in L)
-					bang(get_turf(src), M)
-
-
-		for(var/mob/living/carbon/M in viewers(get_turf(src), null))
-			bang(get_turf(src), M)
+		bang(src,"BANG",10,10)
+		flash(src,10,8)
 
 		for(var/obj/effect/blob/B in view(8,get_turf(src)))       		//Blob damage here
 			var/damage = round(30/(get_dist(B,get_turf(src))+1))
@@ -22,7 +16,7 @@
 			B.update_icon()
 		del(src)
 		return
-
+/*
 	proc/bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
 		if (locate(/obj/item/weapon/cloaking_device, M))			// Called during the loop that bangs people in lockers/containers and when banging
 			for(var/obj/item/weapon/cloaking_device/S in M)			// people in normal view.  Could theroetically be called during other explosions.
@@ -97,7 +91,7 @@
 			if (M.ear_damage >= 5)
 				M << "\red Your ears start to ring!"
 		M.update_icons()
-
+*/
 
 /obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."

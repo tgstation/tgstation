@@ -201,7 +201,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
-/mob/living/carbon/proc/eyecheck()
+/mob/living/carbon/eyecheck()
 	return 0
 
 /mob/living/carbon/proc/tintcheck()

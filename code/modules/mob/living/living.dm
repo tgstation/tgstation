@@ -74,6 +74,9 @@
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
+/mob/living/proc/eyecheck()
+	return 2		//It's probably being called on some slimy tentacle monster with no eyes.
+
 
 // ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
 // Stop! ... Hammertime! ~Carn
