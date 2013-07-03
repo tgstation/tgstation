@@ -325,7 +325,8 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(75+rand(10,30))
-					smoke.delete()
+					if(smoke)
+						smoke.delete()
 					src.total_smoke--
 
 
@@ -938,6 +939,7 @@ steam.start() -- spawns the effect
 		del(src)
 
 	bullet_act()
+		..()
 		if(metal==1 || prob(50))
 			del(src)
 

@@ -130,7 +130,7 @@
 		else
 			if(check_access(scan))
 			// EDIT SPECIFIC JOB
-				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"	
+				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
 				dat += "<h1>[j.title]: [j.current_positions]/[j.total_positions]</h1><hr>"
 				//Make sure antags can't completely ruin rounds
 
@@ -147,8 +147,8 @@
 						dat += "<b>You have to wait [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"] minutes before you can open this position.</b>"
 					if(0)
 						dat += "<b>You cannot open positions for this job.</b><br>"
-	
-				
+
+
 				switch(can_close_job(j))
 					if(1)
 						dat += "<a href='?src=\ref[src];choice=make_job_unavailable'>Close Position</a>"
@@ -276,7 +276,7 @@
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 520)
+	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 590)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -292,14 +292,9 @@
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
-				if(ishuman(usr))
-					modify.loc = usr.loc
-					if(!usr.get_active_hand())
-						usr.put_in_hands(modify)
-					modify = null
-				else
-					modify.loc = loc
-					modify = null
+				modify.loc = loc
+				modify.verb_pickup()
+				modify = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -310,14 +305,9 @@
 
 		if ("scan")
 			if (scan)
-				if(ishuman(usr))
-					scan.loc = usr.loc
-					if(!usr.get_active_hand())
-						usr.put_in_hands(scan)
-					scan = null
-				else
-					scan.loc = src.loc
-					scan = null
+				scan.loc = src.loc
+				scan.verb_pickup()
+				scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -434,7 +424,7 @@
 
 
 /obj/machinery/computer/card/centcom
-	name = "CentCom Identification Console"
+	name = "Centcom Identification Console"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
 	req_access = list(access_cent_captain)
 

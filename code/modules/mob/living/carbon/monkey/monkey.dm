@@ -139,7 +139,7 @@
 
 	else
 		if (M.a_intent == "harm")
-			if ((prob(75) && health > 0))
+			if (prob(75))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
@@ -148,7 +148,7 @@
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
-					if (paralysis < 5)
+					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
 						spawn( 0 )
 							for(var/mob/O in viewers(src, null))

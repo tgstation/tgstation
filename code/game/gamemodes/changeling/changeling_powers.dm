@@ -76,7 +76,7 @@
 		src << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
 		return
 
-	if(!G.state > GRAB_NECK)
+	if(G.state <= GRAB_NECK)
 		src << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
 		return
 	if(changeling.isabsorbing)

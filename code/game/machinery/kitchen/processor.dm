@@ -84,8 +84,9 @@
 				for(var/datum/disease/D in O.viruses)
 					if(D.spread_type != SPECIAL)
 						B.data["viruses"] += D.Copy()
+				if(check_dna_integrity(O))
+					B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 
-				B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 				if(O.resistances&&O.resistances.len)
 					B.data["resistances"] = O.resistances.Copy()
 				bucket_of_blood.reagents.reagent_list += B

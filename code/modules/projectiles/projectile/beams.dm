@@ -31,6 +31,10 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
+	on_hit(var/atom/target, var/blocked = 0)
+		if(istype(target,/turf/)||istype(target,/obj/structure/))
+			target.ex_act(2)
+		..()
 
 
 /obj/item/projectile/beam/deathlaser

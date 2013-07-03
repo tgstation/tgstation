@@ -106,12 +106,6 @@
 					permutated.Add(A)
 					return 0
 
-				if(istype(A,/turf))
-					for(var/obj/O in A)
-						O.bullet_act(src)
-					for(var/mob/M in A)
-						M.bullet_act(src, def_zone)
-
 				density = 0
 				invisibility = 101
 				delete()

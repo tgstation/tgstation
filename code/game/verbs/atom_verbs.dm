@@ -24,8 +24,9 @@
 	if (!tile)
 		return
 
-	var/P = new /obj/effect/decal/point(tile)
+	var/obj/P = new /obj/effect/decal/point(tile)
 	spawn (20)
-		if(P)	del(P)
+		if(P)
+			P.loc = null
 
 	usr.visible_message("<b>[usr]</b> points to [this]")

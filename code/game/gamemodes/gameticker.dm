@@ -5,7 +5,6 @@ var/global/datum/controller/gameticker/ticker
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
 
-
 /datum/controller/gameticker
 	var/const/restart_timeout = 250
 	var/current_state = GAME_STATE_PREGAME
@@ -43,7 +42,11 @@ var/global/datum/controller/gameticker/ticker
 		C.playtitlemusic()
 
 	do
-		pregame_timeleft = 90
+		if(config)
+			pregame_timeleft = config.lobby_countdown
+		else
+			error("configuration was null when retrieving the lobby_countdown value.")
+			pregame_timeleft = 120
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
 		while(current_state == GAME_STATE_PREGAME)

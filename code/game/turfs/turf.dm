@@ -41,20 +41,10 @@
 	if(!isAI(usr))
 		..()
 
+/turf/attack_hand(mob/user as mob)
+	user.Move_Pulled(src)
+
 /turf/ex_act(severity)
-	return 0
-
-
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		src.ex_act(2)
-	..()
-	return 0
-
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/bullet/gyro))
-		explosion(src, -1, 0, 2)
-	..()
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)

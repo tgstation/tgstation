@@ -29,7 +29,6 @@
 	var/toxins_alert = 0
 	var/fire_alert = 0
 	var/pressure_alert = 0
-	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
 	var/tinttotal = 0				// Total level of visualy impairing items
 

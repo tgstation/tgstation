@@ -2359,7 +2359,7 @@ ________________________________________________________________________________
 				spark_system.set_up(5, 0, A.loc)
 
 				var/obj/machinery/power/apc/B = A.loc.loc:get_apc()//Object.turf.area find APC
-				if(B)//If APC exists. Might not if the area is unpowered like CentCom.
+				if(B)//If APC exists. Might not if the area is unpowered like Centcom.
 					var/datum/powernet/PN = B.terminal.powernet
 					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.
 						drain = rand(G.mindrain,G.maxdrain)
@@ -2719,7 +2719,7 @@ It is possible to destroy the net by the occupant or someone else.
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= Proj.damage
 		healthcheck()
-		return 0
+		..()
 
 	ex_act(severity)
 		switch(severity)

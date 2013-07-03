@@ -34,12 +34,12 @@
 					src.authorized -= W:registered_name
 					src.authorized += W:registered_name
 					if (src.auth_need - src.authorized.len > 0)
-						message_admins("[key_name_admin(user)] has authorized early shuttle launch")
-						log_game("[user.ckey] has authorized early shuttle launch")
+						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+						log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
 						world << text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len)
 					else
-						message_admins("[key_name_admin(user)] has launched the shuttle")
-						log_game("[user.ckey] has launched the shuttle early")
+						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+						log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z])")
 						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
 						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
@@ -62,6 +62,8 @@
 			if(!emagged && emergency_shuttle.location == 1 && user.get_active_hand() == W)
 				switch(choice)
 					if("Launch")
+						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+						log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z])")
 						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
 						emergency_shuttle.settimeleft( 10 )
 						emagged = 1

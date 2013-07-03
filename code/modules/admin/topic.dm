@@ -9,42 +9,52 @@
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
 			if("1")
-				log_admin("[key_name(usr)] has spawned a traitor.")
-				if(!src.makeTratiors())
+				message_admins("[key_name_admin(usr)] created traitors.")
+				log_admin("[key_name(usr)] created traitors.")
+				if(!src.makeTraitors())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("2")
-				log_admin("[key_name(usr)] has spawned a changeling.")
+				message_admins("[key_name(usr)] created changelings.")
+				log_admin("[key_name(usr)] created changelings.")
 				if(!src.makeChanglings())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("3")
-				log_admin("[key_name(usr)] has spawned revolutionaries.")
+				message_admins("[key_name(usr)] started a revolution.")
+				log_admin("[key_name(usr)] started a revolution.")
 				if(!src.makeRevs())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("4")
-				log_admin("[key_name(usr)] has spawned a cultists.")
+				message_admins("[key_name(usr)] created cultists.")
+				log_admin("[key_name(usr)] created cultists.")
 				if(!src.makeCult())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("5")
-				log_admin("[key_name(usr)] has spawned a malf AI.")
+				message_admins("[key_name(usr)] caused an AI to malfunction.")
+				log_admin("[key_name(usr)] caused an AI to malfunction.")
 				if(!src.makeMalfAImode())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("6")
-				log_admin("[key_name(usr)] has spawned a wizard.")
+				message_admins("[key_name(usr)] created a wizard.")
+				log_admin("[key_name(usr)] created a wizard.")
 				if(!src.makeWizard())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("7")
-				log_admin("[key_name(usr)] has spawned a nuke team.")
+				message_admins("[key_name(usr)] created a nuke team.")
+				log_admin("[key_name(usr)] created a nuke team.")
 				if(!src.makeNukeTeam())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("8")
-				log_admin("[key_name(usr)] has spawned a ninja.")
+				message_admins("[key_name(usr)] spawned a ninja.")
+				log_admin("[key_name(usr)] spawned a ninja.")
 				src.makeSpaceNinja()
 			if("9")
-				log_admin("[key_name(usr)] has spawned aliens.")
+				message_admins("[key_name(usr)] started an alien infestation.")
+				log_admin("[key_name(usr)] started an alien infestation.")
 				src.makeAliens()
 /* DEATH SQUADS
 			if("10")
-				log_admin("[key_name(usr)] has spawned a death squad.")
+				message_admins("[key_name(usr)] created a death squad.")
+				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 */
@@ -1435,7 +1445,7 @@
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
+		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
@@ -1451,7 +1461,8 @@
 
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
+		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
+		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))	return
