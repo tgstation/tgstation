@@ -2,11 +2,13 @@
 	name = "double agents"
 	config_tag = "double_agents"
 	restricted_jobs = list("Cyborg", "AI", "Captain", "Head of Personnel", "Chief Medical Officer", "Research Director", "Chief Engineer", "Head of Security") // Human / Minor roles only.
-	required_players = 12
-	required_enemies = 3
-	recommended_enemies = 6
+	required_players = 25
+	required_enemies = 5
+	recommended_enemies = 8
 
 	traitor_name = "double agent"
+
+	traitors_possible = 8 //hard limit on traitors if scaling is turned off
 
 	var/list/target_list = list()
 
@@ -25,18 +27,21 @@
 
 /datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)
 
-	if(target_list.len > 1)
-		// Assassinate
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = traitor
-		kill_objective.target = target_list[traitor]
-		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
-		traitor.objectives += kill_objective
+	if(traitor in target_list) // Is a double agent
+		if(target_list.len > 1)
+			// Assassinate
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.target = target_list[traitor]
+			kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
+			traitor.objectives += kill_objective
 
-	// Escape
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = traitor
-	traitor.objectives += escape_objective
+		// Escape
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = traitor
+		traitor.objectives += escape_objective
+	else
+		..()
 	return
 
 /datum/game_mode/traitor/double_agents/make_antag_chance(var/mob/living/carbon/human/character)
