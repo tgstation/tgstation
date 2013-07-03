@@ -216,15 +216,13 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob, var/needs_opened = 1, var/show_message = 1, var/move_them = 1)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
 		return 0
-	if(O.loc == user)
+	if(!isturf(O.loc))
 		return 0
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
 		return 0
-	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
+	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1))
 		return 0
-	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return 0
-	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
+	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc? Will also check for null loc
 		return 0
 	if(needs_opened && !src.opened)
 		return 0
