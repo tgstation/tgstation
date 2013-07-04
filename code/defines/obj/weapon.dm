@@ -473,10 +473,11 @@
 
 /obj/item/device/camera_bug
 	name = "camera bug"
+	desc = "Tiny electronic device meant to bug cameras for viewing later."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "flash"
+	icon_state = "implant_evil"
 	w_class = 1.0
-	item_state = "electronic"
+	item_state = ""
 	throw_speed = 4
 	throw_range = 20
 

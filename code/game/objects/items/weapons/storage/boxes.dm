@@ -26,6 +26,21 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
+/obj/item/weapon/storage/box/surveillance/
+	name = "\improper DromedaryCo packet"
+	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "Dpacket"
+	item_state = "Dpacket"
+	w_class = 1
+	foldable = null
+	New()
+		..()
+		contents = list()
+		sleep(1)
+		for(var/i = 1 to 5)
+			new /obj/item/device/camera_bug(src)
+
 /obj/item/weapon/storage/box/survival/
 	New()
 		..()

@@ -733,6 +733,7 @@
 #include "code\game\objects\items\devices\debugger.dm"
 #include "code\game\objects\items\devices\flash.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
+#include "code\game\objects\items\devices\handtv.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
 #include "code\game\objects\items\devices\multitool.dm"
 #include "code\game\objects\items\devices\paicard.dm"
