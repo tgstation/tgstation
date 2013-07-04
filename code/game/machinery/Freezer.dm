@@ -89,7 +89,7 @@
 
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
-	name = "heater"
+	name = "Heater"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "heater"
 	density = 1
