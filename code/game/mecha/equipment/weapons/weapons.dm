@@ -27,6 +27,7 @@
 		set_ready_state(0)
 		playsound(chassis, fire_sound, 50, 1)
 		var/obj/item/projectile/A = new projectile(curloc)
+		A.firer = chassis.occupant
 		A.original = target
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
@@ -78,9 +79,18 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-	Bump(atom/A)
+	Bump(atom/A) //this is just awful
 		A.bullet_act(src, def_zone)
 		src.life -= 10
+		if(ismob(A))
+			var/mob/M = A
+			if(istype(firer, /mob))
+				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
+			else
+				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
 		if(life <= 0)
 			del(src)
 		return
@@ -147,6 +157,9 @@
 			*/
 		chassis.use_power(energy_drain)
 		log_message("Honked from [src.name]. HONK!")
+		var/turf/T = get_turf(src)
+		message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Mecha Honker in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in ([T.x],[T.y],[T.z])")
 		do_after_cooldown()
 		return
 
@@ -211,6 +224,7 @@
 			playsound(chassis, fire_sound, 80, 1)
 			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
+			A.firer = chassis.occupant
 			A.original = target
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
@@ -255,6 +269,7 @@
 			playsound(chassis, fire_sound, 50, 1)
 			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
+			A.firer = chassis.occupant
 			A.original = target
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
@@ -286,6 +301,9 @@
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		log_message("Fired from [src.name], targeting [target].")
+		var/turf/T = get_turf(src)
+		message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		log_game("[chassis.occupant.ckey]([chassis.occupant]) fired a [src] ([T.x],[T.y],[T.z])")
 		do_after_cooldown()
 		return
 
@@ -323,6 +341,9 @@
 		F.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		log_message("Fired from [src.name], targeting [target].")
+		var/turf/T = get_turf(src)
+		message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		log_game("[chassis.occupant.ckey]([chassis.occupant]) fired a [src] ([T.x],[T.y],[T.z])")
 		spawn(det_time)
 			F.prime()
 		do_after_cooldown()
