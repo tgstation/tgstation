@@ -27,21 +27,22 @@
 
 /datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)
 
-	if(traitor in target_list) // Is a double agent
-		if(target_list.len > 1)
-			// Assassinate
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = traitor
-			kill_objective.target = target_list[traitor]
-			kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
-			traitor.objectives += kill_objective
+	if(target_list.len && target_list[traitor]) // Is a double agent
+
+		// Assassinate
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = traitor
+		kill_objective.target = target_list[traitor]
+		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
+		traitor.objectives += kill_objective
 
 		// Escape
 		var/datum/objective/escape/escape_objective = new
 		escape_objective.owner = traitor
 		traitor.objectives += escape_objective
+
 	else
-		..()
+		..() // Give them standard objectives.
 	return
 
 /datum/game_mode/traitor/double_agents/make_antag_chance(var/mob/living/carbon/human/character)
