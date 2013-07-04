@@ -54,10 +54,6 @@
 
 	uneq_all() // particularly to ensure sight modes are cleared
 
-	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
-		var/obj/machinery/recharge_station/RC = loc
-		RC.go_out()
-
 	if(blind)	blind.layer = 0
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
