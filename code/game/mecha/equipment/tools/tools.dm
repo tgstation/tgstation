@@ -54,6 +54,9 @@
 				M.updatehealth()
 				occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
 				chassis.visible_message("\red [chassis] squeezes [target].")
+				chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+				log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 			else
 				step_away(M,chassis)
 				occupant_message("You push [target] out of the way.")
@@ -110,6 +113,11 @@
 									ore.Move(ore_box)
 				else if(target.loc == C)
 					log_message("Drilled through [target]")
+					if(ismob(target))
+						var/mob/M = target
+						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 					target.ex_act(2)
 		return 1
 
@@ -167,6 +175,11 @@
 								ore.Move(ore_box)
 				else if(target.loc == C)
 					log_message("Drilled through [target]")
+					if(ismob(target))
+						var/mob/M = target
+						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 					target.ex_act(2)
 		return 1
 
@@ -416,6 +429,9 @@
 		P.failchance = 0
 		P.icon_state = "anom"
 		P.name = "wormhole"
+		var/turf/T = get_turf(target)
+		message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Wormhole Generator in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Wormhole Generator in ([T.x],[T.y],[T.z])")
 		do_after_cooldown()
 		src = null
 		spawn(rand(150,300))
@@ -474,6 +490,9 @@
 							sleep(2)
 				set_ready_state(0)
 				chassis.use_power(energy_drain)
+				var/turf/T = get_turf(target)
+				message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Gravitational Catapult in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+				log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
 				do_after_cooldown()
 		return
 
