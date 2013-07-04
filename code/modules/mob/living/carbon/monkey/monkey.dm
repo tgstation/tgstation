@@ -349,7 +349,7 @@
 	if(client && mind)
 		if (client.statpanel == "Status")
 			if(mind.changeling)
-				stat("Chemical Storage", mind.changeling.chem_charges)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Genetic Damage Time", mind.changeling.geneticdamage)
 	return
 

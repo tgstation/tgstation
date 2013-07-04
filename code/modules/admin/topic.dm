@@ -1358,7 +1358,7 @@
 		else
 			health_description = "This mob type has no health to speak of."
 
-		//Gener
+		//Gender
 		switch(M.gender)
 			if(MALE,FEMALE)	gender_description = "[M.gender]"
 			else			gender_description = "<font color='red'><b>[M.gender]</b></font>"
@@ -2076,16 +2076,6 @@
 				for(var/sig in lawchanges)
 					dat += "[sig]<BR>"
 				usr << browse(dat, "window=lawchanges;size=800x500")
-			if("list_job_debug")
-				var/dat = "<B>Job Debug info.</B><HR>"
-				if(job_master)
-					for(var/line in job_master.job_debug)
-						dat += "[line]<BR>"
-					dat+= "*******<BR><BR>"
-					for(var/datum/job/job in job_master.occupations)
-						if(!job)	continue
-						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-					usr << browse(dat, "window=jobdebug;size=600x500")
 			if("check_antagonist")
 				check_antagonists()
 			if("showailaws")
@@ -2130,10 +2120,8 @@
 			if (ok)
 				world << text("<B>A secret has been activated by []!</B>", usr.key)
 
-	else if(href_list["secretscoder"])
-		if(!check_rights(R_DEBUG))	return
-
-		switch(href_list["secretscoder"])
+	else if(href_list["secretsgeneral"])
+		switch(href_list["secretsgeneral"])
 			if("spawn_objects")
 				var/dat = "<B>Admin Log<HR></B>"
 				for(var/l in admin_log)
@@ -2141,6 +2129,21 @@
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
+			if("list_job_debug")
+				var/dat = "<B>Job Debug info.</B><HR>"
+				if(job_master)
+					for(var/line in job_master.job_debug)
+						dat += "[line]<BR>"
+					dat+= "*******<BR><BR>"
+					for(var/datum/job/job in job_master.occupations)
+						if(!job)	continue
+						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+					usr << browse(dat, "window=jobdebug;size=600x500")
+
+	else if(href_list["secretscoder"])
+		if(!check_rights(R_DEBUG))	return
+
+		switch(href_list["secretscoder"])
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
 					if (access_maint_tunnels in M.req_access)
