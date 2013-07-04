@@ -83,7 +83,7 @@ MASS SPECTROMETER
 		user.visible_message(text("<span class='alert'>[user] has analyzed the floor's vitals!</span>"))
 		user.show_message(text("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy"), 1)
 		user.show_message(text("<span class='notice'>\t Damage Specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>"), 1)
-		user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burns</font>/<font color='red'>Brute</font></span>", 1)
+		user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)
 		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return
 
@@ -112,7 +112,7 @@ MASS SPECTROMETER
 	user.show_message(text("<span class='notice'>Analyzing Results for []:\n\t Overall Status: []</span>", M, mob_status), 1)
 	user.show_message(text("<span class='notice'>\t Damage Specifics: <font color='blue'>[]</font>-<font color='green'>[]</font>-<font color='#FF8000'>[]</font>-<font color='red'>[]</font></span>", oxy_loss, tox_loss, fire_loss, brute_loss), 1)
 
-	user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burns</font>/<font color='red'>Brute</font></span>", 1)
+	user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)
 	user.show_message("<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 
 	// Time of death
