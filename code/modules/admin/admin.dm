@@ -402,8 +402,8 @@ var/global/floorIsLava = 0
 	dat +={"
 			<B>Coder Secrets</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
 			<BR>
 			"}
 
