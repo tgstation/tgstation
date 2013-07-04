@@ -189,6 +189,16 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 3
 
+/datum/uplink_item/device_tools/surveillance
+	name = "Camera Surveillance Kit"
+	item = /obj/item/weapon/storage/box/syndie_kit/surveillance
+	cost = 3
+
+/datum/uplink_item/device_tools/camerabugs
+	name = "Camera Bugs"
+	item = /obj/item/weapon/storage/box/surveillance
+	cost = 2
+
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
 	item = /obj/item/device/encryptionkey/binary
@@ -198,6 +208,7 @@ var/list/uplink_items = list()
 	name = "Centcomm Encryption Key"
 	item = /obj/item/device/encryptionkey/syndicate/hacked
 	cost = 2
+
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
 	item = /obj/item/weapon/aiModule/syndicate

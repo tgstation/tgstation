@@ -7,6 +7,8 @@
 	health = 300
 	var/sight_mode = 0
 	var/custom_name = ""
+	var/lawcheck[1]
+	var/ioncheck[1]
 
 //Hud stuff
 
@@ -239,7 +241,7 @@
 		changed_name = "[(prefix ? "[prefix] " : "")][braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
-	
+
 	// if we've changed our name, we also need to update the display name for our PDA
 	setup_PDA()
 
@@ -960,6 +962,25 @@
 		else
 			src << "You need to disable a module first!"
 		installed_modules()
+
+	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawc"])
+		switch(lawcheck[L+1])
+			if ("Yes") lawcheck[L+1] = "No"
+			if ("No") lawcheck[L+1] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+		checklaws()
+
+	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawi"])
+		switch(ioncheck[L])
+			if ("Yes") ioncheck[L] = "No"
+			if ("No") ioncheck[L] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+		checklaws()
+	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+		statelaws()
+
 
 	if (href_list["deact"])
 		var/obj/item/O = locate(href_list["deact"])

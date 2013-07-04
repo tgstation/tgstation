@@ -117,3 +117,12 @@
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/surveillance
+	name = "box (S)"
+
+/obj/item/weapon/storage/box/syndie_kit/surveillance/New()
+	..()
+	new /obj/item/device/handtv(src)
+	new /obj/item/weapon/storage/box/surveillance(src)
+	return
