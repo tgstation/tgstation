@@ -38,35 +38,31 @@
 	return tally+config.monkey_delay
 
 /mob/living/carbon/monkey/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-
-			tmob.LAssailant = src
-		now_pushing = 0
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	now_pushing = 1
+	if(ismob(AM))
+		var/mob/tmob = AM
+		if(!(tmob.status_flags & CANPUSH))
+			now_pushing = 0
+			return
+
+		tmob.LAssailant = src
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+	if (!( now_pushing ))
+		now_pushing = 1
+		if (!( AM.anchored ))
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
