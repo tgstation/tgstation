@@ -148,6 +148,7 @@
 
 		if (href_list["grab"])
 			memorybank = locate(href_list["grab"])
+			if(!istype(dish) || !dish) return
 			analysed = dish.analysed
 			del(dish)
 			dish = null
