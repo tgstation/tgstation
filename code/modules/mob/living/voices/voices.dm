@@ -9,33 +9,39 @@
 	see_in_dark = 0
 	mind = null
 
-	var/fluff_title = "voice"			//what do you call these things in your specific context (e.g. for changelings: memory)
-	var/current_host = null
+	var/can_reenter_corpse = 1
+	var/mob/current_host = null
 	var/old_mind = null
 	//var/cantalk = 1	//unused right now, intended for a mute verb
 
-/mob/living/voices/New(mob/body, mob/host, title)
-	if (title)
-		fluff_title = title
-	stat = 0
+/mob/living/voices/New(mob/host, mob/body, title=null)
+	if (!host)
+		return			//voices need hosts
+	loc = host
+	current_host = host
+
+	 //if there is a body transfer relevant stuff here, if not we're done
+	if (!body)
+		..()
 	attack_log = body.attack_log	//preserve attack log
 	gender = body.gender
-	loc = host						//new voices go into the host
-	for(var/mob/living/voices/V in body.contents) //as do voices that belonged to him (e.g. ling absorbing a ling)
+	for(var/mob/living/voices/V in body.contents) //transfer voices as well (e.g. ling absorbing a ling gains his victims)
 		V.transfer(host)
-	if (!mind)
-		name = body.name
 	old_mind = body.mind
-	name = body.mind.name
+	if (body.mind)				//take the name from the body's mind if there is one
+		name = body.mind.name
+	else
+		name = body.name
+	if (title)
+		name = "[title] of [name]"
 	real_name = name
-	current_host = host
 	..()
 
-/mob/proc/becomevoice(mob/host, title)
-	var/mob/living/voices/NP = new(src, host, title)
+/mob/proc/becomevoice(mob/host, title=null)
+	var/mob/living/voices/newvoice = new(host, src,  title)
 	if(key)
-		NP.key = key
-	return NP
+		newvoice.key = key
+	return newvoice
 
 /mob/living/voices/proc/transfer(mob/newhost)
 	if (newhost && !istype(newhost, /mob/living/voices) ) //don't allow voices to have voices
@@ -48,8 +54,8 @@
 		return 0
 
 /mob/living/voices/Del()
-	ghostize(1, src.old_mind)			//they can re-enter their original body
-	src.current_host << "<span class='notice'>The [src.fluff_title] of [src.real_name] fades away.</span>" // tell the host he ghosted
+	ghostize(can_reenter_corpse, src.old_mind)
+	src.current_host << "<span class='notice'>\The [src.real_name] fades away.</span>" // tell the host he ghosted
 	..()
 
 /mob/living/voices/ghost()	//a way for a voice to become a ghost
@@ -65,5 +71,16 @@
 	src << "\red Your mind is no longer your own!"
 	return
 
-/mob/dead/observer/can_use_hands()	return 0
-/mob/dead/observer/is_active()		return 0
+/mob/living/voices/can_use_hands()	return 0
+/mob/living/voices/is_active()		return 0
+
+/proc/create_voice(host, mob/body, name) // use for admin buttons to set a new name
+	if (body.mind)
+		body.mind.name = name
+	else
+		body.name = name
+	var/mob/living/voices/nv = body.becomevoice(host, null)
+	nv.can_reenter_corpse = 0
+	if (istype(body, /mob/dead/observer))
+		body.Logout()
+	return 1

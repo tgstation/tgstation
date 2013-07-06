@@ -154,7 +154,7 @@
 
 	if (T.mind && (changeling.acceptvoices == 1))
 		var/mob/living/voices/P = T.becomevoice(src, "memory")
-		src << "<span class='notice'>The [P.fluff_title] of [P.real_name] is now with us. We can use 'say :p' to communicate with it.</span>"
+		src << "<span class='notice'>The [P.real_name] is now with us.</span>"
 		P << "<span class='notice'>You are now a part of the changeling's mind. Type 'Ghost' to escape this existence.</span>"
 	T.death(0)
 	T.Drain()
@@ -692,7 +692,6 @@ var/list/datum/dna/hivemind_bank = list()
 	var/index = voices.Find(S)
 	var/mob/living/voices/Svoice = voices_ref[index]
 	Svoice << "<span class='notice'>Your memories fade from [src]'s mind!</span>"
-	call(Svoice,/mob/proc/ghostize)(1,Svoice.old_mind)
 	del(Svoice)
 	src << "<span class='notice'>[S] will no longer bother us.</span>"
 	return 1

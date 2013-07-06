@@ -153,7 +153,7 @@ var/list/powerinstances
 	helptext = "Doubles the rate at which we naturally recharge chemicals."
 	genomecost = 8
 	isVerb = 0
-	verbpath += /mob/living/carbon/proc/changeling_fastchemical
+	verbpath = list(//mob/living/carbon/proc/changeling_fastchemical)
 */
 /datum/power/changeling/EngorgedGlands
 	name = "Engorged Chemical Glands"
