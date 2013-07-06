@@ -1104,6 +1104,7 @@ datum/preferences
 		character.name = character.real_name
 		if(character.dna)
 			character.dna.real_name = character.real_name
+			character.dna.flavor = character.flavor_text
 
 		character.flavor_text = flavor_text
 		character.med_record = med_record
