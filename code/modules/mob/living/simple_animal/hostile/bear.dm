@@ -16,7 +16,7 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
-	response_harm   = "pokes"
+	response_harm   = "hits"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 60
 	health = 60
@@ -43,7 +43,7 @@
 	desc = ""
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
-	response_harm   = "pokes"
+	response_harm   = "hits"
 
 /mob/living/simple_animal/hostile/bear/Move()
 	..()
