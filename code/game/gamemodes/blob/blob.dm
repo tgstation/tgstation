@@ -11,8 +11,8 @@ var/list/blob_nodes = list()
 	config_tag = "blob"
 	required_players = 0
 
-	var/const/waittime_l = 1800 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 3600 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/declared = 0
 	var/stage = 0
@@ -40,11 +40,10 @@ var/list/blob_nodes = list()
 			start_state = new /datum/station_state()
 			start_state.count()
 
-		spawn(rand(waittime_l, waittime_h))//3-5 minutes currently
-			message_admins("Blob spawned and expanding, report created")
-			if(!kill_air)
-				kill_air = 1
-				message_admins("Kill air has been set to true by Blob, testing to see how laggy it is without the extra processing from hullbreaches. Note: the blob is fireproof so plasma does not help anyways")
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept(0)
+
+		spawn(rand(waittime_l * 3, waittime_h * 3))
 
 			if(ticker && ticker.minds && ticker.minds.len)
 				var/player_based_cores = round(ticker.minds.len/players_per_core, 1)

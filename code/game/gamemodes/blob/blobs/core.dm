@@ -5,17 +5,22 @@
 	health = 200
 	brute_resist = 2
 	fire_resist = 2
-
+	var/mob/camera/blob/overmind = null // the blob core's overmind
+	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 
 	New(loc, var/h = 200)
 		blobs += src
 		blob_cores += src
 		processing_objects.Add(src)
+		if(!overmind)
+			create_overmind()
 		..(loc, h)
 
 
 	Del()
 		blob_cores -= src
+		if(overmind)
+			del(overmind)
 		processing_objects.Remove(src)
 		..()
 		return
@@ -28,46 +33,52 @@
 			return
 		return
 
+	Life()
+		if(!overmind)
+			create_overmind()
+		else
+			overmind.add_points(1)
+		for(var/i = 1; i < 8; i += i)
+			Pulse(0, i)
+		for(var/b_dir in alldirs)
+			if(prob(50))
+				continue
+			var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
+			if(B)
+				B.change_to(/obj/effect/blob/shield)
+		..()
+
 
 	run_action()
-		Pulse(0,1)
-		Pulse(0,2)
-		Pulse(0,4)
-		Pulse(0,8)
-		//Should have the fragments in here somewhere
-		return 1
+		return 0
 
 
-	proc/create_fragments(var/wave_size = 1)
-		var/list/candidates = list()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.prefs.be_special & BE_ALIEN)
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					candidates += G.key
+	proc/create_overmind()
 
-		if(candidates.len)
-			for(var/i = 0 to wave_size)
-				var/mob/living/blob/B = new/mob/living/blob(src.loc)
-				B.key = pick(candidates)
-				candidates -= B.key
-
-/*
-	Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
-		set background = 1
-		if(pulse > 20)	return
-		//Looking for another blob to pulse
-		var/list/dirs = list(1,2,4,8)
-		dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
-		for(var/i = 1 to 4)
-			if(!dirs.len)	break
-			var/dirn = pick(dirs)
-			dirs.Remove(dirn)
-			var/turf/T = get_step(src, dirn)
-			var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
-			if(!B)
-				expand(T)//No blob here so try and expand
-				return
-			B.Pulse((pulse+1),get_dir(src.loc,T))
+		if(overmind_get_delay > world.time)
 			return
-		return
-*/
+
+		overmind_get_delay = world.time + 300 // 30 seconds
+
+		if(overmind)
+			del(overmind)
+
+		var/list/candidates = get_candidates(BE_ALIEN)
+		if(candidates.len)
+			var/mob/camera/blob/B = new(src.loc)
+			var/client/C = pick(candidates)
+			B.key = C.key
+			B.blob_core = src
+			src.overmind = B
+
+			B << "<span class='notice'>You are the overmind!</span>"
+			B << "You are the overmind and can control the blob by placing new blob pieces such as..."
+			B << "<b>Normal Blob</b> will expand your reach and allow you to create barriers."
+			B << "<b>Shield Blob</b> is a strong and expensive blob piece which can take more damage."
+			B << "<b>Resourece Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income."
+			B << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you income."
+			B << "<b>Factory Blob</b> is a blob which will spawn pods which will attack nearby food."
+
+			return 1
+		return 0
+

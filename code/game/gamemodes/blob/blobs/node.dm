@@ -8,7 +8,6 @@
 
 
 	New(loc, var/h = 100)
-		blobs += src
 		blob_nodes += src
 		processing_objects.Add(src)
 		..(loc, h)
@@ -20,6 +19,9 @@
 		..()
 		return
 
+	Life()
+		for(var/i = 1; i < 8; i += i)
+			Pulse(10, i)
 
 	update_icon()
 		if(health <= 0)
@@ -30,5 +32,4 @@
 
 
 	run_action()
-		Pulse(0,0)
 		return 0
