@@ -6,6 +6,7 @@
 	var/b_type = "A+"
 	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/flavor //Stores flavor text of somebody absorbed
 
 /datum/dna/proc/check_integrity(var/mob/living/carbon/human/character)
 	if(character)
