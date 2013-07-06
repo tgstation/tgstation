@@ -23,10 +23,16 @@
 	var/online = 1
 	var/n_tag = null
 	var/obj/machinery/power/terminal/terminal = null
+	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
+	var/state = 3
 
 
 /obj/machinery/power/smes/New()
 	..()
+	// Sets up a spark system
+	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
@@ -175,6 +181,132 @@
 			return
 	interact(user)
 
+// ADDED SECURING CODE
+
+/obj/machinery/power/smes/attackby(obj/item/W, mob/user)
+
+	var/mob/living/carbon/human/U = user
+
+	if(istype(W, /obj/item/weapon/wrench))
+		if(online)
+			user << "Turn off the [src] first."
+			return
+		switch(state)
+			if(0)
+				state = 1
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				user.visible_message("[user.name] secures [src] to the floor.", \
+					"You secure the external reinforcing bolts to the floor.", \
+					"You hear a ratchet")
+				src.anchored = 1
+			if(1)
+				state = 0
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				user.visible_message("[user.name] unsecures [src] reinforcing bolts from the floor.", \
+					"You undo the external reinforcing bolts.", \
+					"You hear a ratchet")
+				src.anchored = 0
+			if(2)
+				user << "\red [src] needs to be unwelded from the floor."
+			if(3)
+				user << "\red [src] needs to have its power cords disconnected."
+		return
+
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(online)
+			user << "Turn off the [src] first."
+			return
+		switch(state)
+			if(0)
+				user << "\red [src] needs to be wrenched to the floor."
+			if(1)
+				if (WT.remove_fuel(0,user))
+					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					user.visible_message("[user.name] starts to weld [src] to the floor.", \
+						"You start to weld the [src] to the floor.", \
+						"You hear welding")
+					if (do_after(user,20))
+						if(!src || !WT.isOn()) return
+						state = 2
+						user << "You weld the [src] to the floor."
+						connect_to_network()
+						src.directwired = 1
+				else
+					user << "\red You need more welding fuel to complete this task."
+			if(2)
+				if (WT.remove_fuel(0,user))
+					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					user.visible_message("[user.name] starts to cut [src] free from the floor.", \
+						"You start to cut the [src] free from the floor.", \
+						"You hear welding")
+					if (do_after(user,20))
+						if(!src || !WT.isOn()) return
+						state = 1
+						user << "You cut the [src] free from the floor."
+						disconnect_from_network()
+						src.directwired = 0
+				else
+					user << "\red You need more welding fuel to complete this task."
+			if(3)
+				user << "\red [src] needs to have its power cords disconnected."
+		return
+
+	if(istype(W, /obj/item/weapon/wirecutters))
+
+		/*
+			Will shock anyone who is not wearing yellow gloves with the current along the wires
+			The unit will remain on, and then has the potential to shock when reconnected
+
+			Over 50000W, without protective gloves, will result in body gibbing
+		*/
+
+		//Process live disconnection (can be very nasty)
+		if(online)
+			var/damagemin = charging * 50
+			var/damage = max(damagemin, (loaddemand/10))
+			var/siemens_coeff = 1
+
+			//Has gloves?
+			if(U.gloves)
+				var/obj/item/clothing/gloves/G = U.gloves
+				siemens_coeff = G.siemens_coefficient
+
+			if(siemens_coeff > 0)
+				U.electrocute_act(damage, src,siemens_coeff,1)//The last argument is a safety for the human proc that checks for gloves.
+				if(damage>5000)
+					//If the voltage is so high, gib the person
+					spawn(1)
+					playsound(U.loc, 'sound/effects/splat.ogg', 50, 1)
+					U.gib()
+
+			src.spark_system.start() // creates some sparks because they look cool
+			chargelevel = chargelevel - damage
+
+			//Circuit breaker fires
+			if(state == 3)
+				charging = 0		// stop charging
+				chargecount  = 0
+				chargemode = !chargemode
+				online = !online	//disconnect
+				updateicon()
+
+		switch(state)
+			if(2)
+				state = 3
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				user.visible_message("[user.name] connects [src] power cords.", \
+					"You connect [src] power cords.", \
+					"You hear wirecutters")
+			if(3)
+				state = 2
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				user.visible_message("[user.name] disconnects [src] power cords.", \
+					"You disconnect [src] power cords.", \
+					"You hear wirecutters")
+		return
+
+// END OF SECURING CODE
 
 /obj/machinery/power/smes/interact(mob/user)
 	if(get_dist(src, user) > 1 && !istype(user, /mob/living/silicon/ai))
@@ -230,14 +362,22 @@
 			return
 
 		else if( href_list["cmode"] )
-			chargemode = !chargemode
-			if(!chargemode)
-				charging = 0
-			updateicon()
+			if(state==3)
+				chargemode = !chargemode
+				if(!chargemode)
+					charging = 0
+				updateicon()
+			else
+				usr << "The [src] must have its power cables connected before operating."
+			return
 
 		else if( href_list["online"] )
-			online = !online
-			updateicon()
+			if(state==3)
+				online = !online
+				updateicon()
+			else
+				usr << "The [src] must have its power cables connected before operating."
+			return
 		else if( href_list["input"] )
 
 			var/i = text2num(href_list["input"])
@@ -306,7 +446,7 @@
 		if(prob(1)) //explosion
 			world << "\red SMES explosion in [src.loc.loc]"
 			for(var/mob/M in viewers(src))
-				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
+				M.show_message("\red [src] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
 			sleep(10*pick(4,5,6,7,10,14))
 			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 			smoke.set_up(3, 0, src.loc)
