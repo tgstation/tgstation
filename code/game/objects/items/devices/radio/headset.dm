@@ -30,10 +30,6 @@
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
-	else if(istype(src.loc,/mob/living/simple_animal/parrot))
-		var/mob/living/simple_animal/parrot/P = src.loc
-		if(P.ears == src)
-			return ..(freq, level)
 	return -1
 
 /obj/item/device/radio/headset/syndicate
