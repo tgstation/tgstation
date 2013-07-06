@@ -1,10 +1,25 @@
-/datum/job/assistant
+
+/* /datum/job/assistant
 	title = "Assistant"
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = -1
 	spawn_positions = -1
+	supervisors = "absolutely everyone"
+	selection_color = "#dddddd"
+	access = list()			//See /datum/job/assistant/get_access()
+	minimal_access = list()	//See /datum/job/assistant/get_access()
+
+*/
+
+/datum/job/assistant
+	title = "Assistant"
+	flag = ASSISTANT
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
@@ -22,3 +37,5 @@
 		. |= list(access_maint_tunnels)
 	else
 		return ..()
+
+

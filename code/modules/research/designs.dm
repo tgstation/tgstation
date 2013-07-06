@@ -241,6 +241,15 @@ datum/design/clonepod
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/clonepod"
 
+datum/design/cryo_cell
+	name = "Circuit Design (Cryo Cell)"
+	desc = "Allows for the construction of circuit boards used to build a Cryo Cell."
+	id = "cryo_cell"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/cryo_cell"
+
 datum/design/clonescanner
 	name = "Circuit Design (Cloning Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
@@ -375,6 +384,37 @@ datum/design/aifixer
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/aifixer"
+
+datum/design/photocopier
+	name = "Circuit Design (AI Integrity Restorer)"
+	desc = "Allows for the construction of circuit boards used to build a Photocopier."
+	id = "photocopier"
+	req_tech = list("engineering" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/photocopier"
+
+///////////////////////////////////
+//////////Atmospherics/////////////
+///////////////////////////////////
+
+datum/design/freezer
+	name = "Circuit Design (Freezer)"
+	desc = "Allows for the construction of circuit boards used to build a freezer."
+	id = "freezer"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/freezer"
+
+datum/design/heater
+	name = "Circuit Design (Heater)"
+	desc = "Allows for the construction of circuit boards used to build a Heater."
+	id = "heater"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/heater"
 
 ///////////////////////////////////
 //////////AI Module Disks//////////
@@ -1252,6 +1292,17 @@ datum/design/mrspacman
 	reliability_base = 74
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+
+
+datum/design/smes
+	name = "SMES Generator Board"
+	desc = "The circuit board that for a power storage unit."
+	id = "smes"
+	req_tech = list("programming" = 3, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	reliability_base = 79
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/smes"
 
 
 /////////////////////////////////////////

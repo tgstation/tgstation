@@ -42,7 +42,35 @@ var/const/CLOWN				=(1<<11)
 var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 
+//Event Code
+var/list/command_positions = list(
+	"Captain",
+	"First Officer",
+	"Chief Engineer",
+	"Chief Science Officer",
+	"Command Officer",
 
+)
+
+var/list/science_positions = list(
+	"Chief Science Officer",
+	"Scientist",
+)
+
+var/list/engineering_positions = list(
+	"Chief Engineer",
+	"Engineer",
+)
+
+var/list/security_positions = list(
+)
+
+var/list/medical_positions = list(
+)
+
+var/list/civilian_positions = list(
+)
+/*
 var/list/assistant_occupations = list(
 	"Assistant",
 	"Atmospheric Technician",
@@ -112,12 +140,14 @@ var/list/security_positions = list(
 	"Security Officer"
 )
 
+*/
 
 var/list/nonhuman_positions = list(
 	"AI",
 	"Cyborg",
 	"pAI"
 )
+
 
 
 /proc/guest_jobbans(var/job)

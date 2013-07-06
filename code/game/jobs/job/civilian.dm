@@ -1,3 +1,5 @@
+/*
+
 //Food
 /datum/job/bartender
 	title = "Bartender"
@@ -117,14 +119,17 @@
 		return 1
 
 
+*/
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
 	flag = CARGOTECH
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+//	total_positions = 2
+//	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
@@ -141,7 +146,7 @@
 		return 1
 
 
-
+/*
 /datum/job/mining
 	title = "Shaft Miner"
 	flag = MINER
@@ -248,15 +253,17 @@
 		H.miming = 1
 		return 1
 
-
+*/
 
 /datum/job/janitor
 	title = "Janitor"
 	flag = JANITOR
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+//	total_positions = 1
+//	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	access = list(access_janitor, access_maint_tunnels)
@@ -270,7 +277,7 @@
 		H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), slot_belt)
 		return 1
 
-
+/*
 
 //More or less assistants
 /datum/job/librarian
@@ -332,3 +339,4 @@ var/global/lawyer = 0//Checks for another lawyer
 		return 1
 
 
+*/

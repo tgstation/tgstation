@@ -434,6 +434,21 @@
 		W.update_icon()
 		return
 
+/obj/item/weapon/storage/box/network_disks
+	name = "Spare Network Install Disks"
+	desc = "A box full of network install disks for configuring request consoles."
+	icon_state = "disks"
+
+	New()
+		..()
+		new /obj/item/weapon/disk/network_install(src)
+		new /obj/item/weapon/disk/network_install(src)
+		new /obj/item/weapon/disk/network_install(src)
+		new /obj/item/weapon/disk/network_install(src)
+		new /obj/item/weapon/disk/network_install(src)
+		new /obj/item/weapon/disk/network_install(src)
+		new /obj/item/weapon/disk/network_install(src)
+
 /obj/item/weapon/storage/box/lights
 	name = "replacement bulbs"
 	icon = 'icons/obj/storage.dmi'

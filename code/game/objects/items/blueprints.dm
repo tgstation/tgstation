@@ -130,6 +130,9 @@ move an amendment</a> to the drawing.</p>
 	A.power_light = 0
 	A.power_environ = 0
 	A.always_unpowered = 0
+	A.always_unpowered = 0
+	A.lighting_use_dynamic = 1
+	A.lighting_subarea = 1
 	move_turfs_to_area(turfs, A)
 	spawn(5)
 		//ma = A.master ? "[A.master]" : "(null)"

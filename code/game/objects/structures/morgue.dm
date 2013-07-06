@@ -389,6 +389,49 @@
 			//Foreach goto(99)
 	return
 
+/* switch */
+
+/obj/machinery/crema_switch
+	desc = "Burn baby burn!"
+	name = "crematorium igniter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "doorctrl-open"
+	anchored = 1.0
+	req_access = list(access_crematorium)
+	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
+	var/on = 0
+	var/area/area = null
+	var/otherarea = null
+	var/id = 1
+	var/opened = 0 //0=closed, 1=opened
+	var/wired = 1
+	var/hasElectronics = 1
+	var/tdir = null
+
+/obj/machinery/crema_switch/New(turf/loc, var/ndir, var/building=0)
+	..()
+
+	if (building)
+		// offset 24 pixels in direction of dir
+		// this allows the APC to be embedded in a wall, yet still inside an area
+		dir = ndir
+		src.tdir = dir		// to fix Vars bug
+		dir = SOUTH
+
+		pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
+		pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+		opened = 1
+		wired = 0
+		hasElectronics = 0
+	else
+		icon_state = "crema-0"
+
+	// Sets up a spark system
+	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+
 /obj/machinery/crema_switch/attack_hand(mob/user as mob)
 	if(src.allowed(usr))
 		for (var/obj/structure/crematorium/C in world)

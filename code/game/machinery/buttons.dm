@@ -33,15 +33,3 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-
-/obj/machinery/crema_switch
-	desc = "Burn baby burn!"
-	name = "crematorium igniter"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "crema_switch"
-	anchored = 1.0
-	req_access = list(access_crematorium)
-	var/on = 0
-	var/area/area = null
-	var/otherarea = null
-	var/id = 1

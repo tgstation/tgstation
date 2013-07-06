@@ -1,5 +1,5 @@
-<!-- Most valid html will work in here, excluding images. -->
+<h1>Welcome to Rocket 42nd Station! o7 to you and the whole crew!</h1>
 
-<h1>Welcome to Space Station 13!</h1>
+<i>Roleplay fun with one of the best gaming communities out there! (Mountain Dew not included)</i>
 
-<i>This server is running a /tg/station 13 SVN build.</i>
+<i>Currently running a /tg SVN build</i>

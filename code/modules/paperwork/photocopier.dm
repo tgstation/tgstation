@@ -188,3 +188,9 @@
 	icon_state = "tonercartridge"
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/item/device/toner/ink
+	name = "airlock painter cartridge"
+	icon_state = "tonercartridge"
+	charges = 5
+	max_charges = 5

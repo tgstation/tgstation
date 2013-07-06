@@ -53,11 +53,14 @@ proc/move_mining_shuttle()
 		if (mining_shuttle_location == 1)
 			fromArea = locate(/area/shuttle/mining/outpost)
 			toArea = locate(/area/shuttle/mining/station)
-
 		else
 			fromArea = locate(/area/shuttle/mining/station)
 			toArea = locate(/area/shuttle/mining/outpost)
-
+			for(var/obj/machinery/door/airlock/special/D in world)
+				if(D.id_tag == "mining_shuttle_airlock")
+					D.close()
+					spawn(5)
+					D.locked = 1
 		var/list/dstturfs = list()
 		var/throwy = world.maxy
 
@@ -89,6 +92,10 @@ proc/move_mining_shuttle()
 		fromArea.move_contents_to(toArea)
 		if (mining_shuttle_location)
 			mining_shuttle_location = 0
+			for(var/obj/machinery/door/airlock/special/D in world)
+				if(D.id_tag == "mining_shuttle_airlock")
+					D.locked = 0
+					D.open()//"QMLoaddoor"
 		else
 			mining_shuttle_location = 1
 

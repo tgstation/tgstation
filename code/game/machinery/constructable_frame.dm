@@ -159,6 +159,17 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 Note: Once everything is added to the public areas, will add m_amt and g_amt to circuit boards since autolathe won't be able
 to destroy them and players will be able to make replacements.
 */
+/obj/item/weapon/circuitboard/photocopier
+	name = "Circuit board (Photocopier)"
+	build_path = "/obj/machinery/photocopier"
+	board_type = "machine"
+	origin_tech = "engineering=1;"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = "Circuit board (Destructive Analyzer)"
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
@@ -221,7 +232,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
-obj/item/weapon/circuitboard/rdserver
+/obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (R&D Server)"
 	build_path = "/obj/machinery/r_n_d/server"
 	board_type = "machine"
@@ -240,6 +251,31 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+//Atmos circuit boards:
+
+/obj/item/weapon/circuitboard/freezer
+	name = "Circuit board (Freezer)"
+	build_path = "/obj/machinery/atmospherics/unary/cold_sink/freezer"
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=1"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+
+/obj/item/weapon/circuitboard/heater
+	name = "Circuit board (Heater)"
+	build_path = "/obj/machinery/atmospherics/unary/heat_reservoir/heater"
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=1"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+//Medical circuit boards:
 
 /obj/item/weapon/circuitboard/clonepod
 	name = "Circuit board (Clone Pod)"
@@ -264,6 +300,28 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/weapon/cable_coil" = 2,)
 
+/obj/item/weapon/circuitboard/cryo_cell
+	name = "Circuit board (Cryo Cell)"
+	build_path = "/obj/machinery/atmospherics/unary/cryo_cell"
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=3"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+// Engineering circuit boards:
+
+/obj/item/weapon/circuitboard/smes
+	name = "Circuit board (SMES)"
+	build_path = "/obj/machinery/power/smes"
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=3"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 4,
+							"/obj/item/weapon/cell/hyper" = 2,
+							"/obj/item/weapon/stock_parts/capacitor/super" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 // Telecomms circuit boards:
 

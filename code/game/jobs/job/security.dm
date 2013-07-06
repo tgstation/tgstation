@@ -1,3 +1,5 @@
+/*
+
 //Warden and regular officers add this result to their get_access()
 /datum/job/proc/check_config_for_sec_maint()
 	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS)
@@ -95,15 +97,19 @@
 	L = ..() | check_config_for_sec_maint()
 	return L
 
+*/
+
 /datum/job/detective
 	title = "Detective"
 	flag = DETECTIVE
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+//	total_positions = 1
+//	spawn_positions = 1
+	spawn_positions = 0
 	supervisors = "the head of security"
-	selection_color = "#ffeeee"
+//	selection_color = "#ffeeee"
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 7
@@ -139,7 +145,7 @@
 		L.implanted = 1
 		return 1
 
-
+/*
 
 /datum/job/officer
 	title = "Security Officer"
@@ -182,3 +188,6 @@
 	var/list/L = list()
 	L = ..() | check_config_for_sec_maint()
 	return L
+
+
+*/

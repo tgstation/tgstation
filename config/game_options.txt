@@ -43,7 +43,7 @@ ANIMAL_DELAY 0
 
 ### NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
-#HUMANS_NEED_SURNAMES
+HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
@@ -74,18 +74,18 @@ ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are
 ## Default probablity is 1, increase to make that mode more likely to be picked.
 ## Set to 0 to disable that mode.
 
-PROBABILITY TRAITOR 5
+PROBABILITY TRAITOR 3
 PROBABILITY TRAITORCHAN 4
-PROBABILITY DOUBLE_AGENTS 3
-PROBABILITY NUCLEAR 2
+PROBABILITY DOUBLE_AGENTS 1
+PROBABILITY NUCLEAR 1
 PROBABILITY REVOLUTION 2
 PROBABILITY CULT 2
-PROBABILITY CHANGELING 2
-PROBABILITY WIZARD 4
+PROBABILITY CHANGELING 5
+PROBABILITY WIZARD 0
 PROBABILITY MALFUNCTION 1
-PROBABILITY BLOB 0
+PROBABILITY BLOB 1
 PROBABILITY METEOR 0
-PROBABILITY EXTENDED 0
+PROBABILITY EXTENDED 3
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0

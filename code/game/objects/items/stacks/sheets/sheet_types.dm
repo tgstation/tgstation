@@ -16,6 +16,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("swivel chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("sink", /obj/structure/sink, 4, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("chest drawer", /obj/structure/filingcabinet/chestdrawer, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet	, 2, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
@@ -37,10 +40,22 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("small light fixture frame", /obj/item/light_fixture_frame/small, 1), \
 	null, \
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
+	new/datum/stack_recipe("power terminal", /obj/machinery/power/terminal, 1, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2), \
+	new/datum/stack_recipe("requests console frame", /obj/item/requests_console_frame, 2), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe("door button", /obj/item/switch_frame, 1), \
+	new/datum/stack_recipe("crematorium button", /obj/item/switch_frame/crema, 1), \
+	new/datum/stack_recipe("ignition switch", /obj/machinery/ignition_switch, 1, on_floor = 1, on_wall = 1), \
+	new/datum/stack_recipe("light switch", /obj/item/switch_frame/light, 1), \
+	new/datum/stack_recipe("airlock sensor", /obj/machinery/airlock_sensor, 1, on_floor = 1), \
+	new/datum/stack_recipe("airlock controller", /obj/machinery/embedded_controller/radio/airlock_controller, 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe("igniter", /obj/machinery/igniter, 2, on_floor = 1), \
+	new/datum/stack_recipe("mounted igniter", /obj/machinery/sparker, 2, on_floor = 1) \
 )
 
 /obj/item/stack/sheet/metal
@@ -72,6 +87,15 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
+	null, \
+	new/datum/stack_recipe("recharger", /obj/machinery/recharger, 1, time = 10, one_per_turf = 1, on_floor = 1, on_wall = 1), \
+	null, \
+	new/datum/stack_recipe("firelock door", /obj/machinery/door/firedoor, 4, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("firelock small door", /obj/machinery/door/firedoor/border_only, 4, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("shutter door", /obj/machinery/door/poddoor/shutters, 4, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("blast door", /obj/machinery/door/poddoor/preopen, 8, time = 30, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe("mass driver", /obj/machinery/mass_driver, 10, time = 50, one_per_turf = 1, on_floor = 1) \
 	)
 
 /obj/item/stack/sheet/plasteel

@@ -111,8 +111,37 @@
 				return
 		if (src.amount < R.req_amount*multiplier)
 			return
+
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
+
+		//allows user to enter id for the object
+		if( /*istype(O,/obj/machinery/door/poddoor/shutters) ||\
+			istype(O,/obj/machinery/door/poddoor/preopen) ||\
+			istype(O,/obj/machinery/door_control) ||\ */
+			istype(O,/obj/machinery/ignition_switch) ||\
+			istype(O,/obj/machinery/mass_driver) ||\
+			istype(O,/obj/machinery/igniter) ||\
+			istype(O,/obj/machinery/sparker)\
+			)
+			var/newid = copytext(reject_bad_text(input(usr, "Link ID:", "Awaiting Input", "")),1,256)
+			var/obj/machinery/door/poddoor/shutters/P = O
+			P.id = newid
+
+		//allows user to enter id for the object
+		if( istype(O,/obj/machinery/door/poddoor/shutters) ||\
+			istype(O,/obj/machinery/door/poddoor/preopen)\
+			)
+			var/newid = copytext(reject_bad_text(input(usr, "Name:", "Awaiting Input", "")),1,256)
+			var/obj/machinery/door/poddoor/P = O
+			P.name = newid
+
+		if (R.on_wall)
+			//moves the object based on user direction
+			var/ndir = usr.dir
+			O.pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 27 : -27)
+			O.pixel_y = (ndir & 3)? (ndir ==1 ? 27 : -27) : 0
+
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
@@ -214,7 +243,8 @@
 	var/time = 0
 	var/one_per_turf = 0
 	var/on_floor = 0
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+	var/on_wall = 0
+	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0, on_wall = 0)
 		src.title = title
 		src.result_type = result_type
 		src.req_amount = req_amount
@@ -223,3 +253,4 @@
 		src.time = time
 		src.one_per_turf = one_per_turf
 		src.on_floor = on_floor
+		src.on_wall = on_wall

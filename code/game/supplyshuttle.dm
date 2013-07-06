@@ -114,7 +114,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	var/processing_interval = 300
 	var/iteration = 0
 	//supply points
-	var/points = 50
+	var/points = 1000
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
@@ -169,10 +169,16 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 				dest = locate(SUPPLY_DOCK_AREATYPE)
 				the_shuttles_way = from
 				at_station = 0
+				for(var/obj/machinery/door/poddoor/D in world)
+					if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2")
+						D.close()
 			if(0)
 				from = locate(SUPPLY_DOCK_AREATYPE)
 				dest = locate(SUPPLY_STATION_AREATYPE)
 				the_shuttles_way = dest
+				//for(var/obj/machinery/door/poddoor/D in world)
+				//	if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2")
+				//		D.open()
 				at_station = 1
 		moving = 0
 
@@ -181,6 +187,11 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 			unlucky_person.gib()
 
 		from.move_contents_to(dest)
+		if(at_station)
+			for(var/obj/machinery/door/poddoor/D in world)
+				if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2")
+					D.open()
+
 
 	//Check whether the shuttle is allowed to move
 	proc/can_move()

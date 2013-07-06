@@ -268,6 +268,21 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/switch_frame))
+		var/obj/item/switch_frame/AH = W
+		AH.try_build(src)
+		return
+/*
+	else if(istype(W,/obj/item/switch_frame/light))
+		var/obj/item/switch_frame/light/AH = W
+		AH.try_build(src)
+		return
+*/
+	else if(istype(W,/obj/item/requests_console_frame))
+		var/obj/item/requests_console_frame/AH = W
+		AH.try_build(src)
+		return
+
 	else if(istype(W,/obj/item/light_fixture_frame/small))
 		var/obj/item/light_fixture_frame/small/AH = W
 		AH.try_build(src)

@@ -404,11 +404,19 @@
 		if(access_cent_captain)
 			return "Code Gold"
 
+/*
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
+
+*/
+
+/proc/get_all_jobs()
+	return list("Captain", "First Officer", "Chief Engineer", "Engineer",
+				"Chief Science Officer", "Scientist", "Command Officer")
+
 
 proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")

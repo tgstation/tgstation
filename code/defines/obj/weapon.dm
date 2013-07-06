@@ -162,6 +162,19 @@
 	item_state = "card-id"
 	w_class = 1.0
 
+/obj/item/weapon/disk/network_install
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "network_disk" //Gosh I hope syndies don't mistake them for the nuke disk.
+	item_state = "card-id"
+	name = "network install disk"
+	desc = "Used to setup a new Request Console on station network."
+
+/obj/item/weapon/disk/network_install/New()
+
+/obj/item/weapon/disk/network_install/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+
+
 //TODO: Figure out wtf this is and possibly remove it -Nodrak
 /obj/item/weapon/dummy
 	name = "dummy"
@@ -373,6 +386,115 @@
 	flags = FPRINT|TABLEPASS|CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
 
+/obj/item/weapon/module/switch_control
+	name = "switch control module"
+	icon_state = "switch_mod"
+	var/range = 8
+	var/id = null
+	desc = "An electronic module for operating switches. Range of 8 meters."
+	req_access = list(access_engine)
+
+	var/list/conf_access = null
+	var/last_configurator = null
+	var/locked = 1
+
+	attack_self(mob/user as mob)
+		if (!ishuman(user))
+			return ..(user)
+
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			return
+
+		var/t1 = text("<B>Access control</B><br>\n")
+
+
+		if (last_configurator)
+			t1 += "Operator: [last_configurator]<br>"
+
+		if (locked)
+			t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
+		else
+			t1 += "<a href='?src=\ref[src];logout=1'>Block</a><hr>"
+
+
+			t1 += conf_access == null ? "<font color=red>All</font><br>" : "<a href='?src=\ref[src];access=all'>All</a><br>"
+
+			t1 += "<br>"
+
+			var/list/accesses = get_all_accesses()
+			for (var/acc in accesses)
+				var/aname = get_access_desc(acc)
+
+				if (!conf_access || !conf_access.len || !(acc in conf_access))
+					t1 += "<a href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
+				else
+					t1 += "<a style='color: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
+
+		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
+
+		user << browse(t1, "window=airlock_electronics")
+		onclose(user, "airlock")
+
+	Topic(href, href_list)
+		..()
+		if (usr.stat || usr.restrained() || !ishuman(usr))
+			return
+		if (href_list["close"])
+			usr << browse(null, "window=airlock")
+			return
+
+		if (href_list["login"])
+			var/obj/item/I = usr.get_active_hand()
+			if (istype(I, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = I
+				I = pda.id
+			if (I && src.check_access(I))
+				src.locked = 0
+				src.last_configurator = I:registered_name
+
+		if (locked)
+			return
+
+		if (href_list["logout"])
+			locked = 1
+
+		if (href_list["access"])
+			toggle_access(href_list["access"])
+
+		attack_self(usr)
+
+	proc
+		toggle_access(var/acc)
+			if (acc == "all")
+				conf_access = null
+			else
+				var/req = text2num(acc)
+
+				if (conf_access == null)
+					conf_access = list()
+
+				if (!(req in conf_access))
+					conf_access += req
+				else
+					conf_access -= req
+					if (!conf_access.len)
+						conf_access = null
+
+/obj/item/weapon/module/switch_control/New(turf/loc, var/building=0)
+	..()
+	if(!building)
+		networkNum = networkNum + 1
+		id = "network[networkNum]"
+		return
+	return
+
+/obj/item/weapon/module/switch_control/high
+	name = "high capacity switch control module"
+	icon_state = "switch_ext_mod"
+	range = 0
+	desc = "A high capacity electronic module for operating switches. This model allows long distance networking."
+
 /obj/item/weapon/module/card_reader
 	name = "card reader module"
 	icon_state = "card_mod"
@@ -382,6 +504,11 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+
+/obj/item/weapon/module/console_motherboard
+	name = "console motherboard"
+	icon_state = "console_board"
+	desc = "A motherboard for a computer console."
 
 /obj/item/weapon/module/id_auth
 	name = "\improper ID authentication module"

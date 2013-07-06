@@ -218,6 +218,43 @@
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
 
+
+/obj/structure/closet/crate/secure/circuitboards
+	name = "circuit boards"
+	New()
+		..()
+		new /obj/item/weapon/module/switch_control
+		new /obj/item/weapon/module/switch_control
+		new /obj/item/weapon/module/switch_control/high
+		new /obj/item/weapon/module/card_reader
+		new /obj/item/weapon/module/power_control
+		new /obj/item/weapon/module/id_auth
+		new /obj/item/weapon/module/cell_power
+		new /obj/item/weapon/module/cell_power
+		new /obj/item/weapon/circuitboard/autolathe
+		new /obj/item/weapon/circuitboard/circuit_imprinter
+		new /obj/item/weapon/circuitboard/clonepod
+		new /obj/item/weapon/circuitboard/clonescanner
+		new /obj/item/weapon/circuitboard/cryo_cell
+		new /obj/item/weapon/circuitboard/destructive_analyzer
+		new /obj/item/weapon/circuitboard/freezer
+		new /obj/item/weapon/circuitboard/heater
+		new /obj/item/weapon/circuitboard/mechfab
+		new /obj/item/weapon/circuitboard/pacman
+		new /obj/item/weapon/circuitboard/pacman/mrs
+		new /obj/item/weapon/circuitboard/pacman/super
+		new /obj/item/weapon/circuitboard/photocopier
+		new /obj/item/weapon/circuitboard/protolathe
+		new /obj/item/weapon/circuitboard/smes
+		new /obj/item/weapon/circuitboard/telecomms/broadcaster
+		new /obj/item/weapon/circuitboard/telecomms/bus
+		new /obj/item/weapon/circuitboard/telecomms/hub
+		new /obj/item/weapon/circuitboard/telecomms/processor
+		new /obj/item/weapon/circuitboard/telecomms/receiver
+		new /obj/item/weapon/circuitboard/telecomms/relay
+		new /obj/item/weapon/circuitboard/telecomms/server
+		new /obj/item/weapon/circuitboard/rdserver
+
 /obj/structure/closet/crate/radiation/New()
 	..()
 	new /obj/item/clothing/suit/radiation(src)

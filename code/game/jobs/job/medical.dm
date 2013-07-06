@@ -1,3 +1,5 @@
+/*
+
 /datum/job/cmo
 	title = "Chief Medical Officer"
 	flag = CMO
@@ -34,15 +36,17 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
-
+*/
 
 /datum/job/doctor
 	title = "Medical Doctor"
 	flag = DOCTOR
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
+//	total_positions = 5
+//	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
@@ -66,7 +70,7 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
-
+/*
 
 //Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
@@ -148,4 +152,4 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
-
+*/

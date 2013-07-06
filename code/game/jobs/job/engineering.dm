@@ -1,3 +1,5 @@
+/*
+
 /datum/job/chief_engineer
 	title = "Chief Engineer"
 	flag = CHIEF
@@ -99,3 +101,8 @@
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 		return 1
+
+
+*/
+
+

@@ -8,10 +8,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console
 	name = "Requests Console"
-	desc = "A console intended to send requests to diferent departments on the station."
+	desc = "A console intended to send requests to different departments on the station."
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "req_comp0"
+	icon_state = "req_comp_frame"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
@@ -47,13 +47,16 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/announcementConsole = 0
 		// 0 = This console cannot be used to send department announcements
 		// 1 = This console can send department announcementsf
-	var/open = 0 // 1 if open
+	var/opened = 0 // 1 if opened
 	var/announceAuth = 0 //Will be set to 1 when you authenticate yourself for announcements
 	var/msgVerified = "" //Will contain the name of the person who varified it
 	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
 	var/message = "";
 	var/dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
+	var/hasMotherboard = 1
+	var/tdir = null
+	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
 	luminosity = 0
 
 /obj/machinery/requests_console/power_change()
@@ -61,56 +64,96 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	update_icon()
 
 /obj/machinery/requests_console/update_icon()
-	if(stat & NOPOWER)
-		if(icon_state != "req_comp_off")
-			icon_state = "req_comp_off"
+	if(opened)
+		if(hasMotherboard)
+			if(stat & NOPOWER)
+				icon_state = "req_comp_mb"
+				return
+			else
+				icon_state = "req_comp_open_on"
+				return
+		else
+			icon_state = "req_comp_frame"
+			return
 	else
-		if(icon_state == "req_comp_off")
-			icon_state = "req_comp0"
+		if(stat & NOPOWER)
+			icon_state = "req_comp_off"
+			return
+		else if(!hasMotherboard)
+			icon_state = "req_comp_err"
+			return
+		else if(department == "Unknown")
+			icon_state = "req_comp_boot"
+			return
+	icon_state = "req_comp0"
 
-/obj/machinery/requests_console/New()
+/obj/machinery/requests_console/New(turf/loc, var/ndir, var/building=0)
 	name = "[department] Requests Console"
-	allConsoles += src
-	//req_console_departments += department
-	switch(departmentType)
-		if(1)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-		if(2)
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-		if(3)
-			if(!("[department]" in req_console_information))
-				req_console_information += department
-		if(4)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-		if(5)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
-		if(6)
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
-		if(7)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+	// Sets up a spark system
+	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+	if(department != "Unknown")
+		allConsoles += src
+		//req_console_departments += department
+		update_icon()
+		switch(departmentType)
+			if(1)
+				if(!("[department]" in req_console_assistance))
+					req_console_assistance += department
+			if(2)
+				if(!("[department]" in req_console_supplies))
+					req_console_supplies += department
+			if(3)
+				if(!("[department]" in req_console_information))
+					req_console_information += department
+			if(4)
+				if(!("[department]" in req_console_assistance))
+					req_console_assistance += department
+				if(!("[department]" in req_console_supplies))
+					req_console_supplies += department
+			if(5)
+				if(!("[department]" in req_console_assistance))
+					req_console_assistance += department
+				if(!("[department]" in req_console_information))
+					req_console_information += department
+			if(6)
+				if(!("[department]" in req_console_supplies))
+					req_console_supplies += department
+				if(!("[department]" in req_console_information))
+					req_console_information += department
+			if(7)
+				if(!("[department]" in req_console_assistance))
+					req_console_assistance += department
+				if(!("[department]" in req_console_supplies))
+					req_console_supplies += department
+				if(!("[department]" in req_console_information))
+					req_console_information += department
+	else
+		dir = ndir
+		src.tdir = dir		// to fix Vars bug
+		dir = SOUTH
+
+		pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 30 : -30)
+		pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -30) : 0
+		opened = 1
+		hasMotherboard = 0
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		update_icon()
 
 
 /obj/machinery/requests_console/attack_hand(var/mob/user)
 	if(..(user))
 		return
+	if(department == "Unknown")
+		if(!hasMotherboard)
+			user << "[src] has no motherboard!"
+		else
+			user << "[src] is not on the network, use a network install disk to configure access."
+		return
 	var/dat = ""
-	if(!open)
+	if(!opened)
 		switch(screen)
 			if(1)	//req. assistance
 				dat += text("Which department do you need assistance from?<BR><BR>")
@@ -377,26 +420,27 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user)
+	src.add_fingerprint(usr)
 	/*
 	if (istype(O, /obj/item/weapon/crowbar))
-		if(open)
-			open = 0
+		if(opened)
+			opened = 0
 			icon_state="req_comp0"
 		else
-			open = 1
+			opened = 1
 			if(hackState == 0)
-				icon_state="req_comp_open"
+				icon_state="req_comp_opened"
 			else if(hackState == 1)
 				icon_state="req_comp_rewired"
 	if (istype(O, /obj/item/weapon/screwdriver))
-		if(open)
+		if(opened)
 			if(hackState == 0)
 				hackState = 1
 				icon_state="req_comp_rewired"
 			else if(hackState == 1)
 				hackState = 0
-				icon_state="req_comp_open"
+				icon_state="req_comp_opened"
 		else
 			user << "You can't do much with that."*/
 
@@ -413,9 +457,171 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 0
 				user << "\red You are not authorized to send announcements."
 			updateUsrDialog()
-	if (istype(O, /obj/item/weapon/stamp))
+	else if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
 			var/obj/item/weapon/stamp/T = O
 			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")
 			updateUsrDialog()
+
+	else if(istype(O, /obj/item/weapon/module/console_motherboard))
+		if(opened && !hasMotherboard)
+			//add motherboard
+			hasMotherboard = 1
+			O.Del()
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			user.visible_message(\
+				"[user] has inserted a motherboard into [src]",\
+				"You insert a motherboard into [src].")
+			update_icon()
+
+	else if (istype(O, /obj/item/weapon/screwdriver))
+		//close unit
+		user.visible_message(\
+			"[user] has [opened? "closed" : "opened"] the [src]",\
+			"You [opened? "close" : "opened"] the [src].")
+		opened = !opened
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		update_icon()
+
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if(opened && hasMotherboard)
+			var/mob/living/carbon/human/U = user
+			var/siemens_coeff = 1
+			if(!istype(user))
+				return
+
+			//Has gloves?
+			if(U.gloves)
+				var/obj/item/clothing/gloves/G = U.gloves
+				siemens_coeff = G.siemens_coefficient
+
+			if(!(stat & (NOPOWER|BROKEN)))
+				src.spark_system.start() // creates some sparks because they look cool
+
+			if((siemens_coeff > 0) && !(stat & (NOPOWER|BROKEN)))
+				U.electrocute_act(10, src,1,1)//The last argument is a safety for the human proc that checks for gloves.
+			else
+				//remove wires
+				hasMotherboard = 0
+				department = "Unknown"
+				messages = list()
+				allConsoles -= src
+				user.visible_message(\
+					"[user] has removed a motherboard from the [src]",\
+					"You have removed a motherboard from the [src].")
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				update_icon()
+				new /obj/item/weapon/module/console_motherboard( get_turf(src.loc), 1 )
+
+	//Allow a user to format a new console
+	else if (istype(O, /obj/item/weapon/disk/network_install))
+		if(department == "Unknown" && hasMotherboard && !opened)
+
+			//var/new_department = copytext(reject_bad_text(input(usr, "Department:", "Awaiting Input", "")),1,256)
+
+			var/list/D = list()
+
+			for(var/dpt in req_console_assistance)
+				if(!(dpt in D))
+					D += dpt
+			for(var/dpt in req_console_supplies)
+				if(!(dpt in D))
+					D += dpt
+			for(var/dpt in req_console_information)
+				if(!(dpt in D))
+					D += dpt
+
+			D += "Create new deparment..."
+			var/new_department = "Unknown"
+			var/list_department = input("Please select Department::", "Awaiting Input") in D
+			if(list_department == "Create new deparment...")
+				var/text_department = copytext(reject_bad_text(input(usr, "New Department Name:", "Awaiting Input", "")),1,256)
+				new_department = text_department
+			else
+				new_department = list_department
+
+			//Get Department Type
+			var/list/L = list(
+				"unlisted",
+				"assistance",
+				"supplies",
+				"info",// 3 = info
+				"assistance + supplies",// 4 = ass + sup //Erro goddamn you just HAD to shorten "assistance" down to "ass"
+				"assistance + info",// 5 = ass + info
+				"supplies + info",// 6 = sup + info
+				"assistance + supplies + info",// 7 = ass + sup + info
+			)
+
+			var/desc = input("Please select Department Type:", "Awaiting Input") in L
+
+			switch(desc)
+				if("unlisted")
+					departmentType = 0
+				if("assistance")
+					departmentType = 1
+				if("supplies")
+					departmentType = 2
+				if("info")
+					departmentType = 3
+				if("assistance + supplies")
+					departmentType = 4
+				if("assistance + info")
+					departmentType = 5
+				if("supplies + info")
+					departmentType = 6
+				if("assistance + supplies + info")
+					departmentType = 7
+
+			if(new_department)
+				department = new_department
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+				user << "\green Success! Console setup for [department] on network."
+				name = "[department] Requests Console"
+
+				allConsoles += src
+
+				O.Del()
+				update_icon()
+
+				//req_console_departments += department
+				switch(departmentType)
+					if(1)
+						if(!(department in req_console_assistance))
+							req_console_assistance += department
+					if(2)
+						if(!(department in req_console_supplies))
+							req_console_supplies += department
+					if(3)
+						if(!(department in req_console_information))
+							req_console_information += department
+					if(4)
+						if(!(department in req_console_assistance))
+							req_console_assistance += department
+						if(!(department in req_console_supplies))
+							req_console_supplies += department
+					if(5)
+						if(!(department in req_console_assistance))
+							req_console_assistance += department
+						if(!(department in req_console_information))
+							req_console_information += department
+					if(6)
+						if(!(department in req_console_supplies))
+							req_console_supplies += department
+						if(!(department in req_console_information))
+							req_console_information += department
+					if(7)
+						if(!(department in req_console_assistance))
+							req_console_assistance += department
+						if(!(department in req_console_supplies))
+							req_console_supplies += department
+						if(!(department in req_console_information))
+							req_console_information += department
+		else
+			if(opened)
+				user << "You need to close the console to use it."
+				return
+			if(department == "Unknown" && hasMotherboard && !opened)
+				user << "\red Error! Cannot install network, console already setup for [department] on network."
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+				return
 	return
