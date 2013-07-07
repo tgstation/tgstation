@@ -280,6 +280,7 @@
 	lingchemdisplay.icon_state = "power_display"
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
 	lingchemdisplay.layer = 20
+	lingchemdisplay.invisibility = 101
 
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'

@@ -101,12 +101,12 @@ var/list/powerinstances
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_digitalcamo
 
-/datum/power/changeling/lizardflesh
-	name = "Lizardflesh"
+/datum/power/changeling/fleshmend
+	name = "Fleshmend"
 	desc = "We evolve the ability to rapidly regenerate, restoring the health of the body we use."
 	helptext = "Heals a moderate amount of damage every tick. Can be used while unconscious."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_lizardflesh
+	verbpath = /mob/living/carbon/proc/changeling_fleshmend
 
 /datum/power/changeling/panacea
 	name = "Anatomic Panacea"
@@ -118,14 +118,14 @@ var/list/powerinstances
 /datum/power/changeling/shriek
 	name = "Resonant Shriek"
 	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses humans."
-	helptext = "The high-frequency sounds cannot be heard by humans, but will shatter glass nearby."
+	helptext = "The high-frequency sounds cannot be heard by humans, but will blow out lights nearby."
 	genomecost = 1
 	verbpath = /mob/living/carbon/proc/changeling_shriek
 
 /datum/power/changeling/spiders
 	name = "Spread Infestation"
 	desc = "Our form divides, creating arachnids which will grow into deadly beasts."
-	helptext = "Can be used while in lesser form. The spiders are thoughtless creatures, and may attack their creators when fully grown."
+	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires 10 DNA absorptions."
 	genomecost = 1
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_spiders
@@ -480,16 +480,19 @@ var/list/powerinstances
 
 
 	if(Thepower == null)
-		C << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
+		C << "This is awkward. Changeling power purchase failed, please report this bug to a coder!"
 		return
 
 	if(Thepower in purchasedpowers)
 		C << "We have already evolved this ability!"
 		return
 
-
 	if(geneticpoints < Thepower.genomecost)
 		C << "We have reached our capacity for abilities."
+		return
+
+	if(C.status_flags & FAKEDEATH)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+		C << "We lack the energy to evolve new abilities right now."
 		return
 
 	geneticpoints -= Thepower.genomecost
@@ -521,6 +524,7 @@ var/list/powerinstances
 		geneticpoints = initial(geneticpoints)
 		sting_range = initial(sting_range)
 		chem_storage = initial(chem_storage)
+		chem_recharge_rate = initial(chem_recharge_rate)
 		chem_charges = min(chem_charges, chem_storage)
 		mimicing = ""
 

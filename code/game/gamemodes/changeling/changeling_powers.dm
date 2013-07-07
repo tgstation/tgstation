@@ -45,7 +45,7 @@
 		src << "<span class='warning'>We are incapacitated.</span>"
 		return
 
-	if(changeling.absorbed_dna.len < required_dna)
+	if(changeling.absorbedcount < required_dna)
 		src << "<span class='warning'>We require at least [required_dna] samples of compatible DNA.</span>"
 		return
 
@@ -133,7 +133,7 @@
 	set category = "Changeling"
 	set name = "Transform (5)"
 
-	var/datum/changeling/changeling = changeling_power(5,1,0)
+	var/datum/changeling/changeling = changeling_power(5, 0, 3)
 	if(!changeling)	return
 
 	var/list/names = list()
@@ -154,9 +154,6 @@
 	updateappearance(src)
 	domutcheck(src, null)
 
-	src.verbs -= /mob/living/carbon/proc/changeling_transform
-	spawn(10)	src.verbs += /mob/living/carbon/proc/changeling_transform
-
 	feedback_add_details("changeling_powers","TR")
 	return 1
 
@@ -164,12 +161,12 @@
 //Transform into a monkey.
 /mob/living/carbon/proc/changeling_lesser_form()
 	set category = "Changeling"
-	set name = "Lesser Form (1)"
+	set name = "Lesser Form (5)"
 
-	var/datum/changeling/changeling = changeling_power(1,0,0)
+	var/datum/changeling/changeling = changeling_power(5,0,3)
 	if(!changeling)	return
 
-	changeling.chem_charges--
+	changeling.chem_charges -= 5
 	remove_changeling_powers()
 	changeling.geneticdamage = 3
 	src << "<span class='warning'>Our genes cry out!</span>"
@@ -188,9 +185,9 @@
 /mob/living/carbon/proc/changeling_human_form()
 
 	set category = "Changeling"
-	set name = "Human Form (1)"
+	set name = "Human Form (5)"
 
-	var/datum/changeling/changeling = changeling_power(1,1,0)
+	var/datum/changeling/changeling = changeling_power(5,0,3)
 
 	if(!changeling)	return
 
@@ -205,7 +202,7 @@
 	if(!chosen_dna)
 		return
 
-	changeling.chem_charges--
+	changeling.chem_charges -= 5
 	remove_changeling_powers()
 	src << "<span class='notice'>We transform our appearance.</span>"
 	dna = chosen_dna
@@ -222,45 +219,65 @@
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /mob/living/carbon/proc/changeling_fakedeath()
 	set category = "Changeling"
-	set name = "Regenerative Stasis (20)"
+	set name = "Regenerative Stasis (10)"
 
-	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
+	var/datum/changeling/changeling = changeling_power(10,0,100,DEAD)
 	if(!changeling)	return
+	if(status_flags & FAKEDEATH) return //Make sure we can't stack regenerations and such.
+	changeling.chem_charges -= 10
 
 	if(!stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changelings if they want to fake their death
 		return
-	src << "<span class='notice'>We will attempt to regenerate our form.</span>"
+	src << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
 
 	status_flags |= FAKEDEATH		//play dead
 	update_canmove()
 	remove_changeling_powers()
 
-	emote("gasp")
+	emote("deathgasp")
 	tod = worldtime2text()
 
-	spawn(rand(800,2000))
-		if(changeling_power(20,1,100,DEAD))
-			changeling.chem_charges -= 20
-			if(stat == DEAD)
-				dead_mob_list -= src
-				living_mob_list += src
-			stat = CONSCIOUS
-			tod = null
-			setToxLoss(0)
-			setOxyLoss(0)
-			setCloneLoss(0)
-			SetParalysis(0)
-			SetStunned(0)
-			SetWeakened(0)
-			radiation = 0
-			heal_overall_damage(getBruteLoss(), getFireLoss())
-			reagents.clear_reagents()
-			src << "<span class='notice'>We have regenerated.</span>"
+	spawn(800)
+		src << "<span class='notice'>We have now stored enough power to regenerate.</span>"
+		verbs -= /mob/living/carbon/proc/changeling_fakedeath
+		verbs += /mob/living/carbon/proc/changeling_revive
 
-			status_flags &= ~(FAKEDEATH)
-			update_canmove()
-			make_changeling()
 	feedback_add_details("changeling_powers","FD")
+	return 1
+
+//Separated from regenerative stasis, so that they can choose when to pop up rather than having no control over it.
+/mob/living/carbon/proc/changeling_revive()
+	set category = "Changeling"
+	set name = "Regenerate! (10)"
+
+	var/datum/changeling/changeling = changeling_power(10,0,100,DEAD)
+	if(!changeling)	return
+	changeling.chem_charges -= 10
+
+	if(stat == DEAD)
+		dead_mob_list -= src
+		living_mob_list += src
+	stat = CONSCIOUS
+	tod = null
+	setToxLoss(0)
+	setOxyLoss(0)
+	setCloneLoss(0)
+	SetParalysis(0)
+	SetStunned(0)
+	SetWeakened(0)
+	radiation = 0
+	heal_overall_damage(getBruteLoss(), getFireLoss())
+	reagents.clear_reagents()
+	src << "<span class='notice'>We have regenerated.</span>"
+
+	status_flags &= ~(FAKEDEATH)
+	update_canmove()
+	make_changeling()
+
+	verbs -= /mob/living/carbon/proc/changeling_revive
+	verbs += /mob/living/carbon/proc/changeling_fakedeath
+
+	feedback_add_details("changeling_powers","CR")
 	return 1
 
 //Recover from stuns.
@@ -283,8 +300,6 @@
 
 	reagents.add_reagent("synaptizine", 20)
 
-	src.verbs -= /mob/living/carbon/proc/changeling_unstun
-	spawn(5)	src.verbs += /mob/living/carbon/proc/changeling_unstun
 	feedback_add_details("changeling_powers","UNS")
 	return 1
 
@@ -309,7 +324,7 @@
 	for(var/mob/living/carbon/M in ohearers(4, usr))
 		if(!M.mind || !M.mind.changeling)
 			M.ear_deaf += 30
-			M.confused += 15
+			M.confused += 20
 			M.make_jittery(50)
 
 	for(var/obj/machinery/light/L in range(4, usr))
@@ -319,8 +334,6 @@
 	//for(var/obj/structure/window/W in range(2, usr)) //I like the window-breaking, but it makes the ability too 'loud' to fit changelings.
 	//	W.hit(rand(40,100))
 
-	src.verbs -= /mob/living/carbon/proc/changeling_shriek
-	spawn(5)	src.verbs += /mob/living/carbon/proc/changeling_shriek
 	feedback_add_details("changeling_powers","RS")
 	return 1
 
@@ -331,7 +344,7 @@
 	set name = "Spread Infestation (40)"
 	set desc = "Our form divides, creating arachnids which will grow into deadly beasts."
 
-	var/datum/changeling/changeling = changeling_power(40)
+	var/datum/changeling/changeling = changeling_power(40, 10)
 	if(!changeling)	return 0
 	src.mind.changeling.chem_charges -= 40
 
@@ -342,9 +355,7 @@
 		else
 			S.grow_as = /mob/living/simple_animal/hostile/giant_spider
 
-	src.verbs -= /mob/living/carbon/proc/changeling_spiders
-	spawn(5)	src.verbs += /mob/living/carbon/proc/changeling_spiders
-	feedback_add_details("changeling_powers","CS")
+	feedback_add_details("changeling_powers","SI")
 	return 1
 
 
@@ -366,10 +377,9 @@
 	for(var/datum/disease/D in src.viruses)
 		D.cure()
 
-	src.verbs -= /mob/living/carbon/proc/changeling_panacea
-	spawn(5)	src.verbs += /mob/living/carbon/proc/changeling_panacea
 	feedback_add_details("changeling_powers","AP")
 	return 1
+
 
 //Prevents AIs tracking you but makes you easily detectable to the human-eye.
 /mob/living/carbon/proc/changeling_digitalcamo()
@@ -384,16 +394,14 @@
 	else			src << "<span class='notice'>We distort our form to prevent AI-tracking.</span>"
 	digitalcamo = !digitalcamo
 
-	src.verbs -= /mob/living/carbon/proc/changeling_digitalcamo
-	spawn(5)	src.verbs += /mob/living/carbon/proc/changeling_digitalcamo
 	feedback_add_details("changeling_powers","CAM")
 	return 1
 
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
-/mob/living/carbon/proc/changeling_lizardflesh()
+/mob/living/carbon/proc/changeling_fleshmend()
 	set category = "Changeling"
-	set name = "Lizardflesh (30)"
+	set name = "Fleshmend (30)"
 	set desc = "Begins rapidly regenerating.  Does not effect stuns or chemicals."
 
 	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
@@ -409,8 +417,6 @@
 			adjustFireLoss(-10)
 			sleep(10)
 
-	src.verbs -= /mob/living/carbon/proc/changeling_lizardflesh
-	spawn(5)	src.verbs += /mob/living/carbon/proc/changeling_lizardflesh
 	feedback_add_details("changeling_powers","RR")
 	return 1
 
@@ -422,7 +428,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Hive Channel (10)"
 	set desc = "Allows you to channel DNA in the airwaves to allow other changelings to absorb it."
 
-	var/datum/changeling/changeling = changeling_power(10,1)
+	var/datum/changeling/changeling = changeling_power(10)
 	if(!changeling)	return
 
 	var/list/names = list()
@@ -452,7 +458,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Hive Absorb (20)"
 	set desc = "Allows you to absorb DNA that is being channeled in the airwaves."
 
-	var/datum/changeling/changeling = changeling_power(20,1)
+	var/datum/changeling/changeling = changeling_power(20)
 	if(!changeling)	return
 
 	var/list/names = list()
@@ -539,7 +545,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	changeling.chem_charges -= required_chems
 	verbs -= verb_path
-	spawn(10)	verbs += verb_path
+	spawn(5)	verbs += verb_path
 
 	src << "<span class='notice'>We stealthily sting [T].</span>"
 	if(!T.mind || !T.mind.changeling)	return T	//T will be affected by the sting
@@ -550,7 +556,7 @@ var/list/datum/dna/hivemind_bank = list()
 /mob/living/carbon/proc/changeling_transformation_sting()
 	set category = "Changeling"
 	set name = "Transformation Sting (40)"
-	set desc= "Sting target"
+	set desc= "Transform the target to one of our stored DNAs"
 
 	var/datum/changeling/changeling = changeling_power(40)
 	if(!changeling)	return 0

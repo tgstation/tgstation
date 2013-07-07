@@ -219,7 +219,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/absorbed_dna = list()
 	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
-	var/absorbedcount = 0 //
+	var/absorbedcount = 0
 	var/chem_charges = 20
 	var/chem_storage = 50
 	var/chem_recharge_rate = 0.5
@@ -270,12 +270,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
 		return 0
 
-	if(T.dna in absorbed_dna)
-		U << "<span class='warning'>We already have that DNA in storage.</span>"
-		return 0
-
 	if(!ishuman(T))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		U << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+		return 0
+
+	if(T.dna in absorbed_dna)
+		U << "<span class='warning'>We already have that DNA in storage.</span>"
 		return 0
 
 	if(!check_dna_integrity(T))
