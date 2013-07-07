@@ -545,7 +545,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "apmaint"
 
 /area/maintenance/maintcentral
-	name = "Head of Personnel's Office"
+	name = "Bridge Maintenance"
 	icon_state = "maintcentral"
 
 /area/maintenance/fore
@@ -619,7 +619,7 @@ proc/process_ghost_teleport_locs()
 
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
-	icon_state = "bridge"
+	icon_state = "meeting"
 	music = null
 
 /area/crew_quarters/captain
@@ -631,7 +631,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "courtroom"
 
 /area/crew_quarters/heads
-	name = "\improper Human Resources"
+	name = "\improper Head of Personnel's Office"
 	icon_state = "head_quarters"
 
 /area/crew_quarters/hor

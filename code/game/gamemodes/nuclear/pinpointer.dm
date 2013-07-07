@@ -29,12 +29,16 @@
 		if(!target)
 			icon_state = "pinonnull"
 			return
-		if(target.z != loc.z)
+
+		var/turf/T = get_turf(target)
+		var/turf/L = get_turf(src)
+
+		if(T.z != L.z)
 			icon_state = "pinonnull"
 		else
-			dir = get_dir(src, target)
-			switch(get_dist(src, target))
-				if(0)
+			dir = get_dir(L, T)
+			switch(get_dist(L, T))
+				if(-1)
 					icon_state = "pinondirect"
 				if(1 to 8)
 					icon_state = "pinonclose"

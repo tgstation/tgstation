@@ -12,13 +12,8 @@
 	opacity = 0
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel,/obj/item/stack/sheet/metal,/obj/item/stack/rods)
 	var/list/wirecutters_salvage = list(/obj/item/weapon/cable_coil)
-	var/list/crowbar_salvage
+	var/list/crowbar_salvage = list()
 	var/salvage_num = 5
-
-/obj/structure/mecha_wreckage/gygax/New()
-	..()
-	crowbar_salvage = new
-
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/weldingtool))

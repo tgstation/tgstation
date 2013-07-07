@@ -276,7 +276,7 @@
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 520)
+	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 590)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -292,14 +292,9 @@
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
-				if(ishuman(usr))
-					modify.loc = usr.loc
-					if(!usr.get_active_hand())
-						usr.put_in_hands(modify)
-					modify = null
-				else
-					modify.loc = loc
-					modify = null
+				modify.loc = loc
+				modify.verb_pickup()
+				modify = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -310,14 +305,9 @@
 
 		if ("scan")
 			if (scan)
-				if(ishuman(usr))
-					scan.loc = usr.loc
-					if(!usr.get_active_hand())
-						usr.put_in_hands(scan)
-					scan = null
-				else
-					scan.loc = src.loc
-					scan = null
+				scan.loc = src.loc
+				scan.verb_pickup()
+				scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -346,7 +336,7 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
+					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_NAME_LEN)
 					if(temp_t)
 						t1 = temp_t
 				else
@@ -368,7 +358,7 @@
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered_name = href_list["reg"]
+					modify.registered_name = copytext(sanitize(href_list["reg"]),1,MAX_NAME_LEN)
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 
