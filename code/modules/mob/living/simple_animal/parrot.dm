@@ -11,8 +11,7 @@
 /*So you want to delete parrots eh?
 heres the locations of their snowflake code:
 lines 294-301 in living/say.dm (speech buffer)
-lines 122 and 135 in living/say.dm (parrots talking into headsets)
-lines 33-36 in radio/headset.dm (parrots hearing headsets)
+135 in living/say.dm (parrots talking into headsets)
 */
 
 /*
