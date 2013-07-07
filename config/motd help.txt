@@ -1,0 +1,1 @@
+Most valid html will work in motd.txt (excluding imgs)

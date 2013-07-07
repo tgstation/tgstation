@@ -51,8 +51,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("crematorium button", /obj/item/switch_frame/crema, 1), \
 	new/datum/stack_recipe("ignition switch", /obj/machinery/ignition_switch, 1, on_floor = 1, on_wall = 1), \
 	new/datum/stack_recipe("light switch", /obj/item/switch_frame/light, 1), \
-	new/datum/stack_recipe("airlock sensor", /obj/machinery/airlock_sensor, 1, on_floor = 1), \
-	new/datum/stack_recipe("airlock controller", /obj/machinery/embedded_controller/radio/airlock_controller, 1, on_floor = 1), \
+	new/datum/stack_recipe("airlock sensor", /obj/item/switch_frame/airlock_sensor, 1), \
+	new/datum/stack_recipe("airlock controller", /obj/item/switch_frame/airlock_console, 1), \
 	null, \
 	new/datum/stack_recipe("igniter", /obj/machinery/igniter, 2, on_floor = 1), \
 	new/datum/stack_recipe("mounted igniter", /obj/machinery/sparker, 2, on_floor = 1) \

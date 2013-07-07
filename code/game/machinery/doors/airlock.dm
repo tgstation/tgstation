@@ -76,14 +76,12 @@
 /obj/machinery/door/airlock/special
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
-	icon_state = "door_locked"
-	doortype = 1
+	icon_state = "door_closed"
+	doortype = 6
 	opacity = 0
 	glass = 1
 	autoclose = 0
-	frequency = 1449
-	locked = 1
-	req_access_txt = "8"
+	locked = 0
 
 
 /obj/machinery/door/airlock/glass

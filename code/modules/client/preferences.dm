@@ -77,7 +77,7 @@ datum/preferences
 
 		// OOC Metadata:
 	var/metadata = ""
-	
+
 	var/unlock_content = 0
 
 /datum/preferences/New(client/C)
@@ -212,11 +212,11 @@ datum/preferences
 
 					if(unlock_content || (user.client.holder && (user.client.holder.rights & R_ADMIN)))
 						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-					
+
 					if(unlock_content)
 						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 						dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-						
+
 
 				dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -253,7 +253,7 @@ datum/preferences
 		popup.set_content(dat)
 		popup.open(0)
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 580, height = 560)
+	proc/SetChoices(mob/user, list/splitJobs = list("Chief Engineer"), width = 580, height = 560)
 		if(!job_master)	return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -269,14 +269,14 @@ datum/preferences
 		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=decreaseJobLevel;text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
-		var/index = -1
+//		var/index = -1
 
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
-		var/datum/job/lastJob
+
 
 		for(var/datum/job/job in job_master.occupations)
 
-			index += 1
+/*			index += 1
 			if((index >= limit) || (job.title in splitJobs))
 				if((index < limit) && (lastJob != null))
 					//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
@@ -285,10 +285,10 @@ datum/preferences
 						HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 				HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
 				index = 0
-
+*/
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
-			lastJob = job
+
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED\]</b></font></td></tr>"
 				continue
@@ -306,31 +306,37 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=increaseJobLevel;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
+			if((rank != "AI") && (rank != "Cyborg"))
+				HTML += "<a class='white' href='?_src_=prefs;preference=job;task=increaseJobLevel;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
 
-			if(rank == "Assistant")//Assistant is special
-				if(job_civilian_low & ASSISTANT)
-					HTML += "<font color=green>Yes</font>"
+				if(rank == "Assistant")//Assistant is special
+					if(job_civilian_low & ASSISTANT)
+						HTML += "<font color=green>Yes</font>"
+					else
+						HTML += "<font color=red>No</font>"
+					HTML += "</a></td></tr>"
+					continue
+
+
+				if(GetJobDepartment(job, 1) & job.flag)
+					HTML += "High"
+				else if(GetJobDepartment(job, 2) & job.flag)
+					HTML += "<font color=green>Medium</font>"
+				else if(GetJobDepartment(job, 3) & job.flag)
+					HTML += "<font color=orange>Low</font>"
 				else
-					HTML += "<font color=red>No</font>"
+					HTML += "<font color=red>NEVER</font>"
+
 				HTML += "</a></td></tr>"
 				continue
 
-			if(GetJobDepartment(job, 1) & job.flag)
-				HTML += "High"
-			else if(GetJobDepartment(job, 2) & job.flag)
-				HTML += "<font color=green>Medium</font>"
-			else if(GetJobDepartment(job, 3) & job.flag)
-				HTML += "<font color=orange>Low</font>"
-			else
-				HTML += "<font color=red>NEVER</font>"
-			HTML += "</a></td></tr>"
+
 
 		HTML += "</td'></tr></table>"
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
+//		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 		user << browse(null, "window=preferences")

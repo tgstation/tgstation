@@ -113,7 +113,7 @@ VOTE_PERIOD 600
 # DEFAULT_NO_VOTE
 
 ## allow AI job
-ALLOW_AI
+#ALLOW_AI
 
 
 ## disable abandon mob

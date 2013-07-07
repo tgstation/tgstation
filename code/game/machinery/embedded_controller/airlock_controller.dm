@@ -200,7 +200,6 @@ datum/computer/file/embedded_program/airlock_controller
 
 		return 1
 
-
 obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"

@@ -99,7 +99,7 @@ var/networkNum = 0
 			dat += text("<span class='good'>Formatted</span>")
 		else
 			dat += text("<span class='bad'>Unformatted</span>")
-		dat += text("</td><td width='25%'>(<A href='?src=\ref[src];action=3='>Format Device</A>)</td>")
+		dat += text("</td><td width='25%'><A href='?src=\ref[src];action=3='>Format Device</A></td>")
 		dat += text("</tr></table>")
 		dat += "<h3>Blast Door Connections</h3>"
 		dat += "<table width='100%'>"
