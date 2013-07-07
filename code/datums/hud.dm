@@ -175,7 +175,7 @@ var/datum/global_hud/global_hud = new()
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
 
-	var/list/obj/screen/item_action/item_action_list	//Used for the item action ui buttons.
+	var/list/obj/screen/item_action/item_action_list = list()	//Used for the item action ui buttons.
 
 
 datum/hud/New(mob/owner)
