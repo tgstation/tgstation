@@ -70,6 +70,10 @@
 		access_medical = 1
 		access_manifest = 1
 
+		New()
+			..()
+			spawn(5)
+				radio = new /obj/item/radio/integrated/beepsky(src)
 
 	janitor
 		name = "CustodiPRO Cartridge"
@@ -201,6 +205,11 @@
 		access_reagent_scanner = 1
 		access_status_display = 1
 		access_atmos = 1
+
+		New()
+			..()
+			spawn(5)
+				radio = new /obj/item/radio/integrated/beepsky(src)
 
 	syndicate
 		name = "Detomatix Cartridge"
