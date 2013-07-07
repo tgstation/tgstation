@@ -162,12 +162,35 @@
 	item_state = "card-id"
 	w_class = 1.0
 
-//TODO: Figure out wtf this is and possibly remove it -Nodrak
+
+var/global/datum/dummy_controller/dummy_controller
+
+/datum/dummy_controller
+	var/list/ready = list()
+	var/list/being_used = list()
+
+/datum/dummy_controller/proc/use(atom/movable/A)
+	var/obj/item/weapon/dummy/D
+	if(ready.len)
+		D = ready[1]
+		ready -= D
+	else
+		D = new()
+	being_used += D
+	D.loc = A.loc
+	return D
+
+/datum/dummy_controller/proc/store(var/obj/item/weapon/dummy/D)
+	D.loc = null
+	being_used -= D
+	ready += D
+
 /obj/item/weapon/dummy
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
 	flags = TABLEPASS
+
 
 /obj/item/weapon/dummy/ex_act()
 	return

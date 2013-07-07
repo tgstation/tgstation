@@ -884,7 +884,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- CLICKED OBJECT EXISTS IN GAME WORLD, DISTANCE FROM PERSON TO OBJECT IS 1 SQUARE OR THEY'RE ON THE SAME SQUARE -------
 
 			var/direct = get_dir(usr, src)
-			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
+			var/obj/item/weapon/dummy/D = dummy_controller.use(src)
 			var/ok = 0
 			if ( (direct - 1) & direct)
 
@@ -978,10 +978,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					See the previous More info, for... more info...
 				*/
 
-			//del(D)
-			// Garbage Collect Dummy
-			D.loc = null
-			D = null
+			//store the dummy back for recycling
+			dummy_controller.store(D)
 
 			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------
 			if (!( ok ))
