@@ -705,6 +705,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 //parrots will eat crackers instead of dropping them
 	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (!drop_gently))
+		held_item.loc = null
 		held_item = null
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
