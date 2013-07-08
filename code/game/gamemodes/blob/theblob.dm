@@ -4,7 +4,7 @@
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 3
 	desc = "Some blob creature thingy"
-	density = 1
+	density = 0
 	opacity = 0
 	anchored = 1
 	var/active = 1
@@ -37,6 +37,13 @@
 		Life()
 		return
 
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		..()
+		var/damage = Clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
+		if(damage)
+			health -= damage
+			update_icon()
+
 	proc/Life()
 		return
 
@@ -48,7 +55,7 @@
 		if(run_action())//If we can do something here then we dont need to pulse more
 			return
 
-		if(pulse > 30)
+		if(pulse > 25)
 			return//Inf loop check
 
 		//Looking for another blob to pulse
@@ -72,8 +79,9 @@
 		return 0
 
 
-	proc/expand(var/turf/T = null)
-		if(!prob(health))	return
+	proc/expand(var/turf/T = null, var/prob = 1)
+		if(prob && !prob(health))	return
+		if(istype(T, /turf/space)) 	return
 		if(!T)
 			var/list/dirs = list(1,2,4,8)
 			for(var/i = 1 to 4)
@@ -89,7 +97,9 @@
 			B.loc = T
 		else
 			T.blob_act()//If we cant move in hit the turf
-			del(B)
+			B.loc = null
+			blobs -= B
+
 		for(var/atom/A in T)//Hit everything in the turf
 			A.blob_act()
 		return 1
@@ -108,19 +118,6 @@
 		health -= (damage/brute_resist)
 		update_icon()
 		return
-
-
-	update_icon()//Needs to be updated with the types
-		if(health <= 0)
-			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-			del(src)
-			return
-		if(health <= 15)
-			icon_state = "blob_damaged"
-			return
-//		if(health <= 20)
-//			icon_state = "blob_damaged2"
-//			return
 
 
 	bullet_act(var/obj/item/projectile/Proj)
@@ -155,8 +152,25 @@
 		if(!ispath(type))
 			error("[type] is an invalid type for the blob.")
 		new type(src.loc)
-		del(src)
+		Delete()
 		return
+
+	proc/Delete()
+		del(src)
 
 /obj/effect/blob/normal
 	icon_state = "blob"
+	luminosity = 0
+
+	Delete()
+		src.loc = null
+		blobs -= src
+
+	update_icon()
+		if(health <= 0)
+			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			Delete()
+			return
+		if(health <= 15)
+			icon_state = "blob_damaged"
+			return

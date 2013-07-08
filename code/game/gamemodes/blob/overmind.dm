@@ -1,10 +1,13 @@
 /mob/camera/blob
-	name = "blob overmind"
+	name = "Blob Overmind"
+	real_name = "Blob Overmind"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	invisibility = INVISIBILITY_OBSERVER
+
 	pass_flags = PASSBLOB
 	var/creating_blob = 0
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
@@ -27,7 +30,9 @@
 	statpanel("Status")
 	..()
 	if (client.statpanel == "Status")
-		stat(null, "Blob Points Stored: [blob_points]/[max_blob_points]")
+		if(blob_core)
+			stat(null, "Core Health: [blob_core.health]")
+		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 	return
 
 /mob/camera/blob/Move(var/NewLoc, var/Dir = 0)

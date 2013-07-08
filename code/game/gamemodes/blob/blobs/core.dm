@@ -8,12 +8,11 @@
 	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 
-	New(loc, var/h = 200)
-		blobs += src
+	New(loc, var/h = 200, var/client/new_overmind = null)
 		blob_cores += src
 		processing_objects.Add(src)
 		if(!overmind)
-			create_overmind()
+			create_overmind(new_overmind)
 		..(loc, h)
 
 
@@ -25,11 +24,13 @@
 		..()
 		return
 
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		return
 
 	update_icon()
 		if(health <= 0)
 			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-			del(src)
+			Delete()
 			return
 		return
 
@@ -38,10 +39,11 @@
 			create_overmind()
 		else
 			overmind.add_points(1)
+		health = min(initial(health), health + 1)
 		for(var/i = 1; i < 8; i += i)
 			Pulse(0, i)
 		for(var/b_dir in alldirs)
-			if(prob(50))
+			if(!prob(10))
 				continue
 			var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 			if(B)
@@ -53,7 +55,7 @@
 		return 0
 
 
-	proc/create_overmind()
+	proc/create_overmind(var/client/new_overmind)
 
 		if(overmind_get_delay > world.time)
 			return
@@ -63,21 +65,29 @@
 		if(overmind)
 			del(overmind)
 
-		var/list/candidates = get_candidates(BE_ALIEN)
-		if(candidates.len)
+		var/client/C = null
+		var/list/candidates = list()
+
+		if(!new_overmind)
+			candidates = get_candidates(BE_ALIEN)
+			if(candidates.len)
+				C = pick(candidates)
+		else
+			C = new_overmind
+
+		if(C)
 			var/mob/camera/blob/B = new(src.loc)
-			var/client/C = pick(candidates)
 			B.key = C.key
 			B.blob_core = src
 			src.overmind = B
 
 			B << "<span class='notice'>You are the overmind!</span>"
 			B << "You are the overmind and can control the blob by placing new blob pieces such as..."
-			B << "<b>Normal Blob</b> will expand your reach and allow you to create barriers."
-			B << "<b>Shield Blob</b> is a strong and expensive blob piece which can take more damage."
-			B << "<b>Resourece Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income."
-			B << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you income."
-			B << "<b>Factory Blob</b> is a blob which will spawn pods which will attack nearby food."
+			B << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
+			B << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
+			B << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
+			B << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate."
+			B << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
 
 			return 1
 		return 0

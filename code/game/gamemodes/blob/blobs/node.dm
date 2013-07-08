@@ -12,6 +12,8 @@
 		processing_objects.Add(src)
 		..(loc, h)
 
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		return
 
 	Del()
 		blob_nodes -= src
@@ -21,12 +23,12 @@
 
 	Life()
 		for(var/i = 1; i < 8; i += i)
-			Pulse(10, i)
+			Pulse(5, i)
 
 	update_icon()
 		if(health <= 0)
 			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-			del(src)
+			Delete()
 			return
 		return
 
