@@ -8,6 +8,7 @@
 	active_power_usage = 300
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
+	luminosity = 2
 
 /obj/machinery/computer/New()
 	..()
