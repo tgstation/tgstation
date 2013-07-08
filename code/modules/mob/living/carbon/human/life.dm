@@ -926,6 +926,8 @@
 			silent = 0
 			afterlife++
 		else				//ALIVE. LIGHTS ARE ON
+			if(afterlife)
+				afterlife = 0
 			updatehealth()	//TODO
 			if(!in_stasis)
 				handle_organs()
