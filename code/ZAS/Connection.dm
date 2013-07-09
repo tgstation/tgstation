@@ -75,20 +75,30 @@ connection
 			var/list/connections = air_master.turfs_with_connections[ref_A]
 			connections.Remove(src)
 
-		//Ensure we delete the right values by sanity checkign right before deletion.
-		Sanitize()
-
-		//Remove connection from current zones.
+		//Remove connection from zones.
 		if(A)
 			if(A.zone && A.zone.connections)
 				A.zone.connections.Remove(src)
 				if(!A.zone.connections.len)
 					A.zone.connections = null
+
+		if(istype(zone_A) && (!A || A.zone != zone_A))
+			if(zone_A.connections)
+				zone_A.connections.Remove(src)
+				if(!zone_A.connections.len)
+					zone_A.connections = null
+
 		if(B)
 			if(B.zone && B.zone.connections)
 				B.zone.connections.Remove(src)
 				if(!B.zone.connections.len)
 					B.zone.connections = null
+
+		if(istype(zone_B) && (!B || B.zone != zone_B))
+			if(zone_B.connections)
+				zone_B.connections.Remove(src)
+				if(!zone_B.connections.len)
+					zone_B.connections = null
 
 		//Disconnect zones while handling unusual conditions.
 		//	e.g. loss of a zone on a turf

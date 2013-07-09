@@ -293,7 +293,7 @@ zone/proc/process()
  //Air Movement//
 ////////////////
 
-var/list/sharing_lookup_table = list(0.15, 0.20, 0.24, 0.27, 0.30, 0.33)
+var/list/sharing_lookup_table = list(0.03, 0.07, 0.11, 0.15, 0.18, 0.20)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
@@ -385,7 +385,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		// slowly than small rooms, preserving our good old "hollywood-style"
 		// oh-shit effect when large rooms get breached, but still having small
 		// rooms remain pressurized for long enough to make escape possible.
-		share_size = max(1, max(size - 5, 1) + unsimulated_tiles.len)
+		share_size = max(1, max(size + 3, 1) + unsimulated_tiles.len)
 		correction_ratio = share_size / unsimulated_tiles.len
 
 	for(var/turf/T in unsimulated_tiles)
