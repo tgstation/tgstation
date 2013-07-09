@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer
-	name = "Freezer"
+	name = "freezer"
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "freezer_0"
+	icon_state = "freezer"
 	density = 1
 
 	anchored = 1.0
@@ -32,7 +32,7 @@
 			else
 				icon_state = "freezer"
 		else
-			icon_state = "freezer_0"
+			icon_state = "freezer"
 		return
 
 	attack_ai(mob/user as mob)
@@ -91,7 +91,7 @@
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
 	name = "heater"
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "freezer_0"
+	icon_state = "heater"
 	density = 1
 
 	anchored = 1.0
@@ -118,11 +118,11 @@
 	update_icon()
 		if(src.node)
 			if(src.on)
-				icon_state = "freezer_1"
+				icon_state = "heater_1"
 			else
-				icon_state = "freezer"
+				icon_state = "heater"
 		else
-			icon_state = "freezer_0"
+			icon_state = "heater"
 		return
 
 	attack_ai(mob/user as mob)
