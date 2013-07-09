@@ -38,7 +38,7 @@
 		if(!overmind)
 			create_overmind()
 		else
-			overmind.add_points(1)
+			overmind.add_points(2)
 		health = min(initial(health), health + 1)
 		for(var/i = 1; i < 8; i += i)
 			Pulse(0, i)

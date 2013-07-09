@@ -53,7 +53,7 @@
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
-	set name = "Create Resource Blob (30)"
+	set name = "Create Resource Blob (20)"
 	set desc = "Create a resource tower which will generate points for you."
 
 
@@ -76,7 +76,7 @@
 		usr << "There is a resource blob nearby, move more than 3 tiles away from it!"
 		return
 
-	if(!can_buy(30))
+	if(!can_buy(20))
 		return
 
 
@@ -122,7 +122,7 @@
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
-	set name = "Create Factory Blob (70)"
+	set name = "Create Factory Blob (60)"
 	set desc = "Create a Spore producing blob."
 
 
@@ -140,11 +140,11 @@
 		usr << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/factory/blob in orange(4))
-		usr << "There is a factory blob nearby, move more than 4 tiles away from it!"
+	for(var/obj/effect/blob/factory/blob in orange(6))
+		usr << "There is a factory blob nearby, move more than 6 tiles away from it!"
 		return
 
-	if(!can_buy(70))
+	if(!can_buy(60))
 		return
 
 	B.change_to(/obj/effect/blob/factory)
@@ -176,7 +176,7 @@
 
 /mob/camera/blob/verb/spawn_blob()
 	set category = "Blob"
-	set name = "Expand Blob (10)"
+	set name = "Expand Blob (5)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
 	if(creating_blob)	return
 	var/turf/T = get_turf(src)
@@ -194,7 +194,7 @@
 		usr << "There is no blob adjacent to you."
 		return
 
-	if(!can_buy(10))
+	if(!can_buy(5))
 		return
 	OB.expand(T, 0)
 	return
@@ -214,7 +214,7 @@
 		return
 
 	for(var/mob/living/simple_animal/hostile/blobspore/BS in living_mob_list)
-		if(isturf(BS.loc) && get_dist(BS, src) <= 16)
+		if(isturf(BS.loc) && get_dist(BS, src) <= 20)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return

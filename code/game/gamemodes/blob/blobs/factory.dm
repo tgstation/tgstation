@@ -6,7 +6,7 @@
 	brute_resist = 1
 	fire_resist = 2
 	var/list/spores = list()
-	var/max_spores = 4
+	var/max_spores = 3
 	var/spore_delay = 0
 
 	update_icon()
@@ -22,7 +22,7 @@
 			return 0
 		if(spore_delay > world.time)
 			return 0
-		spore_delay = world.time + 150 // 15 seconds
+		spore_delay = world.time + 100 // 10 seconds
 		new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
 		return 1
 
@@ -34,8 +34,8 @@
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	pass_flags = PASSBLOB
-	health = 20
-	maxHealth = 20
+	health = 15
+	maxHealth = 15
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"

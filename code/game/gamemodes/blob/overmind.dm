@@ -16,6 +16,12 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 
+/mob/camera/blob/New()
+	var/new_name = "[initial(name)] ([rand(1, 999)])"
+	name = new_name
+	real_name = new_name
+	..()
+
 /mob/camera/blob/say(var/message)
 	return//No talking for you
 

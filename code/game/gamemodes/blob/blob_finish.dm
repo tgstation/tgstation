@@ -36,6 +36,16 @@
 	..()
 	return 1
 
+datum/game_mode/proc/auto_declare_completion_blob()
+	if(istype(ticker.mode,/datum/game_mode/blob) )
+		var/datum/game_mode/blob/blob_mode = src
+		if(blob_mode.infected_crew.len)
+			var/text = "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
+
+			for(var/datum/mind/blob in blob_mode.infected_crew)
+				text += "<br>[blob.key] was [blob.name]"
+			world << text
+		return 1
 
 /datum/game_mode/blob/proc/check_quarantine()
 	var/numDead = 0
