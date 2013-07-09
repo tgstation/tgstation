@@ -56,8 +56,9 @@ mob/proc/airflow_stun()
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
-	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
-	weakened = max(weakened,5)
+/*	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
+	weakened = max(weakened,5)*/
+	src << "\blue You stay upright as the air rushes past you."
 	last_airflow_stun = world.time
 
 mob/living/silicon/airflow_stun()
@@ -74,8 +75,10 @@ mob/living/carbon/human/airflow_stun()
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
+/*
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
-	weakened = max(weakened,rand(1,5))
+	weakened = max(weakened,rand(1,5))*/
+	src << "\blue You stay upright as the air rushes past you."
 	last_airflow_stun = world.time
 
 atom/movable/proc/check_airflow_movable(n)
@@ -143,7 +146,7 @@ proc/Airflow(zone/A, zone/B)
 		air_repelled = temporary_pplz
 
 	for(var/atom/movable/M in air_sucked)
-
+		if(1) break
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		//Check for knocking people over
@@ -202,7 +205,7 @@ proc/AirflowSpace(zone/A)
 	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
 	for(var/atom/movable/M in pplz)
-
+		if(1) break
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		if(ismob(M) && n > vsc.airflow_stun_pressure)
@@ -232,6 +235,7 @@ atom/movable
 	var/tmp/last_airflow = 0
 
 	proc/GotoAirflowDest(n)
+		if(1) return
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - vsc.airflow_delay) return
@@ -297,6 +301,7 @@ atom/movable
 
 
 	proc/RepelAirflowDest(n)
+		if(1) return
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - vsc.airflow_delay) return
@@ -370,7 +375,7 @@ mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
+	//weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
@@ -402,12 +407,13 @@ mob/living/carbon/human/airflow_hit(atom/A)
 
 	blocked = run_armor_check("groin","melee")
 	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
-
+/*
 	if(airflow_speed > 10)
 		paralysis += round(airflow_speed * vsc.airflow_stun)
 		stunned = max(stunned,paralysis + 3)
 	else
 		stunned += round(airflow_speed * vsc.airflow_stun/2)
+*/
 	. = ..()
 
 zone/proc/movables()

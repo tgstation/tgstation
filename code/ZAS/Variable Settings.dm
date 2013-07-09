@@ -1,71 +1,64 @@
 var/global/vs_control/vsc = new
 
 vs_control/var
-	IgnitionLevel = 0.5 //default 0.5
-	IgnitionLevel_DESC = "Determines point at which fire can ignite"
-
-	fire_consuption_rate = 0.025 //default .25
+	fire_consuption_rate = 0.25
 	fire_consuption_rate_NAME = "Fire - Air Consumption Ratio"
 	fire_consuption_rate_DESC = "Ratio of air removed and combusted per tick."
 
-	fire_firelevel_multiplier = 80 //default 25
+	fire_firelevel_multiplier = 25
 	fire_firelevel_multiplier_NAME = "Fire - Firelevel Constant"
-	fire_firelevel_multiplier_DESC = "Multiplied by the equation for firelevel, affects the combustion and ignition of gas mixes."
+	fire_firelevel_multiplier_DESC = "Multiplied by the equation for firelevel, affects mainly the extingiushing of fires."
 
-	fire_temperature_multiplier = 10000 //default 1700
-	fire_temperature_multiplier_NAME = "Fire - Temperature Multiplier"
-	fire_temperature_multiplier_DESC = "Base value for fire temperatures."
-
-	fire_gas_combustion_ratio = 0.1 //default .25
-	fire_gas_combustion_ratio_NAME = "Fire - Gas Conversion Ratio"
-	fire_gas_combustion_ratio_DESC = "The rate at which oxygen and plasma are converted to CO2, expressed in terms of the firelevel."
+	fire_fuel_energy_release = 797000
+	fire_fuel_energy_release_NAME = "Fire - Fuel energy release"
+	fire_fuel_energy_release_DESC = "The energy in joule released when burning one mol of a burnable substance"
 
 
-	airflow_lightest_pressure = 25 //default 25
+	airflow_lightest_pressure = 20
 	airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
 	airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
 
-	airflow_light_pressure = 35 //default 35
+	airflow_light_pressure = 35
 	airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
 	airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
 
-	airflow_medium_pressure = 55 //default 50
+	airflow_medium_pressure = 50
 	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
 
-	airflow_heavy_pressure = 70 //default 65
+	airflow_heavy_pressure = 65
 	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
 	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
 
-	airflow_dense_pressure = 80 //default 85
+	airflow_dense_pressure = 85
 	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
 
-	airflow_stun_pressure = 60 //default 60
+	airflow_stun_pressure = 60
 	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
 	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 
-	airflow_stun_cooldown = 60 //default 60
+	airflow_stun_cooldown = 60
 	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
 	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
 
-	airflow_stun = 0.75 //default 1
+	airflow_stun = 1
 	airflow_stun_NAME = "Airflow Impact - Stunning"
 	airflow_stun_DESC = "How much a mob is stunned when hit by an object."
 
-	airflow_damage = 2 //default 2
+	airflow_damage = 2
 	airflow_damage_NAME = "Airflow Impact - Damage"
 	airflow_damage_DESC = "Damage from airflow impacts."
 
-	airflow_speed_decay = 1.5 //default 1.5
+	airflow_speed_decay = 1.5
 	airflow_speed_decay_NAME = "Airflow Speed Decay"
 	airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
 
-	airflow_delay = 45 //default 30
+	airflow_delay = 30
 	airflow_delay_NAME = "Airflow Retrigger Delay"
 	airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
 
-	airflow_mob_slowdown = 1 //default 1
+	airflow_mob_slowdown = 1
 	airflow_mob_slowdown_NAME = "Airflow Slowdown"
 	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
 
@@ -229,7 +222,6 @@ vs_control
 				plc.CONTAMINATION_LOSS = 0.075
 
 			if("ZAS - Normal")
-				IgnitionLevel = 0.5
 				airflow_lightest_pressure = 20
 				airflow_light_pressure = 35
 				airflow_medium_pressure = 50
@@ -244,7 +236,6 @@ vs_control
 				airflow_mob_slowdown = 1
 
 			if("ZAS - Forgiving")
-				IgnitionLevel = 1
 				airflow_lightest_pressure = 45
 				airflow_light_pressure = 60
 				airflow_medium_pressure = 120
@@ -259,7 +250,6 @@ vs_control
 				airflow_mob_slowdown = 0
 
 			if("ZAS - Dangerous")
-				IgnitionLevel = 0.4
 				airflow_lightest_pressure = 15
 				airflow_light_pressure = 30
 				airflow_medium_pressure = 45
@@ -274,7 +264,6 @@ vs_control
 				airflow_mob_slowdown = 2
 
 			if("ZAS - Hellish")
-				IgnitionLevel = 0.3
 				airflow_lightest_pressure = 20
 				airflow_light_pressure = 30
 				airflow_medium_pressure = 40
