@@ -230,6 +230,8 @@
 	return "says, \"[text]\"";
 
 /mob/living/simple_animal/emote(var/act)
+	if(stat)
+		return
 	if(act)
 		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
 		for (var/mob/O in viewers(src, null))
@@ -373,22 +375,32 @@
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
-					adjustBruteLoss(-MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						del(MED)
-					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies [MED] on [src]")
+					if(MED.heal_brute >= 1)
+						adjustBruteLoss(-MED.heal_brute)
+						MED.amount -= 1
+						if(MED.amount <= 0)
+							del(MED)
+						for(var/mob/M in viewers(src, null))
+							if ((M.client && !( M.blinded )))
+								M.show_message("\blue [user] applies [MED] on [src]")
+						return
+					else
+						user << "\blue [MED] won't help at all."
+						return
+			else
+				user << "\blue [src] is at full health."
+				return
 		else
 			user << "\blue [src] is dead, medical items won't bring it back to life."
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+			return
+	else if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
 			if(prob(95))
 				del(src)
 				return
 			gib()
+			return
 	else
 		if(O.force)
 			var/damage = O.force
