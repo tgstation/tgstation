@@ -170,15 +170,15 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 				the_shuttles_way = from
 				at_station = 0
 				for(var/obj/machinery/door/poddoor/D in world)
-					if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2")
+					if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2" || D.id == "QMLoaddoor3")
 						D.close()
 			if(0)
 				from = locate(SUPPLY_DOCK_AREATYPE)
 				dest = locate(SUPPLY_STATION_AREATYPE)
 				the_shuttles_way = dest
-				//for(var/obj/machinery/door/poddoor/D in world)
-				//	if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2")
-				//		D.open()
+				for(var/obj/machinery/door/poddoor/D in world)
+					if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2" || D.id == "QMLoaddoor3")
+						D.close()
 				at_station = 1
 		moving = 0
 
@@ -189,7 +189,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		from.move_contents_to(dest)
 		if(at_station)
 			for(var/obj/machinery/door/poddoor/D in world)
-				if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2")
+				if(D.id == "QMLoaddoor" || D.id == "QMLoaddoor2" || D.id == "QMLoaddoor3")
 					D.open()
 
 

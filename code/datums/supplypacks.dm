@@ -502,7 +502,7 @@
 	containername = "station electronics crate"
 	access = access_cargo
 
-/datum/supply_packs/area_electronics
+/datum/supply_packs/airlock_electronics
 	name = "Airlock Control Electronics"
 	contains = list(/obj/item/switch_frame/airlock_console,
 					/obj/item/switch_frame/airlock_console,
