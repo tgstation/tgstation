@@ -610,7 +610,7 @@
 */
 
 /obj/mecha/blob_act()
-	take_damage(10, "brute")
+	take_damage(30, "brute")
 	return
 
 //TODO

@@ -179,10 +179,10 @@
 		return
 
 	if(istype(B, /obj/effect/blob/core))
-		src << "Unable to use this blob, find another one."
+		src << "Unable to remove this blob."
 		return
 
-	B.change_to(/obj/effect/blob)
+	B.Delete()
 	return
 
 

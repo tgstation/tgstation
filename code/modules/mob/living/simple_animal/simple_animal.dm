@@ -217,6 +217,11 @@
 			new meat_type(src.loc)
 	..()
 
+
+/mob/living/simple_animal/blob_act()
+	adjustBruteLoss(20)
+	return
+
 /mob/living/simple_animal/say_quote(var/text)
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
