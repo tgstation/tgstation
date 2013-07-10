@@ -231,9 +231,6 @@
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))	return
 
-		if( ticker.mode.name == "blob" )
-			alert("You can't call the shuttle during blob!")
-			return
 
 		switch(href_list["call_shuttle"])
 			if("1")

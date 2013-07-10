@@ -24,8 +24,8 @@ var/list/blob_nodes = list()
 	var/players_per_core = 26
 
 	var/blob_count = 0
-	var/blobnukecount = 200//Might be a bit low
-	var/blobwincount = 400//Still needs testing
+	var/blobnukecount = 300//Might be a bit low
+	var/blobwincount = 600//Still needs testing
 
 	var/list/infected_crew = list()
 
@@ -64,11 +64,6 @@ var/list/blob_nodes = list()
 	world << "You must kill it all while minimizing the damage to the station."
 
 
-/datum/game_mode/blob/process()
-	if(declared == 1)
-		stage(2) // check for win conditions
-	return
-
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
 	blob.current << "<B>\red You are infected by the Blob!</B>"
 	blob.current << "<b>You're body is ready to give spawn to a new blob core which will eat this station.</b>"
@@ -81,6 +76,9 @@ var/list/blob_nodes = list()
 
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
+
+	if(emergency_shuttle)
+		emergency_shuttle.always_fake_recall = 1
 
 	spawn(10)
 		start_state = new /datum/station_state()
@@ -123,7 +121,7 @@ var/list/blob_nodes = list()
 		stage(0)
 
 		// Stage 1
-		sleep(5000)
+		sleep(4000)
 		stage(1)
 
 	..()
@@ -148,15 +146,6 @@ var/list/blob_nodes = list()
 				if(!istype(M,/mob/new_player))
 					M << sound('sound/AI/outbreak5.ogg')
 			return
-
-		if (2)
-			if((blobs.len > blobnukecount) && (declared == 1))
-				command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()].  Any living Heads of Staff are ordered to enact directive 7-12 at any cost, a print out with detailed instructions has been sent to your communications computers.", "Biohazard Alert")
-				send_intercept(2)
-				declared = 2
-				spawn(20)
-					set_security_level("delta")
-
 
 	return
 

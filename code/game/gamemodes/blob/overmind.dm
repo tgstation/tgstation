@@ -9,10 +9,9 @@
 	invisibility = INVISIBILITY_OBSERVER
 
 	pass_flags = PASSBLOB
-	var/creating_blob = 0
-	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	faction = "blob"
 
+	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
 

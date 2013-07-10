@@ -13,7 +13,7 @@
 
 // Power verbs
 
-/mob/camera/blob/verb/transport()
+/mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Return to Core"
 	set desc = "Transport back to your core."
@@ -21,6 +21,19 @@
 	if(blob_core)
 		src.loc = blob_core.loc
 
+/mob/camera/blob/verb/jump_to_node()
+	set category = "Blob"
+	set name = "Jump to Node"
+	set desc = "Transport back to your core."
+
+	if(blob_nodes.len)
+		var/list/nodes = list()
+		for(var/i = 1; i <= blob_nodes.len; i++)
+			nodes["Blob Node #[i]"] = blob_nodes[i]
+		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
+		var/obj/effect/blob/node/chosen_node = nodes[node_name]
+		if(chosen_node)
+			src.loc = chosen_node.loc
 
 /mob/camera/blob/verb/create_shield()
 	set category = "Blob"
@@ -36,11 +49,11 @@
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
 	if(!B)//We are on a blob
-		usr << "There is no blob here!"
+		src << "There is no blob here!"
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		usr << "Unable to use this blob, find a normal one."
+		src << "Unable to use this blob, find a normal one."
 		return
 
 	if(!can_buy(10))
@@ -53,7 +66,7 @@
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
-	set name = "Create Resource Blob (20)"
+	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate points for you."
 
 
@@ -65,18 +78,18 @@
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
 	if(!B)//We are on a blob
-		usr << "There is no blob here!"
+		src << "There is no blob here!"
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		usr << "Unable to use this blob, find a normal one."
+		src << "Unable to use this blob, find a normal one."
 		return
 
 	for(var/obj/effect/blob/resource/blob in orange(3))
-		usr << "There is a resource blob nearby, move more than 3 tiles away from it!"
+		src << "There is a resource blob nearby, move more than 3 tiles away from it!"
 		return
 
-	if(!can_buy(20))
+	if(!can_buy(40))
 		return
 
 
@@ -101,15 +114,15 @@
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
 	if(!B)//We are on a blob
-		usr << "There is no blob here!"
+		src << "There is no blob here!"
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		usr << "Unable to use this blob, find a normal one."
+		src << "Unable to use this blob, find a normal one."
 		return
 
 	for(var/obj/effect/blob/node/blob in orange(4))
-		usr << "There is another node nearby, move more than 4 tiles away from it!"
+		src << "There is another node nearby, move more than 4 tiles away from it!"
 		return
 
 	if(!can_buy(60))
@@ -133,15 +146,15 @@
 
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		usr << "You must be on a blob!"
+		src << "You must be on a blob!"
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		usr << "Unable to use this blob, find a normal one."
+		src << "Unable to use this blob, find a normal one."
 		return
 
 	for(var/obj/effect/blob/factory/blob in orange(6))
-		usr << "There is a factory blob nearby, move more than 6 tiles away from it!"
+		src << "There is a factory blob nearby, move more than 6 tiles away from it!"
 		return
 
 	if(!can_buy(60))
@@ -155,7 +168,6 @@
 	set category = "Blob"
 	set name = "Remove Blob (0)"
 	set desc = "Removes a blob."
-	if(creating_blob)	return
 
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -163,11 +175,11 @@
 
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		usr << "You must be on a blob!"
+		src << "You must be on a blob!"
 		return
 
 	if(istype(B, /obj/effect/blob/core))
-		usr << "Unable to use this blob, find another one."
+		src << "Unable to use this blob, find another one."
 		return
 
 	B.change_to(/obj/effect/blob)
@@ -178,7 +190,7 @@
 	set category = "Blob"
 	set name = "Expand Blob (5)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
-	if(creating_blob)	return
+
 	var/turf/T = get_turf(src)
 
 	if(!T)
@@ -186,12 +198,12 @@
 
 	var/obj/effect/blob/B = locate() in T
 	if(B)
-		usr << "There is a blob here!"
+		src << "There is a blob here!"
 		return
 
 	var/obj/effect/blob/OB = locate() in circlerange(src, 1)
 	if(!OB)
-		usr << "There is no blob adjacent to you."
+		src << "There is no blob adjacent to you."
 		return
 
 	if(!can_buy(5))
@@ -204,7 +216,6 @@
 	set category = "Blob"
 	set name = "Rally Spores (5)"
 	set desc = "Rally the spores to move to your location."
-	if(creating_blob)	return
 
 	if(!can_buy(5))
 		return

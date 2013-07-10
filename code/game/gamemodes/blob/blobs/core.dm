@@ -7,6 +7,7 @@
 	fire_resist = 2
 	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
+	var/resource_delay = 0
 
 	New(loc, var/h = 200, var/client/new_overmind = null)
 		blob_cores += src
@@ -38,7 +39,9 @@
 		if(!overmind)
 			create_overmind()
 		else
-			overmind.add_points(2)
+			if(resource_delay <= world.time)
+				resource_delay = world.time + 10 // 1 second
+				overmind.add_points(2)
 		health = min(initial(health), health + 1)
 		for(var/i = 1; i < 8; i += i)
 			Pulse(0, i)
