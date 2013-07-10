@@ -135,6 +135,7 @@
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
+	var/move_on_shuttle = 1 // Can move on the shuttle.
 
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null

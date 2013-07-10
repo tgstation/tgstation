@@ -231,9 +231,6 @@
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))	return
 
-		if( ticker.mode.name == "blob" )
-			alert("You can't call the shuttle during blob!")
-			return
 
 		switch(href_list["call_shuttle"])
 			if("1")
@@ -1045,18 +1042,6 @@
 		log_admin("[key_name(usr)] attempting to corgize [key_name(H)]")
 		message_admins("\blue [key_name_admin(usr)] attempting to corgize [key_name_admin(H)]", 1)
 		H.corgize()
-
-	else if(href_list["makeblob"])
-		if(!check_rights(R_SPAWN))	return
-
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
-			return
-
-		log_admin("[key_name(usr)] attempting to blobize [key_name(H)]")
-		message_admins("\blue [key_name_admin(usr)] attempting to blobize [key_name_admin(H)]", 1)
-		H.blobize()
 
 
 	else if(href_list["forcespeech"])
@@ -1915,19 +1900,6 @@
 				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 				for(var/obj/machinery/light/L in world)
 					L.fix()
-			if("friendai")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/aiEye/aE in mob_list)
-					aE.icon_state = "ai_friend"
-				for(var/obj/machinery/M in machines)
-					if(istype(M, /obj/machinery/ai_status_display))
-						var/obj/machinery/ai_status_display/A = M
-						A.emotion = "Friend Computer"
-					else if(istype(M, /obj/machinery/status_display))
-						var/obj/machinery/status_display/A = M
-						A.friendc = 1
-				message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
 			if("floorlava")
 				if(floorIsLava)
 					usr << "The floor is lava already."

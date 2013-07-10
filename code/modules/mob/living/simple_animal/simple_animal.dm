@@ -217,6 +217,11 @@
 			new meat_type(src.loc)
 	..()
 
+
+/mob/living/simple_animal/blob_act()
+	adjustBruteLoss(20)
+	return
+
 /mob/living/simple_animal/say_quote(var/text)
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
@@ -441,13 +446,13 @@
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
 
-/mob/living/simple_animal/proc/SA_attackable(target_mob)
-	if (isliving(target_mob))
-		var/mob/living/L = target_mob
+/mob/living/simple_animal/proc/SA_attackable(target)
+	if (isliving(target))
+		var/mob/living/L = target
 		if(!L.stat)
-			return (0)
-	if (istype(target_mob,/obj/mecha))
-		var/obj/mecha/M = target_mob
+			return 0
+	if (istype(target,/obj/mecha))
+		var/obj/mecha/M = target
 		if (M.occupant)
-			return (0)
-	return (1)
+			return 0
+	return 1
