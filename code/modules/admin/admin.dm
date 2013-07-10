@@ -399,6 +399,14 @@ var/global/floorIsLava = 0
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
 
+	dat +={"
+			<B>General Secrets</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
+			<BR>
+			"}
+
 	if(check_rights(R_ADMIN,0))
 		dat += {"
 			<B>Admin Secrets</B><BR>
@@ -478,11 +486,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
 			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
 			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
-			<BR>
-			<B>Coder Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
 			<BR>
 			"}
 
