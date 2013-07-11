@@ -7,8 +7,7 @@
 	opacity = 0
 	anchored = 1
 	health = 100
-	brute_resist = 1
-	fire_resist = 2
+	fire_resist = 3
 
 
 	update_icon()
