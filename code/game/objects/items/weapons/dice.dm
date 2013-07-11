@@ -33,6 +33,12 @@
 	icon_state = "d10"
 	sides = 10
 
+/obj/item/weapon/dice/d00
+	name = "d00"
+	desc = "A die with ten sides. Works better for d100 rolls than a golfball."
+	icon_state = "d00"
+	sides = 10
+
 /obj/item/weapon/dice/d12
 	name = "d12"
 	desc = "A die with twelve sides. There's an air of neglect about it."
@@ -46,6 +52,13 @@
 	sides = 20
 
 /obj/item/weapon/dice/attack_self(mob/user as mob)
+	diceroll(user)
+
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user as mob)
+	..()
+	diceroll(user)
+
+/obj/item/weapon/dice/proc/diceroll(mob/user as mob)
 	var/result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
@@ -53,6 +66,11 @@
 	else if(sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
 	icon_state = "[initial(icon_state)][result]"
-	user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
-						 "<span class='notice'>You throw [src]. It lands on a [result]. [comment]</span>", \
-						 "<span class='notice'>You hear [src] landing on a [result]. [comment]</span>")
+	if(initial(icon_state) == "d00")
+		result = (result - 1)*10
+	if(user != null) //Dice was rolled in someone's hand
+		user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
+							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
+							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
+	else if(src.throwing == 0) //Dice was thrown and is coming to rest
+		src.loc.visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
