@@ -33,8 +33,8 @@
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	pass_flags = PASSBLOB
-	health = 15
-	maxHealth = 15
+	health = 50
+	maxHealth = 50
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
