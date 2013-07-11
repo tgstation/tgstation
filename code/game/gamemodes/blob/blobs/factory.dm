@@ -3,7 +3,6 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	health = 100
-	brute_resist = 1
 	fire_resist = 2
 	var/list/spores = list()
 	var/max_spores = 3
@@ -34,8 +33,8 @@
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	pass_flags = PASSBLOB
-	health = 15
-	maxHealth = 15
+	health = 40
+	maxHealth = 40
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
@@ -66,4 +65,4 @@
 	Die()
 		if(factory)
 			factory.spores -= src
-		..()
+		del(src)

@@ -10,8 +10,7 @@ var/list/blob_nodes = list()
 	name = "blob"
 	config_tag = "blob"
 
-	required_players = 0
-	required_enemies = 0
+	required_players = 15
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -21,11 +20,10 @@ var/list/blob_nodes = list()
 	var/declared = 0
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 26
+	var/players_per_core = 30
 
 	var/blob_count = 0
-	var/blobnukecount = 300//Might be a bit low
-	var/blobwincount = 600//Still needs testing
+	var/blobwincount = 500
 
 	var/list/infected_crew = list()
 
@@ -39,7 +37,6 @@ var/list/blob_nodes = list()
 
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
-	blobnukecount = initial(blobnukecount) * cores_to_spawn
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
 
@@ -80,6 +77,14 @@ var/list/blob_nodes = list()
 	if(emergency_shuttle)
 		emergency_shuttle.always_fake_recall = 1
 
+	// Disable the blob event for this round.
+	if(events)
+		var/datum/round_event_control/blob/B = locate() in events.control
+		if(B)
+			B.max_occurrences = 0 // disable the event
+	else
+		error("Events variable is null in blob gamemode post setup.")
+
 	spawn(10)
 		start_state = new /datum/station_state()
 		start_state.count()
@@ -114,7 +119,7 @@ var/list/blob_nodes = list()
 
 
 			if(blob_client && location)
-				new /obj/effect/blob/core(location, 200, blob_client)
+				new /obj/effect/blob/core(location, 200, blob_client, 2)
 
 		// Stage 0
 		sleep(40)
