@@ -1,6 +1,6 @@
 /datum/wires/syndicatebomb
 	random = 1
-	holder_type = /obj/item/weapon/syndicatebomb
+	holder_type = /obj/machinery/syndicatebomb
 	wire_count = 5
 
 var/const/WIRE_BOOM = 1			// Explodes if pulsed or cut while active, defuses a bomb that isn't active on cut
@@ -10,7 +10,7 @@ var/const/WIRE_PROCEED = 8		// Lowers the timer, explodes if cut while the bomb 
 var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if pulsed while already active, will stop a timer a bomb on cut
 
 /datum/wires/syndicatebomb/UpdatePulsed(var/index)
-	var/obj/item/weapon/syndicatebomb/P = holder
+	var/obj/machinery/syndicatebomb/P = holder
 	switch(index)
 		if(WIRE_BOOM)
 			if (P.active)
@@ -46,7 +46,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 				P.timer += 5
 
 /datum/wires/syndicatebomb/UpdateCut(var/index, var/mended)
-	var/obj/item/weapon/syndicatebomb/P = holder
+	var/obj/machinery/syndicatebomb/P = holder
 	switch(index)
 		if(WIRE_EXPLODE)
 			if(!mended)

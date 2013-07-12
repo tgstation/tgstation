@@ -45,6 +45,10 @@
 	*/
 	..()
 
+/obj/machinery/camera/initialize()
+	if(z == 1 && prob(3))
+		deactivate()
+
 /obj/machinery/camera/Del()
 	if(istype(bug))
 		bug.bugged_cameras -= src.c_tag
@@ -87,6 +91,7 @@
 	return
 
 /obj/machinery/camera/blob_act()
+	del(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(var/num = 7)

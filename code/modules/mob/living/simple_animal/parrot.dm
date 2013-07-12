@@ -8,6 +8,12 @@
  *		Sub-types
  */
 
+/*So you want to delete parrots eh?
+heres the locations of their snowflake code:
+lines 294-301 in living/say.dm (speech buffer)
+135 in living/say.dm (parrots talking into headsets)
+*/
+
 /*
  * Defines
  */
@@ -42,19 +48,25 @@
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
+	melee_damage_upper = 10
+	melee_damage_lower = 5
 
 	response_help  = "pets"
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
+	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
+	attacktext = "chomps"
+	friendly = "grooms"
 
+	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
 	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
-	var/parrot_been_shot = 0 //Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.
+	//var/parrot_been_shot = 0 this wasn't working right, and parrots don't survive bullets.((Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.))
 
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
 	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
@@ -97,10 +109,13 @@
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
+	player_list += src
+
 	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
-			  /mob/living/simple_animal/parrot/proc/perch_player)
+			  /mob/living/simple_animal/parrot/proc/perch_player, \
+			  /mob/living/simple_animal/parrot/proc/toggle_mode)
 
 
 /mob/living/simple_animal/parrot/Die()
@@ -113,6 +128,7 @@
 /mob/living/simple_animal/parrot/Stat()
 	..()
 	stat("Held Item", held_item)
+	stat("Mode",a_intent)
 
 /*
  * Inventory
@@ -197,10 +213,10 @@
 									available_channels.Add(":n")
 								if("Medical")
 									available_channels.Add(":m")
-								if("Mining")
-									available_channels.Add(":d")
-								if("Cargo")
-									available_channels.Add(":q")
+								if("Supply")
+									available_channels.Add(":u")
+								if("Service")
+									available_channels.Add(":v")
 
 						if(headset_to_add.translate_binary)
 							available_channels.Add(":b")
@@ -240,6 +256,8 @@
 
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M as mob)
+	..() //goodbye immortal parrots
+
 	if(client) return
 
 
@@ -252,17 +270,27 @@
 		icon_state = "parrot_fly"
 
 //Mobs with objects
-/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
-	if(!stat && !client && !istype(O, /obj/item/stack/medical))
+/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/living/user as mob)
+	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
 			parrot_interest = user
-			parrot_state = PARROT_SWOOP | PARROT_FLEE
+			parrot_state = PARROT_SWOOP
+			if (user.health < 50)
+				parrot_state |= PARROT_ATTACK //weakened mob? fight back!
+			else
+				parrot_state |= PARROT_FLEE
 			icon_state = "parrot_fly"
 			drop_held_item(0)
+	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
+		del(O)
+		user.drop_item()
+		if(health < maxHealth)
+			adjustBruteLoss(-10)
+		user << "\blue [src] eagerly devours the cracker."
+	..()
 	return
 
 //Bullets
@@ -273,8 +301,8 @@
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
 		parrot_interest = null
-		parrot_state = PARROT_WANDER //OWFUCK, Been shot! RUN LIKE HELL!
-		parrot_been_shot += 5
+		parrot_state = PARROT_WANDER | PARROT_FLEE //Been shot and survived! RUN LIKE HELL!
+		//parrot_been_shot += 5
 		icon_state = "parrot_fly"
 		drop_held_item(0)
 	return
@@ -462,8 +490,9 @@
 		if(!parrot_interest || !isliving(parrot_interest)) //Sanity
 			parrot_state = PARROT_WANDER
 
-		walk_away(src, parrot_interest, 1, parrot_speed-parrot_been_shot)
-		parrot_been_shot--
+		walk_away(src, parrot_interest, 1, parrot_speed)
+		/*if(parrot_been_shot > 0)
+			parrot_been_shot--  didn't work anyways, and besides, any bullet poly survives isn't worth the speed boost.*/
 		if(isStuck()) return
 
 		return
@@ -478,6 +507,9 @@
 			return
 
 		var/mob/living/L = parrot_interest
+		if(melee_damage_upper == 0)
+			melee_damage_upper = parrot_damage_upper
+			a_intent = "harm"
 
 		//If the mob is close enough to interact with
 		if(in_range(src, parrot_interest))
@@ -495,21 +527,8 @@
 					parrot_state = PARROT_WANDER
 				return
 
-			//Time for the hurt to begin!
-			var/damage = rand(5,10)
-
-			if(ishuman(parrot_interest))
-				var/mob/living/carbon/human/H = parrot_interest
-				var/datum/limb/affecting = H.get_organ(ran_zone(pick(parrot_dam_zone)))
-
-				H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
-				emote(pick("pecks [H]'s [affecting]", "cuts [H]'s [affecting] with its talons"))
-
-			else
-				L.adjustBruteLoss(damage)
-				emote(pick("pecks at [L]", "claws [L]"))
-			return
-
+			attacktext = pick("claws at", "chomps")
+			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else
 			walk_to(src, parrot_interest, 1, parrot_speed)
@@ -683,6 +702,17 @@
 			src << "\red You have nothing to drop!"
 		return 0
 
+
+//parrots will eat crackers instead of dropping them
+	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (!drop_gently))
+		del(held_item)
+		held_item = null
+		if(health < maxHealth)
+			adjustBruteLoss(-10)
+		emote("[src] eagerly downs the cracker")
+		return 1
+
+
 	if(!drop_gently)
 		if(istype(held_item, /obj/item/weapon/grenade))
 			var/obj/item/weapon/grenade/G = held_item
@@ -714,6 +744,22 @@
 					icon_state = "parrot_sit"
 					return
 	src << "\red There is no perch nearby to sit on."
+	return
+
+/mob/living/simple_animal/parrot/proc/toggle_mode()
+	set name = "Toggle mode"
+	set category = "Parrot"
+	set desc = "Time to bear those claws!"
+
+	if(stat || !client)
+		return
+
+	if(melee_damage_upper)
+		melee_damage_upper = 0
+		a_intent = "help"
+	else
+		melee_damage_upper = parrot_damage_upper
+		a_intent = "harm"
 	return
 
 /*

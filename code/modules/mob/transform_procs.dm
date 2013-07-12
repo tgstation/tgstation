@@ -389,27 +389,6 @@
 	. = new_corgi
 	del(src)
 
-/mob/living/carbon/human/proc/blobize() // Oh boy, this is for you Int - Summoner
-	if (monkeyizing)
-		return
-	for(var/obj/item/W in src)
-		drop_from_inventory(W)
-	regenerate_icons()
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-	for(var/t in organs)
-		del(t)
-
-	var/mob/living/blob/new_blob = new /mob/living/blob (loc)
-	new_blob.a_intent = "harm"
-	new_blob.key = key
-
-	new_blob << "<B>You are now a Blob Fragment. You can now sacrifice yourself to spawn blobs!</B>"
-	. = new_blob
-	del(src)
-
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)

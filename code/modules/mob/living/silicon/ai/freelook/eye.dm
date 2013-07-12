@@ -3,40 +3,17 @@
 // An invisible (no icon) mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
-/mob/aiEye
+/mob/camera/aiEye
 	name = "Inactive AI Eye"
-	icon = 'icons/obj/status_display.dmi' // For AI friend secret shh :o
+
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
-	density = 0
-	status_flags = GODMODE  // You can't damage it.
-	mouse_opacity = 0
-	see_in_dark = 7
 
-// Movement code. Returns 0 to stop air movement from moving it.
-/mob/aiEye/Move()
-	return 0
-
-// Hide popout menu verbs
-/mob/aiEye/examine()
-	set popup_menu = 0
-	set src = usr.contents
-	return 0
-
-/mob/aiEye/pull()
-	set popup_menu = 0
-	set src = usr.contents
-	return 0
-
-/mob/aiEye/point()
-	set popup_menu = 0
-	set src = usr.contents
-	return 0
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/aiEye/proc/setLoc(var/T)
+/mob/camera/aiEye/proc/setLoc(var/T)
 
 	if(ai)
 		if(!isturf(ai.loc))
@@ -51,13 +28,16 @@
 			var/obj/machinery/hologram/holopad/H = ai.current
 			H.move_hologram()
 
+/mob/camera/aiEye/Move()
+	return 0
+
 
 // AI MOVEMENT
 
 // The AI's "eye". Described on the top of the page.
 
 /mob/living/silicon/ai
-	var/mob/aiEye/eyeobj = new()
+	var/mob/camera/aiEye/eyeobj = new()
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
