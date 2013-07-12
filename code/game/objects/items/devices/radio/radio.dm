@@ -55,6 +55,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		initialize()
 
 
+/obj/item/device/radio/MouseDrop(obj/over_object as obj, src_location, over_location)
+	var/mob/M = usr
+	if((!istype(over_object, /obj/screen)) && src.loc == M)
+		return attack_self(M)
+	return
+
+
 /obj/item/device/radio/initialize()
 
 	if(freerange)
