@@ -21,6 +21,10 @@
 	real_name = new_name
 	..()
 
+mob/camera/blob/Life()
+	hud_used.blobdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#82ed00'>[src.blob_points]</font></div>"
+	return
+
 /mob/camera/blob/say(var/message)
 	return//No talking for you
 

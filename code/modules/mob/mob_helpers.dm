@@ -115,6 +115,11 @@ proc/isobserver(A)
 		return 1
 	return 0
 
+proc/isovermind(A)
+	if(istype(A, /mob/camera/blob))
+		return 1
+	return 0
+
 proc/isorgan(A)
 	if(istype(A, /datum/limb))
 		return 1
