@@ -72,16 +72,19 @@
 
 	min_duration = 50
 	max_duration = 70
-
+	var/working = 0
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return ..() && target.brain_op_stage == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!working)
+			working = 1
 		user.visible_message("[user] starts separating [target]'s brain from \his spine with \the [tool].", \
 		"You start separating [target]'s brain from spine with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		working = 0
 		user.visible_message("\blue [user] separates [target]'s brain from \his spine with \the [tool].",	\
 		"\blue You separate [target]'s brain from spine with \the [tool].")
 
