@@ -112,7 +112,7 @@
 	src.visible_message("<span class='danger'>[src] sucks the fluids from [T]!</span>")
 	T << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
-	changeling.absorb_dna(T, usr)
+	changeling.absorb_dna(T)
 
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
 	if(T.mind && T.mind.changeling)//If the target was a changeling, suck out their extra juice!
@@ -220,6 +220,7 @@
 /mob/living/carbon/proc/changeling_fakedeath()
 	set category = "Changeling"
 	set name = "Regenerative Stasis (10)"
+	set desc = "Begin stasis, allowing us to regenerate."
 
 	var/datum/changeling/changeling = changeling_power(10,0,100,DEAD)
 	if(!changeling)	return
@@ -249,6 +250,7 @@
 /mob/living/carbon/proc/changeling_revive()
 	set category = "Changeling"
 	set name = "Regenerate! (10)"
+	set desc = "Regenerate, healing all damage from our form."
 
 	var/datum/changeling/changeling = changeling_power(10,0,100,DEAD)
 	if(!changeling)	return
@@ -283,10 +285,10 @@
 //Recover from stuns.
 /mob/living/carbon/proc/changeling_unstun()
 	set category = "Changeling"
-	set name = "Epinephrine Sacs (35)"
+	set name = "Epinephrine Overdose (35)"
 	set desc = "Removes all stuns instantly, and adds a short-term reduction in further stuns."
 
-	var/datum/changeling/changeling = changeling_power(45,0,100,UNCONSCIOUS)
+	var/datum/changeling/changeling = changeling_power(35,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
 	changeling.chem_charges -= 35
 
@@ -315,7 +317,7 @@
 /mob/living/carbon/proc/changeling_shriek()
 	set category = "Changeling"
 	set name = "Resonant Shriek (25)"
-	set desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the unfocused mind."
+	set desc = "Deafen and confuse those around us."
 
 	var/datum/changeling/changeling = changeling_power(25)
 	if(!changeling)	return 0
@@ -342,7 +344,7 @@
 /mob/living/carbon/proc/changeling_spiders()
 	set category = "Changeling"
 	set name = "Spread Infestation (40)"
-	set desc = "Our form divides, creating arachnids which will grow into deadly beasts."
+	set desc = "Creates spiderlings."
 
 	var/datum/changeling/changeling = changeling_power(40, 10)
 	if(!changeling)	return 0
@@ -363,7 +365,7 @@
 /mob/living/carbon/proc/changeling_panacea()
 	set category = "Changeling"
 	set name = "Anatomic Panacea (35)"
-	set desc = "Expels impurifications from our form, curing diseases, genetic disabilities, and removing toxins and radiation."
+	set desc = "Cures diseases, disabilities, toxins and radiation."
 
 	var/datum/changeling/changeling = changeling_power(35,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
@@ -476,10 +478,12 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	changeling.chem_charges -= 20
-	changeling.absorbed_dna += chosen_dna
-	src << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
-	feedback_add_details("changeling_powers","HD")
+	if(changeling.can_absorb_dna(null, usr))
+		changeling.chem_charges -= 20
+		changeling.shuffle_dna()
+		changeling.absorbed_dna |= chosen_dna
+		src << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
+		feedback_add_details("changeling_powers","HD")
 	return 1
 
 // Fake Voice

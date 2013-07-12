@@ -464,30 +464,27 @@ var/list/powerinstances
 
 /////
 
-/datum/changeling/proc/purchasePower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
+/datum/changeling/proc/purchasePower(var/datum/mind/M, var/pname, var/remake_verbs = 1)
 	if(!M || !M.changeling || !istype(M.current, /mob/living/carbon))
 		return
 
 	var/mob/living/carbon/C = M.current
-	var/datum/power/changeling/Thepower = Pname
-
+	var/datum/power/changeling/thepower = pname
 
 	for (var/datum/power/changeling/P in powerinstances)
-		//world << "[P] - [Pname] = [P.name == Pname ? "True" : "False"]"
-		if(P.name == Pname)
-			Thepower = P
+		if(P.name == pname)
+			thepower = P
 			break
 
-
-	if(Thepower == null)
+	if(thepower == null)
 		C << "This is awkward. Changeling power purchase failed, please report this bug to a coder!"
 		return
 
-	if(Thepower in purchasedpowers)
+	if(thepower in purchasedpowers)
 		C << "We have already evolved this ability!"
 		return
 
-	if(geneticpoints < Thepower.genomecost)
+	if(geneticpoints < thepower.genomecost)
 		C << "We have reached our capacity for abilities."
 		return
 
@@ -495,12 +492,12 @@ var/list/powerinstances
 		C << "We lack the energy to evolve new abilities right now."
 		return
 
-	geneticpoints -= Thepower.genomecost
+	geneticpoints -= thepower.genomecost
 
-	purchasedpowers += Thepower
+	purchasedpowers += thepower
 
-	if(!Thepower.isVerb && Thepower.verbpath)
-		call(C, Thepower.verbpath)()
+	if(!thepower.isVerb && thepower.verbpath)
+		call(C, thepower.verbpath)()
 	else if(remake_verbs)
 		C.make_changeling()
 

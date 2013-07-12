@@ -266,31 +266,34 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		U << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return 0
 
-	if(NOCLONE in T.mutations || HUSK in T.mutations)
-		U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
-		return 0
+	if(T)
+		if(NOCLONE in T.mutations || HUSK in T.mutations)
+			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
+			return 0
 
-	if(!ishuman(T))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
-		U << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
-		return 0
+		if(!ishuman(T))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+			U << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+			return 0
 
-	if(T.dna in absorbed_dna)
-		U << "<span class='warning'>We already have that DNA in storage.</span>"
-		return 0
+		if(T.dna in absorbed_dna)
+			U << "<span class='warning'>We already have that DNA in storage.</span>"
+			return 0
 
-	if(!check_dna_integrity(T))
-		U << "<span class='warning'>[T] is not compatible with our biology.</span>"
-		return 0
+		if(!check_dna_integrity(T))
+			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
+			return 0
 
 	return 1
 
 
 //Absorbs the target DNA.
-/datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/living/carbon/owner/U)
-	for(var/i = 2; i<=dna_max; i++)//boots out the stalest DNA.
-		absorbed_dna[i-1] = absorbed_dna[i]
-	absorbed_dna.Remove(absorbed_dna[dna_max])
-
+/datum/changeling/proc/absorb_dna(mob/living/carbon/T)
+	shuffle_dna()
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	absorbed_dna |= T.dna //And add the target DNA to our absorbed list.
 	absorbedcount++ //all that done, let's increment the objective counter.
+
+/datum/changeling/proc/shuffle_dna()//boots out the stalest DNA.
+	for(var/i = 2; i<=dna_max; i++)
+		absorbed_dna[i-1] = absorbed_dna[i]
+	absorbed_dna.Remove(absorbed_dna[dna_max])
