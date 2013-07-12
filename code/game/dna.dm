@@ -1548,7 +1548,11 @@
 				I.dnatype = src.buffer1type
 				if(href_list["b1injector"]=="2")
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffer1)
-					success = setInjectorBlock(I,blk,src.buffer1)
+					if(src.injectorready)
+						success = setInjectorBlock(I,blk,src.buffer1)
+					else
+						success = 0
+						I = null
 				else
 					I.dna = src.buffer1
 				if(success)
@@ -1562,6 +1566,8 @@
 						src.injectorready = 1
 				else
 					src.temphtml = "Error in injector creation."
+					if(!src.injectorready)
+						src.temphtml +="<br><br><i>Replicator not ready yet.</i>"
 					src.delete = 0
 			else
 				src.temphtml = "Replicator not ready yet."
@@ -1573,7 +1579,11 @@
 				I.dnatype = src.buffer2type
 				if(href_list["b2injector"]=="2")
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffer2)
-					success = setInjectorBlock(I,blk,src.buffer2)
+					if(src.injectorready)
+						success = setInjectorBlock(I,blk,src.buffer2)
+					else
+						success = 0
+						I = null
 				else
 					I.dna = src.buffer2
 				if(success)
@@ -1587,6 +1597,8 @@
 						src.injectorready = 1
 				else
 					src.temphtml = "Error in injector creation."
+					if(!src.injectorready)
+						src.temphtml +="<br><br><i>Replicator not ready yet.</i>"
 					src.delete = 0
 			else
 				src.temphtml = "Replicator not ready yet."
@@ -1598,7 +1610,11 @@
 				I.dnatype = src.buffer3type
 				if(href_list["b3injector"]=="2")
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffer3)
-					success = setInjectorBlock(I,blk,src.buffer3)
+					if(src.injectorready)
+						success = setInjectorBlock(I,blk,src.buffer3)
+					else
+						success = 0
+						I = null
 				else
 					I.dna = src.buffer3
 				if(success)
@@ -1612,6 +1628,8 @@
 						src.injectorready = 1
 				else
 					src.temphtml = "Error in injector creation."
+					if(!src.injectorready)
+						src.temphtml +="<br><br><i>Replicator not ready yet.</i>"
 					src.delete = 0
 			else
 				src.temphtml = "Replicator not ready yet."
