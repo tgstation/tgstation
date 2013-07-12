@@ -62,42 +62,22 @@
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
 	if (src.anchored)
-		return src.flash()
+		return src.activate()
 	else
 		return
 
-/obj/machinery/flasher/proc/flash()
+/obj/machinery/flasher/proc/activate()
 	if (!(powered()) || (isnull(bulb)))
 		return
 
 	if ((bulb.broken) || (src.last_flash && world.time < src.last_flash + 150))
 		return
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	src.last_flash = world.time
 	use_power(1000)
-
-	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
-			continue
-
-		if (istype(O, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = O
-			if(!H.eyecheck() <= 0)
-				continue
-
-		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
-			continue
-
-		O.Weaken(strength)
-		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
-			flick("e_flash", O:flash)
-			O.eye_stat += rand(1, 2)
-		else
-			if(!O.blinded)
-				flick("flash", O:flash)
-				O.eye_stat += rand(0, 2)
+	flash(src,strength,range)
 
 
 /obj/machinery/flasher/emp_act(severity)
@@ -105,7 +85,7 @@
 		..(severity)
 		return
 	if(prob(75/severity))
-		flash()
+		activate()
 		bulb.broken = 1
 		bulb.icon_state = "flashburnt"
 		src.power_change()
@@ -118,9 +98,9 @@
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		if ((M.m_intent != "walk") && (src.anchored))
-			src.flash()
+			src.activate()
 
-/obj/machinery/flasher/portable/flash()
+/obj/machinery/flasher/portable/activate()
 	..()
 	if(prob(4))	//Small chance to burn out on use
 		bulb.broken = 1
@@ -169,7 +149,7 @@
 	for(var/obj/machinery/flasher/M in world)
 		if(M.id == src.id)
 			spawn()
-				M.flash()
+				M.activate()
 
 	sleep(50)
 

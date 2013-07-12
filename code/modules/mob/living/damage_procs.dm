@@ -72,3 +72,37 @@
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
 	return 1
+
+/mob/living/proc/damage_eye(damage)
+	if(!damage) return
+	eye_stat += damage
+	if(eye_stat < 25)
+		src << "<span class='warning'>Your eyes sting.</span>"
+	else if(eye_stat < 50)
+		src << "<span class='warning'>Your eyes burn.</span>"
+		eye_blurry += rand(3, 6)
+	else if(eye_stat < 75)
+		src << "<span class='warning'>Your eyes can't handle much more of this!</span>"
+	else
+		src << "<span class='warning'>You clutch desperately at your eyes!</span>"
+		Stun(5)
+	if(prob(2*(eye_stat - 28)))
+		sdisabilities |= NEARSIGHTED
+	if(prob(2*(eye_stat - 45)))
+		sdisabilities |= BLIND
+
+
+/mob/living/proc/damage_ear(damage)
+	ear_damage += damage
+	if(ear_damage < 25)
+		src << "<span class='warning'>Your ears hurt.</span>"
+	else if(ear_damage < 50)
+		src << "<span class='warning'>Your ears ring.</span>"
+		ear_deaf += rand(5,10)
+	else if(ear_damage < 75)
+		src << "<span class='warning'>Your ears are filled with a persistent ringing.</span>"
+		ear_deaf += rand(8,16)
+	else
+		src << "<span class='warning'>Your ears pop painfully.</span>"
+		Weaken(5)
+		sdisabilities |= DEAF

@@ -1152,10 +1152,11 @@
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
-
+/*			No need for these; damaging eyes adds disabilities.
 			if(eye_stat > 20)
 				if(eye_stat > 30)	client.screen += global_hud.darkMask
 				else				client.screen += global_hud.vimpaired
+*/
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)

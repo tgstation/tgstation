@@ -62,42 +62,27 @@
 			user << "<span class='warning'>*click* *click*</span>"
 			return
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
-	var/flashfail = 0
+	var/flashfail = !flash(M,10)
 
-	if(iscarbon(M))
-		var/safety = M:eyecheck()
-		if(safety <= 0)
-			M.Weaken(10)
-			flick("e_flash", M.flash)
-
-			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-				if(user.mind && user.mind in ticker.mode.head_revolutionaries)
-					if(M.client)
-						if(M.stat == CONSCIOUS)
-							var/revsafe = 0
-							if(isloyal(M))
-								revsafe = 1
-							M.mind_initialize()		//give them a mind datum if they don't have one.
-//							if(M.mind.has_been_rev)
-//								revsafe = 2
-							if(!revsafe)
-								M.mind.has_been_rev = 1
-								ticker.mode.add_revolutionary(M.mind)
-							else if(revsafe == 1)
-								user << "<span class='warning'>Something seems to be blocking the flash!</span>"
-							else
-								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
-						else
-							user << "<span class='warning'>They must be conscious before you can convert them!</span>"
-					else
-						user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
-		else
-			flashfail = 1
-
-	else if(issilicon(M))
-		M.Weaken(rand(5,10))
-	else
-		flashfail = 1
+	if(!flashfail && ishuman(M) && ishuman(user) && M.stat != DEAD)
+		if(user.mind && user.mind in ticker.mode.head_revolutionaries)
+			if(M.client)
+				if(M.stat == CONSCIOUS)
+					var/revsafe = 0
+					for(var/obj/item/weapon/implant/loyalty/L in M)
+						if(L && L.implanted)
+							revsafe = 1
+							break
+					M.mind_initialize()		//give them a mind datum if they don't have one.
+//					if(M.mind.has_been_rev)
+//						revsafe = 2
+					if(!revsafe)
+						M.mind.has_been_rev = 1
+						ticker.mode.add_revolutionary(M.mind)
+					else if(revsafe == 1) user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+					else user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+				else user << "<span class='warning'>They must be conscious before you can convert them!</span>"
+			else user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
 
 	if(isrobot(user))
 		spawn(0)
@@ -158,18 +143,7 @@
 			flick("blspell", animation)
 			sleep(5)
 			del(animation)
-
-	for(var/mob/living/carbon/M in oviewers(3, null))
-		if(prob(50))
-			if (locate(/obj/item/weapon/cloaking_device, M))
-				for(var/obj/item/weapon/cloaking_device/S in M)
-					S.active = 0
-					S.icon_state = "shield0"
-		var/safety = M:eyecheck()
-		if(!safety)
-			if(!M.blinded)
-				flick("flash", M.flash)
-
+	flash(src,0,3,user)
 	return
 
 /obj/item/device/flash/emp_act(severity)
@@ -182,14 +156,9 @@
 				icon_state = "flashburnt"
 				return
 			times_used++
-			if(istype(loc, /mob/living/carbon))
-				var/mob/living/carbon/M = loc
-				var/safety = M.eyecheck()
-				if(safety <= 0)
-					M.Weaken(10)
-					flick("e_flash", M.flash)
-					for(var/mob/O in viewers(M, null))
-						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
+			flash(src,2,5)
+			for(var/mob/O in viewers(src, null))
+				O.show_message("<span class='disarm'>[src] spontaneously activates!</span>")
 	..()
 
 /obj/item/device/flash/synthetic

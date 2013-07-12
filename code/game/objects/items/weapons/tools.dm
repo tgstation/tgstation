@@ -222,14 +222,14 @@
 
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
-/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
+/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/living/M = null)
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= amount)
 		reagents.remove_reagent("fuel", amount)
 		check_fuel()
 		if(M)
-			eyecheck(M)
+			M.damage_eye(rand(0,10*(2-M.eyecheck())))
 		return 1
 	else
 		if(M)
