@@ -4,7 +4,7 @@
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy"
 	health = 100
-	fire_resist = 3
+	fire_resist = 2
 
 
 	update_icon()
