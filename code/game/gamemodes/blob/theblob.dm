@@ -9,7 +9,7 @@
 	anchored = 1
 	var/active = 1
 	var/health = 30
-	var/brute_resist = 8
+	var/brute_resist = 5
 	var/fire_resist = 1
 
 
