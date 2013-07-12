@@ -4,6 +4,8 @@
 	weight = 5
 	max_occurrences = 1
 
+	earliest_start = 48000 // 1 hour 20 minutes
+
 /datum/round_event/blob
 	announceWhen	= 12
 	endWhen			= 120

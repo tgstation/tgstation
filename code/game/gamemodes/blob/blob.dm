@@ -121,7 +121,7 @@ var/list/blob_nodes = list()
 
 
 			if(blob_client && location)
-				new /obj/effect/blob/core(location, 200, blob_client)
+				new /obj/effect/blob/core(location, 200, blob_client, 2)
 
 		// Stage 0
 		sleep(40)
