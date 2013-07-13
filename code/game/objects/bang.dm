@@ -27,6 +27,7 @@ proc/bangmob(mob/living/carbon/target, var/fluff, intensity)
 			if(istype(target:head, /obj/item/clothing/head/helmet))
 				ear_safety += 1
 		intensity = round(intensity/ear_safety)
+		target.sleeping = max(0,intensity)
 		target.damage_ear(rand(0,intensity))			//First, your ears should hurt.
 		target.Weaken(max(intensity-5,0))			//If it's a strong enough bang, it'll knock people down.
 		target.make_dizzy(max(intensity-3,0)*2)			//It doesn't take a huge sound to make you feel woozy

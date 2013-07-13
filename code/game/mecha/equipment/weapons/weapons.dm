@@ -119,21 +119,7 @@
 
 		playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
 		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
-		for(var/mob/living/carbon/M in ohearers(6, chassis))
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-					continue
-			M << "<font color='red' size='7'>HONK</font>"
-			M.sleeping = 0
-			M.stuttering += 20
-			M.ear_deaf += 30
-			M.Weaken(3)
-			if(prob(30))
-				M.Stun(10)
-				M.Paralyse(4)
-			else
-				M.make_jittery(500)
+		bang(chassis,"HONK",7,6)
 			/* //else the mousetraps are useless
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
