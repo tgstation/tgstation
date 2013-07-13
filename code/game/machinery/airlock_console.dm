@@ -388,6 +388,20 @@ obj/machinery/airlock_console
 						new /obj/item/weapon/cable_coil( get_turf(src.loc), 1 )
 			return
 
+		else if(istype(W, /obj/item/weapon/crowbar))
+			if(open && !wired)
+				if(!istype(user))
+					return
+
+				//remove wires
+				user.visible_message(\
+					"[user] has removed [src] from the wall",\
+					"You have removed [src] from the wall.")
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				new /obj/item/switch_frame/airlock_console( get_turf(src.loc), 1 )
+				Del(src)
+		return
+
 	Topic(href, href_list)
 		if(..())
 			return 0
@@ -728,6 +742,19 @@ obj/machinery/airlock_sensor_wired
 						update_icon()
 						new /obj/item/weapon/cable_coil( get_turf(src.loc), 1 )
 			return
+
+		else if(istype(W, /obj/item/weapon/crowbar))
+			if(open && !wired)
+				if(!istype(user))
+					return
+
+				//remove wires
+				user.visible_message(\
+					"[user] has removed [src] from the wall",\
+					"You have removed [src] from the wall.")
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				new /obj/item/switch_frame/airlock_sensor( get_turf(src.loc), 1 )
+				Del(src)
 
 	process()
 		if(on)
