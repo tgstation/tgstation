@@ -20,11 +20,10 @@ var/list/blob_nodes = list()
 	var/declared = 0
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 26
+	var/players_per_core = 30
 
 	var/blob_count = 0
-	var/blobnukecount = 300//Might be a bit low
-	var/blobwincount = 600//Still needs testing
+	var/blobwincount = 500
 
 	var/list/infected_crew = list()
 
@@ -38,7 +37,6 @@ var/list/blob_nodes = list()
 
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
-	blobnukecount = initial(blobnukecount) * cores_to_spawn
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
 
