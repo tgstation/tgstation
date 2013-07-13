@@ -1,0 +1,12 @@
+// BEGIN_INTERNALS
+/*
+MAP_ICON_TYPE: 0
+WINDOW: code\game\machinery\airlock_console.dm;maps\miningColony.0.0.1.dmm;code\datums\supplypacks.dm;code\game\objects\structures\extinguisher.dm;code\game\machinery\door_control.dm;code\game\objects\items\switch_frame.dm;code\game\objects\items\weapons\airlock_painter.dm;maps\tgstation.2.1.2.dmm;code\game\supplyshuttle.dm;code\game\objects\items\stacks\sheets\mineral.dm;code\game\objects\items\stacks\sheets\sheet_types.dm
+LAST_COMPILE_VERSION: 498.1150
+UPDATE_OBJ_TREE: ON
+DIR: code code\__HELPERS code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\trinary_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\datums\helper_datums code\game code\game\machinery code\game\machinery\computer code\game\objects code\game\objects\effects code\game\objects\items code\game\objects\items\devices code\game\objects\items\devices\PDA code\game\objects\items\stacks code\game\objects\items\stacks\sheets code\game\objects\items\stacks\tiles code\game\objects\items\weapons code\game\objects\structures code\modules code\modules\research code\unused code\unused\pda2 maps 
+FILE: maps\miningColony.0.0.1.dmm
+LAST_COMPILE_TIME: 1373732184
+AUTO_FILE_DIR: ON
+*/
+// END_INTERNALS
