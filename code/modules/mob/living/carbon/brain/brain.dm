@@ -5,6 +5,7 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
+	immune_to_ssd = 1
 	use_me = 0 //Can't use the me verb, it's a freaking immobile brain
 
 	New()
