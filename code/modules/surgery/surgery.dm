@@ -82,8 +82,16 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
-			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
-			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
+			if(istype(S,/datum/surgery_step/brain/saw_spine))
+				var/datum/surgery_step/brain/saw_spine/ss = S
+				if(!ss.working)
+					ss.begin_step(user, M, user.zone_sel.selecting, tool)
+				else
+					user << "\blue You're already removing their brain."
+					return 1
+			else
+				S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
+				//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
 			else														//or

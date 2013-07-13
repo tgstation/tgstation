@@ -366,7 +366,7 @@ obj/structure/door_assembly
 
 			//del(W)
 
-	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
+	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 && electronics)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
@@ -376,12 +376,9 @@ obj/structure/door_assembly
 			src.state = 1
 			src.name = "Wired Airlock Assembly"
 			var/obj/item/weapon/airlock_electronics/ae
-			if (!electronics)
-				ae = new/obj/item/weapon/airlock_electronics( src.loc )
-			else
-				ae = electronics
-				electronics = null
-				ae.loc = src.loc
+			ae = electronics
+			electronics = null
+			ae.loc = src.loc
 	else if(istype(W, /obj/item/stack/sheet) && !mineral)
 		var/obj/item/stack/sheet/G = W
 		if(G)

@@ -120,6 +120,7 @@
 			src.victim = M
 			del(W)
 			return
+	if(isrobot(user)) return
 	user.drop_item()
 	if(W && W.loc)
 		W.loc = src.loc

@@ -231,7 +231,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
-		T.ChangeTurf(/turf/simulated/wall) //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
+		T.ChangeTurf(/turf/simulated/wall/r_wall) //Why not make rwall?
 		del(src)
 
 	if( istype(W, /obj/item/weapon/weldingtool) )
