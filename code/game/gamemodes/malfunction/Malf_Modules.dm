@@ -112,6 +112,8 @@ rcd light flash thingy on matter drain
 			else src << "Out of uses."
 	else src << "That's not a machine."
 
+/*
+
 /datum/AI_Module/large/place_cyborg_transformer
 	module_name = "Robotic Factory (Removes Shunting)"
 	mod_pick_name = "cyborgtransformer"
@@ -166,6 +168,8 @@ rcd light flash thingy on matter drain
 	src.can_shunt = 0
 	PCT.uses -= 1
 	src << "You cannot shunt anymore."
+
+*/
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
