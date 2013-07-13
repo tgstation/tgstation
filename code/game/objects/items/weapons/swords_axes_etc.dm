@@ -163,11 +163,11 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-
 		if(!..()) return
-		playsound(src.loc, "swing_hit", 50, 1, -1)
-		//target.Stun(4)	//naaah
-		target.Weaken(4)
+		if(!isrobot(target))
+			playsound(src.loc, "swing_hit", 50, 1, -1)
+			//target.Stun(4)	//naaah
+			target.Weaken(4)
 		return
 	else
 		return ..()
