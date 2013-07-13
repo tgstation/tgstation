@@ -80,13 +80,13 @@
 	if (!(ndir in cardinal))
 		return
 	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
+	//var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "\red Switch cannot be placed on this spot."
 		return
-	if (A.name == "Space")
-		usr << "\red Switch cannot be placed in this area."
-		return
+	//if (A.name == "Space")
+	//	usr << "\red Switch cannot be placed in this area."
+	//	return
 	var/obj/machinery/new_obj = new create(loc, ndir, 1)
 	if(new_name)
 		new_obj.name = new_name

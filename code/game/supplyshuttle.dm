@@ -118,7 +118,13 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/plasma_per_point = 5 // 2 plasma for 1 point
+
+	var/plasma_per_point = 1 // points per plasma!!!
+	var/uranium_per_point = 3 // points per plasma!!!
+	var/diamond_per_point = 5 // points per plasma!!!
+	var/gold_per_point = 4 // points per plasma!!!
+	var/silver_per_point = 3 // points per plasma!!!
+
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
 	//control
 	var/ordernum
@@ -232,6 +238,10 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		if(!shuttle)	return
 
 		var/plasma_count = 0
+		var/uranium_count = 0
+		var/diamond_count = 0
+		var/gold_count = 0
+		var/silver_count = 0
 		var/crate_count = 0
 
 		centcom_message = ""
@@ -289,11 +299,38 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
+					// Sell Uranium
+					if(istype(A, /obj/item/stack/sheet/mineral/uranium))
+						var/obj/item/stack/sheet/mineral/uranium/P = A
+						uranium_count += P.amount
+					// Sell Diamond
+					if(istype(A, /obj/item/stack/sheet/mineral/diamond))
+						var/obj/item/stack/sheet/mineral/diamond/P = A
+						diamond_count += P.amount
+					// Sell Gold
+					if(istype(A, /obj/item/stack/sheet/mineral/gold))
+						var/obj/item/stack/sheet/mineral/gold/P = A
+						gold_count += P.amount
+					// Sell Silver
+					if(istype(A, /obj/item/stack/sheet/mineral/silver))
+						var/obj/item/stack/sheet/mineral/silver/P = A
+						silver_count += P.amount
 			del(MA)
 
+		var/totalpoints
 		if(plasma_count)
-			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
-			points += round(plasma_count / plasma_per_point)
+			totalpoints += (plasma_count * plasma_per_point)
+		if(uranium_count)
+			totalpoints += (uranium_count * uranium_per_point)
+		if(diamond_count)
+			totalpoints += (diamond_count * diamond_per_point)
+		if(gold_count)
+			totalpoints += (gold_count * gold_per_point)
+		if(silver_count)
+			totalpoints += (silver_count * silver_per_point)
+
+			centcom_message += "<font color=green>+[round(totalpoints)]</font>: Received [plasma_count] units of exotic material.<BR>"
+			points += round(totalpoints)
 
 		if(crate_count)
 			centcom_message += "<font color=green>+[round(crate_count*points_per_crate)]</font>: Received [crate_count] crates.<BR>"

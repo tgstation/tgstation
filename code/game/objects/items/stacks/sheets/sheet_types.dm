@@ -90,6 +90,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	null, \
 	new/datum/stack_recipe("recharger", /obj/machinery/recharger, 1, time = 10, one_per_turf = 1, on_floor = 1, on_wall = 1), \
+	new/datum/stack_recipe("reinforced table", /obj/structure/table/reinforced, 2), \
 	null, \
 	new/datum/stack_recipe("firelock door", /obj/machinery/door/firedoor, 4, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("firelock small door", /obj/machinery/door/firedoor/border_only, 4, time = 20, one_per_turf = 1, on_floor = 1), \
