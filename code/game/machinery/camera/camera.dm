@@ -177,6 +177,7 @@
 	else if (iscrowbar(W) && panel_open && src.hasbug)
 		user << "\blue You retrieve \the [hasbug]"
 		user.put_in_hands(hasbug)
+		contents -= hasbug
 		hasbug = null
 		deactivatebug(user)
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.

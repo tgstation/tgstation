@@ -60,12 +60,22 @@
 
 /obj/structure/closet/walllocker/defiblocker/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon/ai)) return
+	if(istype(user, /mob/living/silicon/robot))
+		if(!amount)
+			usr << "<spawn class='notice'>It's empty."
+			return
+		else
+			usr << "<spawn class='notice'>You pull out an emergency defibrilator from \the [src]."
+			new /obj/item/weapon/melee/defibrilator(src.loc)
+			amount = 0
+			update_icon()
 	if(!amount)
 		usr << "<spawn class='notice'>It's empty."
 		return
 	if(amount)
 		usr << "<spawn class='notice'>You take out an emergency defibrilator from \the [src]."
-		new /obj/item/weapon/melee/defibrilator(src.loc)
+		//new /obj/item/weapon/melee/defibrilator(src.loc)
+		usr.put_in_hands(new /obj/item/weapon/melee/defibrilator())
 		amount = 0
 		update_icon()
 	return
