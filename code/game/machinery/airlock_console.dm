@@ -7,8 +7,8 @@
 #define AIRLOCK_STATE_CONFIG		3
 
 obj/machinery/airlock_console
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_control_standby"
+	icon = 'icons/obj/airlock_console.dmi'
+	icon_state = "airlock_control_1"
 	name = "Airlock Console"
 	density = 0
 	var/tdir
@@ -22,6 +22,10 @@ obj/machinery/airlock_console
 	var/sanitize_external
 
 	power_channel = ENVIRON
+
+	//build
+	var/wired = 0
+	var/open = 1
 
 	//screen
 	var/page = 0
@@ -42,6 +46,8 @@ obj/machinery/airlock_console
 	var/interior_status
 	var/pump_status
 
+	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
+
 	New(turf/loc, var/ndir, var/building=0)
 		..()
 		if (building)
@@ -55,14 +61,28 @@ obj/machinery/airlock_console
 			pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
 			anchored = 1
 
+		// Sets up a spark system
+		spark_system = new /datum/effect/effect/system/spark_spread
+		spark_system.set_up(5, 0, src)
+		spark_system.attach(src)
+
 	update_icon()
-		if(formatted || parent)
-			if(processing)
-				icon_state = "airlock_control_process"
+		if(open)
+			if(!wired)
+				icon_state = "airlock_control_1"
 			else
-				icon_state = "airlock_control_standby"
+				icon_state = "airlock_control_2"
 		else
-			icon_state = "airlock_control_off"
+			if(!wired)
+				icon_state = "airlock_control_off"
+			else
+				if(formatted || parent)
+					if(processing)
+						icon_state = "airlock_control_process"
+					else
+						icon_state = "airlock_control_standby"
+				else
+					icon_state = "airlock_control_off"
 
 	proc/airlockState()
 		if(!formatted)	//is activated?
@@ -108,8 +128,13 @@ obj/machinery/airlock_console
 		var/dat = ""
 		var/sclosed = "border:2px solid DarkRed;background-color:red"
 		var/sopen = "border:2px solid DarkGreen;background-color:green"
+		if(!wired)
+			return
+		if(wired && open && (page == 2))
+			page = 0
 		if(formatted || parent)
-			page = 2
+			if(!open)
+				page = 2
 		update_icon()
 		switch(page)	//This is the basic configuration page
 			if(0)
@@ -214,7 +239,7 @@ obj/machinery/airlock_console
 					state = parent.state
 
 				dat += text("<h3>Control Console</h3>")
-				dat += text("[parent? "<span class='Good'>SLAVE CONSOLE</span>": ""]")
+				dat += "[parent? "<p><span class='Good'>Slaved</span>: [parent]</p>": ""]"
 				dat += text("<table width='100%'>")
 
 				switch(state)
@@ -305,6 +330,63 @@ obj/machinery/airlock_console
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 		return
+
+	attackby(obj/item/weapon/W, mob/user)
+		if(..(user))
+			return
+		src.add_fingerprint(usr)
+
+		var/mob/living/carbon/human/U = user
+		if (istype(W, /obj/item/weapon/screwdriver))
+			//close unit
+			user.visible_message(\
+				"[user] has [open? "closed" : "opened"] the [src]",\
+				"You [open? "close" : "open"] the [src].")
+			open = !open
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			update_icon()
+			return
+
+		else if(istype(W, /obj/item/weapon/cable_coil))
+			if(open && !wired)
+				//add wires
+				var/obj/item/weapon/cable_coil/C = W
+				if(C.amount < 1)
+					user << "\red You need more wires."
+					return
+				C.use(1)
+				wired = 1
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				user.visible_message(\
+					"[user] has wired the [src]",\
+					"You wire the [src].")
+				update_icon()
+			return
+
+		else if(istype(W, /obj/item/weapon/wirecutters))
+			if(open && wired)
+				var/siemens_coeff = 1
+				if(!istype(user))
+					return
+
+				//Has gloves?
+				if(U.gloves)
+					var/obj/item/clothing/gloves/G = U.gloves
+					siemens_coeff = G.siemens_coefficient
+
+					if((siemens_coeff > 0) && !(stat & (NOPOWER|BROKEN)))
+						U.electrocute_act(10, src,1,1)//The last argument is a safety for the human proc that checks for gloves.
+						src.spark_system.start() // creates some sparks because they look cool
+					else
+						//remove wires
+						wired = 0
+						user.visible_message(\
+							"[user] has unwired the [src]",\
+							"You unwire the [src].")
+						playsound(src.loc, 'sound/items/wirecutter.ogg', 50, 1)
+						update_icon()
+						new /obj/item/weapon/cable_coil( get_turf(src.loc), 1 )
+			return
 
 	Topic(href, href_list)
 		if(..())
@@ -436,7 +518,7 @@ obj/machinery/airlock_console
 		if(parent)
 			state = parent.state
 			target_state = parent.target_state
-		if(formatted)	//if no sensor, leave
+		if(formatted && wired)	//if no sensor, leave
 			while(process_again)
 				src.updateUsrDialog()
 				process_again = 0
@@ -538,8 +620,8 @@ obj/machinery/airlock_console
 ###################
 */
 obj/machinery/airlock_sensor_wired
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_sensor_off"
+	icon = 'icons/obj/airlock_console.dmi'
+	icon_state = "airlock_sensor_open"
 	name = "airlock sensor (wired)"
 
 	anchored = 1
@@ -553,6 +635,10 @@ obj/machinery/airlock_sensor_wired
 	var/parent
 	var/idle = 1
 	var/tdir
+	var/open = 1
+	var/wired = 0
+
+	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
 
 	New(turf/loc, var/ndir, var/building=0)
 		..()
@@ -566,14 +652,82 @@ obj/machinery/airlock_sensor_wired
 			pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 			pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
 
+		// Sets up a spark system
+		spark_system = new /datum/effect/effect/system/spark_spread
+		spark_system.set_up(5, 0, src)
+		spark_system.attach(src)
+
 	update_icon()
-		if(on)
-			if(alert)
-				icon_state = "airlock_sensor_alert"
+		if(open)
+			if(wired)
+				icon_state = "airlock_sensor_wired"
 			else
-				icon_state = "airlock_sensor_standby"
+				icon_state = "airlock_sensor_open"
 		else
-			icon_state = "airlock_sensor_off"
+			if(on)
+				if(alert)
+					icon_state = "airlock_sensor_alert"
+				else
+					icon_state = "airlock_sensor_standby"
+			else
+				icon_state = "airlock_sensor_off"
+
+	attackby(obj/item/weapon/W, mob/user)
+		if(..(user))
+			return
+		src.add_fingerprint(usr)
+
+		var/mob/living/carbon/human/U = user
+		if (istype(W, /obj/item/weapon/screwdriver))
+			//close unit
+			user.visible_message(\
+				"[user] has [open? "closed" : "opened"] the [src]",\
+				"You [open? "close" : "open"] the [src].")
+			open = !open
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			update_icon()
+			return
+
+		else if(istype(W, /obj/item/weapon/cable_coil))
+			if(open && !wired)
+				//add wires
+				var/obj/item/weapon/cable_coil/C = W
+				if(C.amount < 1)
+					user << "\red You need more wires."
+					return
+				C.use(1)
+				wired = 1
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				user.visible_message(\
+					"[user] has wired the [src]",\
+					"You wire the [src].")
+				update_icon()
+			return
+
+		else if(istype(W, /obj/item/weapon/wirecutters))
+			if(open && wired)
+				var/siemens_coeff = 1
+				if(!istype(user))
+					return
+
+				//Has gloves?
+				if(U.gloves)
+					var/obj/item/clothing/gloves/G = U.gloves
+					siemens_coeff = G.siemens_coefficient
+
+					if((siemens_coeff > 0) && !(stat & (NOPOWER|BROKEN)))
+						U.electrocute_act(10, src,1,1)//The last argument is a safety for the human proc that checks for gloves.
+						src.spark_system.start() // creates some sparks because they look cool
+					else
+						//remove wires
+						wired = 0
+						user.visible_message(\
+							"[user] has unwired the [src]",\
+							"You unwire the [src].")
+						playsound(src.loc, 'sound/items/wirecutter.ogg', 50, 1)
+						update_icon()
+						new /obj/item/weapon/cable_coil( get_turf(src.loc), 1 )
+			return
 
 	process()
 		if(on)

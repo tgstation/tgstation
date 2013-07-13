@@ -43,6 +43,8 @@
 var/mining_shuttle_tickstomove = 10
 var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
+var/targetArea = /area/shuttle/explorer/outpost/location1
+var/targetNum = 1
 
 proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
@@ -51,11 +53,11 @@ proc/move_mining_shuttle()
 		var/area/fromArea
 		var/area/toArea
 		if (mining_shuttle_location == 1)
-			fromArea = locate(/area/shuttle/mining/outpost)
-			toArea = locate(/area/shuttle/mining/station)
+			fromArea = locate(targetArea)
+			toArea = locate(/area/shuttle/explorer/station)
 		else
-			fromArea = locate(/area/shuttle/mining/station)
-			toArea = locate(/area/shuttle/mining/outpost)
+			fromArea = locate(/area/shuttle/explorer/station)
+			toArea = locate(targetArea)
 			for(var/obj/machinery/door/airlock/special/D in world)
 				if(D.id_tag == "mining_shuttle_airlock")
 					D.close()
@@ -127,7 +129,12 @@ proc/move_mining_shuttle()
 		return
 	src.add_fingerprint(usr)
 	var/dat
-	dat = text("<center><A href='?src=\ref[src];move=[1]'>Send Mining Shuttle</A></center>")
+	//var/tgt_dat = text("<center><span class='Good'>Targeted [locate(targetArea)]</span></center>")
+	dat = text("<center><A href='?src=\ref[src];move=[1]'>[mining_shuttle_location? "Return to Station" : "Head to Target"]</A></center>")
+	dat += text("<center><A href='?src=\ref[src];target=[1]'>Target [locate(/area/shuttle/explorer/outpost/location1)]</A></center>")
+	dat += text("<center><A href='?src=\ref[src];target=[2]'>Target [locate(/area/shuttle/explorer/outpost/location2)]</A></center>")
+	dat += text("<center><A href='?src=\ref[src];target=[3]'>Target [locate(/area/shuttle/explorer/outpost/location3)]</A></center>")
+	dat += text("<center><A href='?src=\ref[src];target=[4]'>Target [locate(/area/shuttle/explorer/outpost/location4)]</A></center>")
 	//user << browse("[dat]", "window=miningshuttle;size=200x100")
 	var/datum/browser/popup = new(user, "miningshuttle", name, 200, 140)
 	popup.set_content(dat)
@@ -150,6 +157,24 @@ proc/move_mining_shuttle()
 			move_mining_shuttle()
 		else
 			usr << "\blue Shuttle is already moving."
+	if(href_list["target"])
+		switch(text2num(href_list["target"]))
+			if(1)
+				targetArea = /area/shuttle/explorer/outpost/location1
+				usr << "\blue Target set to [locate(targetArea)]."
+			if(2)
+				targetArea = /area/shuttle/explorer/outpost/location2
+				usr << "\blue Target set to [locate(targetArea)]."
+			if(3)
+				targetArea = /area/shuttle/explorer/outpost/location3
+				usr << "\blue Target set to [locate(targetArea)]."
+			if(4)
+				targetArea = /area/shuttle/explorer/outpost/location4
+				usr << "\blue Target set to [locate(targetArea)]."
+		targetNum = text2num(href_list["target"])
+		src.updateUsrDialog()
+	return
+
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 

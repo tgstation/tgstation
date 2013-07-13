@@ -125,6 +125,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
+
 	//shuttle movement
 	var/at_station = 0
 	var/movetime = 1200
@@ -414,10 +415,16 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		<BR>\n<A href='?src=\ref[src];order=1'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
 		<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
-		<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+		<A href='?src=\ref[user];close=1'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=575x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "logistics", "Supply shuttle", 575, 450)
+
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+
+	//user << browse(dat, "window=computer;size=575x450")
+	//onclose(user, "computer")
 	return
 
 /obj/machinery/computer/ordercomp/Topic(href, href_list)
@@ -428,12 +435,19 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		usr.set_machine(src)
 
 	if(href_list["order"])
-		temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
+		temp = "<h3>Supply Status</h3>"
+		temp += "Supply points: [supply_shuttle.points]"
+		temp += "<h3>Requisition</h3>"
+		temp += "<table width='100%'>"
 		for(var/supply_name in supply_shuttle.supply_packs )
 			var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
-			if(N.hidden || N.contraband) continue																	//Have to send the type instead of a reference to
-			temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"    //the obj because it would get caught by the garbage
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			if(N.class)
+				temp += text("<tr><td>[supply_name]</br></td></tr>")
+			else
+				if(N.hidden || N.contraband) continue																	//Have to send the type instead of a reference to
+				temp += text("<tr><td><A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A></td><td>Cost: [N.cost]</td></tr>")    //the obj because it would get caught by the garbage
+		temp += text("</table>")
+		temp += text("<A href='?src=\ref[src];mainmenu=1'>OK</A>")
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
@@ -504,6 +518,9 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	else if (href_list["mainmenu"])
 		temp = null
 
+	else if (href_list["close"])
+		usr << browse(null, "window=logistics")
+
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
@@ -528,11 +545,17 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 		[supply_shuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
-		\n<A href='?src=\ref[user];mach_close=computer'>Close</A><BR>
+		\n<A href='?src=\ref[user];close=1'>Close</A><BR>
 		<HR>\n<B>Central Command messages</B><BR> [supply_shuttle.centcom_message ? supply_shuttle.centcom_message : "Glory to Nanotrasen."]"}
 
-	user << browse(dat, "window=computer;size=700x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "logistics", "Supply shuttle", 700, 450)
+
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+
+	//user << browse(dat, "window=computer;size=700x450")
+	//onclose(user, "computer")
 	return
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
@@ -601,14 +624,20 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 
 	else if (href_list["order"])
 		if(supply_shuttle.moving) return
-		temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
-
+		temp = "<h3>Supply Status</h3>"
+		temp += "Supply points: [supply_shuttle.points]"
+		temp += "<h3>Requisition</h3>"
+		temp += "<table width='100%'>"
 		for(var/supply_name in supply_shuttle.supply_packs )
 			var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
-			if(N.hidden && !hacked) continue
-			if(N.contraband && !can_order_contraband) continue
-			temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"    //the obj because it would get caught by the garbage
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			if(N.class)
+				temp += text("<tr><td>[supply_name]</td></tr>")
+			else
+				if(N.hidden && !hacked) continue
+				if(N.contraband && !can_order_contraband) continue														//Have to send the type instead of a reference to
+				temp += text("<tr><td><A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A></td><td>Cost: [N.cost]</td></tr>")    //the obj because it would get caught by the garbage
+		temp += text("</table>")
+		temp += text("<A href='?src=\ref[src];mainmenu=1'>OK</A>")
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
@@ -728,6 +757,9 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 
 	else if (href_list["mainmenu"])
 		temp = null
+
+	else if (href_list["close"])
+		usr << browse(null, "window=logistics")
 
 	add_fingerprint(usr)
 	updateUsrDialog()

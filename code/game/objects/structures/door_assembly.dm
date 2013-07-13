@@ -387,7 +387,7 @@ obj/structure/door_assembly
 					typetext = "maintenance"
 					icontext = "mai"
 				if("External")
-					typetext = "external"
+					typetext = "special"
 					icontext = "ext"
 				if("High Security")
 					typetext = "highsecurity"

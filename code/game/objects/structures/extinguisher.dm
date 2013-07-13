@@ -7,6 +7,25 @@
 	density = 0
 	var/obj/item/weapon/extinguisher/has_extinguisher = new/obj/item/weapon/extinguisher
 	var/opened = 0
+	var/tdir
+
+/obj/structure/extinguisher_cabinet/created
+	has_extinguisher = null
+	opened = 1
+	icon_state = "extinguisher_empty"
+
+	New(turf/loc, var/ndir, var/building=0)
+		..()
+		if (building)
+			// offset 24 pixels in direction of dir
+			// this allows the APC to be embedded in a wall, yet still inside an area
+			dir = ndir
+			src.tdir = dir		// to fix Vars bug
+			dir = SOUTH
+
+			pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
+			pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+
 
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)

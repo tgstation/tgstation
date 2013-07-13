@@ -4,5 +4,5 @@ Chief Science Officer=1
 Chief Engineer=1
 
 Command Officer=10
-Scientist=15
-Engineer=15
+Scientist=25
+Engineer=25
