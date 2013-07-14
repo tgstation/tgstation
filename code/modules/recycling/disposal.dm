@@ -39,6 +39,10 @@
 			//gas.volume = 1.05 * CELLSTANDARD
 			update()
 
+	Del()
+		for(var/atom/movable/AM in contents)
+			AM.loc = src.loc
+		..()
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
