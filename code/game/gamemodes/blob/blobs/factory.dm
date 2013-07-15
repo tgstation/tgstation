@@ -56,6 +56,9 @@
 		..()
 		adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 
+	blob_act()
+		return
+
 	New(loc, var/obj/effect/blob/factory/linked_node)
 		if(istype(linked_node))
 			factory = linked_node
