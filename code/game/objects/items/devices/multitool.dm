@@ -41,15 +41,19 @@
 		return
 
 	var/found_eye = 0
+	var/turf/our_turf = get_turf(src)
 
-	for(var/mob/camera/aiEye/A in living_mob_list)
+	if(cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
 
-		var/turf/our_turf = get_turf(src)
-		var/turf/eye_turf = get_turf(A)
+		var/datum/camerachunk/chunk = cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
 
-		if(get_dist(our_turf, eye_turf) < 8)
-			found_eye = 1
-			break
+		if(chunk)
+			if(chunk.seenby.len)
+				for(var/mob/camera/aiEye/A in chunk.seenby)
+					var/turf/eye_turf = get_turf(A)
+					if(get_dist(our_turf, eye_turf) < 8)
+						found_eye = 1
+						break
 
 	if(found_eye)
 		icon_state = "[initial(icon_state)]_red"
