@@ -94,7 +94,7 @@
 
 
 	B.change_to(/obj/effect/blob/resource)
-	var/obj/effect/blob/resource/R = locate(/obj/effect/blob/resource)
+	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
 		R.overmind = src
 
