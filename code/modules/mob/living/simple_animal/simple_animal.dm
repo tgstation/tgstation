@@ -457,6 +457,8 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
+	if(health < 1)
+		Die()
 
 /mob/living/simple_animal/proc/SA_attackable(target)
 	if (isliving(target))
