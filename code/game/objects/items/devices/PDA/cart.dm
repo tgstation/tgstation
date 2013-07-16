@@ -60,8 +60,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/beepsky(src)
+			radio = new /obj/item/radio/integrated/beepsky(src)
 
 	detective
 		name = "D.E.T.E.C.T. Cartridge"
@@ -72,8 +71,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/beepsky(src)
+			radio = new /obj/item/radio/integrated/beepsky(src)
 
 	janitor
 		name = "CustodiPRO Cartridge"
@@ -117,8 +115,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/signal(src)
+			radio = new /obj/item/radio/integrated/signal(src)
 
 
 
@@ -130,8 +127,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/mule(src)
+			radio = new /obj/item/radio/integrated/mule(src)
 
 	head
 		name = "Easy-Record DELUXE"
@@ -150,8 +146,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/mule(src)
+			radio = new /obj/item/radio/integrated/mule(src)
 
 	hos
 		name = "R.O.B.U.S.T. DELUXE"
@@ -162,8 +157,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/beepsky(src)
+			radio = new /obj/item/radio/integrated/beepsky(src)
 
 	ce
 		name = "Power-On DELUXE"
@@ -191,8 +185,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/signal(src)
+			radio = new /obj/item/radio/integrated/signal(src)
 
 	captain
 		name = "Value-PAK Cartridge"
@@ -208,8 +201,7 @@
 
 		New()
 			..()
-			spawn(5)
-				radio = new /obj/item/radio/integrated/beepsky(src)
+			radio = new /obj/item/radio/integrated/beepsky(src)
 
 	syndicate
 		name = "Detomatix Cartridge"
