@@ -24,9 +24,9 @@
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
 
 	//Interaction
-	var/response_help   = "You try to help"
-	var/response_disarm = "You try to disarm"
-	var/response_harm   = "You try to hurt"
+	var/response_help   = "pokes"
+	var/response_disarm = "shoves"
+	var/response_harm   = "hits"
 	var/harm_intent_damage = 3
 
 	//Temperature effect
@@ -217,6 +217,11 @@
 			new meat_type(src.loc)
 	..()
 
+
+/mob/living/simple_animal/blob_act()
+	adjustBruteLoss(20)
+	return
+
 /mob/living/simple_animal/say_quote(var/text)
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
@@ -225,6 +230,8 @@
 	return "says, \"[text]\"";
 
 /mob/living/simple_animal/emote(var/act)
+	if(stat)
+		return
 	if(act)
 		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
 		for (var/mob/O in viewers(src, null))
@@ -368,22 +375,32 @@
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
-					adjustBruteLoss(-MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						del(MED)
-					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies [MED] on [src]")
+					if(MED.heal_brute >= 1)
+						adjustBruteLoss(-MED.heal_brute)
+						MED.amount -= 1
+						if(MED.amount <= 0)
+							del(MED)
+						for(var/mob/M in viewers(src, null))
+							if ((M.client && !( M.blinded )))
+								M.show_message("\blue [user] applies [MED] on [src]")
+						return
+					else
+						user << "\blue [MED] won't help at all."
+						return
+			else
+				user << "\blue [src] is at full health."
+				return
 		else
 			user << "\blue [src] is dead, medical items won't bring it back to life."
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+			return
+	else if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
 			if(prob(95))
 				del(src)
 				return
 			gib()
+			return
 	else
 		if(O.force)
 			var/damage = O.force
@@ -441,13 +458,13 @@
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
 
-/mob/living/simple_animal/proc/SA_attackable(target_mob)
-	if (isliving(target_mob))
-		var/mob/living/L = target_mob
+/mob/living/simple_animal/proc/SA_attackable(target)
+	if (isliving(target))
+		var/mob/living/L = target
 		if(!L.stat)
-			return (0)
-	if (istype(target_mob,/obj/mecha))
-		var/obj/mecha/M = target_mob
+			return 0
+	if (istype(target,/obj/mecha))
+		var/obj/mecha/M = target
 		if (M.occupant)
-			return (0)
-	return (1)
+			return 0
+	return 1

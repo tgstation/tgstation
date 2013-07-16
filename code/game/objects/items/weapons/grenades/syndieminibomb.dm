@@ -6,8 +6,7 @@
 	item_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
-	prime()
-		explosion(src.loc,1,2,4)
-		del(src)
-
-		return
+/obj/item/weapon/grenade/syndieminibomb/prime()
+	update_mob()
+	explosion(src.loc,1,2,4)
+	del(src)

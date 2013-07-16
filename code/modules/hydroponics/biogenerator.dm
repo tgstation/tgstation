@@ -87,19 +87,19 @@
 					dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
 					dat += "<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>"
 					dat += "Food<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=milk;cost=20'>10 milk</A> <FONT COLOR=blue>(20)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=meat;cost=50'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=milk'>10 milk</A> <FONT COLOR=blue>(20)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=meat'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT><BR>"
 					dat += "Nutrient<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=ez;cost=10'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT> | <A href='?src=\ref[src];action=create;item=ez5;cost=50'>x5</A><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=l4z;cost=20'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5;cost=100'>x5</A><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=rh;cost=25'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5;cost=125'>x5</A><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=ez'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT> | <A href='?src=\ref[src];action=create;item=ez5'>x5</A><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=l4z'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5'>x5</A><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=rh'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5'>x5</A><BR>"
 					dat += "Leather<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=wallet;cost=100'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=gloves;cost=250'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=tbelt;cost=300'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=satchel;cost=400'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"
 					//dat += "Other<BR>"
-					//dat += "<A href='?src=\ref[src];action=create;item=monkey;cost=500'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
+					//dat += "<A href='?src=\ref[src];action=create;item=monkey'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
 				else
 					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
 			if("nopoints")
@@ -146,54 +146,74 @@
 		menustat = "void"
 	return
 
-/obj/machinery/biogenerator/proc/create_product(var/item,var/cost)
-	if(cost > points)
+/obj/machinery/biogenerator/proc/check_cost(var/cost)
+	if (cost > points)
 		menustat = "nopoints"
+		return 1
+	else
+		points -= cost
+		processing = 1
+		update_icon()
+		updateUsrDialog()
+		sleep(30)
 		return 0
-	processing = 1
-	update_icon()
-	updateUsrDialog()
-	points -= cost
-	sleep(30)
+
+/obj/machinery/biogenerator/proc/create_product(var/item)
 	switch(item)
 		if("milk")
-			beaker.reagents.add_reagent("milk",10)
+			if (check_cost(20)) return 0
+			else beaker.reagents.add_reagent("milk",10)
 		if("meat")
-			new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+			if (check_cost(50)) return 0
+			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("ez")
-			new/obj/item/nutrient/ez(src.loc)
+			if (check_cost(10)) return 0
+			else new/obj/item/nutrient/ez(src.loc)
 		if("l4z")
-			new/obj/item/nutrient/l4z(src.loc)
+			if (check_cost(20)) return 0
+			else new/obj/item/nutrient/l4z(src.loc)
 		if("rh")
-			new/obj/item/nutrient/rh(src.loc)
+			if (check_cost(25)) return 0
+			else new/obj/item/nutrient/rh(src.loc)
 		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
-			new/obj/item/nutrient/ez(src.loc)
-			new/obj/item/nutrient/ez(src.loc)
-			new/obj/item/nutrient/ez(src.loc)
-			new/obj/item/nutrient/ez(src.loc)
-			new/obj/item/nutrient/ez(src.loc)
+			if (check_cost(50)) return 0
+			else
+				new/obj/item/nutrient/ez(src.loc)
+				new/obj/item/nutrient/ez(src.loc)
+				new/obj/item/nutrient/ez(src.loc)
+				new/obj/item/nutrient/ez(src.loc)
+				new/obj/item/nutrient/ez(src.loc)
 		if("l4z5")
-			new/obj/item/nutrient/l4z(src.loc)
-			new/obj/item/nutrient/l4z(src.loc)
-			new/obj/item/nutrient/l4z(src.loc)
-			new/obj/item/nutrient/l4z(src.loc)
-			new/obj/item/nutrient/l4z(src.loc)
+			if (check_cost(100)) return 0
+			else
+				new/obj/item/nutrient/l4z(src.loc)
+				new/obj/item/nutrient/l4z(src.loc)
+				new/obj/item/nutrient/l4z(src.loc)
+				new/obj/item/nutrient/l4z(src.loc)
+				new/obj/item/nutrient/l4z(src.loc)
 		if("rh5")
-			new/obj/item/nutrient/rh(src.loc)
-			new/obj/item/nutrient/rh(src.loc)
-			new/obj/item/nutrient/rh(src.loc)
-			new/obj/item/nutrient/rh(src.loc)
-			new/obj/item/nutrient/rh(src.loc)
+			if (check_cost(125)) return 0
+			else
+				new/obj/item/nutrient/rh(src.loc)
+				new/obj/item/nutrient/rh(src.loc)
+				new/obj/item/nutrient/rh(src.loc)
+				new/obj/item/nutrient/rh(src.loc)
+				new/obj/item/nutrient/rh(src.loc)
 		if("wallet")
-			new/obj/item/weapon/storage/wallet(src.loc)
+			if (check_cost(100)) return 0
+			else new/obj/item/weapon/storage/wallet(src.loc)
 		if("gloves")
-			new/obj/item/clothing/gloves/botanic_leather(src.loc)
+			if (check_cost(250)) return 0
+			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("tbelt")
-			new/obj/item/weapon/storage/belt/utility(src.loc)
+			if (check_cost(300)) return 0
+			else new/obj/item/weapon/storage/belt/utility(src.loc)
 		if("satchel")
-			new/obj/item/weapon/storage/backpack/satchel(src.loc)
-		if("monkey")
-			new/mob/living/carbon/monkey(src.loc)
+			if (check_cost(400)) return 0
+			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
+		//if("monkey")
+		//	if (check_cost(500)) return 0
+		//	else new/mob/living/carbon/monkey(src.loc)
 	processing = 0
 	menustat = "complete"
 	update_icon()
