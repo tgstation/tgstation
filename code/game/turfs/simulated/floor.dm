@@ -531,3 +531,8 @@ turf/simulated/floor/proc/update_icon()
 					broken = 0
 				else
 					user << "\blue You need more welding fuel to complete this task."
+	if(istype(C,/obj/item/weapon/scythe))
+		var/obj/effect/spacevine/vine = locate() in src
+		if(vine)
+			vine.attackby(C,user)
+			return
