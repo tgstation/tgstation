@@ -212,7 +212,7 @@
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
 
-	summon_type = "/obj/structure/statue"
+	summon_type = "/obj/structure/closet/statue"
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
