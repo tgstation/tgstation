@@ -65,10 +65,11 @@ obj
 
 			//get location and check if it is in a proper ZAS zone
 			var/turf/simulated/floor/S = loc
-			if(!S.zone)
-				del src
 
 			if(!istype(S))
+				del src
+
+			if(!S.zone)
 				del src
 
 			var/datum/gas_mixture/air_contents = S.return_air()
