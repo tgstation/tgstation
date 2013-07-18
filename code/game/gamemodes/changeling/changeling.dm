@@ -294,6 +294,5 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorbedcount++ //all that done, let's increment the objective counter.
 
 /datum/changeling/proc/shuffle_dna()//boots out the stalest DNA.
-	for(var/i = 2; i<=dna_max; i++)
-		absorbed_dna[i-1] = absorbed_dna[i]
-	absorbed_dna.Remove(absorbed_dna[dna_max])
+	if(absorbed_dna.len)
+		absorbed_dna.Cut(1,2)
