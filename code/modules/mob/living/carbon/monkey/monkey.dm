@@ -160,7 +160,7 @@
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
-				if (M == src)
+				if (M == src || anchored)
 					return
 
 				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
@@ -230,7 +230,7 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
