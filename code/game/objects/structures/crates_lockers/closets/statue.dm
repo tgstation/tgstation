@@ -117,13 +117,12 @@
 			M.meteorhit(O)
 			shatter(M)
 
-/obj/structure/closet/statue/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/))
-		health -= W.force
-		visible_message("\red [user] strikes [src] with [W].")
-		if(health <= 0)
-			for(var/mob/M in src)
-				shatter(M)
+/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
+	health -= I.force
+	visible_message("\red [user] strikes [src] with [I].")
+	if(health <= 0)
+		for(var/mob/M in src)
+			shatter(M)
 
 /obj/structure/closet/statue/place()
 	return

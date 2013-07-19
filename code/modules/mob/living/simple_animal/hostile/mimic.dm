@@ -144,10 +144,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
-		if(/obj/structure/closet/statue in contents)
-			return
-		else
-			Die()
+		Die()
 
 /mob/living/simple_animal/hostile/mimic/copy/Die()
 
