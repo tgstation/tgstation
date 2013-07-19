@@ -442,7 +442,8 @@ var/global/list/g_fancy_list_of_safe_types = null
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
 		var/obj/item/weapon/card/id/id = null
-		if(worn) id = worn.GetID()
+		if(worn)
+			id = worn.GetID()
 		if(id)
 			id.icon_state = "gold"
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
@@ -463,7 +464,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 					worn.update_icon()
 			else
 				H.equip_to_slot(id,slot_wear_id)
-				// otherwise leave it on the floor
+
 	else
 		alert("Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
