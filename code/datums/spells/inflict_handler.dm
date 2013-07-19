@@ -61,4 +61,4 @@
 		target.eye_blurry += amt_eye_blurry
 		//summoning
 		if(summon_type)
-			new summon_type(target.loc)
+			new summon_type(target.loc, target)
