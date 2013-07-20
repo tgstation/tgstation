@@ -7,9 +7,8 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	var/active = 1
 	var/health = 30
-	var/brute_resist = 5
+	var/brute_resist = 4
 	var/fire_resist = 1
 
 
@@ -107,7 +106,7 @@
 
 
 	ex_act(severity)
-		var/damage = 50
+		var/damage = 150
 		health -= ((damage/brute_resist) - (severity * 5))
 		update_icon()
 		return
@@ -154,6 +153,7 @@
 /obj/effect/blob/normal
 	icon_state = "blob"
 	luminosity = 0
+	health = 20
 
 	Delete()
 		src.loc = null
