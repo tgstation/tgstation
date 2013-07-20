@@ -34,6 +34,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
+	var/list/secondwords = list("travel","see","tech","destroy", "other", "hide")
 
 	var/list/objectives = list()
 
@@ -94,6 +95,7 @@
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
+		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
 		memoize_cult_objectives(cult_mind)
@@ -149,6 +151,12 @@
 		mob.update_icons()
 		return 1
 
+/datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
+	if (!word)
+		if(secondwords.len > 0)
+			word=pick(secondwords)
+			secondwords -= word
+			grant_runeword(cult_mob,word)
 
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if (!word)
