@@ -31,7 +31,7 @@ var/list/ai_list = list()
 	var/obj/item/device/multitool/aiMulti = null
 
 	//MALFUNCTION
-	var/datum/AI_Module/module_picker/malf_picker
+	var/datum/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
@@ -48,6 +48,7 @@ var/list/ai_list = list()
 	var/datum/trackable/track = null
 
 	var/last_paper_seen = null
+	var/can_shunt = 1
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
