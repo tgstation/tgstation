@@ -152,6 +152,7 @@
 #include "code\datums\spells\turf_teleport.dm"
 #include "code\datums\spells\wizard.dm"
 #include "code\datums\wires\airlock.dm"
+#include "code\datums\wires\alarm.dm"
 #include "code\datums\wires\apc.dm"
 #include "code\datums\wires\camera.dm"
 #include "code\datums\wires\explosive.dm"
