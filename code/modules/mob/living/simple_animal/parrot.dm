@@ -109,8 +109,6 @@ lines 294-301 in living/say.dm (speech buffer)
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
-	player_list += src
-
 	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
@@ -160,10 +158,11 @@ lines 294-301 in living/say.dm (speech buffer)
 			switch(remove_from)
 				if("ears")
 					if(ears)
-						if(available_channels.len)
-							src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-						else
-							src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+						if(!stat)
+							if(available_channels.len)
+								src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							else
+								src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
@@ -264,7 +263,7 @@ lines 294-301 in living/say.dm (speech buffer)
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-	if(M.melee_damage_upper > 0)
+	if(M.melee_damage_upper > 0 && !stat)
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = "parrot_fly"
@@ -704,7 +703,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 
 //parrots will eat crackers instead of dropping them
-	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (!drop_gently))
+	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (drop_gently))
 		del(held_item)
 		held_item = null
 		if(health < maxHealth)
