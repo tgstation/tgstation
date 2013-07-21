@@ -404,7 +404,7 @@ Auto Patrol: []"},
 	if(loc == patrol_target)		// reached target
 		at_patrol_target()
 		return
-
+	if(!path || !istype(path))  path = list()
 	else if(path.len > 0 && patrol_target)		// valid path
 
 		var/turf/next = path[1]
