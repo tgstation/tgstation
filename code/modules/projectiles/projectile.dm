@@ -113,10 +113,22 @@
 					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 					log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src.type]</font>")
 					msg_admin_attack("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
-
 		spawn(0)
 
 			if(A)
+				if(firer && istype(A, /obj/structure/stool/bed/chair/janicart))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
+					var/obj/structure/stool/bed/chair/janicart/JC = A
+					if(JC.buckled_mob)
+						var/mob/BM = JC.buckled_mob
+						if(istype(firer, /mob))
+							BM.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
+							firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
+							log_attack("<font color='red'>[firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src.type]</font>")
+							msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
+						else
+							BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src]</b>"
+							log_attack("<font color='red'>UNKNOWN shot [BM] ([BM.ckey]) with a [src.type]</font>")
+							msg_admin_attack("ATTACK: UNKNOWN shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
 				if (!forcedodge)
 					forcedodge = A.bullet_act(src, def_zone) // searches for return value
 				if(forcedodge == -1) // the bullet passes through a dense object!

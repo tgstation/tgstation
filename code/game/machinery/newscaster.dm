@@ -712,10 +712,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.scanned_user = text("[T.registered_name] ([T.assignment])")
 				src.screen=2*/  //Obsolete after autorecognition
 
-	if (src.isbroken)
+	if ((src.isbroken) && (istype(I, /obj/item/stack/sheet/glass)))
+		var/obj/item/stack/sheet/glass/stack = I
+		if ((stack.amount - 2) < 0)
+			user << "\red You need more glass to do that."
+		else
+			stack.use(2)
+			src.hitstaken = 0
+			src.isbroken = 0
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 1)
+
+	else if (src.isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
 			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+
 	else
 		if(istype(I, /obj/item/weapon) )
 			var/obj/item/weapon/W = I

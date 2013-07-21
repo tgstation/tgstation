@@ -54,11 +54,21 @@
 
 
 /obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
-	if(shattered)
+	if ((shattered) && (istype(I, /obj/item/stack/sheet/glass)))
+		var/obj/item/stack/sheet/glass/stack = I
+		if ((stack.amount - 2) < 0)
+			user << "\red You need more glass to do that."
+		else
+			stack.use(2)
+			shattered = 0
+			icon_state = "mirror"
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 1)
+
+	else if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 
-	if(prob(I.force * 2))
+	else if(prob(I.force * 2))
 		visible_message("<span class='warning'>[user] smashes [src] with [I]!</span>")
 		shatter()
 	else

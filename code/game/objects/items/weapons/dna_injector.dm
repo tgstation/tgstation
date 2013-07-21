@@ -86,12 +86,19 @@
 					inuse = 0
 				M.requests += O
 				if (dnatype == "se")
-					if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
-						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
-						log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
-					else
-	//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-						log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
+					if(!block)
+						if (isblockon(getblock(dna, 27,3),27) && istype(M, /mob/living/carbon/human) )
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+						else
+	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+							log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
+					else // Isolated injector
+						if (isblockon(getblock(dna, 1, 3), 1) && block == 27&& istype(M, /mob/living/carbon/human)  )
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
+						else
+							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 				else
 	//				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
@@ -109,7 +116,7 @@
 					user << "\red Apparently it didn't work."
 					return
 				if (dnatype == "se")
-					if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+					if (isblockon(getblock(dna, 27,3),27) && istype(M, /mob/living/carbon/human))
 						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 						log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 					else
