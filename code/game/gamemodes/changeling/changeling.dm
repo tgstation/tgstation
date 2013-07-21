@@ -96,14 +96,14 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
-	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
+	//OBJECTIVES - Always absorb at least 5 genomes, plus random traitor objectives.
 	//If they have two objectives as well as absorb, they must survive rather than escape
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(2, 3)
+	absorb_objective.gen_amount_goal(5, 8)
 	changeling.objectives += absorb_objective
 
 	var/datum/objective/assassinate/kill_objective = new
@@ -133,7 +133,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
 		changeling.current << "<B>\red You are a changeling!</B>"
-	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
+	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings.</b>"
 	changeling.current << "<B>You must complete the following tasks:</B>"
 
 	if (changeling.current.mind)
@@ -218,17 +218,19 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/absorbed_dna = list()
+	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/chem_charges = 20
-	var/chem_recharge_rate = 0.5
 	var/chem_storage = 50
-	var/sting_range = 1
+	var/chem_recharge_rate = 0.5
+	var/sting_range = 2
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
 	var/mimicing = ""
+	var/canrespec = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -241,6 +243,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
+	absorbed_dna.len = dna_max
+
 
 /datum/changeling/proc/regenerate()
 	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
@@ -254,3 +258,41 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			chosen_dna = DNA
 			break
 	return chosen_dna
+
+
+//Checks if the target DNA is valid and absorbable.
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
+	if(absorbed_dna[1] == U.dna)//If our current DNA is the stalest, we gotta ditch it.
+		U << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+		return 0
+
+	if(T)
+		if(NOCLONE in T.mutations || HUSK in T.mutations)
+			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
+			return 0
+
+		if(!ishuman(T))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+			U << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+			return 0
+
+		if(T.dna in absorbed_dna)
+			U << "<span class='warning'>We already have that DNA in storage.</span>"
+			return 0
+
+		if(!check_dna_integrity(T))
+			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
+			return 0
+
+	return 1
+
+
+//Absorbs the target DNA.
+/datum/changeling/proc/absorb_dna(mob/living/carbon/T)
+	shuffle_dna()
+	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
+	absorbed_dna |= T.dna //And add the target DNA to our absorbed list.
+	absorbedcount++ //all that done, let's increment the objective counter.
+
+/datum/changeling/proc/shuffle_dna()//boots out the stalest DNA.
+	if(absorbed_dna.len)
+		absorbed_dna.Cut(1,2)
