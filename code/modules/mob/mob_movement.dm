@@ -211,16 +211,16 @@
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
-	if(isobserver(mob))
-		return mob.Move(n,direct)
-	if(moving)
-		return 0
 	if(world.time < move_delay)
-		return 0
-	if(mob.stat == DEAD)
 		return 0
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
+	if(!isliving(mob))
+		return mob.Move(n,direct)
+	if(moving)
+		return 0
+	if(mob.stat == DEAD)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)	//Move though walls

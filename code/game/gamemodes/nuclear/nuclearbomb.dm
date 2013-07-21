@@ -6,7 +6,7 @@ var/bomb_set
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1
-	var/deployable = 0.0
+
 	var/extended = 0.0
 	var/timeleft = 60.0
 	var/timing = 0.0
@@ -28,19 +28,23 @@ var/bomb_set
 		src.timeleft--
 		if (src.timeleft <= 0)
 			explode()
+		else
+			playsound(loc, 'sound/items/timer.ogg', 5, 0)
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				src.attack_hand(M)
 	return
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
-	if (src.extended)
-		if (istype(I, /obj/item/weapon/disk/nuclear))
-			usr.drop_item()
-			I.loc = src
-			src.auth = I
-			src.add_fingerprint(user)
+	if (istype(I, /obj/item/weapon/disk/nuclear))
+		if (!src.extended)
+			user << "<span class='notice'>You have to deploy the bomb first.</span>"
 			return
+		usr.drop_item()
+		I.loc = src
+		src.auth = I
+		src.add_fingerprint(user)
+		return
 	..()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
@@ -68,22 +72,20 @@ var/bomb_set
 		dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
 		user << browse(dat, "window=nuclearbomb;size=300x400")
 		onclose(user, "nuclearbomb")
-	else if (src.deployable)
-		src.anchored = 1
-		flick("nuclearbombc", src)
-		src.icon_state = "nuclearbomb1"
-		src.extended = 1
+	else
+		user << "<span class='notice'>You have to deploy the bomb first.</span>"
 	return
 
 /obj/machinery/nuclearbomb/verb/make_deployable()
 	set category = "Object"
-	set name = "Make Deployable"
+	set name = "Deploy Bomb"
 	set src in oview(1)
 
-	if (src.deployable)
-		src.deployable = 0
-	else
-		src.deployable = 1
+	if (!src.extended)
+		src.anchored = 1
+		flick("nuclearbombc", src)
+		src.icon_state = "nuclearbomb1"
+		src.extended = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
 	..()

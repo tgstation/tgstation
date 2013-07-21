@@ -495,10 +495,10 @@
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
-	user << browse(dat, "window=mob[name];size=325x500")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=325x500")
+	onclose(user, "mob\ref[src]")
 
 /mob/living/carbon/Topic(href, href_list)
 	..()

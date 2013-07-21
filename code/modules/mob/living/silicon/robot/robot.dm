@@ -238,6 +238,9 @@
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
+	else
+		gib()
+		return 1
 	return 0
 
 /mob/living/silicon/robot/Stat()

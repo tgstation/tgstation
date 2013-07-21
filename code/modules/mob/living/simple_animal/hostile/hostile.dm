@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile
 	faction = "hostile"
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
-	var/mob/living/target_mob
+	var/target
 	var/attack_same = 0
 	var/ranged = 0
 	var/rapid = 0
@@ -32,63 +32,68 @@
 				continue
 			else
 				if(!L.stat)
-					stance = HOSTILE_STANCE_ATTACK
 					T = L
 					break
 
 		else if(istype(A, /obj/mecha)) // Our line of sight stuff was already done in ListTargets().
 			var/obj/mecha/M = A
 			if (M.occupant)
-				stance = HOSTILE_STANCE_ATTACK
 				T = M
 				break
 
 	return T
 
+/mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)
+	target = new_target
+	stance = HOSTILE_STANCE_ATTACK
+	return
+
+/mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay)
+	walk_to(src, target, 1, delay)
 
 /mob/living/simple_animal/hostile/proc/Found(var/atom/A)
 	return
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()
 	stop_automated_movement = 1
-	if(!target_mob || SA_attackable(target_mob))
-		stance = HOSTILE_STANCE_IDLE
-	if(target_mob in ListTargets())
+	if(!target || SA_attackable(target))
+		LoseTarget()
+	if(target in ListTargets())
 		if(ranged)
-			if(get_dist(src, target_mob) <= 6)
-				OpenFire(target_mob)
+			if(get_dist(src, target) <= 6)
+				OpenFire(target)
 			else
-				walk_to(src, target_mob, 1, move_to_delay)
+				Goto(target, move_to_delay)
 		else
 			stance = HOSTILE_STANCE_ATTACKING
-			walk_to(src, target_mob, 1, move_to_delay)
+			Goto(target, move_to_delay)
 
 /mob/living/simple_animal/hostile/proc/AttackTarget()
 
 	stop_automated_movement = 1
-	if(!target_mob || SA_attackable(target_mob))
+	if(!target || SA_attackable(target))
 		LoseTarget()
 		return 0
-	if(!(target_mob in ListTargets()))
+	if(!(target in ListTargets()))
 		LostTarget()
 		return 0
-	if(get_dist(src, target_mob) <= 1)	//Attacking
+	if(get_dist(src, target) <= 1)	//Attacking
 		AttackingTarget()
 		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
-	if(isliving(target_mob))
-		var/mob/living/L = target_mob
+	if(isliving(target))
+		var/mob/living/L = target
 		L.attack_animal(src)
 		return L
-	if(istype(target_mob,/obj/mecha))
-		var/obj/mecha/M = target_mob
+	if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
 		M.attack_animal(src)
 		return M
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	stance = HOSTILE_STANCE_IDLE
-	target_mob = null
+	target = null
 	walk(src, 0)
 
 /mob/living/simple_animal/hostile/proc/LostTarget()
@@ -125,7 +130,8 @@
 	if(!stat)
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
-				target_mob = FindTarget()
+				var/new_target = FindTarget()
+				GiveTarget(new_target)
 
 			if(HOSTILE_STANCE_ATTACK)
 				DestroySurroundings()
@@ -135,8 +141,8 @@
 				DestroySurroundings()
 				AttackTarget()
 
-/mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
-	var/target = target_mob
+/mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
+	var/target = the_target
 	visible_message("\red <b>[src]</b> fires at [target]!", 1)
 
 	var/tturf = get_turf(target)
@@ -159,7 +165,7 @@
 			new casingtype
 
 	stance = HOSTILE_STANCE_IDLE
-	target_mob = null
+	target = null
 	return
 
 

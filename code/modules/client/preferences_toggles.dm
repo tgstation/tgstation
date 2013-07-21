@@ -131,7 +131,7 @@
 
 var/list/ghost_forms = list("ghost","ghostking","ghostian2")
 /client/verb/pick_form()
-	set name = "Pick Ghost Form"
+	set name = "Choose Ghost Form"
 	set category = "Preferences"
 	set desc = "Choose your preferred ghostly appearance."
 	if(!is_content_unlocked())	return

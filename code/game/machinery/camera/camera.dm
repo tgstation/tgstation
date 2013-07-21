@@ -91,6 +91,7 @@
 	return
 
 /obj/machinery/camera/blob_act()
+	del(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(var/num = 7)
