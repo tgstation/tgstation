@@ -1110,9 +1110,12 @@ datum/mind
 		fail |= !ticker.mode.equip_revolutionary(current)
 
 
+/mob/proc/sync_mind()
+	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = 1		//indicates that the mind is currently synced with a client
 
 //Initialisation procs
-/mob/living/proc/mind_initialize()
+/mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key
 
@@ -1179,6 +1182,11 @@ datum/mind
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
+
+//BLOB
+/mob/camera/overmind/mind_initialize()
+	..()
+	mind.special_role = "Blob"
 
 //Animals
 /mob/living/simple_animal/mind_initialize()
