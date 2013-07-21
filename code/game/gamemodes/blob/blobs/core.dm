@@ -3,17 +3,18 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
 	health = 200
-	brute_resist = 2
 	fire_resist = 2
 	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
+	var/point_rate = 1
 
-	New(loc, var/h = 200, var/client/new_overmind = null)
+	New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 1)
 		blob_cores += src
 		processing_objects.Add(src)
 		if(!overmind)
 			create_overmind(new_overmind)
+		point_rate = new_rate
 		..(loc, h)
 
 
@@ -41,12 +42,12 @@
 		else
 			if(resource_delay <= world.time)
 				resource_delay = world.time + 10 // 1 second
-				overmind.add_points(2)
+				overmind.add_points(point_rate)
 		health = min(initial(health), health + 1)
 		for(var/i = 1; i < 8; i += i)
 			Pulse(0, i)
 		for(var/b_dir in alldirs)
-			if(!prob(10))
+			if(!prob(5))
 				continue
 			var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 			if(B)
