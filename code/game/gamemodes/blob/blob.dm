@@ -22,7 +22,6 @@ var/list/blob_nodes = list()
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
 
-	var/blob_count = 0
 	var/blobwincount = 500
 
 	var/list/infected_crew = list()
@@ -69,6 +68,34 @@ var/list/blob_nodes = list()
 	blob.current << "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"
 	return
 
+/datum/game_mode/blob/proc/show_message(var/message)
+	for(var/datum/mind/blob in infected_crew)
+		blob.current << message
+
+/datum/game_mode/blob/proc/burst_blobs()
+	for(var/datum/mind/blob in infected_crew)
+
+		var/client/blob_client = null
+		var/turf/location = null
+
+		if(iscarbon(blob.current))
+			var/mob/living/carbon/C = blob.current
+			if(directory[ckey(blob.key)])
+				blob_client = directory[ckey(blob.key)]
+				location = get_turf(C)
+				if(location.z != 1 || istype(location, /turf/space))
+					location = null
+				C.gib()
+
+
+		if(blob_client && location)
+			var/obj/effect/blob/core/core = new(location, 200, blob_client, 2)
+			if(core.overmind && core.overmind.mind)
+				core.overmind.mind.name = blob.name
+				infected_crew -= blob
+				infected_crew += core.overmind.mind
+
+
 /datum/game_mode/blob/post_setup()
 
 	for(var/datum/mind/blob in infected_crew)
@@ -91,42 +118,30 @@ var/list/blob_nodes = list()
 
 	spawn(0)
 
-		sleep(rand(waittime_l, waittime_h))
+		var/wait_time = rand(waittime_l, waittime_h)
+
+		sleep(wait_time)
 
 		send_intercept(0)
 
+		sleep(100)
 
-		sleep(rand(waittime_l, waittime_h))
+		show_message("<span class='alert'>You feel tired and bloated.</span>")
 
-		for(var/datum/mind/blob in infected_crew)
-			blob.current << "<span class='alert'>You feel like you are about to burst.</span>"
+		sleep(wait_time)
 
-		sleep(rand(waittime_l, waittime_h))
+		show_message("<span class='alert'>You feel like you are about to burst.</span>")
 
-		for(var/datum/mind/blob in infected_crew)
+		sleep(wait_time / 2)
 
-			var/client/blob_client = null
-			var/turf/location = null
-
-			if(iscarbon(blob.current))
-				var/mob/living/carbon/C = blob.current
-				if(directory[ckey(blob.key)])
-					blob_client = directory[ckey(blob.key)]
-					location = get_turf(C)
-					if(location.z != 1 || istype(location, /turf/space))
-						location = null
-					C.gib()
-
-
-			if(blob_client && location)
-				new /obj/effect/blob/core(location, 200, blob_client, 2)
+		burst_blobs()
 
 		// Stage 0
 		sleep(40)
 		stage(0)
 
 		// Stage 1
-		sleep(4000)
+		sleep(2000)
 		stage(1)
 
 	..()
