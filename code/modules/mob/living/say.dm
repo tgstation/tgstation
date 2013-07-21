@@ -294,7 +294,8 @@ var/list/department_radio_keys = list(
 		if("changeling")
 			if(mind && mind.changeling)
 				for(var/mob/Changeling in mob_list)
-					if((Changeling.mind && Changeling.mind.changeling) && !istype(Changeling, /mob/living/silicon) || istype(Changeling, /mob/dead/observer))
+					if(istype(Changeling, /mob/living/silicon)) return //WHY IS THIS NEEDED?
+					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
 						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
