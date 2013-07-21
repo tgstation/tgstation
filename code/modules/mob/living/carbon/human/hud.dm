@@ -337,23 +337,29 @@
 		return
 
 	client.screen -= hud_used.item_action_list
-	hud_used.item_action_list = list()
 
 	for(var/obj/item/I in src)
 		if(I.action_button_name)
-			var/obj/screen/item_action/A = new(hud_used)
+			if(hud_used.item_action_list.len < num)
+				var/obj/screen/item_action/N = new(hud_used)
+				hud_used.item_action_list += N
+
+			var/obj/screen/item_action/A = hud_used.item_action_list[num]
+
 			A.icon = ui_style2icon(client.prefs.UI_style)
 			A.icon_state = "template"
-			var/image/img = image(I.icon, I.icon_state)
+
+			A.overlays = list()
+			var/image/img = image(I.icon, A, I.icon_state)
 			img.pixel_x = 0
 			img.pixel_y = 0
 			A.overlays += img
-			if(I.action_button_name)
-				A.name = I.action_button_name
-			else
-				A.name = "Use [I.name]"
+
+			A.name = I.action_button_name
 			A.owner = I
-			hud_used.item_action_list += A
+
+			client.screen += hud_used.item_action_list[num]
+
 			switch(num)
 				if(1)
 					A.screen_loc = ui_action_slot1
@@ -367,5 +373,3 @@
 					A.screen_loc = ui_action_slot5
 					break //5 slots available, so no more can be added.
 			num++
-
-	client.screen += hud_used.item_action_list

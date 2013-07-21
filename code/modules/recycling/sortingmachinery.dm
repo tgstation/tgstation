@@ -253,14 +253,14 @@
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 													// travels through the pipes.
-		for(var/obj/structure/bigDelivery/O in src)
+/*		for(var/obj/structure/bigDelivery/O in src)
+			deliveryCheck = 1
+			if(O.sortTag == 0)						//This auto-sorts package wrapped objects to disposals
+				O.sortTag = 1						//Cargo techs can do this themselves with their taggers
+		for(var/obj/item/smallDelivery/O in src)	//With this disabled packages will loop back round and come out the mail chute
 			deliveryCheck = 1
 			if(O.sortTag == 0)
-				O.sortTag = 1
-		for(var/obj/item/smallDelivery/O in src)
-			deliveryCheck = 1
-			if(O.sortTag == 0)
-				O.sortTag = 1
+				O.sortTag = 1						*/
 		if(deliveryCheck == 0)
 			H.destinationTag = 1
 

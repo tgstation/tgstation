@@ -69,18 +69,15 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 			spawn(det_time)
-				if(user)
-					user.drop_item()
 				prime()
-				return
-	return
 
 
 /obj/item/weapon/grenade/proc/prime()
-//	playsound(loc, 'sound/items/Welder2.ogg', 25, 1)
-	var/turf/T = get_turf(src)
-	if(T)
-		T.hotspot_expose(700,125)
+
+/obj/item/weapon/grenade/proc/update_mob()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.drop_from_inventory(src)
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -100,12 +97,10 @@
 				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
 		add_fingerprint(user)
 	..()
-	return
 
 /obj/item/weapon/grenade/attack_hand()
 	walk(src, null, null)
 	..()
-	return
 
 /obj/item/weapon/grenade/attack_paw(mob/user as mob)
 	return attack_hand(user)

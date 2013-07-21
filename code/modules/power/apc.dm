@@ -796,6 +796,9 @@
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
 		return
+	if(!malf.can_shunt)
+		malf << "<span class='warning'>You cannot shunt.</span>"
+		return
 	if(src.z != 1)
 		return
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)

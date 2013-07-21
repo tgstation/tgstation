@@ -84,7 +84,7 @@
 				if (M.timeofdeath + 6000 < world.time)
 					continue
 			var/turf/T = get_turf(M)
-			if(T)	continue
+			if(!T)	continue
 			if(T.z == 2)	continue
 			var/tmpname = M.real_name
 			if(areaindex[tmpname])

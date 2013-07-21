@@ -39,6 +39,10 @@
 			//gas.volume = 1.05 * CELLSTANDARD
 			update()
 
+	Del()
+		for(var/atom/movable/AM in contents)
+			AM.loc = src.loc
+		..()
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -143,6 +147,7 @@
 				V.show_message("[usr] starts climbing into the disposal.", 3)
 			if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 				if(target.anchored) return
+				if(!ishuman(user) && !ismonkey(user)) return
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
 			return

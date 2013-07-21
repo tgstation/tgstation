@@ -15,7 +15,7 @@
 
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
-	set name = "Return to Core"
+	set name = "Jump to Core"
 	set desc = "Transport back to your core."
 
 	if(blob_core)
@@ -24,7 +24,7 @@
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
 	set name = "Jump to Node"
-	set desc = "Transport back to your core."
+	set desc = "Transport back to a selected node."
 
 	if(blob_nodes.len)
 		var/list/nodes = list()
@@ -66,7 +66,7 @@
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
-	set name = "Create Resource Blob (40)"
+	set name = "Create Resource Blob (50)"
 	set desc = "Create a resource tower which will generate points for you."
 
 
@@ -89,12 +89,12 @@
 		src << "There is a resource blob nearby, move more than 3 tiles away from it!"
 		return
 
-	if(!can_buy(40))
+	if(!can_buy(50))
 		return
 
 
 	B.change_to(/obj/effect/blob/resource)
-	var/obj/effect/blob/resource/R = locate(/obj/effect/blob/resource)
+	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
 		R.overmind = src
 
@@ -121,8 +121,8 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/node/blob in orange(4))
-		src << "There is another node nearby, move more than 4 tiles away from it!"
+	for(var/obj/effect/blob/node/blob in orange(5))
+		src << "There is another node nearby, move more than 5 tiles away from it!"
 		return
 
 	if(!can_buy(60))
@@ -153,8 +153,8 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/factory/blob in orange(6))
-		src << "There is a factory blob nearby, move more than 6 tiles away from it!"
+	for(var/obj/effect/blob/factory/blob in orange(7))
+		src << "There is a factory blob nearby, move more than 7 tiles away from it!"
 		return
 
 	if(!can_buy(60))
@@ -166,7 +166,7 @@
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
-	set name = "Remove Blob (0)"
+	set name = "Remove Blob"
 	set desc = "Removes a blob."
 
 	var/turf/T = get_turf(src)

@@ -3,8 +3,8 @@
 	damage_type = BRUTE
 
 /mob/living/simple_animal/hostile/hivebot
-	name = "Hivebot"
-	desc = "A small robot"
+	name = "hivebot"
+	desc = "A small robot."
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "basic"
 	icon_living = "basic"
@@ -28,7 +28,7 @@
 	minbodytemp = 0
 
 /mob/living/simple_animal/hostile/hivebot/range
-	name = "Hivebot"
+	name = "hivebot"
 	desc = "A smallish robot, this one is armed!"
 	ranged = 1
 
@@ -37,7 +37,7 @@
 	rapid = 1
 
 /mob/living/simple_animal/hostile/hivebot/strong
-	name = "Strong Hivebot"
+	name = "strong hivebot"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
 	ranged = 1
@@ -54,8 +54,8 @@
 	return
 
 /mob/living/simple_animal/hostile/hivebot/tele//this still needs work
-	name = "Beacon"
-	desc = "Some odd beacon thing"
+	name = "beacon"
+	desc = "Some odd beacon thing."
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar-off"
 	icon_living = "def_radar-off"
