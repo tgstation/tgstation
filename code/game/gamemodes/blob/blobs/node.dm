@@ -23,6 +23,7 @@
 	Life()
 		for(var/i = 1; i < 8; i += i)
 			Pulse(5, i)
+		health = min(initial(health), health + 1)
 
 	update_icon()
 		if(health <= 0)

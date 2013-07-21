@@ -153,7 +153,7 @@
 /obj/effect/blob/normal
 	icon_state = "blob"
 	luminosity = 0
-	health = 20
+	health = 21
 
 	Delete()
 		src.loc = null
