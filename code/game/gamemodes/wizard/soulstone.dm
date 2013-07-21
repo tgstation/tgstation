@@ -212,6 +212,7 @@
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/wall(Z)
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/floor(Z)
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone(Z)
+						Z.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser(Z)
 						Z.cancel_camera()
 						del(C)
 			else
