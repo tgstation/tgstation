@@ -74,3 +74,15 @@
 							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
 	else if(src.throwing == 0) //Dice was thrown and is coming to rest
 		src.loc.visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
+
+/obj/item/weapon/dice/d4/HasEntered(AM as mob|obj)
+	if(ismob(AM))
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(!H.shoes)
+				H << "<span class='userdanger'>You step on the D4!</span>"
+				var/datum/limb/affecting = H.get_organ(pick("l_leg", "r_leg"))
+				H.Weaken(5)
+				if(affecting.take_damage(4, 0))
+					H.update_damage_overlays(0)
+				H.updatehealth()
