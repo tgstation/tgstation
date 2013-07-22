@@ -80,4 +80,3 @@
 		H << "<span class='userdanger'>You step on the D4!</span>"
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
-		H.update_damage_overlays(0)

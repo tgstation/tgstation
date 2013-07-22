@@ -310,4 +310,3 @@
 				H << "<span class='userdanger'>You step in the broken glass!</span>"
 				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
 				H.Weaken(3)
-				H.update_damage_overlays(0)
