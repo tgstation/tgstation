@@ -52,19 +52,11 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 */
 /proc/check_rights(rights_required, show_msg=1)
 	if(usr && usr.client)
-		if(rights_required)
-			if(usr.client.holder)
-				if(rights_required & usr.client.holder.rights)
-					return 1
-				else
-					if(show_msg)
-						usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>"
+		if (check_rights_for(usr.client, rights_required))
+			return 1
 		else
-			if(usr.client.holder)
-				return 1
-			else
-				if(show_msg)
-					usr << "<font color='red'>Error: You are not an admin.</font>"
+			if(show_msg)
+				usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>"
 	return 0
 
 //probably a bit iffy - will hopefully figure out a better solution
@@ -73,9 +65,13 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		if(usr.client.holder)
 			if(!other || !other.holder)
 				return 1
-			if(usr.client.holder.rights != other.holder.rights)
-				if( (usr.client.holder.rights & other.holder.rights) == other.holder.rights )
-					return 1	//we have all the rights they have and more
+
+			var/usr_rights_pt2 = usr.client.holder.rights / 65536
+			var/other_rights_pt2 = other.holder.rights / 65536
+			if( (usr_rights_pt2 & other_rights_pt2) == other_rights_pt2 )	//Check values larger than 65535
+				if(usr.client.holder.rights != other.holder.rights)			//Check values smaller than 65536
+					if( (usr.client.holder.rights & other.holder.rights) == other.holder.rights )
+						return 1	//we have all the rights they have and more
 		usr << "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>"
 	return 0
 
@@ -86,3 +82,20 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		holder.disassociate()
 		del(holder)
 	return 1
+
+//This proc checks whether subject has at least ONE of the rights specified in rights_required.
+/proc/check_rights_for(client/subject, rights_required)
+	if(subject)
+		if(rights_required)
+			if(subject.holder)
+				if(rights_required >= 65536)
+					var/rights_required_pt2 = rights_required / 65536
+					var/rights_pt2 = subject.holder.rights / 65536
+					if(rights_required_pt2 & rights_pt2)
+						return 1
+				if(rights_required & subject.holder.rights)
+					return 1
+		else
+			if(subject.holder)
+				return 1
+	return 0

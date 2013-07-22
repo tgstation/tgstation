@@ -77,7 +77,7 @@ datum/preferences
 
 		// OOC Metadata:
 	var/metadata = ""
-	
+
 	var/unlock_content = 0
 
 /datum/preferences/New(client/C)
@@ -210,13 +210,13 @@ datum/preferences
 						dat += "<b>Adminhelp Sound:</b> "
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(unlock_content || (user.client.holder && (user.client.holder.rights & R_ADMIN)))
+					if(unlock_content || check_rights_for(user, R_ADMIN))
 						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-					
+
 					if(unlock_content)
 						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 						dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-						
+
 
 				dat += "</td><td width='300px' height='300px' valign='top'>"
 

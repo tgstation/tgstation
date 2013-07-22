@@ -313,7 +313,7 @@ datum/mind
 				crystals = suplink.uses
 			if (suplink)
 				text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
-				if (usr.client.holder.rights & R_FUN)
+				if (check_rights(R_FUN, 0))
 					text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
 				else
 					text += ", [crystals] crystals"
@@ -903,7 +903,7 @@ datum/mind
 					memory = null//Remove any memory they may have had.
 					log_admin("[key_name_admin(usr)] removed [current]'s uplink.")
 				if("crystals")
-					if (usr.client.holder.rights & R_FUN)
+					if (check_rights(R_FUN, 0))
 						var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
 						var/crystals
 						if (suplink)

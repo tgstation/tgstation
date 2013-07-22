@@ -700,7 +700,7 @@
 			return
 
 		if(M != usr)																//we can jobban ourselves
-			if(M.client && M.client.holder && (M.client.holder.rights & R_BAN))		//they can ban too. So we can't ban them
+			if (check_rights_for(M, R_BAN))		//they can ban too. So we can't ban them
 				alert("You cannot perform this action. You must be of a higher administrative rank!")
 				return
 
