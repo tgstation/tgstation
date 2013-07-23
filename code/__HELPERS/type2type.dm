@@ -226,7 +226,7 @@ proc/tg_list2text(list/list, glue=",")
 /proc/rights2text(rights, seperator="")
 	/* --UNCOMMENT ONCE PERMISSIONS ABOVE 2^15 START BEING USED!
 	if(rights >= 65536)
-		var/rights_pt2 = rights - 65536
+		var/rights_pt2 = rights / 65536
 		if(rights_pt2 & 1) .+= "[seperator]+NUKESERVER"
 		if(rights_pt2 & 2) .+= "[seperator]+DDOSALLPLAYERS"
 		if(rights_pt2 & 4) .+= "[seperator]+SPAWN_RL_SINGULARITY"
