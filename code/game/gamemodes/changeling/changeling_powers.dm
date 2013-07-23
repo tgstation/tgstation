@@ -205,7 +205,7 @@
 	changeling.geneticdamage = 30
 	src << "<span class='warning'>Our genes cry out!</span>"
 
-	var/mob/living/carbon/monkey/O = monkeyize(TR_KEEPITEMS | TR_HASHNAME | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSE | TR_KEEPSRC)
+	var/mob/living/carbon/monkey/O = monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSE | TR_KEEPSRC)
 
 	O.make_changeling(1)
 	O.verbs += /mob/living/carbon/proc/changeling_lesser_transform
