@@ -264,6 +264,15 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/weapon/cable_coil" = 2,)
 
+/obj/item/weapon/circuitboard/cyborgrecharger
+	name = "Circuit board (Cyborg Recharger)"
+	build_path = "/obj/machinery/recharge_station"
+	board_type = "machine"
+	origin_tech = "powerstorage=3;engineering=3"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/cell" = 1,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,)
 
 // Telecomms circuit boards:
 
@@ -342,7 +351,3 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
-
-
-
-
