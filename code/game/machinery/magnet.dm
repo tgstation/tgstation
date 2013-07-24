@@ -275,10 +275,9 @@
 		onclose(user, "magnet")
 
 	Topic(href, href_list)
-		if(stat & (BROKEN|NOPOWER))
+		if(..())
 			return
 		usr.set_machine(src)
-		src.add_fingerprint(usr)
 
 		if(href_list["radio-op"])
 

@@ -694,11 +694,12 @@
 	return 1
 
 /obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
+	if(..())
+		return
 	if(!isrobot(usr))
 		if(!can_use(usr, 1))
 			return
 
-	src.add_fingerprint(usr)
 	usr.set_machine(src)
 
 	if (href_list["lock"])
