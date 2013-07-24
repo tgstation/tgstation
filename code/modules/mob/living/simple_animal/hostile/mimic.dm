@@ -141,6 +141,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	..(loc)
 	CopyObject(copy, creator)
 
+/mob/living/simple_animal/hostile/mimic/copy/Life()
+	..()
+	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
+		Die()
+
 /mob/living/simple_animal/hostile/mimic/copy/Die()
 
 	for(var/atom/movable/M in src)
