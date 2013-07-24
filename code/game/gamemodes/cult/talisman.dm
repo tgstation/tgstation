@@ -38,7 +38,7 @@
 					return
 				if("supply")
 					supply()
-			user.take_organ_damage(5, 0)
+//			user.take_organ_damage(5, 0)
 			if(src && src.imbue!="supply" && src.imbue!="runestun")
 				if(delete)
 					user.drop_item(src)
