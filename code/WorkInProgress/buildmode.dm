@@ -254,6 +254,8 @@
 
 		if(4)
 			if(pa.Find("left"))
+				if(isturf(object))
+					return
 				holder.throw_atom = object
 			if(pa.Find("right"))
 				if(holder.throw_atom)
