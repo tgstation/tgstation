@@ -301,17 +301,12 @@
 			del(src)
 	..()
 
-
-/obj/item/weapon/shard/HasEntered(AM as mob|obj)
-	if(ismob(AM))
+/obj/item/weapon/shard/HasEntered(var/mob/AM)
+	if(istype(AM))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(!H.shoes)
 				H << "<span class='userdanger'>You step in the broken glass!</span>"
-				var/datum/limb/affecting = H.get_organ(pick("l_leg", "r_leg"))
+				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
 				H.Weaken(3)
-				if(affecting.take_damage(5, 0))
-					H.update_damage_overlays(0)
-				H.updatehealth()
-	..()
