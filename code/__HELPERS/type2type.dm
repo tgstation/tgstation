@@ -223,7 +223,15 @@ proc/tg_list2text(list/list, glue=",")
 
 
 //Converts a rights bitfield into a string
-/proc/rights2text(rights,seperator="")
+/proc/rights2text(rights, seperator="")
+	/* --UNCOMMENT ONCE PERMISSIONS ABOVE 2^15 START BEING USED!
+	if(rights >= 65536)
+		var/rights_pt2 = rights / 65536
+		if(rights_pt2 & 1) .+= "[seperator]+NUKESERVER"
+		if(rights_pt2 & 2) .+= "[seperator]+DDOSALLPLAYERS"
+		if(rights_pt2 & 4) .+= "[seperator]+SPAWN_RL_SINGULARITY"
+	*/
+
 	if(rights & R_BUILDMODE)	. += "[seperator]+BUILDMODE"
 	if(rights & R_ADMIN)		. += "[seperator]+ADMIN"
 	if(rights & R_BAN)			. += "[seperator]+BAN"
@@ -251,23 +259,23 @@ proc/tg_list2text(list/list, glue=",")
 	var/max = max(red,green,blue)
 	var/min = min(red,green,blue)
 	var/range = max-min
-	
+
 	var/hue=0;var/saturation=0;var/lightness=0;
 	lightness = (max + min)/2
 	if(range != 0)
 		if(lightness < 0.5)	saturation = range/(max+min)
 		else				saturation = range/(2-max-min)
-		
+
 		var/dred = ((max-red)/(6*max)) + 0.5
 		var/dgreen = ((max-green)/(6*max)) + 0.5
 		var/dblue = ((max-blue)/(6*max)) + 0.5
-		
+
 		if(max==red)		hue = dblue - dgreen
 		else if(max==green)	hue = dred - dblue + (1/3)
 		else				hue = dgreen - dred + (2/3)
 		if(hue < 0)			hue++
 		else if(hue > 1)	hue--
-	
+
 	return list(hue, saturation, lightness)
 
 /proc/hsl2rgb(hue, saturation, lightness)
@@ -281,11 +289,11 @@ proc/tg_list2text(list/list, glue=",")
 		if(lightness < 0.5)	b = lightness*(1+saturation)
 		else				b = (lightness+saturation) - (saturation*lightness)
 		a = 2*lightness - b
-		
+
 		red = round(255 * hue2rgb(a, b, hue+(1/3)))
 		green = round(255 * hue2rgb(a, b, hue))
 		blue = round(255 * hue2rgb(a, b, hue-(1/3)))
-	
+
 	return list(red, green, blue)
 
 /proc/hue2rgb(a, b, hue)
