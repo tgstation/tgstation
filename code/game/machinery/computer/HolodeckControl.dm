@@ -250,8 +250,9 @@
 	return 1
 
 /obj/machinery/computer/HolodeckControl/power_change()
-	emergencyShutdown()
 	..()
+	if(stat & NOPOWER)
+		emergencyShutdown()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
 
