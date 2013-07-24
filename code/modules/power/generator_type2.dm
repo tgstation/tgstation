@@ -128,7 +128,8 @@
 
 
 /obj/machinery/power/generator_type2/Topic(href, href_list)
-	..()
+	if(..())
+		return
 
 	if( href_list["close"] )
 		usr << browse(null, "window=teg")

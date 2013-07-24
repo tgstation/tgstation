@@ -243,11 +243,9 @@
 	return
 
 /obj/machinery/chem_master/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER)) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	if(..())
+		return
 
-	src.add_fingerprint(usr)
 	usr.set_machine(src)
 
 
@@ -276,6 +274,7 @@
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
+				if (amount < 0) return
 				R.trans_id_to(src, id, amount)
 
 		else if (href_list["addcustom"])
@@ -290,6 +289,7 @@
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
+				if (amount < 0) return
 				if(mode)
 					reagents.trans_id_to(beaker, id, amount)
 				else

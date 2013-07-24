@@ -203,9 +203,7 @@
 
 
 /obj/machinery/vending/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	if(usr.stat || usr.restrained())
+	if(..())
 		return
 
 
@@ -232,59 +230,55 @@
 		coin = null
 
 
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))))
-		usr.set_machine(src)
-		if((href_list["vend"]) && (vend_ready))
+	usr.set_machine(src)
+	if((href_list["vend"]) && (vend_ready))
 
-			if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-				usr << "<span class='warning'>Access denied.</span>"	//Unless emagged of course
-				flick(icon_deny,src)
-				return
-
-			vend_ready = 0 //One thing at a time!!
-
-			var/datum/data/vending_product/R = locate(href_list["vend"])
-			if(!R || !istype(R) || !R.product_path || R.amount <= 0)
-				vend_ready = 1
-				return
-
-			if(R in coin_records)
-				if(!coin)
-					usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
-					return
-				if(coin.string_attached)
-					if(prob(50))
-						usr << "<span class='notice'>You successfully pull the coin out before [src] could swallow it.</span>"
-					else
-						usr << "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
-						del(coin)
-				else
-					del(coin)
-
-			R.amount--
-
-			if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
-				speak(vend_reply)
-				last_reply = world.time
-
-			use_power(5)
-			if(icon_vend) //Show the vending animation if needed
-				flick(icon_vend,src)
-			spawn(vend_delay)
-				new R.product_path(get_turf(src))
-				vend_ready = 1
-				return
-
-			updateUsrDialog()
+		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
+			usr << "<span class='warning'>Access denied.</span>"	//Unless emagged of course
+			flick(icon_deny,src)
 			return
 
-		else if(href_list["togglevoice"] && panel_open)
-			shut_up = !shut_up
+		vend_ready = 0 //One thing at a time!!
 
-		add_fingerprint(usr)
+		var/datum/data/vending_product/R = locate(href_list["vend"])
+		if(!R || !istype(R) || !R.product_path || R.amount <= 0)
+			vend_ready = 1
+			return
+
+		if(R in coin_records)
+			if(!coin)
+				usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
+				return
+			if(coin.string_attached)
+				if(prob(50))
+					usr << "<span class='notice'>You successfully pull the coin out before [src] could swallow it.</span>"
+				else
+					usr << "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
+					del(coin)
+			else
+				del(coin)
+
+		R.amount--
+
+		if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
+			speak(vend_reply)
+			last_reply = world.time
+
+		use_power(5)
+		if(icon_vend) //Show the vending animation if needed
+			flick(icon_vend,src)
+		spawn(vend_delay)
+			new R.product_path(get_turf(src))
+			vend_ready = 1
+			return
+
 		updateUsrDialog()
-	else
-		usr << browse(null, "window=vending")
+		return
+
+	else if(href_list["togglevoice"] && panel_open)
+		shut_up = !shut_up
+
+	updateUsrDialog()
 
 
 /obj/machinery/vending/process()

@@ -3,71 +3,87 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
 	health = 200
-	brute_resist = 2
 	fire_resist = 2
+	var/mob/camera/blob/overmind = null // the blob core's overmind
+	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
+	var/resource_delay = 0
+	var/point_rate = 1
 
-
-	New(loc, var/h = 200)
-		blobs += src
+	New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 1)
 		blob_cores += src
 		processing_objects.Add(src)
+		if(!overmind)
+			create_overmind(new_overmind)
+		point_rate = new_rate
 		..(loc, h)
 
 
 	Del()
 		blob_cores -= src
+		if(overmind)
+			del(overmind)
 		processing_objects.Remove(src)
 		..()
 		return
 
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		return
 
 	update_icon()
 		if(health <= 0)
 			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-			del(src)
+			Delete()
 			return
 		return
+
+	Life()
+		if(!overmind)
+			create_overmind()
+		else
+			if(resource_delay <= world.time)
+				resource_delay = world.time + 10 // 1 second
+				overmind.add_points(point_rate)
+		health = min(initial(health), health + 1)
+		for(var/i = 1; i < 8; i += i)
+			Pulse(0, i)
+		for(var/b_dir in alldirs)
+			if(!prob(5))
+				continue
+			var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
+			if(B)
+				B.change_to(/obj/effect/blob/shield)
+		..()
 
 
 	run_action()
-		Pulse(0,1)
-		Pulse(0,2)
-		Pulse(0,4)
-		Pulse(0,8)
-		//Should have the fragments in here somewhere
-		return 1
+		return 0
 
 
-	proc/create_fragments(var/wave_size = 1)
-		var/list/candidates = list()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.prefs.be_special & BE_ALIEN)
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					candidates += G.key
+	proc/create_overmind(var/client/new_overmind)
 
-		if(candidates.len)
-			for(var/i = 0 to wave_size)
-				var/mob/living/blob/B = new/mob/living/blob(src.loc)
-				B.key = pick(candidates)
-				candidates -= B.key
-
-/*
-	Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
-		set background = 1
-		if(pulse > 20)	return
-		//Looking for another blob to pulse
-		var/list/dirs = list(1,2,4,8)
-		dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
-		for(var/i = 1 to 4)
-			if(!dirs.len)	break
-			var/dirn = pick(dirs)
-			dirs.Remove(dirn)
-			var/turf/T = get_step(src, dirn)
-			var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
-			if(!B)
-				expand(T)//No blob here so try and expand
-				return
-			B.Pulse((pulse+1),get_dir(src.loc,T))
+		if(overmind_get_delay > world.time)
 			return
-		return
-*/
+
+		overmind_get_delay = world.time + 300 // 30 seconds
+
+		if(overmind)
+			del(overmind)
+
+		var/client/C = null
+		var/list/candidates = list()
+
+		if(!new_overmind)
+			candidates = get_candidates(BE_ALIEN)
+			if(candidates.len)
+				C = pick(candidates)
+		else
+			C = new_overmind
+
+		if(C)
+			var/mob/camera/blob/B = new(src.loc)
+			B.key = C.key
+			B.blob_core = src
+			src.overmind = B
+			return 1
+		return 0
+

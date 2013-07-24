@@ -8,6 +8,9 @@
 //Lower left, persistant menu
 #define ui_inventory "1:6,1:5"
 
+//changeling chem indicator
+#define ui_lingchemdisplay "1,7:15"
+
 //Lower center, persistant menu
 #define ui_sstore1 "3:10,1:5"
 #define ui_id "4:12,1:5"
@@ -166,6 +169,9 @@ var/datum/global_hud/global_hud = new()
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
+	var/obj/screen/lingchemdisplay
+	var/obj/screen/blobpwrdisplay
+	var/obj/screen/blobhealthdisplay
 	var/obj/screen/r_hand_hud_object
 	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
@@ -175,7 +181,7 @@ var/datum/global_hud/global_hud = new()
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
 
-	var/list/obj/screen/item_action/item_action_list	//Used for the item action ui buttons.
+	var/list/obj/screen/item_action/item_action_list = list()	//Used for the item action ui buttons.
 
 
 datum/hud/New(mob/owner)
@@ -258,3 +264,5 @@ datum/hud/New(mob/owner)
 		robot_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
+	else if(isovermind(mymob))
+		blob_hud()
