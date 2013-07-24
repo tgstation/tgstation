@@ -96,8 +96,12 @@
 		if("deathgasp")
 			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
+		if("giggle")
+			if (!muzzled)
+				message = "<B>The [src.name]</B> giggles happily."
+				m_type = 2
 		if("help")
-			src << "choke, collapse, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
+			src << "choke, collapse, dance, deathgasp, drool, gasp, shiver, gnarl, giggle, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
