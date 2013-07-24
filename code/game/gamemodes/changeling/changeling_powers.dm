@@ -360,7 +360,7 @@
 	C.update_canmove()
 	C.remove_changeling_powers()
 
-	C.emote("gasp")
+	C.emote("deathgasp")
 	C.tod = worldtime2text()
 
 	spawn(rand(800,2000))
@@ -380,6 +380,31 @@
 			C.radiation = 0
 			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
 			C.reagents.clear_reagents()
+			if(istype(C, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = C
+				H.vessel.reagent_list = list()
+				H.vessel.add_reagent("blood",560)
+				spawn(1)
+					H.fixblood()
+				for(var/datum/organ/external/O in H.organs)
+					O.amputated = 0
+					O.brute_dam = 0
+					O.burn_dam = 0
+					O.damage_state = "00"
+					O.germ_level = 0
+					O.hidden = null
+					O.number_wounds = 0
+					O.open = 0
+					O.perma_injury = 0
+					O.stage = 0
+					O.status = 0
+					O.trace_chemicals = list()
+					O.wounds = list()
+					O.wound_update_accuracy = 1
+				for(var/datum/organ/internal/IO in H.internal_organs)
+					IO.damage = 0
+					IO.trace_chemicals = list()
+				H.updatehealth()
 			C << "<span class='notice'>We have regenerated.</span>"
 			C.visible_message("<span class='warning'>[src] appears to wake from the dead, having healed all wounds.</span>")
 

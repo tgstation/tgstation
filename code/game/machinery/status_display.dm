@@ -1,3 +1,9 @@
+#define CHARS_PER_LINE 5
+#define FONT_SIZE "5pt"
+#define FONT_COLOR "#09f"
+#define FONT_STYLE "Arial Black"
+#define SCROLL_SPEED 2
+
 // Status display
 // (formerly Countdown timer display)
 
@@ -25,14 +31,13 @@
 	var/index1			// display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
-	var/lastdisplayline1 = ""		// the cached last displays
-	var/lastdisplayline2 = ""
-
 	var/frequency = 1435		// radio frequency
 	var/supply_display = 0		// true if a supply shuttle display
-	var/repeat_update = 0		// true if we are going to update again this ptick
 
 	var/friendc = 0      // track if Friend Computer mode
+
+	maptext_height = 26
+	maptext_width = 32
 
 	// new display
 	// register for radio system
@@ -47,9 +52,8 @@
 
 	process()
 		if(stat & NOPOWER)
-			overlays.Cut()
+			remove_display()
 			return
-
 		update()
 
 	emp_act(severity)
@@ -62,173 +66,114 @@
 	// set what is displayed
 
 	proc/update()
-
 		if(friendc && mode!=4) //Makes all status displays except supply shuttle timer display the eye -- Urist
 			set_picture("ai_friend")
 			return
 
-		if(mode==0)
-			overlays.Cut()
-			return
-
-		if(mode==3)	// alert picture, no change
-			return
-
-		if(mode==1)	// shuttle timer
-			if(emergency_shuttle.online)
-				var/displayloc
-				if(emergency_shuttle.location == 1)
-					displayloc = "ETD "
+		switch(mode)
+			if(0)				//blank
+				remove_display()
+			if(1)				//emergency shuttle timer
+				if(emergency_shuttle.online)
+					var/line1
+					var/line2 = get_shuttle_timer()
+					if(emergency_shuttle.location == 1)
+						line1 = "-ETD-"
+					else
+						line1 = "-ETA-"
+					if(length(line2) > CHARS_PER_LINE)
+						line2 = "Error!"
+					update_display(line1, line2)
 				else
-					displayloc = "ETA "
+					remove_display()
+			if(2)				//custom messages
+				var/line1
+				var/line2
 
-				var/displaytime = get_shuttle_timer()
-				if(lentext(displaytime) > 5)
-					displaytime = "**~**"
-
-				update_display(displayloc, displaytime)
-				return
-			else
-				overlays.Cut()
-				return
-
-		if(mode==4)		// supply shuttle timer
-			var/disp1
-			var/disp2
-			if(supply_shuttle.moving)
-				disp1 = "SPPLY"
-				disp2 = get_supply_shuttle_timer()
-				if(lentext(disp1) > 5)
-					disp1 = "**~**"
-
-			else
-				if(supply_shuttle.at_station)
-					disp1 = "SPPLY"
-					disp2 = "STATN"
+				if(!index1)
+					line1 = message1
 				else
-					disp1 = "SPPLY"
-					disp2 = "AWAY"
+					line1 = copytext(message1+"|"+message1, index1, index1+CHARS_PER_LINE)
+					var/message1_len = length(message1)
+					index1 += SCROLL_SPEED
+					if(index1 > message1_len)
+						index1 -= message1_len
 
-			update_display(disp1, disp2)
+				if(!index2)
+					line2 = message2
+				else
+					line2 = copytext(message2+"|"+message2, index2, index2+CHARS_PER_LINE)
+					var/message2_len = length(message2)
+					index2 += SCROLL_SPEED
+					if(index2 > message2_len)
+						index2 -= message2_len
+				update_display(line1, line2)
+			if(4)				// supply shuttle timer
+				var/line1 = "SUPPLY"
+				var/line2
+				if(supply_shuttle.moving)
+					line2 = get_supply_shuttle_timer()
+					if(lentext(line2) > CHARS_PER_LINE)
+						line2 = "Error"
+				else
+					if(supply_shuttle.at_station)
+						line2 = "Docked"
+					else
+						line1 = ""
+				update_display(line1, line2)
+
+	examine()
+		set src in view()
+		. = ..()
+		switch(mode)
+			if(1,2,4)
+				usr << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
 
 
-
-		if(mode==2)
-			var/line1
-			var/line2
-
-			if(!index1)
-				line1 = message1
-			else
-				line1 = copytext(message1+message1, index1, index1+5)
-				if(index1++ > (lentext(message1)))
-					index1 = 1
-
-			if(!index2)
-				line2 = message2
-			else
-				line2 = copytext(message2+message2, index2, index2+5)
-				if(index2++ > (lentext(message2)))
-					index2 = 1
-
-			update_display(line1, line2)
-
-			// the following allows 2 updates per process, giving faster scrolling
-			if((index1 || index2) && repeat_update)	// if either line is scrolling
-													// and we haven't forced an update yet
-
-				spawn(5)
-					repeat_update = 0
-					update()		// set to update again in 5 ticks
-					repeat_update = 1
-
-	proc/set_message(var/m1, var/m2)
+	proc/set_message(m1, m2)
 		if(m1)
-			index1 = (lentext(m1) > 5)
-			message1 = uppertext(m1)
+			index1 = (length(m1) > CHARS_PER_LINE)
+			message1 = m1
 		else
 			message1 = ""
 			index1 = 0
 
 		if(m2)
-			index2 = (lentext(m2) > 5)
-			message2 = uppertext(m2)
+			index2 = (length(m2) > CHARS_PER_LINE)
+			message2 = m2
 		else
-			message2 = null
+			message2 = ""
 			index2 = 0
-		repeat_update = 1
 
-	proc/set_picture(var/state)
+	proc/set_picture(state)
 		picture_state = state
-		overlays.Cut()
+		remove_display()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
-	proc/update_display(var/line1, var/line2)
-
-		if(line1 == lastdisplayline1 && line2 == lastdisplayline2)
-			return			// no change, no need to update
-
-		lastdisplayline1 = line1
-		lastdisplayline2 = line2
-
-		if(line2 == null)		// single line display
-			overlays.Cut()
-			overlays += texticon(line1, 23, -13)
-		else					// dual line display
-
-			overlays.Cut()
-			overlays += texticon(line1, 23, -9)
-			overlays += texticon(line2, 23, -17)
-
-
-	// return shuttle timer as text
+	proc/update_display(line1, line2)
+		var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
+		if(maptext != new_text)
+			maptext = new_text
 
 	proc/get_shuttle_timer()
 		var/timeleft = emergency_shuttle.timeleft()
 		if(timeleft)
-			return "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
-			// note ~ translates into a blinking :
+			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 		return ""
 
 	proc/get_supply_shuttle_timer()
 		if(supply_shuttle.moving)
 			var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
-			return "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
-			// note ~ translates into a blinking :
+			if(timeleft < 0)
+				return "Late"
+			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 		return ""
 
-
-
-
-	// return an icon of a time text string (tn)
-	// valid characters are 0-9 and :
-	// px, py are pixel offsets
-	proc/texticon(var/tn, var/px = 0, var/py = 0)
-		var/image/I = image('icons/obj/status_display.dmi', "blank")
-
-
-		var/len = lentext(tn)
-
-		for(var/d = 1 to len)
-
-
-			var/char = copytext(tn, len-d+1, len-d+2)
-
-			if(char == " ")
-				continue
-
-			var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
-
-			ID.pixel_x = -(d-1)*5 + px
-			ID.pixel_y = py
-
-			I.overlays += ID
-
-		return I
-
-
-
-
+	proc/remove_display()
+		if(overlays.len)
+			overlays.Cut()
+		if(maptext)
+			maptext = ""
 
 
 	receive_signal(datum/signal/signal)
@@ -318,16 +263,6 @@
 					set_picture("ai_facepalm")
 				if("Friend Computer")
 					set_picture("ai_friend")
-				if("Tribunal")
-					set_picture("tribunal")
-				if("Beer mug")
-					set_picture("ai_beer")
-				if("Dwarf")
-					set_picture("ai_dwarf")
-				if("Fishtank")
-					set_picture("ai_fishtank")
-				if("Plump Helmet")
-					set_picture("ai_plump")
 
 			return
 
@@ -338,5 +273,12 @@
 
 	proc/set_picture(var/state)
 		picture_state = state
-		overlays.Cut()
+		if(overlays.len)
+			overlays.Cut()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+
+#undef CHARS_PER_LINE
+#undef FOND_SIZE
+#undef FONT_COLOR
+#undef FONT_STYLE
+#undef SCROLL_SPEED

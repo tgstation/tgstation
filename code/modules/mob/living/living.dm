@@ -266,6 +266,31 @@
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
 	buckled = initial(src.buckled)
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		H.vessel.reagent_list = list()
+		H.vessel.add_reagent("blood",560)
+		spawn(1)
+			H.fixblood()
+		for(var/datum/organ/external/O in H.organs)
+			O.amputated = 0
+			O.brute_dam = 0
+			O.burn_dam = 0
+			O.damage_state = "00"
+			O.germ_level = 0
+			O.hidden = null
+			O.number_wounds = 0
+			O.open = 0
+			O.perma_injury = 0
+			O.stage = 0
+			O.status = 0
+			O.trace_chemicals = list()
+			O.wounds = list()
+			O.wound_update_accuracy = 1
+		for(var/datum/organ/internal/IO in H.internal_organs)
+			IO.damage = 0
+			IO.trace_chemicals = list()
+		H.updatehealth()
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		C.handcuffed = initial(C.handcuffed)
@@ -276,6 +301,7 @@
 		living_mob_list += src
 	stat = CONSCIOUS
 	regenerate_icons()
+	update_canmove()
 	..()
 	return
 

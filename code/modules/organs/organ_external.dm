@@ -804,7 +804,7 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	spawn(5)
 	if(brainmob && brainmob.client)
 		brainmob.client.screen.len = null //clear the hud
-		brainmob.stat = DEAD
+		brainmob.stat = 2
 	if(ishuman(H))
 		if(H.gender == FEMALE)
 			H.icon_state = "head_f"
