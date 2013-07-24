@@ -206,6 +206,11 @@ var/list/uplink_items = list()
 	item = /obj/item/device/encryptionkey/binary
 	cost = 3
 
+/datum/uplink_item/device_tools/ai_detector
+	name = "Disguised AI Detector"
+	item = /obj/item/device/multitool/ai_detect
+	cost = 1
+
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
 	item = /obj/item/weapon/aiModule/syndicate

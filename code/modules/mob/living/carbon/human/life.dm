@@ -1022,6 +1022,12 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
 
+			if(mind && mind.changeling)
+				hud_used.lingchemdisplay.invisibility = 0
+				hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
+			else
+				hud_used.lingchemdisplay.invisibility = 101
+
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
 				switch(O.mode)

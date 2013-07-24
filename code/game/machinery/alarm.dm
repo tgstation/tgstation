@@ -520,7 +520,6 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
-	src.add_fingerprint(usr)
 	usr.set_machine(src)
 
 	if ( (get_dist(src, usr) > 1 ))
@@ -1113,35 +1112,27 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
-	..()
-	if (usr.stat || stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	if (buildstage != 2)
 		return
 
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
-		if (href_list["reset"])
-			src.reset()
-		else if (href_list["alarm"])
-			src.alarm()
-		else if (href_list["time"])
-			src.timing = text2num(href_list["time"])
-			last_process = world.timeofday
-			processing_objects.Add(src)
-		else if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
-			src.time += tp
-			src.time = min(max(round(src.time), 0), 120)
+	usr.set_machine(src)
+	if (href_list["reset"])
+		src.reset()
+	else if (href_list["alarm"])
+		src.alarm()
+	else if (href_list["time"])
+		src.timing = text2num(href_list["time"])
+		last_process = world.timeofday
+		processing_objects.Add(src)
+	else if (href_list["tp"])
+		var/tp = text2num(href_list["tp"])
+		src.time += tp
+		src.time = min(max(round(src.time), 0), 120)
 
-		src.updateUsrDialog()
-
-		src.add_fingerprint(usr)
-	else
-		usr << browse(null, "window=firealarm")
-		return
-	return
+	src.updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
 	if (!( src.working ))
@@ -1333,7 +1324,8 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/partyalarm/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))

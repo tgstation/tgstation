@@ -275,13 +275,12 @@
 
 
 /obj/machinery/telecomms/Topic(href, href_list)
+	if(..())
+		return
 
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			return
-
-	if(stat & (BROKEN|NOPOWER))
-		return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
 
@@ -384,7 +383,6 @@
 	src.Options_Topic(href, href_list)
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
 
 	updateUsrDialog()
 
