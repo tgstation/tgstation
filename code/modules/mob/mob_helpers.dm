@@ -146,15 +146,14 @@ proc/isorgan(A)
 	return zone
 
 
-/proc/ran_zone(zone, probability)
+/proc/ran_zone(zone, probability = 80)
+
 	zone = check_zone(zone)
-	if(!probability)	probability = 90
-	if(probability <= 100)
-		return zone
 
 	if(prob(probability))
 		return zone
-	var/t = rand(1, 17)
+
+	var/t = rand(1, 17) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)		 return "head"
 		if(2)		 return "chest"
