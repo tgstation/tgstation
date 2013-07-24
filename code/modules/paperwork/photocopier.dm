@@ -52,6 +52,8 @@
 	onclose(user, "copier")
 
 /obj/machinery/photocopier/Topic(href, href_list)
+	if(..())
+		return
 	if(href_list["copy"])
 		if(copy)
 			for(var/i = 0, i < copies, i++)

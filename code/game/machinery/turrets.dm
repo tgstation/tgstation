@@ -434,18 +434,18 @@
 
 
 /obj/machinery/turretid/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if (src.locked)
 		if (!istype(usr, /mob/living/silicon))
 			usr << "Control panel is locked!"
 			return
-	if ( get_dist(src, usr) == 0 || issilicon(usr))
-		if (href_list["toggleOn"])
-			src.enabled = !src.enabled
-			src.updateTurrets()
-		else if (href_list["toggleLethal"])
-			src.lethal = !src.lethal
-			src.updateTurrets()
+	if (href_list["toggleOn"])
+		src.enabled = !src.enabled
+		src.updateTurrets()
+	else if (href_list["toggleLethal"])
+		src.lethal = !src.lethal
+		src.updateTurrets()
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()

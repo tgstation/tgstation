@@ -83,7 +83,8 @@
 	return
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if (src.locked)
 		if (!istype(usr, /mob/living/silicon))
 			usr << "Control panel is locked!"

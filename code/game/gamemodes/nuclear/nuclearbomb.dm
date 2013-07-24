@@ -88,78 +88,68 @@ var/bomb_set
 		src.extended = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
-	..()
-	if (!usr.canmove || usr.stat || usr.restrained())
+	if(..())
 		return
-	if (!ishuman(usr))
-		usr << "\red You don't have the dexterity to do this!"
-		return 1
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.set_machine(src)
-		if (href_list["auth"])
-			if (src.auth)
-				src.auth.loc = src.loc
-				src.yes_code = 0
-				src.auth = null
-			else
-				var/obj/item/I = usr.get_active_hand()
-				if (istype(I, /obj/item/weapon/disk/nuclear))
-					usr.drop_item()
-					I.loc = src
-					src.auth = I
+	usr.set_machine(src)
+	if (href_list["auth"])
 		if (src.auth)
-			if (href_list["type"])
-				if (href_list["type"] == "E")
-					if (src.code == src.r_code)
-						src.yes_code = 1
-						src.code = null
-					else
-						src.code = "ERROR"
+			src.auth.loc = src.loc
+			src.yes_code = 0
+			src.auth = null
+		else
+			var/obj/item/I = usr.get_active_hand()
+			if (istype(I, /obj/item/weapon/disk/nuclear))
+				usr.drop_item()
+				I.loc = src
+				src.auth = I
+	if (src.auth)
+		if (href_list["type"])
+			if (href_list["type"] == "E")
+				if (src.code == src.r_code)
+					src.yes_code = 1
+					src.code = null
 				else
-					if (href_list["type"] == "R")
-						src.yes_code = 0
-						src.code = null
+					src.code = "ERROR"
+			else
+				if (href_list["type"] == "R")
+					src.yes_code = 0
+					src.code = null
+				else
+					src.code += text("[]", href_list["type"])
+					if (length(src.code) > 5)
+						src.code = "ERROR"
+		if (src.yes_code)
+			if (href_list["time"])
+				var/time = text2num(href_list["time"])
+				src.timeleft += time
+				src.timeleft = min(max(round(src.timeleft), 60), 600)
+			if (href_list["timer"])
+				if (src.timing == -1.0)
+					return
+				if (src.safety)
+					usr << "\red The safety is still on."
+					return
+				src.timing = !( src.timing )
+				if (src.timing)
+					src.icon_state = "nuclearbomb2"
+					if(!src.safety)
+						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
-						src.code += text("[]", href_list["type"])
-						if (length(src.code) > 5)
-							src.code = "ERROR"
-			if (src.yes_code)
-				if (href_list["time"])
-					var/time = text2num(href_list["time"])
-					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 60), 600)
-				if (href_list["timer"])
-					if (src.timing == -1.0)
-						return
-					if (src.safety)
-						usr << "\red The safety is still on."
-						return
-					src.timing = !( src.timing )
-					if (src.timing)
-						src.icon_state = "nuclearbomb2"
-						if(!src.safety)
-							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
-						else
-							bomb_set = 0
-					else
-						src.icon_state = "nuclearbomb1"
 						bomb_set = 0
-				if (href_list["safety"])
-					src.safety = !( src.safety )
-					if(safety)
-						src.timing = 0
-						bomb_set = 0
-				if (href_list["anchor"])
-					src.anchored = !( src.anchored )
-		src.add_fingerprint(usr)
-		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				src.attack_hand(M)
-	else
-		usr << browse(null, "window=nuclearbomb")
-		return
-	return
-
+				else
+					src.icon_state = "nuclearbomb1"
+					bomb_set = 0
+			if (href_list["safety"])
+				src.safety = !( src.safety )
+				if(safety)
+					src.timing = 0
+					bomb_set = 0
+			if (href_list["anchor"])
+				src.anchored = !( src.anchored )
+	src.add_fingerprint(usr)
+	for(var/mob/M in viewers(1, src))
+		if ((M.client && M.machine == src))
+			src.attack_hand(M)
 
 /obj/machinery/nuclearbomb/ex_act(severity)
 	return
