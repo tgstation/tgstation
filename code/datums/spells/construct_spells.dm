@@ -97,3 +97,5 @@
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
+	proj_lifespan = 10
+	max_targets = 6

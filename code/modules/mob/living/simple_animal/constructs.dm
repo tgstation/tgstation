@@ -168,8 +168,8 @@
 
 			// Find a turf near or on the original location to bounce to
 			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_x = P.starting.x + pick(0, 0, -1, 1, -1, 1, -2, 2, -2, 2, -2, 2)
+				var/new_y = P.starting.y + pick(0, 0, -1, 1, -1, 1, -2, 2, -2, 2, -2, 2)
 				var/turf/curloc = get_turf(src)
 
 				// redirect the projectile
