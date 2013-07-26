@@ -186,7 +186,7 @@ var/global/floorIsLava = 0
 		dat += "No notes found."
 	else
 		dat += "<table>"
-		sortList(note_keys)
+		note_keys = sortList(note_keys)
 
 		// Display the notes on the current page
 		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
@@ -210,11 +210,12 @@ var/global/floorIsLava = 0
 		for(var/index = 1, index <= number_pages, index++)
 			if(index == page)
 				dat += "<b>"
-			dat += "<a href='?src=\ref[src];notes=list;index='[index]'>[index]</a> "
+			dat += "<a href='?src=\ref[src];notes=list;index=[index]'>[index]</a> "
 			if(index == page)
 				dat += "</b>"
 
 	usr << browse(dat, "window=player_notes;size=400x400")
+
 
 
 /datum/admins/proc/player_has_info(var/key as text)

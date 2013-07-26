@@ -2464,4 +2464,6 @@
 		switch(href_list["notes"])
 			if("show")
 				show_player_info(ckey)
+			if("list")
+				PlayerNotesPage(text2num(href_list["index"]))
 		return
