@@ -589,6 +589,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /mob/living/carbon/slime/show_inv(mob/user)
 	return
 
+/mob/living/carbon/slime/toggle_throw_mode()
+	return
+
 /mob/living/carbon/slime/proc/get_obstacle_ok(atom/A)
 	var/direct = get_dir(src, A)
 	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )

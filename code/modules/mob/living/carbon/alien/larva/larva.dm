@@ -326,6 +326,8 @@
 /mob/living/carbon/alien/larva/show_inv(mob/user)
 	return
 
+/mob/living/carbon/alien/larva/toggle_throw_mode()
+	return
 
 /* Commented out because it's duplicated in life.dm
 /mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE
