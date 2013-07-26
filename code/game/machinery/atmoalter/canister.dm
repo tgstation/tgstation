@@ -17,6 +17,7 @@
 	volume = 1000
 	use_power = 0
 	var/release_log = ""
+	var/busy = 0
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
@@ -174,6 +175,14 @@
 	return
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(iswelder(W) && src.destroyed)
+		if(weld(W, user))
+			user << "\blue You salvage whats left of \the [src]"
+			var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src.loc)
+			M.amount = 3
+			del src
+		return
+
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("\red [user] hits the [src] with a [W]!")
 		src.health -= W.force
@@ -363,3 +372,23 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 
 	src.update_icon()
 	return 1
+
+/obj/machinery/portable_atmospherics/canister/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+
+	if(busy)
+		return 0
+	if(!WT.isOn())
+		return 0
+
+	// Do after stuff here
+	user << "<span class='notice'>You start to slice away at \the [src]...</span>"
+	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	WT.eyecheck(user)
+	busy = 1
+	if(do_after(user, 50))
+		busy = 0
+		if(!WT.isOn())
+			return 0
+		return 1
+	busy = 0
+	return 0
