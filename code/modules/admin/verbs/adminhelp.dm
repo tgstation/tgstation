@@ -111,12 +111,12 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
 
 	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		if(!admin_number_afk && !admin_number_ignored)
 			send2irc(ckey, "[original_msg] - No admins online")
 		else
-			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk]) or skipped ([admin_number_ignored])")
+			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
