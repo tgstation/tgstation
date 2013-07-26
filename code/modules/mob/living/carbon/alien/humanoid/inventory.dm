@@ -1,6 +1,8 @@
 /mob/living/carbon/alien/humanoid/u_equip(obj/item/I)
 	if(!I)	return 0
 
+	var/success = 1
+
 	if(I == r_hand)
 		r_hand = null
 		update_inv_r_hand(0)
@@ -13,14 +15,17 @@
 	else if(I == l_store)
 		l_store = null
 		update_inv_pockets(0)
+	else
+		success = 0
 
-	if(I)
-		if(client)
-			client.screen -= I
-		I.loc = loc
-		I.dropped(src)
+	if(success)
 		if(I)
-			I.layer = initial(I.layer)
+			if(client)
+				client.screen -= I
+			I.loc = loc
+			I.dropped(src)
+			if(I)
+				I.layer = initial(I.layer)
 
 
 //yaaaaaaay snowflakes
