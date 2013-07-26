@@ -26,7 +26,7 @@ Bonus
 
 /datum/symptom/heal/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
@@ -111,7 +111,7 @@ Bonus
 	stage_speed = 4
 	transmittable = 4
 	level = 3
-	var/longevity = 20
+	var/longevity = 25
 
 /datum/symptom/heal/longevity/Heal(var/mob/living/M, var/datum/disease/advance/A)
 	longevity -= 1
@@ -119,4 +119,4 @@ Bonus
 		A.cure()
 
 /datum/symptom/heal/longevity/Start(var/datum/disease/advance/A)
-	longevity = rand(15, 25)
+	longevity = rand(20, 25)
