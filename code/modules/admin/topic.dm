@@ -699,11 +699,6 @@
 			usr << "This can only be used on instances of type /mob"
 			return
 
-		if(M != usr)																//we can jobban ourselves
-			if (check_rights_for(M, R_BAN))		//they can ban too. So we can't ban them
-				alert("You cannot perform this action. You must be of a higher administrative rank!")
-				return
-
 		if(!job_master)
 			usr << "Job Master has not been setup!"
 			return
