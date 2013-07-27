@@ -237,11 +237,11 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid,force
 		carbon_dioxide += max(2 * total_fuel, 0)
 
 		if(fuel)
-			fuel.moles -= fuel.moles * used_fuel_ratio * used_reactants_ratio
+			fuel.moles -= fuel.moles * used_fuel_ratio * used_reactants_ratio * 5 //Fuel burns 5 times as quick
 			if(fuel.moles <= 0) del fuel
 
 		if(liquid)
-			liquid.amount -= liquid.amount * used_fuel_ratio * used_reactants_ratio
+			liquid.amount -= liquid.amount * used_fuel_ratio * used_reactants_ratio * 5 // liquid fuel burns 5 times as quick
 			if(liquid.amount <= 0) del liquid
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
@@ -258,7 +258,10 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 	var/value = 0
 
 	if(oxygen && (toxins || fuel || liquid))
-		value = 1
+		if(toxins && toxins < MOLES_PLASMA_VISIBLE)
+			value = 0
+		else
+			value = 1
 
 	return value
 
