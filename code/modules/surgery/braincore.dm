@@ -99,6 +99,7 @@
 		B.transfer_identity(target)
 
 		target:brain_op_stage = 4.0
+		target:afterlife = 200
 		target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

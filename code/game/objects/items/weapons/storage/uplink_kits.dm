@@ -9,7 +9,6 @@
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 				return
 
-			if ("stealth")
 			if("stealth")
 				new /obj/item/weapon/gun/energy/crossbow(src)
 				new /obj/item/weapon/pen/paralysis(src)
@@ -59,6 +58,7 @@
 				return
 
 			if("smoothoperator")
+				world.log << "Picked smoothoperator"
 				new /obj/item/weapon/gun/projectile/pistol(src)
 				new /obj/item/weapon/silencer(src)
 				new /obj/item/weapon/soap/syndie(src)

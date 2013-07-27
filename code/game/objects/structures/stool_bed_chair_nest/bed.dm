@@ -120,7 +120,11 @@
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = src.loc
+			spawn(1)
+				buckled_mob.loc = src.loc
 		else
+			buckled_mob.buckled = null
+			buckled_mob.resting = 0
 			buckled_mob = null
 
 /obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
