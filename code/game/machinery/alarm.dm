@@ -139,6 +139,8 @@
 		name = "[alarm_area.name] Air Alarm"
 
 	update_icon()
+	if(ticker && ticker.current_state == 3)//if the game is running
+		src.initialize()
 
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
