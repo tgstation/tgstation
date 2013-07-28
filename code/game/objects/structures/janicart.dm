@@ -303,6 +303,7 @@
 			unbuckle()
 		visible_message("<span class='warning'>The pimpin' ride explodes!</span>")
 		explosion(src.loc,-1,0,2,7,10)
+		icon_state = "pussywagon_destroyed"
 
 /obj/structure/stool/bed/chair/janicart/ex_act(severity)
 	switch (severity)
