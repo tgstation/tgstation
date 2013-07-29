@@ -4,9 +4,9 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
-	//message_admins("[name] assigned to block #[assigned].") Pomf: Debug
-	//testing("[name] assigned to block #[assigned].") Pomf: Debug
-		return assigned
+	//Debug message_admins("[name] assigned to block #[assigned].")
+	testing("[name] assigned to block #[assigned].")
+	return assigned
 
 /proc/setupgenetics()
 
