@@ -93,7 +93,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/revolver
 	name = "Revolver"
-	desc = "A projectile velocitor. Holds seven rounds 'cause it's nice. One in the chamber, six in the revolver. Two in the face and they'll fall over."
+	desc = "A projectile velocitor. Holds seven rounds, 'cause it's nice. One in the chamber, six in the revolver. Two in the face, and they'll fall over."
 	item = /obj/item/weapon/gun/projectile
 	cost = 6
 
@@ -123,7 +123,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
-	desc = "Useful for when your target is reading or something. Just like they taught you in the movies: pull the pin, then throw. We don't recommend holding a primed Minibomb for longer than five seconds."
+	desc = "Useful for when your target is reading or something. Just like they taught you in the movies: prime, then throw. We here at the syndicate don't recommend holding a primed Minibomb for longer than five seconds."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
 
@@ -182,7 +182,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Scan an object with this, activate the projector, and suddenly you look like that object! While disguised as an object, you can only move at walking speed, and projectiles pass over you."
+	desc = "Scan an object with this, activate the projector, and suddenly you're an inanimate object! While disguised as an inanimate object, you animate at walking speed, and projectiles will pass over you."
 	item = /obj/item/device/chameleon
 	cost = 4
 
@@ -253,19 +253,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
-	desc = "Pulls singularities towards it. Useful for bringing a station to its knees. Expect the emergency shuttle to be called."
+	desc = "Pulls singularities towards it. Useful if you put the station in-between the singularity and the beacon. Expect the emergency shuttle to be called."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
-	desc = "'Oh my Space God, Captain, a bomb!' Wrench this down, unless you want the mime to push it out of an airlock."
+	desc = "'Oh my God, NT, a bomb!' Wrench this down, unless you want the HoS to dropkick it out an airlock."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
-	desc = "Used to complete the teleporter on your mothership. Always test before using, as syndicate health coverage does not extend to fly monstrosities."
+	desc = "Used to complete the teleporter on the mothership. Always test before using, as syndicate health coverage does not extend to fly monstrosities."
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
 	gamemodes = list("nuclear emergency")
@@ -278,7 +278,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
-	desc = "Pull a facial muscle to slip off your cuffs!"
+	desc = "Pull a facial muscle to slip off your cuffs."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 3
 
@@ -296,13 +296,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
-	desc = "A box of crap that's been sitting in my office for some time now. Some of this stuff isn't standard issue, and probably amounts to more than your allotted allowance. But I'm nice, so you can have it."
+	desc = "A box of crap that's been sitting in my office for some time now. Some of this stuff isn't standard issue, and probably amounts to more than your allotted allowance. But I'm nice. You can have it."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that You Are The Boss"
-	desc = "It's a balloon. Has the easily recognisable syndicate logo on it. Cannot be popped, and the helium will never escape from its mass. Great for parties on the mothership."
+	desc = "It's a balloon. Has the easily recognisable syndicate logo on it. Cannot be popped, and the helium will never escape from its mass. Great for partying on the mothership."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
 
