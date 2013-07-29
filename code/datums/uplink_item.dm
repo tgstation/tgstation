@@ -93,7 +93,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/revolver
 	name = "Revolver"
-	desc = "A projectile velocitor. Holds seven rounds, 'cause it's nice. One in the chamber, six in the revolver. Two in the face and they'll fall over."
+	desc = "A projectile velocitor. Holds seven rounds 'cause it's nice. One in the chamber, six in the revolver. Two in the face and they'll fall over."
 	item = /obj/item/weapon/gun/projectile
 	cost = 6
 
@@ -111,7 +111,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
-	desc = "Loud as fuck and used in six space wars, this energy sword not only burns holes in people, it's great for cutting vegetables."
+	desc = "Quite loud. Used in six Space Wars, this energy sword not only burns holes in people, it's great for cutting vegetables."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 4
 
@@ -123,7 +123,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
-	desc = "Useful for when your target is reading or something. Just like they taught you in movies: pull the pin, then throw. We don't recommend holding a primed Minibomb for longer than five seconds."
+	desc = "Useful for when your target is reading or something. Just like they taught you in the movies: pull the pin, then throw. We don't recommend holding a primed Minibomb for longer than five seconds."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
 
@@ -164,18 +164,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Syndicate Shoes"
-	desc = "Brown shoes that prevent slipping. Useful for navigating slippery floors. Perhaps you made the slippery floors. Perhaps the slippery floors were outside security. Perhaps you rendered the HoS into a floorbound pile of leather? Now you're thinking with clowns."
+	desc = "Brown shoes that prevent slipping. Useful for navigating slippery floors. Perhaps you made the slippery floors. Perhaps the slippery floors were outside security. Perhaps you rendered the HoS into a floorbound pile of leather. Now you're thinking with clowns."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent ID Card"
-	desc = "A card which makes you untrackable by the AI, and can copy access from other ID cards. The access accumulates, so collect them all."
+	desc = "A card which makes you untrackable by the AI, and can copy access from other ID cards. The access accumulates, so collect 'em all!"
 	item = /obj/item/weapon/card/id/syndicate
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
+	item = /obj/item/clothing/mask/gas/voice
 	desc = "A creepy-looking gas mask that mimics the voice of the crewmember named on your ID card. If you aren't wearing an ID, it will simply anonymise your voice, which isn't suspicious at all."
 	cost = 4
 
@@ -246,13 +247,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/powersink
 	name = "Powersink"
-	desc = "When screwed to a wire attached to an electrical grid, this bulky device sucks all the power out of it. Don't order this in public, numbnuts. You think you've got problems with pocket spaghetti, try pocket powersinks."
+	desc = "When screwed to a wire attached to an electrical grid, this bulky device sucks all the power out of it. Don't order this in public, numbnuts."
 	item = /obj/item/device/powersink
 	cost = 5
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
-	desc = "Pulls singularities towards it. Useful for bringing the station to its knees. Expect the emergency shuttle to be called."
+	desc = "Pulls singularities towards it. Useful for bringing a station to its knees. Expect the emergency shuttle to be called."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
 
@@ -295,19 +296,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
-	desc = "A box of crap that's been sitting in my office for some time now. Some of this shit is not standard issue, and probably amounts to more than your allotted allowance. But I'm nice, you can have it."
+	desc = "A box of crap that's been sitting in my office for some time now. Some of this stuff isn't standard issue, and probably amounts to more than your allotted allowance. But I'm nice, so you can have it."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that You Are The Boss"
-	desc = "It's a balloon. Has the easily recognisable syndicate logo on it. Cannot be popped, and the helium will never escape. Great for parties on the mothership."
+	desc = "It's a balloon. Has the easily recognisable syndicate logo on it. Cannot be popped, and the helium will never escape from its mass. Great for parties on the mothership."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
 
 /datum/uplink_item/badass/random
 	name = "Random Item (??)"
-	desc = "Spin the wheel! Try not to end up with bullets for a gun you don't have!"
+	desc = "Can't think of a strategy? Let fate decide for you!"
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
