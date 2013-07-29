@@ -103,7 +103,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(5, 8)
+	absorb_objective.gen_amount_goal(5, 7)
 	changeling.objectives += absorb_objective
 
 	var/datum/objective/assassinate/kill_objective = new
@@ -111,23 +111,23 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	kill_objective.find_target()
 	changeling.objectives += kill_objective
 
-	var/datum/objective/steal/steal_objective = new
-	steal_objective.owner = changeling
-	steal_objective.find_target()
-	changeling.objectives += steal_objective
-
-
 	switch(rand(1,100))
-		if(1 to 80)
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = changeling
-				changeling.objectives += escape_objective
+		if(1 to 60)
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = changeling
+			steal_objective.find_target()
+			changeling.objectives += steal_objective
 		else
-			if (!(locate(/datum/objective/survive) in changeling.objectives))
-				var/datum/objective/survive/survive_objective = new
-				survive_objective.owner = changeling
-				changeling.objectives += survive_objective
+			var/datum/objective/debrain/debrain_objective = new
+			debrain_objective.owner = changeling
+			debrain_objective.find_target()
+			changeling.objectives += debrain_objective
+
+	if (!(locate(/datum/objective/escape) in changeling.objectives))
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = changeling
+		changeling.objectives += escape_objective
+
 	return
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
@@ -190,7 +190,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
-			text += "<br><b>Genomes Absorbed:</b> [changeling.changeling.absorbedcount]"
+			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.absorbedcount]"
 
 			if(changeling.objectives.len)
 				var/count = 1
