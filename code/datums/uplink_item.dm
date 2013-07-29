@@ -99,13 +99,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
-	desc = "Seven additional rounds for the revolver. Reports indicate the presence of machinery on board Nanotrasen space stations suitable for self-producing .357 cartridges."
+	desc = "Seven additional rounds for the revolver. Reports indicate the presence of machinery aboard Nanotrasen space stations suitable for producing extra .357 cartridges."
 	item = /obj/item/ammo_magazine/a357
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Energy Crossbow"
-	desc = "Fires toxin darts that cause a lengthy stun. Fools won't see you bagging it, or know whose dart it was that hit them. Pocketable. Synthesises ammunition over time."
+	name = "Miniature Energy Crossbow"
+	desc = "A miniature energy crossbow that is small enough both to fit into a pocket and to slip into a backpack unnoticed by observers. Fires bolts tipped with toxin, a poisonous substance that is the product of a living organism. Stuns enemies for a short period of time. Recharges automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
 
