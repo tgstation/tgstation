@@ -402,7 +402,7 @@
 	M.sdisabilities = 0
 	var/old_mutations = M.mutations
 	M.mutations = list()
-
+	M.pass_flags = 0
 //	M.see_in_dark = 2
 //	M.see_invisible = 0
 
@@ -423,22 +423,25 @@
 		if(probinj(45,inj) || (mRemote in old_mutations))
 			M << "\blue Your mind expands"
 			M.mutations.Add(mRemote)
+			M.verbs += /mob/living/carbon/human/proc/remoteobserve
 	if(ismuton(REGENERATEBLOCK,M))
 		if(probinj(45,inj) || (mRegen in old_mutations))
-			M << "\blue You feel strange"
+			M << "\blue You feel better"
 			M.mutations.Add(mRegen)
 	if(ismuton(INCREASERUNBLOCK,M))
 		if(probinj(45,inj) || (mRun in old_mutations))
-			M << "\blue You feel quick"
+			M << "\blue Your leg muscles pulsate."
 			M.mutations.Add(mRun)
 	if(ismuton(REMOTETALKBLOCK,M))
 		if(probinj(45,inj) || (mRemotetalk in old_mutations))
 			M << "\blue You expand your mind outwards"
 			M.mutations.Add(mRemotetalk)
+			M.verbs += /mob/living/carbon/human/proc/remotesay
 	if(ismuton(MORPHBLOCK,M))
 		if(probinj(45,inj) || (mMorph in old_mutations))
 			M.mutations.Add(mMorph)
 			M << "\blue Your skin feels strange"
+			M.verbs += /mob/living/carbon/human/proc/morph
 	if(ismuton(BLENDBLOCK,M))
 		if(probinj(45,inj) || (mBlend in old_mutations))
 			M.mutations.Add(mBlend)
@@ -446,7 +449,7 @@
 	if(ismuton(HALLUCINATIONBLOCK,M))
 		if(probinj(45,inj) || (mHallucination in old_mutations))
 			M.mutations.Add(mHallucination)
-			M << "\blue Your mind says 'Hello'"
+			M << "\red Your mind says 'Hello'"
 	if(ismuton(NOPRINTSBLOCK,M))
 		if(probinj(45,inj) || (mFingerprints in old_mutations))
 			M.mutations.Add(mFingerprints)
@@ -454,11 +457,12 @@
 	if(ismuton(SHOCKIMMUNITYBLOCK,M))
 		if(probinj(45,inj) || (mShock in old_mutations))
 			M.mutations.Add(mShock)
-			M << "\blue You feel strange"
+			M << "\blue Your skin feels strange"
 	if(ismuton(SMALLSIZEBLOCK,M))
 		if(probinj(45,inj) || (mSmallsize in old_mutations))
 			M << "\blue Your skin feels rubbery"
 			M.mutations.Add(mSmallsize)
+			M.pass_flags |= 1
 
 
 

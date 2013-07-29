@@ -273,6 +273,7 @@
 
 	proc/breathe()
 		if(reagents.has_reagent("lexorin")) return
+		if(mNobreath in mutations) return // No breath mutation means no breathing.
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/datum/organ/internal/lungs/L = internal_organs["lungs"]
@@ -928,6 +929,14 @@
 		else				//ALIVE. LIGHTS ARE ON
 			if(afterlife)
 				afterlife = 0
+			if(mRegen in mutations)
+				if(nutrition)
+					if(prob(10))
+						var/randumb = rand(1,5)
+						nutrition -= randumb
+						heal_overall_damage(randumb,randumb)
+					if(nutrition < 0)
+						nutrition = 0
 			updatehealth()	//TODO
 			if(!in_stasis)
 				handle_organs()

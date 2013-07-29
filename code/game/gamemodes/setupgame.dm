@@ -1,10 +1,20 @@
+var/global/list/assigned_blocks[STRUCDNASIZE]
+
+/proc/getAssignedBlock(var/name,var/list/blocksLeft)
+	var/assigned = pick(blocksLeft)
+	blocksLeft.Remove(assigned)
+	assigned_blocks[assigned]=name
+	//message_admins("[name] assigned to block #[assigned].") Pomf: Debug
+	//testing("[name] assigned to block #[assigned].") Pomf: Debug
+		return assigned
+
 /proc/setupgenetics()
 
 	if (prob(50))
 		BLOCKADD = rand(-300,300)
 	if (prob(75))
 		DIFFMUT = rand(0,20)
-
+/*
 	var/list/avnums = new/list()
 	var/tempnum
 
@@ -41,6 +51,42 @@
 	tempnum = pick(avnums)
 	avnums.Remove(tempnum)
 	BLINDBLOCK = tempnum
+	*/
+//Thanks to nexis for the fancy code
+	var/list/numsToAssign=new()
+	for(var/i=1;i<STRUCDNASIZE;i++)
+		numsToAssign += i
+
+	testing("Assigning DNA blocks:")
+	message_admins("Assigning DNA blocks:")
+	// Standard muts
+	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
+	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
+	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign)
+	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign)
+	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign)
+	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign)
+	CLUMSYBLOCK        = getAssignedBlock("CLUMSY",        numsToAssign)
+	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign)
+	COUGHBLOCK         = getAssignedBlock("COUGH",         numsToAssign)
+	GLASSESBLOCK       = getAssignedBlock("GLASSES",       numsToAssign)
+	EPILEPSYBLOCK      = getAssignedBlock("EPILEPSY",      numsToAssign)
+	TWITCHBLOCK        = getAssignedBlock("TWITCH",        numsToAssign)
+	NERVOUSBLOCK       = getAssignedBlock("NERVOUS",       numsToAssign)
+
+	// Bay muts
+	HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
+	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign)
+	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign)
+	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign)
+	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign)
+	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign)
+	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign)
+	BLENDBLOCK         = getAssignedBlock("BLEND",         numsToAssign)
+	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
+	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign)
+	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
+	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign)
 
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
