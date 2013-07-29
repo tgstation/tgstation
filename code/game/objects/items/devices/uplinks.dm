@@ -40,11 +40,12 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		// Loop through items in category
 		for(var/datum/uplink_item/item in buyable_items[category])
 			i++
+			var/desc = "[item.desc]"
 			var/cost_text = ""
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
-				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text]<BR>"
+				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text]<BR>[desc]<BR>"
 			else
 				dat += "<font color='grey'><i>[item.name] [cost_text]</i></font><BR>"
 
