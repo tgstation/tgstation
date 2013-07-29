@@ -58,7 +58,6 @@
 				return
 
 			if("smoothoperator")
-				world.log << "Picked smoothoperator"
 				new /obj/item/weapon/gun/projectile/pistol(src)
 				new /obj/item/weapon/silencer(src)
 				new /obj/item/weapon/soap/syndie(src)
