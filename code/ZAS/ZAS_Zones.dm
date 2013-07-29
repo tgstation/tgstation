@@ -263,6 +263,9 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 					ShareRatio( air , Z.air , connected_zones[Z] + unsimulated_boost)
 
 		for(var/zone/Z in closed_connection_zones)
+			//If that zone has already processed, skip it.
+			if(Z.last_update > last_update)
+				continue
 			if(air && Z.air)
 				if( abs(air.temperature - Z.air.temperature) > vsc.connection_temperature_delta )
 					ShareHeat(air, Z.air, closed_connection_zones[Z])
