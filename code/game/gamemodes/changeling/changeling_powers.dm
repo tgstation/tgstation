@@ -285,12 +285,12 @@
 //Recover from stuns.
 /mob/living/carbon/proc/changeling_unstun()
 	set category = "Changeling"
-	set name = "Epinephrine Overdose (35)"
+	set name = "Epinephrine Overdose (30)"
 	set desc = "Removes all stuns instantly, and adds a short-term reduction in further stuns."
 
-	var/datum/changeling/changeling = changeling_power(35,0,100,UNCONSCIOUS)
+	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
-	changeling.chem_charges -= 35
+	changeling.chem_charges -= 30
 
 	src << "<span class='notice'>We arise.</span>"
 	stat = 0
@@ -364,12 +364,12 @@
 //Heals the things that the other regenerative abilities don't.
 /mob/living/carbon/proc/changeling_panacea()
 	set category = "Changeling"
-	set name = "Anatomic Panacea (35)"
+	set name = "Anatomic Panacea (25)"
 	set desc = "Cures diseases, disabilities, toxins and radiation."
 
-	var/datum/changeling/changeling = changeling_power(35,0,100,UNCONSCIOUS)
+	var/datum/changeling/changeling = changeling_power(25,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
-	src.mind.changeling.chem_charges -= 35
+	src.mind.changeling.chem_charges -= 25
 
 	src << "<span class='notice'>We cleanse impurities from our form.</span>"
 	reagents.add_reagent("ryetalyn", 10)
@@ -414,7 +414,6 @@
 	spawn(0)
 		for(var/i = 0, i<10,i++)
 			adjustBruteLoss(-10)
-			adjustToxLoss(-10)
 			adjustOxyLoss(-10)
 			adjustFireLoss(-10)
 			sleep(10)
@@ -626,10 +625,10 @@ var/list/datum/dna/hivemind_bank = list()
 
 /mob/living/carbon/proc/changeling_blind_sting()
 	set category = "Changeling"
-	set name = "Blind Sting (30)"
+	set name = "Blind Sting (25)"
 	set desc= "Temporarily blinds the target."
 
-	var/mob/living/carbon/T = changeling_sting(30,/mob/living/carbon/proc/changeling_blind_sting)
+	var/mob/living/carbon/T = changeling_sting(25,/mob/living/carbon/proc/changeling_blind_sting)
 	if(!T)	return 0
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
 	T.disabilities |= NEARSIGHTED

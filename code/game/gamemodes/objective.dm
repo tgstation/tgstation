@@ -458,7 +458,7 @@ datum/objective/absorb
 						n_p ++
 			target_amount = min(target_amount, n_p)
 
-		explanation_text = "Absorb [target_amount] compatible genomes."
+		explanation_text = "Extract [target_amount] compatible genomes."
 		return target_amount
 
 	check_completion()
