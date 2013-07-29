@@ -361,7 +361,8 @@ Auto Patrol: []"},
 
 
 		if(SECBOT_START_PATROL)	// start a patrol
-
+			if(!path || !istype(path))
+				path = list()
 			if(path.len > 0 && patrol_target)	// have a valid path, so just resume
 				mode = SECBOT_PATROL
 				return
