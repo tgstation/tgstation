@@ -77,7 +77,9 @@ mob/living/carbon/proc/handle_hallucinations()
 								halitem.name = "Flashbang"
 						if(client) client.screen += halitem
 						spawn(rand(100,250))
-							del halitem
+							if(client)
+								client.screen -= halitem
+							halitem = null
 			if(26 to 40)
 				//Flashes of danger
 				//src << "Danger Flash"

@@ -377,7 +377,8 @@ proc/airborne_can_reach(turf/source, turf/target)
 	name = "Telepathy Syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.mutations |= 512
+		mob.mutations |= 104
+		mob:verbs += /mob/living/carbon/human/proc/remotesay
 
 /*/datum/disease2/effect/greater/noface
 	name = "Identity Loss syndrome"
@@ -430,7 +431,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.setBrainLoss(50)
-
+/* stupid disease really
 /datum/disease2/effect/greater/suicide
 	name = "Suicidal syndrome"
 	stage = 4
@@ -442,7 +443,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 		mob.updatehealth()
 		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
 			mob.suiciding = 0
-
+*/
 // lesser syndromes, partly just copypastes
 /datum/disease2/effect/lesser/mind
 	name = "Lazy mind syndrome"

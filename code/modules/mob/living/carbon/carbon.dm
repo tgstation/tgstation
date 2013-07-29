@@ -325,6 +325,11 @@
 	var/obj/item/W = get_active_hand()
 	if( !W )//Not holding anything
 		if( client && (TK in mutations) )
+			if(ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(H.remoteview_target)
+					H << "\red Your mind is too busy remote viewing."
+					return
 			var/obj/item/tk_grab/O = new(src)
 			put_in_active_hand(O)
 			O.host = src

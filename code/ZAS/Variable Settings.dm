@@ -62,6 +62,13 @@ vs_control/var
 	airflow_mob_slowdown_NAME = "Airflow Slowdown"
 	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
 
+	var/connection_insulation = 0.4
+	var/connection_insulation_NAME = "Connections - Insulation"
+	var/connection_insulation_DESC = "How insulative a connection is, in terms of heat transfer.  1 is perfectly insulative, and 0 is perfectly conductive."
+
+	var/connection_temperature_delta = 10
+	var/connection_temperature_delta_NAME = "Connections - Temperature Difference"
+	var/connection_temperature_delta_DESC = "The smallest temperature difference which will cause heat to travel through doors."
 
 vs_control
 	var
