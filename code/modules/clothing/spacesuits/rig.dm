@@ -44,6 +44,17 @@
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 75)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 
+//Atmospherics
+/obj/item/clothing/head/helmet/space/rig/atmos
+	name = "atmospherics hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding. This one is assigned to the Atmospherics division."
+	icon_state = "rig0-atmospherics"
+	color = "atmospherics"
+
+/obj/item/clothing/suit/space/rig/atmos
+	name = "atmospherics hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding. This one is assigned to the Atmospherics division."
+	icon_state = "rig-atmospherics"
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite
