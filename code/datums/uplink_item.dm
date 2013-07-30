@@ -134,19 +134,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
-	desc = "A syringe disguised as a pen, filled with a neuromuscular-blocking drug that renders a target immobile upon injection. The target will appear dead to observers. Side-effects of the drug include noticeable drooling, as subjects are unable to swallow their saliva. Health analysers are able to see past the muscle relaxant's effects. The pen only holds enough paralyzing agent for one dose, and cannot be refilled."
+	desc = "A syringe disguised as a pen, filled with a neuromuscular-blocking drug that renders the target immobile upon injection, making them appear deceased to observers. Side-effects of the drug include noticeable drooling, as those under its influence are unable to swallow their saliva. Health Scanner HUDs are able to see through the muscle relaxant's effects. The pen only holds one dose of paralyzing agent, and cannot be refilled. Works as a regular pen."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
-	desc = "Useful for cleaning up bloodstains to prevent forensics from analysing them for their DNA content. Can be thrown underfoot to slip crew."
+	desc = "Useful for cleaning up bloodstains to conceal an assassination and prevent forensics from analysing the blood for its DNA content. Can be dropped underfoot to slip crew."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
-	desc = "Inserting this cartridge into your PDA will give you five opportunities to detonate the PDAs of crewmembers who have their messaging feature enabled. The concussive effect from the explosion will knock them out for a short period of time, and deafen them for longer."
+	desc = "Inserting this cartridge into a PDA will give an agent five opportunities to detonate the PDAs of crewmembers who have their messaging feature enabled. The concussive effect from the explosion will knock the recepient out for a short period of time, and deafen them for longer. Has a chance to detonate the agent's PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
@@ -164,7 +164,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Syndicate Shoes"
-	desc = "Useful for slipping opponents without being slipped yourself."
+	desc = "Help an agent slip opponents over on wet floors without being slipped themselves. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 2
 
@@ -182,13 +182,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Disguises the user as any handheld object. While disguised, the user can only move at walking pace, and projectiles will pass over them."
+	desc = "Disguises the user as an object scanned with the projector. While disguised, the user can only move at walking pace, and projectiles will pass over them."
 	item = /obj/item/device/chameleon
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
-	desc = "Allows an agent to bug cameras, to make them viewable remotely. Highly moddable, adding certain items to it alters its functions."
+	desc = "Allows an agent to bug cameras, to make them viewable remotely. Extensible, modding it with certain items alters its function."
 	item = /obj/item/device/camera_bug
 	cost = 2
 
@@ -217,49 +217,49 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
-	desc = "Glasses that allow an agent to see organics and synthetics through walls. They do this by capturing the upper portion of the infrared light spectrum, which is emitted as heat by objects instead of simply reflected as light. Hotter objects, such as warm bodies and cyborgs, emit more of this light than cooler objects like walls and other structures."
+	desc = "Thermals disguised as engineers' optical meson scanners. They allow an agent to see organic and synthetic lifeforms through walls. They do this by capturing the upper portion of the infrared light spectrum, which is emitted as heat by objects instead of simply reflected as light. Hotter objects, such as warm bodies, cyborgs and AIs, emit more of this light than cooler objects like walls and other structures."
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 3
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
-	desc = "A key, that when inserted into a radio headset, allows its wearer to listen to and converse on the binary frequency used by AIs and cyborgs. Nanotrasen do not posess this technology, so an agent can expect Asimov synthetics to report them to security if they converse with the AI or cyborgs using it."
+	desc = "A key, that when inserted into a radio headset, allows the listener to eavesdrop and converse on the binary frequency used by AIs and cyborgs. Nanotrasen do not posess this technology, so an agent can expect Asimov synthetics to report them to security if they converse with them using it."
 	item = /obj/item/device/encryptionkey/binary
 	cost = 3
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Disguised AI Detector"
-	desc = "A multitool that turns red when it detects an AI watching it or its holder. Useful for knowing when to behave. Functions as a regular multitool."
+	desc = "A multitool that turns red when it detects an AI watching it or its holder. Useful for knowing when to maintain cover. Functions as a regular multitool."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
-	desc = "When used in conjuction with an AI upload console, this upload module allows the user to upload first priority laws to the AI. An agent is advised to be precise with the wording of their laws."
+	desc = "When used in conjuction with an AI upload console, this upload module allows the user to upload first priority laws to an AI. Agents are advised to be precise with their law wording, as AIs may look for loopholes in a law to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
-	desc = "A common variety of the plastic explosive known as Composition C. Used by agents to breach walls. Can be attached to organics or synthetics to destroy them."
+	desc = "A common variety of the plastic explosive known as Composition C. Used by agents to breach walls. Can be attached to organics or synthetics to destroy them. Has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 2
 
 /datum/uplink_item/device_tools/powersink
 	name = "Powersink"
-	desc = "When screwed to wiring attached to an electrical grid, this large device places excessive load on the grid, causing an overcurrent. Due to the size of the sink, it cannot be carried. It is advised that it is only ordered in the area of its intended use."
+	desc = "When screwed to wiring attached to an electrical grid, then activated, this large device places excessive load on the grid, causing an overcurrent. Due to the size of the sink, it cannot be carried. Ordering this will send an agent a small beacon that, when activated, will teleport the powersink to its location."
 	item = /obj/item/device/powersink
 	cost = 5
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
-	desc = "Pulls singularities towards it. Has the capacity to cause massive damage to a space station, leading to a full emergency evacuation."
+	desc = "When screwed to wiring attached to an electrical grid, then activated, this large device pulls singularities towards it. Has the capacity to cause massive damage to a space station, leading to an emergency evacuation. Due to the size of the sink, it cannot be carried. Ordering this will send an agent a small beacon that when activated, will teleport the larger beacon to their location."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
-	desc = "A large explosive device that cannot fit into backpacks. Has an adjustable timer with a minimum setting of 30 seconds. Can be wrenched down to prevent removal. Possibility of defusal apparent."
+	desc = "A large explosive device. It cannot be carried. Has an adjustable timer with a minimum setting of 30 seconds. Can be wrenched down to prevent removal. Possibility of defusal apparent. Ordering this will send an agent a small beacon that when activated, will teleport the bomb to their location."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
 
@@ -278,13 +278,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
-	desc = "An implant designed to be injected into an agent's body. When activated with a predefined gesture, the implant will attempt to remove an agent's restraints."
+	desc = "An implant designed to be injected into an agent's body. When activated with a predefined bodily gesture, the implant will attempt to remove an agent's restraints."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 3
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant designed to be injected into an agent's body. When activated with a predefined gesture, this implant will grant an agent access to a syndicate uplink with 5 telecrystals. Useful for escaping confinement."
+	desc = "An implant designed to be injected into an agent's body. When activated with a predefined bodily gesture, the implant will grant an agent access to a syndicate uplink with 5 telecrystals. Useful for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
@@ -302,13 +302,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that You Are The Boss"
-	desc = "A red balloon, with an easily recognisable syndicate logo on it. Designed to lower morale among NT employees, as an agent forgoing useful equipment for a pointless balloon is a sure sign of a badass."
+	desc = "A red balloon, with an easily recognisable syndicate logo on it. Designed to lower morale among NT employees, as an agent forgoing useful equipment for a pointless balloon must be a badass."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
 
 /datum/uplink_item/badass/random
 	name = "Random Item (??)"
-	desc = "This will send an agent a random item from the list. Useful for amateur agents that find the task ahead of them so daunting that they cannot think clearly enough to formulate a strategy to tackle it with."
+	desc = "This will send an agent a random item from this list. Useful for amateur agents that find the task ahead of them so daunting that they cannot think clearly enough to formulate a strategy to tackle it with."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
