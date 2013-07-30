@@ -134,7 +134,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
-	desc = "A syringe disguised as a pen, filled with a neuromuscular-blocking drug that renders the target immobile upon injection, making them appear deceased to observers. Side-effects of the drug include noticeable drooling, as those under its influence are unable to swallow their saliva. Health Scanner HUDs are able to see through the muscle relaxant's effects. The pen only holds one dose of paralyzing agent, and cannot be refilled. Works as a regular pen."
+	desc = "A syringe disguised as a pen, filled with a neuromuscular-blocking drug that renders the target immobile upon injection, making them appear deceased to observers. Side-effects of the drug include noticeable drooling, as those under its influence are unable to swallow their saliva. The pen only holds one dose of paralyzing agent, and cannot be refilled. Works as a regular pen."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
 
