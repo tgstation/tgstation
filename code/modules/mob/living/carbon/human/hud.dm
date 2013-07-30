@@ -275,6 +275,13 @@
 	mymob.pullin.screen_loc = ui_pull_resist
 	hotkeybuttons += mymob.pullin
 
+	lingchemdisplay = new /obj/screen()
+	lingchemdisplay.name = "chemical storage"
+	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.layer = 20
+	lingchemdisplay.invisibility = 101
+
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
@@ -303,7 +310,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	inventory_shown = 0;
 
@@ -330,23 +337,29 @@
 		return
 
 	client.screen -= hud_used.item_action_list
-	hud_used.item_action_list = list()
 
 	for(var/obj/item/I in src)
 		if(I.action_button_name)
-			var/obj/screen/item_action/A = new(hud_used)
+			if(hud_used.item_action_list.len < num)
+				var/obj/screen/item_action/N = new(hud_used)
+				hud_used.item_action_list += N
+
+			var/obj/screen/item_action/A = hud_used.item_action_list[num]
+
 			A.icon = ui_style2icon(client.prefs.UI_style)
 			A.icon_state = "template"
-			var/image/img = image(I.icon, I.icon_state)
+
+			A.overlays = list()
+			var/image/img = image(I.icon, A, I.icon_state)
 			img.pixel_x = 0
 			img.pixel_y = 0
 			A.overlays += img
-			if(I.action_button_name)
-				A.name = I.action_button_name
-			else
-				A.name = "Use [I.name]"
+
+			A.name = I.action_button_name
 			A.owner = I
-			hud_used.item_action_list += A
+
+			client.screen += hud_used.item_action_list[num]
+
 			switch(num)
 				if(1)
 					A.screen_loc = ui_action_slot1
@@ -360,5 +373,3 @@
 					A.screen_loc = ui_action_slot5
 					break //5 slots available, so no more can be added.
 			num++
-
-	client.screen += hud_used.item_action_list

@@ -156,7 +156,7 @@ turf/simulated
 			else
 				air_master.active_singletons.Remove(src)
 		if(active_hotspot)
-			active_hotspot.Kill()
+			active_hotspot.garbage_collect()
 		if(air_master && blocks_air)
 			for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 				var/turf/simulated/tile = get_step(src,direction)

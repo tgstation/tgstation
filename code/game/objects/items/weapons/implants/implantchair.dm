@@ -54,24 +54,24 @@
 
 
 	Topic(href, href_list)
-		if((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))
-			if(href_list["implant"])
-				if(src.occupant)
-					injecting = 1
-					go_out()
-					ready = 0
-					spawn(injection_cooldown)
-						ready = 1
-
-			if(href_list["replenish"])
+		if(..())
+			return
+		if(href_list["implant"])
+			if(src.occupant)
+				injecting = 1
+				go_out()
 				ready = 0
-				spawn(replenish_cooldown)
-					add_implants()
+				spawn(injection_cooldown)
 					ready = 1
 
-			src.updateUsrDialog()
-			src.add_fingerprint(usr)
-			return
+		if(href_list["replenish"])
+			ready = 0
+			spawn(replenish_cooldown)
+				add_implants()
+				ready = 1
+
+		src.updateUsrDialog()
+		return
 
 
 	attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)

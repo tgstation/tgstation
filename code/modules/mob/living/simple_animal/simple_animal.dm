@@ -268,7 +268,7 @@
 						O.show_message("\blue [M] [response_help] [src].")
 
 		if("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			if (!(status_flags & CANPUSH))
 				return
@@ -304,7 +304,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 		if ("grab")
-			if(M == src)
+			if(M == src || anchored)
 				return
 			if(!(status_flags & CANPUSH))
 				return
@@ -457,6 +457,8 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
+	if(health < 1)
+		Die()
 
 /mob/living/simple_animal/proc/SA_attackable(target)
 	if (isliving(target))

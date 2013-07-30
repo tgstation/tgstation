@@ -37,7 +37,7 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [msg]")
-	
+
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
@@ -47,7 +47,7 @@
 		if(C.prefs.toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
-					if(holder.rights & R_ADMIN)
+					if(check_rights_for(src, R_ADMIN))
 						C << "<font color=[config.allow_admin_ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
@@ -68,7 +68,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "OOC Text Color"
 	set category = "Preferences"
 
-	if(!holder || !(holder.rights & R_ADMIN))
+	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())	return
 
 	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null

@@ -66,20 +66,19 @@
 		popup.open()
 
 	Topic(href, href_list)
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-			usr.set_machine(src)
-			if (href_list["start"])
-				src.on = !src.on
-				update_icon()
-			if(href_list["temp"])
-				var/amount = text2num(href_list["temp"])
-				if(amount > 0)
-					src.current_temperature = min(T20C, src.current_temperature+amount)
-				else
-					src.current_temperature = max((T0C - 200), src.current_temperature+amount)
+		if(..())
+			return
+		usr.set_machine(src)
+		if (href_list["start"])
+			src.on = !src.on
+			update_icon()
+		if(href_list["temp"])
+			var/amount = text2num(href_list["temp"])
+			if(amount > 0)
+				src.current_temperature = min(T20C, src.current_temperature+amount)
+			else
+				src.current_temperature = max((T0C - 200), src.current_temperature+amount)
 		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		return
 
 	process()
 		..()
@@ -150,6 +149,8 @@
 		onclose(user, "heater")
 
 	Topic(href, href_list)
+		if(..())
+			return
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 			usr.set_machine(src)
 			if (href_list["start"])

@@ -218,7 +218,7 @@
 		return 0
 	if(!isturf(O.loc))
 		return 0
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.lying)
 		return 0
 	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1))
 		return 0
