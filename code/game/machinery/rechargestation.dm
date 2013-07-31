@@ -9,7 +9,10 @@
 	active_power_usage = 1000
 	var/mob/living/silicon/robot/occupant = null
 	var/open = 1
-
+	var/construct_op = 0
+	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
+	var/locked = 1
+	req_access = list(access_robotics)
 
 
 /obj/machinery/recharge_station/New()
@@ -49,9 +52,134 @@
 /obj/machinery/recharge_station/attack_ai(user as mob)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attack_hand(mob/user)
+/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob)
+	if (istype(P, /obj/item/weapon/card/id/))
+		if (construct_op == 0)
+			if (src.allowed(user))
+				if	(emagged == 0)
+					if (locked == 1)
+						user << "You turn off the ID lock."
+						locked = 0
+						return
+					else if (locked == 0)
+						user << "You turn on the ID lock."
+						locked = 1
+						return
+				else
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(2, 1, src)
+					s.start()
+					user << "\red The ID lock is broken!"
+					return
+			return
+		else
+			user << "The ID lock can't be accessed in this state."
+	else if (istype(P, /obj/item/weapon/card/emag))
+		if (construct_op == 0)
+			if (emagged == 0)
+				emagged = 1
+				locked = 0
+				src.req_access = null
+				user << "\red You break the ID lock on the [src]."
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+				return
+		else
+			user << "The ID lock can't be accessed in this state."
+
+	if(locked == 0)
+		if(open == 1)
+			switch(construct_op)
+				if(0)
+					if(istype(P, /obj/item/weapon/screwdriver))
+						user << "You open the circuit cover."
+						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+						icon_state = "borgdecon1"
+						construct_op ++
+				if(1)
+					if(istype(P, /obj/item/weapon/screwdriver))
+						user << "You close the circuit cover."
+						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+						icon_state = "borgcharger0"
+						construct_op --
+					if(istype(P, /obj/item/weapon/wrench))
+						user << "You dislodge the internal plating."
+						playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+						icon_state = "borgdecon2"
+						construct_op ++
+				if(2)
+					if(istype(P, /obj/item/weapon/wrench))
+						user << "You secure the internal plating."
+						playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+						icon_state = "borgdecon1"
+						construct_op --
+					if(istype(P, /obj/item/weapon/wirecutters))
+						playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+						user << "You remove the cables."
+						icon_state = "borgdecon3"
+						construct_op ++
+						var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+						A.amount = 5
+						stat |= BROKEN // the machine's been borked!
+				if(3)
+					if(istype(P, /obj/item/weapon/cable_coil))
+						var/obj/item/weapon/cable_coil/A = P
+						if(A.amount >= 5)
+							user << "You insert the cables."
+							A.amount -= 5
+							if(A.amount <= 0)
+								user.drop_item()
+								del(A)
+							icon_state = "borgdecon2"
+							construct_op --
+							stat &= ~BROKEN // the machine's not borked anymore!
+						else
+							user << "You need more cable"
+					if(istype(P, /obj/item/weapon/crowbar))
+						user << "You begin prying out the circuit board and components..."
+						playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+						if(do_after(user,60))
+							user << "You finish prying out the components."
+
+							// Drop all the component stuff
+							if(contents.len > 0)
+								for(var/obj/x in src)
+									x.loc = user.loc
+							else
+
+								// If the machine wasn't made during runtime, probably doesn't have components:
+								// manually find the components and drop them!
+								var/newpath = text2path(circuitboard)
+								var/obj/item/weapon/circuitboard/C = new newpath
+								for(var/I in C.req_components)
+									for(var/i = 1, i <= C.req_components[I], i++)
+										newpath = text2path(I)
+										var/obj/item/s = new newpath
+										s.loc = user.loc
+										if(istype(P, /obj/item/weapon/cable_coil))
+											var/obj/item/weapon/cable_coil/A = P
+											A.amount = 1
+
+								// Drop a circuit board too
+								C.loc = user.loc
+
+							// Create a machine frame and delete the current machine
+							var/obj/machinery/constructable_frame/machine_frame/F = new
+							F.loc = src.loc
+							del(src)
+				else
+					user << "This needs to be open first."
+	else
+		user << "This needs to be unlocked first."
+
+
+/obj/machinery/recharge_station/attack_hand(user as mob)
 	if(..())	return
-	toggle_open()
+	if(construct_op == 0)
+		toggle_open()
+	else
+		user << "The recharger can't be closed in this state."
 	add_fingerprint(user)
 
 /obj/machinery/recharge_station/proc/toggle_open()
