@@ -82,7 +82,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign)
 	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign)
 	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign)
-	BLENDBLOCK         = getAssignedBlock("BLEND",         numsToAssign)
+	COLDBLOCK         = getAssignedBlock("COLD",         numsToAssign)
 	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
 	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign)
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)

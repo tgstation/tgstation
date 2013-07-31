@@ -89,7 +89,7 @@ obj
 					air_contents.trace_gases.Remove(fuel)
 
 			//check if there is something to combust
-			if(!air_contents.check_combustability(liquid))
+			if(!air_contents.check_recombustability(liquid))
 				//del src
 				RemoveFire()
 
@@ -120,7 +120,7 @@ obj
 					if(istype(enemy_tile))
 						var/datum/gas_mixture/acs = enemy_tile.return_air()
 						var/obj/effect/decal/cleanable/liquid_fuel/liq = locate() in enemy_tile
-						if(!acs.check_combustability(liq))
+						if(!acs.check_recombustability(liq))
 							return
 						//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 						//reduce firelevel.
@@ -140,7 +140,7 @@ obj
 ///////////////////////////////// FLOW HAS BEEN CREATED /// DONT DELETE THE FIRE UNTIL IT IS MERGED BACK OR YOU WILL DELETE AIR ///////////////////////////////////////////////
 
 			if(flow)
-				if(flow.check_combustability(liquid))
+				if(flow.check_recombustability(liquid))
 					//Ensure flow temperature is higher than minimum fire temperatures.
 						//this creates some energy ex nihilo but is necessary to get a fire started
 						//lets just pretend this energy comes from the ignition source and dont mention this again
@@ -148,7 +148,6 @@ obj
 
 					//burn baby burn!
 					flow.zburn(liquid,1)
-
 				//merge the air back
 				S.assume_air(flow)
 
@@ -193,7 +192,7 @@ turf/simulated/apply_fire_protection()
 datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid,force_burn)
 	var/value = 0
 
-	if((temperature > PLASMA_MINIMUM_BURN_TEMPERATURE || force_burn) && check_combustability(liquid) )
+	if((temperature > PLASMA_MINIMUM_BURN_TEMPERATURE || force_burn) && check_recombustability(liquid) )
 		var/total_fuel = 0
 		var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
@@ -232,7 +231,9 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid,force
 		//remove and add gasses as calculated
 		oxygen -= min(oxygen, total_oxygen * used_reactants_ratio )
 
-		toxins -= min(toxins, toxins * used_fuel_ratio * used_reactants_ratio )
+		toxins -= min(toxins, (toxins * used_fuel_ratio * used_reactants_ratio ) * 3)
+		if(toxins < 0)
+			toxins = 0
 
 		carbon_dioxide += max(2 * total_fuel, 0)
 
@@ -251,6 +252,23 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid,force
 		value = total_reactants * used_reactants_ratio
 	return value
 
+datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
+	//this is a copy proc to continue a fire after its been started.
+
+	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
+	var/value = 0
+
+	if(oxygen && (toxins || fuel || liquid))
+		if(liquid)
+			value = 1
+		else if (toxins && !value)
+			value = 1
+		else if(fuel && !value)
+			value = 1
+
+	return value
+
+
 datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this check comes up very often and is thus centralized here to ease adding stuff
 
@@ -258,13 +276,13 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 	var/value = 0
 
 	if(oxygen && (toxins || fuel || liquid))
-		if(toxins && toxins < MOLES_PLASMA_VISIBLE)
-			value = 0
-		if(fuel)
-			if(fuel.moles < (MOLES_PLASMA_VISIBLE / 2))
-				value = 0
-		else
+		if(liquid)
 			value = 1
+		else if (toxins >= 0.7 && !value)
+			value = 1
+		else if(fuel && !value)
+			if(fuel.moles >= 1.4)
+				value = 1
 
 	return value
 
@@ -275,7 +293,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 	var/total_fuel = 0
 	var/firelevel = 0
 
-	if(check_combustability(liquid))
+	if(check_recombustability(liquid))
 
 		total_fuel += toxins
 

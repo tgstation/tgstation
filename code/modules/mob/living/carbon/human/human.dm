@@ -1019,6 +1019,12 @@
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
 
+	if(istype(l_hand, /obj/item/tk_grab) || istype(r_hand, /obj/item/tk_grab/))
+		src << "\red Your mind is too busy with that telekinetic grab."
+		remoteview_target = null
+		reset_view(0)
+		return
+
 	if (target)
 		remoteview_target = target
 		reset_view(target)

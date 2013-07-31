@@ -51,6 +51,9 @@
 		if (!(COLD_RESISTANCE in user.mutations))
 			user.mutations.Add(COLD_RESISTANCE)
 
+		if (!(mHeatres in user.mutations))
+			user.mutations.Add(mHeatres)
+
 		if (!(TK in user.mutations))
 			user.mutations.Add(TK)
 

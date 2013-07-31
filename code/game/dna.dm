@@ -306,7 +306,7 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
+	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,COLDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
 	M.dna.check_integrity()
 	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
 	M.dna.struc_enzymes = newdna
@@ -442,10 +442,15 @@
 			M.mutations.Add(mMorph)
 			M << "\blue Your skin feels strange"
 			M.verbs += /mob/living/carbon/human/proc/morph
-	if(ismuton(BLENDBLOCK,M))
-		if(probinj(45,inj) || (mBlend in old_mutations))
-			M.mutations.Add(mBlend)
-			M << "\blue You feel alone"
+	if(ismuton(COLDBLOCK,M))
+		if(!(COLD_RESISTANCE in old_mutations))
+			if(probinj(15,inj) || (mHeatres in old_mutations))
+				M.mutations.Add(mHeatres)
+				M << "\blue Your skin is icy to the touch"
+		else
+			if(probinj(5,inj) || (mHeatres in old_mutations))
+				M.mutations.Add(mHeatres)
+				M << "\blue Your skin is icy to the touch"
 	if(ismuton(HALLUCINATIONBLOCK,M))
 		if(probinj(45,inj) || (mHallucination in old_mutations))
 			M.mutations.Add(mHallucination)
