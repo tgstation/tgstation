@@ -342,7 +342,7 @@
 						if (istype(location))
 							location.add_blood_floor(M)
 			if("fire")
-				if (!(COLD_RESISTANCE in M.mutations))
+				if (!(mHeatres in M.mutations))
 					M.take_organ_damage(0, power)
 					M << "Aargh it burns!"
 		M.updatehealth()

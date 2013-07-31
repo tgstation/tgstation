@@ -342,7 +342,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define mRun			103 	// no slowdown
 #define mRemotetalk		104 	// remote talking
 #define mMorph			105 	// changing appearance
-#define mBlend			106 	// nothing (seriously nothing)
+#define mHeatres		106 	// nothing (seriously nothing)
 #define mHallucination	107 	// hallucinations
 #define mFingerprints	108 	// no fingerprints
 #define mShock			109 	// insulated hands

@@ -406,6 +406,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 				lying.underlays		+= "fire[fat]_l"
 				standing.underlays	+= "fire[fat]_s"
 				add_image = 1
+			if(mHeatres)
+				lying.underlays		+= "cold[fat]_l"
+				standing.underlays	+= "cold[fat]_s"
+				add_image = 1
 			if(TK)
 				lying.underlays		+= "telekinesishead[fat]_l"
 				standing.underlays	+= "telekinesishead[fat]_s"
@@ -414,6 +418,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 				lying.overlays		+= "lasereyes_l"
 				standing.overlays	+= "lasereyes_s"
 				add_image = 1
+	if((COLD_RESISTANCE in mutations) && (mHeatres in mutations))
+		lying.underlays		-= "cold[fat]_l"
+		standing.underlays	-= "cold[fat]_s"
+		lying.underlays		-= "fire[fat]_l"
+		standing.underlays	-= "fire[fat]_s"
+		lying.underlays		+= "coldfire[fat]_l"
+		standing.underlays	+= "coldfire[fat]_s"
 	if(add_image)
 		overlays_lying[MUTATIONS_LAYER]		= lying
 		overlays_standing[MUTATIONS_LAYER]	= standing

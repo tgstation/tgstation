@@ -103,7 +103,7 @@
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || prob(50))
+			if((mHeatres in mutations) || prob(50))
 				switch(getFireLoss())
 					if(1 to 50)
 						adjustFireLoss(-1)

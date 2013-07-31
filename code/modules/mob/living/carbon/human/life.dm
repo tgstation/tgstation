@@ -215,7 +215,7 @@
 
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || (prob(1)))
+			if((mHeatres in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
 		if ((HULK in mutations) && health <= 25)
@@ -490,7 +490,7 @@
 						spawn(0) emote(pick("giggle", "laugh"))
 				SA.moles = 0
 
-		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
+		if( (abs(310.15 - breath.temperature) > 50) && !(mHeatres in mutations)) // Hot air hurts :(
 			if(status_flags & GODMODE)	return 1	//godmode
 			if(breath.temperature < 260.15)
 				if(prob(20))
@@ -595,8 +595,11 @@
 		if(status_flags & GODMODE)	return 1	//godmode
 		switch(adjusted_pressure)
 			if(HAZARD_HIGH_PRESSURE to INFINITY)
-				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-				pressure_alert = 2
+				if( !(mHeatres in mutations ))
+					adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+					pressure_alert = 2
+				else
+					pressure_alert = 1
 			if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
 				pressure_alert = 1
 			if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
@@ -677,6 +680,8 @@
 		var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
 		var/thermal_protection = 0.0
+		if(mHeatres in mutations)
+			return 1
 		if(thermal_protection_flags)
 			if(thermal_protection_flags & HEAD)
 				thermal_protection += THERMAL_PROTECTION_HEAD

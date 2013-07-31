@@ -52,6 +52,9 @@
 				if (!(COLD_RESISTANCE in user.mutations))
 					user.mutations.Add(COLD_RESISTANCE)
 					user << "\blue Your body feels warm."
+				if (!(mHeatres in user.mutations))
+					user.mutations.Add(mHeatres)
+					user << "\blue Your skin feels icy to the touch."
 				if (!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)
 					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
