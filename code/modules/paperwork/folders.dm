@@ -61,6 +61,13 @@
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
+			if(!(istype(P, /obj/item/weapon/paper)) && !(istype(P, /obj/item/weapon/photo)))
+				var/message = "<span class='warning'>[usr]([usr.key]) has tried to remove something other than a paper/photo from a folder.<span>"
+				message_admins(message)
+				message += "[P]"
+				log_game(message)
+				admin_log.Add(message)
+				return
 			if(P)
 				P.loc = usr.loc
 				usr.put_in_hands(P)
