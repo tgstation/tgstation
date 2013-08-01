@@ -342,7 +342,7 @@ var/list/blood_splatter_icons = list()
 		//if this blood isn't already in the list, add it
 		if(blood_DNA[M.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
-		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+		blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		return 1 //we applied blood to the item
 
 	//adding blood to turfs
@@ -352,7 +352,7 @@ var/list/blood_splatter_icons = list()
 		//get one blood decal and infect it with virus from M.viruses
 		var/obj/effect/decal/cleanable/blood/B = locate() in T.contents
 		if(!B)	B = new /obj/effect/decal/cleanable/blood(T)
-		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+		B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		return 1 //we bloodied the floor
 
 	//adding blood to humans
@@ -361,7 +361,7 @@ var/list/blood_splatter_icons = list()
 		//if this blood isn't already in the list, add it
 		if(blood_DNA[H.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
-		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+		blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 		H.update_inv_gloves()	//handles bloody hands overlays and updating
 		return 1 //we applied blood to the item
 	return
@@ -385,7 +385,7 @@ var/list/blood_splatter_icons = list()
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)	B = new(src)
-			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
 			if(!B)	B = new(src)

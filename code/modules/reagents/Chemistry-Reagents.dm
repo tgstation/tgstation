@@ -1659,8 +1659,8 @@ datum
 									H.update_damage_overlays(0)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream")
-									H.f_style = "Shaved"
-									H.h_style = "Bald"
+									H.facial_hair_style = "Shaved"
+									H.hair_style = "Bald"
 									H.update_hair(0)
 									H.status_flags |= DISFIGURED
 						else

@@ -369,7 +369,7 @@ Code:
 
 				menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
 				if (istype(active2, /datum/data/record) && (active2 in data_core.medical))
-					menu += "Blood Type: [active2.fields["b_type"]]<br><br>"
+					menu += "Blood Type: [active2.fields["blood_type"]]<br><br>"
 
 					menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
 					menu += "Details: [active2.fields["mi_dis_d"]]<br><br>"

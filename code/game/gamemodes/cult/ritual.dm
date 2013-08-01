@@ -574,7 +574,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.word3 = w3
 				R.check_icon()
 				R.blood_DNA = list()
-				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+				R.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 			return
 		else
 			user << "The book seems full of illegible scribbles. Is this a joke?"
@@ -620,7 +620,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			if(istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
 				R.blood_DNA = list()
-				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+				R.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 			switch(r)
 				if("teleport")
 					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")

@@ -204,11 +204,11 @@
 							src << "\red You feel weak."
 							emote("collapse")
 						if(prob(15))
-							if(!(f_style == "Shaved") || !(h_style == "Bald"))
+							if(!( hair_style == "Shaved") || !(hair_style == "Bald"))
 								src << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
-									f_style = "Shaved"
-									h_style = "Bald"
+									facial_hair_style = "Shaved"
+									hair_style = "Bald"
 									update_hair()
 						updatehealth()
 

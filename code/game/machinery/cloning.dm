@@ -166,10 +166,10 @@
 	randmutb(H) //Sometimes the clones come out wrong.
 
 	if(H.gender == MALE)
-		H.f_style = "Full Beard"
+		H.facial_hair_style = "Full Beard"
 	else
-		H.f_style = "Shaved"
-	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+		H.facial_hair_style = "Shaved"
+	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	H.suiciding = 0
 	src.attempting = 0
