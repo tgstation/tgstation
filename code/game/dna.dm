@@ -507,9 +507,14 @@
 		M.disabilities |= NERVOUS
 		M << "\red You feel nervous."
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
-		if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
-			M << "\blue Your body feels warm."
-			M.mutations.Add(COLD_RESISTANCE)
+		if(!(mHeatres in old_mutations))
+			if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
+				M << "\blue Your body feels warm."
+				M.mutations.Add(COLD_RESISTANCE)
+		else
+			if(probinj(5,inj) || (COLD_RESISTANCE in old_mutations))
+				M << "\blue Your body feels warm."
+				M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
 		M.sdisabilities |= BLIND
 		M << "\red You can't seem to see anything."
