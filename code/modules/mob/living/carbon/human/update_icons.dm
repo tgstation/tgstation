@@ -196,7 +196,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			lying		+= image("icon"=facial_l, "layer"=-HAIR_LAYER)
 
 	//Applies the debrained overlay if there is no brain
-	if(!getbrain(src))
+	if(!getorgan(/obj/item/organ/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="debrained_s", "layer"=-HAIR_LAYER)
 		lying		+= image("icon"='icons/mob/human_face.dmi', "icon_state"="debrained_l", "layer"=-HAIR_LAYER)
 	else if(hair_style)
