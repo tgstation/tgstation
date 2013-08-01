@@ -79,24 +79,21 @@
 		tmob.LAssailant = src
 
 	now_pushing = 0
-	spawn(0)
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
 		return
-	return
+	if (!now_pushing)
+		now_pushing = 1
+
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = 0
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -123,8 +120,8 @@
 				stat("Distribution Pressure", internal.distribute_pressure)
 		if(mind)
 			if(mind.changeling)
-				stat("Chemical Storage", mind.changeling.chem_charges)
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Absorbed DNA", mind.changeling.absorbedcount)
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
@@ -377,15 +374,16 @@
 	if(legcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
 	if(w_uniform)
-		dat += "<BR><A href='?src=\ref[src];pockets=1'>Empty Pockets</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([l_store ? "Full" : "Empty"])</A>"
+		dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([r_store ? "Full" : "Empty"])</A>"
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
 
-	user << browse(dat, "window=mob[name];size=340x480")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=340x480")
+	onclose(user, "mob\ref[src]")
 
 
 // called when something steps onto a human
@@ -481,15 +479,38 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["pockets"])
+
+			var/pocket_side = href_list["pockets"]
+			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
+			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
+			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+
 			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
-			usr << "<span class='notice'>You try to empty [src]'s pockets.</span>"
-			if(do_mob(usr, src, STRIP_DELAY * 0.5))
-				u_equip(r_store)
-				u_equip(l_store)
+			if(pocket_item)
+				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
+				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+			else
+				return
+
+			if(do_mob(usr, src, STRIP_DELAY))
+				if(pocket_item)
+					u_equip(pocket_item)
+				else
+					if(place_item)
+						usr.u_equip(place_item)
+						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
+
+				// Update strip window
+				if(usr.machine == src && in_range(src, usr))
+					show_inv(usr)
+
+
+
 			else
 				// Display a warning if the user mocks up
-				src << "<span class='warning'>You feel your pockets being fumbled with!</span>"
+				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))

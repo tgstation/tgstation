@@ -238,6 +238,9 @@
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
+	else
+		gib()
+		return 1
 	return 0
 
 /mob/living/silicon/robot/Stat()
@@ -324,36 +327,29 @@
 
 
 /mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-		now_pushing = 0
-		..()
-		if (istype(AM, /obj/machinery/recharge_station))
-			var/obj/machinery/recharge_station/F = AM
-			F.move_inside()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
-
+	now_pushing = 1
+	if(ismob(AM))
+		var/mob/tmob = AM
+		if(!(tmob.status_flags & CANPUSH))
+			now_pushing = 0
+			return
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+	if (!now_pushing)
+		now_pushing = 1
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (stat == 2)
@@ -591,7 +587,7 @@
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 

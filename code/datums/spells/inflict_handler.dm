@@ -17,6 +17,8 @@
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
+	var/summon_type = null //this will put an obj at the target's location
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
 
 	for(var/mob/living/target in targets)
@@ -57,3 +59,6 @@
 
 		target.eye_blind += amt_eye_blind
 		target.eye_blurry += amt_eye_blurry
+		//summoning
+		if(summon_type)
+			new summon_type(target.loc, target)

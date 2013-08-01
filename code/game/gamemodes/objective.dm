@@ -77,7 +77,7 @@ datum/objective/mutiny
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
+			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
 				return 1
 			var/turf/T = get_turf(target.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
@@ -458,7 +458,7 @@ datum/objective/absorb
 						n_p ++
 			target_amount = min(target_amount, n_p)
 
-		explanation_text = "Absorb [target_amount] compatible genomes."
+		explanation_text = "Extract [target_amount] compatible genomes."
 		return target_amount
 
 	check_completion()

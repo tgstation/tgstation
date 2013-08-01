@@ -79,6 +79,9 @@
 				M.updatehealth()
 			src.occupant_message("You hit [target].")
 			src.visible_message("<font color='red'><b>[src.name] hits [target].</b></font>")
+			occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [occupant.name] ([occupant.ckey]) with [name] (INTENT: [uppertext(occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+			log_attack("<font color='red'>[occupant.name] ([occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 		else
 			step_away(M,src)
 			src.occupant_message("You push [target] out of the way.")

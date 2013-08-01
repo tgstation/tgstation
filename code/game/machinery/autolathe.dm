@@ -7,6 +7,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/flashlight(), \
 		new /obj/item/weapon/extinguisher(), \
 		new /obj/item/device/multitool(), \
+		new /obj/item/device/analyzer(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/weapon/weldingtool(), \
 		new /obj/item/weapon/screwdriver(), \

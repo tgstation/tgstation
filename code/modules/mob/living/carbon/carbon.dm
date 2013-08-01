@@ -370,11 +370,6 @@
 	if(src.client)
 		src.client.screen -= item
 
-	item.loc = src.loc
-
-	if(istype(item, /obj/item))
-		item:dropped(src) // let it know it's been dropped
-
 	//actually throw it!
 	if(item)
 		item.layer = initial(item.layer)
@@ -495,10 +490,10 @@
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
-	user << browse(dat, "window=mob[name];size=325x500")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=325x500")
+	onclose(user, "mob\ref[src]")
 
 /mob/living/carbon/Topic(href, href_list)
 	..()

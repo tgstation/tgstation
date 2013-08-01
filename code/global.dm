@@ -134,15 +134,6 @@ var/shuttlecoming = 0
 var/join_motd = null
 var/forceblob = 0
 
-	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
-	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
-	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-
-var/list/AAlarmWireColorToFlag = RandomAAlarmWires()
-var/list/AAlarmIndexToFlag
-var/list/AAlarmIndexToWireColor
-var/list/AAlarmWireColorToIndex
-
 //This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
 var/MAX_EX_DEVESTATION_RANGE = 3
 var/MAX_EX_HEAVY_RANGE = 7

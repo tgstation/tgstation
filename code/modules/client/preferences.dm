@@ -10,7 +10,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
 	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
 	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien candidate" = 1, //always show                 // 6
+	"alien lifeform" = 1, //always show                 // 6
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
@@ -77,7 +77,7 @@ datum/preferences
 
 		// OOC Metadata:
 	var/metadata = ""
-	
+
 	var/unlock_content = 0
 
 /datum/preferences/New(client/C)
@@ -210,13 +210,13 @@ datum/preferences
 						dat += "<b>Adminhelp Sound:</b> "
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(unlock_content || (user.client.holder && (user.client.holder.rights & R_ADMIN)))
+					if(unlock_content || check_rights_for(user, R_ADMIN))
 						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-					
+
 					if(unlock_content)
 						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 						dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-						
+
 
 				dat += "</td><td width='300px' height='300px' valign='top'>"
 

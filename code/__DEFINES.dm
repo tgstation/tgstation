@@ -389,7 +389,10 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
-#define R_HOST			65535
+
+//IMPORTANT! The permissions system supports flags up to 2^30 (possibly 2^31), HOWEVER, once the flag 65536
+//starts being used, an edit to rights2text(rights, seperator="") needs to happen! The edit is prepared
+//and commented out. Please uncomment it before assigning that flag. Once you do, delete this note. ~Errorage
 
 //Preference toggles
 #define SOUND_ADMINHELP	1
@@ -425,7 +428,7 @@ var/list/be_special_flags = list(
 	"Wizard" = BE_WIZARD,
 	"Malf AI" = BE_MALF,
 	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
+	"Alien Lifeform" = BE_ALIEN,
 	"pAI" = BE_PAI,
 	"Cultist" = BE_CULTIST,
 	"Monkey" = BE_MONKEY,

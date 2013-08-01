@@ -12,7 +12,7 @@
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		src << "\blue You have given up life and succumbed to death."
-
+		death()
 
 
 /mob/living/proc/updatehealth()
@@ -296,10 +296,11 @@
 				t7 = null
 	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
 		var/turf/T = loc
+		var/turf/P = pulling.loc
 		. = ..()
 
 		if (pulling && pulling.loc)
-			if(!( isturf(pulling.loc) ))
+			if(!isturf(pulling.loc) || pulling.loc != P)
 				stop_pulling()
 				return
 			else
@@ -342,7 +343,6 @@
 							var/turf/location = M.loc
 							if (istype(location, /turf/simulated))
 								location.add_blood(M)
-
 
 						step(pulling, get_dir(pulling.loc, T))
 						M.start_pulling(t)

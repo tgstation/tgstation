@@ -413,6 +413,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/sortmob = sortAtom(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
+	for(var/mob/camera/M in sortmob)
+		moblist.Add(M)
 	for(var/mob/living/silicon/pai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/silicon/robot/M in sortmob)
@@ -479,11 +481,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(!ckey)
 		include_link = 0
-	
+
 	if(key)
 		if(include_link)
 			. += "<a href='?priv_msg=[ckey]'>"
-		
+
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
 		else
@@ -861,7 +863,8 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						if(!istype(O,/obj)) continue
 						O.loc = X
 					for(var/mob/M in T)
-						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!M.move_on_shuttle)
+							continue
 						M.loc = X
 
 //					var/area/AR = X.loc
@@ -1021,8 +1024,8 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 						O.loc = X
 
 					for(var/mob/M in T)
-
-						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!M.move_on_shuttle)
+							continue
 						mobs += M
 
 					for(var/mob/M in mobs)
