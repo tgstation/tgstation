@@ -1,25 +1,18 @@
-.getblockstring
+.dnaBlockNumber
 {
 	font-family: Fixed, monospace;
-}
-
-.blockString
-{
-	width: 55px;
-	height: 19px;
-	padding: 0 8px 8px 0;
 	float: left;
+	color: #ffffff;
+	background: #363636;
+	width: 20px;
+	padding: -3px 0 -1px 0;
+	margin: 2px 2px 0 10px;
+	text-align: center;
 }
 
-.statusLabel
+.dnaBlock
 {
-	width: 128px;
-	float: left;
-	overflow: hidden;
-}
-
-.statusValue
-{
+	font-family: Fixed, monospace;
 	float: left;
 }
 
