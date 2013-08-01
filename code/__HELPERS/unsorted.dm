@@ -334,30 +334,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
-//When an AI is activated, it can choose from a list of non-slaved borgs to have as a slave.
-/proc/freeborg()
-	var/select = null
-	var/list/names = list()
-	var/list/borgs = list()
-	var/list/namecounts = list()
-	for (var/mob/living/silicon/robot/A in player_list)
-		var/name = A.real_name
-		if (A.stat == 2)
+//Returns a list of unslaved cyborgs
+/proc/active_free_borgs()
+	. = list()
+	for(var/mob/living/silicon/robot/R in living_mob_list)
+		if(R.connected_ai)
 			continue
-		if (A.connected_ai)
+		if(R.stat == DEAD)
 			continue
-		else
-			if(A.module)
-				name += " ([A.module.name])"
-			names.Add(name)
-			namecounts[name] = 1
-		borgs[name] = A
+		if(R.emagged || R.scrambledcodes || R.syndicate)
+			continue
+		. += R
 
-	if (borgs.len)
-		select = input("Unshackled borg signals detected:", "Borg selection", null, null) as null|anything in borgs
-		return borgs[select]
-
-//When a borg is activated, it can choose which AI it wants to be slaved to
+//Returns a list of AI's
 /proc/active_ais()
 	. = list()
 	for(var/mob/living/silicon/ai/A in living_mob_list)
@@ -378,10 +367,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return selected
 
+/proc/select_active_free_borg(var/mob/user)
+	var/list/borgs = active_free_borgs()
+	if(borgs.len)
+		if(user)	. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
+		else		. = pick(borgs)
+	return .
+
 /proc/select_active_ai(var/mob/user)
 	var/list/ais = active_ais()
 	if(ais.len)
-		if(user)	. = input(usr,"AI signals detected:", "AI selection") in ais
+		if(user)	. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
 		else		. = pick(ais)
 	return .
 
