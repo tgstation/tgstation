@@ -45,7 +45,7 @@
 			dat += "<BR>\n"
 		//user << browse(dat, "window=alerts")
 		//onclose(user, "alerts")
-		var/datum/browser/popup = new(user, "alerts", "Current Station Alerts")
+		var/datum/browser/popup = new(user, "alerts", "Station Alert Console")
 		popup.add_head_content("<META HTTP-EQUIV='Refresh' CONTENT='10'>")
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
