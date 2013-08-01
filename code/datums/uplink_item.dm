@@ -92,38 +92,38 @@ var/list/uplink_items = list()
 	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/dangerous/revolver
-	name = "Fully Loaded Revolver"
-	desc = "A traditional handgun which fires .357 rounds. Has 7 chambers. Can down an unarmoured target with two shots."
+	name = "Full Revolver"
+	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile
 	cost = 6
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
-	desc = "Seven additional rounds for the revolver. Reports indicate the presence of machinery aboard Nanotrasen space stations suitable for producing extra .357 cartridges."
+	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_magazine/a357
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
-	desc = "A miniature energy crossbow that is small enough both to fit into a pocket and to slip into a backpack unnoticed by observers. Fires bolts tipped with toxin, a poisonous substance that is the product of a living organism. Stuns enemies for a short period of time. Recharges automatically."
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
-	desc = "A damaging melee weapon. While inactive, it is small enough to be pocketed. Activating this weapon is loud."
+	desc = "The esword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 4
 
 /datum/uplink_item/dangerous/emp
 	name = "A box of 5 EMP Grenades"
-	desc = "Electromagnetic pulse grenades cause transient disturbance on detonation, damaging electronic equipment."
+	desc = "Electromagnetic pulse grenades cause transient disturbance on detonation, disabling nearby electronic equipment."
 	item = /obj/item/weapon/storage/box/emps
 	cost = 3
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
-	desc = "A handheld fragmentation grenade. Has a five second timer."
+	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
 
@@ -134,19 +134,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
-	desc = "A syringe disguised as a pen, filled with a neuromuscular-blocking drug that renders the target immobile upon injection, making them appear deceased to observers. Side-effects of the drug include noticeable drooling, as those under its influence are unable to swallow their saliva. The pen only holds one dose of paralyzing agent, and cannot be refilled. Works as a regular pen."
+	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
-	desc = "Useful for cleaning up bloodstains to conceal an assassination and prevent forensics from analysing the blood for its DNA content. Can be dropped underfoot to slip crew."
+	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
-	desc = "Inserting this cartridge into a PDA will give an agent five opportunities to detonate the PDAs of crewmembers who have their messaging feature enabled. The concussive effect from the explosion will knock the recepient out for a short period of time, and deafen them for longer. Has a chance to detonate the agent's PDA."
+	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
@@ -158,37 +158,37 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_jumpsuit
 	name = "Chameleon Jumpsuit"
-	desc = "A jumpsuit used to disguise as various jobs aboard the station by mimicking their appropriate uniforms."
+	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/clothing/under/chameleon
 	cost = 3
 
 /datum/uplink_item/stealthy_tools/syndigolashes
-	name = "No-Slip Brown Syndicate Shoes"
-	desc = "Help an agent slip opponents over on wet floors without being slipped themselves. They do not work on lubricated surfaces."
+	name = "No-Slip Brown Shoes"
+	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/agent_card
-	name = "Agent ID Card"
-	desc = "An identification card that prevents the AI from tracking you, and can copy access from other ID cards. The access is cumulative, so scanning one card won't erase the access gained from another."
+	name = "Agent Identification card"
+	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
 	item = /obj/item/weapon/card/id/syndicate
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
 	item = /obj/item/clothing/mask/gas/voice
-	desc = "A conspicuous gas mask that mimics the voice of the person named on the wearer's ID card. Functions as a voice distorter when no ID is worn."
+	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Disguises the user as an object scanned with the projector. While disguised, the user can only move at walking pace, and projectiles will pass over them."
+	desc = "Projects an image across a user, disguising them as an object scanned with it. The disguised user cannot run. Projectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
-	desc = "Allows an agent to bug cameras, to make them viewable remotely. Extensible, modding it with certain items alters its function."
+	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
 	item = /obj/item/device/camera_bug
 	cost = 2
 
@@ -199,73 +199,73 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
-	desc = "Has a variety of effects when used on electronic devices. Breaks airlocks and secure closets open, albeit in a distinguishing way."
+	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 3
 
 /datum/uplink_item/device_tools/toolbox
-	name = "Fully Loaded Syndicate Toolbox"
-	desc = "A unique black and red toolbox that comes with tools, wires, and a multitool. Useful for both escape and infiltration. Agents are advised to acquire insulated gloves before attempting to hack electrical systems."
+	name = "Full Syndicate Toolbox"
+	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
-	desc = "A red syndicate space suit. It fits in backpacks, and has a slot for an agent's sidearm. NT crewmembers are trained to look out for agents in red space suits, so be careful."
+	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 3
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
-	desc = "Thermals disguised as engineers' optical meson scanners. They allow an agent to see organic and synthetic lifeforms through walls. They do this by capturing the upper portion of the infrared light spectrum, which is emitted as heat by objects instead of simply reflected as light. Hotter objects, such as warm bodies, cyborgs and AIs, emit more of this light than cooler objects like walls and other structures."
+	desc = "These glasses are thermals disguised as engineers' optical meson scanners. They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 3
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
-	desc = "A key, that when inserted into a radio headset, allows the listener to eavesdrop and converse on the binary frequency used by AIs and cyborgs. Nanotrasen do not posess this technology, so an agent can expect Asimov synthetics to report them to security if they converse with them using it."
+	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
 	cost = 3
 
 /datum/uplink_item/device_tools/ai_detector
-	name = "Disguised AI Detector"
-	desc = "A multitool that turns red when it detects an AI watching it or its holder. Useful for knowing when to maintain cover. Functions as a regular multitool."
+	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
+	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
-	name = "Hacked AI Upload Module"
-	desc = "When used in conjuction with an AI upload console, this upload module allows the user to upload first priority laws to an AI. Agents are advised to be precise with their law wording, as AIs may look for loopholes in a law to exploit."
+	name = "Hacked Artificial Intelligence Law Upload Module"
+	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
-	desc = "A common variety of the plastic explosive known as Composition C. Used by agents to breach walls. Can be attached to organics or synthetics to destroy them. Has a modifiable timer with a minimum setting of 10 seconds."
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 2
 
 /datum/uplink_item/device_tools/powersink
-	name = "Powersink"
-	desc = "When screwed to wiring attached to an electrical grid, then activated, this large device places excessive load on the grid, causing an overcurrent. Due to the size of the sink, it cannot be carried. Ordering this will send an agent a small beacon that, when activated, will teleport the powersink to its location."
+	name = "Power sink"
+	desc = "When screwed to wiring attached to an electric grid, then activated, this large device places excessive load on the grid, causing a stationwide blackout. The sink cannot be carried because of its excessive size. Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 5
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
-	desc = "When screwed to wiring attached to an electrical grid, then activated, this large device pulls singularities towards it. Has the capacity to cause massive damage to a space station, leading to an emergency evacuation. Due to the size of the sink, it cannot be carried. Ordering this will send an agent a small beacon that when activated, will teleport the larger beacon to their location."
+	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
-	desc = "A large explosive device. It cannot be carried. Has an adjustable timer with a minimum setting of 30 seconds. Can be wrenched down to prevent removal. Possibility of defusal apparent. Ordering this will send an agent a small beacon that when activated, will teleport the bomb to their location."
+	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 30 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. You can wrench the bomb down to prevent removal. The crew may defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
-	desc = "Used to complete the teleporter onboard the syndicate mothership. Agents are advised to test fire the teleporter before entering it, as teleporter malfunctions can occur."
+	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
 	gamemodes = list("nuclear emergency")
@@ -278,13 +278,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
-	desc = "An implant designed to be injected into an agent's body. When activated with a predefined bodily gesture, the implant will attempt to remove an agent's restraints."
+	desc = "An implant injected into the body and later activated using a bodily gesture to attempt to slip restraints."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 3
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant designed to be injected into an agent's body. When activated with a predefined bodily gesture, the implant will grant an agent access to a syndicate uplink with 5 telecrystals. Useful for escaping confinement."
+	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
@@ -296,19 +296,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
-	desc = "A group of items, randomly chosen from a list of specialised bundles, which arrive in a plain box. These items are worth more than 10 telecrystals, but the agent does not know what specialisation they will receive."
+	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
 
 /datum/uplink_item/badass/balloon
-	name = "For showing that You Are The Boss"
-	desc = "A red balloon, with an easily recognisable syndicate logo on it. Designed to lower morale among NT employees, as an agent forgoing useful equipment for a pointless balloon must be a badass."
+	name = "For showing that you are The Boss"
+	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
 
 /datum/uplink_item/badass/random
-	name = "Random Item (??)"
-	desc = "This will send an agent a random item from this list. Useful for amateur agents that find the task ahead of them so daunting that they cannot think clearly enough to formulate a strategy to tackle it with."
+	name = "Random Item (?)"
+	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
