@@ -271,7 +271,7 @@
 	mymob.pullin = new /obj/screen()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "release"
+	mymob.pullin.name = "stop pulling"
 	mymob.pullin.screen_loc = ui_pull_resist
 	hotkeybuttons += mymob.pullin
 
