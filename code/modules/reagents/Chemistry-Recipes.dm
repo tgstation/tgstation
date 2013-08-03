@@ -2142,3 +2142,9 @@ datum
 			required_reagents = list("nothing" = 1, "gin" = 1)
 			result_amount = 2
 
+		thirteenloko
+			name = "Thirteen Loko"
+			id = "thirteenloko"
+			result = "thirteenloko"
+			required_reagents = list("vodka" = 1, "coffee" = 1, "orangejuice" = 1)
+			result_amount = 3
