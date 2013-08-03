@@ -7,7 +7,7 @@
 	var/obj/screen/inventory/inv_box
 
 	using = new /obj/screen()
-	using.name = "act_intent"
+	using.name = "action type"
 	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = 20
@@ -15,7 +15,7 @@
 	action_intent = using
 
 	using = new /obj/screen()
-	using.name = "mov_intent"
+	using.name = "speed"
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
@@ -32,7 +32,7 @@
 	hotkeybuttons += using
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "i_clothing"
+	inv_box.name = "under clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "uniform"
@@ -41,7 +41,7 @@
 	other += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "o_clothing"
+	inv_box.name = "outer clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_wear_suit
 	inv_box.icon_state = "suit"
@@ -50,7 +50,7 @@
 	other += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box.name = "right hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_r_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
@@ -62,7 +62,7 @@
 	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box.name = "left hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_l_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
@@ -90,7 +90,7 @@
 	adding += using
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "id"
+	inv_box.name = "identification"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
@@ -99,7 +99,7 @@
 	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "mask"
+	inv_box.name = "face"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
@@ -117,7 +117,7 @@
 	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "storage1"
+	inv_box.name = "left pocket"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage1
@@ -126,7 +126,7 @@
 	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "storage2"
+	inv_box.name = "right pocket"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage2
@@ -168,7 +168,7 @@
 	adding += using
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "gloves"
+	inv_box.name = "hands"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
 	inv_box.screen_loc = ui_gloves
@@ -204,7 +204,7 @@
 	other += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "shoes"
+	inv_box.name = "feet"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
 	inv_box.screen_loc = ui_shoes
@@ -213,7 +213,7 @@
 	other += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "belt"
+	inv_box.name = "waist"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
 	inv_box.screen_loc = ui_belt
@@ -271,7 +271,7 @@
 	mymob.pullin = new /obj/screen()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
+	mymob.pullin.name = "stop pulling"
 	mymob.pullin.screen_loc = ui_pull_resist
 	hotkeybuttons += mymob.pullin
 
