@@ -408,7 +408,7 @@ datum
 						S.start()
 						sleep(10)
 						S.start()
-					if(holder)
+					if(holder && holder.my_atom)
 						holder.clear_reagents()
 				return
 

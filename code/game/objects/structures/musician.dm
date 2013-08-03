@@ -190,7 +190,7 @@
 		spawn()
 			lines = text2list(t, "\n")
 			if(copytext(lines[1],1,6) == "BPM: ")
-				tempo = 600 / text2num(copytext(lines[1],6))
+				tempo = 600 / max(1, text2num(copytext(lines[1],6)))
 				lines.Cut(1,2)
 			else
 				tempo = 5 // default 120 BPM
