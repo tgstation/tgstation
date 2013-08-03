@@ -74,7 +74,7 @@
 	adding += inv_box
 
 	using = new /obj/screen/inventory()
-	using.name = "active hand"
+	using.name = "hand"
 	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
@@ -82,7 +82,7 @@
 	adding += using
 
 	using = new /obj/screen/inventory()
-	using.name = "active hand"
+	using.name = "hand"
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
