@@ -1,5 +1,5 @@
 /obj/machinery/computer/security
-	name = "security cameras"
+	name = "Security Cameras"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
 	circuit = "/obj/item/weapon/circuitboard/security"

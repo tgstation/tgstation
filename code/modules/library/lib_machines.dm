@@ -65,7 +65,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
 	//user << browse(dat, "window=publiclibrary")
 	//onclose(user, "publiclibrary")
-	var/datum/browser/popup = new(user, "publiclibrary", name)
+	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -240,7 +240,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	//dat += "<A HREF='?src=\ref[user];mach_close=library'>Close</A><br><br>"
 	//user << browse(dat, "window=library")
 	//onclose(user, "library")
-	var/datum/browser/popup = new(user, "library", name)
+	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -425,7 +425,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		dat += "<BR>"
 	//user << browse(dat, "window=scanner")
 	//onclose(user, "scanner")
-	var/datum/browser/popup = new(user, "scanner", name)
+	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

@@ -175,7 +175,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
 		var/mob/living/human_or_robot_user = user
 		var/dat
-		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
 
 		src.scan_user(human_or_robot_user) //Newscaster scans you
 
@@ -418,9 +417,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-
-		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
-		onclose(human_or_robot_user, "newscaster_main")
+		//human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
+		//onclose(human_or_robot_user, "newscaster_main")
+		
+		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[src.unit_no]", 400, 600)
+		popup.set_content(dat)
+		popup.set_title_image(human_or_robot_user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 
 	/*if(src.isbroken) //debugging shit
 		return
