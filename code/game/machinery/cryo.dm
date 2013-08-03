@@ -121,7 +121,6 @@
 
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "cryo", "Cryo Cell Control System", 520, 410) // Set up the popup browser window
-	popup.add_stylesheet("sleeper", 'html/browser/cryo.css')
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()

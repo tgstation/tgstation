@@ -82,7 +82,6 @@
 					<BR><span class='linkOff'>Inject Dexalin</span>"}
 
 		var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
-		popup.add_stylesheet("sleeper", 'html/browser/sleeper.css')
 		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.set_content(dat)
 		popup.open()
