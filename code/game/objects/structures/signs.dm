@@ -75,6 +75,11 @@
 	desc = "A warning sign which reads 'DANGER: FIRE'"
 	icon_state = "fire"
 
+/obj/structure/sign/exitlit
+	name = "\improper Exit"
+	desc = "A luminous sign which reads 'Exit'. Better do as it says."
+	icon_state = "exitlit"
+	luminosity = 1
 
 /obj/structure/sign/nosmoking_1
 	name = "\improper NO SMOKING"
