@@ -42,7 +42,7 @@ var/intercom_range_display_status = 0
 		if(T.maptext)
 			on = 1
 		T.maptext = null
-	
+
 	if(!on)
 		var/list/seen = list()
 		for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -149,9 +149,25 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/disable_communication
 	src.verbs += /client/proc/disable_movement
 	src.verbs += /client/proc/print_pointers
+	src.verbs += /client/proc/count_movable_instances
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/count_movable_instances()
+	set category = "Debug"
+	set name = "Count Movable Instances"
+
+	var/count = 0;
+
+	// Apparently there's a BYOND limit on the number of instances for non-turfs.
+
+	for(var/thing in world)
+		if(isturf(thing))
+			continue
+		count++;
+	usr << "There are [count]/[MAX_FLAG] instances of non-turfs in the world."
+
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
