@@ -33,7 +33,7 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		emagged = 1
-		if(safety_mode)
+		if(!safety_mode)
 			safety_mode = 1
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
