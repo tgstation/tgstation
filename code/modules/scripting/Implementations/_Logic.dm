@@ -127,6 +127,7 @@
 	if(container)
 		if(istype(container, /list) || istext(container))
 			return length(container)
+	return 0
 
 // BY DONKIE~
 // String stuff
