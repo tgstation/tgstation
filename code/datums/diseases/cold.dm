@@ -9,6 +9,7 @@
 	permeability_mod = 0.5
 	desc = "If left untreated the subject will contract the flu."
 	severity = "Minor"
+	HUDrating = 0
 
 /datum/disease/cold/stage_act()
 	..()

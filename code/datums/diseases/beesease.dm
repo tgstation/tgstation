@@ -8,6 +8,7 @@
 	agent = "Bees"
 	affected_species = list("Human","Monkey")
 	curable = 0
+	HUDrating = 0
 
 /datum/disease/beesease/stage_act()
 	..()

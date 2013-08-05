@@ -7,6 +7,7 @@ Alopecia
 	Reduces stage speed slightly.
 	Transmittable.
 	Intense Level.
+	Harmless on HUD.
 
 BONUS
 	Makes the mob lose hair.
@@ -22,6 +23,7 @@ BONUS
 	stage_speed = -1
 	transmittable = 2
 	level = 4
+	HUDrating = 0
 
 /datum/symptom/shedding/Activate(var/datum/disease/advance/A)
 	..()

@@ -8,6 +8,7 @@ Confusion
 	Decreases stage speed.
 	Not very transmittable.
 	Intense Level.
+	Harmful on HUD
 
 Bonus
 	Makes the affected mob be confused for short periods of time.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -3
 	transmittable = 0
 	level = 4
+	HUDrating = 2
 
 
 /datum/symptom/confusion/Activate(var/datum/disease/advance/A)

@@ -8,6 +8,7 @@ Vomiting
 	Doesn't increase stage speed.
 	Little transmittable.
 	Medium Level.
+	Harmful on HUD.
 
 Bonus
 	Forces the affected mob to vomit!
@@ -27,6 +28,7 @@ Bonus
 	stage_speed = 0
 	transmittable = 1
 	level = 3
+	HUDrating = 2
 
 /datum/symptom/vomit/Activate(var/datum/disease/advance/A)
 	..()
@@ -60,6 +62,7 @@ Vomiting Blood
 	Decreases stage speed.
 	Little transmittable.
 	Intense level.
+	Fatal on HUD.
 
 Bonus
 	Forces the affected mob to vomit blood!
@@ -78,6 +81,7 @@ Bonus
 	stage_speed = -1
 	transmittable = 1
 	level = 4
+	HUDrating = 3
 
 /datum/symptom/vomit/blood/Vomit(var/mob/living/M)
 

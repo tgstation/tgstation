@@ -11,6 +11,7 @@
 	agent = "Rip-LEY Alien Microbes"
 	affected_species = list("Human")
 	var/gibbed = 0
+	HUDrating = 3
 
 /datum/disease/xeno_transformation/stage_act()
 	..()

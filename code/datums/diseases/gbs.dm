@@ -10,6 +10,7 @@
 	affected_species = list("Human")
 	curable = 0
 	permeability_mod = 1
+	HUDrating = 3
 
 /datum/disease/gbs/stage_act()
 	..()

@@ -8,6 +8,7 @@ Stimulant
 	Decreases stage speed moderately..
 	Decreases transmittablity tremendously.
 	Moderate Level.
+	Helpful on HUD.
 
 Bonus
 	The body generates Hyperzine.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -4
 	level = 3
+	HUDrating = 1
 
 /datum/symptom/stimulant/Activate(var/datum/disease/advance/A)
 	..()

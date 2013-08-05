@@ -8,6 +8,7 @@ Hyphema (Eye bleeding)
 	Decreases stage speed tremendously.
 	Decreases transmittablity.
 	Critical Level.
+	Harmful on HUD.
 
 Bonus
 	Causes blindness.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -4
 	transmittable = -3
 	level = 5
+	HUDrating = 2
 
 /datum/symptom/visionloss/Activate(var/datum/disease/advance/A)
 	..()

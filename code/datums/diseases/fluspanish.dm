@@ -10,6 +10,7 @@
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will burn to death for being a heretic."
 	severity = "Serious"
+	HUDrating = 3
 
 /datum/disease/inquisition/stage_act()
 	..()

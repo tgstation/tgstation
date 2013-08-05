@@ -8,6 +8,7 @@ Healing
 	Decreases stage speed tremendously.
 	Decreases transmittablity temrendously.
 	Fatal Level.
+	Helpful on HUD.
 
 Bonus
 	Heals toxins in the affected mob's blood stream.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -4
 	transmittable = -4
 	level = 6
+	HUDrating = 1
 
 /datum/symptom/heal/Activate(var/datum/disease/advance/A)
 	..()
@@ -49,6 +51,7 @@ Metabolism
 	Decreases stage speed.
 	Decreases transmittablity temrendously.
 	High Level.
+	Helpful on HUD.
 
 Bonus
 	Cures all diseases (except itself) and creates anti-bodies for them until the symptom dies.
@@ -64,6 +67,7 @@ Bonus
 	stage_speed = -1
 	transmittable = -4
 	level = 3
+	HUDrating = 1
 	var/list/cured_diseases = list()
 
 /datum/symptom/heal/metabolism/Heal(var/mob/living/M, var/datum/disease/advance/A)
@@ -96,6 +100,7 @@ Longevity
 	Large stage speed boost.
 	Large transmittablity boost.
 	High Level.
+	Helpful on HUD.
 
 Bonus
 	After a certain amount of time the symptom will cure itself.
@@ -111,6 +116,7 @@ Bonus
 	stage_speed = 4
 	transmittable = 4
 	level = 3
+	HUDrating = 1
 	var/longevity = 20
 
 /datum/symptom/heal/longevity/Heal(var/mob/living/M, var/datum/disease/advance/A)

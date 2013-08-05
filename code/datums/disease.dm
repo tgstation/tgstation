@@ -49,6 +49,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/can_carry = 1 // If the disease allows "carriers".
 	// if hidden[1] is true, then virus is hidden from medical scanners
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
+	var/HUDrating = 0 // How HUDs will describe the disease. 0 = harmless, 1 = helpful, 2 = harmful, 3 = fatal. This is generated dynamically for advanced dieseases, but is static in all others.
 
 
 /datum/disease/proc/stage_act()

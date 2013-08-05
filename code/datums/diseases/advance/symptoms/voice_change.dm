@@ -8,6 +8,7 @@ Voice Change
 	Decreases stage speed.
 	Reduced transmittable.
 	Fatal Level.
+	Harmless on HUD.
 
 Bonus
 	Changes the voice of the affected mob. Causing confusion in communication.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 6
+	HUDrating = 0
 
 /datum/symptom/voice_change/Activate(var/datum/disease/advance/A)
 	..()

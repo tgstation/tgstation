@@ -9,6 +9,7 @@
 	affected_species = list("Human")
 	desc = "If left untreated the subject will slow, as if partly frozen."
 	severity = "Moderate"
+	HUDrating = 2
 
 /datum/disease/cold9/stage_act()
 	..()

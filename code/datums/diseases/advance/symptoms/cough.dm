@@ -8,6 +8,7 @@ Coughing
 	Doesn't increase stage speed much.
 	Transmittable.
 	Low Level.
+	Harmless on HUD.
 
 BONUS
 	Will force the affected mob to drop small items!
@@ -23,6 +24,7 @@ BONUS
 	stage_speed = 1
 	transmittable = 2
 	level = 1
+	HUDrating = 0
 
 /datum/symptom/cough/Activate(var/datum/disease/advance/A)
 	..()

@@ -8,6 +8,7 @@ Hallucigen
 	Decreases stage speed.
 	Reduced transmittable.
 	Critical Level.
+	Harmful on HUD.
 
 Bonus
 	Makes the affected mob be hallucinated for short periods of time.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 5
+	HUDrating = 2
 
 /datum/symptom/hallucigen/Activate(var/datum/disease/advance/A)
 	..()

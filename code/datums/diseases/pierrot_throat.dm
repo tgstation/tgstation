@@ -11,6 +11,7 @@
 	desc = "If left untreated the subject will probably drive others to insanity."
 	severity = "Medium"
 	longevity = 400
+	HUDrating = 0
 
 /datum/disease/pierrot_throat/stage_act()
 	..()

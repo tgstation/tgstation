@@ -10,3 +10,4 @@
 	severity = "Medium"
 	//stage_prob = 100
 	agent = "Kongey Vibrion M-909"
+	HUDrating = 3

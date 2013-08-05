@@ -8,6 +8,7 @@ Fever
 	Increases stage speed.
 	Little transmittable.
 	Low level.
+	Harmless on HUD.
 
 Bonus
 	Heats up your body.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = 3
 	transmittable = 2
 	level = 2
+	HUDrating = 0
 
 /datum/symptom/fever/Activate(var/datum/disease/advance/A)
 	..()

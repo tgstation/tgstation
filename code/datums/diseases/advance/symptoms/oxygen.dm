@@ -8,6 +8,7 @@ Self-Respiration
 	Decreases stage speed significantly.
 	Decreases transmittablity tremendously.
 	Fatal Level.
+	Helpful on HUD.
 
 Bonus
 	The body generates Inaprovaline.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -4
 	level = 6
+	HUDrating = 1
 
 /datum/symptom/oxygen/Activate(var/datum/disease/advance/A)
 	..()

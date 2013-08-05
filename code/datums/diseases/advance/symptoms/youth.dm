@@ -7,6 +7,7 @@ Eternal Youth
 	Increases stage speed tremendously.
 	Reduces transmission tremendously.
 	Critical Level.
+	Helpful on HUD.
 
 BONUS
 	Gives you immortality and eternal youth!!!
@@ -23,6 +24,7 @@ BONUS
 	stage_speed = 4
 	transmittable = -4
 	level = 5
+	HUDrating = 1
 
 /datum/symptom/youth/Activate(var/datum/disease/advance/A)
 	..()

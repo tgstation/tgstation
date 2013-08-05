@@ -10,6 +10,7 @@
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will feel quite unwell."
 	severity = "Medium"
+	HUDrating = 2
 
 /datum/disease/flu/stage_act()
 	..()

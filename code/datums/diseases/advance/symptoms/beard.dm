@@ -7,6 +7,7 @@ Facial Hypertrichosis
 	Decreases stage speed.
 	Reduced transmittability
 	Intense Level.
+	Harmless on HUD.
 
 BONUS
 	Makes the mob grow a massive beard, regardless of gender.
@@ -22,6 +23,7 @@ BONUS
 	stage_speed = -3
 	transmittable = -1
 	level = 4
+	HUDrating = 0
 
 /datum/symptom/beard/Activate(var/datum/disease/advance/A)
 	..()

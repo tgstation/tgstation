@@ -54,8 +54,8 @@
 
 			var/foundVirus = 0
 			for(var/datum/disease/D in patient.viruses)
-				if(!D.hidden[SCANNER])
-					foundVirus = 1
+				if(!D.hidden[SCANNER] && foundVirus < D.HUDrating)
+					foundVirus = D.HUDrating
 
 			holder = patient.hud_list[HEALTH_HUD]
 			if(patient.stat == 2)
@@ -70,8 +70,10 @@
 				holder.icon_state = "huddead"
 			else if(patient.status_flags & XENO_HOST)
 				holder.icon_state = "hudxeno"
-			else if(foundVirus)
+			else if(foundVirus >= 2)
 				holder.icon_state = "hudill"
+				if(foundVirus == 3)
+					holder.icon_state = "hudveryill"
 			else
 				holder.icon_state = "hudhealthy"
 			client.images += holder

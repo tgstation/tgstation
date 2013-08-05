@@ -7,6 +7,7 @@ Vitiligo
 	Reduces stage speed slightly.
 	Reduces transmission.
 	Critical Level.
+	Harmless on HUD.
 
 BONUS
 	Makes the mob lose skin pigmentation.
@@ -22,6 +23,7 @@ BONUS
 	stage_speed = -1
 	transmittable = -2
 	level = 5
+	HUDrating = 0
 
 /datum/symptom/vitiligo/Activate(var/datum/disease/advance/A)
 	..()

@@ -9,6 +9,7 @@
 	affected_species = list("Human", "Monkey")
 	desc = "If left untreated death will occur."
 	severity = "Major"
+	HUDrating = 3 //Oh god call the shuttle!
 
 /datum/disease/fake_gbs/stage_act()
 	..()

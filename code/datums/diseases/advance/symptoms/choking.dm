@@ -8,6 +8,7 @@ Choking
 	Decreases stage speed.
 	Decreases transmittablity tremendously.
 	Moderate Level.
+	Fatal on HUD.
 
 Bonus
 	Inflicts spikes of oxyloss
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -4
 	level = 3
+	HUDrating = 3
 
 /datum/symptom/choking/Activate(var/datum/disease/advance/A)
 	..()

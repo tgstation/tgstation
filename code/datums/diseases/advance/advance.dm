@@ -187,7 +187,7 @@ var/list/advance_cures = 	list(
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 1)
+	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 1, "HUDrating" = 0)
 
 	for(var/datum/symptom/S in symptoms)
 
@@ -196,6 +196,8 @@ var/list/advance_cures = 	list(
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		properties["severity"] = max(properties["severity"], S.level) // severity is based on the highest level symptom
+		if(S.HUDrating > properties["HUDrating"])
+			properties["HUDrating"] = S.HUDrating
 
 	return properties
 
@@ -211,6 +213,7 @@ var/list/advance_cures = 	list(
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
+		HUDrating = properties["HUDrating"]
 		GenerateCure(properties)
 	else
 		CRASH("Our properties were empty or null!")

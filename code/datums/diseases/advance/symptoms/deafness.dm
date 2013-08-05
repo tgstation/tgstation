@@ -8,6 +8,7 @@ Deafness
 	Decreases stage speed slightly.
 	Decreases transmittablity.
 	Intense Level.
+	Harmful on HUD.
 
 Bonus
 	Causes intermittent loss of hearing.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -1
 	transmittable = -3
 	level = 4
+	HUDrating = 2
 
 /datum/symptom/deafness/Activate(var/datum/disease/advance/A)
 	..()

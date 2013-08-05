@@ -8,6 +8,7 @@ Itching
 	Increases stage speed.
 	Little transmittable.
 	Low Level.
+	Harmless on HUD.
 
 BONUS
 	Displays an annoying message!
@@ -24,6 +25,7 @@ BONUS
 	stage_speed = 3
 	transmittable = 1
 	level = 1
+	HUDrating = 0
 
 /datum/symptom/itching/Activate(var/datum/disease/advance/A)
 	..()

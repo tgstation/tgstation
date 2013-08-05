@@ -8,6 +8,7 @@ Sneezing
 	Doesn't increase stage speed.
 	Very transmittable.
 	Low Level.
+	Harmless on HUD.
 
 Bonus
 	Forces a spread type of AIRBORNE
@@ -24,6 +25,7 @@ Bonus
 	stage_speed = 0
 	transmittable = 4
 	level = 1
+	HUDrating = 0
 
 /datum/symptom/sneeze/Activate(var/datum/disease/advance/A)
 	..()

@@ -8,6 +8,7 @@ Shivering
 	Increases stage speed.
 	Little transmittable.
 	Low level.
+	Harmless on HUD.
 
 Bonus
 	Cools down your body.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = 2
 	transmittable = 2
 	level = 2
+	HUDrating = 0
 
 /datum/symptom/shivering/Activate(var/datum/disease/advance/A)
 	..()

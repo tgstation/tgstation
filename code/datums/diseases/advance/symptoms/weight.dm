@@ -8,6 +8,7 @@ Weight Gain
 	Decreases stage speed.
 	Reduced transmittable.
 	Intense Level.
+	Harmless on HUD.
 
 Bonus
 	Increases the weight gain of the mob,
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 4
+	HUDrating = 0
 
 /datum/symptom/weight_gain/Activate(var/datum/disease/advance/A)
 	..()
@@ -48,6 +50,7 @@ Weight Loss
 	Decreases stage speed.
 	Reduced Transmittable.
 	High level.
+	Harmless on HUD. [if lack of nutrition is ever changed to cause damage, change this to harmful/fatal]
 
 Bonus
 	Decreases the weight of the mob,
@@ -64,6 +67,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 3
+	HUDrating = 0
 
 /datum/symptom/weight_loss/Activate(var/datum/disease/advance/A)
 	..()
@@ -89,6 +93,7 @@ Weight Even
 	Decreases stage speed.
 	Reduced transmittable.
 	High level.
+	Helpful on HUD.
 
 Bonus
 	Causes the weight of the mob to
@@ -106,6 +111,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 4
+	HUDrating = 1
 
 /datum/symptom/weight_even/Activate(var/datum/disease/advance/A)
 	..()

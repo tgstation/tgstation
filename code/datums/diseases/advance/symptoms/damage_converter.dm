@@ -8,6 +8,7 @@ Damage Converter
 	Decreases stage speed tremendously.
 	Reduced transmittablity
 	Intense Level.
+	Harmless on HUD.
 
 Bonus
 	Slowly converts brute/fire damage to toxin.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -4
 	transmittable = -2
 	level = 4
+	HUDrating = 0
 
 /datum/symptom/damage_converter/Activate(var/datum/disease/advance/A)
 	..()

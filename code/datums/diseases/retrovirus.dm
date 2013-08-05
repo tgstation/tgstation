@@ -11,6 +11,7 @@
 	severity = "Severe"
 	permeability_mod = 0.4
 	stage_prob = 2
+	HUDrating = 2
 	var/SE
 	var/UI
 	var/restcure = 0

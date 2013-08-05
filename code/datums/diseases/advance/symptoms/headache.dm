@@ -8,6 +8,7 @@ Headache
 	Increases stage speed.
 	Not transmittable.
 	Low Level.
+	Harmless on HUD.
 
 BONUS
 	Displays an annoying message!
@@ -24,6 +25,7 @@ BONUS
 	stage_speed = 2
 	transmittable = 0
 	level = 1
+	HUDrating = 0
 
 /datum/symptom/headache/Activate(var/datum/disease/advance/A)
 	..()

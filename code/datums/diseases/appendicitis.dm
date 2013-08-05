@@ -12,6 +12,7 @@
 	severity = "Medium"
 	longevity = 1000
 	hidden = list(0, 1)
+	HUDrating = 2
 
 /datum/disease/appendicitis/stage_act()
 	..()

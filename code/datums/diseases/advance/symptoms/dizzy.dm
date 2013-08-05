@@ -8,6 +8,7 @@ Dizziness
 	Decreases stage speed.
 	Reduced transmittability
 	Intense Level.
+	Harmful on HUD.
 
 Bonus
 	Shakes the affected mob's screen for short periods.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 4
+	HUDrating = 2
 
 /datum/symptom/dizzy/Activate(var/datum/disease/advance/A)
 	..()

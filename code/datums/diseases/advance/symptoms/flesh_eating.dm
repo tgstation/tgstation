@@ -8,6 +8,7 @@ Necrotizing Fasciitis (AKA Flesh-Eating Disease)
 	No changes to stage speed.
 	Decreases transmittablity temrendously.
 	Fatal Level.
+	Fatal on HUD.
 
 Bonus
 	Deals brute damage over time.
@@ -23,6 +24,7 @@ Bonus
 	stage_speed = 0
 	transmittable = -4
 	level = 6
+	HUDrating = 3
 
 /datum/symptom/flesh_eating/Activate(var/datum/disease/advance/A)
 	..()

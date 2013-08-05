@@ -12,6 +12,7 @@
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the intial vector into new hosts."
 	severity = "Medium"
+	HUDrating = 2
 
 
 /datum/disease/dnaspread/stage_act()
