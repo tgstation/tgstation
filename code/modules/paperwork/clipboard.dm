@@ -104,12 +104,19 @@
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
-			if(P)
+			if(P && P.loc == src)
 				if(usr.get_active_hand())
 					P.attackby(usr.get_active_hand(), usr)
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
+			if(!(P.loc == src))
+				var/message = "<span class='warning'>[usr]([usr.key]) has tried to remove something it shouldn't from the clipboard<span>"
+				message_admins(message)
+				message += "[P]"
+				log_game(message)
+				admin_log.Add(message)
+				return
 			if(P)
 				P.loc = usr.loc
 				usr.put_in_hands(P)
@@ -138,7 +145,7 @@
 
 		if(href_list["top"])
 			var/obj/item/P = locate(href_list["top"])
-			if(P)
+			if(P && (P.loc == src))
 				toppaper = P
 				usr << "<span class='notice'>You move [P.name] to the top.</span>"
 

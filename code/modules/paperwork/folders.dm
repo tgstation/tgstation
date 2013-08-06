@@ -68,6 +68,13 @@
 				log_game(message)
 				admin_log.Add(message)
 				return
+			if(!(P in src.contents))
+				var/message = "<span class='warning'>[usr]([usr.key]) has tried to remove a paper/photo from a folder that didn't contain it.<span>"
+				message_admins(message)
+				message += "[P]"
+				log_game(message)
+				admin_log.Add(message)
+				return
 			if(P)
 				P.loc = usr.loc
 				usr.put_in_hands(P)
