@@ -234,7 +234,7 @@ var/list/uplink_items = list()
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
-	name = "Hacked Artificial Intelligence Law Upload Module"
+	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 7
@@ -307,7 +307,7 @@ var/list/uplink_items = list()
 	cost = 10
 
 /datum/uplink_item/badass/random
-	name = "Random Item (?)"
+	name = "Random Item"
 	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
