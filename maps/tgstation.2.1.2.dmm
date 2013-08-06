@@ -2962,7 +2962,7 @@
 "beX" = (/obj/structure/closet/secure_closet/hop,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor,/area/crew_quarters/heads)
 "beY" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"; pixel_y = -32},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable,/turf/simulated/floor/plating,/area/crew_quarters/heads)
 "beZ" = (/obj/machinery/hologram/holopad,/turf/simulated/floor,/area/quartermaster/office)
-"bfa" = (/mob/living/simple_animal/corgi/Ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
+"bfa" = (/mob/living/simple_animal/dog/corgi/Ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
 "bfb" = (/obj/machinery/hologram/holopad,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
 "bfc" = (/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 24},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/crew_quarters/heads)
 "bfd" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/turf/simulated/floor/wood,/area/bridge/meeting_room)
