@@ -118,8 +118,8 @@ obj
 					if(istype(enemy_tile))
 						var/datum/gas_mixture/acs = enemy_tile.return_air()
 						var/obj/effect/decal/cleanable/liquid_fuel/liq = locate() in enemy_tile
-						if(!acs.check_recombustability(liq))
-							continue
+						if(!acs) continue
+						if(!acs.check_recombustability(liq)) continue
 						//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 						//reduce firelevel.
 						if(enemy_tile.fire_protection > world.time-30)
