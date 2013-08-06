@@ -29,7 +29,6 @@
 
 /mob/living/simple_animal/pug/attack_animal(mob/living/simple_animal/M as mob)
 	attack_hand(M)
-	src.gib()
 	return
 
 /mob/living/simple_animal/pug/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
