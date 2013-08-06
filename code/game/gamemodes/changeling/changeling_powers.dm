@@ -46,11 +46,11 @@
 		return
 
 	if(changeling.absorbedcount < required_dna)
-		src << "<span class='warning'>We require at least [required_dna] samples of compatible DNA.</span>"
+		src << "<span class='warning'>We require at least [required_dna] sample\s of compatible DNA.</span>"
 		return
 
 	if(changeling.chem_charges < required_chems)
-		src << "<span class='warning'>We require at least [required_chems] units of chemicals to do that!</span>"
+		src << "<span class='warning'>We require at least [required_chems] unit\s of chemicals to do that!</span>"
 		return
 
 	if(changeling.geneticdamage > max_genetic_damage)
@@ -115,8 +115,12 @@
 	changeling.absorb_dna(T)
 
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
-	if(T.mind && T.mind.changeling)//If the target was a changeling, suck out their extra juice!
+	if(T.mind && T.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 		changeling.chem_charges += min(T.mind.changeling.chem_charges, changeling.chem_storage)
+		changeling.absorbedcount += T.mind.changeling.absorbedcount
+
+		T.mind.changeling.absorbed_dna.len = 1
+		T.mind.changeling.absorbedcount = 0
 	else
 		changeling.chem_charges += 10
 
@@ -222,7 +226,7 @@
 	set name = "Regenerative Stasis (10)"
 	set desc = "Begin stasis, allowing us to regenerate."
 
-	var/datum/changeling/changeling = changeling_power(10,0,100,DEAD)
+	var/datum/changeling/changeling = changeling_power(10,1,100,DEAD)
 	if(!changeling)	return
 	if(status_flags & FAKEDEATH) return //Make sure we can't stack regenerations and such.
 	changeling.chem_charges -= 10
@@ -252,7 +256,7 @@
 	set name = "Regenerate! (10)"
 	set desc = "Regenerate, healing all damage from our form."
 
-	var/datum/changeling/changeling = changeling_power(10,0,100,DEAD)
+	var/datum/changeling/changeling = changeling_power(10,1,100,DEAD)
 	if(!changeling)	return
 	changeling.chem_charges -= 10
 
@@ -323,18 +327,23 @@
 	if(!changeling)	return 0
 	src.mind.changeling.chem_charges -= 25
 
-	for(var/mob/living/carbon/M in ohearers(4, usr))
-		if(!M.mind || !M.mind.changeling)
-			M.ear_deaf += 30
-			M.confused += 20
-			M.make_jittery(50)
+	for(var/mob/living/M in hearers(4, usr))
+		if(iscarbon(M))
+			if(!M.mind || !M.mind.changeling)
+				M.ear_deaf += 30
+				M.confused += 20
+				M.make_jittery(50)
+			else
+				M << sound('sound/effects/screech.ogg')
+
+		if(issilicon(M))
+			M << sound('sound/weapons/flash.ogg')
+			M.Weaken(rand(5,10))
+
 
 	for(var/obj/machinery/light/L in range(4, usr))
 		L.on = 1
 		L.broken()
-
-	//for(var/obj/structure/window/W in range(2, usr)) //I like the window-breaking, but it makes the ability too 'loud' to fit changelings.
-	//	W.hit(rand(40,100))
 
 	feedback_add_details("changeling_powers","RS")
 	return 1
@@ -343,19 +352,16 @@
 //Makes some spiderlings. Good for setting traps and causing general trouble.
 /mob/living/carbon/proc/changeling_spiders()
 	set category = "Changeling"
-	set name = "Spread Infestation (40)"
+	set name = "Spread Infestation (50)"
 	set desc = "Creates spiderlings."
 
-	var/datum/changeling/changeling = changeling_power(40, 10)
+	var/datum/changeling/changeling = changeling_power(50, 5)
 	if(!changeling)	return 0
-	src.mind.changeling.chem_charges -= 40
+	src.mind.changeling.chem_charges -= 50
 
-	for(var/i=0, i<3, i++)
+	for(var/i=0, i<2, i++)
 		var/obj/effect/spider/spiderling/S = new(src.loc)
-		if(prob(50))//nurses are obnoxious and lay more eggs, let's not have that for now.
-			S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
-		else
-			S.grow_as = /mob/living/simple_animal/hostile/giant_spider
+		S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
 
 	feedback_add_details("changeling_powers","SI")
 	return 1

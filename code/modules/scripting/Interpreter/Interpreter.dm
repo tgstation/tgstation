@@ -33,7 +33,7 @@
 		status=0
 		returnVal
 
-		max_statements=1000 // maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation
+		max_statements=900 // maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation
 		cur_statements=0    // current amount of statements called
 		alertadmins=0		// set to 1 if the admins shouldn't be notified of anymore issues
 		max_iterations=100 	// max number of uninterrupted loops possible

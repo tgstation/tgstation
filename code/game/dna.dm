@@ -583,47 +583,61 @@
 
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
-	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 470) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 600) // Set up the popup browser window
 	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
 		popup.close()
 		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
-	var/occupant_status
+	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
 	var/scanner_status
 	var/temp_html
 	if(connected)
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
 			if(check_dna_integrity(viable_occupant) && !(NOCLONE in viable_occupant.mutations))	//occupent is viable for dna modification
+				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
-					if(CONSCIOUS)	occupant_status = "<span class='good'>Conscious</span>"
-					if(UNCONSCIOUS)	occupant_status = "<span class='average'>Unconscious</span>"
-					else			occupant_status = "<span class='bad'>DEAD - Cannot Operate</span>"
-				occupant_status = "[viable_occupant.name] => [occupant_status]<br />"
+					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
+					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span>"
+					else			occupant_status += "<span class='bad'>DEAD - Cannot Operate</span>"
+				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div>"
 				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("inaprovaline")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div> [last_change]</div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
 			else
 				viable_occupant = null
-				occupant_status = "<span class='bad'>Invalid DNA structure</span>"
+				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
 		else
-			occupant_status = "<span class='bad'>No subject detected</span>"
+			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
 
-		if(connected.locked)
-			scanner_status = "<span class='bad'>Locked</span>"
+		if(connected.open)
+			scanner_status = "Open"
 		else
-			scanner_status = "<span class='good'>Unlocked</span>"
+			scanner_status = "Closed"
+			if(connected.locked)
+				scanner_status += " <span class='bad'>(Locked)</span>"
+			else
+				scanner_status += " <span class='good'>(Unlocked)</span>"
+			
+		
 	else
-		occupant_status = "<span class='bad'>Error: Undefined</span>"
-		scanner_status = "<span class='bad'>Error: No scanner detected</span>"
+		occupant_status += "<span class='bad'>----</span></div></div>"
+		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
 
-	var/status = "<div class='statusDisplay'>Scanner Status: [scanner_status]<br>Subject Status: [occupant_status]<br>"
+	var/status = "<div class='statusDisplay'>"
+	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
+	status += "[occupant_status]"
+	
+	
+	status += "<h3>Radiation Emitter Status</h3>"
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
-	status += "Emitter Array Output Level: [radstrength] <i>Mutation: (-[stddev]<->+[stddev])=68% (-[2*stddev]<->+[2*stddev])=95%</i><br>"
+	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68%) (-[2*stddev] to +[2*stddev] = 95%)</div></div>"
 	stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
 	var/chance_to_hit
 	switch(stddev)	//hardcoded values from a z-table for a normal distribution
@@ -631,30 +645,34 @@
 		if(0.25 to 0.5)			chance_to_hit = "68-95%"
 		if(0.5 to 0.75)			chance_to_hit = "55-68%"
 		else					chance_to_hit = "<38%"
-	status += "Emitter Array Pulse Duration: [radduration] <i>Accuracy: ([chance_to_hit])</i></div>"
-
+	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
+	status += "</div>" // Close statusDisplay div
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
-	if(connected)		buttons += "<a href='?src=\ref[src];task=togglelock;'>Toggle Bolts</a> <a href='?src=\ref[src];task=toggleopen;'>[connected.open ? "Close" : "Open"] Scanner</a> "
-	else				buttons += "<span class='linkOff'>Toggle Bolts</span> <span class='linkOff'>Open Scanner</span> "
+	if(connected)		
+		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.open ? "Close" : "Open"] Scanner</a> "
+		if (connected.open)
+			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
+		else
+			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
+	else				buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
 	if(viable_occupant)	buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
 	else				buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
 	if(diskette)		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
 	else				buttons += "<span class='linkOff'>Eject Disk</span> "
-	if(current_screen == "buffer")	buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Main Menu</a> "
-	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffers</a> "
-	buttons += "<br><a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Emitter Array Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
-	buttons += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Emitter Array Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
-
+	if(current_screen == "buffer")	buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
+	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
+		
 	switch(current_screen)
 		if("working")
-			temp_html += "<h3>System Busy</h3>"
 			temp_html += status
+			temp_html += "<h1>System Busy</h1>"			
 			temp_html += "Working ... Please wait ([radduration] Seconds)"
-		if("buffer")
-			temp_html += "<h3>Buffer Menu</h3>"
+		if("buffer")			
 			temp_html += status
 			temp_html += buttons
-
+			temp_html += "<h1>Buffer Menu</h1>"
+			
 			if(istype(buffer))
 				for(var/i=1, i<=buffer.len, i++)
 					temp_html += "<br>Slot [i]: "
@@ -710,44 +728,43 @@
 						if(diskette && !diskette.read_only)	temp_html += "<a href='?src=\ref[src];task=savedisk;num=[i];'>Save to Disk</a> "
 						else								temp_html += "<span class='linkOff'>Save to Disk</span> "
 		else
-			temp_html += "<h3>Main Menu</h3>"
 			temp_html += status
 			temp_html += buttons
+			temp_html += "<h1>Radiation Emitter Menu</h1>"
+			
+			temp_html += "<a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
+			temp_html += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
 
-			var/max_line_len = 10*DNA_BLOCK_SIZE
+			temp_html += "<h3>Irradiate Subject</h3>"	
+			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
 
-			temp_html += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>"
+			var/max_line_len = 7*DNA_BLOCK_SIZE	
 			if(viable_occupant)
-				temp_html += "[viable_occupant.dna.unique_enzymes]"
-			else
-				temp_html += " - "
-			temp_html += "</span></div></div><br>"
-
-			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><span class='highlight'>"
-			if(viable_occupant)
+				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
-					temp_html += "<a href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
-					if((i % max_line_len) == 0)
-						temp_html += "<br>"
-					else if((i % DNA_BLOCK_SIZE) == 0)
-						temp_html += " "
+					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
+					if ((i % max_line_len) == 0)
+						temp_html += "</div><div class='clearBoth'>"
+					if((i % DNA_BLOCK_SIZE) == 0 && i < len)						
+						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
-				temp_html += " - "
-			temp_html += "</span></div></div><br>"
+				temp_html += "----"
+			temp_html += "</div></div></div><br>"
 
-			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><span class='highlight'>"
+			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
 			if(viable_occupant)
+				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.struc_enzymes)
 				for(var/i=1, i<=len, i++)
-					temp_html += "<a href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
-					if((i % max_line_len) == 0)
-						temp_html += "<br>"
-					else if((i % DNA_BLOCK_SIZE) == 0)
-						temp_html += " "
+					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
+					if ((i % max_line_len) == 0)
+						temp_html += "</div><div class='clearBoth'>"
+					if((i % DNA_BLOCK_SIZE) == 0 && i < len)						
+						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
-				temp_html += " - "
-			temp_html += "</span></div></div>"
+				temp_html += "----"
+			temp_html += "</div></div></div>"
 
 	popup.set_content(temp_html)
 	popup.open()

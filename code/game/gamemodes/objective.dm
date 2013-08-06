@@ -381,7 +381,7 @@ Nobody takes these seriously anyways -- Ikki
 datum/objective/download
 	proc/gen_amount_goal()
 		target_amount = rand(10,20)
-		explanation_text = "Download [target_amount] research levels."
+		explanation_text = "Download [target_amount] research level\s."
 		return target_amount
 
 
@@ -407,7 +407,7 @@ datum/objective/download
 datum/objective/capture
 	proc/gen_amount_goal()
 		target_amount = rand(5,10)
-		explanation_text = "Accumulate [target_amount] capture points. It is better if they remain relatively unharmed."
+		explanation_text = "Accumulate [target_amount] capture point\s. It is better if they remain relatively unharmed."
 		return target_amount
 
 
@@ -458,7 +458,7 @@ datum/objective/absorb
 						n_p ++
 			target_amount = min(target_amount, n_p)
 
-		explanation_text = "Extract [target_amount] compatible genomes."
+		explanation_text = "Extract [target_amount] compatible genome\s."
 		return target_amount
 
 	check_completion()

@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/med_data//TODO:SANITY
-	name = "Medical Records"
+	name = "Medical Records Console"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
 	req_one_access = list(access_medical, access_forensics_lockers)
@@ -105,7 +105,7 @@
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
 	//user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
 	//onclose(user, "med_rec")
-	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
+	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
