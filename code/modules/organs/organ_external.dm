@@ -274,6 +274,10 @@
 #define GANGREN_LEVEL_TERMINAL	2500
 #define GERM_TRANSFER_AMOUNT	germ_level/500
 /datum/organ/external/proc/update_germs()
+	if((status & ORGAN_ROBOT)) //how does robot limb have da germs?
+		if(germ_level > 0)
+			germ_level = 0
+		return
 	if(germ_level > 0 && owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
 		//Syncing germ levels with external wounds
 		for(var/datum/wound/W in wounds)
