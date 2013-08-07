@@ -78,7 +78,8 @@
 					msg += "\t[C] is a [C.holder.rank]\n"
 					num_admins_online++
 			else
-				num_mods_online++
+				if(!C.holder.fakekey)
+					num_mods_online++
 
 	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
 	msg += "<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'\n"
@@ -98,6 +99,9 @@
 			else
 				msg += "\t[C] is a [C.holder.rank]"
 
+				if(C.holder.fakekey)
+					msg += " <i>(as [C.holder.fakekey])</i>"
+
 				if(isobserver(C.mob))
 					msg += " - Observing"
 				else if(istype(C.mob,/mob/new_player))
@@ -112,9 +116,11 @@
 	else
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
-				num_admins_online++
+				if(!C.holder.fakekey)
+					num_admins_online++
 			else
-				msg += "\t[C] is a [C.holder.rank]\n"
+				if(!C.holder.fakekey)
+					msg += "\t[C] is a [C.holder.rank]\n"
 
 	msg = "<b>Current Moderators ([num_mods_online]):</b>\n" + msg
 	msg += "<b>There are also [num_admins_online] admins online.</b> To view online admins, type 'adminwho'\n"
