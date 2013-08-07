@@ -42,11 +42,11 @@
 	board_type = "other"
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
-	build_path = "/obj/machinery/computer/aiupload"
+	build_path = "/obj/machinery/computer/upload/ai"
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/borgupload
 	name = "Circuit board (Cyborg Upload)"
-	build_path = "/obj/machinery/computer/borgupload"
+	build_path = "/obj/machinery/computer/upload/borg"
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records Console)"
