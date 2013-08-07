@@ -23,8 +23,8 @@
 
 	..()
 
-/mob/living/carbon/monkey/movement_delay()
-	var/tally = 0
+/mob/living/carbon/monkey/movement_delay(var/tally = 0)
+
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) return -1
 
@@ -35,7 +35,7 @@
 
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
-	return tally+config.monkey_delay
+	return ..(tally+config.monkey_delay)
 
 /mob/living/carbon/monkey/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
