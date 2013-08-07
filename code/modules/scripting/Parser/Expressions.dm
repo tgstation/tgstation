@@ -180,12 +180,18 @@
 	- <ParseParenExpression()>
 	- <ParseParamExpression()>
 */
-		ParseExpression(list/end=list(/token/end), list/ErrChars=list("{", "}"))
+		ParseExpression(list/end=list(/token/end), list/ErrChars=list("{", "}"), check_functions = 0)
 			var/stack
 				opr=new
 				val=new
 			src.expecting=VALUE
+			var/loop = 0
 			for()
+				loop++
+				if(loop > 800)
+					errors+=new/scriptError("Too many nested tokens.")
+					return
+
 				if(EndOfExpression(end))
 					break
 				if(istype(curToken, /token/symbol) && ErrChars.Find(curToken.value))
@@ -206,6 +212,7 @@
 						NextToken()
 						continue
 					val.Push(ParseParenExpression())
+
 				else if(istype(curToken, /token/symbol))												//Operator found.
 					var/node/expression/operator/curOperator											//Figure out whether it is unary or binary and get a new instance.
 					if(src.expecting==OPERATOR)
@@ -226,16 +233,24 @@
 						continue
 					opr.Push(curOperator)
 					src.expecting=VALUE
+
 				else if(ntok && ntok.value=="(" && istype(ntok, /token/symbol)\
 											&& istype(curToken, /token/word))								//Parse function call
-					var/token/preToken=curToken
-					var/old_expect=src.expecting
-					var/fex=ParseFunctionExpression()
-					if(old_expect!=VALUE)
-						errors+=new/scriptError/ExpectedToken("operator", preToken)
-						NextToken()
-						continue
-					val.Push(fex)
+
+					if(!check_functions)
+
+						var/token/preToken=curToken
+						var/old_expect=src.expecting
+						var/fex=ParseFunctionExpression()
+						if(old_expect!=VALUE)
+							errors+=new/scriptError/ExpectedToken("operator", preToken)
+							NextToken()
+							continue
+						val.Push(fex)
+					else
+						errors+=new/scriptError/ParameterFunction(curToken)
+						break
+
 				else if(istype(curToken, /token/keyword)) 										//inline keywords
 					var/n_Keyword/kw=options.keywords[curToken.value]
 					kw=new kw(inline=1)
@@ -244,6 +259,7 @@
 							return
 					else
 						errors+=new/scriptError/BadToken(curToken)
+
 				else if(istype(curToken, /token/end)) 													//semicolon found where it wasn't expected
 					errors+=new/scriptError/BadToken(curToken)
 					NextToken()
@@ -255,6 +271,7 @@
 						continue
 					val.Push(GetExpression(curToken))
 					src.expecting=OPERATOR
+
 				NextToken()
 
 			while(opr.Top()) Reduce(opr, val) 																//Reduce the value stack completely
@@ -280,13 +297,16 @@
 
 			for()
 				loops++
-				if(loops>=1000)
+				if(loops>=800)
+					errors += new/scriptError("Too many nested expressions.")
 					break
 					//CRASH("Something TERRIBLE has gone wrong in ParseFunctionExpression ;__;")
 
 				if(istype(curToken, /token/symbol) && curToken.value==")")
 					return exp
 				exp.parameters+=ParseParamExpression()
+				if(errors.len)
+					return exp
 				if(curToken.value==","&&istype(curToken, /token/symbol))NextToken()	//skip comma
 				if(istype(curToken, /token/end))																		//Prevents infinite loop...
 					errors+=new/scriptError/ExpectedToken(")")
@@ -311,5 +331,6 @@
 	See Also:
 	- <ParseExpression()>
 */
-		ParseParamExpression()
-			return ParseExpression(list(",", ")"))
+		ParseParamExpression(var/check_functions = 0)
+			var/cf = check_functions
+			return ParseExpression(list(",", ")"), check_functions = cf)
