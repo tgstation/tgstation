@@ -157,12 +157,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]				>> gender
 	S["age"]				>> age
-	S["hair_color"]			>> h_color
-	S["facial_hair_color"]	>> f_color
+	S["hair_color"]			>> hair_color
+	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
 	S["skin_tone"]			>> skin_tone
-	S["hair_style_name"]	>> h_style
-	S["facial_style_name"]	>> f_style
+	S["hair_style_name"]	>> hair_style
+	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
 
@@ -189,16 +189,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	if(gender == MALE)
-		h_style			= sanitize_inlist(h_style, hair_styles_male_list)
-		f_style			= sanitize_inlist(f_style, facial_hair_styles_male_list)
+		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
 		underwear		= sanitize_inlist(underwear, underwear_m)
 	else
-		h_style			= sanitize_inlist(h_style, hair_styles_female_list)
-		f_style			= sanitize_inlist(f_style, facial_hair_styles_female_list)
+		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	h_color			= sanitize_hexcolor(h_color, 3, 0)
-	f_color			= sanitize_hexcolor(f_color, 3, 0)
+	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
+	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
@@ -230,12 +230,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] << be_random_name
 	S["gender"]				<< gender
 	S["age"]				<< age
-	S["hair_color"]			<< h_color
-	S["facial_hair_color"]	<< f_color
+	S["hair_color"]			<< hair_color
+	S["facial_hair_color"]	<< facial_hair_color
 	S["eye_color"]			<< eye_color
 	S["skin_tone"]			<< skin_tone
-	S["hair_style_name"]	<< h_style
-	S["facial_style_name"]	<< f_style
+	S["hair_style_name"]	<< hair_style
+	S["facial_style_name"]	<< facial_hair_style
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
 
