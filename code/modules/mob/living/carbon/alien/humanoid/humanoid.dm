@@ -39,8 +39,8 @@
 			step(AM, t)
 		now_pushing = null
 
-/mob/living/carbon/alien/humanoid/movement_delay()
-	var/tally = 0
+/mob/living/carbon/alien/humanoid/movement_delay(var/tally = 0)
+
 	if (istype(src, /mob/living/carbon/alien/humanoid/queen))
 		tally += 5
 	if (istype(src, /mob/living/carbon/alien/humanoid/drone))
@@ -49,7 +49,7 @@
 		tally += 1
 	if (istype(src, /mob/living/carbon/alien/humanoid/hunter))
 		tally = -1 // hunters go supersuperfast
-	return (tally + move_delay_add + config.alien_delay)
+	return ..(tally + move_delay_add + config.alien_delay)
 
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 

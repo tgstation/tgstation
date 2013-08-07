@@ -79,8 +79,7 @@
 	slime_mutation[3] = /mob/living/carbon/slime/blue
 	slime_mutation[4] = /mob/living/carbon/slime/purple
 
-/mob/living/carbon/slime/movement_delay()
-	var/tally = 0
+/mob/living/carbon/slime/movement_delay(var/tally = 0)
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
@@ -101,7 +100,7 @@
 	if (bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
-	return tally+config.slime_delay
+	return ..(tally+config.slime_delay)
 
 
 /mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)

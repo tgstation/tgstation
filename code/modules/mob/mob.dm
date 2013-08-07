@@ -87,8 +87,14 @@ var/next_mob_id = 0
 	if(I && istype(I))	//The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
 		I.attack(src, user)
 
-/mob/proc/movement_delay()
-	return 0
+/mob/proc/movement_delay(var/tally = 0)
+
+	// If the mob is cuffed, don't add a tally.
+	if(ismob(pulling))
+		var/mob/M = pulling
+		if(!M.restrained())
+			tally += 1
+	return tally
 
 /mob/proc/Life()
 	return

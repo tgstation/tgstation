@@ -418,12 +418,9 @@
 
 
 
-/mob/living/simple_animal/movement_delay()
-	var/tally = 0 //Incase I need to add stuff other than "speed" later
-
+/mob/living/simple_animal/movement_delay(var/tally = 0)
 	tally = speed
-
-	return tally+config.animal_delay
+	return ..(tally+config.animal_delay)
 
 /mob/living/simple_animal/Stat()
 	..()
