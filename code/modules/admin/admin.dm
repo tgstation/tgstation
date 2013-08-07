@@ -841,3 +841,11 @@ proc/move_ferry()
 		ferry_location = 0
 	else
 		ferry_location = 1
+
+
+proc/kick_clients_in_lobby(var/message)
+	for(var/client/C in clients)
+		if(istype(C.mob, /mob/new_player))
+			if(message)
+				C << message
+			del(C)

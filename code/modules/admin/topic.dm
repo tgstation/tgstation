@@ -2061,6 +2061,13 @@
 				usr << browse(dat, "window=lawchanges;size=800x500")
 			if("check_antagonist")
 				check_antagonists()
+			if("kick_all_from_lobby")
+				if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+					message_admins("[key_name_admin(usr)] has kicked all clients from the lobby.", 1)
+					log_admin("[key_name(usr)] has kicked all clients from the lobby.")
+					kick_clients_in_lobby("\red The admin [usr.ckey] issued a 'kick all clients from lobby' command.")
+				else
+					usr << "You may only use this when the game is running"
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")

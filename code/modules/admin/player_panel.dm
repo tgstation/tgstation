@@ -194,7 +194,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?_src_=holder;secretsadmin=check_antagonist'>Check antagonists</a>
+					Hover over a line to see more information - <a href='?_src_=holder;secretsadmin=check_antagonist'>Check antagonists</a> - <a href='?_src_=holder;secretsadmin=kick_all_from_lobby'>Kick everyone in lobby</a>
 					<p>
 				</td>
 			</tr>
