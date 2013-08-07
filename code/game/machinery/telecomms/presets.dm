@@ -115,8 +115,12 @@
 //Servers
 
 /obj/machinery/telecomms/server/presets
-
 	network = "tcommsat"
+
+/obj/machinery/telecomms/server/presets/New()
+	..()
+	name = id
+
 
 /obj/machinery/telecomms/server/presets/science
 	id = "Science Server"
