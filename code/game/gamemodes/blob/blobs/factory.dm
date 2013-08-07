@@ -71,6 +71,9 @@
 		..()
 
 	Die()
+		del(src)
+
+	Del()
 		if(factory)
 			factory.spores -= src
-		del(src)
+		..()
