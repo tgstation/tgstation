@@ -107,6 +107,13 @@
 		usr << src.desc
 	return
 
+/obj/item/attack_ai(mob/user as mob)
+	..()
+	if(isMoMMI(user))
+		var/in_range = in_range(src, user) || src.loc == user
+		if(in_range)
+			attack_hand(user)
+
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
 	if (hasorgans(user))
@@ -599,6 +606,13 @@
 		usr << "\red You can't pick that up!"
 		return
 	//All checks are done, time to pick it up!
+	if(isMoMMI(usr))
+		// Otherwise, we get MoMMIs changing their own laws.
+		if(istype(src,/obj/item/weapon/aiModule))
+			src << "\red Your firmware prevents you from picking up [src]!"
+			return
+		if(usr.get_active_hand() == null)
+			usr.put_in_hands(src)
 	if(istype(usr, /mob/living/carbon/human))
 		src.attack_hand(usr)
 	if(istype(usr, /mob/living/carbon/alien))

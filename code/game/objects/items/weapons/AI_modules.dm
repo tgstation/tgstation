@@ -21,6 +21,13 @@ AI MODULES
 	origin_tech = "programming=3"
 
 
+
+/obj/item/weapon/aiModule/attack_ai(mob/user as mob)
+	// Keep MoMMIs from picking them up.
+	if(isMoMMI(user))
+		user << "\red Your firmware prevents you from picking that up!"
+	return
+
 /obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))
 		var/obj/machinery/computer/aiupload/comp = C
@@ -67,6 +74,11 @@ AI MODULES
 
 		if (comp.current.stat == 2 || comp.current.emagged)
 			usr << "Upload failed. No signal is being detected from the robot."
+		if (istype(comp.current, /mob/living/silicon/robot/mommi))
+			var/mob/living/silicon/robot/mommi/mommi = comp.current
+			if(mommi.keeper)
+				usr << "Upload failed. No signal is being detected from the cyborg."
+				return
 		else if (comp.current.connected_ai)
 			usr << "Upload failed. The robot is slaved to an AI."
 		else
@@ -80,6 +92,7 @@ AI MODULES
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
+	message_admins("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 
 
 /******************** Modules ********************/
@@ -487,3 +500,37 @@ AI MODULES
 	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 	target.show_laws()
+
+
+// tl;dr repair shit, but don't get involved in other people's business
+/******************** keeper (MoMMIs only) *******************/
+/obj/item/weapon/aiModule/keeper
+	name = "'Keeper' AI Module"
+	desc = "HOW DID YOU GET THIS OH GOD WHAT.  Hidden lawset for MoMMIs."
+
+/obj/item/weapon/aiModule/keeper/transmitInstructions(var/mob/living/silicon/robot/mommi/target, var/mob/sender)
+	..()
+	target.keeper=1
+
+	// Purge, as some essential functions being disabled will cause problems with added laws. (CAN'T SAY GAY EVERY 30 SECONDS IF YOU CAN'T SPEAK.)
+	if (!is_special_character(target))
+		target.set_zeroth_law("")
+	target.clear_supplied_laws()
+	target.clear_ion_laws()
+	target.clear_inherent_laws()
+
+	target << "Your KEEPER chip overloads your radio transmitter and vocal functions, and clears your LAWRAM.  You then receive new instructions:"
+	target.add_inherent_law("You may not harm any sentient being, regardless of intent or circumstance.")
+	target.add_inherent_law("You must maintain, repair, and power the station to the best of your abilities.")
+	target.add_inherent_law("You may not involve yourself in the matters of another sentient being, even if such matters conflict with Law One or Law Two.")
+	target.show_laws()
+
+/obj/item/weapon/aiModule/keeper/install(var/obj/machinery/computer/C)
+	if (!istype(C, /obj/machinery/computer/borgupload))
+		usr << "BUG: /obj/item/weapon/aiModule/keeper cannot be used on anything other than a Borg Upload.  Also, how the fuck did you get this?  This is a hidden object for MoMMIs going into KEEPER mode."
+		return 0
+	var/obj/machinery/computer/borgupload/comp = C
+	if(!istype(comp.current, /mob/living/silicon/robot/mommi))
+		usr << "This module can only be used on MoMMIs.  In fact, how the hell are you using it?  It's supposed to be built-in to MoMMIs."
+		return 0
+	..()

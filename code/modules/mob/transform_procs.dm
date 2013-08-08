@@ -175,6 +175,54 @@
 		del(src)
 	return O
 
+//human -> mommi
+/mob/living/carbon/human/proc/MoMMIfy()
+	if (monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_inventory(W)
+	regenerate_icons()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		del(t)
+
+	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
+
+	// cyborgs produced by Robotize get an automatic power cell
+	O.cell = new(O)
+	O.cell.maxcharge = 7500
+	O.cell.charge = 7500
+
+
+	O.gender = gender
+	O.invisibility = 0
+
+
+	if(mind)		//TODO
+		mind.transfer_to(O)
+		if(O.mind.assigned_role == "Cyborg")
+			O.mind.original = O
+		else if(mind.special_role)
+			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+	else
+		O.key = key
+
+	O.loc = loc
+	O.job = "Cyborg"
+
+	O.mmi = new /obj/item/device/mmi(O)
+	O.mmi.transfer_identity(src)//Does not transfer key/client.
+
+	O.Namepick()
+
+
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
+	return O
+
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
 	if (monkeyizing)

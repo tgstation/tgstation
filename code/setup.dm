@@ -398,6 +398,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_CO2	(1 << 3)
 #define GAS_N2O	(1 << 4)
 
+#define INV_SLOT_SIGHT "sight_slot"
+#define INV_SLOT_TOOL "tool_slot"
 
 var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
