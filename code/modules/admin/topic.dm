@@ -2056,6 +2056,20 @@
 				usr << browse(dat, "window=lawchanges;size=800x500")
 			if("check_antagonist")
 				check_antagonists()
+			if("kick_all_from_lobby")
+				if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+					var/afkonly = text2num(href_list["afkonly"])
+					if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
+						usr << "Kick clients from lobby aborted"
+						return
+					var/list/listkicked = kick_clients_in_lobby("\red The admin [usr.ckey] issued a 'kick all clients from lobby' command.", afkonly)
+					var/strkicked = ""
+					for(var/name in listkicked)
+						strkicked += "[name], "
+					message_admins("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]", 1)
+					log_admin("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
+				else
+					usr << "You may only use this when the game is running"
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")
