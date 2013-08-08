@@ -839,27 +839,50 @@ datum/mind
 					log_admin("[key_name_admin(usr)] has malf'ed [current].")
 
 				if("unemag")
-					var/mob/living/silicon/robot/R = current
-					if (istype(R))
+					if(istype(current,/mob/living/silicon/robot/mommi))
+						var/mob/living/silicon/robot/mommi/R = current
 						R.emagged = 0
 						if (R.activated(R.module.emag))
 							R.module_active = null
-						if(R.module_state_1 == R.module.emag)
-							R.module_state_1 = null
+						if(R.sight_state == R.module.emag)
+							R.sight_state = null
 							R.contents -= R.module.emag
-						else if(R.module_state_2 == R.module.emag)
-							R.module_state_2 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_3 == R.module.emag)
-							R.module_state_3 = null
+						else if(R.tool_state == R.module.emag)
+							R.tool_state = null
 							R.contents -= R.module.emag
 						log_admin("[key_name_admin(usr)] has unemag'ed [R].")
+					else
+						if (istype(current,/mob/living/silicon/robot))
+							var/mob/living/silicon/robot/R = current
+							R.emagged = 0
+							if (R.activated(R.module.emag))
+								R.module_active = null
+							if(R.module_state_1 == R.module.emag)
+								R.module_state_1 = null
+								R.contents -= R.module.emag
+							else if(R.module_state_2 == R.module.emag)
+								R.module_state_2 = null
+								R.contents -= R.module.emag
+							else if(R.module_state_3 == R.module.emag)
+								R.module_state_3 = null
+								R.contents -= R.module.emag
+							log_admin("[key_name_admin(usr)] has unemag'ed [R].")
 
 				if("unemagcyborgs")
 					if (istype(current, /mob/living/silicon/ai))
 						var/mob/living/silicon/ai/ai = current
 						for (var/mob/living/silicon/robot/R in ai.connected_robots)
 							R.emagged = 0
+							if(istype(R,/mob/living/silicon/robot/mommi))
+								var/mob/living/silicon/robot/mommi/M=R
+								if (M.activated(M.module.emag))
+									M.module_active = null
+								if(M.sight_state == M.module.emag)
+									M.sight_state = null
+									M.contents -= M.module.emag
+								else if(M.tool_state == M.module.emag)
+									M.tool_state = null
+									M.contents -= M.module.emag
 							if (R.module)
 								if (R.activated(R.module.emag))
 									R.module_active = null

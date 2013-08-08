@@ -374,6 +374,9 @@ var/global/datum/controller/occupations/job_master
 				if("Cyborg")
 					H.Robotize()
 					return 1
+				if("Mobile MMI")
+					H.MoMMIfy()
+					return 1
 				if("AI","Clown")	//don't need bag preference stuff!
 				else
 					switch(H.backbag) //BS12 EDIT
@@ -421,7 +424,7 @@ var/global/datum/controller/occupations/job_master
 				break
 
 		if(job)
-			if(job.title == "Cyborg")
+			if(job.title == "Cyborg" || job.title=="Mobile MMI")
 				return
 			else
 				C = new job.idtype(H)
@@ -479,7 +482,7 @@ var/global/datum/controller/occupations/job_master
 				if(!J)	continue
 				J.total_positions = text2num(value)
 				J.spawn_positions = text2num(value)
-				if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
+				if(name == "AI" || name == "Cyborg" || name == "Mobile MMI")//I dont like this here but it will do for now
 					J.total_positions = 0
 
 		return 1

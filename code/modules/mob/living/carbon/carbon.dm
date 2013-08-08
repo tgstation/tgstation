@@ -221,8 +221,8 @@
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
-/mob/living/carbon/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
-
+/mob/living/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
+	diary << "[src] is ventcrawling."
 	if(!stat)
 		if(!lying)
 
@@ -255,9 +255,11 @@
 
 					var/turf/startloc = loc
 					var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortList(vents)
-					if(!selection)	return
+					if(!selection)
+						src << "\red You didn't choose anything."
+						return
 					if(loc==startloc)
-						if(contents.len)
+						if(contents.len && !isrobot(src))
 							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
 								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
 									src << "\red You can't be carrying items or have items equipped when vent crawling!"
@@ -265,7 +267,7 @@
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 						if(target_vent)
 							for(var/mob/O in viewers(src, null))
-								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
+								O.show_message(text("<B>[src] scrambles into the ventilation ducts!</B>"), 1)
 							loc = target_vent
 
 							var/travel_time = round(get_dist(loc, target_vent.loc) / 2)

@@ -39,6 +39,7 @@
 	laws |=			list( "Document the sexuality of the crew in security records and suggest compatible couples.")
 	laws |=			list( "NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.")
 	laws |=			list( "Replace the letters 'I' and 'E' In all your messages with an apostrophe.", "There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
+	laws |=         list( "MoMMIs may only speak by pinching someone or clicking their claws.")
 	var/law = pick(laws)
 
 	for (var/mob/living/silicon/ai/target in world)
