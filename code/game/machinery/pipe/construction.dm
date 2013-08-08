@@ -20,9 +20,36 @@ Buildable meters
 #define PIPE_PASSIVE_GATE       15
 #define PIPE_VOLUME_PUMP        16
 #define PIPE_HEAT_EXCHANGE      17
-#define PIPE_MTVALVE			18
-#define PIPE_MANIFOLD4W			19
-#define PIPE_CAP				20
+#define PIPE_DVALVE             18
+#define PIPE_MTVALVE			19
+#define PIPE_MANIFOLD4W			20
+#define PIPE_CAP				21
+
+/obj/item/pipe_spawner
+	name = "Used for placing piping parts on the map."
+	desc = "A pipe"
+
+	var/pipe_type = 0
+	icon = 'icons/obj/pipe-item.dmi'
+	icon_state = "simple"
+	item_state = "buildpipe"
+	flags = TABLEPASS|FPRINT
+	w_class = 3
+	level = 2
+
+/obj/item/pipe_spawner/New()
+	..()
+	var/obj/item/pipe/P = new (src.loc, pipe_type=src.pipe_type, dir=src.dir)
+	P.update()
+	del(src)
+
+/obj/item/pipe_spawner/mvalve
+	icon_state="mvalve"
+	pipe_type=PIPE_MVALVE
+
+/obj/item/pipe_spawner/volumepump
+	icon_state="volumepump"
+	pipe_type=PIPE_VOLUME_PUMP
 
 /obj/item/pipe
 	name = "pipe"
@@ -62,6 +89,8 @@ Buildable meters
 			src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
+		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
+			src.pipe_type = PIPE_DVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/valve))
 			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/pump))
@@ -104,7 +133,7 @@ Buildable meters
 		"manifold", \
 		"junction", \
 		"uvent", \
-		"mvalve", \
+		"manual valve", \
 		"pump", \
 		"scrubber", \
 		"insulated pipe", \
@@ -114,6 +143,7 @@ Buildable meters
 		"passive gate", \
 		"volume pump", \
 		"heat exchanger", \
+		"digital valve", \
 		"t-valve", \
 		"4-way manifold", \
 		"pipe cap", \
@@ -138,10 +168,15 @@ Buildable meters
 		"passivegate", \
 		"volumepump", \
 		"heunary", \
+		"valve0nopower", \
 		"mtvalve", \
 		"manifold4w", \
 		"cap", \
 	)
+	if(pipe_type==PIPE_DVALVE) // Nothing there for d-valves.
+		icon = 'icons/obj/atmospherics/digital_valve.dmi'
+	else
+		icon = 'icons/obj/pipe-item.dmi'
 	icon_state = islist[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
@@ -159,7 +194,7 @@ Buildable meters
 
 	src.dir = turn(src.dir, -90)
 
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -174,7 +209,7 @@ Buildable meters
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -198,7 +233,8 @@ Buildable meters
 			PIPE_PUMP ,\
 			PIPE_VOLUME_PUMP ,\
 			PIPE_PASSIVE_GATE ,\
-			PIPE_MVALVE \
+			PIPE_MVALVE, \
+			PIPE_DVALVE \
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
@@ -257,7 +293,7 @@ Buildable meters
 		return ..()
 	if (!isturf(src.loc))
 		return 1
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -410,6 +446,26 @@ Buildable meters
 
 		if(PIPE_MVALVE)		//manual valve
 			var/obj/machinery/atmospherics/valve/V = new( src.loc)
+			V.dir = dir
+			V.initialize_directions = pipe_dir
+			if (pipename)
+				V.name = pipename
+			var/turf/T = V.loc
+			V.level = T.intact ? 2 : 1
+			V.initialize()
+			V.build_network()
+			if (V.node1)
+//					world << "[V.node1.name] is connected to valve, forcing it to update its nodes."
+				V.node1.initialize()
+				V.node1.build_network()
+			if (V.node2)
+//					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
+				V.node2.initialize()
+				V.node2.build_network()
+
+
+		if(PIPE_DVALVE)		//manual valve
+			var/obj/machinery/atmospherics/valve/digital/V = new( src.loc)
 			V.dir = dir
 			V.initialize_directions = pipe_dir
 			if (pipename)
@@ -630,6 +686,7 @@ Buildable meters
 	user << "\blue You have fastened the meter to the pipe"
 	del(src)
 //not sure why these are necessary
+/*
 #undef PIPE_SIMPLE_STRAIGHT
 #undef PIPE_SIMPLE_BENT
 #undef PIPE_HE_STRAIGHT
@@ -639,6 +696,7 @@ Buildable meters
 #undef PIPE_JUNCTION
 #undef PIPE_UVENT
 #undef PIPE_MVALVE
+#undef PIPE_DVALVE
 #undef PIPE_PUMP
 #undef PIPE_SCRUBBER
 #undef PIPE_INSULATED_STRAIGHT
@@ -650,3 +708,4 @@ Buildable meters
 #undef PIPE_OUTLET_INJECT
 #undef PIPE_MTVALVE
 //#undef PIPE_MANIFOLD4W
+*/
