@@ -639,7 +639,32 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		else
 			if ( (W) && !human.restrained() )
 				W.afterattack(src, human)
+/*
+	else if(isMoMMI(usr))
+		var/mob/living/silicon/robot/mommi/mommi = usr
+		//-mommi stuff-
 
+		if(mommi.stat)
+			return
+
+		var/in_range = in_range(src, mommi) || src.loc == mommi
+
+		if (in_range)
+			if (!( mommi.restrained()))
+				if (W)
+					attackby(W,mommi)
+					if (W)
+						W.afterattack(src, mommi)
+				else
+					attack_hand(mommi)
+			else
+				hand_h(mommi, mommi.hand)
+		else
+			if (!mommi.restrained() )
+				attack_robot(mommi)
+			else
+				hand_r(mommi, mommi.hand)
+*/
 
 	else if(isAI(usr))
 		var/mob/living/silicon/ai/ai = usr

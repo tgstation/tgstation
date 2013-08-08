@@ -165,6 +165,10 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, "space", "spess")
 		message = replacetext(message, "carp", "crap")
 		message = replacetext(message, "reason", "raisin")
+		message = replacetext(message, "mommi", "spidurr")
+		message = replacetext(message, "spider", "spidurr")
+		message = replacetext(message, "skitterbot", "spidurbutt")
+		message = replacetext(message, "skitter", "spider sound")
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"

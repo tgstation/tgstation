@@ -306,7 +306,7 @@ datum/objective/block
 		if(!owner.current)
 			return 0
 		var/area/shuttle = locate(/area/shuttle/escape/centcom)
-		var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
+		var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot, /mob/living/silicon/robot/mommi)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
 			if (player.mind)

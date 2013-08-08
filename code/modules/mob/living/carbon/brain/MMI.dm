@@ -8,6 +8,14 @@
 	w_class = 3
 	origin_tech = "biotech=3"
 
+	var/list/mommi_assembly_parts = list(
+		/obj/item/weapon/cell = 1,
+		/obj/item/robot_parts/l_leg = 2,
+		/obj/item/robot_parts/r_leg = 2,
+		/obj/item/robot_parts/r_arm = 1,
+		/obj/item/robot_parts/l_arm = 1
+	)
+
 	var/list/construction_cost = list("metal"=1000,"glass"=500)
 	var/construction_time = 75
 	//these vars are so the mecha fabricator doesn't shit itself anymore. --NEO
@@ -22,6 +30,76 @@
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if(istype(O,/obj/item/weapon/screwdriver))
+			for(var/t in mommi_assembly_parts)
+				if(contents_count(t)<mommi_assembly_parts[t])
+					return
+
+			if(!istype(loc,/turf))
+				user << "\red You can't assemble the MoMMI, the MMI has to be standing on the ground (or a table) to be perfectly precise."
+				return
+			if(!brainmob)
+				user << "\red What are you doing oh god put the brain back in."
+				return
+			if(!brainmob.key)
+				var/ghost_can_reenter = 0
+				if(brainmob.mind)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.can_reenter_corpse && G.mind == brainmob.mind)
+							ghost_can_reenter = 1
+							break
+				if(!ghost_can_reenter)
+					user << "<span class='notice'>The MMI indicates that their mind is completely unresponsive; there's no point.</span>"
+					return
+
+			if(brainmob.stat == DEAD)
+				user << "\red Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud."
+				return
+
+			if(brainmob.mind in ticker.mode.head_revolutionaries)
+				user << "\red The MMI's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI."
+				return
+
+			if(jobban_isbanned(brainmob, "Cyborg"))
+				user << "\red This MMI does not seem to fit."
+				return
+			//canmove = 0
+			icon = null
+			invisibility = 101
+
+
+			var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(get_turf(loc))
+			if(!M)	return
+
+			user.drop_item()
+
+			M.invisibility = 0
+			//M.custom_name = created_name
+			M.updatename()
+
+			brainmob.mind.transfer_to(M)
+
+			if(M.mind && M.mind.special_role)
+				M.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+
+			M.job = "Cyborg"
+
+			M.cell = locate(/obj/item/weapon/cell) in contents
+			M.cell.loc = M
+			src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			M.mmi = src
+			return
+		for(var/t in mommi_assembly_parts)
+			if(istype(O,t))
+				if(contents_count(t)<mommi_assembly_parts[t])
+					if(!brainmob)
+						user << "\red Why are you sticking robot legs on an empty MMI, you idiot?"
+						return
+					contents += O
+					user.drop_item()
+					O.loc=src
+					user << "You successfully add \the [O] to the contraption,"
+					return
 		if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
 			if(!O:brainmob)
 				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."
@@ -142,3 +220,9 @@
 			if(3)
 				brainmob.emp_damage += rand(0,10)
 	..()
+/obj/item/device/mmi/proc/contents_count(var/type)
+	var/c=0
+	for(var/O in contents)
+		if(istype(O,type))
+			c++
+	return c
