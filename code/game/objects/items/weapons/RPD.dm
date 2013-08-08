@@ -209,7 +209,10 @@ RCD
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
-				var/obj/structure/disposalconstruct/C = new (A,dir=p_dir)
+				var/obj/structure/disposalconstruct/C = new (A)
+				// This may still produce runtimes, but I checked and /obj/structure/disposalconstruct
+				//  DOES have a dir property, inherited from /obj/structure. - N3X
+				C.dir=p_dir
 				switch(p_type)
 					if(0)
 						C.ptype = 0
