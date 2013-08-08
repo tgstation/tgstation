@@ -18,7 +18,6 @@
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
-
 	for(var/mob/living/target in targets)
 		switch(destroys)
 			if("gib")
@@ -54,6 +53,8 @@
 		target.Weaken(amt_weakened)
 		target.Paralyse(amt_paralysis)
 		target.Stun(amt_stunned)
-
+		if(amt_weakened || amt_paralysis || amt_stunned)
+			if(target.buckled)
+				target.buckled.unbuckle()
 		target.eye_blind += amt_eye_blind
 		target.eye_blurry += amt_eye_blurry

@@ -30,5 +30,5 @@
 
 		if(!picked || !isturf(picked))
 			return
-
+		if(target.buckled) target.buckled.unbuckle()
 		target.loc = picked
