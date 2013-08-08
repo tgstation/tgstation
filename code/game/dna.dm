@@ -19,12 +19,12 @@
 	var/unique_enzymes
 	var/struc_enzymes
 	var/uni_identity
-	var/b_type
+	var/blood_type
 	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 
 /datum/dna/New()
-	if(!b_type)	b_type = random_blood_type()
+	if(!blood_type)	blood_type = random_blood_type()
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
@@ -33,13 +33,13 @@
 		L[DNA_GENDER_BLOCK] = construct_block((character.gender!=MALE)+1, 2)
 		if(istype(character, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = character
-			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.h_style), hair_styles_list.len)
-			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.h_color)
-			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.f_style), facial_hair_styles_list.len)
-			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.f_color)
+			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
+			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
+			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
+			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
 			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-		
+
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])	. += L[i]
 		else		. += random_string(DNA_BLOCK_SIZE,hex_characters)
@@ -70,32 +70,32 @@
 		return
 	if(!owner.dna)
 		owner.dna = new /datum/dna()
-	
+
 	if(real_name)
 		owner.real_name = real_name
 		owner.dna.generate_unique_enzymes(owner)
-	
+
 	if(blood_type)
-		owner.dna.b_type = blood_type
-	
+		owner.dna.blood_type = blood_type
+
 	if(ui)
 		owner.dna.uni_identity = ui
 		updateappearance(owner)
-	
+
 	var/update_mutantrace = (mutantrace != owner.dna.mutantrace)
 	owner.dna.mutantrace = mutantrace
 	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
 		H.update_body()
 		H.update_hair()
-	
+
 	if(se)
 		owner.dna.struc_enzymes = se
 		domutcheck(owner)
-	
+
 	check_dna_integrity(owner)
 	return owner.dna
-	
+
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!istype(character))
 		return
@@ -103,9 +103,9 @@
 		if(ready_dna(character))
 			return character.dna
 		return
-	
+
 	if(length(character.dna.uni_identity) != DNA_UNI_IDENTITY_BLOCKS*DNA_BLOCK_SIZE)
-		character.dna.uni_identity = character.dna.generate_uni_identity(character)	
+		character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	if(length(character.dna.struc_enzymes)!= DNA_STRUC_ENZYMES_BLOCKS*DNA_BLOCK_SIZE)
 		character.dna.struc_enzymes = character.dna.generate_struc_enzymes()
 	if(!character.dna.real_name || length(character.dna.unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
@@ -118,7 +118,7 @@
 	if(!character.dna)
 		character.dna = new /datum/dna()
 	if(blood_type)
-		character.dna.b_type = blood_type
+		character.dna.blood_type = blood_type
 		character.dna.real_name = character.real_name
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
@@ -202,17 +202,17 @@
 /proc/updateappearance(mob/living/carbon/C)
 	if(!check_dna_integrity(C))
 		return 0
-	
+
 	var/structure = C.dna.uni_identity
 	C.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	if(istype(C, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
-		H.h_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
-		H.f_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
+		H.hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
+		H.facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 		H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
 		H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-		H.f_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
-		H.h_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+		H.facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+		H.hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 
 		H.update_body()
 		H.update_hair()
@@ -236,7 +236,7 @@
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
 	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
-	
+
 	if(blocks[NEARSIGHTEDBLOCK])
 		M.disabilities |= NEARSIGHTED
 		M << "\red Your eyes feel strange."
@@ -352,7 +352,7 @@
 /obj/machinery/dna_scannernew/proc/toggle_open()
 	if(open)	return close()
 	else		return open()
-	
+
 /obj/machinery/dna_scannernew/proc/close()
 	if(open)
 		open = 0
@@ -367,7 +367,7 @@
 			C.stop_pulling()
 			break
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
-		
+
 		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 		if(occupant)
 			if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
@@ -381,9 +381,9 @@
 							if(ghost.can_reenter_corpse)
 								ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 							break
-		
+
 		return 1
-		
+
 /obj/machinery/dna_scannernew/proc/open()
 	if(!open)
 		if(locked)
@@ -467,7 +467,7 @@
 	density = 1
 	var/radduration = 2
 	var/radstrength = 1
-	
+
 	var/list/buffer[NUMBER_OF_BUFFERS]
 
 	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
@@ -614,7 +614,7 @@
 				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
 		else
 			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
-		
+
 		if(connected.open)
 			scanner_status = "Open"
 		else
@@ -628,7 +628,7 @@
 	else
 		occupant_status += "<span class='bad'>----</span></div></div>"
 		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
-	
+
 	var/status = "<div class='statusDisplay'>"
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
 	status += "[occupant_status]"
@@ -691,11 +691,11 @@
 						var/ue = buffer_slot["UE"]
 						var/name = buffer_slot["name"]
 						var/label = buffer_slot["label"]
-						var/b_type = buffer_slot["b_type"]
+						var/blood_type = buffer_slot["blood_type"]
 						temp_html += "<br>\t<a href='?src=\ref[src];task=setbufferlabel;num=[i];'>Label</a>: [label ? label : name]"
 						temp_html += "<br>\tSubject: [name]"
-						if(ue && name && b_type)
-							temp_html += "<br>\tBlood Type: [b_type]"
+						if(ue && name && blood_type)
+							temp_html += "<br>\tBlood Type: [blood_type]"
 							temp_html += "<br>\tUE: [ue] "
 							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
 							else				temp_html += "<span class='linkOff'>Occupant</span>"
@@ -737,7 +737,7 @@
 
 			temp_html += "<h3>Irradiate Subject</h3>"	
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
-			
+
 			var/max_line_len = 7*DNA_BLOCK_SIZE	
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
@@ -751,7 +751,7 @@
 			else
 				temp_html += "----"
 			temp_html += "</div></div></div><br>"
-			
+
 			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
@@ -768,7 +768,7 @@
 
 	popup.set_content(temp_html)
 	popup.open()
-	
+
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
@@ -782,7 +782,7 @@
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
-	
+
 	var/mob/living/carbon/viable_occupant
 	if(connected)
 		viable_occupant = connected.occupant
@@ -830,7 +830,7 @@
 					"SE"=viable_occupant.dna.struc_enzymes,
 					"UE"=viable_occupant.dna.unique_enzymes,
 					"name"=viable_occupant.real_name,
-					"b_type"=viable_occupant.dna.b_type
+					"blood_type"=viable_occupant.dna.blood_type
 					)
 		if("clearbuffer")
 			if(num)
@@ -854,11 +854,11 @@
 								viable_occupant.dna.uni_identity = buffer_slot["UI"]
 								updateappearance(viable_occupant)
 						else
-							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["b_type"])
+							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 								viable_occupant.real_name = buffer_slot["name"]
 								viable_occupant.name = buffer_slot["name"]
 								viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
-								viable_occupant.dna.b_type = buffer_slot["b_type"]
+								viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 								updateappearance(viable_occupant)
 		if("injector")
 			if(num && injectorready)
@@ -876,9 +876,9 @@
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("UI"=buffer_slot["UI"])
 						else
-							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["b_type"])
+							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 								I = new /obj/item/weapon/dnainjector(loc)
-								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "b_type"=buffer_slot["b_type"])
+								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 					if(I)
 						injectorready = 0
 						spawn(INJECTOR_TIMEOUT)
@@ -905,13 +905,13 @@
 
 				var/locked_state = connected.locked
 				connected.locked = 1
-				
+
 				current_screen = "working"
 				ShowInterface(usr)
-				
+
 				sleep(radduration*10)
 				current_screen = "mainmenu"
-				
+
 				if(viable_occupant && connected && connected.occupant==viable_occupant)
 					viable_occupant.radiation += RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength
 					switch(href_list["task"])
@@ -919,42 +919,42 @@
 							var/len = length(viable_occupant.dna.uni_identity)
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
-							
+
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "UI #[block]-[subblock]; "
-							
+
 							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
 							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
-							
+
 							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
 							updateappearance(viable_occupant)
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
 							num = Wrap(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration, len)
-							
+
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "SE #[block]-[subblock]; "
-							
+
 							var/hex = copytext(viable_occupant.dna.struc_enzymes, num, num+1)
 							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
-							
+
 							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
 							domutcheck(viable_occupant, connected)
 				else
 					current_screen = "mainmenu"
-				
+
 				if(connected)
 					connected.locked = locked_state
 
 	ShowInterface(usr,last_change)
-	
+
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

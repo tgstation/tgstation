@@ -134,7 +134,7 @@ proc/cmd_admin_mute(whom, mute_type, automute = 0)
 		if(MUTE_DEADCHAT)	mute_string = "deadchat and DSAY"
 		if(MUTE_ALL)		mute_string = "everything"
 		else				return
-		
+
 	var/client/C
 	if(istype(whom, /client))
 		C = whom
@@ -142,12 +142,12 @@ proc/cmd_admin_mute(whom, mute_type, automute = 0)
 		C = directory[whom]
 	else
 		return
-	
+
 	var/datum/preferences/P
 	if(C)	P = C.prefs
 	else	P = preferences_datums[whom]
 	if(!P)	return
-	
+
 	if(automute)
 		if(!config.automute_on)	return
 	else
@@ -306,7 +306,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.b_type = record_found.fields["b_type"]
+		new_character.blood_type = record_found.fields["blood_type"]
 	else
 		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
@@ -326,7 +326,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.
-		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], null, record_found.fields["b_type"])
+		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], null, record_found.fields["blood_type"])
 	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
 		ready_dna(new_character)
 
