@@ -346,7 +346,7 @@
 			overlays += back_icon
 
 	if(facehugger)
-		if(istype(src, /mob/living/simple_animal/corgi/puppy))
+		if(istype(src, /mob/living/simple_animal/dog/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
 		else
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
@@ -364,7 +364,7 @@
 	icon_dead = "puppy_dead"
 
 //puppies cannot wear anything.
-/mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
+/mob/living/simple_animal/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		usr << "\red You can't fit this on [src]"
 		return
@@ -412,7 +412,7 @@
 			if(alone && ian && puppies < 4)
 				if(near_camera(src) || near_camera(ian))
 					return
-				new /mob/living/simple_animal/corgi/puppy(loc)
+				new /mob/living/simple_animal/dog/corgi/puppy(loc)
 				puppies++
 				return
 	return

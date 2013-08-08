@@ -381,7 +381,7 @@
 	for(var/t in organs)	//this really should not be necessary
 		del(t)
 
-	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
+	var/mob/living/simple_animal/dog/corgi/new_corgi = new /mob/living/simple_animal/dog/corgi (loc)
 	new_corgi.a_intent = "harm"
 	new_corgi.key = key
 
@@ -469,7 +469,7 @@
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/cat))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/corgi))
+	if(ispath(MP, /mob/living/simple_animal/dog/corgi))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/crab))
 		return 1

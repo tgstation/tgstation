@@ -51,7 +51,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
+	if(istype(A, /mob/living/simple_animal/dog/corgi))
 		return 1
 	return 0
 
