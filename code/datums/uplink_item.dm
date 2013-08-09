@@ -15,6 +15,8 @@ var/list/uplink_items = list()
 				continue
 			if(I.gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
 				continue
+			if(I.exclude_gamemodes.len && ticker && ticker.mode.name in I.gamemodes)
+				continue
 			if(I.last)
 				last += I
 				continue
@@ -43,6 +45,7 @@ var/list/uplink_items = list()
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+	var/list/exclude_gamemodes = list() //Empty list means it is in all the gamemodes, you should never need both of these vars for one item.
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -139,7 +142,7 @@ var/list/uplink_items = list()
 	name = "Detomatix PDA Cartridge"
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
-	gamemodes = list("revolution", "traitor+changeling", "wizard", "nuclear emergency", "traitor", "AI malfunction", "changeling", "meteor", "cult", "blob", "sandbox", "extended")
+	exclude_gamemodes = list("double agents")
 
 
 // STEALTHY TOOLS
