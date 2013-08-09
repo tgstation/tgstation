@@ -13,7 +13,9 @@ var/list/uplink_items = list()
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
-			if(I.gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
+			if(I.include_gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
+				continue
+			if(I.exclude_gamemodes.len && ticker && ticker.mode.name in I.gamemodes)
 				continue
 			if(I.last)
 				last += I
@@ -43,7 +45,8 @@ var/list/uplink_items = list()
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
-	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+	var/list/include_gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+	var/list/exclude_gamemodes = list() // Empty list means it is in all the gamemodes, you should never need both of these vars for one item.
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -149,6 +152,7 @@ var/list/uplink_items = list()
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
+	exclude_gamemodes = list("double agents")
 
 
 // STEALTHY TOOLS
@@ -268,7 +272,7 @@ var/list/uplink_items = list()
 	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
-	gamemodes = list("nuclear emergency")
+	include_gamemodes = list("nuclear emergency")
 
 
 // IMPLANTS
