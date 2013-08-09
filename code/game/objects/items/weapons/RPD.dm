@@ -243,7 +243,7 @@ RCD
 				return 1
 			return 0
 		else
-			user << "ERROR: RPD in MODE: [p_class] attempted use by [user]. Send this text to the /vg/station bugtracker or an admin."
+			..()
 			return 0
 
 
