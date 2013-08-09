@@ -173,17 +173,22 @@ RCD
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-	if(!istype(A, /turf/simulated/floor))
-		if(p_class==-1 && istype(A,/obj/item/pipe))
-			user << "Destroying Pipe..."
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 5))
-				activate()
-				del(A)
-				return 1
-			return 0
-		return 0
+
 	switch(p_class)
+		if(-1) // Eating pipes
+			// Must click on an actual pipe or meter.
+			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter))
+				user << "Destroying Pipe..."
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				if(do_after(user, 5))
+					activate()
+					del(A)
+					return 1
+				return 0
+
+			// Avoid spewing errors about invalid mode -1 when clicking on stuff that aren't pipes.
+			user << "The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
+			return 0
 		if(0)
 			user << "Building Pipes ..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
