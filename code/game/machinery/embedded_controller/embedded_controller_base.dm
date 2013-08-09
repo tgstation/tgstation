@@ -26,11 +26,18 @@ obj/machinery/embedded_controller
 	anchored = 1
 
 	var/on = 1
-
-	attack_hand(mob/user)
-		user << browse(return_text(), "window=computer")
+	
+	interact(mob/user as mob)
+		//user << browse(return_text(), "window=computer")
+		//onclose(user, "computer")
 		user.set_machine(src)
-		onclose(user, "computer")
+		var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_content(return_text())
+		popup.open()		
+
+	attack_hand(mob/user as mob)
+		interact(user)
 
 	update_icon()
 	proc/return_text()

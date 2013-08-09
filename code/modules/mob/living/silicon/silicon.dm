@@ -20,9 +20,6 @@
 /mob/living/silicon/proc/triggerAlarm()
 	return
 
-/mob/living/silicon/proc/show_laws()
-	return
-
 /mob/living/silicon/proc/queueAlarm(var/message, var/type, var/incoming = 1)
 	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
 	if(incoming)

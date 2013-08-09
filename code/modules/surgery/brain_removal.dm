@@ -16,11 +16,11 @@
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","head")
 		user.visible_message("<span class='notice'>[user] saws [target]'s skull open!")
-	return 1	
-			
+	return 1
+
 
 /datum/surgery_step/extract_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	B = getbrain(target)
+	B = target.getorgan(/obj/item/organ/brain)
 	if(B)
 		user.visible_message("<span class='notice'>[user] begins to extract [target]'s brain.</span>")
 	else
@@ -33,7 +33,7 @@
 		B.transfer_identity(target)
 		target.internal_organs -= B
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target	
+			var/mob/living/carbon/human/H = target
 			H.update_hair(0)
 			H.apply_damage(25,"brute","head")
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"

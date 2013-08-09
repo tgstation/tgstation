@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/med_data//TODO:SANITY
-	name = "Medical Records"
+	name = "Medical Records Console"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
 	req_one_access = list(access_medical, access_forensics_lockers)
@@ -59,7 +59,7 @@
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
-						dat += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src, src.active2.fields["b_type"], src, src.active2.fields["b_dna"], src, src.active2.fields["mi_dis"], src, src.active2.fields["mi_dis_d"], src, src.active2.fields["ma_dis"], src, src.active2.fields["ma_dis_d"], src, src.active2.fields["alg"], src, src.active2.fields["alg_d"], src, src.active2.fields["cdi"], src, src.active2.fields["cdi_d"], src, src.active2.fields["notes"])
+						dat += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[];field=blood_type'>[]</A><BR>\nDNA: <A href='?src=\ref[];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src, src.active2.fields["blood_type"], src, src.active2.fields["b_dna"], src, src.active2.fields["mi_dis"], src, src.active2.fields["mi_dis_d"], src, src.active2.fields["ma_dis"], src, src.active2.fields["ma_dis_d"], src, src.active2.fields["alg"], src, src.active2.fields["alg_d"], src, src.active2.fields["cdi"], src, src.active2.fields["cdi_d"], src, src.active2.fields["notes"])
 						var/counter = 1
 						while(src.active2.fields[text("com_[]", counter)])
 							dat += text("[]<BR><A href='?src=\ref[];del_c=[]'>Delete Entry</A><BR><BR>", src.active2.fields[text("com_[]", counter)], src, counter)
@@ -105,7 +105,7 @@
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
 	//user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
 	//onclose(user, "med_rec")
-	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
+	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -269,9 +269,9 @@
 					if("m_stat")
 						if (istype(src.active1, /datum/data/record))
 							src.temp = text("<B>Mental Condition:</B><BR>\n\t<A href='?src=\ref[];temp=1;m_stat=insane'>*Insane*</A><BR>\n\t<A href='?src=\ref[];temp=1;m_stat=unstable'>*Unstable*</A><BR>\n\t<A href='?src=\ref[];temp=1;m_stat=watch'>*Watch*</A><BR>\n\t<A href='?src=\ref[];temp=1;m_stat=stable'>Stable</A><BR>", src, src, src, src)
-					if("b_type")
+					if("blood_type")
 						if (istype(src.active2, /datum/data/record))
-							src.temp = text("<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[];temp=1;b_type=an'>A-</A> <A href='?src=\ref[];temp=1;b_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[];temp=1;b_type=bn'>B-</A> <A href='?src=\ref[];temp=1;b_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[];temp=1;b_type=abn'>AB-</A> <A href='?src=\ref[];temp=1;b_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[];temp=1;b_type=on'>O-</A> <A href='?src=\ref[];temp=1;b_type=op'>O+</A><BR>", src, src, src, src, src, src, src, src)
+							src.temp = text("<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=an'>A-</A> <A href='?src=\ref[];temp=1;blood_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=bn'>B-</A> <A href='?src=\ref[];temp=1;blood_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=abn'>AB-</A> <A href='?src=\ref[];temp=1;blood_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=on'>O-</A> <A href='?src=\ref[];temp=1;blood_type=op'>O+</A><BR>", src, src, src, src, src, src, src, src)
 					if("b_dna")
 						if (istype(src.active1, /datum/data/record))
 							var/t1 = copytext(sanitize(input("Please input DNA hash:", "Med. records", src.active1.fields["dna"], null)  as text),1,MAX_MESSAGE_LEN)
@@ -305,25 +305,25 @@
 							src.active1.fields["m_stat"] = "Stable"
 
 
-			if (href_list["b_type"])
+			if (href_list["blood_type"])
 				if (src.active2)
-					switch(href_list["b_type"])
+					switch(href_list["blood_type"])
 						if("an")
-							src.active2.fields["b_type"] = "A-"
+							src.active2.fields["blood_type"] = "A-"
 						if("bn")
-							src.active2.fields["b_type"] = "B-"
+							src.active2.fields["blood_type"] = "B-"
 						if("abn")
-							src.active2.fields["b_type"] = "AB-"
+							src.active2.fields["blood_type"] = "AB-"
 						if("on")
-							src.active2.fields["b_type"] = "O-"
+							src.active2.fields["blood_type"] = "O-"
 						if("ap")
-							src.active2.fields["b_type"] = "A+"
+							src.active2.fields["blood_type"] = "A+"
 						if("bp")
-							src.active2.fields["b_type"] = "B+"
+							src.active2.fields["blood_type"] = "B+"
 						if("abp")
-							src.active2.fields["b_type"] = "AB+"
+							src.active2.fields["blood_type"] = "AB+"
 						if("op")
-							src.active2.fields["b_type"] = "O+"
+							src.active2.fields["blood_type"] = "O+"
 
 
 			if (href_list["del_r"])
@@ -356,7 +356,7 @@
 					R.fields["name"] = src.active1.fields["name"]
 					R.fields["id"] = src.active1.fields["id"]
 					R.name = text("Medical Record #[]", R.fields["id"])
-					R.fields["b_type"] = "Unknown"
+					R.fields["blood_type"] = "Unknown"
 					R.fields["b_dna"] = "Unknown"
 					R.fields["mi_dis"] = "None"
 					R.fields["mi_dis_d"] = "No minor disabilities have been declared."
@@ -420,7 +420,7 @@
 					else
 						P.info += "<B>General Record Lost!</B><BR>"
 					if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
-						P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src.active2.fields["b_type"], src.active2.fields["b_dna"], src.active2.fields["mi_dis"], src.active2.fields["mi_dis_d"], src.active2.fields["ma_dis"], src.active2.fields["ma_dis_d"], src.active2.fields["alg"], src.active2.fields["alg_d"], src.active2.fields["cdi"], src.active2.fields["cdi_d"], src.active2.fields["notes"])
+						P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src.active2.fields["blood_type"], src.active2.fields["b_dna"], src.active2.fields["mi_dis"], src.active2.fields["mi_dis_d"], src.active2.fields["ma_dis"], src.active2.fields["ma_dis_d"], src.active2.fields["alg"], src.active2.fields["alg_d"], src.active2.fields["cdi"], src.active2.fields["cdi_d"], src.active2.fields["notes"])
 						var/counter = 1
 						while(src.active2.fields[text("com_[]", counter)])
 							P.info += text("[]<BR>", src.active2.fields[text("com_[]", counter)])
@@ -444,13 +444,13 @@
 		if(prob(10/severity))
 			switch(rand(1,6))
 				if(1)
-					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+					R.fields["name"] = random_name(R.fields["sex"],1)
 				if(2)
 					R.fields["sex"]	= pick("Male", "Female")
 				if(3)
-					R.fields["age"] = rand(5, 85)
+					R.fields["age"] = rand(AGE_MIN, AGE_MAX)
 				if(4)
-					R.fields["b_type"] = pick("A-", "B-", "AB-", "O-", "A+", "B+", "AB+", "O+")
+					R.fields["blood_type"] = random_blood_type()
 				if(5)
 					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
 				if(6)

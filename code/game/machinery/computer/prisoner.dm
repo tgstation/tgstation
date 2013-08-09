@@ -1,5 +1,5 @@
 /obj/machinery/computer/prisoner
-	name = "prisoner management console"
+	name = "Prisoner Management Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_armory)
@@ -28,6 +28,7 @@
 		if(screen == 0)
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 		else if(screen == 1)
+			dat += "<H3>Prisoner Implant Management</H3>"
 			dat += "<HR>Chemical Implants<BR>"
 			var/turf/Tr = null
 			for(var/obj/item/weapon/implant/chem/C in world)
@@ -56,7 +57,7 @@
 
 		//user << browse(dat, "window=computer;size=400x500")
 		//onclose(user, "computer")
-		var/datum/browser/popup = new(user, "computer", "Prisoner Implant Management System", 400, 500)
+		var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()

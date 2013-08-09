@@ -204,11 +204,11 @@
 							src << "\red You feel weak."
 							emote("collapse")
 						if(prob(15))
-							if(!(f_style == "Shaved") || !(h_style == "Bald"))
+							if(!( hair_style == "Shaved") || !(hair_style == "Bald"))
 								src << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
-									f_style = "Shaved"
-									h_style = "Bald"
+									facial_hair_style = "Shaved"
+									hair_style = "Bald"
 									update_hair()
 						updatehealth()
 
@@ -812,7 +812,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			if(health <= config.health_threshold_dead || !getbrain(src))
+			if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				silent = 0
@@ -1021,6 +1021,12 @@
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
+
+			if(mind && mind.changeling)
+				hud_used.lingchemdisplay.invisibility = 0
+				hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
+			else
+				hud_used.lingchemdisplay.invisibility = 101
 
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask

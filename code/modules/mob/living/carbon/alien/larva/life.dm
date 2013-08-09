@@ -222,7 +222,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < -25 || !getbrain(src))
+			if(health < -25 || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				silent = 0

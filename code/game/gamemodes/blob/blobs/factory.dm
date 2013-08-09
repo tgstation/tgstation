@@ -59,6 +59,11 @@
 	blob_act()
 		return
 
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(istype(mover, /obj/effect/blob))
+			return 1
+		return ..()
+
 	New(loc, var/obj/effect/blob/factory/linked_node)
 		if(istype(linked_node))
 			factory = linked_node
@@ -66,6 +71,9 @@
 		..()
 
 	Die()
+		del(src)
+
+	Del()
 		if(factory)
 			factory.spores -= src
-		del(src)
+		..()

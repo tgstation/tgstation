@@ -116,45 +116,39 @@
 
 
 	Topic(href, href_list)
-		if (usr.stat)
+		if(..())
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-			usr.set_machine(src)
+		usr.set_machine(src)
 
-			switch(href_list["op"])
+		switch(href_list["op"])
 
-				if("temp")
-					var/value = text2num(href_list["val"])
+			if("temp")
+				var/value = text2num(href_list["val"])
 
-					// limit to 20-90 degC
-					set_temperature = dd_range(20, 90, set_temperature + value)
+				// limit to 20-90 degC
+				set_temperature = dd_range(20, 90, set_temperature + value)
 
-				if("cellremove")
-					if(open && cell && !usr.get_active_hand())
-						cell.updateicon()
-						usr.put_in_hands(cell)
-						cell.add_fingerprint(usr)
-						cell = null
-						usr.visible_message("\blue [usr] removes the power cell from \the [src].", "\blue You remove the power cell from \the [src].")
+			if("cellremove")
+				if(open && cell && !usr.get_active_hand())
+					cell.updateicon()
+					usr.put_in_hands(cell)
+					cell.add_fingerprint(usr)
+					cell = null
+					usr.visible_message("\blue [usr] removes the power cell from \the [src].", "\blue You remove the power cell from \the [src].")
 
 
-				if("cellinstall")
-					if(open && !cell)
-						var/obj/item/weapon/cell/C = usr.get_active_hand()
-						if(istype(C))
-							usr.drop_item()
-							cell = C
-							C.loc = src
-							C.add_fingerprint(usr)
+			if("cellinstall")
+				if(open && !cell)
+					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					if(istype(C))
+						usr.drop_item()
+						cell = C
+						C.loc = src
+						C.add_fingerprint(usr)
 
-							usr.visible_message("\blue [usr] inserts a power cell into \the [src].", "\blue You insert the power cell into \the [src].")
+						usr.visible_message("\blue [usr] inserts a power cell into \the [src].", "\blue You insert the power cell into \the [src].")
 
-			updateDialog()
-		else
-			usr << browse(null, "window=spaceheater")
-			usr.unset_machine()
-		return
-
+		updateDialog()
 
 
 	process()

@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/secure_data//TODO:SANITY
-	name = "Security Records"
+	name = "Security Records Console"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
 	req_one_access = list(access_security, access_forensics_lockers)
@@ -81,17 +81,17 @@
 							var/background
 							switch(crimstat)
 								if("*Arrest*")
-									background = "'background-color:#DC143C;'"
+									background = "'background-color:#990000;'"
 								if("Incarcerated")
-									background = "'background-color:#CD853F;'"
+									background = "'background-color:#CD6500;'"
 								if("Parolled")
-									background = "'background-color:#CD853F;'"
+									background = "'background-color:#CD6500;'"
 								if("Released")
-									background = "'background-color:#3BB9FF;'"
+									background = "'background-color:#006699;'"
 								if("None")
-									background = "'background-color:#00FF7F;'"
+									background = "'background-color:#4F7529;'"
 								if("")
-									background = "'background-color:#FFFFFF;'"
+									background = "''" //"'background-color:#FFFFFF;'"
 									crimstat = "No Record."
 							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
 							dat += text("<td>[]</td>", R.fields["id"])
@@ -174,7 +174,7 @@
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
 	//user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
 	//onclose(user, "secure_rec")
-	var/datum/browser/popup = new(user, "secure_rec", "Security Records", 600, 400)
+	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

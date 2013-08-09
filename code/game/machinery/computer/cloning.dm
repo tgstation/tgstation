@@ -169,7 +169,7 @@
 					var/list/L = list()
 					if(diskette.fields["UI"])
 						L += "Unique Identifier"
-					if(diskette.fields["UE"] && diskette.fields["name"] && diskette.fields["b_type"])
+					if(diskette.fields["UE"] && diskette.fields["name"] && diskette.fields["blood_type"])
 						L += "Unique Enzymes"
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
@@ -268,10 +268,10 @@
 					src.menu = 1
 					src.updateUsrDialog()
 					return
-				
+
 				src.active_record.fields = diskette.fields.Copy()
 				src.temp = "Load successful."
-			
+
 			if("eject")
 				if(src.diskette)
 					src.diskette.loc = src.loc
@@ -280,8 +280,8 @@
 				if(!diskette || diskette.read_only || !active_record || !active_record.fields)
 					src.temp = "<font class='bad'>Save error.</font>"
 					src.updateUsrDialog()
-					return	
-				
+					return
+
 				diskette.fields = active_record.fields.Copy()
 				diskette.name = "data disk - '[src.diskette.fields["name"]]'"
 				src.temp = "Save successful."
@@ -324,7 +324,7 @@
 	if (!check_dna_integrity(subject) || !istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
-	if (!getbrain(subject))
+	if (!subject.getorgan(/obj/item/organ/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return
 	if (subject.suiciding == 1)
@@ -351,7 +351,7 @@
 	R.fields["UE"] = subject.dna.unique_enzymes
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
-	R.fields["b_type"] = subject.dna.b_type
+	R.fields["blood_type"] = subject.dna.blood_type
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

@@ -80,12 +80,10 @@
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if(busy)
 		usr << "This device is busy."
-		return
-	if(usr.stat || stat & (BROKEN|NOPOWER))
-		usr << "This device is without power."
 		return
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
@@ -94,7 +92,6 @@
 		reset()
 
 	updateUsrDialog()
-	add_fingerprint(usr)
 	return
 
 /obj/machinery/keycard_auth/proc/reset()

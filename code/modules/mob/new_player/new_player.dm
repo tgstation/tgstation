@@ -286,22 +286,41 @@
 		var/mins = (mills % 36000) / 600
 		var/hours = mills / 36000
 
-		var/dat = "<html><body><center>"
-		dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
+		var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
 
 		if(emergency_shuttle) //In case Nanotrasen decides reposess Centcom's shuttles.
 			if(emergency_shuttle.direction == 2) //Shuttle is going to centcom, not recalled
-				dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
+				dat += "<div class='notice red'>The station has been evacuated.</div><br>"
 			if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
-				dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
+				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
-		dat += "Choose from the following open positions:<br>"
+		var/available_job_count = 0
 		for(var/datum/job/job in job_master.occupations)
 			if(job && IsJobAvailable(job.title))
-				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+				available_job_count++;
 
-		dat += "</center>"
-		src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+		dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
+		dat += "<div class='jobs'><div class='jobsColumn'>"
+		var/job_count = 0
+		for(var/datum/job/job in job_master.occupations)
+			if(job && IsJobAvailable(job.title))
+				job_count++;
+				if (job_count > round(available_job_count / 2))
+					dat += "</div><div class='jobsColumn'>"
+				var/position_class = "otherPosition"
+				if (job.title in command_positions)
+					position_class = "commandPosition"
+				dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+		dat += "</div></div>"
+		
+		// Removing the old window method but leaving it here for reference
+		//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+		
+		// Added the new browser window method
+		var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+		popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
+		popup.set_content(dat)
+		popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
 	proc/create_character()
@@ -327,7 +346,7 @@
 
 		new_character.name = real_name
 
-		ready_dna(new_character, client.prefs.b_type)
+		ready_dna(new_character, client.prefs.blood_type)
 
 		new_character.key = key		//Manually transfer the key to log them in
 

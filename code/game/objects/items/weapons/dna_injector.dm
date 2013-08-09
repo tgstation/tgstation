@@ -21,11 +21,11 @@
 		M.radiation += rand(20, 50)
 		if(fields)
 			var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
-			if(fields["name"] && fields["UE"] && fields["b_type"])
+			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
 				M.dna.unique_enzymes = fields["UE"]
 				M.name = M.real_name
-				M.dna.b_type = fields["b_type"]
+				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				updateappearance(M)
@@ -44,7 +44,7 @@
 	if(!ishuman(user))
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return
-	
+
 	target.attack_log += "\[[time_stamp()]\] <font color='orange'>[user.name] ([user.ckey]) attempted to inject with [name]</font>"
 	user.attack_log += "\[[time_stamp()]\] <font color='red'>Used the [name] to attempt to inject [target.name] ([target.ckey])</font>"
 	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [name] to attempt to inject [target.name] ([target.ckey])</font>")

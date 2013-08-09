@@ -323,48 +323,47 @@ var/list/blood_splatter_icons = list()
 		return 0
 	if(!istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-
-	//adding blood to items
-	if(istype(src, /obj/item))
-		//apply the blood-splatter overlay if it isn't already in there
-		if(!blood_DNA.len)
-			//try to find a pre-processed blood-splatter. otherwise, make a new one
-			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = blood_splatter_icons[index]
-			if(!blood_splatter_icon )
-				blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
-				blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
-				blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-				blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
-				blood_splatter_icons[index] = blood_splatter_icon
-			overlays += blood_splatter_icon
-
-		//if this blood isn't already in the list, add it
-		if(blood_DNA[M.dna.unique_enzymes])
-			return 0 //already bloodied with this blood. Cannot add more.
-		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		return 1 //we applied blood to the item
-
-	//adding blood to turfs
-	else if(istype(src, /turf/simulated))
-		var/turf/simulated/T = src
-
-		//get one blood decal and infect it with virus from M.viruses
-		var/obj/effect/decal/cleanable/blood/B = locate() in T.contents
-		if(!B)	B = new /obj/effect/decal/cleanable/blood(T)
-		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		return 1 //we bloodied the floor
-
-	//adding blood to humans
-	else if(istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
-		//if this blood isn't already in the list, add it
-		if(blood_DNA[H.dna.unique_enzymes])
-			return 0 //already bloodied with this blood. Cannot add more.
-		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
-		H.update_inv_gloves()	//handles bloody hands overlays and updating
-		return 1 //we applied blood to the item
 	return
+
+/obj/item/add_blood(mob/living/carbon/M)
+	if(..() == 0)	return 0
+
+	//apply the blood-splatter overlay if it isn't already in there
+	if(!blood_DNA.len)
+		//try to find a pre-processed blood-splatter. otherwise, make a new one
+		var/index = blood_splatter_index()
+		var/icon/blood_splatter_icon = blood_splatter_icons[index]
+		if(!blood_splatter_icon )
+			blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
+			blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
+			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+			blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
+			blood_splatter_icons[index] = blood_splatter_icon
+		overlays += blood_splatter_icon
+
+	//if this blood isn't already in the list, add it
+	if(blood_DNA[M.dna.unique_enzymes])
+		return 0 //already bloodied with this blood. Cannot add more.
+	blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
+	return 1 //we applied blood to the item
+
+/turf/simulated/add_blood(mob/living/carbon/M)
+	if(..() == 0)	return 0
+
+	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
+	if(!B)	B = new /obj/effect/decal/cleanable/blood(src)			//make a bloood splatter if we couldn't find one
+	B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
+	return 1 //we bloodied the floor
+
+/mob/living/carbon/human/add_blood(mob/living/carbon/M)
+	if(..() == 0)	return 0
+
+	if(blood_DNA[M.dna.unique_enzymes])
+		return 0 //already bloodied with this blood. Cannot add more.
+	blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
+	update_inv_gloves()	//handles bloody hands overlays and updating
+	return 1 //we applied blood to the item
+
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
 	if( istype(src, /turf/simulated) )
@@ -385,7 +384,7 @@ var/list/blood_splatter_icons = list()
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)	B = new(src)
-			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
 			if(!B)	B = new(src)

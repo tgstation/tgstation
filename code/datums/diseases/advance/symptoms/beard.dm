@@ -31,15 +31,15 @@ BONUS
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(1, 2)
-					if(H.f_style == "Shaved")
-						H.f_style = "Adam Jensen Beard"
+					if(H.facial_hair_style == "Shaved")
+						H.facial_hair_style = "Adam Jensen Beard"
 						H.update_hair()
 				if(3, 4)
-					if(!(H.f_style == "Dwarf Beard") && !(H.h_style == "Very Long Beard") && !(H.h_style == "Full Beard"))
-						H.f_style = "Full Beard"
+					if(!(H.facial_hair_style == "Dwarf Beard") && !(H.hair_style == "Very Long Beard") && !(H.hair_style == "Full Beard"))
+						H.facial_hair_style = "Full Beard"
 						H.update_hair()
 				else
-					if(!(H.f_style == "Dwarf Beard") && !(H.h_style == "Very Long Beard"))
-						H.f_style = pick("Dwarf Beard", "Very Long Beard")
+					if(!(H.facial_hair_style == "Dwarf Beard") && !(H.hair_style == "Very Long Beard"))
+						H.facial_hair_style = pick("Dwarf Beard", "Very Long Beard")
 						H.update_hair()
 	return

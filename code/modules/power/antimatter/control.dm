@@ -300,11 +300,7 @@
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	..()
-	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
-	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon/ai)))
-		usr.unset_machine()
-		usr << browse(null, "window=AMcontrol")
+	if(..())
 		return
 
 	if(href_list["close"])

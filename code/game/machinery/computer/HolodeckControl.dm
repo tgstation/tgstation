@@ -249,32 +249,10 @@
 
 	return 1
 
-/obj/machinery/computer/HolodeckControl/proc/togglePower(var/toggleOn = 0)
-
-	if(toggleOn)
-		var/area/targetsource = locate(/area/holodeck/source_emptycourt)
-		holographic_items = targetsource.copy_contents_to(linkedholodeck)
-
-		spawn(30)
-			for(var/obj/effect/landmark/L in linkedholodeck)
-				if(L.name=="Atmospheric Test Start")
-					spawn(20)
-						var/turf/T = get_turf(L)
-						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-						s.set_up(2, 1, T)
-						s.start()
-						if(T)
-							T.temperature = 5000
-							T.hotspot_expose(50000,50000,1)
-
-		active = 1
-	else
-		for(var/item in holographic_items)
-			derez(item)
-		var/area/targetsource = locate(/area/holodeck/source_plating)
-		targetsource.copy_contents_to(linkedholodeck , 1)
-		active = 0
-
+/obj/machinery/computer/HolodeckControl/power_change()
+	..()
+	if(stat & NOPOWER)
+		emergencyShutdown()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
 
@@ -320,16 +298,17 @@
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
-	//Get rid of any items
-	for(var/item in holographic_items)
-		derez(item)
-	//Turn it back to the regular non-holographic room
-	target = locate(/area/holodeck/source_plating)
-	if(target)
-		loadProgram(target)
+	if(!istype(target,/area/holodeck/source_plating))
+		//Get rid of any items
+		for(var/item in holographic_items)
+			derez(item)
+		//Turn it back to the regular non-holographic room
+		target = locate(/area/holodeck/source_plating)
+		if(target)
+			loadProgram(target)
 
-	var/area/targetsource = locate(/area/holodeck/source_plating)
-	targetsource.copy_contents_to(linkedholodeck , 1)
+		var/area/targetsource = locate(/area/holodeck/source_plating)
+		targetsource.copy_contents_to(linkedholodeck , 1)
 	active = 0
 
 
