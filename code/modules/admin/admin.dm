@@ -841,3 +841,18 @@ proc/move_ferry()
 		ferry_location = 0
 	else
 		ferry_location = 1
+
+//Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
+//defaults to kicking everyone (afk + non afk clients in the lobby)
+//returns a list of ckeys of the kicked clients
+proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
+	var/list/kicked_client_names = list()
+	for(var/client/C in clients)
+		if(istype(C.mob, /mob/new_player))
+			if(kick_only_afk && !C.is_afk())	//Ignore clients who are not afk
+				continue
+			if(message)
+				C << message
+			kicked_client_names.Add("[C.ckey]")
+			del(C)
+	return kicked_client_names
