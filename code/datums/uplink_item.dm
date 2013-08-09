@@ -13,7 +13,7 @@ var/list/uplink_items = list()
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
-			if(I.gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
+			if(I.include_gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
 				continue
 			if(I.exclude_gamemodes.len && ticker && ticker.mode.name in I.gamemodes)
 				continue
@@ -44,8 +44,8 @@ var/list/uplink_items = list()
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
-	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-	var/list/exclude_gamemodes = list() //Empty list means it is in all the gamemodes, you should never need both of these vars for one item.
+	var/list/include_gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+	var/list/exclude_gamemodes = list() // Empty list means it is in all the gamemodes, you should never need both of these vars for one item.
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -244,7 +244,7 @@ var/list/uplink_items = list()
 	name = "Teleporter Circuit Board"
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
-	gamemodes = list("nuclear emergency")
+	include_gamemodes = list("nuclear emergency")
 
 
 // IMPLANTS
