@@ -10,15 +10,17 @@
 	var/botEmagChance = 10
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
+	var/ionAnnounceChance = 33
 
-/datum/round_event/ion_storm/New(var/bogEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null)
+/datum/round_event/ion_storm/New(var/bogEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
 	src.botEmagChance = botEmagChance
 	src.announceEvent = announceEvent
 	src.ionMessage = ionMessage
+	src.ionAnnounceChance = ionAnnounceChance
 	..()
 
 /datum/round_event/ion_storm/announce()
-	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(33)))
+	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 		world << sound('sound/AI/ionstorm.ogg')
 
