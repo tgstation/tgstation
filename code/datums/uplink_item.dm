@@ -139,6 +139,7 @@ var/list/uplink_items = list()
 	name = "Detomatix PDA Cartridge"
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
+	gamemodes = list("revolution", "traitor+changeling", "traitor", "wizard", "nuclear emergency", "traitor", "AI malfunction", "changeling", "meteor", "cult", "blob", "sandbox", "extended")
 
 
 // STEALTHY TOOLS
