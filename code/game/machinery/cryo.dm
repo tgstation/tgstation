@@ -10,6 +10,7 @@
 	var/temperature_archived
 	var/mob/living/carbon/occupant = null
 	var/beaker = null
+	var/opened = 0
 
 	var/current_heat_capacity = 50
 
@@ -118,6 +119,31 @@
 		user.drop_item()
 		G.loc = src
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
+	else if(istype(G, /obj/item/weapon/screwdriver))
+		if(!opened)
+			src.opened = 1
+			//src.icon_state = "cryo_cell_t"
+			user << "You open the maintenance hatch of [src]"
+		else
+			src.opened = 0
+			//src.icon_state = "cryo_cell"
+			user << "You close the maintenance hatch of [src]"
+	if (opened)
+		if(istype(G, /obj/item/weapon/crowbar)) //beakers are destroyed in the process of destroying the cryo cell
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+		else
+			user.set_machine(src)
+			interact(user)
+			return 1
 	else if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return

@@ -131,6 +131,24 @@ datum/design/pandemic
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pandemic"
 
+datum/design/cryo
+	name = "Cicrcuit Design (Cryo)"
+	desc = "Allows for the construction of circuit boards used to build a Cryo Cell."
+	id = "cryo"
+	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/cryo"
+
+datum/design/chem_dispenser
+	name = "Circuit Design (Chemistry Dispenser)"
+	desc = "Allows for the construction of circuit boards used to build a Chemistry Dispenser"
+	id = "chem_dispenser"
+	req_tech = list("programming" = 3, "biotech" = 5, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "obj/item/weapon/circuitboard/chem_dispenser"
+
 datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
@@ -222,6 +240,15 @@ datum/design/robocontrol
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/robotics"
+
+datum/design/smes
+	name = "Circuit Design (SMES) "
+	desc = "Allows for the construction of circuit boards used to build SMES Power Storage Units"
+	id="smes"
+	req_tech = list("power" = 4, "engineering" = 4, "programming" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/smes"
 
 datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"

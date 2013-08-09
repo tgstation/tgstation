@@ -252,6 +252,43 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
+/obj/item/weapon/circuitboard/smes
+	name = "Circuit Board (SMES)"
+	build_path = "/obj/machinery/power/smes"
+	board_type = "machine"
+	origin_tech = "power-4;engineering=4;programming=4"
+	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 4,
+							"/obj/item/weapon/stock_parts/manipulator" = 3,
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 2)
+
+/obj/item/weapon/circuitboard/chem_dispenser
+	name = "Circuit Board (Chemistry Dispenser)"
+	build_path = "/obj/machinery/chem_dispenser"
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=5;engineering=4"
+	frame_desc = "Requires 2 manipulators, 2 scanning modules, 3 micro-lasers, 3 pieces of cable and 1 console screen."
+	req_components = list (
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/cryo
+	name = "Circuit Board (Cryo)"
+	build_path = "/obj/machinery/atmospherics/unary/cryo_cell"
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=3;engineering=2"
+	frame_desc = "Requires 3 Manipulators, 2 Scanning Modules, 4 pieces of cable, and 1 Console Screen."
+	req_components = list (
+							"/obj/item/weapon/cable_coil" = 4,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
 /obj/item/weapon/circuitboard/clonepod
 	name = "Circuit board (Clone Pod)"
 	build_path = "/obj/machinery/clonepod"
