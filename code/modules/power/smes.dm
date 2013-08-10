@@ -51,7 +51,7 @@
 	terminal.dir = EAST
 	terminal.master = src
 
-/obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!opened)
 			src.opened = 1
@@ -79,6 +79,7 @@
 				"You added cables the SMES.")
 			make_terminal()
 			terminal.connect_to_network()
+			src.stat = 0
 		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
 			var/tempTDir = get_step(src.loc, WEST)
 			if(tempTDir:intact)

@@ -250,6 +250,51 @@ datum/design/smes
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/smes"
 
+datum/design/defib_recharger
+	name = "Circuit Design (Defib Recharger)"
+	desc = "Allows for the construction of circuit boards used to build Defib Rechargers"
+	id="defib_recharger"
+	req_tech = list("power" = 2, "engineering" = 2, "programming" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/defib_recharger"
+
+datum/design/photocopier
+	name = "Circuit Design (Photocopier)"
+	desc = "Allows for the construction of circuit boards to build photocopiers"
+	id = "photocopier"
+	req_tech = list ("power" = 2, "engineering" = 2, "programming" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/photocopier"
+
+datum/design/freezer
+	name = "Circuit Design (Freezer)"
+	desc = "Allows for the construction of circuit boards to build freezers."
+	id = "freezer"
+	req_tech = list("power" = 3, "engineering" = 4, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/freezer"
+
+datum/design/heater
+	name = "Circuit Design (Heater)"
+	desc = "Allows for the construction of circuit boards to build heaters."
+	id ="heater"
+	req_tech = list("power" = 3, "engineering" = 5, "biotech"= 4)
+	build_type = IMPRINTER
+	materials = list ("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/heater"
+
+datum/design/chemmaster3000
+	name = "Circuit Design (ChemMaster 3000)"
+	desc = "Allows for the cosntruction of circuit boards used to build ChemMaster 3000s"
+	id="chemmaster3000"
+	req_tech = list ("engineering" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/chemmaster3000"
+
 datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
