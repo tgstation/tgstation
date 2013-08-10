@@ -3379,7 +3379,7 @@
 "bmY" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{dir = 0; icon_state = "blue"},/area/bridge)
 "bmZ" = (/obj/machinery/door_control{id = "bridge blast"; name = "Bridge Blast Door Control"; pixel_x = -1; pixel_y = -24; req_access_txt = "19"},/turf/simulated/floor{icon_state = "blue"; dir = 6},/area/bridge)
 "bna" = (/obj/structure/stool/bed/chair{dir = 4},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/crew_quarters/heads)
-"bnb" = (/mob/living/simple_animal/corgi/Ian,/turf/simulated/floor,/area/crew_quarters/heads)
+"bnb" = (/mob/living/simple_animal/dog/corgi/Ian,/turf/simulated/floor,/area/crew_quarters/heads)
 "bnc" = (/obj/structure/table/woodentable,/obj/structure/window/reinforced{dir = 8},/obj/machinery/cell_charger,/obj/item/weapon/cell/crap,/turf/simulated/floor{dir = 2; icon_state = "carpetsymbol"},/area/bridge)
 "bnd" = (/turf/simulated/floor/carpet,/area/bridge)
 "bne" = (/obj/structure/rack,/obj/item/device/aicard,/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/bridge)
