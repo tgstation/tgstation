@@ -1329,6 +1329,17 @@ datum/design/nanopaste
 	build_type = PROTOLATHE
 	materials = list("$metal" = 7000, "$glass" = 7000)
 	build_path = "/obj/item/stack/nanopaste"
+
+datum/design/medical_module_surgery
+	name = "medical module board"
+	desc = "Used to give a medical cyborg surgery tools."
+	id = "medical_module_surgery"
+	req_tech = list("biotech" = 3, "engineering" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 80000, "$glass" = 20000)
+	build_path = "/obj/item/borg/upgrade/medical/surgery"
+	category = "Robotic Upgrade Modules"
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

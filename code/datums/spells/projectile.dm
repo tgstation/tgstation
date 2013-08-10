@@ -50,7 +50,12 @@
 						projectile.dir = get_dir(projectile,target)
 						projectile.loc = get_step_to(projectile,target)
 					else
-						step_to(projectile,target)
+						var/turf/T = get_step_to(projectile,target)
+						var/obj/structure/stool/bed/chair/janicart/JC = locate() in T
+						if(JC && istype(JC) && prob(75))
+							projectile.loc = T
+						else
+							step_to(projectile,target)
 				else
 					if(proj_insubstantial)
 						projectile.loc = get_step(projectile,dir)

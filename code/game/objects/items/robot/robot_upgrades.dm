@@ -19,6 +19,36 @@
 	return 0
 
 
+
+// Medical Cyborg Stuff
+
+/obj/item/borg/upgrade/medical/surgery
+	name = "medical module board"
+	desc = "Used to give a medical cyborg surgery tools."
+	icon_state = "cyborg_upgrade"
+	construction_cost = list("metal"=80000 , "glass"=6000)
+	require_module = 1
+
+/obj/item/borg/upgrade/medical/surgery/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+	if(!istype(R.module, /obj/item/weapon/robot_module/medical))
+		R << "Upgrade mounting error!  This module is reserved for medical modules!"
+		usr << "There's no mounting point for the module!"
+		return 0
+	else
+		R.module.modules += new/obj/item/weapon/circular_saw
+		R.module.modules += new/obj/item/weapon/scalpel
+		R.module.modules += new/obj/item/weapon/bonesetter
+		R.module.modules += new/obj/item/weapon/FixOVein
+		R.module.modules += new/obj/item/weapon/surgicaldrill
+		R.module.modules += new/obj/item/weapon/cautery
+		R.module.modules += new/obj/item/weapon/hemostat
+		R.module.modules += new/obj/item/weapon/retractor
+
+		return 1
+
+// End of Medical Cyborg Stuff
+
 /obj/item/borg/upgrade/reset
 	name = "robotic module reset board"
 	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the robot."

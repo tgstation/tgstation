@@ -9,7 +9,7 @@ vs_control/var
 	fire_firelevel_multiplier_NAME = "Fire - Firelevel Constant"
 	fire_firelevel_multiplier_DESC = "Multiplied by the equation for firelevel, affects mainly the extingiushing of fires."
 
-	fire_fuel_energy_release = 797000
+	fire_fuel_energy_release = 550000
 	fire_fuel_energy_release_NAME = "Fire - Fuel energy release"
 	fire_fuel_energy_release_DESC = "The energy in joule released when burning one mol of a burnable substance"
 
