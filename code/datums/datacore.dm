@@ -8,18 +8,11 @@
 		return
 
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
-	var/datum/data/record/foundrecord
-
-	for(var/datum/data/record/t in data_core.general)
-		if(t.fields["name"] == name)
-			foundrecord = t
-			break
-
+	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
-
-
+var/record_id_num = 1001
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
@@ -30,8 +23,9 @@
 		else
 			assignment = "Unassigned"
 
-		var/id = num2hex(rand(1, 1.6777215E7),6)	//this was the best they could come up with? A large random number? *sigh*
+		var/id = num2hex(record_id_num++,6)
 
+		//These records should ~really~ be merged or something
 		//General Record
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
@@ -75,9 +69,9 @@
 
 		//Locked Record
 		var/datum/data/record/L = new()
-		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
+		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")	//surely this should just be id, like the others?
 		L.fields["name"]		= H.real_name
-		L.fields["rank"] = H.mind.assigned_role
+		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
 		L.fields["sex"]			= H.gender
 		L.fields["blood_type"]	= H.blood_type

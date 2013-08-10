@@ -9,42 +9,25 @@
 		var/image/holder
 		var/turf/T = get_turf(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
-			var/perpname = "wot"
 			holder = perp.hud_list[ID_HUD]
+			holder.icon_state = "hudno_id"
 			if(perp.wear_id)
-				var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
-				if(I)
-					perpname = I.registered_name
-					holder.icon_state = "hud[ckey(perp:wear_id:GetJobName())]"
-					client.images += holder
-				else
-					perpname = perp.name
-					holder.icon_state = "hudno_id"
-					client.images += holder
-			else
-				holder.icon_state = "hudno_id"
-				client.images += holder
+				holder.icon_state = "hud[ckey(perp:wear_id:GetJobName())]"
+			client.images += holder
 
-			for(var/datum/data/record/E in data_core.general)
-				if(E.fields["name"] == perpname)
+			var/perpname = perp.get_face_name(perp.get_id_name(""))
+			if(perpname)
+				var/datum/data/record/R = find_record("name", perpname, data_core.security)
+				if(R)
 					holder = perp.hud_list[WANTED_HUD]
-					for (var/datum/data/record/R in data_core.security)
-						if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-							holder.icon_state = "hudwanted"
-							client.images += holder
-							break
-						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-							holder.icon_state = "hudincarcerated"
-							client.images += holder
-							break
-						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
-							holder.icon_state = "hudparolled"
-							client.images += holder
-							break
-						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
-							holder.icon_state = "hudreleased"
-							client.images += holder
-							break
+					switch(R.fields["criminal"])
+						if("*Arrest*")		holder.icon_state = "hudwanted"
+						if("Incarcerated")	holder.icon_state = "hudincarcerated"
+						if("Parolled")		holder.icon_state = "hudparolled"
+						if("Released")		holder.icon_state = "hudreleased"
+						else
+							return
+					client.images += holder
 
 /mob/living/silicon/pai/proc/medicalHUD()
 	if(client)
