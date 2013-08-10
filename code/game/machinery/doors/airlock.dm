@@ -234,25 +234,12 @@
 		PlasmaBurn(exposed_temperature)
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
-	for(var/turf/simulated/floor/target_tile in range(2,loc))
-		if(target_tile.parent && target_tile.parent.group_processing)
-			target_tile.parent.suspend_group_processing()
-		var/datum/gas_mixture/napalm = new
-		var/toxinsToDeduce = 35
-		napalm.toxins = toxinsToDeduce
-		napalm.temperature = 400+T0C
-		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
-	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
-		var/turf/T = get_turf(F)
-		T.ChangeTurf(/turf/simulated/wall/mineral/plasma/)
-		del (F)
-	for(var/turf/simulated/wall/mineral/plasma/W in range(3,src))
-		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
-	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
-		D.ignite(temperature/4)
+	atmos_spawn_air("fire", 500)
 	new/obj/structure/door_assembly/door_assembly_0( src.loc )
 	del (src)
+
+/obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
+	return 0
 
 /obj/machinery/door/airlock/clown
 	name = "bananium airlock"

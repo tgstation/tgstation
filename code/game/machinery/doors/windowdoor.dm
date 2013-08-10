@@ -12,30 +12,6 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
 
-
-/obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(target))
-			if(target.parent)
-				air_master.groups_to_rebuild += target.parent
-			else
-				air_master.tiles_to_update += target
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(target)) air_master.tiles_to_update += target
-
-	return 1
-
 /obj/machinery/door/window/New()
 	..()
 
@@ -87,6 +63,12 @@
 	else
 		return 1
 
+/obj/machinery/door/window/CanAtmosPass(var/turf/T)
+	if(get_dir(loc, T) == dir)
+		return !density
+	else
+		return 1
+
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
@@ -110,7 +92,8 @@
 	explosion_resistance = 0
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelok_sight()
 
 	if(operating == 1) //emag again
 		src.operating = 0
@@ -128,8 +111,8 @@
 	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
-	update_nearby_tiles()
-
+	air_update_turf(1)
+	update_freelok_sight()
 	sleep(10)
 
 	src.operating = 0

@@ -21,17 +21,18 @@
 	if(density)
 		layer = 3.1 //Above most items if closed
 		explosion_resistance = initial(explosion_resistance)
-		update_heat_protection(get_turf(src))
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
-	update_nearby_tiles(need_rebuild=1)
+	update_freelok_sight()
+	air_update_turf(1)
 	return
 
 
 /obj/machinery/door/Del()
 	density = 0
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelok_sight()
 	..()
 	return
 
@@ -65,6 +66,10 @@
 		return
 	return
 
+/obj/machinery/door/Move()
+	air_update_turf(1)
+	..()
+	air_update_turf(1)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
@@ -72,6 +77,8 @@
 		return !opacity
 	return !density
 
+/obj/machinery/door/CanAtmosPass()
+	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if(operating)	return
@@ -197,7 +204,8 @@
 	explosion_resistance = 0
 	update_icon()
 	SetOpacity(0)
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelok_sight()
 
 	if(operating)	operating = 0
 
@@ -218,63 +226,17 @@
 	if(visible && !glass)
 		SetOpacity(1)	//caaaaarn!
 	operating = 0
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelok_sight()
 	return
 
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/north = get_step(source,NORTH)
-	var/turf/simulated/south = get_step(source,SOUTH)
-	var/turf/simulated/east = get_step(source,EAST)
-	var/turf/simulated/west = get_step(source,WEST)
-
-	update_heat_protection(loc)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(north))
-			if(north.parent)
-				air_master.groups_to_rebuild += north.parent
-			else
-				air_master.tiles_to_update += north
-		if(istype(south))
-			if(south.parent)
-				air_master.groups_to_rebuild += south.parent
-			else
-				air_master.tiles_to_update += south
-		if(istype(east))
-			if(east.parent)
-				air_master.groups_to_rebuild += east.parent
-			else
-				air_master.tiles_to_update += east
-		if(istype(west))
-			if(west.parent)
-				air_master.groups_to_rebuild += west.parent
-			else
-				air_master.tiles_to_update += west
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
-	return 1
-
-/obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
-	if(istype(source))
-		if(src.density && (src.opacity || src.heat_proof))
-			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
-		else
-			source.thermal_conductivity = initial(source.thermal_conductivity)
+/obj/machinery/door/BlockSuperconductivity()
+	if(opacity || heat_proof)
+		return 1
+	return 0
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

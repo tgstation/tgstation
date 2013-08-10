@@ -128,27 +128,8 @@
 	else
 		return 1
 
-
-/obj/machinery/door/firedoor/border_only/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/destination = get_step(source,dir)
-
-	update_heat_protection(loc)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(destination))
-			if(destination.parent)
-				air_master.groups_to_rebuild += destination.parent
-			else
-				air_master.tiles_to_update += destination
+/obj/machinery/door/firedoor/border_only/CanAtmosPass(var/turf/T)
+	if(get_dir(loc, T) == dir)
+		return !density
 	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(destination)) air_master.tiles_to_update += destination
-	return 1
+		return 1

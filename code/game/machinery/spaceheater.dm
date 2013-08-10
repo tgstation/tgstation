@@ -178,6 +178,7 @@
 							//world << "now at [removed.temperature]"
 
 						env.merge(removed)
+						air_update_turf()
 
 						//world << "turf now at [env.temperature]"
 
@@ -185,6 +186,7 @@
 			else
 				on = 0
 				update_icon()
+
 
 
 		return

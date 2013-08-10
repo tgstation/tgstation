@@ -42,7 +42,7 @@
 
 
 
-/atom/proc/assume_air(datum/air_group/giver)
+/atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)
 	return null
 

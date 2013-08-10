@@ -36,18 +36,6 @@
 	health = 120
 
 
-/obj/structure/alien/resin/New()
-	..()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-
-
-/obj/structure/alien/resin/Del()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = initial(T.thermal_conductivity)
-	..()
-
-
 /obj/structure/alien/resin/proc/healthcheck()
 	if(health <=0)
 		del(src)
