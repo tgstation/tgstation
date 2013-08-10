@@ -424,10 +424,14 @@
 				opened = 1
 			update_icon()
 	else
+		// The extra crowbar thing fixes MoMMIs not being able to remove APCs.
+		// They can just pop them off with a crowbar.
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \
-				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& ( \
+					(W.force >= 5 && W.w_class >= 3.0) \
+					|| istype(W,/obj/item/weapon/crowbar) \
+				) \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
@@ -453,9 +457,12 @@
 	if(!user)
 		return
 	src.add_fingerprint(user)
-	if(usr == user && opened && (!issilicon(user)))
+	if(usr == user && opened)
 		if(cell)
-			user.put_in_hands(cell)
+			if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
+				cell.loc=src.loc // Drop it, whoops.
+			else
+				user.put_in_hands(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
 
@@ -778,7 +785,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "\red \The [src] have AI control disabled!"
+				user << "\red \The [src] has AI control disabled!"
 				user << browse(null, "window=apc")
 				user.unset_machine()
 			return 0

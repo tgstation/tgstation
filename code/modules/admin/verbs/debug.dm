@@ -165,6 +165,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+/client/proc/cmd_admin_mommify(var/mob/M in mob_list)
+	set category = "Fun"
+	set name = "Make MoMMI"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(istype(M, /mob/living/carbon/human))
+		log_admin("[key_name(src)] has MoMMIfied [M.key].")
+		spawn(10)
+			M:MoMMIfy()
+
+	else
+		alert("Invalid mob")
+
 /client/proc/cmd_admin_animalize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"

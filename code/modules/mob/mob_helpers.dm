@@ -105,6 +105,11 @@
 		return 1
 	return 0
 
+/proc/isMoMMI(A)
+	if(istype(A, /mob/living/silicon/robot/mommi))
+		return 1
+	return 0
+
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1

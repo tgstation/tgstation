@@ -46,6 +46,15 @@
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				new_mob.universal_speak = 1
+			if("mommi")
+				new_mob = new /mob/living/silicon/robot/mommi(M.loc)
+				new_mob.gender = M.gender
+				new_mob.invisibility = 0
+				new_mob.job = "MoMMI"
+				var/mob/living/silicon/robot/mommi/MoMMI = new_mob
+				MoMMI.mmi = new /obj/item/device/mmi(new_mob)
+				MoMMI.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("slime")
 				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
 				else				new_mob = new /mob/living/carbon/slime(M.loc)

@@ -35,6 +35,11 @@
 				src << "This function is not available to you."
 				return
 		else
+			if(isMoMMI(src)&&client)//For patching directly into AI holopads.
+				var/mob/living/silicon/robot/mommi/U = src
+				if(U.keeper)
+					src << "\red Your KEEPER module has disabled your vocalizer.  Try :b to attempt to relay your message through the AI or borgs, or try an *emote (say \"*help\" for a listing)."
+					return
 			return ..(message)
 	else
 		return ..(message)

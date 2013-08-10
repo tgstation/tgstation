@@ -70,6 +70,8 @@
 	set hidden = 1
 	if(istype(mob, /mob/living/carbon))
 		mob:swap_hand()
+	if(istype(mob,/mob/living/silicon/robot/mommi))
+		return // MoMMIs only have one tool slot.
 	if(istype(mob,/mob/living/silicon/robot))//Oh nested logic loops, is there anything you can't do? -Sieve
 		var/mob/living/silicon/robot/R = mob
 		if(!R.module_active)
