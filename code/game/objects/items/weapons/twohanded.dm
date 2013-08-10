@@ -3,7 +3,6 @@
  * 		Twohanded
  *		Fireaxe
  *		Double-Bladed Energy Swords
- *              High-Frequency Blade    
  */
 
 /*##################################################################
@@ -182,7 +181,7 @@
 
 
 /*
- * High-Frequency Blade     //coding is hard
+ * High-Frequency Blade
  */
 /obj/item/weapon/twohanded/hfrequency
 	icon_state = "hfrequency0"
