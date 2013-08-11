@@ -833,6 +833,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "cardboard sheets crate"
 	group = supply_materials
 
+/datum/supply_packs/sandstone30
+	name = "30 Sandstone Blocks"
+	contains = list(/obj/item/stack/sheet/mineral/sandstone)
+	amount = 30
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "sandstone blocks crate"
+	group = supply_materials
+/*		// Disabled by request of coderbus
 /datum/supply_packs/wood30
 	name = "25 Wood Planks"
 	contains = list(/obj/item/stack/sheet/wood)
@@ -849,15 +858,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 40
 	containertype = /obj/structure/closet/crate
 	containername = "wood planks crate"
-	group = supply_materials
-
-/datum/supply_packs/sandstone30
-	name = "30 Sandstone Blocks"
-	contains = list(/obj/item/stack/sheet/mineral/sandstone)
-	amount = 30
-	cost = 20
-	containertype = /obj/structure/closet/crate
-	containername = "sandstone blocks crate"
 	group = supply_materials
 
 /// Precious materials: these are intentionally priced high to not make mining redundent
@@ -933,7 +933,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate
 	containername = "plasma blocks crate"
 	group = supply_materials
-
+*/
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
