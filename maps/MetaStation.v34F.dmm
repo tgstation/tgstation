@@ -6340,7 +6340,7 @@
 "crV" = (/obj/machinery/light/small{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{tag = "icon-warningcorner"; icon_state = "warningcorner"; dir = 2},/area/toxins/mixing)
 "crW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/toxins/mixing)
 "crX" = (/turf/simulated/floor{icon_state = "white"},/area/medical/medbay3{name = "Medbay Aft"})
-"crY" = (/obj/machinery/driver_button{dir = 2; id = "toxinsdriver"; pixel_y = 24},/turf/simulated/floor,/area/toxins/mixing)
+"crY" = (/turf/simulated/floor,/area/toxins/mixing)
 "crZ" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/toxins/mixing)
 "csa" = (/obj/structure/sign/securearea,/turf/simulated/wall,/area/toxins/mixing)
 "csb" = (/turf/simulated/floor/airless{dir = 8; icon_state = "warning"},/area/toxins/test_area)
