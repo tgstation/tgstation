@@ -142,6 +142,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 	proc/process()
 		for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 			var/datum/supply_packs/P = new typepath()
+			if(P.name == "HEADER") continue		// To filter out group headers
 			supply_packs[P.name] = P
 
 		spawn(0)
@@ -347,8 +348,8 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 				A:req_access += text2num(SP.access)
 
 			var/list/contains
-			if(istype(SP,/datum/supply_packs/randomised))
-				var/datum/supply_packs/randomised/SPR = SP
+			if(istype(SP,/datum/supply_packs/misc/randomised))
+				var/datum/supply_packs/misc/randomised/SPR = SP
 				contains = list()
 				if(SPR.contains.len)
 					for(var/j=1,j<=SPR.num_contained,j++)
