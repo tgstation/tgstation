@@ -421,12 +421,15 @@
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/human/proc/get_visible_name()
-	var/face_name = get_face_name()
+	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
-
-	if(id_name && (id_name != face_name))
-		return "[face_name] (as [id_name])"
-	return face_name
+	if(face_name)
+		if(id_name && (id_name != face_name))
+			return "[face_name] (as [id_name])"
+		return face_name
+	if(id_name)
+		return id_name
+	return "Unknown"
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
