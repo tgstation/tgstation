@@ -235,10 +235,7 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
-		if(istype(usr, /mob/living/silicon/robot/mommi))
-			var/mob/living/silicon/robot/mommi/M = usr
-			if(!M.drop_item()) return
-		else
+		if(!istype(usr, /mob/living/silicon/robot/mommi))
 			usr.u_equip(W)
 		usr.update_icons()	//update our overlays
 	W.loc = src
