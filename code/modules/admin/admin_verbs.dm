@@ -198,19 +198,25 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/add_admin_verbs()
 	if(holder)
+		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
-		if(holder.rights & R_BUILDMODE)		verbs += /client/proc/togglebuildmodeself
-		if(holder.rights & R_ADMIN)			verbs += admin_verbs_admin
-		if(holder.rights & R_BAN)			verbs += admin_verbs_ban
-		if(holder.rights & R_FUN)			verbs += admin_verbs_fun
-		if(holder.rights & R_SERVER)		verbs += admin_verbs_server
-		if(holder.rights & R_DEBUG)			verbs += admin_verbs_debug
-		if(holder.rights & R_POSSESS)		verbs += admin_verbs_possess
-		if(holder.rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
-		if(holder.rights & R_STEALTH)		verbs += /client/proc/stealth
-		if(holder.rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
-		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
-		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
+		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
+		if(rights & R_ADMIN)		verbs += admin_verbs_admin
+		if(rights & R_BAN)			verbs += admin_verbs_ban
+		if(rights & R_FUN)			verbs += admin_verbs_fun
+		if(rights & R_SERVER)		verbs += admin_verbs_server
+		if(rights & R_DEBUG)		verbs += admin_verbs_debug
+		if(rights & R_POSSESS)		verbs += admin_verbs_possess
+		if(rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
+		if(rights & R_STEALTH)		verbs += /client/proc/stealth
+		if(rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
+		if(rights & R_SOUNDS)		verbs += admin_verbs_sounds
+		if(rights & R_SPAWN)		verbs += admin_verbs_spawn
+		
+		for(var/path in holder.rank.adds)
+			verbs += path
+		for(var/path in holder.rank.subs)
+			verbs -= path
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
@@ -246,6 +252,8 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/kaboom,
 		/client/proc/cmd_admin_areatest
 		)
+	if(holder)
+		verbs.Remove(holder.rank.adds)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"

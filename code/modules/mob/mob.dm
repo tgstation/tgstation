@@ -380,7 +380,7 @@ var/list/slot_equipment_priority = list( \
 	set category = "OOC"
 	var/is_admin = 0
 
-	if(client.holder && (client.holder.rights & R_ADMIN))
+	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "\blue You must be observing to use this!"
