@@ -15,6 +15,7 @@
 	var/amount = 30
 	var/beaker = null
 	var/recharged = 0
+	var/opened = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
@@ -165,20 +166,48 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+
+/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob) //to be worked on
 	if(isrobot(user))
 		return
 
-	if(!istype(B, /obj/item/weapon/reagent_containers/glass))
-		return
+	if(!istype(D, /obj/item/weapon/reagent_containers/glass))
+		if(istype(D, /obj/item/weapon/screwdriver))
+			if(!opened)
+				src.opened = 1
+				//src.icon_state = "chem_dispenser_t"
+				user << "You open the maintenance hatch of [src]"
+			else
+				src.opened = 0
+				//src.icon_state = "chem_dispenser"
+				user << "You close the maintenance hatch of [src]"
+			return 1
+		if(opened)
+			if(istype(D, /obj/item/weapon/crowbar))
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+				M.state = 2
+				M.icon_state = "box_1"
+				for(var/obj/I in component_parts)
+					if(I.reliability != 100 && crit_fail)
+						I.crit_fail = 1
+					I.loc = src.loc
+				del(src)
+				return 1
+			else // this might need rework
+				user.set_machine(user)
+				interact(user)
+				return 1
+		else
+			return
 
 	if(src.beaker)
 		user << "A beaker is already loaded into the machine."
 		return
 
-	src.beaker =  B
+	src.beaker =  D
 	user.drop_item()
-	B.loc = src
+	D.loc = src
 	user << "You add the beaker to the machine!"
 	for(var/mob/player in player_list)
 		if (player.machine == src && player.client)
@@ -216,6 +245,7 @@
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 0
 	var/condi = 0
+	var/opened = 0
 	var/useramount = 30 // Last used amount
 	var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
@@ -276,6 +306,38 @@
 		B.loc = src
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
+	else if(istype(B, /obj/item/weapon/screwdriver))
+		if(src.beaker)
+			user << "A beaker is loaded in [src]."
+			return
+		if(src.loaded_pill_bottle)
+			user << "A pill bottle is loaded in [src]."
+			return
+		if(!opened)
+			src.opened = 1
+			//src.icon_state = "freezer_t"
+			user << "You open the maintenance hatch of [src]."
+		else
+			src.opened = 0
+			//src.icon_state = "freezer"
+			user << "You close the maintenance hatch of [src]."
+		return 1
+	if(opened)
+		if(src.beaker || src.loaded_pill_bottle)
+			return
+		if(istype(B, /obj/item/weapon/crowbar))
+			user << "You begin to remove the circuits from the [src]."
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			if(do_after(user, 50))
+				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+				M.state = 2
+				M.icon_state = "box_1"
+				for(var/obj/I in component_parts)
+					if(I.reliability != 100 && crit_fail)
+						I.crit_fail = 1
+					I.loc = src.loc
+				del(src)
+				return 1
 	return
 
 /obj/machinery/chem_master/Topic(href, href_list)
