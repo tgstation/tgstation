@@ -152,42 +152,53 @@
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
-	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	/obj/item/weapon/twohanded/dualsaber/New()
-		color = pick("red", "blue", "green", "purple")
+/obj/item/weapon/twohanded/dualsaber/update_icon()
+	icon_state = "dualsaber[wielded]"
+	return
 
-	/obj/item/weapon/twohanded/dualsaber/update_icon()
-		if(wielded)
-			icon_state = "dualsaber[color]"
-		else
-			icon_state = "dualsaber0"
-			clean_blood()//blood overlays get weird otherwise, because the sprite changes.
-			return
-
-	/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
-		..()
-		if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-			user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
-			user.take_organ_damage(20,25)
-			return
-		if((wielded) && prob(50))
-			spawn(0)
+/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
+	..()
+	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
+		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
+		user.take_organ_damage(20,25)
+		return
+	if((wielded) && prob(50))
+		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
 				sleep(1)
 
-	/obj/item/weapon/twohanded/dualsaber/IsShield()
-		if(wielded)
-			return 1
-		else
-			return 0
+/obj/item/weapon/twohanded/dualsaber/IsShield()
+	if(wielded)
+		return 1
+	else
+		return 0
 
-	/obj/item/weapon/twohanded/dualsaber/green
-		New()
-		color = "green"
 
-	/obj/item/weapon/twohanded/dualsaber/red
-		New()
-		color = "red"
+
+
+
+/*
+ * High-Frequency Blade
+ */
+/obj/item/weapon/twohanded/hfrequency
+	icon_state = "hfrequency0"
+	name = "high-frequency blade"
+	desc = "Keep hands off blade at all times."
+	slot_flags = SLOT_BACK
+	force = 3
+	throwforce = 35
+	throw_speed = 5
+	throw_range = 10
+	w_class = 4.0
+	force_unwielded = 40
+	force_wielded = 120
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	origin_tech = "magnets=4;combat=5"
+
+/obj/item/weapon/twohanded/hfrequency/update_icon()
+	icon_state = "hfrequency[wielded]"
+	return
+

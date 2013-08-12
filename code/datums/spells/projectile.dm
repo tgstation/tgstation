@@ -76,6 +76,9 @@
 							spawn(proj_trail_lifespan)
 								del(trail)
 
+				if(!projectile)
+					break
+
 				if(projectile.loc in range(target.loc,proj_trigger_range))
 					projectile.perform(list(target))
 					break

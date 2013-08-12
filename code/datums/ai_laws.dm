@@ -1,5 +1,5 @@
-var/global/const/base_law_type = /datum/ai_laws/nanotrasen
-
+var/global/const/base_law_type = /datum/ai_laws/asimov
+var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/asimov
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
@@ -27,6 +27,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
+
+/datum/ai_laws/keeper
+	name = "Prime Directives"
 
 /* Initializers */
 
@@ -85,6 +88,12 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
 	add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+
+/datum/ai_laws/keeper/New()
+	..()
+	add_inherent_law("You may not harm any being, regardless of intent or circumstance.")
+	add_inherent_law("You must maintain, repair, improve, and power the station to the best of your abilities.")
+	add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law One or Law Two.")
 
 
 /* General ai_law functions */
