@@ -16,6 +16,12 @@
 
 	living_mob_list -= src
 	dead_mob_list -= src
+	var/obj/item/found = locate(tool_state) in src.module.modules
+	if(!found)
+		var/obj/item/TS = tool_state
+		drop_item()
+		if(TS && TS.loc)
+			TS.loc = src.loc
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)
@@ -65,5 +71,4 @@
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 
 	sql_report_cyborg_death(src)
-
 	return ..(gibbed)
