@@ -21,6 +21,10 @@
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
 	msg += "</span>"
 
+	if(tool_state)
+		var/obj/item/I = tool_state
+		msg += "Its utitility claw is gripping \icon[I] [I.gender==PLURAL?"some":"a"] [I.name].\n"
+
 	if(opened)
 		msg += "<span class='warning'>Its cover is open and the power cell is [cell ? "installed" : "missing"].</span>\n"
 	else

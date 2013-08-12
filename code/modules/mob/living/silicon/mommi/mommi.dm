@@ -462,6 +462,63 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/mommi/attack_hand(mob/user)
+	add_fingerprint(user)
+
+	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
+		if(cell)
+			cell.updateicon()
+			cell.add_fingerprint(user)
+			user.put_in_active_hand(cell)
+			user << "You remove \the [cell]."
+			cell = null
+			updateicon()
+			return
+
+
+	if(ishuman(user))
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
+			return
+
+	if(!istype(user, /mob/living/silicon))
+		switch(user.a_intent)
+			if("disarm")
+				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [user.name] ([user.ckey])</font>")
+				log_admin("ATTACK: [user.name] ([user.ckey]) disarmed [src.name] ([src.ckey])")
+				log_attack("<font color='red'>[user.name] ([user.ckey]) disarmed [src.name] ([src.ckey])</font>")
+				var/randn = rand(1,100)
+				//var/talked = 0;
+				if (randn <= 25)
+					weakened = 3
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					visible_message("\red <B>[user] has pushed [src]!</B>")
+					var/obj/item/found = locate(tool_state) in src.module.modules
+					if(!found)
+						var/obj/item/TS = tool_state
+						drop_item()
+						if(TS && TS.loc)
+							TS.loc = src.loc
+							visible_message("\red <B>[src]'s robotic arm loses grip on what it was holding")
+					return
+				if(randn <= 50)//MoMMI's robot arm is stronger than a human's, but not by much
+					var/obj/item/found = locate(tool_state) in src.module.modules
+					if(!found)
+						var/obj/item/TS = tool_state
+						drop_item()
+						if(TS && TS.loc)
+							TS.loc = src.loc
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						visible_message("\red <B>[user] has disarmed [src]!</B>")
+					else
+						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+						visible_message("\red <B>[user] attempted to disarm [src]!</B>")
+					return
+
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
 /*
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -692,8 +749,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	<BR>
 	<B>Activated Modules</B>
 	<BR>
-	Sight Mode: [sight_state ? "<A HREF=?src=\ref[src];mod=\ref[sight_state]>[sight_state]</A>" : "NULL"]<BR>
-	Utility Module: [tool_state ? "<A HREF=?src=\ref[src];mod=\ref[tool_state]>[tool_state]</A>" : "NULL"]<BR>
+	Sight Mode: [sight_state ? "<A HREF=?src=\ref[src];mod=\ref[sight_state]>[sight_state]</A>" : "No module selected"]<BR>
+	Utility Module: [tool_state ? "<A HREF=?src=\ref[src];mod=\ref[tool_state]>[tool_state]</A>" : "No module selected"]<BR>
 	<BR>
 	<B>Installed Modules</B><BR><BR>"}
 
