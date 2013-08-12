@@ -5,7 +5,7 @@
 
 	robot_talk_understand = 0
 
-	var/network = "SS13"
+	var/network = list("SS13")
 	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities
@@ -75,20 +75,20 @@
 	..()
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
 
-	
+
 // this function shows the information about being silenced as a pAI in the Status panel
 /mob/living/silicon/pai/proc/show_silenced()
 	if(src.silence_time)
 		var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 		stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-		
-		
+
+
 /mob/living/silicon/pai/Stat()
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
 		show_silenced()
-		
+
 	if (proc_holder_list.len)//Generic list for proc_holder objects.
 		for(var/obj/effect/proc_holder/P in proc_holder_list)
 			statpanel("[P.panel]","",P)
