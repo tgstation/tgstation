@@ -69,7 +69,9 @@
 		interpreter.SetVar("E" 		, 	2.718281828)	// value of e
 		interpreter.SetVar("SQURT2" , 	1.414213562)	// value of the square root of 2
 		interpreter.SetVar("FALSE"  , 	0)				// boolean shortcut to 0
+		interpreter.SetVar("false"  , 	0)				// boolean shortcut to 0
 		interpreter.SetVar("TRUE"	,	1)				// boolean shortcut to 1
+		interpreter.SetVar("true"	,	1)				// boolean shortcut to 1
 
 		interpreter.SetVar("NORTH" 	, 	NORTH)			// NORTH (1)
 		interpreter.SetVar("SOUTH" 	, 	SOUTH)			// SOUTH (2)
