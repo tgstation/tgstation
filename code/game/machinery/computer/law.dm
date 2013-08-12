@@ -63,6 +63,11 @@
 
 	attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
 		if(istype(module, /obj/item/weapon/aiModule))
+			if(isMoMMI(src.current))
+				var/mob/living/silicon/robot/mommi/mommi = src.current
+				if(mommi.keeper)
+					user << "\red [src.current] is operating in KEEPER mode and cannot be accessed via control signals."
+					return ..()
 			module.install(src)
 		else
 			return ..()
