@@ -1,5 +1,5 @@
 var/global/const/base_law_type = /datum/ai_laws/asimov
-var/global/const/mommi_base_law_type = /datum/ai_laws/asimov // /datum/ai_laws/keeper
+var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/asimov
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
