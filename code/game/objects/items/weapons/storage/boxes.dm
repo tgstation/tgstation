@@ -172,6 +172,20 @@
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 
+/obj/item/weapon/storage/box/flashes
+	name = "box of flashbulbs"
+	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
