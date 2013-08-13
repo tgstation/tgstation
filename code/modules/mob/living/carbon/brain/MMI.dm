@@ -75,8 +75,8 @@
 
 			M.invisibility = 0
 			//M.custom_name = created_name
+			M.Namepick()
 			M.updatename()
-
 			brainmob.mind.transfer_to(M)
 
 			if(M.mind && M.mind.special_role)
