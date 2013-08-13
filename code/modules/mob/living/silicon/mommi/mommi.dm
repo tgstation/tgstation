@@ -52,6 +52,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		// Enforce silence.
 		keeper=1
+		connected_ai = null // Enforce no AI parent
+		scrambledcodes = 1 // Hide from console
+
 	module = new /obj/item/weapon/robot_module/mommi(src)
 	if(connected_ai)
 		connected_ai.connected_robots += src
@@ -67,6 +70,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		camera.network = list("SS13")
 		if(isWireCut(5)) // 5 = BORG CAMERA
 			camera.status = 0
+
+	// Sanity check
+	if(connected_ai && keeper)
+		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
 
 	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
