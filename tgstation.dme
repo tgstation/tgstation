@@ -281,6 +281,7 @@
 #include "code\game\machinery\portable_turret.dm"
 #include "code\game\machinery\recharger.dm"
 #include "code\game\machinery\rechargestation.dm"
+#include "code\game\machinery\recycler.dm"
 #include "code\game\machinery\requests_console.dm"
 #include "code\game\machinery\robot_fabricator.dm"
 #include "code\game\machinery\shieldgen.dm"
