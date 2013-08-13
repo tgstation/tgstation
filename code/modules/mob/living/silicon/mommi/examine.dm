@@ -7,7 +7,7 @@
 		return
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
-	msg += "<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it's survive in an ocean for very long.</p>"
+	msg += "<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it'd survive in an ocean for very long.</p>"
 	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 75)
