@@ -177,7 +177,7 @@ RCD
 	switch(p_class)
 		if(-1) // Eating pipes
 			// Must click on an actual pipe or meter.
-			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter))
+			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
 				user << "Destroying Pipe..."
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))

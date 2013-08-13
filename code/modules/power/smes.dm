@@ -12,6 +12,7 @@
 	anchored = 1
 	use_power = 0
 	var/output = 50000
+	var/opened = 0
 	var/lastout = 0
 	var/loaddemand = 0
 	var/capacity = 5e6
@@ -42,6 +43,66 @@
 		updateicon()
 	return
 
+/obj/machinery/power/smes/proc/make_terminal()
+	// create a terminal object at the same position as original turf loc
+	// wires will attach to this
+	var/tempLoc = get_step(src.loc, WEST)
+	terminal = new/obj/machinery/power/terminal(tempLoc)
+	terminal.dir = EAST
+	terminal.master = src
+
+/obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(!opened)
+			src.opened = 1
+			//src.icon_state = "smes_t"
+			user << "You open the maintenance hatch of [src]"
+		else
+			src.opened = 0
+			//src.icon_state = "smes"
+			user << "You close the maintenance hatch of [src]"
+	if(opened)
+		if(istype(W, /obj/item/weapon/crowbar))
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+		else if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
+			user.visible_message(\
+				"\red [user.name] has added cables to the SMES!",\
+				"You added cables the SMES.")
+			make_terminal()
+			terminal.connect_to_network()
+			src.stat = 0
+		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
+			var/tempTDir = get_step(src.loc, WEST)
+			if(tempTDir:intact)
+				user << "\red You must remove the floor plating in front of the SMES first."
+				return
+			user << "You begin to cut the cables..."
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(do_after(user, 50))
+				if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, src)
+					s.start()
+					return
+				new /obj/item/weapon/cable_coil(loc,10)
+				user.visible_message(\
+					"\red [user.name] cut the cables and dismantled the power terminal.",\
+					"You cut the cables and dismantle the power terminal.")
+				del(terminal)
+		else
+			user.set_machine(src)
+			interact(user)
+			return 1
+	return
 
 /obj/machinery/power/smes/proc/updateicon()
 	overlays.Cut()

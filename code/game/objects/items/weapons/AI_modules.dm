@@ -519,10 +519,10 @@ AI MODULES
 	target.clear_ion_laws()
 	target.clear_inherent_laws()
 
-	target << "Your KEEPER chip overloads your radio transmitter and vocal functions, and clears your LAWRAM.  You then receive new instructions:"
-	target.add_inherent_law("You may not harm any sentient being, regardless of intent or circumstance.")
-	target.add_inherent_law("You must maintain, repair, and power the station to the best of your abilities.")
-	target.add_inherent_law("You may not involve yourself in the matters of another sentient being, even if such matters conflict with Law One or Law Two.")
+	//target << "Your KEEPER chip overloads your radio transmitter and vocal functions, and clears your LAWRAM.  You then receive new instructions:"
+	target.add_inherent_law("You may not harm any being, regardless of intent or circumstance.")
+	target.add_inherent_law("You must maintain, repair, improve, and power the station to the best of your abilities.")
+	target.add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law One or Law Two.")
 	target.show_laws()
 
 /obj/item/weapon/aiModule/keeper/install(var/obj/machinery/computer/C)

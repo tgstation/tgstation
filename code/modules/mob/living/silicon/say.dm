@@ -36,6 +36,9 @@
 				return
 		else
 			if(isMoMMI(src)&&client)//For patching directly into AI holopads.
+				// Beep boop. Emotes are acceptable.
+				if (copytext(message, 1, 2) == "*" && !stat)
+					return ..(message)
 				var/mob/living/silicon/robot/mommi/U = src
 				if(U.keeper)
 					src << "\red Your KEEPER module has disabled your vocalizer.  Try :b to attempt to relay your message through the AI or borgs, or try an *emote (say \"*help\" for a listing)."
