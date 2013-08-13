@@ -43,6 +43,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		cell = new /obj/item/weapon/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
+	..()
 
 	laws = new mommi_base_law_type
 	// Don't sync if we're a KEEPER.
@@ -66,7 +67,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		camera.network = list("SS13")
 		if(isWireCut(5)) // 5 = BORG CAMERA
 			camera.status = 0
-	..()
 
 	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
