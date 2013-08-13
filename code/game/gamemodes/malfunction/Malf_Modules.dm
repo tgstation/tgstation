@@ -112,7 +112,6 @@ rcd light flash thingy on matter drain
 			else src << "Out of uses."
 	else src << "That's not a machine."
 
-/*
 
 /datum/AI_Module/large/place_cyborg_transformer
 	module_name = "Robotic Factory (Removes Shunting)"
@@ -140,7 +139,7 @@ rcd light flash thingy on matter drain
 		src << "Out of uses."
 		return
 
-	var/sure = alert(src, "Make sure the room it is in is big enough and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
+	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
 	if(sure != "Yes")
 		return
 
@@ -149,6 +148,11 @@ rcd light flash thingy on matter drain
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
 
 	var/alert_msg = "There isn't enough room. Make sure you are placing the machine in a clear area and on a floor."
+
+	var/datum/camerachunk/C = cameranet.getCameraChunk(middle.x, middle.y, middle.z)
+	if(!C.visibleTurfs[middle])
+		alert(src, "We cannot get camera vision of this location.")
+		return
 
 	for(var/T in turfs)
 
@@ -165,11 +169,11 @@ rcd light flash thingy on matter drain
 
 	// All clear, place the transformer
 	new /obj/machinery/transformer/conveyor(middle)
+	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
 	src.can_shunt = 0
 	PCT.uses -= 1
 	src << "You cannot shunt anymore."
 
-*/
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
