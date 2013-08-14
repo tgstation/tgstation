@@ -91,11 +91,8 @@
 /obj/structure/filingcabinet/security/attack_hand(mob/user)
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/S
-			for(var/datum/data/record/R in data_core.security)
-				if((R.fields["name"] == G.fields["name"] || R.fields["id"] == G.fields["id"]))
-					S = R
-					break
+			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
+			if(!S)	continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
 			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
@@ -120,11 +117,8 @@
 /obj/structure/filingcabinet/medical/attack_hand(mob/user)
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/M
-			for(var/datum/data/record/R in data_core.medical)
-				if((R.fields["name"] == G.fields["name"] || R.fields["id"] == G.fields["id"]))
-					M = R
-					break
+			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
+			if(!M)	continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
 			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"

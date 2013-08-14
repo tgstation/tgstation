@@ -214,12 +214,8 @@ var/list/ai_list = list()
 	set name = "Show Crew Manifest"
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
-	var/list/L = list()
-	for (var/datum/data/record/t in data_core.general)
-		var/R = t.fields["name"] + " - " + t.fields["rank"]
-		L += R
-	for(var/R in sortList(L))
-		dat += "[R]<br>"
+	for(var/datum/data/record/t in sortRecord(data_core.general))
+		dat += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")
