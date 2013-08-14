@@ -70,7 +70,9 @@
 	R.weakened = 5
 	spawn(50)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		sleep(30) R.weakened = 0
+		sleep(30)
+		if(R)
+			R.weakened = 0
 
 	// Activate the cooldown
 	cooldown = 1
