@@ -93,6 +93,15 @@
 		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job"))
 
 		/*
+			-> Send a signal used by signallers.
+					@format: signal(frequency, code)
+
+					@param frequency:	Frequency to broadcast to
+					@param code:		Code to send
+		*/
+		interpreter.SetProc("signal", /proc/ntsl_send_signal)
+
+		/*
 			-> Store a value permanently to the server machine (not the actual game hosting machine, the ingame machine)
 					@format: mem(address, value)
 

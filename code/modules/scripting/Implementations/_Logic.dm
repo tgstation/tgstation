@@ -252,12 +252,10 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 		var/i = 1
 		var/lenh=lentext(haystack)
 		var/lena=lentext(a)
-		//var/lenb=lentext(b)
 		var/count = 0
 		var/list/dat = list()
 		while (i < lenh)
 			var/found = findtext(haystack, a, i, 0)
-			//diary << "findtext([haystack], [a], [i], 0)=[found]"
 			if (found == 0) // Not found
 				break
 			else
@@ -265,27 +263,50 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 					dat+=found
 					count+=1
 				else
-					//diary << "Script found [a] [count] times, aborted"
 					break
-			//diary << "Found [a] at [found]! Moving up..."
 			i = found + lena
 		if (count == 0)
 			return haystack
-		//var/nlen = lenh + ((lenb - lena) * count)
 		var/buf = copytext(haystack,1,dat[1]) // Prefill
 		var/lastReadPos = 0
 		for (i = 1, i <= count, i++)
 			var/precopy = dat[i] - lastReadPos-1
-			//internal static unsafe void CharCopy (String target, int targetIndex, String source, int sourceIndex, int count)
-			//fixed (char* dest = target, src = source)
-			//CharCopy (dest + targetIndex, src + sourceIndex, count);
-			//CharCopy (dest + curPos, source + lastReadPos, precopy);
 			buf+=copytext(haystack,lastReadPos,precopy)
-			diary << "buf+=copytext([haystack],[lastReadPos],[precopy])"
-			diary<<"[buf]"
 			lastReadPos = dat[i] + lena
-			//CharCopy (dest + curPos, replace, newValue.length);
 			buf+=b
-			diary<<"[buf]"
 		buf+=copytext(haystack,lastReadPos, 0)
 		return buf
+
+
+/proc/ntsl_send_signal(var/freq,var/code)
+	if(isnum(freq)&&isnum(code))
+		if(!radio_controller)
+			sleep(20)
+		if(!radio_controller)
+			return
+		// Sanitize frequency
+		var/new_frequency = freq
+		if(new_frequency < 1200 || new_frequency > 1600)
+			new_frequency = sanitize_frequency(new_frequency)
+
+		// Sanitize code
+		code = round(code)
+		code = min(100, code)
+		code = max(1, code)
+
+		// Since we're not an object, we can't do this.
+		/*
+		radio_controller.remove_object(src, frequency)
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+		*/
+
+		// Therefore, we do this hacky bit of crap instead.
+		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(freq)
+
+		// Go go gadget
+		var/datum/signal/signal = new
+		signal.source = null // Oh god I hope this works.
+		signal.encryption = code
+		signal.data["message"] = "ACTIVATE"
+		radio_connection.post_signal(null, signal)
