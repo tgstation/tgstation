@@ -9,11 +9,64 @@ import logging
 import logging.handlers
 
 MONITOR = ('127.0.0.1',1336) # IP, port.
-RESTART_COMMAND="/home/gmod/byond/ss13.sh"
-STATS_FILE='/home/gmod/stats.json'
+RESTART_COMMAND="/home/gmod/byond/ss13.sh" # What shell script restarts SS13?
+COMPILE_COMMAND="/home/gmod/byond/compile_ss13.sh" # What shell script should be run to compile SS13?
+STATS_FILE='/home/gmod/stats.json' # Where do you want stats.json placed?
+
 MAX_FAILURES=3
-LOGPATH='/home/gmod/byond/crashlogs/'
 TIMEOUT=30.0
+
+LOGPATH='/home/gmod/byond/crashlogs/' # Where do you want crash.log stored?
+GAMEPATH='/home/gmod/byond/tgstation/' # Where is the game directory?
+CONFIGPATH='/home/gmod/byond/config/' # Where is your current list of config files?
+
+GIT_REMOTE='origin'
+GIT_BRANCH='malfmodules'
+
+def git_commit():
+	try:
+		rev = subprocess.Popen(['git','rev-parse','--short','HEAD'], stdout=subprocess.PIPE).communicate()[0][:-1]
+		if rev:
+			return rev.decode('utf-8')
+	except Exception as e:
+		print(e)
+		pass
+	return '[UNKNOWN]'
+
+def git_branch():
+	try:
+		branch = subprocess.Popen(["git", "rev-parse", "--abbrev-ref",'HEAD'], stdout=subprocess.PIPE).communicate()[0][:-1]
+		if branch:
+			return branch.decode('utf-8')
+	except Exception as e:
+		print(e)
+		pass
+	return '[UNKNOWN]'
+	
+def checkForUpdate(serverState):
+	global GIT_REMOTE,GIT_BRANCH,COMPILE_COMMAND,GAMEPATH,CONFIGPATH
+	cwd=os.getcwd()
+	os.chdir(GAMEPATH)
+	subprocess.call('git pull -s recursive -Xtheirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
+	subprocess.call('git checkout -q {0}'.format(GIT_BRANCH),shell=True) 
+	currentCommit = git_commit()
+	currentBranch = git_branch()
+	if currentCommit != lastCommit and lastCommit is not None:
+		subprocess.call('git reset --hard {0}/{1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True) 
+		subprocess.call('cp -av {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
+		log.info('Updated to {0} ({1}).  Triggering compile.'.format(currentCommit,currentBranch))
+		subprocess.call(COMPILE_COMMAND,shell=True)
+		updateTrigger=os.path.join(GAMEPATH,'data','UPDATE_READY.txt')
+		if not os.path.isdir(os.path.dirname(updateTrigger)):
+			os.makedirs(os.path.dirname(updateTrigger))
+		if serverState:
+			log.info('Server will restart after round ends.')
+			with open(updateTrigger,'w') as f:
+				f.write('honk')
+		else:
+			if os.path.isfile(updateTrigger):
+				os.remove(updateTrigger)
+	os.chdir(cwd)
 
 # Return True for success, False otherwise.
 def open_socket():
@@ -38,7 +91,7 @@ def decode_packet(packet):
 			elif packet[4] == b'\x06': # ASCII string
 				unpackstr = '' # result string
 				index = 5 # string index
-                               
+							   
 				while (size > 0): # loop through the entire ASCII string
 					size -= 1
 					unpackstr = unpackstr+packet[index] # add the string position to return string
@@ -128,30 +181,42 @@ consoleHandler = logging.StreamHandler()
 consoleHandler.setFormatter(logFormatter)
 log.addHandler(consoleHandler)
 
+log.info('-----')
 log.info('/vg/station Watchdog: Started.')
 lastState=True
 failChain=0
 firstRun=True
+lastCommit=None
+cwd=os.getcwd()
+os.chdir(GAMEPATH)
+lastCommit=git_commit()
+currentBranch=git_branch()
+os.chdir(cwd)
+log.info('Git repository on branch {1}, commit {0}.'.format(lastCommit,currentBranch))
 while True:
 	if not ping_server(b'?status'):
 		# try to start the server again
+		checkForUpdate(False)
 		failChain += 1
 		if lastState == False:
 			if failChain > MAX_FAILURES:
-				log.error('Too many failures, quitting.')
+				log.error('Too many failures, quitting!')
 				sys.exit(1)
 			log.error('Try {0}/{1}...'.format(failChain,MAX_FAILURES))
 		else:
-			log.error("Detected a problem, attempting restart ({0}/{1}.".format(failChain,MAX_FAILURES))
+			log.error("Detected a problem, attempting restart ({0}/{1}).".format(failChain,MAX_FAILURES))
 		subprocess.call(RESTART_COMMAND,shell=True)
-		time.sleep(50) # Sleep 50 seconds for a total of one minute before we ping again.
+		time.sleep(50) # Sleep 50 seconds for a total of almost 2 minutes before we ping again.
 		lastState=False
 	else:
 		if lastState == False:
 			log.info('Server is confirmed to be back up and running.')
 		if firstRun:
 			log.info('Server is confirmed to be up and running.')
+		else:
+			checkForUpdate(True)
+		
 		lastState=True
 		failChain=0
 	firstRun=False
-	time.sleep(10) # Ten seconds between "pings".
+	time.sleep(50) # 50 seconds between "pings".
