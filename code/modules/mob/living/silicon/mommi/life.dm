@@ -167,7 +167,7 @@
 			switch(health)
 				if(60 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(40 to 50)
+				if(40 to 60)
 					src.healths.icon_state = "health1"
 				if(30 to 40)
 					src.healths.icon_state = "health2"

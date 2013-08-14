@@ -13,7 +13,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	health = 60
 	pass_flags = PASSTABLE
 	var/keeper=0 // 0 = No, 1 = Yes (Disables speech and common radio.)
-
+	var/picked = 0
 	var/obj/screen/inv_tool = null
 	var/obj/screen/inv_sight = null
 
@@ -55,7 +55,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		connected_ai = null // Enforce no AI parent
 		//scrambledcodes = 1 // Hide from console | lets try it with them visible
 
-	module = new /obj/item/weapon/robot_module/mommi(src)
+
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawsync()
@@ -78,19 +78,29 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
 
+/mob/living/silicon/robot/mommi/proc/choose_icon()
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper")
+	switch(icontype)
+		if("Basic")	icon_state = "mommi"
+		else		icon_state = "keeper"
+	updateicon()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/Del()
+/mob/living/silicon/robot/mommi/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
+		var/obj/item/device/mmi/nmmi = mmi
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
-		if(T)	mmi.loc = T
-		if(mind)	mind.transfer_to(mmi.brainmob)
+		if(T)	nmmi.loc = T
+		if(mind)	mind.transfer_to(nmmi.brainmob)
 		mmi = null
+		nmmi.icon = 'icons/obj/assemblies.dmi'
 	..()
 
 /mob/living/silicon/robot/mommi/pick_module()
-	return // Nope
+	module = new /obj/item/weapon/robot_module/mommi(src)
+	choose_icon()
+	return // Yup
 
 /mob/living/silicon/robot/mommi/updatename(var/prefix as text)
 
@@ -335,13 +345,20 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
 
 /mob/living/silicon/robot/mommi/updateicon()
-
 	overlays.Cut()
 	if(stat == 0)
-		if(emagged)
-			overlays += "eyes-mommi-emagged"
-		else
-			overlays += "eyes-mommi"
+		switch(icon_state)
+			if("mommi")
+				if(emagged)
+					overlays += "eyes-mommi-emagged"
+				else
+					overlays += "eyes-mommi"
+			if("keeper")
+				if(emagged)
+					icon_state = "keeper_emagged"
+			if("keeper_emagged")
+				if(!emagged)
+					icon_state = "keeper"
 
 	if(opened) // TODO:  Open the front "head" panel
 		if(wiresexposed)

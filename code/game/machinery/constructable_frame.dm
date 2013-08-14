@@ -268,7 +268,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (SMES)"
 	build_path = "/obj/machinery/power/smes"
 	board_type = "machine"
-	origin_tech = "power-4;engineering=4;programming=4"
+	origin_tech = "power=4;engineering=4;programming=4"
 	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 4,
