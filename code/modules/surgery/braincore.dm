@@ -103,6 +103,7 @@
 		target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		working = 0
 		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
 		target.apply_damage(30, BRUTE, "head", 1)
