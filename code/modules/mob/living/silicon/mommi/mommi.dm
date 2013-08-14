@@ -52,8 +52,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		// Enforce silence.
 		keeper=1
 		connected_ai = null // Enforce no AI parent
-		//scrambledcodes = 1 // Hide from console | lets try it with them visible
-
+		scrambledcodes = 1 // Hide from console because people are fucking idiots
 
 	if(connected_ai)
 		connected_ai.connected_robots += src
