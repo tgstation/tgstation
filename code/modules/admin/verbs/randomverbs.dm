@@ -295,10 +295,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		/*Try and locate a record for the person being respawned through data_core.
 		This isn't an exact science but it does the trick more often than not.*/
 		var/id = md5("[G_found.real_name][G_found.mind.assigned_role]")
-		for(var/datum/data/record/t in data_core.locked)
-			if(t.fields["id"]==id)
-				record_found = t//We shall now reference the record.
-				break
+
+		record_found = find_record("id", id, data_core.locked)
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.fields["name"]

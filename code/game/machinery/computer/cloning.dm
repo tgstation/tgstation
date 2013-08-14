@@ -140,8 +140,8 @@
 		if(2)
 			dat += "<h3>Current records</h3>"
 			dat += "<a href='byond://?src=\ref[src];menu=1'><< Back</a><br><br>"
-			for(var/datum/data/record/R in src.records)
-				dat += "<h4>[R.fields["name"]]</h4>Scan ID [R.fields["id"]] <a href='byond://?src=\ref[src];view_rec=\ref[R]'>View Record</a>"
+			for(var/datum/data/record/R in records)
+				dat += "<h4>[R.fields["name"]]</h4>Scan ID [R.fields["id"]] <a href='byond://?src=\ref[src];view_rec=[R.fields["id"]]'>View Record</a>"
 		if(3)
 			dat += "<h3>Selected Record</h3>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'><< Back</a><br>"
@@ -150,7 +150,7 @@
 				dat += "<font class='bad'>Record not found.</font>"
 			else
 				dat += "<h4>[src.active_record.fields["name"]]</h4>"
-				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"
+				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=\ref[src];clone=[active_record.fields["id"]]'>Clone</a><br>"
 
 				var/obj/item/weapon/implant/health/H = locate(src.active_record.fields["imp"])
 
@@ -226,16 +226,16 @@
 		else
 			src.scanner.locked = 0
 
-	else if (href_list["view_rec"])
-		src.active_record = locate(href_list["view_rec"])
-		if(istype(src.active_record,/datum/data/record))
-			if (!active_record.fields["ckey"])
-				del(src.active_record)
+	else if(href_list["view_rec"])
+		src.active_record = find_record("id", href_list["view_rec"], records)
+		if(active_record)
+			if(!active_record.fields["ckey"])
+				records -= active_record
+				active_record = null
 				src.temp = "<font class='bad'>Record Corrupt</font>"
 			else
 				src.menu = 3
 		else
-			src.active_record = null
 			src.temp = "Record missing."
 
 	else if (href_list["del_rec"])
@@ -250,8 +250,8 @@
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
-					src.records.Remove(src.active_record)
-					del(src.active_record)
+					src.records.Remove(active_record)
+					active_record = null
 					src.menu = 2
 				else
 					src.temp = "<font class='bad'>Access Denied.</font>"
@@ -290,9 +290,9 @@
 		src.updateUsrDialog()
 
 	else if (href_list["clone"])
-		var/datum/data/record/C = locate(href_list["clone"])
+		var/datum/data/record/C = find_record("id", href_list["clone"], records)
 		//Look for that player! They better be dead!
-		if(istype(C))
+		if(C)
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if(!pod1)
 				temp = "<font class='bad'>No Clonepod detected.</font>"
@@ -305,7 +305,8 @@
 			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				records.Remove(C)
-				del(C)
+				if(active_record == C)
+					active_record = null
 				menu = 1
 			else
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
@@ -336,11 +337,11 @@
 	if (NOCLONE in subject.mutations)
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
 		return
-	if (!isnull(find_record(subject.ckey)))
+	if (find_record("ckey", subject.ckey, records))
 		scantemp = "<font class='average'>Subject already in database.</font>"
 		return
 
-	var/datum/data/record/R = new /datum/data/record()
+	var/datum/data/record/R = new()
 	if(subject.dna)
 		R.fields["mrace"] = subject.dna.mutantrace
 	else
@@ -355,7 +356,7 @@
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
-	if (isnull(imp))
+	if(!imp)
 		imp = new /obj/item/weapon/implant/health(subject)
 		imp.implanted = subject
 		R.fields["imp"] = "\ref[imp]"
@@ -368,15 +369,6 @@
 
 	src.records += R
 	scantemp = "Subject successfully scanned."
-
-//Find a specific record by key.
-/obj/machinery/computer/cloning/proc/find_record(var/find_key)
-	var/selected_record = null
-	for(var/datum/data/record/R in src.records)
-		if (R.fields["ckey"] == find_key)
-			selected_record = R
-			break
-	return selected_record
 
 /obj/machinery/computer/cloning/update_icon()
 
