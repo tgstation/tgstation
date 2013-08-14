@@ -33,7 +33,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	status_flags &= ~CANPUSH
 
 	ident = rand(1, 999)
 	updatename()
@@ -95,6 +94,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(mind)	mind.transfer_to(nmmi.brainmob)
 		mmi = null
 		nmmi.icon = 'icons/obj/assemblies.dmi'
+		nmmi.invisibility = 0
 	..()
 
 /mob/living/silicon/robot/mommi/pick_module()
