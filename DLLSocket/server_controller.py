@@ -44,10 +44,10 @@ def git_branch():
 	return '[UNKNOWN]'
 	
 def checkForUpdate(serverState):
-	global GIT_REMOTE,GIT_BRANCH,COMPILE_COMMAND,GAMEPATH,CONFIGPATH
+	global GIT_REMOTE,GIT_BRANCH,COMPILE_COMMAND,GAMEPATH,CONFIGPATH,lastCommit
 	cwd=os.getcwd()
 	os.chdir(GAMEPATH)
-	subprocess.call('git pull -s recursive -Xtheirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
+	subprocess.call('git pull -q -s recursive -Xtheirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
 	subprocess.call('git checkout -q {0}'.format(GIT_BRANCH),shell=True) 
 	currentCommit = git_commit()
 	currentBranch = git_branch()
@@ -66,6 +66,7 @@ def checkForUpdate(serverState):
 		else:
 			if os.path.isfile(updateTrigger):
 				os.remove(updateTrigger)
+	lastCommit=currentCommit
 	os.chdir(cwd)
 
 # Return True for success, False otherwise.
