@@ -8,7 +8,7 @@ RCD
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "rcd"
+	icon_state = "rpd"
 	opacity = 0
 	density = 0
 	anchored = 0.0
