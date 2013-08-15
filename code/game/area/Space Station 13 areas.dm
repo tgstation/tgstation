@@ -240,12 +240,6 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
 
-/area/shuttle/prison/station
-	icon_state = "shuttle"
-
-/area/shuttle/prison/prison
-	icon_state = "shuttle2"
-
 /area/shuttle/specops/centcom
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered"
@@ -1517,7 +1511,6 @@ var/list/the_station_areas = list (
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 //	/area/shuttle/transport2/station,	//not present on map
-	/area/shuttle/prison/station,
 	/area/shuttle/specops/station,
 	/area/atmos,
 	/area/maintenance,

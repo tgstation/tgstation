@@ -10,7 +10,7 @@ var/list/blob_nodes = list()
 	name = "blob"
 	config_tag = "blob"
 
-	required_players = 15
+	required_players = 30
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -21,8 +21,9 @@ var/list/blob_nodes = list()
 
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
+	var/blob_point_rate = 3
 
-	var/blobwincount = 500
+	var/blobwincount = 350
 
 	var/list/infected_crew = list()
 
@@ -89,7 +90,7 @@ var/list/blob_nodes = list()
 
 
 		if(blob_client && location)
-			var/obj/effect/blob/core/core = new(location, 200, blob_client, 2)
+			var/obj/effect/blob/core/core = new(location, 200, blob_client, blob_point_rate)
 			if(core.overmind && core.overmind.mind)
 				core.overmind.mind.name = blob.name
 				infected_crew -= blob
@@ -151,12 +152,6 @@ var/list/blob_nodes = list()
 	switch(stage)
 		if (0)
 			send_intercept(1)
-			for (var/mob/living/silicon/ai/aiPlayer in living_mob_list)
-				if (aiPlayer.client)
-					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. NanoTrasen will not send an emergency shuttle under any circumstances."
-					//var/law = "The station is under quarantine. The biohazard must be destroyed at all costs and must not be allowed to spread. Anyone using a space suit for any reason other than to destroy the biohazard is to be terminated. NanoTrasen will not send an emergency shuttle under any circumstances."
-					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
 			declared = 1
 			return
 

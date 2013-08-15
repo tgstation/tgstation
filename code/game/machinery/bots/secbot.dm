@@ -628,19 +628,11 @@ Auto Patrol: []"},
 		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2
 
-	if(src.check_records)
-		for (var/datum/data/record/E in data_core.general)
-			var/perpname = perp.name
-			if(perp.wear_id)
-				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
-				if(id)
-					perpname = id.registered_name
-
-			if(E.fields["name"] == perpname)
-				for (var/datum/data/record/R in data_core.security)
-					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-						threatcount = 4
-						break
+	if(check_records)	//check if they are set to *Arrest* on records
+		var/perpname = perp.get_face_name(perp.get_id_name())
+		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		if(!R || (R.fields["criminal"] == "*Arrest*"))
+			threatcount += 4
 
 	return threatcount
 

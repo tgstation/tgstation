@@ -119,6 +119,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
+	hitsound = 'sound/items/bikehorn.ogg'
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 3

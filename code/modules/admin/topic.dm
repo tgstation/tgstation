@@ -2082,7 +2082,7 @@
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 				for(var/datum/data/record/t in data_core.general)
-					dat += text("<tr><td>[]</td><td>[]</td></tr>", t.fields["name"], t.fields["rank"])
+					dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=manifest;size=440x410")
 			if("DNA")
