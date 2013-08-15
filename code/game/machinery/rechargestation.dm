@@ -31,6 +31,7 @@
 			if(3.0)
 				if (prob(25))
 					src.anchored = 0
+					src.build_icon()
 			else
 		return
 
@@ -58,9 +59,10 @@
 					"\blue You have fastened \the [src].", \
 					"You hear a ratchet.")
 				anchored=1
+		src.build_icon()
 
 	process()
-		if(!(NOPOWER|BROKEN) || !anchored)
+		if(!(stat & (NOPOWER|BROKEN)) || !anchored)
 			return
 
 		if(src.occupant)
