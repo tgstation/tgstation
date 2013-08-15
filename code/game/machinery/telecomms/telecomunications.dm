@@ -101,7 +101,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				copy.data["original"] = signal.data["original"]
 
 		else
-			del(copy)
+			copy = null
 
 
 		send_count++
@@ -167,10 +167,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
 	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
-		for(var/x in autolinkers)
-			if(T.autolinkers.Find(x))
-				if(src != T)
+		if(src != T)
+			for(var/x in autolinkers)
+				if(x in T.autolinkers)
 					links |= T
+					break
 
 /obj/machinery/telecomms/update_icon()
 	if(on)
@@ -519,12 +520,20 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 							// would add up to md5("password123comsat")
 	var/language = "human"
 	var/obj/item/device/radio/headset/server_radio = null
+	var/last_signal = 0 	// Last time it sent a signal
 
 /obj/machinery/telecomms/server/New()
 	..()
 	Compiler = new()
 	Compiler.Holder = src
 	server_radio = new()
+
+/obj/machinery/telecomms/server/Del()
+	// Garbage collects all the NTSL datums.
+	if(Compiler)
+		Compiler.GC()
+		Compiler = null
+	..()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -593,8 +602,19 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		if(istext(t))
 			rawcode = t
 
-/obj/machinery/telecomms/server/proc/compile()
+/obj/machinery/telecomms/server/proc/admin_log(var/mob/mob)
+
+	var/msg="[mob.name] has compiled a script to server [src]:"
+	diary << msg
+	diary << rawcode
+	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
+	if(length(rawcode)) // Let's not bother the admins for empty code.
+		message_admins("[mob.real_name] ([mob.key]) has compiled and uploaded a NTLS script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
+
+/obj/machinery/telecomms/server/proc/compile(var/mob/user)
+
 	if(Compiler)
+		admin_log(user)
 		return Compiler.Compile(rawcode)
 
 /obj/machinery/telecomms/server/proc/update_logs()

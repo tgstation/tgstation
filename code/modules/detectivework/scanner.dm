@@ -171,3 +171,6 @@
 		sum_list[4] = "\The [A] in \the [get_area(A)]"
 		stored["\ref [A]"] = sum_list
 		return 0
+
+/proc/get_timestamp()
+	return time2text(world.time + 432000, "hh:mm:ss")
