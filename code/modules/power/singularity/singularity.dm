@@ -452,7 +452,7 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
-	name = "Nar-Sie"
+	name = "Nar-sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
@@ -461,8 +461,8 @@ var/global/list/uneatable = list(
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
 	move_self = 1 //Do we move on our own?
-	grav_pull = 10 //How many tiles out do we pull?
-	consume_range = 3 //How many tiles out do we eat
+	grav_pull = 5 //How many tiles out do we pull?
+	consume_range = 6 //How many tiles out do we eat
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -472,6 +472,7 @@ var/global/list/uneatable = list(
 	pixel_y = -256
 	current_size = 12
 	move_self = 1 //Do we move on our own?
+	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
 /obj/machinery/singularity/narsie/large/New()
@@ -509,11 +510,9 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/human/M in oviewers(8, src))
+	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
-			if(iscultist(M))
-				continue
-			else
+			if(!iscultist(M))
 				M << "\red You feel your sanity crumble away in an instant as you gaze upon [src.name]..."
 				M.apply_effect(3, STUN)
 
@@ -524,7 +523,7 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
-		if(!iscultist(C))//if someone's not a cultist (includes constructs/cult xenos/whatever)
+		if(!iscultist(C))//TODO: Make Narsie reward her cultists with transformation into a construct.
 			C.dust()
 
 	if(isturf(A))
