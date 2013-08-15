@@ -91,7 +91,7 @@
 
 		build_icon()
 			if(stat & (NOPOWER|BROKEN) || !anchored)
-				icon_state = "borgcharger0"
+				icon_state = "borgcharger"
 			else
 				if(src.occupant)
 					icon_state = "borgcharger1"
