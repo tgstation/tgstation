@@ -302,6 +302,17 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/cable_coil" = 3,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
 
+/obj/item/weapon/circuitboard/recharge_station
+	name = "Circuit Board (Cyborg Recharging Station)"
+	build_path = "/obj/machinery/recharge_station"
+	board_type = "machine"
+	origin_tech = "power=4;programming=3"
+	frame_desc = "Requires 4 cables, 2 manipulators, and 2 matter bins."
+	req_components = list (
+							"/obj/item/weapon/cable_coil" = 4,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2)
+
 /obj/item/weapon/circuitboard/heater
 	name = "Circuit Board (Heater)"
 	build_path = "/obj/machinery/atmospherics/unary/heat_reservoir/heater"
