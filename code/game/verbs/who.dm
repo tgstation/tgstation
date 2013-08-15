@@ -7,7 +7,7 @@
 
 	var/list/Lines = list()
 
-	if(holder)
+	if(holder && check_rights(R_ADMIN,0))
 		for(var/client/C in clients)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
