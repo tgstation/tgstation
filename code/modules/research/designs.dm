@@ -241,6 +241,15 @@ datum/design/robocontrol
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/robotics"
 
+datum/design/recharge_station
+	name = "Circuit Design (Cyborg Recharging Station)"
+	desc = "Allows for the construction of circuit boards used to build a Cyborg Recharging Station."
+	id = "recharge_station"
+	req_tech = list("programming" = 4, "power" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/recharge_station"
+
 datum/design/smes
 	name = "Circuit Design (SMES) "
 	desc = "Allows for the construction of circuit boards used to build SMES Power Storage Units"
