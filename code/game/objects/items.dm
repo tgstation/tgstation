@@ -58,7 +58,7 @@
 	return
 
 /obj/item/blob_act()
-	return
+	del(src)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
