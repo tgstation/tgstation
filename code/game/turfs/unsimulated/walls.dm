@@ -9,6 +9,7 @@
 	name = "window"
 	icon_state = "fakewindows"
 	opacity = 0
+	blocks_air = 1
 
 /turf/unsimulated/wall/fakedoor
 	name = "Centcom Access"
