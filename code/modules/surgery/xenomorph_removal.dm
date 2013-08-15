@@ -10,6 +10,12 @@
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/shovel/spade = 65, /obj/item/weapon/minihoe = 50, /obj/item/weapon/crowbar = 35)
 	time = 64
 
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(ishuman(target))
+		user.visible_message("<span class='notice'>[user] saws [target]'s chest open!</span>")
+	return 1
+
+
 /datum/surgery_step/xenomorph_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to search in [target]'s chest for a xenomorph.</span>")
 
