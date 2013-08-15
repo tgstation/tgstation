@@ -154,7 +154,7 @@
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	visible_message("\red <B>The glass door was hit by [AM].</B>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -175,7 +175,7 @@
 			return
 		src.health = max(0, src.health - 25)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+		visible_message("\red <B>[user] smashes against the [src.name].</B>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
