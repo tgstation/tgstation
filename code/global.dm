@@ -195,6 +195,7 @@ var/list/AAlarmWireColorToIndex
 #define MAX_PAPER_MESSAGE_LEN 3072
 #define MAX_BOOK_MESSAGE_LEN 9216
 #define MAX_NAME_LEN 26
+#define MAX_BROADCAST_LEN		512
 
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
@@ -241,3 +242,5 @@ var/custom_event_msg = null
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
 var/DBConnection/dbcon = new()	//Feedback database (New database)
 var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.
+
+#define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day

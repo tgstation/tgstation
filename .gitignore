@@ -5,3 +5,4 @@
 *.lk
 info.json
 /config/admins.txt
+*.bak

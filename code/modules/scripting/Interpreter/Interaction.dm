@@ -21,6 +21,7 @@
 			ASSERT(program)
 			src.program 	= program
 			CreateGlobalScope()
+			alertadmins = 0 // reset admin alerts
 
 /*
 	Proc: Run
@@ -29,7 +30,6 @@
 		Run()
 			cur_recursion = 0 // reset recursion
 			cur_statements = 0 // reset CPU tracking
-			alertadmins = 0
 
 			ASSERT(src.program)
 			RunBlock(src.program)
@@ -109,6 +109,17 @@
 				return
 			var/x = globalScope.variables[name]
 			return Eval(x)
+
+/*
+	Proc: GetCleanVar
+	Returns the value of a global variable in the script and cleans it (sanitizes).
+*/
+
+		GetCleanVar(name, compare)
+			var/x = GetVar(name)
+			if(istext(x) && compare && x != compare) // Was changed
+				x = sanitize(x)
+			return x
 
 /*
 	Proc: CallProc

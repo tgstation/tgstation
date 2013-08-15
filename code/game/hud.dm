@@ -274,7 +274,11 @@ datum/hud/New(mob/owner)
 		ai_hud()
 
 	else if(isrobot(mymob))
-		robot_hud()
+		// HACK for MoMMIs.
+		if(istype(mymob,/mob/living/silicon/robot/mommi))
+			mommi_hud()
+		else
+			robot_hud()
 
 //	else if(ishivebot(mymob))
 //		hivebot_hud()

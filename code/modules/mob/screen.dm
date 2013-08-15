@@ -455,6 +455,28 @@
 			if(issilicon(usr))
 				usr:uneq_active()
 
+		////////////////////////////////////////////////
+		// MoMMI shit
+		if(INV_SLOT_TOOL)
+			if(usr:tool_state)
+				if(usr:module_active != usr:tool_state)
+					usr:inv_tool.icon_state = "inv1 +a"
+					usr:inv_sight.icon_state = "sight"
+					usr:module_active = usr:tool_state
+				else
+					usr:inv_tool.icon_state = "inv1"
+					usr:module_active = null
+		if(INV_SLOT_SIGHT)
+			if(usr:sight_state)
+				if(usr:module_active != usr:sight_state)
+					usr:inv_tool.icon_state = "inv1"
+					usr:inv_sight.icon_state = "sight+a"
+					usr:module_active = usr:sight_state
+				else
+					usr:inv_sight.icon_state = "sight"
+					usr:module_active = null
+		////////////////////////////////////////////////
+
 		if("module1")
 			if(usr:module_state_1)
 				if(usr:module_active != usr:module_state_1)

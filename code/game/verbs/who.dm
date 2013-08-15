@@ -99,6 +99,9 @@
 			else
 				msg += "\t[C] is a [C.holder.rank]"
 
+				if(C.holder.fakekey)
+					msg += " <i>(as [C.holder.fakekey])</i>"
+
 				if(isobserver(C.mob))
 					msg += " - Observing"
 				else if(istype(C.mob,/mob/new_player))

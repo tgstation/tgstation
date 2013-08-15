@@ -424,10 +424,14 @@
 				opened = 1
 			update_icon()
 	else
+		// The extra crowbar thing fixes MoMMIs not being able to remove APCs.
+		// They can just pop them off with a crowbar.
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \
-				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& ( \
+					(W.force >= 5 && W.w_class >= 3.0) \
+					|| istype(W,/obj/item/weapon/crowbar) \
+				) \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
@@ -453,9 +457,12 @@
 	if(!user)
 		return
 	src.add_fingerprint(user)
-	if(usr == user && opened && (!issilicon(user)))
+	if(usr == user && opened)
 		if(cell)
-			user.put_in_hands(cell)
+			if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
+				cell.loc=src.loc // Drop it, whoops.
+			else
+				user.put_in_hands(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
 
@@ -499,7 +506,6 @@
 	else
 		beenhit += 1
 	return
-
 
 
 /obj/machinery/power/apc/interact(mob/user)
@@ -778,7 +784,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "\red \The [src] have AI control disabled!"
+				user << "\red \The [src] has AI control disabled!"
 				user << browse(null, "window=apc")
 				user.unset_machine()
 			return 0
@@ -905,7 +911,6 @@
 	else if (href_list["occupyapc"])
 		malfoccupy(usr)
 
-
 	else if (href_list["deoccupyapc"])
 		malfvacate()
 
@@ -919,6 +924,9 @@
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
+		return
+	if(!malf.can_shunt)
+		malf << "<span class='warning'>You cannot shunt.</span>"
 		return
 	if(src.z != 1)
 		return
@@ -938,6 +946,10 @@
 	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupant.cancel_camera()
 
+	for(var/obj/item/weapon/pinpointer/point in world)
+		point.the_disk = src //the pinpointer will detect the shunted AI
+
+
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
 	if(!src.occupant)
 		return
@@ -953,6 +965,9 @@
 			src.occupant.loc = src.loc
 			src.occupant.death()
 			src.occupant.gib()
+
+	for(var/obj/item/weapon/pinpointer/point in world)
+		point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
 
 
 /obj/machinery/power/apc/proc/ion_act()

@@ -814,52 +814,72 @@ datum/mind
 					if(src in ticker.mode.malf_ai)
 						ticker.mode.malf_ai -= src
 						special_role = null
+						var/mob/living/silicon/ai/A = current
 
-						current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
-							/datum/game_mode/malfunction/proc/takeover,
-							/datum/game_mode/malfunction/proc/ai_win,
-							/client/proc/fireproof_core,
-							/client/proc/upgrade_turrets,
-							/client/proc/disable_rcd,
-							/client/proc/overload_machine,
-							/client/proc/blackout,
-							/client/proc/interhack,
-							/client/proc/reactivate_camera)
+						A.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
+						/datum/game_mode/malfunction/proc/takeover,
+						/datum/game_mode/malfunction/proc/ai_win)
 
-						current:laws = new /datum/ai_laws/nanotrasen
-						del(current:malf_picker)
-						current:show_laws()
-						current.icon_state = "ai"
+						A.malf_picker.remove_verbs(A)
 
-						current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
-						log_admin("[key_name_admin(usr)] has de-malf'ed [current].")
+						A.laws = new /datum/ai_laws/asimov
+						del(A.malf_picker)
+						A.show_laws()
+						A.icon_state = "ai"
+
+						A << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
+						message_admins("[key_name_admin(usr)] has de-malf'ed [A].")
+						log_admin("[key_name_admin(usr)] has de-malf'ed [A].")
 
 				if("malf")
 					make_AI_Malf()
 					log_admin("[key_name_admin(usr)] has malf'ed [current].")
 
 				if("unemag")
-					var/mob/living/silicon/robot/R = current
-					if (istype(R))
+					if(istype(current,/mob/living/silicon/robot/mommi))
+						var/mob/living/silicon/robot/mommi/R = current
 						R.emagged = 0
 						if (R.activated(R.module.emag))
 							R.module_active = null
-						if(R.module_state_1 == R.module.emag)
-							R.module_state_1 = null
+						if(R.sight_state == R.module.emag)
+							R.sight_state = null
 							R.contents -= R.module.emag
-						else if(R.module_state_2 == R.module.emag)
-							R.module_state_2 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_3 == R.module.emag)
-							R.module_state_3 = null
+						else if(R.tool_state == R.module.emag)
+							R.tool_state = null
 							R.contents -= R.module.emag
 						log_admin("[key_name_admin(usr)] has unemag'ed [R].")
+					else
+						if (istype(current,/mob/living/silicon/robot))
+							var/mob/living/silicon/robot/R = current
+							R.emagged = 0
+							if (R.activated(R.module.emag))
+								R.module_active = null
+							if(R.module_state_1 == R.module.emag)
+								R.module_state_1 = null
+								R.contents -= R.module.emag
+							else if(R.module_state_2 == R.module.emag)
+								R.module_state_2 = null
+								R.contents -= R.module.emag
+							else if(R.module_state_3 == R.module.emag)
+								R.module_state_3 = null
+								R.contents -= R.module.emag
+							log_admin("[key_name_admin(usr)] has unemag'ed [R].")
 
 				if("unemagcyborgs")
 					if (istype(current, /mob/living/silicon/ai))
 						var/mob/living/silicon/ai/ai = current
 						for (var/mob/living/silicon/robot/R in ai.connected_robots)
 							R.emagged = 0
+							if(istype(R,/mob/living/silicon/robot/mommi))
+								var/mob/living/silicon/robot/mommi/M=R
+								if (M.activated(M.module.emag))
+									M.module_active = null
+								if(M.sight_state == M.module.emag)
+									M.sight_state = null
+									M.contents -= M.module.emag
+								else if(M.tool_state == M.module.emag)
+									M.tool_state = null
+									M.contents -= M.module.emag
 							if (R.module)
 								if (R.activated(R.module.emag))
 									R.module_active = null
@@ -955,7 +975,7 @@ datum/mind
 
 			current.verbs += /mob/living/silicon/ai/proc/choose_modules
 			current.verbs += /datum/game_mode/malfunction/proc/takeover
-			current:malf_picker = new /datum/AI_Module/module_picker
+			current:malf_picker = new /datum/module_picker
 			current:laws = new /datum/ai_laws/malfunction
 			current:show_laws()
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"

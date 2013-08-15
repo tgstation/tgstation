@@ -39,13 +39,15 @@
 			//gas.volume = 1.05 * CELLSTANDARD
 			update()
 
+	MouseDrop_T(var/obj/item/target, mob/user)
+		src.attackby(target,user)
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
 		if(stat & BROKEN || !I || !user)
 			return
 
-		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
+		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash) && !istype(user,/mob/living/silicon/robot/mommi))
 			return
 		src.add_fingerprint(user)
 		if(mode<=0) // It's off
@@ -118,8 +120,15 @@
 			return
 
 		if(!I)	return
-
-		user.drop_item()
+		if(!isMoMMI(user))
+			user.drop_item()
+		else
+			var/mob/living/silicon/robot/mommi/M = user
+			if(is_type_in_list(I,M.module.modules))
+				user << "\red You can't throw away what's attached to you."
+				return
+			else
+				M.drop_item()
 		if(I)
 			I.loc = src
 

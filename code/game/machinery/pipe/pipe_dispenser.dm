@@ -19,9 +19,10 @@
 <A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
 <A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=20;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
+<A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
+<A href='?src=\ref[src];make=21;dir=1'>Pipe Cap</A><BR>
+<A href='?src=\ref[src];make=20;dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=19;dir=1'>Manual T-Valve</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>

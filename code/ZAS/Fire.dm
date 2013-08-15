@@ -64,7 +64,7 @@ obj
 			. = 1
 
 			//get location and check if it is in a proper ZAS zone
-			var/turf/simulated/floor/S = loc
+			var/turf/simulated/S = loc
 
 			if(!istype(S))
 				del src
@@ -109,9 +109,7 @@ obj
 			//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
-
-
-			/spread
+			//spread
 			for(var/direction in cardinal)
 				if(S.air_check_directions&direction) //Grab all valid bordering tiles
 
@@ -120,8 +118,8 @@ obj
 					if(istype(enemy_tile))
 						var/datum/gas_mixture/acs = enemy_tile.return_air()
 						var/obj/effect/decal/cleanable/liquid_fuel/liq = locate() in enemy_tile
-						if(!acs.check_recombustability(liq))
-							return
+						if(!acs) continue
+						if(!acs.check_recombustability(liq)) continue
 						//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 						//reduce firelevel.
 						if(enemy_tile.fire_protection > world.time-30)
@@ -136,10 +134,10 @@ obj
 			//seperate part of the present gas
 			//this is done to prevent the fire burning all gases in a single pass
 			var/datum/gas_mixture/flow = air_contents.remove_ratio(vsc.fire_consuption_rate)
-
 ///////////////////////////////// FLOW HAS BEEN CREATED /// DONT DELETE THE FIRE UNTIL IT IS MERGED BACK OR YOU WILL DELETE AIR ///////////////////////////////////////////////
 
 			if(flow)
+
 				if(flow.check_recombustability(liquid))
 					//Ensure flow temperature is higher than minimum fire temperatures.
 						//this creates some energy ex nihilo but is necessary to get a fire started
@@ -147,11 +145,12 @@ obj
 					//flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
 
 					//burn baby burn!
+
 					flow.zburn(liquid,1)
 				//merge the air back
 				S.assume_air(flow)
 
-///////////////////////////////// FLOW HAS BEEN REMERGED /// feel free to delete the fire again from here on //////////////////////////////////////////////////////////////////
+///////////////////////////////// FLOW HAS BEEN REMERGED /// feel free to delete the fire again from here on /////////////////////////////////////////////////////////////////
 
 
 		New(newLoc,fl)
@@ -189,10 +188,10 @@ turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
 
-datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid,force_burn)
+datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, force_burn)
 	var/value = 0
 
-	if((temperature > PLASMA_MINIMUM_BURN_TEMPERATURE || force_burn) && check_recombustability(liquid) )
+	if((temperature > PLASMA_MINIMUM_BURN_TEMPERATURE || force_burn) && check_recombustability(liquid))
 		var/total_fuel = 0
 		var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
@@ -243,6 +242,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid,force
 
 		if(liquid)
 			liquid.amount -= (liquid.amount * used_fuel_ratio * used_reactants_ratio) * 5 // liquid fuel burns 5 times as quick
+
 			if(liquid.amount <= 0) del liquid
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
@@ -267,7 +267,6 @@ datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_
 			value = 1
 
 	return value
-
 
 datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this check comes up very often and is thus centralized here to ease adding stuff
