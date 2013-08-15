@@ -241,11 +241,20 @@ datum/design/robocontrol
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/robotics"
 
+datum/design/recharge_station
+	name = "Circuit Design (Cyborg Recharging Station)"
+	desc = "Allows for the construction of circuit boards used to build a Cyborg Recharging Station."
+	id = "recharge_station"
+	req_tech = list("programming" = 4, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/recharge_station"
+
 datum/design/smes
 	name = "Circuit Design (SMES) "
 	desc = "Allows for the construction of circuit boards used to build SMES Power Storage Units"
 	id="smes"
-	req_tech = list("power" = 4, "engineering" = 4, "programming" = 4)
+	req_tech = list("powerstorage" = 4, "engineering" = 4, "programming" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/smes"
@@ -254,7 +263,7 @@ datum/design/defib_recharger
 	name = "Circuit Design (Defib Recharger)"
 	desc = "Allows for the construction of circuit boards used to build Defib Rechargers"
 	id="defib_recharger"
-	req_tech = list("power" = 2, "engineering" = 2, "programming" = 3, "biotech" = 4)
+	req_tech = list("powerstorage" = 2, "engineering" = 2, "programming" = 3, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/defib_recharger"
@@ -263,7 +272,7 @@ datum/design/photocopier
 	name = "Circuit Design (Photocopier)"
 	desc = "Allows for the construction of circuit boards to build photocopiers"
 	id = "photocopier"
-	req_tech = list ("power" = 2, "engineering" = 2, "programming" = 4)
+	req_tech = list ("powerstorage" = 2, "engineering" = 2, "programming" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/photocopier"
@@ -272,7 +281,7 @@ datum/design/freezer
 	name = "Circuit Design (Freezer)"
 	desc = "Allows for the construction of circuit boards to build freezers."
 	id = "freezer"
-	req_tech = list("power" = 3, "engineering" = 4, "biotech" = 4)
+	req_tech = list("powerstorage" = 3, "engineering" = 4, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/freezer"
@@ -281,7 +290,7 @@ datum/design/heater
 	name = "Circuit Design (Heater)"
 	desc = "Allows for the construction of circuit boards to build heaters."
 	id ="heater"
-	req_tech = list("power" = 3, "engineering" = 5, "biotech"= 4)
+	req_tech = list("powerstorage" = 3, "engineering" = 5, "biotech"= 4)
 	build_type = IMPRINTER
 	materials = list ("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/heater"
