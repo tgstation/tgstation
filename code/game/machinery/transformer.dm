@@ -8,9 +8,12 @@
 	density = 1
 	var/transform_dead = 0
 	var/transform_standing = 0
-	var/cooldown_duration = 600 // 1 minute
+	var/cooldown_duration = 1500 // 2.5 minutes
 	var/cooldown = 0
 	var/robot_cell_charge = 5000
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 5000
 
 /obj/machinery/transformer/New()
 	// On us
@@ -60,17 +63,15 @@
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(5)
 
-	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize(1) // Delete the items or they'll all pile up in a single tile and lag
+	if(R)
+		R.cell.maxcharge = robot_cell_charge
+		R.cell.charge = robot_cell_charge
 
-	R.cell.maxcharge = robot_cell_charge
-	R.cell.charge = robot_cell_charge
-
- 	// So he can't jump out the gate right away.
-	R.weakened = 5
+	 	// So he can't jump out the gate right away.
+		R.weakened = 5
 	spawn(50)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		sleep(30)
 		if(R)
 			R.weakened = 0
 
