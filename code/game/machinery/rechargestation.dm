@@ -84,13 +84,15 @@
 				new /obj/item/weapon/stock_parts/manipulator(src.loc)
 				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
 				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
-				return 1
+				new /obj/item/stack/sheet/metal(src.loc,amount=5)
+				del(src)
+				return
 			src.build_icon()
 			return 1
 		return ..()
 
 	process()
-		if(!(stat & (NOPOWER|BROKEN)) || !anchored)
+		if(stat & (NOPOWER|BROKEN) || !anchored)
 			return
 
 		if(src.occupant)
@@ -103,7 +105,7 @@
 
 
 	relaymove(mob/user as mob)
-		if(user.stat || !anchored)
+		if(user.stat)
 			return
 		src.go_out()
 		return
@@ -224,6 +226,9 @@
 		move_inside()
 			set category = "Object"
 			set src in oview(1)
+			// Broken or unanchored?  Fuck off.
+			if(stat & (NOPOWER|BROKEN) || !anchored)
+				return
 			if (usr.stat == 2)
 				//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 				return

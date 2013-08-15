@@ -311,7 +311,7 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list (
 							"/obj/item/weapon/cable_coil" = 4,
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,)
+							"/obj/item/weapon/stock_parts/matter_bin" = 2)
 
 /obj/item/weapon/circuitboard/heater
 	name = "Circuit Board (Heater)"
