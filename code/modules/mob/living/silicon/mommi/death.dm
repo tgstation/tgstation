@@ -16,12 +16,13 @@
 
 	living_mob_list -= src
 	dead_mob_list -= src
-	var/obj/item/found = locate(tool_state) in src.module.modules
-	if(!found)
-		var/obj/item/TS = tool_state
-		drop_item()
-		if(TS && TS.loc)
-			TS.loc = src.loc
+	if(src.module && istype(src.module))
+		var/obj/item/found = locate(tool_state) in src.module.modules
+		if(!found)
+			var/obj/item/TS = tool_state
+			drop_item()
+			if(TS && TS.loc)
+				TS.loc = src.loc
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)

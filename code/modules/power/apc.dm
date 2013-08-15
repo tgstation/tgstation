@@ -508,7 +508,6 @@
 	return
 
 
-
 /obj/machinery/power/apc/interact(mob/user)
 	if(!user)
 		return
@@ -912,7 +911,6 @@
 	else if (href_list["occupyapc"])
 		malfoccupy(usr)
 
-
 	else if (href_list["deoccupyapc"])
 		malfvacate()
 
@@ -926,6 +924,9 @@
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
+		return
+	if(!malf.can_shunt)
+		malf << "<span class='warning'>You cannot shunt.</span>"
 		return
 	if(src.z != 1)
 		return
@@ -945,6 +946,10 @@
 	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupant.cancel_camera()
 
+	for(var/obj/item/weapon/pinpointer/point in world)
+		point.the_disk = src //the pinpointer will detect the shunted AI
+
+
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
 	if(!src.occupant)
 		return
@@ -960,6 +965,9 @@
 			src.occupant.loc = src.loc
 			src.occupant.death()
 			src.occupant.gib()
+
+	for(var/obj/item/weapon/pinpointer/point in world)
+		point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
 
 
 /obj/machinery/power/apc/proc/ion_act()
