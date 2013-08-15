@@ -9,14 +9,58 @@
 	active_power_usage = 1000
 	var/mob/occupant = null
 
-
-
 	New()
 		..()
 		build_icon()
 
+	Del()
+		src.go_out()
+		..()
+
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					new /obj/item/weapon/circuitboard/recharge_station(src.loc)
+					del(src)
+					return
+			if(3.0)
+				if (prob(25))
+					src.anchored = 0
+			else
+		return
+
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if (!istype(W, /obj/item/weapon/wrench))
+			return ..()
+		if (occupant)
+			user << "\red You cannot unwrench this [src], it's occupado."
+			return 1
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(anchored)
+			user << "\blue You begin to unfasten \the [src]..."
+			if (do_after(user, 40))
+				user.visible_message( \
+					"[user] unfastens \the [src].", \
+					"\blue You have unfastened \the [src].", \
+					"You hear a ratchet.")
+				anchored=0
+		else
+			user << "\blue You begin to fasten \the [src]..."
+			if (do_after(user, 20))
+				user.visible_message( \
+					"[user] fastens \the [src].", \
+					"\blue You have fastened \the [src].", \
+					"You hear a ratchet.")
+				anchored=1
+
 	process()
-		if(!(NOPOWER|BROKEN))
+		if(!(NOPOWER|BROKEN) || !anchored)
 			return
 
 		if(src.occupant)
@@ -29,7 +73,7 @@
 
 
 	relaymove(mob/user as mob)
-		if(user.stat)
+		if(user.stat || !anchored)
 			return
 		src.go_out()
 		return
@@ -44,14 +88,15 @@
 		..(severity)
 
 	proc
+
 		build_icon()
-			if(NOPOWER|BROKEN)
+			if(stat & (NOPOWER|BROKEN) || !anchored)
+				icon_state = "borgcharger"
+			else
 				if(src.occupant)
 					icon_state = "borgcharger1"
 				else
 					icon_state = "borgcharger0"
-			else
-				icon_state = "borgcharger0"
 
 		process_occupant()
 			if(src.occupant)
