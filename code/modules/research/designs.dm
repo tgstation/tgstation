@@ -340,6 +340,15 @@ datum/design/powermonitor
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/powermonitor"
 
+datum/design/apc_board
+	name = "Circuit Design (Power Control Module)"
+	desc = "Allows for the construction of circuit boards used to build a new APC"
+	id = "apc_board"
+	req_tech = list("powerstorage"=2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/module/power_control"
+
 datum/design/solarcontrol
 	name = "Circuit Design (Solar Control)"
 	desc = "Allows for the construction of circuit boards used to build a solar control console"
@@ -429,6 +438,15 @@ datum/design/comm_server
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/comm_server"
+
+datum/design/traffic_control
+	name = "Circuit Design (Telecommunications Traffic Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a telecommunications traffic control console."
+	id = "traffic_control"
+	req_tech = list("programming" = 5)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/comm_traffic"
 
 datum/design/message_monitor
 	name = "Circuit Design (Messaging Monitor Console)"

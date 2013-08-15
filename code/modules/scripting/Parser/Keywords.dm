@@ -51,9 +51,9 @@ var/const/Represents a special statement in the code triggered by a keyword.
 		kwReturn
 			Parse(n_Parser/nS_Parser/parser)
 				.=KW_PASS
-				if(istype(parser.curBlock, /node/BlockDefinition/GlobalBlock))
-					parser.errors+=new/scriptError/BadReturn(parser.curToken)
-					. = KW_WARN
+				if(istype(parser.curBlock, /node/BlockDefinition/GlobalBlock)) // Exit out of the program by setting the tokens list size to the same as index.
+					parser.tokens.len = parser.index
+					return
 				var/node/statement/ReturnStatement/stmt=new
 				parser.NextToken()   //skip 'return' token
 				stmt.value=parser.ParseExpression()
@@ -72,6 +72,31 @@ var/const/Represents a special statement in the code triggered by a keyword.
 				parser.curBlock.statements+=stmt
 				stmt.block=new
 				parser.AddBlock(stmt.block)
+
+		kwElseIf
+			Parse(n_Parser/nS_Parser/parser)
+				.=KW_PASS
+				var/list/L=parser.curBlock.statements
+				var/node/statement/IfStatement/ifstmt
+
+				if(L && L.len)
+					ifstmt = L[L.len] //Get the last statement in the current block
+				if(!ifstmt || !istype(ifstmt) || ifstmt.else_if)
+					parser.errors += new/scriptError/ExpectedToken("if statement", parser.curToken)
+					return KW_FAIL
+
+				var/node/statement/IfStatement/ElseIf/stmt = new
+				parser.NextToken()  //skip 'if' token
+				stmt.cond = parser.ParseParenExpression()
+				if(!parser.CheckToken(")", /token/symbol))
+					return KW_FAIL
+				if(!parser.CheckToken("{", /token/symbol, skip=0)) //Token needs to be preserved for parse loop, so skip=0
+					return KW_ERR
+				parser.curBlock.statements+=stmt
+				stmt.block=new
+				ifstmt.else_if = stmt
+				parser.AddBlock(stmt.block)
+
 
 		kwElse
 			Parse(n_Parser/nS_Parser/parser)

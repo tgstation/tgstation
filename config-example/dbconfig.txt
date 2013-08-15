@@ -1,0 +1,26 @@
+# MySQL Connection Configuration
+
+# Server the MySQL database can be found at
+# Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
+ADDRESS localhost
+
+# MySQL server port (default is 3306)
+PORT 3306
+
+# Database the population, death, karma, etc. tables may be found in
+DATABASE tgstation
+
+# Username/Login used to access the database
+LOGIN mylogin
+
+# Password used to access the database
+PASSWORD mypassword
+
+# The following information is for feedback tracking via the blackbox server
+FEEDBACK_DATABASE test
+FEEDBACK_LOGIN mylogin
+FEEDBACK_PASSWORD mypassword
+
+# Track population and death statistics
+# Comment this out to disable
+#ENABLE_STAT_TRACKING
