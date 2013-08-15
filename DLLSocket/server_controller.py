@@ -20,8 +20,8 @@ LOGPATH='/home/gmod/byond/crashlogs/' # Where do you want crash.log stored?
 GAMEPATH='/home/gmod/byond/tgstation/' # Where is the game directory?
 CONFIGPATH='/home/gmod/byond/config/' # Where is your current list of config files?
 
-GIT_REMOTE='origin'
-GIT_BRANCH='malfmodules'
+GIT_REMOTE='nexypoo'
+GIT_BRANCH='Bleeding-Edge'
 
 def git_commit():
 	try:
@@ -47,8 +47,9 @@ def checkForUpdate(serverState):
 	global GIT_REMOTE,GIT_BRANCH,COMPILE_COMMAND,GAMEPATH,CONFIGPATH,lastCommit
 	cwd=os.getcwd()
 	os.chdir(GAMEPATH)
-	subprocess.call('git pull -q -s recursive -Xtheirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
-	subprocess.call('git checkout -q {0}'.format(GIT_BRANCH),shell=True) 
+	#subprocess.call('git pull -q -s recursive -X theirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
+	subprocess.call('git fetch -q {0}'.format(GIT_REMOTE),shell=True)
+	subprocess.call('git checkout -q {0}/{1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True) 
 	currentCommit = git_commit()
 	currentBranch = git_branch()
 	if currentCommit != lastCommit and lastCommit is not None:
@@ -66,6 +67,16 @@ def checkForUpdate(serverState):
 		else:
 			if os.path.isfile(updateTrigger):
 				os.remove(updateTrigger)
+	# Update MOTD
+	inputRules=os.path.join(CONFIGPATH,'motd.txt')
+	outputRules=os.path.join(GAMEPATH,'config','motd.txt')
+	with open(inputRules,'r') as template:
+		with open(outputRules,'w') as motd:
+			for _line in template:
+				line=_line.replace('{GIT_BRANCH}',GIT_BRANCH)
+				line=line.replace('{GIT_REMOTE}',GIT_REMOTE)
+				line=line.replace('{GIT_COMMIT}',currentCommit)
+				motd.write(line)
 	lastCommit=currentCommit
 	os.chdir(cwd)
 
