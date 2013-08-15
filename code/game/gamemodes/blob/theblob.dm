@@ -17,6 +17,8 @@
 		src.dir = pick(1, 2, 4, 8)
 		src.update_icon()
 		..(loc)
+		for(var/atom/A in loc)
+			A.blob_act()
 		return
 
 
