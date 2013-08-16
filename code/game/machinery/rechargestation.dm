@@ -9,14 +9,90 @@
 	active_power_usage = 1000
 	var/mob/occupant = null
 
-
-
 	New()
 		..()
 		build_icon()
 
+	Del()
+		src.go_out()
+		..()
+
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					new /obj/item/weapon/circuitboard/recharge_station(src.loc)
+					del(src)
+					return
+			if(3.0)
+				if (prob(25))
+					src.anchored = 0
+					src.build_icon()
+			else
+		return
+
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		// Wrench to toggle anchor
+		if (istype(W, /obj/item/weapon/wrench))
+			if (occupant)
+				user << "\red You cannot unwrench this [src], it's occupado."
+				return 1
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(anchored)
+				user << "\blue You begin to unfasten \the [src]..."
+				if (do_after(user, 40))
+					user.visible_message( \
+						"[user] unfastens \the [src].", \
+						"\blue You have unfastened \the [src].", \
+						"You hear a ratchet.")
+					anchored=0
+			else
+				user << "\blue You begin to fasten \the [src]..."
+				if (do_after(user, 20))
+					user.visible_message( \
+						"[user] fastens \the [src].", \
+						"\blue You have fastened \the [src].", \
+						"You hear a ratchet.")
+					anchored=1
+			src.build_icon()
+			return 1
+		// Weld to disassemble.
+		else if(istype(W, /obj/item/weapon/weldingtool))
+			if (occupant)
+				user << "\red You cannot disassemble this [src], it's occupado."
+				return 1
+			if (!anchored)
+				user << "\red \The [src] is too unstable to weld!  The anchoring bolts need to be tightened."
+				return 1
+			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			user << "\blue You begin to cut \the [src] into pieces..."
+			if (do_after(user, 40))
+				user.visible_message( \
+					"[user] disassembles \the [src].", \
+					"\blue You have disassembled \the [src].", \
+					"You hear welding.")
+				anchored=0
+				new /obj/item/weapon/circuitboard/recharge_station(src.loc)
+				var/obj/item/weapon/wire/wire = new (src.loc)
+				wire.amount=4
+				new /obj/item/weapon/stock_parts/manipulator(src.loc)
+				new /obj/item/weapon/stock_parts/manipulator(src.loc)
+				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
+				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
+				new /obj/item/stack/sheet/metal(src.loc,amount=5)
+				del(src)
+				return
+			src.build_icon()
+			return 1
+		return ..()
+
 	process()
-		if(!(NOPOWER|BROKEN))
+		if(stat & (NOPOWER|BROKEN) || !anchored)
 			return
 
 		if(src.occupant)
@@ -44,14 +120,15 @@
 		..(severity)
 
 	proc
+
 		build_icon()
-			if(NOPOWER|BROKEN)
+			if(stat & (NOPOWER|BROKEN) || !anchored)
+				icon_state = "borgcharger"
+			else
 				if(src.occupant)
 					icon_state = "borgcharger1"
 				else
 					icon_state = "borgcharger0"
-			else
-				icon_state = "borgcharger0"
 
 		process_occupant()
 			if(src.occupant)
@@ -149,6 +226,9 @@
 		move_inside()
 			set category = "Object"
 			set src in oview(1)
+			// Broken or unanchored?  Fuck off.
+			if(stat & (NOPOWER|BROKEN) || !anchored)
+				return
 			if (usr.stat == 2)
 				//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 				return
