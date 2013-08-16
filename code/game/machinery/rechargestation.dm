@@ -37,32 +37,62 @@
 
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
-			return ..()
-		if (occupant)
-			user << "\red You cannot unwrench this [src], it's occupado."
+		// Wrench to toggle anchor
+		if (istype(W, /obj/item/weapon/wrench))
+			if (occupant)
+				user << "\red You cannot unwrench this [src], it's occupado."
+				return 1
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(anchored)
+				user << "\blue You begin to unfasten \the [src]..."
+				if (do_after(user, 40))
+					user.visible_message( \
+						"[user] unfastens \the [src].", \
+						"\blue You have unfastened \the [src].", \
+						"You hear a ratchet.")
+					anchored=0
+			else
+				user << "\blue You begin to fasten \the [src]..."
+				if (do_after(user, 20))
+					user.visible_message( \
+						"[user] fastens \the [src].", \
+						"\blue You have fastened \the [src].", \
+						"You hear a ratchet.")
+					anchored=1
+			src.build_icon()
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(anchored)
-			user << "\blue You begin to unfasten \the [src]..."
+		// Weld to disassemble.
+		else if(istype(W, /obj/item/weapon/weldingtool))
+			if (occupant)
+				user << "\red You cannot disassemble this [src], it's occupado."
+				return 1
+			if (!anchored)
+				user << "\red \The [src] is too unstable to weld!  The anchoring bolts need to be tightened."
+				return 1
+			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			user << "\blue You begin to cut \the [src] into pieces..."
 			if (do_after(user, 40))
 				user.visible_message( \
-					"[user] unfastens \the [src].", \
-					"\blue You have unfastened \the [src].", \
-					"You hear a ratchet.")
+					"[user] disassembles \the [src].", \
+					"\blue You have disassembled \the [src].", \
+					"You hear welding.")
 				anchored=0
-		else
-			user << "\blue You begin to fasten \the [src]..."
-			if (do_after(user, 20))
-				user.visible_message( \
-					"[user] fastens \the [src].", \
-					"\blue You have fastened \the [src].", \
-					"You hear a ratchet.")
-				anchored=1
-		src.build_icon()
+				new /obj/item/weapon/circuitboard/recharge_station(src.loc)
+				var/obj/item/weapon/wire/wire = new (src.loc)
+				wire.amount=4
+				new /obj/item/weapon/stock_parts/manipulator(src.loc)
+				new /obj/item/weapon/stock_parts/manipulator(src.loc)
+				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
+				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
+				new /obj/item/stack/sheet/metal(src.loc,amount=5)
+				del(src)
+				return
+			src.build_icon()
+			return 1
+		return ..()
 
 	process()
-		if(!(stat & (NOPOWER|BROKEN)) || !anchored)
+		if(stat & (NOPOWER|BROKEN) || !anchored)
 			return
 
 		if(src.occupant)
@@ -75,7 +105,7 @@
 
 
 	relaymove(mob/user as mob)
-		if(user.stat || !anchored)
+		if(user.stat)
 			return
 		src.go_out()
 		return
@@ -196,6 +226,9 @@
 		move_inside()
 			set category = "Object"
 			set src in oview(1)
+			// Broken or unanchored?  Fuck off.
+			if(stat & (NOPOWER|BROKEN) || !anchored)
+				return
 			if (usr.stat == 2)
 				//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 				return

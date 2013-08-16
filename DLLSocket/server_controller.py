@@ -20,7 +20,7 @@ LOGPATH='/home/gmod/byond/crashlogs/' # Where do you want crash.log stored?
 GAMEPATH='/home/gmod/byond/tgstation/' # Where is the game directory?
 CONFIGPATH='/home/gmod/byond/config/' # Where is your current list of config files?
 
-GIT_REMOTE='nexypoo'
+GIT_REMOTE='origin'
 GIT_BRANCH='Bleeding-Edge'
 
 def git_commit():
