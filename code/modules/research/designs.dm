@@ -147,7 +147,7 @@ datum/design/chem_dispenser
 	req_tech = list("programming" = 3, "biotech" = 5, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "obj/item/weapon/circuitboard/chem_dispenser"
+	build_path = "/obj/item/weapon/circuitboard/chem_dispenser"
 
 datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
