@@ -11,6 +11,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/uses 						// Numbers of crystals
 	// List of items not to shove in their hands.
 	var/list/purchase_log = list()
+	var/show_description = null
+	var/active = 0
 
 /obj/item/device/uplink/New()
 	..()
@@ -45,9 +47,15 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
-				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text]<BR><font size=2>[desc]</font><BR>"
+				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text] "
 			else
-				dat += "<font color='grey'><i>[item.name] [cost_text]</i></font><BR><font size=2><font color='grey'><i>[desc]</i></font></font><BR>"
+				dat += "<font color='grey'><i>[item.name] [cost_text] </i></font>"
+			if(item.desc)
+				if(show_description == item.type)
+					dat += "<A href='byond://?src=\ref[src];show_desc=0'><font size=2>\[-\]</font></A><BR><font size=2>[desc]</font>"
+				else
+					dat += "<A href='byond://?src=\ref[src];show_desc=[item.type]'><font size=2>\[?\]</font></A>"
+			dat += "<BR>"
 
 		// Break up the categories, if it isn't the last.
 		if(buyable_items.len != index)
@@ -70,6 +78,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/Topic(href, href_list)
 	..()
+
+	if(!active)
+		return
+
 	if (href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
@@ -89,6 +101,13 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 					I.buy(src, usr)
 
 
+	else if(href_list["show_desc"])
+
+		var/type = text2path(href_list["show_desc"])
+		show_description = type
+		interact(usr)
+
+
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.
 /* How to create an uplink in 3 easy steps!
 
@@ -104,7 +123,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/hidden
 	name = "Hidden Uplink."
 	desc = "There is something wrong if you're examining this."
-	var/active = 0
 
 /obj/item/device/uplink/hidden/Topic(href, href_list)
 	..()

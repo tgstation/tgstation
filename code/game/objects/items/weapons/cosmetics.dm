@@ -99,9 +99,9 @@
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
 	if(location == "mouth")
-		H.f_style = "Shaved"
+		H.facial_hair_style = "Shaved"
 	else
-		H.h_style = "Skinhead"
+		H.hair_style = "Skinhead"
 
 	H.update_hair()
 	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
@@ -116,7 +116,7 @@
 			if(!get_location_accessible(H, location))
 				user << "<span class='notice'>The mask is in the way.</span>"
 				return
-			if(H.f_style == "Shaved")
+			if(H.facial_hair_style == "Shaved")
 				user << "<span class='notice'>Already clean-shaven.</span>"
 				return
 
@@ -141,7 +141,7 @@
 			if(!get_location_accessible(H, location))
 				user << "<span class='notice'>The headgear is in the way.</span>"
 				return
-			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead")
+			if(H.hair_style == "Bald" || H.hair_style == "Balding Hair" || H.hair_style == "Skinhead")
 				user << "<span class='notice'>There is not enough hair left to shave!</span>"
 				return
 

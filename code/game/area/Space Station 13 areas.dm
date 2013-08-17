@@ -240,12 +240,6 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
 
-/area/shuttle/prison/station
-	icon_state = "shuttle"
-
-/area/shuttle/prison/prison
-	icon_state = "shuttle2"
-
 /area/shuttle/specops/centcom
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered"
@@ -1426,82 +1420,9 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Strange Station"
 	icon_state = "away"
 
-/area/awaymission/wwmines
-	name = "\improper Wild West Mines"
-	icon_state = "away1"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwgov
-	name = "\improper Wild West Mansion"
-	icon_state = "away2"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwrefine
-	name = "\improper Wild West Refinery"
-	icon_state = "away3"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwvault
-	name = "\improper Wild West Vault"
-	icon_state = "away3"
-	luminosity = 0
-
-/area/awaymission/wwvaultdoors
-	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
-	icon_state = "away2"
-	requires_power = 0
-	luminosity = 0
-
 /area/awaymission/desert
 	name = "Mars"
 	icon_state = "away"
-
-/area/awaymission/BMPship1
-	name = "\improper Aft Block"
-	icon_state = "away1"
-
-/area/awaymission/BMPship2
-	name = "\improper Midship Block"
-	icon_state = "away2"
-
-/area/awaymission/BMPship3
-	name = "\improper Fore Block"
-	icon_state = "away3"
-
-/area/awaymission/spacebattle
-	name = "\improper Space Battle"
-	icon_state = "away"
-	requires_power = 0
-
-/area/awaymission/spacebattle/cruiser
-	name = "\improper Nanotrasen Cruiser"
-
-/area/awaymission/spacebattle/syndicate1
-	name = "\improper Syndicate Assault Ship 1"
-
-/area/awaymission/spacebattle/syndicate2
-	name = "\improper Syndicate Assault Ship 2"
-
-/area/awaymission/spacebattle/syndicate3
-	name = "\improper Syndicate Assault Ship 3"
-
-/area/awaymission/spacebattle/syndicate4
-	name = "\improper Syndicate War Sphere 1"
-
-/area/awaymission/spacebattle/syndicate5
-	name = "\improper Syndicate War Sphere 2"
-
-/area/awaymission/spacebattle/syndicate6
-	name = "\improper Syndicate War Sphere 3"
-
-/area/awaymission/spacebattle/syndicate7
-	name = "\improper Syndicate Fighter"
-
-/area/awaymission/spacebattle/secret
-	name = "\improper Hidden Chamber"
 
 /area/awaymission/listeningpost
 	name = "\improper Listening Post"
@@ -1590,7 +1511,6 @@ var/list/the_station_areas = list (
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 //	/area/shuttle/transport2/station,	//not present on map
-	/area/shuttle/prison/station,
 	/area/shuttle/specops/station,
 	/area/atmos,
 	/area/maintenance,
@@ -1621,60 +1541,3 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
-
-
-
-
-/area/beach
-	name = "Keelin's private beach"
-	icon_state = "null"
-	luminosity = 1
-	lighting_use_dynamic = 0
-	requires_power = 0
-	var/sound/mysound = null
-
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
-
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
-
-	proc/process()
-		set background = 1
-
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-			sound_delay = rand(0, 50)
-
-		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
-
-		spawn(60) .()
-

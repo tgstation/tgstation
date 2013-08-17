@@ -8,24 +8,7 @@
 	walltype = "rwall"
 
 	var/d_state = 0
-
-/turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
-	if (HULK in user.mutations)
-		if (prob(10))
-			usr << text("\blue You smash through the wall.")
-			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			usr << text("\blue You punch the wall.")
-			return
-
-	user << "\blue You push the wall but nothing happens!"
-	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
-	src.add_fingerprint(user)
-	..()
-	return
-
+	hardness = 10
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
 

@@ -104,16 +104,11 @@
 
 	user.set_machine(src)
 	var/dat
-	if (!( ticker ))
-		return
+	if(!ticker)	return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
-		var/list/L = list()
-		for (var/datum/data/record/t in data_core.general)
-			var/R = t.fields["name"] + " - " + t.fields["rank"]
-			L += R
-		for(var/R in sortList(L))
-			crew += "[R]<br>"
+		for(var/datum/data/record/t in sortRecord(data_core.general))
+			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
 	else if(mode == 2)
@@ -407,12 +402,8 @@
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
-				var/list/L = list()
-				for (var/datum/data/record/t in data_core.general)
-					var/R = t.fields["name"] + " - " + t.fields["rank"]
-					L += R
-				for(var/R in sortList(L))
-					t1 += "[R]<br>"
+				for(var/datum/data/record/t in sortRecord(data_core.general))
+					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null

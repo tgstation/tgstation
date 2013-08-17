@@ -273,7 +273,7 @@ Code:
 
 				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				menu += "Entries cannot be modified from this terminal.<br><br>"
-				if(!isnull(data_core.general))
+				if(data_core.general)
 					for (var/datum/data/record/t in sortRecord(data_core.general))
 						menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 				menu += "<br>"
@@ -347,14 +347,14 @@ Code:
 
 			if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 				menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
-				if(!isnull(data_core.general))
-					for (var/datum/data/record/R in sortRecord(data_core.general))
-						menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				if(data_core.general)
+					for(var/datum/data/record/R in sortRecord(data_core.general))
+						menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 				menu += "<br>"
 			if(441)
 				menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
-				if (istype(active1, /datum/data/record) && (active1 in data_core.general))
+				if(active1 in data_core.general)
 					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
@@ -368,8 +368,8 @@ Code:
 				menu += "<br>"
 
 				menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
-				if (istype(active2, /datum/data/record) && (active2 in data_core.medical))
-					menu += "Blood Type: [active2.fields["b_type"]]<br><br>"
+				if(active2 in data_core.medical)
+					menu += "Blood Type: [active2.fields["blood_type"]]<br><br>"
 
 					menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
 					menu += "Details: [active2.fields["mi_dis_d"]]<br><br>"
@@ -390,15 +390,15 @@ Code:
 				menu += "<br>"
 			if (45) //security records
 				menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
-				if(!isnull(data_core.general))
+				if(data_core.general)
 					for (var/datum/data/record/R in sortRecord(data_core.general))
-						menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+						menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 				menu += "<br>"
 			if(451)
 				menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
-				if (istype(active1, /datum/data/record) && (active1 in data_core.general))
+				if(active1 in data_core.general)
 					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
@@ -412,7 +412,7 @@ Code:
 				menu += "<br>"
 
 				menu += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-				if (istype(active3, /datum/data/record) && (active3 in data_core.security))
+				if(active3 in data_core.security)
 					menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
 					menu += "Minor Crimes: [active3.fields["mi_crim"]]<br>"
@@ -624,30 +624,22 @@ Code:
 
 	switch(href_list["choice"])
 		if("Medical Records")
-			var/datum/data/record/R = locate(href_list["target"])
-			var/datum/data/record/M = locate(href_list["target"])
+			active1 = find_record("id", href_list["target"], data_core.general)
+			if(active1)
+				active2 = find_record("id", href_list["target"], data_core.medical)
 			loc:mode = 441
 			mode = 441
-			if (R in data_core.general)
-				for (var/datum/data/record/E in data_core.medical)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-						M = E
-						break
-				active1 = R
-				active2 = M
+			if(!active2)
+				active1 = null
 
 		if("Security Records")
-			var/datum/data/record/R = locate(href_list["target"])
-			var/datum/data/record/S = locate(href_list["target"])
+			active1 = find_record("id", href_list["target"], data_core.general)
+			if(active1)
+				active3 = find_record("id", href_list["target"], data_core.security)
 			loc:mode = 451
 			mode = 451
-			if (R in data_core.general)
-				for (var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-						S = E
-						break
-				active1 = R
-				active3 = S
+			if(!active3)
+				active1 = null
 
 		if("Send Signal")
 			spawn( 0 )

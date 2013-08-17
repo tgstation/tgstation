@@ -143,7 +143,7 @@ MASS SPECTROMETER
 
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message(text("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span>"), 1)
-	if (M.getBrainLoss() >= 100 || !getbrain(M))
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		user.show_message(text("<span class='alert'>Subject brain function is non-existant.</span>"), 1)
 	else if (M.getBrainLoss() >= 60)
 		user.show_message(text("<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>"), 1)

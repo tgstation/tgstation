@@ -202,7 +202,7 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		if(getbrain(src))//Only perform these checks if there is no brain
+		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
 			if(!key)
@@ -260,10 +260,11 @@
 		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if(!key && getbrain(src))
-			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-		else if(!client && getbrain(src))
-			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+		if(getorgan(/obj/item/organ/brain))
+			if(!key)
+				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+			else if(!client)
+				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] repulsively uncanny!\n"
@@ -275,25 +276,13 @@
 			if(usr.stat ||  H != usr) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 
-			var/perpname = "wot"
 			var/criminal = "None"
 
-			if(wear_id)
-				var/obj/item/weapon/card/id/I = wear_id.GetID()
-				if(I)
-					perpname = I.registered_name
-				else
-					perpname = name
-			else
-				perpname = name
-
+			var/perpname = H.get_face_name(H.get_id_name(""))
 			if(perpname)
-				for (var/datum/data/record/E in data_core.general)
-					if(E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if(R.fields["id"] == E.fields["id"])
-								criminal = R.fields["criminal"]
-
+				var/datum/data/record/R = find_record("name", perpname, data_core.security)
+				if(R)
+					criminal = R.fields["criminal"]
 
 				msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
 				//msg += "\[Set Hostile Identification\]\n"

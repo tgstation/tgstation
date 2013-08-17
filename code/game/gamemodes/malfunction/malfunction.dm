@@ -4,9 +4,9 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	required_players = 0//20
-	required_enemies = 0//1
-	recommended_enemies = 0//1
+	required_players = 20
+	required_enemies = 1
+	recommended_enemies = 1
 
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 10

@@ -309,7 +309,7 @@
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
 			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
@@ -1994,7 +1994,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
 				for(var/mob/living/carbon/human/B in mob_list)
-					B.f_style = "Dward Beard"
+					B.facial_hair_style = "Dward Beard"
 					B.update_hair()
 				message_admins("[key_name_admin(usr)] activated dorf mode")
 			if("ionstorm")
@@ -2056,6 +2056,20 @@
 				usr << browse(dat, "window=lawchanges;size=800x500")
 			if("check_antagonist")
 				check_antagonists()
+			if("kick_all_from_lobby")
+				if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+					var/afkonly = text2num(href_list["afkonly"])
+					if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
+						usr << "Kick clients from lobby aborted"
+						return
+					var/list/listkicked = kick_clients_in_lobby("\red The admin [usr.ckey] issued a 'kick all clients from lobby' command.", afkonly)
+					var/strkicked = ""
+					for(var/name in listkicked)
+						strkicked += "[name], "
+					message_admins("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]", 1)
+					log_admin("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
+				else
+					usr << "You may only use this when the game is running"
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")
@@ -2068,7 +2082,7 @@
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 				for(var/datum/data/record/t in data_core.general)
-					dat += text("<tr><td>[]</td><td>[]</td></tr>", t.fields["name"], t.fields["rank"])
+					dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=manifest;size=440x410")
 			if("DNA")
@@ -2076,7 +2090,7 @@
 				dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.dna && H.ckey)
-						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.blood_type]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=DNA;size=440x410")
 			if("fingerprints")

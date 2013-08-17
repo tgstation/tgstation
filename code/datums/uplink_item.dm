@@ -182,7 +182,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Projects an image across a user, disguising them as an object scanned with it. The disguised user cannot run. Projectiles pass over them."
+	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 4
 
@@ -234,7 +234,7 @@ var/list/uplink_items = list()
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
-	name = "Hacked Artificial Intelligence Law Upload Module"
+	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 7
@@ -307,7 +307,7 @@ var/list/uplink_items = list()
 	cost = 10
 
 /datum/uplink_item/badass/random
-	name = "Random Item (?)"
+	name = "Random Item"
 	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0

@@ -252,10 +252,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
 		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			for(var/datum/data/record/R in L)
-				if(R.fields["name"] == oldname)
-					R.fields["name"] = newname
-					break
+			var/datum/data/record/R = find_record("name", oldname, L)
+			if(R)	R.fields["name"] = newname
 
 		//update our pda and id if we have them on our person
 		var/list/searching = GetAllContents(searchDepth = 3)

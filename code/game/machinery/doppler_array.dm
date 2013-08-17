@@ -10,10 +10,12 @@ var/list/doppler_arrays = list()
 
 
 /obj/machinery/doppler_array/New()
+	..()
 	doppler_arrays += src
 
 /obj/machinery/doppler_array/Del()
 	doppler_arrays -= src
+	..()
 
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
