@@ -160,6 +160,26 @@
 			return
 		else if(W.IsSpecialAssembly())
 			attach_special(W, user)
+		else if(istype(W,/obj/item/weapon/weldingtool))
+			if(!a_left || !a_right)
+				user << "\red BUG:Assembly part missing, please report this!"
+				return
+			if(!isigniter(a_left) && !isigniter(a_right))
+				user << "\red You can't make an igniter without an igniting component!"
+				return
+			var/obj/item/weapon/weldingtool/WT = W
+			if (WT.remove_fuel(0,user))
+				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				user << "\blue You begin to weld \the [src] to the floor..."
+				if (do_after(user, 40))
+					var/obj/machinery/igniter/igniter=new(src.loc)
+					igniter.assembly=src
+					src.loc=igniter
+					user << "\blue You attach the assembly to the floor with a few spot welds."
+			else:
+				user << "\red You need more welder fuel to do that."
+				return
+
 		else
 			..()
 		return
@@ -200,10 +220,13 @@
 		if(!secured)
 			visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		if((normal) && (a_right) && (a_left))
-			if(a_right != D)
-				a_right.pulsed(0)
-			if(a_left != D)
-				a_left.pulsed(0)
+			if(istype(src.loc, /obj/machinery/igniter))
+				src.loc:toggle_state()
+			else:
+				if(a_right != D)
+					a_right.pulsed(0)
+				if(a_left != D)
+					a_left.pulsed(0)
 		if(master)
 			master.receive_signal()
 //		if(special && special_assembly)
