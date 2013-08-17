@@ -31,6 +31,25 @@
 	update_items()
 	return 1
 
+//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
+/mob/living/silicon/robot/mommi/remove_from_mob(var/obj/O)
+	src.u_equip(O)
+	if (src.client)
+		src.client.screen -= O
+	O.layer = initial(O.layer)
+	O.screen_loc = null
+	return 1
+
+/mob/living/silicon/robot/mommi/u_equip(W as obj)
+	if (W == tool_state)
+		if(module_active==tool_state)
+			module_active=null
+		unequip_tool()
+	else if (W == sight_state)
+		if(module_active==sight_state)
+			module_active=null
+		unequip_sight()
+
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
 	// If we have anything active, deactivate it.
@@ -106,6 +125,10 @@
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null
 
+	unequip_sight()
+	unequip_tool()
+
+/mob/living/silicon/robot/mommi/proc/unequip_sight()
 	if(sight_state)
 		if(istype(sight_state,/obj/item/borg/sight))
 			sight_mode &= ~sight_state:sight_mode
@@ -114,6 +137,8 @@
 		contents -= sight_state
 		sight_state = null
 		inv_sight.icon_state = "sight"
+
+/mob/living/silicon/robot/mommi/proc/unequip_tool()
 	if(tool_state)
 		var/obj/item/found = locate(tool_state) in src.module.modules
 		if(!found)
