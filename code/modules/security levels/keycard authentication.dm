@@ -69,7 +69,7 @@
 	if(screen == 1)
 		dat += "Select an event to trigger:<ul>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"
-		dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A></li>"
+		//dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A></li>" Not yet
 		dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
 		dat += "</ul>"
