@@ -92,7 +92,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
-	var/maintAccessReqRevoked = 0 // Used in the procs to revoke maint access/give maint access to all maint doors. Boolean.
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"

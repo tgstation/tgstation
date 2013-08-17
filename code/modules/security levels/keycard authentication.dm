@@ -69,7 +69,9 @@
 	if(screen == 1)
 		dat += "Select an event to trigger:<ul>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"
-		dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Maintenance Access'>Emergency Maintenance Access</A></li>"
+		dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A></li>"
+		dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
+		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
 		dat += "</ul>"
 		user << browse(dat, "window=keycard_auth;size=500x250")
 	if(screen == 2)
@@ -149,26 +151,23 @@
 		if("Revoke Emergency Maintenance Access")
 			revoke_maint_all_access()
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
-		if("Emergency Rescue Team")
+		if("Emergency Response Team")
 			trigger_armed_response_team(1)
 			feedback_inc("alert_keycard_auth_ert",1)
 
-/proc/make_maint_all_access()
-	for(var/obj/machinery/door/airlock/A in machines)
-		if(A.z == 1 && access_maint_tunnels in A.req_access)
-			A.maintAccessReqRevoked = 1
-			A.req_access.Remove(access_maint_tunnels)
+var/global/maint_all_access = 0
 
+/proc/make_maint_all_access()
+	maint_all_access = 1
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
 
 /proc/revoke_maint_all_access()
-	for(var/obj/machinery/door/airlock/A in machines)
-		if(A.z == 1 && A.maintAccessReqRevoked == 1)
-			A.maintAccessReqRevoked = 0
-			A.req_access.Add(access_maint_tunnels)
-
+	maint_all_access = 0
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
 
-
+/obj/machinery/door/airlock/allowed(mob/M)
+	if(maint_all_access && src.check_access_list(list(access_maint_tunnels)))
+		return 1
+	return ..(M)
