@@ -143,14 +143,32 @@
 		if("Red alert")
 			set_security_level(SEC_LEVEL_RED)
 			feedback_inc("alert_keycard_auth_red",1)
-		if("Emergency Maintenance Access")
+		if("Grant Emergency Maintenance Access")
 			make_maint_all_access()
-			feedback_inc("alert_keycard_auth_maint",1)
+			feedback_inc("alert_keycard_auth_maintGrant",1)
+		if("Revoke Emergency Maintenance Access")
+			revoke_maint_all_access()
+			feedback_inc("alert_keycard_auth_maintRevoke",1)
+		if("Emergency Rescue Team")
+			trigger_armed_response_team(1)
+			feedback_inc("alert_keycard_auth_ert",1)
 
 /proc/make_maint_all_access()
-	for(var/obj/machinery/door/airlock/A in world)
-		if(A.z == 1)
+	for(var/obj/machinery/door/airlock/A in machines)
+		if(A.z == 1 && access_maint_tunnels in A.req_access)
+			A.maintAccessReqRevoked = 1
 			A.req_access.Remove(access_maint_tunnels)
 
 	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks. All crew members are now permitted access to emergency maintenance areas.</font>"
+	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
+
+/proc/revoke_maint_all_access()
+	for(var/obj/machinery/door/airlock/A in machines)
+		if(A.z == 1 && A.maintAccessReqRevoked == 1)
+			A.maintAccessReqRevoked = 0
+			A.req_access.Add(access_maint_tunnels)
+
+	world << "<font size=4 color='red'>Attention!</font>"
+	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
+
+
