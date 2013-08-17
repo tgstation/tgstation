@@ -1479,8 +1479,7 @@ FIRE ALARM
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.firereset()
+	A.firereset()
 	update_icon()
 	return
 
@@ -1491,8 +1490,7 @@ FIRE ALARM
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.firealert()
+	A.firealert()
 	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return

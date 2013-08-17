@@ -5785,7 +5785,7 @@
 "chm" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor,/area/engine/break_room)
 "chn" = (/obj/machinery/camera{c_tag = "Engineering Access"},/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/machinery/vending/engivend,/turf/simulated/floor,/area/engine/break_room)
 "cho" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/obj/machinery/vending/tool,/turf/simulated/floor,/area/engine/break_room)
-"chp" = (/obj/machinery/constructable_frame/machine_frame,/turf/simulated/floor,/area/engine/break_room)
+"chp" = (/obj/machinery/computer/security/engineering,/turf/simulated/floor,/area/engine/break_room)
 "chq" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/turf/simulated/floor,/area/engine/break_room)
 "chr" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple{color = "red"; dir = 5; icon_state = "intact-r"; level = 2},/turf/simulated/floor,/area/atmos)
 "chs" = (/obj/machinery/atmospherics/trinary/filter{dir = 4; filter_type = 2; icon_state = "intact_on"; name = "Gas filter (N2 tank)"; on = 1},/turf/simulated/floor{icon_state = "red"; dir = 10},/area/atmos)
