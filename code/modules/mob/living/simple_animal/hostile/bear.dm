@@ -36,6 +36,7 @@
 	var/stance_step = 0
 
 	faction = "russian"
+	idle_env_destroyer = 1
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
