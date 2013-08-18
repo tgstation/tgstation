@@ -348,18 +348,9 @@ datum
 			required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/turf/location = get_turf(holder.my_atom.loc)
-				for(var/turf/simulated/floor/target_tile in range(0,location))
-					if(target_tile.parent && target_tile.parent.group_processing)
-						target_tile.parent.suspend_group_processing()
-
-					var/datum/gas_mixture/napalm = new
-
-					napalm.toxins = created_volume
-					napalm.temperature = 400+T0C
-
-					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
+				var/turf/simulated/T = get_turf(src)
+				if(istype(T))
+					T.atmos_spawn_air("fire", created_volume)
 				holder.del_reagent("napalm")
 				return
 
@@ -1229,18 +1220,9 @@ datum
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
-				var/turf/location = get_turf(holder.my_atom.loc)
-				for(var/turf/simulated/floor/target_tile in range(0,location))
-					if(target_tile.parent && target_tile.parent.group_processing)
-						target_tile.parent.suspend_group_processing()
-
-					var/datum/gas_mixture/napalm = new
-
-					napalm.toxins = 50
-					napalm.temperature = 2400
-
-					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
+				var/turf/simulated/T = get_turf(src)
+				if(istype(T))
+					T.atmos_spawn_air("fire", 50)
 
 //Yellow
 		slimeoverload

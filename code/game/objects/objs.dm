@@ -19,7 +19,7 @@
 	processing_objects.Remove(src)
 	return 0
 
-/obj/assume_air(datum/air_group/giver)
+/obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
 		return loc.assume_air(giver)
 	else

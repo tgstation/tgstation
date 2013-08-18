@@ -952,18 +952,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
 				var/obj/icon = A
+				var/obj/machinery/atmospherics/pipe/tank/T = A
 				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
+					O << "\red [user] has used [src] on \icon[icon] [T]"
 
-				var/pressure = A:parent.air.return_pressure()
-				var/total_moles = A:parent.air.total_moles()
+				var/pressure = T.parent.air.return_pressure()
+				var/total_moles = T.parent.air.total_moles()
 
 				user << "\blue Results of analysis of \icon[icon]"
 				if (total_moles>0)
-					var/o2_concentration = A:parent.air.oxygen/total_moles
-					var/n2_concentration = A:parent.air.nitrogen/total_moles
-					var/co2_concentration = A:parent.air.carbon_dioxide/total_moles
-					var/plasma_concentration = A:parent.air.toxins/total_moles
+					var/o2_concentration = T.parent.air.oxygen/total_moles
+					var/n2_concentration = T.parent.air.nitrogen/total_moles
+					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
+					var/plasma_concentration = T.parent.air.toxins/total_moles
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
@@ -974,7 +975,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user << "\blue Plasma: [round(plasma_concentration*100)]%"
 					if(unknown_concentration>0.01)
 						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(A:parent.air.temperature-T0C)]&deg;C"
+					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
 				else
 					user << "\blue Tank is empty!"
 

@@ -1336,19 +1336,12 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				var/turf/the_turf = get_turf(O)
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
-				the_turf.assume_air(napalm)
-			reaction_turf(var/turf/T, var/volume)
+				O.atmos_spawn_air("fuel", 5)
+
+			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
-				T.assume_air(napalm)
+				if(istype(T))
+					T.atmos_spawn_air("fuel", 5)
 				return
 
 		toxin/lexorin
