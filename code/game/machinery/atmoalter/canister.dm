@@ -129,7 +129,9 @@
 				environment.merge(removed)
 			else
 				loc.assume_air(removed)
+				air_update_turf()
 			src.update_icon()
+
 
 	if(air_contents.return_pressure() < 1)
 		can_label = 1

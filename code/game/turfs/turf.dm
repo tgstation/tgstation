@@ -30,6 +30,16 @@
 			return
 	return
 
+// Adds the adjacent turfs to the current atmos processing
+/turf/Del()
+	if(air_master)
+		for(var/direction in cardinal)
+			if(atmos_adjacent_turfs & direction)
+				var/turf/simulated/T = get_step(src, direction)
+				if(istype(T))
+					air_master.add_to_active(T)
+	..()
+
 /turf/DblClick()
 	if(istype(usr, /mob/living/silicon/ai))
 		return move_camera_by_click()
@@ -202,10 +212,12 @@
 	if(path == type)	return src
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/old_opacity = opacity
+	if(air_master)
+		air_master.remove_from_active(src)
 
 	var/turf/W = new path(src)
 
-	if(istype(W, /turf/simulated/floor))
+	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
 
@@ -219,36 +231,40 @@
 			W.UpdateAffectingLights()
 
 	W.levelupdate()
+	W.CalculateAdjacentTurfs()
 	return W
 
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
-	var/aoxy = 0//Holders to assimilate air from nearby turfs
-	var/anitro = 0
-	var/aco = 0
-	var/atox = 0
-	var/atemp = 0
-	var/turf_count = 0
+	if(air)
+		var/aoxy = 0//Holders to assimilate air from nearby turfs
+		var/anitro = 0
+		var/aco = 0
+		var/atox = 0
+		var/atemp = 0
+		var/turf_count = 0
 
-	for(var/direction in cardinal)//Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))//Counted as no air
-			turf_count++//Considered a valid turf for air calcs
-			continue
-		else if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/S = T
-			if(S.air)//Add the air's contents to the holders
-				aoxy += S.air.oxygen
-				anitro += S.air.nitrogen
-				aco += S.air.carbon_dioxide
-				atox += S.air.toxins
-				atemp += S.air.temperature
-			turf_count ++
-	air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-	air.nitrogen = (anitro/max(turf_count,1))
-	air.carbon_dioxide = (aco/max(turf_count,1))
-	air.toxins = (atox/max(turf_count,1))
-	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+		for(var/direction in cardinal)//Only use cardinals to cut down on lag
+			var/turf/T = get_step(src,direction)
+			if(istype(T,/turf/space))//Counted as no air
+				turf_count++//Considered a valid turf for air calcs
+				continue
+			else if(istype(T,/turf/simulated/floor))
+				var/turf/simulated/S = T
+				if(S.air)//Add the air's contents to the holders
+					aoxy += S.air.oxygen
+					anitro += S.air.nitrogen
+					aco += S.air.carbon_dioxide
+					atox += S.air.toxins
+					atemp += S.air.temperature
+				turf_count ++
+		air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
+		air.nitrogen = (anitro/max(turf_count,1))
+		air.carbon_dioxide = (aco/max(turf_count,1))
+		air.toxins = (atox/max(turf_count,1))
+		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+		if(air_master)
+			air_master.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

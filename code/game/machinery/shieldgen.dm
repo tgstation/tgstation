@@ -13,63 +13,25 @@
 /obj/machinery/shield/New()
 	src.dir = pick(1,2,3,4)
 	..()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 
 /obj/machinery/shield/Del()
 	opacity = 0
 	density = 0
-	update_nearby_tiles()
+	air_update_turf(1)
 	..()
+
+/obj/machinery/shield/Move()
+	air_update_turf(1)
+	..()
+	air_update_turf(1)
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0
 	else return ..()
 
-//Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
-/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/north = get_step(source,NORTH)
-	var/turf/simulated/south = get_step(source,SOUTH)
-	var/turf/simulated/east = get_step(source,EAST)
-	var/turf/simulated/west = get_step(source,WEST)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(north))
-			if(north.parent)
-				air_master.groups_to_rebuild += north.parent
-			else
-				air_master.tiles_to_update += north
-		if(istype(south))
-			if(south.parent)
-				air_master.groups_to_rebuild += south.parent
-			else
-				air_master.tiles_to_update += south
-		if(istype(east))
-			if(east.parent)
-				air_master.groups_to_rebuild += east.parent
-			else
-				air_master.tiles_to_update += east
-		if(istype(west))
-			if(west.parent)
-				air_master.groups_to_rebuild += west.parent
-			else
-				air_master.tiles_to_update += west
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
-
-	return 1
-
+/obj/machinery/shield/CanAtmosPass(var/turf/T)
+	return !density
 
 /obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return
