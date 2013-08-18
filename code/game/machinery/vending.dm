@@ -157,7 +157,26 @@
 		coin = W
 		user << "\blue You insert the [W] into the [src]"
 		return
-	else if(istype(W, /obj/item/weapon/card) && currently_vending)
+	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
+		//attempt to connect to a new db, and if that doesn't work then fail
+		if(!linked_db)
+			reconnect_database()
+		if(linked_db)
+			if(linked_account)
+				var/obj/item/weapon/card/I = W
+				scan_card(I)
+			else
+				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
+		else
+			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"*/
+	else
+		..()
+
+//H.wear_id
+/obj/machinery/vending/proc/connect_account(var/obj/item/W)
+	if(istype(W,/obj/item/device/pda))
+		W=W:id // Cheating, but it'll work.  Hopefully.
+	if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
 			reconnect_database()
@@ -169,8 +188,6 @@
 				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
 		else
 			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
-	else
-		..()
 
 /obj/machinery/vending/proc/scan_card(var/obj/item/weapon/card/I)
 	if(!currently_vending) return
@@ -178,8 +195,7 @@
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		if(linked_account)
-			var/attempt_pin = input("Enter pin code", "Vendor transaction") as num
-			var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, attempt_pin, 2)
+			var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0) // Pin = 0, Sec level 2, PIN not required.
 			if(D)
 				var/transaction_amount = currently_vending.price
 				if(transaction_amount <= D.money)
@@ -229,6 +245,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
+
 	user.set_machine(src)
 
 	if(src.seconds_electrified != 0)
@@ -239,7 +256,8 @@
 
 	if(src.currently_vending)
 		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
-		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
+		dat += "<b>You have selected [currently_vending.product_name].<br>Please ensure your ID is in your ID holder or hand.</b><br>"
+		dat += "<a href='byond://?src=\ref[src];buy=1'>Pay</a> | "
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
 		user << browse(dat, "window=vending")
 		onclose(user, "")
@@ -315,7 +333,7 @@
 	if(istype(usr,/mob/living/silicon))
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
+			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) && !isMoMMI(R))
 				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
 				return
 		else
@@ -358,6 +376,18 @@
 		else if (href_list["cancel_buying"])
 			src.currently_vending = null
 			src.updateUsrDialog()
+			return
+
+		else if (href_list["buy"])
+			if(istype(usr, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H=usr
+				var/obj/item/weapon/card/card = null
+				if(istype(H.wear_id,/obj/item/weapon/card))
+					card=H.wear_id
+				else if(istype(H.get_active_hand(),/obj/item/weapon/card))
+					card=H.wear_id
+				if(card)
+					connect_account(card)
 			return
 
 		else if ((href_list["cutwire"]) && (src.panel_open))
