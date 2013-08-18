@@ -139,11 +139,6 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 
 /turf/simulated/proc/process_cell()
 
-	var/image/Aran = image('icons/mob/hud.dmi', "hud_imp_chem")
-	overlays += Aran
-	spawn(9)
-		overlays -= Aran
-
 	if(archived_cycle < air_master.current_cycle) //archive self if not already done
 		archive()
 	current_cycle = air_master.current_cycle
@@ -228,14 +223,6 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 	if(!excited_group && remove == 1)
 		air_master.remove_from_active(src)
 
-	var/image/Aran5
-	if(excited_group)
-		Aran5 = image('icons/mob/hud.dmi', "[excited_group.colour]")
-	else
-		Aran5 = image('icons/mob/hud.dmi', "hud_imp_chem")
-	overlays += Aran5
-	spawn(15)
-		overlays -= Aran5
 
 
 /turf/simulated/proc/archive()
@@ -300,12 +287,10 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 
 /datum/excited_group
 	var/list/turf_list = list()
-	var/colour
 	var/breakdown = 0
 	var/breakdown_cooldown = 0
 
 /datum/excited_group/New()
-	colour = pick("hudhealthy","hudill","huddead","hudxeno","hudwanted","hudprisioner","hudcaptain","hudheadofpersonal","hudchiefengineer","hudresearchdirector","hudchiefmedicalofficer","hudquartermaster","hudheadofsecurity","hudchemist","hudscientist","hudroboticist","hudvirologist","hudgeneticist","hudmedicaldoctor","hudatmospherictechnician","hudstationengineer","hudshaftminer","hudsecurityofficer","huddetective","hudwarden","hudbotanist","hudlibrarian","hudlawyer","hudchaplain","hudbartender","hudchef","hudjanitor","hudclown","hudmime","hudcargotechnician","hudassistant","hudunknown","hudninja","hudalien","hudchangeling","huddeathsquad","hudoperative","hudwizard","hudmalborg","hudmalai","hudcultist","hudtraitor","hudrevolutionary")
 	if(air_master)
 		air_master.excited_groups += src
 
