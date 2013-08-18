@@ -1347,7 +1347,7 @@
 /obj/mecha/proc/get_log_html()
     var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
     for(var/list/entry in log)
-        output += {"<div style='font-weight: bold;'>[time2text(entry["date"],"MMM DD")] [entry["time"]] [entry["year"]]</div>
+        output += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
                         <div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
                         "}
     output += "</body></html>"
@@ -1411,7 +1411,7 @@
 
 /obj/mecha/proc/log_message(message as text,red=null)
 	log.len++
-	log[log.len] = list("date","time"="[worldtime2text()]","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
