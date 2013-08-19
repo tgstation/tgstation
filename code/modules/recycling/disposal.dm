@@ -1212,6 +1212,7 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
+	var/start_eject = 0
 
 	New()
 		..()
@@ -1229,10 +1230,13 @@
 	proc/expel(var/obj/structure/disposalholder/H)
 
 		flick("outlet-open", src)
-		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
-		sleep(20)	//wait until correct animation frame
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-
+		if((start_eject + 30) < world.time)
+			start_eject = world.time
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+			sleep(20)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		else
+			sleep(20)
 		if(H)
 			for(var/atom/movable/AM in H)
 				AM.loc = src.loc
