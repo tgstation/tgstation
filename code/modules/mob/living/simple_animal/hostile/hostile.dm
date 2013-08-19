@@ -11,7 +11,7 @@
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
 	var/vision_range = 10
-	var/idle_env_destroyer = 0
+	var/idle_env_destroyer = 1
 	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
