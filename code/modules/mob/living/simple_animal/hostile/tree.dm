@@ -36,7 +36,6 @@
 	minbodytemp = 0
 
 	faction = "carp"
-	idle_env_destroyer = 1
 
 /mob/living/simple_animal/hostile/tree/FindTarget()
 	. = ..()

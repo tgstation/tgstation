@@ -35,7 +35,6 @@
 
 	faction = "mimic"
 	move_to_delay = 8
-	idle_env_destroyer = 1
 
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()

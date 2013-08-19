@@ -30,7 +30,6 @@
 	minbodytemp = 0
 
 	faction = "faithless"
-	idle_env_destroyer = 1
 
 /mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/check_drift = 0)
 	return 1

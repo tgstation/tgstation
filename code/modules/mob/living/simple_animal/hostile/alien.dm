@@ -33,8 +33,6 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	heat_damage_per_tick = 20
-	idle_env_destroyer = 1
-
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

@@ -12,4 +12,4 @@
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = "creature"
-	idle_env_destroyer = 1
+
