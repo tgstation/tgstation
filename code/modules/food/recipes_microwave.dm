@@ -91,6 +91,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 
+/datum/recipe/appendixburger
+	reagents = list("flour" = 5)
+	items = list(
+		/obj/item/organ/appendix
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/appendixburger
+
+
 /datum/recipe/brainburger
 	reagents = list("flour" = 5)
 	items = list(
