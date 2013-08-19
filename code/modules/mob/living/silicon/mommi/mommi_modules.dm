@@ -6,7 +6,6 @@
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
 		//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
-		//src.modules += new /obj/item/weapon/extinguisher(src) // Too big
 		//src.modules += new /obj/item/device/flashlight(src)   // Broken
 		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
@@ -16,8 +15,8 @@
 		src.modules += new /obj/item/device/multitool(src)
 		src.modules += new /obj/item/device/t_scanner(src)
 		src.modules += new /obj/item/device/analyzer(src)
-		src.modules += new /obj/item/weapon/pipe_dispenser(src)
-		src.modules += new /obj/item/device/healthanalyzer(src)
+		src.modules += new /obj/item/weapon/extinguisher(src) // Aurx sed so
+		src.modules += new /obj/item/weapon/pipe_dispenser(src) // Ditto
 
 		// Added this back in since it made the MoMMI practically useless for engineering stuff.
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
@@ -27,11 +26,11 @@
 		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
 		G.amount = 50
 		src.modules += G
-
+*/
+		// Aurx also sed so
 		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
 		G.amount = 50
 		src.modules += G
-*/
 
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
