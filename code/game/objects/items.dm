@@ -416,78 +416,78 @@
 					return 0
 				return 1
 			if(slot_wear_mask)
-				if(H.wear_mask)
-					return 0
 				if( !(slot_flags & SLOT_MASK) )
 					return 0
+				if(H.wear_mask)
+					return 2
 				return 1
 			if(slot_back)
-				if(H.back)
-					return 0
 				if( !(slot_flags & SLOT_BACK) )
 					return 0
+				if(H.back)
+					return 2
 				return 1
 			if(slot_wear_suit)
-				if(H.wear_suit)
-					return 0
 				if( !(slot_flags & SLOT_OCLOTHING) )
 					return 0
+				if(H.wear_suit)
+					return 2
 				return 1
 			if(slot_gloves)
-				if(H.gloves)
-					return 0
 				if( !(slot_flags & SLOT_GLOVES) )
 					return 0
+				if(H.gloves)
+					return 2
 				return 1
 			if(slot_shoes)
-				if(H.shoes)
-					return 0
 				if( !(slot_flags & SLOT_FEET) )
 					return 0
+				if(H.shoes)
+					return 2
 				return 1
 			if(slot_belt)
-				if(H.belt)
-					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
 						H << "\red You need a jumpsuit before you can attach this [name]."
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
-					return
+					return 0
+				if(H.belt)
+					return 2
 				return 1
 			if(slot_glasses)
-				if(H.glasses)
-					return 0
 				if( !(slot_flags & SLOT_EYES) )
 					return 0
+				if(H.glasses)
+					return 2
 				return 1
 			if(slot_head)
-				if(H.head)
-					return 0
 				if( !(slot_flags & SLOT_HEAD) )
 					return 0
+				if(H.head)
+					return 2
 				return 1
 			if(slot_ears)
-				if(H.ears)
-					return 0
 				if( !(slot_flags & SLOT_EARS) )
 					return 0
+				if(H.ears)
+					return 2
 				return 1
 			if(slot_w_uniform)
-				if(H.w_uniform)
-					return 0
 				if( !(slot_flags & SLOT_ICLOTHING) )
 					return 0
+				if(H.w_uniform)
+					return 2
 				return 1
 			if(slot_wear_id)
-				if(H.wear_id)
-					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
 						H << "\red You need a jumpsuit before you can attach this [name]."
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
+				if(H.wear_id)
+					return 2
 				return 1
 			if(slot_l_store)
 				if(H.l_store)
@@ -513,8 +513,6 @@
 					return 1
 				return 0
 			if(slot_s_store)
-				if(H.s_store)
-					return 0
 				if(!H.wear_suit)
 					if(!disable_warning)
 						H << "\red You need a suit before you can attach this [name]."
@@ -528,7 +526,10 @@
 						usr << "The [name] is too big to attach."
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					return 1
+					if(H.s_store)
+						return 2
+					else
+						return 1
 				return 0
 			if(slot_handcuffed)
 				if(H.handcuffed)
