@@ -144,7 +144,7 @@ proc/Airflow(zone/A, zone/B)
 		var/list/temporary_pplz = air_sucked
 		air_sucked = air_repelled
 		air_repelled = temporary_pplz
-
+/* Commenting out to save perf
 	for(var/atom/movable/M in air_sucked)
 		if(1) break
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
@@ -191,7 +191,7 @@ proc/Airflow(zone/A, zone/B)
 				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
 				spawn M.RepelAirflowDest(abs(n)/5)
-
+*/
 proc/AirflowSpace(zone/A)
 
 	//The space version of the Airflow(A,B,n) proc.

@@ -167,7 +167,7 @@
 
 
 /datum/game_mode/proc/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
+	var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
 	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"
 
 
@@ -211,15 +211,15 @@
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
+			intercept.name = "paper- '[command_name()] Status Summary'"
 			intercept.info = intercepttext
 
-			comm.messagetitle.Add("Cent. Com. Status Summary")
+			comm.messagetitle.Add("[command_name()] Status Summary")
 			comm.messagetext.Add(intercepttext)
 	world << sound('commandreport.ogg')
 
-/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	for(var/mob/M in player_list)
+	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept.")
+/*	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
 			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
