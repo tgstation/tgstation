@@ -75,6 +75,8 @@
 			H.apply_damage(75,"brute","head")
 			user.visible_message("<span class='notice'>[user] saws [target]'s skull open!")
 	else
+		var/mob/living/carbon/human/H = target
+		H.apply_damage(75,"brute","chest")
 		user.visible_message("<span class='notice'>[user] saws [target]'s chest open!")
 	return 1
 
