@@ -353,6 +353,21 @@
 	if(WT)
 		stat(null, text("Welder Fuel: [WT.get_fuel()]/[WT.max_fuel]"))
 
+/mob/living/silicon/robot/proc/show_metal_sheets()
+	var/obj/item/stack/sheet/metal/cyborg/M = installed_module(/obj/item/stack/sheet/metal/cyborg)
+	if(M)
+		stat(null, text("Metal Sheets: [M.amount]/50"))
+
+/mob/living/silicon/robot/proc/show_glass_sheets()
+	var/obj/item/stack/sheet/glass/G = installed_module(/obj/item/stack/sheet/glass)
+	if(G)
+		stat(null, text("Glass Sheets: [G.amount]/50"))
+
+/mob/living/silicon/robot/proc/show_rglass_sheets()
+	var/obj/item/stack/sheet/rglass/G = installed_module(/obj/item/stack/sheet/rglass)
+	if(G)
+		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
+
 
 // update the status screen display
 /mob/living/silicon/robot/Stat()
@@ -363,6 +378,9 @@
 		show_jetpack_pressure()
 		show_cable_lengths()
 		show_welder_fuel()
+		show_metal_sheets()
+		show_glass_sheets()
+		show_rglass_sheets()
 
 /mob/living/silicon/robot/restrained()
 	return 0
