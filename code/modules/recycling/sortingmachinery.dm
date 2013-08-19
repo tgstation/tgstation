@@ -212,6 +212,7 @@
 	density = 1
 	icon_state = "intake"
 
+	var/start_flush = 0
 	var/c_mode = 0
 
 	New()
@@ -267,7 +268,9 @@
 		air_contents = new()		// new empty gas resv.
 
 		sleep(10)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		if((start_flush + 15) < world.time)
+			start_flush = world.time
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(5) // wait for animation to finish
 
 		H.init(src)	// copy the contents of disposer to holder
