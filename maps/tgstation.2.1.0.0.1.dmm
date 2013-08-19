@@ -1636,7 +1636,7 @@
 "aFx" = (/obj/machinery/atmospherics/pipe/manifold{color = "red"; dir = 4; icon_state = "manifold-r-f"; initialize_directions = 11; level = 1; name = "pipe manifold"},/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor/plating,/area/maintenance/fsmaint2)
 "aFy" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 6; icon_state = "intact-b-f"; initialize_directions = 6; level = 1; name = "pipe"},/turf/simulated/wall,/area/library)
 "aFz" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 9; icon_state = "intact-b-f"; level = 1; name = "pipe"},/turf/simulated/wall,/area/library)
-"aFA" = (/obj/machinery/door/airlock/maintenance{name = "Library Maintenance"; req_access_txt = "12"},/turf/simulated/floor/plating,/area/library)
+"aFA" = (/obj/machinery/door/airlock/maintenance{name = "Library Maintenance"; req_access_txt = "37"},/turf/simulated/floor/plating,/area/library)
 "aFB" = (/obj/item/device/radio/intercom{pixel_y = 25},/obj/structure/table/woodentable,/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/turf/simulated/floor/wood,/area/library)
 "aFC" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/structure/table/woodentable,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/packageWrap,/turf/simulated/floor/wood,/area/library)
 "aFD" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk,/turf/simulated/floor/wood,/area/library)
