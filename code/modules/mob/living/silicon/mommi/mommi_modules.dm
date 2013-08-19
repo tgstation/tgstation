@@ -16,7 +16,7 @@
 		src.modules += new /obj/item/device/t_scanner(src)
 		src.modules += new /obj/item/device/analyzer(src)
 		src.modules += new /obj/item/weapon/extinguisher(src) // Aurx sed so
-		src.modules += new /obj/item/weapon/pipe_dispenser(src) // Ditto
+		src.modules += new /obj/item/weapon/pipe_dispenser(src)
 
 		// Added this back in since it made the MoMMI practically useless for engineering stuff.
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
@@ -28,7 +28,7 @@
 		src.modules += G
 */
 		// Aurx also sed so
-		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
+		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src)
 		G.amount = 50
 		src.modules += G
 
@@ -39,7 +39,7 @@
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
 			/obj/item/stack/sheet/metal/cyborg,
-			///obj/item/stack/sheet/glass/cyborg,
+			/obj/item/stack/sheet/glass,
 			/obj/item/weapon/cable_coil,
 		)
 		for (var/T in what)
