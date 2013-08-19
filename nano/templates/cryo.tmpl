@@ -1,0 +1,58 @@
+<h3>Cryo Cell Status</h3>
+
+<div class="statusDisplay">
+	{^{if !hasOccupant}}
+		<div class="line">Cell Unoccupied</div>
+	{{else}}
+		<div class="line">
+			{^{:occupant.name}}&nbsp;=>&nbsp;
+			{^{if occupant.stat == 0}}
+				<span class="good">Conscious</span>
+			{{else occupant.stat == 1}}
+				<span class="average">Unconscious</span>
+			{{else}}
+				<span class="bad">DEAD</span>
+			{{/if}}
+		</div>
+		<div class="line"><div class="statusLabel">Health:</div><div class="progressBar">{^{:~string('<div class="progressFill good" style="width: {0}%;"></div>', [occupant.health])}}</div><div class="statusValue">{^{:occupant.health}}%</div></div>
+		<div class="line"><div class="statusLabel">=&gt; Brute Damage:</div><div class="progressBar">{^{:~string('<div class="progressFill bad" style="width: {0}%;"></div>', [occupant.bruteLoss])}}</div><div class="statusValue">{^{:occupant.bruteLoss}}%</div></div>
+		<div class="line"><div class="statusLabel">=&gt; Resp. Damage:</div><div class="progressBar">{^{:~string('<div class="progressFill bad" style="width: {0}%;"></div>', [occupant.oxyLoss])}}</div><div class="statusValue">{^{:occupant.oxyLoss}}%</div></div>
+		<div class="line"><div class="statusLabel">=&gt; Toxin Content:</div><div class="progressBar">{^{:~string('<div class="progressFill bad" style="width: {0}%;"></div>', [occupant.toxLoss])}}</div><div class="statusValue">{^{:occupant.toxLoss}}%</div></div>
+		<div class="line"><div class="statusLabel">=&gt; Burn Severity:</div><div class="progressBar">{^{:~string('<div class="progressFill bad" style="width: {0}%;"></div>', [occupant.fireLoss])}}</div><div class="statusValue">{^{:occupant.fireLoss}}%</div></div>
+		<div class="line"><div class="statusLabel">Body Temperature:</div><div class="statusValue">{^{:occupant.bodyTemperature}} K</div></div>
+	{{/if}}
+	<hr>
+	<div class="line"><div class="statusLabel">Cell Temperature:</div><div class="statusValue">
+		{^{:~string('<span class="{0}">{1} K</span>', cellTemperatureStatus, cellTemperature)}} <!-- syntax error, bloody arrays are not allowed... -->
+	</div></div>
+</div>
+
+<h3>Cryo Cell Operation</h3>
+<div class="item">
+	<div class="itemLabel">
+		Cryo Cell Status:
+	</div>
+	<div class="itemContent">
+		{^{:~link('On', 'power', {'start' : 1}, isOperating ? 'selected' : null)}}{^{:~link('Off', 'close', {'start' : 1}, isOperating ? null : 'selected')}}
+	</div>
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemLabel">
+		Beaker:
+	</div>
+	<div class="itemContent" style="width: 40%;">
+		{^{if isBeakerLoaded}}			
+			{^{for beakerContents}}
+				<span class="highlight">{^{:volume}} units of {^{:name}}</span><br>
+			{{else}}
+				<span class="bad">Beaker is empty</span>
+			{{/for}}
+		{{else}}
+			<span class="average"><i>No beaker loaded</i></span>
+		{{/if}}
+	</div>
+	<div class="itemContent" style="width: 26%;">
+		{^{:~link('Eject Beaker', 'eject', {'eject' : 1}, isBeakerLoaded ? null : 'disabled')}}
+	</div>
+</div>
