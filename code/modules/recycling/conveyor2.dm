@@ -19,8 +19,29 @@
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
 
+
+// Auto conveyour is always on unless unpowered
+
+/obj/machinery/conveyor/auto/New(loc, newdir)
+	..(loc, newdir)
+	operating = 1
+	setmove()
+
+/obj/machinery/conveyor/auto/update()
+	if(stat & BROKEN)
+		icon_state = "conveyor-broken"
+		operating = 0
+		return
+	else if(!operable)
+		operating = 0
+	else if(stat & NOPOWER)
+		operating = 0
+	else
+		operating = 1
+	icon_state = "conveyor[operating]"
+
 	// create a conveyor
-/obj/machinery/conveyor/New(loc, newdir, on = 0)
+/obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
 		dir = newdir
@@ -49,9 +70,6 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
-	if(on)
-		operating = 1
-		setmove()
 
 /obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
