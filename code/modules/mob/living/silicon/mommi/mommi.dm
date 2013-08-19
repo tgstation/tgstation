@@ -81,6 +81,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	switch(icontype)
 		if("Basic")	icon_state = "mommi"
 		else		icon_state = "keeper"
+	picked=1
 	updateicon()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
