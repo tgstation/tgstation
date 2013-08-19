@@ -69,15 +69,10 @@
 	return 1
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(surgery.name == "brain removal")
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			H.apply_damage(75,"brute","head")
-			user.visible_message("<span class='notice'>[user] saws [target]'s skull open!")
-	else
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.apply_damage(75,"brute","chest")
-		user.visible_message("<span class='notice'>[user] saws [target]'s chest open!")
+		H.apply_damage(75,"brute","[target_zone]")
+		user.visible_message("<span class='notice'>[user] saws [target]'s [target_zone] open!")	
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
