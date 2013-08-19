@@ -49,7 +49,6 @@
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
-	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
@@ -267,8 +266,6 @@
 					Ticklag = text2num(value)
 				if("tickcomp")
 					Tickcomp = 1
-				if("tor_ban")
-					ToRban = 1
 				if("automute_on")
 					automute_on = 1
 				else
