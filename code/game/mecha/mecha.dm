@@ -1345,13 +1345,13 @@
 
 
 /obj/mecha/proc/get_log_html()
-    var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
-    for(var/list/entry in log)
-        output += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
-                        <div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
-                        "}
-    output += "</body></html>"
-    return output
+	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
+	for(var/list/entry in log)
+		output += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
+						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
+						"}
+	output += "</body></html>"
+	return output
 
 
 /obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
