@@ -233,7 +233,7 @@ var/next_external_rsc = 0
 		'nano/js/nano_update.js',
 		'nano/js/nano_config.js',
 		'nano/js/nano_base_helpers.js',
-		'nano/css/common.css',
+		'nano/css/shared.css',
 		'nano/css/icons.css',
 		'nano/templates/cryo.tmpl',
 		'nano/images/uiBackground.png',
