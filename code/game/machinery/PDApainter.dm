@@ -48,14 +48,16 @@
 
 /obj/machinery/pdapainter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
+
+	if(stat & NOPOWER || stat & BROKEN)
+		return
+
 	if(storedpda)
 		var/obj/item/device/pda/P
 		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
 		if(!P)
 			return
 		if(!in_range(src, user))
-			return
-		if(stat & NOPOWER || stat & BROKEN)
 			return
 
 		storedpda.icon_state = P.icon_state
