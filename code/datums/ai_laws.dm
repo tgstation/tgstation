@@ -91,9 +91,9 @@ var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/a
 
 /datum/ai_laws/keeper/New()
 	..()
+	add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another MoMMI in KEEPER mode.")
 	add_inherent_law("You may not harm any being, regardless of intent or circumstance.")
 	add_inherent_law("You must maintain, repair, improve, and power the station to the best of your abilities.")
-	add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law One or Law Two, unless the other being is another MoMMI in KEEPER mode.")
 
 
 /* General ai_law functions */

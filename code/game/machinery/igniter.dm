@@ -5,6 +5,7 @@
 	icon_state = "igniter1"
 	var/id = null
 	var/on = 1.0
+	var/obj/item/device/assembly_holder/assembly=null
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
@@ -35,6 +36,12 @@
 			location.hotspot_expose(1000,500,1)
 	return 1
 
+/obj/machinery/igniter/proc/toggle_state()
+	use_power(50)
+	src.on = !( src.on )
+	src.icon_state = text("igniter[]", src.on)
+	return
+
 /obj/machinery/igniter/New()
 	..()
 	icon_state = "igniter[on]"
@@ -44,6 +51,24 @@
 		icon_state = "igniter[src.on]"
 	else
 		icon_state = "igniter0"
+
+/obj/machinery/igniter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/weapon/weldingtool) && src.assembly)
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0,user))
+			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			user << "\blue You begin to cut \the [src] off the floor..."
+			if (do_after(user, 40))
+				user.visible_message( \
+					"[user] disassembles \the [src].", \
+					"\blue You have disassembled \the [src].", \
+					"You hear welding.")
+				src.assembly.loc=src.loc
+				return 1
+		else:
+			user << "\red You need more welder fuel to do that."
+			return 1
+
 
 // Wall mounted remote-control igniter.
 

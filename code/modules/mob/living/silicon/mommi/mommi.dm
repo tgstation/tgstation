@@ -43,7 +43,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		cell.maxcharge = 7500
 		cell.charge = 7500
 	..()
-
+	module = new /obj/item/weapon/robot_module/mommi(src)
 	laws = new mommi_base_law_type
 	// Don't sync if we're a KEEPER.
 	if(!istype(laws,/datum/ai_laws/keeper))
@@ -81,6 +81,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	switch(icontype)
 		if("Basic")	icon_state = "mommi"
 		else		icon_state = "keeper"
+	picked=1
 	updateicon()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -97,9 +98,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	..()
 
 /mob/living/silicon/robot/mommi/pick_module()
-	module = new /obj/item/weapon/robot_module/mommi(src)
-	choose_icon()
-	return // Yup
+	return // Nope
 
 /mob/living/silicon/robot/mommi/updatename(var/prefix as text)
 
@@ -377,6 +376,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if(!module)
 		pick_module()
+		return
+	if(!picked)
+		choose_icon()
 		return
 	var/dat = "<HEAD><TITLE>Modules</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>

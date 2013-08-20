@@ -329,6 +329,10 @@
 	if(module)
 		return (locate(/obj/item/weapon/tank/jetpack) in module.modules)
 	return 0
+/mob/living/silicon/robot/proc/installed_module(var/typepath)
+	if(module)
+		return (locate(typepath) in module.modules)
+	return 0
 
 
 // this function displays the cyborgs current cell charge in the stat panel
@@ -339,6 +343,32 @@
 		stat(null, text("No Cell Inserted!"))
 
 
+/mob/living/silicon/robot/proc/show_cable_lengths()
+	var/obj/item/weapon/cable_coil/coil = installed_module(/obj/item/weapon/cable_coil)
+	if(coil)
+		stat(null, text("Cable Lengths: [coil.amount]/30")) // MAXCOIL
+
+/mob/living/silicon/robot/proc/show_welder_fuel()
+	var/obj/item/weapon/weldingtool/WT = installed_module(/obj/item/weapon/weldingtool)
+	if(WT)
+		stat(null, text("Welder Fuel: [WT.get_fuel()]/[WT.max_fuel]"))
+
+/mob/living/silicon/robot/proc/show_metal_sheets()
+	var/obj/item/stack/sheet/metal/cyborg/M = installed_module(/obj/item/stack/sheet/metal/cyborg)
+	if(M)
+		stat(null, text("Metal Sheets: [M.amount]/50"))
+
+/mob/living/silicon/robot/proc/show_glass_sheets()
+	var/obj/item/stack/sheet/glass/G = installed_module(/obj/item/stack/sheet/glass)
+	if(G)
+		stat(null, text("Glass Sheets: [G.amount]/50"))
+
+/mob/living/silicon/robot/proc/show_rglass_sheets()
+	var/obj/item/stack/sheet/rglass/G = installed_module(/obj/item/stack/sheet/rglass)
+	if(G)
+		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
+
+
 // update the status screen display
 /mob/living/silicon/robot/Stat()
 	..()
@@ -346,6 +376,11 @@
 	if (client.statpanel == "Status")
 		show_cell_power()
 		show_jetpack_pressure()
+		show_cable_lengths()
+		show_welder_fuel()
+		show_metal_sheets()
+		show_glass_sheets()
+		show_rglass_sheets()
 
 /mob/living/silicon/robot/restrained()
 	return 0

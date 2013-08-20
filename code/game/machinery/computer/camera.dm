@@ -117,3 +117,9 @@
 	icon_state = "miningcameras"
 	network = list("MINE")
 	circuit = "/obj/item/weapon/circuitboard/mining"
+
+/obj/machinery/computer/security/engineering
+	name = "Engineering Cameras"
+	desc = "Used to monitor fires and breaches."
+	icon_state = "engineeringcameras"
+	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
