@@ -4863,7 +4863,7 @@
 "bPA" = (/obj/structure/extinguisher_cabinet{pixel_x = 0; pixel_y = 30},/obj/structure/closet/firecloset,/obj/item/taperoll/engineering,/turf/simulated/floor,/area/engine/break_room)
 "bPB" = (/obj/structure/closet/firecloset,/obj/item/taperoll/engineering,/turf/simulated/floor,/area/engine/break_room)
 "bPC" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/computer/security/telescreen{desc = "Used for watching the singularity chamber."; dir = 8; layer = 4; name = "Singularity Engine Telescreen"; network = list("Singularity"); pixel_x = 0; pixel_y = 30},/obj/structure/stool/bed/chair/office/dark{dir = 4},/turf/simulated/floor,/area/engine/break_room)
-"bPD" = (/obj/machinery/power/monitor,/obj/structure/cable,/turf/simulated/floor{icon_state = "caution"; dir = 5},/area/engine/break_room)
+"bPD" = (/obj/structure/cable,/obj/machinery/computer/security/engineering,/turf/simulated/floor{icon_state = "caution"; dir = 5},/area/engine/break_room)
 "bPE" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall/r_wall,/area/atmos)
 "bPF" = (/turf/simulated/wall/r_wall,/area/atmos)
 "bPG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall/r_wall,/area/atmos)
