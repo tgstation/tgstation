@@ -123,3 +123,4 @@
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
 	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
+	circuit = "/obj/item/weapon/circuitboard/security/engineering"
