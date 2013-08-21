@@ -8,7 +8,7 @@
 	density = 1
 	var/transform_dead = 0
 	var/transform_standing = 0
-	var/cooldown_duration = 1500 // 2.5 minutes
+	var/cooldown_duration = 900 // 1.5 minutes
 	var/cooldown = 0
 	var/robot_cell_charge = 5000
 	use_power = 1
@@ -44,6 +44,11 @@
 		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
 			AM.loc = src.loc
 			transform(AM)
+	//Shit bugs out if theres too many items on the enter side conveyer
+	else if(istype(AM, /obj/item))
+		var/move_dir = get_dir(loc, AM.loc)
+		if(move_dir == EAST)
+			AM.loc = src.loc
 
 /obj/machinery/transformer/proc/transform(var/mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
