@@ -1,4 +1,4 @@
-/obj/structure/closet/crate/critter
+/obj/structure/closet/critter
 	name = "critter crate"
 	desc = "A crate designed for safe transport of animals. Can sustain life for a while. Only openable from the the outside."
 	icon_state = "critter"
@@ -28,13 +28,12 @@
 			newgas.temperature = target_temp
 		return newgas
 
-/obj/structure/closet/crate/critter/can_open()
-	if(src.locked)
+/obj/structure/closet/critter/can_open()
+	if(src.locked || src.welded)
 		return 0
 	return 1
 
-/obj/structure/closet/crate/critter/open()
-
+/obj/structure/closet/critter/open()
 	if(!src.can_open())
 		return 0
 
@@ -56,55 +55,14 @@
 		else
 			new src.content_mob(loc)
 			src.already_opened = 1
+	..()
 
-	playsound(src.loc, sound_effect_open, 15, 1, -3)
-
-	dump_contents()
-
-	src.icon_state = icon_opened
-	src.opened = 1
-	src.density = 0
-	return 1
-
-/obj/structure/closet/crate/critter/close()
-	playsound(src.loc, sound_effect_close, 15, 1, -3)
-
-	take_contents()
-
-	src.icon_state = icon_closed
-	src.opened = 0
-	src.density = 1
+/obj/structure/closet/critter/close()
+	..()
 	src.locked = 1
 	return 1
 
-/obj/structure/closet/crate/critter/insert(var/atom/movable/AM)
-
-	if(contents.len >= storage_capacity)
-		return -1
-
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
-		if(L.buckled)
-			return 0
-		if(L.client)
-			L.client.perspective = EYE_PERSPECTIVE
-			L.client.eye = src
-
-	else if(isobj(AM))
-		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
-			return 0
-	else
-		return 0
-
-	if(istype(AM, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-		var/obj/structure/stool/bed/B = AM
-		if(B.buckled_mob)
-			return 0
-
-	AM.loc = src
-	return 1
-
-/obj/structure/closet/crate/critter/attack_hand(mob/user as mob)
+/obj/structure/closet/critter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if(src.loc == usr.loc)
@@ -114,27 +72,27 @@
 		src.locked = 0
 		src.toggle()
 
-/obj/structure/closet/crate/critter/corgi
+/obj/structure/closet/critter/corgi
 	name = "corgi crate"
 	content_mob = /mob/living/simple_animal/corgi //This statement is (not) false. See above.
 
-/obj/structure/closet/crate/critter/cow
+/obj/structure/closet/critter/cow
 	name = "cow crate"
 	content_mob = /mob/living/simple_animal/cow
 
-/obj/structure/closet/crate/critter/goat
+/obj/structure/closet/critter/goat
 	name = "goat crate"
 	content_mob = /mob/living/simple_animal/hostile/retaliate/goat
 
-/obj/structure/closet/crate/critter/chick
+/obj/structure/closet/critter/chick
 	name = "chicken crate"
 	content_mob = /mob/living/simple_animal/chick
 
-/obj/structure/closet/crate/critter/cat
+/obj/structure/closet/critter/cat
 	name = "cat crate"
 	content_mob = /mob/living/simple_animal/cat
 
-/*/obj/structure/closet/crate/critter/pug //just in case pugs gets added
+/*/obj/structure/closet/critter/pug //just in case pugs gets added
 	  name = "pug crate"
 	  content_mob = /mob/living/simple_animal/pug
 */

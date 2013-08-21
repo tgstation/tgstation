@@ -432,9 +432,10 @@
 			var/obj/structure/closet/secure_closet/SC = L.loc
 			if(!SC.locked && !SC.welded)
 				return	//It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
-		if(istype(L.loc, /obj/structure/closet/crate/critter))
-			breakout_time = 0.75	//These weren't designed for humans, thus, are easier to break out from.
-			var/obj/structure/closet/crate/critter/CR = L.loc
+		if(istype(L.loc, /obj/structure/closet/critter))
+			var/obj/structure/closet/critter/CR = L.loc
+			if(!CR.welded)
+				breakout_time = 0.75	//These weren't designed for humans, thus, are easier to break out from. The weld is the same as normal.
 			if(!CR.locked)	//This cannot happen, but let's check for it anyway.
 				return
 		else
@@ -457,8 +458,8 @@
 				var/obj/structure/closet/secure_closet/SC = L.loc
 				if(!SC.locked && !SC.welded)
 					return
-			if(istype(L.loc, /obj/structure/closet/crate/critter))
-				var/obj/structure/closet/crate/critter/CR = L.loc
+			if(istype(L.loc, /obj/structure/closet/critter))
+				var/obj/structure/closet/critter/CR = L.loc
 				if(!CR.locked)
 					return
 			else
@@ -482,14 +483,15 @@
 					var/obj/structure/bigDelivery/BD = SC.loc
 					BD.attack_hand(usr)
 				SC.open()
-			else if(istype(usr.loc, /obj/structure/closet/crate/critter))
-				var/obj/structure/closet/crate/critter/CR = L.loc
+			else if(istype(usr.loc, /obj/structure/closet/critter))
+				var/obj/structure/closet/critter/CR = L.loc
 				L.visible_message("<span class='danger'>[L] successfully broke out of [CR]!</span>", \
 								"<span class='notice'>You successfully break out of [CR]!</span>")
 				if(istype(CR.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
 					var/obj/structure/bigDelivery/BD = CR.loc
 					BD.attack_hand(usr)
 				CR.locked = 0
+				CR.welded = 0
 				CR.open()
 			else
 				C.welded = 0
