@@ -31,7 +31,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 //handles adding notes to the end of a ckey's buffer
 //originally had seperate entries such as var/by to record who left the note and when
 //but the current bansystem is a heap of dung.
-/proc/notes_add(var/ckey, var/note)
+/proc/notes_add(var/ckey, var/note, var/lognote = 0)
 	if(!ckey)
 		ckey = ckey(input(usr,"Who would you like to add notes for?","Enter a ckey",null) as text|null)
 		if(!ckey)	return
@@ -46,8 +46,9 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	notesfile.eof = 1		//move to the end of the buffer
 	notesfile << "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]"
 
-	message_admins("[key_name(usr)] added note '[note]' to [ckey]")
-	log_admin("[key_name(usr)] added note '[note]' to [ckey]")
+	if(lognote)//don't need an admin log for the notes applied automatically during bans.
+		message_admins("[key_name(usr)] added note '[note]' to [ckey]")
+		log_admin("[key_name(usr)] added note '[note]' to [ckey]")
 
 	return
 
