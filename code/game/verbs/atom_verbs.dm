@@ -1,9 +1,10 @@
 /atom/movable/verb/pull()
 	set name = "Pull"
-	set category = "IC"
+	set category = "Object"
 	set src in oview(1)
 
-	usr.start_pulling(src)
+	if(Adjacent(usr))
+		usr.start_pulling(src)
 	return
 
 /atom/verb/point()

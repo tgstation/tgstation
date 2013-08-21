@@ -8,7 +8,7 @@
 	icon_state = "forensic1"
 	w_class = 3.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()

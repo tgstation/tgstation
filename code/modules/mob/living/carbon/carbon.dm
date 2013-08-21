@@ -338,8 +338,9 @@
 	in_throw_mode = 1
 	throw_icon.icon_state = "act_throw_on"
 
-
-/mob/living/carbon/proc/throw_item(atom/target)
+/mob/proc/throw_item(atom/target)
+	return
+/mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
 	if(usr.stat || !target)
 		return

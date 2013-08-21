@@ -5,7 +5,7 @@
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = USEDELAY
+	flags = USEDELAY | NOBLUDGEON
 	//item_state = null
 	w_class = 10.0
 	layer = 20

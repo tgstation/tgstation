@@ -23,7 +23,6 @@
 	var/obj/screen/nutrition_icon = null
 	var/obj/screen/pressure = null
 	var/obj/screen/damageoverlay = null
-
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
@@ -95,7 +94,6 @@
 	var/a_intent = "help"//Living
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
-	var/lastDblClick = 0
 	var/lastKnownIP = null
 	var/obj/structure/stool/bed/buckled = null//Living
 	var/obj/item/l_hand = null//Living

@@ -163,20 +163,6 @@
 	item_state = "card-id"
 	w_class = 1.0
 
-//TODO: Figure out wtf this is and possibly remove it -Nodrak
-/obj/item/weapon/dummy
-	name = "dummy"
-	invisibility = 101.0
-	anchored = 1.0
-	flags = TABLEPASS
-
-/obj/item/weapon/dummy/ex_act()
-	return
-
-/obj/item/weapon/dummy/blob_act()
-	return
-
-
 /*
 /obj/item/weapon/game_kit
 	name = "Gaming Kit"

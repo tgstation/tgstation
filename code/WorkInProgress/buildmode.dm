@@ -57,7 +57,7 @@
 				dir = NORTHWEST
 			if(NORTHWEST)
 				dir = NORTH
-		return
+		return 1
 
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
@@ -95,7 +95,7 @@
 				usr << "\blue Left Mouse Button on turf/obj/mob      = Throw"
 				usr << "\blue Right Mouse Button on turf/obj/mob     = Select"
 				usr << "\blue ***********************************************************"
-		return
+		return 1
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
@@ -103,6 +103,7 @@
 
 	Click()
 		togglebuildmode(master.cl.mob)
+		return 1
 
 /obj/effect/bmode/buildholder
 	density = 0
@@ -142,7 +143,7 @@
 		else if(pa.Find("right"))
 			switch(master.cl.buildmode)
 				if(1)
-					return
+					return 1
 				if(2)
 					objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet")
 					var/P = text2path(objholder)
@@ -157,9 +158,9 @@
 
 					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
 					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
-						return
+						return 1
 					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-					if(!thetype) return
+					if(!thetype) return 1
 					switch(thetype)
 						if("text")
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
@@ -171,6 +172,7 @@
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
 						if("turf-reference")
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
+		return 1
 
 
 /proc/build_click(var/mob/user, buildmode, location, control, params, var/obj/object)

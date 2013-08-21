@@ -59,6 +59,7 @@
 #define CONDUCT		64		// conducts electricity (metal etc.)
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
+#define NOBLUDGEON	65536	// when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags

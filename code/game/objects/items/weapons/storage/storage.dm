@@ -292,18 +292,19 @@
 
 	if(isrobot(user))
 		user << "<span class='notice'>You're a robot. No.</span>"
-		return	//Robots can't interact with storage items.
+		return 1	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
-		return
+		return 1
 
 	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			user << "<span class='notice'>[T] won't fit in [src]."
-			return
+			return 1
 
 	handle_item_insertion(W)
+	return 1
 
 
 /obj/item/weapon/storage/dropped(mob/user)

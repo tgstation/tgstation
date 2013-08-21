@@ -41,7 +41,7 @@
 
 
 	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
-		if(flag)	//we're placing gun on a table or in backpack
+		if(flag)	//It's adjacent, is the user, or is on the user's person
 			return
 
 		//Exclude lasertag guns from the CLUMSY check.
