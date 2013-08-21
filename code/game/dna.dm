@@ -230,6 +230,8 @@
 	M.see_invisible = initial(M.see_invisible)
 
 	var/list/blocks = new /list(DNA_STRUC_ENZYMES_BLOCKS) //on-off status for each block
+	for(var/i in race_se_blocks)	//race mutations
+		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
 	for(var/i in bad_se_blocks)		//bad mutations
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
 	for(var/i in good_se_blocks)	//good mutations
@@ -623,8 +625,8 @@
 				scanner_status += " <span class='bad'>(Locked)</span>"
 			else
 				scanner_status += " <span class='good'>(Unlocked)</span>"
-			
-		
+
+
 	else
 		occupant_status += "<span class='bad'>----</span></div></div>"
 		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
@@ -632,8 +634,8 @@
 	var/status = "<div class='statusDisplay'>"
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
 	status += "[occupant_status]"
-	
-	
+
+
 	status += "<h3>Radiation Emitter Status</h3>"
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
 	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
@@ -649,7 +651,7 @@
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "</div>" // Close statusDisplay div
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
-	if(connected)		
+	if(connected)
 		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.open ? "Close" : "Open"] Scanner</a> "
 		if (connected.open)
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
@@ -662,17 +664,17 @@
 	else				buttons += "<span class='linkOff'>Eject Disk</span> "
 	if(current_screen == "buffer")	buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
 	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
-		
+
 	switch(current_screen)
 		if("working")
 			temp_html += status
-			temp_html += "<h1>System Busy</h1>"			
+			temp_html += "<h1>System Busy</h1>"
 			temp_html += "Working ... Please wait ([radduration] Seconds)"
-		if("buffer")			
+		if("buffer")
 			temp_html += status
 			temp_html += buttons
 			temp_html += "<h1>Buffer Menu</h1>"
-			
+
 			if(istype(buffer))
 				for(var/i=1, i<=buffer.len, i++)
 					temp_html += "<br>Slot [i]: "
@@ -731,14 +733,14 @@
 			temp_html += status
 			temp_html += buttons
 			temp_html += "<h1>Radiation Emitter Menu</h1>"
-			
+
 			temp_html += "<a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
 			temp_html += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
 
-			temp_html += "<h3>Irradiate Subject</h3>"	
+			temp_html += "<h3>Irradiate Subject</h3>"
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
 
-			var/max_line_len = 7*DNA_BLOCK_SIZE	
+			var/max_line_len = 7*DNA_BLOCK_SIZE
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.uni_identity)
@@ -746,7 +748,7 @@
 					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)						
+					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "----"
@@ -760,7 +762,7 @@
 					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)						
+					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "----"

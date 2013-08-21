@@ -40,6 +40,7 @@ var/CLUMSYBLOCK = 0
 var/STRANGEBLOCK = 0
 var/RACEBLOCK = 0
 
+var/list/race_se_blocks
 var/list/bad_se_blocks
 var/list/good_se_blocks
 var/list/op_se_blocks
