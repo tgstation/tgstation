@@ -78,8 +78,8 @@
 				loc = A.loc
 				return 0// nope.avi
 
-			var/distance = get_dist(original,loc)
-			def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
+			var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
+			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
 				M << "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by [src]!</span>"
 			else

@@ -238,10 +238,10 @@ var/list/slot_equipment_priority = list( \
 	<HR>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
-	user << browse(dat, "window=mob[name];size=325x500")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=325x500")
+	onclose(user, "mob\ref[src]")
 
 
 /mob/verb/mode()
@@ -644,7 +644,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
+				stat(null,"Air-[master_controller.air_cost]\t#[air_master.active_turfs.len]")
+				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
 				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")

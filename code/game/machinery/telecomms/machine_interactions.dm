@@ -59,8 +59,10 @@
 						del(A)
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
+				else
+					user << "You need more cable"
 			if(istype(P, /obj/item/weapon/crowbar))
-				user << "You begin prying out the circuit board other components..."
+				user << "You begin prying out the circuit board and components..."
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60))
 					user << "You finish prying out the components."
@@ -275,13 +277,12 @@
 
 
 /obj/machinery/telecomms/Topic(href, href_list)
+	if(..())
+		return
 
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			return
-
-	if(stat & (BROKEN|NOPOWER))
-		return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
 
@@ -384,7 +385,6 @@
 	src.Options_Topic(href, href_list)
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
 
 	updateUsrDialog()
 

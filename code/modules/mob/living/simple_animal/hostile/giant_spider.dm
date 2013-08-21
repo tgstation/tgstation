@@ -19,7 +19,7 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
-	response_harm   = "pokes"
+	response_harm   = "hits"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 200
 	health = 200
@@ -64,8 +64,8 @@
 
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
 	..()
-	if(isliving(target_mob))
-		var/mob/living/L = target_mob
+	if(isliving(target))
+		var/mob/living/L = target
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
 			if(prob(poison_per_bite))
@@ -82,7 +82,7 @@
 				for(var/turf/T in orange(20, src))
 					move_targets.Add(T)*/
 				stop_automated_movement = 1
-				walk_to(src, pick(orange(20, src)), 1, move_to_delay)
+				Goto(pick(orange(20, src)), move_to_delay)
 				spawn(50)
 					stop_automated_movement = 0
 					walk(src,0)
@@ -107,7 +107,7 @@
 					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/giant_spider))
 						cocoon_target = C
 						busy = MOVING_TO_TARGET
-						walk_to(src, C, 1, move_to_delay)
+						Goto(C, move_to_delay)
 						//give up if we can't reach them after 10 seconds
 						GiveUp(C)
 						return
@@ -149,7 +149,7 @@
 								cocoon_target = O
 								busy = MOVING_TO_TARGET
 								stop_automated_movement = 1
-								walk_to(src, O, 1, move_to_delay)
+								Goto(O, move_to_delay)
 								//give up if we can't reach them after 10 seconds
 								GiveUp(O)
 

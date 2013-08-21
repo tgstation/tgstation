@@ -16,31 +16,28 @@
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 0
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-
-		if (ismob(AM))
-			var/mob/tmob = AM
-			tmob.LAssailant = src
-
-		if (!now_pushing)
-			now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+
+	if (ismob(AM))
+		var/mob/tmob = AM
+		tmob.LAssailant = src
+
+	if (!now_pushing)
+		now_pushing = 1
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	var/tally = 0
@@ -264,7 +261,7 @@
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
@@ -398,10 +395,10 @@ In all, this is a lot like the monkey code. /N
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
-	user << browse(dat, "window=mob[name];size=325x500")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=325x500")
+	onclose(user, "mob\ref[src]")
 
 
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)

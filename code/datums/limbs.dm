@@ -12,13 +12,13 @@
 /datum/limb/chest
 	name = "chest"
 	icon_name = "chest"
-	max_damage = 150
+	max_damage = 200
 	body_part = CHEST
 
 /datum/limb/head
 	name = "head"
 	icon_name = "head"
-	max_damage = 125
+	max_damage = 200
 	body_part = HEAD
 
 /datum/limb/l_arm

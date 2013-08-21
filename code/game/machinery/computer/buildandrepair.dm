@@ -42,14 +42,14 @@
 	board_type = "other"
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
-	build_path = "/obj/machinery/computer/aiupload"
+	build_path = "/obj/machinery/computer/upload/ai"
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/borgupload
 	name = "Circuit board (Cyborg Upload)"
-	build_path = "/obj/machinery/computer/borgupload"
+	build_path = "/obj/machinery/computer/upload/borg"
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/med_data
-	name = "Circuit board (Medical Records)"
+	name = "Circuit board (Medical Records Console)"
 	build_path = "/obj/machinery/computer/med_data"
 /obj/item/weapon/circuitboard/pandemic
 	name = "Circuit board (PanD.E.M.I.C. 2200)"
@@ -77,7 +77,7 @@
 	build_path = "/obj/machinery/computer/teleporter"
 	origin_tech = "programming=2;bluespace=2"
 /obj/item/weapon/circuitboard/secure_data
-	name = "Circuit board (Security Records)"
+	name = "Circuit board (Security Records Console)"
 	build_path = "/obj/machinery/computer/secure_data"
 /obj/item/weapon/circuitboard/stationalert
 	name = "Circuit board (Station Alerts)"
@@ -129,7 +129,7 @@
 	name = "Circuit board (Magix)"
 	build_path = "/obj/machinery/computer/pod/old/swf"
 /obj/item/weapon/circuitboard/prisoner
-	name = "Circuit board (Prisoner Management)"
+	name = "Circuit board (Prisoner Management Console)"
 	build_path = "/obj/machinery/computer/prisoner"
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
@@ -141,7 +141,7 @@
 	name = "Circuit Board (R&D Server Control)"
 	build_path = "/obj/machinery/computer/rdservercontrol"
 /obj/item/weapon/circuitboard/crew
-	name = "Circuit board (Crew monitoring computer)"
+	name = "Circuit board (Crew Monitoring Console)"
 	build_path = "/obj/machinery/computer/crew"
 	origin_tech = "programming=3;biotech=2;magnets=2"
 /obj/item/weapon/circuitboard/mech_bay_power_console
@@ -149,7 +149,7 @@
 	build_path = "/obj/machinery/computer/mech_bay_power_console"
 	origin_tech = "programming=2;powerstorage=3"
 /obj/item/weapon/circuitboard/ordercomp
-	name = "Circuit board (Supply ordering console)"
+	name = "Circuit board (Supply Ordering Console)"
 	build_path = "/obj/machinery/computer/ordercomp"
 	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/supplycomp

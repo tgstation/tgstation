@@ -46,6 +46,12 @@
 
 	..()	//redirect to hsrc.Topic()
 
+/client/proc/is_content_unlocked()
+	if(!prefs.unlock_content)
+		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+		return 0
+	return 1
+
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
@@ -79,6 +85,11 @@
 	///////////
 	//CONNECT//
 	///////////
+#if (PRELOAD_RSC == 0)
+var/list/external_rsc_urls
+var/next_external_rsc = 0
+#endif
+
 /client/New(TopicData)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
@@ -86,6 +97,12 @@
 		return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
+
+#if (PRELOAD_RSC == 0)
+	if(external_rsc_urls && external_rsc_urls.len)
+		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
+		preload_rsc = external_rsc_urls[next_external_rsc]
+#endif
 
 	clients += src
 	directory[ckey] = src
@@ -215,9 +232,8 @@
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',
-		'html/browser/cryo.css',
 		'html/browser/scannernew.css',
-		'html/browser/sleeper.css',
+		'html/browser/playeroptions.css',
 		'icons/pda_icons/pda_atmos.png',
 		'icons/pda_icons/pda_back.png',
 		'icons/pda_icons/pda_bell.png',
@@ -268,9 +284,3 @@
 		'icons/stamp_icons/large_stamp-qm.png',
 		'icons/stamp_icons/large_stamp-law.png'
 		)
-
-/client/proc/is_content_unlocked()
-	if(!prefs.unlock_content)
-		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
-		return 0
-	return 1

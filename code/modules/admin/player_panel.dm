@@ -194,7 +194,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?_src_=holder;secretsadmin=check_antagonist'>Check antagonists</a>
+					Hover over a line to see more information - <a href='?_src_=holder;secretsadmin=check_antagonist'>Check antagonists</a> - Kick <a href='?_src_=holder;secretsadmin=kick_all_from_lobby;afkonly=0'>everyone</a>/<a href='?_src_=holder;secretsadmin=kick_all_from_lobby;afkonly=1'>AFKers</a> in lobby
 					<p>
 				</td>
 			</tr>
@@ -474,6 +474,20 @@
 					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
 				else
 					dat += "<tr><td><i>Traitor not found!</i></td></tr>"
+			dat += "</table>"
+
+		if(istype(ticker.mode, /datum/game_mode/blob))
+			var/datum/game_mode/blob/mode = ticker.mode
+			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
+			dat += "<tr><td><i>Progress: [blobs.len]/[mode.blobwincount]</i></td></tr>"
+
+			for(var/datum/mind/blob in mode.infected_crew)
+				var/mob/M = blob.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+				else
+					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 			dat += "</table>"
 
 		dat += "</body></html>"

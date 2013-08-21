@@ -598,7 +598,8 @@
 
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
 		var/tpart_set = filter.getStr("part_set")

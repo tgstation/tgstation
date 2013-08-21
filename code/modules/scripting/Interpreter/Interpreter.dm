@@ -33,11 +33,11 @@
 		status=0
 		returnVal
 
-		max_statements=1000 // maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation
+		max_statements=900 // maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation
 		cur_statements=0    // current amount of statements called
 		alertadmins=0		// set to 1 if the admins shouldn't be notified of anymore issues
 		max_iterations=100 	// max number of uninterrupted loops possible
-		max_recursion=50   	// max recursions without returning anything (or completing the code block)
+		max_recursion=10   	// max recursions without returning anything (or completing the code block)
 		cur_recursion=0	   	// current amount of recursion
 /*
 	Var: persist
@@ -85,6 +85,19 @@
 			return S
 
 /*
+	Proc: AlertAdmins
+	Alerts the admins of a script that is bad.
+*/
+		AlertAdmins()
+			if(container && !alertadmins)
+				if(istype(container, /datum/TCS_Compiler))
+					var/datum/TCS_Compiler/Compiler = container
+					var/obj/machinery/telecomms/server/Holder = Compiler.Holder
+					var/message = "Potential crash-inducing NTSL script detected at telecommunications server [Compiler.Holder] ([Holder.x], [Holder.y], [Holder.z])."
+
+					alertadmins = 1
+					message_admins(message, 1)
+/*
 	Proc: RunBlock
 	Runs each statement in a block of code.
 */
@@ -108,15 +121,7 @@
 					cur_statements++
 					if(cur_statements >= max_statements)
 						RaiseError(new/runtimeError/MaxCPU())
-
-						if(container && !alertadmins)
-							if(istype(container, /datum/TCS_Compiler))
-								var/datum/TCS_Compiler/Compiler = container
-								var/obj/machinery/telecomms/server/Holder = Compiler.Holder
-								var/message = "Potential crash-inducing NTSL script detected at telecommunications server [Compiler.Holder] ([Holder.x], [Holder.y], [Holder.z])."
-
-								alertadmins = 1
-								message_admins(message, 1)
+						AlertAdmins()
 						break
 
 					if(istype(S, /node/statement/VariableAssignment))
@@ -179,6 +184,7 @@
 
 			// If recursion gets too high (max 50 nested functions) throw an error
 			if(cur_recursion >= max_recursion)
+				AlertAdmins()
 				RaiseError(new/runtimeError/RecursionLimitReached())
 				return 0
 
@@ -330,4 +336,5 @@
 			else if(!istype(value) && isobject(value))			value = new/node/expression/value/reference(value)
 			//TODO: check for invalid name
 			S.variables["[name]"] = value
+
 

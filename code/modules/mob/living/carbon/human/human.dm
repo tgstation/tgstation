@@ -79,24 +79,21 @@
 		tmob.LAssailant = src
 
 	now_pushing = 0
-	spawn(0)
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
 		return
-	return
+	if (!now_pushing)
+		now_pushing = 1
+
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = 0
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -123,8 +120,8 @@
 				stat("Distribution Pressure", internal.distribute_pressure)
 		if(mind)
 			if(mind.changeling)
-				stat("Chemical Storage", mind.changeling.chem_charges)
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Absorbed DNA", mind.changeling.absorbedcount)
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
@@ -210,7 +207,7 @@
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
+	apply_damage(rand(20,30), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
 /mob/living/carbon/human/meteorhit(O as obj)
@@ -377,15 +374,16 @@
 	if(legcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
 	if(w_uniform)
-		dat += "<BR><A href='?src=\ref[src];pockets=1'>Empty Pockets</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([l_store ? "Full" : "Empty"])</A>"
+		dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([r_store ? "Full" : "Empty"])</A>"
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
 
-	user << browse(dat, "window=mob[name];size=340x480")
-	onclose(user, "mob[name]")
+	user << browse(dat, "window=mob\ref[src];size=340x480")
+	onclose(user, "mob\ref[src]")
 
 
 // called when something steps onto a human
@@ -398,74 +396,68 @@
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
-	var/obj/item/device/pda/pda = wear_id
-	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		if (pda.id && istype(pda.id, /obj/item/weapon/card/id))
-			. = pda.id.assignment
-		else
-			. = pda.ownjob
-	else if (istype(id))
+	var/obj/item/weapon/card/id/id = get_idcard()
+	if(id)
 		. = id.assignment
 	else
-		return if_no_id
-	if (!.)
-		. = if_no_job
-	return
+		var/obj/item/device/pda/pda = wear_id
+		if(istype(pda))
+			. = pda.ownjob
+		else
+			return if_no_id
+	if(!.)
+		return if_no_job
 
 //gets name from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(var/if_no_id = "Unknown")
+	var/obj/item/weapon/card/id/id = get_idcard()
+	if(id)
+		return id.registered_name
 	var/obj/item/device/pda/pda = wear_id
-	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		if (pda.id)
-			. = pda.id.registered_name
-		else
-			. = pda.owner
-	else if (istype(id))
-		. = id.registered_name
-	else
-		return if_no_id
-	return
+	if(istype(pda))
+		return pda.owner
+	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/human/proc/get_visible_name()
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
-		return get_id_name("Unknown")
-	if( head && (head.flags_inv&HIDEFACE) )
-		return get_id_name("Unknown")		//Likewise for hats
-	var/face_name = get_face_name()
+	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
-	if(id_name && (id_name != face_name))
-		return "[face_name] (as [id_name])"
-	return face_name
+	if(face_name)
+		if(id_name && (id_name != face_name))
+			return "[face_name] (as [id_name])"
+		return face_name
+	if(id_name)
+		return id_name
+	return "Unknown"
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
-/mob/living/carbon/human/proc/get_face_name()
+/mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
+	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+		return if_no_face
+	if( head && (head.flags_inv&HIDEFACE) )
+		return if_no_face		//Likewise for hats
 	var/datum/limb/O = get_organ("head")
 	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
-		return "Unknown"
+		return if_no_face
 	return real_name
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
+	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if(istype(pda))		. = pda.owner
-	else if(istype(id))	. = id.registered_name
-	if(!.) 				. = if_no_id	//to prevent null-names making the mob unclickable
+	if(istype(wallet))		id = wallet.front_id
+	if(istype(id))			. = id.registered_name
+	else if(istype(pda))	. = pda.owner
+	if(!.) 					. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
 //gets ID card object from special clothes slot or null.
 /mob/living/carbon/human/proc/get_idcard()
-	var/obj/item/weapon/card/id/id = wear_id
-	var/obj/item/device/pda/pda = wear_id
-	if (istype(pda) && pda.id)
-		id = pda.id
-	if (istype(id))
-		return id
+	if(wear_id)
+		return wear_id.GetID()
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
@@ -481,15 +473,38 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["pockets"])
+
+			var/pocket_side = href_list["pockets"]
+			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
+			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
+			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+
 			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
-			usr << "<span class='notice'>You try to empty [src]'s pockets.</span>"
-			if(do_mob(usr, src, STRIP_DELAY * 0.5))
-				u_equip(r_store)
-				u_equip(l_store)
+			if(pocket_item)
+				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
+				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+			else
+				return
+
+			if(do_mob(usr, src, STRIP_DELAY))
+				if(pocket_item)
+					u_equip(pocket_item)
+				else
+					if(place_item)
+						usr.u_equip(place_item)
+						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
+
+				// Update strip window
+				if(usr.machine == src && in_range(src, usr))
+					show_inv(usr)
+
+
+
 			else
 				// Display a warning if the user mocks up
-				src << "<span class='warning'>You feel your pockets being fumbled with!</span>"
+				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
@@ -514,31 +529,19 @@
 
 
 				var/modified = 0
-				var/perpname = "wot"
-				if(wear_id)
-					var/obj/item/weapon/card/id/I = wear_id.GetID()
-					if(I)
-						perpname = I.registered_name
-					else
-						perpname = name
-				else
-					perpname = name
-
+				var/perpname = H.get_face_name(H.get_id_name(""))
 				if(perpname)
-					for (var/datum/data/record/E in data_core.general)
-						if (E.fields["name"] == perpname)
-							for (var/datum/data/record/R in data_core.security)
-								if (R.fields["id"] == E.fields["id"])
+					var/datum/data/record/R = find_record("name", perpname, data_core.security)
+					if(R)
+						var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+						if(R)
+							if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+								if(setcriminal != "Cancel")
+									R.fields["criminal"] = setcriminal
+									modified = 1
 
-									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
-
-									if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-										if(setcriminal != "Cancel")
-											R.fields["criminal"] = setcriminal
-											modified = 1
-
-											spawn()
-												H.handle_regular_hud_updates()
+									spawn()
+										H.handle_regular_hud_updates()
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."

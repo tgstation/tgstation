@@ -55,6 +55,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		initialize()
 
 
+/obj/item/device/radio/MouseDrop(obj/over_object as obj, src_location, over_location)
+	var/mob/M = usr
+	if((!istype(over_object, /obj/screen)) && src.loc == M)
+		return attack_self(M)
+	return
+
+
 /obj/item/device/radio/initialize()
 
 	if(freerange)
@@ -255,11 +262,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 		if (ishuman(M))
 			var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
-			var/datum/data/record/findjob
-			for (var/datum/data/record/t in data_core.general)
-				if(t.fields["name"] == voice)
-					findjob = t
-					break
+			var/datum/data/record/findjob = find_record("name", voice, data_core.general)
 
 			if(voice != real_name)
 				displayname = voice

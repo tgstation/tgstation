@@ -52,7 +52,7 @@
 			return
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
 		AI_mind.current:laws = new /datum/ai_laws/malfunction
-		AI_mind.current:malf_picker = new /datum/AI_Module/module_picker
+		AI_mind.current:malf_picker = new /datum/module_picker
 		AI_mind.current:show_laws()
 
 		greet_malf(AI_mind)
@@ -111,13 +111,15 @@
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)
-		AI_mind.current << "Congratulations you have taken control of the station."
-		AI_mind.current << "You may decide to blow up the station. You have 60 seconds to choose."
-		AI_mind.current << "You should have a new verb in the Malfunction tab. If you dont - rejoin the game."
-		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
+		if(AI_mind.current)
+			AI_mind.current << "Congratulations you have taken control of the station."
+			AI_mind.current << "You may decide to blow up the station. You have 60 seconds to choose."
+			AI_mind.current << "You should have a new verb in the Malfunction tab. If you dont - rejoin the game."
+			AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
 	spawn (600)
 		for(var/datum/mind/AI_mind in malf_ai)
-			AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
+			if(AI_mind.current)
+				AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
 		to_nuke_or_not_to_nuke = 0
 	return
 

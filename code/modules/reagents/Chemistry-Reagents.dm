@@ -358,39 +358,6 @@ datum
 				..()
 				return
 
-		srejuvenate
-			name = "Soporific Rejuvenant"
-			id = "stoxin2"
-			description = "Put people to sleep, and heals them."
-			reagent_state = LIQUID
-			color = "#C8A5DC" // rgb: 200, 165, 220
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(!data) data = 1
-				data++
-				if(M.losebreath >= 10)
-					M.losebreath = max(10, M.losebreath-10)
-				holder.remove_reagent(src.id, 0.2)
-				switch(data)
-					if(1 to 15)
-						M.eye_blurry = max(M.eye_blurry, 10)
-					if(15 to 25)
-						M.drowsyness  = max(M.drowsyness, 20)
-					if(25 to INFINITY)
-						M.sleeping += 1
-						M.adjustOxyLoss(-M.getOxyLoss())
-						M.SetWeakened(0)
-						M.SetStunned(0)
-						M.SetParalysis(0)
-						M.dizziness = 0
-						M.drowsyness = 0
-						M.stuttering = 0
-						M.confused = 0
-						M.jitteriness = 0
-				..()
-				return
-
 		inaprovaline
 			name = "Inaprovaline"
 			id = "inaprovaline"
@@ -1369,19 +1336,12 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				var/turf/the_turf = get_turf(O)
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
-				the_turf.assume_air(napalm)
-			reaction_turf(var/turf/T, var/volume)
+				O.atmos_spawn_air("fuel", 5)
+
+			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
-				T.assume_air(napalm)
+				if(istype(T))
+					T.atmos_spawn_air("fuel", 5)
 				return
 
 		toxin/lexorin
@@ -1659,8 +1619,8 @@ datum
 									H.update_damage_overlays(0)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream")
-									H.f_style = "Shaved"
-									H.h_style = "Bald"
+									H.facial_hair_style = "Shaved"
+									H.hair_style = "Bald"
 									H.update_hair(0)
 									H.status_flags |= DISFIGURED
 						else
@@ -2619,8 +2579,11 @@ datum
 				if(!data) data = 1
 				data++
 				switch(data)
-					if(51 to INFINITY)
+					if(51 to 200)
 						M.sleeping += 1
+					if(201 to INFINITY)
+						M.sleeping += 1
+						M.adjustToxLoss(2)
 				..()
 				return
 
@@ -2642,6 +2605,8 @@ datum
 					M.confused = max(M.confused+3,0)
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
+				else if(data >=200)
+					M.adjustToxLoss(2)
 				..()
 				return
 
@@ -2665,6 +2630,8 @@ datum
 					M.confused = max(M.confused+3,0)
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
+				else if(data >=200)
+					M.adjustToxLoss(2)
 				..()
 				return
 
@@ -2691,15 +2658,30 @@ datum
 						M.make_dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
-					if (10 to INFINITY)
+					if (10 to 200)
 						if (!M.stuttering) M.stuttering = 1
 						M.make_jittery(40)
 						M.make_dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
+					if(200 to INFINITY)
+						if (!M.stuttering) M.stuttering = 1
+						M.make_jittery(60)
+						M.make_dizzy(60)
+						M.druggy = max(M.druggy, 75)
+						if(prob(40)) M.emote(pick("twitch","giggle"))
+						if(prob(30)) M.adjustToxLoss(2)
 				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
+
+/*boozepwr chart
+55 = non-toxic alchohol
+45 = medium-toxic
+35 = the hard stuff
+25 = potent mixes
+<15 = deadly toxic
+*/
 
 		ethanol
 			name = "Ethanol"
@@ -2707,7 +2689,7 @@ datum
 			description = "A well-known alcohol with a variety of applications."
 			reagent_state = LIQUID
 			color = "#404030" // rgb: 64, 64, 48
-			var/boozepwr = 45 //lower numbers mean the booze will have an effect faster.
+			var/boozepwr = 10 //lower numbers mean the booze will have an effect faster.
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
@@ -2720,6 +2702,8 @@ datum
 				if(data >= boozepwr*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
+				if(data >= boozepwr*10 && prob(33))
+					M.adjustToxLoss(2)
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
@@ -2753,6 +2737,7 @@ datum
 			id = "kahlua"
 			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 45
 
 			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
@@ -2767,12 +2752,14 @@ datum
 			id = "whiskey"
 			description = "A superb and well-aged single-malt whiskey. Damn."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/thirteenloko
 			name = "Thirteen Loko"
 			id = "thirteenloko"
 			description = "A potent mixture of caffeine and alcohol."
 			color = "#102000" // rgb: 16, 32, 0
+			boozepwr = 35
 
 			on_mob_life(var/mob/living/M as mob)
 				M.drowsyness = max(0,M.drowsyness-7)
@@ -2789,28 +2776,19 @@ datum
 			id = "vodka"
 			description = "Number one drink AND fueling choice for Russians worldwide."
 			color = "#0064C8" // rgb: 0, 100, 200
+			boozepwr = 35
 
 			on_mob_life(var/mob/living/M as mob)
 				M.radiation = max(M.radiation-2,0)
 				..()
 				return
 
-		ethanol/holywater
-			name = "Holy Water"
-			id = "holywater"
-			description = "Water blessed by some deity."
-			color = "#E0E8EF" // rgb: 224, 232, 239
-			boozepwr = 15
-
-			reaction_turf(var/turf/simulated/T, var/volume)
-				if(!istype(T)) return
-				T.Bless()
-
 		ethanol/bilk
 			name = "Bilk"
 			id = "bilk"
 			description = "This appears to be beer mixed with milk. Disgusting."
 			color = "#895C4C" // rgb: 137, 92, 76
+			boozepwr = 55
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.getBruteLoss() && prob(10)) M.heal_organ_damage(1,0)
@@ -2823,6 +2801,7 @@ datum
 			id = "threemileisland"
 			description = "Made for a woman, strong enough for a man."
 			color = "#666340" // rgb: 102, 99, 64
+			boozepwr = 15
 
 			on_mob_life(var/mob/living/M as mob)
 				M.druggy = max(M.druggy, 50)
@@ -2834,36 +2813,42 @@ datum
 			id = "gin"
 			description = "It's gin. In space. I say, good sir."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
 
 		ethanol/rum
 			name = "Rum"
 			id = "rum"
 			description = "Yohoho and all that."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 45
 
 		ethanol/tequilla
 			name = "Tequila"
 			id = "tequilla"
 			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 			color = "#FFFF91" // rgb: 255, 255, 145
+			boozepwr = 35
 
 		ethanol/vermouth
 			name = "Vermouth"
 			id = "vermouth"
 			description = "You suddenly feel a craving for a martini..."
 			color = "#91FF91" // rgb: 145, 255, 145
+			boozepwr = 45
 
 		ethanol/wine
 			name = "Wine"
 			id = "wine"
 			description = "An premium alchoholic beverage made from distilled grape juice."
 			color = "#7E4043" // rgb: 126, 64, 67
+			boozepwr = 45
 
 		ethanol/cognac
 			name = "Cognac"
 			id = "cognac"
 			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 			color = "#AB3C05" // rgb: 171, 60, 5
+			boozepwr = 45
 
 		ethanol/hooch
 			name = "Hooch"
@@ -2877,91 +2862,98 @@ datum
 			id = "ale"
 			description = "A dark alchoholic beverage made by malted barley and yeast."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
 
 		ethanol/goldschlager
 			name = "Goldschlager"
 			id = "goldschlager"
 			description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 			color = "#FFFF91" // rgb: 255, 255, 145
+			boozepwr = 25
 
 		ethanol/patron
 			name = "Patron"
 			id = "patron"
 			description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
 			color = "#585840" // rgb: 88, 88, 64
+			boozepwr = 45
 
 		ethanol/gintonic
 			name = "Gin and Tonic"
 			id = "gintonic"
 			description = "An all time classic, mild cocktail."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 65
+			boozepwr = 55
 
 		ethanol/cuba_libre
 			name = "Cuba Libre"
 			id = "cubalibre"
 			description = "Rum, mixed with cola. Viva la revolution."
 			color = "#3E1B00" // rgb: 62, 27, 0
+			boozepwr = 45
 
 		ethanol/whiskey_cola
 			name = "Whiskey Cola"
 			id = "whiskeycola"
 			description = "Whiskey, mixed with cola. Surprisingly refreshing."
 			color = "#3E1B00" // rgb: 62, 27, 0
-			boozepwr = 65
+			boozepwr = 35
 
 		ethanol/martini
 			name = "Classic Martini"
 			id = "martini"
 			description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/vodkamartini
 			name = "Vodka Martini"
 			id = "vodkamartini"
 			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 25
 
 		ethanol/white_russian
 			name = "White Russian"
 			id = "whiterussian"
 			description = "That's just, like, your opinion, man..."
 			color = "#A68340" // rgb: 166, 131, 64
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/screwdrivercocktail
 			name = "Screwdriver"
 			id = "screwdrivercocktail"
 			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
 			color = "#A68310" // rgb: 166, 131, 16
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/booger
 			name = "Booger"
 			id = "booger"
 			description = "Ewww..."
 			color = "#8CFF8C" // rgb: 140, 255, 140
-			boozepwr = 55
+			boozepwr = 45
 
 		ethanol/bloody_mary
 			name = "Bloody Mary"
 			id = "bloodymary"
 			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/brave_bull
 			name = "Brave Bull"
 			id = "bravebull"
 			description = "It's just as effective as Dutch-Courage!."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/tequilla_sunrise
 			name = "Tequila Sunrise"
 			id = "tequillasunrise"
 			description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 			color = "#FFE48C" // rgb: 255, 228, 140
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/toxins_special
 			name = "Toxins Special"
@@ -2969,6 +2961,7 @@ datum
 			description = "This thing is ON FIRE!. CALL THE DAMN SHUTTLE!"
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 15
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 330)
@@ -2982,6 +2975,7 @@ datum
 			description = "Deny drinking this and prepare for THE LAW."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 25
 
 			on_mob_life(var/mob/living/M as mob)
 				M.Stun(2)
@@ -2993,20 +2987,21 @@ datum
 			id = "irishcream"
 			description = "Whiskey-imbued cream, what else would you expect from the Irish."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/manly_dorf
 			name = "The Manly Dorf"
 			id = "manlydorf"
 			description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 10
+			boozepwr = 45 //was 10, but really its only beer and ale, both weak alchoholic beverages
 
 		ethanol/longislandicedtea
 			name = "Long Island Iced Tea"
 			id = "longislandicedtea"
 			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 55
+			boozepwr = 25
 
 		ethanol/moonshine
 			name = "Moonshine"
@@ -3027,34 +3022,35 @@ datum
 			id = "irishcoffee"
 			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/margarita
 			name = "Margarita"
 			id = "margarita"
 			description = "On the rocks with salt on the rim. Arriba~!"
 			color = "#8CFF8C" // rgb: 140, 255, 140
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/black_russian
 			name = "Black Russian"
 			id = "blackrussian"
 			description = "For the lactose-intolerant. Still as classy as a White Russian."
 			color = "#360000" // rgb: 54, 0, 0
-			boozepwr = 55
+			boozepwr = 35
 
 		ethanol/manhattan
 			name = "Manhattan"
 			id = "manhattan"
 			description = "The Detective's undercover drink of choice. He never could stomach gin..."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 55
+			boozepwr = 45
 
 		ethanol/manhattan_proj
 			name = "Manhattan Project"
 			id = "manhattan_proj"
 			description = "A scientist's drink of choice, for pondering ways to blow up the station."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 15
 
 			on_mob_life(var/mob/living/M as mob)
 				M.druggy = max(M.druggy, 30)
@@ -3066,12 +3062,14 @@ datum
 			id = "whiskeysoda"
 			description = "For the more refined griffon."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/antifreeze
 			name = "Anti-freeze"
 			id = "antifreeze"
 			description = "Ultimate refreshment."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 25
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 330)
@@ -3084,48 +3082,56 @@ datum
 			id = "barefoot"
 			description = "Barefoot and pregnant"
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 45
 
 		ethanol/snowwhite
 			name = "Snow White"
 			id = "snowwhite"
 			description = "A cold refreshment"
 			color = "#FFFFFF" // rgb: 255, 255, 255
+			boozepwr = 45
 
 		ethanol/demonsblood
 			name = "Demons Blood"
 			id = "demonsblood"
 			description = "AHHHH!!!!"
 			color = "#820000" // rgb: 130, 0, 0
+			boozepwr = 35
 
 		ethanol/vodkatonic
 			name = "Vodka and Tonic"
 			id = "vodkatonic"
 			description = "For when a gin and tonic isn't russian enough."
 			color = "#0064C8" // rgb: 0, 100, 200
+			boozepwr = 35
 
 		ethanol/ginfizz
 			name = "Gin Fizz"
 			id = "ginfizz"
 			description = "Refreshingly lemony, deliciously dry."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 45
 
 		ethanol/bahama_mama
 			name = "Bahama mama"
 			id = "bahama_mama"
 			description = "Tropical cocktail."
 			color = "#FF7F3B" // rgb: 255, 127, 59
+			boozepwr = 35
 
 		ethanol/singulo
 			name = "Singulo"
 			id = "singulo"
 			description = "A blue-space beverage!"
 			color = "#2E6671" // rgb: 46, 102, 113
+			boozepwr = 15
 
 		ethanol/sbiten
 			name = "Sbiten"
 			id = "sbiten"
 			description = "A spicy Vodka! Might be a little hot for the little guys!"
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 360)
@@ -3138,12 +3144,14 @@ datum
 			id = "devilskiss"
 			description = "Creepy time!"
 			color = "#A68310" // rgb: 166, 131, 16
+			boozepwr = 35
 
 		ethanol/red_mead
 			name = "Red Mead"
 			id = "red_mead"
 			description = "The true Viking drink! Even though it has a strange red color."
 			color = "#C73C00" // rgb: 199, 60, 0
+			boozepwr = 45
 
 		ethanol/mead
 			name = "Mead"
@@ -3151,6 +3159,7 @@ datum
 			description = "A Vikings drink, though a cheap one."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 45
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += 1
@@ -3162,6 +3171,7 @@ datum
 			id = "iced_beer"
 			description = "A beer which is so cold the air around it freezes."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 55
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.bodytemperature > 270)
@@ -3181,18 +3191,21 @@ datum
 			id = "aloe"
 			description = "So very, very, very good."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/andalusia
 			name = "Andalusia"
 			id = "andalusia"
 			description = "A nice, strange named drink."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/alliescocktail
 			name = "Allies Cocktail"
 			id = "alliescocktail"
 			description = "A drink made from your allies, not as sweet as when made from your enemies."
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/acid_spit
 			name = "Acid Spit"
@@ -3200,6 +3213,7 @@ datum
 			description = "A drink for the daring, can be deadly if incorrectly prepared!"
 			reagent_state = LIQUID
 			color = "#365000" // rgb: 54, 80, 0
+			boozepwr = 45
 
 		ethanol/amasec
 			name = "Amasec"
@@ -3207,30 +3221,35 @@ datum
 			description = "Official drink of the Nanotrasen Gun-Club!"
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 35
 
 		ethanol/changelingsting
 			name = "Changeling Sting"
 			id = "changelingsting"
 			description = "You take a tiny sip and feel a burning sensation..."
 			color = "#2E6671" // rgb: 46, 102, 113
+			boozepwr = 15
 
 		ethanol/irishcarbomb
 			name = "Irish Car Bomb"
 			id = "irishcarbomb"
 			description = "Mmm, tastes like chocolate cake..."
 			color = "#2E6671" // rgb: 46, 102, 113
+			boozepwr = 25
 
 		ethanol/syndicatebomb
 			name = "Syndicate Bomb"
 			id = "syndicatebomb"
 			description = "Tastes like terrorism!"
 			color = "#2E6671" // rgb: 46, 102, 113
+			boozepwr = 15
 
 		ethanol/erikasurprise
 			name = "Erika Surprise"
 			id = "erikasurprise"
 			description = "The surprise is, it's green!"
 			color = "#2E6671" // rgb: 46, 102, 113
+			boozepwr = 35
 
 		ethanol/driestmartini
 			name = "Driest Martini"
@@ -3246,6 +3265,7 @@ datum
 			description = "A drink from Clown Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#FFFF91" // rgb: 255, 255, 140
+			boozepwr = 25
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -3261,6 +3281,7 @@ datum
 			description = "A drink from Mime Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#664300" // rgb: 102, 67, 0
+			boozepwr = 15
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor

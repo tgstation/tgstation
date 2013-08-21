@@ -37,7 +37,7 @@ var/const/APC_WIRE_AI_CONTROL = 8
 				A.shorted = 1
 
 				spawn(1200)
-					if(A.shorted == 1)
+					if(!IsIndexCut(APC_WIRE_MAIN_POWER1) && !IsIndexCut(APC_WIRE_MAIN_POWER2))
 						A.shorted = 0
 						A.updateDialog()
 
@@ -46,7 +46,7 @@ var/const/APC_WIRE_AI_CONTROL = 8
 				A.aidisabled = 1
 
 				spawn(10)
-					if (A.aidisabled == 1)
+					if(!IsIndexCut(APC_WIRE_AI_CONTROL))
 						A.aidisabled = 0
 						A.updateDialog()
 

@@ -11,6 +11,7 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
+	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
@@ -89,7 +90,7 @@
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
 	if ((HULK in user.mutations))
-		if (prob(40))
+		if (prob(hardness))
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -120,7 +121,7 @@
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
-		if (prob(40))
+		if (prob(hardness))
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)

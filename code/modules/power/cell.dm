@@ -140,8 +140,7 @@
 	return
 
 /obj/item/weapon/cell/blob_act()
-	if(prob(75))
-		explode()
+	ex_act(1)
 
 /obj/item/weapon/cell/proc/get_electrocute_damage()
 	switch (charge)

@@ -39,8 +39,6 @@ client/verb/tcscompile()
 					src << output(null, "tcserror")
 					src << output("<font color = black>Please wait, compiling...</font>", "tcserror")
 
-					if(Server.compiling)
-						return
 					var/list/compileerrors = Server.compile(mob) // then compile the code!
 					if(!telecomms_check(mob))
 						return

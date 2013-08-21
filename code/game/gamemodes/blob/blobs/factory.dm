@@ -1,24 +1,27 @@
 /obj/effect/blob/factory
-	name = "porous blob"
+	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	health = 100
-	brute_resist = 1
 	fire_resist = 2
 	var/list/spores = list()
-	var/max_spores = 4
-
+	var/max_spores = 3
+	var/spore_delay = 0
 
 	update_icon()
 		if(health <= 0)
 			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-			del(src)
+			Delete()
 			return
 		return
 
 
 	run_action()
-		if(spores.len >= max_spores)	return 0
+		if(spores.len >= max_spores)
+			return 0
+		if(spore_delay > world.time)
+			return 0
+		spore_delay = world.time + 100 // 10 seconds
 		new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
 		return 1
 
@@ -30,10 +33,10 @@
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	pass_flags = PASSBLOB
-	health = 20
-	maxHealth = 20
-	melee_damage_lower = 4
-	melee_damage_upper = 8
+	health = 40
+	maxHealth = 40
+	melee_damage_lower = 2
+	melee_damage_upper = 4
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	var/obj/effect/blob/factory/factory = null
@@ -49,18 +52,28 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		..()
+		adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+
+	blob_act()
+		return
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(istype(mover, /obj/effect/blob))
+			return 1
+		return ..()
 
 	New(loc, var/obj/effect/blob/factory/linked_node)
-		..()
 		if(istype(linked_node))
 			factory = linked_node
 			factory.spores += src
-		..(loc)
-		return
-	Die()
 		..()
+
+	Die()
+		del(src)
+
+	Del()
 		if(factory)
 			factory.spores -= src
 		..()
-		del(src)
-

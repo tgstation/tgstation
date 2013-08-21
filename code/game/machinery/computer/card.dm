@@ -104,16 +104,11 @@
 
 	user.set_machine(src)
 	var/dat
-	if (!( ticker ))
-		return
+	if(!ticker)	return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
-		var/list/L = list()
-		for (var/datum/data/record/t in data_core.general)
-			var/R = t.fields["name"] + " - " + t.fields["rank"]
-			L += R
-		for(var/R in sortList(L))
-			crew += "[R]<br>"
+		for(var/datum/data/record/t in sortRecord(data_core.general))
+			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
 	else if(mode == 2)
@@ -276,7 +271,7 @@
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier", 900, 520)
+	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier Console", 900, 590)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -336,7 +331,7 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
+					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_NAME_LEN)
 					if(temp_t)
 						t1 = temp_t
 				else
@@ -358,7 +353,7 @@
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered_name = href_list["reg"]
+					modify.registered_name = copytext(sanitize(href_list["reg"]),1,MAX_NAME_LEN)
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 
@@ -407,12 +402,8 @@
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
-				var/list/L = list()
-				for (var/datum/data/record/t in data_core.general)
-					var/R = t.fields["name"] + " - " + t.fields["rank"]
-					L += R
-				for(var/R in sortList(L))
-					t1 += "[R]<br>"
+				for(var/datum/data/record/t in sortRecord(data_core.general))
+					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null

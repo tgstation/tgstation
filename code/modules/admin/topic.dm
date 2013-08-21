@@ -78,6 +78,8 @@
 
 		var/bantype = text2num(href_list["dbbanaddtype"])
 		var/banckey = href_list["dbbanaddckey"]
+		var/banip = href_list["dbbanaddip"]
+		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
 		var/banreason = href_list["dbbanreason"]
@@ -130,9 +132,18 @@
 				playermob = M
 				break
 
+
 		banreason = "(MANUAL BAN) "+banreason
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey)
+		if(!playermob)
+			if(banip)
+				banreason = "[banreason] (CUSTOM IP)"
+			if(bancid)
+				banreason = "[banreason] (CUSTOM CID)"
+		else
+			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
+
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
 
 	else if(href_list["editrights"])
 		if(!check_rights(R_PERMISSIONS))
@@ -231,9 +242,6 @@
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))	return
 
-		if( ticker.mode.name == "blob" )
-			alert("You can't call the shuttle during blob!")
-			return
 
 		switch(href_list["call_shuttle"])
 			if("1")
@@ -301,7 +309,7 @@
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
 			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
@@ -691,11 +699,6 @@
 			usr << "This can only be used on instances of type /mob"
 			return
 
-		if(M != usr)																//we can jobban ourselves
-			if(M.client && M.client.holder && (M.client.holder.rights & R_BAN))		//they can ban too. So we can't ban them
-				alert("You cannot perform this action. You must be of a higher administrative rank!")
-				return
-
 		if(!job_master)
 			usr << "Job Master has not been setup!"
 			return
@@ -1046,18 +1049,6 @@
 		message_admins("\blue [key_name_admin(usr)] attempting to corgize [key_name_admin(H)]", 1)
 		H.corgize()
 
-	else if(href_list["makeblob"])
-		if(!check_rights(R_SPAWN))	return
-
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
-			return
-
-		log_admin("[key_name(usr)] attempting to blobize [key_name(H)]")
-		message_admins("\blue [key_name_admin(usr)] attempting to blobize [key_name_admin(H)]", 1)
-		H.blobize()
-
 
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))	return
@@ -1358,7 +1349,7 @@
 		else
 			health_description = "This mob type has no health to speak of."
 
-		//Gener
+		//Gender
 		switch(M.gender)
 			if(MALE,FEMALE)	gender_description = "[M.gender]"
 			else			gender_description = "<font color='red'><b>[M.gender]</b></font>"
@@ -1915,19 +1906,6 @@
 				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 				for(var/obj/machinery/light/L in world)
 					L.fix()
-			if("friendai")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/aiEye/aE in mob_list)
-					aE.icon_state = "ai_friend"
-				for(var/obj/machinery/M in machines)
-					if(istype(M, /obj/machinery/ai_status_display))
-						var/obj/machinery/ai_status_display/A = M
-						A.emotion = "Friend Computer"
-					else if(istype(M, /obj/machinery/status_display))
-						var/obj/machinery/status_display/A = M
-						A.friendc = 1
-				message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
 			if("floorlava")
 				if(floorIsLava)
 					usr << "The floor is lava already."
@@ -2016,7 +1994,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
 				for(var/mob/living/carbon/human/B in mob_list)
-					B.f_style = "Dward Beard"
+					B.facial_hair_style = "Dward Beard"
 					B.update_hair()
 				message_admins("[key_name_admin(usr)] activated dorf mode")
 			if("ionstorm")
@@ -2076,18 +2054,22 @@
 				for(var/sig in lawchanges)
 					dat += "[sig]<BR>"
 				usr << browse(dat, "window=lawchanges;size=800x500")
-			if("list_job_debug")
-				var/dat = "<B>Job Debug info.</B><HR>"
-				if(job_master)
-					for(var/line in job_master.job_debug)
-						dat += "[line]<BR>"
-					dat+= "*******<BR><BR>"
-					for(var/datum/job/job in job_master.occupations)
-						if(!job)	continue
-						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-					usr << browse(dat, "window=jobdebug;size=600x500")
 			if("check_antagonist")
 				check_antagonists()
+			if("kick_all_from_lobby")
+				if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+					var/afkonly = text2num(href_list["afkonly"])
+					if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
+						usr << "Kick clients from lobby aborted"
+						return
+					var/list/listkicked = kick_clients_in_lobby("\red The admin [usr.ckey] issued a 'kick all clients from lobby' command.", afkonly)
+					var/strkicked = ""
+					for(var/name in listkicked)
+						strkicked += "[name], "
+					message_admins("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]", 1)
+					log_admin("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
+				else
+					usr << "You may only use this when the game is running"
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")
@@ -2100,7 +2082,7 @@
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 				for(var/datum/data/record/t in data_core.general)
-					dat += text("<tr><td>[]</td><td>[]</td></tr>", t.fields["name"], t.fields["rank"])
+					dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=manifest;size=440x410")
 			if("DNA")
@@ -2108,7 +2090,7 @@
 				dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.dna && H.ckey)
-						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.blood_type]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=DNA;size=440x410")
 			if("fingerprints")
@@ -2130,10 +2112,8 @@
 			if (ok)
 				world << text("<B>A secret has been activated by []!</B>", usr.key)
 
-	else if(href_list["secretscoder"])
-		if(!check_rights(R_DEBUG))	return
-
-		switch(href_list["secretscoder"])
+	else if(href_list["secretsgeneral"])
+		switch(href_list["secretsgeneral"])
 			if("spawn_objects")
 				var/dat = "<B>Admin Log<HR></B>"
 				for(var/l in admin_log)
@@ -2141,6 +2121,21 @@
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
+			if("list_job_debug")
+				var/dat = "<B>Job Debug info.</B><HR>"
+				if(job_master)
+					for(var/line in job_master.job_debug)
+						dat += "[line]<BR>"
+					dat+= "*******<BR><BR>"
+					for(var/datum/job/job in job_master.occupations)
+						if(!job)	continue
+						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+					usr << browse(dat, "window=jobdebug;size=600x500")
+
+	else if(href_list["secretscoder"])
+		if(!check_rights(R_DEBUG))	return
+
+		switch(href_list["secretscoder"])
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
 					if (access_maint_tunnels in M.req_access)

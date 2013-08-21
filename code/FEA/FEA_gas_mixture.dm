@@ -1,4 +1,4 @@
-/*
+ /*
 What are the archived variables for?
 	Calculations are done using the archived variables with the results merged into the regular variables.
 	This prevents race conditions that arise based on the order of tile processing.
@@ -38,6 +38,8 @@ What are the archived variables for?
 	var/volume = CELL_VOLUME
 
 	var/temperature = 0 //in Kelvin, use calculate_temperature() to modify
+
+	var/last_share
 
 	var/group_multiplier = 1
 		//Size of the group this gas_mixture is representing.
@@ -533,12 +535,12 @@ What are the archived variables for?
 
 		return 1
 
-	share(datum/gas_mixture/sharer)
+	share(datum/gas_mixture/sharer, var/atmos_adjacent_turfs = 4)
 		if(!sharer)	return 0
-		var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/5
-		var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/5
-		var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/5
-		var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/5
+		var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/(atmos_adjacent_turfs+1)
+		var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/(atmos_adjacent_turfs+1)
+		var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/(atmos_adjacent_turfs+1)
+		var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/(atmos_adjacent_turfs+1)
 
 		var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
@@ -588,6 +590,7 @@ What are the archived variables for?
 		sharer.toxins += delta_toxins/sharer.group_multiplier
 
 		var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
+		last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
 
 		var/list/trace_types_considered = list()
 
@@ -598,12 +601,12 @@ What are the archived variables for?
 				var/delta = 0
 
 				if(corresponding)
-					delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/5
+					delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/(atmos_adjacent_turfs+1)
 				else
 					corresponding = new trace_gas.type()
 					sharer.trace_gases += corresponding
 
-					delta = trace_gas.moles_archived/5
+					delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
 
 				trace_gas.moles -= delta/group_multiplier
 				corresponding.moles += delta/sharer.group_multiplier
@@ -616,6 +619,7 @@ What are the archived variables for?
 						heat_capacity_sharer_to_self -= individual_heat_capacity
 
 				moved_moles += delta
+				last_share += abs(delta)
 
 				trace_types_considered += trace_gas.type
 
@@ -640,6 +644,7 @@ What are the archived variables for?
 					heat_capacity_sharer_to_self += individual_heat_capacity
 
 					moved_moles += -delta
+					last_share += abs(delta)
 
 		if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
@@ -659,14 +664,11 @@ What are the archived variables for?
 			var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 			return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
-		else
-			return 0
-
-	mimic(turf/model, border_multiplier)
-		var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/5
-		var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/5
-		var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/5
-		var/delta_toxins = QUANTIZE(toxins_archived - model.toxins)/5
+	mimic(turf/model, border_multiplier, var/atmos_adjacent_turfs = 4)
+		var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
+		var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
+		var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
+		var/delta_toxins = QUANTIZE(toxins_archived - model.toxins)/(atmos_adjacent_turfs+1)
 
 		var/delta_temperature = (temperature_archived - model.temperature)
 
@@ -706,12 +708,13 @@ What are the archived variables for?
 			toxins -= delta_toxins/group_multiplier
 
 		var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
+		last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
 
 		if(trace_gases.len)
 			for(var/datum/gas/trace_gas in trace_gases)
 				var/delta = 0
 
-				delta = trace_gas.moles_archived/5
+				delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
 
 				if(border_multiplier)
 					trace_gas.moles -= delta*border_multiplier/group_multiplier
@@ -722,6 +725,7 @@ What are the archived variables for?
 				heat_transferred += heat_cap_transferred*temperature_archived
 				heat_capacity_transferred += heat_cap_transferred
 				moved_moles += delta
+				moved_moles += abs(delta)
 
 		if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			var/new_self_heat_capacity = old_self_heat_capacity - heat_capacity_transferred

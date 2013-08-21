@@ -212,6 +212,7 @@
 	density = 1
 	icon_state = "intake"
 
+	var/start_flush = 0
 	var/c_mode = 0
 
 	New()
@@ -253,21 +254,23 @@
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 													// travels through the pipes.
-		for(var/obj/structure/bigDelivery/O in src)
+/*		for(var/obj/structure/bigDelivery/O in src)
+			deliveryCheck = 1
+			if(O.sortTag == 0)						//This auto-sorts package wrapped objects to disposals
+				O.sortTag = 1						//Cargo techs can do this themselves with their taggers
+		for(var/obj/item/smallDelivery/O in src)	//With this disabled packages will loop back round and come out the mail chute
 			deliveryCheck = 1
 			if(O.sortTag == 0)
-				O.sortTag = 1
-		for(var/obj/item/smallDelivery/O in src)
-			deliveryCheck = 1
-			if(O.sortTag == 0)
-				O.sortTag = 1
+				O.sortTag = 1						*/
 		if(deliveryCheck == 0)
 			H.destinationTag = 1
 
 		air_contents = new()		// new empty gas resv.
 
 		sleep(10)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		if((start_flush + 15) < world.time)
+			start_flush = world.time
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(5) // wait for animation to finish
 
 		H.init(src)	// copy the contents of disposer to holder

@@ -344,3 +344,8 @@ proc/listclearnulls(list/list)
 		if(istype(T, type))
 			i++
 	return i
+
+/proc/find_record(field, value, list/L)
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R

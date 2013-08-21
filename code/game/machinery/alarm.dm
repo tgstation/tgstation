@@ -1,28 +1,4 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
-/proc/RandomAAlarmWires()
-	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/AAlarmwires = list(0, 0, 0, 0, 0)
-	AAlarmIndexToFlag = list(0, 0, 0, 0, 0)
-	AAlarmIndexToWireColor = list(0, 0, 0, 0, 0)
-	AAlarmWireColorToIndex = list(0, 0, 0, 0, 0)
-	var/flagIndex = 1
-	for (var/flag=1, flag<32, flag+=flag)
-		var/valid = 0
-		while (!valid)
-			var/colorIndex = rand(1, 5)
-			if (AAlarmwires[colorIndex]==0)
-				valid = 1
-				AAlarmwires[colorIndex] = flag
-				AAlarmIndexToFlag[flagIndex] = flag
-				AAlarmIndexToWireColor[flagIndex] = colorIndex
-				AAlarmWireColorToIndex[colorIndex] = flagIndex
-		flagIndex+=1
-	return AAlarmwires
-
-
-
 // A datum for dealing with threshold limit values
 // used in /obj/machinery/alarm
 /datum/tlv
@@ -51,6 +27,20 @@
 		max1 = other.max1
 		max2 = other.max2
 
+#define AALARM_MODE_SCRUBBING 1
+#define AALARM_MODE_VENTING 2 //makes draught
+#define AALARM_MODE_PANIC 3 //constantly sucks all air
+#define AALARM_MODE_REPLACEMENT 4 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_OFF 5
+
+#define AALARM_SCREEN_MAIN    1
+#define AALARM_SCREEN_VENT    2
+#define AALARM_SCREEN_SCRUB   3
+#define AALARM_SCREEN_MODE    4
+#define AALARM_SCREEN_SENSORS 5
+
+#define AALARM_REPORT_TIMEOUT 100
+
 /obj/machinery/alarm
 	name = "alarm"
 	icon = 'icons/obj/monitors.dmi'
@@ -64,36 +54,19 @@
 	var/frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
-#define AALARM_REPORT_TIMEOUT 100
+
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
+	var/datum/wires/alarm/wires = null
 	var/wiresexposed = 0 // If it's been screwdrivered open.
 	var/aidisabled = 0
 	var/AAlarmwires = 31
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
- // Uses code from apc.dm
 
-#define AALARM_WIRE_IDSCAN 1									//Added wires
-#define AALARM_WIRE_POWER 2
-#define AALARM_WIRE_SYPHON 3
-#define AALARM_WIRE_AI_CONTROL 4
-#define AALARM_WIRE_AALARM 5
-
-
-#define AALARM_MODE_SCRUBBING    1
-#define AALARM_MODE_VENTING      2 //makes draught
-#define AALARM_MODE_PANIC        3 //constantly sucks all air
-#define AALARM_MODE_REPLACEMENT  4 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_OFF          5
 	var/mode = AALARM_MODE_SCRUBBING
 
-#define AALARM_SCREEN_MAIN    1
-#define AALARM_SCREEN_VENT    2
-#define AALARM_SCREEN_SCRUB   3
-#define AALARM_SCREEN_MODE    4
-#define AALARM_SCREEN_SENSORS 5
 	var/screen = AALARM_SCREEN_MAIN
 	var/area_uid
 	var/area/alarm_area
@@ -145,6 +118,7 @@
 
 /obj/machinery/alarm/New(nloc, ndir, nbuild)
 	..()
+	wires = new(src)
 	if(nloc)
 		loc = nloc
 
@@ -165,6 +139,8 @@
 		name = "[alarm_area.name] Air Alarm"
 
 	update_icon()
+	if(ticker && ticker.current_state == 3)//if the game is running
+		src.initialize()
 
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
@@ -201,31 +177,6 @@
 			user << browse(null, "window=air_alarm")
 			return
 
-	if(wiresexposed && (!istype(user, /mob/living/silicon)))
-		var/t1 = text("<B>Access Panel</B><br />\n")
-		var/list/AAlarmwires = list(
-			"Orange" = 1,
-			"Dark red" = 2,
-			"White" = 3,
-			"Yellow" = 4,
-			"Black" = 5,
-		)
-		for(var/wiredesc in AAlarmwires)
-			var/is_uncut = src.AAlarmwires & AAlarmWireColorToFlag[AAlarmwires[wiredesc]]
-			t1 += "[wiredesc] wire: "
-			if(!is_uncut)
-				t1 += "<a href='?src=\ref[src];AAlarmwires=[AAlarmwires[wiredesc]]'>Mend</a>"
-
-			else
-				t1 += "<a href='?src=\ref[src];AAlarmwires=[AAlarmwires[wiredesc]]'>Cut</a> "
-				t1 += "<a href='?src=\ref[src];pulse=[AAlarmwires[wiredesc]]'>Pulse</a> "
-
-			t1 += "<br />"
-		t1 += text("<br />\n[(src.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked.")]<br />\n[((src.shorted || (stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!")]<br />\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
-		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p>")
-		user << browse(t1, "window=AAlarmwires")
-		onclose(user, "AAlarmwires")
-
 	if(!shorted)
 		//user << browse(return_text(),"window=air_alarm")
 		//onclose(user, "air_alarm")
@@ -235,135 +186,11 @@
 		popup.open()
 		refresh_all()
 
-	return
-
-
-/obj/machinery/alarm/proc/isWireColorCut(var/wireColor)
-	var/wireFlag = AAlarmWireColorToFlag[wireColor]
-	return ((src.AAlarmwires & wireFlag) == 0)
-
-/obj/machinery/alarm/proc/isWireCut(var/wireIndex)
-	var/wireFlag = AAlarmIndexToFlag[wireIndex]
-	return ((src.AAlarmwires & wireFlag) == 0)
-
-/obj/machinery/alarm/proc/cut(var/wireColor)
-	var/wireFlag = AAlarmWireColorToFlag[wireColor]
-	var/wireIndex = AAlarmWireColorToIndex[wireColor]
-	AAlarmwires &= ~wireFlag
-	switch(wireIndex)
-		if(AALARM_WIRE_IDSCAN)
-			src.locked = 1
-			//world << "Idscan wire cut"
-
-		if(AALARM_WIRE_POWER)
-			src.shock(usr, 50)
-			src.shorted = 1
-			update_icon()
-			//world << "Power wire cut"
-
-		if (AALARM_WIRE_AI_CONTROL)
-			if (src.aidisabled == 0)
-				src.aidisabled = 1
-				//world << "AI Control Wire Cut"
-
-		if(AALARM_WIRE_SYPHON)
-			mode = AALARM_MODE_PANIC
-			apply_mode()
-			//world << "Syphon Wire Cut"
-
-		if(AALARM_WIRE_AALARM)
-
-			if (alarm_area.atmosalert(2))
-				post_alert(2)
-			spawn(1)
-				src.updateUsrDialog()
-			update_icon()
-
-			//world << "AAlarm Wire Cut"
-
-	src.updateDialog()
-	update_icon()
+	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+		wires.Interact(user)
 
 	return
 
-/obj/machinery/alarm/proc/mend(var/wireColor)
-	var/wireFlag = AAlarmWireColorToFlag[wireColor]
-	var/wireIndex = AAlarmWireColorToIndex[wireColor] //not used in this function
-	AAlarmwires |= wireFlag
-	switch(wireIndex)
-		if(AALARM_WIRE_IDSCAN)
-			//world << "Idscan wire mended"
-
-		if(AALARM_WIRE_POWER)
-			src.shorted = 0
-			src.shock(usr, 50)
-			update_icon()
-			//world << "Power wire mended"
-
-		if(AALARM_WIRE_AI_CONTROL)
-			if (src.aidisabled == 1)
-				src.aidisabled = 0
-				//world << "AI Cont. wire mended"
-
-
-	//	if(AALARM_WIRE_SYPHON)
-		//	world << "Syphon Wire mended"
-
-
-	//	if(AALARM_WIRE_AALARM)
-			//world << "AAlarm Wire mended"
-
-	update_icon()
-	src.updateDialog()
-	return
-
-/obj/machinery/alarm/proc/pulse(var/wireColor)
-	//var/wireFlag = AAlarmWireColorToFlag[wireColor] //not used in this function
-	var/wireIndex = AAlarmWireColorToIndex[wireColor]
-	switch(wireIndex)
-		if(AALARM_WIRE_IDSCAN)			//unlocks for 30 seconds, if you have a better way to hack I'm all ears
-			src.locked = 0
-			spawn(300)
-				src.locked = 1
-			//world << "Idscan wire pulsed"
-
-		if (AALARM_WIRE_POWER)
-		//	world << "Power wire pulsed"
-			if(shorted == 0)
-				shorted = 1
-				update_icon()
-
-			spawn(1200)
-				if(shorted == 1)
-					shorted = 0
-					update_icon()
-
-
-		if (AALARM_WIRE_AI_CONTROL)
-		//	world << "AI Control wire pulsed"
-			if (src.aidisabled == 0)
-				src.aidisabled = 1
-			src.updateDialog()
-			spawn(10)
-				if (src.aidisabled == 1)
-					src.aidisabled = 0
-				src.updateDialog()
-
-		if(AALARM_WIRE_SYPHON)
-		//	world << "Syphon wire pulsed"
-			mode = AALARM_MODE_REPLACEMENT
-			apply_mode()
-
-		if(AALARM_WIRE_AALARM)
-		//	world << "Aalarm wire pulsed"
-			if (alarm_area.atmosalert(0))
-				post_alert(0)
-			spawn(1)
-				src.updateUsrDialog()
-			update_icon()
-
-	src.updateDialog()
-	return
 
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
@@ -695,39 +522,13 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
-	src.add_fingerprint(usr)
 	usr.set_machine(src)
 
 	if ( (get_dist(src, usr) > 1 ))
 		if (!istype(usr, /mob/living/silicon))
 			usr.unset_machine()
 			usr << browse(null, "window=air_alarm")
-			usr << browse(null, "window=AAlarmwires")
 			return
-
-	if (href_list["AAlarmwires"])
-		var/t1 = text2num(href_list["AAlarmwires"])
-		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			usr << "You need wirecutters!"
-			return
-		if (src.isWireColorCut(t1))
-			src.mend(t1)
-		else
-			src.cut(t1)
-		spawn(1)
-			src.updateUsrDialog()
-	else if (href_list["pulse"])
-		var/t1 = text2num(href_list["pulse"])
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
-			return
-		if (src.isWireColorCut(t1))
-			usr << "You can't pulse a cut wire."
-			return
-		else
-			src.pulse(t1)
-		spawn(1)
-			src.updateUsrDialog()
 
 
 
@@ -988,7 +789,7 @@ table tr:first-child th:first-child { border: none;}
 				if(stat & (NOPOWER|BROKEN))
 					user << "It does nothing"
 				else
-					if(src.allowed(usr) && !isWireCut(AALARM_WIRE_IDSCAN))
+					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
 						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
 						src.updateUsrDialog()
@@ -1055,8 +856,8 @@ Just a object used in constructing air alarms
 */
 /obj/item/weapon/airalarm_electronics
 	name = "air alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+	icon_state = "airalarm_electronics"
 	desc = "Looks like a circuit. Probably is."
 	w_class = 2.0
 	m_amt = 50
@@ -1313,35 +1114,27 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
-	..()
-	if (usr.stat || stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	if (buildstage != 2)
 		return
 
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
-		if (href_list["reset"])
-			src.reset()
-		else if (href_list["alarm"])
-			src.alarm()
-		else if (href_list["time"])
-			src.timing = text2num(href_list["time"])
-			last_process = world.timeofday
-			processing_objects.Add(src)
-		else if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
-			src.time += tp
-			src.time = min(max(round(src.time), 0), 120)
+	usr.set_machine(src)
+	if (href_list["reset"])
+		src.reset()
+	else if (href_list["alarm"])
+		src.alarm()
+	else if (href_list["time"])
+		src.timing = text2num(href_list["time"])
+		last_process = world.timeofday
+		processing_objects.Add(src)
+	else if (href_list["tp"])
+		var/tp = text2num(href_list["tp"])
+		src.time += tp
+		src.time = min(max(round(src.time), 0), 120)
 
-		src.updateUsrDialog()
-
-		src.add_fingerprint(usr)
-	else
-		usr << browse(null, "window=firealarm")
-		return
-	return
+	src.updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
 	if (!( src.working ))
@@ -1533,7 +1326,8 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/partyalarm/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
