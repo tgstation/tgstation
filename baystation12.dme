@@ -79,6 +79,7 @@
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"
 #include "code\ATMOSPHERICS\atmospherics.dm"
+#include "code\ATMOSPHERICS\chiller.dm"
 #include "code\ATMOSPHERICS\datum_pipe_network.dm"
 #include "code\ATMOSPHERICS\datum_pipeline.dm"
 #include "code\ATMOSPHERICS\he_pipes.dm"
