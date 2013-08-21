@@ -28,9 +28,9 @@ var/command_name = null
 
 	// Prefix
 	if (name)
-		name += pick("", "Central", "System", "Home")
+		name += pick("", "Central", "System", "Home", "Galactic")
 	else
-		name += pick("Central", "System", "Home")
+		name += pick("Central", "System", "Home", "Galactic")
 	if (name)
 		name += " "
 
