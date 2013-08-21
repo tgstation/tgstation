@@ -42,6 +42,9 @@
 /obj/screen/item_action/Click()
 	if(!usr || !owner)
 		return 1
+	if(usr.next_move >= world.time)
+		return
+	usr.next_move = world.time + 10
 
 	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
 		return 1

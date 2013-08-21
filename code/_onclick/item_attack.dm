@@ -5,7 +5,8 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user)
-	if(isturf(src))	return
+	return
+/atom/movable/attackby(obj/item/W, mob/user)
 	if(!(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
