@@ -417,7 +417,7 @@ var/list/blood_splatter_icons = list()
 //	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
 //		return DblClickNew()
 	return DblClick(location, control, params)
-
+/*
 var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblClickNew() proc is being tested)
 
 /atom/proc/DblClickNew()
@@ -719,6 +719,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if (in_range)
 			if ( !animal.restrained() )
 				attack_animal(animal)
+*/
 
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 	if(!usr)	return
@@ -883,28 +884,30 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- CLICKED OBJECT EXISTS IN GAME WORLD, DISTANCE FROM PERSON TO OBJECT IS 1 SQUARE OR THEY'RE ON THE SAME SQUARE -------
 
 			var/direct = get_dir(usr, src)
-			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
 			var/ok = 0
 			if ( (direct - 1) & direct)
 
 				// ------- CLICKED OBJECT IS LOCATED IN A DIAGONAL POSITION FROM THE PERSON -------
 
+				var/turf/Step_0 = get_turf(usr) //our location
 				var/turf/Step_1
 				var/turf/Step_2
+				var/turf/Step_3 = get_turf(src) //our target click location
+
 				switch(direct)
-					if(5.0)
+					if(5)
 						Step_1 = get_step(usr, NORTH)
 						Step_2 = get_step(usr, EAST)
 
-					if(6.0)
+					if(6)
 						Step_1 = get_step(usr, SOUTH)
 						Step_2 = get_step(usr, EAST)
 
-					if(9.0)
+					if(9)
 						Step_1 = get_step(usr, NORTH)
 						Step_2 = get_step(usr, WEST)
 
-					if(10.0)
+					if(10)
 						Step_1 = get_step(usr, SOUTH)
 						Step_2 = get_step(usr, WEST)
 
@@ -913,33 +916,59 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 					// ------- BOTH CARDINAL DIRECTIONS OF THE DIAGONAL EXIST IN THE GAME WORLD -------
 
-					var/check_1 = 0
-					var/check_2 = 0
-					if(step_to(D, Step_1))
-						check_1 = 1
+					var/check_1 = 1
+					var/check_2 = 1
+
+					if(Step_1.blocks_air)
+						check_1 = 0
+					else
+						for(var/obj/border_obstacle in Step_0)
+							if(border_obstacle.flags & ON_BORDER)
+								if(!border_obstacle.CanPass(usr, Step_1))
+									check_1 = 0
+									break
+
+					if(Step_2.blocks_air)
+						check_2 = 0
+					else
+						for(var/obj/border_obstacle in Step_0)
+							if(border_obstacle.flags & ON_BORDER)
+								if(!border_obstacle.CanPass(usr, Step_2))
+									check_2 = 0
+									break
+
+					if(check_1)
 						for(var/obj/border_obstacle in Step_1)
-							if(border_obstacle.flags & ON_BORDER)
-								if(!border_obstacle.CheckExit(D, src))
-									check_1 = 0
-									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON ONE OF THE DIRECITON TILES -------
-						for(var/obj/border_obstacle in get_turf(src))
-							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON THE TILE YOU'RE ON -------
-									check_1 = 0
+							if(!border_obstacle.CanPass(usr, Step_0))
+								check_1 = 0
+								break
+							if(!border_obstacle.CanPass(usr, Step_3))
+								check_1 = 0
+								break
 
-					D.loc = usr.loc
-					if(step_to(D, Step_2))
-						check_2 = 1
+						if(check_1)
+							for(var/obj/border_obstacle in Step_3)
+								if(border_obstacle.flags & ON_BORDER && (src != border_obstacle))
+									if(!border_obstacle.CanPass(usr, Step_1))
+										check_1 = 0
+										break
 
-						for(var/obj/border_obstacle in Step_2)
-							if(border_obstacle.flags & ON_BORDER)
-								if(!border_obstacle.CheckExit(D, src))
+					if(!check_1)
+						if(check_2)
+							for(var/obj/border_obstacle in Step_2)
+								if(!border_obstacle.CanPass(usr, Step_0))
 									check_2 = 0
-						for(var/obj/border_obstacle in get_turf(src))
-							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+									break
+								if(!border_obstacle.CanPass(usr, Step_3))
 									check_2 = 0
+									break
+
+							if(check_2)
+								for(var/obj/border_obstacle in Step_3)
+									if(border_obstacle.flags & ON_BORDER && (src != border_obstacle))
+										if(!border_obstacle.CanPass(usr, Step_2))
+											check_2 = 0
+											break
 
 
 					if(check_1 || check_2)
@@ -948,10 +977,10 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 					/*
 						More info:
-							If you're trying to click an item in the north-east of your mob, the above section of code will first check if tehre's a tile to the north or you and to the east of you
-							These two tiles are Step_1 and Step_2. After this, a new dummy object is created on your location. It then tries to move to Step_1, If it succeeds, objects on the turf you're on and
-							the turf that Step_1 is are checked for items which have the ON_BORDER flag set. These are itmes which limit you on only one tile border. Windows, for the most part.
-							CheckExit() and CanPass() are use to determine this. The dummy object is then moved back to your location and it tries to move to Step_2. Same checks are performed here.
+							If you're trying to click an item in the north-east of your mob, the above section of code will first check if there's a tile to the north or you and to the east of you
+							These two tiles are Step_1 and Step_2. Objects on the turf you're on and the turf that Step_1 is are checked for items which have the ON_BORDER flag set.
+							These are itmes which limit you on only one tile border. Windows, for the most part.
+							CheckExit() and CanPass() are used to determine this. If Step_1 fails, it will start calculating for Step_2.
 							If at least one of the two checks succeeds, it means you can reach the item and ok is set to 1.
 					*/
 			else
@@ -965,24 +994,19 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					//Now, check objects to block exit that are on the border
 					for(var/obj/border_obstacle in usr.loc)
 						if(border_obstacle.flags & ON_BORDER)
-							if(!border_obstacle.CheckExit(D, src))
+							if(!border_obstacle.CheckExit(usr, src))
 								ok = 0
 
 					//Next, check objects to block entry that are on the border
 					for(var/obj/border_obstacle in get_turf(src))
 						if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-							if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+							if(!border_obstacle.CanPass(usr, usr.loc, 1, 0))
 								ok = 0
 				/*
 					See the previous More info, for... more info...
 				*/
 
-			//del(D)
-			// Garbage Collect Dummy
-			D.loc = null
-			D = null
 
-			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------
 			if (!( ok ))
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
