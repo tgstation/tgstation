@@ -45,11 +45,16 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	notesfile.cd = "/[ckey]"
 	notesfile.eof = 1		//move to the end of the buffer
 	notesfile << "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]"
+
+	message_admins("[key_name(usr)] added note '[note]' to [ckey]")
+	log_admin("[key_name(usr)] added note '[note]' to [ckey]")
+
 	return
 
 //handles removing entries from the buffer, or removing the entire directory if no start_index is given
 /proc/notes_remove(var/ckey, var/start_index, var/end_index)
 	var/savefile/notesfile = new(NOTESFILE)
+	var/admin_msg
 	if(!notesfile)	return
 
 	if(!ckey)
@@ -67,17 +72,27 @@ datum/admins/proc/notes_gethtml(var/ckey)
 			var/temp
 			notesfile >> temp
 			if( (start_index <= index) && (index <= end_index) )
+				admin_msg = temp
 				continue
+
 			noteslist += temp
 
 		notesfile.eof = -2		//Move to the start of the buffer and then erase.
 
 		for( var/note in noteslist )
 			notesfile << note
+
+
+		message_admins("[key_name(usr)] removed a note '[admin_msg]' from [ckey]")
+		log_admin("[key_name(usr)] removed a note '[admin_msg]' from [ckey]")
+
 	else
 		notesfile.cd = "/"
 		if(alert(usr,"Are you sure you want to remove all their notes?","Confirmation","No","Yes - Remove all notes") == "Yes - Remove all notes")
 			notesfile.dir.Remove(ckey)
+
+			message_admins("[key_name(usr)] removed all notes from [ckey]")
+			log_admin("[key_name(usr)] removed all notes from [ckey]")
 	return
 
 #undef NOTESFILE
