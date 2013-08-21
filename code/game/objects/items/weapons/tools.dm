@@ -193,17 +193,24 @@
 /obj/item/weapon/weldingtool/afterattack(obj/O, mob/user)
 	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
 		if(!welding)
-			O.reagents.trans_to(src, max_fuel)
-			user << "<span class='notice'>[src] refueled.</span>"
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			return
+			if(O.reagents.has_reagent("fuel") && O.reagents.total_volume > 0)
+				O.reagents.trans_to(src, max_fuel)
+				user << "<span class='notice'>[src] refueled.</span>"
+				playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+				return
+			else
+				user << "<span class='notice'>[O] is out of fuel!</span>"
+
 		else
-			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
-			log_game("[key_name(user)] triggered a fueltank explosion.")
-			user << "<span class='warning'>That was stupid of you.</span>"
-			explosion(O.loc, -1, 0, 2)
-			if(O)
-				del(O)
+			if(O.reagents.has_reagent("fuel") && O.reagents.total_volume > 0)
+				message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
+				log_game("[key_name(user)] triggered a fueltank explosion.")
+				user << "<span class='warning'>That was stupid of you.</span>"
+				explosion(O.loc, -1, 0, 2)
+				if(O)
+					del(O)
+			else
+				user << "<span class='warning'>That was stupid of you... Luckily, [O] was out of fuel.</span>"
 			return
 
 	if(welding)
