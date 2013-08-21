@@ -56,8 +56,12 @@ mob/proc/airflow_stun()
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
-/*	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
-	weakened = max(weakened,5)*/
+
+	if(vsc.airflow_push)
+		if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
+		weakened = max(weakened,5)
+		last_airflow_stun = world.time
+		return
 	src << "\blue You stay upright as the air rushes past you."
 	last_airflow_stun = world.time
 
@@ -75,17 +79,22 @@ mob/living/carbon/human/airflow_stun()
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
-/*
-	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
-	weakened = max(weakened,rand(1,5))*/
+
+	if(vsc.airflow_push)
+		if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
+		weakened = max(weakened,rand(1,5))
+		last_airflow_stun = world.time
+		return
 	src << "\blue You stay upright as the air rushes past you."
 	last_airflow_stun = world.time
 
 atom/movable/proc/check_airflow_movable(n)
-
-	if(anchored && !ismob(src)) return 0
-
-	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure) return 0
+	if(!vsc.airflow_push)
+		return 0
+	if(anchored && !ismob(src))
+		return 0
+	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure)
+		return 0
 
 	return 1
 
@@ -144,54 +153,53 @@ proc/Airflow(zone/A, zone/B)
 		var/list/temporary_pplz = air_sucked
 		air_sucked = air_repelled
 		air_repelled = temporary_pplz
-/* Commenting out to save perf
-	for(var/atom/movable/M in air_sucked)
-		if(1) break
-		if(M.last_airflow > world.time - vsc.airflow_delay) continue
+	if(vsc.airflow_push) // If enabled
+		for(var/atom/movable/M in air_sucked)
+			if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
-		//Check for knocking people over
-		if(ismob(M) && n > vsc.airflow_stun_pressure)
-			if(M:status_flags & GODMODE) continue
-			M:airflow_stun()
+			//Check for knocking people over
+			if(ismob(M) && n > vsc.airflow_stun_pressure)
+				if(M:status_flags & GODMODE) continue
+				M:airflow_stun()
 
-		if(M.check_airflow_movable(n))
+			if(M.check_airflow_movable(n))
 
-			//Check for things that are in range of the midpoint turfs.
-			var/list/close_turfs = list()
-			for(var/turf/U in connected_turfs)
-				if(M in range(U)) close_turfs += U
-			if(!close_turfs.len) continue
+				//Check for things that are in range of the midpoint turfs.
+				var/list/close_turfs = list()
+				for(var/turf/U in connected_turfs)
+					if(M in range(U)) close_turfs += U
+				if(!close_turfs.len) continue
 
-			//If they're already being tossed, don't do it again.
-			if(!M.airflow_speed)
+				//If they're already being tossed, don't do it again.
+				if(!M.airflow_speed)
 
-				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+					M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-				spawn M.GotoAirflowDest(abs(n)/5)
+					spawn M.GotoAirflowDest(abs(n)/5)
 
-	//Do it again for the stuff in the other zone, making it fly away.
-	for(var/atom/movable/M in air_repelled)
+		//Do it again for the stuff in the other zone, making it fly away.
+		for(var/atom/movable/M in air_repelled)
 
-		if(M.last_airflow > world.time - vsc.airflow_delay) continue
+			if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
-		if(ismob(M) && abs(n) > vsc.airflow_medium_pressure)
-			if(M:status_flags & GODMODE) continue
-			M:airflow_stun()
+			if(ismob(M) && abs(n) > vsc.airflow_medium_pressure)
+				if(M:status_flags & GODMODE) continue
+				M:airflow_stun()
 
-		if(M.check_airflow_movable(abs(n)))
+			if(M.check_airflow_movable(abs(n)))
 
-			var/list/close_turfs = list()
-			for(var/turf/U in connected_turfs)
-				if(M in range(U)) close_turfs += U
-			if(!close_turfs.len) continue
+				var/list/close_turfs = list()
+				for(var/turf/U in connected_turfs)
+					if(M in range(U)) close_turfs += U
+				if(!close_turfs.len) continue
 
-			//If they're already being tossed, don't do it again.
-			if(!M.airflow_speed)
+				//If they're already being tossed, don't do it again.
+				if(!M.airflow_speed)
 
-				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+					M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-				spawn M.RepelAirflowDest(abs(n)/5)
-*/
+					spawn M.RepelAirflowDest(abs(n)/5)
+
 proc/AirflowSpace(zone/A)
 
 	//The space version of the Airflow(A,B,n) proc.
@@ -204,29 +212,29 @@ proc/AirflowSpace(zone/A)
 	var/list/connected_turfs = A.unsimulated_tiles //The midpoints are now all the space connections.
 	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
-	for(var/atom/movable/M in pplz)
-		if(1) break
-		if(M.last_airflow > world.time - vsc.airflow_delay) continue
+	if(vsc.airflow_push) // If enabled
+		for(var/atom/movable/M in pplz)
+			if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
-		if(ismob(M) && n > vsc.airflow_stun_pressure)
-			var/mob/O = M
-			if(O.status_flags & GODMODE) continue
-			O.airflow_stun()
+			if(ismob(M) && n > vsc.airflow_stun_pressure)
+				var/mob/O = M
+				if(O.status_flags & GODMODE) continue
+				O.airflow_stun()
 
-		if(M.check_airflow_movable(n))
+			if(M.check_airflow_movable(n))
 
-			var/list/close_turfs = list()
-			for(var/turf/U in connected_turfs)
-				if(M in range(U)) close_turfs += U
-			if(!close_turfs.len) continue
+				var/list/close_turfs = list()
+				for(var/turf/U in connected_turfs)
+					if(M in range(U)) close_turfs += U
+				if(!close_turfs.len) continue
 
-			//If they're already being tossed, don't do it again.
-			if(!M.airflow_speed)
+				//If they're already being tossed, don't do it again.
+				if(!M.airflow_speed)
 
-				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
-				spawn
-					if(M) M.GotoAirflowDest(n/10)
-					//Sometimes shit breaks, and M isn't there after the spawn.
+					M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+					spawn
+						if(M) M.GotoAirflowDest(n/10)
+						//Sometimes shit breaks, and M isn't there after the spawn.
 
 atom/movable
 	var/tmp/turf/airflow_dest
@@ -235,7 +243,7 @@ atom/movable
 	var/tmp/last_airflow = 0
 
 	proc/GotoAirflowDest(n)
-		if(1) return
+		if(!vsc.airflow_push) return // If not enabled, fuck it.
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - vsc.airflow_delay) return
@@ -301,7 +309,7 @@ atom/movable
 
 
 	proc/RepelAirflowDest(n)
-		if(1) return
+		if(!vsc.airflow_push) return // If not enabled, fuck it.
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - vsc.airflow_delay) return
@@ -375,7 +383,7 @@ mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	//weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
+	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
@@ -407,13 +415,14 @@ mob/living/carbon/human/airflow_hit(atom/A)
 
 	blocked = run_armor_check("groin","melee")
 	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
-/*
-	if(airflow_speed > 10)
-		paralysis += round(airflow_speed * vsc.airflow_stun)
-		stunned = max(stunned,paralysis + 3)
-	else
-		stunned += round(airflow_speed * vsc.airflow_stun/2)
-*/
+
+	if(vsc.airflow_push)
+		if(airflow_speed > 10)
+			paralysis += round(airflow_speed * vsc.airflow_stun)
+			stunned = max(stunned,paralysis + 3)
+		else
+			stunned += round(airflow_speed * vsc.airflow_stun/2)
+
 	. = ..()
 
 zone/proc/movables()
