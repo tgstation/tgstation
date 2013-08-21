@@ -398,7 +398,7 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0)
+/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0, automatic = 0)
 	if(!slot) return 0
 	if(!M) return 0
 
@@ -419,6 +419,9 @@
 				if( !(slot_flags & SLOT_MASK) )
 					return 0
 				if(H.wear_mask)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.wear_mask.canremove)
 						return 2
 					else
@@ -428,6 +431,9 @@
 				if( !(slot_flags & SLOT_BACK) )
 					return 0
 				if(H.back)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.back.canremove)
 						return 2
 					else
@@ -437,6 +443,9 @@
 				if( !(slot_flags & SLOT_OCLOTHING) )
 					return 0
 				if(H.wear_suit)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.wear_suit.canremove)
 						return 2
 					else
@@ -446,6 +455,9 @@
 				if( !(slot_flags & SLOT_GLOVES) )
 					return 0
 				if(H.gloves)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.gloves.canremove)
 						return 2
 					else
@@ -455,6 +467,9 @@
 				if( !(slot_flags & SLOT_FEET) )
 					return 0
 				if(H.shoes)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.shoes.canremove)
 						return 2
 					else
@@ -468,6 +483,9 @@
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
 				if(H.belt)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.belt.canremove)
 						return 2
 					else
@@ -477,6 +495,9 @@
 				if( !(slot_flags & SLOT_EYES) )
 					return 0
 				if(H.glasses)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.glasses.canremove)
 						return 2
 					else
@@ -486,6 +507,9 @@
 				if( !(slot_flags & SLOT_HEAD) )
 					return 0
 				if(H.head)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.head.canremove)
 						return 2
 					else
@@ -495,6 +519,9 @@
 				if( !(slot_flags & SLOT_EARS) )
 					return 0
 				if(H.ears)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.ears.canremove)
 						return 2
 					else
@@ -504,6 +531,9 @@
 				if( !(slot_flags & SLOT_ICLOTHING) )
 					return 0
 				if(H.w_uniform)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.w_uniform.canremove)
 						return 2
 					else
@@ -517,6 +547,9 @@
 				if( !(slot_flags & SLOT_ID) )
 					return 0
 				if(H.wear_id)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.wear_id.canremove)
 						return 2
 					else
@@ -559,6 +592,9 @@
 						usr << "The [name] is too big to attach."
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
 					if(H.s_store)
 						if(H.s_store.canremove)
 							return 2
@@ -615,7 +651,6 @@
 		return 0 //Unsupported slot
 
 		//END MONKEY
-
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
