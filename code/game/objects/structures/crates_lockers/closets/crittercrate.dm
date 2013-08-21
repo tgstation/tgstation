@@ -104,19 +104,6 @@
 	AM.loc = src
 	return 1
 
-/obj/structure/closet/crate/critter/relaymove(mob/user as mob)
-	if(user.stat || !isturf(src.loc))
-		return
-
-	if(!src.open())
-		user << "<span class='notice'>It won't budge!</span>"
-		if(!lastbang)
-			lastbang = 1
-			for (var/mob/M in hearers(src, null))
-				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
-			spawn(30)
-				lastbang = 0
-
 /obj/structure/closet/crate/critter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 
