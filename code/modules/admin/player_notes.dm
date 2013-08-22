@@ -12,7 +12,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
 	if(ckey)
-		. = "<b>Notes for <a href='?_src_=holder;notes=show'>[ckey]</a>:</b> <a href='?_src_=holder;notes=add;ckey=[ckey]'>\[+\]</a> <a href='?_src_=holder;notes=remove;ckey=[ckey]'>\[-\]</a><br>"
+		. = "<b>Notes for <a href='?_src_=holder;notes=show'>[ckey]</a>:</b> <a href='?_src_=holder;notes=add;ckey=[ckey]'>\[+\]</a><br>"
 		notesfile.cd = "/[ckey]"
 		var/index = 1
 		while( !notesfile.eof )
@@ -21,7 +21,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 			. += "[note] <a href='?_src_=holder;notes=remove;ckey=[ckey];from=[index]'>\[-\]</a><br>"
 			index++
 	else
-		. = "<b>All Notes:</b> <a href='?_src_=holder;notes=add'>\[+\]</a> <a href='?_src_=holder;notes=remove'>\[-\]</a><br>"
+		. = "<b>All Notes:</b> <a href='?_src_=holder;notes=add'>\[+\]</a><br>"
 		notesfile.cd = "/"
 		for(var/dir in notesfile.dir)
 			. += "<a href='?_src_=holder;notes=show;ckey=[dir]'>[dir]</a><br>"
@@ -83,17 +83,13 @@ datum/admins/proc/notes_gethtml(var/ckey)
 		for( var/note in noteslist )
 			notesfile << note
 
-
 		message_admins("[key_name(usr)] removed a note '[admin_msg]' from [ckey]")
 		log_admin("[key_name(usr)] removed a note '[admin_msg]' from [ckey]")
 
-	else
-		notesfile.cd = "/"
-		if(alert(usr,"Are you sure you want to remove all their notes?","Confirmation","No","Yes - Remove all notes") == "Yes - Remove all notes")
+		if(noteslist.len == 0)
+			notesfile.cd = "/"
 			notesfile.dir.Remove(ckey)
-
-			message_admins("[key_name(usr)] removed all notes from [ckey]")
-			log_admin("[key_name(usr)] removed all notes from [ckey]")
+			message_admins("[ckey] has no notes and was removed from the notes list.")
 	return
 
 #undef NOTESFILE
