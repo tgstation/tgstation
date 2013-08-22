@@ -306,6 +306,10 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
 
+	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+		rec.iron++
+		return 1
+
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
@@ -322,6 +326,10 @@
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS)
+
+/obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.glass++
+	return 1
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -408,6 +416,10 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
+	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+		rec.iron+=2
+		return 1
+
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
 	desc = "Hard table parts. Well...harder..."
@@ -415,6 +427,11 @@
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
 	flags = FPRINT | TABLEPASS| CONDUCT
+
+	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+		// 2 metal + 4 rods (0.5 metal ea)
+		rec.iron+=4
+		return 1
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"

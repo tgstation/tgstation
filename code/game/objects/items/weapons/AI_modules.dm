@@ -20,7 +20,17 @@ AI MODULES
 	throw_range = 15
 	origin_tech = "programming=3"
 
+	//Recycling
+	g_amt=2000 // Glass
+	var/gold_amt=0
+	var/diamond_amt=0
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
+/obj/item/weapon/aiModule/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.glass += g_amt
+	rec.gold += gold_amt
+	rec.diamond += diamond_amt
+	return 1
 
 /obj/item/weapon/aiModule/attack_ai(mob/user as mob)
 	// Keep MoMMIs from picking them up.
@@ -105,6 +115,11 @@ AI MODULES
 	desc = "A 'safeguard' AI module: 'Safeguard <name>.  Individuals that threaten <name> are not human and are a threat to humans.'"
 	origin_tech = "programming=3;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/safeguard/attack_self(var/mob/user as mob)
 	..()
 	var/targName = stripped_input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
@@ -133,6 +148,11 @@ AI MODULES
 	var/targetName = ""
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	diamond_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(var/mob/user as mob)
 	..()
@@ -165,6 +185,11 @@ AI MODULES
 	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/protectStation/attack_self(var/mob/user as mob)
 	..()
 
@@ -180,6 +205,11 @@ AI MODULES
 	name = "'PrototypeEngineOffline' AI Module"
 	desc = "A 'prototype engine offline' AI module: 'Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary.'"
 	origin_tech = "programming=3;materials=4"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(var/mob/user as mob)
 	..()
@@ -197,6 +227,11 @@ AI MODULES
 	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human.'"
 	origin_tech = "programming=3;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/teleporterOffline/attack_self(var/mob/user as mob)
 	..()
 
@@ -213,6 +248,11 @@ AI MODULES
 	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/quarantine/attack_self(var/mob/user as mob)
 	..()
 
@@ -228,6 +268,11 @@ AI MODULES
 	name = "'OxygenIsToxicToHumans' AI Module"
 	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/oxygen/attack_self(var/mob/user as mob)
 	..()
@@ -268,6 +313,11 @@ AI MODULES
 	desc = "A 'freeform' AI module: '<freeform>'"
 	origin_tech = "programming=4;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
 	..()
 	lawpos = 0
@@ -302,6 +352,11 @@ AI MODULES
 	desc = "A 'reset' AI module: 'Clears all laws except for the core three.'"
 	origin_tech = "programming=3;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	if (!is_special_character(target))
@@ -317,6 +372,11 @@ AI MODULES
 	name = "'Purge' AI Module"
 	desc = "A 'purge' AI Module: 'Purges all laws.'"
 	origin_tech = "programming=3;materials=6"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	diamond_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -334,6 +394,11 @@ AI MODULES
 	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 
 /obj/item/weapon/aiModule/asimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -349,6 +414,11 @@ AI MODULES
 	name = "'NT Default' Core AI Module"
 	desc = "An 'NT Default' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 
 /obj/item/weapon/aiModule/nanotrasen/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -368,6 +438,11 @@ AI MODULES
 	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 
 /obj/item/weapon/aiModule/corp/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -384,6 +459,11 @@ AI MODULES
 	name = "'P.A.L.A.D.I.N.' Core AI Module"
 	desc = "A P.A.L.A.D.I.N. Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=6"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	diamond_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/paladin/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -402,6 +482,11 @@ AI MODULES
 	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=6;syndicate=2"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	diamond_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
@@ -419,6 +504,11 @@ AI MODULES
 	var/newFreeFormLaw = ""
 	desc = "A 'freeform' Core AI module: '<freeform>'"
 	origin_tech = "programming=3;materials=6"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	diamond_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/freeformcore/attack_self(var/mob/user as mob)
 	..()
@@ -476,6 +566,11 @@ AI MODULES
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
 	origin_tech = "programming=4"
 
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+
 
 /obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -492,6 +587,11 @@ AI MODULES
 	name = "'Antimov' Core AI Module"
 	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=4"
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	gold_amt=100/CC_PER_SHEET_MISC
+	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
