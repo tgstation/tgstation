@@ -485,14 +485,17 @@ table {
 	openwindow(user)
 	return
 
+/obj/machinery/sorting_machine/proc/toggleCategory(var/n)
+	if(n in selected_types)
+		selected_types -= n
+		selection -= types[n]
+	else
+		selected_types += n
+		selection += types[n]
+
 /obj/machinery/sorting_machine/Topic(href, href_list)
 	src.add_fingerprint(usr)
 	if(href_list["set_types"])
 		var/n = href_list["set_types"]
-		if(n in selected_types)
-			selected_types -= n
-			selection -= types[n]
-		else
-			selected_types += n
-			selection += types[n]
+		toggleCategory(n)
 	openwindow(usr)

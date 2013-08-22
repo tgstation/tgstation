@@ -19,6 +19,8 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
+	g_amt=2000 // Recycle glass
+
 	var/id = null
 	var/frequency = null
 	var/build_path = null

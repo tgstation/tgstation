@@ -2972,7 +2972,7 @@
 "bfh" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bfi" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bfj" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/mineral/output,/turf/simulated/floor/plating,/area/maintenance/disposal)
-"bfk" = (/obj/machinery/sorting_machine{selected_types = list("Glasses","Electronics","Metals/Minerals")},/turf/simulated/floor/plating,/area/maintenance/disposal)
+"bfk" = (/obj/machinery/sorting_machine{select_txt = "Glasses Metals/Minerals Electronics"; selected_types = list()},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bfl" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/light/small{dir = 1},/obj/machinery/mineral/input,/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bfm" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bfn" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall,/area/maintenance/disposal)
