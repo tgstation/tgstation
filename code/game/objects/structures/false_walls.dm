@@ -1,6 +1,21 @@
 /*
  * False Walls
  */
+
+#define FALSEDOOR_MAX_PRESSURE_DIFF 100.0
+
+/proc/performFalseWallPressureCheck(var/turf/loc,var/mob/user)
+	var/datum/gas_mixture/myenv=loc.return_air()
+	var/pressure=myenv.return_pressure()
+
+	for(var/dir in cardinal)
+		var/turf/T=get_turf(get_step(loc,dir))
+		var/datum/gas_mixture/environment = T.return_air()
+		var/pdiff = abs(pressure - environment.return_pressure())
+		if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
+			return pdiff
+	return 1
+
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."

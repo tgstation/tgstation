@@ -70,10 +70,16 @@
 				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
 						if(S.amount < 2) return
-						S.use(2)
-						user << "\blue You create a false wall! Push on it to open or close the passage."
-						new /obj/structure/falsewall (src.loc)
-						del(src)
+						var/pdiff=performFalseWallPressureCheck(src.loc,user)
+						if(!pdiff)
+							S.use(2)
+							user << "\blue You create a false wall! Push on it to open or close the passage."
+							new /obj/structure/falsewall (src.loc)
+							del(src)
+						else
+							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
+							message_admins("Attempted false wall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
+							return
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -91,10 +97,16 @@
 				if(/obj/item/stack/sheet/plasteel)
 					if(!anchored)
 						if(S.amount < 2) return
-						S.use(2)
-						user << "\blue You create a false wall! Push on it to open or close the passage."
-						new /obj/structure/falserwall (src.loc)
-						del(src)
+						var/pdiff=performFalseWallPressureCheck(src.loc,user)
+						if(!pdiff)
+							S.use(2)
+							user << "\blue You create a false wall! Push on it to open or close the passage."
+							new /obj/structure/falserwall (src.loc)
+							del(src)
+						else
+							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
+							message_admins("Attempted false rwall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
+							return
 					else
 						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 							if(S.amount < 1) return ..()
@@ -124,11 +136,17 @@
 				var/M = S.sheettype
 				if(!anchored)
 					if(S.amount < 2) return
-					S.use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					var/F = text2path("/obj/structure/falsewall/[M]")
-					new F (src.loc)
-					del(src)
+					var/pdiff=performFalseWallPressureCheck(src.loc,user)
+					if(!pdiff)
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						var/F = text2path("/obj/structure/falsewall/[M]")
+						new F (src.loc)
+						del(src)
+					else
+						user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
+						message_admins("Attempted false [M] wall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
+						return
 				else
 					if(S.amount < 2) return ..()
 					user << "\blue Now adding plating..."

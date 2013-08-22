@@ -19,6 +19,9 @@
 	health -= Proj.damage
 	..()
 	if(health <= 0)
+		var/pdiff=performFalseWallPressureCheck(src.loc,Proj.firer)
+		if(pdiff>0)
+			message_admins("Window destroyed by [Proj.firer.real_name] ([formatPlayerPanel(Proj.firer,Proj.firer.ckey)]) via \an [Proj]! pdiff = [pdiff] at [formatJumpTo(loc)]!")
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/stack/rods(loc)
 		del(src)
@@ -79,8 +82,10 @@
 	..()
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
+	var/mob/M=null
 	if(ismob(AM))
 		tforce = 40
+		M=AM
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
@@ -91,10 +96,22 @@
 		anchored = 0
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
+		var/pdiff=performFalseWallPressureCheck(src.loc,M)
+		if(pdiff>0)
+			if(M)
+				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] deanchored by [M.real_name] ([formatPlayerPanel(M,M.ckey)])!")
+			else
+				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] deanchored by [AM]!")
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
+		var/pdiff=performFalseWallPressureCheck(src.loc,M)
+		if(pdiff>0)
+			if(M)
+				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] destroyed by [M.real_name] ([formatPlayerPanel(M,M.ckey)])!")
+			else
+				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] destroyed by [AM]!")
 
 
 /obj/structure/window/attack_hand(mob/user as mob)
@@ -104,6 +121,9 @@
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
+		var/pdiff=performFalseWallPressureCheck(src.loc,user)
+		if(pdiff>0)
+			message_admins("Window destroyed by hulk [user.real_name] ([formatPlayerPanel(user,user.ckey)]) with pdiff [pdiff] at [formatJumpTo(loc)]!")
 	else if (usr.a_intent == "hurt")
 		playsound(src.loc, 'glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
@@ -128,6 +148,9 @@
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
+		var/pdiff=performFalseWallPressureCheck(src.loc,user)
+		if(pdiff>0)
+			message_admins("Window destroyed by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) with pdiff [pdiff] at [formatJumpTo(loc)]!")
 	else	//for nicer text~
 		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
@@ -185,11 +208,19 @@
 			update_nearby_icons()
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>")
+			if(!anchored)
+				var/pdiff=performFalseWallPressureCheck(src.loc,user)
+				if(pdiff>0)
+					message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")
 		else if(!reinf)
 			anchored = !anchored
 			update_nearby_icons()
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
+			if(!anchored)
+				var/pdiff=performFalseWallPressureCheck(src.loc,user)
+				if(pdiff>0)
+					message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")
 	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
@@ -201,6 +232,9 @@
 				anchored = 0
 				update_nearby_icons()
 				step(src, get_dir(user, src))
+				var/pdiff=performFalseWallPressureCheck(src.loc,user)
+				if(pdiff>0)
+					message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()
@@ -222,6 +256,9 @@
 		else
 			new /obj/item/weapon/shard(loc)
 			if(reinf) new /obj/item/stack/rods(loc)
+		var/pdiff=performFalseWallPressureCheck(src.loc,null)
+		if(pdiff>0)
+			message_admins("Window with pdiff [pdiff] broken at [formatJumpTo(loc)]!")
 		del(src)
 		return
 
