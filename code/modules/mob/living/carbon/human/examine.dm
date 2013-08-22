@@ -273,12 +273,12 @@
 	if(istype(usr, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-			if(usr.stat ||  H != usr) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+			if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 
 			var/criminal = "None"
 
-			var/perpname = H.get_face_name(H.get_id_name(""))
+			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
 				var/datum/data/record/R = find_record("name", perpname, data_core.security)
 				if(R)
