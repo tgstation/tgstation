@@ -9,7 +9,8 @@
 /datum/event/prison_break/setup()
 	announceWhen = rand(50, 60)
 	releaseWhen = rand(20, 30)
-
+	src.startWhen = src.releaseWhen-1
+	src.endWhen = src.releaseWhen+1
 
 /datum/event/prison_break/announce()
 	if(prisonAreas && prisonAreas.len > 0)

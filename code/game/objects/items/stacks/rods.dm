@@ -13,6 +13,10 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
+/obj/item/stack/rods/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.iron += amount/2
+	return 1
+
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/weldingtool))

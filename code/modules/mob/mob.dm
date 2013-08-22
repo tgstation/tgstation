@@ -149,19 +149,224 @@
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
 	if(!istype(W)) return 0
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		switch(W.mob_can_equip(src, slot, disable_warning, automatic))
+			if(0)
+				if(del_on_fail)
+					del(W)
+				else
+					if(!disable_warning)
+						src << "\red You are unable to equip that." //Only print if del_on_fail is false
+				return 0
+			if(1)
+				equip_to_slot(W, slot, redraw_mob)
+			if(2)
+				var/obj/item/wearing = null
+				var/hand
+				if(W == l_hand)
+					hand = 0
+				else if(W == r_hand)
+					hand = 1
+				switch(slot)
+					if(slot_wear_mask)
+						wearing = wear_mask
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_back)
+						wearing = back
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_wear_suit)
+						wearing = H.wear_suit
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+						if(H.s_store)
+							if(!H.s_store.mob_can_equip(src, slot_s_store, 1))
+								u_equip(H.s_store)
+					if(slot_gloves)
+						wearing = H.gloves
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_shoes)
+						wearing = H.shoes
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_belt)
+						wearing = H.belt
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_glasses)
+						wearing = H.glasses
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_head)
+						wearing = H.head
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_ears)
+						wearing = H.ears
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_w_uniform)
+						wearing = H.w_uniform
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+/*
+						if(H.wear_id)
+							if(!H.wear_id.mob_can_equip(src, slot_wear_id, 1))
+								u_equip(H.wear_id)
+						if(H.l_store)
+							if(!H.l_store.mob_can_equip(src, slot_l_store, 1))
+								u_equip(H.l_store)
+						if(H.r_store)
+							if(!H.r_store.mob_can_equip(src, slot_r_store, 1))
+								u_equip(H.r_store)
+						if(H.belt)
+							if(!H.belt.mob_can_equip(src, slot_belt, 1))
+								u_equip(H.belt)*/
+					if(slot_wear_id)
+						wearing = H.wear_id
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_s_store)
+						wearing = H.s_store
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+		return 1
+	else
+		if(!W.mob_can_equip(src, slot, disable_warning))
+			if(del_on_fail)
+				del(W)
+			else
+				if(!disable_warning)
+					src << "\red You are unable to equip that." //Only print if del_on_fail is false
+			return 0
 
-	if(!W.mob_can_equip(src, slot, disable_warning))
-		if(del_on_fail)
-			del(W)
-		else
-			if(!disable_warning)
-				src << "\red You are unable to equip that." //Only print if del_on_fail is false
-		return 0
-
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return 1
+		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+		return 1
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
@@ -196,11 +401,205 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W)) return 0
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
 	return 0
 
+/mob/proc/check_for_open_slot(obj/item/W)
+	if(!istype(W)) return 0
+	var/openslot = 0
+	for(var/slot in slot_equipment_priority)
+		if(W.mob_check_equip(src, slot, 1) == 1)
+			openslot = 1
+			break
+	return openslot
+
+/obj/item/proc/mob_check_equip(M as mob, slot, disable_warning = 0)
+	if(!M) return 0
+	if(!slot) return 0
+	if(ishuman(M))
+		//START HUMAN
+		var/mob/living/carbon/human/H = M
+
+		switch(slot)
+			if(slot_l_hand)
+				if(H.l_hand)
+					return 0
+				return 1
+			if(slot_r_hand)
+				if(H.r_hand)
+					return 0
+				return 1
+			if(slot_wear_mask)
+				if( !(slot_flags & SLOT_MASK) )
+					return 0
+				if(H.wear_mask)
+					return 0
+				return 1
+			if(slot_back)
+				if( !(slot_flags & SLOT_BACK) )
+					return 0
+				if(H.back)
+					if(H.back.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_wear_suit)
+				if( !(slot_flags & SLOT_OCLOTHING) )
+					return 0
+				if(H.wear_suit)
+					if(H.wear_suit.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_gloves)
+				if( !(slot_flags & SLOT_GLOVES) )
+					return 0
+				if(H.gloves)
+					if(H.gloves.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_shoes)
+				if( !(slot_flags & SLOT_FEET) )
+					return 0
+				if(H.shoes)
+					if(H.shoes.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_belt)
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if( !(slot_flags & SLOT_BELT) )
+					return 0
+				if(H.belt)
+					if(H.belt.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_glasses)
+				if( !(slot_flags & SLOT_EYES) )
+					return 0
+				if(H.glasses)
+					if(H.glasses.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_head)
+				if( !(slot_flags & SLOT_HEAD) )
+					return 0
+				if(H.head)
+					if(H.head.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_ears)
+				if( !(slot_flags & SLOT_EARS) )
+					return 0
+				if(H.ears)
+					if(H.ears.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_w_uniform)
+				if( !(slot_flags & SLOT_ICLOTHING) )
+					return 0
+				if(H.w_uniform)
+					if(H.w_uniform.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_wear_id)
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if( !(slot_flags & SLOT_ID) )
+					return 0
+				if(H.wear_id)
+					if(H.wear_id.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_l_store)
+				if(H.l_store)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if(slot_flags & SLOT_DENYPOCKET)
+					return
+				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					return 1
+			if(slot_r_store)
+				if(H.r_store)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if(slot_flags & SLOT_DENYPOCKET)
+					return 0
+				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					return 1
+				return 0
+			if(slot_s_store)
+				if(!H.wear_suit)
+					if(!disable_warning)
+						H << "\red You need a suit before you can attach this [name]."
+					return 0
+				if(!H.wear_suit.allowed)
+					if(!disable_warning)
+						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+					return 0
+				if(src.w_class > 3)
+					if(!disable_warning)
+						usr << "The [name] is too big to attach."
+					return 0
+				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
+					if(H.s_store)
+						if(H.s_store.canremove)
+							return 2
+						else
+							return 0
+					else
+						return 1
+				return 0
+			if(slot_handcuffed)
+				if(H.handcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/handcuffs))
+					return 0
+				return 1
+			if(slot_legcuffed)
+				if(H.legcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/legcuffs))
+					return 0
+				return 1
+			if(slot_in_backpack)
+				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
+					var/obj/item/weapon/storage/backpack/B = H.back
+					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
+						return 1
+				return 0
+		return 0 //Unsupported slot
+		//END HUMAN
 /mob/proc/reset_view(atom/A)
 	if (client)
 		if (istype(A, /atom/movable))

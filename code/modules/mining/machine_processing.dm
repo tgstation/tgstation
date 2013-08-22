@@ -406,3 +406,147 @@
 			else
 				break
 	return
+
+/////////////////////////////////////////////////
+// Recycling Furnace
+/obj/machinery/mineral/processing_unit/recycle
+	name = "recycling furnace"
+	var/gold = 0;
+	var/silver = 0;
+	var/diamond = 0;
+	var/glass = 0;
+	var/plasma = 0;
+	var/uranium = 0;
+	var/iron = 0;
+	var/clown = 0;
+	var/adamantine = 0;
+	var/list/ALLOWED_TYPES=list(
+		/obj/item,
+		/obj/machinery/portable_atmospherics/canister,
+	)
+
+
+/obj/machinery/mineral/processing_unit/recycle/process()
+	if (src.output && src.input)
+		var/i
+		//if(!(stat & (BROKEN|UNPOWERED)))
+		for (i = 0; i < 10; i++)
+			if (glass >= 1)
+				glass--;
+				new /obj/item/stack/sheet/glass(output.loc)
+
+			if (gold >= 1)
+				gold--;
+				new /obj/item/stack/sheet/mineral/gold(output.loc)
+
+			if (silver >= 1)
+				silver--;
+				new /obj/item/stack/sheet/mineral/silver(output.loc)
+
+			if (diamond >= 1)
+				diamond--;
+				new /obj/item/stack/sheet/mineral/diamond(output.loc)
+
+			if (plasma >= 1)
+				plasma--;
+				new /obj/item/stack/sheet/mineral/plasma(output.loc)
+
+			if (uranium >= 1)
+				uranium--;
+				new /obj/item/stack/sheet/mineral/uranium(output.loc)
+
+			if (iron >= 1)
+				iron--;
+				new /obj/item/stack/sheet/metal(output.loc)
+
+			if (clown >= 1)
+				clown--;
+				new /obj/item/stack/sheet/mineral/clown(output.loc)
+
+		for (i = 0; i < 10; i++)
+			var/obj/O
+			for(O in input.loc.contents)
+				var/allowed=0
+				for(var/T in ALLOWED_TYPES)
+					if(istype(O,T))
+						allowed=1
+						break
+				if(O && allowed)
+					if (O.recycle(src))
+						del(O)
+					else
+						O.loc = src.output.loc
+
+
+/obj/machinery/mineral/processing_unit/recycle/attack_ai(var/mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/mineral/processing_unit/recycle/attack_paw(var/mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/mineral/processing_unit/recycle/attack_hand(var/mob/user as mob)
+	return src.interact(user)
+
+/obj/machinery/mineral/processing_unit/recycle/interact(var/mob/user as mob)
+
+	user.set_machine(src)
+	var/found=0
+	var/html = {"<html>
+	<head>
+		<title>Recyk Processor</title>
+	</head>
+	<body>
+		<h1>Recyk PRO-1000</h1>
+		<p><b>Current Status:</b> (<a href='?src=\ref[user];mach_close=recyk_furnace'>Close</a>)</p>
+		<ul>
+	"}
+	if(adamantine > 0.0)
+		html += "<li><b>Adamantine:</b> [adamantine]</li>"
+		found=1
+	if(clown > 0.0)
+		html += "<li><b>Bananaium:</b> [clown]</li>"
+		found=1
+	if(diamond > 0.0)
+		html += "<li><b>Diamond:</b> [diamond]</li>"
+		found=1
+	if(glass > 0.0)
+		html += "<li><b>Glass:</b> [glass]</li>"
+		found=1
+	if(gold > 0.0)
+		html += "<li><b>Gold:</b> [gold]</li>"
+		found=1
+	if(iron > 0.0)
+		html += "<li><b>Iron:</b> [iron]</li>"
+		found=1
+	if(plasma > 0.0)
+		html += "<li><b>Plasma:</b> [plasma]</li>"
+		found=1
+	if(silver > 0.0)
+		html += "<li><b>Silver:</b> [silver]</li>"
+		found=1
+	if(uranium > 0.0)
+		html += "<li><b>Uranium:</b> [uranium]</li>"
+		found=1
+	if(!found)
+		html += "<li><i>(Nothing loaded yet!)</i></li>"
+	html +={"
+		</ul>
+		<p><i>(Units are sheets)</i></p>
+	</body>
+</html>
+	"}
+
+	//"<A href='?src=\ref[src];toggle=1'>[valve_open?("Open"):("Closed")]</A><BR>
+
+	user << browse(html, "window=recyk_furnace;size=600x300")
+	onclose(user, "canister")
+	return
+
+/obj/machinery/mineral/processing_unit/recycle/Topic(href, href_list)
+
+	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict.
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+		if(1)//if(!isAdminGhost(usr))
+			usr << browse(null, "window=recyk_furnace")
+			onclose(usr, "recyk_furnace")
+			return

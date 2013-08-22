@@ -253,13 +253,13 @@
 		else
 			return !density
 
-	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+/*	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 		if(istype(mover) && mover.checkpass(PASSGLASS))
 			return 1
 		/*if(get_dir(loc, target) == dir)
 			return !density*/
 		else
-			return !density
+			return !density*/
 
 
 	update_nearby_tiles(need_rebuild)

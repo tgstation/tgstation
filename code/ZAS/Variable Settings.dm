@@ -1,6 +1,13 @@
 var/global/vs_control/vsc = new
 
+// Whoever made this fucking thing:  I hate you so much.
 vs_control/var
+	// N3X15 - Added back in so we can tweak performance.
+	airflow_push = 0
+	airflow_push_NAME="Airflow - Push shit around"
+	airflow_push_DESC="1=yes please rape my server, 0=no"
+	airflow_push_METHOD="Toggle" // See ChangeSettings().  I'd rather not let people break this.
+
 	fire_consuption_rate = 0.75
 	fire_consuption_rate_NAME = "Fire - Air Consumption Ratio"
 	fire_consuption_rate_DESC = "Ratio of air removed and combusted per tick."
@@ -73,7 +80,7 @@ vs_control/var
 vs_control
 	var
 		list/settings = list()
-		list/bitflags = list("1","2","4","8","16","32","64","128","256","512","1024")
+		list/bitflags = list("1","2","4","8","16","32","64","128","256","512","1024") // Oh jesus why.  Learn to shift bits, you idiots.
 		pl_control/plc = new()
 
 	New()
@@ -229,6 +236,7 @@ vs_control
 				plc.CONTAMINATION_LOSS = 0.075
 
 			if("ZAS - Normal")
+				airflow_push=0
 				airflow_lightest_pressure = 20
 				airflow_light_pressure = 35
 				airflow_medium_pressure = 50
@@ -243,6 +251,7 @@ vs_control
 				airflow_mob_slowdown = 1
 
 			if("ZAS - Forgiving")
+				airflow_push=0
 				airflow_lightest_pressure = 45
 				airflow_light_pressure = 60
 				airflow_medium_pressure = 120
@@ -257,6 +266,7 @@ vs_control
 				airflow_mob_slowdown = 0
 
 			if("ZAS - Dangerous")
+				airflow_push=1
 				airflow_lightest_pressure = 15
 				airflow_light_pressure = 30
 				airflow_medium_pressure = 45
@@ -271,6 +281,7 @@ vs_control
 				airflow_mob_slowdown = 2
 
 			if("ZAS - Hellish")
+				airflow_push=1
 				airflow_lightest_pressure = 20
 				airflow_light_pressure = 30
 				airflow_medium_pressure = 40

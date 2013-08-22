@@ -2120,7 +2120,19 @@
 		var/ok = 0
 		switch(href_list["secretsadmin"])
 			if("clear_bombs")
-				//I do nothing
+				var/num=0
+				for(var/obj/item/device/transfer_valve/TV in world)
+					if(TV.tank_one||TV.tank_two)
+						del(TV)
+						TV++
+				message_admins("[key_name_admin(usr)] has removed [num] bombs", 1)
+			if("detonate_bombs")
+				var/num=0
+				for(var/obj/item/device/transfer_valve/TV in world)
+					if(TV.tank_one||TV.tank_two)
+						TV.toggle_valve()
+				message_admins("[key_name_admin(usr)] has toggled valves on [num] bombs", 1)
+
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)
