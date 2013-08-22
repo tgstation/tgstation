@@ -22,6 +22,9 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+/atom/movable/proc/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	return 0
+
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	if(src.throwing)
 		src.throw_impact(A)

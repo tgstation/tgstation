@@ -304,3 +304,198 @@
 			else
 				user << "You need more welding fuel to complete this task."
 				return
+
+
+/obj/machinery/sorting_machine
+	name = "Sorting Machine"
+	desc = "Sorts stuff."
+	density = 1
+	icon = 'icons/obj/recycling.dmi'
+	icon_state = "grinder-b1"
+	anchored=1
+
+	var/select_txt
+	var/list/selection=list()
+	var/list/selected_types=list()
+	var/list/types=list(
+		"Carcasses" = list(
+			/mob/living/carbon,
+			/mob/living/simple_animal
+		),
+		"Glasses" = list(
+			/obj/item/weapon/shard,
+			/obj/item/stack/sheet/glass,
+			/obj/item/stack/sheet/rglass,
+			/obj/item/stack/tile/light,
+			/obj/item/weapon/broken_bottle,
+			/obj/item/weapon/reagent_containers/glass/bucket,
+			/obj/item/clothing/head/welding,
+			/obj/item/weapon/stock_parts/console_screen,
+			/obj/item/weapon/reagent_containers/glass,
+			/obj/item/weapon/reagent_containers/syringe,
+			/obj/item/weapon/light/tube,
+			/obj/item/weapon/light/bulb,
+		),
+		"Electronics" = list(
+			/obj/item/weapon/circuitboard,
+			/obj/item/weapon/aiModule,
+			/obj/item/device/flashlight,
+			/obj/item/device/multitool,
+			/obj/item/device/t_scanner,
+			/obj/item/weapon/airlock_electronics,
+			/obj/item/weapon/airalarm_electronics,
+			/obj/item/weapon/firealarm_electronics,
+			/obj/item/device/taperecorder,
+			/obj/item/device/assembly/igniter,
+			/obj/item/device/assembly/signaler,
+			/obj/item/device/radio/headset,
+			/obj/item/device/radio,
+			/obj/item/device/assembly/infra,
+			/obj/item/device/assembly/timer,
+			/obj/item/weapon/camera_assembly
+		),
+		"Metals/Minerals" = list(
+			/obj/item/stack/rods,
+			/obj/item/stack/sheet/plasteel,
+			/obj/item/stack/sheet/metal,
+			/obj/item/stack/sheet/metal/cyborg,
+			/obj/item/stack/sheet/mineral,
+			/obj/item/apc_frame,
+			/obj/item/alarm_frame,
+			/obj/item/firealarm_frame,
+			/obj/item/weapon/table_parts,
+			/obj/item/weapon/table_parts/reinforced,
+			/obj/item/weapon/rack_parts,
+			/obj/item/weapon/crowbar,
+			/obj/item/weapon/extinguisher,
+			/obj/item/weapon/weldingtool,
+			/obj/item/weapon/screwdriver,
+			/obj/item/weapon/wirecutters,
+			/obj/item/weapon/wrench,
+			/obj/item/weapon/rcd_ammo,
+			/obj/item/weapon/kitchenknife,
+			/obj/item/weapon/scalpel,
+			/obj/item/weapon/circular_saw,
+			/obj/item/weapon/surgicaldrill,
+			/obj/item/weapon/retractor,
+			/obj/item/weapon/cautery,
+			/obj/item/ammo_casing/shotgun/blank,
+			/obj/item/ammo_casing/shotgun/beanbag,
+			/obj/item/ammo_magazine/c38,
+			/obj/structure/closet, // 2 sheets
+			/obj/machinery/portable_atmospherics/canister, //10 sheets
+			/obj/item/stack/tile/plasteel, //1/4 of a sheet
+			/obj/item/weapon/grenade/chem_grenade,
+		)
+	)
+
+	var/obj/machinery/mineral/input = null
+	var/obj/machinery/mineral/output = null
+	var/obj/machinery/mineral/selected_output = null
+
+/obj/machinery/sorting_machine/New()
+	..()
+	spawn( 5 )
+		var i = 0;
+		for (var/dir in cardinal)
+			var/turf/T=get_step(src, dir)
+			if(!input)
+				src.input = locate(/obj/machinery/mineral/input, T)
+				i++
+			if(!output)
+				src.output = locate(/obj/machinery/mineral/output, T)
+				i++
+			if(!selected_output)
+				src.selected_output = locate(/obj/machinery/mineral/selected_output, T)
+				i++
+			if(src.output && src.input && src.selected_output)
+				break
+		if(i<3)
+			diary << "\a [src] couldn't find an input or output plate."
+		if(select_txt)
+			for(var/n in text2list(select_txt," "))
+				selected_types += n
+				selection += types[n]
+	return
+
+
+
+/obj/machinery/sorting_machine/process()
+	if(stat & (BROKEN | NOPOWER))
+		return
+	use_power(100)
+
+	var/affecting = input.loc.contents		// moved items will be all in loc
+	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
+		var/items_moved = 0
+		for(var/atom/movable/A in affecting)
+			if(!A.anchored)
+				if(A.loc == input.loc) // prevents the object from being affected if it's not currently here.
+					var/found=0
+					for(var/t in selection)
+						if(istype(A,t))
+							A.loc=selected_output.loc
+							found=1
+							break
+					if(!found)
+						A.loc=output.loc
+					items_moved++
+			if(items_moved >= 10)
+				break
+
+/obj/machinery/sorting_machine/proc/openwindow(mob/user as mob)
+	var/dat = {"
+		<html>
+			<head>
+				<style type="text/css">
+html,body {
+	font-family:sans-serif,verdana;
+	font-size:smaller;
+	color:#666;
+}
+h1 {
+	border-bottom:1px solid maroon;
+}
+table {
+	width:100%;
+	padding:4px;
+}
+				</style>
+			</head>
+			<body>
+				<h1>SortMaster 5000</h1><br>
+				<p>Select the desired items to sort from the line.</p>"}
+	dat += "<ul>"
+	for (var/n in types)
+		dat += "<li>"
+		var/selected = (n in selected_types)
+		if(selected)
+			dat+="<b>"
+		dat+="<a href='?src=\ref[src];set_types=[n]'>[n]</a>"
+		if(selected)
+			dat+="</b>"
+		dat+="</li>"
+
+	dat += "</ul></body></html>"
+
+	user << browse(dat, "window=destTagScreen;size=450x350")
+	onclose(user, "destTagScreen")
+
+/obj/machinery/sorting_machine/attack_hand(mob/user as mob)
+	openwindow(user)
+	return
+
+/obj/machinery/sorting_machine/proc/toggleCategory(var/n)
+	if(n in selected_types)
+		selected_types -= n
+		selection -= types[n]
+	else
+		selected_types += n
+		selection += types[n]
+
+/obj/machinery/sorting_machine/Topic(href, href_list)
+	src.add_fingerprint(usr)
+	if(href_list["set_types"])
+		var/n = href_list["set_types"]
+		toggleCategory(n)
+	openwindow(usr)

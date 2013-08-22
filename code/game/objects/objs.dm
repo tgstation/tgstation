@@ -18,6 +18,14 @@
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
+
+/obj/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	if (src.m_amt == 0 && src.g_amt == 0)
+		return 0
+	rec.iron += src.m_amt/CC_PER_SHEET_METAL
+	rec.glass += src.g_amt/CC_PER_SHEET_GLASS
+	return 1
+
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0

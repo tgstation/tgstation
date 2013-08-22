@@ -16,6 +16,12 @@
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
+	var/list/allowedTypes=list(
+		/mob/living/carbon/human,
+		/mob/living/carbon/alien,
+		/mob/living/carbon/monkey,
+		/mob/living/simple_animal/corgi
+	)
 	var/turf/input_plate
 
 	New()
@@ -33,16 +39,26 @@
 				diary << "a [src] didn't find an input plate."
 				return
 
-	Bumped(var/atom/A)
-		if(!input_plate) return
+/obj/machinery/gibber/autogibber/process()
+	if(!input_plate) return
+	if(stat & (BROKEN | NOPOWER))
+		return
+	use_power(100)
 
-		if(ismob(A))
-			var/mob/M = A
+	var/affecting = input_plate.contents		// moved items will be all in loc
+	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
+		for(var/atom/movable/A in affecting)
+			if(ismob(A))
+				var/mob/M = A
 
-			if(M.loc == input_plate
-			)
-				M.loc = src
-				M.gib()
+				if(M.loc == input_plate)
+					//var/found=0
+					for(var/t in allowedTypes)
+						if(istype(M,t))
+							//found=1
+							M.loc = src
+							startautogibbing(M)
+							break
 
 
 /obj/machinery/gibber/New()
@@ -160,6 +176,71 @@
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	del(src.occupant)
+	spawn(src.gibtime)
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		operating = 0
+		for (var/i=1 to totalslabs)
+			var/obj/item/meatslab = allmeat[i]
+			var/turf/Tx = locate(src.x - i, src.y, src.z)
+			meatslab.loc = src.loc
+			meatslab.throw_at(Tx,i,3)
+			if (!Tx.density)
+				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
+		src.operating = 0
+		update_icon()
+
+/obj/machinery/gibber/proc/startautogibbing(mob/victim as mob)
+	if(src.operating)
+		return
+	if(!victim)
+		visible_message("\red You hear a loud metallic grinding sound.")
+		return
+	use_power(1000)
+	visible_message("\red You hear a loud squelchy grinding sound.")
+	src.operating = 1
+	update_icon()
+	var/sourcename = victim.real_name
+	var/sourcejob = victim.job
+	var/sourcenutriment = victim.nutrition / 15
+	var/sourcetotalreagents = victim.reagents.total_volume
+	var/totalslabs = 3
+
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/allmeat[totalslabs]
+	for (var/i=1 to totalslabs)
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/newmeat = null
+		if(istype(victim, /mob/living/carbon/human))
+			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/human
+			newmeat.name = sourcename + newmeat.name
+			newmeat:subjectname = sourcename
+			newmeat:subjectjob = sourcejob
+		if(istype(victim, /mob/living/carbon/alien))
+			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/xenomeat
+		if(istype(victim, /mob/living/carbon/monkey))
+			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+		if(istype(victim, /mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = victim
+			newmeat = new SA.meat_type
+
+		if(newmeat==null)
+			return
+		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+		victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+		allmeat[i] = newmeat
+
+	victim.attack_log += "\[[time_stamp()]\] Was auto-gibbed by <b>[src]</b>" //One shall not simply gib a mob unnoticed!
+	log_attack("\[[time_stamp()]\] <b>[src]</b> auto-gibbed <b>[victim]/[victim.ckey]</b>")
+	victim.death(1)
+	if(ishuman(victim) || ismonkey(victim) || isalien(victim))
+		var/obj/item/brain/B = new(src.loc)
+		B.transfer_identity(victim)
+		var/turf/Tx = locate(src.x - 2, src.y, src.z)
+		B.loc = src.loc
+		B.throw_at(Tx,2,3)
+		if(isalien(victim))
+			new /obj/effect/decal/cleanable/xenoblood/xgibs(Tx,2)
+		else
+			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
+	del(victim)
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0

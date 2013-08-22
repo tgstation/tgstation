@@ -315,6 +315,19 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		icon_state = "intact-y-f"
 
+	simple/filtering
+		name="Pipe"
+		color="green"
+		icon_state = ""
+
+	simple/filtering/visible
+		level = 2
+		icon_state = "intact-g"
+
+	simple/filtering/hidden
+		level = 1
+		icon_state = "intact-g-f"
+
 
 
 	simple/insulated
@@ -328,6 +341,10 @@ obj/machinery/atmospherics/pipe
 		alert_pressure = 900*ONE_ATMOSPHERE
 
 		level = 2
+
+		hidden
+			level=1
+			icon_state="intact-f"
 
 
 	tank
@@ -792,6 +809,11 @@ obj/machinery/atmospherics/pipe
 		color="yellow"
 		icon_state = ""
 
+	manifold/filtering
+		name="Air filtering pipe"
+		color="green"
+		icon_state = ""
+
 	manifold/scrubbers/visible
 		level = 2
 		icon_state = "manifold-r"
@@ -831,6 +853,15 @@ obj/machinery/atmospherics/pipe
 	manifold/yellow/hidden
 		level = 1
 		icon_state = "manifold-y-f"
+
+	manifold/filtering/visible
+		level = 2
+		icon_state = "manifold-g"
+
+	manifold/filtering/hidden
+		level = 1
+		icon_state = "manifold-g-f"
+
 
 	manifold4w
 		icon = 'icons/obj/atmospherics/pipe_manifold.dmi'

@@ -28,7 +28,7 @@
 		usr << "\red APC cannot be placed in this area."
 		return
 	if (A.get_apc())
-		usr << "\red This area already has APC."
+		usr << "\red This area already has an APC."
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)

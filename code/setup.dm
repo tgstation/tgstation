@@ -398,6 +398,10 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_CO2	(1 << 3)
 #define GAS_N2O	(1 << 4)
 
+#define CC_PER_SHEET_METAL 3750
+#define CC_PER_SHEET_GLASS 3750
+#define CC_PER_SHEET_MISC 2000
+
 #define INV_SLOT_SIGHT "sight_slot"
 #define INV_SLOT_TOOL "tool_slot"
 

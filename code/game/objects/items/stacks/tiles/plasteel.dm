@@ -18,6 +18,10 @@
 	src.pixel_y = rand(1, 14)
 	return
 
+/obj/item/stack/tile/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.iron += amount/4
+	return 1
+
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
 	if (usr.stat)

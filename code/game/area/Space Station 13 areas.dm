@@ -646,7 +646,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "disposal"
 
 /area/maintenance/disposal
-	name = "Waste Disposal"
+	name = "Recycling"
 	icon_state = "disposal"
 
 //Hallway
