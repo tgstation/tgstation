@@ -34,6 +34,14 @@
 		new /mob/living/simple_animal/corgi/Lisa(loc)
 	..()
 
+/obj/structure/largecrate/pug
+	icon_state = "lisacrate"
+
+/obj/structure/largecrate/pug/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/crowbar))
+		new /mob/living/simple_animal/pug(loc)
+	..()
+
 /obj/structure/largecrate/cow
 	name = "cow crate"
 	icon_state = "lisacrate"
