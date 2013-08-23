@@ -52,17 +52,24 @@
 	return
 
 
-// Slimes - defaults to same as animals
+// Slimes
 /mob/living/carbon/slime/UnarmedAttack(var/atom/A)
 	A.attack_slime(src)
 /atom/proc/attack_slime(mob/user as mob)
-	attack_animal(src)
 	return
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
 	A.hand_s(src)
 /atom/proc/hand_s(mob/user as mob)			//slime - restrained
-	hand_an(src)
 	return
 
 /mob/new_player/ClickOn()
 	return
+
+
+// Allow ventcrawling - Monkeys, aliens, and slimes
+/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/carbon/ML)
+	if(!istype(ML))
+		return
+	var/list/ventcrawl_verbs = list(/mob/living/carbon/monkey/verb/ventcrawl, /mob/living/carbon/alien/verb/ventcrawl, /mob/living/carbon/slime/verb/ventcrawl)
+	if(length(ML.verbs & ventcrawl_verbs)) // alien queens have this removed, an istype would be coplicated
+		ML.handle_ventcrawl(src)
