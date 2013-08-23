@@ -626,6 +626,8 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
+	// If you add an if(..()) check you must first remove the var/nowindow parameter.
+	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
 	if(usr.stat || usr.restrained())

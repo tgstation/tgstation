@@ -693,9 +693,10 @@
 			return 0
 	return 1
 
-/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
+/obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return
+
 	if(!isrobot(usr))
 		if(!can_use(usr, 1))
 			return
@@ -706,14 +707,7 @@
 		coverlocked = !coverlocked
 
 	else if (href_list["breaker"])
-		operating = !operating
-		if(malfai)
-			if (ticker.mode.config_tag == "malfunction")
-				if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
-					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
-
-		src.update()
-		update_icon()
+		toggle_breaker()
 
 	else if (href_list["cmode"])
 		chargemode = !chargemode
@@ -786,10 +780,19 @@
 	else if (href_list["deoccupyapc"])
 		malfvacate()
 
-	if(usingUI)
-		src.updateDialog()
+	src.updateDialog()
 
 	return
+
+/obj/machinery/power/apc/proc/toggle_breaker()
+	operating = !operating
+	if(malfai)
+		if (ticker.mode.config_tag == "malfunction")
+			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+				operating ? ticker.mode:apcs++ : ticker.mode:apcs--
+
+	src.update()
+	update_icon()
 
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	if(!istype(malf))
