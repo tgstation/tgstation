@@ -9,16 +9,25 @@
 	var/list/colorlist = list()
 
 
-/obj/machinery/pdapainter/process()
-	return PROCESS_KILL
-
 /obj/machinery/pdapainter/update_icon()
 	overlays.Cut()
+
+	if(stat & BROKEN)
+		icon_state = "[initial(icon_state)]-broken"
+		return
+
 	if(storedpda)
 		overlays += "[initial(icon_state)]-closed"
+
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+
 	return
 
 /obj/machinery/pdapainter/New()
+
 	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/heads,
 						/obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
 
@@ -47,10 +56,9 @@
 
 
 /obj/machinery/pdapainter/attack_hand(mob/user as mob)
-	src.add_fingerprint(user)
+	..()
 
-	if(stat & NOPOWER || stat & BROKEN)
-		return
+	src.add_fingerprint(user)
 
 	if(storedpda)
 		var/obj/item/device/pda/P
@@ -81,12 +89,5 @@
 
 
 /obj/machinery/pdapainter/power_change()
-	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
-	else
-		if(powered())
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			icon_state = "[initial(icon_state)]-off"
-			stat |= NOPOWER
+	..()
+	update_icon()
