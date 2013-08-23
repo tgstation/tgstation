@@ -11,14 +11,6 @@
 	time = 64
 	var/obj/item/organ/brain/B = null
 
-/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.apply_damage(75,"brute","head")
-		user.visible_message("<span class='notice'>[user] saws [target]'s skull open!")
-	return 1
-
-
 /datum/surgery_step/extract_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	B = target.getorgan(/obj/item/organ/brain)
 	if(B)
