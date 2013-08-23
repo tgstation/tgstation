@@ -7,8 +7,6 @@
 	var/alert = null
 
 	New()
-		verbs -= /mob/living/carbon/verb/lay_down
-		verbs -= /mob/living/carbon/verb/mob_sleep
 		create_reagents(1000)
 		..()
 

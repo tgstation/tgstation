@@ -159,6 +159,24 @@
 
 /mob/proc/get_contents()
 
+/mob/living/proc/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(usr.sleeping)
+		usr << "<span class='notice'>You are already sleeping.</span>"
+		return
+	else
+		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+			usr.sleeping = 20 //Short nap
+
+
+/mob/living/proc/lay_down()
+	set name = "Rest"
+	set category = "IC"
+
+	resting = !resting
+	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)

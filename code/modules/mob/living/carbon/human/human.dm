@@ -15,7 +15,8 @@
 
 /mob/living/carbon/human/New()
 	create_reagents(1000)
-
+	verbs += /mob/living/proc/mob_sleep
+	verbs += /mob/living/proc/lay_down
 	//initialise organs
 	organs = newlist(/datum/limb/chest, /datum/limb/head, /datum/limb/l_arm,
 					 /datum/limb/r_arm, /datum/limb/r_leg, /datum/limb/l_leg)
