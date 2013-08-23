@@ -1,8 +1,8 @@
 /mob/living/carbon/alien/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
-	maxHealth = 150
-	health = 150
+	maxHealth = 250
+	health = 250
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"
@@ -27,15 +27,15 @@
 		if (healths)
 			if (stat != 2)
 				switch(health)
-					if(150 to INFINITY)
+					if(250 to INFINITY)
 						healths.icon_state = "health0"
-					if(100 to 150)
+					if(150 to 250)
 						healths.icon_state = "health1"
-					if(50 to 100)
+					if(100 to 150)
 						healths.icon_state = "health2"
-					if(25 to 50)
+					if(50 to 100)
 						healths.icon_state = "health3"
-					if(0 to 25)
+					if(0 to 50)
 						healths.icon_state = "health4"
 					else
 						healths.icon_state = "health5"

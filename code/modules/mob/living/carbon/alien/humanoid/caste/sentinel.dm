@@ -1,7 +1,7 @@
 /mob/living/carbon/alien/humanoid/sentinel
 	name = "alien sentinel"
 	caste = "s"
-	maxHealth = 125
+	maxHealth = 175
 	health = 125
 	storedPlasma = 100
 	max_plasma = 250
@@ -28,11 +28,11 @@
 		if (healths)
 			if (stat != 2)
 				switch(health)
-					if(125 to INFINITY)
+					if(175 to INFINITY)
 						healths.icon_state = "health0"
-					if(100 to 125)
+					if(125 to 175)
 						healths.icon_state = "health1"
-					if(75 to 100)
+					if(75 to 125)
 						healths.icon_state = "health2"
 					if(25 to 75)
 						healths.icon_state = "health3"
