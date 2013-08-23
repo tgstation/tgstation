@@ -11,6 +11,7 @@
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
 	var/vision_range = 10
+	var/idle_env_destroyer = 1
 	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
@@ -45,7 +46,8 @@
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)
 	target = new_target
-	stance = HOSTILE_STANCE_ATTACK
+	if(target != null || src.idle_env_destroyer == 1)
+		stance = HOSTILE_STANCE_ATTACK
 	return
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay)

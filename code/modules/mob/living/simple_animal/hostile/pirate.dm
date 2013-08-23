@@ -33,6 +33,7 @@
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
 	faction = "pirate"
+	idle_env_destroyer = 0
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
