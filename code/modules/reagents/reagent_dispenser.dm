@@ -91,27 +91,26 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
-
 	bullet_act(var/obj/item/projectile/Proj)
 		..()
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
-			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2)
-			if(src)
+			if(reagents.has_reagent("fuel") && reagents.total_volume > 0)
+				message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
+				log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
+				explosion(src.loc,-1,0,2)
 				del(src)
 
-
-
 	blob_act()
-		explosion(src.loc,0,1,5,7,10)
-		if(src)
-			del(src)
+		if(reagents.has_reagent("fuel") && reagents.total_volume > 0)
+			explosion(src.loc,0,1,5,7,10)
+		del(src)
+
 
 	ex_act()
-		explosion(src.loc,-1,0,2)
-		if(src)
-			del(src)
+		if(reagents.has_reagent("fuel") && reagents.total_volume > 0)
+			explosion(src.loc,-1,0,2)
+		del(src)
+
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
