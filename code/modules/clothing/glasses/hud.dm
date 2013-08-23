@@ -125,6 +125,7 @@
 				else
 					continue
 				C.images += holder
+				break
 
 		var/perpname = perp.get_face_name(perp.get_id_name(""))
 		if(perpname)
@@ -137,5 +138,5 @@
 					if("Parolled")		holder.icon_state = "hudparolled"
 					if("Released")		holder.icon_state = "hudreleased"
 					else
-						return
+						continue
 				C.images += holder
