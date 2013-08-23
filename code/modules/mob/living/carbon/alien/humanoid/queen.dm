@@ -1,8 +1,8 @@
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
 	caste = "q"
-	maxHealth = 250
-	health = 250
+	maxHealth = 300
+	health = 300
 	icon_state = "alienq_s"
 	status_flags = CANPARALYSE
 	heal_rate = 5
@@ -37,15 +37,15 @@
 		if (src.healths)
 			if (src.stat != 2)
 				switch(health)
-					if(250 to INFINITY)
+					if(300 to INFINITY)
 						src.healths.icon_state = "health0"
-					if(175 to 250)
+					if(200 to 300)
 						src.healths.icon_state = "health1"
-					if(100 to 175)
+					if(125 to 200)
 						src.healths.icon_state = "health2"
-					if(50 to 100)
+					if(75 to 125)
 						src.healths.icon_state = "health3"
-					if(0 to 50)
+					if(0 to 75)
 						src.healths.icon_state = "health4"
 					else
 						src.healths.icon_state = "health5"
