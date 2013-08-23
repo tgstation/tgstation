@@ -110,7 +110,7 @@
 		spawn(0)
 
 			var/found_something = 0
-			add_log("<B>[get_timestamp()] - [target_name]</B>", 0)
+			add_log("<B>[worldtime2text()][get_timestamp()] - [target_name]</B>", 0)
 
 			// Fingerprints
 			if(fingerprints && fingerprints.len)
@@ -171,4 +171,4 @@
 		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
 
 /proc/get_timestamp()
-	return time2text(world.time + 432000, "hh:mm:ss")
+	return time2text(world.time + 432000, ":ss")
