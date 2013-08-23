@@ -27,6 +27,7 @@ obj/item/weapon/gun/energy/laser/retro
 	force = 10
 	origin_tech = null
 	var/charge_tick = 0
+	projectile_type = "/obj/item/projectile/beam/captain"
 
 
 	New()
