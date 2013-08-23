@@ -233,7 +233,7 @@
 	proj_step_delay = 1
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
-	explosion(T, -1, 0, 2, 3)
+	explosion(T, -1, 0, 2, 3, 0)
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/fireball

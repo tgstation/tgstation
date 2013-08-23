@@ -138,21 +138,10 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		var/message = "A wire has been cut"
-		var/atom/A = user
-		if(A)
-			var/turf/Z = get_turf(A)
-			var/area/my_area = get_area(Z)
-			message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-			message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
-			var/mob/M = get(A, /mob)
-			if(M)
-				message += " - Cut By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-		message_admins(message, 0, 1)
 		del(src)
-
-		return	// not needed, but for clarity
+		return
 
 
 	else if(istype(W, /obj/item/weapon/cable_coil))
