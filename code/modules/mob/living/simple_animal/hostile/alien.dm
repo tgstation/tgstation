@@ -34,7 +34,6 @@
 	minbodytemp = 0
 	heat_damage_per_tick = 20
 
-
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
 	icon_state = "aliend_running"
