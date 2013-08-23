@@ -523,15 +523,14 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
-		if(!iscultist(C))//TODO: Make Narsie reward her cultists with transformation into a construct.
-			C.dust()
+		C.dust()
 
 	if(isturf(A))
 		var/turf/T = A
-		if(istype(T, /turf/simulated/floor))
+		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/engine/cult))
 			if(prob(20)) T.ChangeTurf(/turf/simulated/floor/engine/cult)
 
-		else if(istype(T,/turf/simulated/wall))
+		else if(istype(T,/turf/simulated/wall) && !istype(T, /turf/simulated/wall/cult))
 			if(prob(20)) T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
