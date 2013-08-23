@@ -328,7 +328,7 @@
 	return attack_hand(user)
 
 
-/mob/living/verb/mob_sleep()
+/mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
 
@@ -340,7 +340,7 @@
 			usr.sleeping = 20 //Short nap
 
 
-/mob/living/verb/lay_down()
+/mob/living/carbon/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
 

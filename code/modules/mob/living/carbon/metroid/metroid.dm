@@ -65,6 +65,8 @@
 	create_reagents(100)
 	name = text("[colour] baby slime ([rand(1, 1000)])")
 	real_name = name
+	verbs -= /mob/living/carbon/verb/lay_down
+	verbs -= /mob/living/carbon/verb/mob_sleep
 	spawn (1)
 		regenerate_icons()
 		src << "\blue Your icons have been generated!"
