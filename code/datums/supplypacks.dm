@@ -927,3 +927,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
+
+/datum/supply_packs/pug
+	name = "Pug Crate"
+	contains = list()
+	cost = 50
+	containertype = /obj/structure/largecrate/pug
+	containername = "pug crate"
