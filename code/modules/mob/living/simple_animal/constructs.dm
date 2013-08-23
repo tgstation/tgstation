@@ -1,7 +1,7 @@
 
 /mob/living/simple_animal/construct
 	name = "Construct"
-	real_name = "Contruct"
+	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
 	emote_hear = list("wails","screeches")
@@ -25,6 +25,9 @@
 	minbodytemp = 0
 	faction = "cult"
 
+/mob/living/simple_animal/construct/New()
+	name = text("[initial(name)] ([rand(1, 1000)])")
+	real_name = name
 
 /mob/living/simple_animal/construct/Life()
 	..()
@@ -255,7 +258,7 @@
 	var/energy = 0
 	var/max_energy = 1000
 
-/mob/living/simple_animal/constructbehemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/construct/behemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
