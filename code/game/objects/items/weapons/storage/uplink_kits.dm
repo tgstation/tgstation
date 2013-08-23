@@ -128,3 +128,13 @@
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/emp
+	name = "EMP kit"
+
+/obj/item/weapon/storage/box/syndie_kit/emp/New()
+	..()
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/implanter/emp/(src)
+	new /obj/item/device/flashlight/emp/(src)
+	return

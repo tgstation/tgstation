@@ -116,9 +116,9 @@ var/list/uplink_items = list()
 	cost = 4
 
 /datum/uplink_item/dangerous/emp
-	name = "A box of 5 EMP Grenades"
-	desc = "Electromagnetic pulse grenades cause transient disturbance on detonation, disabling nearby electronic equipment."
-	item = /obj/item/weapon/storage/box/emps
+	name = "EMP Kit"
+	desc = "A box that contains an EMP grenade, an EMP implant and a short ranged device disguised as a flashlight. Useful to disrupt communication and silicon lifeforms."
+	item = /obj/item/weapon/storage/box/syndie_kit/emp
 	cost = 3
 
 /datum/uplink_item/dangerous/syndicate_minibomb
