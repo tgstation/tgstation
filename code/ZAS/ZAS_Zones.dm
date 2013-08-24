@@ -170,7 +170,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 		if(unsimulated_tiles.len)
 			var/moved_air = ShareSpace(air,unsimulated_tiles)
 
-			if(moved_air > vsc.airflow_lightest_pressure)
+			if(moved_air > zas_settings.Get("airflow_lightest_pressure"))
 				AirflowSpace(src)
 		else
 			unsimulated_tiles = null
@@ -252,7 +252,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 				//Ensure we're not doing pointless calculations on equilibrium zones.
 				var/moles_delta = abs(air.total_moles() - Z.air.total_moles())
 				if(moles_delta > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
-					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
+					if(abs(Z.air.return_pressure() - air.return_pressure()) > zas_settings.Get("airflow_lightest_pressure"))
 						Airflow(src,Z)
 					var/unsimulated_boost = 0
 					if(unsimulated_tiles)
@@ -267,7 +267,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 			if(Z.last_update > last_update)
 				continue
 			if(air && Z.air)
-				if( abs(air.temperature - Z.air.temperature) > vsc.connection_temperature_delta )
+				if( abs(air.temperature - Z.air.temperature) > zas_settings.Get("connection_temperature_delta") )
 					ShareHeat(air, Z.air, closed_connection_zones[Z])
 
 	progress = "all components completed successfully, the problem is not here"
@@ -408,7 +408,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
 
 	//We need to adjust it to account for the insulation settings.
-	ratio *= 1 - vsc.connection_insulation
+	ratio *= 1 - zas_settings.Get("connection_insulation")
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1 - ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1 - ratio) + nit_avg )

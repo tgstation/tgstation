@@ -52,12 +52,12 @@ mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
 	if(stat == 2)
 		return 0
-	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
+	if(last_airflow_stun > world.time - zas_settings.Get("airflow_stun_cooldown"))	return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
 
-	if(vsc.airflow_push)
+	if(zas_settings.Get("airflow_push"))
 		if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 		weakened = max(weakened,5)
 		last_airflow_stun = world.time
@@ -72,7 +72,7 @@ mob/living/carbon/metroid/airflow_stun()
 	return
 
 mob/living/carbon/human/airflow_stun()
-	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
+	if(last_airflow_stun > world.time - zas_settings.Get("airflow_stun_cooldown"))	return 0
 	if(buckled) return 0
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
@@ -80,7 +80,7 @@ mob/living/carbon/human/airflow_stun()
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
 
-	if(vsc.airflow_push)
+	if(zas_settings.Get("airflow_push"))
 		if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 		weakened = max(weakened,rand(1,5))
 		last_airflow_stun = world.time
@@ -89,17 +89,17 @@ mob/living/carbon/human/airflow_stun()
 	last_airflow_stun = world.time
 
 atom/movable/proc/check_airflow_movable(n)
-	if(!vsc.airflow_push)
+	if(!zas_settings.Get("airflow_push"))
 		return 0
 	if(anchored && !ismob(src))
 		return 0
-	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure)
+	if(!istype(src,/obj/item) && n < zas_settings.Get("airflow_dense_pressure"))
 		return 0
 
 	return 1
 
 mob/check_airflow_movable(n)
-	if(n < vsc.airflow_heavy_pressure)
+	if(n < zas_settings.Get("airflow_heavy_pressure"))
 		return 0
 	return 1
 
@@ -114,11 +114,11 @@ obj/item/check_airflow_movable(n)
 	. = ..()
 	switch(w_class)
 		if(2)
-			if(n < vsc.airflow_lightest_pressure) return 0
+			if(n < zas_settings.Get("airflow_lightest_pressure")) return 0
 		if(3)
-			if(n < vsc.airflow_light_pressure) return 0
+			if(n < zas_settings.Get("airflow_light_pressure")) return 0
 		if(4,5)
-			if(n < vsc.airflow_medium_pressure) return 0
+			if(n < zas_settings.Get("airflow_medium_pressure")) return 0
 
 //The main airflow code. Called by zone updates.
 //Zones A and B are air zones. n represents the amount of air moved.
@@ -128,7 +128,7 @@ proc/Airflow(zone/A, zone/B)
 	var/n = B.air.return_pressure() - A.air.return_pressure()
 
 	 //Don't go any further if n is lower than the lowest value needed for airflow.
-	if(abs(n) < vsc.airflow_lightest_pressure) return
+	if(abs(n) < zas_settings.Get("airflow_lightest_pressure")) return
 
 	//These turfs are the midway point between A and B, and will be the destination point for thrown objects.
 	var/list/connection/connections_A = A.connections
@@ -153,12 +153,12 @@ proc/Airflow(zone/A, zone/B)
 		var/list/temporary_pplz = air_sucked
 		air_sucked = air_repelled
 		air_repelled = temporary_pplz
-	if(vsc.airflow_push) // If enabled
+	if(zas_settings.Get("airflow_push")) // If enabled
 		for(var/atom/movable/M in air_sucked)
-			if(M.last_airflow > world.time - vsc.airflow_delay) continue
+			if(M.last_airflow > world.time - zas_settings.Get("airflow_delay")) continue
 
 			//Check for knocking people over
-			if(ismob(M) && n > vsc.airflow_stun_pressure)
+			if(ismob(M) && n > zas_settings.Get("airflow_stun_pressure"))
 				if(M:status_flags & GODMODE) continue
 				M:airflow_stun()
 
@@ -180,9 +180,9 @@ proc/Airflow(zone/A, zone/B)
 		//Do it again for the stuff in the other zone, making it fly away.
 		for(var/atom/movable/M in air_repelled)
 
-			if(M.last_airflow > world.time - vsc.airflow_delay) continue
+			if(M.last_airflow > world.time - zas_settings.Get("airflow_delay")) continue
 
-			if(ismob(M) && abs(n) > vsc.airflow_medium_pressure)
+			if(ismob(M) && abs(n) > zas_settings.Get("airflow_medium_pressure"))
 				if(M:status_flags & GODMODE) continue
 				M:airflow_stun()
 
@@ -207,16 +207,16 @@ proc/AirflowSpace(zone/A)
 	var/n = A.air.return_pressure()
 	//Here, n is determined by only the pressure in the room.
 
-	if(n < vsc.airflow_lightest_pressure) return
+	if(n < zas_settings.Get("airflow_lightest_pressure")) return
 
 	var/list/connected_turfs = A.unsimulated_tiles //The midpoints are now all the space connections.
 	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
-	if(vsc.airflow_push) // If enabled
+	if(zas_settings.Get("airflow_push")) // If enabled
 		for(var/atom/movable/M in pplz)
-			if(M.last_airflow > world.time - vsc.airflow_delay) continue
+			if(M.last_airflow > world.time - zas_settings.Get("airflow_delay")) continue
 
-			if(ismob(M) && n > vsc.airflow_stun_pressure)
+			if(ismob(M) && n > zas_settings.Get("airflow_stun_pressure"))
 				var/mob/O = M
 				if(O.status_flags & GODMODE) continue
 				O.airflow_stun()
@@ -243,10 +243,10 @@ atom/movable
 	var/tmp/last_airflow = 0
 
 	proc/GotoAirflowDest(n)
-		if(!vsc.airflow_push) return // If not enabled, fuck it.
+		if(!zas_settings.Get("airflow_push")) return // If not enabled, fuck it.
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
-		if(last_airflow > world.time - vsc.airflow_delay) return
+		if(last_airflow > world.time - zas_settings.Get("airflow_delay")) return
 		if(airflow_speed)
 			airflow_speed = n/max(get_dist(src,airflow_dest),1)
 			return
@@ -280,7 +280,7 @@ atom/movable
 		while(airflow_speed > 0)
 			if(airflow_speed <= 0) return
 			airflow_speed = min(airflow_speed,15)
-			airflow_speed -= vsc.airflow_speed_decay
+			airflow_speed -= zas_settings.Get("airflow_speed_decay")
 			if(airflow_speed > 7)
 				if(airflow_time++ >= airflow_speed - 7)
 					if(od)
@@ -300,7 +300,7 @@ atom/movable
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
-				src:client:move_delay = world.time + vsc.airflow_mob_slowdown
+				src:client:move_delay = world.time + zas_settings.Get("airflow_mob_slowdown")
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
@@ -309,10 +309,10 @@ atom/movable
 
 
 	proc/RepelAirflowDest(n)
-		if(!vsc.airflow_push) return // If not enabled, fuck it.
+		if(!zas_settings.Get("airflow_push")) return // If not enabled, fuck it.
 		if(!airflow_dest) return
 		if(airflow_speed < 0) return
-		if(last_airflow > world.time - vsc.airflow_delay) return
+		if(last_airflow > world.time - zas_settings.Get("airflow_delay")) return
 		if(airflow_speed)
 			airflow_speed = n/max(get_dist(src,airflow_dest),1)
 			return
@@ -346,7 +346,7 @@ atom/movable
 		while(airflow_speed > 0)
 			if(airflow_speed <= 0) return
 			airflow_speed = min(airflow_speed,15)
-			airflow_speed -= vsc.airflow_speed_decay
+			airflow_speed -= zas_settings.Get("airflow_speed_decay")
 			if(airflow_speed > 7)
 				if(airflow_time++ >= airflow_speed - 7)
 					sleep(1 * tick_multiplier)
@@ -360,7 +360,7 @@ atom/movable
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
-				src:client:move_delay = world.time + vsc.airflow_mob_slowdown
+				src:client:move_delay = world.time + zas_settings.Get("airflow_mob_slowdown")
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
@@ -405,7 +405,7 @@ mob/living/carbon/human/airflow_hit(atom/A)
 		src.wear_suit.add_blood(src)
 	if (src.w_uniform)
 		src.w_uniform.add_blood(src)
-	var/b_loss = airflow_speed * vsc.airflow_damage
+	var/b_loss = airflow_speed * zas_settings.Get("airflow_damage")
 
 	var/blocked = run_armor_check("head","melee")
 	apply_damage(b_loss/3, BRUTE, "head", blocked, 0, "Airflow")
@@ -416,12 +416,12 @@ mob/living/carbon/human/airflow_hit(atom/A)
 	blocked = run_armor_check("groin","melee")
 	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
 
-	if(vsc.airflow_push)
+	if(zas_settings.Get("airflow_push"))
 		if(airflow_speed > 10)
-			paralysis += round(airflow_speed * vsc.airflow_stun)
+			paralysis += round(airflow_speed * zas_settings.Get("airflow_stun"))
 			stunned = max(stunned,paralysis + 3)
 		else
-			stunned += round(airflow_speed * vsc.airflow_stun/2)
+			stunned += round(airflow_speed * zas_settings.Get("airflow_stun")/2)
 
 	. = ..()
 

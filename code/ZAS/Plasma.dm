@@ -1,43 +1,5 @@
 var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
-pl_control/var
-	PLASMA_DMG = 3
-	PLASMA_DMG_NAME = "Plasma Damage Amount"
-	PLASMA_DMG_DESC = "Self Descriptive"
-
-	CLOTH_CONTAMINATION = 1
-	CLOTH_CONTAMINATION_NAME = "Cloth Contamination"
-	CLOTH_CONTAMINATION_DESC = "If this is on, plasma does damage by getting into cloth."
-
-	PLASMAGUARD_ONLY = 0
-	PLASMAGUARD_ONLY_NAME = "\"PlasmaGuard Only\""
-	PLASMAGUARD_ONLY_DESC = "If this is on, only biosuits and spacesuits protect against contamination and ill effects."
-
-	GENETIC_CORRUPTION = 0
-	GENETIC_CORRUPTION_NAME = "Genetic Corruption Chance"
-	GENETIC_CORRUPTION_DESC = "Chance of genetic corruption as well as toxic damage, X in 10,000."
-
-	SKIN_BURNS = 0
-	SKIN_BURNS_DESC = "Plasma has an effect similar to mustard gas on the un-suited."
-	SKIN_BURNS_NAME = "Skin Burns"
-
-	EYE_BURNS = 1
-	EYE_BURNS_NAME = "Eye Burns"
-	EYE_BURNS_DESC = "Plasma burns the eyes of anyone not wearing eye protection."
-
-	CONTAMINATION_LOSS = 0.02
-	CONTAMINATION_LOSS_NAME = "Contamination Loss"
-	CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing" //Per tick?  ASK ARYN
-
-	PLASMA_HALLUCINATION = 0
-	PLASMA_HALLUCINATION_NAME = "Plasma Hallucination"
-	PLASMA_HALLUCINATION_DESC = "Does being in plasma cause you to hallucinate?"
-
-	N2O_HALLUCINATION = 1
-	N2O_HALLUCINATION_NAME = "N2O Hallucination"
-	N2O_HALLUCINATION_DESC = "Does being in sleeping gas cause you to hallucinate?"
-
-
 obj/var/contaminated = 0
 
 obj/item/proc
@@ -78,21 +40,21 @@ obj/item/proc
 	//Handles all the bad things plasma can do.
 
 	//Contamination
-	if(vsc.plc.CLOTH_CONTAMINATION) contaminate()
+	if(zas_settings.Get("CLOTH_CONTAMINATION")) contaminate()
 
 	//Anything else requires them to not be dead.
 	if(stat >= 2)
 		return
 
 	//Burn skin if exposed.
-	if(vsc.plc.SKIN_BURNS)
+	if(zas_settings.Get("SKIN_BURNS"))
 		if(!pl_head_protected() || !pl_suit_protected())
 			burn_skin(0.75)
 			if(prob(20)) src << "\red Your skin burns!"
 			updatehealth()
 
 	//Burn eyes if exposed.
-	if(vsc.plc.EYE_BURNS)
+	if(zas_settings.Get("EYE_BURNS"))
 		if(!head)
 			if(!wear_mask)
 				burn_eyes()
@@ -108,8 +70,8 @@ obj/item/proc
 						burn_eyes()
 
 	//Genetic Corruption
-	if(vsc.plc.GENETIC_CORRUPTION)
-		if(rand(1,10000) < vsc.plc.GENETIC_CORRUPTION)
+	if(zas_settings.Get("GENETIC_CORRUPTION"))
+		if(rand(1,10000) < zas_settings.Get("GENETIC_CORRUPTION"))
 			randmutb(src)
 			src << "\red High levels of toxins cause you to spontaneously mutate."
 			domutcheck(src,null)
@@ -128,7 +90,7 @@ obj/item/proc
 /mob/living/carbon/human/proc/pl_head_protected()
 	//Checks if the head is adequately sealed.
 	if(head)
-		if(vsc.plc.PLASMAGUARD_ONLY)
+		if(zas_settings.Get("PLASMAGUARD_ONLY"))
 			if(head.flags & PLASMAGUARD)
 				return 1
 		else if(head.flags & HEADCOVERSEYES)
@@ -138,7 +100,7 @@ obj/item/proc
 /mob/living/carbon/human/proc/pl_suit_protected()
 	//Checks if the suit is adequately sealed.
 	if(wear_suit)
-		if(vsc.plc.PLASMAGUARD_ONLY)
+		if(zas_settings.Get("PLASMAGUARD_ONLY"))
 			if(wear_suit.flags & PLASMAGUARD) return 1
 		else
 			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1
@@ -154,7 +116,7 @@ obj/item/proc
 turf/Entered(obj/item/I)
 	. = ..()
 	//Items that are in plasma, but not on a mob, can still be contaminated.
-	if(istype(I) && vsc.plc.CLOTH_CONTAMINATION)
+	if(istype(I) && zas_settings.Get("CLOTH_CONTAMINATION"))
 		var/datum/gas_mixture/env = return_air(1)
 		if(!env)
 			return

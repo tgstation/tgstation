@@ -1,19 +1,30 @@
-/***************************
-* FUCKING EXPERIMENTAL WILL EAT YOUR CHILDREN
-****************************
+/*
+ZAS Settings System 2.0
 
-Okay, so VariableSettings is a mess of spaghetticode.
+Okay, so VariableSettings is a mess of spaghetticode and
+	is about as flexible as a grandmother covered in
+	starch.
 
 This is an attempt to fix that by using getters and
-	setters instead of stupidity.  It may or may
-	not work, but dammit, it's better than hackery.
+	setters instead of stupidity.  It's a little more difficult
+	to code with, but dammit, it's better than hackery.
+
+NOTE:  plc was merged into the main settings.  We can set up
+        visual groups later.
+
+HOW2GET:
+	zas_setting.Get(/datum/ZAS_Setting/herp)
+
+HOW2SET:
+	zas_setting.Set(/datum/ZAS_Setting/herp, "dsfargeg")
 */
 
-var/global/ZAS_Settings/vsc = new
+var/global/ZAS_Settings/zas_settings = new
 
 #define ZAS_TYPE_UNDEFINED -1
 #define ZAS_TYPE_BOOLEAN 0
 #define ZAS_TYPE_NUMERIC 1
+
 /**
 * ZAS Setting Datum
 *
@@ -137,6 +148,67 @@ var/global/ZAS_Settings/vsc = new
 	desc = "The smallest temperature difference which will cause heat to travel through doors."
 	valtype=ZAS_TYPE_NUMERIC
 
+
+///////////////////////////////////////
+// PLASMA SHIT
+///////////////////////////////////////
+// ALL CAPS BECAUSE PLASMA IS HARDCORE YO
+// And I'm too lazy to fix the refs.
+
+/datum/ZAS_Setting/PLASMA_DMG
+	name = "Plasma Damage Amount"
+	desc = "Self Descriptive"
+	value = 3
+	valtype=ZAS_TYPE_NUMERIC
+
+/datum/ZAS_Setting/CLOTH_CONTAMINATION
+	name = "Cloth Contamination"
+	desc = "If this is on, plasma does damage by getting into cloth."
+	value = 1
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/PLASMAGUARD_ONLY
+	name = "PlasmaGuard Only"
+	desc = "If this is on, only biosuits and spacesuits protect against contamination and ill effects."
+	value = 0
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/GENETIC_CORRUPTION
+	name = "Genetic Corruption Chance"
+	desc = "Chance of genetic corruption as well as toxic damage, X in 10,000."
+	value = 0
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/SKIN_BURNS
+	name = "Skin Burns"
+	desc = "Plasma has an effect similar to mustard gas on the un-suited."
+	value = 0
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/EYE_BURNS
+	name = "Eye Burns"
+	desc = "Plasma burns the eyes of anyone not wearing eye protection."
+	value = 1
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/CONTAMINATION_LOSS
+	name = "Contamination Loss"
+	desc = "How much toxin damage is dealt from contaminated clothing"
+	value = 0.02 //Per tick?  ASK ARYN
+	valtype=ZAS_TYPE_NUMERIC
+
+/datum/ZAS_Setting/PLASMA_HALLUCINATION
+	name = "Plasma Hallucination"
+	desc = "Does being in plasma cause you to hallucinate?"
+	value = 0
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/N2O_HALLUCINATION
+	name = "N2O Hallucination"
+	desc = "Does being in sleeping gas cause you to hallucinate?"
+	value = 1
+	valtype=ZAS_TYPE_BOOLEAN
+
 /**
 * ZAS Settings
 *
@@ -146,24 +218,68 @@ var/global/ZAS_Settings/vsc = new
 * @subpackage ZAS
 */
 /ZAS_Settings
+	// INTERNAL USE ONLY
 	var/list/datum/ZAS_Setting/settings = list()
-	pl_control/plc = new()
 
 /ZAS_Settings/New()
 	.=..()
 	for(var/S in typesof(/datum/ZAS_Setting) - /datum/ZAS_Setting)
-		testing("Creating [S]")
 		var/id=idfrompath("[S]")
-		settings[id]=new S
+		//testing("Creating zas_settings\[[id]\] = new [S]")
+		src.settings[id]=new S
 
+
+	if(fexists("config/ZAS.txt") == 0)
+		Save()
+	Load()
+
+/ZAS_Settings/proc/Save()
+	var/F = file("config/ZAS.txt")
+	fdel(F)
+	for(var/id in src.settings)
+		var/datum/ZAS_Setting/setting = src.settings[id]
+		F << "# [setting.name]"
+		F << "#   [setting.desc]"
+		F << "[id] [setting.value]"
+		F << ""
+
+/ZAS_Settings/proc/Load()
+	for(var/t in file2list("config/ZAS.txt"))
+		if(!t)	continue
+
+		t = trim(t)
+		if (length(t) == 0)
+			continue
+		else if (copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/name = null
+		var/value = null
+
+		if (pos)
+			name = copytext(t, 1, pos)
+			value = copytext(t, pos + 1)
+		else
+			name = t
+
+		if (!name)
+			continue
+
+		src.SetFromConfig(name,value)
+
+// INTERNAL USE ONLY
 /ZAS_Settings/proc/idfrompath(var/str)
 	return replacetext(str,"/datum/ZAS_Setting/","")
 
-/ZAS_Settings/proc/Set(var/id, var/value)
-	var/datum/ZAS_Setting/setting = settings[id]
+// INTERNAL USE ONLY
+/ZAS_Settings/proc/ChangeSetting(var/user,var/id)
+	var/datum/ZAS_Setting/setting = src.settings[id]
+	var/displayedValue=""
 	switch(setting.valtype)
 		if(ZAS_TYPE_NUMERIC)
-			setting.value = input(user,"Enter a number:","Settings",newvar) as num
+			setting.value = input(user,"Enter a number:","Settings",setting.value) as num
+			displayedValue="\"[setting.value]\""
 		/*
 		if(ZAS_TYPE_BITFLAG)
 			var/flag = input(user,"Toggle which bit?","Settings") in bitflags
@@ -174,28 +290,207 @@ var/global/ZAS_Settings/vsc = new
 				newvar |= flag
 		*/
 		if(ZAS_TYPE_BOOLEAN)
-			setting.value = !newvar
+			setting.value = !setting.value
+			displayedValue = (setting.value) ? "ON" : "OFF"
 		/*
 		if(ZAS_TYPE_STRING)
 			setting.value = input(user,"Enter text:","Settings",newvar) as message
 		*/
 		else
-			error("[S] has an invalid type.  Enjoy your hard crash bb.")
-			var/lol=1/0
-			error("[lol]") // Just in case this compiler optimizes out unused vars.
+			error("[id] has an invalid typeval.")
+			return
+	world << "\blue <b>[key_name(user)] changed ZAS setting <i>[setting.name]</i> to <i>[displayedValue]</i>.</b>"
 
+	ChangeSettingsDialog(user)
+
+/**
+* Set the value of a setting.
+*
+* Recommended to use the actual type of the setting rather than the ID, since
+*  this will allow for the compiler to check the validity of id.  Kinda.
+*
+* @param id Either the typepath of the desired setting, or the string ID of the setting.
+* @param value The value that the setting should be set to.
+*/
+/ZAS_Settings/proc/Set(var/id, var/value)
+	var/datum/ZAS_Setting/setting = src.settings[idfrompath(id)]
+	setting.value=value
+
+// INTERNAL USE ONLY
+/ZAS_Settings/proc/SetFromConfig(var/id, var/value)
+	var/datum/ZAS_Setting/setting = src.settings[id]
+	switch(setting.valtype)
+		if(ZAS_TYPE_NUMERIC)
+			setting.value = text2num(value)
+		/*
+		if(ZAS_TYPE_BITFLAG)
+			var/flag = input(user,"Toggle which bit?","Settings") in bitflags
+			flag = text2num(flag)
+			if(newvar & flag)
+				newvar &= ~flag
+			else
+				newvar |= flag
+		*/
+		if(ZAS_TYPE_BOOLEAN)
+			setting.value = (value == "1")
+		/*
+		if(ZAS_TYPE_STRING)
+			setting.value = input(user,"Enter text:","Settings",newvar) as message
+		*/
+
+/**
+* Get a setting.
+*
+* Recommended to use the actual type of the setting rather than the ID, since
+*  this will allow for the compiler to check the validity of id.  Kinda.
+*
+* @param id Either the typepath of the desired setting, or the string ID of the setting.
+* @returns Value of the desired setting
+*/
 /ZAS_Settings/proc/Get(var/id)
-	return settings[id].value
+	var/datum/ZAS_Setting/setting = src.settings[idfrompath(id)]
+	return setting.value
 
-/ZAS_Settings/proc/ChangeSettingsDialog(mob/user,list/L)
-	//var/which = input(user,"Choose a setting:") in L
-	var/dat = "<dl>"
-	for(var/datum/ZAS_Setting/s in settings)
-		dat += "<dt><b>[s.name] = [s.value]</b> <A href='?src=\ref[src];changevar=[idfrompath(s.type)]'>\[Change\]</A></dt>"
+/ZAS_Settings/proc/ChangeSettingsDialog(mob/user)
+	var/dat = {"
+<html>
+	<head>
+		<title>ZAS Settings 2.0</title>
+		<style type="text/css">
+body,html {
+	background:#666666;
+	font-family:sans-serif;
+	font-size:smaller;
+	color: #cccccc;
+}
+a { color: white; }
+		</style>
+	</head>
+	<body>
+		<h1>ZAS Configuration</h1>
+		<p><a href="?src=\ref[src];save=1">Save Settings</a> | <a href="?src=\ref[src];load=1">Load Settings</a></p>
+		<p>Please note that changing these settings can and probably will result in death, destruction and mayhem. <b>Change at your own risk.</b></p>
+	<dl>"}
+	for(var/id in src.settings)
+		var/datum/ZAS_Setting/s = src.settings[id]
+		dat += "<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>"
 		dat += "<dd>[s.desc]</i></dd>"
-	dat += "</dl>"
+	dat += "</dl></body></html>"
 	user << browse(dat,"window=settings")
 
 /ZAS_Settings/Topic(href,href_list)
 	if("changevar" in href_list)
 		ChangeSetting(usr,href_list["changevar"])
+	if("save" in href_list)
+		var/sure = input(usr,"Are you sure?  This will overwrite your ZAS configuration!","Overwrite ZAS.txt?", "No") in list("Yes","No")
+		if(sure=="Yes")
+			Save()
+			message_admins("[key_name(usr)] saved ZAS settings to disk.")
+	if("load" in href_list)
+		var/sure = input(usr,"Are you sure?","Reload ZAS.txt?", "No") in list("Yes","No")
+		if(sure=="Yes")
+			Load()
+			message_admins("[key_name(usr)] reloaded ZAS settings from disk.")
+
+/ZAS_Settings/proc/SetDefault(var/mob/user)
+	var/list/setting_choices = list("Plasma - Standard", "Plasma - Low Hazard", "Plasma - High Hazard", "Plasma - Oh Shit!", "ZAS - Normal", "ZAS - Forgiving", "ZAS - Dangerous", "ZAS - Hellish")
+	var/def = input(user, "Which of these presets should be used?") as null|anything in setting_choices
+	if(!def)
+		return
+	switch(def)
+		if("Plasma - Standard")
+			Set("CLOTH_CONTAMINATION",  1)   //If this is on, plasma does damage by getting into cloth.
+			Set("PLASMAGUARD_ONLY",     0)
+			Set("GENETIC_CORRUPTION",   0)   //Chance of genetic corruption as well as toxic damage, X in 1000.
+			Set("SKIN_BURNS",           0)   //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("EYE_BURNS",            1)   //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("PLASMA_HALLUCINATION", 0)
+			Set("CONTAMINATION_LOSS",   0.02)
+
+		if("Plasma - Low Hazard")
+			Set("CLOTH_CONTAMINATION",  0) //If this is on, plasma does damage by getting into cloth.
+			Set("PLASMAGUARD_ONLY",     0)
+			Set("GENETIC_CORRUPTION",   0) //Chance of genetic corruption as well as toxic damage, X in 1000
+			Set("SKIN_BURNS",           0) //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("PLASMA_HALLUCINATION", 0)
+			Set("CONTAMINATION_LOSS",   0.01)
+
+		if("Plasma - High Hazard")
+			Set("CLOTH_CONTAMINATION",  1) //If this is on, plasma does damage by getting into cloth.
+			Set("PLASMAGUARD_ONLY",     0)
+			Set("GENETIC_CORRUPTION",   0) //Chance of genetic corruption as well as toxic damage, X in 1000.
+			Set("SKIN_BURNS",           1) //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("PLASMA_HALLUCINATION", 1)
+			Set("CONTAMINATION_LOSS",   0.05)
+
+		if("Plasma - Oh Shit!")
+			Set("CLOTH_CONTAMINATION",  1) //If this is on, plasma does damage by getting into cloth.
+			Set("PLASMAGUARD_ONLY",     1)
+			Set("GENETIC_CORRUPTION",   5) //Chance of genetic corruption as well as toxic damage, X in 1000.
+			Set("SKIN_BURNS",           1) //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("PLASMA_HALLUCINATION", 1)
+			Set("CONTAMINATION_LOSS",   0.075)
+
+		if("ZAS - Normal")
+			Set("airflow_push",              0)
+			Set("airflow_lightest_pressure", 20)
+			Set("airflow_light_pressure",    35)
+			Set("airflow_medium_pressure",   50)
+			Set("airflow_heavy_pressure",    65)
+			Set("airflow_dense_pressure",    85)
+			Set("airflow_stun_pressure",     60)
+			Set("airflow_stun_cooldown",     60)
+			Set("airflow_stun",              1)
+			Set("airflow_damage",            2)
+			Set("airflow_speed_decay",       1.5)
+			Set("airflow_delay",             30)
+			Set("airflow_mob_slowdown",      1)
+
+		if("ZAS - Forgiving")
+			Set("airflow_push",              0)
+			Set("airflow_lightest_pressure", 45)
+			Set("airflow_light_pressure",    60)
+			Set("airflow_medium_pressure",   120)
+			Set("airflow_heavy_pressure",    110)
+			Set("airflow_dense_pressure",    200)
+			Set("airflow_stun_pressure",     150)
+			Set("airflow_stun_cooldown",     90)
+			Set("airflow_stun",              0.15)
+			Set("airflow_damage",            0.15)
+			Set("airflow_speed_decay",       1.5)
+			Set("airflow_delay",             50)
+			Set("airflow_mob_slowdown",      0)
+
+		if("ZAS - Dangerous")
+			Set("airflow_push",              1)
+			Set("airflow_lightest_pressure", 15)
+			Set("airflow_light_pressure",    30)
+			Set("airflow_medium_pressure",   45)
+			Set("airflow_heavy_pressure",    55)
+			Set("airflow_dense_pressure",    70)
+			Set("airflow_stun_pressure",     50)
+			Set("airflow_stun_cooldown",     50)
+			Set("airflow_stun",              2)
+			Set("airflow_damage",            3)
+			Set("airflow_speed_decay",       1.2)
+			Set("airflow_delay",             25)
+			Set("airflow_mob_slowdown",      2)
+
+		if("ZAS - Hellish")
+			Set("airflow_push",              1)
+			Set("airflow_lightest_pressure", 20)
+			Set("airflow_light_pressure",    30)
+			Set("airflow_medium_pressure",   40)
+			Set("airflow_heavy_pressure",    50)
+			Set("airflow_dense_pressure",    60)
+			Set("airflow_stun_pressure",     40)
+			Set("airflow_stun_cooldown",     40)
+			Set("airflow_stun",              3)
+			Set("airflow_damage",            4)
+			Set("airflow_speed_decay",       1)
+			Set("airflow_delay",             20)
+			Set("airflow_mob_slowdown",      3)
+	world << "\blue <b>[key_name(usr)] loaded ZAS preset <i>[def]</i></b>"
