@@ -14,24 +14,6 @@
 		src << "\blue You have given up life and succumbed to death."
 		death()
 
-/mob/living/verb/mob_sleep()
-	set name = "Sleep"
-	set category = "IC"
-
-	if(usr.sleeping)
-		usr << "<span class='notice'>You are already sleeping.</span>"
-		return
-	else
-		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
-			usr.sleeping = 20 //Short nap
-
-
-/mob/living/verb/lay_down()
-	set name = "Rest"
-	set category = "IC"
-
-	resting = !resting
-	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -316,7 +298,6 @@
 		usr << "OOC Metadata is not supported by this server!"
 
 	return
-
 
 /mob/living/Move(a, b, flag)
 	if (buckled)
