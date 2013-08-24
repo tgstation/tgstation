@@ -12,6 +12,8 @@
 	var/health = 10
 	var/destroyed = 0
 
+/obj/structure/grille/Del()
+	loc = null //garbage collect
 
 /obj/structure/grille/ex_act(severity)
 	del(src)
