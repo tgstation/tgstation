@@ -106,13 +106,10 @@
 
 	var/obj/item/W = get_active_hand()
 
-	// Fast exit: In the case of USEDELAY.
-	// We will do this check again later and operations aren't heavy compared to list procs and Adjacent()
-
 	if(W == A)
-		next_move = world.time + 10
-		if(W.flags&USEDELAY)
-			next_move += 5
+		next_move = world.time + 2 // this is to be consistent with mode(), which was previously no delay at all
+//		if(W.flags&USEDELAY)
+//			next_move += 5
 		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
@@ -123,9 +120,15 @@
 
 	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
+
+		// faster access to objects already on you
+		if(A in contents)
+			next_move = world.time + 6 // on your person
+		else
+			next_move = world.time + 8 // in a box/bag or in your square
+
 		// No adjacency needed
 		if(W)
-			next_move = world.time + 10
 			if(W.flags&USEDELAY)
 				next_move += 5
 
@@ -133,7 +136,6 @@
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
-			next_move = world.time + 10
 			UnarmedAttack(A)
 		return
 
@@ -141,9 +143,10 @@
 		return
 
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
+		next_move = world.time + 10
+
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				next_move = world.time + 10
 				if(W.flags&USEDELAY)
 					next_move += 5
 
@@ -152,16 +155,13 @@
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params)
 			else
-				next_move = world.time + 10
 				UnarmedAttack(A)
 			return
 		else // non-adjacent click
 			if(W)
-				next_move = world.time + 10
 				W.afterattack(A,src,0,params)
 			else
 				if((LASER in mutations) && a_intent == "harm")
-					next_move = world.time + 10
 					LaserEyes(A) // moved into a proc below
 
 	return

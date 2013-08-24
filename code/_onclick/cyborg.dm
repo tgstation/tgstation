@@ -37,7 +37,7 @@
 		return
 
 	if(W == A)
-		next_move = world.time + 10
+		next_move = world.time + 8
 		if(W.flags&USEDELAY)
 			next_move += 5
 
@@ -47,7 +47,7 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A in loc) || (A in contents))
 		// No adjacency checks
-		next_move = world.time + 10
+		next_move = world.time + 8
 		if(W.flags&USEDELAY)
 			next_move += 5
 

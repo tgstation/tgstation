@@ -128,10 +128,10 @@
 	if(istext(selhand))
 		selhand = lowertext(selhand)
 
-	if(selhand == "right" || selhand == "r")
-		selhand = 0
-	if(selhand == "left" || selhand == "l")
-		selhand = 1
+		if(selhand == "right" || selhand == "r")
+			selhand = 0
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
 
 	if(selhand != src.hand)
 		swap_hand()
