@@ -68,6 +68,12 @@
 	user.visible_message("<span class='notice'>[user] succeeds!</span>")
 	return 1
 
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.apply_damage(75,"brute","[target_zone]")
+		user.visible_message("<span class='notice'>[user] saws [target]'s [target_zone] open!")	
+	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] screws up!</span>")

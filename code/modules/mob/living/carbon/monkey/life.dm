@@ -100,7 +100,7 @@
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || prob(50))
+			if((COLD_RESISTANCE in mutations) && prob(50))
 				switch(getFireLoss())
 					if(1 to 50)
 						adjustFireLoss(-1)
@@ -332,7 +332,7 @@
 
 			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 
-		if(stat==2)
+		if(stat != 2)
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 		//Account for massive pressure differences

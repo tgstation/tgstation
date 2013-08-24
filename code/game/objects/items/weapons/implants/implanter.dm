@@ -66,3 +66,12 @@
 	imp = new /obj/item/weapon/implant/adrenalin(src)
 	..()
 	update_icon()
+
+
+/obj/item/weapon/implanter/emp
+	name = "implanter-EMP"
+
+/obj/item/weapon/implanter/emp/New()
+	imp = new /obj/item/weapon/implant/emp(src)
+	..()
+	update_icon()

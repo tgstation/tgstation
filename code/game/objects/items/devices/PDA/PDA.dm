@@ -271,7 +271,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br>")
 
-				dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
 
 				dat += "<br><br>"
 
