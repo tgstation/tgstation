@@ -34,7 +34,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	break_stuff_probability = 2
+	//break_stuff_probability = 2
 
 	faction = "carp"
 
