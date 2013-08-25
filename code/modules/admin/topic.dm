@@ -202,10 +202,6 @@
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))	return
 
-		if( ticker.mode.name == "blob" )
-			alert("You can't call the shuttle during blob!")
-			return
-
 		switch(href_list["call_shuttle"])
 			if("1")
 				if ((!( ticker ) || emergency_shuttle.location))
@@ -1960,19 +1956,6 @@
 				for(var/obj/machinery/light/L in world)
 					L.fix()
 				message_admins("[key_name_admin(usr)] fixed all lights", 1)
-			if("friendai")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/aiEye/aE in mob_list)
-					aE.icon_state = "ai_friend"
-				for(var/obj/machinery/M in machines)
-					if(istype(M, /obj/machinery/ai_status_display))
-						var/obj/machinery/ai_status_display/A = M
-						A.emotion = "Friend Computer"
-					else if(istype(M, /obj/machinery/status_display))
-						var/obj/machinery/status_display/A = M
-						A.friendc = 1
-				message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
 			if("aliens")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","AL")

@@ -78,11 +78,6 @@ proc/move_research_shuttle()
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["move"])
-		if(ticker.mode.name == "blob")
-			if(ticker.mode:declared)
-				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-				return
-
 		if (!research_shuttle_moving)
 			usr << "\blue Shuttle recieved message and will be sent shortly."
 			move_research_shuttle()

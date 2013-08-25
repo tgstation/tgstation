@@ -8,11 +8,16 @@ var/list/beam_master = list()
 //        icon_states/dirs for each placed beam image
 //            turfs that have that icon_state/dir
 
+//Special laser the captains gun uses
+/obj/item/projectile/beam/captain
+	name = "captain laser"
+	damage = 40
+
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 40
+	damage = 30
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 4

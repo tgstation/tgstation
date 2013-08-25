@@ -21,7 +21,7 @@
 
 // Add an AI eye to the chunk, then update if changed.
 
-/datum/camerachunk/proc/add(mob/aiEye/ai)
+/datum/camerachunk/proc/add(mob/camera/aiEye/ai)
 	if(!ai.ai)
 		return
 	ai.visibleCameraChunks += src
@@ -34,7 +34,7 @@
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/aiEye/ai)
+/datum/camerachunk/proc/remove(mob/camera/aiEye/ai)
 	if(!ai.ai)
 		return
 	ai.visibleCameraChunks -= src
@@ -81,11 +81,14 @@
 		if(!c.can_use())
 			continue
 
-		var/turf/point = locate(src.x + 8, src.y + 8, src.z)
-		if(get_dist(point, c) > 24)
+		var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), src.z)
+		if(get_dist(point, c) > CHUNK_SIZE + (CHUNK_SIZE / 2))
 			continue
 
 		for(var/turf/t in c.can_see())
+			// Possible optimization: if(turfs[t]) here, rather than &= turfs afterwards.
+			// List associations use a tree or hashmap of some sort (alongside the list itself)
+			//  so are surprisingly fast. (significantly faster than var/thingy/x in list, in testing)
 			newVisibleTurfs[t] = t
 
 	// Removes turf that isn't in turfs.
@@ -102,7 +105,7 @@
 		if(t.obscured)
 			obscured -= t.obscured
 			for(var/eye in seenby)
-				var/mob/aiEye/m = eye
+				var/mob/camera/aiEye/m = eye
 				if(!m || !m.ai)
 					continue
 				if(m.ai.client)
@@ -116,32 +119,33 @@
 
 			obscured += t.obscured
 			for(var/eye in seenby)
-				var/mob/aiEye/m = eye
+				var/mob/camera/aiEye/m = eye
 				if(!m || !m.ai)
 					seenby -= m
 					continue
 				if(m.ai.client)
 					m.ai.client.images += t.obscured
 
+	changed = 0
+
 // Create a new camera chunk, since the chunks are made as they are needed.
 
 /datum/camerachunk/New(loc, x, y, z)
 
 	// 0xf = 15
-	x &= ~0xf
-	y &= ~0xf
+	x &= ~(CHUNK_SIZE - 1)
+	y &= ~(CHUNK_SIZE - 1)
 
 	src.x = x
 	src.y = y
 	src.z = z
 
-	for(var/obj/machinery/camera/c in range(16, locate(x + 8, y + 8, z)))
+	for(var/obj/machinery/camera/c in range(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(c.can_use())
 			cameras += c
 
-	for(var/turf/t in range(10, locate(x + 8, y + 8, z)))
-		if(t.x >= x && t.y >= y && t.x < x + 16 && t.y < y + 16)
-			turfs[t] = t
+	for(var/turf/t in block(locate(x, y, z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
+		turfs[t] = t
 
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
@@ -152,6 +156,9 @@
 			continue
 
 		for(var/turf/t in c.can_see())
+			// Possible optimization: if(turfs[t]) here, rather than &= turfs afterwards.
+			// List associations use a tree or hashmap of some sort (alongside the list itself)
+			//  so are surprisingly fast. (significantly faster than var/thingy/x in list, in testing)
 			visibleTurfs[t] = t
 
 	// Removes turf that isn't in turfs.

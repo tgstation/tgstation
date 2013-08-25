@@ -44,7 +44,7 @@
 		if("disarm")
 			if (prob(80))
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(rand(0.5,3))
+				Weaken(rand(3,5))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)

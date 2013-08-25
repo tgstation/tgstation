@@ -22,7 +22,7 @@
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANPARALYSE|CANPUSH
-	var/heal_rate = 1
+	var/heal_rate = 2.5
 	var/plasma_rate = 5
 
 	var/oxygen_alert = 0

@@ -2,7 +2,7 @@
 	name = "force bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ice_1"
-	damage = 20
+	damage = 25
 	flag = "energy"
 
 /obj/item/projectile/forcebolt/strong
@@ -22,7 +22,7 @@
 
 
 /obj/item/projectile/forcebolt/strong/on_hit(var/atom/target, var/blocked = 0)
-
+	damage = 30
 	// NONE OF THIS WORKS. DO NOT USE.
 	var/throwdir = null
 
