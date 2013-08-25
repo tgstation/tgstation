@@ -385,7 +385,7 @@
 				if(istype(H.wear_id,/obj/item/weapon/card))
 					card=H.wear_id
 				else if(istype(H.get_active_hand(),/obj/item/weapon/card))
-					card=H.wear_id
+					card=H.get_active_hand()
 				if(card)
 					connect_account(card)
 			return
