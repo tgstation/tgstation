@@ -248,6 +248,8 @@
 						M_job = "pAI"
 					else if(isrobot(M))
 						M_job = "Cyborg"
+					else if(isMoMMI(M))
+						M_job = "Mobile-MMI"
 					else
 						M_job = "Silicon-based"
 
@@ -508,9 +510,16 @@
 				var/mob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?priv_msg=\ref[M]'>PM</A></td>"
 				else
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
+			dat += "</table>"
+		else
+			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
+			for(var/mob/M in world)
+				if(istype(M, /mob/camera/blob))
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += " <td><A href='?priv_msg=\ref[M]'>PM</A></td>"
 			dat += "</table>"
 
 		dat += "</body></html>"
