@@ -20,6 +20,9 @@
 	name = new_name
 	real_name = new_name
 	..()
+	spawn(10)
+		if(src.mind)
+			src.mind.special_role = "Blob"
 
 /mob/camera/blob/Login()
 	..()
@@ -35,12 +38,47 @@
 
 
 mob/camera/blob/Life()
-	//hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#82ed00'>[src.blob_points]</font></div>"
-	//hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#e36600'>[blob_core.health]</font></div>"
+	//sanity for manual spawned blob cameras
+	if(hud_used)
+		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#82ed00'>[src.blob_points]</font></div>"
+		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#e36600'>[blob_core.health]</font></div>"
 	return
 
 /mob/camera/blob/say(var/message)
-	return//No talking for you
+	if (!message)
+		return
+
+	if (src.client)
+		if(client.prefs.muted & MUTE_IC)
+			src << "You cannot send IC messages (muted)."
+			return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
+
+	if (stat)
+		return
+
+	blob_talk(message)
+
+/mob/camera/blob/proc/blob_talk(message)
+	log_say("[key_name(src)] : [message]")
+
+	message = trim(message)
+
+	if (!message)
+		return
+
+	var/message_a = say_quote(message)
+	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
+
+	for (var/mob/camera/blob/S in world)
+		if(istype(S))
+			S.show_message(rendered, 2)
+
+	for (var/mob/M in dead_mob_list)
+		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping
+			rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i></font>"
+			M.show_message(rendered, 2)
 
 /mob/camera/blob/emote(var/act,var/m_type=1,var/message = null)
 	return

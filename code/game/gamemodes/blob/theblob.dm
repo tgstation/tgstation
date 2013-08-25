@@ -142,10 +142,13 @@
 		update_icon()
 		return
 
-	proc/change_to(var/type)
+	proc/change_to(var/type, var/mob/camera/blob/M = null)
 		if(!ispath(type))
 			error("[type] is an invalid type for the blob.")
-		new type(src.loc)
+		if("[type]" == "/obj/effect/blob/core")
+			new type(src.loc, 200, null, 1, M)
+		else
+			new type(src.loc)
 		Delete()
 		return
 

@@ -100,6 +100,39 @@
 
 	return
 
+/mob/camera/blob/proc/create_core()
+	set category = "Blob"
+	set name = "Create Core Blob (100)"
+	set desc = "Create another Core Blob to aid in the station takeover"
+
+
+	var/turf/T = get_turf(src)
+
+	if(!T)
+		return
+
+	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+
+	if(!B)//We are on a blob
+		src << "There is no blob here!"
+		return
+
+	if(!istype(B, /obj/effect/blob/normal))
+		src << "Unable to use this blob, find a normal one."
+		return
+
+	for(var/obj/effect/blob/core/blob in orange(15))
+		src << "There is another core blob nearby, move more than 15 tiles away from it!"
+		return
+
+	if(!can_buy(100))
+		return
+
+
+	B.change_to(/obj/effect/blob/core, src)
+
+	return
+
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
