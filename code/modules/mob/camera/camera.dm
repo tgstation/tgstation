@@ -9,6 +9,3 @@
 	invisibility = 101 // No one can see us
 
 	move_on_shuttle = 0
-
-/mob/camera/experience_pressure_difference()
-	return
