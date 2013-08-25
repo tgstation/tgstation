@@ -1,19 +1,4 @@
 
-
-/proc/performWallPressureCheck(var/turf/loc,var/mob/user)
-	var/minp=16777216;
-	var/maxp=0;
-	for(var/dir in cardinal)
-		var/turf/T=get_turf(get_step(loc,dir))
-		var/datum/gas_mixture/environment = T.return_air()
-		var/cp = environment.return_pressure()
-		if(cp<minp)minp=cp
-		if(cp>maxp)maxp=cp
-	var/pdiff = abs(minp-maxp)
-	if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
-		return pdiff
-	return 1
-
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
@@ -181,7 +166,7 @@
 			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
 			src.dismantle_wall(1)
 
-			var/pdiff=performWallPressureCheck(src.loc,user)
+			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) broke a rotting wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 			return
@@ -223,7 +208,7 @@
 
 			if( user.loc == T && user.get_active_hand() == WT )
 				user << "<span class='notice'>You remove the outer plating.</span>"
-				var/pdiff=performWallPressureCheck(src.loc,user)
+				var/pdiff=performWallPressureCheck(src.loc)
 				if(pdiff)
 					message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) dismanted a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 				dismantle_wall()
@@ -244,7 +229,7 @@
 		if( user.loc == T && user.get_active_hand() == W )
 			user << "<span class='notice'>You remove the outer plating.</span>"
 			dismantle_wall()
-			var/pdiff=performWallPressureCheck(src.loc,user)
+			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) dismantled with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 			for(var/mob/O in viewers(user, 5))
@@ -264,7 +249,7 @@
 		if( user.loc == T && user.get_active_hand() == W )
 			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
 			dismantle_wall()
-			var/pdiff=performWallPressureCheck(src.loc,user)
+			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) drilled a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 			for(var/mob/O in viewers(user, 5))
@@ -288,7 +273,7 @@
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			dismantle_wall(1)
-			var/pdiff=performWallPressureCheck(src.loc,user)
+			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) sliced up a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 			for(var/mob/O in viewers(user, 5))
@@ -379,7 +364,7 @@
 	F.icon_state = "wall_thermite"
 	user << "<span class='warning'>The thermite melts through the wall.</span>"
 
-	var/pdiff=performWallPressureCheck(src.loc,user)
+	var/pdiff=performWallPressureCheck(src.loc)
 	if(pdiff)
 		message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) thermited a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 

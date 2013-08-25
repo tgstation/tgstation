@@ -70,7 +70,7 @@
 				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
 						if(S.amount < 2) return
-						var/pdiff=performFalseWallPressureCheck(src.loc,user)
+						var/pdiff=performWallPressureCheck(src.loc)
 						if(!pdiff)
 							S.use(2)
 							user << "\blue You create a false wall! Push on it to open or close the passage."
@@ -97,7 +97,7 @@
 				if(/obj/item/stack/sheet/plasteel)
 					if(!anchored)
 						if(S.amount < 2) return
-						var/pdiff=performFalseWallPressureCheck(src.loc,user)
+						var/pdiff=performWallPressureCheck(src.loc)
 						if(!pdiff)
 							S.use(2)
 							user << "\blue You create a false wall! Push on it to open or close the passage."
@@ -136,7 +136,7 @@
 				var/M = S.sheettype
 				if(!anchored)
 					if(S.amount < 2) return
-					var/pdiff=performFalseWallPressureCheck(src.loc,user)
+					var/pdiff=performWallPressureCheck(src.loc)
 					if(!pdiff)
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."

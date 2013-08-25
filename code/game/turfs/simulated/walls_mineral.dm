@@ -90,7 +90,7 @@
 	..()
 
 /turf/simulated/wall/mineral/plasma/proc/PlasmaBurn(temperature)
-	var/pdiff=performWallPressureCheck(src.loc,null)
+	var/pdiff=performWallPressureCheck(src.loc)
 	if(pdiff>0)
 		message_admins("Plasma wall with pdiff [pdiff] at [formatJumpTo(loc)] just caught fire!")
 	spawn(2)
