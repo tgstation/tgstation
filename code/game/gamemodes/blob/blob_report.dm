@@ -4,6 +4,9 @@
 	var/intercepttext = ""
 	var/interceptname = "Error"
 	switch(report)
+		if(0)
+			..()
+			return
 		if(1)
 			interceptname = "Biohazard Alert"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"

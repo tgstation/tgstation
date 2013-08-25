@@ -1142,18 +1142,21 @@ datum/mind
 
 
 
+/mob/proc/sync_mind()
+	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = 1		//indicates that the mind is currently synced with a client
 
 //Initialisation procs
-/mob/living/proc/mind_initialize()
+/mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key
+
 	else
 		mind = new /datum/mind(key)
-		mind.original = src
 		if(ticker)
 			ticker.minds += mind
 		else
-			world.log << "## DEBUG: mind_initialize(): No ticker ready yet! Please inform Carn"
+			error("mind_initialize(): No ticker ready yet! Please inform Carn")
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
@@ -1212,6 +1215,11 @@ datum/mind
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
 
+//BLOB
+/mob/camera/overmind/mind_initialize()
+	..()
+	mind.special_role = "Blob"
+
 //Animals
 /mob/living/simple_animal/mind_initialize()
 	..()
@@ -1239,6 +1247,4 @@ datum/mind
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
-
-
 
