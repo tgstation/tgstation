@@ -24,6 +24,9 @@
 /obj/machinery/meter/process()
 	if(!target)
 		icon_state = "meterX"
+		// Pop the meter off when the pipe we're attached to croaks.
+		new /obj/item/pipe_meter(src.loc)
+		spawn(0) del(src)
 		return 0
 
 	if(stat & (BROKEN|NOPOWER))
@@ -35,6 +38,9 @@
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
 		icon_state = "meterX"
+		// Pop the meter off when the environment we're attached to croaks.
+		new /obj/item/pipe_meter(src.loc)
+		spawn(0) del(src)
 		return 0
 
 	var/env_pressure = environment.return_pressure()
