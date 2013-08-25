@@ -188,6 +188,8 @@ var/datum/global_hud/global_hud = new()
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
+	var/obj/screen/blobpwrdisplay
+	var/obj/screen/blobhealthdisplay
 	var/obj/screen/r_hand_hud_object
 	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
@@ -289,4 +291,6 @@ datum/hud/New(mob/owner)
 	else if(isobserver(mymob))
 		ghost_hud()
 
+	else if(isovermind(mymob))
+		blob_hud()
 	return
