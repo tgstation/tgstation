@@ -109,6 +109,8 @@ obj
 			//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
+			for(var/atom/A in loc)
+				A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 			//spread
 			for(var/direction in cardinal)
 				if(S.air_check_directions&direction) //Grab all valid bordering tiles
