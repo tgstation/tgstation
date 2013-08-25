@@ -298,6 +298,9 @@
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
+	else
+		gib()
+		return 1
 	return 0
 
 // this function shows information about the malf_ai gameplay type in the status screen

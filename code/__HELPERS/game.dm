@@ -350,6 +350,13 @@ var/list/DummyCache = list()
 		i++
 	return candidates
 
+/proc/get_candidates(be_special_flag=0)
+	. = list()
+	for(var/mob/dead/observer/G in player_list)
+		if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+			if(!G.client.is_afk() && (G.client.prefs.be_special & be_special_flag))
+				. += G.client
+
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()
 	O.maptext = maptext

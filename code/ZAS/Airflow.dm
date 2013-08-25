@@ -429,6 +429,6 @@ zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/A in T)
-			if(istype(A, /obj/effect) || istype(A, /mob/aiEye))
+			if(istype(A, /obj/effect) || istype(A, /mob/camera))
 				continue
 			. += A
