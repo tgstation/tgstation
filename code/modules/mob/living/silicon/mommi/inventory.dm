@@ -5,18 +5,22 @@
 /mob/living/silicon/robot/mommi/get_active_hand()
 	return module_active
 
+/mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W)
+	var/obj/item/found = locate(W) in src.module.modules
+	return found
 /mob/living/silicon/robot/mommi/put_in_hands(var/obj/item/W)
 	// Fixing NPEs caused by PDAs giving me NULLs to hold :V - N3X
 	// And before you ask, this is how /mob handles NULLs, too.
 	if(!W)
 		return 0
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
-	if(is_type_in_list(W,src.module.modules))
+	//if(is_type_in_list(W,src.module.modules))
+	if(is_in_modules(W))
 		src << "\red Picking up something that's built-in to you seems a bit silly."
 		return 0
 	if(tool_state)
-		var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!found)
+		//var/obj/item/found = locate(tool_state) in src.module.modules
+		if(!is_in_modules(tool_state))
 			var/obj/item/TS = tool_state
 			drop_item()
 			if(TS && TS.loc)
@@ -64,8 +68,8 @@
 
 /mob/living/silicon/robot/mommi/drop_item(var/atom/Target)
 	if(tool_state)
-		var/obj/item/found = locate(tool_state) in src.module.modules
-		if(found)
+		//var/obj/item/found = locate(tool_state) in src.module.modules
+		if(is_in_modules(tool_state))
 			src << "\red This item cannot be dropped."
 			return 0
 		if(client)
@@ -107,8 +111,8 @@
 		sight_state = null
 		inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
-		var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!found)
+		//var/obj/item/found = locate(tool_state) in src.module.modules
+		if(is_in_modules(tool_state))
 			var/obj/item/TS = tool_state
 			drop_item()
 			if(TS && TS.loc)
@@ -140,8 +144,8 @@
 
 /mob/living/silicon/robot/mommi/proc/unequip_tool()
 	if(tool_state)
-		var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!found)
+		//var/obj/item/found = locate(tool_state) in src.module.modules
+		if(!is_in_modules(tool_state))
 			drop_item()
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
