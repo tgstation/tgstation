@@ -4,16 +4,41 @@
 
 #define FALSEDOOR_MAX_PRESSURE_DIFF 100.0
 
-/proc/performFalseWallPressureCheck(var/turf/loc,var/mob/user)
+/**
+* Gets the highest and lowest pressures from the tiles in cardinal directions
+* around us, then checks the difference.
+*/
+/proc/getOPressureDifferential(var/turf/loc)
+	var/minp=16777216;
+	var/maxp=0;
+	for(var/dir in cardinal)
+		var/turf/T=get_turf(get_step(loc,dir))
+		var/cp=0
+		if(T && istype(T,/turf/simulated) && T.zone)
+			var/datum/gas_mixture/environment = T.return_air()
+			cp = environment.return_pressure()
+		if(cp<minp)minp=cp
+		if(cp>maxp)maxp=cp
+	return abs(minp-maxp)
+
+// Checks pressure here vs. around us.
+/proc/performFalseWallPressureCheck(var/turf/loc)
 	var/datum/gas_mixture/myenv=loc.return_air()
 	var/pressure=myenv.return_pressure()
 
 	for(var/dir in cardinal)
-		var/turf/T=get_turf(get_step(loc,dir))
-		var/datum/gas_mixture/environment = T.return_air()
-		var/pdiff = abs(pressure - environment.return_pressure())
-		if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
-			return pdiff
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		if(T && istype(T) && T.zone)
+			var/datum/gas_mixture/environment = T.return_air()
+			var/pdiff = abs(pressure - environment.return_pressure())
+			if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
+				return pdiff
+	return 1
+
+/proc/performWallPressureCheck(var/turf/loc)
+	var/pdiff = getOPressureDifferential(loc)
+	if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
+		return pdiff
 	return 1
 
 /obj/structure/falsewall
