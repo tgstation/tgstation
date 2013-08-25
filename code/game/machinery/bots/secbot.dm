@@ -256,11 +256,12 @@ Auto Patrol: []"},
 								src.icon_state = "secbot[src.on]"
 
 							var/mob/living/simple_animal/S = src.target
-							S.AdjustStunned(10)
-							S.adjustBruteLoss(15)
-							if(S.stat)
-								src.frustration = 8
-								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+							if(S && istype(S))
+								S.AdjustStunned(10)
+								S.adjustBruteLoss(15)
+								if(S.stat)
+									src.frustration = 8
+									playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, src.target)
