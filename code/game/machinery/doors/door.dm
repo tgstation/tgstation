@@ -262,6 +262,7 @@
 	if(istype(south)) air_master.tiles_to_update += south
 	if(istype(east)) air_master.tiles_to_update += east
 	if(istype(west)) air_master.tiles_to_update += west
+	update_freelok_sight()
 	return 1
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
