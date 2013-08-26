@@ -349,6 +349,8 @@ var/global/ZAS_Settings/zas_settings = new
 */
 /ZAS_Settings/proc/Get(var/id)
 	var/datum/ZAS_Setting/setting = src.settings[idfrompath(id)]
+	if(!setting || !istype(setting))
+		world.log << "ZAS_SETTING DEBUG: [id] | [idfrompath(id)]"
 	return setting.value
 
 /ZAS_Settings/proc/ChangeSettingsDialog(mob/user)
