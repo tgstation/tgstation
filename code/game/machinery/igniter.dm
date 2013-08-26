@@ -64,8 +64,8 @@
 					"\blue You have disassembled \the [src].", \
 					"You hear welding.")
 				src.assembly.loc=src.loc
-				spawn(0) del(src)
-				return 1
+				del(src)
+				return
 		else:
 			user << "\red You need more welder fuel to do that."
 			return 1
