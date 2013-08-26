@@ -244,6 +244,25 @@
 	OB.expand(T, 0)
 	return
 
+/mob/camera/blob/proc/click_expand_blob(var/turf/T)
+
+	if(!T)
+		return
+
+	var/obj/effect/blob/B = locate() in T
+	if(B)
+		src << "There is a blob here!"
+		return
+
+	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
+	if(!OB)
+		src << "There is no blob adjacent to that tile."
+		return
+
+	if(!can_buy(5))
+		return
+	OB.expand(T, 0)
+	return
 
 /mob/camera/blob/verb/rally_spores()
 	set category = "Blob"

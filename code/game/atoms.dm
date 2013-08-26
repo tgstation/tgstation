@@ -889,7 +889,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		// ------- ALT-CLICK -------
 
 		if(parameters["alt"]){
-			if(!isAI(usr))
+			if(isrobot(usr))
+				RobotAltClick(usr)
+			else if(!isAI(usr))
 				AltClick(usr)
 			else
 				AIAltClick(usr)
@@ -899,7 +901,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		// ------- CTRL-CLICK -------
 
 		if(parameters["ctrl"]){
-			if(!isAI(usr))
+			if(isovermind(usr))
+				OvermindCtrlClick(usr)
+			else if(!isAI(usr))
 				CtrlClick(usr)
 			else
 				AICtrlClick(usr)
@@ -1242,6 +1246,22 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 /atom/proc/CtrlClick()
 	if(hascall(src,"pull"))
 		src:pull()
+	return
+
+/atom/proc/OvermindCtrlClick(var/mob/camera/blob/blob)
+	if(istype(src, /turf))
+		blob.click_expand_blob(src)
+	return
+
+/atom/proc/RobotAltClick() // Opens and closes doors!
+	if(istype(src , /obj/machinery/door/airlock))
+		if(src:density)
+			var/nhref = "src=\ref[src];aiEnable=7"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=7"
+			src.Topic(nhref, params2list(nhref), src, 1)
+
 	return
 
 /atom/proc/AIShiftClick() // Opens and closes doors!
