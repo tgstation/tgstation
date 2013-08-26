@@ -862,7 +862,7 @@
 			if("show")
 				notes_show(ckey)
 			if("add")
-				notes_add(ckey,href_list["text"])
+				notes_add(ckey,href_list["text"], 1)
 				notes_show(ckey)
 			if("remove")
 				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))

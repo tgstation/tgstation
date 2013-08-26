@@ -1179,10 +1179,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			src.Topic(nhref, params2list(nhref), src, 1)
 
 	else if (istype(src , /obj/machinery/power/apc/))
-		var/nhref = "src=\ref[src];breaker=1"
-		src.Topic(nhref, params2list(nhref), 0)
-
-
+		var/obj/machinery/power/apc/A = src
+		A.toggle_breaker()
 
 	return
 

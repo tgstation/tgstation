@@ -12,33 +12,44 @@
 	var/m_type = 1
 	var/message
 
-	switch(act)
-		if("moan")
-			message = "<B>The [src.name]</B> moans."
-			m_type = 2
-		if("shiver")
-			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
-		if("sway")
-			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
-		if("twitch")
-			message = "<B>The [src.name]</B> twitches."
-			m_type = 1
-		if("vibrate")
-			message = "<B>The [src.name]</B> vibrates!"
-			m_type = 1
-		if("light")
-			message = "<B>The [src.name]</B> lights up for a bit, then stops."
-			m_type = 1
-		if("jiggle")
-			message = "<B>The [src.name]</B> jiggles!"
-			m_type = 1
+	switch(act) //Alphabetical please
 		if("bounce")
 			message = "<B>The [src.name]</B> bounces in place."
 			m_type = 1
+
+		if("jiggle")
+			message = "<B>The [src.name]</B> jiggles!"
+			m_type = 1
+
+		if("light")
+			message = "<B>The [src.name]</B> lights up for a bit, then stops."
+			m_type = 1
+
+		if("moan")
+			message = "<B>The [src.name]</B> moans."
+			m_type = 2
+
+		if("shiver")
+			message = "<B>The [src.name]</B> shivers."
+			m_type = 2
+
+		if("sway")
+			message = "<B>The [src.name]</B> sways around dizzily."
+			m_type = 1
+
+		if("twitch")
+			message = "<B>The [src.name]</B> twitches."
+			m_type = 1
+
+		if("vibrate")
+			message = "<B>The [src.name]</B> vibrates!"
+			m_type = 1
+
+		if ("help") //This is an exception
+			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate"
+
 		else
-			src << text("Invalid Emote: []", act)
+			src << "\blue Unusable emote '[act]'. Say *help for a list."
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

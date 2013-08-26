@@ -232,11 +232,12 @@
 	var/list/blocks = new /list(DNA_STRUC_ENZYMES_BLOCKS) //on-off status for each block
 	for(var/i in bad_se_blocks)		//bad mutations
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
+	blocks[RACEBLOCK] = (deconstruct_block(getblock(M.dna.struc_enzymes, RACEBLOCK), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
 	for(var/i in good_se_blocks)	//good mutations
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
 	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
-
+	
 	if(blocks[NEARSIGHTEDBLOCK])
 		M.disabilities |= NEARSIGHTED
 		M << "\red Your eyes feel strange."
