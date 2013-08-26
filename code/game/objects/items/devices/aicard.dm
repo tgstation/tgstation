@@ -1,6 +1,6 @@
 /obj/item/device/aicard
 	name = "inteliCard"
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
 	w_class = 2.0
@@ -117,9 +117,9 @@
 					A.control_disabled = !A.control_disabled
 					A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
 					if (A.control_disabled)
-						overlays -= image('icons/obj/pda.dmi', "aicard-on")
+						overlays -= image('icons/obj/aicards.dmi', "aicard-on")
 					else
-						overlays += image('icons/obj/pda.dmi', "aicard-on")
+						overlays += image('icons/obj/aicards.dmi', "aicard-on")
 		attack_self(U)
 
 
