@@ -135,7 +135,7 @@ obj
 
 			//seperate part of the present gas
 			//this is done to prevent the fire burning all gases in a single pass
-			var/datum/gas_mixture/flow = air_contents.remove_ratio(zas_settings.Get("fire_consuption_rate"))
+			var/datum/gas_mixture/flow = air_contents.remove_ratio(zas_settings.Get("fire_consumption_rate"))
 ///////////////////////////////// FLOW HAS BEEN CREATED /// DONT DELETE THE FIRE UNTIL IT IS MERGED BACK OR YOU WILL DELETE AIR ///////////////////////////////////////////////
 
 			if(flow)
