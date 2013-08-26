@@ -322,6 +322,12 @@ div.notice
 	height: 100%;
 	background: #40628a;
 	overflow: hidden;
+	float: left;
+}
+
+.progressFill.alignRight
+{
+	float: right;
 }
 
 .progressFill.good
@@ -341,6 +347,8 @@ div.notice
 	color: #ffffff;
 	background: #ee0000;
 }
+
+
 
 .progressFill.highlight
 {
