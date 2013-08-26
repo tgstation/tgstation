@@ -381,8 +381,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		choose_icon()
 		return
 	var/dat = "<HEAD><TITLE>Modules</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
-	<BR>
+	dat += {"<BR>
 	<BR>
 	<B>Activated Modules</B>
 	<BR>
@@ -404,7 +403,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-	src << browse(dat, "window=robotmod&can_close=0")
+	src << browse(dat, "window=robotmod")
+	onclose(src,"robotmod") // Register on-close shit, which unsets machinery.
 
 
 /mob/living/silicon/robot/mommi/Topic(href, href_list)
