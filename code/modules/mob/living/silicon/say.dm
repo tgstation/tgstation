@@ -141,6 +141,6 @@
 	rendered = null
 
 	for (var/mob/M in dead_mob_list)
-		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping
+		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain) && isobserver(M)) //No meta-evesdropping
 			rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
 			M.show_message(rendered, 2)
