@@ -23,7 +23,10 @@
 
 // Checks pressure here vs. around us.
 /proc/performFalseWallPressureCheck(var/turf/loc)
-	var/datum/gas_mixture/myenv=loc.return_air()
+	var/turf/simulated/lT=loc
+	if(!istype(lT) || !lT.zone)
+		return 0
+	var/datum/gas_mixture/myenv=lT.return_air()
 	var/pressure=myenv.return_pressure()
 
 	for(var/dir in cardinal)
@@ -33,13 +36,13 @@
 			var/pdiff = abs(pressure - environment.return_pressure())
 			if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 				return pdiff
-	return 1
+	return 0
 
 /proc/performWallPressureCheck(var/turf/loc)
 	var/pdiff = getOPressureDifferential(loc)
 	if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 		return pdiff
-	return 1
+	return 0
 
 /obj/structure/falsewall
 	name = "wall"
