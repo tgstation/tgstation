@@ -63,7 +63,7 @@
 		Cryo Cell Status:
 	</div>
 	<div class="itemContent" style="width: 40%;">
-		{^{:~link('On', 'power', {'start' : 1}, isOperating ? 'selected' : null)}}{^{:~link('Off', 'close', {'start' : 1}, isOperating ? null : 'selected')}}
+		{^{:~link('On', 'power', {'switchOn' : 1}, isOperating ? 'selected' : null)}}{^{:~link('Off', 'close', {'switchOff' : 1}, isOperating ? null : 'selected')}}
 	</div>
 	<div class="itemContent" style="width: 26%;">
 		{^{:~link('Eject Occupant', 'arrowreturnthick-1-s', {'ejectOccupant' : 1}, hasOccupant ? null : 'disabled')}}

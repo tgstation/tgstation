@@ -1,3 +1,7 @@
+#define STATUS_INTERACTIVE 2 // GREEN Visability
+#define STATUS_UPDATE 1 // ORANGE Visability
+#define STATUS_DISABLED 0 // RED Visability
+
 /datum/nanoui
 	var/mob/user
 	var/atom/movable/src_object
@@ -19,7 +23,7 @@
 	var/content = "<div id='mainTemplate'></div>" // the #mainTemplate div will contain the compiled "main" template html
 	var/list/initial_data[0]
 	var/is_auto_updating = 0
-	var/status = 2
+	var/status = STATUS_INTERACTIVE
 	
 	// Only allow users with a certain user.stat to get updates. Defaults to 0 (concious)
 	var/allowed_user_stat = 0 // -1 = ignore, 0 = alive, 1 = unconcious or alive, 2 = dead concious or alive
@@ -62,30 +66,31 @@
 
 /datum/nanoui/proc/update_status(push_update = 0)
 	if (istype(user, /mob/living/silicon/ai))
-		set_status(2, push_update) // interactive (green visibility)
+		set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 	else if (istype(user, /mob/living/silicon/robot))
 		if (src_object in view(7, user)) // robots can see and interact with things they can see within 7 tiles
-			set_status(2, push_update) // interactive (green visibility)
+			set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 		else
-			set_status(0, push_update) // no updates, completely disabled (red visibility)
+			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
 	else
 		var/dist = get_dist(src_object, user)
 		
 		if (dist > 4)
 			close()
 			return
-		
-		if ((allowed_user_stat > -1) && (user.stat > allowed_user_stat))
-			set_status(0, push_update) // no updates, completely disabled (red visibility)
 			
-		if (!(src_object in view(4, user))) // If the src object is not in visable, set status to 0
-			set_status(0, push_update) // interactive (green visibility)			
+		if ((allowed_user_stat > -1) && (user.stat > allowed_user_stat))
+			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
+		else if (user.restrained() || user.lying)
+			set_status(STATUS_UPDATE, push_update) // update only (orange visibility)
+		else if (!(src_object in view(4, user))) // If the src object is not in visable, set status to 0
+			set_status(STATUS_DISABLED, push_update) // interactive (green visibility)			
 		else if (dist <= 1)
-			set_status(2, push_update) // interactive (green visibility)
+			set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 		else if (dist <= 2)
-			set_status(1, push_update) // update only (orange visibility)
+			set_status(STATUS_UPDATE, push_update) // update only (orange visibility)
 		else if (dist <= 4)
-			set_status(0, push_update) // no updates, completely disabled (red visibility)
+			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
 
 /datum/nanoui/proc/set_auto_update(state = 1)
 	is_auto_updating = state
@@ -140,7 +145,7 @@
 	if (initial_data.len > 0)
 		initial_data_json = list2json(initial_data)
 
-	var/url_parameters_json = list2json(list("src" = "\ref[src_object]"))
+	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -176,6 +181,14 @@
 			[title ? "<div id='uiTitleWrapper'><div id='uiStatusIcon' class='icon24 uiStatusGood'></div><div [title_attributes]>[title]</div><div id='uiTitleFluff'></div></div>" : ""]
 			<div id='uiContent'>
 	"}
+	
+/datum/nanoui/Topic(href, href_list)
+	update_status(0) // update the status
+	if (status != STATUS_INTERACTIVE || user != usr) // If UI is not interactive or usr calling Topic is not the UI user
+		return
+		
+	if (src_object.Topic(href, href_list))
+		nanomanager.update_uis(src_object) // update all UIs attached to src_object	
 
 /datum/nanoui/proc/get_footer()
 	var/scriptsContent = ""
@@ -236,9 +249,8 @@
 
 /datum/nanoui/proc/push_data(data, force_push = 0)
 	update_status(0)
-	if (!status && !force_push)
-		//user << "Cannot update UI, no visibility (status [status])"
-		return // Cannot update UI, no visibility (status [status])
+	if (status == STATUS_DISABLED && !force_push)
+		return // Cannot update UI, no visibility
 
 	data = modify_data(data)
 

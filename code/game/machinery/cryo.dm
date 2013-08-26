@@ -13,11 +13,9 @@
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 
-
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
@@ -26,7 +24,6 @@
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
 			break
-
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -132,16 +129,19 @@
 		return
 	//user.set_machine(src)
 
-
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
-	if(usr == occupant || usr.stat)
-		return
+	if(usr == occupant)
+		return 0 // don't update UIs attached to this object
 
 	if(..())
-		return
+		return 0 // don't update UIs attached to this object
 
-	if(href_list["start"])
-		on = !on
+	if(href_list["switchOn"])
+		on = 1
+		update_icon()
+		
+	if(href_list["switchOff"])
+		on = 0
 		update_icon()
 
 	if(href_list["ejectBeaker"])
@@ -152,10 +152,11 @@
 			
 	if(href_list["ejectOccupant"])
 		if(!occupant || isslime(usr) || ispAI(usr))
-			return
+			return 0 // don't update UIs attached to this object
 		go_out()
-
-	nanomanager.update_uis(src) // update all UIs attached to this object
+	
+	add_fingerprint(usr)
+	return 1 // update UIs attached to this object
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
