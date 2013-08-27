@@ -19,6 +19,9 @@
 		if(T && istype(T,/turf/simulated) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			cp = environment.return_pressure()
+		else
+			if(istype(T,/turf/simulated))
+				continue
 		if(cp<minp)minp=cp
 		if(cp>maxp)maxp=cp
 	return abs(minp-maxp)
@@ -45,6 +48,25 @@
 	if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 		return pdiff
 	return 0
+
+/client/verb/pdiff()
+	set name = "Get PDiff"
+	set category = "Debug"
+
+	if(!mob || !holder)
+		return
+	var/turf/T = mob.loc
+
+	if (!( istype(T, /turf) ))
+		return
+
+	var/pdiff = getOPressureDifferential(T)
+	var/fwpcheck=performFalseWallPressureCheck(T)
+	var/wpcheck=performWallPressureCheck(T)
+
+	src << "Pressure Differential (cardinals): [pdiff]"
+	src << "FWPCheck: [fwpcheck]"
+	src << "WPCheck: [wpcheck]"
 
 /obj/structure/falsewall
 	name = "wall"
