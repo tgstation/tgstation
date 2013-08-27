@@ -2,7 +2,9 @@
  * False Walls
  */
 
-#define FALSEDOOR_MAX_PRESSURE_DIFF 100.0
+// Minimum pressure difference to fail building falsewalls.
+// Also affects admin alerts.
+#define FALSEDOOR_MAX_PRESSURE_DIFF 25.0
 
 /**
 * Gets the highest and lowest pressures from the tiles in cardinal directions

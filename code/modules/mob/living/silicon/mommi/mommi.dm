@@ -14,6 +14,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	pass_flags = PASSTABLE
 	var/keeper=0 // 0 = No, 1 = Yes (Disables speech and common radio.)
 	var/picked = 0
+	var/subtype="keeper"
 	var/obj/screen/inv_tool = null
 	var/obj/screen/inv_sight = null
 
@@ -79,8 +80,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi/proc/choose_icon()
 	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper")
 	switch(icontype)
-		if("Basic")	icon_state = "mommi"
-		else		icon_state = "keeper"
+		if("Basic")	subtype = "mommi"
+		else		subtype = "keeper"
 	picked=1
 	updateicon()
 
@@ -343,21 +344,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
 
 /mob/living/silicon/robot/mommi/updateicon()
+	icon_state=subtype
+	// Clear all overlays.
 	overlays.Cut()
-	if(stat == 0)
-		switch(icon_state)
-			if("mommi")
-				if(emagged)
-					overlays += "eyes-mommi-emagged"
-				else
-					overlays += "eyes-mommi"
-			if("keeper")
-				if(emagged)
-					icon_state = "keeper_emagged"
-			if("keeper_emagged")
-				if(!emagged)
-					icon_state = "keeper"
-
 	if(opened) // TODO:  Open the front "head" panel
 		if(wiresexposed)
 			overlays += "ov-openpanel +w"
@@ -365,6 +354,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
+	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
+	if(layer==MOB_LAYER)
+		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
+	else
+		overlays+="eyes-[subtype][emagged?"-emagged":""]"
 	return
 
 

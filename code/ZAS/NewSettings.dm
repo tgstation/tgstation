@@ -348,6 +348,8 @@ var/global/ZAS_Settings/zas_settings = new
 * @returns Value of the desired setting
 */
 /ZAS_Settings/proc/Get(var/id)
+	if(ispath(id))
+		id="[id]"
 	var/datum/ZAS_Setting/setting = src.settings[idfrompath(id)]
 	if(!setting || !istype(setting))
 		world.log << "ZAS_SETTING DEBUG: [id] | [idfrompath(id)]"
