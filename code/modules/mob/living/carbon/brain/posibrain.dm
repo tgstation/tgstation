@@ -10,7 +10,7 @@
 	construction_time = 75
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
-	mob/living/carbon/brain/brainmob = null
+	//var/mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
@@ -42,8 +42,6 @@
 				transfer_personality(C.mob)
 			else if (response == "Never for this round")
 				C.prefs.be_special ^= BE_PAI
-
-
 
 	proc/transfer_personality(var/mob/candidate)
 
@@ -125,4 +123,9 @@
 	dead_mob_list -= src.brainmob
 	//mob_list -= src.brainmob
 	living_mob_list |= src.brainmob
+	..()
+
+/obj/item/device/mmi/posibrain/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(try_handling_mommi_construction(O,user))
+		return
 	..()
