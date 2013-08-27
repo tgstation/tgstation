@@ -892,11 +892,7 @@
 
 	overlays.Cut()
 	if(stat == 0)
-		//overlays += "eyes" // Why the fuck are you adding eyes, then clearing, then setting eyes again? wtf.
-		//overlays.Cut()
-		overlays += image(icon,"eyes-[icon_state]",level=LIGHTING_LAYER+1)
-	//else
-	//	overlays -= "eyes"
+		overlays += image(icon,"eyes-[icon_state]",LIGHTING_LAYER+1)
 
 	if(opened)
 		if(wiresexposed)
