@@ -6,7 +6,7 @@
 	icon_state = "aircond0"
 	name = "air conditioner"
 	desc = "If you can't take the heat, use one of these."
-	set_temperature = 70		// in celcius, add T0C for kelvin
+	set_temperature = 20		// in celcius, add T0C for kelvin
 	var/cooling_power = 40000
 
 	flags = FPRINT
@@ -78,10 +78,13 @@
 	else
 		..()
 	return
-
 /obj/machinery/space_heater/air_conditioner/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
+	interact(user)
+
+/obj/machinery/space_heater/air_conditioner/interact(mob/user as mob)
 	if(open)
+		var/temp = set_temperature
 		var/dat
 		dat = "Power cell: "
 		if(cell)
@@ -93,9 +96,10 @@
 
 		dat += "Set Temperature: "
 
-		dat += "<A href='?src=\ref[src];op=temp;val=-5'>-</A>"
-
-		dat += " [set_temperature]&deg;C "
+		dat += "<A href='?src=\ref[src];op=temp;val=-5'>-</A> "
+		dat += "<A href='?src=\ref[src];op=temp;val=-1'>-</A>"
+		dat += " [temp]&deg;C "
+		dat += "<A href='?src=\ref[src];op=temp;val=1'>+</A> "
 		dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"
 
 		user.set_machine(src)
@@ -119,8 +123,8 @@
 			if("temp")
 				var/value = text2num(href_list["val"])
 
-				// limit to 80K - 90C
-				set_temperature = dd_range(80+T0C, 90, set_temperature + value)
+				// limit to 15c and 20c(room temp)
+				set_temperature = dd_range(15, 25, set_temperature + value)
 
 			if("cellremove")
 				if(open && cell && !usr.get_active_hand())
@@ -142,7 +146,7 @@
 
 						usr.visible_message("\blue [usr] inserts a power cell into \the [src].", "\blue You insert the power cell into \the [src].")
 
-		updateDialog()
+		src.updateDialog()
 	else
 		usr << browse(null, "window=aircond")
 		usr.unset_machine()
@@ -155,7 +159,7 @@
 		var/transfer_moles = 0.25 * env.total_moles()
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)
 		if(removed)
-			if(removed.temperature > (set_temperature+T0C))
+			if(removed.temperature > (set_temperature + T0C))
 				var/air_heat_capacity = removed.heat_capacity()
 				var/combined_heat_capacity = cooling_power + air_heat_capacity
 				//var/old_temperature = removed.temperature
@@ -165,6 +169,7 @@
 					removed.temperature = combined_energy/combined_heat_capacity
 				env.merge(removed)
 				return 1
+			env.merge(removed)
 	return 0
 
 /obj/machinery/space_heater/air_conditioner/process()
