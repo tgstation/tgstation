@@ -40,21 +40,21 @@ obj/item/proc
 	//Handles all the bad things plasma can do.
 
 	//Contamination
-	if(zas_settings.Get("CLOTH_CONTAMINATION")) contaminate()
+	if(zas_settings.Get(/datum/ZAS_Setting/CLOTH_CONTAMINATION)) contaminate()
 
 	//Anything else requires them to not be dead.
 	if(stat >= 2)
 		return
 
 	//Burn skin if exposed.
-	if(zas_settings.Get("SKIN_BURNS"))
+	if(zas_settings.Get(/datum/ZAS_Setting/SKIN_BURNS))
 		if(!pl_head_protected() || !pl_suit_protected())
 			burn_skin(0.75)
 			if(prob(20)) src << "\red Your skin burns!"
 			updatehealth()
 
 	//Burn eyes if exposed.
-	if(zas_settings.Get("EYE_BURNS"))
+	if(zas_settings.Get(/datum/ZAS_Setting/EYE_BURNS))
 		if(!head)
 			if(!wear_mask)
 				burn_eyes()
@@ -70,8 +70,8 @@ obj/item/proc
 						burn_eyes()
 
 	//Genetic Corruption
-	if(zas_settings.Get("GENETIC_CORRUPTION"))
-		if(rand(1,10000) < zas_settings.Get("GENETIC_CORRUPTION"))
+	if(zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
+		if(rand(1,10000) < zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
 			randmutb(src)
 			src << "\red High levels of toxins cause you to spontaneously mutate."
 			domutcheck(src,null)
@@ -90,7 +90,7 @@ obj/item/proc
 /mob/living/carbon/human/proc/pl_head_protected()
 	//Checks if the head is adequately sealed.
 	if(head)
-		if(zas_settings.Get("PLASMAGUARD_ONLY"))
+		if(zas_settings.Get(/datum/ZAS_Setting/PLASMAGUARD_ONLY))
 			if(head.flags & PLASMAGUARD)
 				return 1
 		else if(head.flags & HEADCOVERSEYES)
@@ -100,7 +100,7 @@ obj/item/proc
 /mob/living/carbon/human/proc/pl_suit_protected()
 	//Checks if the suit is adequately sealed.
 	if(wear_suit)
-		if(zas_settings.Get("PLASMAGUARD_ONLY"))
+		if(zas_settings.Get(/datum/ZAS_Setting/PLASMAGUARD_ONLY))
 			if(wear_suit.flags & PLASMAGUARD) return 1
 		else
 			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1
@@ -116,7 +116,7 @@ obj/item/proc
 turf/Entered(obj/item/I)
 	. = ..()
 	//Items that are in plasma, but not on a mob, can still be contaminated.
-	if(istype(I) && zas_settings.Get("CLOTH_CONTAMINATION"))
+	if(istype(I) && zas_settings.Get(/datum/ZAS_Setting/CLOTH_CONTAMINATION))
 		var/datum/gas_mixture/env = return_air(1)
 		if(!env)
 			return
