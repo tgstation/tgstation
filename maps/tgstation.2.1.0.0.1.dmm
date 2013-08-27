@@ -3225,7 +3225,7 @@
 "bka" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/hallway/secondary/entry)
 "bkb" = (/obj/machinery/conveyor{dir = 1; id = "garbage"},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"; tag = "icon-warnplate (NORTH)"},/area/maintenance/disposal)
 "bkc" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor{icon_state = "loadingarea"; tag = "loading"},/area/maintenance/disposal)
-"bkd" = (/obj/structure/stool,/obj/machinery/door/window/eastright{dir = 8; name = "Chemistry Desk"; req_access_txt = "33"},/turf/simulated/floor{icon_state = "neutralcorner"; dir = 1},/area/maintenance/disposal)
+"bkd" = (/obj/structure/stool,/obj/machinery/door/window/eastright{dir = 8; name = "Conveyor Access"; req_access_txt = "0"},/turf/simulated/floor{icon_state = "neutralcorner"; dir = 1},/area/maintenance/disposal)
 "bke" = (/turf/simulated/floor,/area/maintenance/disposal)
 "bkf" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_x = 0; pixel_y = -29},/turf/simulated/floor,/area/maintenance/disposal)
 "bkg" = (/obj/machinery/light_switch{pixel_y = -25},/turf/simulated/floor,/area/maintenance/disposal)
