@@ -86,7 +86,6 @@
 
 		if(istype(T))
 			T.Entered(tool_state)
-
 		TS.dropped(src)
 		tool_state = null
 		module_active=null
@@ -112,9 +111,10 @@
 		inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
-		if(is_in_modules(tool_state))
+		if(!is_in_modules(tool_state))
 			var/obj/item/TS = tool_state
 			drop_item()
+
 			if(TS && TS.loc)
 				TS.loc = src.loc
 		if(istype(tool_state,/obj/item/borg/sight))
