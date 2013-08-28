@@ -223,15 +223,7 @@ proc/tg_list2text(list/list, glue=",")
 
 
 //Converts a rights bitfield into a string
-/proc/rights2text(rights, seperator="")
-	/* --UNCOMMENT ONCE PERMISSIONS ABOVE 2^15 START BEING USED!
-	if(rights >= 65536)
-		var/rights_pt2 = rights / 65536
-		if(rights_pt2 & 1) .+= "[seperator]+NUKESERVER"
-		if(rights_pt2 & 2) .+= "[seperator]+DDOSALLPLAYERS"
-		if(rights_pt2 & 4) .+= "[seperator]+SPAWN_RL_SINGULARITY"
-	*/
-
+/proc/rights2text(rights, seperator="", list/adds, list/subs)
 	if(rights & R_BUILDMODE)	. += "[seperator]+BUILDMODE"
 	if(rights & R_ADMIN)		. += "[seperator]+ADMIN"
 	if(rights & R_BAN)			. += "[seperator]+BAN"
@@ -245,6 +237,11 @@ proc/tg_list2text(list/list, glue=",")
 	if(rights & R_VAREDIT)		. += "[seperator]+VAREDIT"
 	if(rights & R_SOUNDS)		. += "[seperator]+SOUND"
 	if(rights & R_SPAWN)		. += "[seperator]+SPAWN"
+
+	for(var/verbpath in adds)
+		. += "[seperator]+[verbpath]"
+	for(var/verbpath in subs)
+		. += "[seperator]-[verbpath]"
 	return .
 
 /proc/ui_style2icon(ui_style)

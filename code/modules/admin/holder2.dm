@@ -1,9 +1,9 @@
 var/list/admin_datums = list()
 
 /datum/admins
-	var/rank			= "Temporary Admin"
+	var/datum/admin_rank/rank
+
 	var/client/owner	= null
-	var/rights = 0
 	var/fakekey			= null
 
 	var/datum/marked_datum
@@ -13,14 +13,17 @@ var/list/admin_datums = list()
 	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
 	var/admincaster_signature	//What you'll sign the newsfeeds as
 
-/datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
+/datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
 		error("Admin datum created without a ckey argument. Datum has been deleted")
 		del(src)
 		return
+	if(!istype(R))
+		error("Admin datum created without a rank. Datum has been deleted")
+		del(src)
+		return
+	rank = R
 	admincaster_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	rank = initial_rank
-	rights = initial_rights
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
@@ -65,14 +68,10 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		if(usr.client.holder)
 			if(!other || !other.holder)
 				return 1
-
-			var/usr_rights_pt2 = usr.client.holder.rights / 65536
-			var/other_rights_pt2 = other.holder.rights / 65536
-			if( (usr_rights_pt2 & other_rights_pt2) == other_rights_pt2 )	//Check values larger than 65535
-				if(usr.client.holder.rights != other.holder.rights)			//Check values smaller than 65536
-					if( (usr.client.holder.rights & other.holder.rights) == other.holder.rights )
-						return 1	//we have all the rights they have and more
-		usr << "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>"
+			if(usr.client.holder.rank.rights != other.holder.rank.rights)	//Check values smaller than 65536
+				if( (usr.client.holder.rank.rights & other.holder.rank.rights) == other.holder.rank.rights )
+					return 1	//we have all the rights they have and more
+		usr << "<font color='red'>Error: Cannot proceed. They have greater or equal rights to us.</font>"
 	return 0
 
 
@@ -85,17 +84,8 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
-	if(subject)
-		if(rights_required)
-			if(subject.holder)
-				if(rights_required >= 65536)
-					var/rights_required_pt2 = rights_required / 65536
-					var/rights_pt2 = subject.holder.rights / 65536
-					if(rights_required_pt2 & rights_pt2)
-						return 1
-				if(rights_required & subject.holder.rights)
-					return 1
-		else
-			if(subject.holder)
-				return 1
+	if(subject && subject.holder && subject.holder.rank)
+		if(rights_required && !(rights_required & subject.holder.rank.rights))
+			return 0
+		return 1
 	return 0
