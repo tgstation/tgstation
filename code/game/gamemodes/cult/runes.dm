@@ -532,8 +532,8 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
 					H.current << "\red \b [input]"
-				if (/obj/item/weapon/paper/talisman)
-					return 1
+			if (/obj/item/weapon/paper/talisman)
+				return 1
 			return 0
 
 /////////////////////////////////////////FIFTEENTH RUNE
@@ -753,7 +753,7 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					users+=C
-			if(users.len>=3)
+			if(users.len>=1)
 				var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 				if(!cultist)
 					return fizzle()
