@@ -592,10 +592,10 @@
 						usr << "The [name] is too big to attach."
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					if(automatic)
-						if(H.check_for_open_slot(src))
-							return 0
 					if(H.s_store)
+						if(automatic)
+							if(H.check_for_open_slot(src))
+								return 0
 						if(H.s_store.canremove)
 							return 2
 						else
