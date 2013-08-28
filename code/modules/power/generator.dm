@@ -109,6 +109,7 @@
 	add_avail(lastgen)
 
 /obj/machinery/power/generator/attack_ai(mob/user)
+	src.add_hiddenprint(user)
 	if(stat & (BROKEN|NOPOWER)) return
 	interact(user)
 

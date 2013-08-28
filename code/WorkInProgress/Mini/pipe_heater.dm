@@ -38,6 +38,7 @@
 		return
 
 	attack_ai(mob/user as mob)
+		src.add_hiddenprint(user)
 		return src.attack_hand(user)
 
 	attack_paw(mob/user as mob)

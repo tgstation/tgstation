@@ -45,6 +45,7 @@
 	active_power_usage = 4
 
 /obj/machinery/holosign_switch/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 /
 obj/machinery/holosign_switch/attack_paw(mob/user as mob)

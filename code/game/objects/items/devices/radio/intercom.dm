@@ -15,6 +15,7 @@
 	..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)

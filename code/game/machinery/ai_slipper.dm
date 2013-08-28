@@ -32,6 +32,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (istype(user, /mob/living/silicon))
+		src.add_hiddenprint(user)
 		return src.attack_hand(user)
 	else // trying to unlock the interface
 		if (src.allowed(usr))
@@ -50,6 +51,7 @@
 	return
 
 /obj/machinery/ai_slipper/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/ai_slipper/attack_hand(mob/user as mob)

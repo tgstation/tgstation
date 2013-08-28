@@ -373,6 +373,7 @@
 			user << "<span class='warning'>Access denied.</span>"
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	if(!ailock)
 		return attack_hand(user)
 	else
@@ -541,6 +542,7 @@
 		return
 
 	attack_ai(mob/user as mob)
+		src.add_hiddenprint(user)
 		return attack_hand(user)
 
 

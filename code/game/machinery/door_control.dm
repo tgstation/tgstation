@@ -32,6 +32,7 @@
 	active_power_usage = 4
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	if(wires & 2)
 		return src.attack_hand(user)
 	else
@@ -138,6 +139,7 @@
 		icon_state = "doorctrl0"
 
 /obj/machinery/driver_button/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attack_paw(mob/user as mob)

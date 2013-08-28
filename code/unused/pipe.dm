@@ -1566,6 +1566,7 @@ var/linenums = 0
 	return src.attack_hand(user)
 
 /obj/machinery/valve/dvalve/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/valve/dvalve/attack_hand(mob/user)

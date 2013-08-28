@@ -559,6 +559,7 @@
 
 
 /obj/machinery/suit_storage_unit/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 

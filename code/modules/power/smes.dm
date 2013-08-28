@@ -221,6 +221,7 @@
 
 
 /obj/machinery/power/smes/attack_ai(mob/user)
+	src.add_hiddenprint(user)
 	add_fingerprint(user)
 	if(stat & BROKEN) return
 	interact(user)

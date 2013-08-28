@@ -39,6 +39,7 @@
 	return
 
 /obj/machinery/sleep_console/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/sleep_console/attack_paw(mob/user as mob)

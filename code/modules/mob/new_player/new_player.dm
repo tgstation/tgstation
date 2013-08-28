@@ -119,7 +119,7 @@
 				src << "\blue Now teleporting."
 				observer.loc = O.loc
 				if(client.prefs.be_random_name)
-					client.prefs.real_name = random_name()
+					client.prefs.real_name = random_name(client.prefs.gender)
 				observer.real_name = client.prefs.real_name
 				observer.name = observer.real_name
 				observer.key = key
@@ -356,7 +356,7 @@
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
-			client.prefs.real_name = random_name()
+			client.prefs.real_name = random_name(new_character.gender)
 			client.prefs.randomize_appearance_for(new_character)
 		else
 			client.prefs.copy_to(new_character)

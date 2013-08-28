@@ -2,7 +2,9 @@
  * False Walls
  */
 
-#define FALSEDOOR_MAX_PRESSURE_DIFF 100.0
+// Minimum pressure difference to fail building falsewalls.
+// Also affects admin alerts.
+#define FALSEDOOR_MAX_PRESSURE_DIFF 25.0
 
 /**
 * Gets the highest and lowest pressures from the tiles in cardinal directions
@@ -17,6 +19,9 @@
 		if(T && istype(T,/turf/simulated) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			cp = environment.return_pressure()
+		else
+			if(istype(T,/turf/simulated))
+				continue
 		if(cp<minp)minp=cp
 		if(cp>maxp)maxp=cp
 	return abs(minp-maxp)
@@ -43,6 +48,25 @@
 	if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 		return pdiff
 	return 0
+
+/client/verb/pdiff()
+	set name = "Get PDiff"
+	set category = "Debug"
+
+	if(!mob || !holder)
+		return
+	var/turf/T = mob.loc
+
+	if (!( istype(T, /turf) ))
+		return
+
+	var/pdiff = getOPressureDifferential(T)
+	var/fwpcheck=performFalseWallPressureCheck(T)
+	var/wpcheck=performWallPressureCheck(T)
+
+	src << "Pressure Differential (cardinals): [pdiff]"
+	src << "FWPCheck: [fwpcheck]"
+	src << "WPCheck: [wpcheck]"
 
 /obj/structure/falsewall
 	name = "wall"
@@ -97,6 +121,7 @@
 
 /obj/structure/falsewall/attack_ai(mob/user as mob)
 	if(isMoMMI(user))
+		src.add_hiddenprint(user)
 		attack_hand(user)
 
 /obj/structure/falsewall/attack_hand(mob/user as mob)
@@ -224,6 +249,7 @@
 
 /obj/structure/falserwall/attack_ai(mob/user as mob)
 	if(isMoMMI(user))
+		src.add_hiddenprint(user)
 		attack_hand(user)
 
 /obj/structure/falserwall/attack_hand(mob/user as mob)

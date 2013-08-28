@@ -51,6 +51,7 @@
 	return
 
 /obj/machinery/computer/curer/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/computer/curer/attack_paw(var/mob/user as mob)

@@ -124,6 +124,7 @@
 		return
 
 	attack_ai(var/mob/user)
+		src.add_hiddenprint(user)
 		interact(user, 1)
 
 	attack_paw()

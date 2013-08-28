@@ -16,6 +16,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 	attack_ai(mob/user as mob)
+		src.add_hiddenprint(user)
 		return attack_hand(user)
 
 	attack_paw(mob/user as mob)

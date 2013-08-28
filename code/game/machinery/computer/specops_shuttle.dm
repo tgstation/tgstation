@@ -240,6 +240,7 @@ var/specops_shuttle_timeleft = 0
 	return 1
 
 /obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/attack_paw(var/mob/user as mob)

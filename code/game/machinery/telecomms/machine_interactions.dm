@@ -96,6 +96,7 @@
 
 
 /obj/machinery/telecomms/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	attack_hand(user)
 
 /obj/machinery/telecomms/attack_hand(var/mob/user as mob)

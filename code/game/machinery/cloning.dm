@@ -102,6 +102,7 @@
 		return src.healthstring
 
 /obj/machinery/clonepod/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 /obj/machinery/clonepod/attack_paw(mob/user as mob)
 	return attack_hand(user)

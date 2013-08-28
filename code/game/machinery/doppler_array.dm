@@ -20,6 +20,7 @@ var/list/doppler_arrays = list()
 	return src.attack_hand(user)
 
 /obj/machinery/doppler_array/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/doppler_array/attack_hand(mob/user as mob)

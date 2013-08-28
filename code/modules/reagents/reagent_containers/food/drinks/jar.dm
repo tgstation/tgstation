@@ -7,6 +7,7 @@
 	desc = "A jar. You're not sure what it's supposed to hold."
 	icon_state = "jar"
 	item_state = "beaker"
+	g_amt=500
 	New()
 		..()
 		reagents.add_reagent("slime", 50)

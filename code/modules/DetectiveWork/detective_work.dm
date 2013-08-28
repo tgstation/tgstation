@@ -86,6 +86,7 @@ obj/machinery/computer/forensic_scanning
 
 
 	attack_ai(mob/user)
+		src.add_hiddenprint(user)
 		return attack_hand(user)
 
 

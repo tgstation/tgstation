@@ -12,6 +12,7 @@
 	active_power_usage = 4
 
 /obj/machinery/igniter/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/igniter/attack_paw(mob/user as mob)
@@ -146,6 +147,7 @@
 	..(severity)
 
 /obj/machinery/ignition_switch/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_paw(mob/user as mob)

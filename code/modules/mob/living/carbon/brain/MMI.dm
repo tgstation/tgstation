@@ -29,18 +29,24 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	// Return true if handled
+	proc/try_handling_mommi_construction(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O,/obj/item/weapon/screwdriver))
 			for(var/t in mommi_assembly_parts)
-				if(contents_count(t)<mommi_assembly_parts[t])
-					return
+				var/cc=contents_count(t)
+				var/req=mommi_assembly_parts[t]
+				if(cc<req)
+					var/temppart = new t(src)
+					user << "\red You're short [req-cc] [temppart]\s."
+					del(temppart)
+					return TRUE
 
 			if(!istype(loc,/turf))
-				user << "\red You can't assemble the MoMMI, the MMI has to be standing on the ground (or a table) to be perfectly precise."
-				return
+				user << "\red You can't assemble the MoMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise."
+				return TRUE
 			if(!brainmob)
 				user << "\red What are you doing oh god put the brain back in."
-				return
+				return TRUE
 			if(!brainmob.key)
 				var/ghost_can_reenter = 0
 				if(brainmob.mind)
@@ -49,20 +55,21 @@
 							ghost_can_reenter = 1
 							break
 				if(!ghost_can_reenter)
-					user << "<span class='notice'>The MMI indicates that their mind is completely unresponsive; there's no point.</span>"
-					return
+					user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+					return TRUE
 
 			if(brainmob.stat == DEAD)
 				user << "\red Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud."
-				return
+				return TRUE
 
 			if(brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "\red The MMI's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI."
-				return
+				user << "\red \The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain."
+				return TRUE
 
 			if(jobban_isbanned(brainmob, "Cyborg"))
-				user << "\red This MMI does not seem to fit."
-				return
+				user << "\red This brain does not seem to fit."
+				return TRUE
+
 			//canmove = 0
 			icon = null
 			invisibility = 101
@@ -88,18 +95,27 @@
 			M.cell.loc = M
 			src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			M.mmi = src
-			return
+			return TRUE
 		for(var/t in mommi_assembly_parts)
 			if(istype(O,t))
-				if(contents_count(t)<mommi_assembly_parts[t])
+				var/cc=contents_count(t)
+				if(cc<mommi_assembly_parts[t])
 					if(!brainmob)
-						user << "\red Why are you sticking robot legs on an empty MMI, you idiot?"
-						return
+						user << "\red Why are you sticking robot legs on an empty [src], you idiot?"
+						return TRUE
 					contents += O
 					user.drop_item()
 					O.loc=src
-					user << "You successfully add \the [O] to the contraption,"
-					return
+					user << "\blue You successfully add \the [O] to the contraption,"
+					return TRUE
+				else if(cc==mommi_assembly_parts[t])
+					user << "\red You have enough of these."
+					return TRUE
+		return FALSE
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if(try_handling_mommi_construction(O,user))
+			return
 		if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
 			if(!O:brainmob)
 				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."

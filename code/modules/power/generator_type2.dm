@@ -89,6 +89,7 @@
 
 
 /obj/machinery/power/generator_type2/attack_ai(mob/user)
+	src.add_hiddenprint(user)
 	if(stat & (BROKEN|NOPOWER)) return
 	interact(user)
 

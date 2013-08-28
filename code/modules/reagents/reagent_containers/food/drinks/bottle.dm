@@ -10,6 +10,7 @@
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	g_amt=500
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob)
 
@@ -126,6 +127,7 @@
 	item_state = "beer"
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	g_amt=500
 
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -252,6 +254,7 @@
 	icon_state = "orangejuice"
 	item_state = "carton"
 	isGlass = 0
+	g_amt=0
 	New()
 		..()
 		reagents.add_reagent("orangejuice", 100)
@@ -262,6 +265,7 @@
 	icon_state = "cream"
 	item_state = "carton"
 	isGlass = 0
+	g_amt=0
 	New()
 		..()
 		reagents.add_reagent("cream", 100)
@@ -272,6 +276,7 @@
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	isGlass = 0
+	g_amt=0
 	New()
 		..()
 		reagents.add_reagent("tomatojuice", 100)
@@ -282,6 +287,7 @@
 	icon_state = "limejuice"
 	item_state = "carton"
 	isGlass = 0
+	g_amt=0
 	New()
 		..()
 		reagents.add_reagent("limejuice", 100)

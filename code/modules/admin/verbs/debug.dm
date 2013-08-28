@@ -146,6 +146,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	t+= "Oxygen : [env.oxygen]\n"
 	t+= "Plasma : [env.toxins]\n"
 	t+= "CO2: [env.carbon_dioxide]\n"
+	t+= "Pressure: [env.return_pressure()]\n"
 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -929,6 +929,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/scan_consolenew/attack_ai(user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/computer/scan_consolenew/attack_hand(user as mob)

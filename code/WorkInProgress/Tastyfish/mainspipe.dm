@@ -642,6 +642,7 @@ obj/machinery/atmospherics/mains_pipe/valve
 		icon_state = "dvalve0"
 
 		attack_ai(mob/user as mob)
+			src.add_hiddenprint(user)
 			return src.attack_hand(user)
 
 		attack_hand(mob/user as mob)

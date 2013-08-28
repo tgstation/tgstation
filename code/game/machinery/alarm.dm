@@ -631,6 +631,7 @@
 ///////////////
 
 /obj/machinery/alarm/attack_ai(mob/user)
+	src.add_hiddenprint(user)
 	return interact(user)
 
 /obj/machinery/alarm/attack_hand(mob/user)
@@ -1298,6 +1299,7 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
