@@ -139,3 +139,14 @@ dl.creditblock dt {
 	padding: 3px;
 	font-weight: bold;
 }
+.testserver {
+	padding: 2px 10px 2px 30px;
+	background-position: 6px center;
+	border: 1px solid orange;
+	border-radius: 3px;
+	background-repeat: no-repeat;
+	text-align: center;
+	width: 500px;
+	margin: auto;
+	background-image: url(hard-hat-exclamation.png)
+}
