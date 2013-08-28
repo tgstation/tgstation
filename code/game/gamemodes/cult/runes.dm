@@ -61,7 +61,7 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					culcount++
-			if(usr.loc==src.loc)
+			if(user.loc==src.loc)
 				return fizzle()
 			if(culcount>=1)
 				user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
@@ -532,9 +532,7 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
 					H.current << "\red \b [input]"
-			if (/obj/item/weapon/paper/talisman)
-				return 1
-			return 0
+			return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE
 
