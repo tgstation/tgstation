@@ -1,29 +1,32 @@
-######################################################################
-# Basically, ckey goes first. Rank goes after the "-"                #
-# Case is not important for ckey.                                    #
-# Case IS important for the rank. However punctuation/spaces are not #
-# Ranks can be anything defined in admin_ranks.txt           ~Carn   #
-######################################################################
+###############################################################################################
+# Basically, ckey goes first. Rank goes after the "="                                         #
+# Case is not important for ckey.                                                             #
+# Case IS important for the rank.                                                             #
+# All punctuation (spaces etc) EXCEPT '-', '_' and '@' will be stripped from rank names.      #
+# Ranks can be anything defined in admin_ranks.txt                                            #
+# NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
+# NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
+###############################################################################################
 
-quarxink - Game Master
-tle - Game Master
-xsi - Game Master
-scaredofshadows - Game Master
-neofite - Game Master
-trubblebass - Game Master
-mport2004 - Game Master
-deuryn - Game Master
-agouri - Game Master
-errorage - Game Master
-superxpdude - Game Master
-petethegoat - Game Master
-korphaeron - Game Master
-nodrak - Game Master
-carnwennan - Game Master
-ikarrus - Game Master
-cheridan - Game Master
-giacomand - Game Master
-rockdtben - Game Master
-sieve - Game Master
-aranclanos - Game Master
-intigracy - Game Master
+quarxink = Game Master
+tle = Game Master
+xsi = Game Master
+scaredofshadows = Game Master
+neofite = Game Master
+trubblebass = Game Master
+mport2004 = Game Master
+deuryn = Game Master
+agouri = Game Master
+errorage = Game Master
+superxpdude = Game Master
+petethegoat = Game Master
+korphaeron = Game Master
+nodrak = Game Master
+carnwennan = Game Master
+ikarrus = Game Master
+cheridan = Game Master
+giacomand = Game Master
+rockdtben = Game Master
+sieve = Game Master
+aranclanos = Game Master
+intigracy = Game Master
