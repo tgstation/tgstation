@@ -13,6 +13,14 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
+
+
+//################### TWO HANDED WEAPON BUFFS ############################
+// TwoHanded Weapon Damage Buffed as suggested by KazeEspada - RobRichards
+// See here for Details http://www.ss13.eu/phpbb/viewtopic.php?f=10&t=1303
+
+
+
 /*
  * Twohanded
  */
@@ -115,7 +123,7 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
-	force_wielded = 18
+	force_wielded = 30 // Was 18, Buffed - RobRichards
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
@@ -150,7 +158,7 @@
 	throw_range = 5
 	w_class = 2.0
 	force_unwielded = 3
-	force_wielded = 30
+	force_wielded = 60 // Was 30, Buffed - RobRichards
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
@@ -205,7 +213,7 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 13
+	force_wielded = 20 // Was 13, Buffed - RobRichards
 	throwforce = 15
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
