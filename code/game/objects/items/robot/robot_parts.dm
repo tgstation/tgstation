@@ -9,6 +9,13 @@
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 	var/list/part = null
 
+/obj/item/robot_parts/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	if("metal" in construction_cost)
+		rec.iron += construction_cost["metal"]
+	if("glass" in construction_cost)
+		rec.glass += construction_cost["glass"]
+	return 1
+
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."

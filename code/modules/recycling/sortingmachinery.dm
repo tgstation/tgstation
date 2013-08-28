@@ -343,10 +343,13 @@
 			/obj/item/stack/tile/light,
 			/obj/item/weapon/broken_bottle,
 			/obj/item/weapon/reagent_containers/glass/bucket,
+			/obj/item/weapon/reagent_containers/glass/bottle,
+			/obj/item/weapon/reagent_containers/syringe,
+			/obj/item/weapon/reagent_containers/food/drinks/bottle,
+			/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+			/obj/item/weapon/reagent_containers/food/drinks/jar,
 			/obj/item/clothing/head/welding,
 			/obj/item/weapon/stock_parts/console_screen,
-			/obj/item/weapon/reagent_containers/glass,
-			/obj/item/weapon/reagent_containers/syringe,
 			/obj/item/weapon/light/tube,
 			/obj/item/weapon/light/bulb,
 		),
@@ -400,6 +403,9 @@
 			/obj/machinery/portable_atmospherics/canister, //10 sheets
 			/obj/item/stack/tile/plasteel, //1/4 of a sheet
 			/obj/item/weapon/grenade/chem_grenade,
+			/obj/item/borg/upgrade,
+			/obj/item/robot_parts,
+			/obj/item/weapon/ore
 		)
 	)
 
