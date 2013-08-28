@@ -101,9 +101,12 @@ NanoUpdate = function ()
 					$('body').oneTime(300, 'enableClick', function () {
 						_canClick = true;
 					});
-					$(this).oneTime(300, 'linkPending', function () {
-						$(this).addClass('linkPending');
-					});
+					if (updateData['ui']['status'] == 2)
+					{						
+						$(this).oneTime(300, 'linkPending', function () {
+							$(this).addClass('linkPending');
+						});
+					}
 					window.location.href = href;
 				}
 			});

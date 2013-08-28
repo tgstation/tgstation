@@ -258,6 +258,7 @@ div.notice
 {
 	float: left;
 	width: 30%;
+	color: #e9c183;
 }
 
 .itemContent
@@ -382,4 +383,15 @@ div.notice
 	color: #ffffff; 
 	background: #999999;
 	border-color: #666666;
+}
+
+.fixedLeft
+{
+	width: 110px;
+	float: left;
+}
+
+.floatRight
+{
+	float: right;
 }

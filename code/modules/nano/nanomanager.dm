@@ -29,7 +29,7 @@
 	for (var/ui_key in open_uis[src_object_key])			
 		for (var/datum/nanoui/ui in open_uis[src_object_key][ui_key])
 			if(ui && ui.src_object && ui.user)
-				ui.process()
+				ui.process(1)
 				update_count++
 	return update_count
 

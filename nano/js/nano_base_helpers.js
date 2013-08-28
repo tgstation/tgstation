@@ -15,20 +15,31 @@ NanoBaseHelpers = function ()
 	{
 		$.views.helpers({
 			// Generate a Byond link
-			link: function( text, icon, parameters, status ) {
+			link: function( text, icon, parameters, status, elementClass, elementId) {
 	
 				var iconHtml = '';
-				if (typeof icon != 'undefined' && icon != null)
+				if (typeof icon != 'undefined' && icon)
 				{
 					iconHtml = '<div class="uiLinkPendingIcon"></div><div class="uiIcon16 ' + icon + '"></div>';
 				}
 				
-				if (typeof status != 'undefined' && status != null)
+				if (typeof elementClass == 'undefined' || !elementClass)
 				{
-					return '<div class="link ' + status + '">' + iconHtml + text + '</div>';
+					elementClass = '';
 				}
 				
-				return '<div class="link linkActive" data-href="' + generateHref(parameters) + '">' + iconHtml + text + '</div>';
+				var elementIdHtml = '';
+				if (typeof elementId != 'undefined' && elementId)
+				{
+					elementIdHtml = 'id="' + elementId + '"';
+				}
+				
+				if (typeof status != 'undefined' && status)
+				{
+					return '<div class="link ' + elementClass + ' ' + status + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
+				}
+				
+				return '<div class="link linkActive ' + elementClass + '" data-href="' + generateHref(parameters) + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
 			},
 			// Round a number to the nearest integer
 			round: function(number) {								
