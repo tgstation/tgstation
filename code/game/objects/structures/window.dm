@@ -22,6 +22,7 @@
 		var/pdiff=performFalseWallPressureCheck(src.loc)
 		if(pdiff>0)
 			message_admins("Window destroyed by [Proj.firer.real_name] ([formatPlayerPanel(Proj.firer,Proj.firer.ckey)]) via \an [Proj]! pdiff = [pdiff] at [formatJumpTo(loc)]!")
+			log_admin("Window destroyed by ([Proj.firer.ckey]) via \an [Proj]! pdiff = [pdiff] at [loc]!")
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/stack/rods(loc)
 		del(src)
@@ -100,8 +101,10 @@
 		if(pdiff>0)
 			if(M)
 				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] deanchored by [M.real_name] ([formatPlayerPanel(M,M.ckey)])!")
+				log_admin("Window with pdiff [pdiff] at [loc] deanchored by [M.real_name] ([M.ckey])!")
 			else
 				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] deanchored by [AM]!")
+				log_admin("Window with pdiff [pdiff] at [loc] deanchored by [AM]!")
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
@@ -110,8 +113,10 @@
 		if(pdiff>0)
 			if(M)
 				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] destroyed by [M.real_name] ([formatPlayerPanel(M,M.ckey)])!")
+				log_admin("Window with pdiff [pdiff] at [loc] destroyed by [M.real_name] ([M.ckey])!")
 			else
 				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] destroyed by [AM]!")
+				log_admin("Window with pdiff [pdiff] at [loc] destroyed by [AM]!")
 
 
 /obj/structure/window/attack_hand(mob/user as mob)
@@ -124,6 +129,7 @@
 		var/pdiff=performFalseWallPressureCheck(src.loc)
 		if(pdiff>0)
 			message_admins("Window destroyed by hulk [user.real_name] ([formatPlayerPanel(user,user.ckey)]) with pdiff [pdiff] at [formatJumpTo(loc)]!")
+			log_admin("Window destroyed by hulk [user.real_name] ([user.ckey]) with pdiff [pdiff] at [loc]!")
 	else if (usr.a_intent == "hurt")
 		playsound(src.loc, 'glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
@@ -212,6 +218,7 @@
 				var/pdiff=performFalseWallPressureCheck(src.loc)
 				if(pdiff>0)
 					message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")
+					log_admin("Window with pdiff [pdiff] deanchored by [user.real_name] ([user.ckey]) at [loc]!")
 		else if(!reinf)
 			anchored = !anchored
 			update_nearby_icons()
@@ -221,6 +228,7 @@
 				var/pdiff=performFalseWallPressureCheck(src.loc)
 				if(pdiff>0)
 					message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")
+					log_admin("Window with pdiff [pdiff] deanchored by [user.real_name] ([user.ckey]) at [loc]!")
 	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
@@ -235,6 +243,7 @@
 				var/pdiff=performFalseWallPressureCheck(src.loc)
 				if(pdiff>0)
 					message_admins("Window with pdiff [pdiff] deanchored by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)]!")
+					log_admin("Window with pdiff [pdiff] deanchored by [user.real_name] ([user.ckey]) at [loc]!")
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()
