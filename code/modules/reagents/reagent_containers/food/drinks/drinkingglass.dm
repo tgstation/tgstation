@@ -6,6 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
+	g_amt = 500
 
 	on_reagent_change()
 		/*if(reagents.reagent_list.len > 1 )
