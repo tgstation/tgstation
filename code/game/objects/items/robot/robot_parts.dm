@@ -11,9 +11,9 @@
 
 /obj/item/robot_parts/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	if("metal" in construction_cost)
-		rec.iron += construction_cost["metal"]
+		rec.iron += construction_cost["metal"]/CC_PER_SHEET_METAL
 	if("glass" in construction_cost)
-		rec.glass += construction_cost["glass"]
+		rec.glass += construction_cost["glass"]/CC_PER_SHEET_GLASS
 	return 1
 
 /obj/item/robot_parts/l_arm

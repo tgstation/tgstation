@@ -14,15 +14,15 @@
 
 /obj/item/borg/upgrade/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	if("metal" in construction_cost)
-		rec.iron += construction_cost["metal"]
+		rec.iron += construction_cost["metal"]/CC_PER_SHEET_METAL
 	if("glass" in construction_cost)
-		rec.glass += construction_cost["glass"]
+		rec.glass += construction_cost["glass"]/CC_PER_SHEET_GLASS
 	if("gold" in construction_cost)
-		rec.gold += construction_cost["gold"]
+		rec.gold += construction_cost["gold"]/CC_PER_SHEET_MISC
 	if("diamond" in construction_cost)
-		rec.diamond += construction_cost["diamond"]
+		rec.diamond += construction_cost["diamond"]/CC_PER_SHEET_MISC
 	if("uranium" in construction_cost)
-		rec.uranium += construction_cost["uranium"]
+		rec.uranium += construction_cost["uranium"]/CC_PER_SHEET_MISC
 	return 1
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
