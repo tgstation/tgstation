@@ -49,7 +49,7 @@
 		return pdiff
 	return 0
 
-/client/verb/pdiff()
+/client/proc/pdiff()
 	set name = "Get PDiff"
 	set category = "Debug"
 
