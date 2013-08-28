@@ -73,6 +73,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/shield_capacitor/attack_ai(user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/shield_capacitor/attack_hand(mob/user)

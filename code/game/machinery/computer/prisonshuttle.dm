@@ -27,6 +27,7 @@ var/prison_shuttle_timeleft = 0
 
 
 	attack_ai(var/mob/user as mob)
+		src.add_hiddenprint(user)
 		return src.attack_hand(user)
 
 

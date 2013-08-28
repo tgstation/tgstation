@@ -153,6 +153,7 @@
 
 
 /obj/machinery/bot/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	src.attack_hand(user)
 
 /******************************************************************/

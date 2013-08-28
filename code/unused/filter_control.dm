@@ -10,6 +10,7 @@
 		desc = "A remote control for a filter: [control]"
 
 /obj/machinery/filter_control/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/filter_control/attack_paw(mob/user as mob)

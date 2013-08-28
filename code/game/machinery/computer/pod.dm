@@ -106,6 +106,7 @@
 
 
 /obj/machinery/computer/pod/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 

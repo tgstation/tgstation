@@ -18,6 +18,7 @@
 	var/temp = null
 
 /obj/machinery/computer/dna/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/computer/dna/attack_paw(mob/user as mob)
@@ -605,6 +606,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/scan_console/attack_ai(user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/scan_console/attack_hand(user as mob)

@@ -335,12 +335,14 @@ var/list/mechtoys = list(
 
 
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/computer/ordercomp/attack_paw(var/mob/user as mob)
 	return attack_hand(user)
 
 /obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/computer/supplycomp/attack_paw(var/mob/user as mob)

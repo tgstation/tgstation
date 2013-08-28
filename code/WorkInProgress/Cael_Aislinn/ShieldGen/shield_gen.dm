@@ -81,6 +81,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/shield_gen/attack_ai(user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/shield_gen/attack_hand(mob/user)

@@ -214,6 +214,7 @@
 			updateWindow(player)
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/chem_dispenser/attack_paw(mob/user as mob)
@@ -477,6 +478,7 @@
 	return
 
 /obj/machinery/chem_master/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/chem_master/attack_paw(mob/user as mob)
@@ -703,6 +705,7 @@
 	return
 
 /obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/computer/pandemic/attack_paw(mob/user as mob)

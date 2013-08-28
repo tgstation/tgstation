@@ -176,6 +176,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	return attack_hand(user)
 
 /obj/machinery/computer/syndicate_elite_shuttle/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/computer/syndicate_elite_shuttle/attack_paw(var/mob/user as mob)

@@ -240,6 +240,7 @@
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_hand(mob/user as mob)

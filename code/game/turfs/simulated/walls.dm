@@ -359,11 +359,11 @@
 	O.layer = 5
 
 	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
-/*	if(!F)
+	if(!F)
 		if(O)
 			message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) thermited a wall into space at [formatJumpTo(loc)]!")
 			del(O)
-			user << "<span class='warning'>The thermite melts through the wall.</span>"*/
+			user << "<span class='warning'>The thermite melts through the wall.</span>"
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
 	user << "<span class='warning'>The thermite melts through the wall.</span>"

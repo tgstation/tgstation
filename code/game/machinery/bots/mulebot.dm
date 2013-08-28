@@ -193,6 +193,7 @@
 
 
 /obj/machinery/bot/mulebot/attack_ai(var/mob/user)
+	src.add_hiddenprint(user)
 	user.set_machine(src)
 	interact(user, 1)
 
