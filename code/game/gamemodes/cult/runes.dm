@@ -61,7 +61,9 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					culcount++
-			if(culcount>=3)
+			if(usr.loc==src.loc)
+				return fizzle()
+			if(culcount>=1)
 				user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
 				user.visible_message("\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
 				"\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
@@ -530,8 +532,9 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
 					H.current << "\red \b [input]"
-			del(src)
-			return 1
+				if (/obj/item/weapon/paper/talisman)
+					return 1
+			return 0
 
 /////////////////////////////////////////FIFTEENTH RUNE
 
