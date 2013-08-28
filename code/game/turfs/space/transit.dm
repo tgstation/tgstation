@@ -1,6 +1,10 @@
 /turf/space/transit
 	var/pushdirection // push things that get caught in the transit tile this direction
 
+/turf/space/transit/New()
+	if(!istype(src, /turf/space/transit))
+		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+
 //Overwrite because we dont want people building rods in space.
 /turf/space/transit/attackby(obj/O as obj, mob/user as mob)
 	return
