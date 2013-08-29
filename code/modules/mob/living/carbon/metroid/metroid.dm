@@ -341,7 +341,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (istype(wear_mask, /obj/item/clothing/mask/gag))
 				return
 			if (health > 0)
 				attacked += 10

@@ -81,7 +81,7 @@
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
 /mob/living/carbon/monkey/hand_p(mob/M as mob)
-	if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+	if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/gag) )))
 		if ((prob(75) && health > 0))
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
@@ -104,7 +104,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+		if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/gag) )))
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))

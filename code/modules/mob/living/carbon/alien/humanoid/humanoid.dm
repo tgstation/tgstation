@@ -135,7 +135,7 @@
 
 /mob/living/carbon/alien/humanoid/hand_p(mob/living/carbon/user)
 	if(user.a_intent == "harm")
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+		if(istype(user.wear_mask, /obj/item/clothing/mask/gag))
 			return
 		if(health > 0)
 			visible_message("<span class='danger'>[user] has bit [src]!</span>")
@@ -159,7 +159,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (istype(wear_mask, /obj/item/clothing/mask/gag))
 				return
 			if (health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)

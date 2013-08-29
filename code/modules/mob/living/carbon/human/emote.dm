@@ -9,7 +9,7 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/gagged = istype(src.wear_mask, /obj/item/clothing/mask/gag)
 	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
@@ -63,7 +63,7 @@
 				message = "<B>[src]</B> clutches \his throat desperately!"
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> chokes!"
 					m_type = 2
 				else
@@ -75,7 +75,7 @@
 				message = "<B>[src]</B> appears to chuckle."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> chuckles."
 					m_type = 2
 				else
@@ -101,7 +101,7 @@
 				message = "<B>[src]</B> appears to cough!"
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> coughs!"
 					m_type = 2
 				else
@@ -113,7 +113,7 @@
 				message = "<B>[src]</B> cries."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> cries."
 					m_type = 2
 				else
@@ -195,7 +195,7 @@
 				message = "<B>[src]</B> appears to be gasping!"
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> gasps!"
 					m_type = 2
 				else
@@ -207,7 +207,7 @@
 				message = "<B>[src]</B> giggles silently!"
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> giggles."
 					m_type = 2
 				else
@@ -237,7 +237,7 @@
 				message = "<B>[src]</B> appears to groan!"
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> groans!"
 					m_type = 2
 				else
@@ -248,7 +248,7 @@
 			if(miming)
 				message = "<B>[src]</B> grumbles!"
 				m_type = 1
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> grumbles!"
 				m_type = 2
 			else
@@ -307,7 +307,7 @@
 				message = "<B>[src]</B> acts out a laugh."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> laughs."
 					m_type = 2
 				else
@@ -419,7 +419,7 @@
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> screams!"
 					m_type = 2
 				else
@@ -445,7 +445,7 @@
 				message = "<B>[src]</B> sighs."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> sighs."
 					m_type = 2
 				else
@@ -471,7 +471,7 @@
 				message = "<B>[src]</B> sneezes."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> sneezes."
 					m_type = 2
 				else
@@ -489,7 +489,7 @@
 				message = "<B>[src]</B> sleeps soundly."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> snores."
 					m_type = 2
 				else
@@ -531,7 +531,7 @@
 				message = "<B>[src]</B> appears hurt."
 				m_type = 1
 			else
-				if (!muzzled)
+				if (!gagged)
 					message = "<B>[src]</B> whimpers."
 					m_type = 2
 				else
@@ -543,7 +543,7 @@
 			m_type = 1
 
 		if ("yawn")
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> yawns."
 				m_type = 2
 				if(miming)
