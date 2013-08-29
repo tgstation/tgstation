@@ -7,7 +7,7 @@ IRC: irc://irc.rizon.net/coderbus
 ================================================================================
 DOWNLOADING
 ================================================================================
-There are a number of ways to download the source code.
+There are a number of ways to download the source code. A
 
 Option 1: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/-tg-station
