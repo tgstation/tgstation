@@ -22,8 +22,8 @@
 	* If you are diagonally adjacent, ensure you can pass through at least one of the mutually adjacent square.
 		* Passing through in this case ignores anything with the throwpass flag, such as tables, racks, and morgue trays.
 */
-/turf/Adjacent(var/mob/user, var/atom/target = null)
-	var/turf/T0 = get_turf(user)
+/turf/Adjacent(var/atom/neighbor, var/atom/target = null)
+	var/turf/T0 = get_turf(neighbor)
 	if(T0 == src)
 		return 1
 	if(get_dist(src,T0) > 1)
@@ -34,7 +34,7 @@
 		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target)
 
 	// Not orthagonal
-	var/in_dir = get_dir(user,src) // eg. northwest (1+8)
+	var/in_dir = get_dir(neighbor,src) // eg. northwest (1+8)
 	var/d1 = in_dir&(in_dir-1)		// eg west		(1+8)&(8) = 8
 	var/d2 = in_dir - d1			// eg north		(1+8) - 8 = 1
 
@@ -60,11 +60,11 @@
 	Note: Multiple-tile objects are created when the bound_width and bound_height are creater than the tile size.
 	This is not used in stock /tg/station currently.
 */
-/atom/movable/Adjacent(var/mob/user)
+/atom/movable/Adjacent(var/atom/neighbor)
 	if(!isturf(loc)) return 0
 	for(var/turf/T in locs)
 		if(isnull(T)) continue
-		if(T.Adjacent(user,src)) return 1
+		if(T.Adjacent(neighbor,src)) return 1
 	return 0
 
 /*

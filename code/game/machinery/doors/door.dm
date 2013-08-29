@@ -108,11 +108,18 @@
 	return src.attackby(user, user)
 
 
+/obj/machinery/door/attack_tk(mob/user as mob)
+	if(requiresID() && !allowed(null))
+		return
+	..()
+
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
+	if(istype(I,/obj/item/tk_grab) && !Adjacent(user))
+		user = null
 	if(!src.requiresID())
 		user = null
 	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))

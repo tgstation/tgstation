@@ -506,9 +506,8 @@ var/list/slot_equipment_priority = list( \
 	..()
 	if(M != usr)	return
 	if(usr == src)	return
-	if(!in_range(usr, src))	return
+	if(!Adjacent(usr))	return
 	if(istype(M, /mob/living/silicon/ai))	return
-	if(LinkBlocked(usr.loc, loc))			return
 	show_inv(usr)
 
 

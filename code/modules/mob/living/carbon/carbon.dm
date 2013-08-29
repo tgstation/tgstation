@@ -319,19 +319,6 @@
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
-	var/obj/item/I = get_active_hand()
-	if(!I)//Not holding anything
-		if(client && (TK in mutations))
-			var/obj/item/tk_grab/O = new(src)
-			put_in_active_hand(O)
-			O.host = src
-			return
-
-	if(istype(I, /obj/item/tk_grab))
-		if(hand)	del(l_hand)
-		else		del(r_hand)
-		return
-
 	if(in_throw_mode)
 		throw_mode_off()
 	else

@@ -26,8 +26,17 @@
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
 	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
+
+		if(over_object == M && Adjacent(M)) // this must come before the screen objects only block
+			orient2hud(M)					// dunno why it wasn't before
+			if(M.s_active)
+				M.s_active.close(M)
+			show_to(M)
+			return
+
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
+
 		if(!(loc == usr) || (loc && loc.loc == usr))
 			return
 		playsound(loc, "rustle", 50, 1, -5)
@@ -41,10 +50,6 @@
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
 
 
 /obj/item/weapon/storage/proc/return_inv()
@@ -309,16 +314,6 @@
 
 /obj/item/weapon/storage/dropped(mob/user)
 	return
-
-
-/obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
-	..()
-	orient2hud(usr)
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		if(usr.s_active)
-			usr.s_active.close(usr)
-		show_to(usr)
-
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	playsound(loc, "rustle", 50, 1, -5)

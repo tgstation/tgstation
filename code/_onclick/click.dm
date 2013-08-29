@@ -107,9 +107,9 @@
 	var/obj/item/W = get_active_hand()
 
 	if(W == A)
-		next_move = world.time + 2 // this is to be consistent with mode(), which was previously no delay at all
-//		if(W.flags&USEDELAY)
-//			next_move += 5
+		next_move = world.time + 6
+		if(W.flags&USEDELAY)
+			next_move += 5
 		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
@@ -163,6 +163,15 @@
 			else
 				if((LASER in mutations) && a_intent == "harm")
 					LaserEyes(A) // moved into a proc below
+				else if(TK in mutations)
+					switch(get_dist(src,A))
+						if(1 to 5) // not adjacent may mean blocked by window
+							next_move += 2
+						if(5 to 7)
+							next_move += 5
+						if(8 to 1024)
+							next_move += 10
+					A.attack_tk(src)
 
 	return
 
