@@ -68,7 +68,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 		var/mob/living/carbon/human/H = user
 
-		if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+		if(istype(H.wear_mask, /obj/item/clothing/mask/gag))
 			user << "<span class='notice'>You can't get the words out!</span>"
 			return 0
 

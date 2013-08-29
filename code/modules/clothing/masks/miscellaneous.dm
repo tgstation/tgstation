@@ -1,13 +1,13 @@
-/obj/item/clothing/mask/muzzle
-	name = "muzzle"
-	desc = "To stop that awful noise."
-	icon_state = "muzzle"
-	item_state = "blindfold"
+/obj/item/clothing/mask/gag
+	name = "gag"
+	desc = "Place firmly in mouth to prevent speech."
+	icon_state = "gag"
+	item_state = "gag"
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-/obj/item/clothing/mask/muzzle/attack_paw(mob/user)
+/obj/item/clothing/mask/gag/attack_paw(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.wear_mask)

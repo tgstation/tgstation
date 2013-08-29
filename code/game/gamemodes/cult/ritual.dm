@@ -140,7 +140,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+			if(istype(H.wear_mask, /obj/item/clothing/mask/gag))
 				H << "<span class='notice'>You are unable to speak the words of the rune.</span>"
 				return
 		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
