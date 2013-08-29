@@ -13,6 +13,9 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
+
+
+
 /*
  * Twohanded
  */
@@ -115,7 +118,7 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
-	force_wielded = 18
+	force_wielded = 30 // Was 18, Buffed - RobRichards/RR
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
@@ -150,7 +153,7 @@
 	throw_range = 5
 	w_class = 2.0
 	force_unwielded = 3
-	force_wielded = 30
+	force_wielded = 60 // Was 30, Buffed - RR
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
@@ -205,7 +208,7 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 13
+	force_wielded = 20 // Was 13, Buffed - RR
 	throwforce = 15
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
