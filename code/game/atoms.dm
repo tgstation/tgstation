@@ -891,6 +891,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if(parameters["alt"]){
 			if(isrobot(usr))
 				RobotAltClick(usr)
+			else if(isovermind(usr))
+				OvermindAltClick(usr)
 			else if(!isAI(usr))
 				AltClick(usr)
 			else
@@ -1251,6 +1253,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 /atom/proc/OvermindCtrlClick(var/mob/camera/blob/blob)
 	if(istype(src, /turf))
 		blob.click_expand_blob(src)
+	return
+
+/atom/proc/OvermindAltClick(var/mob/camera/blob/blob)
+	if(istype(src, /obj/effect/blob/normal))
+		blob.click_create_shield(src)
 	return
 
 /atom/proc/RobotAltClick() // Opens and closes doors!
