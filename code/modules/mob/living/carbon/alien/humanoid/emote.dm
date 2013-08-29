@@ -8,13 +8,13 @@
 
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/gagged = istype(src.wear_mask, /obj/item/clothing/mask/gag)
 	var/m_type = 1
 	var/message
 
 	switch(act)
 		if ("burp") //Alphabetical please.
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> burps."
 				m_type = 2
 
@@ -45,12 +45,12 @@
 			m_type = 2
 
 		if ("gnarl")
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> gnarls and shows its teeth.."
 				m_type = 2
 
 		if ("hiss")
-			if(!muzzled)
+			if(!gagged)
 				message = "<B>[src]</B> hisses."
 				m_type = 2
 
@@ -67,7 +67,7 @@
 			m_type = 1
 
 		if ("roar")
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> roars."
 				m_type = 2
 
@@ -82,7 +82,7 @@
 				m_type = 1
 
 		if ("scretch")
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> scretches."
 				m_type = 2
 
@@ -120,7 +120,7 @@
 			m_type = 1
 
 		if ("whimper")
-			if (!muzzled)
+			if (!gagged)
 				message = "<B>[src]</B> whimpers."
 				m_type = 2
 

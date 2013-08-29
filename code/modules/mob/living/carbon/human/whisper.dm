@@ -38,7 +38,7 @@
 	if (src.sdisabilities & MUTE)
 		return
 
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	if (istype(src.wear_mask, /obj/item/clothing/mask/gag))
 		return
 
 	var/italics = 1

@@ -529,7 +529,7 @@
 
 
 /mob/living/carbon/say(var/message)
-	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
+	if(istype(wear_mask, /obj/item/clothing/mask/gag))
 		return
 
 	..(message)

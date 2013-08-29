@@ -3,7 +3,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+		if (istype(wear_mask, /obj/item/clothing/mask/gag))
 			return
 
 		for(var/mob/O in viewers(src, null))
