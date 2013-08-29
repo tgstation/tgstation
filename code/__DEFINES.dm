@@ -388,11 +388,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
-
-//IMPORTANT! The permissions system supports flags up to 2^30 (possibly 2^31), HOWEVER, once the flag 65536
-//starts being used, an edit to rights2text(rights, seperator="") needs to happen! The edit is prepared
-//and commented out. Please uncomment it before assigning that flag. Once you do, delete this note. ~Errorage
-
 //Preference toggles
 #define SOUND_ADMINHELP	1
 #define SOUND_MIDI		2

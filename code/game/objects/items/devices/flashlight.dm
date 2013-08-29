@@ -209,3 +209,34 @@
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6 //luminosity when on
+
+/obj/item/device/flashlight/emp
+	desc = "A hand-held emergency light modified to inflict EMP at short range."
+	origin_tech = "magnets=4;syndicate=5"
+
+	var/emp_charges = 5
+
+/obj/item/device/flashlight/emp/examine()
+	..()
+	usr << "Has [emp_charges] charge\s remaining."
+	return
+
+/obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
+	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+		..()
+	return
+
+/obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user)
+	if (emp_charges > 0)
+		A.emp_act(1)
+		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
+											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
+		if(ismob(A))
+			var/mob/M = A
+			M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> attacked <b>[M]/[M.ckey]</b> with an <b>EMP-light</b>"
+			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> attacked <b>[M]/[M.ckey]</b> with an <b>EMP-light</b>"
+			log_attack("<font color='red'>[user] ([user.ckey]) attacked [M] ([M.ckey]) with an EMP-light</font>")
+		emp_charges -= 1
+	else
+		user << "<span class='warning'>The [src] is out of charges!</span>"
+	return

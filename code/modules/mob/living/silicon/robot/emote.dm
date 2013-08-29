@@ -42,7 +42,6 @@
 							break
 				if (!M)
 					param = null
-
 				if (param)
 					message = "<B>[src]</B> bows to [param]."
 				else
@@ -103,7 +102,6 @@
 						break
 			if (!M)
 				param = null
-
 			if (param)
 				message = "<B>[src]</B> glares at [param]."
 			else
@@ -116,10 +114,8 @@
 					if (param == A.name)
 						M = A
 						break
-
 			if (!M)
 				param = null
-
 			if (param)
 				message = "<B>[src]</B> looks at [param]."
 			else
@@ -152,7 +148,6 @@
 						break
 			if(!M)
 				param = null
-
 			if (param)
 				message = "<B>[src]</B> pings at [param]."
 			else
@@ -185,7 +180,6 @@
 						break
 			if (!M)
 				param = null
-
 			if (param)
 				message = "<B>[src]</B> stares at [param]."
 			else
