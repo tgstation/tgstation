@@ -32,6 +32,12 @@
 	projectile_type = "/obj/item/projectile/bullet/weakbullet"
 
 
+/obj/item/ammo_casing/c10mm
+	desc = "A 10mm bullet casing."
+	caliber = "10mm"
+	projectile_type = "/obj/item/projectile/bullet/midbullet3"
+
+
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
