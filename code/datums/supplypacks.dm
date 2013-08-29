@@ -666,12 +666,11 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 40
 	containertype = /obj/structure/closet/critter/cat
 	containername = "cat crate"
-/*/datum/supply_packs/organic/pug //uncomment me when I get a sprite
+/datum/supply_packs/organic/pug
 	name = "Pug crate"
 	cost = 50
 	containertype = /obj/structure/closet/critter/pug
 	containername = "pug crate"
-*/
 
 ////// hippy gear
 
