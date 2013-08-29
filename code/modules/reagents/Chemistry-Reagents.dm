@@ -484,6 +484,7 @@ datum
 				if(M.canmove && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5)) M.emote(pick("twitch","drool","moan"))
+				M.adjustBrainLoss(2)
 				..()
 				return
 
@@ -793,7 +794,6 @@ datum
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
-					T.overlays.Cut()
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in src)
 						del(C)
@@ -1261,6 +1261,7 @@ datum
 				M.drowsyness = 0
 				M.stuttering = 0
 				M.confused = 0
+				M.reagents.remove_all_type(/datum/reagent/ethanol, 1*REM, 0, 1)
 				..()
 				return
 
