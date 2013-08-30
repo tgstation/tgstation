@@ -671,6 +671,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	if(!src.canAIControl())
 		if(src.canAIHack())
 			src.hack(user)

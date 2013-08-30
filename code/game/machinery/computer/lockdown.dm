@@ -60,6 +60,7 @@
 				L.Add(D)
 
 	attack_ai(mob/user)
+		src.add_hiddenprint(user)
 		attack_hand(user)
 
 	attack_hand(mob/user)

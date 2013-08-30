@@ -11,6 +11,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	volume = 30
+	g_amt=1000 // Half of a circuit board
 
 	New()
 		..()

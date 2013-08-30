@@ -355,6 +355,34 @@
 								u_equip(W)
 								del(W)
 								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_l_store)
+						wearing = H.l_store
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					if(slot_r_store)
+						wearing = H.r_store
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))

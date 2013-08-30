@@ -15,6 +15,7 @@
 
 
 /obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
 	return interact(user)
 
 /obj/machinery/computer/atmoscontrol/attack_paw(var/mob/user as mob)

@@ -556,28 +556,39 @@
 						return 0
 				return 1
 			if(slot_l_store)
-				if(H.l_store)
-					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
 						H << "\red You need a jumpsuit before you can attach this [name]."
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
-					return 1
+				if(automatic)
+					if(H.l_store)
+						return 0
+					else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+						return 1
+				else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					if(H.l_store)
+						return 2
+					else
+						return 1
 			if(slot_r_store)
-				if(H.r_store)
-					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
 						H << "\red You need a jumpsuit before you can attach this [name]."
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
-					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
-					return 1
-				return 0
+					return
+				if(automatic)
+					if(H.r_store)
+						return 0
+					else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+						return 1
+				else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					if(H.r_store)
+						return 2
+					else
+						return 1
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
@@ -592,10 +603,10 @@
 						usr << "The [name] is too big to attach."
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					if(automatic)
-						if(H.check_for_open_slot(src))
-							return 0
 					if(H.s_store)
+						if(automatic)
+							if(H.check_for_open_slot(src))
+								return 0
 						if(H.s_store.canremove)
 							return 2
 						else

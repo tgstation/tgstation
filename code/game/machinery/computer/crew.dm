@@ -15,6 +15,7 @@
 
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
+	src.add_hiddenprint(user)
 	attack_hand(user)
 	interact(user)
 

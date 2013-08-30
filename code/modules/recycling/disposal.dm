@@ -215,6 +215,7 @@
 
 	// ai as human but can't flush
 	attack_ai(mob/user as mob)
+		src.add_hiddenprint(user)
 		interact(user, 1)
 
 	// human interact with machine

@@ -201,11 +201,12 @@
 	desc = "A chute for big and small packages alike!"
 	density = 1
 	icon_state = "intake"
-
 	var/c_mode = 0
+	var/doFlush=0
 
 	New()
 		..()
+		processing_objects.Remove(src)
 		spawn(5)
 			trunk = locate() in src.loc
 			if(trunk)
@@ -229,17 +230,24 @@
 			if(WEST)
 				if(AM.loc.x != src.loc.x-1) return
 
+		//testing("[src] FUCKING BUMPED BY \a [AM]")
+
 		if(istype(AM, /obj))
 			var/obj/O = AM
 			O.loc = src
 		else if(istype(AM, /mob))
 			var/mob/M = AM
 			M.loc = src
-		src.flush()
+		//src.flush() This spams audio like fucking crazy.
+		// Instead, we queue up for the next process.
+		if(!(src in processing_objects))
+			processing_objects.Add(src)
+		flick("intake-closing", src) // We can play this, though.
+		doFlush=1
 
 	flush()
 		flushing = 1
-		flick("intake-closing", src)
+		//flick("intake-closing", src)
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 													// travels through the pipes.
@@ -305,6 +313,12 @@
 				user << "You need more welding fuel to complete this task."
 				return
 
+	process()
+		if(doFlush)
+			//testing("[src] FLUSHING")
+			src.flush()
+			doFlush=0
+
 
 /obj/machinery/sorting_machine
 	name = "Sorting Machine"
@@ -329,10 +343,13 @@
 			/obj/item/stack/tile/light,
 			/obj/item/weapon/broken_bottle,
 			/obj/item/weapon/reagent_containers/glass/bucket,
+			/obj/item/weapon/reagent_containers/glass/bottle,
+			/obj/item/weapon/reagent_containers/syringe,
+			/obj/item/weapon/reagent_containers/food/drinks/bottle,
+			/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+			/obj/item/weapon/reagent_containers/food/drinks/jar,
 			/obj/item/clothing/head/welding,
 			/obj/item/weapon/stock_parts/console_screen,
-			/obj/item/weapon/reagent_containers/glass,
-			/obj/item/weapon/reagent_containers/syringe,
 			/obj/item/weapon/light/tube,
 			/obj/item/weapon/light/bulb,
 		),
@@ -386,6 +403,9 @@
 			/obj/machinery/portable_atmospherics/canister, //10 sheets
 			/obj/item/stack/tile/plasteel, //1/4 of a sheet
 			/obj/item/weapon/grenade/chem_grenade,
+			/obj/item/borg/upgrade,
+			/obj/item/robot_parts,
+			/obj/item/weapon/ore
 		)
 	)
 

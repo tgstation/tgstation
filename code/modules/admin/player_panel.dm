@@ -514,7 +514,7 @@
 				else
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 			dat += "</table>"
-		else
+		else if(locate(/mob/camera/blob) in world)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			for(var/mob/M in world)
 				if(istype(M, /mob/camera/blob))

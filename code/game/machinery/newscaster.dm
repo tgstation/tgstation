@@ -169,6 +169,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return
 
 /obj/machinery/newscaster/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
@@ -750,6 +751,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user) //or maybe it'll have some special functions? No idea.
 
 

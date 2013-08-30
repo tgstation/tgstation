@@ -62,6 +62,7 @@
 	return
 
 /obj/machinery/atmoalter/heater/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/atmoalter/heater/attack_paw(mob/user as mob)

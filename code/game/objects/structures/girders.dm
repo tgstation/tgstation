@@ -79,6 +79,7 @@
 						else
 							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
 							message_admins("Attempted false wall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
+							log_admin("Attempted false wall made by [user.real_name] (user.ckey) at [loc] had a pressure difference of [pdiff]!")
 							return
 					else
 						if(S.amount < 2) return ..()
@@ -106,6 +107,7 @@
 						else
 							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
 							message_admins("Attempted false rwall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
+							log_admin("Attempted false rwall made by [user.real_name] ([user.ckey]) at [loc] had a pressure difference of [pdiff]!")
 							return
 					else
 						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
@@ -146,6 +148,7 @@
 					else
 						user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
 						message_admins("Attempted false [M] wall made by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(loc)] had a pressure difference of [pdiff]!")
+						log_admin("Attempted false [M] wall made by [user.real_name] ([user.ckey]) at [loc] had a pressure difference of [pdiff]!")
 						return
 				else
 					if(S.amount < 2) return ..()

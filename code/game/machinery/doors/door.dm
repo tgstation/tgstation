@@ -79,7 +79,7 @@
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if(operating)	return
-	if(user.last_airflow > world.time - zas_settings.Get("airflow_delay")) //Fakkit
+	if(user.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //Fakkit
 		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
@@ -96,6 +96,7 @@
 
 
 /obj/machinery/door/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 

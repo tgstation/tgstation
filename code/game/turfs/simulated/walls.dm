@@ -211,6 +211,7 @@
 				var/pdiff=performWallPressureCheck(src.loc)
 				if(pdiff)
 					message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) dismanted a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
+					log_admin("[user.real_name] ([user.ckey]) dismanted a wall with a pdiff of [pdiff] at [loc]!")
 				dismantle_wall()
 		else
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
@@ -232,6 +233,7 @@
 			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) dismantled with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
+				log_admin("[user.real_name] ([user.ckey]) dismantled with a pdiff of [pdiff] at [loc]!")
 			for(var/mob/O in viewers(user, 5))
 				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
 		return
@@ -252,6 +254,7 @@
 			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) drilled a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
+				log_admin("[user.real_name] ([user.ckey]) drilled a wall with a pdiff of [pdiff] at [loc]!")
 			for(var/mob/O in viewers(user, 5))
 				O.show_message("<span class='warning'>The wall was drilled through by [user]!</span>", 1, "<span class='warning'>You hear the grinding of metal.</span>", 2)
 		return
@@ -276,6 +279,7 @@
 			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) sliced up a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
+				log_admin("[user.real_name] ([user.ckey]) sliced up a wall with a pdiff of [pdiff] at [loc]!")
 			for(var/mob/O in viewers(user, 5))
 				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
 		return

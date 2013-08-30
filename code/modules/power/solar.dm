@@ -320,6 +320,7 @@ var/list/solars_list = list()
 
 
 /obj/machinery/power/solar_control/attack_ai(mob/user)
+	src.add_hiddenprint(user)
 	add_fingerprint(user)
 	if(stat & (BROKEN | NOPOWER)) return
 	interact(user)

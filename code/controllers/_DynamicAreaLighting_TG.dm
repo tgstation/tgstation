@@ -221,13 +221,16 @@ atom/proc/UpdateAffectingLights()
 
 turf
 	var/lighting_lumcount = 0
+	var/accepts_lighting=1
 	var/lighting_changed = 0
 
 turf/space
 	lighting_lumcount = 4		//starlight
+	accepts_lighting=0 // Don't apply overlays
 
 turf/proc/update_lumcount(amount)
-	lighting_lumcount += amount
+	if(accepts_lighting)
+		lighting_lumcount += amount
 //	if(lighting_lumcount < 0 || lighting_lumcount > 100)
 //		world.log << "## WARNING: [type] ([src]) lighting_lumcount = [lighting_lumcount]"
 	if(!lighting_changed)
@@ -303,5 +306,5 @@ area
 
 #undef LIGHTING_MAX_LUMINOSITY
 #undef LIGHTING_MAX_LUMINOSITY_MOB
-#undef LIGHTING_LAYER
+//#undef LIGHTING_LAYER
 //#undef LIGHTING_ICON

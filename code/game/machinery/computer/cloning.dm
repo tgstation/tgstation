@@ -152,6 +152,7 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/cloning/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)

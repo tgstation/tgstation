@@ -136,6 +136,7 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/intercom_view 			//-errorage
 	src.verbs += /client/proc/air_status //Air things
 	src.verbs += /client/proc/Cell //More air things
+	src.verbs += /client/proc/pdiff //Antigriff testing - N3X
 	src.verbs += /client/proc/atmosscan //check plumbing
 	src.verbs += /client/proc/powerdebug //check power
 	src.verbs += /client/proc/count_objects_on_z_level

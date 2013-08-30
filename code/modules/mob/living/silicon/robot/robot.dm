@@ -892,11 +892,7 @@
 
 	overlays.Cut()
 	if(stat == 0)
-		overlays += "eyes"
-		overlays.Cut()
-		overlays += "eyes-[icon_state]"
-	else
-		overlays -= "eyes"
+		overlays += image(icon,"eyes-[icon_state]",LIGHTING_LAYER+1)
 
 	if(opened)
 		if(wiresexposed)

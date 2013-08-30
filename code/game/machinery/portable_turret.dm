@@ -183,6 +183,7 @@
 
 
 /obj/machinery/porta_turret/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	return attack_hand(user)
 
 /obj/machinery/porta_turret/attack_hand(mob/user as mob)
@@ -890,6 +891,7 @@ Status: []<BR>"},
 	. = ..()
 	if (.)
 		return
+	src.add_hiddenprint(user)
 	var/dat
 	if(!(Parent_Turret.lasercolor))
 		dat += text({"

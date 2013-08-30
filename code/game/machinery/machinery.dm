@@ -191,6 +191,7 @@ Class Procs:
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
 	if(isrobot(user))
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.

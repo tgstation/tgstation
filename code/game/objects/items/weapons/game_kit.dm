@@ -53,6 +53,7 @@ THAT STUPID GAME KIT
 	src.data = dat
 
 /obj/item/weapon/game_kit/attack_ai(mob/user as mob, unused, flag)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user, unused, flag)
 
 /obj/item/weapon/game_kit/attack_hand(mob/user as mob, unused, flag)

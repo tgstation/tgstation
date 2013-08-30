@@ -120,6 +120,7 @@
 
 //Allows AIs to use door_timer, see human attack_hand function below
 	attack_ai(var/mob/user as mob)
+		src.add_hiddenprint(user)
 		return src.attack_hand(user)
 
 
