@@ -272,7 +272,8 @@
 		H.vessel.add_reagent("blood",560)
 		spawn(1)
 			H.fixblood()
-		for(var/datum/organ/external/O in H.organs)
+		for(var/organ_name in H.organs_by_name)
+			var/datum/organ/external/O = H.organs_by_name[organ_name]
 			O.amputated = 0
 			O.brute_dam = 0
 			O.burn_dam = 0
@@ -287,7 +288,8 @@
 			O.trace_chemicals = list()
 			O.wounds = list()
 			O.wound_update_accuracy = 1
-		for(var/datum/organ/internal/IO in H.internal_organs)
+		for(var/organ_name in H.internal_organs)
+			var/datum/organ/internal/IO = H.internal_organs[organ_name]
 			IO.damage = 0
 			IO.trace_chemicals = list()
 		H.updatehealth()
