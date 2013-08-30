@@ -6,7 +6,6 @@
 	icon_closed = "critter"
 	var/already_opened = 0
 	var/content_mob = null
-	var/locked = 0 //used for breaking out only
 
 /obj/structure/closet/critter/can_open()
 	if(src.locked || src.welded)
@@ -44,8 +43,8 @@
 /obj/structure/closet/critter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 
-	if(src.loc == usr.loc)
-		usr << "<span class='notice'>It won't budge!</span>"
+	if(src.loc == user.loc)
+		user << "<span class='notice'>It won't budge!</span>"
 		src.toggle()
 	else
 		src.locked = 0
