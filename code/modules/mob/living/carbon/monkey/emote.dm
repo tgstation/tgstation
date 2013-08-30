@@ -14,45 +14,14 @@
 	var/message
 
 	switch(act) //Ooh ooh ah ah keep this alphabetical ooh ooh ah ah!
-		if ("choke")
-			message = "<B>[src]</B> chokes."
-			m_type = 2
-
-		if ("collapse")
-			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
-			m_type = 2
-
-		if ("dance")
-			if (!src.restrained())
-				message = "<B>[src]</B> dances around happily."
-				m_type = 1
-
 		if ("deathgasp")
 			message = "<b>[src]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
-
-		if ("drool")
-			message = "<B>[src]</B> drools."
-			m_type = 1
-
-		if ("gasp")
-			message = "<B>[src]</B> gasps."
-			m_type = 2
 
 		if ("gnarl")
 			if (!muzzled)
 				message = "<B>[src]</B> gnarls and shows its teeth.."
 				m_type = 2
-
-		if ("giggle")
-			if (!muzzled)
-				message = "<B>[src]</B> giggles happily."
-				m_type = 2
-
-		if ("jump")
-			message = "<B>[src]</B> jumps!"
-			m_type = 1
 
 		if ("paw")
 			if (!src.restrained())
@@ -62,10 +31,6 @@
 		if ("moan")
 			message = "<B>[src]</B> moans!"
 			m_type = 2
-
-		if ("nod")
-			message = "<B>[src]</B> nods its head."
-			m_type = 1
 
 		if ("roar")
 			if (!muzzled)
@@ -87,10 +52,6 @@
 				message = "<B>[src]</B> scretches."
 				m_type = 2
 
-		if ("shake")
-			message = "<B>[src]</B> shakes its head."
-			m_type = 1
-
 		if ("shiver")
 			message = "<B>[src]</B> shivers."
 			m_type = 2
@@ -100,35 +61,16 @@
 				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
-		if ("sit")
-			message = "<B>[src]</B> sits down."
-			m_type = 1
-
-		if ("sulk")
-			message = "<B>[src]</B> sulks down sadly."
-			m_type = 1
-
-		if ("sway")
-			message = "<B>[src]</B> sways around dizzily."
-			m_type = 1
-
 		if ("tail")
 			message = "<B>[src]</B> waves its tail."
 			m_type = 1
 
-		if ("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = 1
-
-		if ("whimper")
-			if (!muzzled)
-				message = "<B>[src]</B> whimpers."
-				m_type = 2
-
 		if ("help") //Ooh ah ooh ooh this is an exception to alphabetical ooh ooh.
-			src << "Help for monkey emotes. You can use these emotes with say \"*emote\":\nchoke, collapse, dance, deathgasp, drool, gasp, gnarl, giggle, jump, paw, moan, nod, roar, roll, scratch, scretch, \nshake, shiver, sign-#, sit, sulk, sway, tail, twitch, whimper"
+			src << "Help for monkey emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, choke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, gnarl, giggle, glare-(none)/mob, grin, jump, laugh, paw, me, moan, nod, roar, roll, point-atom, scream, scratch, scretch, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, whimper, yawn"
+
 		else
-			src << text("Invalid Emote: []", act)
+			..(act)
+
 	if ((message && src.stat == 0))
 		if(src.client)
 			log_emote("[name]/[key] : [message]")
