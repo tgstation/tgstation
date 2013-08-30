@@ -199,9 +199,9 @@
 	var/distance = get_dist(usr,src)
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
 		distance = 1
-	if (src.stat == 1 || stat == 2)
+	if (src.stat == 1 || stat == 2 || status_flags & FAKEDEATH)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
-		if((stat == 2 || src.health < config.health_threshold_crit) && distance <= 3)
+		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
@@ -235,14 +235,16 @@
 
 	msg += "</span>"
 
+/*removing redundant examine if statement
 	if(stat == UNCONSCIOUS)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-	else if(getBrainLoss() >= 60)
+*/
+	if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if(!key && brain_op_stage != 4 && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
+	else if(!client && brain_op_stage != 4 && stat != DEAD && status_flags & !FAKEDEATH)
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	var/list/wound_flavor_text = list()
