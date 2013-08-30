@@ -374,19 +374,21 @@
 			C.setToxLoss(0)
 			C.setOxyLoss(0)
 			C.setCloneLoss(0)
+			C.setBrainLoss(0)
 			C.SetParalysis(0)
 			C.SetStunned(0)
 			C.SetWeakened(0)
 			C.radiation = 0
 			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
 			C.reagents.clear_reagents()
-			if(istype(C, /mob/living/carbon/human))
+			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.vessel.reagent_list = list()
 				H.vessel.add_reagent("blood",560)
 				spawn(1)
 					H.fixblood()
-				for(var/datum/organ/external/O in H.organs)
+				for(var/organ_name in H.organs_by_name)
+					var/datum/organ/external/O = H.organs_by_name[organ_name]
 					O.amputated = 0
 					O.brute_dam = 0
 					O.burn_dam = 0
@@ -401,7 +403,8 @@
 					O.trace_chemicals = list()
 					O.wounds = list()
 					O.wound_update_accuracy = 1
-				for(var/datum/organ/internal/IO in H.internal_organs)
+				for(var/organ_name in H.internal_organs)
+					var/datum/organ/internal/IO = H.internal_organs[organ_name]
 					IO.damage = 0
 					IO.trace_chemicals = list()
 				H.updatehealth()
