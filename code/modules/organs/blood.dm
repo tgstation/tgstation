@@ -191,7 +191,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //Transfers blood from container ot vessels, respecting blood types compatability.
 /mob/living/carbon/human/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 	var/datum/reagent/blood/our = get_blood(vessel)
-	var/datum/reagent/blood/injected = get_blood(container.reagents)
+	var/datum/reagent/blood/injected
+	if(container)
+		injected = get_blood(container.reagents)
 	if (!injected)
 		return
 	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
