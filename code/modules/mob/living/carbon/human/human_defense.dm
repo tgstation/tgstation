@@ -5,18 +5,32 @@ bullet_act
 ex_act
 meteor_act
 emp_act
-
 */
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			var/reflectchance = 40 - round(P.damage/3)
+	if(l_hand && istype(l_hand, /obj/item/weapon/twohanded/dualsaber) || r_hand && istype(r_hand, /obj/item/weapon/twohanded/dualsaber) || wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
+		var/obj/item/weapon/twohanded/dualsaber/D = l_hand
+		var/obj/item/weapon/twohanded/dualsaber/C = r_hand
+		var/obj/item/clothing/suit/armor/laserproof/E = wear_suit
+		var/swordreflectchance = 0
+		var/armorreflectchance = 0
+		if(istype(C, /obj/item/weapon/twohanded/dualsaber))
+			if(C.wielded == 1)
+				swordreflectchance = 100
+		if(istype(D, /obj/item/weapon/twohanded/dualsaber))
+			if(D.wielded == 1)
+				swordreflectchance = 100
+		if(istype(E, /obj/item/clothing/suit/armor/laserproof))
+			armorreflectchance = (40 - round(P.damage/3))
 			if(!(def_zone in list("chest", "groin")))
-				reflectchance /= 2
-			if(prob(reflectchance))
-				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>", \
-								"<span class='userdanger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
+				armorreflectchance /= 2
+		if(HULK in src.mutations)
+			swordreflectchance = 0 //If hulk, remove dualsword benefit
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+			var/totalreflectchance = swordreflectchance + armorreflectchance
+			if(prob(totalreflectchance))
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
@@ -38,7 +52,6 @@ emp_act
 		P.on_hit(src, 2)
 		return 2
 	return (..(P , def_zone))
-
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
 	var/armorval = 0
