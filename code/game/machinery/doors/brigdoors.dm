@@ -23,6 +23,7 @@
 	density = 0       		// can walk through it.
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.time reaches it - release the prisoneer
+	var/timelength = 0		// the length of time this door will be set for
 	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
@@ -65,6 +66,7 @@
 			if(world.time > src.releasetime)
 				src.timer_end() // open doors, reset timer, clear status screen
 				src.timing = 0
+				timeset(0)
 			src.updateUsrDialog()
 			src.update_icon()
 		else
@@ -115,15 +117,17 @@
 
 
 	proc/timeleft()
-		. = (releasetime-world.time)/10
+		. = (src.timing ? (releasetime-world.time) : timelength)/10
 		if(. < 0)
 			. = 0
 
 
 	proc/timeset(var/seconds)
-		releasetime=world.time+seconds*10
+		if(src.timing)
+			releasetime=world.time+seconds*10
+		else
+			timelength=seconds*10
 		return
-
 
 //Allows AIs to use door_timer, see human attack_hand function below
 	attack_ai(var/mob/user as mob)
@@ -177,20 +181,18 @@
 			return
 
 		usr.set_machine(src)
-		if(href_list["timing"])
-			src.timing = text2num(href_list["timing"])
-		else
-			if(href_list["tp"])  //adjust timer, close door if not already closed
+		if(!href_list["fc"])
+			var/timeleft = timeleft()
+			if(href_list["tp"]) //adjust timer
 				var/tp = text2num(href_list["tp"])
-				var/timeleft = timeleft()
 				timeleft += tp
-				timeleft = min(max(round(timeleft), 0), 600)
-				timeset(timeleft)
-				//src.timing = 1
-				//src.closedoor()
-			if(href_list["fc"])
-				for(var/obj/machinery/flasher/F in targets)
-					F.flash()
+			timeleft = min(max(round(timeleft), 0), 600)
+			if(href_list["timing"]) //switch between timing and not timing
+				src.timing = text2num(href_list["timing"])
+			timeset(timeleft)
+		else
+			for(var/obj/machinery/flasher/F in targets)
+				F.flash()
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		src.update_icon()
