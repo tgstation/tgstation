@@ -26,13 +26,9 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
-/obj/item/clothing/mask/facehugger/attack_paw(user as mob) //can be picked up by aliens
-	if(isalien(user))
-		attack_hand(user)
-		return
-	else
-		..()
-		return
+/obj/item/clothing/mask/facehugger/attack_alien(user as mob) //can be picked up by aliens
+	attack_hand(user)
+	return
 
 /obj/item/clothing/mask/facehugger/attack_hand(user as mob)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
