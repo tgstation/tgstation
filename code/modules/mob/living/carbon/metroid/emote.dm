@@ -46,7 +46,7 @@
 			m_type = 1
 
 		if ("help") //This is an exception
-			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate"
+			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate"
 
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
