@@ -41,10 +41,15 @@ json_writer
 					if(!i)
 						break
 					if(targ == "\n")
-						txt = copytext(txt, 1, i) + "\\n" + copytext(txt, i+1)
+						txt = copytext(txt, 1, i) + "\\n" + copytext(txt, i+2)
+						start = i + 1 // 1 character added
+					if(targ == "'")
+						txt = copytext(txt, 1, i) + "`" + copytext(txt, i+1) // apostrophies fuck shit up...
+						start = i + 1 // 1 character added
 					else
 						txt = copytext(txt, 1, i) + "\\" + copytext(txt, i)
-					start = i + 2
+						start = i + 2 // 2 characters added
+					
 			return {""[txt]""}
 
 		is_associative(list/L)

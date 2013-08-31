@@ -59,6 +59,11 @@ NanoUpdate = function ()
 		var body = $('body'); // We store data in the body tag, it's as good a place as any
 		
 		_data = body.data('initialData');
+		
+		if (!_data)
+		{
+			alert('Error: Initial data did not load correctly.');
+		}
 
 		var templateData = body.data('templateData');
 		
@@ -118,7 +123,17 @@ NanoUpdate = function ()
 	// Receive update data from the server
 	var receiveUpdateData = function (jsonString)
 	{
-		var updateData = jQuery.parseJSON(jsonString);
+		var updateData;
+		try
+		{
+			updateData = jQuery.parseJSON(jsonString);
+		}
+		catch (error)
+		{
+			alert(error.Message);
+			return;
+		}
+		
 		
 		if (_isInitialised) // templates have been loaded and are observing the data. We need to update it recursively
 		{

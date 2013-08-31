@@ -75,7 +75,7 @@ NanoBaseHelpers = function ()
 				return '';
 			},
 			// Display a bar. Used to show health, capacity, etc.
-			displayBar: function(value, rangeMin, rangeMax, styleClass) {		
+			displayBar: function(value, rangeMin, rangeMax, styleClass, showText) {		
 			
 				if (rangeMin < rangeMax)
                 {
@@ -100,14 +100,19 @@ NanoBaseHelpers = function ()
                     }
                 }				
 				
-				if (typeof styleClass == 'undefined')
+				if (typeof styleClass == 'undefined' || !styleClass)
 				{
 					styleClass = '';
 				}
 				
+				if (typeof showText == 'undefined' || !showText)
+				{
+					showText = '';
+				}
+				
 				var percentage = Math.round((value - rangeMin) / (rangeMax - rangeMin) * 100);
 				
-				return '<div class="progressBar"><div class="progressFill ' + styleClass + '" style="width: ' + percentage + '%;"></div></div>';
+				return '<div class="displayBar ' + styleClass + '"><div class="displayBarFill ' + styleClass + '" style="width: ' + percentage + '%;"></div><div class="displayBarText ' + styleClass + '">' + showText + '</div></div>';
 			}
 		});
 	}

@@ -21,11 +21,12 @@
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 2
+	var/addenergy = 1
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
-		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		use_power(1500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
 	if(powered())
@@ -33,12 +34,13 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
+	nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/process()
 
 	if(recharged < 0)
 		recharge()
-		recharged = 30
+		recharged = 15
 	else
 		recharged -= 1
 
@@ -73,6 +75,7 @@
 
 	data["amount"] = amount
 	data["energy"] = energy
+	data["maxEnergy"] = max_energy
 
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 

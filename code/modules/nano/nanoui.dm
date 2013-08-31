@@ -139,11 +139,13 @@
 
 	var/template_data_json = "{}" // An empty JSON object
 	if (templatel_data.len > 0)
-		template_data_json = list2json(templatel_data)
+		template_data_json = list2json(templatel_data)	
 
 	var/initial_data_json = "{}" // An empty JSON object
 	if (initial_data.len > 0)
 		initial_data_json = list2json(initial_data)
+		
+	//user << initial_data_json
 
 	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
 
@@ -254,7 +256,7 @@
 		return // Cannot update UI, no visibility
 
 	data = modify_data(data)
-
+	//user << list2json(data)
 	user << output(list2params(list(list2json(data))),"[window_id].browser:receiveUpdateData")
 	on_close_winset()
 

@@ -307,17 +307,30 @@ div.notice
 	padding: 0;
 }
 
-.progressBar
+.displayBar
 {
-	width: 240px;
-	height: 14px;
+	position: relative;
+	width: 236px;
+	height: 16px;
 	border: 1px solid #666666;
 	float: left;
-	margin: 0 5px;
+	margin: 0 5px 0 0;
 	overflow: hidden;
+	background: #000000;
 }
 
-.progressFill
+.displayBarText
+{
+	position: absolute;
+	top: -2px;
+	left: 5px;
+	width: 100%;
+	height: 100%;
+	color: #ffffff;
+	font-weight: normal;
+}
+
+.displayBarFill
 {
 	width: 0%;
 	height: 100%;
@@ -326,32 +339,30 @@ div.notice
 	float: left;
 }
 
-.progressFill.alignRight
+.displayBarFill.alignRight
 {
 	float: right;
 }
 
-.progressFill.good
+.displayBarFill.good
 {
 	color: #ffffff;
 	background: #4f7529;
 }
 
-.progressFill.average
+.displayBarFill.average
 {
 	color: #ffffff;
 	background: #cd6500;
 }
 
-.progressFill.bad
+.displayBarFill.bad
 {
 	color: #ffffff;
 	background: #ee0000;
 }
 
-
-
-.progressFill.highlight
+.displayBarFill.highlight
 {
 	color: #ffffff;
 	background: #8BA5C4;
