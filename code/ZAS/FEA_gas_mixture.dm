@@ -14,6 +14,14 @@ What are the archived variables for?
 #define QUANTIZE(variable)		(round(variable,0.0001))
 #define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
 
+#define TEMPERATURE_ICE_FORMATION 273.15 // 273 kelvin is the freezing point of water.
+#define MIN_PRESSURE_ICE_FORMATION 10 // 10kPa should be okay
+
+#define GRAPHICS_PLASMA   1
+#define GRAPHICS_N2O      2
+#define GRAPHICS_REAGENTS 4  // Not used.  Yet.
+#define GRAPHICS_COLD     8
+
 datum
 	gas //These are used for the "Trace Gases" stuff, but is buggy.
 		sleeping_agent
@@ -47,7 +55,7 @@ datum
 				//Size of the group this gas_mixture is representing.
 				//=1 for singletons
 
-			graphic
+			graphics = 0
 
 			list/datum/gas/trace_gases = list() //Seemed to be a good idea that was abandoned
 
@@ -59,7 +67,7 @@ datum
 
 				temperature_archived
 
-				graphic_archived = 0
+				graphics_archived = 0
 				fuel_burnt = 0
 
 //FOR THE LOVE OF GOD PLEASE USE THIS PROC
@@ -196,17 +204,30 @@ datum
 			//Inputs: None
 			//Outputs: 1 if graphic changed, 0 if unchanged
 
-			graphic = 0
-			if(toxins > MOLES_PLASMA_VISIBLE)
-				graphic = 1
-			else if(length(trace_gases))
-				var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
-				if(sleeping_agent && (sleeping_agent.moles > 1))
-					graphic = 2
-				else
-					graphic = 0
+			graphics = 0
 
-			return graphic != graphic_archived
+			// If configured and cold, maek ice
+			if(zas_settings.Get(/datum/ZAS_Setting/ice_formation))
+				if(temperature <= TEMPERATURE_ICE_FORMATION && return_pressure()>MIN_PRESSURE_ICE_FORMATION)
+					// If we're just forming, do a probability check.  Otherwise, KEEP IT ON~
+					// This ordering will hopefully keep it from sampling random noise every damn tick.
+					//if(was_icy || (!was_icy && prob(25)))
+					graphics |= GRAPHICS_COLD
+
+			if(toxins > MOLES_PLASMA_VISIBLE)
+				graphics |= GRAPHICS_PLASMA
+
+			var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
+			if(sleeping_agent && (sleeping_agent.moles > 1))
+				graphics |= GRAPHICS_N2O
+
+			/*
+			var/datum/gas/reagent = exact_locate(/datum/gas/reagent,trace_gases)
+			if(reagent && (reagent.moles > 0.1))
+				graphics |= GRAPHICS_REAGENTS
+			*/
+
+			return graphics != graphics_archived
 
 		proc/react(atom/dump_location)
 			//Purpose: Calculating if it is possible for a fire to occur in the airmix
@@ -305,7 +326,7 @@ datum
 
 			temperature_archived = temperature
 
-			graphic_archived = graphic
+			graphics_archived = graphics
 
 			return 1
 

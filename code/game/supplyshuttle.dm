@@ -38,7 +38,7 @@ var/list/mechtoys = list(
 
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "\improper Plastic flaps"
-	desc = "I definitely cant get past those. No way."
+	desc = "I definitely can't get past those. No way."
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0

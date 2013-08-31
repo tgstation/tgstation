@@ -13,6 +13,14 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))
 
+#define TEMPERATURE_ICE_FORMATION 273.15 // 273 kelvin is the freezing point of water.
+#define MIN_PRESSURE_ICE_FORMATION 10 // 10kPa should be okay
+
+#define GRAPHICS_PLASMA   1
+#define GRAPHICS_N2O      2
+#define GRAPHICS_REAGENTS 4  // Not used.  Yet.
+#define GRAPHICS_COLD     8
+
 /datum/gas
 	sleeping_agent
 		specific_heat = 40
@@ -43,7 +51,8 @@ What are the archived variables for?
 		//Size of the group this gas_mixture is representing.
 		//=1 for singletons
 
-	var/graphic
+	// BITFIELD, SEE GRAPHICS_*
+	var/graphics = 0
 
 	var/list/datum/gas/trace_gases = list()
 
@@ -55,7 +64,7 @@ What are the archived variables for?
 
 	var/tmp/temperature_archived
 
-	var/tmp/graphic_archived
+	var/tmp/graphics_archived
 	var/tmp/fuel_burnt = 0
 
 	//PV=nRT - related procedures
@@ -105,19 +114,34 @@ What are the archived variables for?
 
 
 	//Procedures used for very specific events
+	// N3X's new tile overlay logic
 	proc/check_tile_graphic()
 		//returns 1 if graphic changed
-		graphic = null
-		if(toxins > MOLES_PLASMA_VISIBLE)
-			graphic = "plasma"
-		else
-			var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
-			if(sleeping_agent && (sleeping_agent.moles > 1))
-				graphic = "sleeping_agent"
-			else
-				graphic = null
 
-		return graphic != graphic_archived
+		graphics = 0
+		
+		// If configured and cold, maek ice
+		if(zas_settings.get(/datum/ZAS_Setting/ice_formation))
+			if(temperature <= TEMPERATURE_ICE_FORMATION && return_pressure()>MIN_PRESSURE_ICE_FORMATION)
+				// If we're just forming, do a probability check.  Otherwise, KEEP IT ON~
+				// This ordering will hopefully keep it from sampling random noise every damn tick.
+				//if(was_icy || (!was_icy && prob(25)))
+				graphics |= GRAPHICS_COLD
+
+		if(toxins > MOLES_PLASMA_VISIBLE)
+			graphics |= GRAPHICS_PLASMA
+
+		var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
+		if(sleeping_agent && (sleeping_agent.moles > 1))
+			graphics |= GRAPHICS_N2O
+
+		/*
+		var/datum/gas/reagent = exact_locate(/datum/gas/reagent,trace_gases)
+		if(reagent && (reagent.moles > 0.1))
+			graphics |= GRAPHICS_REAGENTS
+		*/
+
+		return graphics != graphics_archived
 
 	proc/react(atom/dump_location)
 		var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
@@ -293,7 +317,7 @@ What are the archived variables for?
 
 		temperature_archived = temperature
 
-		graphic_archived = graphic
+		graphics_archived = graphics
 
 		return 1
 

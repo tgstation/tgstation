@@ -96,6 +96,29 @@
 					M << "\blue You slipped on the floor!"
 					playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)
+			if(3) // Ice
+				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
+					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) && prob(30))
+						M.stop_pulling()
+						step(M, M.dir)
+						M << "\blue You slipped on the wet floor!"
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						M.Stun(4)
+						M.Weaken(5)
+					else
+						M.inertia_dir = 0
+						return
+				else if(!istype(M, /mob/living/carbon/metroid))
+					if (M.m_intent == "run" && prob(30))
+						M.stop_pulling()
+						step(M, M.dir)
+						M << "\blue You slipped on the wet floor!"
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						M.Stun(4)
+						M.Weaken(5)
+					else
+						M.inertia_dir = 0
+						return
 
 	..()
 

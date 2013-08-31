@@ -307,7 +307,7 @@ proc/setup_database_connection()
 	if ( . )
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
-		world.log << "Error: [dbcon.ErrorMsg()]"
+		world.log << "Database Error: [dbcon.ErrorMsg()]"
 		failed_db_connections++		//If it failed, increase the failed connections counter.
 
 	return .
