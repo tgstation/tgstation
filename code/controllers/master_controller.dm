@@ -138,7 +138,7 @@ datum/controller/game_controller/proc/process()
 				controller_iteration++
 
 				vote.process()
-				process_newscaster()
+				//process_newscaster()
 
 				//AIR
 

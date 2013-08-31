@@ -354,7 +354,7 @@
 				new_character.dna.mutantrace = "vox"
 				new_character.vox_talk_understand = 1
 
-		if(ticker.random_players)
+		if(ticker.random_players || appearance_isbanned(new_character))
 			new_character.gender = pick(MALE, FEMALE)
 			client.prefs.real_name = random_name(new_character.gender)
 			client.prefs.randomize_appearance_for(new_character)

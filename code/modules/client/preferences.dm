@@ -226,6 +226,7 @@ datum/preferences
 		dat += "</center><hr><table><tr><td width='340px' height='320px'>"
 
 		dat += "<b>Name:</b> "
+		if(appearance_isbanned(user)) dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 		dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
 		dat += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
 		dat += "(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
