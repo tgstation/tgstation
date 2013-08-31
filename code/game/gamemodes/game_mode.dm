@@ -357,8 +357,8 @@
 			heads += player.mind
 	return heads
 
-/datum/game_mode/New()
-	newscaster_announcements = pick(newscaster_standard_feeds)
+/*/datum/game_mode/New()
+	newscaster_announcements = pick(newscaster_standard_feeds)*/
 
 //////////////////////////
 //Reports player logouts//

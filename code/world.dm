@@ -36,6 +36,7 @@
 		load_alienwhitelist()
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
+	appearance_loadbanfile()
 	LoadBans()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
