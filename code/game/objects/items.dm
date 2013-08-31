@@ -406,6 +406,13 @@
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
 
+		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
+			if(FAT in H.mutations)
+				if(!(flags & ONESIZEFITSALL))
+					if(!disable_warning)
+						H << "\red You're too fat to wear the [name]."
+					return 0
+
 		switch(slot)
 			if(slot_l_hand)
 				if(H.l_hand)
@@ -670,7 +677,7 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain))|| !isMoMMI(usr))//Is humanoid, and is not a brain
 		usr << "\red You can't pick things up!"
 		return
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
@@ -682,7 +689,7 @@
 	if(!usr.hand && usr.r_hand) //Right hand is not full
 		usr << "\red Your right hand is full."
 		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
+	if(usr.hand && usr.l_hand && !isMoMMI(usr)) //Left hand is not full
 		usr << "\red Your left hand is full."
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf

@@ -306,6 +306,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define STRUCDNASIZE 27
 #define UNIDNASIZE 13
 
+// Used in preferences.
+#define DISABILITY_FLAG_NEARSIGHTED 1
+#define DISABILITY_FLAG_FAT 2
+#define DISABILITY_FLAG_EPILEPTIC 4
+#define DISABILITY_FLAG_DEAF 4
+
 	// Generic mutations:
 #define	TK				1
 #define COLD_RESISTANCE	2

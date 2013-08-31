@@ -404,7 +404,7 @@ var/global/datum/controller/occupations/job_master
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 
 		//Gives glasses to the vision impaired
-		if(H.disabilities & NEARSIGHTED)
+		if(H.disabilities & DISABILITY_FLAG_NEARSIGHTED)
 			var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses

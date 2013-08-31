@@ -375,9 +375,20 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = client.prefs.b_type
 
-		if(client.prefs.disabilities)
+		if(client.prefs.disabilities & DISABILITY_FLAG_NEARSIGHTED)
 			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,GLASSESBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,GLASSESBLOCK,3)),3)
 			new_character.disabilities |= NEARSIGHTED
+
+		if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
+			new_character.mutations += FAT
+
+		if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)
+			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,3)),3)
+			new_character.disabilities |= EPILEPSY
+
+		if(client.prefs.disabilities & DISABILITY_FLAG_DEAF)
+			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,DEAFBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,DEAFBLOCK,3)),3)
+			new_character.disabilities |= DEAFBLOCK
 
 		new_character.key = key		//Manually transfer the key to log them in
 

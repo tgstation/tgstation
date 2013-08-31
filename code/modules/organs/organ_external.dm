@@ -44,6 +44,8 @@
 	// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 1
 
+	var/has_fat=0 // Has a _fat variant
+
 /datum/organ/external/New(var/datum/organ/external/P)
 	if(P)
 		parent = P
@@ -580,11 +582,16 @@
 			return 1
 	return 0
 
-/datum/organ/external/get_icon(gender="")
+/datum/organ/external/get_icon(gender="",fat="")
+	//stand_icon = new /icon(icobase, "torso_[g][fat?"_fat":""]")
+	if(gender)
+		gender="_[gender]"
+	if(fat && has_fat)
+		fat="_[fat]"
 	if (status & ORGAN_MUTATED)
-		return new /icon(owner.deform_icon, "[icon_name][gender ? "_[gender]" : ""]")
+		return new /icon(owner.deform_icon, "[icon_name][gender][fat]")
 	else
-		return new /icon(owner.race_icon, "[icon_name][gender ? "_[gender]" : ""]")
+		return new /icon(owner.race_icon, "[icon_name][gender][fat]")
 
 
 /datum/organ/external/proc/is_usable()
@@ -601,6 +608,7 @@
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
+	has_fat=1
 
 
 /datum/organ/external/groin
