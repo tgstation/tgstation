@@ -21,6 +21,12 @@
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
 
+
+/obj/item/projectile/bullet/midbullet3 //Only used with the Stechkin Pistol - RobRichards
+	damage = 30
+
+
+
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
 	damage = 20
