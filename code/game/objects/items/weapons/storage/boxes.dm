@@ -386,7 +386,7 @@
 
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "Space Suit and Helmet"
-	desc = "A sleek, study box used to hold replica spacesuits."
+	desc = "A sleek, sturdy box used to hold replica spacesuits."
 	icon_state = "box_of_doom"
 
 	New()
