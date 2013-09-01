@@ -153,13 +153,13 @@
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
-					W.afterattack(A,src,1,params)
+					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
 				UnarmedAttack(A)
 			return
 		else // non-adjacent click
 			if(W)
-				W.afterattack(A,src,0,params)
+				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				if((LASER in mutations) && a_intent == "harm")
 					LaserEyes(A) // moved into a proc below
@@ -169,8 +169,10 @@
 							next_move += 2
 						if(5 to 7)
 							next_move += 5
-						if(8 to 1024)
+						if(8 to 15)
 							next_move += 10
+						if(16 to 128)
+							return
 					A.attack_tk(src)
 
 	return

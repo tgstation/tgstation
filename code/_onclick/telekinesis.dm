@@ -109,11 +109,7 @@
 		return
 
 	attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-		if(focus && focus.Adjacent(M))
-			if(istype(focus,/obj/item))
-				var/obj/item/I = focus
-				I.attack(M,user,def_zone)
-				return
+		return
 
 
 	proc/focus_object(var/obj/target, var/mob/living/user)
