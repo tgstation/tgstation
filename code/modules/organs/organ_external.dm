@@ -582,16 +582,19 @@
 			return 1
 	return 0
 
-/datum/organ/external/get_icon(gender="",fat="")
+/datum/organ/external/get_icon(gender="",isFat=0)
 	//stand_icon = new /icon(icobase, "torso_[g][fat?"_fat":""]")
 	if(gender)
 		gender="_[gender]"
-	if(fat && has_fat)
-		fat="_[fat]"
+	var/fat=""
+	if(isFat && has_fat)
+		fat="_fat"
+	var/icon_state="[icon_name][gender][fat]"
+	//testing("[src].get_icon('[gender]', '[fat]') = /icon([owner.race_icon], [icon_state])")
 	if (status & ORGAN_MUTATED)
-		return new /icon(owner.deform_icon, "[icon_name][gender][fat]")
+		return new /icon(owner.deform_icon, icon_state)
 	else
-		return new /icon(owner.race_icon, "[icon_name][gender][fat]")
+		return new /icon(owner.race_icon, icon_state)
 
 
 /datum/organ/external/proc/is_usable()

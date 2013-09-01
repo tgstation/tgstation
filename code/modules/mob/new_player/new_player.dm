@@ -381,6 +381,7 @@
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
 			new_character.mutations += FAT
+			new_character.overeatduration = 600 // Max overeat
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)
 			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,3)),3)
