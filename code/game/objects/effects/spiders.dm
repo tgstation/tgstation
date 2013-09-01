@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
 
@@ -169,7 +169,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
+				src.visible_message("\blue \The [src] skitters[pick(" away"," around","")].")
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -195,7 +195,7 @@
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
 /obj/effect/spider/cocoon/Del()
-	src.visible_message("\red \the [src] splits open.")
+	src.visible_message("\red \The [src] splits open.")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()
