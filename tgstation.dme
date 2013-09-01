@@ -872,6 +872,7 @@
 #include "code\modules\mob\living\carbon\human\human_damage.dm"
 #include "code\modules\mob\living\carbon\human\human_defense.dm"
 #include "code\modules\mob\living\carbon\human\human_defines.dm"
+#include "code\modules\mob\living\carbon\human\human_helpers.dm"
 #include "code\modules\mob\living\carbon\human\human_movement.dm"
 #include "code\modules\mob\living\carbon\human\inventory.dm"
 #include "code\modules\mob\living\carbon\human\life.dm"
