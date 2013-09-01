@@ -408,6 +408,7 @@
 
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
+				testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
 						H << "\red You're too fat to wear the [name]."
