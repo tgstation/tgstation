@@ -203,6 +203,7 @@
 	icon_state = "intake"
 	var/c_mode = 0
 	var/doFlushIn=0
+	var/num_contents=0
 
 	New()
 		..()
@@ -243,6 +244,7 @@
 		if(!(src in processing_objects))
 			processing_objects.Add(src)
 		doFlushIn=5 // Ticks, adjust if delay is too long or too short
+		num_contents++
 
 	flush()
 		flushing = 1
@@ -268,6 +270,8 @@
 		sleep(5) // wait for animation to finish
 
 		H.init(src)	// copy the contents of disposer to holder
+		num_contents=0
+		doFlushIn=0
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
@@ -314,10 +318,10 @@
 
 	process()
 		if(doFlushIn>0)
-			if(doFlushIn==1)
+			if(doFlushIn==1 || num_contents>=50)
 				//testing("[src] FLUSHING")
 				src.flush()
-		doFlushIn--
+			doFlushIn--
 
 
 /obj/machinery/sorting_machine
