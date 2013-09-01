@@ -202,7 +202,7 @@
 	density = 1
 	icon_state = "intake"
 	var/c_mode = 0
-	var/doFlush=0
+	var/doFlushIn=0
 
 	New()
 		..()
@@ -242,12 +242,11 @@
 		// Instead, we queue up for the next process.
 		if(!(src in processing_objects))
 			processing_objects.Add(src)
-		flick("intake-closing", src) // We can play this, though.
-		doFlush=1
+		doFlushIn=5 // Ticks, adjust if delay is too long or too short
 
 	flush()
 		flushing = 1
-		//flick("intake-closing", src)
+		flick("intake-closing", src)
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 													// travels through the pipes.
@@ -314,10 +313,11 @@
 				return
 
 	process()
-		if(doFlush)
-			//testing("[src] FLUSHING")
-			src.flush()
-			doFlush=0
+		if(doFlushIn>0)
+			if(doFlushIn==1)
+				//testing("[src] FLUSHING")
+				src.flush()
+		doFlushIn--
 
 
 /obj/machinery/sorting_machine
