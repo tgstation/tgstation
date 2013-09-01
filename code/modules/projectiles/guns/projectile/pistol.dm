@@ -86,19 +86,19 @@
 
 /obj/item/weapon/gun/projectile/pistol
 	name = "\improper Stechtkin pistol"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	desc = "A small, easily concealable gun. Uses 10mm rounds."
 	icon_state = "pistol"
 	w_class = 2
 	max_shells = 8
-	caliber = "9mm"
+	caliber = "10mm"
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	ammo_type = "/obj/item/ammo_casing/c9mm"
+	ammo_type = "/obj/item/ammo_casing/c10mm"
 	load_method = 2
 
 /obj/item/weapon/gun/projectile/pistol/New()
 	..()
-	empty_mag = new /obj/item/ammo_magazine/mc9mm/empty(src)
+	empty_mag = new /obj/item/ammo_magazine/mc10mm/empty(src)
 	return
 
 /obj/item/weapon/gun/projectile/pistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)

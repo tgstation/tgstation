@@ -210,7 +210,7 @@ datum/preferences
 						dat += "<b>Adminhelp Sound:</b> "
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(unlock_content || check_rights_for(user, R_ADMIN))
+					if(unlock_content || check_rights_for(user.client, R_ADMIN))
 						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 					if(unlock_content)

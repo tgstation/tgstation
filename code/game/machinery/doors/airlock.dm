@@ -97,6 +97,7 @@
 	opacity = 0
 	doortype = 10
 	glass = 1
+	bound_width = 64 // 2x1
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"

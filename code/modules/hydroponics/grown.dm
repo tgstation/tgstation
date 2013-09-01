@@ -505,6 +505,43 @@
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	seed = "/obj/item/seeds/chillighost"
+	name = "ghost chili"
+	desc = "It seems to be vibrating gently."
+	icon_state = "ghostchilipepper"
+	var/mob/held_mob
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
+			reagents.add_reagent("capsaicin", 8+round(potency / 2, 1))
+			reagents.add_reagent("condensedcapsaicin", 4+round(potency / 4, 1))
+			bitesize = 1+round(reagents.total_volume / 4, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attack_hand(mob/user as mob)
+	..()
+	if( istype(src.loc, /mob) )
+		held_mob = src.loc
+		processing_objects.Add(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/process()
+	if(held_mob && src.loc == held_mob)
+		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
+			if(hasvar(held_mob,"gloves") && held_mob:gloves)
+				return
+			held_mob.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(prob(10))
+				held_mob << "<span class='warning'>Your hand holding [src] burns!</span>"
+	else
+		held_mob = null
+		..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
 	name = "eggplant"
