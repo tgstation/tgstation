@@ -61,3 +61,11 @@
 /obj/effect/decal/cleanable/blood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
+/obj/effect/decal/cleanable/blood/xtrails
+	icon_state = "xtrails"
+	desc = "Your instincts say that you shouldn't be following this."
+	random_icon_states = null
+/obj/effect/decal/cleanable/blood/xltrails
+	icon_state = "xltrails"
+	desc = "The chemist tripped with (and/or is <i>on</i>) acid."
+	random_icon_states = null

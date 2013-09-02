@@ -357,11 +357,28 @@
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
-
+						if (M.lying && (prob(M.getBruteLoss() / 2)))
+							var/trail_type = /obj/effect/decal/cleanable/blood/ltrails //default
+							if (istype(M.loc, /turf/simulated))
+								if(M.getBruteLoss() >= 300) //heavy trails, equalient to all limbs being mangled or 75% chest + 75% head damage
+									if(istype(M, /mob/living/carbon/alien)) //alien blood trails
+										trail_type = /obj/effect/decal/cleanable/blood/xtrails
+									else //human blood trails
+										trail_type = /obj/effect/decal/cleanable/blood/trails
+								else //light trails
+									if(istype(M, /mob/living/carbon/alien)) //alien blood trails
+										trail_type = /obj/effect/decal/cleanable/blood/xltrails
+								var/obj/B = new trail_type(M.loc)
+								var/newdir = get_dir(T, M.loc)
+								if(newdir == M.dir)
+									B.dir = newdir
+								else
+									newdir = newdir | M.dir
+									if(newdir == 3)
+										newdir = 1
+									else if(newdir == 12)
+										newdir = 4
+								B.dir = newdir
 						step(pulling, get_dir(pulling.loc, T))
 						M.start_pulling(t)
 				else
