@@ -9,6 +9,8 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/locked = 0
+	var/broken = 0
 	var/large = 1
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100

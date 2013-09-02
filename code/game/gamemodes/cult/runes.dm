@@ -61,7 +61,9 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					culcount++
-			if(culcount>=3)
+			if(user.loc==src.loc)
+				return fizzle()
+			if(culcount>=1)
 				user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
 				user.visible_message("\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
 				"\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
@@ -530,7 +532,6 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
 					H.current << "\red \b [input]"
-			del(src)
 			return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE
@@ -750,7 +751,7 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					users+=C
-			if(users.len>=3)
+			if(users.len>=1)
 				var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 				if(!cultist)
 					return fizzle()

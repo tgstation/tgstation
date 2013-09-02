@@ -718,7 +718,7 @@ Auto Patrol: []"},
 	if(check_records)	//check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
-		if(!R || (R.fields["criminal"] == "*Arrest*"))
+		if(R && (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
 	if((src.idcheck) && (src.allowed(perp)) && !(src.lasercolor))

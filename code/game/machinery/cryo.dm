@@ -224,6 +224,7 @@
 	expel_gas = air_contents.remove(remove_amount)
 	expel_gas.temperature = T20C	//Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
+	air_update_turf()
 
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/go_out()
