@@ -66,7 +66,7 @@
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
-
+	reflect_chance = 40
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"

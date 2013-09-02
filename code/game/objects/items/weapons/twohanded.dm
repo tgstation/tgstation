@@ -157,6 +157,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	color = pick("red", "blue", "green", "purple")
@@ -186,6 +187,25 @@
 		return 1
 	else
 		return 0
+
+/obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield() hulk checks due to reflect_chance var for balance issues
+	wielded = 0
+	force = force_unwielded
+	name = "[initial(name)]"
+	update_icon()
+	reflect_chance = 0
+
+/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues
+	wielded = 1
+	reflect_chance = 100
+	var/mob/living/M = loc
+	if(istype(loc, /mob/living))
+		if (HULK in M.mutations)
+			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
+			reflect_chance = 0
+	force = force_wielded
+	name = "[initial(name)] (Wielded)"
+	update_icon()
 
 /obj/item/weapon/twohanded/dualsaber/green
 	New()
