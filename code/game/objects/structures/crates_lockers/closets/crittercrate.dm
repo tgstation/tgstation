@@ -8,36 +8,36 @@
 	var/content_mob = null
 
 /obj/structure/closet/critter/can_open()
-	if(src.locked || src.welded)
+	if(locked || welded)
 		return 0
 	return 1
 
 /obj/structure/closet/critter/open()
-	if(!src.can_open())
+	if(!can_open())
 		return 0
 
-	if(src.content_mob == null) //making sure we don't spawn anything too eldritch
-		src.already_opened = 1
+	if(content_mob == null) //making sure we don't spawn anything too eldritch
+		already_opened = 1
 		return ..()
 
-	if(src.content_mob != null && src.already_opened == 0)
-		if(src.content_mob == /mob/living/simple_animal/chick)
+	if(content_mob != null && already_opened == 0)
+		if(content_mob == /mob/living/simple_animal/chick)
 			var/num = rand(4, 6)
 			for(var/i = 0, i < num, i++)
-				new src.content_mob(loc)
-		else if(src.content_mob == /mob/living/simple_animal/corgi)
+				new content_mob(loc)
+		else if(content_mob == /mob/living/simple_animal/corgi)
 			var/num = rand(0, 1)
 			if(num) //No more matriarchy for cargo
-				src.content_mob = /mob/living/simple_animal/corgi/Lisa
-			new src.content_mob(loc)
+				content_mob = /mob/living/simple_animal/corgi/Lisa
+			new content_mob(loc)
 		else
-			new src.content_mob(loc)
-		src.already_opened = 1
+			new content_mob(loc)
+		already_opened = 1
 	..()
 
 /obj/structure/closet/critter/close()
 	..()
-	src.locked = 1
+	locked = 1
 	return 1
 
 /obj/structure/closet/critter/attack_hand(mob/user as mob)
@@ -45,10 +45,10 @@
 
 	if(src.loc == user.loc)
 		user << "<span class='notice'>It won't budge!</span>"
-		src.toggle()
+		toggle()
 	else
-		src.locked = 0
-		src.toggle()
+		locked = 0
+		toggle()
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"
@@ -71,5 +71,5 @@
 	content_mob = /mob/living/simple_animal/cat
 
 /obj/structure/closet/critter/pug
-	  name = "pug crate"
-	  content_mob = /mob/living/simple_animal/pug
+	name = "pug crate"
+	content_mob = /mob/living/simple_animal/pug
