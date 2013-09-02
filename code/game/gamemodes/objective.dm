@@ -281,6 +281,7 @@ datum/objective/steal
 		"the nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 		"the reactive teleport armor" = /obj/item/clothing/suit/armor/reactive,
+		"a laser pointer" = /obj/item/device/laser_pointer,
 /*
 Nobody takes these seriously anyways -- Ikki
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
