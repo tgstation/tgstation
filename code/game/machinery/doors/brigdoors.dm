@@ -62,10 +62,10 @@
 // update the door_timer window and the icon
 	process()
 		if(stat & (NOPOWER|BROKEN))	return
-		if(src.timing)
+		if(timing)
 			if(world.time > src.releasetime)
 				src.timer_end() // open doors, reset timer, clear status screen
-				src.timing = 0
+				timing = 0
 				timeset(0)
 			src.updateUsrDialog()
 			src.update_icon()
@@ -117,13 +117,13 @@
 
 
 	proc/timeleft()
-		. = (src.timing ? (releasetime-world.time) : timelength)/10
+		. = (timing ? (releasetime-world.time) : timelength)/10
 		if(. < 0)
 			. = 0
 
 
 	proc/timeset(var/seconds)
-		if(src.timing)
+		if(timing)
 			releasetime=world.time+seconds*10
 		else
 			timelength=seconds*10
@@ -147,7 +147,7 @@
 		var/dat = "<HTML><BODY><TT>"
 		dat += "<HR>Timer System:</hr>"
 		dat += "<b>Door [src.id] controls</b><br/>"
-		if (src.timing)
+		if (timing)
 			dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
 		else
 			dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
@@ -181,22 +181,25 @@
 			return
 
 		usr.set_machine(src)
-		if(!href_list["fc"])
+		if(href_list["timing"]) //switch between timing and not timing
 			var/timeleft = timeleft()
-			if(href_list["tp"]) //adjust timer
-				var/tp = text2num(href_list["tp"])
-				timeleft += tp
 			timeleft = min(max(round(timeleft), 0), 600)
-			if(href_list["timing"]) //switch between timing and not timing
-				src.timing = text2num(href_list["timing"])
+			timing = text2num(href_list["timing"])
 			timeset(timeleft)
 		else
-			for(var/obj/machinery/flasher/F in targets)
-				F.flash()
+			if(href_list["tp"]) //adjust timer
+				var/timeleft = timeleft()
+				var/tp = text2num(href_list["tp"])
+				timeleft += tp
+				timeleft = min(max(round(timeleft), 0), 600)
+				timeset(timeleft)
+			else
+				for(var/obj/machinery/flasher/F in targets)
+					F.flash()
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		src.update_icon()
-		if(src.timing)
+		if(timing)
 			src.timer_start()
 		else
 			src.timer_end()
@@ -214,7 +217,7 @@
 		if(stat & (BROKEN))
 			set_picture("ai_bsod")
 			return
-		if(src.timing)
+		if(timing)
 			var/disp1 = id
 			var/timeleft = timeleft()
 			var/disp2 = "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
