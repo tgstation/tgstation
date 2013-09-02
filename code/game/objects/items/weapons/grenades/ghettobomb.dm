@@ -12,7 +12,6 @@
                 W.underlays += image(src.icon, icon_state = src.icon_state)
                 del(I)
                 del(src)
-                ..()
 
 
 /obj/item/weapon/grenade/iedcasing
