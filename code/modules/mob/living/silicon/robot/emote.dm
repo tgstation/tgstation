@@ -8,11 +8,12 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	switch(act)
+	switch(act)//01000001011011000111000001101000011000010110001001100101011101000110100101111010011001010110010000100001 (Seriously please keep it that way.)
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
+			m_type = 1
 
 		if("beep")
 			var/M = null
@@ -23,6 +24,7 @@
 						break
 			if(!M)
 				param = null
+
 			if (param)
 				message = "<B>[src]</B> beeps at [param]."
 			else
@@ -46,7 +48,7 @@
 					message = "<B>[src]</B> bows."
 			m_type = 1
 
-		if("buzz")
+		if ("buzz")
 			var/M = null
 			if(param)
 				for (var/mob/A in view(1, src))
@@ -55,6 +57,7 @@
 						break
 			if(!M)
 				param = null
+
 			if (param)
 				message = "<B>[src]</B> buzzes at [param]."
 			else
@@ -117,7 +120,6 @@
 				message = "<B>[src]</B> looks at [param]."
 			else
 				message = "<B>[src]</B> looks."
-			m_type = 1
 
 		if ("me")
 			if (src.client)
@@ -137,7 +139,7 @@
 			message = "<B>[src]</B> nods."
 			m_type = 1
 
-		if("ping")
+		if ("ping")
 			var/M = null
 			if(param)
 				for (var/mob/A in view(1, src))
@@ -168,7 +170,6 @@
 					message = "<B>[src]</B> salutes to [param]."
 				else
 					message = "<B>[src]</b> salutes."
-			m_type = 1
 
 		if ("stare")
 			var/M = null
@@ -183,6 +184,7 @@
 				message = "<B>[src]</B> stares at [param]."
 			else
 				message = "<B>[src]</B> stares."
+			m_type = 1
 
 		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
@@ -193,7 +195,7 @@
 			m_type = 1
 
 		if ("help")
-			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob, clap, custom, deathgasp, \nflap, glare-(none)/mob, look-(none)/mob, me, nod, ping-(none)/mob, \nsalute-(none)/mob, stare-(none)/mob, twitch, twitch_s,"
+			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob, clap, custom, deathgasp, flap, glare-(none)/mob, look-(none)/mob, me, nod, ping-(none)/mob, \nsalute-(none)/mob, twitch, twitch_s,"
 
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."

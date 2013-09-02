@@ -12,3 +12,4 @@
 #maps/RandomZLevels/wildwest.dmm
 #maps/RandomZLevels/challenge.dmm
 #maps/RandomZLevels/listeningpost.dmm
+#maps/RandomZLevels/spacehotel.dmm

@@ -50,6 +50,23 @@
 	ammo_type = "/obj/item/ammo_casing/c9mm"
 	max_ammo = 30
 
+/obj/item/ammo_magazine/mc10mm
+	name = "magazine (10mm)"
+	icon_state = "9x19p"
+	origin_tech = "combat=2"
+	ammo_type = "/obj/item/ammo_casing/c10mm"
+	max_ammo = 8
+	multiple_sprites = 1
+
+/obj/item/ammo_magazine/mc10mm/empty
+	max_ammo = 0
+
+/obj/item/ammo_magazine/c10mm
+	name = "Ammunition Box (10mm)"
+	icon_state = "9mm"
+	origin_tech = "combat=2"
+	ammo_type = "/obj/item/ammo_casing/c10mm"
+	max_ammo = 30
 
 
 /obj/item/ammo_magazine/c45

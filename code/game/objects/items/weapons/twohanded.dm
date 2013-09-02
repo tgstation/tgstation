@@ -107,6 +107,14 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	del(src)
 
+/obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+	var/mob/user = loc
+	if(!istype(user)) return 0
+	var/obj/item/I = user.get_active_hand()
+	if(I == src) I = user.get_inactive_hand()
+	if(!I) return 0
+	return I.IsShield()
+
 
 /*
  * Fireaxe

@@ -199,11 +199,11 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 
 /atom/movable/proc/air_update_turf(var/command = 0)
 	if(istype(loc,/turf))
-		var/turf/T = loc
-		if(command)
-			T.CalculateAdjacentTurfs()
-		if(air_master)
-			air_master.add_to_active(T,command)
+		for(var/turf/T in locs) // used by double wide doors and other nonexistant multitile structures
+			if(command)
+				T.CalculateAdjacentTurfs()
+			if(air_master)
+				air_master.add_to_active(T,command)
 
 
 

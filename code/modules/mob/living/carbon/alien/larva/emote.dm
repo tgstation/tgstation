@@ -97,7 +97,7 @@
 				m_type = 2
 
 		if ("help") //"The exception"
-			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\nburp, choke, collapse, dance, drool, gasp, gnarl, hiss, jump, moan, nod, roll, scratch,\nscretch, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
+			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\n\nburp, choke, collapse, dance, drool, gasp, gnarl, hiss, jump, moan, nod, roll, scratch,\nscretch, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
 
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
