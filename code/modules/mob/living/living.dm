@@ -439,18 +439,13 @@
 
 	//Breaking out of a locker?
 	else if(loc && istype(loc, /obj/structure/closet))
-		var/breakout_time = 2 //2 minutes by default
-
 		var/obj/structure/closet/C = L.loc
-		if(C.opened)
-			return	//Door's open... wait, why are you in it's contents then?
-		if(istype(L.loc, /obj/structure/closet/secure_closet))
-			var/obj/structure/closet/secure_closet/SC = L.loc
-			if(!SC.locked && !SC.welded)
-				return	//It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
-		else
-			if(!C.welded)
-				return	//closed but not welded...</span>
+		var/breakout_time = 2 //2 minutes by default
+		if(istype(L.loc, /obj/structure/closet/critter) && !C.welded)
+			breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
+
+		if(C.opened || (!C.welded && !C.locked))
+			return	//Door's open, not locked or welded, no point in resisting.
 
 		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
@@ -460,43 +455,19 @@
 			O << "<span class='warning'>[C] begins to shake violently!</span>"
 
 		if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-			if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened)	//closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
+			if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened || (!C.locked && !C.welded))
 				return
+			//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
-			//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
-			if(istype(L.loc, /obj/structure/closet/secure_closet))
-				var/obj/structure/closet/secure_closet/SC = L.loc
-				if(!SC.locked && !SC.welded)
-					return
-			else
-				if(!C.welded)
-					return
-
-			//Well then break it!
-			if(istype(usr.loc, /obj/structure/closet/secure_closet))
-				var/obj/structure/closet/secure_closet/SC = L.loc
-				SC.desc = "It appears to be broken."
-				SC.icon_state = SC.icon_off
-				flick(SC.icon_broken, SC)
-				sleep(10)
-				flick(SC.icon_broken, SC)
-				sleep(10)
-				SC.broken = 1
-				SC.locked = 0
-				L.visible_message("<span class='danger'>[L] successfully broke out of [SC]!</span>", \
-								"<span class='notice'>You successfully break out of [SC]!</span>")
-				if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
-					var/obj/structure/bigDelivery/BD = SC.loc
-					BD.attack_hand(usr)
-				SC.open()
-			else
-				C.welded = 0
-				L.visible_message("<span class='danger'>[L] successfully broke out of [C]!</span>", \
-								"<span class='notice'>You successfully break out of [C]!</span>")
-				if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
-					var/obj/structure/bigDelivery/BD = C.loc
-					BD.attack_hand(usr)
-				C.open()
+			C.welded = 0 //applies to all lockers lockers
+			C.locked = 0 //applies to critter crates and secure lockers only
+			C.broken = 1 //applies to secure lockers only
+			L.visible_message("<span class='danger'>[L] successfully broke out of [C]!</span>", \
+							"<span class='notice'>You successfully break out of [C]!</span>")
+			if(istype(C.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
+				var/obj/structure/bigDelivery/BD = C.loc
+				BD.attack_hand(usr)
+			C.open()
 
 	//breaking out of handcuffs
 	else if(iscarbon(L))
