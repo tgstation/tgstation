@@ -358,7 +358,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(layer==MOB_LAYER)
 		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
 	else
-		overlays+="eyes-[subtype][emagged?"-emagged":""]"
+		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",TURF_LAYER+0.2) // Fixes floating eyes
 	return
 
 
