@@ -186,16 +186,17 @@
 			timeleft = min(max(round(timeleft), 0), 600)
 			timing = text2num(href_list["timing"])
 			timeset(timeleft)
-		else
-			if(href_list["tp"]) //adjust timer
-				var/timeleft = timeleft()
-				var/tp = text2num(href_list["tp"])
-				timeleft += tp
-				timeleft = min(max(round(timeleft), 0), 600)
-				timeset(timeleft)
-			else
-				for(var/obj/machinery/flasher/F in targets)
-					F.flash()
+		else if(href_list["tp"]) //adjust timer
+			var/timeleft = timeleft()
+			var/tp = text2num(href_list["tp"])
+			timeleft += tp
+			timeleft = min(max(round(timeleft), 0), 600)
+			timeset(timeleft)
+			//src.timing = 1
+			//src.closedoor()
+		else if(href_list["fc"])
+			for(var/obj/machinery/flasher/F in targets)
+				F.flash()
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		src.update_icon()
