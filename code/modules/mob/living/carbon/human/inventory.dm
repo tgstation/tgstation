@@ -190,6 +190,7 @@
 		l_hand = null
 	else if(I == r_hand)
 		r_hand = null
+	if(client) client.screen -= I //  will get put back if visible
 
 	switch(slot)
 		if(slot_back)
