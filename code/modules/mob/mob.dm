@@ -22,11 +22,15 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Plasma : [environment.toxins] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "\red Temperature: [environment.temperature] \n"
+	t += {"\red Temperature: [environment.temperature] \n
+		\blue Nitrogen: [environment.nitrogen] \n
+		\blue Oxygen: [environment.oxygen] \n
+		\blue Plasma : [environment.toxins] \n
+		\blue Carbon Dioxide: [environment.carbon_dioxide] \n"}
+	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
 		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
 

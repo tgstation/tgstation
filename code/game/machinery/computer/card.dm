@@ -53,15 +53,22 @@
 		return
 	if (mode) // accessing crew manifest
 
-		dat += "<h4>Crew Manifest</h4>"
-		dat += "Entries cannot be modified from this terminal.<br><br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:56: dat += "<h4>Crew Manifest</h4>"
+		dat += {"<h4>Crew Manifest</h4>
+			Entries cannot be modified from this terminal.<br><br>"}
+		// END AUTOFIX
 		if(data_core)
 			dat += data_core.get_manifest(0) // make it monochrome
-		dat += "<br>"
-		dat += "<a href='?src=\ref[src];choice=print'>Print</a><br>"
-		dat += "<br>"
-		dat += "<a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:60: dat += "<br>"
+		dat += {"<br>
+			<a href='?src=\ref[src];choice=print'>Print</a><br>
+			<br>
+			<a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br>"}
+		// END AUTOFIX
 		/*var/crew = ""
 		var/list/L = list()
 		for (var/datum/data/record/t in data_core.general)
@@ -96,15 +103,23 @@
 			scan_name = "--------"
 
 		if(!authenticated)
-			header += "<br><i>Please insert the cards into the slots</i><br>"
-			header += "Target: <a href='?src=\ref[src];choice=modify'>[target_name]</a><br>"
-			header += "Confirm Identity: <a href='?src=\ref[src];choice=scan'>[scan_name]</a><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:99: header += "<br><i>Please insert the cards into the slots</i><br>"
+			header += {"<br><i>Please insert the cards into the slots</i><br>
+				Target: <a href='?src=\ref[src];choice=modify'>[target_name]</a><br>
+				Confirm Identity: <a href='?src=\ref[src];choice=scan'>[scan_name]</a><br>"}
+			// END AUTOFIX
 		else
-			header += "<div align='center'><br>"
-			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
-			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
-			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:103: header += "<div align='center'><br>"
+			header += {"<div align='center'><br>
+				<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || 
+				<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> 
+				<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || 
+				<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"}
+		// END AUTOFIX
 
 		header += "<hr>"
 
@@ -142,21 +157,23 @@
 									allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
 								}
 							</script>"}
-			carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-			carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
-			carddesc += "<input type='hidden' name='choice' value='reg'>"
-			carddesc += "<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
-			carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
-			carddesc += "</form>"
 
-			carddesc += "<form name='accountnum' action='?src=\ref[src]' method='get'>"
-			carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
-			carddesc += "<input type='hidden' name='choice' value='account'>"
-			carddesc += "<b>Stored account number:</b> <input type='text' id='accountfield' name='account' value='[modify.associated_account_number]' style='width:250px; background-color:white;' onchange='markAccountRed()'>"
-			carddesc += "<input type='submit' value='Rename' onclick='markAccountGreen()'>"
-			carddesc += "</form>"
-
-			carddesc += "<b>Assignment:</b> "
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:145: carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
+			carddesc += {"<form name='cardcomp' action='?src=\ref[src]' method='get'>
+				<input type='hidden' name='src' value='\ref[src]'>
+				<input type='hidden' name='choice' value='reg'>
+				<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>
+				<input type='submit' value='Rename' onclick='markGreen()'>
+				</form>
+				<form name='accountnum' action='?src=\ref[src]' method='get'>
+				<input type='hidden' name='src' value='\ref[src]'>
+				<input type='hidden' name='choice' value='account'>
+				<b>Stored account number:</b> <input type='text' id='accountfield' name='account' value='[modify.associated_account_number]' style='width:250px; background-color:white;' onchange='markAccountRed()'>
+				<input type='submit' value='Rename' onclick='markAccountGreen()'>
+				</form>
+				<b>Assignment:</b> "}
+			// END AUTOFIX
 			var/jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
@@ -167,9 +184,13 @@
 					else
 						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
 			else
-				accesses += "<div align='center'><b>Access</b></div>"
-				accesses += "<table style='width:100%'>"
-				accesses += "<tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:170: accesses += "<div align='center'><b>Access</b></div>"
+				accesses += {"<div align='center'><b>Access</b></div>
+					<table style='width:100%'>
+					<tr>"}
+				// END AUTOFIX
 				for(var/i = 1; i <= 7; i++)
 					accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
 				accesses += "</tr><tr>"
@@ -185,8 +206,12 @@
 				accesses += "</tr></table>"
 			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
 		else
-			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
-			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:188: body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
+			body = {"<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>
+				<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"}
+		// END AUTOFIX
 		dat = "<tt>[header][body]<hr><br></tt>"
 	user << browse(dat, "window=id_com;size=900x520")
 	onclose(user, "id_com")

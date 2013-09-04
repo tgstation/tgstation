@@ -139,28 +139,36 @@
 	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
 
 	if(circ1 && circ2)
-		t += "Output : [round(lastgen)] W<BR><BR>"
 
-		t += "<B>Primary Circulator (top or right)</B><BR>"
-		t += "Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa<BR>"
-		t += "Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K<BR>"
-		t += "Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
-		t += "Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>"
-
-		t += "<B>Secondary Circulator (bottom or left)</B><BR>"
-		t += "Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>"
-		t += "Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K<BR>"
-		t += "Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
-		t += "Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:142: t += "Output : [round(lastgen)] W<BR><BR>"
+		t += {"Output : [round(lastgen)] W<BR><BR>
+			<B>Primary Circulator (top or right)</B><BR>
+			Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa<BR>
+			Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K<BR>
+			Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>
+			Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>
+			<B>Secondary Circulator (bottom or left)</B><BR>
+			Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>
+			Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K<BR>
+			Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>
+			Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
+		// END AUTOFIX
 	else
-		t += "Unable to connect to circulators.<br>"
-		t += "Ensure both are in position and wrenched into place."
 
-	t += "<BR>"
-	t += "<HR>"
-	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:157: t += "Unable to connect to circulators.<br>"
+		t += {"Unable to connect to circulators.<br>
+			Ensure both are in position and wrenched into place."}
+		// END AUTOFIX
 
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:160: t += "<BR>"
+	t += {"<BR>
+		<HR>
+		<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"}
+	// END AUTOFIX
 	user << browse(t, "window=teg;size=460x300")
 	onclose(user, "teg")
 	return 1

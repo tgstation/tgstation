@@ -10,7 +10,6 @@
 	health = 5
 	maxHealth = 5
 	attacktext = "bites"
-	attacktext = "bites"
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	response_help  = "pets"

@@ -36,9 +36,13 @@
 					var/list/alm = L[alarm]
 					var/area/A = alm[1]
 					var/list/sources = alm[3]
-					dat += "<NOBR>"
-					dat += "&bull; "
-					dat += "[A.name]"
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\station_alert.dm:39: dat += "<NOBR>"
+					dat += {"<NOBR>
+						&bull; 
+						[A.name]"}
+					// END AUTOFIX
 					if (sources.len > 1)
 						dat += text(" - [] sources", sources.len)
 					dat += "</NOBR><BR>\n"

@@ -445,8 +445,12 @@
 		var/counter = 0
 //Regular jobs
 	//Command (Blue)
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:448: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in command_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -466,8 +470,12 @@
 
 	//Security (Red)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:469: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in security_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -487,8 +495,12 @@
 
 	//Engineering (Yellow)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:490: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in engineering_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -508,8 +520,12 @@
 
 	//Medical (White)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:511: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in medical_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -529,8 +545,12 @@
 
 	//Science (Purple)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:532: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in science_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -550,8 +570,12 @@
 
 	//Civilian (Grey)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:553: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in civilian_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -571,8 +595,12 @@
 
 	//Non-Human (Green)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:574: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in nonhuman_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -599,9 +627,12 @@
 
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:602: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		//Traitor
 		if(jobban_isbanned(M, "traitor") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'><font color=red>[replacetext("Traitor", " ", "&nbsp")]</font></a></td>"

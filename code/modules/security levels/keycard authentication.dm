@@ -63,20 +63,35 @@
 
 	var/dat = "<h1>Keycard Authentication Device</h1>"
 
-	dat += "This device is used to trigger some high security events. It requires the simultaneous swipe of two high-level ID cards."
-	dat += "<br><hr><br>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\security levels\keycard authentication.dm:66: dat += "This device is used to trigger some high security events. It requires the simultaneous swipe of two high-level ID cards."
+	dat += {"This device is used to trigger some high security events. It requires the simultaneous swipe of two high-level ID cards.
+		<br><hr><br>"}
+	// END AUTOFIX
 	if(screen == 1)
-		dat += "Select an event to trigger:<ul>"
-		dat += "<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\security levels\keycard authentication.dm:70: dat += "Select an event to trigger:<ul>"
+		dat += {"Select an event to trigger:<ul>
+			<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"}
+		// END AUTOFIX
 		//dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A></li>" Not yet
-		dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
-		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
-		dat += "</ul>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\security levels\keycard authentication.dm:73: dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
+		dat += {"<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>
+			<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>
+			</ul>"}
+		// END AUTOFIX
 		user << browse(dat, "window=keycard_auth;size=500x250")
 	if(screen == 2)
-		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
-		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\security levels\keycard authentication.dm:78: dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
+		dat += {"Please swipe your card to authorize the following event: <b>[event]</b>
+			<p><A href='?src=\ref[src];reset=1'>Back</A>"}
+		// END AUTOFIX
 		user << browse(dat, "window=keycard_auth;size=500x250")
 	return
 

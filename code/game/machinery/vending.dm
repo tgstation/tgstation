@@ -257,9 +257,13 @@
 
 	if(src.currently_vending)
 		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
-		dat += "<b>You have selected [currently_vending.product_name].<br>Please ensure your ID is in your ID holder or hand.</b><br>"
-		dat += "<a href='byond://?src=\ref[src];buy=1'>Pay</a> | "
-		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:260: dat += "<b>You have selected [currently_vending.product_name].<br>Please ensure your ID is in your ID holder or hand.</b><br>"
+		dat += {"<b>You have selected [currently_vending.product_name].<br>Please ensure your ID is in your ID holder or hand.</b><br>
+			<a href='byond://?src=\ref[src];buy=1'>Pay</a> | 
+			<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"}
+		// END AUTOFIX
 		user << browse(dat, "window=vending")
 		onclose(user, "")
 		return
@@ -282,8 +286,12 @@
 			display_records = src.product_records + src.hidden_records + src.coin_records
 
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " <b>[R.amount]</b> </font>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:285: dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
+			dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
+				<b>[R.amount]</b> </font>"}
+			// END AUTOFIX
 			if(R.price)
 				dat += " <b>(Price: [R.price])</b>"
 			if (R.amount > 0)
@@ -308,16 +316,23 @@
 			if(!is_uncut)
 				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
 			else
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-				dat += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:311: dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
+				dat += {"<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> 
+					<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "}
+				// END AUTOFIX
 			dat += "<br>"
 
-		dat += "<br>"
-		dat += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-		dat += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-		dat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-		dat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:315: dat += "<br>"
+		dat += {"<br>
+			The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>
+			The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>
+			The green light is [src.extended_inventory ? "on" : "off"].<BR>
+			The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"}
+		// END AUTOFIX
 		if (product_slogans != "")
 			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
@@ -888,4 +903,3 @@
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
-

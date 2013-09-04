@@ -354,8 +354,11 @@ table tr:first-child th:first-child { border: none;}
 			output += "<TR><th>Temperature</th>"
 			for (var/i = 1, i <= 4, i++)
 				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
-			output += "</TR>"
-			output += "</table>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Mini\atmos_control.dm:357: output += "</TR>"
+			output += {"</TR>
+				</table>"}
+			// END AUTOFIX
 	return output
 //---END COPYPASTA----

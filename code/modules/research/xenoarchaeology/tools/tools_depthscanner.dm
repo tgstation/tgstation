@@ -80,19 +80,27 @@
 	var/dat = "<b>Co-ordinates with positive matches</b><br>"
 	dat += "<A href='?src=\ref[src];clear=0'>== Clear all ==</a><br>"
 	if(current)
-		dat += "Time: [current.time]<br>"
-		dat += "Coords: [current.coords]<br>"
-		dat += "Anomaly depth: [current.depth] cm<br>"
-		dat += "Clearance above anomaly depth: [current.clearance] cm<br>"
-		dat += "Dissonance spread: [current.dissonance_spread]<br>"
-		dat += "Anomaly material: [current.material]<br>"
-		dat += "<A href='?src=\ref[src];clear=[current.record_index]'>clear entry</a><br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\tools_depthscanner.dm:83: dat += "Time: [current.time]<br>"
+		dat += {"Time: [current.time]<br>
+			Coords: [current.coords]<br>
+			Anomaly depth: [current.depth] cm<br>
+			Clearance above anomaly depth: [current.clearance] cm<br>
+			Dissonance spread: [current.dissonance_spread]<br>
+			Anomaly material: [current.material]<br>
+			<A href='?src=\ref[src];clear=[current.record_index]'>clear entry</a><br>"}
+		// END AUTOFIX
 	else
-		dat += "Select an entry from the list<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\tools_depthscanner.dm:91: dat += "Select an entry from the list<br>"
+		dat += {"Select an entry from the list<br>
+			<br>
+			<br>
+			<br>
+			<br>"}
+		// END AUTOFIX
 	dat += "<hr>"
 	if(positive_locations.len)
 		for(var/index=1, index<=positive_locations.len, index++)
@@ -100,9 +108,13 @@
 			dat += "<A href='?src=\ref[src];select=[index]'>[D.time], coords: [D.coords]</a><br>"
 	else
 		dat += "No entries recorded."
-	dat += "<hr>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</a><br>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</a><br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\tools_depthscanner.dm:103: dat += "<hr>"
+	dat += {"<hr>
+		<A href='?src=\ref[src];refresh=1'>Refresh</a><br>
+		<A href='?src=\ref[src];close=1'>Close</a><br>"}
+	// END AUTOFIX
 	user << browse(dat,"window=depth_scanner;size=300x500")
 	onclose(user, "depth_scanner")
 

@@ -213,3 +213,12 @@
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
+
+// VOX SHUTTLE SHIT
+/turf/simulated/shuttle/floor/vox
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+
+/turf/simulated/shuttle/plating/vox
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure

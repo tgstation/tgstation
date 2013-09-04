@@ -77,15 +77,23 @@
 
 /obj/machinery/bot/floorbot/interact(mob/user as mob)
 	var/dat
-	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
-	dat += "Tiles left: [src.amount]<BR>"
-	dat += "Behvaiour controls are [src.locked ? "locked" : "unlocked"]<BR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\floorbot.dm:80: dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
+	dat += {"<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>
+		Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>
+		Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>
+		Tiles left: [src.amount]<BR>
+		Behvaiour controls are [src.locked ? "locked" : "unlocked"]<BR>"}
+	// END AUTOFIX
 	if(!src.locked || issilicon(user))
-		dat += "Improves floors: <A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A><BR>"
-		dat += "Finds tiles: <A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A><BR>"
-		dat += "Make singles pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A><BR>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\floorbot.dm:86: dat += "Improves floors: <A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A><BR>"
+		dat += {"Improves floors: <A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A><BR>
+			Finds tiles: <A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A><BR>
+			Make singles pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A><BR>"}
+		// END AUTOFIX
 		var/bmode
 		if (src.targetdirection)
 			bmode = dir2text(src.targetdirection)

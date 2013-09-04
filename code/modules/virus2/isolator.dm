@@ -65,8 +65,12 @@
 	user.machine = src
 	var/dat = ""
 	if(!beaker)
-		dat = "Please insert sample into the isolator.<BR>"
-		dat += "<A href='?src=\ref[src];close=1'>Close</A>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\isolator.dm:68: dat = "Please insert sample into the isolator.<BR>"
+		dat = {"Please insert sample into the isolator.<BR>
+			<A href='?src=\ref[src];close=1'>Close</A>"}
+		// END AUTOFIX
 	else if(isolating)
 		dat = "Isolating"
 	else

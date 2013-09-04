@@ -90,7 +90,11 @@ client/verb/showrevinfo()
 	set name = "Show Server Revision"
 	var/output =  "Sorry, the revision info is unavailable."
 	output = file2text("/home/bay12/live/data/gitcommit")
-	output += "Current Infomational Settings: <br>"
-	output += "Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\helper_datums\getrev.dm:93: output += "Current Infomational Settings: <br>"
+	output += {"Current Infomational Settings: <br>
+		Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"}
+	// END AUTOFIX
 	usr << browse(output,"window=revdata");
 	return

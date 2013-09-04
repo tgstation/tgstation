@@ -438,8 +438,12 @@
 				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
 					remove_from_queue(i)//Trash it
 					return list_queue()//Rebuild it
-		output += "</ol>"
-		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mech_fabricator.dm:441: output += "</ol>"
+		output += {"</ol>
+			\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"}
+		// END AUTOFIX
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/convert_designs()

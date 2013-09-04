@@ -86,33 +86,49 @@
 		switch(menustat)
 			if("menu")
 				if (beaker)
-					dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
-					dat += "<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>"
-					dat += "Food<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=milk'>10 milk</A> <FONT COLOR=blue>(20)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=meat'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT><BR>"
-					dat += "Nutrient<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=ez'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT> | <A href='?src=\ref[src];action=create;item=ez5'>x5</A><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=l4z'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5'>x5</A><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=rh'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5'>x5</A><BR>"
-					dat += "Leather<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:89: dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
+					dat += {"<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>
+						<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>
+						Food<BR>
+						<A href='?src=\ref[src];action=create;item=milk'>10 milk</A> <FONT COLOR=blue>(20)</FONT><BR>
+						<A href='?src=\ref[src];action=create;item=meat'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT><BR>
+						Nutrient<BR>
+						<A href='?src=\ref[src];action=create;item=ez'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT> | <A href='?src=\ref[src];action=create;item=ez5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=l4z'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=rh'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5'>x5</A><BR>
+						Leather<BR>
+						<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>
+						<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>
+						<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>
+						<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"}
+					// END AUTOFIX
 					//dat += "Other<BR>"
 					//dat += "<A href='?src=\ref[src];action=create;item=monkey'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
 				else
 					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
 			if("nopoints")
-				dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
-				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:108: dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
+				dat += {"You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>
+					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
+				// END AUTOFIX
 			if("complete")
-				dat += "Operation complete.<BR>"
-				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:111: dat += "Operation complete.<BR>"
+				dat += {"Operation complete.<BR>
+					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
+				// END AUTOFIX
 			if("void")
-				dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
-				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:114: dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
+				dat += {"<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>
+					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
+				// END AUTOFIX
 	user << browse(dat, "window=biogenerator")
 	onclose(user, "biogenerator")
 	return

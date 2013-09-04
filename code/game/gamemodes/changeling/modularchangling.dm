@@ -257,23 +257,20 @@ var/list/datum/power/changeling/powerinstances = list()
 
 					var span = document.getElementById(id);
 
+
 					body = "<table><tr><td>";
-
-					body += "</td><td align='center'>";
-
-					body += "<font size='2'><b>"+desc+"</b></font> <BR>"
-
-					body += "<font size='2'><font color = 'red'><b>"+helptext+"</b></font> <BR>"
+					body +=	"</td><td align='center'>";
+					body +=	"<font size='2'><b>"+desc+"</b></font> <BR>";
+					body +=	"<font size='2'><font color = 'red'><b>"+helptext+"</b></font> <BR>";
 
 					if(!ownsthis)
 					{
 						body += "<a href='?src=\ref[src];P="+power+"'>Evolve</a>"
 					}
 
+
 					body += "</td><td align='center'>";
-
-					body += "</td></tr></table>";
-
+					body +=	"</td></tr></table>";
 
 					span.innerHTML = body
 				}
@@ -497,4 +494,3 @@ var/list/datum/power/changeling/powerinstances = list()
 		call(M.current, Thepower.verbpath)()
 	else if(remake_verbs)
 		M.current.make_changeling()
-

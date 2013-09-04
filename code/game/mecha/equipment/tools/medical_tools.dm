@@ -564,9 +564,13 @@
 		var/r_list = get_reagents_list()
 		var/inputs
 		if(r_list)
-			inputs += "<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">"
-			inputs += "<input type=\"hidden\" name=\"select_reagents\" value=\"1\">"
-			inputs += "<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\equipment\tools\medical_tools.dm:567: inputs += "<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">"
+			inputs += {"<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">
+				<input type=\"hidden\" name=\"select_reagents\" value=\"1\">
+				<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"}
+			// END AUTOFIX
 		var/output = {"<form action="byond://" method="get">
 							[r_list || "No known reagents"]
 							[inputs]

@@ -59,8 +59,12 @@
 			dat = "Blood sample inserted."
 			var/code = ""
 			for(var/V in ANTIGENS) if(text2num(V) & B.data["antibodies"]) code += ANTIGENS[V]
-			dat += "<BR>Antibodies: [code]"
-			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\curer.dm:62: dat += "<BR>Antibodies: [code]"
+			dat += {"<BR>Antibodies: [code]
+				<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"}
+			// END AUTOFIX
 		else
 			dat += "<BR>Please check container contents."
 		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject container</a>"

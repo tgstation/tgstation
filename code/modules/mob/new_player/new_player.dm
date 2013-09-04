@@ -25,16 +25,23 @@
 
 	proc/new_player_panel_proc()
 		var/output = "<div align='center'><B>New Player Options</B>"
-		output +="<hr>"
-		output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\new_player.dm:28: output +="<hr>"
+		output += {"<hr>
+			<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"}
+		// END AUTOFIX
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 			if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
 			else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
 		else
-			output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
-			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\new_player.dm:36: output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
+			output += {"<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>
+				<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"}
+			// END AUTOFIX
 
 		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 

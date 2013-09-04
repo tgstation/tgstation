@@ -54,11 +54,9 @@
 
 /datum/game_mode/cult/pre_setup()
 	if(prob(50))
-		objectives += "survive"
-		objectives += "sacrifice"
+		objectives += "survivesacrifice"
 	else
-		objectives += "eldergod"
-		objectives += "sacrifice"
+		objectives += "eldergodsacrifice"
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs

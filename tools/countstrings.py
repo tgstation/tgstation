@@ -40,6 +40,8 @@ def CountStringsIn(filename):
             while(True):
                 c = f.read(1)
                 if not c:
+                    if inString:
+                        print('{0}: UNTERMINATED STRING!'.format(filename))
                     return numStrings
                 if not inString:
                     if c == '/':

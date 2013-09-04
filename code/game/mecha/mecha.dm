@@ -1330,8 +1330,12 @@
 						<div class='links'>"}
 		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
 			output += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
-		output += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
-		output += "</div></div>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mecha.dm:1333: output += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
+		output += {"<b>Available equipment slots:</b> [max_equip-equipment.len]
+			</div></div>"}
+		// END AUTOFIX
 	return output
 
 /obj/mecha/proc/get_equipment_list() //outputs mecha equipment list in html
@@ -1373,8 +1377,12 @@
 		var/a_name = get_access_desc(a)
 		if(!a_name) continue //there's some strange access without a name
 		output += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
-	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>"
-	output += "</body></html>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mecha.dm:1376: output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>"
+	output += {"<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>
+		</body></html>"}
+	// END AUTOFIX
 	user << browse(output, "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
 	return

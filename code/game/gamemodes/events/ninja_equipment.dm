@@ -345,8 +345,12 @@ ________________________________________________________________________________
 			for (var/obj/item/device/pda/P in world)
 				if (!P.owner||P.toff)
 					continue
-				dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-				dat += "</li>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:348: dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
+				dat += {"<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>
+					</li>"}
+				// END AUTOFIX
 				count++
 			dat += "</ul>"
 			if (count == 0)
@@ -413,9 +417,12 @@ ________________________________________________________________________________
 			dat += "<h4><img src=sos_13.png> AI Control:</h4>"
 			//var/mob/living/silicon/ai/A = AI
 			if(AI)//If an AI exists.
-				dat += "Stored AI: <b>[A.name]</b><br>"
-				dat += "System integrity: [(A.health+100)/2]%<br>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:416: dat += "Stored AI: <b>[A.name]</b><br>"
+				dat += {"Stored AI: <b>[A.name]</b><br>
+					System integrity: [(A.health+100)/2]%<br>"}
+				// END AUTOFIX
 				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
 				//if (A.laws.zeroth)
 				//	laws += "<li>0: [A.laws.zeroth]</li>"
@@ -467,8 +474,12 @@ ________________________________________________________________________________
 			dat += "<ul>"
 			if(istype(stored_research,/list))//If there is stored research. Should be but just in case.
 				for(var/datum/tech/current_data in stored_research)
-					dat += "<li>"
-					dat += "[current_data.name]: [current_data.level]"
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:470: dat += "<li>"
+					dat += {"<li>
+						[current_data.name]: [current_data.level]"}
+					// END AUTOFIX
 					if(t_disk)//If there is a disk inserted. We can either write or overwrite.
 						dat += " <a href='byond://?src=\ref[src];choice=Copy to Disk;target=\ref[current_data]'><i>*Copy to Disk</i></a><br>"
 					dat += "</li>"

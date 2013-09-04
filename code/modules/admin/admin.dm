@@ -40,9 +40,12 @@ var/global/floorIsLava = 0
 	var/body = "<html><head><title>Options for [M.key]</title></head>"
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
-		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:43: body += " played by <b>[M.client]</b> "
+		body += {"played by <b>[M.client]</b> 
+			\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"}
+		// END AUTOFIX
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
 	else
@@ -87,10 +90,13 @@ var/global/floorIsLava = 0
 
 	if (M.client)
 		if(!istype(M, /mob/new_player))
-			body += "<br><br>"
-			body += "<b>Transformation:</b>"
-			body += "<br>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:90: body += "<br><br>"
+			body += {"<br><br>
+				<b>Transformation:</b>
+				<br>"}
+			// END AUTOFIX
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
@@ -262,10 +268,13 @@ var/global/floorIsLava = 0
 			dat += "<br><br>"
 		if(update_file) info << infos
 
-	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
 
-	dat += "</body></html>"
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:265: dat += "<br>"
+	dat += {"<br>
+		<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>
+		</body></html>"}
+	// END AUTOFIX
 	usr << browse(dat, "window=adminplayerinfo;size=480x480")
 
 

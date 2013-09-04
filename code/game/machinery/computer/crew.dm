@@ -64,9 +64,13 @@
 	user.set_machine(src)
 	src.scan()
 	var/t = "<TT><B>Crew Monitoring</B><HR>"
-	t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	t += "<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\crew.dm:67: t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A> "
+	t += {"<BR><A href='?src=\ref[src];update=1'>Refresh</A> 
+		<A href='?src=\ref[src];close=1'>Close</A><BR>
+		<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"}
+	// END AUTOFIX
 	var/list/logs = list()
 	for(var/obj/item/clothing/under/C in src.tracked)
 		var/log = ""
@@ -101,8 +105,12 @@
 	logs = sortList(logs)
 	for(var/log in logs)
 		t += log
-	t += "</table>"
-	t += "</FONT></PRE></TT>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\crew.dm:104: t += "</table>"
+	t += {"</table>
+		</FONT></PRE></TT>"}
+	// END AUTOFIX
 	user << browse(t, "window=crewcomp;size=900x600")
 	onclose(user, "crewcomp")
 

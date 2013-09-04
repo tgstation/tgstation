@@ -232,14 +232,16 @@
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
+	s += {"<b>[station_name()]</b>"
+		(
+		<a href=\"http://\">" //Change this to wherever you want the hub to link to
+		Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version
+		</a>
+		)"}
+	// END AUTOFIX
 	var/list/features = list()
 
 	if(ticker)

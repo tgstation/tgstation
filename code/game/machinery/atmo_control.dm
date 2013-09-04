@@ -369,12 +369,19 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 Rate: [volume_rate] L/sec<BR>"}
 
 				if(automation)
-					output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>"
-					output += "Injector Controls Locked Out<BR>"
-				else
-					output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
-					output += "Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\atmo_control.dm:372: output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>"
+					output += {"Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>
+						Injector Controls Locked Out<BR>"}
+					// END AUTOFIX
+				else
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\atmo_control.dm:375: output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
+					output += {"Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>
+						Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"}
+					// END AUTOFIX
 			else
 				output += "<FONT color='red'>ERROR: Can not find device</FONT> <A href='?src=\ref[src];refresh_status=1'>Search</A><BR>"
 
@@ -442,7 +449,3 @@ Rate: [volume_rate] L/sec<BR>"}
 				)
 
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-
-
-

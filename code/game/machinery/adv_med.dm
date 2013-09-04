@@ -266,14 +266,17 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					dat += "<HR><table border='1'>"
-					dat += "<tr>"
-					dat += "<th>Organ</th>"
-					dat += "<th>Burn Damage</th>"
-					dat += "<th>Brute Damage</th>"
-					dat += "<th>Other Wounds</th>"
-					dat += "</tr>"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:269: dat += "<HR><table border='1'>"
+					dat += {"<HR><table border='1'>
+						<tr>
+						<th>Organ</th>
+						<th>Burn Damage</th>
+						<th>Brute Damage</th>
+						<th>Other Wounds</th>
+						</tr>"}
+					// END AUTOFIX
 					for(var/datum/organ/external/e in occupant.organs)
 						dat += "<tr>"
 						var/AN = ""
@@ -308,9 +311,13 @@
 						dat += "</tr>"
 					for(var/organ_name in occupant.internal_organs)
 						var/datum/organ/internal/i = occupant.internal_organs[organ_name]
-						dat += "<tr>"
-						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>"
-						dat += "</tr>"
+
+						// AUTOFIXED BY fix_string_idiocy.py
+						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:311: dat += "<tr>"
+						dat += {"<tr>
+							<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>
+							</tr>"}
+						// END AUTOFIX
 					dat += "</table>"
 			else
 				dat += "\The [src] is empty."

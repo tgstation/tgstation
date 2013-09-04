@@ -41,15 +41,22 @@ var/const/max_assembly_amount = 300
 	if(locked)
 		t += "Swipe your ID to unlock this console."
 	else
-		t += "Compressed matter in storage: [compressed_matter] <A href='?src=\ref[src];eject_matter=1'>\[Eject all\]</a><br>"
-		t += "<A href='?src=\ref[src];activate=1'><b>Activate Fuel Synthesis</b></A><BR> (fuel assemblies require no more than [max_assembly_amount] rods).<br>"
-		t += "<hr>"
-		t += "- New fuel assembly constituents:- <br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_compressor.dm:44: t += "Compressed matter in storage: [compressed_matter] <A href='?src=\ref[src];eject_matter=1'>\[Eject all\]</a><br>"
+		t += {"Compressed matter in storage: [compressed_matter] <A href='?src=\ref[src];eject_matter=1'>\[Eject all\]</a><br>
+			<A href='?src=\ref[src];activate=1'><b>Activate Fuel Synthesis</b></A><BR> (fuel assemblies require no more than [max_assembly_amount] rods).<br>
+			<hr>
+			- New fuel assembly constituents:- <br>"}
+		// END AUTOFIX
 		for(var/reagent in new_assembly_quantities)
 			t += "	[reagent] rods: [new_assembly_quantities[reagent]] \[<A href='?src=\ref[src];change_reagent=[reagent]'>Modify</A>\]<br>"
-	t += "<hr>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_compressor.dm:50: t += "<hr>"
+	t += {"<hr>
+		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
+	// END AUTOFIX
 	user << browse(t, "window=fuelcomp;size=500x300")
 	user.set_machine(src)
 
