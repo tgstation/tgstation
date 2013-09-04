@@ -328,7 +328,22 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
 		overlays_lying[UNIFORM_LAYER]		= lying
 		overlays_standing[UNIFORM_LAYER]	= standing
-		
+
+		var/g = (gender == FEMALE) ? "f" : "m"
+		if(g == "f" && U.fitted == 1)
+			var/icon/o_lying		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l")
+			var/icon/o_standing		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+			var/icon/f_lying		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_l")
+			var/icon/f_standing		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
+			o_lying.Blend(f_lying, ICON_OVERLAY)
+			o_standing.Blend(f_standing, ICON_OVERLAY)
+			o_lying.SwapColor(rgb(153, 255, 204, 255), rgb(0, 0, 0, 0))
+			o_standing.SwapColor(rgb(153, 255, 204, 255), rgb(0, 0, 0, 0))
+			lying		= image(o_lying,"layer"=-UNIFORM_LAYER)
+			standing	= image(o_standing,"layer"=-UNIFORM_LAYER)
+			overlays_lying[UNIFORM_LAYER]		= lying
+			overlays_standing[UNIFORM_LAYER]	= standing
+
 		if(w_uniform.blood_DNA)
 			lying.overlays		+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood2")
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")

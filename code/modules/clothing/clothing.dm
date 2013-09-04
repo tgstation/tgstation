@@ -145,6 +145,7 @@ BLIND     // can't see anything
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/fitted = 1// For use in alternate clothing styles for women, if clothes vary from a jumpsuit in shape, set this to 0
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
