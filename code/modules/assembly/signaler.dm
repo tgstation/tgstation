@@ -5,7 +5,6 @@
 	item_state = "signaler"
 	m_amt = 1000
 	g_amt = 200
-	w_amt = 100
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 
