@@ -26,22 +26,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-escape_map = {
-    't': '\t',
-    'r': '\r',
-    'n': '\n',
-}
-def escape(c):
-    if c in escape_map:
-        return escape_map[c]
-    return '\\' + c
 def CountStringsIn(filename):
     with open(filename, 'r') as f:
         with open(filename + '.str', 'w') as debug:
             numStrings = 0
             inString = False
             inMegaString = False
-            inEmbeddedStatement = False
+            blockCommentLevel = 0
+            embeddedLevel = 0
             lastChar = ''
             escaped = False
             buffer = ''
@@ -49,48 +41,94 @@ def CountStringsIn(filename):
                 c = f.read(1)
                 if not c:
                     return numStrings
-                if c == '\\' and not escaped:
-                    escaped = True
-                    continue
-                if escaped:
-                    escaped = False
-                    if inString:
-                        buffer += escape(c)
-                    continue
                 if not inString:
-                    if c == '{':
+                    if c == '/':
+                        if lastChar == '/' and blockCommentLevel == 0:
+                            # debug.write("[LINECOMMENT:{0}]".format(f.tell()))
+                            # Seek to EOL.
+                            while(c not in '\r\n'):
+                                c = f.read(1)
+                            # debug.write("[ENDCOMMENT:{0}]".format(f.tell()))
+                            lastChar = ''
+                            continue
+                    if c == '*':
+                        if lastChar == '/':
+                            # debug.write("[BLOCKCOMMENT:{0}]".format(f.tell()))
+                            blockCommentLevel += 1
+                            while(blockCommentLevel > 0):
+                                c = f.read(1)
+                                if not c:
+                                    return numStrings
+                                if c == '*':
+                                    if lastChar == '/':
+                                        blockCommentLevel += 1
+                                elif c == '/':
+                                    if lastChar == '*':
+                                        blockCommentLevel -= 1
+                                lastChar = c
+                            # debug.write("[ENDCOMMENT:{0}]".format(f.tell()))
+                            lastChar = ''
+                            continue
+                    elif c == '"':
+                        if lastChar == '{':
+                            # debug.write("[MEGASTRING:{0}]".format(f.tell()))
+                            inString = True
+                            inMegaString = True
+                            continue
+                        else:
+                            inString = True
+                            # debug.write("[NEWSTRING:{0}]".format(f.tell()))
+                            inMegaString = False
+                            continue
+                    elif c == '{':
                         lastChar = c
                         continue
                     else:
                         lastChar = c
                 else:
-                    if c == "[":
-                        inEmbeddedStatement = True
-                    if c == "]":
-                        inEmbeddedStatement = False
-                if inMegaString:
-                    if c == '}' and lastChar == '"':
-                        inString = False
-                        inMegaString = False
-                        numStrings += 1
-                        debug.write("\n[{0}]={1}".format(numStrings, repr(buffer)))
-                        buffer = ''
+                    if c == '\\' and not escaped:
+                        escaped = True
                         continue
-                else:
-                    if c == '"' and not inEmbeddedStatement:
-                        if lastChar == '{':
-                            inString = True
-                            inMegaString = True
-                            continue
+                    if escaped:
+                        escaped = False
+                        # debug.write("[ESCAPE:{0}]".format(repr(c)))
+                        if inString:
+                            buffer += '\\' + c
+                            lastChar = c
+                        continue
+                    if c in ('[', ']'):
+                        if c == '[':
+                            embeddedLevel += 1
                         else:
-                            inString = not inString
-                            if not inString:
-                                numStrings += 1
-                                debug.write("\n[{0}]={1}".format(numStrings, repr(buffer)))
-                                buffer = ''
+                            embeddedLevel -= 1
+                        buffer += c  # +"<{0}>".format(str(embeddedLevel))
+                        lastChar = c
+                        continue
+                    if embeddedLevel > 0:
+                        buffer += c
+                        lastChar = c
+                        continue
+                    if inMegaString:
+                        if c == '}' and lastChar == '"':
+                            # debug.write("[ENDMEGASTRING]")
+                            inString = False
+                            inMegaString = False
+                            escaped = False
+                            numStrings += 1
+                            debug.write("\n[{0}]={1}".format(numStrings, repr(buffer)))
+                            buffer = ''
                             continue
-                if inString:
+                    else:
+                        if c == '"':
+                            inString = False
+                            # debug.write("[ENDSTRING:{0}]".format(f.tell()))
+                            numStrings += 1
+                            escaped = False
+                            debug.write("\n[{0}]={1}".format(numStrings, repr(buffer)))
+                            buffer = ''
+                            continue
                     buffer += c
+                    lastChar = c
             return numStrings
 
 def ProcessFiles(top='.', ext='.dm'):
