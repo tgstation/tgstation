@@ -494,7 +494,7 @@
 					if(automatic)
 						if(H.check_for_open_slot(src))
 							return 0
-					if(H.belt.canremove)
+					if(H.belt.canremove && !istype(H.belt, /obj/item/weapon/storage/belt))
 						return 2
 					else
 						return 0
