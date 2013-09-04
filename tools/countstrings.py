@@ -26,26 +26,72 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-def CountStringsIn(f):
-    numStrings = 0
-    inString = False
-    escaped = False
-    while(True):
-        c = f.read(1)
-        if not c:
-            return numStrings
-        if c == '\\' and not escaped:
-            escaped = True
-            continue
-        if escaped:
+escape_map = {
+    't': '\t',
+    'r': '\r',
+    'n': '\n',
+}
+def escape(c):
+    if c in escape_map:
+        return escape_map[c]
+    return '\\' + c
+def CountStringsIn(filename):
+    with open(filename, 'r') as f:
+        with open(filename + '.str', 'w') as debug:
+            numStrings = 0
+            inString = False
+            inMegaString = False
+            inEmbeddedStatement = False
+            lastChar = ''
             escaped = False
-            continue         
-        if c == '"':
-            inString = not inString
-            if not inString:
-                numStrings += 1
-            continue
-    return numStrings
+            buffer = ''
+            while(True):
+                c = f.read(1)
+                if not c:
+                    return numStrings
+                if c == '\\' and not escaped:
+                    escaped = True
+                    continue
+                if escaped:
+                    escaped = False
+                    if inString:
+                        buffer += escape(c)
+                    continue
+                if not inString:
+                    if c == '{':
+                        lastChar = c
+                        continue
+                    else:
+                        lastChar = c
+                else:
+                    if c == "[":
+                        inEmbeddedStatement = True
+                    if c == "]":
+                        inEmbeddedStatement = False
+                if inMegaString:
+                    if c == '}' and lastChar == '"':
+                        inString = False
+                        inMegaString = False
+                        numStrings += 1
+                        debug.write("\n[{0}]={1}".format(numStrings, repr(buffer)))
+                        buffer = ''
+                        continue
+                else:
+                    if c == '"' and not inEmbeddedStatement:
+                        if lastChar == '{':
+                            inString = True
+                            inMegaString = True
+                            continue
+                        else:
+                            inString = not inString
+                            if not inString:
+                                numStrings += 1
+                                debug.write("\n[{0}]={1}".format(numStrings, repr(buffer)))
+                                buffer = ''
+                            continue
+                if inString:
+                    buffer += c
+            return numStrings
 
 def ProcessFiles(top='.', ext='.dm'):
     numStringsTotal = 0
@@ -56,12 +102,11 @@ def ProcessFiles(top='.', ext='.dm'):
         for filename in files:
             filepath = os.path.join(root, filename)
             if filepath.endswith(ext):
-                with open(filepath, 'r') as f:
-                    numStrings = CountStringsIn(f)
-                    numStringsTotal += numStrings
-                    if numStrings > maxStringsInFile[0]:
-                        maxStringsInFile = [numStrings, filepath]
-                    numFilesTotal += 1
+                numStrings = CountStringsIn(filepath)
+                numStringsTotal += numStrings
+                if numStrings > maxStringsInFile[0]:
+                    maxStringsInFile = [numStrings, filepath]
+                numFilesTotal += 1
                 print(','.join([filepath, str(numStrings)]))
     print('>>> Total Strings: {0}'.format(numStringsTotal))
     print('>>> Total Files:   {0}'.format(numFilesTotal))
@@ -73,13 +118,13 @@ def ProcessFilesFromDME(dmefile='baystation12.dme', ext='.dm'):
     numFilesTotal = 0
     maxStringsInFile = [0, '']
     rootdir = os.path.dirname(dmefile)
-    with open(os.path.join(rootdir,'stringcounts.csv'),'w') as csv:
-        with open(dmefile,'r') as dmeh:
+    with open(os.path.join(rootdir, 'stringcounts.csv'), 'w') as csv:
+        with open(dmefile, 'r') as dmeh:
             for line in dmeh:
                 if line.startswith('#include'):
                     inString = False
-                    #escaped=False
-                    filename=''
+                    # escaped=False
+                    filename = ''
                     for c in line:
                         """
                         if c == '\\' and not escaped:
@@ -95,14 +140,13 @@ def ProcessFilesFromDME(dmefile='baystation12.dme', ext='.dm'):
                             if not inString:
                                 filepath = os.path.join(rootdir, filename)
                                 if filepath.endswith(ext):
-                                    with open(filepath, 'r') as f:
-                                        numStrings = CountStringsIn(f)
-                                        numStringsTotal += numStrings
-                                        if numStrings > maxStringsInFile[0]:
-                                            maxStringsInFile = [numStrings, filepath]
-                                        numFilesTotal += 1
-                                    csv.write(','.join([filepath, str(numStrings)])+"\n")
-                                filename=''
+                                    numStrings = CountStringsIn(filepath)
+                                    numStringsTotal += numStrings
+                                    if numStrings > maxStringsInFile[0]:
+                                        maxStringsInFile = [numStrings, filepath]
+                                    numFilesTotal += 1
+                                    csv.write(','.join([filepath, str(numStrings)]) + "\n")
+                                filename = ''
                             continue
                         else:
                             if inString:
@@ -116,8 +160,9 @@ if os.path.isdir(sys.argv[1]):
         for filename in files:
             filepath = os.path.join(root, filename)
             if filepath.endswith('.dme'):
-                ProcessFilesFromDME(filepath,sys.argv[2])
+                ProcessFilesFromDME(filepath, sys.argv[2])
                 sys.exit(0)
 if os.path.isfile(sys.argv[1]):
-    ProcessFilesFromDME(sys.argv[1],sys.argv[2])
-#ProcessFiles(sys.argv[1], sys.argv[2])
+    ProcessFilesFromDME(sys.argv[1], sys.argv[2])
+# ProcessFiles(sys.argv[1], sys.argv[2])
+

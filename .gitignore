@@ -6,3 +6,5 @@
 info.json
 /config/admins.txt
 *.bak
+
+*.str

@@ -134,12 +134,6 @@
 			ecosystem involving self cannibalism and a symbiotic relationship with the contained liquid.<br><br>\
 			Structure is composed of a carbo-titanium alloy with interlaced reinforcing energy fields, and the contained liquid \
 			resembles proto-plasmic residue supportive of single cellular developmental conditions."
-		if(/obj/machinery/power/supermatter)
-			return "Super dense plasma clump - Appears to have been shaped or hewn, structure is composed of matter 2000% denser than ordinary carbon matter residue.\
-			Potential application as unrefined plasma source."
-		if(/obj/machinery/power/supermatter)
-			return "Super dense plasma clump - Appears to have been shaped or hewn, structure is composed of matter 2000% denser than ordinary carbon matter residue.\
-			Potential application as unrefined plasma source."
 		if(/obj/structure/constructshell)
 			return "Tribal idol - Item resembles statues/emblems built by superstitious pre-warp civilisations to honour their gods. Material appears to be a \
 			rock/plastcrete composite."

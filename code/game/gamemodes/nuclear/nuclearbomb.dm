@@ -15,6 +15,8 @@ var/bomb_set
 	var/yes_code = 0.0
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
+	var/removal_stage = 0 // 0 is no removal, 1 is covers removed, 2 is covers open,
+	                      // 3 is sealant open, 4 is unwrenched, 5 is removed from bolts.
 	flags = FPRINT
 	use_power = 0
 
@@ -33,14 +35,83 @@ var/bomb_set
 				src.attack_hand(M)
 	return
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon/O as obj, mob/user as mob)
 	if (src.extended)
-		if (istype(I, /obj/item/weapon/disk/nuclear))
+		if (istype(O, /obj/item/weapon/disk/nuclear))
 			usr.drop_item()
-			I.loc = src
-			src.auth = I
+			O.loc = src
+			src.auth = O
 			src.add_fingerprint(user)
 			return
+
+	if (src.anchored)
+		switch(removal_stage)
+			if(0)
+				if(istype(O,/obj/item/weapon/weldingtool))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						user << "\red You need more fuel to complete this task."
+						return
+
+					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
+
+					if(do_after(user,40))
+						if(!src || !user || !WT.remove_fuel(5, user)) return
+						user.visible_message("[user] cuts through the bolt covers on [src].", "You cut through the bolt cover.")
+						removal_stage = 1
+				return
+
+			if(1)
+				if(istype(O,/obj/item/weapon/crowbar))
+					user.visible_message("[user] starts forcing open the bolt covers on [src].", "You start forcing open the anchoring bolt covers with [O]...")
+
+					if(do_after(user,15))
+						if(!src || !user) return
+						user.visible_message("[user] forces open the bolt covers on [src].", "You force open the bolt covers.")
+						removal_stage = 2
+				return
+
+			if(2)
+				if(istype(O,/obj/item/weapon/weldingtool))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						user << "\red You need more fuel to complete this task."
+						return
+
+					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
+
+					if(do_after(user,40))
+						if(!src || !user || !WT.remove_fuel(5, user)) return
+						user.visible_message("[user] cuts apart the anchoring system sealant on [src].", "You cut apart the anchoring system's sealant.")
+						removal_stage = 3
+				return
+
+			if(3)
+				if(istype(O,/obj/item/weapon/wrench))
+
+					user.visible_message("[user] begins unwrenching the anchoring bolts on [src].", "You begin unwrenching the anchoring bolts...")
+
+					if(do_after(user,50))
+						if(!src || !user) return
+						user.visible_message("[user] unwrenches the anchoring bolts on [src].", "You unwrench the anchoring bolts.")
+						removal_stage = 4
+				return
+
+			if(4)
+				if(istype(O,/obj/item/weapon/crowbar))
+
+					user.visible_message("[user] begins lifting [src] off of the anchors.", "You begin lifting the device off the anchors...")
+
+					if(do_after(user,80))
+						if(!src || !user) return
+						user.visible_message("[user] crowbars [src] off of the anchors. It can now be moved.", "You jam the crowbar under the nuclear device and lift it off its anchors. You can now move it!")
+						anchored = 0
+						removal_stage = 5
+				return
 	..()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
@@ -69,7 +140,11 @@ var/bomb_set
 		user << browse(dat, "window=nuclearbomb;size=300x400")
 		onclose(user, "nuclearbomb")
 	else if (src.deployable)
-		src.anchored = 1
+		if(removal_stage < 5)
+			src.anchored = 1
+			visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring!")
+		else
+			visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
 		flick("nuclearbombc", src)
 		src.icon_state = "nuclearbomb1"
 		src.extended = 1
@@ -81,8 +156,10 @@ var/bomb_set
 	set src in oview(1)
 
 	if (src.deployable)
+		usr << "\red You close several panels to make [src] undeployable."
 		src.deployable = 0
 	else
+		usr << "\red You adjust some panels to make [src] deployable."
 		src.deployable = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
@@ -148,7 +225,18 @@ var/bomb_set
 						src.timing = 0
 						bomb_set = 0
 				if (href_list["anchor"])
+
+					if(removal_stage == 5)
+						src.anchored = 0
+						visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+						return
+
 					src.anchored = !( src.anchored )
+					if(src.anchored)
+						visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+					else
+						visible_message("\red The anchoring bolts slide back into the depths of [src].")
+
 		src.add_fingerprint(usr)
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))

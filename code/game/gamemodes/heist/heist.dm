@@ -25,11 +25,12 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
-	world << "<B>The current game mode is - Heist!</B>"
-	world << "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>"
-	world << "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!"
-	world << "<B>Raiders:</B> Loot [station_name()] for anything and everything you need."
-	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."
+	world << {"
+		<B>The current game mode is - Heist!</B><br />
+		<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B><br />
+		Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!<br />
+		<B>Raiders:</B> Loot [station_name()] for anything and everything you need.<br />
+		<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows.<br />"}
 
 /datum/game_mode/heist/can_start()
 
@@ -176,10 +177,10 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	return raid_objectives
 
 /datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
-	raider.current << "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>"
-	raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both."
-	raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."
-	raider.current << "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!"
+	raider.current << {"\blue <B>You are a Vox Raider, fresh from the Shoal!</b><br />
+		The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.<br />
+		Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.<br />
+		Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!</b>"}
 	var/obj_count = 1
 	for(var/datum/objective/objective in raider.objectives)
 		raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -237,8 +238,8 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	world << "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>"
-	world << "[win_msg]"
+	world << {"\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT><br />
+		[win_msg]"}
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
