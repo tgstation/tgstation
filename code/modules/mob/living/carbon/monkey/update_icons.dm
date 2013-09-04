@@ -28,12 +28,13 @@
 	update_hud()
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	overlays.Cut()
+
 	if(lying)
-		icon_state = "monkey0"
+		icon_state = ico + "0"
 		for(var/image/I in overlays_lying)
 			overlays += I
 	else
-		icon_state = "monkey1"
+		icon_state = ico + "1"
 		for(var/image/I in overlays_standing)
 			overlays += I
 

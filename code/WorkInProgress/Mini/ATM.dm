@@ -17,7 +17,7 @@ log transactions
 /obj/machinery/atm
 	name = "NanoTrasen Automatic Teller Machine"
 	desc = "For all your monetary needs!"
-	icon = 'terminals.dmi'
+	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
 	anchored = 1
 	use_power = 1
@@ -36,8 +36,11 @@ log transactions
 
 /obj/machinery/atm/New()
 	..()
-	reconnect_database()
 	machine_id = "[station_name()] RT #[num_financial_terminals++]"
+
+/obj/machinery/atm/initialize()
+	..()
+	reconnect_database()
 
 /obj/machinery/atm/process()
 	if(stat & NOPOWER)
@@ -67,7 +70,7 @@ log transactions
 		break
 
 /obj/machinery/atm/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
+	for(var/obj/machinery/account_database/DB in world) //Hotfix until someone finds out why it isn't in 'machines'
 		if( DB.z == src.z && !(DB.stat & NOPOWER) && DB.activated )
 			linked_db = DB
 			break
@@ -250,25 +253,27 @@ log transactions
 							if(number_incorrect_tries > max_pin_attempts)
 								//lock down the atm
 								ticks_left_locked_down = 30
-								playsound(src, 'buzz-two.ogg', 50, 1)
+								playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 
 								//create an entry in the account transaction log
-								var/datum/transaction/T = new()
-								T.target_name = authenticated_account.owner_name
-								T.purpose = "Unauthorised login attempt"
-								T.source_terminal = machine_id
-								T.date = current_date_string
-								T.time = worldtime2text()
-								authenticated_account.transaction_log.Add(T)
+								var/datum/money_account/failed_account = linked_db.get_account(tried_account_num)
+								if(failed_account)
+									var/datum/transaction/T = new()
+									T.target_name = failed_account.owner_name
+									T.purpose = "Unauthorised login attempt"
+									T.source_terminal = machine_id
+									T.date = current_date_string
+									T.time = worldtime2text()
+									failed_account.transaction_log.Add(T)
 							else
 								usr << "\red \icon[src] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining."
 								previous_account_number = tried_account_num
-								playsound(src, 'buzz-sigh.ogg', 50, 1)
+								playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 						else
 							usr << "\red \icon[src] incorrect pin/account combination entered."
 							number_incorrect_tries = 0
 					else
-						playsound(src, 'twobeep.ogg', 50, 1)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 						ticks_left_timeout = 120
 						view_screen = NO_SCREEN
 
@@ -290,7 +295,7 @@ log transactions
 					alert("That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
 					if(amount <= authenticated_account.money)
-						playsound(src, 'chime.ogg', 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', 50, 1)
 
 						//remove the money
 						authenticated_account.money -= amount

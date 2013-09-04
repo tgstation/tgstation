@@ -144,10 +144,15 @@
 		"You start attaching [tool] where [target]'s [affected.display_name] used to be.")
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/obj/item/robot_parts/L = tool
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] has attached [tool] where [target]'s [affected.display_name] used to be.",	\
 		"\blue You have attached [tool] where [target]'s [affected.display_name] used to be.")
 		affected.robotize()
+		if(L.sabotaged)
+			affected.sabotaged = 1
+		else
+			affected.sabotaged = 0
 		target.update_body()
 		target.updatehealth()
 		target.UpdateDamageIcon()

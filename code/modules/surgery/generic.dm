@@ -30,7 +30,6 @@
 	max_duration = 110
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if(!istype(target, /mob/living/carbon/human)) return
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && affected.open == 0 && target_zone != "mouth"
 
@@ -191,7 +190,16 @@
 	max_duration = 160
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target_zone != "chest" && target_zone != "groin" && target_zone != "head"
+		if (target_zone == "eyes")	//there are specific steps for eye surgery
+			return 0
+		if (!hasorgans(target))
+			return 0
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		if (affected == null)
+			return 0
+		if (affected.status & ORGAN_DESTROYED)
+			return 0
+		return target_zone != "chest" && target_zone != "groin" && target_zone != "head"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -204,7 +212,7 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] cuts off [target]'s [affected.display_name] with \the [tool].", \
 		"\blue You cut off [target]'s [affected.display_name] with \the [tool].")
-		affected.droplimb(1,1)
+		affected.droplimb(1,0)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)

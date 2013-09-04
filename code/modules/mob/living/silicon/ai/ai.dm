@@ -31,9 +31,11 @@ var/list/ai_list = list()
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
+	var/custom_sprite = 0 //For our custom sprites
+//Hud stuff
 
 	//MALFUNCTION
-	var/datum/module_picker/malf_picker
+	var/datum/AI_Module/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
@@ -127,55 +129,50 @@ var/list/ai_list = list()
 	set name = "Set AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
+	/* Jesus christ, more of this shit?
+	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
+		var/file = file2text("config/custom_sprites.txt")
+		var/lines = text2list(file, "\n")
 
+		for(var/line in lines)
+		// split & clean up
+			var/list/Entry = text2list(line, "-")
+			for(var/i = 1 to Entry.len)
+				Entry[i] = trim(Entry[i])
+
+			if(Entry.len < 2)
+				continue;
+
+			if(Entry[1] == src.ckey && Entry[2] == src.real_name)
+				custom_sprite = 1 //They're in the list? Custom sprite time
+				icon = 'icons/mob/custom-synthetic.dmi'
+	*/
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
-	var/list/icons = list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static")
-	if (src.name == "M00X-BC" && src.ckey == "searif")
-		icons += "M00X-BC"
-	if (src.name == "Skuld" && src.ckey == "ravensdale")
-		icons += "Skuld"
-	if (src.name == "REMNANT" && src.ckey == "serithi")
-		icons += "REMNANT"
-	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
-	if(icontype == "Clown")
-		icon_state = "ai-clown2"
-	else if(icontype == "Monochrome")
-		icon_state = "ai-mono"
-	else if(icontype == "Blue")
-		icon_state = "ai"
-	else if(icontype == "Inverted")
-		icon_state = "ai-u"
-	else if(icontype == "Firewall")
-		icon_state = "ai-magma"
-	else if(icontype == "Green")
-		icon_state = "ai-wierd"
-	else if(icontype == "Red")
-		icon_state = "ai-malf"
-	else if(icontype == "Static")
-		icon_state = "ai-static"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Smiley")
-		icon_state = "ai-smiley"
-	else if(icontype == "Matrix")
-		icon_state = "ai-matrix"
-	else if(icontype == "Angry")
-		icon_state = "ai-angryface"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "M00X-BC")
-		icon_state = "ai-searif"
-	else if(icontype == "Triumvirate")
-		icon_state = "ai-triumvirate"
-	else if(icontype == "Triumvirate Static")
-		icon_state = "ai-triumvirate-malf"
-	else if(icontype == "Skuld")
-		icon_state = "ai-ravensdale"
-	else if(icontype == "REMNANT")
-		icon_state = "ai-serithi"
+	/* Nuked your hidden shit.*/
+	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static")
+	switch(icontype)
+		if("Custom") icon_state = "[src.ckey]-ai"
+		if("Clown") icon_state = "ai-clown2"
+		if("Monochrome") icon_state = "ai-mono"
+		if("Inverted") icon_state = "ai-u"
+		if("Firewall") icon_state = "ai-magma"
+		if("Green") icon_state = "ai-wierd"
+		if("Red") icon_state = "ai-red"
+		if("Static") icon_state = "ai-static"
+		if("Text") icon_state = "ai-text"
+		if("Smiley") icon_state = "ai-smiley"
+		if("Matrix") icon_state = "ai-matrix"
+		if("Angry") icon_state = "ai-angryface"
+		if("Dorf") icon_state = "ai-dorf"
+		if("Bliss") icon_state = "ai-bliss"
+		if("Triumvirate") icon_state = "ai-triumvirate"
+		if("Triumvirate Static") icon_state = "ai-triumvirate-malf"
+		if("M00X-BC") icon_state = "ai-searif"
+		if("Skuld") icon_state = "ai-ravensdale"
+		if("REMNANT") icon_state = "ai-serithi"
+		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -571,10 +568,9 @@ var/list/ai_list = list()
 		if(!C.can_use())
 			continue
 
-		var/list/tempnetwork = C.network
-		tempnetwork.Remove("CREED", "thunder", "RD", "toxins", "Prison")
+		var/list/tempnetwork = difflist(C.network,RESTRICTED_CAMERA_NETWORKS,1)
 		if(tempnetwork.len)
-			for(var/i in C.network)
+			for(var/i in tempnetwork)
 				cameralist[i] = i
 	var/old_network = network
 	network = input(U, "Which network would you like to view?") as null|anything in cameralist

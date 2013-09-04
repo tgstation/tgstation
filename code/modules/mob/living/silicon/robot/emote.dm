@@ -10,7 +10,18 @@
 
 	switch(act)
 		if ("me")
-			return custom_emote(m_type, message)
+			if (src.client)
+				if(client.prefs.muted & MUTE_IC)
+					src << "You cannot send IC messages (muted)."
+					return
+				if (src.client.handle_spam_prevention(message,MUTE_IC))
+					return
+			if (stat)
+				return
+			if(!(message))
+				return
+			else
+				return custom_emote(m_type, message)
 
 		if ("custom")
 			return custom_emote(m_type, message)
@@ -61,20 +72,6 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps his wings ANGRILY!"
 				m_type = 2
-
-		if ("me")
-			if (src.client)
-				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
-					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			else
-				message = "<B>[src]</B> [message]"
 
 		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
@@ -194,7 +191,7 @@
 			if (istype(module,/obj/item/weapon/robot_module/security))
 				message = "<B>[src]</B> shows its legal authorization barcode."
 
-				playsound(src.loc, 'biamthelaw.ogg', 50, 0)
+				playsound(src.loc, 'sound/voice/biamthelaw.ogg', 50, 0)
 				m_type = 2
 			else
 				src << "You are not THE LAW, pal."
@@ -207,8 +204,12 @@
 				m_type = 2
 			else
 				src << "You are not security."
+
+		if ("help")
+			src << "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt"
 		else
-			src << text("Invalid Emote: []", act)
+			src << "\blue Unusable emote '[act]'. Say *help for a list."
+
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

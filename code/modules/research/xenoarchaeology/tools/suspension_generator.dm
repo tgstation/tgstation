@@ -1,7 +1,7 @@
 /obj/machinery/suspension_gen
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "suspension2"
 	density = 1
 	req_access = list(access_research)

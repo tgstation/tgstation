@@ -34,9 +34,11 @@
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if (!ishuman(M))
 			user << "\red [M] is not human and cannot have the fingerprints."
+			flick("forensic0",src)
 			return 0
 		if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 			user << "\blue No fingerprints found on [M]"
+			flick("forensic0",src)
 			return 0
 		else
 			if (src.amount < 1)
@@ -71,6 +73,7 @@
 			return
 		if(istype(A,/obj/item/weapon/f_card))
 			user << "The scanner displays on the screen: \"ERROR 43: Object on Excluded Object List.\""
+			flick("forensic0",src)
 			return
 
 		add_fingerprint(user)
@@ -81,6 +84,7 @@
 			if(!isnull(A.blood_DNA))
 				for(var/blood in A.blood_DNA)
 					user << "\blue Blood type: [A.blood_DNA[blood]]\nDNA: [blood]"
+					flick("forensic2",src)
 			return
 
 		//General
@@ -88,10 +92,12 @@
 			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 			"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
 			"You hear a faint hum of electrical equipment.")
+			flick("forensic0",src)
 			return 0
 
 		if(add_data(A))
 			user << "\blue Object already in internal memory. Consolidating data..."
+			flick("forensic2",src)
 			return
 
 
@@ -116,6 +122,7 @@
 		//FIBERS
 		if(A.suit_fibers)
 			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+			flick("forensic2",src)
 
 		//Blood
 		if (A.blood_DNA)
@@ -127,11 +134,13 @@
 			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 			"You finish scanning \the [A].",\
 			"You hear a faint hum of electrical equipment.")
+			flick("forensic2",src)
 			return 0
 		else
 			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
 			"The results of the scan pique your interest.",\
 			"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
+			flick("forensic2",src)
 			return 0
 		return
 

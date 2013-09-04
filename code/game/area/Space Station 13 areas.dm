@@ -309,6 +309,11 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/research/outpost
 	icon_state = "shuttle"
 
+/area/shuttle/vox/station
+	name = "\improper Vox Skipjack"
+	icon_state = "yellow"
+	requires_power = 0
+
 /area/airtunnel1/      // referenced in airtunnel.dm:759
 
 /area/dummy/           // Referenced in engine.dm:261
@@ -489,10 +494,29 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 
+/area/vox_station/transit
+	name = "\improper hyperspace"
+	icon_state = "shuttle"
 
+/area/vox_station/southwest_solars
+	name = "\improper aft port solars"
+	icon_state = "southwest"
 
+/area/vox_station/northwest_solars
+	name = "\improper fore port solars"
+	icon_state = "northwest"
 
+/area/vox_station/northeast_solars
+	name = "\improper fore starboard solars"
+	icon_state = "northeast"
 
+/area/vox_station/southeast_solars
+	name = "\improper aft starboard solars"
+	icon_state = "southeast"
+
+/area/vox_station/mining
+	name = "\improper nearby mining asteroid"
+	icon_state = "north"
 
 //PRISON
 /area/prison

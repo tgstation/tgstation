@@ -71,27 +71,19 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	var/germ_level = user.germ_level
 	if(user.gloves)
 		germ_level = user.gloves.germ_level
-	if(!(E.status & ORGAN_ROBOT)) //Germs on robotic limbs bad
-		E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
+
+	E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
-	if(!istype(M,/mob/living/carbon/human))
+	if(!istype(M,/mob/living/carbon))
 		return 0
 	if (user.a_intent == "harm")	//check for Hippocratic Oath
 		return 0
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
-			if(istype(S,/datum/surgery_step/brain/saw_spine))
-				var/datum/surgery_step/brain/saw_spine/ss = S
-				if(!ss.working)
-					ss.begin_step(user, M, user.zone_sel.selecting, tool)
-				else
-					user << "\blue You're already removing their brain."
-					return 1
-			else
-				S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
-				//We had proper tools! (or RNG smiled.) and User did not move or change hands.
+			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
+			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
 			else														//or

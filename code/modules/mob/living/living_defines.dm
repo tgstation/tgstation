@@ -24,7 +24,6 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
 
-
 	var/t_plasma = null
 	var/t_oxygen = null
 	var/t_sl_gas = null

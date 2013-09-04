@@ -68,7 +68,7 @@
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
 
-	world << sound('commandreport.ogg')
+	world << sound('sound/AI/commandreport.ogg')
 
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
@@ -89,7 +89,7 @@
 
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
-	world << sound('commandreport.ogg')
+	world << sound('sound/AI/commandreport.ogg')
 
 
 /datum/game_mode/epidemic/post_setup()
@@ -124,14 +124,15 @@
 
 	for(var/i = 0, i < lethal_amount, i++)
 		var/mob/living/carbon/human/H = pick(crew)
-		if(H.virus2)
+		if(lethal.uniqueID in H.virus2)
 			i--
 			continue
-		H.virus2 = lethal.getcopy()
+		H.virus2["[lethal.uniqueID]"] = lethal.getcopy()
 		infectees += H
 
 	var/mob/living/carbon/human/patient_zero = pick(infectees)
-	patient_zero.virus2.stage = 3
+	var/datum/disease2/disease/V = patient_zero.virus2["[lethal.uniqueID]"]
+	V.stage = 3
 
 	cruiser_arrival = world.time + (10 * 90 * 60)
 	stage = 1
@@ -169,7 +170,7 @@
 	var/sick = 0
 	for(var/mob/living/carbon/human/H in world)
 		if(H.key && H.stat != 2) alive++
-		if(H.virus2 && H.stat != 2) sick++
+		if(H.virus2.len && H.stat != 2) sick++
 
 	if(alive == 0)
 		finished = 2
@@ -193,7 +194,7 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in world)
 		if(M.client)
-			M << 'Alarm.ogg'
+			M << 'sound/machines/Alarm.ogg'
 	world << "\blue<b>Incoming missile detected.. Impact in 10..</b>"
 	for (var/i=9 to 1 step -1)
 		sleep(10)

@@ -72,38 +72,30 @@
 
 	min_duration = 50
 	max_duration = 70
-	var/working = 0
+
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return ..() && target.brain_op_stage == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if(!working)
-			working = 1
 		user.visible_message("[user] starts separating [target]'s brain from \his spine with \the [tool].", \
 		"You start separating [target]'s brain from spine with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		working = 0
 		user.visible_message("\blue [user] separates [target]'s brain from \his spine with \the [tool].",	\
 		"\blue You separate [target]'s brain from spine with \the [tool].")
 
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-
-		log_admin("ATTACK: [user] ([user.ckey]) debrained [target] ([target.ckey]) with [tool].")
-		message_admins("ATTACK: [user] ([user.ckey]) debrained [target] ([target.ckey]) with [tool].")
-		log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		var/obj/item/brain/B = new(target.loc)
 		B.transfer_identity(target)
 
 		target:brain_op_stage = 4.0
-		target:afterlife = 200
 		target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		working = 0
 		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
 		target.apply_damage(30, BRUTE, "head", 1)

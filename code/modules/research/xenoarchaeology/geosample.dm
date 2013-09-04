@@ -17,7 +17,7 @@
 /obj/item/weapon/rocksliver
 	name = "rock sliver"
 	desc = "It looks extremely delicate."
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "sliver1"	//0-4
 	w_class = 1
 	//item_state = "electronic"

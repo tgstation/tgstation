@@ -86,7 +86,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/list/signalers[12]
 	var/lockdownbyai = 0
 	autoclose = 1
-	var/doortype = 0
+	var/assembly_type = /obj/structure/door_assembly
+	var/mineral = null
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
@@ -96,125 +97,116 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/command
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
-	doortype = 1
+	assembly_type = /obj/structure/door_assembly/door_assembly_com
 
 /obj/machinery/door/airlock/security
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorsec.dmi'
-	doortype = 2
+	assembly_type = /obj/structure/door_assembly/door_assembly_sec
 
 /obj/machinery/door/airlock/engineering
 	name = "Airlock"
 	icon = 'icons/obj/doors/Dooreng.dmi'
-	doortype = 3
+	assembly_type = /obj/structure/door_assembly/door_assembly_eng
 
 /obj/machinery/door/airlock/medical
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doormed.dmi'
-	doortype = 4
+	assembly_type = /obj/structure/door_assembly/door_assembly_med
 
 /obj/machinery/door/airlock/maintenance
 	name = "Maintenance Access"
 	icon = 'icons/obj/doors/Doormaint.dmi'
-	doortype = 5
+	assembly_type = /obj/structure/door_assembly/door_assembly_mai
 
 /obj/machinery/door/airlock/external
 	name = "External Airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
-	doortype = 6
+	assembly_type = /obj/structure/door_assembly/door_assembly_ext
 
 /obj/machinery/door/airlock/glass
 	name = "Glass Airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
-	doortype = 7
 	glass = 1
 
 /obj/machinery/door/airlock/centcom
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorele.dmi'
 	opacity = 0
-	doortype = 8
 
 /obj/machinery/door/airlock/vault
 	name = "Vault"
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
-	doortype = 9
-
-/obj/machinery/door/airlock/glass_large
-	name = "Glass Airlock"
-	icon = 'icons/obj/doors/Door2x1glassfull.dmi'
-	opacity = 0
-	doortype = 10
-	glass = 1
+	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
 
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
 	icon = 'icons/obj/doors/Doorfreezer.dmi'
 	opacity = 1
-	doortype = 11
+	assembly_type = /obj/structure/door_assembly/door_assembly_fre
 
 /obj/machinery/door/airlock/hatch
 	name = "Airtight Hatch"
 	icon = 'icons/obj/doors/Doorhatchele.dmi'
 	opacity = 1
-	doortype = 12
+	assembly_type = /obj/structure/door_assembly/door_assembly_hatch
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorhatchmaint2.dmi'
 	opacity = 1
-	doortype = 13
+	assembly_type = /obj/structure/door_assembly/door_assembly_mhatch
 
 /obj/machinery/door/airlock/glass_command
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorcomglass.dmi'
 	opacity = 0
-	doortype = 14
+	assembly_type = /obj/structure/door_assembly/door_assembly_com
 	glass = 1
 
 /obj/machinery/door/airlock/glass_engineering
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorengglass.dmi'
 	opacity = 0
-	doortype = 15
+	assembly_type = /obj/structure/door_assembly/door_assembly_eng
 	glass = 1
 
 /obj/machinery/door/airlock/glass_security
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorsecglass.dmi'
 	opacity = 0
-	doortype = 16
+	assembly_type = /obj/structure/door_assembly/door_assembly_sec
 	glass = 1
 
 /obj/machinery/door/airlock/glass_medical
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doormedglass.dmi'
 	opacity = 0
-	doortype = 17
+	assembly_type = /obj/structure/door_assembly/door_assembly_med
 	glass = 1
 
 /obj/machinery/door/airlock/mining
 	name = "Mining Airlock"
 	icon = 'icons/obj/doors/Doormining.dmi'
-	doortype = 18
+	assembly_type = /obj/structure/door_assembly/door_assembly_min
 
 /obj/machinery/door/airlock/atmos
 	name = "Atmospherics Airlock"
 	icon = 'icons/obj/doors/Dooratmo.dmi'
-	doortype = 19
+	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 
 /obj/machinery/door/airlock/research
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorresearch.dmi'
-	doortype = 20
+	assembly_type = /obj/structure/door_assembly/door_assembly_research
 
 /obj/machinery/door/airlock/glass_research
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorresearchglass.dmi'
 	opacity = 0
-	doortype = 21
+	assembly_type = /obj/structure/door_assembly/door_assembly_research
 	glass = 1
 	heat_proof = 1
 
@@ -222,40 +214,36 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorminingglass.dmi'
 	opacity = 0
-	doortype = 22
+	assembly_type = /obj/structure/door_assembly/door_assembly_min
 	glass = 1
 
 /obj/machinery/door/airlock/glass_atmos
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Dooratmoglass.dmi'
 	opacity = 0
-	doortype = 23
+	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 	glass = 1
 
 /obj/machinery/door/airlock/gold
 	name = "Gold Airlock"
 	icon = 'icons/obj/doors/Doorgold.dmi'
-	var/mineral = "gold"
-	doortype = 24
+	mineral = "gold"
 
 /obj/machinery/door/airlock/silver
 	name = "Silver Airlock"
 	icon = 'icons/obj/doors/Doorsilver.dmi'
-	var/mineral = "silver"
-	doortype = 25
+	mineral = "silver"
 
 /obj/machinery/door/airlock/diamond
 	name = "Diamond Airlock"
 	icon = 'icons/obj/doors/Doordiamond.dmi'
-	var/mineral = "diamond"
-	doortype = 26
+	mineral = "diamond"
 
 /obj/machinery/door/airlock/uranium
 	name = "Uranium Airlock"
 	desc = "And they said I was crazy."
 	icon = 'icons/obj/doors/Dooruranium.dmi'
-	var/mineral = "uranium"
-	doortype = 27
+	mineral = "uranium"
 	var/last_event = 0
 
 /obj/machinery/door/airlock/uranium/process()
@@ -274,8 +262,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "Plasma Airlock"
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/Doorplasma.dmi'
-	var/mineral = "plasma"
-	doortype = 28
+	mineral = "plasma"
 
 /obj/machinery/door/airlock/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -303,37 +290,35 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
 	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
 		D.ignite(temperature/4)
-	new/obj/structure/door_assembly/door_assembly_0( src.loc )
+	new/obj/structure/door_assembly( src.loc )
 	del (src)
 
 /obj/machinery/door/airlock/clown
 	name = "Bananium Airlock"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
-	var/mineral = "clown"
-	doortype = 29
+	mineral = "clown"
 
 /obj/machinery/door/airlock/sandstone
 	name = "Sandstone Airlock"
 	icon = 'icons/obj/doors/Doorsand.dmi'
-	var/mineral = "sandstone"
-	doortype = 30
+	mineral = "sandstone"
 
 /obj/machinery/door/airlock/science
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorsci.dmi'
-	doortype = 31
+	assembly_type = /obj/structure/door_assembly/door_assembly_science
 
 /obj/machinery/door/airlock/glass_science
 	name = "Glass Airlocks"
 	icon = 'icons/obj/doors/Doorsciglass.dmi'
 	opacity = 0
-	doortype = 32
+	assembly_type = /obj/structure/door_assembly/door_assembly_science
 	glass = 1
 
 /obj/machinery/door/airlock/highsecurity
 	name = "High Tech Security Airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
-	doortype = 33
+	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity
 
 /*
 About the new airlock wires panel:
@@ -1204,42 +1189,26 @@ About the new airlock wires panel:
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
 				user << "\blue You removed the airlock electronics!"
-				switch(src.doortype)
-					if(0) new/obj/structure/door_assembly/door_assembly_0( src.loc )
-					if(1) new/obj/structure/door_assembly/door_assembly_com( src.loc )
-					if(2) new/obj/structure/door_assembly/door_assembly_sec( src.loc )
-					if(3) new/obj/structure/door_assembly/door_assembly_eng( src.loc )
-					if(4) new/obj/structure/door_assembly/door_assembly_med( src.loc )
-					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
-					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
-					if(7) new/obj/structure/door_assembly/door_assembly_glass( src.loc )
-					if(12) new/obj/structure/door_assembly/door_assembly_hatch( src.loc )
-					if(13) new/obj/structure/door_assembly/door_assembly_mhatch( src.loc )
-					if(14) new/obj/structure/door_assembly/door_assembly_com/glass( src.loc )
-					if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )
-					if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
-					if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
-					if(18) new/obj/structure/door_assembly/door_assembly_min( src.loc )
-					if(19) new/obj/structure/door_assembly/door_assembly_atmo( src.loc )
-					if(20) new/obj/structure/door_assembly/door_assembly_research( src.loc )
-					if(21) new/obj/structure/door_assembly/door_assembly_research/glass( src.loc )
-					if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
-					if(23) new/obj/structure/door_assembly/door_assembly_atmo/glass( src.loc )
-					if(24) new/obj/structure/door_assembly/door_assembly_gold( src.loc )
-					if(25) new/obj/structure/door_assembly/door_assembly_silver( src.loc )
-					if(26) new/obj/structure/door_assembly/door_assembly_diamond( src.loc )
-					if(27) new/obj/structure/door_assembly/door_assembly_uranium( src.loc )
-					if(28) new/obj/structure/door_assembly/door_assembly_plasma( src.loc )
-					if(29) new/obj/structure/door_assembly/door_assembly_clown( src.loc )
-					if(30) new/obj/structure/door_assembly/door_assembly_sandstone( src.loc )
-					if(31) new/obj/structure/door_assembly/door_assembly_science( src.loc )
-					if(32) new/obj/structure/door_assembly/door_assembly_science/glass( src.loc )
-					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
+
+				var/obj/structure/door_assembly/da = new assembly_type(src.loc)
+				da.anchored = 1
+				if(mineral)
+					da.glass = mineral
+				//else if(glass)
+				else if(glass && !da.glass)
+					da.glass = 1
+				da.state = 1
+				da.created_name = src.name
+				da.update_state()
 
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )
-					ae.conf_access = src.req_access
+					if(src.req_access.len)
+						ae.conf_access = src.req_access
+					else if (src.req_one_access.len)
+						ae.conf_access = src.req_one_access
+						ae.one_access = 1
 				else
 					ae = electronics
 					electronics = null
@@ -1307,29 +1276,31 @@ About the new airlock wires panel:
 		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) )
 			return
 	if(safe)
-		if(locate(/mob/living) in get_turf(src))
-		//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
-			spawn (60)
-				close()
-			return
+		for(var/turf/turf in locs)
+			if(locate(/mob/living) in turf)
+			//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
+				spawn (60)
+					close()
+				return
 
-	for(var/mob/living/M in get_turf(src))
-		if(isrobot(M))
-			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-		else
-			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			M.SetStunned(5)
-			M.SetWeakened(5)
-			var/obj/effect/stop/S
-			S = new /obj/effect/stop
-			S.victim = M
-			S.loc = src.loc
-			spawn(20)
-				del(S)
-			M.emote("scream")
-		var/turf/location = src.loc
-		if(istype(location, /turf/simulated))
-			location.add_blood(M)
+	for(var/turf/turf in locs)
+		for(var/mob/living/M in turf)
+			if(isrobot(M))
+				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			else
+				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+				M.SetStunned(5)
+				M.SetWeakened(5)
+				var/obj/effect/stop/S
+				S = new /obj/effect/stop
+				S.victim = M
+				S.loc = M.loc
+				spawn(20)
+					del(S)
+				M.emote("scream")
+			var/turf/location = src.loc
+			if(istype(location, /turf/simulated))
+				location.add_blood(M)
 
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
@@ -1338,9 +1309,10 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
 	else
 		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
-	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
-	if(killthis)
-		killthis.ex_act(2)//Smashin windows
+	for(var/turf/turf in locs)
+		var/obj/structure/window/killthis = (locate(/obj/structure/window) in turf)
+		if(killthis)
+			killthis.ex_act(2)//Smashin windows
 	..()
 	return
 

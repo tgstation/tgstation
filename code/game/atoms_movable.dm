@@ -47,18 +47,18 @@
 		return 1
 	return 0
 
-/atom/movable/proc/hit_check()
+/atom/movable/proc/hit_check(var/speed)
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
 			if(istype(A,/mob/living))
 				if(A:lying) continue
-				src.throw_impact(A)
+				src.throw_impact(A,speed)
 				if(src.throwing == 1)
 					src.throwing = 0
 			if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A)
+					src.throw_impact(A,speed)
 					src.throwing = 0
 
 /atom/movable/proc/throw_at(atom/target, range, speed)
@@ -100,7 +100,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(speed)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -112,7 +112,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(speed)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -129,7 +129,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(speed)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -141,7 +141,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(speed)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -153,7 +153,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src:throw_impact(get_turf(src))
+	if(isobj(src)) src:throw_impact(get_turf(src),speed)
 
 
 //Overlays

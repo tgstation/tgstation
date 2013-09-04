@@ -12,8 +12,8 @@
 <html>
 <head>
 <title>Permissions Panel</title>
-<script type='text/javascript' src='search.js'></script>
-<link rel='stylesheet' type='text/css' href='panels.css'>
+<script type='text/javascript' src='html/search.js'></script>
+<link rel='stylesheet' type='text/css' href='html/panels.css'>
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>

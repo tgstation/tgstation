@@ -5,8 +5,6 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
-
-
 /*-------TODOOOOOOOOOO--------*/
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
@@ -38,6 +36,7 @@
 		module_active = null
 		module_state_3 = null
 		inv3.icon_state = "inv3"
+	updateicon()
 
 /mob/living/silicon/robot/proc/uneq_all()
 	module_active = null
@@ -66,7 +65,7 @@
 		contents -= module_state_3
 		module_state_3 = null
 		inv3.icon_state = "inv3"
-
+	updateicon()
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)
 	if(module_state_1 == O)
@@ -77,3 +76,4 @@
 		return 1
 	else
 		return 0
+	updateicon()

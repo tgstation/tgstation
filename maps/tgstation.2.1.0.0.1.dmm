@@ -6924,7 +6924,7 @@
 "cDi" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
 "cDj" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
 "cDk" = (/obj/machinery/recharge_station,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
-"cDl" = (/obj/machinery/robotic_fabricator,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
+"cDl" = (/obj/machinery/mecha_part_fabricator,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
 "cDm" = (/obj/machinery/autolathe{desc = "Your typical Autolathe. It appears to have much more options than your regular one, however..."; hacked = 1; name = "Thunderdome Autolathe"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
 "cDn" = (/obj/structure/dispenser,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/administration/centcom)
 "cDo" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/unsimulated/floor{icon_state = "carpet"; dir = 2},/area/centcom/living)

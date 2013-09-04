@@ -103,34 +103,19 @@
 
 		if("hurt")
 
-			var/attack_verb
-			if(M.dna)
-				switch(M.dna.mutantrace)
-					if("lizard")
-						attack_verb = "scratch"
-					if("tajaran")
-						attack_verb = "scratch"
-					if("plant")
-						attack_verb = "slash"
-					else
-						attack_verb = "punch"
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb]ed [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb]ed by [M.name] ([M.ckey])</font>")
 
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[attack_verb]ed [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [attack_verb]ed by [M.name] ([M.ckey])</font>")
-
-			log_attack("<font color='red'>[M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])</font>")
+			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
 			var/damage = rand(0, 5)//BS12 EDIT
 			if(!damage)
-				switch(attack_verb)
-					if("slash")
-						playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					if("scratch")
-						playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					else
-						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				if(M.species.attack_verb == "punch")
+					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				else
+					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 
-				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
+				visible_message("\red <B>[M] has attempted to [M.species.attack_verb] [src]!</B>")
 				return 0
 
 
@@ -140,21 +125,18 @@
 			if(HULK in M.mutations)			damage += 5
 
 
-			switch(attack_verb)
-				if("slash")
-					playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-				if("scratch")
-					playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-				else
-					playsound(loc, "punch", 25, 1, -1)
+			if(M.species.attack_verb == "punch")
+				playsound(loc, "punch", 25, 1, -1)
+			else
+				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 
-			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
+			visible_message("\red <B>[M] has [M.species.attack_verb]ed [src]!</B>")
 			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= 9)
+			if(damage >= 5 && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
 
-			if(attack_verb == "scratch")	damage += 5
+			if(M.species.attack_verb != "punch")	damage += 5
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 
@@ -162,9 +144,7 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 
-			log_admin("ATTACK: [M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])")
-			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
-
+			log_attack("[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])")
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)

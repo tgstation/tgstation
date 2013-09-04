@@ -177,7 +177,7 @@
 				var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, attempt_pin, 2)
 				if(D)
 					if(transaction_amount <= D.money)
-						playsound(src, 'chime.ogg', 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', 50, 1)
 						src.visible_message("\icon[src] The [src] chimes.")
 						transaction_paid = 1
 

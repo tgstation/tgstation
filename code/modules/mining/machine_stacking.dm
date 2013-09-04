@@ -18,7 +18,15 @@
 		else
 			del(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(user as mob)
+/obj/machinery/mineral/stacking_unit_console/process()
+	updateDialog()
+
+/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
+	add_fingerprint(user)
+	interact(user)
+
+/obj/machinery/mineral/stacking_unit_console/interact(mob/user)
+	user.set_machine(src)
 
 	var/dat
 
@@ -60,6 +68,7 @@
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
 	user << browse("[dat]", "window=console_stacking_machine")
+	onclose(user, "console_stacking_machine")
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())

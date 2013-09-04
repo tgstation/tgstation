@@ -5,6 +5,7 @@ var/global/list/datum/money_account/department_accounts = list()
 var/global/next_account_number = 0
 var/global/obj/machinery/account_database/centcomm_account_db
 var/global/datum/money_account/vendor_account
+var/global/list/all_money_accounts = list()
 
 /proc/create_station_account()
 	if(!station_account)
@@ -27,8 +28,7 @@ var/global/datum/money_account/vendor_account
 
 		//add the account
 		station_account.transaction_log.Add(T)
-		for(var/obj/machinery/account_database/A in world)
-			A.accounts.Add(station_account)
+		all_money_accounts.Add(station_account)
 
 /proc/create_department_account(department)
 	next_account_number = rand(111111, 999999)
@@ -50,13 +50,70 @@ var/global/datum/money_account/vendor_account
 
 	//add the account
 	department_account.transaction_log.Add(T)
-	for(var/obj/machinery/account_database/A in world)
-		A.accounts.Add(department_account)
+	all_money_accounts.Add(department_account)
 
 	department_accounts[department] = department_account
 
 //the current ingame time (hh:mm) can be obtained by calling:
 //worldtime2text()
+
+/proc/create_account(var/new_owner_name = "Default user", var/starting_funds = 0, var/obj/machinery/account_database/source_db)
+
+	//create a new account
+	var/datum/money_account/M = new()
+	M.owner_name = new_owner_name
+	M.remote_access_pin = rand(1111, 111111)
+	M.money = starting_funds
+
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = new_owner_name
+	T.purpose = "Account creation"
+	T.amount = starting_funds
+	if(!source_db)
+		//set a random date, time and location some time over the past few decades
+		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 25[rand(10,56)]"
+		T.time = "[rand(0,24)]:[rand(11,59)]"
+		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
+
+		M.account_number = rand(111111, 999999)
+	else
+		T.date = current_date_string
+		T.time = worldtime2text()
+		T.source_terminal = source_db.machine_id
+
+		M.account_number = next_account_number
+		next_account_number += rand(1,25)
+
+		//create a sealed package containing the account details
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(source_db.loc)
+
+		var/obj/item/weapon/paper/R = new /obj/item/weapon/paper(P)
+		P.wrapped = R
+		R.name = "Account information: [M.owner_name]"
+		R.info = "<b>Account details (confidential)</b><br><hr><br>"
+		R.info += "<i>Account holder:</i> [M.owner_name]<br>"
+		R.info += "<i>Account number:</i> [M.account_number]<br>"
+		R.info += "<i>Account pin:</i> [M.remote_access_pin]<br>"
+		R.info += "<i>Starting balance:</i> $[M.money]<br>"
+		R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
+		R.info += "<i>Creation terminal ID:</i> [source_db.machine_id]<br>"
+		R.info += "<i>Authorised NT officer overseeing creation:</i> [source_db.held_card.registered_name]<br>"
+
+		//stamp the paper
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.icon_state = "paper_stamp-cent"
+		if(!R.stamped)
+			R.stamped = new
+		R.stamped += /obj/item/weapon/stamp
+		R.overlays += stampoverlay
+		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
+
+	//add the account
+	M.transaction_log.Add(T)
+	all_money_accounts.Add(M)
+
+	return M
 
 /datum/money_account
 	var/owner_name = ""
@@ -79,10 +136,9 @@ var/global/datum/money_account/vendor_account
 /obj/machinery/account_database
 	name = "Accounts database"
 	desc = "Holds transaction logs, account data and all kinds of other financial records."
-	icon = 'virology.dmi'
+	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 	density = 1
-	var/list/accounts = list()
 	req_one_access = list(access_hop, access_captain)
 	var/receipt_num
 	var/machine_id = ""
@@ -156,10 +212,10 @@ var/global/datum/money_account/vendor_account
 						dat += "</tr>"
 					dat += "</table>"
 				else
-					dat += "<a href='?src=\ref[src];choice=create_account;'>Create new account</a> <a href='?src=\ref[src];choice=sync_accounts;'>Sync accounts across databases</a><br><br>"
+					dat += "<a href='?src=\ref[src];choice=create_account;'>Create new account</a><br><br>"
 					dat += "<table border=1 style='width:100%'>"
-					for(var/i=1, i<=accounts.len, i++)
-						var/datum/money_account/D = accounts[i]
+					for(var/i=1, i<=all_money_accounts.len, i++)
+						var/datum/money_account/D = all_money_accounts[i]
 						dat += "<tr>"
 						dat += "<td>#[D.account_number]</td>"
 						dat += "<td>[D.owner_name]</td>"
@@ -193,22 +249,12 @@ var/global/datum/money_account/vendor_account
 
 	if(href_list["choice"])
 		switch(href_list["choice"])
-			if("sync_accounts")
-				for(var/obj/machinery/account_database/A in world)
-					for(var/datum/money_account/M in src.accounts)
-						if(!A.accounts.Find(M))
-							A.accounts.Add(M)
-					for(var/datum/money_account/M in A.accounts)
-						if(!src.accounts.Find(M))
-							src.accounts.Add(M)
-				usr << "\icon[src] <span class='info'>Accounts synched across all NanoTrasen financial databases.</span>"
-
 			if("create_account")
 				creating_new_account = 1
 			if("finalise_create_account")
 				var/account_name = href_list["holder_name"]
 				var/starting_funds = max(text2num(href_list["starting_funds"]), 0)
-				add_account(account_name, starting_funds)
+				create_account(account_name, starting_funds, src)
 				if(starting_funds > 0)
 					//subtract the money
 					station_account.money -= starting_funds
@@ -247,85 +293,18 @@ var/global/datum/money_account/vendor_account
 							access_level = 1
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
-				if(index && index <= accounts.len)
-					detailed_account_view = accounts[index]
+				if(index && index <= all_money_accounts.len)
+					detailed_account_view = all_money_accounts[index]
 			if("view_accounts_list")
 				detailed_account_view = null
 				creating_new_account = 0
 
 	src.attack_hand(usr)
 
-/obj/machinery/account_database/proc/add_account_across_all(var/new_owner_name = "Default user", var/starting_funds = 0, var/pre_existing = 0)
-	var/datum/money_account/M = add_account(new_owner_name, starting_funds, pre_existing)
-	for(var/obj/machinery/account_database/D in world)
-		if(D == src)
-			continue
-		D.accounts.Add(M)
-
-	return M
-
-/obj/machinery/account_database/proc/add_account(var/new_owner_name = "Default user", var/starting_funds = 0, var/pre_existing = 0)
-
-	//create a new account
-	var/datum/money_account/M = new()
-	M.owner_name = new_owner_name
-	M.remote_access_pin = rand(1111, 111111)
-	M.money = starting_funds
-
-	//create an entry in the account transaction log for when it was created
-	var/datum/transaction/T = new()
-	T.target_name = new_owner_name
-	T.purpose = "Account creation"
-	T.amount = starting_funds
-	if(pre_existing)
-		//set a random date, time and location some time over the past few decades
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 25[rand(10,56)]"
-		T.time = "[rand(0,24)]:[rand(11,59)]"
-		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
-
-		M.account_number = rand(111111, 999999)
-	else
-		T.date = current_date_string
-		T.time = worldtime2text()
-		T.source_terminal = machine_id
-
-		M.account_number = next_account_number
-		next_account_number += rand(1,25)
-
-		//create a sealed package containing the account details
-		var/obj/item/smallDelivery/P = new(src.loc)
-
-		var/obj/item/weapon/paper/R = new(P)
-		P.wrapped = R
-		R.name = "Account information: [M.owner_name]"
-		R.info = "<b>Account details (confidential)</b><br><hr><br>"
-		R.info += "<i>Account holder:</i> [M.owner_name]<br>"
-		R.info += "<i>Account number:</i> [M.account_number]<br>"
-		R.info += "<i>Account pin:</i> [M.remote_access_pin]<br>"
-		R.info += "<i>Starting balance:</i> $[M.money]<br>"
-		R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
-		R.info += "<i>Creation terminal ID:</i> [machine_id]<br>"
-		R.info += "<i>Authorised NT officer overseeing creation:</i> [held_card.registered_name]<br>"
-
-		//stamp the paper
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-cent"
-		if(!R.stamped)
-			R.stamped = new
-		R.stamped += /obj/item/weapon/stamp
-		R.overlays += stampoverlay
-		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
-
-	//add the account
-	M.transaction_log.Add(T)
-	accounts.Add(M)
-
-	return M
-
 /obj/machinery/account_database/proc/charge_to_account(var/attempt_account_number, var/source_name, var/purpose, var/terminal_id, var/amount)
 	if(!activated)
 		return 0
-	for(var/datum/money_account/D in accounts)
+	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == attempt_account_number)
 			D.money += amount
 
@@ -350,7 +329,12 @@ var/global/datum/money_account/vendor_account
 /obj/machinery/account_database/proc/attempt_account_access(var/attempt_account_number, var/attempt_pin_number, var/security_level_passed = 0,var/pin_needed=1)
 	if(!activated)
 		return 0
-	for(var/datum/money_account/D in accounts)
+	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == attempt_account_number)
 			if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number || !pin_needed) )
 				return D
+
+/obj/machinery/account_database/proc/get_account(var/account_number)
+	for(var/datum/money_account/D in all_money_accounts)
+		if(D.account_number == account_number)
+			return D

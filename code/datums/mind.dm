@@ -217,7 +217,7 @@ datum/mind
 				text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 				text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
 				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in world)
+				for (var/obj/machinery/nuclearbomb/bombue in machines)
 					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 						code = bombue.r_code
 						break
@@ -719,7 +719,7 @@ datum/mind
 						usr << "\red Equipping a syndicate failed!"
 				if("tellcode")
 					var/code
-					for (var/obj/machinery/nuclearbomb/bombue in world)
+					for (var/obj/machinery/nuclearbomb/bombue in machines)
 						if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 							code = bombue.r_code
 							break
@@ -975,7 +975,7 @@ datum/mind
 
 			current.verbs += /mob/living/silicon/ai/proc/choose_modules
 			current.verbs += /datum/game_mode/malfunction/proc/takeover
-			current:malf_picker = new /datum/module_picker
+			current:malf_picker = new /datum/AI_Module/module_picker
 			current:laws = new /datum/ai_laws/malfunction
 			current:show_laws()
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
@@ -1142,21 +1142,18 @@ datum/mind
 
 
 
-/mob/proc/sync_mind()
-	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
 
 //Initialisation procs
-/mob/proc/mind_initialize()
+/mob/proc/mind_initialize() // vgedit: /mob instead of /mob/living
 	if(mind)
 		mind.key = key
-
 	else
 		mind = new /datum/mind(key)
+		mind.original = src
 		if(ticker)
 			ticker.minds += mind
 		else
-			error("mind_initialize(): No ticker ready yet! Please inform Carn")
+			world.log << "## DEBUG: mind_initialize(): No ticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
@@ -1247,4 +1244,10 @@ datum/mind
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
+
+/mob/living/simple_animal/vox/armalis/mind_initialize()
+	..()
+	mind.assigned_role = "Armalis"
+	mind.special_role = "Vox Raider"
+
 

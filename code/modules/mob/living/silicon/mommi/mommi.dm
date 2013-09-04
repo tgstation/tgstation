@@ -77,13 +77,48 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
 
-/mob/living/silicon/robot/mommi/proc/choose_icon()
+/*
+/mob/living/silicon/robot/mommi/choose_icon()
 	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper")
 	switch(icontype)
 		if("Basic")	subtype = "mommi"
 		else		subtype = "keeper"
 	picked=1
 	updateicon()
+*/
+/mob/living/silicon/robot/mommi/pick_module()
+
+	if(module)
+		return
+	var/list/modules = list("MoMMI")
+	if(modules.len)
+		modtype = input("Please, select a module!", "Robot", null, null) in modules
+	else:
+		modtype=modules[0]
+
+	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
+	var/channels = list()
+
+	if(module)
+		return
+
+	switch(modtype)
+		if("MoMMI")
+			module = new /obj/item/weapon/robot_module/standard(src)
+			module_sprites["Basic"] = "mommi"
+			module_sprites["Keeper"] = "keeper"
+
+	//Custom_sprite check and entry
+	if (custom_sprite == 1)
+		module_sprites["Custom"] = "[src.ckey]-[modtype]"
+
+	hands.icon_state = lowertext(modtype)
+	feedback_inc("mommi_[lowertext(modtype)]",1)
+	updatename()
+
+	choose_icon(6,module_sprites)
+	radio.config(channels)
+	base_icon = icon_state
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
@@ -97,9 +132,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		nmmi.icon = 'icons/obj/assemblies.dmi'
 		nmmi.invisibility = 0
 	..()
-
-/mob/living/silicon/robot/mommi/pick_module()
-	return // Nope
 
 /mob/living/silicon/robot/mommi/updatename(var/prefix as text)
 

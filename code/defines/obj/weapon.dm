@@ -314,6 +314,7 @@
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
+	sharp = 1
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
 	force = 5.0
@@ -353,6 +354,28 @@
 	throw_range = 20
 	m_amt = 100
 	origin_tech = "magnets=2;syndicate=3"*/
+
+/obj/item/weapon/shard/shrapnel
+	name = "shrapnel"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "shrapnellarge"
+	desc = "A bunch of tiny bits of shattered metal."
+
+/obj/item/weapon/shard/shrapnel/New()
+
+	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
+	switch(src.icon_state)
+		if("shrapnelsmall")
+			src.pixel_x = rand(-12, 12)
+			src.pixel_y = rand(-12, 12)
+		if("shrapnelmedium")
+			src.pixel_x = rand(-8, 8)
+			src.pixel_y = rand(-8, 8)
+		if("shrapnellarge")
+			src.pixel_x = rand(-5, 5)
+			src.pixel_y = rand(-5, 5)
+		else
+	return
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -551,6 +574,13 @@
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
+
+/obj/item/weapon/hatchet/unathiknife
+	name = "duelling knife"
+	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "unathiknife"
+	attack_verb = list("ripped", "torn", "cut")
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"

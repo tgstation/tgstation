@@ -415,10 +415,14 @@
 			return "Code Gold"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
+	var/list/all_jobs = list()
+	var/list/all_datums = typesof(/datum/job)
+	all_datums.Remove(list(/datum/job,/datum/job/ai,/datum/job/cyborg))
+	var/datum/job/jobdatum
+	for(var/jobtype in all_datums)
+		jobdatum = new jobtype
+		all_jobs.Add(jobdatum.title)
+	return all_jobs
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")

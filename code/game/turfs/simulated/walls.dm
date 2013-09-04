@@ -1,4 +1,3 @@
-
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
@@ -357,7 +356,9 @@
 	O.anchored = 1
 	O.density = 1
 	O.layer = 5
+
 	src.ChangeTurf(/turf/simulated/floor/plating)
+
 	var/turf/simulated/floor/F = src
 	if(!F)
 		if(O)

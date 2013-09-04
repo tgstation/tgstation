@@ -7,8 +7,14 @@ mob/var/next_pain_time = 0
 
 // partname is the name of a body part
 // amount is a num from 1 to 100
-mob/proc/pain(var/partname, var/amount, var/force, var/burning = 0)
+mob/living/carbon/proc/pain(var/partname, var/amount, var/force, var/burning = 0)
 	if(stat >= 2) return
+	if(reagents.has_reagent("tramadol"))
+		return
+	if(reagents.has_reagent("oxycodone"))
+		return
+	if(analgesic)
+		return
 	if(world.time < next_pain_time && !force)
 		return
 	if(amount > 10 && istype(src,/mob/living/carbon/human))

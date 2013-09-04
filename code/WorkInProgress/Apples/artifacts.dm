@@ -1,7 +1,7 @@
 /obj/item/changestone
 	name = "An uncut ruby"
 	desc = "The ruby shines and catches the light, despite being uncut"
-	icon = 'artifacts.dmi'
+	icon = 'icons/obj/artifacts.dmi'
 	icon_state = "changerock"
 
 obj/item/changestone/attack_hand(var/mob/user as mob)
@@ -14,7 +14,6 @@ obj/item/changestone/attack_hand(var/mob/user as mob)
 				H.gender = FEMALE
 			H.dna.ready_dna(H)
 			H.update_body()
-			H.update_face()
 	..()
 
 

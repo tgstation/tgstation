@@ -279,29 +279,29 @@ rcd light flash thingy on matter drain
 				src << "Out of uses."
 
 
-/datum/module_picker
+/datum/AI_Module/module_picker
 	var/temp = null
 	var/processing_time = 100
 	var/list/possible_modules = list()
 
-/datum/module_picker/New()
+/datum/AI_Module/module_picker/New()
 	for(var/type in typesof(/datum/AI_Module))
 		var/datum/AI_Module/AM = new type
 		if(AM.power_type != null)
 			src.possible_modules += AM
 
-/datum/module_picker/proc/remove_verbs(var/mob/living/silicon/ai/A)
+/datum/AI_Module/module_picker/proc/remove_verbs(var/mob/living/silicon/ai/A)
 
 	for(var/datum/AI_Module/AM in possible_modules)
 		A.verbs.Remove(AM.power_type)
 
 
-/datum/module_picker/proc/use(user as mob)
+/datum/AI_Module/module_picker/proc/use(user as mob)
 	var/dat
-	dat = "<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>"
-	dat += "<HR>"
-	dat += "<B>Install Module:</B><BR>"
-	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
+	dat = {"<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>
+	<HR>
+	<B>Install Module:</B><BR>
+	<I>The number afterwards is the amount of processing time it consumes.</I><BR>"}
 	for(var/datum/AI_Module/large/module in src.possible_modules)
 		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in src.possible_modules)
@@ -314,7 +314,7 @@ rcd light flash thingy on matter drain
 	popup.open()
 	return
 
-/datum/module_picker/Topic(href, href_list)
+/datum/AI_Module/module_picker/Topic(href, href_list)
 	..()
 
 	if(!isAI(usr))

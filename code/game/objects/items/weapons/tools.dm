@@ -449,12 +449,12 @@
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
 			if(user != M)
-				user.visible_message("\red You patch some dents on \the [M]'s [S.display_name]",\
-				"\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
+				user.visible_message("\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
+				"\red You patch some dents on \the [M]'s [S.display_name]",\
 				"You hear a welder.")
 			else
-				user.visible_message("\red You patch some dents on your [S.display_name]",\
-				"\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
+				user.visible_message("\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
+				"\red You patch some dents on your [S.display_name]",\
 				"You hear a welder.")
 		else
 			user << "Nothing to fix!"

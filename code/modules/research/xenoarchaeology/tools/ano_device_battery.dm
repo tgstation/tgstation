@@ -18,7 +18,7 @@
 
 /obj/item/weapon/anodevice
 	name = "Anomaly power utilizer"
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "anodev"
 	var/cooldown = 0
 	var/activated = 0

@@ -1,7 +1,7 @@
 
 //gimmicky hack to collect particles and direct them into the field
 /obj/effect/rust_particle_catcher
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	density = 0
 	anchored = 1
 	layer = 4

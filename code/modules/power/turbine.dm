@@ -212,11 +212,11 @@
 /obj/machinery/computer/turbine_computer/New()
 	..()
 	spawn(5)
-		for(var/obj/machinery/compressor/C in world)
+		for(var/obj/machinery/compressor/C in machines)
 			if(id == C.comp_id)
 				compressor = C
 		doors = new /list()
-		for(var/obj/machinery/door/poddoor/P in world)
+		for(var/obj/machinery/door/poddoor/P in machines)
 			if(P.id == id)
 				doors += P
 

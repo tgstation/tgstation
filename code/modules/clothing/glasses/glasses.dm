@@ -1,7 +1,7 @@
 
 /obj/item/clothing/glasses
 	name = "glasses"
-	icon = 'glasses.dmi'
+	icon = 'icons/obj/clothing/glasses.dmi'
 	//w_class = 2.0
 	//flags = GLASSESCOVERSEYES
 	//slot_flags = SLOT_EYES

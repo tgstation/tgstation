@@ -27,11 +27,12 @@
 	H.internal_organs[src.name] = src
 	src.owner = H
 
-/datum/organ/internal/proc/take_damage(amount)
+/datum/organ/internal/proc/take_damage(amount, var/silent=0)
 	src.damage += amount
 
 	var/datum/organ/external/parent = owner.get_organ(parent_organ)
-	owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
+	if (!silent)
+		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
 
 /****************************************************
 				INTERNAL ORGANS DEFINES
@@ -62,6 +63,24 @@
 
 	process()
 		if(owner.life_tick % process_accuracy == 0)
+			if(src.damage < 0)
+				src.damage = 0
+
+			//High toxins levels are dangerous
+			if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+				//Healthy liver suffers on its own
+				if (src.damage < min_broken_damage)
+					src.damage += 0.2 * process_accuracy
+				//Damaged one shares the fun
+				else
+					var/victim = pick(owner.internal_organs)
+					var/datum/organ/internal/O = owner.internal_organs[victim]
+					O.damage += 0.2  * process_accuracy
+
+			//Detox can heal small amounts of damage
+			if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
+				src.damage -= 0.2 * process_accuracy
+
 			// Damaged liver means some chemicals are very dangerous
 			if(src.damage >= src.min_bruised_damage)
 				for(var/datum/reagent/R in owner.reagents.reagent_list)

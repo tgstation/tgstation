@@ -60,7 +60,7 @@ var/list/valid_secondary_effect_types = list(\
 /obj/machinery/artifact
 	name = "alien artifact"
 	desc = "A large alien device."
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "ano00"
 	var/icon_num = 0
 	density = 1

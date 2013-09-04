@@ -62,9 +62,11 @@
 	name = "storage"
 	master = null
 
-/obj/screen/storage/attackby(W, mob/user as mob)
-	src.master.attackby(W, user)
-	return
+/obj/screen/storage/attack_hand(mob/user)
+	if(master)
+		var/obj/item/I = user.get_active_hand()
+		if(I)
+			master.attackby(I, user)
 
 /obj/screen/zone_sel
 	name = "Damage Zone"
@@ -75,7 +77,7 @@
 
 /obj/screen/gun
 	name = "gun"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	master = null
 	dir = 2
 

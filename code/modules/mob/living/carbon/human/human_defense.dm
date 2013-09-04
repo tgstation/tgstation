@@ -131,6 +131,17 @@ emp_act
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
 
+	if(istype(I,/obj/item/weapon/card/emag))
+		if(!(affecting.status & ORGAN_ROBOT))
+			user << "\red That limb isn't robotic."
+			return
+		if(affecting.sabotaged)
+			user << "\red [src]'s [affecting.display_name] is already sabotaged!"
+		else
+			user << "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties."
+			affecting.sabotaged = 1
+		return
+
 	if(I.attack_verb.len)
 		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
 	else
@@ -140,7 +151,7 @@ emp_act
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor , is_sharp(I), I.name)
+	apply_damage(I.force, I.damtype, affecting, armor , is_sharp(I), I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))

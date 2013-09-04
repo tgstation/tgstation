@@ -14,7 +14,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"space ninja" = "true",								 // 10
+	"ninja" = "true",									 // 10
+	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
+	"diona" = 1,                                         // 12
 )
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -64,6 +66,7 @@ datum/preferences
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
 	var/species = "Human"
+	var/language = "None"				//Secondary language
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -98,6 +101,7 @@ datum/preferences
 	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""
+	var/gen_record = ""
 	var/disabilities = 0 // NOW A BITFIELD, SEE ABOVE
 
 	var/nanotrasen_relation = "Neutral"
@@ -252,6 +256,7 @@ datum/preferences
 		dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 		dat += "<br>"
 		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
+		dat += "Secondary Language:<br><a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
@@ -439,7 +444,7 @@ datum/preferences
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
 			if(job.alt_titles)
-				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
@@ -450,9 +455,9 @@ datum/preferences
 			if(GET_RANDOM_JOB)
 				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
 			if(BE_ASSISTANT)
-				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preferences unavailable</font></a></u></center><br>"
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
 			if(RETURN_TO_LOBBY)
-				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preferences unavailable</font></a></u></center><br>"
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
 		HTML += "</tt>"
@@ -493,6 +498,13 @@ datum/preferences
 			HTML += "[med_record]"
 		else
 			HTML += "[copytext(med_record, 1, 37)]..."
+
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
+
+		if(lentext(gen_record) <= 40)
+			HTML += "[gen_record]"
+		else
+			HTML += "[copytext(gen_record, 1, 37)]..."
 
 		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
 
@@ -750,6 +762,15 @@ datum/preferences
 
 					sec_record = secmsg
 					SetRecords(user)
+			if(href_list["task"] == "gen_record")
+				var/genmsg = input(usr,"Set your employment notes here.","Employment Records",html_decode(gen_record)) as message
+
+				if(genmsg != null)
+					genmsg = copytext(genmsg, 1, MAX_PAPER_MESSAGE_LEN)
+					genmsg = html_encode(genmsg)
+
+					gen_record = genmsg
+					SetRecords(user)
 
 		switch(href_list["task"])
 			if("random")
@@ -763,13 +784,13 @@ datum/preferences
 						g_hair = rand(0,255)
 						b_hair = rand(0,255)
 					if("h_style")
-						h_style = random_hair_style(gender)
+						h_style = random_hair_style(gender, species)
 					if("facial")
 						r_facial = rand(0,255)
 						g_facial = rand(0,255)
 						b_facial = rand(0,255)
 					if("f_style")
-						f_style = random_facial_hair_style(gender)
+						f_style = random_facial_hair_style(gender, species)
 					if("underwear")
 						underwear = rand(1,underwear_m.len)
 						ShowChoices(user)
@@ -799,31 +820,21 @@ datum/preferences
 						if(new_age)
 							age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 					if("species")
+
 						var/list/new_species = list("Human")
 						var/prev_species = species
 						var/whitelisted = 0
+
 						if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-							if(is_alien_whitelisted(user, "Soghun")) //Check for Unathi and admins
-								new_species += "Unathi"
-								whitelisted = 1
-							if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran and admins
-								new_species += "Tajaran"
-								whitelisted = 1
-							if(is_alien_whitelisted(user, "Skrell")) //Check for Skrell and admins
-								new_species += "Skrell"
-								whitelisted = 1
-							if(is_alien_whitelisted(user, "Vox")) //Check for Skrell and admins
-								new_species += "Vox"
-								whitelisted = 1
-
-
+							for(var/S in whitelisted_species)
+								if(is_alien_whitelisted(user,S))
+									new_species += S
+									whitelisted = 1
 							if(!whitelisted)
 								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
 						else //Not using the whitelist? Aliens for everyone!
-							new_species += "Tajaran"
-							new_species += "Unathi"
-							new_species += "Skrell"
-							new_species += "Vox"
+							new_species = whitelisted_species
+
 						species = input("Please select a species", "Character Generation", null) in new_species
 
 						if(prev_species != species)
@@ -871,6 +882,26 @@ datum/preferences
 
 							s_tone = 0
 
+					if("language")
+						var/languages_available
+						var/list/new_languages = list("None")
+
+						if(config.usealienwhitelist)
+							for(var/L in all_languages)
+								var/datum/language/lang = all_languages[L]
+								if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))))
+									new_languages += lang
+									languages_available = 1
+
+							if(!(languages_available))
+								alert(user, "There are not currently any available secondary languages.")
+						else
+							for(var/L in all_languages)
+								var/datum/language/lang = all_languages[L]
+								if(!(lang.flags & RESTRICTED))
+									new_languages += lang
+
+						language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 					if("metadata")
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
@@ -1112,11 +1143,11 @@ datum/preferences
 		character.name = character.real_name
 		if(character.dna)
 			character.dna.real_name = character.real_name
-			character.dna.flavor = character.flavor_text
 
 		character.flavor_text = flavor_text
 		character.med_record = med_record
 		character.sec_record = sec_record
+		character.gen_record = gen_record
 
 		character.gender = gender
 		character.age = age
@@ -1138,6 +1169,7 @@ datum/preferences
 
 		character.h_style = h_style
 		character.f_style = f_style
+
 
 		character.skills = skills
 

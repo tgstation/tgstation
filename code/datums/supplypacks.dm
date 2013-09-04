@@ -66,6 +66,29 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Monkey crate"
 	group = "Hydroponics"
 
+/datum/supply_packs/farwa
+	name = "Farwa crate"
+	contains = list (/obj/item/weapon/storage/box/farwacubes)
+	cost = 30
+	containertype = /obj/structure/closet/crate/freezer
+	containername = "Farwa crate"
+	group = "Hydroponics"
+
+/datum/supply_packs/skrell
+	name = "Neaera crate"
+	contains = list (/obj/item/weapon/storage/box/neaeracubes)
+	cost = 30
+	containertype = /obj/structure/closet/crate/freezer
+	containername = "Neaera crate"
+	group = "Hydroponics"
+
+/datum/supply_packs/stok
+	name = "Stok crate"
+	contains = list (/obj/item/weapon/storage/box/stokcubes)
+	cost = 30
+	containertype = /obj/structure/closet/crate/freezer
+	containername = "Stok crate"
+	group = "Hydroponics"
 
 /datum/supply_packs/beanbagammo
 	name = "Beanbag shells"
@@ -336,7 +359,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-					/obj/item/weapon/storage/box/syringes)
+					/obj/item/weapon/storage/box/syringes,
+					/obj/item/weapon/storage/box/autoinjectors)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Medical crate"

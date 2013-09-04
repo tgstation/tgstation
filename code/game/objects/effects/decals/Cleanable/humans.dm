@@ -11,8 +11,8 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
 	blood_DNA = list()
-	var/datum/disease2/disease/virus2 = null
-	var/amount = 3
+	var/list/datum/disease2/disease/virus2 = list()
+	var/amount = 5
 
 /obj/effect/decal/cleanable/blood/Del()
 	for(var/datum/disease/D in viruses)
@@ -57,7 +57,7 @@
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
-	name = "dried [src.name]"
+	name = "dried [src]"
 	desc = "It's dark red and crusty. Someone is not doing their job."
 	var/icon/I = icon(icon,icon_state)
 	I.SetIntensity(0.7)
@@ -87,7 +87,7 @@
 	name = "drips of blood"
 	desc = "It's red."
 	gender = PLURAL
-	icon = 'drip.dmi'
+	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
 	amount = 0
 
@@ -141,7 +141,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "mucus"
 	random_icon_states = list("mucus")
-	var/datum/disease2/disease/virus2 = null
+	var/list/datum/disease2/disease/virus2 = list()

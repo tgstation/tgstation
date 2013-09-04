@@ -57,11 +57,11 @@
 		P.on_hit(src,2)
 		return 2
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, used_weapon = "Projectile([P.name])")
+		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, absorb, 0, P)
 	P.on_hit(src, absorb)
 	return absorb
 
-/mob/living/hitby(atom/movable/AM as mob|obj)//Standardization and logging -Sieve
+/mob/living/hitby(atom/movable/AM as mob|obj,var/speed = 5)//Standardization and logging -Sieve
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/zone = ran_zone("chest",75)//Hits a random part of the body, geared towards the chest
@@ -72,12 +72,56 @@
 		src.visible_message("\red [src] has been hit by [O].")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
 		if(armor < 2)
-			apply_damage(O.throwforce, dtype, zone, armor, O)
+			apply_damage(O.throwforce*(speed/5), dtype, zone, armor, O.sharp, O)
+
 		if(!O.fingerprintslast)
 			return
+
 		var/client/assailant = directory[ckey(O.fingerprintslast)]
 		if(assailant && assailant.mob && istype(assailant.mob,/mob))
 			var/mob/M = assailant.mob
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with [O], last touched by [M.name] ([assailant.ckey])</font>")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with [O]</font>")
-			log_attack("<font color='red'>[src.name] ([src.ckey]) was hit by [O], last touched by [M.name] ([assailant.ckey])</font>")
+
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a thrown [O], last touched by [M.name] ([assailant.ckey])</font>")
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
+			msg_admin_attack("[src.name] ([src.ckey]) was hit by a thrown [O], last touched by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+
+			// Begin BS12 momentum-transfer code.
+
+			if(speed >= 20)
+				var/obj/item/weapon/W = O
+				var/momentum = speed/2
+				var/dir = get_dir(M,src)
+
+				visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
+				src.throw_at(get_edge_target_turf(src,dir),1,momentum)
+
+				if(istype(W.loc,/mob/living) && W.sharp) //Projectile is embedded and suitable for pinning.
+
+					if(!istype(src,/mob/living/carbon/human)) //Handles embedding for non-humans and simple_animals.
+						O.loc = src
+						src.embedded += O
+
+					var/turf/T = near_wall(dir,2)
+
+					if(T)
+						src.loc = T
+						visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
+						src.anchored = 1
+						src.pinned += O
+
+
+/mob/living/proc/near_wall(var/direction,var/distance=1)
+	var/turf/T = get_step(get_turf(src),direction)
+	var/turf/last_turf = src.loc
+	var/i = 1
+
+	while(i>0 && i<=distance)
+		if(T.density) //Turf is a wall!
+			return last_turf
+		i++
+		last_turf = T
+		T = get_step(T,direction)
+
+	return 0
+
+// End BS12 momentum-transfer code.
