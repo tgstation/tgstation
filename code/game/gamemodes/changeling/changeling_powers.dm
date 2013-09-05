@@ -186,7 +186,7 @@
 	changeling.geneticdamage = 30
 	src.dna = chosen_dna
 	src.real_name = chosen_dna.real_name
-	src.flavor_text = ""
+	src.flavor_text = chosen_dna.flavor
 	updateappearance(src, src.dna.uni_identity)
 	domutcheck(src, null)
 
@@ -384,6 +384,33 @@
 			C.radiation = 0
 			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
 			C.reagents.clear_reagents()
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				H.vessel.reagent_list = list()
+				H.vessel.add_reagent("blood",560)
+				spawn(1)
+					H.fixblood()
+				for(var/organ_name in H.organs_by_name)
+					var/datum/organ/external/O = H.organs_by_name[organ_name]
+					O.amputated = 0
+					O.brute_dam = 0
+					O.burn_dam = 0
+					O.damage_state = "00"
+					O.germ_level = 0
+					O.hidden = null
+					O.number_wounds = 0
+					O.open = 0
+					O.perma_injury = 0
+					O.stage = 0
+					O.status = 0
+					O.trace_chemicals = list()
+					O.wounds = list()
+					O.wound_update_accuracy = 1
+				for(var/organ_name in H.internal_organs)
+					var/datum/organ/internal/IO = H.internal_organs[organ_name]
+					IO.damage = 0
+					IO.trace_chemicals = list()
+				H.updatehealth()
 			C << "<span class='notice'>We have regenerated.</span>"
 			C.visible_message("<span class='warning'>[src] appears to wake from the dead, having healed all wounds.</span>")
 
