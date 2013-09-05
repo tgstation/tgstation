@@ -168,3 +168,12 @@ obj/item/weapon/gun/energy/staff
 	icon_state = "xray"
 	projectile_type = "/obj/item/projectile/beam/mindflayer"
 	fire_sound = 'sound/weapons/Laser.ogg'
+
+/obj/item/weapon/gun/energy/heatray
+	name = "heatray"
+	desc = "A prototype energy weapon that ignites targets at long distance. Aim away from face."
+	icon_state = "floramut100"
+	item_state = "obj/item/gun.dmi"
+	projectile_type = "/obj/item/projectile/beam/heatray"
+	fire_sound = 'sound/weapons/emitter.ogg'
+	modifystate = "floramut"
