@@ -240,9 +240,9 @@ datum/preferences
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:220: dat += "<center>"
 			dat += {"<center>
-				Slot <b>[slot_name]</b> - 
-				<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - 
-				<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - 
+				Slot <b>[slot_name]</b> -
+				<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> -
+				<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> -
 				<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>
 				</center>"}
 			// END AUTOFIX
@@ -260,7 +260,7 @@ datum/preferences
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:234: dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
 		dat += {"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>
-			(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) 
+			(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>)
 			(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)
 			<br>
 			<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>
@@ -280,7 +280,7 @@ datum/preferences
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:252: dat += "<br><b>Occupation Choices</b><br>"
 		dat += {"<br><b>Occupation Choices</b><br>
 			\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>
-			<br><table><tr><td><b>Body</b> 
+			<br><table><tr><td><b>Body</b>
 			(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)
 			<br>
 			Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>
@@ -372,10 +372,10 @@ datum/preferences
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:335: dat += "<br>"
 		dat += {"<br>
 			<br><b>Hair</b><br>
-			<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> 
+			<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font>
 			Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>
 			<br><b>Facial</b><br>
-			<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> 
+			<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font>
 			Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>
 			<br><b>Eyes</b><br>
 			<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font>
@@ -402,7 +402,7 @@ datum/preferences
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:367: dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-			dat += {"<a href='?_src_=prefs;preference=load'>Undo</a> - 
+			dat += {"<a href='?_src_=prefs;preference=load'>Undo</a> -
 				<a href='?_src_=prefs;preference=save'>Save Setup</a> - "}
 			// END AUTOFIX
 
@@ -430,8 +430,8 @@ datum/preferences
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:386: HTML += "<tt><center>"
 		HTML += {"<tt><center>
 			<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>
-			<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here
-			<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns
+			<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>
+			<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>
 			<table width='100%' cellpadding='1' cellspacing='0'>"}
 		// END AUTOFIX
 		var/index = -1

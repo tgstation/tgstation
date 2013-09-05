@@ -556,9 +556,9 @@
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:555: t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
 		t += {"<I>(Swipe ID card to unlock inteface.)</I><BR>
-			Main breaker : <B>[operating ? "On" : "Off"]</B><BR>
-			External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>
-			Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"}
+				Main breaker : <B>[operating ? "On" : "Off"]</B><BR>
+				External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>
+				Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"}
 		// END AUTOFIX
 		if(cell)
 
@@ -575,10 +575,11 @@
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:567: t += "Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><BR>"
-		t += {"Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><BR>
-			Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B><BR>
-			Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B><BR>
-			<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>
+		t += {"Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B>
+Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B>
+Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B>
+
+Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>
 			<HR>Cover lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"}
 		// END AUTOFIX
 	else
@@ -605,7 +606,7 @@
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:587: t += "<BR><HR>Power channels<BR><PRE>"
 		t += {"<BR><HR>Power channels<BR><PRE>
-			Equipment:    [add_lspace(lastused_equip, 6)] W : "}
+Equipment:    [add_lspace(lastused_equip, 6)] W : "}
 		// END AUTOFIX
 		switch(equipment)
 			if(0)
@@ -619,8 +620,8 @@
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:600: t +="<BR>"
-		t += {"<BR>
-			Lighting:     [add_lspace(lastused_light, 6)] W : "}
+		t += {"
+Lighting:     [add_lspace(lastused_light, 6)] W : "}
 		// END AUTOFIX
 		switch(lighting)
 			if(0)
@@ -634,8 +635,8 @@
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:613: t +="<BR>"
-		t += {"<BR>
-			Environmental:[add_lspace(lastused_environ, 6)] W : "}
+		t += {"
+Environmental:[add_lspace(lastused_environ, 6)] W : "}
 		// END AUTOFIX
 		switch(environ)
 			if(0)
