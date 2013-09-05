@@ -23,7 +23,7 @@ var/list/blob_nodes = list()
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	var/blobwincount = 350
+	var/blobwincount = 500 // WAS: 350
 
 	var/list/infected_crew = list()
 
