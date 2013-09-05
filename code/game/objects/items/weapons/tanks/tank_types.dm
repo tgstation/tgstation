@@ -163,6 +163,18 @@
 	icon_state = "emergency_double"
 	volume = 10
 
+/obj/item/weapon/tank/emergency_nitrogen
+	name = "emergency nitrogen tank"
+	icon_state = "emergency_nitrogen"
+	volume = 2
+
+	New()
+		..()
+		src.air_contents.nitrogen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		src.air_contents.update_values()
+
+		return
+
 /*
  * Nitrogen
  */

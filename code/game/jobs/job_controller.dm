@@ -381,19 +381,33 @@ var/global/datum/controller/occupations/job_master
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)
-							H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+							if(H.species.survival_gear)
+								H.equip_to_slot_or_del(new H.species.survival_gear(H), slot_r_hand)
 						if(2)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							if(H.species.survival_gear)
+								new H.species.survival_gear(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 						if(3)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							if(H.species.survival_gear)
+								new H.species.survival_gear(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 						if(4)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							if(H.species.survival_gear)
+								new H.species.survival_gear(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
+					switch(H.species.breath_type)
+						if("nitrogen")
+							// For vox
+							H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
+							H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(H), slot_l_hand)
+							H << "\blue You are now running on internals from the [H.l_hand] on your left hand."
+							H.internal = H.l_hand
+							if (H.internals)
+								H.internals.icon_state = "internal1"
+
 
 		H << "<B>You are the [alt_title ? alt_title : rank].</B>"
 		H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"

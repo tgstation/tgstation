@@ -16,6 +16,7 @@
 	var/mutantrace               // Safeguard due to old code.
 
 	var/breath_type     // Non-oxygen gas breathed, if any.
+	var/survival_gear = /obj/item/weapon/storage/box/survival // For spawnin'.
 
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
 	var/cold_level_2 = 200  // Cold damage level 2 below this point.
@@ -84,8 +85,9 @@
 
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
+	survival_gear=/obj/item/weapon/storage/box/survival/vox
 
-	flags = NO_SCAN
+	flags = WHITELISTED | NO_SCAN
 
 /datum/species/diona
 	name = "Diona"
