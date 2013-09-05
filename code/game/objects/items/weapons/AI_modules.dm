@@ -103,6 +103,7 @@ AI MODULES
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 	message_admins("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
+	log_game("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 
 
 /******************** Modules ********************/
@@ -138,6 +139,7 @@ AI MODULES
 	target << law
 	target.add_supplied_law(4, law)
 	lawchanges.Add("The law specified [targetName]")
+	log_game("[sender.name]([sender.key]) added law \"[law]\" on [target.name]([target.key])")
 
 
 
@@ -337,6 +339,7 @@ AI MODULES
 		lawpos = 15
 	target.add_supplied_law(lawpos, law)
 	lawchanges.Add("The law was '[newFreeFormLaw]'")
+	log_game("[sender.name]([sender.key]) added law \"[law]\" to [target.name]([target.key])")
 
 /obj/item/weapon/aiModule/freeform/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
@@ -522,6 +525,7 @@ AI MODULES
 	var/law = "[newFreeFormLaw]"
 	target.add_inherent_law(law)
 	lawchanges.Add("The law is '[newFreeFormLaw]'")
+	log_game("[sender.name]([sender.key]) added inherent law \"[newFreeFormLaw]\" to [target.name]([target.key])")
 
 /obj/item/weapon/aiModule/freeformcore/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
@@ -550,6 +554,7 @@ AI MODULES
 	target << "\red BZZZZT"
 	var/law = "[newFreeFormLaw]"
 	target.add_ion_law(law)
+	log_game("[sender.name]([sender.key]) added ion law \"[newFreeFormLaw]\" to [target.name]([target.key])")
 
 /obj/item/weapon/aiModule/syndicate/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
