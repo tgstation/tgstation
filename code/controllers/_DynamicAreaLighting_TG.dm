@@ -226,11 +226,13 @@ turf
 
 turf/space
 	lighting_lumcount = 4		//starlight
-	accepts_lighting=0 // Don't apply overlays
+	accepts_lighting=0 			// Don't apply overlays
 
 turf/proc/update_lumcount(amount)
 	if(accepts_lighting)
 		lighting_lumcount += amount
+	else if(lighting_lumcount != initial(lighting_lumcount))
+		lighting_lumcount = initial(lighting_lumcount)
 //	if(lighting_lumcount < 0 || lighting_lumcount > 100)
 //		world.log << "## WARNING: [type] ([src]) lighting_lumcount = [lighting_lumcount]"
 	if(!lighting_changed)

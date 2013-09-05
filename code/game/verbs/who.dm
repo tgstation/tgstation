@@ -84,8 +84,10 @@
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\verbs\who.dm:84: msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
-	msg = {"<b>Current Admins ([num_admins_online]):</b>\n" + ms
-		<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'\n"}
+	msg = {"<b>Current Admins ([num_admins_online]):</b>
+[msg]
+<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'
+"}
 	// END AUTOFIX
 	src << msg
 
