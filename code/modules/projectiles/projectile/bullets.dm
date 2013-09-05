@@ -53,3 +53,8 @@
 
 /obj/item/projectile/bullet/a762
 	damage = 25
+
+/obj/item/projectile/bullet/incindiarybullet
+	name = "incindiary bullet"
+	damage = 20
+	ignite_target = 1

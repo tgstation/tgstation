@@ -80,6 +80,9 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		//Check if we're on fire
+		handle_fire()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
@@ -445,12 +448,13 @@
 		if(!environment)
 			return
 		var/loc_temp = get_temperature(environment)
-
 		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
 		//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
 		if(stat != 2)
 			stabilize_temperature_from_calories()
+
+		//If this area has no oxygen, extinguish self if on fire//
 
 		//After then, it reacts to the surrounding atmosphere based on your thermal protection
 		if(loc_temp < bodytemperature)
@@ -516,6 +520,28 @@
 					pressure_alert = -1
 
 		return
+
+///FIRE CODE
+	proc/handle_fire()
+		if(!on_fire)
+			return
+		var/datum/gas_mixture/G = loc.return_air()
+
+		if(G.oxygen < 1)
+			ExtinguishMob()
+			return
+
+		var/thermal_protection = get_heat_protection(30000)
+		if(thermal_protection < 1)
+			bodytemperature += min((1-thermal_protection) * ((30000 - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			//We're on fire and not protected!
+			fire_alert = max(fire_alert, 2)
+			apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+		return
+
+
+//END FIRE CODE
 
 	/*
 	proc/adjust_body_temperature(current, loc_temp, boost)

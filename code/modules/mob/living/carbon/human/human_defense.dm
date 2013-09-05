@@ -8,6 +8,7 @@ emp_act
 
 */
 
+
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -33,6 +34,13 @@ emp_act
 					P.xo = new_x - curloc.x
 
 				return -1 // complete projectile permutation
+
+			if(prob(P.damage/2))
+				IgniteMob()
+			if(P.ignite_target)
+				IgniteMob()
+
+		return (..(P , def_zone))
 
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 2)
@@ -193,3 +201,17 @@ emp_act
 
 		if(I.force > 10 || I.force >= 5 && prob(33))
 			forcesay(hit_appends)	//forcesay checks stat already.
+
+
+///Mobs on Fire code//
+/mob/living/carbon/human/proc/IgniteMob()
+	if(stat != DEAD)
+		on_fire = 1
+		update_fire()
+
+/mob/living/carbon/human/proc/ExtinguishMob()
+	if(on_fire)
+		on_fire = 0
+		update_fire()
+
+//End Fire
