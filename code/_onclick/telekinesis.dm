@@ -53,7 +53,7 @@
 	layer = 20
 
 	var/last_throw = 0
-	var/obj/focus = null
+	var/atom/movable/focus = null
 	var/mob/living/host = null
 
 
@@ -114,10 +114,8 @@
 
 	proc/focus_object(var/obj/target, var/mob/living/user)
 		if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
-		if(target.anchored)
-			target.attack_hand(user) // you can use shit now!
-			return//No throwing anchored things
-		if(!isturf(target.loc))
+		if(target.anchored || !isturf(target.loc))
+			del src
 			return
 		focus = target
 		update_icon()

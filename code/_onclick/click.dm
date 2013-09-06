@@ -155,31 +155,35 @@
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
-				UnarmedAttack(A)
+				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
 			if(W)
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
-				if((LASER in mutations) && a_intent == "harm")
-					LaserEyes(A) // moved into a proc below
-				else if(TK in mutations)
-					switch(get_dist(src,A))
-						if(1 to 5) // not adjacent may mean blocked by window
-							next_move += 2
-						if(5 to 7)
-							next_move += 5
-						if(8 to 15)
-							next_move += 10
-						if(16 to 128)
-							return
-					A.attack_tk(src)
+				RangedAttack(A, params)
 
 	return
 
-// attack_hand, attack_paw, etc
-/mob/proc/UnarmedAttack(var/atom/A)
+// translates into attack_hand, attack_paw, etc.  proximity_flag should NOT be true if you are not adjacent (telekinesis)
+/mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
 	return
+
+// unarmed and at range - laser eyes, telekinesis, and mob special abilities
+/mob/proc/RangedAttack(var/atom/A, var/params)
+	if((LASER in mutations) && a_intent == "harm")
+		LaserEyes(A) // moved into a proc below
+	else if(TK in mutations)
+		switch(get_dist(src,A))
+			if(1 to 5) // not adjacent may mean blocked by window
+				next_move += 2
+			if(5 to 7)
+				next_move += 5
+			if(8 to 15)
+				next_move += 10
+			if(16 to 128)
+				return
+		A.attack_tk(src)
 
 // hand_h, hand_p, etc - these are almost entirely unused
 /mob/proc/RestrainedClickOn(var/atom/A)
