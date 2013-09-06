@@ -84,5 +84,5 @@
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
-	icon = "chemical.dmi"
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
