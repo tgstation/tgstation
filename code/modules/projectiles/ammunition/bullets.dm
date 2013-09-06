@@ -90,11 +90,19 @@
 
 
 /obj/item/ammo_casing/shotgun/dart
-	name = "shotgun darts"
+	name = "shotgun dart"
 	desc = "A dart for use in shotguns."
 	icon_state = "blshell" //someone, draw the icon, please.
-	projectile_type = "/obj/item/projectile/energy/dart"
+	projectile_type = "/obj/item/projectile/bullet/dart"
 	m_amt = 12500
+	
+	New()
+		..()
+		flags |= NOREACT
+		create_reagents(50)
+
+	attackby()
+		return
 
 /obj/item/ammo_casing/a762
 	desc = "A 7.62 bullet casing."
