@@ -64,7 +64,8 @@ var/list/admin_verbs_ban = list(
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
-	/client/proc/play_sound
+	/client/proc/play_sound,
+	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/object_talk,
@@ -208,7 +209,7 @@ var/list/admin_verbs_hideable = list(
 		if(rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
 		if(rights & R_SOUNDS)		verbs += admin_verbs_sounds
 		if(rights & R_SPAWN)		verbs += admin_verbs_spawn
-		
+
 		for(var/path in holder.rank.adds)
 			verbs += path
 		for(var/path in holder.rank.subs)
