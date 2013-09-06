@@ -99,7 +99,7 @@
 	New()
 		..()
 		flags |= NOREACT
-		create_reagents(50)
+		create_reagents(30)
 
 	attackby()
 		return
