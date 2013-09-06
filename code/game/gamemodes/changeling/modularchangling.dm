@@ -7,7 +7,7 @@ var/list/powerinstances
 	var/desc = "Placeholder"
 	var/helptext = ""
 	var/isVerb = 1 	// Is it an active power, or passive?
-	var/verbpath // Path to a verb that contains the effects.
+	var/list/verbpath = list() // Pathes to verbs that contain the effects.
 
 /datum/power/changeling
 	var/allowduringlesserform = 0
@@ -17,7 +17,7 @@ var/list/powerinstances
 	name = "Absorb DNA"
 	desc = "Permits us to siphon the DNA from a human. They become one with us, and the new energy lets us change our abilities."
 	genomecost = 0
-	verbpath = /mob/living/carbon/proc/changeling_absorb_dna
+	verbpath = list(/mob/living/carbon/proc/changeling_absorb_dna)
 
 /datum/power/changeling/extractdna
 	name = "Extract DNA Strand"
@@ -25,13 +25,13 @@ var/list/powerinstances
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	genomecost = 0
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_extract_dna_sting
+	verbpath = list(/mob/living/carbon/proc/changeling_extract_dna_sting)
 
 /datum/power/changeling/transform
 	name = "Transform"
 	desc = "We take on the appearance and voice of one we have absorbed."
 	genomecost = 0
-	verbpath = /mob/living/carbon/proc/changeling_transform
+	verbpath = list(/mob/living/carbon/proc/changeling_transform)
 
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
@@ -39,7 +39,14 @@ var/list/powerinstances
 	helptext = "Can be used before or after death. Duration varies greatly. Can be used in lesser form."
 	genomecost = 0
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_fakedeath
+	verbpath = list(/mob/living/carbon/proc/changeling_fakedeath)
+
+/datum/power/changeling/memoryabsorb
+	name = "Memory Absorption"
+	desc = "The memories of our victims join our conciousness after syphoning their DNA."
+	genomecost = 0
+	allowduringlesserform = 1
+	verbpath = list(/mob/proc/changeling_toggle_memoryabsorb, /mob/proc/changeling_kickvoice)
 
 // Hivemind
 /datum/power/changeling/hive_upload
@@ -48,7 +55,7 @@ var/list/powerinstances
 	helptext = "Allows other changelings to absorb the DNA you channel from the airwaves. Will not help them towards their absorb objectives."
 	genomecost = 0
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_hiveupload
+	verbpath = list(/mob/living/carbon/proc/changeling_hiveupload)
 
 /datum/power/changeling/hive_download
 	name = "Hive Absorb"
@@ -56,34 +63,34 @@ var/list/powerinstances
 	helptext = "Allows you to absorb a single DNA and use it. Does not count towards your absorb objective."
 	genomecost = 0
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_hivedownload
+	verbpath = list(/mob/living/carbon/proc/changeling_hivedownload)
 
 /datum/power/changeling/lesser_form
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser. We become a monkey."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_lesser_form
+	verbpath = list(/mob/living/carbon/proc/changeling_lesser_form)
 
 /datum/power/changeling/mimicvoice
 	name = "Mimic Voice"
 	desc = "We shape our vocal glands to sound like a desired voice."
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this"
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_mimicvoice
+	verbpath = list(/mob/living/carbon/proc/changeling_mimicvoice)
 
 /datum/power/changeling/transformation_sting
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform into another."
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_transformation_sting
+	verbpath = list(/mob/living/carbon/proc/changeling_transformation_sting)
 
 /datum/power/changeling/Epinephrine
 	name = "Epinephrine Sacs"
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "Removes all stuns instantly, and adds a short-term reduction in further stuns. Can be used while unconscious."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_unstun
+	verbpath = list(/mob/living/carbon/proc/changeling_unstun)
 
 /datum/power/changeling/EngorgedGlands
 	name = "Engorged Chemical Glands"
@@ -91,7 +98,7 @@ var/list/powerinstances
 	helptext = "Allows us to store an extra 25 units of chemicals, and doubles production rate."
 	genomecost = 1
 	isVerb = 0
-	verbpath = /mob/proc/changeling_advglands
+	verbpath = list(/mob/proc/changeling_advglands)
 
 /datum/power/changeling/DigitalCamouflage
 	name = "Digital Camouflage"
@@ -99,28 +106,28 @@ var/list/powerinstances
 	helptext = "We cannot be tracked by camera while using this skill.  However, humans looking at us will find us... uncanny."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_digitalcamo
+	verbpath = list(/mob/living/carbon/proc/changeling_digitalcamo)
 
 /datum/power/changeling/fleshmend
 	name = "Fleshmend"
 	desc = "We evolve the ability to rapidly regenerate, restoring the health of the body we use."
 	helptext = "Heals a moderate amount of damage every tick. Can be used while unconscious."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_fleshmend
+	verbpath = list(/mob/living/carbon/proc/changeling_fleshmend)
 
 /datum/power/changeling/panacea
 	name = "Anatomic Panacea"
 	desc = "Expels impurifications from our form; curing diseases, genetic disabilities, and removing toxins and radiation."
 	helptext = "Can be used while unconscious."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_panacea
+	verbpath = list(/mob/living/carbon/proc/changeling_panacea)
 
 /datum/power/changeling/shriek
 	name = "Resonant Shriek"
 	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
 	helptext = "The high-frequency sounds cannot be heard by humans, but will blow out lights nearby. Cyborgs will have their sensors overloaded and become stunned."
 	genomecost = 1
-	verbpath = /mob/living/carbon/proc/changeling_shriek
+	verbpath = list(/mob/living/carbon/proc/changeling_shriek)
 
 /datum/power/changeling/spiders
 	name = "Spread Infestation"
@@ -128,7 +135,7 @@ var/list/powerinstances
 	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 5 DNA absorptions."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_spiders
+	verbpath = list(/mob/living/carbon/proc/changeling_spiders)
 
 /datum/power/changeling/lsd_sting
 	name = "Hallucination Sting"
@@ -136,14 +143,14 @@ var/list/powerinstances
 	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_lsd_sting
+	verbpath = list(/mob/living/carbon/proc/changeling_lsd_sting)
 
 /datum/power/changeling/blind_sting
 	name = "Blind Sting"
 	desc = "We silently sting a human, completely blinding them for a short time."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_blind_sting
+	verbpath = list(/mob/living/carbon/proc/changeling_blind_sting)
 
 /datum/power/changeling/cryo_sting
 	name = "Cryogenic Sting"
@@ -151,7 +158,7 @@ var/list/powerinstances
 	helptext = "Does not provide a warning to a victim, though they will likely realize they are suddenly freezing."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_cryo_sting
+	verbpath = list(/mob/living/carbon/proc/changeling_cryo_sting)
 
 /datum/power/changeling/mute_sting
 	name = "Mute Sting"
@@ -159,7 +166,7 @@ var/list/powerinstances
 	helptext = "Does not provide a warning to a victim that they have been stung, until they try to speak and cannot."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_mute_sting
+	verbpath = list(/mob/living/carbon/proc/changeling_mute_sting)
 
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
@@ -496,8 +503,8 @@ var/list/powerinstances
 
 	purchasedpowers += thepower
 
-	if(!thepower.isVerb && thepower.verbpath)
-		call(C, thepower.verbpath)()
+	if(!thepower.isVerb && (thepower.verbpath.len == 1))
+		call(C, thepower.verbpath[1])()
 	else if(remake_verbs)
 		C.make_changeling()
 
