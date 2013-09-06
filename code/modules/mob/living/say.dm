@@ -132,7 +132,7 @@ var/list/department_radio_keys = list(
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
+			if (!(ishuman(src) || (message_mode=="changeling") || istype(src, /mob/living/simple_animal/parrot) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
 				message_mode = null //only humans can use headsets
 			// Check changed so that parrots can use headsets. Other simple animals do not have ears and will cause runtimes.
 			// And borgs -Sieve
@@ -250,6 +250,7 @@ var/list/department_radio_keys = list(
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
 						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				return
+
 ////SPECIAL HEADSETS START
 		else
 			//world << "SPECIAL HEADSETS"
