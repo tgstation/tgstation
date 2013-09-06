@@ -19,6 +19,9 @@
 	load_into_chamber()
 		if(in_chamber)
 			var/obj/item/ammo_casing/AC = current_shell
+			if(AC.reagents && AC.BB.reagents)
+				AC.reagents:trans_to(AC.BB, AC.reagents:total_volume) //For chemical darts
+				AC.reagents:delete()
 			AC.desc += " This one is spent."
 			AC.BB = null //remove the ammunition from the shell
 			return 1
@@ -91,6 +94,9 @@
 		loaded -= AC //Remove casing from loaded list.
 
 		if(AC.BB)
+			if(AC.reagents && AC.BB.reagents)
+				AC.reagents:trans_to(AC.BB, AC.reagents:total_volume) //For chemical darts
+				AC.reagents:delete()
 			in_chamber = AC.BB //Load projectile into chamber.
 			AC.BB.loc = src //Set projectile loc to gun.
 			AC.BB = null //Remove the ammunition from the shell
@@ -135,6 +141,6 @@
 				item_state = "gun"
 				slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 				slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+				user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
 				name = "sawn-off shotgun"
 				desc = "Omar's coming!"
-				user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
