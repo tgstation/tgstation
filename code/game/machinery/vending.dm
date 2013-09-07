@@ -467,7 +467,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/space_up = 10)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/thirteenloko = 5)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/thirteenloko = 5,/obj/item/weapon/reagent_containers/food/drinks/grapeterb = 5,/obj/item/weapon/reagent_containers/food/drinks/cherrydan = 5,/obj/item/weapon/reagent_containers/food/drinks/orangegoat = 5,/obj/item/weapon/reagent_containers/food/drinks/aranapple = 5)
 
 //This one's from bay12
 /obj/machinery/vending/cart

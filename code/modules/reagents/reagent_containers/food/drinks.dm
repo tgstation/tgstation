@@ -282,6 +282,46 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/grapeterb
+	name = "Grape Terbsoda"
+	desc = "Tastes strongly of purple and plasma."
+	icon_state = "grape_can"
+	New()
+		..()
+		reagents.add_reagent("grapeterb", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/cherrydan
+	name = "Cherry Terbsoda"
+	desc = "Tastes of burning and lovely cherries."
+	icon_state = "cherry_can"
+	New()
+		..()
+		reagents.add_reagent("cherrydan", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/aranapple
+	name = "Aran-C Apple Juice"
+	desc = "Tastes a bit angry and smells of fermented apples."
+	icon_state = "aran_can"
+	New()
+		..()
+		reagents.add_reagent("aranapple", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/orangegoat
+	name = "Pete's Orange Cream Soda"
+	desc = "Tastes of goat milk and oranges."
+	icon_state = "goat_can"
+	New()
+		..()
+		reagents.add_reagent("orangegoat", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
 /obj/item/weapon/reagent_containers/food/drinks/dr_gibb
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
