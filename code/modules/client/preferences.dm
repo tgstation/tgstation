@@ -765,7 +765,7 @@ datum/preferences
 				if("input")
 					var/dflag=text2num(href_list["disability"])
 					if(dflag >= 0)
-						if(dflag==DISABILITY_FLAG_FAT && species=="Human")
+						if(!(dflag==DISABILITY_FLAG_FAT && species!="Human"))
 							disabilities ^= text2num(href_list["disability"]) //MAGIC
 					SetDisabilities(user)
 				else
