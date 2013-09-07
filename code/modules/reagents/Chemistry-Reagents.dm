@@ -2466,6 +2466,58 @@ datum
 				..()
 				return
 
+		grapeterb
+			name = "Grape Terbsoda"
+			id = "grapeterb"
+			description = "Tastes strongly of purple and plasma.
+			reagent_state = LIQUID
+			color = "#480048" // rgb: 72, 0, 72
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.getBruteLoss() && prob(30)) M.heal_organ_damage(1,0)
+				M.nutrition += 1
+				..()
+				return
+
+		cherrydan
+			name = "Cherrydan-Brand Soda"
+			id = "cherryterb"
+			description = "It tastes of a burning senstation and cherries."
+			reagent_state = LIQUID
+			color = "#480000" // rgb: 72, 0, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.getOxyLoss() && prob(60)) M.adjustOxyLoss(-1)
+				M.nutrition += 1
+				..()
+				return
+
+		orangegoat
+			name = "Pete's Orange Cream Soda"
+			id = "orangegoat"
+			description = "Tastes of goat milk and oranges."
+			reagent_state = LIQUID
+			color = "#484800" // rgb: 72, 72, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.getFireLoss() && prob(30)) M.heal_organ_damage(0,1)
+				M.nutrition += 1
+				..()
+				return
+
+		aranapple
+			name = "Aran-C Apple Juice"
+			id = "aranapple"
+			description = "Tastes faintly of anger and fermented apples."
+			reagent_state = LIQUID
+			color = "#000048" // rgb: 0, 0, 72
+
+			on_mob_life(var/mob/living/M as mob)
+				if(M.getToxLoss() && prob(30)) M.adjustToxLoss(-1)
+				M.nutrition += 1
+				..()
+				return
+
 		sodawater
 			name = "Soda Water"
 			id = "sodawater"
