@@ -43,7 +43,7 @@ var/global/floorIsLava = 0
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:43: body += " played by <b>[M.client]</b> "
-		body += {"played by <b>[M.client]</b> 
+		body += {"played by <b>[M.client]</b>
 			\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"}
 		// END AUTOFIX
 	if(istype(M, /mob/new_player))
@@ -63,6 +63,7 @@ var/global/floorIsLava = 0
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
+		<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
 	"}
 
@@ -115,7 +116,7 @@ var/global/floorIsLava = 0
 			else if(ishuman(M))
 				body += {"<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> |
 					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
-					<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> | 
+					<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> |
 					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
 					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
 				"}
