@@ -35,14 +35,13 @@
 				var/a = 1
 				if(number & 2)
 					for(a = 1; a <= 2; a++)
-						sleep(1)
 						step(peel,direction)
 				else
-					sleep(1)
 					step(peel,direction)
+		new /obj/item/weapon/bananapeel/traitorpeel(get_turf(src.loc))
 		del(src)
 		return
-
+/*
 	proc/banana(turf/T as turf)
 		if(!T || !istype(T))
 			return
@@ -51,6 +50,7 @@
 		if(locate(/obj/structure/window) in T)
 			return
 		new /obj/item/weapon/bananapeel/traitorpeel(T)
+*/
 
 /obj/item/weapon/bananapeel/traitorpeel
 	name = "banana peel"
@@ -75,7 +75,7 @@
 					M << "\red Your feet feel like they're on fire!"
 					M.take_overall_damage(0, max(0, (burned - 2)))
 
-			if(!istype(M, /mob/living/carbon/slime))
+			if(!istype(M, /mob/living/carbon/slime) && !isrobot(M))
 				M.stop_pulling()
 				step(M, M.dir)
 				spawn(1) step(M, M.dir)
