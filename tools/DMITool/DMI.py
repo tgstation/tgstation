@@ -133,7 +133,7 @@ def compare(theirsfile, minefile, parser, reportstream):
 			if stateName not in states:
 				states.append(stateName)
 	o = ''
-	for state in states:
+	for state in sorted(states):
 		inTheirs = state in theirs
 		inMine = state in mine 
 		if inTheirs and not inMine:
