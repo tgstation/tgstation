@@ -33,8 +33,6 @@
 /mob/living/carbon/human/adjustBruteLoss(var/amount)
 	if(amount > 0)
 		take_overall_damage(amount, 0)
-		if(prob(amount))
-			IgniteMob()
 	else
 		heal_overall_damage(-amount, 0)
 
