@@ -152,3 +152,4 @@
 		new /obj/item/clothing/shoes/magboots/vox(src)
 		new /obj/item/clothing/suit/space/vox/pressure(src)
 		new /obj/item/clothing/under/vox/vox_casual(src)
+		new /obj/item/weapon/tank/jetpack/oxygen(src)
