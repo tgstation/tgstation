@@ -869,22 +869,23 @@
 				heal_overall_damage(1,1)
 
 		//The fucking FAT mutation is the greatest shit ever. It makes everyone so hot and bothered.
-		if(FAT in mutations)
-			if(overeatduration < 100)
-				src << "\blue You feel fit again!"
-				mutations.Remove(FAT)
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
-				update_inv_wear_suit()
-		else
-			if(overeatduration > 500)
-				src << "\red You suddenly feel blubbery!"
-				mutations.Add(FAT)
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
-				update_inv_wear_suit()
+		if(species.flags & CAN_BE_FAT)
+			if(FAT in mutations)
+				if(overeatduration < 100)
+					src << "\blue You feel fit again!"
+					mutations.Remove(FAT)
+					update_mutantrace(0)
+					update_mutations(0)
+					update_inv_w_uniform(0)
+					update_inv_wear_suit()
+			else
+				if(overeatduration > 500)
+					src << "\red You suddenly feel blubbery!"
+					mutations.Add(FAT)
+					update_mutantrace(0)
+					update_mutations(0)
+					update_inv_w_uniform(0)
+					update_inv_wear_suit()
 
 		// nutrition decrease
 		if (nutrition > 0 && stat != 2)

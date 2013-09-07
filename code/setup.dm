@@ -308,9 +308,9 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // Used in preferences.
 #define DISABILITY_FLAG_NEARSIGHTED 1
-#define DISABILITY_FLAG_FAT 2
-#define DISABILITY_FLAG_EPILEPTIC 4
-#define DISABILITY_FLAG_DEAF 4
+#define DISABILITY_FLAG_FAT         2
+#define DISABILITY_FLAG_EPILEPTIC   4
+#define DISABILITY_FLAG_DEAF        8
 
 	// Generic mutations:
 #define	TK				1

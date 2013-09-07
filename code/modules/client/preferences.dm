@@ -16,7 +16,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 	"ninja" = "true",									 // 10
 	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
-	"diona" = 1,                                         // 12
+	"diona" = 0,                                         // 12
 )
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -520,6 +520,8 @@ datum/preferences
 		return
 
 	proc/ShowDisabilityState(mob/user,flag,label)
+		if(flag==DISABILITY_FLAG_FAT && species!="Human")
+			return "<li><i>[species] cannot be fat.</i></li>"
 		return "<li><b>[label]:</b> <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "Yes" : "No"]</a></li>"
 
 	proc/SetDisabilities(mob/user)
@@ -761,8 +763,10 @@ datum/preferences
 					disabilities=0
 					SetDisabilities(user)
 				if("input")
-					if(text2num(href_list["disability"]) >= 0)
-						disabilities ^= text2num(href_list["disability"]) //MAGIC
+					var/dflag=text2num(href_list["disability"])
+					if(dflag >= 0)
+						if(dflag==DISABILITY_FLAG_FAT && species=="Human")
+							disabilities ^= text2num(href_list["disability"]) //MAGIC
 					SetDisabilities(user)
 				else
 					SetDisabilities(user)
@@ -1251,7 +1255,7 @@ datum/preferences
 			else if(status == "cyborg")
 				O.status |= ORGAN_ROBOT
 
-		if(disabilities & DISABILITY_FLAG_FAT)
+		if(disabilities & DISABILITY_FLAG_FAT && species=="Human")//character.species.flags & CAN_BE_FAT)
 			character.mutations += FAT
 		if(disabilities & DISABILITY_FLAG_NEARSIGHTED)
 			character.disabilities|=NEARSIGHTED

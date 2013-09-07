@@ -145,7 +145,7 @@ datum/preferences
 			icobase = 'icons/mob/human_races/r_human.dmi'
 
 		var/fat=""
-		if(disabilities&DISABILITY_FLAG_FAT)
+		if(disabilities&DISABILITY_FLAG_FAT && current_species.flags & CAN_BE_FAT)
 			fat="_fat"
 		preview_icon = new /icon(icobase, "torso_[g][fat]")
 		preview_icon.Blend(new /icon(icobase, "groin_[g]"), ICON_OVERLAY)
