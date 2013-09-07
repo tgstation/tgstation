@@ -32,7 +32,8 @@
 		spawn(0)
 			var/obj/effect/expl_particles/expl = new /obj/effect/expl_particles(src.location)
 			var/direct = pick(alldirs)
-			for(i=0, i<pick(1;25,2;50,3,4;200), i++)
+			var/a = 0
+			for(a=0, a<pick(1;25,2;50,3,4;200), a++)
 				sleep(1)
 				step(expl,direct)
 

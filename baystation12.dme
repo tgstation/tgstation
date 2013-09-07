@@ -571,6 +571,7 @@
 #include "code\game\objects\items\weapons\weaponry.dm"
 #include "code\game\objects\items\weapons\wires.dm"
 #include "code\game\objects\items\weapons\grenades\chem_grenade.dm"
+#include "code\game\objects\items\weapons\grenades\clowngrenade.dm"
 #include "code\game\objects\items\weapons\grenades\emgrenade.dm"
 #include "code\game\objects\items\weapons\grenades\flashbang.dm"
 #include "code\game\objects\items\weapons\grenades\grenade.dm"

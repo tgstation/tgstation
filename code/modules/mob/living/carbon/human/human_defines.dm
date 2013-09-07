@@ -55,3 +55,5 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
+
+	var/meatleft = 3 //For chef item

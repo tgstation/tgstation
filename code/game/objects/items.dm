@@ -678,9 +678,10 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain))|| !isMoMMI(usr))//Is humanoid, and is not a brain
-		usr << "\red You can't pick things up!"
-		return
+	if(!istype(usr, /mob/living/carbon) && !isMoMMI(usr))//Is not a carbon being or MoMMI
+		usr << "You can't pick things up!"
+	if(istype(usr, /mob/living/carbon/brain))//Is a brain
+		usr << "You can't pick things up!"
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		usr << "\red You can't pick things up!"
 		return

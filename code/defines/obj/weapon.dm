@@ -520,7 +520,7 @@
 	item_state = ""
 	throw_speed = 4
 	throw_range = 20
-
+/*unused
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()
 	for (var/obj/machinery/camera/C in cameranet.cameras)
@@ -545,7 +545,7 @@
 	if (usr.stat == 2) return
 
 	usr.client.eye = target
-
+*/
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
