@@ -1,4 +1,7 @@
-/*
+// MoMMIs do spess construction, so shouldn't slip.
+/mob/living/silicon/robot/mommi/Process_Spaceslipping(var/prob_slip=5)
+	return 0
+
 /mob/living/silicon/robot/mommi/Process_Spacemove()
 	if(module)
 		for(var/obj/item/weapon/tank/jetpack/J in module.modules)
@@ -6,12 +9,3 @@
 				if(J.allow_thrust(0.01))	return 1
 	if(..())	return 1
 	return 0
-
- //No longer needed, but I'll leave it here incase we plan to re-use it.
-/mob/living/silicon/robot/mommi/movement_delay()
-	var/tally = 0 //Incase I need to add stuff other than "speed" later
-
-	tally = speed
-
-	return tally+config.robot_delay
-*/
