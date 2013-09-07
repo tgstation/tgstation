@@ -122,6 +122,7 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
+	accepts_lighting=0
 
 /turf/simulated/shuttle/wall
 	name = "wall"
