@@ -8,3 +8,5 @@ info.json
 *.bak
 
 *.str
+
+*.pyc
