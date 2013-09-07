@@ -34,10 +34,10 @@
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\permissionverbs\permissionedit.dm:33: output += "<tr>"
 		output += {"<tr>
-			<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=\ref[src];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>
-			<td><a href='?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>
-			<td><a class='small' href='?src=\ref[src];editrights=permissions;ckey=[adm_ckey]'>[rights]</a></font></td>
-			</tr>"}
+<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=\ref[src];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>
+<td><a href='?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>
+<td><a class='small' href='?src=\ref[src];editrights=permissions;ckey=[adm_ckey]'>[rights]</a></font></td>
+</tr>"}
 		// END AUTOFIX
 	output += {"
 </table></div>
