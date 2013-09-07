@@ -756,7 +756,7 @@ var/list/datum/dna/hivemind_bank = list()
 /mob/proc/changeling_unfat_sting()
 	set category = "Changeling"
 	set name = "Unfat sting"
-	set desc = "Sting target"
+	set desc = "A rapid weightloss plan that actually works!"
 
 	var/mob/living/carbon/T = changeling_sting(0,/mob/proc/changeling_unfat_sting)
 	if(!T)	return 0

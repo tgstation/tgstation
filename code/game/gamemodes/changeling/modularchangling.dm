@@ -122,7 +122,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/unfat_sting
 	name = "Unfat Sting"
 	desc = "We silently sting a human, forcing them to rapidly metobolize their fat."
-	genomecost = 1
+	genomecost = 0
 	verbpath = /mob/proc/changeling_unfat_sting
 
 /datum/power/changeling/boost_range
