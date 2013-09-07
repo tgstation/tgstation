@@ -6,12 +6,12 @@
 	caliber = "38"
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/c38"
-
+	var/perfect = 0
 
 	special_check(var/mob/living/carbon/human/M)
 		if(caliber == initial(caliber))
 			return 1
-		if(prob(70 - (loaded.len * 10)))	//minimum probability of 10, maximum of 60
+		if(!perfect && prob(70 - (loaded.len * 10)))	//minimum probability of 10, maximum of 60
 			M << "<span class='danger'>[src] blows up in your face.</span>"
 			M.take_organ_damage(0,20)
 			M.drop_item()
@@ -38,8 +38,14 @@
 			return 1
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
+		var/obj/item/weapon/conversion_kit/CK
 		..()
-		if(istype(A, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(A) || istype(A, /obj/item/weapon/conversion_kit))
+			if(istype(A, /obj/item/weapon/conversion_kit))
+				CK = A
+				if(!CK.open)
+					user << "<span class='notice'>This [CK.name] is useless unless you open it first. </span>"
+					return
 			if(caliber == "38")
 				user << "<span class='notice'>You begin to reinforce the barrel of [src].</span>"
 				if(loaded.len)
@@ -54,6 +60,8 @@
 					caliber = "357"
 					desc = "The barrel and chamber assembly seems to have been modified."
 					user << "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>"
+					if(CK && istype(CK))
+						perfect = 1
 			else
 				user << "<span class='notice'>You begin to revert the modifications to [src].</span>"
 				if(loaded.len)
@@ -68,6 +76,7 @@
 					caliber = "38"
 					desc = initial(desc)
 					user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
+					perfect = 0
 
 
 

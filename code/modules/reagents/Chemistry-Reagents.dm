@@ -363,6 +363,29 @@ datum
 				..()
 				return
 
+		chefspecial
+			// Quiet and lethal, needs atleast 4 units in the person before they'll die
+			name = "Chef's Special"
+			id = "chefspecial"
+			description = "An extremely toxic chemical that will surely end in death."
+			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.39
+
+			on_mob_life(var/mob/living/M as mob)
+				var/random = rand(150,180)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				switch(data)
+					if(0 to 5)
+						..()
+				if(data >= random)
+					if(M.stat != DEAD)
+						M.death(0)
+						M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
+				data++
+				return
+
 		minttoxin
 			name = "Mint Toxin"
 			id = "minttoxin"

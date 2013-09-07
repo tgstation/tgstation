@@ -178,7 +178,7 @@
  * Bucher's cleaver
  */
 /obj/item/weapon/butch
-	name = "butcher's Cleaver"
+	name = "Butcher's Cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
@@ -191,6 +191,15 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/weapon/butch/meatcleaver
+	name = "Meat Cleaver"
+	icon_state = "mcleaver"
+	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
+	force = 25.0
+	throwforce = 15.0
+
+
 
 /obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

@@ -228,13 +228,14 @@
 	if(istype(used_weapon,/obj/item/weapon))
 		var/obj/item/weapon/W = used_weapon  //Sharp objects will always embed if they do enough damage.
 		if( (damage > (10*W.w_class)) && ( (sharp && !ismob(W.loc)) || prob(damage/W.w_class) ) )
-			organ.implants += W
-			visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
-			W.add_blood(src)
-			if(ismob(W.loc))
-				var/mob/living/H = W.loc
-				H.drop_item()
-			W.loc = src
+			if(!istype(W, /obj/item/weapon/butch/meatcleaver))
+				organ.implants += W
+				visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
+				W.add_blood(src)
+				if(ismob(W.loc))
+					var/mob/living/H = W.loc
+					H.drop_item()
+				W.loc = src
 
 	else if(istype(used_weapon,/obj/item/projectile)) //We don't want to use the actual projectile item, so we spawn some shrapnel.
 		if(prob(75) && damagetype == BRUTE)

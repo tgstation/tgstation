@@ -13,6 +13,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/list/purchase_log = list()
 	var/show_description = null
 	var/active = 0
+	var/job = null
 
 /obj/item/device/uplink/New()
 	..()
@@ -20,8 +21,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	uses = ticker.mode.uplink_uses
 
 //Let's build a menu!
-/obj/item/device/uplink/proc/generate_menu()
-
+/obj/item/device/uplink/proc/generate_menu(mob/user as mob)
+	if(!job)
+		job = user.job
 	var/dat = "<B>[src.welcome]</B><BR>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -45,8 +47,15 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		// Loop through items in category
 		for(var/datum/uplink_item/item in buyable_items[category])
 			i++
+
 			var/cost_text = ""
 			var/desc = "[item.desc]"
+			if(item.job)
+				if(item.job != job)
+					world.log << "Skipping job item that doesn't match"
+					continue
+				else
+					world.log << "Found matching job item"
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
@@ -71,7 +80,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/interact(mob/user as mob)
 
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
-	dat += src.generate_menu()
+	dat += src.generate_menu(user)
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\uplinks.dm:72: dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"

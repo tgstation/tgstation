@@ -1,6 +1,6 @@
 var/list/uplink_items = list()
 
-/proc/get_uplink_items()
+/proc/get_uplink_items(var/job = null)
 	// If not already initialized..
 	if(!uplink_items.len)
 
@@ -25,7 +25,6 @@ var/list/uplink_items = list()
 			uplink_items[I.category] += I
 
 		for(var/datum/uplink_item/I in last)
-
 			if(!uplink_items[I.category])
 				uplink_items[I.category] = list()
 
@@ -45,6 +44,7 @@ var/list/uplink_items = list()
 	var/last = 0 // Appear last
 	var/abstract = 0
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+	var/job = null
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	U.uses -= max(cost, 0)
@@ -296,6 +296,42 @@ var/list/uplink_items = list()
 	desc = "An implant injected into the body, and later activated using a bodily gesture to retrieve an item that was earlier compressed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_compress
 	cost = 4
+
+//Work in Progress, job specific antag tools
+
+/datum/uplink_item/jobspecific
+	category = "Job Specific Tools"
+
+//Clown
+/datum/uplink_item/jobspecific/clowngrenade
+	name = "1 Banana Grenade"
+	desc = "A grenade that explodes into HONK! brand banana peels that are genetically modified to be extra slippery and extrude caustic acid when stepped on"
+	item = /obj/item/weapon/grenade/clown_grenade
+	cost = 4
+	job = "Clown"
+
+//Detective
+/datum/uplink_item/jobspecific/evidenceforger
+	name = "Evidence Forger"
+	desc = "An evidence scanner that allows you forge evidence by setting the output before scanning the item."
+	item = /obj/item/device/detective_scanner/forger
+	cost = 3
+	job = "Detective"
+
+/datum/uplink_item/jobspecific/conversionkit
+	name = "Conversion Kit Bundle"
+	desc = "A bundle that comes with a professional revolver conversion kit and 1 box of .357 ammo. The kit allows you to convert your revolver to fire lethal rounds or vice versa, modification is nearly perfect and will not result in catastrophic failure."
+	item = /obj/item/weapon/storage/box/syndie_kit/conversion
+	cost = 6
+	job = "Detective"
+
+//Chef
+/datum/uplink_item/jobspecific/conversionkit
+	name = "Chef Excellence's Special Sauce"
+	desc = "A custom made sauce made from the toxin glands of 1000 space carp, if somebody ingests enough they'll be dead in 3 minutes or less guaranteed."
+	item = /obj/item/weapon/reagent_containers/food/condiment/syndisauce
+	cost = 2
+	job = "Chef"
 
 // POINTLESS BADASSERY
 
