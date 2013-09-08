@@ -9,6 +9,7 @@
 
 /*-------TODOOOOOOOOOO--------*/
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
+	var/obj/item/TS
 	if(!O)
 		return 0
 
@@ -27,14 +28,19 @@
 	if(module_active == O)
 		module_active = null
 	if(module_state_1 == O)
+		TS = module_state_1
 		inv1.icon_state = "inv1"
 		module_state_1 = null
 	else if(module_state_2 == O)
+		TS = module_state_2
 		inv2.icon_state = "inv2"
 		module_state_2 = null
 	else if(module_state_3 == O)
+		TS = module_state_3
 		module_state_3 = null
 		inv3.icon_state = "inv3"
+	if(TS && istype(TS))
+		TS.loc = src.module
 	return 1
 
 /mob/living/silicon/robot/proc/uneq_active()
