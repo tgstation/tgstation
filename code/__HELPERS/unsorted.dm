@@ -433,8 +433,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/voices/M in sortmob)
-		moblist.Add(M)
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
 //	for(var/mob/living/silicon/hive_mainframe/M in world)

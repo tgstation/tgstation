@@ -231,7 +231,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
-	var/acceptvoices = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
