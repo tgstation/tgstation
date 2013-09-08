@@ -6,7 +6,11 @@
 	return module_active
 
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W)
-	var/obj/item/found = locate(W) in src.module.modules
+	var/obj/item/found
+	if(istype(W, src.module.emag.type))
+		found = W
+	else
+		found = locate(W) in src.module.modules
 	return found
 /mob/living/silicon/robot/mommi/put_in_hands(var/obj/item/W)
 	// Fixing NPEs caused by PDAs giving me NULLs to hold :V - N3X
@@ -111,8 +115,8 @@
 		inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!is_in_modules(tool_state))
-			var/obj/item/TS = tool_state
+		var/obj/item/TS = tool_state
+		if(!is_in_modules(TS))
 			drop_item()
 
 			if(TS && TS.loc)
@@ -125,6 +129,8 @@
 		module_active = null
 		tool_state = null
 		inv_tool.icon_state = "inv1"
+		if(is_in_modules(TS))
+			TS.loc = src.module
 
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null

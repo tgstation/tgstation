@@ -77,15 +77,20 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
 
-/*
+
 /mob/living/silicon/robot/mommi/choose_icon()
 	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper")
 	switch(icontype)
 		if("Basic")	subtype = "mommi"
 		else		subtype = "keeper"
-	picked=1
 	updateicon()
-*/
+	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
+	switch(answer)
+		if("No")
+			choose_icon()
+			return
+	picked = 1
+
 /mob/living/silicon/robot/mommi/pick_module()
 
 	if(module)
@@ -435,6 +440,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/Topic(href, href_list)
 	..()
+	if(usr && (src != usr))
+		return
+
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
@@ -452,6 +460,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
+		if(O.loc != src.module)
+			return
 		if(istype(O,/obj/item/borg/sight))
 			if(sight_state)
 				contents -= sight_state

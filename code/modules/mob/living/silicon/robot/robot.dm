@@ -1109,6 +1109,10 @@
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()
+
+	if(usr && (src != usr))
+		return
+
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
@@ -1125,7 +1129,11 @@
 			O.attack_self(src)
 
 	if (href_list["act"])
+		if(isMoMMI(src))
+			return
 		var/obj/item/O = locate(href_list["act"])
+		if(O.loc != src.module)
+			return
 		if(activated(O))
 			src << "Already activated"
 			return
