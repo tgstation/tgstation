@@ -401,7 +401,7 @@
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_DEAF)
 			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,DEAFBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,DEAFBLOCK,3)),3)
-			new_character.disabilities |= DEAFBLOCK
+			new_character.sdisabilities |= DEAF
 
 		new_character.key = key		//Manually transfer the key to log them in
 

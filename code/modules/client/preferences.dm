@@ -1262,7 +1262,7 @@ datum/preferences
 		if(disabilities & DISABILITY_FLAG_EPILEPTIC)
 			character.disabilities|=EPILEPSY
 		if(disabilities & DISABILITY_FLAG_DEAF)
-			character.disabilities|=DEAF
+			character.sdisabilities|=DEAF
 
 		if(underwear > underwear_m.len || underwear < 1)
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
