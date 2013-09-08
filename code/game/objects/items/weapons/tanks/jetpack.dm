@@ -107,14 +107,15 @@
 		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 		src.ion_trail.set_up(src)
 		//src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		air_contents.adjust(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.update_values()
 		return
 
 	examine()
 		set src in usr
 		..()
 		if(air_contents.nitrogen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of nitrogen!</B>")
 			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return
 
