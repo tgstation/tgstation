@@ -51,16 +51,16 @@ def PNG_header_write (f):
 
 
 def PNG_chunk_read (f):
-    s=f.read(8)
-    length = i32(s)#struct.unpack(">I", f.read(4))
-    name   = s[4:]
-    data   = f.read(length)
-    crc = PNG_crc(f,name,data)
-    #crc,   = struct.unpack(">i", f.read(4))
+    s = f.read(8)
+    length = i32(s)  # struct.unpack(">I", f.read(4))
+    name = s[4:]
+    data = f.read(length)
+    crc = PNG_crc(f, name, data)
+    # crc,   = struct.unpack(">i", f.read(4))
 
-    #crc_ = binascii.crc32(name)
-    #crc_ = binascii.crc32(data, crc_)
-    #if crc != crc_:
+    # crc_ = binascii.crc32(name)
+    # crc_ = binascii.crc32(data, crc_)
+    # if crc != crc_:
     #    print("corrupt data crc : ", crc, crc_)
     #    sys.exit()
 
@@ -87,7 +87,7 @@ def PNG_IHDR_write (f, w, h, d, col, comp, filt, intl):
 
 def PNG_IHDR_parse (data):
     if len(data) != 13:
-        print("IHDR : length %d != 13"%(len(data)))
+        print("IHDR : length %d != 13" % (len(data)))
         sys.exit()
 
     w, h, d, col, comp, filt, intl = struct.unpack(">IIbbbbb", data)
@@ -101,7 +101,7 @@ def PNG_acTL_write (f, nf, np):
 
 def PNG_acTL_parse (data):
     if len(data) != 8:
-        print("acTL : length %d != 8"%(len(data)))
+        print("acTL : length %d != 8" % (len(data)))
         sys.exit()
 
     nf, np = struct.unpack(">II", data)
@@ -116,7 +116,7 @@ def PNG_fcTL_write (f, ns, w, h, x0, y0, dn, dd, dop, bop):
 
 def PNG_fcTL_parse (data):
     if len(data) != 26:
-        print("fcTL : length %d != 26"%(len(data)))
+        print("fcTL : length %d != 26" % (len(data)))
         sys.exit()
 
     ns, w, h, x0, y0, dn, dd, dop, bop = struct.unpack(">IIIIIHHBB", data)
@@ -142,22 +142,22 @@ def usage():
 
 # Making a builder class implementation so we're mildly more flexible.
 class APNG:
-	frames=[]
-	np=0
-	i=1
+	frames = []
+	np = 0
+	i = 1
 	
 	def __init__(self):
-		self.frames=[]
-		self.np=0
-		self.i=1
-	def addFrame(self,infile,numerator=100,denominator=1000):
-		self.frames += [(infile,numerator,denominator)]
+		self.frames = []
+		self.np = 0
+		self.i = 1
+	def addFrame(self, infile, numerator=100, denominator=1000):
+		self.frames += [(infile, numerator, denominator)]
 		
-	def save(self,outputFile):
+	def save(self, outputFile):
 		with open(outputFile, 'wb') as apng:
-			num_frames=len(self.frames)
-			dop = 1 # APNG_DISPOSE_OP_BACKGROUND
-			bop = 0 # APNG_BLEND_OP_SOURCE
+			num_frames = len(self.frames)
+			dop = 1  # APNG_DISPOSE_OP_BACKGROUND
+			bop = 0  # APNG_BLEND_OP_SOURCE
 			PNG_header_write(apng)
 
 			ns = 0  # number of sequence
@@ -169,7 +169,7 @@ class APNG:
 			filt0 = 0
 			intl0 = 0
 			for i in range(num_frames):
-				filename,numerator,denominator=self.frames[i]
+				filename, numerator, denominator = self.frames[i]
 				print('Reading %s...' % filename)
 				with open(filename, 'rb') as f_png:
 					PNG_header_read (f_png)
@@ -178,7 +178,7 @@ class APNG:
 						if name == 'IEND':
 							break
 						elif name == 'IHDR':
-							if(i==0):
+							if(i == 0):
 								w0, h0, d0, col0, comp0, filt0, intl0 = PNG_IHDR_parse (data)
 								PNG_IHDR_write (apng, w0, h0, d0, col0, comp0, filt0, intl0)
 								# acTL
@@ -193,34 +193,34 @@ class APNG:
 								PNG_fcTL_write (apng, ns, w0, h0, 0, 0, numerator, denominator, dop, bop)
 							ns += 1
 						elif name == 'IDAT':
-							if(i==0):
+							if(i == 0):
 								# IDAT
 								PNG_chunk_write (apng, name, data)
 							else:
 								# fdAT
 								PNG_fdAT_write (apng, ns, data)
-								ns+=1
+								ns += 1
 			PNG_chunk_write (apng, 'IEND', '')
 
 def main():
     file_apng = ''
     file_pngs = []
-    np = 0    # number of plays
+    np = 0  # number of plays
     dn = 100  # numerator of delay 
-    dd = 1000 # denominator of delay
+    dd = 1000  # denominator of delay
     i = 1
     while i < len(sys.argv):
         if sys.argv[i] == '-o':
-            file_apng = sys.argv[i+1]
+            file_apng = sys.argv[i + 1]
             i += 2
         elif sys.argv[i] == '-np':
-            np = int(sys.argv[i+1])
+            np = int(sys.argv[i + 1])
             i += 2
         elif sys.argv[i] == '-dn':
-            dn = int(sys.argv[i+1])
+            dn = int(sys.argv[i + 1])
             i += 2
         elif sys.argv[i] == '-dd':
-            dd = int(sys.argv[i+1])
+            dd = int(sys.argv[i + 1])
             i += 2
         elif sys.argv[i] == '-h' or sys.argv[i] == '--help':
             usage()
@@ -235,10 +235,10 @@ def main():
 
     f_apng = file(file_apng, 'wb')
 
-    nf = len(file_pngs) # number of frames
+    nf = len(file_pngs)  # number of frames
 
-    dop = 1 # APNG_DISPOSE_OP_BACKGROUND
-    bop = 0 # APNG_BLEND_OP_SOURCE
+    dop = 1  # APNG_DISPOSE_OP_BACKGROUND
+    bop = 0  # APNG_BLEND_OP_SOURCE
 
     PNG_header_write (f_apng)
 
@@ -277,7 +277,7 @@ def main():
 
 
     # the following frames
-    for i in range(1,len(file_pngs)):
+    for i in range(1, len(file_pngs)):
         f_png = file(file_pngs[i], 'rb')
         PNG_header_read (f_png)
 

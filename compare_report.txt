@@ -226,8 +226,6 @@
  + williamhackett
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
- + forensic0-old
- + forensic1-old
  - handtv
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
@@ -243,6 +241,11 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
  + psychbed
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
+ - intercom-frame
+ - intercom-open
+ - intercom-p-open
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\robotics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
  - mommispawner-building
