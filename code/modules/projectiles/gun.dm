@@ -30,7 +30,7 @@
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 	var/firerate = 1 	// 0 for one bullet after tarrget moves and aim is lowered,
 						//1 for keep shooting until aim is lowered
-	var/fire_delay = 6
+	var/fire_delay = 2
 	var/last_fired = 0
 
 	proc/ready_to_fire()

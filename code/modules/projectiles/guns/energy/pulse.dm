@@ -9,7 +9,7 @@
 	projectile_type = "/obj/item/projectile/beam/pulse"
 	cell_type = "/obj/item/weapon/cell/super"
 	var/mode = 2
-	fire_delay = 25
+	fire_delay = 2
 
 	attack_self(mob/living/user as mob)
 		switch(mode)
