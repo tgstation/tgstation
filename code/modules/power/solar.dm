@@ -408,13 +408,13 @@ var/list/solars_list = list()
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:408: t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
-	t += {"<B>Generated power</B> : [round(lastgen)] W<BR>
-		Station Rotational Period: [60/abs(sun.rate)] minutes<BR>
-		Station Rotational Direction: [sun.rate<0 ? "CCW" : "CW"]<BR>
-		Star Orientation: [sun.angle]&deg ([angle2text(sun.angle)])<BR>
-		Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])<BR>
-		<BR><HR><BR>
-		Tracking: "}
+	t += {"<B>Generated power</B> : [round(lastgen)] W
+Station Rotational Period: [60/abs(sun.rate)] minutes
+Station Rotational Direction: [sun.rate<0 ? "CCW" : "CW"]
+Star Orientation: [sun.angle]&deg ([angle2text(sun.angle)])
+Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])
+<HR>
+Tracking: "}
 	// END AUTOFIX
 	switch(track)
 		if(0)
@@ -427,8 +427,8 @@ var/list/solars_list = list()
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:423: t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
-	t += {"Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>
-		Manual Tracking Direction: "}
+	t += {"Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]
+Manual Tracking Direction: "}
 	// END AUTOFIX
 	switch(trackdir)
 		if(-1)
