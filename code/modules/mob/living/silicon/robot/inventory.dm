@@ -7,9 +7,11 @@
 
 /*-------TODOOOOOOOOOO--------*/
 /mob/living/silicon/robot/proc/uneq_active()
+	var/obj/item/TS
 	if(isnull(module_active))
 		return
 	if(module_state_1 == module_active)
+		TS = module_state_1
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode &= ~module_state_1:sight_mode
 		if (client)
@@ -19,6 +21,7 @@
 		module_state_1 = null
 		inv1.icon_state = "inv1"
 	else if(module_state_2 == module_active)
+		TS = module_state_2
 		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode &= ~module_state_2:sight_mode
 		if (client)
@@ -28,6 +31,7 @@
 		module_state_2 = null
 		inv2.icon_state = "inv2"
 	else if(module_state_3 == module_active)
+		TS = module_state_3
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode &= ~module_state_3:sight_mode
 		if (client)
@@ -36,6 +40,8 @@
 		module_active = null
 		module_state_3 = null
 		inv3.icon_state = "inv3"
+	if(TS && istype(TS))
+		TS.loc = src.module
 	updateicon()
 
 /mob/living/silicon/robot/proc/uneq_all()
