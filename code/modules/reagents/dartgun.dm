@@ -292,4 +292,4 @@
 	starting_chems = list("kelotane","bicaridine","anti_toxin")
 
 /obj/item/weapon/gun/dartgun/vox/raider
-	starting_chems = list("space_drugs","stoxin","impedrezene")
+	starting_chems = list("stoxin","chloralhydrate")
