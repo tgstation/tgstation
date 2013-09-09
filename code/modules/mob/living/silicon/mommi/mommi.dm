@@ -460,9 +460,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
+		var/obj/item/TS
 		if(O.loc != src.module)
 			return
 		if(istype(O,/obj/item/borg/sight))
+			TS = sight_state
 			if(sight_state)
 				contents -= sight_state
 				sight_mode &= ~sight_state:sight_mode
@@ -474,6 +476,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			sight_mode |= sight_state:sight_mode
 			inv_sight.icon_state = "sight"
 		else
+			TS = tool_state
 			if(tool_state)
 				contents -= tool_state
 				if (client)
@@ -482,6 +485,13 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			O.layer = 20
 			contents += O
 			inv_tool.icon_state = "inv1"
+		if(TS && istype(TS))
+			if(src.is_in_modules(TS))
+				TS.loc = src.module
+			else
+				TS.layer=initial(TS.layer)
+				TS.loc = src.loc
+
 		installed_modules()
 	return
 
