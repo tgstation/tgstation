@@ -432,10 +432,10 @@ In all, this is a lot like the monkey code. /N
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? text("[]", head) : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? text("[]", wear_suit) : "Nothing")]</A>
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
-	onclose(user, "mob[name]")
+	user << browse(dat, text("window=mob\ref[src];size=340x480"))
+	onclose(user, "mob\ref[src]")
 	return
 
 

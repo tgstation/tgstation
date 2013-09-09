@@ -349,6 +349,16 @@ var/list/uplink_items = list()
 	cost = 2
 	job = "Janitor"
 
+
+//Assistant
+
+/datum/uplink_item/jobspecific/pickpocketgloves
+	name = "Pickpocket's Gloves"
+	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
+	item = /obj/item/clothing/gloves/black/thief
+	cost = 3
+	job = "Assistant"
+
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass

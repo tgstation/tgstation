@@ -1,3 +1,4 @@
+#define STRIP_DELAY			40	//time taken (in deciseconds) to strip somebody
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -280,7 +281,11 @@
 
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
-
+	var/obj/item/clothing/gloves/G
+	var/pickpocket = 0
+	if(user:gloves)
+		G = user:gloves
+		pickpocket = G.pickpocket
 	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
@@ -303,12 +308,13 @@
 	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([l_store ? (pickpocket ? l_store.name : "Full") : "Empty"])</A>
+	<BR><A href='?src=\ref[src];pockets=right'>Right Pocket ([r_store ? (pickpocket ? r_store.name : "Full") : "Empty"])</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
-	onclose(user, "mob[name]")
+	user << browse(dat, text("window=mob\ref[src];size=340x480"))
+	onclose(user, "mob\ref[src]")
 	return
 
 // called when something steps onto a human
@@ -403,6 +409,43 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
+	var/pickpocket = 0
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+		if(href_list["pockets"])
+			if(usr:gloves)
+				var/obj/item/clothing/gloves/G = usr:gloves
+				pickpocket = G.pickpocket
+			var/pocket_side = href_list["pockets"]
+			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
+			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
+			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+
+			if(pocket_item)
+				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
+				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+			else
+				return
+
+			if(do_mob(usr, src, STRIP_DELAY))
+				if(pocket_item)
+					u_equip(pocket_item)
+					if(pickpocket) usr.put_in_hands(pocket_item)
+				else
+					if(place_item)
+						usr.u_equip(place_item)
+						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
+
+				// Update strip window
+				if(usr.machine == src && in_range(src, usr))
+					show_inv(usr)
+
+
+
+			else if(!pickpocket)
+				// Display a warning if the user mocks up
+				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
+
 	if (href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
 			show_inv(machine)
@@ -414,12 +457,16 @@
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+		if(usr:gloves)
+			var/obj/item/clothing/gloves/G = usr:gloves
+			pickpocket = G.pickpocket
 		O.source = usr
 		O.target = src
 		O.item = usr.get_active_hand()
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]
+		O.pickpocket = pickpocket //Stealthy
 		requests += O
 		spawn( 0 )
 			O.process()
