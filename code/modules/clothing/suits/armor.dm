@@ -72,7 +72,6 @@
 	var/hit_reflect_chance = reflect_chance
 	if(!(def_zone in list("chest", "groin")))
 		hit_reflect_chance /= 2
-	world << hit_reflect_chance
 	if (prob(hit_reflect_chance))
 		return 1
 
