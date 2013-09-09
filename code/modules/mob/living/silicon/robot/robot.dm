@@ -194,6 +194,7 @@
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
+			module_sprites["Marina"] = "marina"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
