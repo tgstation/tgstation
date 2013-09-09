@@ -102,9 +102,11 @@
 /*-------TODOOOOOOOOOO--------*/
 // Called by store button
 /mob/living/silicon/robot/mommi/uneq_active()
+	var/obj/item/TS
 	if(isnull(module_active))
 		return
 	if(sight_state == module_active)
+		TS = sight_state
 		if(istype(sight_state,/obj/item/borg/sight))
 			sight_mode &= ~sight_state:sight_mode
 		if (client)
@@ -115,7 +117,7 @@
 		inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
-		var/obj/item/TS = tool_state
+		TS = tool_state
 		if(!is_in_modules(TS))
 			drop_item()
 
@@ -129,8 +131,8 @@
 		module_active = null
 		tool_state = null
 		inv_tool.icon_state = "inv1"
-		if(is_in_modules(TS))
-			TS.loc = src.module
+	if(is_in_modules(TS))
+		TS.loc = src.module
 
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null
