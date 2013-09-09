@@ -1322,7 +1322,7 @@ datum
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
 			color = "#E71B00" // rgb: 231, 27, 0
-			toxpwr = 3
+			toxpwr = 2.5 //Not quite lethal
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1348,18 +1348,18 @@ datum
 		toxin/lexorin
 			name = "Lexorin"
 			id = "lexorin"
-			description = "Lexorin temporarily stops respiration. Causes tissue damage."
+			description = "Lexorin temporarily stops respiration, causes tissue damage, burns, and is heavily toxic."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
-			toxpwr = 0
+			toxpwr = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
 				if(prob(33))
-					M.take_organ_damage(1*REM, 0)
-				M.adjustOxyLoss(3)
+					M.take_organ_damage(1*REM, 1*REM)
+				M.adjustOxyLoss(2)
 				if(prob(20)) M.emote("gasp")
 				..()
 				return
