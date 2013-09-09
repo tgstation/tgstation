@@ -68,6 +68,7 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
+
 /mob/living/silicon/robot/New(loc,var/syndie = 0,var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -135,6 +136,17 @@
 	if (!rbPDA)
 		rbPDA = new/obj/item/device/pda/ai(src)
 	rbPDA.set_name_and_job(custom_name,braintype)
+
+/mob/living/silicon/robot/debug_droideka
+	New()
+		..()
+		module = new /obj/item/weapon/robot_module/combat(src)
+		radio.config(list("Security" = 1))
+		base_icon = icon_state
+		icon_state = "droid-combat"
+		overlays -= "eyes"
+		base_icon = icon_state
+		updateicon()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
