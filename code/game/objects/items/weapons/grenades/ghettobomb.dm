@@ -42,12 +42,14 @@
 			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			return
+		if( istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && target.reagents.total_volume < 30)
+			user << "<span  class='notice'>There's not enough fuel left to work with.</span>"
 
 /obj/item/weapon/grenade/iedcasing/attackby(var/obj/item/I, mob/user as mob) //Wiring the can for ignition
 	if(istype(I, /obj/item/weapon/cable_coil))
 		if(assembled == 1)
 			var/obj/item/weapon/cable_coil/C = I
-			C.amount -= 1
+			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
 			desc = "A weak, improvised explosive."
