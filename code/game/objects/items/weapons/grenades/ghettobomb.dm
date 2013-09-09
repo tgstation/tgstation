@@ -33,16 +33,16 @@
 
 /obj/item/weapon/grenade/iedcasing/afterattack(atom/target, mob/user , flag) //Filling up the can
 	if(assembled == 0)
-		if( istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && target.reagents.total_volume > 30)
+		if( istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && target.reagents.total_volume > 50)
 			var/obj/structure/reagent_dispensers/fueltank/F = target
-			F.reagents.remove_reagent("fuel", 30, 1)//Deleting 30 fuel from the welding fuel tank,
+			F.reagents.remove_reagent("fuel", 50, 1)//Deleting 30 fuel from the welding fuel tank,
 			assembled = 1
 			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			return
-		if( istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && target.reagents.total_volume < 30)
+		if( istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && target.reagents.total_volume < 50)
 			user << "<span  class='notice'>There's not enough fuel left to work with.</span>"
 
 /obj/item/weapon/grenade/iedcasing/attackby(var/obj/item/I, mob/user as mob) //Wiring the can for ignition
