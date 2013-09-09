@@ -235,7 +235,7 @@ turf/proc/update_lumcount(amount)
 		lighting_lumcount = initial(lighting_lumcount)
 //	if(lighting_lumcount < 0 || lighting_lumcount > 100)
 //		world.log << "## WARNING: [type] ([src]) lighting_lumcount = [lighting_lumcount]"
-	if(!lighting_changed)
+	if(!lighting_changed && accepts_lighting)
 		lighting_controller.changed_turfs += src
 		lighting_changed = 1
 
@@ -243,7 +243,7 @@ turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
 
-	if(!istype(Area) || !Area.lighting_use_dynamic) return
+	if(!istype(Area) || !Area.lighting_use_dynamic || !accepts_lighting) return
 
 	// change the turf's area depending on its brightness
 	// restrict light to valid levels
