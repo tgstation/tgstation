@@ -293,6 +293,56 @@
 	flags = FPRINT | TABLEPASS
 	attack_verb = list("warned", "cautioned", "smashed")
 
+	proximity_sign
+		var/timing = 0
+		var/armed = 0
+		var/timepassed = 0
+
+		attack_self(mob/user as mob)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.job != "Janitor")
+					return
+				if(armed)
+					armed = 0
+					user << "\blue You disarm \the [src]."
+					return
+				timing = !timing
+				if(timing)
+					processing_objects.Add(src)
+				else
+					armed = 0
+					timepassed = 0
+				H << "\blue You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]"
+
+		process()
+			if(!timing)
+				processing_objects.Remove(src)
+			timepassed++
+			if(timepassed >= 15 && !armed)
+				armed = 1
+				timing = 0
+
+		HasProximity(atom/movable/AM as mob|obj)
+			if(armed)
+				if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
+					var/mob/living/carbon/C = AM
+					if(C.move_speed < 12)
+						src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
+						explosion(src.loc,-1,2,0)
+						if(ishuman(C))
+							dead_legs(C)
+						if(src)
+							del(src)
+
+		proc/dead_legs(mob/living/carbon/human/H as mob)
+			var/datum/organ/external/l = H.get_organ("l_leg")
+			var/datum/organ/external/r = H.get_organ("r_leg")
+			if(l && !(l.status & ORGAN_DESTROYED))
+				l.status |= ORGAN_DESTROYED
+			if(r && !(r.status & ORGAN_DESTROYED))
+				r.status |= ORGAN_DESTROYED
+
 /obj/item/weapon/caution/cone
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
