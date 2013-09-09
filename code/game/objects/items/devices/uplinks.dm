@@ -52,10 +52,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			var/desc = "[item.desc]"
 			if(item.job)
 				if(item.job != job)
-					world.log << "Skipping job item that doesn't match"
+					//world.log << "Skipping job item that doesn't match"
 					continue
 				else
-					world.log << "Found matching job item"
+					//world.log << "Found matching job item"
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
