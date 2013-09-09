@@ -48,6 +48,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	var/access = null
 	var/hidden = 0
 	var/contraband = 0
+	var/delete = 0
 	var/group = supply_misc
 
 
@@ -57,7 +58,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 		if(!path)	continue
 		var/atom/movable/AM = new path()
 		manifest += "<li>[AM.name]</li>"
-		AM.loc = null	//just to make sure they're deleted by the garbage collector
+		if(delete)
+			del AM
+		else
+			AM.loc = null	//just to make sure they're deleted. Deletes if the crate contains bots or radios, otherwise garbage collects.
 	manifest += "</ul>"
 
 
@@ -93,6 +97,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate/internals
 	containername = "emergency crate"
 	group = supply_emergency
+	delete = 1 //must delete because of bots
 
 /datum/supply_packs/emergency/internals
 	name = "Internals crate"
@@ -288,12 +293,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list (/obj/item/weapon/storage/box/trackimp)
 	cost = 20
 	containername = "tracking implant crate"
+	delete = 1 //the implants contain radios
 
 /datum/supply_packs/security/armory/chemimp
 	name = "Chemical implants crate"
 	contains = list (/obj/item/weapon/storage/box/chemimp)
 	cost = 20
 	containername = "chemical implant crate"
+	delete = 1 //the implants contain radios
 
 /datum/supply_packs/security/securitybarriers
 	name = "Security Barriers"
@@ -779,6 +786,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containertype = /obj/structure/largecrate/mule
 	containername = "\improper MULEbot Crate"
+	delete = 1 //The whole reason this var even exists because of this asshole.
 
 /datum/supply_packs/misc/watertank
 	name = "Water tank crate"
