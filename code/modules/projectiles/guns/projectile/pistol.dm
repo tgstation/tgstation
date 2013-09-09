@@ -8,7 +8,7 @@
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/c45"
-
+	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 
 
 /obj/item/weapon/gun/projectile/deagle
@@ -116,6 +116,8 @@
 				return
 			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
 			user.put_in_hands(silenced)
+			var/obj/item/weapon/silencer/S = silenced
+			fire_sound = S.oldsound
 			silenced = 0
 			w_class = 2
 			update_icon()
@@ -131,6 +133,9 @@
 		user.drop_item()
 		user << "<span class='notice'>You screw [I] onto [src].</span>"
 		silenced = I	//dodgy?
+		var/obj/item/weapon/silencer/S = I
+		S.oldsound = fire_sound
+		fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 		w_class = 3
 		I.loc = src		//put the silencer into the gun
 		update_icon()
@@ -150,3 +155,4 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silencer"
 	w_class = 2
+	var/oldsound = 0 //Stores the true sound the gun made before it was silenced
