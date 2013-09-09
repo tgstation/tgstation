@@ -199,6 +199,13 @@
 	force = 25.0
 	throwforce = 15.0
 
+	throw_impact(atom/hit_atom)
+		if(istype(hit_atom, /mob/living) && prob(85))
+			var/mob/living/L = hit_atom
+			L.Stun(5)
+			L.Weaken(5)
+		return ..()
+
 
 
 /obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
