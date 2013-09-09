@@ -40,7 +40,7 @@ emp_act
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		if(check_reflect(P.damage, "the [P.name]")) // Checks if you've passed a reflection% check
+		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 							"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 			// Find a turf near or on the original location to bounce to
@@ -64,18 +64,18 @@ emp_act
 		return 2
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect() //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
+/mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsReflect() == 1)
+		if(I.IsReflect(def_zone) == 1)
 			return 1
 	if(l_hand && istype(l_hand, /obj/item/))
 		var/obj/item/I = l_hand
-		if(I.IsReflect() == 1)
+		if(I.IsReflect(def_zone) == 1)
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/))
 		var/obj/item/I = r_hand
-		if(I.IsReflect() == 1)
+		if(I.IsReflect(def_zone) == 1)
 			return 1
 	return 0
 

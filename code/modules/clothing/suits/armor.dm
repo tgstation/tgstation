@@ -68,6 +68,14 @@
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
 	reflect_chance = 40
 
+/obj/item/clothing/suit/armor/laserproof/IsReflect(var/def_zone)
+	var/hit_reflect_chance = reflect_chance
+	if(!(def_zone in list("chest", "groin")))
+		hit_reflect_chance /= 2
+	world << hit_reflect_chance
+	if (prob(hit_reflect_chance))
+		return 1
+
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
