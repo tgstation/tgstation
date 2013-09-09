@@ -326,12 +326,28 @@ var/list/uplink_items = list()
 	job = "Detective"
 
 //Chef
-/datum/uplink_item/jobspecific/conversionkit
+/datum/uplink_item/jobspecific/specialsauce
 	name = "Chef Excellence's Special Sauce"
 	desc = "A custom made sauce made from the toxin glands of 1000 space carp, if somebody ingests enough they'll be dead in 3 minutes or less guaranteed."
 	item = /obj/item/weapon/reagent_containers/food/condiment/syndisauce
 	cost = 2
 	job = "Chef"
+
+/datum/uplink_item/jobspecific/meatcleaver
+	name = "Meat Cleaver"
+	desc = "A mean looking meat cleaver that does damage comparable to an Energy Sword but with the added benefit of chopping your victim into hunks of meat after they've died and the chance to stun when thrown."
+	item = /obj/item/weapon/butch/meatcleaver
+	cost = 5
+	job = "Chef"
+
+//Janitor
+
+/datum/uplink_item/jobspecific/cautionsign
+	name = "Proximity Mine"
+	desc = "An Anti-Personnel proximity mine cleverly disguised as a wet floor caution sign that is triggered by running past it, activate it to start the 15 second timer and activate again to disarm."
+	item = /obj/item/weapon/caution/proximity_sign
+	cost = 2
+	job = "Janitor"
 
 // POINTLESS BADASSERY
 
