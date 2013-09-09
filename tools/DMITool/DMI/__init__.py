@@ -71,12 +71,13 @@ class DMI:
         x=0
         y=0
         for frame in frames:
-            with Image.open(frame,'r') as icon:
-                map.paste(icon,(x*self.iw,y*self.ih))
-                x+=1
-                if x > icons_per_row:
-                    y+=1
-                    x=0
+            #print(frame)
+            icon = Image.open(frame,'r')
+            map.paste(icon,(x*self.iw,y*self.ih))
+            x+=1
+            if x > icons_per_row:
+                y+=1
+                x=0
                     
         # More borrowed from DMIDE:
         # undocumented class

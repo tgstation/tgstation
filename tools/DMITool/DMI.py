@@ -5,7 +5,7 @@ Makes merging sprites a hell of a lot easier.
 by N3X15 <nexis@7chan.org>
 
 Requires PIL and apng.py (included)
-Written for Python 3.3.
+Written for Python 2.7.
 """
 
 import sys, os, traceback, fnmatch, argparse
