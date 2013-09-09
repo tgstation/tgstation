@@ -4,7 +4,6 @@
 	icon_state = "voice"
 	m_amt = 500
 	g_amt = 50
-	w_amt = 10
 	origin_tech = "magnets=1"
 	var/listening = 0
 	var/recorded	//the activation message

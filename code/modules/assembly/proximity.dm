@@ -4,7 +4,6 @@
 	icon_state = "prox"
 	m_amt = 800
 	g_amt = 200
-	w_amt = 50
 	origin_tech = "magnets=1"
 
 	secured = 0
