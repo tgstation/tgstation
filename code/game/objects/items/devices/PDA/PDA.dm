@@ -346,7 +346,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:336: dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
-				dat += {"Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]
+				dat += {"Station Time: [worldtime2text()]
 					<br><br>
 					<h4>General Functions</h4>
 					<ul>
@@ -460,9 +460,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:412: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
 				dat += {"<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>
-					<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> | 
-					<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> | 
-					<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | 
+					<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> |
+					<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> |
+					<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> |
 					<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"}
 				// END AUTOFIX
 				if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
