@@ -447,15 +447,15 @@ client/proc/one_click_antag()
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
 			if(!jobban_isbanned(G, "Vox Raider") && !jobban_isbanned(G, "Syndicate"))
-			switch(alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+				switch(alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
 						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
+					else
+						return
 
 	sleep(300) //Debug.
 
