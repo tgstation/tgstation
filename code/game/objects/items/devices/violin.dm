@@ -9,6 +9,12 @@
 	force = 10
 	var/datum/song/handheld/song
 
+	suicide_act(mob/user) //Suggested by kingofkosmos
+		song.repeat = 0
+		song.playing = 0
+		hearers(user) << "<b>[user]</b> stops playing and remarks, \"Gentlemen, it has been a privilege playing with you tonight.\" \n\red <b>It looks like \he's trying to commit suicide!</b>"
+		return (TOXLOSS)
+
 /obj/item/device/violin/New()
 	song = new("violin", src)
 	song.instrumentExt = "mid"

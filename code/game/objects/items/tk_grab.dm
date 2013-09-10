@@ -14,6 +14,10 @@
 	var/obj/focus = null
 	var/mob/living/host = null
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is using telekinesis to choke \himself! It looks like \he's trying to commit suicide!</b>"
+		return (OXYLOSS)
+
 
 	dropped(mob/user as mob)
 		del(src)

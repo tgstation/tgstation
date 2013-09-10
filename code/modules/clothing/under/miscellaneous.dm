@@ -184,6 +184,10 @@
 	color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
 
+	suicide_act(mob/user) //Suggested by Ricotez
+		viewers(user) << "\red <b>[user] is trying to become one with the animes!</b>"
+		return (TOXLOSS) //You know why
+
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."

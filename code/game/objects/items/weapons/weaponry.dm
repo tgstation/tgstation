@@ -45,8 +45,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	suicide_act(mob/user) //Suggested by Chocobro
+		viewers(user) << "\red <b>[user] just can't take how shitty the [src.name] is! It looks like \he's trying to commit an ollies outy!</b>"
 		return(BRUTELOSS)
 
 /obj/item/weapon/claymore

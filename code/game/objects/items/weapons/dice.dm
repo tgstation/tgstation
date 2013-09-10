@@ -6,6 +6,11 @@
 	w_class = 1
 	var/sides = 6
 
+	suicide_act(mob/user)
+		viewers(user) << "\blue [user] rolls the [src.name]. \red <b>\His luck has run out, it landed on 0!</b>"
+		user.drop_item()
+		return (TOXLOSS)
+
 /obj/item/weapon/dice/New()
 	icon_state = "[initial(icon_state)][rand(1, sides)]"
 

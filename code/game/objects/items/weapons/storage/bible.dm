@@ -9,6 +9,12 @@
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
+	suicide_act(mob/user) //Suggested by kingofkosmos
+		viewers(user) << "\red <b>Is sacrificing their body for the glory of [src.deity_name]!</b>"
+		user.drop_item()
+		user.dust()
+		return ((BRUTELOSS+FIRELOSS)|(BRUTELOSS|FIRELOSS))
+
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."

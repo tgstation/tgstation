@@ -26,6 +26,10 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is eating himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		return (BRUTELOSS)
+
 /obj/item/weapon/kitchen/utensil/New()
 	if (prob(60))
 		src.pixel_y = rand(0, 4)
@@ -82,9 +86,7 @@
 	throwforce = 10.0
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << "\red <b>[user] is slitting \his [pick("wrists", "throat", "stomach")] with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
@@ -114,9 +116,7 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << "\red <b>[user] is slitting \his [pick("wrists", "throat", "stomach")] with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/ritual
@@ -143,6 +143,13 @@
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+	suicide_act(mob/living/carbon/human/user)
+		viewers(user) << "\red <b>[user] is decapitating \himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		for (var/datum/limb/head/H in user.organs)
+			H.take_damage(200, 0)
+		return (BRUTELOSS)
 
 /*
  * Rolling Pins

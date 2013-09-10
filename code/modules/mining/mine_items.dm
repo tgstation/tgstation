@@ -193,6 +193,10 @@ proc/move_mining_shuttle()
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] starts mining \his face! It looks like \he's trying to commit suicide.</b>"
+		return (BRUTELOSS)
+
 	hammer
 		name = "sledgehammer"
 		//icon_state = "sledgehammer" Waiting on sprite
@@ -279,6 +283,10 @@ proc/move_mining_shuttle()
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] smacks \himself in the head with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		return (BRUTELOSS)
 
 /obj/item/weapon/shovel/spade
 	name = "spade"

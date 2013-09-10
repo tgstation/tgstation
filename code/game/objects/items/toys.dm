@@ -18,6 +18,13 @@
 	throw_range = 20
 	force = 0
 
+	suicide_act(mob/living/carbon/user)
+		viewers(user) << "\red <b>[user] lubes up the [src.name] and jams it up \his [prob(25) ? "juicy kawaii " : ""]ass! It looks like \he's trying to commit suicide!</b>"
+		user.drop_item()
+		user.internal_organs += src
+		src.loc = user
+		return (BRUTELOSS)
+
 
 /*
  * Balloons
@@ -110,6 +117,12 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
+
+	suicide_act(mob/living/carbon/user)
+		viewers(user) << "\red <b>[user] is consumed by the [src.name]! That's the last of \him.</b>"
+		user.drop_item()
+		user.gib()
+		return (BRUTELOSS+TOXLOSS)
 
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?

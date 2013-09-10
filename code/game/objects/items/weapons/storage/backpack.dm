@@ -36,6 +36,12 @@
 	max_w_class = 4
 	max_combined_w_class = 28
 
+	suicide_act(mob/user) //Suggested by MrPerson
+		user.drop_item()
+		viewers(user) << "\red <b>[user] is trying to stuff \himself inside the [src.name][prob(1) ? "\'s juicy kawaii ass":""]! It looks like \he's trying to commit suicide!</b>"
+		del (user)
+		return (OXYLOSS + FIRELOSS)
+
 	New()
 		..()
 		return

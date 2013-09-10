@@ -14,6 +14,10 @@
 	pressure_resistance = 2
 	attack_verb = list("stamped")
 
+	suicide_act(mob/user) //Suggested by FreakyM
+		viewers(user) << "\red <b>[user] stamps 'VOID' on \his forehead, then promptly falls over, dead.</b>"
+		return (OXYLOSS)
+
 /obj/item/weapon/stamp/qm
 	name = "quartermaster's rubber stamp"
 	icon_state = "stamp-qm"

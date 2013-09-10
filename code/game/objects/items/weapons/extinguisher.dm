@@ -18,6 +18,17 @@
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
 
+	suicide_act(mob/user) //Suggested by TankNut I think
+		if (src.reagents.total_volume < 1)
+			viewers(user) << "\red <b>[user] has [pick(attack_verb)] \himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+			return (BRUTELOSS)
+		else
+			viewers(user) << "\red <b>[user] is extinguishing \himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+			if (src.safety)
+				src.attack_self(user)
+			src.afterattack(get_turf(user), user)
+			return (OXYLOSS)
+
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."

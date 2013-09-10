@@ -28,6 +28,10 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is yanking \his nose off using the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*
  * Screwdriver
@@ -49,8 +53,7 @@
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << "\red <b>[user] is stabbing the [src.name] into \his [pick("temple", "heart")]! It looks like \he's trying to commit suicide.</b>"
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -107,6 +110,15 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 
+	suicide_act(mob/living/carbon/human/user)
+		viewers(user) << "\red <b>[user] is snipping \his genitals with the [src.name] and starts bleeding to death!</b>"
+		if (user.gender == MALE)
+			user.gender = FEMALE
+		else
+			user.gender = MALE
+		user.regenerate_icons()
+		return (BRUTELOSS+FIRELOSS+TOXLOSS)
+
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
 		icon_state = "cutters-y"
@@ -142,6 +154,13 @@
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+
+	suicide_act(mob/user)
+		if (src.get_fuel())
+			viewers(user) << "\red <b>[user] is burning himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+			if (!src.isOn())
+				src.toggle()
+			return (FIRELOSS)
 
 /obj/item/weapon/weldingtool/New()
 	create_reagents(max_fuel)
@@ -404,6 +423,11 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is using the [src.name] to pry \his eyes out! It looks like \he's trying to commit suicide!</b>"
+		user.disabilities |= NEARSIGHTED
+		return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'

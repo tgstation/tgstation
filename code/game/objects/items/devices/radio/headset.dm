@@ -8,6 +8,10 @@
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
 
+	suicide_act(mob/user) //Suggested by SkipsPro
+		viewers(user) << "/red <b>[user] is jamming the [src.name] into \his ears! It looks like \he's trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 	slot_flags = SLOT_EARS
 	var/translate_binary = 0
 	var/translate_hive = 0

@@ -9,8 +9,14 @@
 
 	var/wax = 200
 	var/lit = 0
+
+	suicide_act(mob/user) //Suggested by SkipsPro
+		viewers(user) << "\red <b>[user] is trying to swallow the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		return (FIRELOSS)
+
 	proc
 		light(var/flavor_text = "\red [usr] lights the [name].")
+
 
 
 /obj/item/candle/update_icon()

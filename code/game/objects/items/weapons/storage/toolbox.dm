@@ -19,6 +19,10 @@
 			world << "BAD: [src] ([src.type]) spawned at [src.x] [src.y] [src.z]"
 			del(src)
 
+/obj/item/weapon/storage/toolbox/suicide_act(mob/user) //Suggested by Mat13295
+	viewers(user) << "\red <b>[user] is slamming the [src.name] shut over \his head! It looks like \he's trying to commit suicide!</b>"
+	return(BRUTELOSS)
+
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"

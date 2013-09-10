@@ -19,6 +19,10 @@
 	var/recharging = 0
 	var/recharge_locked = 0
 
+	suicide_act(mob/user) //Suggested by kingofkosmos
+		viewers(user) << "\red <b>[user] is shining the [src.name] into \his eyes! It looks like \he's trying to commit suicide!</b>"
+		return (FIRELOSS)
+
 /obj/item/device/laser_pointer/red
 	pointer_icon_state = "red_laser"
 /obj/item/device/laser_pointer/green

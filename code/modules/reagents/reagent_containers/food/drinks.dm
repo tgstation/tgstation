@@ -11,6 +11,16 @@
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
 
+	suicide_act(mob/user) //Suggested by HBL
+		if (reagents.total_volume)
+			viewers(user) << "\red <b>It looks like [user] is drinking \himself to death!</b>"
+			src.attack(user, user)
+			reagents.reaction(user, INGEST)
+			spawn(5)
+				if (reagents.total_volume)
+					reagents.trans_to(user, reagents.total_volume)
+			return (TOXLOSS)
+
 	on_reagent_change()
 		if (gulp_size < 5) gulp_size = 5
 		else gulp_size = max(round(reagents.total_volume / 5), 5)
@@ -286,6 +296,15 @@
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
+
+	suicide_act(mob/user) //Suggested by Anonus
+		if (reagents.get_reagent_amount("dr_gibb") >= 10)
+			viewers(user) << "\red <b>[user] is [src.name]ing themselves!</b>"
+			user.gib()
+			return (BRUTELOSS)
+		else
+			return (..(user))
+
 	New()
 		..()
 		reagents.add_reagent("dr_gibb", 30)

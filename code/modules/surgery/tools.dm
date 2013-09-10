@@ -9,6 +9,10 @@
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is holding \his [pick("nose", "throat")] with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		return (OXYLOSS)
+
 
 /obj/item/weapon/hemostat
 	name = "hemostat"
@@ -22,6 +26,11 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
+	suicide_act(mob/living/carbon/user)
+		viewers(user) << "\red <b>[user] is pinching \himself in the jugular vein with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		var/turf/simulated/L = get_turf(user)
+		L.add_blood(user)
+		return (BRUTELOSS)
 
 /obj/item/weapon/cautery
 	name = "cautery"
@@ -34,6 +43,10 @@
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is burning \himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		return (FIRELOSS)
 
 
 /obj/item/weapon/surgicaldrill
@@ -51,8 +64,8 @@
 	attack_verb = list("drilled")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("/red <b>[user] is pressing [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"/red <b>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << "\red <b>[user] is pressing [src] to \his [pick("temple", "chest", "eyes")] and activating it! It looks like \he's trying to commit suicide.</b>"
+		playsound(user, hitsound, 50, 1)
 		return (BRUTELOSS)
 
 
@@ -73,9 +86,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with [src]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << "\red <b>[user] is slitting \his [pick("wrists", "throat", "stomach")] with [src]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS)
 
 
@@ -96,6 +107,11 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is using the [src.name] to slice off \his [pick("arm", "leg", "head")]! It looks like \he's trying to commit suicide!</b>"
+		playsound(user, hitsound, 50, 1)
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/surgical_drapes
 	name = "surgical drapes"
@@ -105,6 +121,10 @@
 	w_class = 1.0
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is suffocating \himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+		return (OXYLOSS)
 
 /obj/item/weapon/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
