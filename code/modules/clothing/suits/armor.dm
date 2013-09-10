@@ -70,8 +70,8 @@
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(var/def_zone)
 	var/hit_reflect_chance = reflect_chance
-	if(!(def_zone in list("chest", "groin")))
-		hit_reflect_chance /= 2
+	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		hit_reflect_chance = 0
 	if (prob(hit_reflect_chance))
 		return 1
 
