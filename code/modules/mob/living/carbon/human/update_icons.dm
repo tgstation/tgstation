@@ -87,6 +87,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human
 	var/list/overlays_lying[TOTAL_LAYERS]
 	var/list/overlays_standing[TOTAL_LAYERS]
+	var/global/list/female_uniform_icons = list()
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	var/race = dna ? dna.mutantrace : null
@@ -329,18 +330,31 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_lying[UNIFORM_LAYER]		= lying
 		overlays_standing[UNIFORM_LAYER]	= standing
 
-		var/g = (gender == FEMALE) ? "f" : "m"
-		if(g == "f" && U.fitted == 1)
-			var/icon/o_lying		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l")
-			var/icon/o_standing		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
-			var/icon/f_lying		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_l")
-			var/icon/f_standing		= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
-			o_lying.Blend(f_lying, ICON_OVERLAY)
-			o_standing.Blend(f_standing, ICON_OVERLAY)
-			o_lying.SwapColor(rgb(153, 255, 204, 255), rgb(0, 0, 0, 0))
-			o_standing.SwapColor(rgb(153, 255, 204, 255), rgb(0, 0, 0, 0))
-			lying		= image(o_lying,"layer"=-UNIFORM_LAYER)
-			standing	= image(o_standing,"layer"=-UNIFORM_LAYER)
+		var/G = (gender == FEMALE) ? "f" : "m"
+		if(G == "f" && U.fitted == 1)
+			var/index = "[t_color]_l"
+			var/icon/female_uniform_icon = female_uniform_icons[index]
+			if(!female_uniform_icon ) 	//Create standing/laying icons if they don't exist
+				female_uniform_icon			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l")
+				var/icon/female_l			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_l")
+				female_uniform_icon.Blend(female_l, ICON_MULTIPLY)
+				female_uniform_icon 		= fcopy_rsc(female_uniform_icon)
+				female_uniform_icons[index] = female_uniform_icon
+				index = "[t_color]_s"
+				female_uniform_icon			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+				var/icon/female_s			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
+				female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
+				female_uniform_icon 		= fcopy_rsc(female_uniform_icon)
+				female_uniform_icons[index] = female_uniform_icon
+				lying		= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)	//intentionally reversed
+				standing	= image("icon"=female_uniform_icons["[t_color]_l"], "layer"=-UNIFORM_LAYER)	//not an error
+				overlays_lying[UNIFORM_LAYER]		= lying
+				overlays_standing[UNIFORM_LAYER]	= standing
+				apply_overlay(UNIFORM_LAYER)	//this little shuffle is to trick blend into generating both icons at the same time
+				remove_overlay(UNIFORM_LAYER) 	//without it, there'd be a blink of nudity on the lying/standing transition
+
+			lying		= image("icon"=female_uniform_icons["[t_color]_l"], "layer"=-UNIFORM_LAYER)
+			standing	= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)
 			overlays_lying[UNIFORM_LAYER]		= lying
 			overlays_standing[UNIFORM_LAYER]	= standing
 
