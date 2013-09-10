@@ -1,5 +1,4 @@
 
-
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
@@ -148,10 +147,21 @@
 	New()
 		..()
 		reagents.add_reagent("beer",1000)
+		
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
 	del(src)
+
+/obj/structure/reagent_dispensers/beerkeg/ale
+	name = "ale cask"
+	desc = "A cask forged with dorfen skill"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "aletank"
+	amount_per_transfer_from_this = 10
+	New()
+		..()
+		reagents.add_reagent("ale",1000)
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "Virus Food Dispenser"
