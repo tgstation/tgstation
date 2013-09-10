@@ -208,7 +208,7 @@
 			else
 				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
-	for (var/obj/machinery/computer/communications/comm in world)
+	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper- '[command_name()] Status Summary'"
@@ -216,7 +216,7 @@
 
 			comm.messagetitle.Add("[command_name()] Status Summary")
 			comm.messagetext.Add(intercepttext)
-	world << sound('commandreport.ogg')
+	world << sound('sound/AI/commandreport.ogg')
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept.")
 /*	for(var/mob/M in player_list)
@@ -240,6 +240,7 @@
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
+		if(BE_RAIDER)       roletext="Vox Raider"
 
 
 	// Ultimate randomizing code right here
@@ -357,8 +358,8 @@
 			heads += player.mind
 	return heads
 
-/datum/game_mode/New()
-	newscaster_announcements = pick(newscaster_standard_feeds)
+/*/datum/game_mode/New()
+	newscaster_announcements = pick(newscaster_standard_feeds)*/
 
 //////////////////////////
 //Reports player logouts//

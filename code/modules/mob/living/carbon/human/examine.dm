@@ -190,6 +190,12 @@
 		else if(jitteriness >= 100)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
+	//splints
+	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+		var/datum/organ/external/o = get_organ(organ)
+		if(o && o.status & ORGAN_SPLINTED)
+			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.display_name]!</span>\n"
+
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
@@ -199,29 +205,19 @@
 	var/distance = get_dist(usr,src)
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
 		distance = 1
-	if (src.stat == 1 || stat == 2)
+	if (src.stat == 1 || stat == 2 || status_flags & FAKEDEATH)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
-		if((stat == 2 || src.health < config.health_threshold_crit) && distance <= 3)
+		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
-			spawn(15)
-				usr << "\blue [t_He] has a pulse!"
-
-	if (src.stat == 2 || (status_flags & FAKEDEATH))
-		if(distance <= 1)
-			if(istype(usr, /mob/living/carbon/human) && usr.stat == 0)
-				for(var/mob/O in viewers(usr.loc, null))
-					O.show_message("[usr] checks [src]'s pulse.", 1)
-			spawn(15)
-				var/foundghost = 0
-				if(src.client)
-					foundghost = 1
-				if(!foundghost)
-					usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
+		spawn(15)
+			if(distance <= 1 && usr.stat != 1)
+				if(pulse == PULSE_NONE)
+					usr << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
 				else
-					usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
+					usr << "<span class='deadsay'>[t_He] has a pulse!</span>"
 
 	msg += "<span class='warning'>"
 
@@ -235,14 +231,16 @@
 
 	msg += "</span>"
 
+/*removing redundant examine if statement
 	if(stat == UNCONSCIOUS)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-	else if(getBrainLoss() >= 60)
+*/
+	if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if(!key && brain_op_stage != 4 && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
+	else if(!client && brain_op_stage != 4 && stat != DEAD && status_flags & !FAKEDEATH)
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	var/list/wound_flavor_text = list()
@@ -286,40 +284,43 @@
 						wound_descriptors[this_wound_desc] += W.amount
 						continue
 					wound_descriptors[this_wound_desc] = W.amount
-				var/list/flavor_text = list()
-				var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
-				"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
-				for(var/wound in wound_descriptors)
-					switch(wound_descriptors[wound])
-						if(1)
-							if(!flavor_text.len)
-								flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
-							else
-								flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
-						if(2)
-							if(!flavor_text.len)
-								flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
-							else
-								flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
-						if(3 to 5)
-							if(!flavor_text.len)
-								flavor_text += "<span class='warning'>[t_He] has several [wound]s"
-							else
-								flavor_text += " several [wound]s"
-						if(6 to INFINITY)
-							if(!flavor_text.len)
-								flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
-							else
-								flavor_text += " a ton of [wound]\s"
-				var/flavor_text_string = ""
-				for(var/text = 1, text <= flavor_text.len, text++)
-					if(text == flavor_text.len && flavor_text.len > 1)
-						flavor_text_string += ", and"
-					else if(flavor_text.len > 1 && text > 1)
-						flavor_text_string += ","
-					flavor_text_string += flavor_text[text]
-				flavor_text_string += " on [t_his] [temp.display_name].</span><br>"
-				wound_flavor_text["[temp.display_name]"] = flavor_text_string
+				if(wound_descriptors.len)
+					var/list/flavor_text = list()
+					var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
+					"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
+					for(var/wound in wound_descriptors)
+						switch(wound_descriptors[wound])
+							if(1)
+								if(!flavor_text.len)
+									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
+								else
+									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
+							if(2)
+								if(!flavor_text.len)
+									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+								else
+									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+							if(3 to 5)
+								if(!flavor_text.len)
+									flavor_text += "<span class='warning'>[t_He] has several [wound]s"
+								else
+									flavor_text += " several [wound]s"
+							if(6 to INFINITY)
+								if(!flavor_text.len)
+									flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
+								else
+									flavor_text += " a ton of [wound]\s"
+					var/flavor_text_string = ""
+					for(var/text = 1, text <= flavor_text.len, text++)
+						if(text == flavor_text.len && flavor_text.len > 1)
+							flavor_text_string += ", and"
+						else if(flavor_text.len > 1 && text > 1)
+							flavor_text_string += ","
+						flavor_text_string += flavor_text[text]
+					flavor_text_string += " on [t_his] [temp.display_name].</span><br>"
+					wound_flavor_text["[temp.display_name]"] = flavor_text_string
+				else
+					wound_flavor_text["[temp.display_name]"] = ""
 				if(temp.status & ORGAN_BLEEDING)
 					is_bleeding["[temp.display_name]"] = 1
 			else
@@ -381,67 +382,63 @@
 	if(display_gloves)
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
-
+	for(var/implant in get_visible_implants(1))
+		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</span>\n"
 	if(digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-			if(usr.stat ||  H != usr) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
-				return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
+	if(hasHUD(usr,"security"))
+		var/perpname = "wot"
+		var/criminal = "None"
 
-			var/perpname = "wot"
-			var/criminal = "None"
-
-			if(wear_id)
-				var/obj/item/weapon/card/id/I = wear_id.GetID()
-				if(I)
-					perpname = I.registered_name
-				else
-					perpname = name
+		if(wear_id)
+			var/obj/item/weapon/card/id/I = wear_id.GetID()
+			if(I)
+				perpname = I.registered_name
 			else
 				perpname = name
+		else
+			perpname = name
 
-			if(perpname)
-				for (var/datum/data/record/E in data_core.general)
-					if(E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if(R.fields["id"] == E.fields["id"])
-								criminal = R.fields["criminal"]
-
-
-				msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-				msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
-				//msg += "\[Set Hostile Identification\]\n"
-
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-			var/perpname = "wot"
-			var/medical = "None"
-
-			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
-					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
-					var/obj/item/device/pda/tempPda = wear_id
-					perpname = tempPda.owner
-			else
-				perpname = src.name
-
+		if(perpname)
 			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.general)
-						if (R.fields["id"] == E.fields["id"])
-							medical = R.fields["p_stat"]
+				if(E.fields["name"] == perpname)
+					for (var/datum/data/record/R in data_core.security)
+						if(R.fields["id"] == E.fields["id"])
+							criminal = R.fields["criminal"]
 
 
-			msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
-			msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\carbon\human\examine.dm:411: msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			msg += {"<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n
+				<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"}
+			// END AUTOFIX
+	if(hasHUD(usr,"medical"))
+		var/perpname = "wot"
+		var/medical = "None"
+
+		if(wear_id)
+			if(istype(wear_id,/obj/item/weapon/card/id))
+				perpname = wear_id:registered_name
+			else if(istype(wear_id,/obj/item/device/pda))
+				var/obj/item/device/pda/tempPda = wear_id
+				perpname = tempPda.owner
+		else
+			perpname = src.name
+
+		for (var/datum/data/record/E in data_core.general)
+			if (E.fields["name"] == perpname)
+				for (var/datum/data/record/R in data_core.general)
+					if (R.fields["id"] == E.fields["id"])
+						medical = R.fields["p_stat"]
 
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\carbon\human\examine.dm:433: msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
+		msg += {"<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n
+			<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"}
+		// END AUTOFIX
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
@@ -451,3 +448,26 @@
 		msg += "\n[t_He] is [pose]"
 
 	usr << msg
+
+//Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
+/proc/hasHUD(mob/M as mob, hudtype)
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		switch(hudtype)
+			if("security")
+				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud)
+			if("medical")
+				return istype(H.glasses, /obj/item/clothing/glasses/hud/health)
+			else
+				return 0
+	else if(istype(M, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = M
+		switch(hudtype)
+			if("security")
+				return istype(R.module_state_1, /obj/item/borg/sight/hud/sec) || istype(R.module_state_2, /obj/item/borg/sight/hud/sec) || istype(R.module_state_3, /obj/item/borg/sight/hud/sec)
+			if("medical")
+				return istype(R.module_state_1, /obj/item/borg/sight/hud/med) || istype(R.module_state_2, /obj/item/borg/sight/hud/med) || istype(R.module_state_3, /obj/item/borg/sight/hud/med)
+			else
+				return 0
+	else
+		return 0

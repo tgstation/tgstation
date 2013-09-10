@@ -10,6 +10,8 @@
 		set name = "Toggle Magboots"
 		set category = "Object"
 		set src in usr
+		if(usr.stat)
+			return
 		if(src.magpulse)
 			src.flags &= ~NOSLIP
 			src.slowdown = SHOES_SLOWDOWN

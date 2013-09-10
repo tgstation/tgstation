@@ -501,7 +501,7 @@ datum
 			result = "virusfood"
 			required_reagents = list("water" = 5, "milk" = 5, "oxygen" = 5)
 			result_amount = 15
-
+/*
 		mix_virus
 			name = "Mix Virus"
 			id = "mixvirus"
@@ -539,7 +539,7 @@ datum
 						var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 						if(D)
 							D.Devolve()
-
+*/
 		condensedcapsaicin
 			name = "Condensed Capsaicin"
 			id = "condensedcapsaicin"
@@ -972,9 +972,12 @@ datum
 				if(A)
 					var/turf/T = get_turf(A)
 					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Recipes.dm:975: message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)
+						(<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
+					// END AUTOFIX
 					var/mob/M = get(A, /mob)
 					if(M)
 						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
@@ -1062,9 +1065,12 @@ datum
 				if(A)
 					var/turf/T = get_turf(A)
 					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Recipes.dm:1065: message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)
+						(<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
+					// END AUTOFIX
 					var/mob/M = get(A, /mob)
 					if(M)
 						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
@@ -1128,9 +1134,12 @@ datum
 				if(A)
 					var/turf/T = get_turf(A)
 					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Recipes.dm:1131: message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)
+						(<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
+					// END AUTOFIX
 					var/mob/M = get(A, /mob)
 					if(M)
 						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
@@ -2043,6 +2052,3 @@ datum
 			result = "rewriter"
 			required_reagents = list("spacemountainwind" = 1, "coffee" = 1)
 			result_amount = 2
-
-
-

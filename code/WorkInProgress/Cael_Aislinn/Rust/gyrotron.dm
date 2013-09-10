@@ -90,7 +90,7 @@
 			return
 /*
 			var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-			playsound(src.loc, 'emitter.ogg', 25, 1)
+			playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 			if(prob(35))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -119,7 +119,7 @@
 		A.damage = mega_energy * 500
 		//
 		A.icon_state = "emitter"
-		playsound(src.loc, 'emitter.ogg', 25, 1)
+		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 		use_power(100 * mega_energy + 500)
 		/*if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -171,18 +171,30 @@
 				return
 		var/t = "<B>Free electron MASER (Gyrotron) Control Panel</B><BR>"
 		if(owned_gyrotron && owned_gyrotron.on)
-			t += "<font color=green>Gyrotron operational</font><br>"
-			t += "Operational mode: <font color=blue>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron.dm:174: t += "<font color=green>Gyrotron operational</font><br>"
+			t += {"<font color=green>Gyrotron operational</font><br>
+				Operational mode: <font color=blue>"}
+			// END AUTOFIX
 			if(owned_gyrotron.emitting)
 				t += "Emitting</font> <a href='?src=\ref[owned_gyrotron];deactivate=1'>\[Deactivate\]</a><br>"
 			else
 				t += "Not emitting</font> <a href='?src=\ref[owned_gyrotron];activate=1'>\[Activate\]</a><br>"
-			t += "Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>"
-			t += "Beam frequency: [owned_gyrotron.frequency] <a href='?src=\ref[owned_gyrotron];modifyfreq=1'>\[Modify\]</a><br>"
-			t += "Beam power: [owned_gyrotron.mega_energy] <a href='?src=\ref[owned_gyrotron];modifypower=1'>\[Modify\]</a><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron.dm:180: t += "Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>"
+			t += {"Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>
+				Beam frequency: [owned_gyrotron.frequency] <a href='?src=\ref[owned_gyrotron];modifyfreq=1'>\[Modify\]</a><br>
+				Beam power: [owned_gyrotron.mega_energy] <a href='?src=\ref[owned_gyrotron];modifypower=1'>\[Modify\]</a><br>"}
+			// END AUTOFIX
 		else
 			t += "<b><font color=red>Gyrotron unresponsive</font></b>"
-		t += "<hr>"
-		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron.dm:185: t += "<hr>"
+		t += {"<hr>
+			<A href='?src=\ref[src];close=1'>Close</A><BR>"}
+		// END AUTOFIX
 		user << browse(t, "window=gyro_monitor;size=500x800")
 		user.machine = src

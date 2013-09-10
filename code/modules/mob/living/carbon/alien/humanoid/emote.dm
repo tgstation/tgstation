@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/emote(var/act)
+/mob/living/carbon/alien/humanoid/emote(var/act,var/m_type=1,var/message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -9,10 +9,25 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1
-	var/message
 
 	switch(act)
+		if ("me")
+			if(silent)
+				return
+			if (src.client)
+				if (client.prefs.muted & MUTE_IC)
+					src << "\red You cannot send IC messages (muted)."
+					return
+				if (src.client.handle_spam_prevention(message,MUTE_IC))
+					return
+			if (stat)
+				return
+			if(!(message))
+				return
+			return custom_emote(m_type, message)
+
+		if ("custom")
+			return custom_emote(m_type, message)
 		if("sign")
 			if (!src.restrained())
 				message = text("<B>The alien</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))

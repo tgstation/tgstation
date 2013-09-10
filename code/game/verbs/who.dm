@@ -81,8 +81,14 @@
 				if(!C.holder.fakekey)
 					num_mods_online++
 
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
-	msg += "<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'\n"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\verbs\who.dm:84: msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
+	msg = {"<b>Current Admins ([num_admins_online]):</b>
+[msg]
+<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'
+"}
+	// END AUTOFIX
 	src << msg
 
 /client/verb/modwho()
@@ -122,6 +128,10 @@
 				if(!C.holder.fakekey)
 					msg += "\t[C] is a [C.holder.rank]\n"
 
-	msg = "<b>Current Moderators ([num_mods_online]):</b>\n" + msg
-	msg += "<b>There are also [num_admins_online] admins online.</b> To view online admins, type 'adminwho'\n"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\verbs\who.dm:125: msg = "<b>Current Moderators ([num_mods_online]):</b>\n" + msg
+	msg = {"<b>Current Moderators ([num_mods_online]):</b>\n" + ms
+		<b>There are also [num_admins_online] admins online.</b> To view online admins, type 'adminwho'\n"}
+	// END AUTOFIX
 	src << msg

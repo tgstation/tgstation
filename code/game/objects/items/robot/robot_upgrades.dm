@@ -73,9 +73,10 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
+	R.base_icon = "robot"
 	del(R.module)
 	R.module = null
-	R.modtype = "robot"
+	R.camera.network.Remove(list("Medical","MINE"))
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
 	R.updateicon()
@@ -95,6 +96,7 @@
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 	R.name = heldname
+	R.custom_name = heldname
 	R.real_name = heldname
 
 	return 1
@@ -182,7 +184,7 @@
 /obj/item/borg/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
+	if(!istype(R.module, /obj/item/weapon/robot_module/miner)&&!isMoMMI(R))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
 		return 0
@@ -190,7 +192,7 @@
 		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
-		R.icon_state="Miner+j"
+		//R.icon_state="Miner+j"
 		return 1
 
 

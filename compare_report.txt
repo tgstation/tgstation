@@ -1,0 +1,313 @@
+# DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\genetics.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\genetics.dmi
+ - cold_l
+ - cold_s
+ - coldfire_l
+ - coldfire_s
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\warning_stripes.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\warning_stripes.dmi
+ + 
+ + E
+ + E-corner
+ + N
+ + N-corner
+ + NE-in
+ + NE-out
+ + NW-in
+ + NW-out
+ + S
+ + S-corner
+ + SE-in
+ + SE-out
+ + SW-in
+ + SW-out
+ + U-E
+ + U-N
+ + U-S
+ + U-W
+ + W
+ + W-corner
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
+ - ai-banned
+ - ai-ravensdale
+ - ai-ravensdale-crash
+ + ai-red
+ - ai-searif
+ - ai-serithi
+ - ai-serithi-crash
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\back.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
+ - hfrequency0
+ - hfrequency2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\blob.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
+ - blob_resource
+ - blobpod
+ - marker
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\custom-synthetic.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\custom-synthetic.dmi
+ + eyes-ravensdale-Combat
+ + eyes-ravensdale-Engineering
+ + eyes-ravensdale-Janitor
+ + eyes-ravensdale-Medical
+ + eyes-ravensdale-Miner
+ + eyes-ravensdale-Security
+ + eyes-ravensdale-Service
+ + eyes-ravensdale-Standard
+ + ravensdale-Combat
+ + ravensdale-Engineering
+ + ravensdale-Janitor
+ + ravensdale-Medical
+ + ravensdale-Miner
+ + ravensdale-Security
+ + ravensdale-Service
+ + ravensdale-Standard
+ + ravensdale-ai
+ + ravensdale-ai-crash
+ + ravensdale-openpanel +c
+ + ravensdale-openpanel +w
+ + ravensdale-openpanel -c
+ + robot
+ + rowtree-Combat
+ + rowtree-Combat-roll
+ + rowtree-Combat-shield
+ + rowtree-Engineering
+ + rowtree-Janitor
+ + rowtree-Medical
+ + rowtree-Miner
+ + rowtree-Security
+ + rowtree-Service
+ + rowtree-Standard
+ + rowtree-openpanel +c
+ + rowtree-openpanel +w
+ + rowtree-openpanel -c
+ + serithi-ai
+ + serithi-ai-crash
+ + sydrec-Combat
+ + sydrec-Combat-roll
+ + sydrec-Combat-shield
+ + sydrec-Engineering
+ + sydrec-Janitor
+ + sydrec-Medical
+ + sydrec-Miner
+ + sydrec-Miner+j
+ + sydrec-Security
+ + sydrec-Service
+ + sydrec-Standard
+ + sydrec-openpanel +c
+ + sydrec-openpanel +w
+ + sydrec-openpanel -c
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\head.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\head.dmi
+ + brucehachert
+ + brucehachert2
+ - ert_commander
+ - ert_commander2
+ - ert_engineer
+ - ert_engineer2
+ - ert_medical
+ - ert_medical2
+ - ert_security
+ - ert_security2
+ - paramedic-eva-helmet
+ - paramedic-eva-helmet2
+ + rig0-ert_commander
+ + rig0-ert_commander2
+ + rig0-ert_engineer
+ + rig0-ert_engineer2
+ + rig0-ert_medical
+ + rig0-ert_medical2
+ + rig0-ert_security
+ + rig0-ert_security2
+ - rig0-sec2old
+ - rig0-secold
+ + rig1-ert_commander
+ + rig1-ert_commander2
+ + rig1-ert_engineer
+ + rig1-ert_medical
+ + rig1-ert_medical2
+ + rig1-ert_security
+ + rig1-ert_security2
+ - rig1-sec2old
+ - rig1-secold
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
+ + eleanorstone
+ - hfrequency0
+ - hfrequency1
+ + konaahirano
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
+ + eleanorstone
+ - hfrequency0
+ - hfrequency1
+ + konaahirano
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
+ + konaahirano
+ + konaahirano2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\robots.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
+ - eyes-Brobot
+ - eyes-Hydrobot
+ - eyes-Miner_old
+ - eyes-Security
+ - eyes-engineerrobot
+ - eyes-janitorrobot
+ - eyes-keeper
+ - eyes-keeper-emagged
+ - eyes-medicalrobot
+ - eyes-mommi
+ - eyes-mommi-emagged
+ - eyes-mommi-emaggedold
+ - eyes-mommiold
+ - eyes-securityrobot
+ - keeper
+ - mommi
+ - mommiold
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_robot.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_robot.dmi
+ - sight
+ - sight+a
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\suit.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\suit.dmi
+ + aeneasrinil
+ + aeneasrinil2
+ + aeneasrinil_open
+ + aeneasrinil_open2
+ - paramedic-eva
+ - paramedic-eva2
+ - paramedic-vest
+ - paramedic-vest2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\uniform.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\uniform.dmi
+ + ana_uniform_l
+ + ana_uniform_s
+ + hopwhimsy_l
+ + hopwhimsy_s
+ + lilith_uniform_l
+ + lilith_uniform_s
+ + milohachert_l
+ + milohachert_s
+ - paramedic_l
+ - paramedic_s
+ + solara_dress_l
+ + solara_dress_s
+ - wardendnavy_l
+ + wardendnavyclothes_l
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmos.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
+ - aircond0
+ - aircond1
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\custom_items.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\custom_items.dmi
+ + aeneasrinil
+ + aeneasrinil_open
+ + ana_badge
+ + ana_uniform
+ + asusrose
+ + brucehachert
+ + eleanorstone
+ + eugene_pen
+ + konaahirano
+ + krinn_hat
+ + leamas-empty
+ + leamas-loaded
+ + leamas-reload
+ + lid_eleanorstone
+ + lilith_uniform
+ + matthewriebhardt
+ + milohachert
+ + reesemackenzie
+ + siraj_tongueleaf
+ + solara_dress
+ + williamhackett
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
+ - handtv
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
+ - tea
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
+ - rpd
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\kitchen.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\kitchen.dmi
+ - mcleaver
+ - mcleaverblood
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\objects.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
+ - borgcharger
+ + psychbed
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
+ - intercom-frame
+ - intercom-open
+ - intercom-p-open
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\robotics.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
+ - mommispawner-building
+ - mommispawner-idle
+ - mommispawner-nopower
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\shards.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\shards.dmi
+ + shrapnellarge
+ + shrapnelmedium
+ + shrapnelsmall
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\tank.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
+ - emergency_nitrogen
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vehicles.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
+ - pussywagon_destroyed
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\weapons.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\weapons.dmi
+ - Paddle_wield
+ - butcherknife
+ - defib_emag
+ - defib_empty
+ - defib_full
+ - defib_half
+ - defib_lefthand
+ - defib_low
+ - defib_nobattery
+ - defib_righthand
+ - defibpaddle_in
+ - defibpaddlein_full
+ - defibpaddlein_half
+ - defibpaddlein_low
+ - defibpaddleout_full
+ - defibpaddleout_half
+ - defibpaddleout_low
+ - dualsabergreen
+ - hfrequency
+ - kit_0
+ - kit_1
+ - paddle_lefthand
+ - paddle_righthand
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
+ - ert_commander
+ - ert_engineer
+ - ert_medical
+ - ert_security
+ - krinn_hat
+ - paramedic-eva-helmet
+ + rig0-ert_commander
+ + rig0-ert_engineer
+ + rig0-ert_medical
+ + rig0-ert_security
+ + rig1-ert_commander
+ + rig1-ert_engineer
+ + rig1-ert_medical
+ + rig1-ert_security
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
+ - paramedic-eva
+ - paramedic-vest
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\uniforms.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
+ + hopwhimsy
+ - paramedic

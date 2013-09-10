@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(var/act, var/type, var/desc)
+/mob/living/carbon/monkey/emote(var/act,var/m_type=1,var/message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -10,15 +10,26 @@
 		act = copytext(act,1,length(act))
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1
-	var/message
 
 	switch(act)
 		if ("me")
-			return custom_emote(m_type, desc)
+			if(silent)
+				return
+			if (src.client)
+				if (client.prefs.muted & MUTE_IC)
+					src << "\red You cannot send IC messages (muted)."
+					return
+				if (src.client.handle_spam_prevention(message,MUTE_IC))
+					return
+			if (stat)
+				return
+			if(!(message))
+				return
+			return custom_emote(m_type, message)
+
 
 		if ("custom")
-			return custom_emote(m_type, desc)
+			return custom_emote(m_type, message)
 
 		if("sign")
 			if (!src.restrained())

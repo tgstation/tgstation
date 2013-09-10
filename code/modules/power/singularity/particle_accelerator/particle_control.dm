@@ -211,23 +211,38 @@
 	user.set_machine(src)
 
 	var/dat = ""
-	dat += "Particle Accelerator Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
-	dat += "Status:<BR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:214: dat += "Particle Accelerator Control Panel<BR>"
+	dat += {"Particle Accelerator Control Panel<BR>
+		<A href='?src=\ref[src];close=1'>Close</A><BR><BR>
+		Status:<BR>"}
+	// END AUTOFIX
 	if(!assembled)
-		dat += "Unable to detect all parts!<BR>"
-		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:218: dat += "Unable to detect all parts!<BR>"
+		dat += {"Unable to detect all parts!<BR>
+			<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"}
+		// END AUTOFIX
 	else
-		dat += "All parts in place.<BR><BR>"
-		dat += "Power:"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:221: dat += "All parts in place.<BR><BR>"
+		dat += {"All parts in place.<BR><BR>
+			Power:"}
+		// END AUTOFIX
 		if(active)
 			dat += "On<BR>"
 		else
 			dat += "Off <BR>"
-		dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
-		dat += "Particle Strength: [src.strength] "
-		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:227: dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
+		dat += {"<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>
+			Particle Strength: [src.strength] 
+			<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"}
+		// END AUTOFIX
 	user << browse(dat, "window=pacontrol;size=420x500")
 	onclose(user, "pacontrol")
 	return

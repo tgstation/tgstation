@@ -280,9 +280,13 @@
 
 	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
 	// Built-in
-	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
-	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
-	dat += "<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:283: dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
+	dat += {"<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>
+		<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>
+		<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"}
+	// END AUTOFIX
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -322,9 +326,13 @@
 			dat += "<a href='byond://?src=\ref[src];software=camerajack;sub=0'>Camera Jack</a> <br>"
 		if(s == "door jack")
 			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
-	dat += "<br>"
-	dat += "<br>"
-	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:325: dat += "<br>"
+	dat += {"<br>
+		<br>
+		<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"}
+	// END AUTOFIX
 	return dat
 
 
@@ -332,10 +340,13 @@
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
-	dat += "<h2>CentComm pAI Module Subversion Network</h2><br>"
-	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
-	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:335: dat += "<h2>CentComm pAI Module Subversion Network</h2><br>"
+	dat += {"<h2>CentComm pAI Module Subversion Network</h2><br>
+		<pre>Remaining Available Memory: [src.ram]</pre><br>
+		<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"}
+	// END AUTOFIX
 	for(var/s in available_software)
 		if(!software.Find(s))
 			var/cost = src.available_software[s]
@@ -351,15 +362,19 @@
 /mob/living/silicon/pai/proc/directives()
 	var/dat = ""
 
-	dat += "[(src.master) ? "Your master: [src.master] ([src.master_dna])" : "You are bound to no one."]"
-	dat += "<br><br>"
-	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
-	dat += "<h2>Directives</h2><br>"
-	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_law0]<br>"
-	dat += "<b>Supplemental Directives</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_laws]<br>"
-	dat += "<br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:354: dat += "[(src.master) ? "Your master: [src.master] ([src.master_dna])" : "You are bound to no one."]"
+	dat += {"[(src.master) ? "Your master: [src.master] ([src.master_dna])" : "You are bound to no one."]
+		<br><br>
+		<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>
+		<h2>Directives</h2><br>
+		<b>Prime Directive</b><br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_law0]<br>
+		<b>Supplemental Directives</b><br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_laws]<br>
+		<br>"}
+	// END AUTOFIX
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
 			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
 			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
@@ -544,15 +559,23 @@
 			var/co2_level = environment.carbon_dioxide/total_moles
 			var/plasma_level = environment.toxins/total_moles
 			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-			dat += "Nitrogen: [round(n2_level*100)]%<br>"
-			dat += "Oxygen: [round(o2_level*100)]%<br>"
-			dat += "Carbon Dioxide: [round(co2_level*100)]%<br>"
-			dat += "Plasma: [round(plasma_level*100)]%<br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:547: dat += "Nitrogen: [round(n2_level*100)]%<br>"
+			dat += {"Nitrogen: [round(n2_level*100)]%<br>
+				Oxygen: [round(o2_level*100)]%<br>
+				Carbon Dioxide: [round(co2_level*100)]%<br>
+				Plasma: [round(plasma_level*100)]%<br>"}
+			// END AUTOFIX
 			if(unknown_level > 0.01)
 				dat += "OTHER: [round(unknown_level)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
-	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
-	dat += "<br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:554: dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
+	dat += {"<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>
+		<br>"}
+	// END AUTOFIX
 	return dat
 
 // Camera Jack - Clearly not finished
@@ -579,8 +602,12 @@
 	var/dat = "<h3>Airlock Jack</h3>"
 	dat += "Cable status : "
 	if(!src.cable)
-		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:582: dat += "<font color=#FF5555>Retracted</font> <br>"
+		dat += {"<font color=#FF5555>Retracted</font> <br>
+			<a href='byond://?src=\ref[src];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"}
+		// END AUTOFIX
 		return dat
 	if(!src.cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
@@ -596,8 +623,12 @@
 	if(!src.hackdoor)
 		dat += "<a href='byond://?src=\ref[src];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
 	else
-		dat += "Jack in progress... [src.hackprogress]% complete.<br>"
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:599: dat += "Jack in progress... [src.hackprogress]% complete.<br>"
+		dat += {"Jack in progress... [src.hackprogress]% complete.<br>
+			<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"}
+		// END AUTOFIX
 	//src.hackdoor = machine
 	//src.hackloop()
 	return dat
@@ -639,9 +670,16 @@
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortAtom(PDAs))
 			if (!P.owner||P.toff||P == src.pda)	continue
-			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
-			dat += "</li>"
-	dat += "</ul>"
-	dat += "<br><br>"
-	dat += "Messages: <hr> [pda.tnote]"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:642: dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
+			dat += {"<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>
+				</li>"}
+			// END AUTOFIX
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:644: dat += "</ul>"
+	dat += {"</ul>
+		<br><br>
+		Messages: <hr> [pda.tnote]"}
+	// END AUTOFIX
 	return dat

@@ -80,26 +80,28 @@
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/living/M = target
 //		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
-		if(ishuman(target) && (PLANT in M.mutations)) //Plantmen possibly get mutated and damaged by the rays.
-			if(prob(15))
-				M.apply_effect((rand(30,80)),IRRADIATE)
-				M.Weaken(5)
-				for (var/mob/V in viewers(src))
-					V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
-			if(prob(35))
-			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
-			//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
-				if(prob(80))
-					randmutb(M)
-					domutcheck(M,null)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = M
+			if((H.species.flags & IS_PLANT) && (M.nutrition < 500))
+				if(prob(15))
+					M.apply_effect((rand(30,80)),IRRADIATE)
+					M.Weaken(5)
+					for (var/mob/V in viewers(src))
+						V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
+				if(prob(35))
+				//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
+				//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
+					if(prob(80))
+						randmutb(M)
+						domutcheck(M,null)
+					else
+						randmutg(M)
+						domutcheck(M,null)
 				else
-					randmutg(M)
-					domutcheck(M,null)
-			else
-				M.adjustFireLoss(rand(5,15))
-				M.show_message("\red The radiation beam singes you!")
-			//	for (var/mob/V in viewers(src))
-			//		V.show_message("\red [M] is singed by the radiation beam.", 3, "\red You hear the crackle of burning leaves.", 2)
+					M.adjustFireLoss(rand(5,15))
+					M.show_message("\red The radiation beam singes you!")
+				//	for (var/mob/V in viewers(src))
+				//		V.show_message("\red [M] is singed by the radiation beam.", 3, "\red You hear the crackle of burning leaves.", 2)
 		else if(istype(target, /mob/living/carbon/))
 		//	for (var/mob/V in viewers(src))
 		//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
@@ -118,8 +120,9 @@
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/M = target
 //		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
-		if(ishuman(target) && (PLANT in M.mutations)) //These rays make plantmen fat.
-			if(M.nutrition < 500) //sanity check
+		if(ishuman(target)) //These rays make plantmen fat.
+			var/mob/living/carbon/human/H = M
+			if((H.species.flags & IS_PLANT) && (M.nutrition < 500))
 				M.nutrition += 30
 		else if (istype(target, /mob/living/carbon/))
 			M.show_message("\blue The radiation beam dissipates harmlessly through your body.")

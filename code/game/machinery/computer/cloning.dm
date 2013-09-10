@@ -165,10 +165,12 @@
 	updatemodules()
 
 	var/dat = "<h3>Cloning System Control</h3>"
-	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 
-	dat += "<br><tt>[temp]</tt><br>"
-
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:168: dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
+	dat += {"<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>
+		<br><tt>[temp]</tt><br>"}
+	// END AUTOFIX
 	switch(src.menu)
 		if(1)
 			// Modules
@@ -207,28 +209,42 @@
 				dat += "Biomass: <i>[src.pod1.biomass]</i><br>"
 */
 			// Database
-			dat += "<h4>Database Functions</h4>"
-			dat += "<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:210: dat += "<h4>Database Functions</h4>"
+			dat += {"<h4>Database Functions</h4>
+				<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"}
+			// END AUTOFIX
 			if (src.diskette)
 				dat += "<a href='byond://?src=\ref[src];disk=eject'>Eject Disk</a>"
 
 
 		if(2)
-			dat += "<h4>Current records</h4>"
-			dat += "<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:217: dat += "<h4>Current records</h4>"
+			dat += {"<h4>Current records</h4>
+				<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"}
+			// END AUTOFIX
 			for(var/datum/data/record/R in src.records)
 				dat += "<a href='byond://?src=\ref[src];view_rec=\ref[R]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
 
 		if(3)
-			dat += "<h4>Selected Record</h4>"
-			dat += "<a href='byond://?src=\ref[src];menu=2'>Back</a><br>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:223: dat += "<h4>Selected Record</h4>"
+			dat += {"<h4>Selected Record</h4>
+				<a href='byond://?src=\ref[src];menu=2'>Back</a><br>"}
+			// END AUTOFIX
 			if (!src.active_record)
 				dat += "<font color=red>ERROR: Record not found.</font>"
 			else
-				dat += "<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>"
-				dat += "<b>Name:</b> [src.active_record.fields["name"]]<br>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:229: dat += "<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>"
+				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
+					<b>Name:</b> [src.active_record.fields["name"]]<br>"}
+				// END AUTOFIX
 				var/obj/item/weapon/implant/health/H = locate(src.active_record.fields["imp"])
 
 				if ((H) && (istype(H)))
@@ -237,12 +253,15 @@
 					dat += "<font color=red>Unable to locate implant.</font><br>"
 
 				if (!isnull(src.diskette))
-					dat += "<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>"
 
-					dat += " | Save: <a href='byond://?src=\ref[src];save_disk=ue'>UI + UE</a>"
-					dat += " | Save: <a href='byond://?src=\ref[src];save_disk=ui'>UI</a>"
-					dat += " | Save: <a href='byond://?src=\ref[src];save_disk=se'>SE</a>"
-					dat += "<br>"
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:240: dat += "<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>"
+					dat += {"<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>
+						| Save: <a href='byond://?src=\ref[src];save_disk=ue'>UI + UE</a>
+						| Save: <a href='byond://?src=\ref[src];save_disk=ui'>UI</a>
+						| Save: <a href='byond://?src=\ref[src];save_disk=se'>SE</a>
+						<br>"}
+					// END AUTOFIX
 				else
 					dat += "<br>" //Keeping a line empty for appearances I guess.
 
@@ -255,13 +274,14 @@
 		if(4)
 			if (!src.active_record)
 				src.menu = 2
-			dat = "[src.temp]<br>"
-			dat += "<h4>Confirm Record Deletion</h4>"
 
-			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>"
-			dat += "<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"
-
-
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:258: dat = "[src.temp]<br>"
+			dat = {"[src.temp]<br>
+				<h4>Confirm Record Deletion</h4>
+				<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>
+				<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"}
+			// END AUTOFIX
 	user << browse(dat, "window=cloning")
 	onclose(user, "cloning")
 	return
@@ -397,7 +417,7 @@
 			else
 
 				var/mob/selected = find_dead_player("[C.fields["ckey"]]")
-				selected << 'chime.ogg'	//probably not the best sound but I think it's reasonable
+				selected << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
 				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
 				if(answer != "No" && pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"]))
 					temp = "Initiating cloning cycle..."
@@ -440,10 +460,7 @@
 	subject.dna.check_integrity()
 
 	var/datum/data/record/R = new /datum/data/record(  )
-	if(subject.dna)
-		R.fields["mrace"] = subject.dna.mutantrace
-	else
-		R.fields["mrace"] = null
+	R.fields["mrace"] = subject.species
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)

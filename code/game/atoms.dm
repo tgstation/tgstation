@@ -21,7 +21,7 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
-/atom/proc/throw_impact(atom/hit_atom)
+/atom/proc/throw_impact(atom/hit_atom, var/speed)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
 		M.hitby(src)
@@ -32,7 +32,7 @@
 		var/obj/O = hit_atom
 		if(!O.anchored)
 			step(O, src.dir)
-		O.hitby(src)
+		O.hitby(src,speed)
 
 	else if(isturf(hit_atom))
 		var/turf/T = hit_atom
@@ -639,32 +639,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		else
 			if ( (W) && !human.restrained() )
 				W.afterattack(src, human)
-/*
-	else if(isMoMMI(usr))
-		var/mob/living/silicon/robot/mommi/mommi = usr
-		//-mommi stuff-
 
-		if(mommi.stat)
-			return
-
-		var/in_range = in_range(src, mommi) || src.loc == mommi
-
-		if (in_range)
-			if (!( mommi.restrained()))
-				if (W)
-					attackby(W,mommi)
-					if (W)
-						W.afterattack(src, mommi)
-				else
-					attack_hand(mommi)
-			else
-				hand_h(mommi, mommi.hand)
-		else
-			if (!mommi.restrained() )
-				attack_robot(mommi)
-			else
-				hand_r(mommi, mommi.hand)
-*/
 
 	else if(isAI(usr))
 		var/mob/living/silicon/ai/ai = usr
@@ -891,6 +866,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if(parameters["alt"]){
 			if(isrobot(usr))
 				RobotAltClick(usr)
+			else if(isovermind(usr))
+				OvermindAltClick(usr)
 			else if(!isAI(usr))
 				AltClick(usr)
 			else
@@ -1251,6 +1228,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 /atom/proc/OvermindCtrlClick(var/mob/camera/blob/blob)
 	if(istype(src, /turf))
 		blob.click_expand_blob(src)
+	return
+
+/atom/proc/OvermindAltClick(var/mob/camera/blob/blob)
+	if(istype(src, /obj/effect/blob/normal))
+		blob.click_create_shield(src)
 	return
 
 /atom/proc/RobotAltClick() // Opens and closes doors!

@@ -43,7 +43,7 @@
 					Sprites:
 				</dt>
 				<dd>
-					Bustatime, Dbuhos, Emisune, N3X15, Rei1226
+					Bustatime, Dbuhos, Emisune, N3X15, Rei1226, Osaifh
 				</dd>
 				<dt class="creditsection">
 					Sounds:
@@ -73,7 +73,44 @@
 		(ie. code improvements for expandability, etc.) should not be listed here. They
 		should be listed in the changelog upon commit though. Thanks. -->
 		<!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
-
+		<!-- Suggestion:  Group changes not merged into master into a single [IN DEVELOPMENT] block, then change the date to today before merging.  Makes the changes from the last release a bit easier to comprehend. -->
+		<div class="commit sansserif">
+			<h2 class="date">2013.09.09</h2>
+			<!-- Put all your stuff in here until we update. Order is author name (alphabetic) -> type of change -> severity of change. - Nexypoo-->
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Update to latest baycode for various fixes and new features.</li>
+				<li class="rscadd">Vox Raiders gamemode added.</li>
+				<li class="rscadd">Fatness mutation re-added to humans and made it selectable from the character screen.  Other species don't have the sprites.</li>
+				<li class="rscadd">Added a simple flag to vents that prevents them from spawning mice.  Useful for stopping mice from spawning in atmos/toxins mixing/other places where they can't escape.</li>
+				<li class="rscdel">Due to hardcoded byond limits, many unused and fluff items were removed.</li>
+				<li class="experiment">MoMMI Spawners added for those who wish to spawn as a MoMMI on the derelict rather than as a mouse. (Disabled for now.)</li>
+				<li class="bugfix">Fixed input pipes taking up too much CPU when miners dump an ore box full of shit into them.</li>
+				<li class="bugfix">Fix a PDA exploit.</li>
+				<li class="bugfix">Vox (and other future nitrogen-breathers) now spawn with the required internals.</li>
+				<li class="bugfix">MoMMIs can open and close crates.</li>
+				<li class="tweak">Blob win condition is now 500 blobs per core, up from 350.</li>
+				<li class="tweak">Unfat sting is now free.</li>
+				<li class="tweak">ERT hardsuits have heat protection.</li>
+				<li class="tweak">MoMMIs cannot slip in space anymore.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Uplink items now have a short blurb describing what they are and their use.</li>
+				<li class="rscadd">Job specific traitor items, still a work in progress.</li>
+				<li class="rscadd">Identity bans added:  Force you to have a random name and appearance upon spawn.</li>
+				<li class="tweak">Increased the hunger rate making chefs actually usefull!</li>
+				<li class="bugfix">Changeling regenerate now properly fixes organ damage.</li>
+				<li class="bugfix">Holstered weapons will now be properly affected by an EMP.</li>
+				<li class="bugfix">Fixed changelings being obviously alive when they're in stasis.</li>
+				<li class="bugfix">Makes MoMMI unable to be blob candidate, otherwise it gets picked and round ends immediately.</li>
+				<li class="bugfix">Fixed MoMMI eye sprites.</li>
+				<li class="bugfix">Add a missing wire to the map for the power monitor.</li>
+				<li class="bugfix">Fixes cyborg/MoMMI glass regeneration while being in a recharge_station.</li>
+				<li class="bugfix">Fixes MoMMI dropping their emag tool when storing.</li>
+			</ul>
+		</div>
+		
 		<div class="commit sansserif">
 			<h2 class="date">2013.08.27</h2>
 			<h3 class="author">N3X15 updated:</h3>

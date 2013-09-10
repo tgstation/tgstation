@@ -106,7 +106,10 @@
 				src << "<span class='notice'>We stab [T] with the proboscis.</span>"
 				src.visible_message("<span class='danger'>[src] stabs [T] with the proboscis!</span>")
 				T << "<span class='danger'>You feel a sharp stabbing pain!</span>"
-				T.take_overall_damage(40)
+				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
+				if(affecting.take_damage(39,0,1,"large organic needle"))
+					T:UpdateDamageIcon()
+					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(src, T, 150))
@@ -183,7 +186,7 @@
 	changeling.geneticdamage = 30
 	src.dna = chosen_dna
 	src.real_name = chosen_dna.real_name
-	src.flavor_text = chosen_dna.flavor
+	src.flavor_text = ""
 	updateappearance(src, src.dna.uni_identity)
 	domutcheck(src, null)
 
@@ -374,19 +377,21 @@
 			C.setToxLoss(0)
 			C.setOxyLoss(0)
 			C.setCloneLoss(0)
+			C.setBrainLoss(0)
 			C.SetParalysis(0)
 			C.SetStunned(0)
 			C.SetWeakened(0)
 			C.radiation = 0
 			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
 			C.reagents.clear_reagents()
-			if(istype(C, /mob/living/carbon/human))
+			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.vessel.reagent_list = list()
 				H.vessel.add_reagent("blood",560)
 				spawn(1)
 					H.fixblood()
-				for(var/datum/organ/external/O in H.organs)
+				for(var/organ_name in H.organs_by_name)
+					var/datum/organ/external/O = H.organs_by_name[organ_name]
 					O.amputated = 0
 					O.brute_dam = 0
 					O.burn_dam = 0
@@ -401,7 +406,8 @@
 					O.trace_chemicals = list()
 					O.wounds = list()
 					O.wound_update_accuracy = 1
-				for(var/datum/organ/internal/IO in H.internal_organs)
+				for(var/organ_name in H.internal_organs)
+					var/datum/organ/internal/IO = H.internal_organs[organ_name]
 					IO.damage = 0
 					IO.trace_chemicals = list()
 				H.updatehealth()
@@ -749,15 +755,16 @@ var/list/datum/dna/hivemind_bank = list()
 
 /mob/proc/changeling_unfat_sting()
 	set category = "Changeling"
-	set name = "Unfat sting (5)"
-	set desc = "Sting target"
+	set name = "Unfat sting"
+	set desc = "A rapid weightloss plan that actually works!"
 
-	var/mob/living/carbon/T = changeling_sting(5,/mob/proc/changeling_unfat_sting)
+	var/mob/living/carbon/T = changeling_sting(0,/mob/proc/changeling_unfat_sting)
 	if(!T)	return 0
-	T << "<span class='danger'>you feel a small prick as stomach churns violently and you become to feel skinnier.</span>"
-	T.overeatduration = 0
-	T.nutrition -= 100
-	feedback_add_details("changeling_powers","US")
+	if(T.overeatduration>100)
+		T << "<span class='danger'>You feel a small prick as your stomach churns violently. You begin to feel skinnier.</span>"
+		T.overeatduration = 0
+		T.nutrition -= 100
+		feedback_add_details("changeling_powers","US")
 	return 1
 
 /mob/proc/changeling_DEATHsting()

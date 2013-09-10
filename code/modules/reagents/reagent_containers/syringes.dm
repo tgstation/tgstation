@@ -130,11 +130,33 @@
 					return
 
 				if(ismob(target) && target != user)
+					var/time = 30 //Injecting through a hardsuit takes longer due to needing to find a port.
+					if(istype(target,/mob/living/carbon/human))
+						var/mob/living/carbon/human/H = target
+						if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
+							time = 60
+
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("\red <B>[] is trying to inject []!</B>", user, target), 1)
-					if(!do_mob(user, target)) return
+						if(time == 30)
+							O.show_message(text("\red <B>[] is trying to inject []!</B>", user, target), 1)
+						else
+							O.show_message(text("\red <B>[] begins hunting for an injection port on []'s suit!</B>", user, target), 1)
+
+					if(!do_mob(user, target, time)) return
+
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message(text("\red [] injects [] with the syringe!", user, target), 1)
+
+					if(istype(target,/mob/living))
+						var/mob/living/M = target
+						var/list/injected = list()
+						for(var/datum/reagent/R in src.reagents.reagent_list)
+							injected += R.name
+						var/contained = english_list(injected)
+						M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
+						user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
+						msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
 					src.reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
@@ -144,14 +166,12 @@
 						B = d
 						break
 					var/trans
-					if(B && ishuman(target))
-						var/mob/living/carbon/human/H = target
-						H.inject_blood()
-						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-						user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
+					if(B && istype(target,/mob/living/carbon))
+						var/mob/living/carbon/C = target
+						C.inject_blood(src,5)
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-						user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
+					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
 					if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()
@@ -186,11 +206,13 @@
 
 
 	/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
-
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-
-		log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+		var/list/injected = list()
+		for(var/datum/reagent/R in src.reagents.reagent_list)
+			injected += R.name
+		var/contained = english_list(injected)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] Reagents: [contained] (INTENT: [uppertext(user.a_intent)])</font>"
+		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] Reagents: [contained] (INTENT: [uppertext(user.a_intent)])</font>"
+		msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		if(istype(target, /mob/living/carbon/human))
 

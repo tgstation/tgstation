@@ -23,6 +23,7 @@
 	//3: Do not pass either
 
 	var/welded = 0 // Added for aliens -- TLE
+	var/canSpawnMice = 1 // Set to 0 to prevent spawning of mice.
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection

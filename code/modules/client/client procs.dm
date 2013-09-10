@@ -103,6 +103,14 @@
 		del(src)
 		return
 
+	// Change the way they should download resources.
+	if(config.resource_urls)
+		src.preload_rsc = pick(config.resource_urls)
+	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
+	
+	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
+
+
 	clients += src
 	directory[ckey] = src
 

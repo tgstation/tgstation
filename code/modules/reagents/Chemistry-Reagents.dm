@@ -363,6 +363,29 @@ datum
 				..()
 				return
 
+		chefspecial
+			// Quiet and lethal, needs atleast 4 units in the person before they'll die
+			name = "Chef's Special"
+			id = "chefspecial"
+			description = "An extremely toxic chemical that will surely end in death."
+			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.39
+
+			on_mob_life(var/mob/living/M as mob)
+				var/random = rand(150,180)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				switch(data)
+					if(0 to 5)
+						..()
+				if(data >= random)
+					if(M.stat != DEAD)
+						M.death(0)
+						M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
+				data++
+				return
+
 		minttoxin
 			name = "Mint Toxin"
 			id = "minttoxin"
@@ -929,11 +952,15 @@ datum
 				M.apply_effect(2*REM,IRRADIATE,0)
 				// radium may increase your chances to cure a disease
 				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
-					if(M:virus2 && prob(5))
-						if(prob(50))
-							M.radiation += 50 // curing it that way may kill you instead
-							M.adjustToxLoss(100)
-						M:antibodies |= M:virus2.antigen
+					var/mob/living/carbon/C = M
+					if(C.virus2.len)
+						for (var/ID in C.virus2)
+							var/datum/disease2/disease/V = C.virus2[ID]
+							if(prob(5))
+								if(prob(50))
+									M.radiation += 50 // curing it that way may kill you instead
+									M.adjustToxLoss(100)
+								M:antibodies |= V.antigen
 				..()
 				return
 
@@ -1253,7 +1280,7 @@ datum
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
-							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+							if(H.species.flags & IS_PLANT) //plantmen take a LOT of damage
 								H.adjustToxLoss(10)
 
 		plasma
@@ -2788,7 +2815,7 @@ datum
 
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
-					if(A.data) d += A.data
+					if(isnum(A.data)) d += A.data
 
 				M.dizziness +=dizzy_adj.
 				if(d >= slur_start && d < pass_out)
@@ -2803,6 +2830,12 @@ datum
 				if(d >= pass_out)
 					M:paralysis = max(M:paralysis, 20)
 					M:drowsyness  = max(M:drowsyness, 30)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+						if (istype(L))
+							L.take_damage(0.1, 1)
+						H.adjustToxLoss(0.1)
 
 				holder.remove_reagent(src.id, 0.4)
 				..()
@@ -3449,14 +3482,14 @@ datum
 				nutriment_factor = 1 * FOOD_METABOLISM
 				color = "#2E6671" // rgb: 46, 102, 113
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
+				on_mob_life(var/mob/living/M as mob)
+					if(!data) data = 1
+					data++
+					M.dizziness +=10
+					if(data >= 55 && data <115)
+						if (!M.stuttering) M.stuttering = 1
+						M.stuttering += 10
+					else if(data >= 115 && prob(33))
+						M.confused = max(M.confused+15,15)
+					..()
+					return

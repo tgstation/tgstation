@@ -104,6 +104,12 @@ emp_act
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
+	if(istype(src.w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/u = src.w_uniform
+		var/obj/item/clothing/tie/holster/h = u.hastie
+		if(h && istype(h))
+			if(h.holstered)
+				h.holstered.emp_act(severity)
 	for(var/datum/organ/external/O  in organs)
 		if(O.status & ORGAN_DESTROYED)	continue
 		O.emp_act(severity)
@@ -116,10 +122,24 @@ emp_act
 	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
-	if(!target_zone)
+	if(!target_zone && !src.stat)
 		visible_message("\red <B>[user] misses [src] with \the [I]!")
 		return
-
+	if(istype(I, /obj/item/weapon/butch/meatcleaver) && src.stat == DEAD && user.a_intent == "hurt")
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new /obj/item/weapon/reagent_containers/food/snacks/meat/human(get_turf(src.loc))
+		newmeat.name = src.real_name + newmeat.name
+		newmeat.subjectname = src.real_name
+		newmeat.subjectjob = src.job
+		newmeat.reagents.add_reagent ("nutriment", (src.nutrition / 15) / 3)
+		src.reagents.trans_to (newmeat, round ((src.reagents.total_volume) / 3, 1))
+		src.loc.add_blood(src)
+		--src.meatleft
+		user << "\red You hack off a chunk of meat from [src.name]"
+		if(!src.meatleft)
+			src.attack_log += "\[[time_stamp()]\] Was chopped up into meat by <b>[user]/[user.ckey]</b>"
+			user.attack_log += "\[[time_stamp()]\] Chopped up <b>[src]/[src.ckey]</b> into meat</b>"
+			msg_admin_attack("[user.name] ([user.ckey]) chopped up [src] ([src.ckey]) into meat (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			del(src)
 	var/datum/organ/external/affecting = get_organ(target_zone)
 	if (!affecting)
 		return
@@ -131,6 +151,17 @@ emp_act
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
 
+	if(istype(I,/obj/item/weapon/card/emag))
+		if(!(affecting.status & ORGAN_ROBOT))
+			user << "\red That limb isn't robotic."
+			return
+		if(affecting.sabotaged)
+			user << "\red [src]'s [affecting.display_name] is already sabotaged!"
+		else
+			user << "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties."
+			affecting.sabotaged = 1
+		return
+
 	if(I.attack_verb.len)
 		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
 	else
@@ -140,7 +171,7 @@ emp_act
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor , is_sharp(I), I.name)
+	apply_damage(I.force, I.damtype, affecting, armor , is_sharp(I), I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
@@ -203,3 +234,120 @@ emp_act
 	if(w_uniform)
 		w_uniform.add_blood(source)
 		update_inv_w_uniform(0)
+
+/mob/living/carbon/human/ex_act(severity)
+	if(!blinded)
+		flick("flash", flash)
+
+	var/shielded = 0
+	var/b_loss = null
+	var/f_loss = null
+
+	switch (severity)
+		if (1.0)
+			b_loss += 500
+			if (!prob(getarmor(null, "bomb")))
+				gib()
+				return
+			else
+				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				throw_at(target, 200, 4)
+			//return
+//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
+				//user.throw_at(target, 200, 4)
+
+		if (2.0)
+			if (stat == 2 && client)
+				gib()
+				return
+
+			else if (stat == 2 && !client)
+				gibs(loc, viruses)
+				del(src)
+				return
+
+			if (!shielded)
+				b_loss += 60
+
+			f_loss += 60
+
+			if (prob(getarmor(null, "bomb")))
+				b_loss = b_loss/1.5
+				f_loss = f_loss/1.5
+
+			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+				ear_damage += 30
+				ear_deaf += 120
+			if (prob(70) && !shielded)
+				Paralyse(10)
+
+		if(3.0)
+			b_loss += 30
+			if (prob(getarmor(null, "bomb")))
+				b_loss = b_loss/2
+			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+				ear_damage += 15
+				ear_deaf += 60
+			if (prob(50) && !shielded)
+				Paralyse(10)
+
+	var/update = 0
+
+	// focus most of the blast on one organ
+	var/datum/organ/external/take_blast = pick(organs)
+	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+
+	// distribute the remaining 10% on all limbs equally
+	b_loss *= 0.1
+	f_loss *= 0.1
+
+	var/weapon_message = "Explosive Blast"
+
+	for(var/datum/organ/external/temp in organs)
+		switch(temp.name)
+			if("head")
+				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
+			if("chest")
+				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
+			if("l_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("l_leg")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_leg")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_foot")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("l_foot")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("l_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+	if(update)	UpdateDamageIcon()
+
+
+/mob/living/carbon/human/blob_act()
+	if(stat == 2)	return
+	show_message("\red The blob attacks you!")
+	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
+	return
+
+/mob/living/carbon/human/meteorhit(O as obj)
+	for(var/mob/M in viewers(src, null))
+		if ((M.client && !( M.blinded )))
+			M.show_message("\red [src] has been hit by [O]", 1)
+	if (health > 0)
+		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
+		if(!affecting)	return
+		if (istype(O, /obj/effect/immovablerod))
+			if(affecting.take_damage(101, 0))
+				UpdateDamageIcon()
+		else
+			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
+				UpdateDamageIcon()
+		updatehealth()
+	return

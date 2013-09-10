@@ -5,6 +5,23 @@
 	item_state = "helm-command"
 	armor = list(melee = 50, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
+	var/obj/machinery/camera/camera
+
+/obj/item/clothing/head/helmet/space/ert/attack_self(mob/user)
+	if(camera)
+		..(user)
+	else
+		camera = new /obj/machinery/camera(src)
+		camera.network = list("ERT")
+		cameranet.removeCamera(camera)
+		camera.c_tag = user.name
+		user << "\blue User scanned as [camera.c_tag]. Camera activated."
+
+/obj/item/clothing/head/helmet/space/ert/examine()
+	..()
+	if(get_dist(usr,src) <= 1)
+		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team suit"
@@ -20,6 +37,7 @@
 	/obj/item/device/radio, /obj/item/device/analyzer, /obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, \
 	/obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton, /obj/item/weapon/gun/energy/gun)
 	siemens_coefficient = 0.6
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 //Commander
 /obj/item/clothing/head/helmet/space/ert/commander

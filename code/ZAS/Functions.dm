@@ -78,7 +78,7 @@ proc/FloodFill(turf/simulated/start)
 proc/ZMerge(zone/A,zone/B)
 
 	//Sanity~
-	if(!istype(A) || !istype(B) || !istype(B.air) || !istype(A.air))
+	if(!istype(A) || !istype(B))
 		return
 
 	var/new_contents = A.contents + B.contents

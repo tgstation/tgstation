@@ -173,6 +173,8 @@
 					M = new/turf/simulated/mineral/silver(src)
 				if("Plasma")
 					M = new/turf/simulated/mineral/plasma(src)
+				if("Clown")
+					M = new/turf/simulated/mineral/clown(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -194,6 +196,10 @@
 /turf/simulated/mineral/random/high_chance
 	mineralChance = 25
 	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Archaeo" = 2)
+
+/turf/simulated/mineral/random/high_chance_clown
+	mineralChance = 25
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 25, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 2, "Clown"=15)
 
 /turf/simulated/mineral/random/Del()
 	return

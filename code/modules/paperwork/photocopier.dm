@@ -29,10 +29,14 @@
 		if(copy || photocopy)
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 			if(toner)
-				dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
-				dat += "Printing: [copies] copies."
-				dat += "<a href='byond://?src=\ref[src];min=1'>-</a> "
-				dat += "<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\paperwork\photocopier.dm:32: dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
+				dat += {"<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>
+					Printing: [copies] copies.
+					<a href='byond://?src=\ref[src];min=1'>-</a> 
+					<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"}
+				// END AUTOFIX
 		else if(toner)
 			dat += "Please insert paper to copy.<BR><BR>"
 		dat += "Current toner level: [toner]"

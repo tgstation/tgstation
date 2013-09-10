@@ -11,41 +11,45 @@
 			if("1")
 				log_admin("[key_name(usr)] has spawned a traitor.")
 				if(!src.makeTraitors())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("2")
 				log_admin("[key_name(usr)] has spawned a changeling.")
 				if(!src.makeChanglings())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("3")
 				log_admin("[key_name(usr)] has spawned revolutionaries.")
 				if(!src.makeRevs())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("4")
 				log_admin("[key_name(usr)] has spawned a cultists.")
 				if(!src.makeCult())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("5")
 				log_admin("[key_name(usr)] has spawned a malf AI.")
 				if(!src.makeMalfAImode())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("6")
 				log_admin("[key_name(usr)] has spawned a wizard.")
 				if(!src.makeWizard())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("7")
 				log_admin("[key_name(usr)] has spawned a nuke team.")
-				if(!makeNukeTeam())
-					usr << "\red Unfortunatly there were no candidates available"
+				if(!src.makeNukeTeam())
+					usr << "\red Unfortunately there weren't enough candidates available."
 			if("8")
 				log_admin("[key_name(usr)] has spawned a ninja.")
-				makeSpaceNinja()
+				src.makeSpaceNinja()
 			if("9")
 				log_admin("[key_name(usr)] has spawned aliens.")
-				makeAliens()
+				src.makeAliens()
 			if("10")
 				log_admin("[key_name(usr)] has spawned a death squad.")
 				if(!makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
+			if("11")
+				log_admin("[key_name(usr)] has spawned vox raiders.")
+				if(!src.makeVoxRaiders())
+					usr << "\red Unfortunately there weren't enough candidates available."
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -93,6 +97,12 @@
 				if(!banckey || !banreason || !banjob || !banduration)
 					usr << "Not enough parameters (Requires ckey, reason and job)"
 					return
+			if(BANTYPE_APPEARANCE)
+				if(!banckey || !banreason)
+					usr << "Not enough parameters (Requires ckey and reason)"
+					return
+				banduration = null
+				banjob = null
 
 		var/mob/playermob
 
@@ -201,6 +211,10 @@
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))	return
+
+		if( ticker.mode.name == "blob" )
+			alert("You can't call the shuttle during blob!")
+			return
 
 		switch(href_list["call_shuttle"])
 			if("1")
@@ -354,6 +368,55 @@
 
 	/////////////////////////////////////new ban stuff
 
+	else if(href_list["appearanceban"])
+		if(!check_rights(R_BAN))
+			return
+		var/mob/M = locate(href_list["appearanceban"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(!M.ckey)	//sanity
+			usr << "This mob has no ckey"
+			return
+
+		var/banreason = appearance_isbanned(M)
+		if(banreason)
+	/*		if(!config.ban_legacy_system)
+				usr << "Unfortunately, database based unbanning cannot be done through this panel"
+				DB_ban_panel(M.ckey)
+				return	*/
+			switch(alert("Reason: '[banreason]' Remove appearance ban?","Please Confirm","Yes","No"))
+				if("Yes")
+					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban")
+					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban")
+					feedback_inc("ban_appearance_unban", 1)
+					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
+					appearance_unban(M)
+					message_admins("\blue [key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban", 1)
+					M << "\red<BIG><B>[usr.client.ckey] has removed your appearance ban.</B></BIG>"
+
+		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
+			if("Yes")
+				var/reason = input(usr,"Reason?","reason","Metafriender") as text|null
+				if(!reason)
+					return
+				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
+				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
+				feedback_inc("ban_appearance",1)
+				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
+				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
+				notes_add(M.ckey, "Appearance banned - [reason]")
+				message_admins("\blue [key_name_admin(usr)] appearance banned [key_name_admin(M)]", 1)
+				M << "\red<BIG><B>You have been appearance banned by [usr.client.ckey].</B></BIG>"
+				M << "\red <B>The reason is: [reason]</B>"
+				M << "\red Appearance ban can be lifted only upon request."
+				if(config.banappeals)
+					M << "\red To try to resolve this matter head to [config.banappeals]"
+				else
+					M << "\red No ban appeals URL has been set."
+			if("No")
+				return
+
 	else if(href_list["jobban2"])
 //		if(!check_rights(R_BAN))	return
 
@@ -382,8 +445,12 @@
 		var/counter = 0
 //Regular jobs
 	//Command (Blue)
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:448: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in command_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -403,8 +470,12 @@
 
 	//Security (Red)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:469: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in security_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -424,8 +495,12 @@
 
 	//Engineering (Yellow)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:490: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in engineering_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -445,8 +520,12 @@
 
 	//Medical (White)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:511: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in medical_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -466,8 +545,12 @@
 
 	//Science (Purple)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:532: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in science_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -487,8 +570,12 @@
 
 	//Civilian (Grey)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:553: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in civilian_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -508,8 +595,12 @@
 
 	//Non-Human (Green)
 		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:574: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		for(var/jobPos in nonhuman_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -536,9 +627,12 @@
 
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:602: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
+			<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"}
+		// END AUTOFIX
 		//Traitor
 		if(jobban_isbanned(M, "traitor") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'><font color=red>[replacetext("Traitor", " ", "&nbsp")]</font></a></td>"
@@ -576,6 +670,12 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'><font color=red>[replacetext("Wizard", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'>[replacetext("Wizard", " ", "&nbsp")]</a></td>"
+
+		//Vox Raider
+		if(jobban_isbanned(M, "Vox Raider") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox&nbsp;Raider</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'>Vox&nbsp;Raider</a></td>"
 
 /*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
@@ -2020,17 +2120,13 @@
 			if("virus")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","V")
-				var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose")
-				if(answer=="Random")
-					viral_outbreak()
-					message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
-				else if(answer == "Choose")
-					var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu","pierrot's throat","rhumba beat")
-					var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
-					viral_outbreak(V)
-					message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
+				var/answer = alert("Do you want this to be a greater disease or a lesser one?",,"Greater","Lesser")
+				if(answer=="Lesser")
+					virus2_lesser_infection()
+					message_admins("[key_name_admin(usr)] has triggered a lesser virus outbreak.", 1)
 				else
-					AdminCreateVirus(usr)
+					virus2_greater_infection()
+					message_admins("[key_name_admin(usr)] has triggered a greater virus outbreak.", 1)
 			if("retardify")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","RET")

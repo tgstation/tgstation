@@ -4,6 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/glass
 	name = " "
+	var/base_name = " "
 	desc = " "
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "null"
@@ -12,6 +13,8 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50)
 	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+	var/label_text = ""
 
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
@@ -31,7 +34,12 @@
 		/obj/machinery/disposal,
 		/obj/machinery/apiary,
 		/mob/living/simple_animal/cow,
-		/mob/living/simple_animal/hostile/retaliate/goat	)
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/obj/machinery/computer/centrifuge	)
+
+	New()
+		..()
+		base_name = name
 
 	examine()
 		set src in view()
@@ -39,8 +47,7 @@
 		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\blue It contains:"
 		if(reagents && reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				usr << "\blue [R.volume] units of [R.name]"
+			usr << "\blue [src.reagents.total_volume] units of liquid."
 		else
 			usr << "\blue Nothing."
 		if (!is_open_container())
@@ -65,16 +72,17 @@
 				return
 
 		if(ismob(target) && target.reagents && reagents.total_volume)
-			var/mob/M = target
 			user << "\blue You splash the solution onto [target]."
-			var/R
-			if(src.reagents)
-				for(var/datum/reagent/A in src.reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
-			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
-			M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
-			log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])")
+
+			var/mob/living/M = target
+			var/list/injected = list()
+			for(var/datum/reagent/R in src.reagents.reagent_list)
+				injected += R.name
+			var/contained = english_list(injected)
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red [] has been splashed with something by []!", target, user), 1)
 			src.reagents.reaction(target, TOUCH)
@@ -120,6 +128,22 @@
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
 			return
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
+			var/tmp_label = sanitize(input(user, "Enter a label for [src.name]","Label",src.label_text))
+			if(length(tmp_label) > 10)
+				user << "\red The label can be at most 10 characters long."
+			else
+				user << "\blue You set the label to \"[tmp_label]\"."
+				src.label_text = tmp_label
+				src.update_name_label()
+
+	proc/update_name_label()
+		if(src.label_text == "")
+			src.name = src.base_name
+		else
+			src.name = "[src.base_name] ([src.label_text])"
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
@@ -178,6 +202,16 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/vial
+	name = "vial"
+	desc = "A small glass vial. Can hold up to 25 units."
+	icon_state = "vial"
+	g_amt = 250
+	volume = 25
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	New()
 		..()
@@ -217,6 +251,16 @@
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 			user.drop_from_inventory(src)
 			del(src)
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial
+	name = "vial"
+	desc = "Small glass vial. Looks fragile."
+	icon_state = "vial"
+	g_amt = 500
+	volume = 15
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(1,5,15)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

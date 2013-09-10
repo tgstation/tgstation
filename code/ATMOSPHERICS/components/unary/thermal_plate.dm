@@ -5,7 +5,7 @@
 //Based off Heat Reservoir and Space Heater
 //Transfers heat between a pipe system and environment, based on which has a greater thermal energy concentration
 
-	icon = 'cold_sink.dmi'
+	icon = 'icons/obj/atmospherics/cold_sink.dmi'
 	icon_state = "intact_off"
 
 	name = "Thermal Transfer Plate"

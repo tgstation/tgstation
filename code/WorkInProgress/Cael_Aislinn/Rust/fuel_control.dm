@@ -63,31 +63,38 @@
 
 	var/dat = "<B>Reactor Core Fuel Control</B><BR>"
 	/*dat += "<b>Fuel depletion announcement:</b> "
-	dat += "[announce_fueldepletion == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_fueldepletion=0'>\[Disable\]</a>"] "
-	dat += "[announce_fueldepletion == 1 ? 	"Announcing"	: "<a href='?src=\ref[src];announce_fueldepletion=1'>\[Announce\]</a>"] "
-	dat += "[announce_fueldepletion == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_fueldepletion=2'>\[Broadcast\]</a>"]<br>"
-	dat += "<b>Stage progression announcement:</b> "
-	dat += "[announce_stageprogression == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_stageprogression=0'>\[Disable\]</a>"] "
-	dat += "[announce_stageprogression == 1 ? 	"Announcing"	: "<a href='?src=\ref[src];announce_stageprogression=1'>\[Announce\]</a>"] "
-	dat += "[announce_stageprogression == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_stageprogression=2'>\[Broadcast\]</a>"]<br>"*/
-	dat += "<hr>"
 
-	dat += "<b>Detected devices</b> <a href='?src=\ref[src];scan=1'>\[Refresh list\]</a>"
-	dat += "<table border=1 width='100%'>"
-	dat += "<tr>"
-	dat += "<td><b>ID</b></td>"
-	dat += "<td><b>Assembly</b></td>"
-	dat += "<td><b>Consumption</b></td>"
-	dat += "<td><b>Depletion</b></td>"
-	dat += "<td><b>Duration</b></td>"
-	dat += "<td><b>Next stage</b></td>"
-	dat += "<td></td>"
-	dat += "<td></td>"
-	dat += "</tr>"
-
+	// NOT-AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_control.dm:66: dat += "[announce_fueldepletion == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_fueldepletion=0'>\[Disable\]</a>"] "
+	dat += {"[announce_fueldepletion == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_fueldepletion=0'>\[Disable\]</a>"]
+		[announce_fueldepletion == 1 ? 	"Announcing"	: "<a href='?src=\ref[src];announce_fueldepletion=1'>\[Announce\]</a>"]
+		[announce_fueldepletion == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_fueldepletion=2'>\[Broadcast\]</a>"]<br>
+		<b>Stage progression announcement:</b>
+		[announce_stageprogression == 0 ? 	"Disabled"		: "<a href='?src=\ref[src];announce_stageprogression=0'>\[Disable\]</a>"]
+		[announce_stageprogression == 1 ? 	"Announcing"	: "<a href='?src=\ref[src];announce_stageprogression=1'>\[Announce\]</a>"]
+		[announce_stageprogression == 2 ? 	"Broadcasting"	: "<a href='?src=\ref[src];announce_stageprogression=2'>\[Broadcast\]</a>"]<br>"}*/
+	dat += {"
+		<hr>
+		<b>Detected devices</b> <a href='?src=\ref[src];scan=1'>\[Refresh list\]</a>
+		<table border=1 width='100%'>
+		<tr>
+		<td><b>ID</b></td>
+		<td><b>Assembly</b></td>
+		<td><b>Consumption</b></td>
+		<td><b>Depletion</b></td>
+		<td><b>Duration</b></td>
+		<td><b>Next stage</b></td>
+		<td></td>
+		<td></td>
+		</tr>"}
+	// END AUTOFIX
 	for(var/obj/machinery/power/rust_fuel_injector/I in connected_injectors)
-		dat += "<tr>"
-		dat += "<td>[I.id_tag]</td>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_control.dm:89: dat += "<tr>"
+		dat += {"<tr>
+			<td>[I.id_tag]</td>"}
+		// END AUTOFIX
 		if(I.cur_assembly)
 			dat += "<td><a href='?src=\ref[I];toggle_injecting=1;update_extern=\ref[src]'>\[[I.injecting ? "Halt injecting" : "Begin injecting"]\]</a></td>"
 		else
@@ -105,13 +112,20 @@
 			dat += "<td><a href='?src=\ref[src];set_next_stage=[I.id_tag]'>[proceeding_stages[I.id_tag]]</a></td>"
 		else
 			dat += "<td>None <a href='?src=\ref[src];set_next_stage=[I.id_tag]'>\[modify\]</a></td>"
-		dat += "<td><a href='?src=\ref[src];toggle_stage=[I.id_tag]'>\[[active_stages.Find(I.id_tag) ? "Deactivate stage" : "Activate stage "] \]</a></td>"
-		dat += "</tr>"
-	dat += "</table>"
 
-	dat += "<hr>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> "
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_control.dm:108: dat += "<td><a href='?src=\ref[src];toggle_stage=[I.id_tag]'>\[[active_stages.Find(I.id_tag) ? "Deactivate stage" : "Activate stage "] \]</a></td>"
+		dat += {"<td><a href='?src=\ref[src];toggle_stage=[I.id_tag]'>\[[active_stages.Find(I.id_tag) ? "Deactivate stage" : "Activate stage "] \]</a></td>
+			</tr>"}
+		// END AUTOFIX
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_control.dm:110: dat += "</table>"
+	dat += {"</table>
+		<hr>
+		<A href='?src=\ref[src];refresh=1'>Refresh</A>
+		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
+	// END AUTOFIX
 	user << browse(dat, "window=fuel_control;size=800x400")
 	user.set_machine(src)
 

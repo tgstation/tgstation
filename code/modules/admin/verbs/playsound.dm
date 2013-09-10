@@ -62,7 +62,7 @@ client/proc/space_asshole()
 	for(var/mob/M in world)
 		if(M.client)
 			if(M.client.midis)
-				M << 'space_asshole.ogg'
+				M << 'sound/music/space_asshole.ogg'
 
 
 client/proc/honk_theme()

@@ -3,7 +3,14 @@
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
-	src.traumatic_shock = src.getOxyLoss() + src.getToxLoss() + src.getFireLoss() + 1.2*src.getBruteLoss() + 2*src.getCloneLoss() + src.halloss
+	src.traumatic_shock = 			\
+	1	* src.getOxyLoss() + 		\
+	0.5	* src.getToxLoss() + 		\
+	2.5	* src.getFireLoss() + 		\
+	1.5	* src.getBruteLoss() + 		\
+	2	* src.getCloneLoss() + 		\
+	1	* src.halloss
+
 	if(reagents.has_reagent("alkysine"))
 		src.traumatic_shock -= 10
 	if(reagents.has_reagent("inaprovaline"))

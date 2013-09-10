@@ -117,12 +117,12 @@
 	src.brainmob.real_name = src.brainmob.name
 	src.brainmob.loc = src
 	src.brainmob.container = src
+	src.brainmob.robot_talk_understand = 1
 	src.brainmob.stat = 0
 	src.brainmob.silent = 0
 	src.brainmob.brain_op_stage = 4.0
 	dead_mob_list -= src.brainmob
-	//mob_list -= src.brainmob
-	living_mob_list |= src.brainmob
+
 	..()
 
 /obj/item/device/mmi/posibrain/attackby(var/obj/item/O as obj, var/mob/user as mob)

@@ -108,18 +108,26 @@
 		return
 	user.machine = src
 	var/dat = "<B>[src.name]</B><BR>"
-	dat += "Module heat level: [temperature] kelvin<br>"
-	dat += "Safeties set at 350k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>"
-	dat += "<hr>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\analysis_base.dm:111: dat += "Module heat level: [temperature] kelvin<br>"
+	dat += {"Module heat level: [temperature] kelvin<br>
+		Safeties set at 350k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>
+		<hr>"}
+	// END AUTOFIX
 	if(scan_process)
 		dat += "Scan in progress<br><br><br>"
 	else
 		dat += "[held_container ? "<A href='?src=\ref[src];eject_beaker=1'>Eject beaker</a>" : "No beaker inserted."]<br>"
 		//dat += "[fuel_container ? "<A href='?src=\ref[src];eject_fuel=1'>Eject fuel tank</a>" : "No fuel tank inserted."]<br>"
 		dat += "[held_container ? "<A href='?src=\ref[src];begin=1'>Begin scanning</a>" : ""]"
-	dat += "<hr>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</a><BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</a><BR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\analysis_base.dm:120: dat += "<hr>"
+	dat += {"<hr>
+		<A href='?src=\ref[src];refresh=1'>Refresh</a><BR>
+		<A href='?src=\ref[src];close=1'>Close</a><BR>"}
+	// END AUTOFIX
 	user << browse(dat, "window=anomaly;size=450x500")
 	onclose(user, "anomaly")
 

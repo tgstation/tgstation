@@ -266,7 +266,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	switch(newsize)
 		if(1)
 			size = 1
-			icon = 'rust.dmi'
+			icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 			icon_state = "emfield_s1"
 			pixel_x = 0
 			pixel_y = 0
@@ -274,7 +274,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			changed = 1
 		if(3)
 			size = 3
-			icon = '96x96.dmi'
+			icon = 'icons/effects/96x96.dmi'
 			icon_state = "emfield_s3"
 			pixel_x = -32
 			pixel_y = -32
@@ -282,7 +282,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			changed = 3
 		if(5)
 			size = 5
-			icon = '160x160.dmi'
+			icon = 'icons/effects/160x160.dmi'
 			icon_state = "emfield_s5"
 			pixel_x = -64
 			pixel_y = -64
@@ -290,7 +290,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			changed = 5
 		if(7)
 			size = 7
-			icon = '224x224.dmi'
+			icon = 'icons/effects/224x224.dmi'
 			icon_state = "emfield_s7"
 			pixel_x = -96
 			pixel_y = -96

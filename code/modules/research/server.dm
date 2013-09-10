@@ -93,7 +93,7 @@
 
 //Backup files to centcomm to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in world)
+	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
@@ -170,7 +170,7 @@
 	..()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
-	for(var/obj/machinery/r_n_d/server/S in world)
+	for(var/obj/machinery/r_n_d/server/S in machines)
 		switch(S.server_id)
 			if(-1)
 				continue
@@ -219,20 +219,20 @@
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S in world)
+		for(var/obj/machinery/r_n_d/server/S in machines)
 			if(S.server_id == text2num(href_list["access"]) || S.server_id == text2num(href_list["data"]) || S.server_id == text2num(href_list["transfer"]))
 				temp_server = S
 				break
 		if(href_list["access"])
 			screen = 1
-			for(var/obj/machinery/computer/rdconsole/C in world)
+			for(var/obj/machinery/computer/rdconsole/C in machines)
 				if(C.sync)
 					consoles += C
 		else if(href_list["data"])
 			screen = 2
 		else if(href_list["transfer"])
 			screen = 3
-			for(var/obj/machinery/r_n_d/server/S in world)
+			for(var/obj/machinery/r_n_d/server/S in machines)
 				if(S == src)
 					continue
 				servers += S
@@ -283,18 +283,26 @@
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
 
-			for(var/obj/machinery/r_n_d/server/S in world)
+			for(var/obj/machinery/r_n_d/server/S in machines)
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
-				dat += "[S.name] || "
-				dat += "<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | "
-				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:289: dat += "[S.name] || "
+				dat += {"[S.name] || 
+					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | 
+					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
+				// END AUTOFIX
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
-			dat += "[temp_server.name] Access Rights<BR><BR>"
-			dat += "Consoles with Upload Access<BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:296: dat += "[temp_server.name] Access Rights<BR><BR>"
+			dat += {"[temp_server.name] Access Rights<BR><BR>
+				Consoles with Upload Access<BR>"}
+			// END AUTOFIX
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
@@ -313,20 +321,36 @@
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(2) //Data Management menu
-			dat += "[temp_server.name] Data ManagementP<BR><BR>"
-			dat += "Known Technologies<BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:316: dat += "[temp_server.name] Data ManagementP<BR><BR>"
+			dat += {"[temp_server.name] Data ManagementP<BR><BR>
+				Known Technologies<BR>"}
+			// END AUTOFIX
 			for(var/datum/tech/T in temp_server.files.known_tech)
-				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:319: dat += "* [T.name] "
+				dat += {"* [T.name] 
+					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings"}
+				// END AUTOFIX
 			dat += "Known Designs<BR>"
 			for(var/datum/design/D in temp_server.files.known_designs)
-				dat += "* [D.name] "
-				dat += "<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:323: dat += "* [D.name] "
+				dat += {"* [D.name] 
+					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
+				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(3) //Server Data Transfer
-			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
-			dat += "Send Data to what server?<BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:328: dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
+			dat += {"[temp_server.name] Server to Server Transfer<BR><BR>
+				Send Data to what server?<BR>"}
+			// END AUTOFIX
 			for(var/obj/machinery/r_n_d/server/S in servers)
 				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"

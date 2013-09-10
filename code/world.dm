@@ -36,6 +36,7 @@
 		load_alienwhitelist()
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
+	appearance_loadbanfile()
 	LoadBans()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
@@ -231,14 +232,16 @@
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
+	s += {"<b>[station_name()]</b>"
+		(
+		<a href=\"http://\">" //Change this to wherever you want the hub to link to
+		Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version
+		</a>
+		)"}
+	// END AUTOFIX
 	var/list/features = list()
 
 	if(ticker)
@@ -307,7 +310,7 @@ proc/setup_database_connection()
 	if ( . )
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
-		world.log << "Error: [dbcon.ErrorMsg()]"
+		world.log << "Database Error: [dbcon.ErrorMsg()]"
 		failed_db_connections++		//If it failed, increase the failed connections counter.
 
 	return .
@@ -352,6 +355,7 @@ proc/setup_old_database_connection()
 		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_old_db_connections++		//If it failed, increase the failed connections counter.
+		world.log << dbcon.ErrorMsg()
 
 	return .
 

@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade/
 	name = "A borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
 	var/construction_time = 120
 	var/construction_cost = list("metal"=10000)
@@ -24,14 +24,15 @@
 
 /obj/item/borg/upgrade/reset/action(var/mob/living/silicon/robot/R)
 	R.uneq_all()
-	R.hands.icon_state = "nomod"
-	R.icon_state = "robot"
 	del(R.module)
 	R.module = null
 	R.modtype = "robot"
 	R.real_name = "Cyborg [R.ident]"
 	R.name = R.real_name
 	R.nopush = 0
+	R.hands.icon_state = "nomod"
+	R.base_icon = "robot"
+	R.icon_state = "robot"
 	R.updateicon()
 
 	return 1

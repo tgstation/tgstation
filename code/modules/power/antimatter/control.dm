@@ -269,31 +269,34 @@
 	user.set_machine(src)
 
 	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
-	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
-	dat += "<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>"
 
-	dat += "Stability: [stability]%<BR>"
-	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
-	dat += "Cores: [linked_cores.len]<BR><BR>"
-	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
-	dat += "Last Produced: [stored_power]<BR>"
-
-	dat += "Fuel: "
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\antimatter\control.dm:272: dat += "AntiMatter Control Panel<BR>"
+	dat += {"AntiMatter Control Panel<BR>
+		<A href='?src=\ref[src];close=1'>Close</A><BR>
+		<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>
+		<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>
+		Status: [(active?"Injecting":"Standby")] <BR>
+		<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>
+		Stability: [stability]%<BR>
+		Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability chec
+		Cores: [linked_cores.len]<BR><BR>
+		-Current Efficiency: [reported_core_efficiency]<BR>
+		-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>
+		Last Produced: [stored_power]<BR>
+		Fuel: "}
+	// END AUTOFIX
 	if(!fueljar)
 		dat += "<BR>No fuel receptacle detected."
 	else
-		dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
-		dat += "- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>"
 
-		dat += "- Injecting: [fuel_injection] units<BR>"
-		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
-
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\antimatter\control.dm:290: dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
+		dat += {"<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>
+			- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>
+			- Injecting: [fuel_injection] units<BR>
+			- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"}
+		// END AUTOFIX
 	user << browse(dat, "window=AMcontrol;size=420x500")
 	onclose(user, "AMcontrol")
 	return

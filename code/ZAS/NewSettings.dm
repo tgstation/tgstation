@@ -148,6 +148,19 @@ var/global/ZAS_Settings/zas_settings = new
 	desc = "The smallest temperature difference which will cause heat to travel through doors."
 	valtype=ZAS_TYPE_NUMERIC
 
+// N3X15 - Ice is disabled by default, per Pomf's request.
+/datum/ZAS_Setting/ice_formation
+	name="Airflow - Enable Ice Formation"
+	value = 0
+	desc="1=yes, 0=no - Slippin' and slidin' when pressure &gt; 10kPa and temperature &lt; 273K"
+	valtype=ZAS_TYPE_BOOLEAN
+
+/datum/ZAS_Setting/space_isnt_cold
+	name="Airflow - Disable Cold Space"
+	value = 0 // Pomf requested
+	desc="1=yes, 0=no - Disables space behaving as being very fucking cold (0K)."
+	valtype=ZAS_TYPE_BOOLEAN
+
 
 ///////////////////////////////////////
 // PLASMA SHIT
@@ -377,8 +390,12 @@ a { color: white; }
 	<dl>"}
 	for(var/id in src.settings)
 		var/datum/ZAS_Setting/s = src.settings[id]
-		dat += "<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>"
-		dat += "<dd>[s.desc]</i></dd>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\ZAS\NewSettings.dm:393: dat += "<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>"
+		dat += {"<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>
+			<dd>[s.desc]</i></dd>"}
+		// END AUTOFIX
 	dat += "</dl></body></html>"
 	user << browse(dat,"window=settings")
 

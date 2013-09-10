@@ -6,7 +6,6 @@
 	var/b_type = "A+"
 	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
-	var/flavor //Stores flavor text of somebody absorbed
 
 /datum/dna/proc/check_integrity(var/mob/living/carbon/human/character)
 	if(character)
@@ -292,6 +291,14 @@
 /proc/ismuton(var/block,var/mob/M)
 	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
 
+/proc/togglemut(mob/M as mob, var/block)
+	if(!M)	return
+	var/newdna
+	M.dna.check_integrity()
+	newdna = setblock(M.dna.struc_enzymes,block,toggledblock(getblock(M.dna.struc_enzymes,block,3)),3)
+	M.dna.struc_enzymes = newdna
+	return
+
 /proc/randmutb(mob/M as mob)
 	if(!M)	return
 	var/num
@@ -563,7 +570,13 @@
 			sleep(48)
 			del(animation)
 
-		var/mob/living/carbon/monkey/O = new(src)
+
+		var/mob/living/carbon/monkey/O = null
+		if(H.species.primitive)
+			O = new H.species.primitive(src)
+		else
+			H.gib() //Trying to change the species of a creature with no primitive var set is messy.
+			return
 
 		if(M)
 			if (M.dna)
@@ -631,6 +644,9 @@
 			del(animation)
 
 		var/mob/living/carbon/human/O = new( src )
+		if(Mo.greaterform)
+			O.set_species(Mo.greaterform)
+
 		if (isblockon(getblock(M.dna.uni_identity, 11,3),11))
 			O.gender = FEMALE
 		else

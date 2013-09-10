@@ -92,6 +92,7 @@ PROBABILITY TRAITORCHAN 0
 PROBABILITY EXTEND-A-TRAITORMONGOUS 0
 PROBABILITY EPIDEMIC 1
 PROBABILITY MEME 0
+PROBABILITY HEIST 0
 
 ## Hash out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
@@ -205,11 +206,27 @@ GATEWAY_DELAY 18000
 ## Uncomment to restrict non-admins from using humanoid alien races
 USEALIENWHITELIST
 
-## Location of the nudge.py script
-NUDGE_SCRIPT_PATH nudge.py
-
 ## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
-ALIEN_PLAYER_RATIO 0.2
+#ALIEN_PLAYER_RATIO 0.2
 
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
+
+## Password used for authorizing ircbot and other external tools.
+#COMMS_PASSWORD
+
+## Uncomment to enable sending data to the IRC bot.
+#USE_IRC_BOT
+
+## Host where the IRC bot is hosted.  Port 45678 needs to be open.
+#IRC_BOT_HOST localhost
+
+## IRC channel to send information to.  Leave blank to disable.
+#MAIN_IRC #main
+
+## IRC channel to send adminhelps to.  Leave blank to disable adminhelps-to-irc.
+#ADMIN_IRC #admin
+
+## Path to the python2 executable on the system.  Leave blank for default.
+## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
+#PYTHON_PATH

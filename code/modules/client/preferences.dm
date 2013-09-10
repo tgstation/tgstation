@@ -14,7 +14,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"space ninja" = "true",								 // 10
+	"ninja" = "true",									 // 10
+	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
+	"diona" = 0,                                         // 12
 )
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -64,6 +66,7 @@ datum/preferences
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
 	var/species = "Human"
+	var/language = "None"				//Secondary language
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -98,7 +101,8 @@ datum/preferences
 	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""
-	var/disabilities = 0
+	var/gen_record = ""
+	var/disabilities = 0 // NOW A BITFIELD, SEE ABOVE
 
 	var/nanotrasen_relation = "Neutral"
 
@@ -178,29 +182,48 @@ datum/preferences
 
 
 		var/HTML = "<body>"
-		HTML += "<b>Select your Skills</b><br>"
-		HTML += "Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preference=skills;preconfigured=1;\">Use preconfigured skillset</a><br>"
-		HTML += "<table>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:185: HTML += "<b>Select your Skills</b><br>"
+		HTML += {"<b>Select your Skills</b><br>
+			Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>
+			<a href=\"byond://?src=\ref[user];preference=skills;preconfigured=1;\">Use preconfigured skillset</a><br>
+			<table>"}
+		// END AUTOFIX
 		for(var/V in SKILLS)
-			HTML += "<tr><th colspan = 5><b>[V]</b>"
-			HTML += "</th></tr>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:190: HTML += "<tr><th colspan = 5><b>[V]</b>"
+			HTML += {"<tr><th colspan = 5><b>[V]</b>
+				</th></tr>"}
+			// END AUTOFIX
 			for(var/datum/skill/S in SKILLS[V])
 				var/level = skills[S.ID]
-				HTML += "<tr style='text-align:left;'>"
-				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skillinfo=\ref[S]'>[S.name]</a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:194: HTML += "<tr style='text-align:left;'>"
+				HTML += {"<tr style='text-align:left;'>
+					<th><a href='byond://?src=\ref[user];preference=skills;skillinfo=\ref[S]'>[S.name]</a></th>
+					<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"}
+				// END AUTOFIX
 				// secondary skills don't have an amateur level
 				if(S.secondary)
 					HTML += "<th></th>"
 				else
 					HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>"
-				HTML += "</tr>"
-		HTML += "</table>"
-		HTML += "<a href=\"byond://?src=\ref[user];preference=skills;cancel=1;\">\[Done\]</a>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:202: HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
+				HTML += {"<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>
+					<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>
+					</tr>"}
+				// END AUTOFIX
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:205: HTML += "</table>"
+		HTML += {"</table>
+			<a href=\"byond://?src=\ref[user];preference=skills;cancel=1;\">\[Done\]</a>"}
+		// END AUTOFIX
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=show_skills;size=600x800")
 		return
@@ -213,50 +236,67 @@ datum/preferences
 		var/dat = "<html><body><center>"
 
 		if(path)
-			dat += "<center>"
-			dat += "Slot <b>[slot_name]</b> - "
-			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
-			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
-			dat += "</center>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:220: dat += "<center>"
+			dat += {"<center>
+				Slot <b>[slot_name]</b> -
+				<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> -
+				<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> -
+				<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>
+				</center>"}
+			// END AUTOFIX
 		else
 			dat += "Please create an account to save your preferences."
 
-		dat += "</center><hr><table><tr><td width='340px' height='320px'>"
 
-		dat += "<b>Name:</b> "
-		dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
-		dat += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
-		dat += "(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-		dat += "<br>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:230: dat += "</center><hr><table><tr><td width='340px' height='320px'>"
+		dat += {"</center><hr><table><tr><td width='340px' height='320px'>
+			<b>Name:</b> "}
+		// END AUTOFIX
+		if(appearance_isbanned(user)) dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 
-		dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-		dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
-
-		dat += "<br>"
-		dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
-		dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
-		dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
-		dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>"
-		dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:234: dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
+		dat += {"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>
+			(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>)
+			(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)
+			<br>
+			<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>
+			<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>
+			<br>
+			<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>
+			<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>
+			<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>
+			<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
+			<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>"}
+		// END AUTOFIX
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
-		dat += "<br><b>Occupation Choices</b><br>"
-		dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
 
-		dat += "<br><table><tr><td><b>Body</b> "
-		dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
-		dat += "<br>"
-		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
-		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:252: dat += "<br><b>Occupation Choices</b><br>"
+		dat += {"<br><b>Occupation Choices</b><br>
+			\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>
+			<br><table><tr><td><b>Body</b>
+			(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)
+			<br>
+			Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>
+			Secondary Language:<br><a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>
+			Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>
+			Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"}
+		// END AUTOFIX
 		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
-		dat += "Needs Glasses: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
-		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
 
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:264: dat += "<br><b>Handicaps</b><br>"
+		dat += {"<br><b>Handicaps</b><br>
+			\t<a href='byond://?src=\ref[user];task=input;preference=disabilities'><b>\[Set Disabilities\]</b></a><br>
+			\tLimbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"}
+		// END AUTOFIX
 		//display limbs below
 		var/ind = 0
 		for(var/name in organ_data)
@@ -301,22 +341,25 @@ datum/preferences
 		else
 			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
 
-		dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
-		dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
-
-		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
-
-		dat += "</td><td width='300px' height='300px'>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:312: dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+		dat += {"Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>
+			Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>
+			</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>
+			</td><td width='300px' height='300px'>"}
+		// END AUTOFIX
 		if(jobban_isbanned(user, "Records"))
 			dat += "<b>You are banned from using character records.</b><br>"
 		else
 			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
 
-		dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
 
-		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:325: dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
+		dat += {"\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>
+			<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"}
+		// END AUTOFIX
 		if(lentext(flavor_text) <= 40)
 			if(!lentext(flavor_text))
 				dat += "\[...\]"
@@ -324,20 +367,20 @@ datum/preferences
 				dat += "[flavor_text]"
 		else
 			dat += "[copytext(flavor_text, 1, 37)]...<br>"
-		dat += "<br>"
 
-		dat += "<br><b>Hair</b><br>"
-		dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> "
-		dat += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
-
-		dat += "<br><b>Facial</b><br>"
-		dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> "
-		dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
-
-		dat += "<br><b>Eyes</b><br>"
-		dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font>"
-
-		dat += "<br><br>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:335: dat += "<br>"
+		dat += {"<br>
+			<br><b>Hair</b><br>
+			<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font>
+			Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>
+			<br><b>Facial</b><br>
+			<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font>
+			Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>
+			<br><b>Eyes</b><br>
+			<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font>
+			<br><br>"}
+		// END AUTOFIX
 		if(jobban_isbanned(user, "Syndicate"))
 			dat += "<b>You are banned from antagonist roles.</b>"
 			src.be_special = 0
@@ -356,12 +399,19 @@ datum/preferences
 		dat += "</td></tr></table><hr><center>"
 
 		if(!IsGuestKey(user.key))
-			dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-			dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
 
-		dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
-		dat += "</center></body></html>"
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:367: dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
+			dat += {"<a href='?_src_=prefs;preference=load'>Undo</a> -
+				<a href='?_src_=prefs;preference=save'>Save Setup</a> - "}
+			// END AUTOFIX
 
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:370: dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
+		dat += {"<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>
+			</center></body></html>"}
+		// END AUTOFIX
 		user << browse(dat, "window=preferences;size=560x580")
 
 	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer", "AI"), width = 550, height = 550)
@@ -375,11 +425,15 @@ datum/preferences
 
 
 		var/HTML = "<body>"
-		HTML += "<tt><center>"
-		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
-		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
-		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:386: HTML += "<tt><center>"
+		HTML += {"<tt><center>
+			<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>
+			<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>
+			<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>
+			<table width='100%' cellpadding='1' cellspacing='0'>"}
+		// END AUTOFIX
 		var/index = -1
 
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
@@ -415,10 +469,12 @@ datum/preferences
 			else
 				HTML += "[rank]"
 
-			HTML += "</td><td width='40%'>"
 
-			HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
-
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:426: HTML += "</td><td width='40%'>"
+			HTML += {"</td><td width='40%'>
+				<a href='?_src_=prefs;preference=job;task=input;text=[rank]'>"}
+			// END AUTOFIX
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
 					HTML += " <font color=green>\[Yes]</font>"
@@ -436,59 +492,83 @@ datum/preferences
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
 			if(job.alt_titles)
-				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
-		HTML += "</td'></tr></table>"
 
-		HTML += "</center></table>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:450: HTML += "</td'></tr></table>"
+		HTML += {"</td'></tr></table>
+			</center></table>"}
+		// END AUTOFIX
 		switch(alternate_option)
 			if(GET_RANDOM_JOB)
 				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
 			if(BE_ASSISTANT)
-				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preferences unavailable</font></a></u></center><br>"
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
 			if(RETURN_TO_LOBBY)
-				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preferences unavailable</font></a></u></center><br>"
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
-		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
-		HTML += "</tt>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:462: HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
+		HTML += {"<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>
+			</tt>"}
+		// END AUTOFIX
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
 		return
 
+	proc/ShowDisabilityState(mob/user,flag,label)
+		if(flag==DISABILITY_FLAG_FAT && species!="Human")
+			return "<li><i>[species] cannot be fat.</i></li>"
+		return "<li><b>[label]:</b> <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "Yes" : "No"]</a></li>"
+
 	proc/SetDisabilities(mob/user)
 		var/HTML = "<body>"
-		HTML += "<tt><center>"
-		HTML += "<b>Choose disabilities</b><br>"
 
-		HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
-		HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
-		HTML += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
-		HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
-		HTML += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-		HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:474: HTML += "<tt><center>"
+		HTML += {"<tt><center>
+			<b>Choose disabilities</b><ul>"}
+		// END AUTOFIX
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_NEARSIGHTED,"Needs Glasses")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_FAT,"Obese")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_EPILEPTIC,"Seizures")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_DEAF,"Deaf")
 
-		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
-		HTML += "</center></tt>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:481: HTML += "</ul>"
+		HTML += {"</ul>
+			<a href=\"?_src_=prefs;task=close;preference=disabilities\">\[Done\]</a>
+			<a href=\"?_src_=prefs;task=reset;preference=disabilities\">\[Reset\]</a>
+			</center></tt>"}
+		// END AUTOFIX
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=disabil;size=350x300")
 		return
 
 	proc/SetRecords(mob/user)
 		var/HTML = "<body>"
-		HTML += "<tt><center>"
-		HTML += "<b>Set Character Records</b><br>"
 
-		HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:492: HTML += "<tt><center>"
+		HTML += {"<tt><center>
+			<b>Set Character Records</b><br>
+			<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"}
+		// END AUTOFIX
 		if(lentext(med_record) <= 40)
 			HTML += "[med_record]"
 		else
 			HTML += "[copytext(med_record, 1, 37)]..."
+
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
+
+		if(lentext(gen_record) <= 40)
+			HTML += "[gen_record]"
+		else
+			HTML += "[copytext(gen_record, 1, 37)]..."
 
 		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
 
@@ -497,10 +577,13 @@ datum/preferences
 		else
 			HTML += "[copytext(sec_record, 1, 37)]...<br>"
 
-		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
-		HTML += "</center></tt>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:516: HTML += "<br>"
+		HTML += {"<br>
+			<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>
+			</center></tt>"}
+		// END AUTOFIX
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=records;size=350x300")
 		return
@@ -670,6 +753,24 @@ datum/preferences
 				else
 					SetChoices(user)
 			return 1
+		else if(href_list["preference"] == "disabilities")
+
+			switch(href_list["task"])
+				if("close")
+					user << browse(null, "window=disabil")
+					ShowChoices(user)
+				if("reset")
+					disabilities=0
+					SetDisabilities(user)
+				if("input")
+					var/dflag=text2num(href_list["disability"])
+					if(dflag >= 0)
+						if(!(dflag==DISABILITY_FLAG_FAT && species!="Human"))
+							disabilities ^= text2num(href_list["disability"]) //MAGIC
+					SetDisabilities(user)
+				else
+					SetDisabilities(user)
+			return 1
 		else if(href_list["preference"] == "skills")
 			if(href_list["cancel"])
 				user << browse(null, "window=show_skills")
@@ -730,6 +831,15 @@ datum/preferences
 
 					sec_record = secmsg
 					SetRecords(user)
+			if(href_list["task"] == "gen_record")
+				var/genmsg = input(usr,"Set your employment notes here.","Employment Records",html_decode(gen_record)) as message
+
+				if(genmsg != null)
+					genmsg = copytext(genmsg, 1, MAX_PAPER_MESSAGE_LEN)
+					genmsg = html_encode(genmsg)
+
+					gen_record = genmsg
+					SetRecords(user)
 
 		switch(href_list["task"])
 			if("random")
@@ -743,13 +853,13 @@ datum/preferences
 						g_hair = rand(0,255)
 						b_hair = rand(0,255)
 					if("h_style")
-						h_style = random_hair_style(gender)
+						h_style = random_hair_style(gender, species)
 					if("facial")
 						r_facial = rand(0,255)
 						g_facial = rand(0,255)
 						b_facial = rand(0,255)
 					if("f_style")
-						f_style = random_facial_hair_style(gender)
+						f_style = random_facial_hair_style(gender, species)
 					if("underwear")
 						underwear = rand(1,underwear_m.len)
 						ShowChoices(user)
@@ -779,31 +889,21 @@ datum/preferences
 						if(new_age)
 							age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 					if("species")
+
 						var/list/new_species = list("Human")
 						var/prev_species = species
 						var/whitelisted = 0
+
 						if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-							if(is_alien_whitelisted(user, "Soghun")) //Check for Unathi and admins
-								new_species += "Unathi"
-								whitelisted = 1
-							if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran and admins
-								new_species += "Tajaran"
-								whitelisted = 1
-							if(is_alien_whitelisted(user, "Skrell")) //Check for Skrell and admins
-								new_species += "Skrell"
-								whitelisted = 1
-							if(is_alien_whitelisted(user, "Vox")) //Check for Skrell and admins
-								new_species += "Vox"
-								whitelisted = 1
-
-
+							for(var/S in whitelisted_species)
+								if(is_alien_whitelisted(user,S))
+									new_species += S
+									whitelisted = 1
 							if(!whitelisted)
 								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
 						else //Not using the whitelist? Aliens for everyone!
-							new_species += "Tajaran"
-							new_species += "Unathi"
-							new_species += "Skrell"
-							new_species += "Vox"
+							new_species = whitelisted_species
+
 						species = input("Please select a species", "Character Generation", null) in new_species
 
 						if(prev_species != species)
@@ -851,6 +951,26 @@ datum/preferences
 
 							s_tone = 0
 
+					if("language")
+						var/languages_available
+						var/list/new_languages = list("None")
+
+						if(config.usealienwhitelist)
+							for(var/L in all_languages)
+								var/datum/language/lang = all_languages[L]
+								if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))))
+									new_languages += lang
+									languages_available = 1
+
+							if(!(languages_available))
+								alert(user, "There are not currently any available secondary languages.")
+						else
+							for(var/L in all_languages)
+								var/datum/language/lang = all_languages[L]
+								if(!(lang.flags & RESTRICTED))
+									new_languages += lang
+
+						language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 					if("metadata")
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
@@ -957,15 +1077,6 @@ datum/preferences
 
 							flavor_text = msg
 
-					if("disabilities")
-						if(text2num(href_list["disabilities"]) >= -1)
-							if(text2num(href_list["disabilities"]) >= 0)
-								disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
-							SetDisabilities(user)
-							return
-						else
-							user << browse(null, "window=disabil")
-
 					if("limbs")
 						var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
 						if(!limb_name) return
@@ -1027,9 +1138,6 @@ datum/preferences
 							gender = FEMALE
 						else
 							gender = MALE
-
-					if("disabilities")				//please note: current code only allows nearsightedness as a disability
-						disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
@@ -1104,11 +1212,11 @@ datum/preferences
 		character.name = character.real_name
 		if(character.dna)
 			character.dna.real_name = character.real_name
-			character.dna.flavor = character.flavor_text
 
 		character.flavor_text = flavor_text
 		character.med_record = med_record
 		character.sec_record = sec_record
+		character.gen_record = gen_record
 
 		character.gender = gender
 		character.age = age
@@ -1146,6 +1254,16 @@ datum/preferences
 				O.destspawn = 1
 			else if(status == "cyborg")
 				O.status |= ORGAN_ROBOT
+
+		if(disabilities & DISABILITY_FLAG_FAT && species=="Human")//character.species.flags & CAN_BE_FAT)
+			character.mutations += FAT
+		if(disabilities & DISABILITY_FLAG_NEARSIGHTED)
+			character.disabilities|=NEARSIGHTED
+		if(disabilities & DISABILITY_FLAG_EPILEPTIC)
+			character.disabilities|=EPILEPSY
+		if(disabilities & DISABILITY_FLAG_DEAF)
+			character.sdisabilities|=DEAF
+
 		if(underwear > underwear_m.len || underwear < 1)
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
 		character.underwear = underwear
@@ -1176,9 +1294,13 @@ datum/preferences
 					name = "<b>[name]</b>"
 				dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 
-		dat += "<hr>"
-		dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
-		dat += "</center></tt>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:1228: dat += "<hr>"
+		dat += {"<hr>
+			<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>
+			</center></tt>"}
+		// END AUTOFIX
 		user << browse(dat, "window=saves;size=300x390")
 
 	proc/close_load_dialog(mob/user)

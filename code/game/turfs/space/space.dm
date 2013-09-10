@@ -68,6 +68,7 @@
 	if ((!(A) || src != A.loc))	return
 
 	inertial_drift(A)
+
 	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!

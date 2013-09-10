@@ -50,6 +50,7 @@ BLIND     // can't see anything
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
+	var/pickpocket = 0 //Master pickpocket?
 
 /obj/item/clothing/gloves/examine()
 	set src in usr
@@ -167,8 +168,12 @@ BLIND     // can't see anything
 		hastie = I
 		I.loc = src
 		user << "<span class='notice'>You attach [I] to [src].</span>"
+
 		if (istype(hastie,/obj/item/clothing/tie/holster))
 			verbs += /obj/item/clothing/under/proc/holster
+
+		if (istype(hastie,/obj/item/clothing/tie/storage))
+			verbs += /obj/item/clothing/under/proc/storage
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
@@ -230,8 +235,15 @@ BLIND     // can't see anything
 	if(hastie)
 		usr.put_in_hands(hastie)
 		hastie = null
+
 		if (istype(hastie,/obj/item/clothing/tie/holster))
 			verbs -= /obj/item/clothing/under/proc/holster
+
+		if (istype(hastie,/obj/item/clothing/tie/storage))
+			verbs -= /obj/item/clothing/under/proc/storage
+			var/obj/item/clothing/tie/storage/W = hastie
+			if (W.hold)
+				W.hold.loc = hastie
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
@@ -277,3 +289,23 @@ BLIND     // can't see anything
 				"\blue You draw \the [H.holstered], pointing it at the ground.")
 			usr.put_in_hands(H.holstered)
 			H.holstered = null
+
+/obj/item/clothing/under/proc/storage()
+	set name = "Look in storage"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
+
+	if (!hastie || !istype(hastie,/obj/item/clothing/tie/storage))
+		usr << "\red You need something to store items in for that!"
+		return
+	var/obj/item/clothing/tie/storage/W = hastie
+
+	if (!istype(W.hold))
+		return
+
+	W.hold.loc = usr
+	W.hold.attack_hand(usr)
+
+

@@ -5,7 +5,7 @@
 	var/mob/living/carbon/occupant
 	var/locked
 	name = "Body Scanner"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
@@ -167,7 +167,7 @@
 	var/delete
 	var/temphtml
 	name = "Body Scanner Console"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scannerconsole"
 	density = 1
 	anchored = 1
@@ -236,7 +236,7 @@
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
-					if(occupant.virus2)
+					if(occupant.virus2.len)
 						dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
 					dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
@@ -266,14 +266,17 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					dat += "<HR><table border='1'>"
-					dat += "<tr>"
-					dat += "<th>Organ</th>"
-					dat += "<th>Burn Damage</th>"
-					dat += "<th>Brute Damage</th>"
-					dat += "<th>Other Wounds</th>"
-					dat += "</tr>"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:269: dat += "<HR><table border='1'>"
+					dat += {"<HR><table border='1'>
+						<tr>
+						<th>Organ</th>
+						<th>Burn Damage</th>
+						<th>Brute Damage</th>
+						<th>Other Wounds</th>
+						</tr>"}
+					// END AUTOFIX
 					for(var/datum/organ/external/e in occupant.organs)
 						dat += "<tr>"
 						var/AN = ""
@@ -285,10 +288,10 @@
 						var/internal_bleeding = ""
 						var/lung_ruptured = ""
 						for(var/datum/wound/W in e.wounds) if(W.internal)
-							internal_bleeding = "<br>Internal Bleeding"
+							internal_bleeding = "<br>Internal bleeding"
 							break
 						if(istype(e, /datum/organ/external/chest) && occupant.is_lung_ruptured())
-							lung_ruptured = "Lung Ruptured:"
+							lung_ruptured = "Lung ruptured:"
 						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
 						if(e.status & ORGAN_BLEEDING)
@@ -298,7 +301,7 @@
 						if(e.open)
 							open = "Open:"
 						if(e.implants.len)
-							imp = "Implanted:"
+							imp = "Unknown body present:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
 						if(!(e.status & ORGAN_DESTROYED))
@@ -308,9 +311,13 @@
 						dat += "</tr>"
 					for(var/organ_name in occupant.internal_organs)
 						var/datum/organ/internal/i = occupant.internal_organs[organ_name]
-						dat += "<tr>"
-						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>"
-						dat += "</tr>"
+
+						// AUTOFIXED BY fix_string_idiocy.py
+						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:311: dat += "<tr>"
+						dat += {"<tr>
+							<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>
+							</tr>"}
+						// END AUTOFIX
 					dat += "</table>"
 			else
 				dat += "\The [src] is empty."

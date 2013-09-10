@@ -9,6 +9,7 @@
  * 		Wirecutters
  * 		Welding Tool
  * 		Crowbar
+ * 		Revolver Conversion Kit(made sense)
  */
 
 /*
@@ -449,14 +450,36 @@
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
 			if(user != M)
-				user.visible_message("\red You patch some dents on \the [M]'s [S.display_name]",\
-				"\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
+				user.visible_message("\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
+				"\red You patch some dents on \the [M]'s [S.display_name]",\
 				"You hear a welder.")
 			else
-				user.visible_message("\red You patch some dents on your [S.display_name]",\
-				"\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
+				user.visible_message("\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
+				"\red You patch some dents on your [S.display_name]",\
 				"You hear a welder.")
 		else
 			user << "Nothing to fix!"
 	else
 		return ..()
+
+/obj/item/weapon/conversion_kit
+	name = "\improper Revolver Conversion Kit"
+	desc = "A professional conversion kit used to convert any knock off revolver into the real deal capable of shooting lethal .357 rounds without the possibility of catastrophic failure"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "kit"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 2.0
+	origin_tech = "combat=2"
+	var/open = 0
+
+	New()
+		..()
+		update_icon()
+
+	update_icon()
+		icon_state = "[initial(icon_state)]_[open]"
+
+	attack_self(mob/user as mob)
+		open = !open
+		user << "\blue You [open?"open" : "close"] the conversion kit."
+		update_icon()

@@ -42,7 +42,7 @@ var/global/list/uneatable = list(
 		spawn(temp)
 			del(src)
 	..()
-	for(var/obj/machinery/singularity_beacon/singubeacon in world)
+	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break

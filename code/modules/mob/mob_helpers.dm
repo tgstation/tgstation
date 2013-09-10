@@ -90,6 +90,11 @@
 		return 1
 	return 0
 
+/proc/isAIEye(A)
+	if(istype(A, /mob/camera/aiEye))
+		return 1
+	return 0
+
 /proc/ispAI(A)
 	if(istype(A, /mob/living/silicon/pai))
 		return 1

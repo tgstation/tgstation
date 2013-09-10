@@ -53,7 +53,7 @@
 
 /obj/item/clothing/mask/breath/vox/mob_can_equip(M as mob, slot)
 	var/mob/living/carbon/human/V = M
-	if(V.dna.mutantrace != "vox")
+	if(V.species.name != "Vox")
 		V << "<span class='warning'>This clearly isn't designed for your species!</span>"
 		return 0
 

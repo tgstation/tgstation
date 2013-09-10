@@ -96,7 +96,7 @@
 			msg+="!"
 
 	var/list/listening = viewers(src)
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))

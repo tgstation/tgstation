@@ -96,6 +96,29 @@
 		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
+/obj/item/weapon/tank/jetpack/nitrogen
+	name = "Jetpack (Nitrogen)"
+	desc = "A tank of compressed nitrogen for use as propulsion in zero-gravity areas. Use with caution."
+	icon_state = "jetpack-red"
+	item_state = "jetpack-red"
+
+	New()
+		..()
+		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
+		src.ion_trail.set_up(src)
+		//src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.update_values()
+		return
+
+	examine()
+		set src in usr
+		..()
+		if(air_contents.nitrogen < 10)
+			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of nitrogen!</B>")
+			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
+		return
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "Jetpack (Carbon Dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."

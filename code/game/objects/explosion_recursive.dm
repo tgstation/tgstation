@@ -1,4 +1,7 @@
 /client/proc/kaboom()
+
+	set category = "Debug"
+
 	var/power = input(src, "power?", "power?") as num
 	var/turf/T = get_turf(src.mob)
 	explosion_rec(T, power)

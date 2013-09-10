@@ -11,6 +11,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/uses 						// Numbers of crystals
 	// List of items not to shove in their hands.
 	var/list/purchase_log = list()
+	var/show_description = null
+	var/active = 0
+	var/job = null
 
 /obj/item/device/uplink/New()
 	..()
@@ -18,14 +21,18 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	uses = ticker.mode.uplink_uses
 
 //Let's build a menu!
-/obj/item/device/uplink/proc/generate_menu()
-
+/obj/item/device/uplink/proc/generate_menu(mob/user as mob)
+	if(!job)
+		job = user.job
 	var/dat = "<B>[src.welcome]</B><BR>"
-	dat += "Tele-Crystals left: [src.uses]<BR>"
-	dat += "<HR>"
-	dat += "<B>Request item:</B><BR>"
-	dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\uplinks.dm:26: dat += "Tele-Crystals left: [src.uses]<BR>"
+	dat += {"Tele-Crystals left: [src.uses]<BR>
+		<HR>
+		<B>Request item:</B><BR>
+		<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"}
+	// END AUTOFIX
 	var/list/buyable_items = get_uplink_items()
 
 	// Loop through categories
@@ -40,13 +47,27 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		// Loop through items in category
 		for(var/datum/uplink_item/item in buyable_items[category])
 			i++
+
 			var/cost_text = ""
+			var/desc = "[item.desc]"
+			if(item.job)
+				if(item.job != job)
+					//world.log << "Skipping job item that doesn't match"
+					continue
+				else
+					//world.log << "Found matching job item"
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
-				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text]<BR>"
+				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text] "
 			else
-				dat += "<font color='grey'><i>[item.name] [cost_text]</i></font><BR>"
+				dat += "<font color='grey'><i>[item.name] [cost_text] </i></font>"
+			if(item.desc)
+				if(show_description == 2)
+					dat += "<A href='byond://?src=\ref[src];show_desc=1'><font size=2>\[-\]</font></A><BR><font size=2>[desc]</font>"
+				else
+					dat += "<A href='byond://?src=\ref[src];show_desc=2'><font size=2>\[?\]</font></A>"
+			dat += "<BR>"
 
 		// Break up the categories, if it isn't the last.
 		if(buyable_items.len != index)
@@ -59,9 +80,13 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/interact(mob/user as mob)
 
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
-	dat += src.generate_menu()
-	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
-	dat += "</font></body>"
+	dat += src.generate_menu(user)
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\uplinks.dm:72: dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
+	dat += {"<A href='byond://?src=\ref[src];lock=1'>Lock</a>
+		</font></body>"}
+	// END AUTOFIX
 	user << browse(dat, "window=hidden")
 	onclose(user, "hidden")
 	return
@@ -69,6 +94,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/Topic(href, href_list)
 	..()
+	if(!active)
+		return
+
 	if (href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
@@ -93,6 +121,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				log_game(textalt)
 				admin_log.Add(textalt)
 
+	else if(href_list["show_desc"])
+		show_description = text2num(href_list["show_desc"])
+		interact(usr)
 
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.
 /* How to create an uplink in 3 easy steps!
@@ -109,7 +140,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/hidden
 	name = "Hidden Uplink."
 	desc = "There is something wrong if you're examining this."
-	var/active = 0
 
 /obj/item/device/uplink/hidden/Topic(href, href_list)
 	..()
@@ -177,6 +207,3 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 10
-
-
-

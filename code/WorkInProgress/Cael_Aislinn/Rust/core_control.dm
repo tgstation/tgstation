@@ -42,30 +42,38 @@
 			cur_viewed_device = null
 
 		if(cur_viewed_device)
-			dat += "<b>Device tag:</b> [cur_viewed_device.id_tag ? cur_viewed_device.id_tag : "UNSET"]<br>"
-			dat += "<font color=blue>Device [cur_viewed_device.owned_field ? "activated" : "deactivated"].</font><br>"
-			dat += "<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];toggle_active=1'>\[Bring field [cur_viewed_device.owned_field ? "offline" : "online"]\]</a><br>"
-			dat += "<b>Device [cur_viewed_device.anchored ? "secured" : "unsecured"].</b><br>"
-			dat += "<hr>"
-			dat += "<b>Field encumbrance:</b> [cur_viewed_device.owned_field ? 0 : "NA"]<br>"
-			dat += "<b>Field strength:</b> [cur_viewed_device.field_strength] Wm^3<br>"
-			dat += "<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-1000'>\[----\]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-100'>\[--- \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-10'>\[--  \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-1'>\[-   \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=1'>\[+   \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=10'>\[++  \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=100'>\[+++ \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=1000'>\[++++\]</a><br>"
-			dat += "<b>Field frequency:</b> [cur_viewed_device.field_frequency] MHz<br>"
-			dat += "<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-1000'>\[----\]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-100'>\[--- \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-10'>\[--  \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-1'>\[-   \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=1'>\[+   \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=10'>\[++  \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=100'>\[+++ \]</a> \
-			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=1000'>\[++++\]</a><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm:45: dat += "<b>Device tag:</b> [cur_viewed_device.id_tag ? cur_viewed_device.id_tag : "UNSET"]<br>"
+			dat += {"<b>Device tag:</b> [cur_viewed_device.id_tag ? cur_viewed_device.id_tag : "UNSET"]<br>
+				<font color=blue>Device [cur_viewed_device.owned_field ? "activated" : "deactivated"].</font><br>
+				<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];toggle_active=1'>\[Bring field [cur_viewed_device.owned_field ? "offline" : "online"]\]</a><br>
+				<b>Device [cur_viewed_device.anchored ? "secured" : "unsecured"].</b><br>
+				<hr>
+				<b>Field encumbrance:</b> [cur_viewed_device.owned_field ? 0 : "NA"]<br>
+				<b>Field strength:</b> [cur_viewed_device.field_strength] Wm^3<br>
+				<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-1000'>\[----\]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-100'>\[--- \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-10'>\[--  \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=-1'>\[-   \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=1'>\[+   \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=10'>\[++  \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=100'>\[+++ \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];str=1000'>\[++++\]</a><br>"}
+			// END AUTOFIX
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm:60: dat += "<b>Field frequency:</b> [cur_viewed_device.field_frequency] MHz<br>"
+			dat += {"<b>Field frequency:</b> [cur_viewed_device.field_frequency] MHz<br>
+				<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-1000'>\[----\]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-100'>\[--- \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-10'>\[--  \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=-1'>\[-   \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=1'>\[+   \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=10'>\[++  \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=100'>\[+++ \]</a>
+			<a href='?src=\ref[cur_viewed_device];extern_update=\ref[src];freq=1000'>\[++++\]</a><br>"}
+			// END AUTOFIX
 
 			var/power_stat = "Good"
 			if(cur_viewed_device.cached_power_avail < cur_viewed_device.active_power_usage)
@@ -76,28 +84,39 @@
 		else
 			dat += "<a href='?src=\ref[src];scan=1'>\[Refresh device list\]</a><br><br>"
 			if(connected_devices.len)
-				dat += "<table width='100%' border=1>"
-				dat += "<tr>"
-				dat += "<td><b>Device tag</b></td>"
-				dat += "<td></td>"
-				dat += "</tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm:79: dat += "<table width='100%' border=1>"
+				dat += {"<table width='100%' border=1>
+					<tr>
+					<td><b>Device tag</b></td>
+					<td></td>
+					</tr>"}
+				// END AUTOFIX
 				for(var/obj/machinery/power/rust_core/C in connected_devices)
 					if(!check_core_status(C))
 						connected_devices.Remove(C)
 						continue
 
-					dat += "<tr>"
-					dat += "<td>[C.id_tag]</td>"
-					dat += "<td><a href='?src=\ref[src];manage_individual=\ref[C]'>\[Manage\]</a></td>"
-					dat += "</tr>"
-					dat += "</table>"
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm:89: dat += "<tr>"
+					dat += {"<tr>
+						<td>[C.id_tag]</td>
+						<td><a href='?src=\ref[src];manage_individual=\ref[C]'>\[Manage\]</a></td>
+						</tr>
+						</table>"}
+					// END AUTOFIX
 			else
 				dat += "No devices connected.<br>"
 
-		dat += "<hr>"
-		dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> "
-		dat += "<a href='?src=\ref[src];close=1'>Close</a>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm:97: dat += "<hr>"
+		dat += {"<hr>
+			<a href='?src=\ref[src];refresh=1'>Refresh</a>
+			<a href='?src=\ref[src];close=1'>Close</a>"}
+		// END AUTOFIX
 	user << browse(dat, "window=core_control;size=500x400")
 	onclose(user, "core_control")
 	user.set_machine(src)

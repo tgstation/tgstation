@@ -6,7 +6,7 @@
 
 
 /obj/machinery/iv_drip/var/mob/living/carbon/human/attached = null
-/obj/machinery/iv_drip/var/mode = "give" // mode can be "give" or "take"
+/obj/machinery/iv_drip/var/mode = 1 // 1 is injecting, 0 is taking blood.
 /obj/machinery/iv_drip/var/obj/item/weapon/reagent_containers/beaker = null
 
 /obj/machinery/iv_drip/update_icon()
@@ -70,7 +70,7 @@
 	set background = 1
 
 	if(src.attached)
-		if(!(get_dist(src, src.attached) <= 1))
+		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
 			src.attached:apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
 			src.attached = null
@@ -79,16 +79,17 @@
 
 	if(src.attached && src.beaker)
 		// Give blood
-		if(mode == "give" && src.beaker.volume > 0)
-			var/transfer_amount = REAGENTS_METABOLISM
-			if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
-				// speed up transfer on blood packs
-				transfer_amount = 4
-			src.beaker.reagents.trans_to(src.attached, transfer_amount)
-			update_icon()
+		if(mode)
+			if(src.beaker.volume > 0)
+				var/transfer_amount = REAGENTS_METABOLISM
+				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
+					// speed up transfer on blood packs
+					transfer_amount = 4
+				src.beaker.reagents.trans_to(src.attached, transfer_amount)
+				update_icon()
 
 		// Take blood
-		else if(mode == "take")
+		else
 			var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 			amount = min(amount, 4)
 			// If the beaker is full, ping
@@ -134,34 +135,25 @@
 		usr << "\red You can't do that."
 		return
 
-	if(mode == "give")
-		mode = "take"
-		usr << "The IV drip is now taking blood."
-	else if(mode == "take")
-		mode = "give"
-		usr << "The IV drip is now giving blood."
+	if(usr.stat)
+		return
+
+	mode = !mode
+	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
 
 /obj/machinery/iv_drip/examine()
 	set src in view()
 	..()
 	if (!(usr in view(2)) && usr!=src.loc) return
 
-	if(mode == "take")
-		usr << "The IV drip is taking blood."
-	else if(mode == "give")
-		usr << "The IV drip is injecting."
+	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
 
 	if(beaker)
-		usr << "\blue Attached is \a [beaker] with:"
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				usr << "\blue [R.volume] units of [R.name]"
+			usr << "\blue Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid."
 		else
 			usr << "\blue Attached is an empty [beaker]."
 	else
 		usr << "\blue No chemicals are attached."
 
-	if(attached)
-		usr << "\blue [attached] is attached."
-	else
-		usr << "\blue No one is attached."
+	usr << "\blue [attached ? attached : "No one"] is attached."

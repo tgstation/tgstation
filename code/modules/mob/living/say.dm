@@ -123,11 +123,14 @@ var/list/department_radio_keys = list(
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null
+	var/datum/language/speaking = null //For use if a specific language is being spoken.
 
+	// If brain damaged, talk on headset at random.
 	if (getBrainLoss() >= 60 && prob(50))
 		if (ishuman(src))
 			message_mode = "headset"
-	// Special message handling
+
+	// General public key. Special message handling
 	else if (copytext(message, 1, 2) == ";")
 		if (ishuman(src))
 			message_mode = "headset"
@@ -138,8 +141,12 @@ var/list/department_radio_keys = list(
 	else if (length(message) >= 2)
 		var/channel_prefix = copytext(message, 1, 3)
 
+		//Check if the person is speaking a language that they know.
+		for(var/datum/language/L in languages)
+			if(lowertext(channel_prefix) == ":[L.key]")
+				speaking = L
+				break
 		message_mode = department_radio_keys[channel_prefix]
-		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
 			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
@@ -188,11 +195,6 @@ var/list/department_radio_keys = list(
 					message += "Z"
 */
 	var/list/obj/item/used_radios = new
-
-	var/is_speaking_skrell = 0
-	var/is_speaking_soghun = 0
-	var/is_speaking_taj = 0
-	var/is_speaking_vox = 0
 	var/is_speaking_radio = 0
 
 	switch (message_mode)
@@ -278,22 +280,6 @@ var/list/department_radio_keys = list(
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
-
-		if ("tajaran")
-			if(tajaran_talk_understand || universal_speak)
-				is_speaking_taj = 1
-
-		if ("soghun")
-			if(soghun_talk_understand || universal_speak)
-				is_speaking_soghun = 1
-
-		if ("skrell")
-			if(skrell_talk_understand || universal_speak)
-				is_speaking_skrell = 1
-
-		if ("vox")
-			if(vox_talk_understand || universal_speak)
-				is_speaking_vox = 1
 
 		if("changeling")
 			if(mind && mind.changeling)
@@ -383,21 +369,12 @@ var/list/department_radio_keys = list(
 
 	for (var/M in listening)
 		if(hascall(M,"say_understands"))
-			if (M:say_understands(src) && !is_speaking_skrell && !is_speaking_soghun && !is_speaking_vox && !is_speaking_taj)
+			if (M:say_understands(src,speaking))
 				heard_a += M
-			else if(ismob(M))
-				if(is_speaking_skrell && (M:skrell_talk_understand || M:universal_speak))
-					heard_a += M
-				else if(is_speaking_soghun && (M:soghun_talk_understand || M:universal_speak))
-					heard_a += M
-				else if(is_speaking_taj && (M:tajaran_talk_understand || M:universal_speak))
-					heard_a += M
-				else if(is_speaking_vox && (M:vox_talk_understand || M:universal_speak))
-					heard_a += M
-				else
-					heard_b += M
 			else
-				heard_a += M
+				heard_b += M
+		else
+			heard_a += M
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
@@ -409,7 +386,7 @@ var/list/department_radio_keys = list(
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj,is_speaking_vox)
+		var/message_a = say_quote(message,speaking)
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
@@ -424,12 +401,12 @@ var/list/department_radio_keys = list(
 					rendered2 = "<span class='game say'><span class='name'>[GetVoice()]</span></span> [alt_name] <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span>"
 					M:show_message(rendered2, 2)
 					continue
-	//END CHANGES
+		//END CHANGES
 			if(hascall(M,"show_message"))
 				var/deaf_message = ""
 				var/deaf_type = 1
 				if(M != src)
-					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
+					deaf_message = "<span class='name'>[name]</span>[alt_name] talks but you cannot hear them."
 				else
 					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
 					deaf_type = 2 // Since you should be able to hear yourself without looking
@@ -443,7 +420,7 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message_b)
+			message_b = say_quote(message_b,speaking)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"

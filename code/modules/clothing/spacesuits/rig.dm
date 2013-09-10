@@ -89,7 +89,22 @@
 	color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
+	var/obj/machinery/camera/camera
 
+/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
+	if(camera)
+		..(user)
+	else
+		camera = new /obj/machinery/camera(src)
+		camera.network = list("NUKE")
+		cameranet.removeCamera(camera)
+		camera.c_tag = user.name
+		user << "\blue User scanned as [camera.c_tag]. Camera activated."
+
+/obj/item/clothing/head/helmet/space/rig/syndi/examine()
+	..()
+	if(get_dist(usr,src) <= 1)
+		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"

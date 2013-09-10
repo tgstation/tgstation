@@ -21,7 +21,7 @@
 /obj/machinery/power/supermatter
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal.  \red You get headaches just from looking at it."
-	icon = 'engine.dmi'
+	icon = 'icons/obj/engine.dmi'
 	icon_state = "darkmatter"
 	density = 1
 	anchored = 0

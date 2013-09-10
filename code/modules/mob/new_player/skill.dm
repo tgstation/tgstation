@@ -203,25 +203,41 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 		return
 
 	var/HTML = "<body>"
-	HTML += "<b>Select your Skills</b><br>"
-	HTML += "Current skill level: <b>[M.GetSkillClass(M.used_skillpoints)]</b> ([M.used_skillpoints])<br>"
-	HTML += "<table>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:206: HTML += "<b>Select your Skills</b><br>"
+	HTML += {"<b>Select your Skills</b><br>
+		Current skill level: <b>[M.GetSkillClass(M.used_skillpoints)]</b> ([M.used_skillpoints])<br>
+		<table>"}
+	// END AUTOFIX
 	for(var/V in SKILLS)
-		HTML += "<tr><th colspan = 5><b>[V]</b>"
-		HTML += "</th></tr>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:210: HTML += "<tr><th colspan = 5><b>[V]</b>"
+		HTML += {"<tr><th colspan = 5><b>[V]</b>
+			</th></tr>"}
+		// END AUTOFIX
 		for(var/datum/skill/S in SKILLS[V])
 			var/level = M.skills[S.ID]
-			HTML += "<tr style='text-align:left;'>"
-			HTML += "<th>[S.name]</th>"
-			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></th>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:214: HTML += "<tr style='text-align:left;'>"
+			HTML += {"<tr style='text-align:left;'>
+				<th>[S.name]</th>
+				<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></th>"}
+			// END AUTOFIX
 			// secondary skills don't have an amateur level
 			if(S.secondary)
 				HTML += "<th></th>"
 			else
 				HTML += "<th><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></th>"
-			HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>"
-			HTML += "<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></th>"
-			HTML += "</tr>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:222: HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>"
+			HTML += {"<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>
+				<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></th>
+				</tr>"}
+			// END AUTOFIX
 	HTML += "</table>"
 
 	user << browse(null, "window=preferences")

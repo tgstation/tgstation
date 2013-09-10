@@ -102,7 +102,6 @@
 
 	usr << browse(list, "window=laws")
 
-
 /mob/living/silicon/robot/show_laws(var/everyone = 0)
 	laws_sanity_check()
 	var/who
@@ -135,7 +134,6 @@
 		who << "<b>Remember, you are not required to listen to the AI.</b>"
 	else
 		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
-
 
 /mob/living/silicon/robot/proc/lawsync()
 	laws_sanity_check()

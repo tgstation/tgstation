@@ -9,7 +9,7 @@
 //----------------------------------------
 
 /proc/create_border_image(icon/input, border_color = "#000000", fill_color = "#000000", border_alpha = 255, fill_alpha = 255)
-	var/icon/I = icon('uristrunes.dmi', "blank")
+	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 	I.Blend(input, ICON_OVERLAY)
 
 	//Discard the image
@@ -176,11 +176,11 @@ var/list/rune_animation = list(
 	if(lookup in rune_cache)
 		return rune_cache[lookup]
 
-	var/icon/base = icon('uristrunes.dmi', "")
+	var/icon/base = icon('icons/effects/uristrunes.dmi', "")
 
 	for(var/i = 0, i < 10, i++)
 		if(rune_bits & (1 << i))
-			base.Blend(icon('uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
+			base.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
 
 	var/icon/result
 
@@ -214,23 +214,23 @@ var/list/rune_animation = list(
 
 /*
 /mob/verb/create_rune_custom(rune as num, color1 as color, border1 as color, color2 as color, border2 as color, alpha1 as num, alpha2 as num)
-	var/icon/I = icon('uristrunes.dmi', "blank")
+	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 
 	for(var/i = 0, i < 10, i++)
 		if(rune & (1 << i))
-			I.Blend(icon('uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
+			I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
 
 	var/obj/o = new(locate(x, y, z))
 	o.icon = animate_rune(I, color1, border1, color2, border2, alpha1, alpha2)
 
 /mob/verb/spam()
 	for(var/turf/t in range(4))
-		var/icon/I = icon('uristrunes.dmi', "blank")
+		var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 
 		var/rune = rand(1, 1023)
 		for(var/i = 0, i < 10, i++)
 			if(rune & (1 << i))
-				I.Blend(icon('uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
+				I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
 
 		var/obj/o = new(t)
 		o.icon = animate_rune_full(I, rand(0, 255), rand(0, 255), rand(0, 255), rand(-255, 255),

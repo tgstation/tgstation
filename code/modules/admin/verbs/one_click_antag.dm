@@ -17,11 +17,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
-
-/* These dont work just yet
-	Ninja, aliens and deathsquad I have not looked into yet
-	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
-*/
+		<a href='?src=\ref[src];makeAntag=11'>Make Vox Raiders (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
@@ -437,3 +433,95 @@ client/proc/one_click_antag()
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
+
+/datum/admins/proc/makeVoxRaiders()
+
+	var/list/mob/dead/observer/candidates = list()
+	var/mob/dead/observer/theghost = null
+	var/time_passed = world.time
+	var/input = "Disregard shinies, acquire hardware."
+
+	var/leader_chosen = 0 //when the leader is chosen. The last person spawned.
+
+	//Generates a list of candidates from active ghosts.
+	for(var/mob/dead/observer/G in player_list)
+		spawn(0)
+			if(!jobban_isbanned(G, "Vox Raider") && !jobban_isbanned(G, "Syndicate"))
+			switch(alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						return
+					candidates += G
+				if("No")
+					return
+				else
+					return
+
+	sleep(300) //Debug.
+
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key)
+			candidates.Remove(G)
+
+	if(candidates.len)
+		var/max_raiders = 1
+		var/raiders = max_raiders
+		//Spawns vox raiders and equips them.
+		for (var/obj/effect/landmark/L in world)
+			if(L.name == "voxstart")
+				if(raiders<=0)
+					break
+
+				var/mob/living/carbon/human/new_vox = create_vox_raider(L, leader_chosen)
+
+				while((!theghost || !theghost.client) && candidates.len)
+					theghost = pick(candidates)
+					candidates.Remove(theghost)
+
+				if(!theghost)
+					del(new_vox)
+					break
+
+				new_vox.key = theghost.key
+				new_vox << "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: \red<B> [input]</B>"
+				new_vox << "\red Don't forget to turn on your nitrogen internals!"
+
+				raiders--
+			if(raiders > max_raiders)
+				return 0
+	else
+		return 0
+	return 1
+
+/datum/admins/proc/create_vox_raider(obj/spawn_location, leader_chosen = 0)
+
+	var/mob/living/carbon/human/new_vox = new(spawn_location.loc)
+
+	new_vox.gender = pick(MALE, FEMALE)
+	new_vox.h_style = "Short Vox Quills"
+	new_vox.regenerate_icons()
+
+	var/sounds = rand(2,10)
+	var/i = 0
+	var/newname = ""
+
+	while(i<=sounds)
+		i++
+		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+
+	new_vox.real_name = capitalize(newname)
+	new_vox.name = new_vox.real_name
+	new_vox.age = rand(12,20)
+
+	new_vox.dna.ready_dna(new_vox) // Creates DNA.
+	new_vox.dna.mutantrace = "vox"
+	new_vox.set_species("Vox") // Actually makes the vox! How about that.
+	new_vox.add_language("Vox-pidgin")
+	new_vox.mind_initialize()
+	new_vox.mind.assigned_role = "MODE"
+	new_vox.mind.special_role = "Vox Raider"
+
+	ticker.mode.traitors += new_vox.mind
+	new_vox.equip_vox_raider()
+
+	return new_vox

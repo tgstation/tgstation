@@ -12,7 +12,7 @@
 	icon_state ="bookEngineering"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	title = "Station Repairs and Construction"
-	dat = {"
+	/*dat = {"
 
 		<html><head>
 		</head>
@@ -23,7 +23,7 @@
 
 		</html>
 
-		"}
+		"}*/
 
 /obj/item/weapon/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
@@ -32,7 +32,7 @@
 	title = "Particle Accelerator User's Guide"
 //big pile of shit below.
 
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -65,7 +65,7 @@
 				</ol>
 
 				</body>
-				</html>"}
+				</html>"}*/
 
 
 /obj/item/weapon/book/manual/engineering_hacking
@@ -75,7 +75,7 @@
 	title = "Hacking"
 //big pile of shit below.
 
-	dat = {"
+	/*dat = {"
 
 		<html><head>
 		</head>
@@ -86,7 +86,7 @@
 
 		</html>
 
-		"}
+		"}*/
 
 /obj/item/weapon/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
@@ -95,7 +95,7 @@
 	title = "Singularity Safety in Special Circumstances"
 //big pile of shit below.
 
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -134,14 +134,14 @@
 				Step one: <b>GET THE FUCK OUT OF THERE!!! FORGET THE WOMEN AND CHILDREN, SAVE YOURSELF!!!</b><br>
 				</body>
 				</html>
-				"}
+				"}*/
 
 /obj/item/weapon/book/manual/hydroponics_pod_people
 	name = "The Human Harvest - From seed to market"
 	icon_state ="bookHydroponicsPodPeople"
 	author = "Farmer John"
 	title = "The Human Harvest - From seed to market"
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -169,7 +169,7 @@
 
 				</body>
 				</html>
-				"}
+				"}*/
 
 /obj/item/weapon/book/manual/medical_cloning
 	name = "Cloning techniques of the 26th century"
@@ -178,7 +178,7 @@
 	title = "Cloning techniques of the 26th century"
 //big pile of shit below.
 
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -246,7 +246,7 @@
 
 				</body>
 				</html>
-				"}
+				"}*/
 
 
 /obj/item/weapon/book/manual/ripley_build_and_repair
@@ -256,7 +256,7 @@
 	title = "APLU \"Ripley\" Construction and Operation Manual"
 //big pile of shit below.
 
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -322,7 +322,7 @@
 
 				<h2>Operation</h2>
 				Coming soon...
-			"}
+			"}*/
 
 
 /obj/item/weapon/book/manual/research_and_development
@@ -330,7 +330,8 @@
 	icon_state = "rdbook"
 	author = "Dr. L. Ight"
 	title = "Research and Development 101"
-	dat = {"<html>
+	/*dat = {"
+	<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -372,7 +373,7 @@
 				Many machines produces from circuit boards and inserted into a machine frame require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked. If you use these parts when constructing something, its attributes may be improved. For example, if you use an advanced matter bin when constructing an autolathe (rather then a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however: Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
 				</body>
 				</html>
-			"}
+			"}*/
 
 
 /obj/item/weapon/book/manual/robotics_cyborgs
@@ -380,7 +381,7 @@
 	icon_state = "borgbook"
 	author = "XISC"
 	title = "Cyborgs for Dummies"
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 21px; margin: 15px 0px 5px;}
@@ -575,7 +576,7 @@
 
         </body>
 		</html>
-		"}
+		"}*/
 
 /obj/item/weapon/book/manual/security_space_law
 	name = "Space Law"
@@ -589,7 +590,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
+		<iframe width='100%' height='97%' src="http://baystation12.net/wiki/index.php?title=Space_law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
 
 		</html>
 
@@ -600,7 +601,7 @@
 	icon_state ="bookEngineering2"
 	author = "Engineering Encyclopedia"
 	title = "Engineering Textbook"
-	dat = {"
+	/*dat = {"
 
 		<html><head>
 		</head>
@@ -610,7 +611,7 @@
 
 		</html>
 
-		"}
+		"}*/
 
 
 /obj/item/weapon/book/manual/chef_recipes
@@ -618,7 +619,7 @@
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
 	title = "Chef Recipes"
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -663,14 +664,14 @@
 
 				</body>
 				</html>
-			"}
+			"}*/
 
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "barbook"
 	author = "Sir John Rose"
 	title = "Barman Recipes"
-	dat = {"<html>
+	/*dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -715,7 +716,7 @@
 
 				</body>
 				</html>
-			"}
+			"}*/
 
 
 /obj/item/weapon/book/manual/detective
@@ -723,7 +724,7 @@
 	icon_state ="bookDetective"
 	author = "Nanotrasen"
 	title = "The Film Noir: Proper Procedures for Investigations"
-	dat = {"<html>
+	/*dat = {"<html>
 			<head>
 			<style>
 			h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -757,14 +758,14 @@
 			It really is that easy! Good luck!
 
 			</body>
-			</html>"}
+			</html>"}*/
 
 /obj/item/weapon/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
 	icon_state ="bookNuclear"
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
-	dat = {"<html>
+	/*dat = {"<html>
 			Nuclear Explosives 101:<br>
 			Hello and thank you for choosing the Syndicate for your nuclear information needs.<br>
 			Today's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.<br>
@@ -792,4 +793,4 @@
 			<b>Disk, Code, Safety, Timer, Disk, RUN!</b><br>
 			Intelligence Analysts believe that normal Nanotrasen procedure is for the Captain to secure the nuclear authorisation disk.<br>
 			Good luck!
-			</html>"}
+			</html>"}*/

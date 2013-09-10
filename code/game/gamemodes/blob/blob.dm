@@ -12,7 +12,7 @@ var/list/blob_nodes = list()
 
 	required_players = 30
 
-	restricted_jobs = list("Cyborg", "AI")
+	restricted_jobs = list("Cyborg", "AI", "Mobile MMI")
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -23,7 +23,7 @@ var/list/blob_nodes = list()
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	var/blobwincount = 350
+	var/blobwincount = 500 // WAS: 350
 
 	var/list/infected_crew = list()
 
@@ -56,17 +56,17 @@ var/list/blob_nodes = list()
 
 
 /datum/game_mode/blob/announce()
-	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
-	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
-	world << "You must kill it all while minimizing the damage to the station."
+	world << {"<B>The current game mode is - <font color='green'>Blob</font>!</B><br />
+		<B>A dangerous alien organism is rapidly spreading throughout the station!</B><br />
+		You must kill it all while minimizing the damage to the station."}
 
 
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
-	blob.current << "<B>\red You are infected by the Blob!</B>"
-	blob.current << "<b>Your body is ready to give spawn to a new blob core which will eat this station.</b>"
-	blob.current << "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>"
-	blob.current << "<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>"
-	blob.current << "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"
+	blob.current << {"<B>\red You are infected by the Blob!</B><br />
+		<b>Your body is ready to give spawn to a new blob core which will eat this station.</b><br />
+		<b>Find a good location to spawn the core and then take control and overwhelm the station!</b><br />
+		<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b><br />
+		<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"}
 	return
 
 /datum/game_mode/blob/proc/show_message(var/message)

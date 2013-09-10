@@ -28,8 +28,11 @@
 	// Determines if the accessory will be skipped or included in random hair generations
 	var/gender = NEUTER
 
-	// Restrict some styles to specific races
+	// Restrict some styles to specific species
 	var/list/species_allowed = list("Human")
+
+	// Whether or not the accessory can be affected by colouration
+	var/do_colouration = 1
 
 
 /*
@@ -65,11 +68,11 @@
 	longalt
 		name = "Shoulder-length Hair Alt"
 		icon_state = "hair_longfringe"
-/* No sprite
-	longish
+
+	/*longish
 		name = "Longer Hair"
-		icon_state = "hair_b2"
-*/
+		icon_state = "hair_b2"*/
+
 	longer
 		name = "Long Hair"
 		icon_state = "hair_vlong"
@@ -386,117 +389,139 @@
 		name = "Long Unathi Spines"
 		icon_state = "soghun_longspines"
 		species_allowed = list("Unathi")
+		do_colouration = 0
 
 	una_spines_short
 		name = "Short Unathi Spines"
 		icon_state = "soghun_shortspines"
 		species_allowed = list("Unathi")
+		do_colouration = 0
 
 	una_frills_long
 		name = "Long Unathi Frills"
 		icon_state = "soghun_longfrills"
 		species_allowed = list("Unathi")
+		do_colouration = 0
 
 	una_frills_short
 		name = "Short Unathi Frills"
 		icon_state = "soghun_shortfrill"
 		species_allowed = list("Unathi")
+		do_colouration = 0
 
 	una_horns
 		name = "Unathi Horns"
 		icon_state = "soghun_horns"
 		species_allowed = list("Unathi")
+		do_colouration = 0
 
 	skr_tentacle_m
 		name = "Skrell Male Tentacles"
 		icon_state = "skrell_hair_m"
 		species_allowed = list("Skrell")
 		gender = MALE
+		do_colouration = 0
 
 	skr_tentacle_f
 		name = "Skrell Female Tentacles"
 		icon_state = "skrell_hair_f"
 		species_allowed = list("Skrell")
 		gender = FEMALE
+		do_colouration = 0
 
 	skr_gold_m
 		name = "Gold plated Skrell Male Tentacles"
 		icon_state = "skrell_goldhair_m"
 		species_allowed = list("Skrell")
 		gender = MALE
+		do_colouration = 0
 
 	skr_gold_f
 		name = "Gold chained Skrell Female Tentacles"
 		icon_state = "skrell_goldhair_f"
 		species_allowed = list("Skrell")
 		gender = FEMALE
+		do_colouration = 0
 
 	skr_clothtentacle_m
 		name = "Cloth draped Skrell Male Tentacles"
 		icon_state = "skrell_clothhair_m"
 		species_allowed = list("Skrell")
 		gender = MALE
+		do_colouration = 0
 
 	skr_clothtentacle_f
 		name = "Cloth draped Skrell Female Tentacles"
 		icon_state = "skrell_clothhair_f"
 		species_allowed = list("Skrell")
 		gender = FEMALE
+		do_colouration = 0
 
 	taj_ears
 		name = "Tajaran Ears"
 		icon_state = "ears_plain"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_clean
 		name = "Tajara Clean"
 		icon_state = "hair_clean"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_shaggy
 		name = "Tajara Shaggy"
 		icon_state = "hair_shaggy"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_mohawk
 		name = "Tajaran Mohawk"
 		icon_state = "hair_mohawk"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_plait
 		name = "Tajara Plait"
 		icon_state = "hair_plait"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_straight
 		name = "Tajara Straight"
 		icon_state = "hair_straight"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_long
 		name = "Tajara Long"
 		icon_state = "hair_long"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_rattail
 		name = "Tajara Rat Tail"
 		icon_state = "hair_rattail"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_spiky
-		name = "Tajara  Spiky"
+		name = "Tajara Spiky"
 		icon_state = "hair_tajspiky"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_ears_messy
 		name = "Tajara Messy"
 		icon_state = "hair_messy"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	vox_quills_short
 		name = "Short Vox Quills"
 		icon_state = "vox_shortquills"
 		species_allowed = list("Vox")
+		do_colouration = 0
 
 /datum/sprite_accessory/facial_hair
 
@@ -504,31 +529,37 @@
 		name = "Tajara Sideburns"
 		icon_state = "facial_mutton"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_mutton
 		name = "Tajara Mutton"
 		icon_state = "facial_mutton"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_pencilstache
 		name = "Tajara Pencilstache"
 		icon_state = "facial_pencilstache"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_moustache
 		name = "Tajara Moustache"
 		icon_state = "facial_moustache"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_goatee
 		name = "Tajara Goatee"
 		icon_state = "facial_goatee"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 	taj_smallstache
 		name = "Tajara Smallsatche"
 		icon_state = "facial_smallstache"
 		species_allowed = list("Tajaran")
+		do_colouration = 0
 
 //skin styles - WIP
 //going to have to re-integrate this with surgery

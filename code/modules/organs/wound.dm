@@ -13,7 +13,8 @@
 
 	// amount of damage this wound causes
 	var/damage = 0
-
+	// ticks of bleeding left.
+	var/bleed_timer = 0
 	// amount of damage the current wound type requires(less means we need to apply the next healing stage)
 	var/min_damage = 0
 
@@ -70,6 +71,8 @@
 		// make the max_bleeding_stage count from the end of the list rather than the start
 		// this is more robust to changes to the list
 		max_bleeding_stage = src.desc_list.len - max_bleeding_stage
+
+		bleed_timer += damage
 
 	// returns 1 if there's a next stage, 0 otherwise
 	proc/next_stage()
@@ -136,6 +139,7 @@
 	// opens the wound again
 	proc/open_wound(damage)
 		src.damage += damage
+		bleed_timer += damage
 
 		while(src.current_stage > 1 && src.damage_list[current_stage-1] <= src.damage)
 			src.current_stage--
@@ -145,7 +149,7 @@
 
 	proc/bleeding()
 		// internal wounds don't bleed in the sense of this function
-		return (!(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT && damage >= 10) && current_stage <= max_bleeding_stage && !src.internal)
+		return ((damage > 30 || bleed_timer > 0) && !(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT && damage >= 5) && current_stage <= max_bleeding_stage && !src.internal)
 
 /** CUTS **/
 /datum/wound/cut/small

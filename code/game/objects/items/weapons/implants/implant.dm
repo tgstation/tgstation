@@ -2,7 +2,7 @@
 #define MALFUNCTION_PERMANENT 2
 /obj/item/weapon/implant
 	name = "implant"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
@@ -159,9 +159,14 @@ Implant Specifics:<BR>"}
 			return
 		if(istype(imp_in, /mob/))
 			var/mob/T = imp_in
+
+			message_admins("Explosive implant triggered in [T] ([T.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
+			log_game("Explosive implant triggered in [T] ([T.key]).")
+
 			T.gib()
 		explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
 		var/turf/t = get_turf(imp_in)
+
 		if(t)
 			t.hotspot_expose(3500,125)
 
@@ -455,9 +460,13 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/source as mob)
 		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		if (source.mind)
-			source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+			source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return 1
 
 	islegal()
 		return 0
+
+/obj/item/weapon/implant/cortical
+	name = "cortical stack"
+	desc = "A fist-sized mass of biocircuits and chips."

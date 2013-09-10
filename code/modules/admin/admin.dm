@@ -40,56 +40,64 @@ var/global/floorIsLava = 0
 	var/body = "<html><head><title>Options for [M.key]</title></head>"
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
-		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:43: body += " played by <b>[M.client]</b> "
+		body += {"played by <b>[M.client]</b>
+			\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"}
+		// END AUTOFIX
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
 
-	body += "<br><br>\[ "
-	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
-	body += "<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> - "
-	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
-	body += "<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
-
-	body += "<b>Mob type</b> = [M.type]<br><br>"
-
-	body += "<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> | "
-	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
-	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
-	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | "
-	body += "<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A> "
+	body += {"
+		<br><br>\[
+		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
+		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
+		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
+		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
+		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
+		<b>Mob type</b> = [M.type]<br><br>
+		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
+		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
+		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
+		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
+		<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> |
+		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
+	"}
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
 		var/muted = M.client.prefs.muted
-		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += {"<br><b>Mute: </b>
+			\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> |
+			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> |
+			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> |
+			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> |
+			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]
+			(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)
+		"}
 
-	body += "<br><br>"
-	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "
-	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | "
-	body += "<A href='?src=\ref[src];sendmob=\ref[M]'>Send To</A>"
-
-	body += "<br><br>"
-	body += "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | "
-	body += "<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | "
-	body += "<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>"
+	body += {"<br><br>
+		<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> |
+		<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> |
+		<A href='?src=\ref[src];sendmob=\ref[M]'>Send To</A>
+		<br><br>
+		<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> |
+		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
+		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
+	"}
 
 	if (M.client)
 		if(!istype(M, /mob/new_player))
-			body += "<br><br>"
-			body += "<b>Transformation:</b>"
-			body += "<br>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:90: body += "<br><br>"
+			body += {"<br><br>
+				<b>Transformation:</b>
+				<br>"}
+			// END AUTOFIX
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
@@ -106,11 +114,12 @@ var/global/floorIsLava = 0
 			if(isAI(M))
 				body += "<B>Is an AI</B> "
 			else if(ishuman(M))
-				body += "<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | "
-				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
-				body += "<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> | "
-				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> "
+				body += {"<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> |
+					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
+					<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> |
+					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
+					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
+				"}
 
 			//Simple Animals
 			if(isanimal(M))
@@ -118,45 +127,46 @@ var/global/floorIsLava = 0
 			else
 				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
-			body += "<br><br>"
-			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
-			body += "<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> | "
-			body += "\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>, "
-			body += "<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>, "
-			body += "<A href='?src=\ref[src];simplemake=queen;mob=\ref[M]'>Queen</A>, "
-			body += "<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
-			body += "<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
-			body += "<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A> "
-			body += "\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>, "
-			body += "<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \] "
-			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
-			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
-			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
-			body += "<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> | "
-			body += "<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> | "
-			body += "<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> | "
-			body += "<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> | "
-			body += "<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
-			//body += "<A href='?src=\ref[src];simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
-			//body += "<A href='?src=\ref[src];simplemake=polyparrot;mob=\ref[M]'>Poly</A> | "
-			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
-			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
-			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
-			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>"
-			body += "<br>"
+			body += {"<br><br>
+				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
+				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
+				\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>,
+				<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>,
+				<A href='?src=\ref[src];simplemake=queen;mob=\ref[M]'>Queen</A>,
+				<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>,
+				<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \]
+				<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A>
+				\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
+				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \]
+				<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> |
+				<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> |
+				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> |
+				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> |
+				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> |
+				<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> |
+				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> |
+				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> |
+				\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> ,
+				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> ,
+				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \]
+				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
+				<br>
+			"}
 
 	if (M.client)
-		body += "<br><br>"
-		body += "<b>Other actions:</b>"
-		body += "<br>"
-		body += "<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | "
-		body += "<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | "
-		body += "<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | "
-		body += "<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
-		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += {"<br><br>
+			<b>Other actions:</b>
+			<br>
+			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> |
+			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> |
+			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> |
+			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
+			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
+		"}
 
-	body += "<br>"
-	body += "</body></html>"
+	body += {"<br>
+		</body></html>
+	"}
 
 	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -218,7 +228,6 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=player_notes;size=400x400")
 
 
-
 /datum/admins/proc/player_has_info(var/key as text)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
@@ -260,10 +269,13 @@ var/global/floorIsLava = 0
 			dat += "<br><br>"
 		if(update_file) info << infos
 
-	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
 
-	dat += "</body></html>"
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:265: dat += "<br>"
+	dat += {"<br>
+		<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>
+		</body></html>"}
+	// END AUTOFIX
 	usr << browse(dat, "window=adminplayerinfo;size=480x480")
 
 
@@ -283,23 +295,29 @@ var/global/floorIsLava = 0
 
 	switch(admincaster_screen)
 		if(0)
-			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
-			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
-			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
+			dat += {"Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network.
+				<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units.
+				<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>
+			"}
 			if(news_network.wanted_issue)
 				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
-			dat+= "<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>"
-			dat+= "<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>"
-			dat+= "<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>"
-			dat+= "<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>"
+
+			dat+= {"<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>
+				<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>
+				<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>
+				<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>
+			"}
+
 			var/wanted_already = 0
 			if(news_network.wanted_issue)
 				wanted_already = 1
-			dat+="<HR><B>Feed Security functions:</B><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
-			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_story=1'>Censor Feed Stories</A>"
-			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel.</A>"
-			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admincaster_signature]</FONT></A>"
+
+			dat+={"<HR><B>Feed Security functions:</B><BR>
+				<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>
+				<BR><A href='?src=\ref[src];ac_menu_censor_story=1'>Censor Feed Stories</A>
+				<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel.</A>
+				<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admincaster_signature]</FONT></A>
+			"}
 		if(1)
 			dat+= "Station Feed Channels<HR>"
 			if( isemptylist(news_network.network_channels) )
@@ -310,26 +328,36 @@ var/global/floorIsLava = 0
 						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
 						dat+="<B><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
-			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
+			dat+={"<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>
+				<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>
+			"}
+
 		if(2)
-			dat+="Creating new Feed Channel..."
-			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
-			dat+="<B><A href='?src=\ref[src];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
-			dat+="<B><A href='?src=\ref[src];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
+			dat+={"
+				Creating new Feed Channel...
+				<HR><B><A href='?src=\ref[src];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>
+				<B><A href='?src=\ref[src];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>
+				<B><A href='?src=\ref[src];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>
+				<BR><A href='?src=\ref[src];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>
+			"}
 		if(3)
-			dat+="Creating new Feed Message..."
-			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
-			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
-			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.body] <BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
+			dat+={"
+				Creating new Feed Message...
+				<HR><B><A href='?src=\ref[src];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
+				<B>Message Author:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>
+				<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.body] <BR>
+				<BR><A href='?src=\ref[src];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>
+			"}
 		if(4)
-			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+			dat+={"
+					Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>
+					<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>
+				"}
 		if(5)
-			dat+="Feed Channel [src.admincaster_feed_channel.channel_name] created successfully.<BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+			dat+={"
+				Feed Channel [src.admincaster_feed_channel.channel_name] created successfully.<BR><BR>
+				<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>
+			"}
 		if(6)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
@@ -352,8 +380,10 @@ var/global/floorIsLava = 0
 		if(9)
 			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
 			if(src.admincaster_feed_channel.censored)
-				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
-				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+				dat+={"
+					<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
+					No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>
+				"}
 			else
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
@@ -366,13 +396,17 @@ var/global/floorIsLava = 0
 							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>"
+			dat+={"
+				<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>
+				<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>
+			"}
 		if(10)
-			dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
-			dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
-			dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
-			dat+="<HR>Select Feed channel to get Stories from:<BR>"
+			dat+={"
+				<B>Nanotrasen Feed Censorship Tool</B><BR>
+				<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>
+				Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>
+				<HR>Select Feed channel to get Stories from:<BR>
+			"}
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
@@ -380,10 +414,12 @@ var/global/floorIsLava = 0
 					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
-			dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
-			dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
-			dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
-			dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
+			dat+={"
+				<B>Nanotrasen D-Notice Handler</B><HR>
+				<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's
+				morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed
+				stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>
+			"}
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
@@ -392,22 +428,29 @@ var/global/floorIsLava = 0
 
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
 		if(12)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
-			dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
-
+			dat+={"
+				<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>
+				<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>
+			"}
 			if( isemptylist(src.admincaster_feed_channel.messages) )
 				dat+="<I>No feed messages found in channel...</I><BR>"
 			else
 				for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-					dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+					dat+={"
+						-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>
+						<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>
+					"}
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[10]'>Back</A>"
 		if(13)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
-			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];ac_toggle_d_notice=\ref[src.admincaster_feed_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
+			dat+={"
+				<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>
+				Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];ac_toggle_d_notice=\ref[src.admincaster_feed_channel]'>Bestow a D-Notice upon the channel</A>.<HR>
+			"}
 			if(src.admincaster_feed_channel.censored)
-				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
-				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+				dat+={"
+					<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
+					No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>
+				"}
 			else
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
@@ -425,9 +468,11 @@ var/global/floorIsLava = 0
 				end_param = 2
 			if(wanted_already)
 				dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
-			dat+="<HR>"
-			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_feed_message.author] <BR>"
-			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_feed_message.body] <BR>"
+			dat+={"
+				<HR>
+				<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_feed_message.author] <BR>
+				<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_feed_message.body] <BR>
+			"}
 			if(wanted_already)
 				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 			else
@@ -437,8 +482,10 @@ var/global/floorIsLava = 0
 				dat+="<BR><A href='?src=\ref[src];ac_cancel_wanted=1'>Take down Issue</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(15)
-			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] is now in Network Circulation.</FONT><BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+			dat+={"
+				<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] is now in Network Circulation.</FONT><BR><BR>
+				<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>
+			"}
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
@@ -447,13 +494,17 @@ var/global/floorIsLava = 0
 				dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
-			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+			dat+={"
+				<B>Wanted Issue successfully deleted from Circulation</B><BR>
+				<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>
+			"}
 		if(18)
-			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
-			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
-			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
-			dat+="<B>Photo:</B>: "
+			dat+={"
+				<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>
+				<B>Criminal</B>: [news_network.wanted_issue.author]<BR>
+				<B>Description</B>: [news_network.wanted_issue.body]<BR>
+				<B>Photo:</B>:
+			"}
 			if(news_network.wanted_issue.img)
 				usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
 				dat+="<BR><img src='tmp_photow.png' width = '180'>"
@@ -461,8 +512,10 @@ var/global/floorIsLava = 0
 				dat+="None"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
-			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+			dat+={"
+				<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>
+				<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>
+			"}
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 

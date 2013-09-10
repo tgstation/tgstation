@@ -159,10 +159,12 @@ client
 					}
 				</script> "}
 
-		body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
 
-		body += "<div align='center'><table width='100%'><tr><td width='50%'>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:162: body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
+		body += {"<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>
+			<div align='center'><table width='100%'><tr><td width='50%'>"}
+		// END AUTOFIX
 		if(sprite)
 			body += "<table align='center' width='100%'><tr><td><img src='view_vars_sprite.png'></td><td>"
 		else
@@ -197,10 +199,12 @@ client
 		else
 			body += "<b>[D]</b>"
 
-		body += "</div>"
 
-		body += "</tr></td></table>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:200: body += "</div>"
+		body += {"</div>
+			</tr></td></table>"}
+		// END AUTOFIX
 		var/formatted_type = text("[D.type]")
 		if(length(formatted_type) > 25)
 			var/middle_point = length(formatted_type) / 2
@@ -215,12 +219,13 @@ client
 		if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
 			body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
 
-		body += "</div>"
 
-		body += "</div></td>"
-
-		body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:218: body += "</div>"
+		body += {"</div>
+			</div></td>
+			<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"}
+		// END AUTOFIX
 		//if(ismob(D))
 		//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
 
@@ -244,46 +249,60 @@ client
 		body += "<option value>---</option>"
 
 		if(ismob(D))
-			body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
-			body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
-			body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
-			body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 
-			body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
-			body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
-
-			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-			body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
-
-			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:247: body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+			body += {"<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>
+				<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>
+				<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>
+				<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>
+				<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>
+				<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>
+				<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>
+				<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>
+				<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>
+				<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>
+				<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"}
+			// END AUTOFIX
 			if(ishuman(D))
-				body += "<option value>---</option>"
-				body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
-				body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-				body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
-				body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
-				body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-				body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:262: body += "<option value>---</option>"
+				body += {"<option value>---</option>
+					<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>
+					<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>
+					<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>
+					<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>
+					<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>
+					<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>
+					<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"}
+			// END AUTOFIX
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:270: body += "<option value>---</option>"
+			body += {"<option value>---</option>
+				<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"}
+			// END AUTOFIX
 		if(isobj(D))
 			body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 		if(isobj(D) || ismob(D) || isturf(D))
-			body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
-			body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
 
-		body += "</select></form>"
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:275: body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
+			body += {"<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>
+				<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"}
+			// END AUTOFIX
 
-		body += "</div></td></tr></table></div><hr>"
-
-		body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
-		body += "<b>C</b> - Change, asks you for the var type first.<br>"
-		body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
-
-		body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
-
-		body += "<ol id='vars'>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:278: body += "</select></form>"
+		body += {"</select></form>
+			</div></td></tr></table></div><hr>
+			<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>
+			<b>C</b> - Change, asks you for the var type first.<br>
+			<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>
+			<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>
+			<ol id='vars'>"}
+		// END AUTOFIX
 		var/list/names = list()
 		for (var/V in D.vars)
 			names += V
@@ -380,8 +399,12 @@ client
 			if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 				// not sure if this is completely right...
 				if(0)   //(L.vars.len > 0)
-					html += "<ol>"
-					html += "</ol>"
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:386: html += "<ol>"
+					html += {"<ol>
+						</ol>"}
+					// END AUTOFIX
 				else
 					html += "<ul>"
 					var/index = 1
@@ -743,6 +766,67 @@ client
 			H.dna.mutantrace = new_mutantrace
 			H.update_mutantrace()
 
+	else if(href_list["setspecies"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["setspecies"])
+		if(!istype(H))
+			usr << "This can only be done to instances of type /mob/living/carbon/human"
+			return
+
+		var/new_species = input("Please choose a new species.","Species",null) as null|anything in all_species
+
+		if(!H)
+			usr << "Mob doesn't exist anymore"
+			return
+
+		if(H.set_species(new_species))
+			usr << "Set species of [H] to [H.species]."
+		else
+			usr << "Failed! Something went wrong."
+
+	else if(href_list["addlanguage"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/H = locate(href_list["addlanguage"])
+		if(!istype(H))
+			usr << "This can only be done to instances of type /mob"
+			return
+
+		var/new_language = input("Please choose a language to add.","Language",null) as null|anything in all_languages
+
+		if(!H)
+			usr << "Mob doesn't exist anymore"
+			return
+
+		if(H.add_language(new_language))
+			usr << "Added [new_language] to [H]."
+		else
+			usr << "Mob already knows that language."
+
+	else if(href_list["remlanguage"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/H = locate(href_list["remlanguage"])
+		if(!istype(H))
+			usr << "This can only be done to instances of type /mob"
+			return
+
+		if(!H.languages.len)
+			usr << "This mob knows no languages."
+			return
+
+		var/datum/language/rem_language = input("Please choose a language to remove.","Language",null) as null|anything in H.languages
+
+		if(!H)
+			usr << "Mob doesn't exist anymore"
+			return
+
+		if(H.remove_language(rem_language.name))
+			usr << "Removed [rem_language] from [H]."
+		else
+			usr << "Mob doesn't know that language."
+
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return
 
@@ -789,4 +873,3 @@ client
 		src.debug_variables(DAT)
 
 	return
-

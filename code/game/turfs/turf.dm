@@ -193,7 +193,7 @@
 			M.inertia_dir  = 0
 			return
 		spawn(5)
-			if((M && !(M.anchored) && (M.loc == src)))
+			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
 					return

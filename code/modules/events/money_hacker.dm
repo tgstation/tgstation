@@ -8,12 +8,13 @@
 	var/obj/machinery/account_database/affected_db
 
 /datum/event/money_hacker/setup()
-	for(var/obj/machinery/account_database/DB in world)
-		if( DB.z == 1 && !(DB.stat&NOPOWER) && DB.activated && DB.accounts.len)
-			affected_db = DB
-			break
+	if(all_money_accounts.len)
+		for(var/obj/machinery/account_database/DB in world)
+			if( DB.z == 1 && !(DB.stat&NOPOWER) && DB.activated )
+				affected_db = DB
+				break
 	if(affected_db)
-		affected_account = pick(affected_db.accounts)
+		affected_account = pick(all_money_accounts)
 	else
 		kill()
 		return

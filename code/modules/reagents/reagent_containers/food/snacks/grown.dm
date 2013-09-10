@@ -39,13 +39,17 @@
 				msg += "- Plant type: <i>Weed</i>\n"
 			if(2)
 				msg += "- Plant type: <i>Mushroom</i>\n"
-		msg += "- Potency: <i>[potency]</i>\n"
-		msg += "- Yield: <i>[yield]</i>\n"
-		msg += "- Maturation speed: <i>[maturation]</i>\n"
-		msg += "- Production speed: <i>[production]</i>\n"
-		msg += "- Endurance: <i>[endurance]</i>\n"
-		msg += "- Healing properties: <i>[reagents.get_reagent_amount("nutriment")]</i>\n"
-		msg += "*---------*</span>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\reagent_containers\food\snacks\grown.dm:42: msg += "- Potency: <i>[potency]</i>\n"
+		msg += {"- Potency: <i>[potency]</i>\n
+			- Yield: <i>[yield]</i>\n
+			- Maturation speed: <i>[maturation]</i>\n
+			- Production speed: <i>[production]</i>\n
+			- Endurance: <i>[endurance]</i>\n
+			- Healing properties: <i>[reagents.get_reagent_amount("nutriment")]</i>\n
+			*---------*</span>"}
+		// END AUTOFIX
 		usr << msg
 		return
 
@@ -98,12 +102,16 @@
 				msg += "- Plant type: <i>Weed</i>\n"
 			if(2)
 				msg += "- Plant type: <i>Mushroom</i>\n"
-		msg += "- Acid strength: <i>[potency]</i>\n"
-		msg += "- Yield: <i>[yield]</i>\n"
-		msg += "- Maturation speed: <i>[maturation]</i>\n"
-		msg += "- Production speed: <i>[production]</i>\n"
-		msg += "- Endurance: <i>[endurance]</i>\n"
-		msg += "*---------*</span>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\reagent_containers\food\snacks\grown.dm:101: msg += "- Acid strength: <i>[potency]</i>\n"
+		msg += {"- Acid strength: <i>[potency]</i>\n
+			- Yield: <i>[yield]</i>\n
+			- Maturation speed: <i>[maturation]</i>\n
+			- Production speed: <i>[production]</i>\n
+			- Endurance: <i>[endurance]</i>\n
+			*---------*</span>"}
+		// END AUTOFIX
 		usr << msg
 		return
 

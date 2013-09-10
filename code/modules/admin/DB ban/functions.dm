@@ -25,6 +25,9 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 		if(BANTYPE_JOB_TEMP)
 			bantype_str = "JOB_TEMPBAN"
 			bantype_pass = 1
+		if(BANTYPE_APPEARANCE)
+			bantype_str = "APPEARANCE_PERMABAN"
+			bantype_pass = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
 	if( !isnum(duration) ) return
@@ -103,6 +106,9 @@ datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 				bantype_pass = 1
 			if(BANTYPE_JOB_TEMP)
 				bantype_str = "JOB_TEMPBAN"
+				bantype_pass = 1
+			if(BANTYPE_APPEARANCE)
+				bantype_str = "APPEARANCE_PERMABAN"
 				bantype_pass = 1
 			if(BANTYPE_ANY_FULLBAN)
 				bantype_str = "ANY"
@@ -273,49 +279,53 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 
 	var/output = "<div align='center'><table width='90%'><tr>"
 
-	output += "<td width='35%' align='center'>"
-	output += "<h1>Banning panel</h1>"
-	output += "</td>"
 
-	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
-
-	output += "<form method='GET' action='?src=\ref[src]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)"
-	output += "<input type='hidden' name='src' value='\ref[src]'>"
-	output += "<table width='100%'><tr>"
-	output += "<td><b>Ban type:</b><select name='dbbanaddtype'>"
-	output += "<option value=''>--</option>"
-	output += "<option value='[BANTYPE_PERMA]'>PERMABAN</option>"
-	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
-	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
-	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
-	output += "</select></td>"
-	output += "<td><b>Ckey:</b> <input type='text' name='dbbanaddckey'></td></tr>"
-	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
-	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
-	output += "<option value=''>--</option>"
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:282: output += "<td width='35%' align='center'>"
+	output += {"<td width='35%' align='center'>
+		<h1>Banning panel</h1>
+		</td>
+		<td width='65%' align='center' bgcolor='#f9f9f9'>
+		<form method='GET' action='?src=\ref[src]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)
+		<input type='hidden' name='src' value='\ref[src]'>
+		<table width='100%'><tr>
+		<td><b>Ban type:</b><select name='dbbanaddtype'>
+		<option value=''>--</option>
+		<option value='[BANTYPE_PERMA]'>PERMABAN</option>
+		<option value='[BANTYPE_TEMP]'>TEMPBAN</option>
+		<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>
+		<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>
+		<option value='[BANTYPE_APPEARANCE]'>APPEARANCE BAN</option>
+		</select></td>
+		<td><b>Ckey:</b> <input type='text' name='dbbanaddckey'></td></tr>
+		<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>
+		<td><b>Job:</b><select name='dbbanaddjob'>
+		<option value=''>--</option>"}
+	// END AUTOFIX
 	for(var/j in get_all_jobs())
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list("traitor","changeling","operative","revolutionary","cultist","wizard"))
 		output += "<option value='[j]'>[j]</option>"
-	output += "</select></td></tr></table>"
-	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
-	output += "<input type='submit' value='Add ban'>"
-	output += "</form>"
 
-	output += "</td>"
-	output += "</tr>"
-	output += "</table>"
-
-	output += "<form method='GET' action='?src=\ref[src]'><b>Search:</b> "
-	output += "<input type='hidden' name='src' value='\ref[src]'>"
-	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
-	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>"
-	output += "<input type='submit' value='search'>"
-	output += "</form>"
-	output += "Please note that all jobban bans or unbans are in-effect the following round."
-
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:309: output += "</select></td></tr></table>"
+	output += {"</select></td></tr></table>
+		<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>
+		<input type='submit' value='Add ban'>
+		</form>
+		</td>
+		</tr>
+		</table>
+		<form method='GET' action='?src=\ref[src]'><b>Search:</b> 
+		<input type='hidden' name='src' value='\ref[src]'>
+		<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>
+		<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>
+		<input type='submit' value='search'>
+		</form>
+		Please note that all jobban bans or unbans are in-effect the following round."}
+	// END AUTOFIX
 	if(adminckey || playerckey)
 
 		var/blcolor = "#ffeeee" //banned light
@@ -323,15 +333,18 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		var/ulcolor = "#eeffee" //unbanned light
 		var/udcolor = "#ddffdd" //unbanned dark
 
-		output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
-		output += "<tr>"
-		output += "<th width='25%'><b>TYPE</b></th>"
-		output += "<th width='20%'><b>CKEY</b></th>"
-		output += "<th width='20%'><b>TIME APPLIED</b></th>"
-		output += "<th width='20%'><b>ADMIN</b></th>"
-		output += "<th width='15%'><b>OPTIONS</b></th>"
-		output += "</tr>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:333: output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
+		output += {"<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>
+			<tr>
+			<th width='25%'><b>TYPE</b></th>
+			<th width='20%'><b>CKEY</b></th>
+			<th width='20%'><b>TIME APPLIED</b></th>
+			<th width='20%'><b>ADMIN</b></th>
+			<th width='15%'><b>OPTIONS</b></th>
+			</tr>"}
+		// END AUTOFIX
 		adminckey = ckey(adminckey)
 		playerckey = ckey(playerckey)
 		var/adminsearch = ""
@@ -375,31 +388,48 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
 				if("JOB_TEMPBAN")
 					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]"
+				if("APPEARANCE_PERMABAN")
+					typedesc = "<b>APPEARANCE/NAME BAN</b>"
 
-			output += "<tr bgcolor='[dcolor]'>"
-			output += "<td align='center'>[typedesc]</td>"
-			output += "<td align='center'><b>[ckey]</b></td>"
-			output += "<td align='center'>[bantime]</td>"
-			output += "<td align='center'><b>[ackey]</b></td>"
-			output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
-			output += "</tr>"
-			output += "<tr bgcolor='[lcolor]'>"
-			output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>"
-			output += "</tr>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:388: output += "<tr bgcolor='[dcolor]'>"
+			output += {"<tr bgcolor='[dcolor]'>
+				<td align='center'>[typedesc]</td>
+				<td align='center'><b>[ckey]</b></td>
+				<td align='center'>[bantime]</td>
+				<td align='center'><b>[ackey]</b></td>
+				<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>
+				</tr>
+				<tr bgcolor='[lcolor]'>
+				<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>
+				</tr>"}
+			// END AUTOFIX
 			if(edits)
-				output += "<tr bgcolor='[dcolor]'>"
-				output += "<td align='center' colspan='5'><b>EDITS</b></td>"
-				output += "</tr>"
-				output += "<tr bgcolor='[lcolor]'>"
-				output += "<td align='center' colspan='5'><font size='2'>[edits]</font></td>"
-				output += "</tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:399: output += "<tr bgcolor='[dcolor]'>"
+				output += {"<tr bgcolor='[dcolor]'>
+					<td align='center' colspan='5'><b>EDITS</b></td>
+					</tr>
+					<tr bgcolor='[lcolor]'>
+					<td align='center' colspan='5'><font size='2'>[edits]</font></td>
+					</tr>"}
+				// END AUTOFIX
 			if(unbanned)
-				output += "<tr bgcolor='[dcolor]'>"
-				output += "<td align='center' colspan='5' bgcolor=''><b>UNBANNED by admin [unbanckey] on [unbantime]</b></td>"
-				output += "</tr>"
-			output += "<tr>"
-			output += "<td colspan='5' bgcolor='white'>&nbsp</td>"
-			output += "</tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:406: output += "<tr bgcolor='[dcolor]'>"
+				output += {"<tr bgcolor='[dcolor]'>
+					<td align='center' colspan='5' bgcolor=''><b>UNBANNED by admin [unbanckey] on [unbantime]</b></td>
+					</tr>"}
+				// END AUTOFIX
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:409: output += "<tr>"
+			output += {"<tr>
+				<td colspan='5' bgcolor='white'>&nbsp</td>
+				</tr>"}
+			// END AUTOFIX
 
 		output += "</table></div>"
 

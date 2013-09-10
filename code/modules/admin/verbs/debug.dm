@@ -142,12 +142,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/datum/gas_mixture/env = T.return_air()
 
 	var/t = ""
-	t+= "Nitrogen : [env.nitrogen]\n"
-	t+= "Oxygen : [env.oxygen]\n"
-	t+= "Plasma : [env.toxins]\n"
-	t+= "CO2: [env.carbon_dioxide]\n"
-	t+= "Pressure: [env.return_pressure()]\n"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\debug.dm:145: t+= "Nitrogen : [env.nitrogen]\n"
+	t += {"Nitrogen : [env.nitrogen]\n
+		Oxygen : [env.oxygen]\n
+		Plasma : [env.toxins]\n
+		CO2: [env.carbon_dioxide]\n
+		Pressure: [env.return_pressure()]\n"}
+	// END AUTOFIX
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

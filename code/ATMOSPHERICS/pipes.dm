@@ -544,7 +544,7 @@ obj/machinery/atmospherics/pipe
 		var/build_killswitch = 1
 
 		var/obj/machinery/atmospherics/node1
-		New()		
+		New()
 			initialize_directions = dir
 			..()
 
@@ -739,7 +739,7 @@ obj/machinery/atmospherics/pipe
 
 				icon_state = "manifold_[connected]_[unconnected]"
 
-				if(!connected) 
+				if(!connected)
 					del(src)
 
 			return
@@ -953,6 +953,7 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		update_icon()
+			overlays.Cut()
 			if(node1&&node2&&node3&&node4)
 				var/C = ""
 				switch(color)
@@ -966,7 +967,7 @@ obj/machinery/atmospherics/pipe
 
 			else
 				icon_state = "manifold4w_ex"
-				var/icon/con = new/icon('pipe_manifold.dmi',"manifold4w_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
+				var/icon/con = new/icon('icons/obj/atmospherics/pipe_manifold.dmi',"manifold4w_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
 
 				if(node1)
 					overlays += new/image(con,dir=1)
@@ -982,7 +983,7 @@ obj/machinery/atmospherics/pipe
 			return
 
 		initialize()
-			
+
 			for(var/obj/machinery/atmospherics/target in get_step(src,1))
 				if(target.initialize_directions & 2)
 					node1 = target
@@ -1059,11 +1060,11 @@ obj/machinery/atmospherics/pipe
 	manifold4w/general/hidden
 		level = 1
 		icon_state = "manifold4w-f"
-		
+
 	cap
 		name = "pipe endcap"
 		desc = "An endcap for pipes"
-		icon = 'pipes.dmi'
+		icon = 'icons/obj/pipes.dmi'
 		icon_state = "cap"
 		level = 2
 		layer = 2.4 //under wires with their 2.44

@@ -108,7 +108,7 @@ var/global/datum/controller/gameticker/ticker
 
 	//setup the money accounts
 	if(!centcomm_account_db)
-		for(var/obj/machinery/account_database/check_db in world)
+		for(var/obj/machinery/account_database/check_db in machines)
 			if(check_db.z == 2)
 				centcomm_account_db = check_db
 				break
@@ -121,10 +121,6 @@ var/global/datum/controller/gameticker/ticker
 
 	//here to initialize the random events nicely at round start
 	setup_economy()
-
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
-	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
@@ -146,7 +142,12 @@ var/global/datum/controller/gameticker/ticker
 		if(C.holder)
 			admins_number++
 	if(admins_number == 0)
-		send2irc("Server", "Round just started with no admins online!")
+		send2adminirc("Round has started with no admins online.")
+
+	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
+	master_controller.process()		//Start master_controller.process()
+	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+
 
 	if(config.sql_enabled)
 		spawn(3000)

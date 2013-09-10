@@ -22,11 +22,15 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Plasma : [environment.toxins] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "\red Temperature: [environment.temperature] \n"
+	t += {"\red Temperature: [environment.temperature] \n
+		\blue Nitrogen: [environment.nitrogen] \n
+		\blue Oxygen: [environment.oxygen] \n
+		\blue Plasma : [environment.toxins] \n
+		\blue Carbon Dioxide: [environment.carbon_dioxide] \n"}
+	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
 		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
 
@@ -655,10 +659,10 @@ var/list/slot_equipment_priority = list( \
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
+	onclose(user, "mob\ref[src]")
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
@@ -725,7 +729,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/memory()
 	set name = "Notes"
-	set category = "OOC"
+	set category = "IC"
 	if(mind)
 		mind.show_memory(src)
 	else
@@ -733,7 +737,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
-	set category = "OOC"
+	set category = "IC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
@@ -1012,22 +1016,31 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/start_pulling(var/atom/movable/AM)
 	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if (!( AM.anchored ))
-		if(pulling)
-			var/pulling_old = pulling
-			stop_pulling()
-			// Are we pulling the same thing twice? Just stop pulling.
-			if(pulling_old == AM)
-				return
-		src.pulling = AM
-		AM.pulledby = src
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
 
+	if (AM.anchored)
+		return
+
+	var/mob/M = AM
+	if(ismob(AM))
+		if(!iscarbon(src))
+			M.LAssailant = null
+		else
+			M.LAssailant = usr
+
+	if(pulling)
+		var/pulling_old = pulling
+		stop_pulling()
+		// Are we pulling the same thing twice? Just stop pulling.
+		if(pulling_old == AM)
+			return
+
+	src.pulling = AM
+	AM.pulledby = src
+
+	//Attempted fix for people flying away through space when cuffed and dragged.
+	if(ismob(AM))
+		var/mob/pulled = AM
+		pulled.inertia_dir = 0
 
 /mob/proc/can_use_hands()
 	return
@@ -1315,3 +1328,66 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
+
+mob/verb/yank_out_object()
+	set category = "Object"
+	set name = "Yank out object"
+	set desc = "Remove an embedded item at the cost of bleeding and pain."
+	set src in view(1)
+
+	if(!isliving(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
+
+	if(usr.stat == 1)
+		usr << "You are unconcious and cannot do that!"
+		return
+
+	if(usr.restrained())
+		usr << "You are restrained and cannot do that!"
+		return
+
+	var/mob/S = src
+	var/mob/U = usr
+	var/list/valid_objects = list()
+	var/self = null
+
+	if(S == U)
+		self = 1 // Removing object from yourself.
+
+	for(var/obj/item/weapon/W in embedded)
+		if(W.w_class >= 2)
+			valid_objects += W
+
+	if(!valid_objects.len)
+		if(self)
+			src << "You have nothing stuck in your body that is large enough to remove."
+		else
+			U << "[src] has nothing stuck in their wounds that is large enough to remove."
+		return
+
+	var/obj/item/weapon/selection = input("What do you want to yank out?", "Embedded objects") in valid_objects
+
+	if(self)
+		src << "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>"
+	else
+		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
+
+	if(!do_after(U, 80))
+		return
+	if(!selection || !S || !U)
+		return
+
+	if(self)
+		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
+	else
+		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
+
+	selection.loc = get_turf(src)
+
+	for(var/obj/item/weapon/O in pinned)
+		if(O == selection)
+			pinned -= O
+		if(!pinned.len)
+			anchored = 0
+	return 1

@@ -113,8 +113,3 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		send2irc(ckey, original_msg)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
-
-proc/send2irc(msg,msg2)
-	if(config.useircbot)
-		shell("python [config.nudge_script_path] [msg] [msg2]")
-	return

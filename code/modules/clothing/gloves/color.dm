@@ -39,6 +39,11 @@
 	ce
 		color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
+	thief
+		pickpocket = 1
+
+
+
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."

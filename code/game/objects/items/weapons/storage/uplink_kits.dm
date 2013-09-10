@@ -125,3 +125,12 @@
 	new /obj/item/device/handtv(src)
 	new /obj/item/weapon/storage/box/surveillance(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/conversion
+	name = "box (CK)"
+
+/obj/item/weapon/storage/box/syndie_kit/conversion/New()
+	..()
+	new /obj/item/weapon/conversion_kit(src)
+	new /obj/item/ammo_magazine/a357(src)
+	return

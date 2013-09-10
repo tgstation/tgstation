@@ -174,3 +174,164 @@
 	desc = "A handgun holster. Made of expensive leather."
 	icon_state = "holster"
 	color = "holster_low"
+
+/obj/item/clothing/tie/storage
+	name = "load bearing equipment"
+	desc = "Used to hold things when you don't have enough hands for that."
+	icon_state = "webbing"
+	color = "webbing"
+	var/slots = 3
+	var/obj/item/weapon/storage/pockets/hold
+
+/obj/item/clothing/tie/storage/New()
+	hold = new /obj/item/weapon/storage/pockets(src)
+	hold.master_item = src
+	hold.storage_slots = slots
+
+/obj/item/clothing/tie/storage/attack_self(mob/user as mob)
+	user << "<span class='notice'>You empty [src].</span>"
+	var/turf/T = get_turf(src)
+	hold.hide_from(usr)
+	for(var/obj/item/I in hold.contents)
+		hold.remove_from_storage(I, T)
+	src.add_fingerprint(user)
+
+/obj/item/clothing/tie/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	hold.attackby(W,user)
+	src.add_fingerprint(user)
+
+/obj/item/weapon/storage/pockets
+	name = "storage"
+	var/master_item		//item it belongs to
+
+/obj/item/weapon/storage/pockets/close(mob/user as mob)
+	..()
+	loc = master_item
+
+/obj/item/clothing/tie/storage/webbing
+	name = "webbing"
+	desc = "Strudy mess of synthcotton belts and buckles, ready to share your burden."
+	icon_state = "webbing"
+	color = "webbing"
+
+/obj/item/clothing/tie/storage/black_vest
+	name = "black webbing vest"
+	desc = "Robust black synthcotton vest with lots of pockets to hold whatever you need, but cannot hold in hands."
+	icon_state = "vest_black"
+	color = "vest_black"
+	slots = 5
+
+/obj/item/clothing/tie/storage/brown_vest
+	name = "brown webbing vest"
+	desc = "Worn brownish synthcotton vest with lots of pockets to unload your hands."
+	icon_state = "vest_brown"
+	color = "vest_brown"
+	slots = 5
+/*
+	Holobadges are worn on the belt or neck, and can be used to show that the holder is an authorized
+	Security agent - the user details can be imprinted on the badge with a Security-access ID card,
+	or they can be emagged to accept any ID for use in disguises.
+*/
+
+/obj/item/clothing/tie/holobadge
+
+	name = "holobadge"
+	desc = "This glowing blue badge marks the holder as THE LAW."
+	icon_state = "holobadge"
+	color = "holobadge"
+	slot_flags = SLOT_BELT
+
+	var/emagged = 0 //Emagging removes Sec check.
+	var/stored_name = null
+
+/obj/item/clothing/tie/holobadge/cord
+	icon_state = "holobadge-cord"
+	color = "holobadge-cord"
+	slot_flags = SLOT_MASK
+
+/obj/item/clothing/tie/holobadge/attack_self(mob/user as mob)
+	if(!stored_name)
+		user << "Waving around a badge before swiping an ID would be pretty pointless."
+		return
+	if(isliving(user))
+		user.visible_message("\red [user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.","\red You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.")
+
+/obj/item/clothing/tie/holobadge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+
+	if (istype(O, /obj/item/weapon/card/emag))
+		if (emagged)
+			user << "\red [src] is already cracked."
+			return
+		else
+			emagged = 1
+			user << "\red You swipe [O] and crack the holobadge security checks."
+			return
+
+	else if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
+
+		var/obj/item/weapon/card/id/id_card = null
+
+		if(istype(O, /obj/item/weapon/card/id))
+			id_card = O
+		else
+			var/obj/item/device/pda/pda = O
+			id_card = pda.id
+
+		if(access_security in id_card.access || emagged)
+			user << "You imprint your ID details onto the badge."
+			stored_name = id_card.registered_name
+			name = "holobadge ([stored_name])"
+			desc = "This glowing blue badge marks [stored_name] as THE LAW."
+		else
+			user << "[src] rejects your insufficient access rights."
+		return
+	..()
+
+/obj/item/clothing/tie/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
+	if(isliving(user))
+		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+
+/obj/item/weapon/storage/box/holobadge
+	name = "holobadge box"
+	desc = "A box claiming to contain holobadges."
+	New()
+		new /obj/item/clothing/tie/holobadge(src)
+		new /obj/item/clothing/tie/holobadge(src)
+		new /obj/item/clothing/tie/holobadge(src)
+		new /obj/item/clothing/tie/holobadge(src)
+		new /obj/item/clothing/tie/holobadge/cord(src)
+		new /obj/item/clothing/tie/holobadge/cord(src)
+		..()
+		return
+
+/obj/item/clothing/tie/storage/knifeharness
+	name = "decorated harness"
+	desc = "A heavily decorated harness of sinew and leather with two knife-loops."
+	icon_state = "unathiharness2"
+	color = "unathiharness2"
+	slots = 2
+
+/obj/item/clothing/tie/storage/knifeharness/attackby(var/obj/item/O as obj, mob/user as mob)
+	..()
+	update()
+
+/obj/item/clothing/tie/storage/knifeharness/proc/update()
+	var/count = 0
+	for(var/obj/item/I in hold)
+		if(istype(I,/obj/item/weapon/hatchet/unathiknife))
+			count++
+	if(count>2) count = 2
+	item_state = "unathiharness[count]"
+	icon_state = item_state
+	color = item_state
+
+	if(istype(loc, /obj/item/clothing))
+		var/obj/item/clothing/U = loc
+		if(istype(U.loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = U.loc
+			H.update_inv_w_uniform()
+
+/obj/item/clothing/tie/storage/knifeharness/New()
+	..()
+	new /obj/item/weapon/hatchet/unathiknife(hold)
+	new /obj/item/weapon/hatchet/unathiknife(hold)

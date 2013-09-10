@@ -107,10 +107,13 @@ datum/mind
 			return
 
 		var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
-		out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-		out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
-		out += "Factions and special roles:<br>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:110: out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
+		out += {"Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>
+			Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>
+			Factions and special roles:<br>"}
+		// END AUTOFIX
 		var/list/sections = list(
 			"revolution",
 			"cult",
@@ -134,9 +137,12 @@ datum/mind
 			else if (assigned_role in list("Security Officer", "Detective", "Warden"))
 				text += "head|<b>OFFICER</b>|employee|headre|rev"
 			else if (src in ticker.mode.head_revolutionaries)
-				text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-				text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:137: text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+				text = {"head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>
+					<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"}
+				// END AUTOFIX
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (flash)
@@ -166,8 +172,12 @@ datum/mind
 			else if (assigned_role in list("Security Officer", "Detective", "Warden"))
 				text += "head|<b>OFFICER</b>|employee|cultist"
 			else if (src in ticker.mode.cult)
-				text += "head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-				text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:169: text += "head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
+				text += {"head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>
+					<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."}
+				// END AUTOFIX
 /*
 				if (objectives.len==0)
 					text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
@@ -182,8 +192,12 @@ datum/mind
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
 			if (src in ticker.mode.wizards)
-				text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
-				text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:185: text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
+				text += {"<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>
+					<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."}
+				// END AUTOFIX
 				if (objectives.len==0)
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
 			else
@@ -214,10 +228,14 @@ datum/mind
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
 			if (src in ticker.mode.syndicates)
-				text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
-				text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:217: text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
+				text += {"<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>
+					<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."}
+				// END AUTOFIX
 				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in world)
+				for (var/obj/machinery/nuclearbomb/bombue in machines)
 					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 						code = bombue.r_code
 						break
@@ -322,12 +340,14 @@ datum/mind
 			text += "." //hiel grammar
 			out += text
 
-		out += "<br>"
-
-		out += "<b>Memory:</b><br>"
-		out += memory
-		out += "<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a><br>"
-		out += "Objectives:<br>"
+		// NOT-QUITE-AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:325: out += "<br>"
+		out += {"<br>
+			<b>Memory:</b>
+			<br>[memory]
+			<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a>
+			<br>Objectives:<br>"}
+		// END AUTOFIX
 		if (objectives.len == 0)
 			out += "EMPTY<br>"
 		else
@@ -335,10 +355,12 @@ datum/mind
 			for(var/datum/objective/objective in objectives)
 				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
 				obj_count++
-		out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 
-		out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:338: out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
+		out += {"<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>
+			<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"}
+		// END AUTOFIX
 		usr << browse(out, "window=edit_memory[src]")
 
 	Topic(href, href_list)
@@ -719,7 +741,7 @@ datum/mind
 						usr << "\red Equipping a syndicate failed!"
 				if("tellcode")
 					var/code
-					for (var/obj/machinery/nuclearbomb/bombue in world)
+					for (var/obj/machinery/nuclearbomb/bombue in machines)
 						if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 							code = bombue.r_code
 							break
@@ -975,7 +997,7 @@ datum/mind
 
 			current.verbs += /mob/living/silicon/ai/proc/choose_modules
 			current.verbs += /datum/game_mode/malfunction/proc/takeover
-			current:malf_picker = new /datum/module_picker
+			current:malf_picker = new /datum/AI_Module/module_picker
 			current:laws = new /datum/ai_laws/malfunction
 			current:show_laws()
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
@@ -1142,21 +1164,18 @@ datum/mind
 
 
 
-/mob/proc/sync_mind()
-	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
 
 //Initialisation procs
-/mob/proc/mind_initialize()
+/mob/proc/mind_initialize() // vgedit: /mob instead of /mob/living
 	if(mind)
 		mind.key = key
-
 	else
 		mind = new /datum/mind(key)
+		mind.original = src
 		if(ticker)
 			ticker.minds += mind
 		else
-			error("mind_initialize(): No ticker ready yet! Please inform Carn")
+			world.log << "## DEBUG: mind_initialize(): No ticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
@@ -1248,3 +1267,7 @@ datum/mind
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
 
+/mob/living/simple_animal/vox/armalis/mind_initialize()
+	..()
+	mind.assigned_role = "Armalis"
+	mind.special_role = "Vox Raider"

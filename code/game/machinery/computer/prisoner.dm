@@ -38,11 +38,15 @@
 				Tr = get_turf(C)
 				if((Tr) && (Tr.z != src.z))	continue//Out of range
 				if(!C.implanted) continue
-				dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
-				dat += "<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>"
-				dat += "<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>"
-				dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font color=red>(10)</font>)</A><BR>"
-				dat += "********************************<BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\prisoner.dm:41: dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
+				dat += {"[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: 
+					<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>
+					<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>
+					<A href='?src=\ref[src];inject10=\ref[C]'>(<font color=red>(10)</font>)</A><BR>
+					********************************<BR>"}
+				// END AUTOFIX
 			dat += "<HR>Tracking Implants<BR>"
 			for(var/obj/item/weapon/implant/tracking/T in world)
 				Tr = get_turf(T)
@@ -55,9 +59,13 @@
 					loc_display = mob_loc.loc
 				if(T.malfunction)
 					loc_display = pick(teleportlocs)
-				dat += "ID: [T.id] | Location: [loc_display]<BR>"
-				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
-				dat += "********************************<BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\prisoner.dm:58: dat += "ID: [T.id] | Location: [loc_display]<BR>"
+				dat += {"ID: [T.id] | Location: [loc_display]<BR>
+					<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>
+					********************************<BR>"}
+				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
 		user << browse(dat, "window=computer;size=400x500")
@@ -106,5 +114,3 @@
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		return
-
-

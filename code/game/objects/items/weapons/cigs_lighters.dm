@@ -61,7 +61,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	body_parts_covered = null
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
-	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
+	var/icon_on = "cigon"
+	var/overlay_on = "ciglit"
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
@@ -145,6 +146,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
 		reagents.handle_reactions()
+		// This ain't ready yet.
+		//overlays.Cut()
+		//overlays += image('icons/mob/mask.dmi',overlay_on,LIGHTING_LAYER+1)
 		icon_state = icon_on
 		item_state = icon_on
 		var/turf/T = get_turf(src)
@@ -198,6 +202,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
+	overlay_on = "cigarlit"
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
@@ -210,6 +215,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
+	overlay_on = "cigar2lit"
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "Premium Havanian Cigar"
@@ -217,6 +223,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
+	overlay_on = "cigar2lit"
 	smoketime = 7200
 	chem_volume = 30
 
@@ -250,6 +257,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
+	overlay_on = "pipelit"
 	smoketime = 100
 
 /obj/item/clothing/mask/cigarette/pipe/light(var/flavor_text = "[usr] lights the [name].")

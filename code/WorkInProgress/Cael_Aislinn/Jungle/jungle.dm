@@ -35,7 +35,7 @@
 	New()
 		//pick a random temple to link to
 		var/list/waypoints = list()
-		for(var/obj/effect/landmark/temple/destination/T in world)
+		for(var/obj/effect/landmark/temple/destination/T in landmarks_list)
 			waypoints.Add(T)
 			if(!T)
 				return
@@ -163,7 +163,7 @@
 		num_spawned++
 
 	//make some randomly pathing rivers
-	for(var/obj/effect/landmark/river_waypoint/W in world)
+	for(var/obj/effect/landmark/river_waypoint/W in landmarks_list)
 		if (W.z != src.z || W.connected)
 			continue
 
@@ -236,7 +236,7 @@
 		num_spawned++
 
 	//get any path nodes placed on the map
-	for(var/obj/effect/landmark/path_waypoint/W in world)
+	for(var/obj/effect/landmark/path_waypoint/W in landmarks_list)
 		if (W.z == src.z)
 			path_nodes.Add(W)
 

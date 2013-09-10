@@ -38,9 +38,13 @@
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
 	else
 		if(screen == 0)
-			dat += "<h3>Cyborg Control Console</h3><BR>"
-			dat += "<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>"
-			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\robot.dm:41: dat += "<h3>Cyborg Control Console</h3><BR>"
+			dat += {"<h3>Cyborg Control Console</h3><BR>
+				<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>
+				<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"}
+			// END AUTOFIX
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in mob_list)
 				if(istype(user, /mob/living/silicon/ai))
@@ -75,9 +79,13 @@
 				if (istype(user, /mob/living/silicon))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
-				dat += "<BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\robot.dm:78: dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
+				dat += {"<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> 
+					<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>
+					<BR>"}
+				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 		if(screen == 2)
 			if(!src.status)
@@ -225,4 +233,3 @@
 			R.self_destruct()
 
 	return
-

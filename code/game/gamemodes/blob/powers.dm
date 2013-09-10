@@ -244,6 +244,22 @@
 	OB.expand(T, 0)
 	return
 
+/mob/camera/blob/proc/click_create_shield(obj/effect/blob/B)
+	if(!B)//We are on a blob
+		src << "There is no blob here!"
+		return
+
+	if(!istype(B, /obj/effect/blob/normal))
+		src << "Unable to use this blob, find a normal one."
+		return
+
+	if(!can_buy(10))
+		return
+
+
+	B.change_to(/obj/effect/blob/shield)
+	return
+
 /mob/camera/blob/proc/click_expand_blob(var/turf/T)
 
 	if(!T)

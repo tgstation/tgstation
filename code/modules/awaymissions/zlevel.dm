@@ -40,7 +40,7 @@ proc/createRandomZlevel()
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
-			maploader.load_map(file)
+			maploader.load_map(file, load_speed = 100)
 
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if (L.name != "awaystart")

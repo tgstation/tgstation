@@ -552,42 +552,62 @@
 
 
 	if(locked && (!istype(user, /mob/living/silicon)))
-		t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
-		t += "Main breaker : <B>[operating ? "On" : "Off"]</B><BR>"
-		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
-		t += "Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:555: t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
+		t += {"<I>(Swipe ID card to unlock inteface.)</I><BR>
+				Main breaker : <B>[operating ? "On" : "Off"]</B><BR>
+				External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>
+				Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"}
+		// END AUTOFIX
 		if(cell)
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
-			t += " ([chargemode ? "Auto" : "Off"])"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:560: t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
+			t += {"([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])
+				([chargemode ? "Auto" : "Off"])"}
+			// END AUTOFIX
 
 		t += "<BR><HR>Power channels<BR><PRE>"
 
 		var/list/L = list ("Off","Off (Auto)", "On", "On (Auto)")
 
-		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><BR>"
-		t += "Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B><BR>"
-		t += "Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B><BR>"
 
-		t += "<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
-		t += "<HR>Cover lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:567: t += "Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><BR>"
+		t += {"Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B>
+Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B>
+Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B>
 
+Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>
+			<HR>Cover lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"}
+		// END AUTOFIX
 	else
 		if (!istype(user, /mob/living/silicon))
 			t += "<I>(Swipe ID card to lock interface.)</I><BR>"
-		t += "Main breaker: [operating ? "<B>On</B> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <B>Off</B>" ]<BR>"
-		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
-		if(cell)
-			t += "Power cell: <B>[round(cell.percent())]%</B>"
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
-			t += " ([chargemode ? "<A href='?src=\ref[src];cmode=1'>Off</A> <B>Auto</B>" : "<B>Off</B> <A href='?src=\ref[src];cmode=1'>Auto</A>"])"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:577: t += "Main breaker: [operating ? "<B>On</B> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <B>Off</B>" ]<BR>"
+		t += {"Main breaker: [operating ? "<B>On</B> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <B>Off</B>" ]<BR>
+			External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"}
+		// END AUTOFIX
+		if(cell)
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:580: t += "Power cell: <B>[round(cell.percent())]%</B>"
+			t += {"Power cell: <B>[round(cell.percent())]%</B>
+				([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])
+				([chargemode ? "<A href='?src=\ref[src];cmode=1'>Off</A> <B>Auto</B>" : "<B>Off</B> <A href='?src=\ref[src];cmode=1'>Auto</A>"])"}
+			// END AUTOFIX
 		else
 			t += "Power cell: <B><FONT COLOR=red>Not connected.</FONT></B>"
 
-		t += "<BR><HR>Power channels<BR><PRE>"
 
-
-		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : "
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:587: t += "<BR><HR>Power channels<BR><PRE>"
+		t += {"<BR><HR>Power channels<BR><PRE>
+Equipment:    [add_lspace(lastused_equip, 6)] W : "}
+		// END AUTOFIX
 		switch(equipment)
 			if(0)
 				t += "<B>Off</B> <A href='?src=\ref[src];eqp=2'>On</A> <A href='?src=\ref[src];eqp=3'>Auto</A>"
@@ -597,10 +617,12 @@
 				t += "<A href='?src=\ref[src];eqp=1'>Off</A> <B>On</B> <A href='?src=\ref[src];eqp=3'>Auto</A>"
 			if(3)
 				t += "<A href='?src=\ref[src];eqp=1'>Off</A> <A href='?src=\ref[src];eqp=2'>On</A> <B>Auto (On)</B>"
-		t +="<BR>"
 
-		t += "Lighting:     [add_lspace(lastused_light, 6)] W : "
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:600: t +="<BR>"
+		t += {"
+Lighting:     [add_lspace(lastused_light, 6)] W : "}
+		// END AUTOFIX
 		switch(lighting)
 			if(0)
 				t += "<B>Off</B> <A href='?src=\ref[src];lgt=2'>On</A> <A href='?src=\ref[src];lgt=3'>Auto</A>"
@@ -610,10 +632,12 @@
 				t += "<A href='?src=\ref[src];lgt=1'>Off</A> <B>On</B> <A href='?src=\ref[src];lgt=3'>Auto</A>"
 			if(3)
 				t += "<A href='?src=\ref[src];lgt=1'>Off</A> <A href='?src=\ref[src];lgt=2'>On</A> <B>Auto (On)</B>"
-		t +="<BR>"
 
-
-		t += "Environmental:[add_lspace(lastused_environ, 6)] W : "
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:613: t +="<BR>"
+		t += {"
+Environmental:[add_lspace(lastused_environ, 6)] W : "}
+		// END AUTOFIX
 		switch(environ)
 			if(0)
 				t += "<B>Off</B> <A href='?src=\ref[src];env=2'>On</A> <A href='?src=\ref[src];env=3'>Auto</A>"
@@ -626,10 +650,12 @@
 
 
 
-		t += "<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
-		t += "<HR>Cover lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"
 
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:629: t += "<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
+		t += {"<BR>Total load: [lastused_light + lastused_equip + lastused_environ] W</PRE>
+			<HR>Cover lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"}
+		// END AUTOFIX
 		if (istype(user, /mob/living/silicon))
 			t += "<BR><HR><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><BR>"
 		if (ticker && ticker.mode)
@@ -645,9 +671,12 @@
 					else
 						t += "<I>Core Processes Uploaded</I><BR>"
 
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
-	t += "</TT></body></html>"
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\apc.dm:648: t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
+	t += {"<BR><HR><A href='?src=\ref[src];close=1'>Close</A>
+		</TT></body></html>"}
+	// END AUTOFIX
 	user << browse(t, "window=apc")
 	onclose(user, "apc")
 	return

@@ -90,12 +90,12 @@ datum/controller/game_controller/proc/setup_objects()
 
 	world << "\red \b Initializing pipe networks"
 	sleep(-1)
-	for(var/obj/machinery/atmospherics/machine in world)
+	for(var/obj/machinery/atmospherics/machine in machines)
 		machine.build_network()
 
 	world << "\red \b Initializing atmos machinery."
 	sleep(-1)
-	for(var/obj/machinery/atmospherics/unary/U in world)
+	for(var/obj/machinery/atmospherics/unary/U in machines)
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
 			var/obj/machinery/atmospherics/unary/vent_pump/T = U
 			T.broadcast_status()
@@ -138,7 +138,7 @@ datum/controller/game_controller/proc/process()
 				controller_iteration++
 
 				vote.process()
-				process_newscaster()
+				//process_newscaster()
 
 				//AIR
 

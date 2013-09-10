@@ -226,7 +226,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.loc = T
 			else
 				A << "This mob is not located in the game world."
-/*
+
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
 	set name = "Boo!"
@@ -240,7 +240,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
-*/
 
 /mob/dead/observer/memory()
 	set hidden = 1
@@ -275,7 +274,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/list/found_vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
-		if(!v.welded && v.z == src.z)
+		if(!v.welded && v.z == src.z && v.canSpawnMice==1) // No more spawning in atmos.  Assuming the mappers did their jobs, anyway.
 			found_vents.Add(v)
 	if(found_vents.len)
 		vent_found = pick(found_vents)
@@ -286,6 +285,46 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(host)
 		host.ckey = src.ckey
 		host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
+
+/mob/dead/observer/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Ghost"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+
+/*
+/mob/dead/observer/verb/become_mommi()
+	set name = "Become MoMMI"
+	set category = "Ghost"
+
+	var/timedifference = world.time - client.time_died_as_mouse
+	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+		var/timedifference_text
+		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
+		src << "<span class='warning'>You may only spawn again as a mouse or MoMMI more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		return
+
+	//find a viable mouse candidate
+	var/mob/living/silicon/robot/mommi/host
+	var/obj/machinery/mommi_spawner/spawner
+	var/list/found_spawners = list()
+	for(var/obj/machinery/mommi_spawner/s in world)
+		if(s.z == src.z && s.canSpawn())
+			found_spawners.Add(s)
+	if(found_spawners.len)
+		spawner = pick(found_spawners)
+		host = new /mob/living/simple_animal/mouse(spawner.loc)
+	else
+		src << "<span class='warning'>Unable to find any powered MoMMI Spawners to spawn MoMMIs at.</span>"
+
+	if(host)
+		host.ckey = src.ckey
+		//host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
+*/
 
 //BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)
