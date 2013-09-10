@@ -120,7 +120,7 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security", "Botany")
 	if(module)
 		return
 	switch(mod)
@@ -131,6 +131,14 @@
 			icon_state = "robot"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
+
+		if("Botany")
+			updatename(mod)
+			module = new /obj/item/weapon/robot_module/botany(src)
+			hands.icon_state = "standard"
+			icon_state = "botanysprite"
+			modtype = "Hydro"
+			feedback_inc("cyborg_botany",1)
 
 		if("Service")
 			updatename(mod)

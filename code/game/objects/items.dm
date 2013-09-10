@@ -188,11 +188,14 @@
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						user << "<span class='notice'>You put everything in [S].</span>"
+						if(!istype(S, /obj/item/weapon/storage/bag/plants/seedmanipulator))
+							user << "<span class='notice'>You put everything in [S].</span>"
 					else if(success)
-						user << "<span class='notice'>You put some things in [S].</span>"
+						if(!istype(S, /obj/item/weapon/storage/bag/plants/seedmanipulator))
+							user << "<span class='notice'>You put some things in [S].</span>"
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						if(!istype(S, /obj/item/weapon/storage/bag/plants/seedmanipulator))
+							user << "<span class='notice'>You fail to pick anything up with [S].</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
