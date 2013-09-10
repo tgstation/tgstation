@@ -461,7 +461,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
 		var/obj/item/TS
-		if(O.loc != src.module)
+		if(!(locate(O) in src.module.modules) && O != src.module.emag)
 			return
 		if(istype(O,/obj/item/borg/sight))
 			TS = sight_state

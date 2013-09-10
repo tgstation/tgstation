@@ -112,6 +112,8 @@
 	if(isMoMMI(user))
 		var/in_range = in_range(src, user) || src.loc == user
 		if(in_range)
+			if(src == user:tool_state || src == user:sight_state)
+				return 0
 			attack_hand(user)
 
 /obj/item/attack_hand(mob/user as mob)
