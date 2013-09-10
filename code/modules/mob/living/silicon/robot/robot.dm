@@ -855,6 +855,9 @@
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()
+	if(usr && (src != usr))
+		return
+
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
@@ -872,6 +875,8 @@
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
+		if(!(locate(O) in src.module.modules) && O != src.module.emag)
+			return
 		if(activated(O))
 			src << "Already activated"
 			return
