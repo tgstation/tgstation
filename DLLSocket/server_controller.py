@@ -14,7 +14,7 @@ COMPILE_COMMAND="/home/gmod/byond/compile_ss13.sh" # What shell script should be
 STATS_FILE='/home/gmod/stats.json' # Where do you want stats.json placed?
 
 MAX_FAILURES=3
-TIMEOUT=30.0
+TIMEOUT=30.0 # 30 seconds
 
 LOGPATH='/home/gmod/byond/crashlogs/' # Where do you want crash.log stored?
 GAMEPATH='/home/gmod/byond/tgstation/' # Where is the game directory?
@@ -73,9 +73,7 @@ def checkForUpdate(serverState):
 	with open(inputRules,'r') as template:
 		with open(outputRules,'w') as motd:
 			for _line in template:
-				line=_line.replace('{GIT_BRANCH}',GIT_BRANCH)
-				line=line.replace('{GIT_REMOTE}',GIT_REMOTE)
-				line=line.replace('{GIT_COMMIT}',currentCommit)
+				line=_line.format(GIT_BRANCH=GIT_BRANCH,GIT_REMOTE=GIT_REMOTE,GIT_COMMIT=currentCommit)
 				motd.write(line)
 	lastCommit=currentCommit
 	os.chdir(cwd)
