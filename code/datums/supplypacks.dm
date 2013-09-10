@@ -641,27 +641,36 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/organic/cow
 	name = "Cow Crate"
 	cost = 30
-	containertype = /obj/structure/largecrate/cow
+	containertype = /obj/structure/closet/critter/cow
 	containername = "cow crate"
 
 /datum/supply_packs/organic/goat
 	name = "Goat Crate"
 	cost = 25
-	containertype = /obj/structure/largecrate/goat
+	containertype = /obj/structure/closet/critter/goat
 	containername = "goat crate"
 
 /datum/supply_packs/organic/chicken
 	name = "Chicken Crate"
 	cost = 20
-	containertype = /obj/structure/largecrate/chick
+	containertype = /obj/structure/closet/critter/chick
 	containername = "chicken crate"
 
-/datum/supply_packs/organic/lisa
+/datum/supply_packs/organic/corgi
 	name = "Corgi Crate"
-	contains = list()
 	cost = 50
-	containertype = /obj/structure/largecrate/lisa
+	containertype = /obj/structure/closet/critter/corgi
 	containername = "corgi crate"
+/datum/supply_packs/organic/cat
+	name = "Cat crate"
+	cost = 40
+	containertype = /obj/structure/closet/critter/cat
+	containername = "cat crate"
+/datum/supply_packs/organic/pug
+	name = "Pug crate"
+	cost = 50
+	containertype = /obj/structure/closet/critter/pug
+	containername = "pug crate"
 
 ////// hippy gear
 
@@ -927,10 +936,3 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
-
-/datum/supply_packs/pug
-	name = "Pug Crate"
-	contains = list()
-	cost = 50
-	containertype = /obj/structure/largecrate/pug
-	containername = "pug crate"

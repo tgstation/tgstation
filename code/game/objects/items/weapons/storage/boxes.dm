@@ -384,6 +384,16 @@
 		new /obj/item/weapon/handcuffs(src)
 		new /obj/item/weapon/handcuffs(src)
 
+/obj/item/weapon/storage/box/fakesyndiesuit
+	name = "Space Suit and Helmet"
+	desc = "A sleek, sturdy box used to hold replica spacesuits."
+	icon_state = "box_of_doom"
+
+	New()
+		..()
+		new /obj/item/clothing/head/syndicatefake(src)
+		new /obj/item/clothing/suit/syndicatefake(src)
+
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon Mousetraps"
 	desc = "<B><FONT=red>WARNING:</FONT></B> <I>Keep out of reach of children</I>."

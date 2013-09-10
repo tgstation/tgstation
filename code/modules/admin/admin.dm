@@ -421,6 +421,11 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
 			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
 			<BR>
+			<B>Shuttles</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsadmin=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];secretsadmin=moveminingshuttle'>Move Mining Shuttle</A><BR>
+			<BR>
 			"}
 
 	if(check_rights(R_FUN,0))
@@ -448,11 +453,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
 			<A href='?src=\ref[src];secretsfun=energeticflux'>Trigger a hyper-energetic flux</A><BR>
 			<BR>
-			<B>Shuttles</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
-			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
 			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
@@ -467,6 +467,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<BR>
 			"}
 
 /* DEATH SQUADS
