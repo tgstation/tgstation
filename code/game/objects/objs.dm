@@ -2,7 +2,6 @@
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
-	var/w_amt = 0	// waster amounts
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0

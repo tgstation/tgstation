@@ -442,3 +442,6 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 					return 2
 		return 1
 	return 0
+
+/mob/proc/has_mutation(var/mutation)
+	return mutation in src.mutations ? 1 : 0
