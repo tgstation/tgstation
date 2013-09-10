@@ -427,7 +427,8 @@
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity) return
 	if(istype(A, /obj/effect/spacevine))
 		for(var/obj/effect/spacevine/B in orange(A,1))
 			if(prob(80))

@@ -2,24 +2,51 @@
 
 // New feature: Double click on mobs as AI to track them
 
-// No adjacency, no nothing
-/mob/living/silicon/ai/ClickOn(var/atom/A, var/doubleclick)
-	if(control_disabled || stat || (world.time <= next_move && !doubleclick)) return
+/mob/living/silicon/ai/DblClickOn(var/atom/A)
+	if(control_disabled || stat) return
 	next_move = world.time + 9
 
-	if(doubleclick)
-		if(ismob(A))
-			ai_actual_track(A)
-		else
-			A.move_camera_by_click()
-	else if(restrained())
-		A.hand_a(src)
+	if(ismob(A))
+		ai_actual_track(A)
 	else
-		A.attack_ai(src)
+		A.move_camera_by_click()
+
+// No adjacency, no nothing
+/mob/living/silicon/ai/ClickOn(var/atom/A, params)
+	if(world.time <= next_click)
+		return
+	next_click = world.time + 1
+
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
+
+	var/list/modifiers = params2list(params)
+	if("middle" in modifiers)
+		MiddleClickOn(A)
+		return
+	if("shift" in modifiers)
+		ShiftClickOn(A)
+		return
+	if("ctrl" in modifiers)
+		CtrlClickOn(A)
+		return
+	if("alt" in modifiers)
+		AltClickOn(A)
+		return
+	if(control_disabled || stat || world.time <= next_move) return
+	next_move = world.time + 9
+
+	/*
+		AI restrained() currently does nothing
+	if(restrained())
+		RestrainedClickOn(A)
+	else
+	*/
+	A.attack_ai(src)
+
 
 /atom/proc/attack_ai(mob/user as mob)
-	return
-/atom/proc/hand_a(mob/user as mob)			//AI - restrained
 	return
 
 
@@ -50,12 +77,12 @@
 
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)
+		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
 
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
-	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency!)
+	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
 
 /atom/proc/AIAltClick()

@@ -1,18 +1,21 @@
 /*
 	Adjacency proc for determining touch range
 
-	This is to determine if a user can enter a square for the purposes of touching something.
+	This is mostly to determine if a user can enter a square for the purposes of touching something.
 	Examples include reaching a square diagonally or reaching something on the other side of a glass window.
 
 	This is calculated by looking for border items, or in the case of clicking diagonally from yourself, dense items.
 	This proc will NOT notice if you are trying to attack a window on the other side of a dense object in its turf.  There is a window helper for that.
+
+	Note that in all cases the neighbor is handled simply; this is usually the user's mob, in which case it is up to you
+	to check that the mob is not inside of something
 */
-/atom/proc/Adjacent(var/mob/user)
+/atom/proc/Adjacent(var/atom/neighbor)
 	return 0
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
-/area/Adjacent(var/mob/user)
-	CRASH("Call to /area/Adjacent(user), unimplemented proc")
+/area/Adjacent(var/atom/neighbor)
+	CRASH("Call to /area/Adjacent(), unimplemented proc")
 
 
 /*
@@ -76,6 +79,23 @@
 			return loc.Adjacent(neighbor,recurse - 1)
 		return 0
 	return ..()
+/*
+	Special case: This allows you to reach a door when it is visally on top of,
+	but technically behind, a fire door
+
+	You could try to rewrite this to be faster, but I'm not sure anything would be.
+	This can be safely removed if border firedoors are ever moved to be on top of doors
+	so they can be interacted with without opening the door.
+*/
+/obj/machinery/door/Adjacent(var/atom/neighbor)
+	var/obj/machinery/door/firedoor/border_only/BOD = locate() in loc
+	if(BOD)
+		BOD.throwpass = 1 // allow click to pass
+		. = ..()
+		BOD.throwpass = 0
+		return .
+	return ..()
+
 
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
@@ -84,12 +104,21 @@
 */
 /turf/proc/ClickCross(var/target_dir, var/border_only, var/target_atom = null)
 	for(var/obj/O in src)
-		if( !O.density || O == target_atom) continue
+		if( !O.density || O == target_atom || O.throwpass) continue // throwpass is used for anything you can click through
 
-		if( O.flags&ON_BORDER ) // windows have throwpass but are on border, check them first
+		if( O.flags&ON_BORDER) // windows have throwpass but are on border, check them first
 			if( O.dir & target_dir || O.dir&(O.dir-1) ) // full tile windows are just diagonals mechanically
 				return 0
 
-		else if( !border_only && !O.throwpass ) // dense, not on border, cannot pass over
+		else if( !border_only ) // dense, not on border, cannot pass over
 			return 0
 	return 1
+/*
+	Aside: throwpass does not do what I thought it did originally, and is only used for checking whether or not
+	a thrown object should stop after already successfully entering a square.  Currently the throw code involved
+	only seems to affect hitting mobs, because the checks performed against objects are already performed when
+	entering or leaving the square.  Since throwpass isn't used on mobs, but only on objects, it is effectively
+	useless.  Throwpass may later need to be removed and replaced with a passcheck (bitfield on movable atom passflags).
+
+	Since I don't want to complicate the click code rework by messing with unrelated systems it won't be changed here.
+*/

@@ -33,15 +33,15 @@
 				largest_move_time = M.next_move - world.time
 			else
 				largest_move_time = 1
-		if(M.client.next_click >= largest_click_time)
+		if(M.next_click >= largest_click_time)
 			largest_click_mob = M
-			if(M.client.next_click > world.time)
-				largest_click_time = M.client.next_click - world.time
+			if(M.next_click > world.time)
+				largest_click_time = M.next_click - world.time
 			else
 				largest_click_time = 0
-		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.client.next_click]  world.time = [world.time]")
+		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.next_click]  world.time = [world.time]")
 		M.next_move = 1
-		M.client.next_click = 0
+		M.next_click = 0
 	message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
 	message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
 	message_admins("world.time = [world.time]", 1)

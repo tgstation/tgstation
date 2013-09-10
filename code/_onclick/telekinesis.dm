@@ -3,6 +3,7 @@
 
 	This needs more thinking out, but I might as well.
 */
+var/const/tk_maxrange = 15
 
 // click on atom with an empty hand, not Adjacent
 /atom/proc/attack_tk(mob/user)
@@ -47,7 +48,7 @@
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = USEDELAY | NOBLUDGEON
+	flags = NOBLUDGEON
 	//item_state = null
 	w_class = 10.0
 	layer = 20
@@ -77,19 +78,34 @@
 		if(focus)
 			focus.attack_self_tk(user)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)//TODO: go over this
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity)//TODO: go over this
 		if(!target || !user)	return
 		if(last_throw+3 > world.time)	return
-		if(!host)
+		if(!host || host != user)
 			del(src)
 			return
 		if(!(TK in host.mutations))
 			del(src)
 			return
-		if(isobj(target))
-			if(!target.loc || !isturf(target.loc))
-				del(src)
+		if(isobj(target) && !isturf(target.loc))
+			return
+
+		var/d = get_dist(user, target)
+		if(focus) d = max(d,get_dist(user,focus)) // whichever is further
+		switch(d)
+			if(0)
+				;
+			if(1 to 5) // not adjacent may mean blocked by window
+				if(!proximity)
+					user.next_move += 2
+			if(5 to 7)
+				user.next_move += 5
+			if(8 to tk_maxrange)
+				user.next_move += 10
+			else
+				user << "\blue Your mind won't reach that far."
 				return
+
 		if(!focus)
 			focus_object(target, user)
 			return
@@ -98,11 +114,15 @@
 			target.attack_self_tk(user)
 			return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
-		var/focusturf = get_turf(focus)
-		if(get_dist(focusturf, target) <= 1 && !istype(target, /turf))
-			target.attackby(focus, user, user:get_organ_target())
 
-		else if(get_dist(focusturf, target) <= 16)
+		if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+			var/obj/item/I = focus
+			var/resolved = target.attackby(I, user, user:get_organ_target())
+			if(!resolved && target && I)
+				I.afterattack(target,user,1) // for splashing with beakers
+
+
+		else
 			apply_focus_overlay()
 			focus.throw_at(target, 10, 1)
 			last_throw = world.time

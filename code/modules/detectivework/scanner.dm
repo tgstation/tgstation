@@ -8,7 +8,7 @@
 	icon_state = "forensic1"
 	w_class = 3.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY | NOBLUDGEON
+	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
@@ -43,9 +43,8 @@
 	scan(M, user)
 
 
-/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob)
-
-	if(!in_range(A,user))
+/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob,proximity)
+	if(!proximity)
 		return
 	if(!isturf(A) && !isobj(A))
 		return

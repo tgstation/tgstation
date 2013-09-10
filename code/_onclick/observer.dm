@@ -1,20 +1,18 @@
-/mob/dead/observer/ClickOn(var/atom/A, var/doubleclick)
-	if(doubleclick)
+/mob/dead/observer/DblClickOn(var/atom/A)
+	if(can_reenter_corpse && mind && mind.current)
+		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
+			reenter_corpse()						// (cloning scanner, body bag, closet, mech, etc)
+			return									// seems legit.
 
-		if(can_reenter_corpse && mind && mind.current)
-			if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
-				reenter_corpse()						// (cloning scanner, body bag, closet, mech, etc)
-				return									// seems legit.
+	// Things you might plausibly want to follow
+	if((ismob(A) && A != src) || istype(A,/obj/machinery/bot) || istype(A,/obj/machinery/singularity))
+		ManualFollow(A)
 
-		// Things you might plausibly want to follow
-		if((ismob(A) && A != src) || istype(A,/obj/machinery/bot) || istype(A,/obj/machinery/singularity))
-			ManualFollow(A)
+	// Otherwise jump
+	else
+		loc = get_turf(A)
 
-		// Otherwise jump
-		else
-			loc = get_turf(A)
-
-		return
+/mob/dead/observer/ClickOn(var/atom/A)
 	if(world.time <= next_move) return
 	next_move = world.time + 8
 	// You are responsible for checking config.ghost_interaction when you override this function

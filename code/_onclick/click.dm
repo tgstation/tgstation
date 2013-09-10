@@ -2,60 +2,21 @@
 	Click code cleanup
 	~Sayu
 */
-/client/var/next_click	= 0 // 1 decisecond click delay (above and beyond mob/next_move)
-
-/client/DblClick(atom/object,location,control,params)
-	Click(object,location,control,params,doubleclick=1)
+/mob/var/next_click	= 0 // 1 decisecond click delay (above and beyond mob/next_move)
 
 /*
-	Client click code:
-	Enforces 1 click/decisecond in all cases.
-	If the target object has an overridden click handler (GUI code mostly), allow it to handle it.
-	If you are in buildmode, let the buildmode handler handle it.
-	If it is a special click, handle it separately.
-	Otherwise, run your particular mobtype's click handler.
+	Click code:
+	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
+	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
 
-	The default below applies to most everything except cyborgs, AI, and ghosts, whose code are in separate files.
-
-	Note: ShiftClickOn, etc, do NOT check paralysis/stat/etc by default.
+	Alternately, you could hardcode every mob's variation in a flat ClickOn() proc; however,
+	that's a lot of code duplication and is hard to maintain.
 */
+/atom/Click(location,control,params)
+	usr.ClickOn(src, params)
+/atom/DblClick(location,control,params)
+	usr.DblClickOn(src,params)
 
-/client/Click(atom/object,location,control,params,doubleclick = 0)
-	if(world.time <= next_click && !doubleclick)
-		return
-	next_click = world.time + 1
-
-	if(!mob || !object) return
-
-	usr = mob
-
-	if(object.Click(location,control,params)) // some things redefine Click() and it's faster to call a default-return proc than typecheck object every call
-		return
-
-	if(buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(mob, buildmode, location, control, params, object)
-		return
-
-	if(params)
-		var/list/modifiers = params2list(params)
-
-		if("middle" in modifiers)
-			mob.MiddleClickOn(object)
-			return
-		if("shift" in modifiers)
-			mob.ShiftClickOn(object)
-			return
-		if("ctrl" in modifiers)
-			mob.CtrlClickOn(object)
-			return
-		if("alt" in modifiers)
-			mob.AltClickOn(object)
-			return
-
-	mob.ClickOn(object, doubleclick, params)
-
-/atom/Click() // default return 0.  If you override this and want to stop normal interaction, return 1.
-	return 0
 
 /mob/proc/face_atom(var/atom/A)
 	if(!canface()) return
@@ -71,30 +32,40 @@
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
 
-/*
-	Default mob click handler - applies to humans, monkeys, simple animals, etc.
+/mob/proc/ClickOn( var/atom/A, var/params )
+	if(world.time <= next_click)
+		return
+	next_click = world.time + 1
 
-	This is a mostly straight port of oldcode, but using object inheritance to determine
-	which function to call instead of istype()s.
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
 
-	ClickOn, RestrainedClickOn, UnarmedAttack, etc,	can all be overwritten for various mobtypes.
-*/.
-/mob/proc/ClickOn( var/atom/A, var/doubleclick, var/params )
-	if(!A || doubleclick) // doubleclick not used by default
+	var/list/modifiers = params2list(params)
+	if("middle" in modifiers)
+		MiddleClickOn(A)
+		return
+	if("shift" in modifiers)
+		ShiftClickOn(A)
+		return
+	if("ctrl" in modifiers)
+		CtrlClickOn(A)
+		return
+	if("alt" in modifiers)
+		AltClickOn(A)
 		return
 
 	if(stat || paralysis || stunned || weakened)
 		return
 
-	if(next_move >= world.time) // in the year 2000...
+	face_atom(A) // change direction to face what you clicked on
+
+	if(next_move > world.time) // in the year 2000...
 		return
 
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
-
-	face_atom(A) // change direction to face what you clicked on
-
 
 	if(restrained())
 		RestrainedClickOn(A)
@@ -165,27 +136,35 @@
 
 	return
 
+// Default behavior ignore
+/mob/proc/DblClickOn(var/atom/A, var/params)
+	ClickOn(A,params)
+
+
 // translates into attack_hand, attack_paw, etc.  proximity_flag should NOT be true if you are not adjacent (telekinesis)
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
 	return
 
 // unarmed and at range - laser eyes, telekinesis, and mob special abilities
 /mob/proc/RangedAttack(var/atom/A, var/params)
+	if(!mutations.len) return
 	if((LASER in mutations) && a_intent == "harm")
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
 		switch(get_dist(src,A))
+			if(0)
+				;
 			if(1 to 5) // not adjacent may mean blocked by window
 				next_move += 2
 			if(5 to 7)
 				next_move += 5
-			if(8 to 15)
+			if(8 to tk_maxrange)
 				next_move += 10
-			if(16 to 128)
+			else
 				return
 		A.attack_tk(src)
 
-// hand_h, hand_p, etc - these are almost entirely unused
+// Not currently used by anything but could easily be
 /mob/proc/RestrainedClickOn(var/atom/A)
 	return
 

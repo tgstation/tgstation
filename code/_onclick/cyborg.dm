@@ -3,14 +3,29 @@
 
 	Cyborgs have no range restriction on attack_robot(), because it is basically an AI click.
 	However, they do have a range restriction on item use.
-
-	Note that at present cyborg restrained() returns 0 in all cases
 */
 
+/mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
+	if(world.time <= next_click)
+		return
+	next_click = world.time + 1
 
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
 
-/mob/living/silicon/robot/ClickOn(var/atom/A, var/doubleclick, var/params)
-	if(!A)
+	var/list/modifiers = params2list(params)
+	if("middle" in modifiers)
+		MiddleClickOn(A)
+		return
+	if("shift" in modifiers)
+		ShiftClickOn(A)
+		return
+	if("ctrl" in modifiers)
+		CtrlClickOn(A)
+		return
+	if("alt" in modifiers)
+		AltClickOn(A)
 		return
 
 	if(stat || lockcharge || weakened || stunned || paralysis)
@@ -21,9 +36,12 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
+	/*
+	cyborg restrained() currently does nothing
 	if(restrained())
-		A.hand_r(src)
+		RestrainedClickOn(A)
 		return
+	*/
 
 	var/obj/item/W = get_active_hand()
 
@@ -78,8 +96,4 @@
 
 /atom/proc/attack_robot(mob/user as mob)
 	attack_ai(user)
-	return
-
-/atom/proc/hand_r(mob/user as mob)			//Cyborg (robot) - restrained
-	src.hand_a(user)
 	return

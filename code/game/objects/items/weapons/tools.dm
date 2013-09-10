@@ -190,7 +190,8 @@
 		location.hotspot_expose(700, 5)
 
 
-/obj/item/weapon/weldingtool/afterattack(obj/O, mob/user)
+/obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
+	if(!proximity) return
 	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
 		if(!welding)
 			O.reagents.trans_to(src, max_fuel)

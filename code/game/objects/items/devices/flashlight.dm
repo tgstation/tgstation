@@ -226,7 +226,8 @@
 		..()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user)
+/obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
+	if(!proximity) return
 	if (emp_charges > 0)
 		A.emp_act(1)
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \

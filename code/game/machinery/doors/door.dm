@@ -118,7 +118,7 @@
 		return
 	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
-	if(istype(I,/obj/item/tk_grab) && !Adjacent(user))
+	if(!Adjacent(user))
 		user = null
 	if(!src.requiresID())
 		user = null

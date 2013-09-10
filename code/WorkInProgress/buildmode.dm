@@ -175,7 +175,7 @@
 		return 1
 
 
-/proc/build_click(var/mob/user, buildmode, location, control, params, var/obj/object)
+/proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)

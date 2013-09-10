@@ -4,7 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY|NOBLUDGEON
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -236,11 +236,12 @@
 	reagents.add_reagent("plantbgone", 100)
 
 
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-		return
+/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+	if(proximity)
+		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
+			return
 
-	if (istype(A, /obj/effect/blob)) // blob damage in blob code
-		return
+		if (istype(A, /obj/effect/blob)) // blob damage in blob code
+			return
 
 	..()
