@@ -24,11 +24,13 @@
 		return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
+		var/obj/item/TS = tool_state
 		if(!is_in_modules(tool_state))
-			var/obj/item/TS = tool_state
 			drop_item()
 			if(TS && TS.loc)
 				TS.loc = src.loc
+		else
+			TS.loc = src.module
 		contents -= tool_state
 		if (client)
 			client.screen -= tool_state
@@ -61,6 +63,8 @@
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
 	// If we have anything active, deactivate it.
+	if(!W)
+		return 0
 	if(get_active_hand())
 		uneq_active()
 	return put_in_hands(W)
