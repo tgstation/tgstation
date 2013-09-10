@@ -278,6 +278,7 @@
 	var/t_loc = null	//target location
 	var/obj/item/item = null
 	var/place = null
+	var/pickpocket = null
 
 /obj/effect/equip_e/human
 	name = "human"
@@ -430,7 +431,10 @@
 			if("belt")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their belt item ([target.belt]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) belt item ([target.belt])</font>")
-				message = "\red <B>[source] is trying to take off the [target.belt] from [target]'s belt!</B>"
+				if(!pickpocket)
+					message = "\red <B>[source] is trying to take off the [target.belt] from [target]'s belt!</B>"
+				else
+					source << "\blue You try to take off the [target.belt] from [target]'s belt!"
 			if("suit")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their suit ([target.wear_suit]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) suit ([target.wear_suit])</font>")
@@ -481,7 +485,10 @@
 			if("id")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their ID ([target.wear_id]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) ID ([target.wear_id])</font>")
-				message = "\red <B>[source] is trying to take off [target.wear_id] from [target]'s uniform!</B>"
+				if(!pickpocket)
+					message = "\red <B>[source] is trying to take off [target.wear_id] from [target]'s uniform!</B>"
+				else
+					source << "\blue You try to take off [target.wear_id] from [target]'s uniform!"
 			if("internal")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")

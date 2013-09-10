@@ -140,7 +140,8 @@
 					G.icon_state = new_glove_icon_state
 					G.color = color
 					G.name = new_glove_name
-					G.desc = new_desc
+					if(!istype(G, /obj/item/clothing/gloves/black/thief))
+						G.desc = new_desc
 			if(new_shoe_icon_state && new_shoe_name)
 				for(var/obj/item/clothing/shoes/S in contents)
 					//world << "DEBUG: YUP! FOUND IT!"

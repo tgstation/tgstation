@@ -243,15 +243,6 @@ emp_act
 	var/b_loss = null
 	var/f_loss = null
 
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
-
 	switch (severity)
 		if (1.0)
 			b_loss += 500
@@ -266,6 +257,15 @@ emp_act
 				//user.throw_at(target, 200, 4)
 
 		if (2.0)
+			if (stat == 2 && client)
+				gib()
+				return
+
+			else if (stat == 2 && !client)
+				gibs(loc, viruses)
+				del(src)
+				return
+
 			if (!shielded)
 				b_loss += 60
 

@@ -50,6 +50,7 @@ BLIND     // can't see anything
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
+	var/pickpocket = 0 //Master pickpocket?
 
 /obj/item/clothing/gloves/examine()
 	set src in usr
