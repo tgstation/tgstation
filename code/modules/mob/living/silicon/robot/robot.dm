@@ -1145,7 +1145,7 @@
 		if(isMoMMI(src))
 			return
 		var/obj/item/O = locate(href_list["act"])
-		if(O.loc != src.module)
+		if(!(locate(O) in src.module.modules) && O != src.module.emag)
 			return
 		if(activated(O))
 			src << "Already activated"

@@ -10,8 +10,7 @@
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\mommi\examine.dm:10: msg += "<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it'd survive in an ocean for very long.</p>"
-	msg += {"<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it'd survive in an ocean for very long.</p>
-		<span class='warning'>"}
+	msg += {"<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it'd survive in an ocean for very long.</p><span class='warning'>"}
 	// END AUTOFIX
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 75)
