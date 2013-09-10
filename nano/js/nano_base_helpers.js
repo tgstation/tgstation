@@ -1,6 +1,7 @@
+// NanoBaseHelpers is where the base template helpers (common to all templates) are stored
 NanoBaseHelpers = function () 
 {
-	var _urlParameters = {}; // This is populated with the base url parameters, which is probaby just the "src" parameter
+	var _urlParameters = {}; // This is populated with the base url parameters (used by all links), which is probaby just the "src" parameter
 	
 	var init = function () 
 	{
@@ -117,6 +118,7 @@ NanoBaseHelpers = function ()
 		});
 	}
 	
+	// generate a Byond href, combines _urlParameters with parameters
 	var generateHref = function (parameters)
 	{
 		var queryString = '?';
