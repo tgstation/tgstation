@@ -593,7 +593,7 @@
 /obj/item/proc/IsShield()
 	return 0
 
-/obj/item/proc/IsReflect() //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
+/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	if(prob(reflect_chance))
 		return 1
 
