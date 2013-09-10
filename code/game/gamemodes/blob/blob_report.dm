@@ -10,18 +10,18 @@
 		if(1)
 			interceptname = "Biohazard Alert"
 			intercepttext = {"<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>
-				Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>
-				Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>
-				NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>
-				Orders for all [station_name()] personnel follows:<BR>
-				<ol>
-					<li>Do not leave the quarantine area.</li>
-					<li>Locate any outbreaks of the organism on the station.</li>
-					<li>If found, use any neccesary means to contain the organism.</li>
-					<li>Avoid damage to the capital infrastructure of the station.</li>
-				</ol>
-				<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.<BR>
-				Message ends."}
+Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.
+Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.
+NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.
+Orders for all [station_name()] personnel follows:
+<ol>
+	<li>Do not leave the quarantine area.</li>
+	<li>Locate any outbreaks of the organism on the station.</li>
+	<li>If found, use any neccesary means to contain the organism.</li>
+	<li>Avoid damage to the capital infrastructure of the station.</li>
+</ol>
+Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.
+Message ends."}
 		if(2)
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in world)
@@ -30,14 +30,14 @@
 						nukecode = bomb.r_code
 			interceptname = "Directive 7-12"
 			intercepttext = {"<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>
-				Directive 7-12 has been issued for [station_name()].<BR>
-				The biohazard has grown out of control and will soon reach critical mass.<BR>
+				Directive 7-12 has been issued for [station_name()].
+				The biohazard has grown out of control and will soon reach critical mass.
 				Your orders are as follows:
 				<ol>
 					<li>Secure the Nuclear Authentication Disk.</li>
 					<li>Detonate the Nuke located in the Station's Vault.</li>
 				</ol>
-				<b>Nuclear Authentication Code:</b> [nukecode] <BR>
+				<b>Nuclear Authentication Code:</b> [nukecode]
 				Message ends."}
 
 			for (var/mob/living/silicon/ai/aiPlayer in player_list)

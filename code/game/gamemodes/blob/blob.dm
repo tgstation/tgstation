@@ -57,16 +57,16 @@ var/list/blob_nodes = list()
 
 /datum/game_mode/blob/announce()
 	world << {"<B>The current game mode is - <font color='green'>Blob</font>!</B><br />
-		<B>A dangerous alien organism is rapidly spreading throughout the station!</B><br />
-		You must kill it all while minimizing the damage to the station."}
+<B>A dangerous alien organism is rapidly spreading throughout the station!</B><br />
+You must kill it all while minimizing the damage to the station."}
 
 
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
 	blob.current << {"<B>\red You are infected by the Blob!</B><br />
-		<b>Your body is ready to give spawn to a new blob core which will eat this station.</b><br />
-		<b>Find a good location to spawn the core and then take control and overwhelm the station!</b><br />
-		<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b><br />
-		<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"}
+<b>Your body is ready to give spawn to a new blob core which will eat this station.</b><br />
+<b>Find a good location to spawn the core and then take control and overwhelm the station!</b><br />
+<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b><br />
+<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"}
 	return
 
 /datum/game_mode/blob/proc/show_message(var/message)
