@@ -240,6 +240,7 @@
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
+		if(BE_RAIDER)       roletext="Vox Raider"
 
 
 	// Ultimate randomizing code right here
