@@ -41,19 +41,6 @@
 	var/datum/reagents/R = reagent_list[reagent_list.len]
 	R.add_reagent(reagent, 100)
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/M as mob, mob/user as mob)
-	var/datum/reagents/R = reagent_list[mode]
-	if(!R.total_volume)
-		user << "<span class='notice'>The injector is empty.</span>"
-		return
-
-/obj/item/weapon/reagent_containers/borgnutriment/attack(var/obj/item/O as obj)
-	if(istype(O, /obj/machinery/hydroponics))
-		usr << "fucking rainbows"
-		volume = volume - 10
-		return
-	else
-		return
 
 /obj/item/weapon/reagent_containers/borgnutriment/attack_self(mob/user)
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
@@ -61,7 +48,6 @@
 	if(mode > reagent_list.len)
 		mode = 1
 	CURRENTMODE = mode
-	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
 	user << "<span class='notice'>Synthesizer is now producing '[R.name]'.</span>"
 	return

@@ -304,7 +304,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "\red [O] is not filled with water."
 		update_icon()
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants/borgplantbag))
+	else if(istype(O, /obj/item/weapon/storage/bag/plants/borgplantbag)) //Borgs can harvest
 		if(harvest)
 			myseed.harvest()
 		else if(dead)

@@ -71,7 +71,7 @@
 
 /obj/item/weapon/storage/bag/plants/seedmanipulator
 	name = "Cyborg Seed Manipulator"
-	desc = "It allows you to pick up and seeds...if only you had hands."
+	desc = "It allows you to pick up and seeds."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
 	icon_state = "Seeds"

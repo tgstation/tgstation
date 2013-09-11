@@ -55,24 +55,6 @@
 		emag = new /obj/item/weapon/melee/energy/sword(src)
 
 
-/obj/item/weapon/robot_module/medical
-	name = "medical robot module"
-
-	New()
-		..()
-		modules += new /obj/item/borg/sight/hud/med(src)
-		modules += new /obj/item/device/healthanalyzer(src)
-		modules += new /obj/item/weapon/reagent_containers/borghypo(src)
-		modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-		modules += new /obj/item/weapon/reagent_containers/dropper(src)
-		modules += new /obj/item/weapon/reagent_containers/syringe(src)
-		modules += new /obj/item/weapon/extinguisher/mini(src)
-		emag = new /obj/item/weapon/reagent_containers/spray(src)
-
-		emag.reagents.add_reagent("pacid", 250)
-		emag.name = "polyacid spray"
-
-
 /obj/item/weapon/robot_module/botany
 	name = "hydroponics robot module"
 
@@ -93,6 +75,25 @@
 
 		emag.reagents.add_reagent("pacid", 250)
 		emag.name = "polyacid spray"//Chainsaw will be added in the future
+
+
+/obj/item/weapon/robot_module/medical
+	name = "medical robot module"
+
+	New()
+		..()
+		modules += new /obj/item/borg/sight/hud/med(src)
+		modules += new /obj/item/device/healthanalyzer(src)
+		modules += new /obj/item/weapon/reagent_containers/borghypo(src)
+		modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		modules += new /obj/item/weapon/reagent_containers/dropper(src)
+		modules += new /obj/item/weapon/reagent_containers/syringe(src)
+		modules += new /obj/item/weapon/extinguisher/mini(src)
+		emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+		emag.reagents.add_reagent("pacid", 250)
+		emag.name = "polyacid spray"
+
 
 
 /obj/item/weapon/robot_module/engineering

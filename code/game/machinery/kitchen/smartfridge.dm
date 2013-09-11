@@ -114,7 +114,7 @@
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
+/obj/machinery/smartfridge/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/smartfridge/attack_hand(mob/user as mob)

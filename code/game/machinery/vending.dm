@@ -207,15 +207,15 @@
 		return
 
 
-	/*if(istype(usr,/mob/living/silicon))
+	if(istype(usr,/mob/living/silicon))
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
+			if((!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler)))&&(!(R.module && istype(R.module,/obj/item/weapon/robot_module/botany))))
 				usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 				return
 		else
 			usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
-			return*/
+			return
 
 
 	if(href_list["remove_coin"])
