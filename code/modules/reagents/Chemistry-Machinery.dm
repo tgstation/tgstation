@@ -3,7 +3,7 @@
 #define GAS 3
 
 /obj/machinery/chem_dispenser
-	name = "Chem Dispenser"
+	name = "chem dispenser"
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'

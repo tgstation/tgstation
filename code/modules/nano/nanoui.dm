@@ -11,7 +11,7 @@ nanoui is used to open and update nano browser uis
 #define STATUS_UPDATE 1 // ORANGE Visability
 #define STATUS_DISABLED 0 // RED Visability
 
-/datum/nanoui
+/datum/nanoui	
 	// the user who opened this ui
 	var/mob/user
 	// the object this ui "belongs" to
@@ -180,8 +180,7 @@ nanoui is used to open and update nano browser uis
 	data["ui"] = list(
 			"status" = status,
 			"user" = list("name" = user.name)
-		)
-	//user << list2json(data)
+		)	
 	return data
 
  /**
@@ -271,8 +270,6 @@ nanoui is used to open and update nano browser uis
 	var/initial_data_json = "{}" // An empty JSON object
 	if (initial_data.len > 0)
 		initial_data_json = list2json(initial_data)
-
-	//user << initial_data_json
 
 	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
 
@@ -374,7 +371,6 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/on_close_winset()
 	if(!user.client)
-		world << "ERROR: No user.client!?"
 		return
 	var/params = "\ref[src]"
 
@@ -390,28 +386,21 @@ nanoui is used to open and update nano browser uis
 	set hidden = 1						// hide this verb from the user's panel
 	set name = "nanoclose"			// no autocomplete on cmd line
 
-	//world << "world [src] looking for [uiref]"
-
 	var/datum/nanoui/ui = locate(uiref)
 
 	if (ui)
-		//world << "[src] UI found [ui.window_id]"
 		ui.close()
 
 		if (ui.on_close_logic)
 			if(ui.ref)
 				var/href = "close=1"
-				//world << "[src] Topic [href] [ui.ref]"
 				src.Topic(href, params2list(href), ui.ref)	// this will direct to the atom's
 														// Topic() proc via client.Topic()
 			else
 				// no atomref specified (or not found)
 				// so just reset the user mob's machine var
 				if(src && src.mob)
-					//world << "[src] was [src.mob.machine], setting to null"
 					src.mob.unset_machine()
-	else
-		world << "[src] UI not found"
 
  /**
   * Push data to an already open UI window
@@ -424,9 +413,7 @@ nanoui is used to open and update nano browser uis
 		return // Cannot update UI, no visibility
 
 	data = add_default_data(data)
-	//user << list2json(data)
 	user << output(list2params(list(list2json(data))),"[window_id].browser:receiveUpdateData")
-	//on_close_winset()
 
  /**
   * This Topic() proc is called whenever a user clicks on a link within a Nano UI
@@ -438,7 +425,6 @@ nanoui is used to open and update nano browser uis
 /datum/nanoui/Topic(href, href_list)
 	update_status(0) // update the status
 	if (status != STATUS_INTERACTIVE || user != usr) // If UI is not interactive or usr calling Topic is not the UI user
-		//usr << "Not interaction or wrong usr"
 		return
 
 	if (src_object.Topic(href, href_list))
