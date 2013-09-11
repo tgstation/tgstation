@@ -38,8 +38,6 @@ emp_act
 		P.on_hit(src, 2)
 		return 2
 
-	if(prob(P.damage/2))
-		IgniteMob()
 	if(P.ignite_target)
 		IgniteMob()
 
@@ -201,7 +199,6 @@ emp_act
 
 ///Mobs on Fire code//
 /mob/living/carbon/human/proc/IgniteMob()
-	if(stat != DEAD)
 		on_fire = 1
 		update_fire()
 
