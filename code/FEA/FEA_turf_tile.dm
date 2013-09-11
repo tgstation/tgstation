@@ -105,10 +105,7 @@ turf/simulated
 
 	var/tmp/temperature_archived //USED ONLY FOR SOLIDS
 	var/tmp/being_superconductive = 0
-	var/tmp/was_icy=0
 
-	// N3X: Included my code that allows for multiple overlays at once.
-	// Also ice, if configured :3c
 	proc/update_visuals(datum/gas_mixture/model)
 		overlays.Cut()
 
@@ -116,44 +113,11 @@ turf/simulated
 		if(siding_icon_state)
 			overlays += image('icons/turf/floors.dmi',siding_icon_state)
 
-		// ONLY USED IF ZAS_SETTINGS SAYS SO.
-		if(model.graphics & GRAPHICS_COLD)
-			if(!was_icy)
-				wet=3 // Custom ice
-				was_icy=1
-				var/o=""
-				//if(is_plating())
-				//	o="snowfloor_s"
-				//else
-				if(is_plasteel_floor())
-					o="snowfloor"
-				if(o!="")
-					overlays += image('icons/turf/overlays.dmi',o)
-		else
-			if(was_icy)
-				wet=0
-				was_icy=0
-				if(prob(10))
-					wet = 1
-					if(wet_overlay)
-						overlays -= wet_overlay
-						wet_overlay = null
-					wet_overlay = image('icons/effects/water.dmi',src,"wet_floor")
-					overlays += wet_overlay
-
-					spawn(800)
-						if (!istype(src)) return
-						if(wet >= 2) return
-						wet = 0
-						if(wet_overlay)
-							overlays -= wet_overlay
-							wet_overlay = null
-		if(model.graphics & GRAPHICS_PLASMA)
-			overlays.Add(plmaster)
-		if(model.graphics & GRAPHICS_N2O)
-			overlays.Add(slmaster)
-		//if(model.graphics & GRAPHICS_REAGENTS)
-		//	overlays.Add(slmaster/*rlmaster*/)
+		switch(model.graphic)
+			if("plasma")
+				overlays.Add(plmaster)
+			if("sleeping_agent")
+				overlays.Add(slmaster)
 
 
 
@@ -169,7 +133,6 @@ turf/simulated
 			air.toxins = toxins
 
 			air.temperature = temperature
-
 
 			if(air_master)
 				air_master.tiles_to_update.Add(src)
