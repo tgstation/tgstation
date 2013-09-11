@@ -36,6 +36,7 @@
 		..()
 		return
 
+
 obj/machinery/hydroponics/process()
 
 	if(myseed && (myseed.loc != src))
@@ -134,8 +135,6 @@ obj/machinery/hydroponics/process()
 				weedinvasion() // Weed invasion into empty tray
 		update_icon()
 	return
-
-
 
 obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
@@ -288,6 +287,7 @@ obj/machinery/hydroponics/proc/mutatepest()
 
 obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
+
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/weapon/reagent_containers/glass/bucket))
 		var/b_amount = O.reagents.get_reagent_amount("water")
@@ -304,6 +304,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "\red [O] is not filled with water."
 		update_icon()
 
+	else if(istype(O, /obj/item/weapon/storage/bag/plants/borgplantbag)) //Borgs can harvest.
+		if(harvest)
+			myseed.harvest()
+		else if(dead)
+			planted = 0
+			dead = 0
+			user << "You remove the dead plant from [src]."
+			del(myseed)
+			update_icon()
+		else
+			return
+
 	else if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
 		user.u_equip(O)
@@ -313,6 +325,32 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user << "You replace the nutrient solution in the [src]."
 		del(O)
 		update_icon()
+
+	else if(istype(O, /obj/item/weapon/reagent_containers/borgnutriment))  // borg shit
+		var/obj/item/weapon/reagent_containers/borgnutriment/S = O
+		if(S.volume <= 0)
+			user << "\red [S] is empty."
+			return
+		user << "\red You inject the [myseed.plantname] with a chemical solution."
+		if(S.CURRENTMODE == 3)
+			adjustToxic(-round(/*S.reagents.get_reagent_amount("anti_toxin")*/10*2))
+			return user:cell:use(30)
+		if(S.CURRENTMODE == 4)
+			adjustHealth(-round(/*S.reagents.get_reagent_amount("plantbgone")*/10*5))
+			adjustToxic(round(/*S.reagents.get_reagent_amount("plantbgone")*/10*3))
+			adjustWeeds(-rand(4,8))
+			return user:cell:use(30)
+		if(S.CURRENTMODE == 1)
+			adjustHealth(10)
+			adjustNutri(20)
+			adjustPests(-rand(1,2))
+			adjustSYield(rand(1,2))
+			return user:cell:use(200)
+		if(S.CURRENTMODE == 2)
+			adjustHealth(round(/*S.reagents.get_reagent_amount("nutriment")*/10*0.5))
+			adjustNutri(round(/*S.reagents.get_reagent_amount("nutriment")*/10*1))
+			return user:cell:use(80)
+
 
 	else if(istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
 		var/obj/item/weapon/reagent_containers/syringe/S = O
@@ -412,7 +450,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 				// Plant-B-Gone is just as bad
 				if(S.reagents.has_reagent("plantbgone", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("plantbgone")*2))
+					adjustHealth(-round(S.reagents.get_reagent_amount("plantbgone")*5))
 					adjustToxic(-round(S.reagents.get_reagent_amount("plantbgone")*3))
 					adjustWeeds(-rand(4,8))
 
@@ -473,6 +511,30 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "There's nothing to apply the solution into."
 		update_icon()
 
+	else if(istype(O, /obj/item/weapon/storage/bag/plants/seedmanipulator))
+		var/obj/item/weapon/storage/bag/plants/seedmanipulator/S = O
+		for(var/obj/item/T in S.contents)
+			S.seed = S.seed + 1
+		if(S.seed == 0)
+			user << "The Cybernetic Seed Manipulator is empty!"
+			return
+		else if(planted)
+			user << "\red [src] already has seeds in it!"
+			return
+		else
+			dead = 0
+			for(var/obj/item/T in S.contents)
+				myseed = T
+				user << "You plant [T] with the Cybernetic Seed Manipulator."
+			planted = 1
+			age = 1
+			health = myseed.endurance
+			lastcycle = world.time
+			O.loc = src
+			update_icon()
+			S.seed = 0
+
+
 	else if( istype(O, /obj/item/seeds/) )
 		if(!planted)
 			user.u_equip(O)
@@ -532,6 +594,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(weedlevel > 0)
 			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from [src].")
 			weedlevel = 0
+			update_icon()
+		else if(dead)
+			planted = 0
+			dead = 0
+			user << "You remove the dead plant from [src]."
+			del(myseed)
 			update_icon()
 		else
 			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."

@@ -34,7 +34,7 @@
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
 	return
 
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
+/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module.
 	var/list/temp_list = modules
 	modules = list()
 	for(var/obj/O in temp_list)
@@ -53,6 +53,28 @@
 		modules += new /obj/item/weapon/crowbar(src)
 		modules += new /obj/item/device/healthanalyzer(src)
 		emag = new /obj/item/weapon/melee/energy/sword(src)
+
+
+/obj/item/weapon/robot_module/botany
+	name = "hydroponics robot module"
+
+	New()
+		..()
+		modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		modules += new /obj/item/device/analyzer/plant_analyzer(src)
+		modules += new /obj/item/weapon/reagent_containers/syringe(src)
+		modules += new /obj/item/weapon/reagent_containers/borgnutriment(src)
+		modules += new /obj/item/weapon/storage/bag/plants/seedmanipulator(src)
+		modules += new /obj/item/weapon/storage/bag/plants/borgplantbag(src)
+		modules += new /obj/item/weapon/extinguisher/mini(src)
+		modules += new /obj/item/weapon/shovel/spade(src)
+		modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
+		modules += new /obj/item/weapon/hatchet(src)
+		modules += new /obj/item/weapon/minihoe(src)
+		emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+		emag.reagents.add_reagent("pacid", 250)
+		emag.name = "polyacid spray"//Chainsaw will be added in the future
 
 
 /obj/item/weapon/robot_module/medical
