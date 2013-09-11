@@ -48,7 +48,6 @@
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
-		ExtinguishMob()
 
 		//For ninjas exploding when they die./N
 		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
