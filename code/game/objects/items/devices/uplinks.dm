@@ -23,7 +23,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu(mob/user as mob)
 	if(!job)
-		job = user.job
+		job = user.mind.assigned_role
 	var/dat = "<B>[src.welcome]</B><BR>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
