@@ -590,6 +590,9 @@ datum/objective/steal
 
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
+						//Stealing the cheap autoinjector doesn't count
+						if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
+							continue
 						return 1
 		return 0
 
