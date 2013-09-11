@@ -129,7 +129,7 @@ MASS SPECTROMETER
 	if (istype(M, /mob/living/carbon))
 		if(M:reagents.total_volume > 0)
 			user.show_message(text("\red Warning: Unknown substance detected in subject's blood."))
-		if(M:virus2)
+		if(M:virus2.len)
 			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
 	if (M.getCloneLoss())
 		user.show_message("\red Subject appears to have been imperfectly cloned.")
