@@ -31,7 +31,7 @@
 	..()
 
 
-// Use this to add more chemicals for the borghypo to produce.
+// Use this to add more chemicals for the borghypo to produce
 /obj/item/weapon/reagent_containers/borgnutriment/proc/add_reagent(var/reagent)
 	reagent_ids |= reagent
 	var/datum/reagents/RG = new(60)

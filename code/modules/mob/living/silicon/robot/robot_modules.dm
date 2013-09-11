@@ -34,7 +34,7 @@
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
 	return
 
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
+/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module.
 	var/list/temp_list = modules
 	modules = list()
 	for(var/obj/O in temp_list)
