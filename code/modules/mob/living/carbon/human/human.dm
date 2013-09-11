@@ -283,7 +283,8 @@
 /mob/living/carbon/human/show_inv(mob/user as mob)
 	var/obj/item/clothing/gloves/G
 	var/pickpocket = 0
-	if(user:gloves)
+
+	if(ishuman(user) && user:gloves)
 		G = user:gloves
 		pickpocket = G.pickpocket
 	user.set_machine(src)
@@ -412,7 +413,8 @@
 	var/pickpocket = 0
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["pockets"])
-			if(usr:gloves)
+			if(isanimal(usr)) return //Animals can't do that
+			if(ishuman(usr) && (usr:gloves))
 				var/obj/item/clothing/gloves/G = usr:gloves
 				pickpocket = G.pickpocket
 			var/pocket_side = href_list["pockets"]
@@ -456,6 +458,7 @@
 		src << browse(null, t1)
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
+		if(isanimal(usr)) return //Animals can't do that
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		if(usr:gloves)
 			var/obj/item/clothing/gloves/G = usr:gloves
