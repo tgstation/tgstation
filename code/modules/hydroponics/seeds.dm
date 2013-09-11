@@ -40,11 +40,13 @@
 		return
 	if (istype(O, /obj/item/weapon/storage/bag/plants/seedmanipulator))
 		var/obj/item/weapon/storage/bag/plants/seedmanipulator/S = O
-		if(S.seed == 1)
+		if(S.contents.len > 0)
 			return
 		else
 			usr << "You pick up the seed in the manipulator."
+			S.contents = src
 			..()
+			return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/chiliseed

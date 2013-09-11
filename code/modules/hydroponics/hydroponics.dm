@@ -304,7 +304,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "\red [O] is not filled with water."
 		update_icon()
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants/borgplantbag)) //Borgs can harvest.
+	/*else if(istype(O, /obj/item/weapon/storage/bag/plants/borgplantbag)) //Borgs can harvest.
 		if(harvest)
 			myseed.harvest()
 		else if(dead)
@@ -314,7 +314,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			del(myseed)
 			update_icon()
 		else
-			return
+			return*/
 
 	else if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
@@ -328,15 +328,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if(istype(O, /obj/item/weapon/reagent_containers/borgnutriment))  // borg shit
 		var/obj/item/weapon/reagent_containers/borgnutriment/S = O
-		if(S.volume <= 0)
-			user << "\red [S] is empty."
-			return
 		user << "\red You inject the [myseed.plantname] with a chemical solution."
 		if(S.CURRENTMODE == 3)
 			adjustToxic(-round(/*S.reagents.get_reagent_amount("anti_toxin")*/10*2))
 			return user:cell:use(30)
 		if(S.CURRENTMODE == 4)
-			adjustHealth(-round(/*S.reagents.get_reagent_amount("plantbgone")*/10*5))
+			adjustHealth(-round(/*S.reagents.get_reagent_amount("plantbgone")*/10*2))
 			adjustToxic(round(/*S.reagents.get_reagent_amount("plantbgone")*/10*3))
 			adjustWeeds(-rand(4,8))
 			return user:cell:use(30)
@@ -513,9 +510,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants/seedmanipulator))
 		var/obj/item/weapon/storage/bag/plants/seedmanipulator/S = O
-		for(var/obj/item/T in S.contents)
-			S.seed = S.seed + 1
-		if(S.seed == 0)
+		if(S.contents.len < 1)
 			user << "The Cybernetic Seed Manipulator is empty!"
 			return
 		else if(planted)
@@ -532,8 +527,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			lastcycle = world.time
 			O.loc = src
 			update_icon()
-			S.seed = 0
-
+			S.contents.len = 0
+			return
 
 	else if( istype(O, /obj/item/seeds/) )
 		if(!planted)
@@ -615,7 +610,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		update_icon()
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-		attack_hand(user)
+		//attack_hand(user)
 		var/obj/item/weapon/storage/bag/plants/S = O
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
 			if(!S.can_be_inserted(G))
