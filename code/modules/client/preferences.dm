@@ -255,7 +255,8 @@ datum/preferences
 		dat += {"</center><hr><table><tr><td width='340px' height='320px'>
 			<b>Name:</b> "}
 		// END AUTOFIX
-		if(appearance_isbanned(user)) dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
+		if(appearance_isbanned(user))
+			dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:234: dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
