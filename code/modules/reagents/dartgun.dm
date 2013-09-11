@@ -52,7 +52,7 @@
 	..()
 	if(starting_chems)
 		for(var/chem in starting_chems)
-			var/obj/item/weapon/reagent_containers/glass/beaker/vial/B = new(src)
+			var/obj/item/weapon/reagent_containers/glass/beaker/B = new(src)
 			B.reagents.add_reagent(chem, 50)
 			beakers += B
 	cartridge = new /obj/item/weapon/dart_cartridge(src)
@@ -134,7 +134,7 @@
 	var/obj/item/weapon/reagent_containers/syringe/dart = new(src)
 
 	if(mixing.len)
-		var/mix_amount = dart_reagent_amount/mixing.len
+		var/mix_amount =  5 //dart_reagent_amount/mixing.len | 5 per mixed should be fine enough.
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in mixing)
 			B.reagents.trans_to(dart,mix_amount)
 
