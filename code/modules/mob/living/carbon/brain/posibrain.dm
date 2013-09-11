@@ -49,6 +49,7 @@
 		//src.brainmob.mind = candidate.mind Causes issues with traitor overlays and traitor specific chat.
 		//src.brainmob.key = candidate.key
 		src.brainmob.ckey = candidate.ckey
+		src.brainmob.stat = 0
 		src.name = "positronic brain ([src.brainmob.name])"
 
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"

@@ -55,13 +55,28 @@ def checkForUpdate(serverState):
 	if currentCommit != lastCommit and lastCommit is not None:
 		subprocess.call('git reset --hard {0}/{1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True) 
 		subprocess.call('cp -av {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
+
+		# Copy bot config, if it exists.
+		botConfigSource=os.path.join(GAMEPATH,'config','CORE_DATA.py')
+		botConfigDest=os.path.join(GAMEPATH,'bot','CORE_DATA.py')
+		if os.file.exists(botConfigSource):
+			if os.file.exists(botConfigDest):
+				os.remove(botConfigDest)
+				log.warn('RM {0}'.format(botConfigDest))
+			shutil.move(botConfigSource,botConfigDest)
+			log.warn('move {0} {1}'.format(botConfigSource,botConfigDest))
+
+		# Compile
 		log.info('Updated to {0} ({1}).  Triggering compile.'.format(currentCommit,currentBranch))
 		subprocess.call(COMPILE_COMMAND,shell=True)
+
+		# Notify the server that we're restarting.
 		updateTrigger=os.path.join(GAMEPATH,'data','UPDATE_READY.txt')
 		if not os.path.isdir(os.path.dirname(updateTrigger)):
 			os.makedirs(os.path.dirname(updateTrigger))
+
 		if serverState:
-			log.info('Server will restart after round ends.')
+			log.info('Server updated.')
 			with open(updateTrigger,'w') as f:
 				f.write('honk')
 		else:

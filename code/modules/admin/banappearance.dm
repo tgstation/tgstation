@@ -17,7 +17,7 @@ var/appearance_keylist[0]	//to store the keys
 /proc/appearance_isbanned(mob/M)
 	if(M)
 		for(var/s in appearance_keylist)
-			if(findtext(s, "[M.ckey]") == 1)
+			if( findtext(s,M.ckey) == 1 )
 				var/startpos = findtext(s, "## ") + 3
 				if(startpos && startpos < length(s))
 					var/text = copytext(s, startpos, 0)
@@ -44,6 +44,7 @@ DEBUG
 	if(config.ban_legacy_system)
 		var/savefile/S=new("data/appearance_full.ban")
 		S["keys[0]"] >> appearance_keylist
+		world.log << S["keys[0]"]
 		log_admin("Loading appearance_rank")
 		S["runonce"] >> appearanceban_runonce
 

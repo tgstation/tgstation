@@ -4,9 +4,16 @@
 *.dmb
 *.lk
 info.json
-/config/admins.txt
+
+# WinMerge backups
 *.bak
 
+# String dumps
 *.str
 
+# Compiled Python doohickies
 *.pyc
+
+#ignore any files in config/, except those in subdirectories.
+/config/*
+!/config/*/*
