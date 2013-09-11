@@ -67,18 +67,26 @@
 	del(src)
 	return
 
+ /**
+  * The ui_interact proc is used to open and update Nano UIs
+  * If ui_interact is not used then the UI will not update correctly
+  * ui_interact is currently defined for /atom/movable
+  *
+  * @param user /mob The mob who is interacting with this ui
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
+  *
+  * @return nothing
+  */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main")
 	if(stat & (BROKEN|NOPOWER)) return
 	if(user.stat || user.restrained()) return
 
+	// this is the data which will be sent to the ui	
 	var/data[0]
-
 	data["amount"] = amount
 	data["energy"] = energy
 	data["maxEnergy"] = max_energy
-
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-
 
 	var beakerContents[0]
 	var beakerCurrentVolume = 0
@@ -102,10 +110,9 @@
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 
-	//user << list2json(data)
-
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
 	if (!ui)
+		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 585)
 		// When the UI is first opened this is the data it will use
 		ui.set_initial_data(data)

@@ -28,7 +28,7 @@ nanoui is used to open and update nano browser uis
 	var/height = 0
 	// whether to use extra logic when window closes
 	var/on_close_logic = 1
-	// the ref to use when the window is closed (if on_close_logic is 1), usually null
+	// an extra ref to use when the window is closed, usually null
 	var/atom/ref = null
 	// options for modifying window behaviour
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
@@ -240,7 +240,7 @@ nanoui is used to open and update nano browser uis
 	content = ncontent
 
  /**
-  * Set whether or not to use the "old" on close logic (custom refs and unset_machine())
+  * Set whether or not to use the "old" on close logic (mainly unset_machine())
   *
   * @param state int (bool) Set on_close_logic to 1 or 0 (true/false)
   *
@@ -375,32 +375,6 @@ nanoui is used to open and update nano browser uis
 	var/params = "\ref[src]"
 
 	winset(user, window_id, "on-close=\"nanoclose [params]\"")
-
- /**
-  * Called when a Nano UI window is closed
-  * This is how Nano handles closed windows
-  *
-  * @return nothing
-  */
-/client/verb/nanoclose(var/uiref as text)
-	set hidden = 1						// hide this verb from the user's panel
-	set name = "nanoclose"			// no autocomplete on cmd line
-
-	var/datum/nanoui/ui = locate(uiref)
-
-	if (ui)
-		ui.close()
-
-		if (ui.on_close_logic)
-			if(ui.ref)
-				var/href = "close=1"
-				src.Topic(href, params2list(href), ui.ref)	// this will direct to the atom's
-														// Topic() proc via client.Topic()
-			else
-				// no atomref specified (or not found)
-				// so just reset the user mob's machine var
-				if(src && src.mob)
-					src.mob.unset_machine()
 
  /**
   * Push data to an already open UI window
