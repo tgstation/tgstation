@@ -206,7 +206,7 @@
 	if(..())
 		return
 
-
+//Botany and service borgs can use vending machines
 	if(istype(usr,/mob/living/silicon))
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr

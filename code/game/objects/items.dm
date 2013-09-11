@@ -188,7 +188,7 @@
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						if(!istype(S, /obj/item/weapon/storage/bag/plants/seedmanipulator)) //Stop spamming for borg seed manipulator
+						if(!istype(S, /obj/item/weapon/storage/bag/plants/seedmanipulator)) //Stop spamming for borg seed manipulator.
 							user << "<span class='notice'>You put everything in [S].</span>"
 					else if(success)
 						if(!istype(S, /obj/item/weapon/storage/bag/plants/seedmanipulator))
