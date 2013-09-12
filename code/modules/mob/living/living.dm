@@ -1,4 +1,26 @@
 
+/mob/living/Life()
+	..()
+	if (monkeyizing)	return
+	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
+	if(mind)
+		if(mind in ticker.mode.implanted)
+			if(implanting) return
+			//world << "[src.name]"
+			var/datum/mind/head = ticker.mode.implanted[mind]
+			//var/list/removal
+			if(!(locate(/obj/item/weapon/implant/traitor) in src.contents))
+				//world << "doesn't have an implant"
+				ticker.mode.remove_traitor_mind(mind, head)
+				/*
+				if((head in ticker.mode.implanters))
+					ticker.mode.implanter[head] -= src.mind
+				ticker.mode.implanted -= src.mind
+				if(src.mind in ticker.mode.traitors)
+					ticker.mode.traitors -= src.mind
+					special_role = null
+					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
+				*/
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))

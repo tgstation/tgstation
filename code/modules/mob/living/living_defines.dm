@@ -38,3 +38,5 @@
 	var/update_slimes = 1
 
 	var/specialsauce = 0 //Has this person consumed enough special sauce? IF so they're a ticking time bomb of death.
+
+	var/implanting = 0 //Used for the mind-slave implant

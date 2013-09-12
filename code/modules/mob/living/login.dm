@@ -17,6 +17,11 @@
 			if("nuclear emergency")
 				if(mind in ticker.mode:syndicates)
 					ticker.mode.update_all_synd_icons()
+		var/ref = "\ref[mind]"
+		if(ref in ticker.mode.implanter)
+			ticker.mode.update_traitor_icons_added(mind)
+		if(mind in ticker.mode.implanted)
+			ticker.mode.update_traitor_icons_added(mind)
 	return .
 
 //This stuff needs to be merged from cloning.dm but I'm not in the mood to be shouted at for breaking all the things :< ~Carn
