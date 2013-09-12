@@ -276,6 +276,9 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	germ_level = 0
+	next_pain_time = 0
+	traumatic_shock = 0
 	radiation = 0
 	nutrition = 400
 	bodytemperature = 310
@@ -287,15 +290,22 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
+	if(buckled)
+		buckled.unbuckle()
 	buckled = initial(src.buckled)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		H.vessel.reagent_list = list()
 		H.vessel.add_reagent("blood",560)
+		H.shock_stage = 0
 		spawn(1)
 			H.fixblood()
 		for(var/organ_name in H.organs_by_name)
 			var/datum/organ/external/O = H.organs_by_name[organ_name]
+			for(var/obj/item/weapon/shard/shrapnel/s in O.implants)
+				if(istype(s))
+					O.implants -= s
+					H.contents -= s
 			O.amputated = 0
 			O.brute_dam = 0
 			O.burn_dam = 0
