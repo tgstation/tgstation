@@ -19,7 +19,7 @@
 		else
 			if (copytext(message, 1, 2) != "*" && !stat)
 				playsound(loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
-			return ..(message)
+			return ..(message, "A")
 	else
 
 // ~lol~
