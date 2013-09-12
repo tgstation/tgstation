@@ -32,6 +32,8 @@ proc/load_alienwhitelist()
 		return 0
 	if(M && species)
 		for (var/s in alien_whitelist)
+			if(findtext(s,"* - [species]")
+				return 1
 			if(findtext(s,"[M.ckey] - [species]"))
 				return 1
 			if(findtext(s,"[M.ckey] - All"))
