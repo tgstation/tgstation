@@ -6,7 +6,15 @@
 	return "Maximize all legal research tech levels."
 
 /datum/job_objective/maximize_research/check_for_completion()
-	var/obj/machinery/r_n_d/server/server = locate(/obj/machinery/r_n_d/server) in /area/toxins/server
+	var/obj/machinery/r_n_d/server/server = null
+	for(var/obj/machinery/r_n_d/server/serber in machines)
+		if(serber.name == "Core R&D Server")
+			server=serber
+			break
+	if(!server)
+		// This was just used for testing.
+		//world << "UNABLE TO FIND A GODDAMN RND SERVER. FUCK."
+		return
 	for(var/datum/tech/T in server.files.possible_tech)
 		if(T.max_level==0) // Ignore illegal tech, etc
 			continue
