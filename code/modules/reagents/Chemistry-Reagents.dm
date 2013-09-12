@@ -332,7 +332,7 @@ datum
 
 			reaction_mob(var/mob/M, var/volume)
 				src = null
-				M.contract_disease(new /datum/disease/sliming(0),1)
+				M.contract_disease(new /datum/disease/transformation/slime(0),1)
 
 		srejuvenate
 			name = "Soporific Rejuvenant"
@@ -1215,7 +1215,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
+					M.contract_disease(new /datum/disease/transformation/robot(0),1)
 
 		xenomicrobes
 			name = "Xenomicrobes"
@@ -1227,7 +1227,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
+					M.contract_disease(new /datum/disease/transformation/xeno(0),1)
 
 		fluorosurfactant//foam precursor
 			name = "Fluorosurfactant"
