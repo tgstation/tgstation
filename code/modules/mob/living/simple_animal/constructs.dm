@@ -1,7 +1,7 @@
 
 /mob/living/simple_animal/construct
 	name = "Construct"
-	real_name = "Contruct"
+	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
 	emote_hear = list("wails","screeches")
@@ -25,6 +25,9 @@
 	minbodytemp = 0
 	faction = "cult"
 
+/mob/living/simple_animal/construct/New()
+	name = text("[initial(name)] ([rand(1, 1000)])")
+	real_name = name
 
 /mob/living/simple_animal/construct/Life()
 	..()
@@ -159,7 +162,30 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
+/mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
+	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+		var/reflectchance = 65 - round(P.damage/3)
+		if(prob(reflectchance))
+			visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s shell!</span>", \
+							"<span class='userdanger'>The [P.name] gets reflected by [src]'s shell!</span>")
 
+			// Find a turf near or on the original location to bounce to
+			if(P.starting)
+				var/new_x = P.starting.x + pick(0, 0, -1, 1, -1, 1, -2, 2, -2, 2, -2, 2)
+				var/new_y = P.starting.y + pick(0, 0, -1, 1, -1, 1, -2, 2, -2, 2, -2, 2)
+				var/turf/curloc = get_turf(src)
+
+				// redirect the projectile
+				P.original = locate(new_x, new_y, P.z)
+				P.starting = curloc
+				P.current = curloc
+				P.firer = src
+				P.yo = new_y - curloc.y
+				P.xo = new_x - curloc.x
+
+			return -1 // complete projectile permutation
+
+	return (..(P))
 
 
 
@@ -232,7 +258,7 @@
 	var/energy = 0
 	var/max_energy = 1000
 
-/mob/living/simple_animal/constructbehemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/construct/behemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force

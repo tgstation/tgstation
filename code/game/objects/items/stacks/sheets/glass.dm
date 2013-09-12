@@ -87,6 +87,7 @@
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
+			W.air_update_turf(1)
 			src.use(1)
 		if("Full Window")
 			if(!src)	return 1
@@ -102,6 +103,7 @@
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
+			W.air_update_turf(1)
 			src.use(2)
 	return 0
 

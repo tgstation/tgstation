@@ -58,7 +58,7 @@
 				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
 				return 0
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
 				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if(wrapped)
 					return 0
@@ -648,6 +648,15 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
+	icon_state = "hburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/appendixburger
+	name = "appendix burger"
+	desc = "Tastes like appendicitis."
 	icon_state = "hburger"
 	New()
 		..()

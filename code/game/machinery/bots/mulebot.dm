@@ -746,7 +746,7 @@ var/global/mulebot_count = 0
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()
-	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+	B.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 
 	bloodiness += 4
 

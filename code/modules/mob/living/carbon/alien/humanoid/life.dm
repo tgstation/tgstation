@@ -95,7 +95,7 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/air_group/breath
+		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
 		if(health <= config.health_threshold_crit)
 			losebreath++
@@ -304,7 +304,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < config.health_threshold_dead || !getbrain(src))
+			if(health < config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				stat = DEAD

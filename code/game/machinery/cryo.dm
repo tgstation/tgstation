@@ -121,7 +121,6 @@
 
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "cryo", "Cryo Cell Control System", 520, 410) // Set up the popup browser window
-	popup.add_stylesheet("sleeper", 'html/browser/cryo.css')
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
@@ -225,6 +224,7 @@
 	expel_gas = air_contents.remove(remove_amount)
 	expel_gas.temperature = T20C	//Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
+	air_update_turf()
 
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/go_out()

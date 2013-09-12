@@ -42,13 +42,13 @@ datum/preferences
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/b_type = "A+"					//blood type (not-chooseable)
+	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
-	var/h_style = "Bald"				//Hair type
-	var/h_color = "000"					//Hair color
-	var/f_style = "Shaved"				//Face hair type
-	var/f_color = "000"					//Facial hair color
+	var/hair_style = "Bald"				//Hair type
+	var/hair_color = "000"				//Hair color
+	var/facial_hair_style = "Shaved"	//Face hair type
+	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 
@@ -81,7 +81,7 @@ datum/preferences
 	var/unlock_content = 0
 
 /datum/preferences/New(client/C)
-	b_type = random_blood_type()
+	blood_type = random_blood_type()
 	ooccolor = normal_ooc_colour
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -161,7 +161,7 @@ datum/preferences
 
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
-				dat += "<b>Blood Type:</b> [b_type]<BR>"
+				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
@@ -171,16 +171,16 @@ datum/preferences
 
 				dat += "<h3>Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><BR>"
-				dat += "<span style='border:1px solid #161616; background-color: #[h_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top' width='28%'>"
 
 				dat += "<h3>Facial Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[f_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top'>"
@@ -210,7 +210,7 @@ datum/preferences
 						dat += "<b>Adminhelp Sound:</b> "
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(unlock_content || check_rights_for(user, R_ADMIN))
+					if(unlock_content || check_rights_for(user.client, R_ADMIN))
 						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 					if(unlock_content)
@@ -253,7 +253,7 @@ datum/preferences
 		popup.set_content(dat)
 		popup.open(0)
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 580, height = 560)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 555, height = 585)
 		if(!job_master)	return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -520,13 +520,13 @@ datum/preferences
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
-						h_color = random_short_color()
-					if("h_style")
-						h_style = random_hair_style(gender)
+						hair_color = random_short_color()
+					if("hair_style")
+						hair_style = random_hair_style(gender)
 					if("facial")
-						f_color = random_short_color()
-					if("f_style")
-						f_style = random_facial_hair_style(gender)
+						facial_hair_color = random_short_color()
+					if("facial_hair_style")
+						facial_hair_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = random_underwear(gender)
 					if("eyes")
@@ -565,31 +565,31 @@ datum/preferences
 					if("hair")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 						if(new_hair)
-							h_color = sanitize_hexcolor(new_hair)
+							hair_color = sanitize_hexcolor(new_hair)
 
 
-					if("h_style")
-						var/new_h_style
+					if("hair_style")
+						var/new_hair_style
 						if(gender == MALE)
-							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
+							new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
 						else
-							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
-						if(new_h_style)
-							h_style = new_h_style
+							new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
+						if(new_hair_style)
+							hair_style = new_hair_style
 
 					if("facial")
 						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
 						if(new_facial)
-							f_color = sanitize_hexcolor(new_facial)
+							facial_hair_color = sanitize_hexcolor(new_facial)
 
-					if("f_style")
-						var/new_f_style
+					if("facial_hair_style")
+						var/new_facial_hair_style
 						if(gender == MALE)
-							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
+							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
 						else
-							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
-						if(new_f_style)
-							f_style = new_f_style
+							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
+						if(new_facial_hair_style)
+							facial_hair_style = new_facial_hair_style
 
 					if("underwear")
 						var/new_underwear
@@ -630,8 +630,8 @@ datum/preferences
 						else
 							gender = MALE
 						underwear = random_underwear(gender)
-						f_style = random_facial_hair_style(gender)
-						h_style = random_hair_style(gender)
+						facial_hair_style = random_facial_hair_style(gender)
+						hair_style = random_hair_style(gender)
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
@@ -708,15 +708,15 @@ datum/preferences
 
 		character.gender = gender
 		character.age = age
-		character.b_type = b_type
+		character.blood_type = blood_type
 
 		character.eye_color = eye_color
-		character.h_color = h_color
-		character.f_color = f_color
+		character.hair_color = hair_color
+		character.facial_hair_color = facial_hair_color
 
 		character.skin_tone = skin_tone
-		character.h_style = h_style
-		character.f_style = f_style
+		character.hair_style = hair_style
+		character.facial_hair_style = facial_hair_style
 		character.underwear = underwear
 
 		if(backbag > 3 || backbag < 1)

@@ -1,5 +1,5 @@
 /obj/machinery/computer/prisoner
-	name = "prisoner management console"
+	name = "Prisoner Management Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_armory)
@@ -28,6 +28,7 @@
 		if(screen == 0)
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 		else if(screen == 1)
+			dat += "<H3>Prisoner Implant Management</H3>"
 			dat += "<HR>Chemical Implants<BR>"
 			var/turf/Tr = null
 			for(var/obj/item/weapon/implant/chem/C in world)
@@ -41,14 +42,20 @@
 				dat += "********************************<BR>"
 			dat += "<HR>Tracking Implants<BR>"
 			for(var/obj/item/weapon/implant/tracking/T in world)
+				if(!iscarbon(T.imp_in))
+					continue
+				if(!T.implanted)
+					continue
 				Tr = get_turf(T)
-				if((Tr) && (Tr.z != src.z))	continue//Out of range
-				if(!T.implanted) continue
+				if((Tr) && (Tr.z != src.z))
+					continue//Out of range
+
 				var/loc_display = "Unknown"
 				var/mob/living/carbon/M = T.imp_in
-				if(M.z == 1 && !istype(M.loc, /turf/space))
+				if(Tr.z == 1 && !istype(M.loc, /turf/space))
 					var/turf/mob_loc = get_turf(M)
 					loc_display = mob_loc.loc
+
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 				dat += "********************************<BR>"
@@ -56,7 +63,7 @@
 
 		//user << browse(dat, "window=computer;size=400x500")
 		//onclose(user, "computer")
-		var/datum/browser/popup = new(user, "computer", "Prisoner Implant Management System", 400, 500)
+		var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()

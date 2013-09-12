@@ -49,7 +49,8 @@
 
 	density = 0
 	explosion_resistance = 0
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelok_sight()
 	operating = 0
 
 	return 1
@@ -69,7 +70,8 @@
 	density = 1
 	explosion_resistance = initial(explosion_resistance)
 	SetOpacity(1)
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelok_sight()
 	sleep(10)
 
 	operating = 0

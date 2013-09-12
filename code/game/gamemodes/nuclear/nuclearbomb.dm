@@ -53,7 +53,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	if (src.extended)
 		user.set_machine(src)
-		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
+		var/dat = text("<TT>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
 		if (src.auth)
 			if (src.yes_code)
 				dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src, src, src, src.timeleft, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
@@ -69,9 +69,10 @@ var/bomb_set
 			message = text("[]", src.code)
 			if (src.yes_code)
 				message = "*****"
-		dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-		user << browse(dat, "window=nuclearbomb;size=300x400")
-		onclose(user, "nuclearbomb")
+		dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A><A href='?src=\ref[];type=2'>2</A><A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A><A href='?src=\ref[];type=5'>5</A><A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A><A href='?src=\ref[];type=8'>8</A><A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A><A href='?src=\ref[];type=0'>0</A><A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
+		var/datum/browser/popup = new(user, "nuclearbomb", name, 300, 400)
+		popup.set_content(dat)
+		popup.open()
 	else
 		user << "<span class='notice'>You have to deploy the bomb first.</span>"
 	return
@@ -81,11 +82,12 @@ var/bomb_set
 	set name = "Deploy Bomb"
 	set src in oview(1)
 
-	if (!src.extended)
-		src.anchored = 1
-		flick("nuclearbombc", src)
-		src.icon_state = "nuclearbomb1"
-		src.extended = 1
+	if(isliving(usr))
+		if(!src.extended)
+			src.anchored = 1
+			flick("nuclearbombc", src)
+			src.icon_state = "nuclearbomb1"
+			src.extended = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
 	if(..())
@@ -213,6 +215,7 @@ var/bomb_set
 					blackbox.save_all_data_to_sql()
 				sleep(300)
 				log_game("Rebooting due to nuclear detonation")
+				kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
 				world.Reboot()
 				return
 	return

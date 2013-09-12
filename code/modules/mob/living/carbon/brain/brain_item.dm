@@ -61,7 +61,7 @@
 
 //since these people will be dead M != usr
 
-	if(!getbrain(M))
+	if(!M.getorgan(/obj/item/organ/brain))
 		user.drop_item()
 		for(var/mob/O in viewers(M, null))
 			if(O == (user || M))

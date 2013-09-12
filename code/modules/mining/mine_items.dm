@@ -133,11 +133,6 @@ proc/move_mining_shuttle()
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["move"])
-		if(mining_shuttle_location == 1 && istype(ticker.mode, /datum/game_mode/blob)) // shuttle is on the station, this will mean miners can come back
-			if(ticker.mode:declared)
-				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-				return
-
 		if (!mining_shuttle_moving)
 			usr << "\blue Shuttle recieved message and will be sent shortly."
 			move_mining_shuttle()

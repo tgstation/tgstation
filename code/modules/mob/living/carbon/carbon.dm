@@ -370,11 +370,6 @@
 	if(src.client)
 		src.client.screen -= item
 
-	item.loc = src.loc
-
-	if(istype(item, /obj/item))
-		item:dropped(src) // let it know it's been dropped
-
 	//actually throw it!
 	if(item)
 		item.layer = initial(item.layer)
@@ -538,3 +533,10 @@
 		return
 
 	..(message)
+
+/mob/living/carbon/proc/is_mutantrace(var/mrace)
+	if(mrace)
+		if(src.dna && src.dna.mutantrace == mrace)
+			return 1
+	else
+		return src.dna && src.dna.mutantrace ? 1 : 0

@@ -44,6 +44,25 @@
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 75)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 
+//Atmospherics
+/obj/item/clothing/head/helmet/space/rig/atmos
+	name = "atmospherics hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has thermal shielding."
+	icon_state = "rig0-atmospherics"
+	item_state = "atmo_helm"
+	color = "atmospherics"
+	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 0)
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+
+/obj/item/clothing/suit/space/rig/atmos
+	name = "atmospherics hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has thermal shielding."
+	icon_state = "rig-atmospherics"
+	item_state = "atmo_hardsuit"
+	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 100, rad = 0)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite

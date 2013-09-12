@@ -5,7 +5,7 @@
 	icon_state = "marker"
 
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisibility = INVISIBILITY_OBSERVER
 
 	pass_flags = PASSBLOB

@@ -204,11 +204,11 @@
 							src << "\red You feel weak."
 							emote("collapse")
 						if(prob(15))
-							if(!(f_style == "Shaved") || !(h_style == "Bald"))
+							if(!( hair_style == "Shaved") || !(hair_style == "Bald"))
 								src << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
-									f_style = "Shaved"
-									h_style = "Bald"
+									facial_hair_style = "Shaved"
+									hair_style = "Bald"
 									update_hair()
 						updatehealth()
 
@@ -229,7 +229,7 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/air_group/breath
+		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
 		if(health <= config.health_threshold_crit)
 			losebreath++
@@ -812,7 +812,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			if(health <= config.health_threshold_dead || !getbrain(src))
+			if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				silent = 0

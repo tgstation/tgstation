@@ -186,6 +186,7 @@
 						emp_damage -= 1
 
 			//Other
+			/* commented out because none of these should happen
 			if(stunned)
 				AdjustStunned(-1)
 
@@ -200,6 +201,7 @@
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
+			*/
 		return 1
 
 

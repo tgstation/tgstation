@@ -57,49 +57,49 @@
 "be" = (/obj/structure/shuttle/engine/heater,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
 "bf" = (/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
 "bg" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bh" = (/obj/machinery/sleeper{icon_state = "sleeper_0-r"; orient = "RIGHT"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bi" = (/obj/machinery/vending/snack,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bj" = (/obj/machinery/vending/cola,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bk" = (/obj/machinery/vending/cigarette,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bl" = (/obj/machinery/vending/coffee,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bm" = (/obj/structure/closet/syndicate,/obj/item/clothing/suit/space/rig/syndi,/obj/item/clothing/head/helmet/space/rig/syndi,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bn" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bo" = (/obj/structure/closet/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bp" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion"; dir = 4},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/awaymission/syndishuttle)
-"bq" = (/obj/structure/shuttle/engine/router,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
-"br" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
-"bs" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
-"bt" = (/obj/structure/lattice,/turf/space,/area/awaymission/syndishuttle)
-"bu" = (/obj/machinery/door/airlock/centcom,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
-"bv" = (/obj/machinery/door/airlock/centcom,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bw" = (/turf/simulated/floor/airless{icon_state = "damaged5"},/area/awaymission/research)
-"bx" = (/obj/structure/girder/reinforced,/turf/simulated/floor/airless{icon_state = "damaged4"},/area/awaymission/research)
-"by" = (/turf/simulated/wall/r_wall,/area/awaymission/research)
-"bz" = (/obj/machinery/portable_atmospherics/canister/toxins,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
-"bA" = (/obj/machinery/bot/medbot/mysterious{desc = "A dark little medical robot. She looks somewhat underwhelmed."; name = "Nightingale"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bB" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bC" = (/obj/structure/table,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bD" = (/obj/structure/table,/obj/item/weapon/paper/sc_safehint_paper_shuttle,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bE" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
-"bF" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/awaymission/syndishuttle)
-"bG" = (/turf/simulated/floor/airless{icon_state = "damaged3"},/area/awaymission/research)
-"bH" = (/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/awaymission/research)
-"bI" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/awaymission/research)
-"bJ" = (/obj/item/weapon/shard,/mob/living/carbon/alien/larva{bruteloss = 25; fireloss = 175; stat = 2},/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/awaymission/research)
-"bK" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"bL" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"bM" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/awaymission/research)
-"bN" = (/obj/machinery/door/window/eastleft,/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/awaymission/research)
-"bO" = (/obj/machinery/door/window/westright,/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/awaymission/research)
-"bP" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/awaymission/research)
-"bQ" = (/obj/structure/filingcabinet/filingcabinet,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"bR" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/window/eastleft,/obj/machinery/door/window/westright,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"bS" = (/mob/living/simple_animal/lizard,/turf/simulated/floor/grass,/area/awaymission/research)
-"bT" = (/turf/simulated/floor/grass,/area/awaymission/research)
-"bU" = (/mob/living/carbon/monkey,/turf/simulated/floor/grass,/area/awaymission/research)
-"bV" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-burst_r (EAST)"; icon_state = "burst_r"; dir = 4},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/awaymission/syndishuttle)
-"bW" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (NORTH)"; icon_state = "heater"; dir = 1},/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
-"bX" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/awaymission/syndishuttle)
+"bh" = (/obj/machinery/vending/snack,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bi" = (/obj/machinery/vending/cola,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bj" = (/obj/machinery/vending/cigarette,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bk" = (/obj/machinery/vending/coffee,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bl" = (/obj/structure/closet/syndicate,/obj/item/clothing/suit/space/rig/syndi,/obj/item/clothing/head/helmet/space/rig/syndi,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bm" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bn" = (/obj/structure/closet/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bo" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion"; dir = 4},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/awaymission/syndishuttle)
+"bp" = (/obj/structure/shuttle/engine/router,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
+"bq" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
+"br" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
+"bs" = (/obj/structure/lattice,/turf/space,/area/awaymission/syndishuttle)
+"bt" = (/obj/machinery/door/airlock/centcom,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
+"bu" = (/obj/machinery/door/airlock/centcom,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bv" = (/turf/simulated/floor/airless{icon_state = "damaged5"},/area/awaymission/research)
+"bw" = (/obj/structure/girder/reinforced,/turf/simulated/floor/airless{icon_state = "damaged4"},/area/awaymission/research)
+"bx" = (/turf/simulated/wall/r_wall,/area/awaymission/research)
+"by" = (/obj/machinery/portable_atmospherics/canister/toxins,/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
+"bz" = (/obj/machinery/bot/medbot/mysterious{desc = "A dark little medical robot. She looks somewhat underwhelmed."; name = "Nightingale"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bA" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bB" = (/obj/structure/table,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bC" = (/obj/structure/table,/obj/item/weapon/paper/sc_safehint_paper_shuttle,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bD" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
+"bE" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/awaymission/syndishuttle)
+"bF" = (/turf/simulated/floor/airless{icon_state = "damaged3"},/area/awaymission/research)
+"bG" = (/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/awaymission/research)
+"bH" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/awaymission/research)
+"bI" = (/obj/item/weapon/shard,/mob/living/carbon/alien/larva{bruteloss = 25; fireloss = 175; stat = 2},/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/awaymission/research)
+"bJ" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"bK" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"bL" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/awaymission/research)
+"bM" = (/obj/machinery/door/window/eastleft,/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/awaymission/research)
+"bN" = (/obj/machinery/door/window/westright,/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/awaymission/research)
+"bO" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/awaymission/research)
+"bP" = (/obj/structure/filingcabinet/filingcabinet,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"bQ" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/window/eastleft,/obj/machinery/door/window/westright,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"bR" = (/mob/living/simple_animal/lizard,/turf/simulated/floor/grass,/area/awaymission/research)
+"bS" = (/turf/simulated/floor/grass,/area/awaymission/research)
+"bT" = (/mob/living/carbon/monkey,/turf/simulated/floor/grass,/area/awaymission/research)
+"bU" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-burst_r (EAST)"; icon_state = "burst_r"; dir = 4},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/awaymission/syndishuttle)
+"bV" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (NORTH)"; icon_state = "heater"; dir = 1},/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
+"bW" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/awaymission/syndishuttle)
+"bX" = (/obj/machinery/sleeper{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/syndishuttle)
 "bY" = (/obj/structure/girder/reinforced,/turf/simulated/floor/airless{icon_state = "damaged3"},/area/awaymission/research)
 "bZ" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/awaymission/research)
 "ca" = (/turf/simulated/floor,/area/awaymission/research)
@@ -115,7 +115,7 @@
 "ck" = (/obj/item/weapon/shard{icon_state = "small"},/mob/living/carbon/alien/larva{bruteloss = 50; fireloss = 150; stat = 2},/turf/simulated/floor{dir = 2; icon_state = "warning"},/area/awaymission/research)
 "cl" = (/obj/item/weapon/shard{icon_state = "medium"},/obj/item/weapon/shard{icon_state = "small"},/obj/structure/alien/weeds/node,/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/awaymission/research)
 "cm" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/paper,/obj/item/weapon/paper,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"cn" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/mob/living/simple_animal/hostile/hivebot{opensdoors = 0},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/awaymission/research)
+"cn" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/mob/living/simple_animal/hostile/hivebot,/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/awaymission/research)
 "co" = (/obj/structure/window/reinforced,/turf/simulated/floor{dir = 2; icon_state = "warning"},/area/awaymission/research)
 "cp" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/awaymission/research)
 "cq" = (/obj/machinery/door/window/southright,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
@@ -631,7 +631,7 @@
 "mg" = (/obj/structure/closet/crate/medical{name = "Surgical Tools"},/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/surgicaldrill,/obj/item/weapon/scalpel,/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
 "mh" = (/obj/structure/stool/bed/roller,/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
 "mi" = (/obj/structure/window/reinforced/tinted{dir = 8; icon_state = "twindow"; tag = ""},/turf/simulated/floor{icon_state = "whitehall"; dir = 2},/area/awaymission/southblock)
-"mj" = (/obj/machinery/sleeper,/turf/simulated/floor{icon_state = "whitehall"; dir = 2},/area/awaymission/southblock)
+"mj" = (/obj/machinery/sleeper{dir = 1},/turf/simulated/floor{icon_state = "whitehall"; dir = 2},/area/awaymission/southblock)
 "mk" = (/obj/machinery/sleep_console,/turf/simulated/floor{icon_state = "white"},/area/awaymission/southblock)
 "ml" = (/turf/simulated/floor{icon_state = "warning"},/area/awaymission/southblock)
 "mm" = (/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/awaymission/southblock)
@@ -661,25 +661,25 @@ aaaaaaaaaaaaaaaaaaaaaaaCaDafafagagagagagagaEafaFaGamafaHapaBaqafanamaBaEagagagag
 aaaaaaaaaaaaaaaDaaaaaaaIaJaKaaaaaaaaaaakakajaFaFamaGaFamamaBaLamaBaMaNajakakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aCaCaDaaaaaaaaaCaDaaaaaOaPaQaDaaaaaaaaaaakafafafaGaRaSaFaFaTaUaBamaVaWajakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aCaXaYaDaaaaaaaCaCaCaCaCaCaCaCaCaCaZaabaaaafajajajajajbbbcajajajajajajajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bdbebfaYaDaaaaaCbgbhbibjbkblbmbnboaCaCaaaGajamaGaqamamapaGajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bpbqbrbsaCaCaCaCbnbnbnbnbnbnbnbnboaCaCaKaKaCaCbtamaqaqamapajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bpbqbrbfbubnbnbnbnbnbnbnbnbnbnbnbnbvbnbnbnbnbnbvbwbxbybybybybybybybybybybybybybybybybybybyakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bpbqbrbzaCaCaCaCbnbnbAbBbCbDbEbnbmaCaCaCaCaCaKbFbGbHbIbJbKbLbMbIbNbKbObIbPbQbLbRbSbTbTbUbyakakaaaaaaaaaaaaaaaabybybybybyaaaaaaaa
-bVbWbfbXbFaaaaaCbgbhbnbBbCbnbEbnboaCaCbFafajaqaFbYbZcacbccbKcdcacbbKcdcecbbKbKcfcgbTbTbTbyakakakakakakakbybybybychchchbybybyaaaa
-aCbfbXbFaaaaaaaCaCaCaCaCaCaCaCaCaCaCbFafciajaFaFbycjckclcmbKcncocpcqcrcocpbKcsctcucvcwcxbyakakaaaaaaaacyczcAcAcAcAcBcAcAcAbybyaa
-aCaCbFaaaaaaaaaCbFaaaacCaPcDafafafafafaqaGajancEbybKbKcFbKbKbKcGcmcHbKcGcmcIbKcJbKbKbKbKbyakaaaaaaaacycKcAcLcAcBcMcNcOcBcAcPbyaa
-aaaaaaaaaaaaaabFaaaaaaaKaJafafafafafcQafcRajaFaqbybybybybycScTcUbKbKbKbKcTbKbKbKbKbKbKbKbybybybybycVbybycWcAcXcYcYcYcYcYcZcAbyby
-aaaaaaaaaaaaaaaaaaaaaaaCafafaeaqafaeaqanandaamaqbydbdcddbydedfdgdgdgdgdgdgdgdfdgdgdgdgdhbydidjbybydkcAdlcAcAcMcYcYcYcYcYcOcAdmby
-aaaaaaaaaaaaafafafafafafajajajaFdnaGaGandoajamdpdqdrdrdrdsdtbKbKbKbKbKbKdubKbKbKbKbKbKbKdvcAcAdvcAcAcAdlcAcXcNcYcYdwcYcYcNcZdmby
-aaaaaaaaaaaaafafafafdxdydzdAajafajajajajajajamdBbydCdDddbydEdFdGdHdGdGdGdGdGdHdIdGdGdGdJbycAdjbybycAdKdlcAcAdLcYcYcYcYcYdMcAdmby
-aaaaaaaaaaaaajafdNafdOaFdPdQafdRafdSdTdUamajaqdVbybybybybycSdWbKbKdXdYdZeaebbKbKececececbybybybybycVbybycWcAcXcYcYcYcYcYcZcAbyby
-aaaaaaaaaaaaedeeefaGaeaeaFegafeheiejejejekajeldVbyemdGdGenbKdWbKbKbKbKbKbKebbKbKeceobKepbyakaaaaaaaacycKcAcAcAeqdLcNdMeqcAcPbyaa
-aaaaaaaaaaaaeresetaFaeaFaGeuevewexeweyezeAeveBeCbyeDeEeFeGbKdWbKbKbKbKbKdXebbKbKeceHeIeJbyakakaaaaaaaacyeKcAcAcAcAeqcAcAcAbybyaa
-aaaaaaaaaaaaeLeMafaGafaGaGeNajeOegdxdxdxefajaFePbyeFeFeFeGbKdWeQbKeReSeSeTeUbKbKeVeWbKeXbyakakakakakakakbybybybyeYeYeYbybybyaaaa
-aaaaaaaaaaaaajajeZekfaaFfadQajdRfbfcfdfcfcajaGfebyeDeEeFeGbKdWffbKbKfgbKfhebbKbKececececbyakakaaaaaaaaaaaaaaaabybybybybyaaaaaaaa
-aaaaaaaaaaaaafajajfifjfkejflajajajfmajajajajaBfebyeFeFeFeGbKdWfnbKbKbKbKfoebbKfpbKbKbKfqbyakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaajajajajajajajfrfsfsajftftfufvfwbyeDeEeFeGbKdWfxfyfzfAfBfCebbKfDbKbKbKfEbyaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaajfsfFfGajfHfIfJfJfKbybybybybybybybybybybybybybybybybybybybybyfLfLfLfLfLfLfLfMfNaaaaaaaaaaaaaaaaaaaa
+bdbebfaYaDaaaaaCbgbgbhbibjbkblbmbnaCaCaaaGajamaGaqamamapaGajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bobpbqbraCaCaCaCbmbmbmbmbmbmbmbmbnaCaCaKaKaCaCbsamaqaqamapajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bobpbqbfbtbmbmbmbmbmbmbmbmbmbmbmbmbubmbmbmbmbmbubvbwbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bobpbqbyaCaCaCaCbmbmbzbAbBbCbDbmblaCaCaCaCaCaKbEbFbGbHbIbJbKbLbHbMbJbNbHbObPbKbQbRbSbSbTbxakakaaaaaaaaaaaaaaaabxbxbxbxbxaaaaaaaa
+bUbVbfbWbEaaaaaCbXbXbmbAbBbmbDbmbnaCaCbEafajaqaFbYbZcacbccbJcdcacbbJcdcecbbJbJcfcgbSbSbSbxakakakakakakakbxbxbxbxchchchbxbxbxaaaa
+aCbfbWbEaaaaaaaCaCaCaCaCaCaCaCaCaCaCbEafciajaFaFbxcjckclcmbJcncocpcqcrcocpbJcsctcucvcwcxbxakakaaaaaaaacyczcAcAcAcAcBcAcAcAbxbxaa
+aCaCbEaaaaaaaaaCbEaaaacCaPcDafafafafafaqaGajancEbxbJbJcFbJbJbJcGcmcHbJcGcmcIbJcJbJbJbJbJbxakaaaaaaaacycKcAcLcAcBcMcNcOcBcAcPbxaa
+aaaaaaaaaaaaaabEaaaaaaaKaJafafafafafcQafcRajaFaqbxbxbxbxbxcScTcUbJbJbJbJcTbJbJbJbJbJbJbJbxbxbxbxbxcVbxbxcWcAcXcYcYcYcYcYcZcAbxbx
+aaaaaaaaaaaaaaaaaaaaaaaCafafaeaqafaeaqanandaamaqbxdbdcddbxdedfdgdgdgdgdgdgdgdfdgdgdgdgdhbxdidjbxbxdkcAdlcAcAcMcYcYcYcYcYcOcAdmbx
+aaaaaaaaaaaaafafafafafafajajajaFdnaGaGandoajamdpdqdrdrdrdsdtbJbJbJbJbJbJdubJbJbJbJbJbJbJdvcAcAdvcAcAcAdlcAcXcNcYcYdwcYcYcNcZdmbx
+aaaaaaaaaaaaafafafafdxdydzdAajafajajajajajajamdBbxdCdDddbxdEdFdGdHdGdGdGdGdGdHdIdGdGdGdJbxcAdjbxbxcAdKdlcAcAdLcYcYcYcYcYdMcAdmbx
+aaaaaaaaaaaaajafdNafdOaFdPdQafdRafdSdTdUamajaqdVbxbxbxbxbxcSdWbJbJdXdYdZeaebbJbJececececbxbxbxbxbxcVbxbxcWcAcXcYcYcYcYcYcZcAbxbx
+aaaaaaaaaaaaedeeefaGaeaeaFegafeheiejejejekajeldVbxemdGdGenbJdWbJbJbJbJbJbJebbJbJeceobJepbxakaaaaaaaacycKcAcAcAeqdLcNdMeqcAcPbxaa
+aaaaaaaaaaaaeresetaFaeaFaGeuevewexeweyezeAeveBeCbxeDeEeFeGbJdWbJbJbJbJbJdXebbJbJeceHeIeJbxakakaaaaaaaacyeKcAcAcAcAeqcAcAcAbxbxaa
+aaaaaaaaaaaaeLeMafaGafaGaGeNajeOegdxdxdxefajaFePbxeFeFeFeGbJdWeQbJeReSeSeTeUbJbJeVeWbJeXbxakakakakakakakbxbxbxbxeYeYeYbxbxbxaaaa
+aaaaaaaaaaaaajajeZekfaaFfadQajdRfbfcfdfcfcajaGfebxeDeEeFeGbJdWffbJbJfgbJfhebbJbJececececbxakakaaaaaaaaaaaaaaaabxbxbxbxbxaaaaaaaa
+aaaaaaaaaaaaafajajfifjfkejflajajajfmajajajajaBfebxeFeFeFeGbJdWfnbJbJbJbJfoebbJfpbJbJbJfqbxakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaajajajajajajajfrfsfsajftftfufvfwbxeDeEeFeGbJdWfxfyfzfAfBfCebbJfDbJbJbJfEbxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaajfsfFfGajfHfIfJfJfKbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxfLfLfLfLfLfLfLfMfNaaaaaaaaaaaaaaaaaaaa
 aafOfPfQfRfSfPfTaaaaaaaaaaaaajfUfsfVajftfWfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfXfLfYfZfYgafYgafZgagbfNaaaaaaaaaaaaaaaaaa
 aagcgdgegfgegdgcaaaaaaaaaaaaajggghgiajftgjfXgkglgmglgnfXgogpgqfXgrgsgtgugvglglgwglfXftftfLfYgafYgafYgagxgagagyaaaaaaaaaaaaaaaaaa
 aagzgAgegegegAgBgCgCgCgCgCgCgCgCgCgCgCftfWfXgDglgEglgFfXglglgFfXgGgHgIgJgKglgLgugMfXftftgNgOgOgPgOgOgOgQgRgSgyaaaaaaaaaaaaaaaaaa

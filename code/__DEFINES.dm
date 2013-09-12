@@ -26,7 +26,6 @@
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
 
-var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
 
 //ITEM INVENTORY SLOT BITMASKS
@@ -388,11 +387,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define R_SPAWN			4096
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
-
-
-//IMPORTANT! The permissions system supports flags up to 2^30 (possibly 2^31), HOWEVER, once the flag 65536
-//starts being used, an edit to rights2text(rights, seperator="") needs to happen! The edit is prepared
-//and commented out. Please uncomment it before assigning that flag. Once you do, delete this note. ~Errorage
 
 //Preference toggles
 #define SOUND_ADMINHELP	1

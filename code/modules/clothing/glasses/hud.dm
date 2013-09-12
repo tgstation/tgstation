@@ -104,55 +104,39 @@
 	var/client/C = M.client
 	var/image/holder
 	for(var/mob/living/carbon/human/perp in view(M))
-		if(!C) continue
-		var/perpname = "wot"
 		holder = perp.hud_list[ID_HUD]
+		holder.icon_state = "hudno_id"
 		if(perp.wear_id)
-			var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
-			if(I)
-				perpname = I.registered_name
-				holder.icon_state = "hud[ckey(I.GetJobName())]"
-				C.images += holder
-			else
-				perpname = perp.name
-				holder.icon_state = "hudno_id"
-				C.images += holder
-		else
-			perpname = perp.name
-			holder.icon_state = "hudno_id"
-			C.images += holder
+			holder.icon_state = "hud[ckey(perp.wear_id.GetJobName())]"
+		C.images += holder
 
-		for(var/datum/data/record/E in data_core.general)
-			if(E.fields["name"] == perpname)
-				holder = perp.hud_list[WANTED_HUD]
-				for (var/datum/data/record/R in data_core.security)
-					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-						holder.icon_state = "hudwanted"
-						C.images += holder
-						break
-					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-						holder.icon_state = "hudincarcerated"
-						C.images += holder
-						break
-					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
-						holder.icon_state = "hudparolled"
-						C.images += holder
-						break
-					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
-						holder.icon_state = "hudreleased"
-						C.images += holder
-						break
+
 		for(var/obj/item/weapon/implant/I in perp)
 			if(I.implanted)
 				if(istype(I,/obj/item/weapon/implant/tracking))
 					holder = perp.hud_list[IMPTRACK_HUD]
 					holder.icon_state = "hud_imp_tracking"
-					C.images += holder
-				if(istype(I,/obj/item/weapon/implant/loyalty))
+				else if(istype(I,/obj/item/weapon/implant/loyalty))
 					holder = perp.hud_list[IMPLOYAL_HUD]
 					holder.icon_state = "hud_imp_loyal"
-					C.images += holder
-				if(istype(I,/obj/item/weapon/implant/chem))
+				else if(istype(I,/obj/item/weapon/implant/chem))
 					holder = perp.hud_list[IMPCHEM_HUD]
 					holder.icon_state = "hud_imp_chem"
-					C.images += holder
+				else
+					continue
+				C.images += holder
+				break
+
+		var/perpname = perp.get_face_name(perp.get_id_name(""))
+		if(perpname)
+			var/datum/data/record/R = find_record("name", perpname, data_core.security)
+			if(R)
+				holder = perp.hud_list[WANTED_HUD]
+				switch(R.fields["criminal"])
+					if("*Arrest*")		holder.icon_state = "hudwanted"
+					if("Incarcerated")	holder.icon_state = "hudincarcerated"
+					if("Parolled")		holder.icon_state = "hudparolled"
+					if("Released")		holder.icon_state = "hudreleased"
+					else
+						continue
+				C.images += holder

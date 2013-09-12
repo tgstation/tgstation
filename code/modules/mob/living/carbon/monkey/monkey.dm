@@ -11,6 +11,8 @@
 
 /mob/living/carbon/monkey/New()
 	create_reagents(1000)
+	verbs += /mob/living/proc/mob_sleep
+	verbs += /mob/living/proc/lay_down
 
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart

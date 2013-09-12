@@ -416,18 +416,10 @@ proc/get_all_job_icons() //For all existing HUD icons
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander")
 
-/obj/proc/GetJobName() //Used in secHUD icon generation
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/jobName
-
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			jobName = src:id:assignment
-	if(istype(src, /obj/item/weapon/card/id))
-		jobName = src:assignment
-
+/obj/item/proc/GetJobName() //Used in secHUD icon generation
+	var/obj/item/weapon/card/id/I = GetID()
+	if(!I)	return
+	var/jobName = I.assignment
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job

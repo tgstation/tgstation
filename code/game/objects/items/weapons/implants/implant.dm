@@ -179,3 +179,28 @@
 	source.mind.store_memory("An adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
 	source << "<span class='notice'>The implanted adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.</span>"
 	return 1
+
+
+/obj/item/weapon/implant/emp
+	name = "emp"
+	desc = "Triggers an EMP."
+
+	var/activation_emote = "chuckle"
+	var/uses = 1
+
+/obj/item/weapon/implant/emp/New()
+	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+	..()
+	return
+
+/obj/item/weapon/implant/emp/trigger(emote, mob/living/carbon/source as mob)
+	if (src.uses < 1)	return 0
+	if (emote == src.activation_emote)
+		src.uses--
+		empulse(source, 3, 5)
+	return
+
+/obj/item/weapon/implant/emp/implanted(mob/living/carbon/source)
+		source.mind.store_memory("EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+		return 1

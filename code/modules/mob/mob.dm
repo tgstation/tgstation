@@ -380,7 +380,7 @@ var/list/slot_equipment_priority = list( \
 	set category = "OOC"
 	var/is_admin = 0
 
-	if(client.holder && (client.holder.rights & R_ADMIN))
+	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "\blue You must be observing to use this!"
@@ -644,7 +644,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
+				stat(null,"Air-[master_controller.air_cost]\t#[air_master.active_turfs.len]")
+				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
 				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")

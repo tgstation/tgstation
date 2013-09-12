@@ -39,6 +39,7 @@ var/list/uplink_items = list()
 /datum/uplink_item
 	var/name = "item name"
 	var/category = "item category"
+	var/desc = "item description"
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
@@ -88,35 +89,41 @@ var/list/uplink_items = list()
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
-	category = "Highly Visible and Dangerous Weapons"
+	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/dangerous/revolver
-	name = "Revolver"
+	name = "Full Revolver"
+	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile
 	cost = 6
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
+	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_magazine/a357
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Energy Crossbow"
+	name = "Miniature Energy Crossbow"
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
+	desc = "The esword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 4
 
 /datum/uplink_item/dangerous/emp
-	name = "5 EMP Grenades"
-	item = /obj/item/weapon/storage/box/emps
+	name = "EMP Kit"
+	desc = "A box that contains an EMP grenade, an EMP implant and a short ranged device disguised as a flashlight. Useful to disrupt communication and silicon lifeforms."
+	item = /obj/item/weapon/storage/box/syndie_kit/emp
 	cost = 3
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
+	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
 
@@ -127,16 +134,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
+	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
+	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
+	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
@@ -148,31 +158,43 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_jumpsuit
 	name = "Chameleon Jumpsuit"
+	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/clothing/under/chameleon
 	cost = 3
 
+/datum/uplink_item/stealthy_tools/chameleon_stamp
+	name = "Chameleon Stamp"
+	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp™. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; it can also be used in a washing machine to forge clothing."
+	item = /obj/item/weapon/stamp/chameleon
+	cost = 1
+
 /datum/uplink_item/stealthy_tools/syndigolashes
-	name = "No-Slip Syndicate Shoes"
+	name = "No-Slip Brown Shoes"
+	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/agent_card
-	name = "Agent ID Card"
+	name = "Agent Identification card"
+	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
 	item = /obj/item/weapon/card/id/syndicate
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
 	item = /obj/item/clothing/mask/gas/voice
+	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
+	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
+	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
 	item = /obj/item/device/camera_bug
 	cost = 2
 
@@ -183,61 +205,73 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
+	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 3
 
 /datum/uplink_item/device_tools/toolbox
-	name = "Fully Loaded Toolbox"
+	name = "Full Syndicate Toolbox"
+	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
 
 /datum/uplink_item/device_tools/space_suit
-	name = "Space Suit"
+	name = "Syndicate Space Suit"
+	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 3
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
+	desc = "These glasses are thermals disguised as engineers' optical meson scanners. They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 3
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
+	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
 	cost = 3
 
 /datum/uplink_item/device_tools/ai_detector
-	name = "Disguised AI Detector"
+	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
+	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
-	name = "Hacked AI Upload Module"
+	name = "Hacked AI Law Upload Module"
+	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
-	name = "C-4 (Destroys Walls)"
+	name = "Composition C-4"
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 2
 
 /datum/uplink_item/device_tools/powersink
-	name = "Powersink (DANGER!)"
+	name = "Power sink"
+	desc = "When screwed to wiring attached to an electric grid, then activated, this large device places excessive load on the grid, causing a stationwide blackout. The sink cannot be carried because of its excessive size. Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 5
 
 /datum/uplink_item/device_tools/singularity_beacon
-	name = "Singularity Beacon (DANGER!)"
+	name = "Singularity Beacon"
+	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
 
 /datum/uplink_item/device_tools/syndicate_bomb
-	name = "Syndicate Bomb (DANGER!)"
+	name = "Syndicate Bomb"
+	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 30 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. You can wrench the bomb down to prevent removal. The crew may defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
+	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
 	gamemodes = list("nuclear emergency")
@@ -250,11 +284,13 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
+	desc = "An implant injected into the body and later activated using a bodily gesture to attempt to slip restraints."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 3
 
 /datum/uplink_item/implants/uplink
-	name = "Uplink Implant (Contains 5 Telecrystals)"
+	name = "Uplink Implant"
+	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
@@ -266,16 +302,19 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
+	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
 
 /datum/uplink_item/badass/balloon
-	name = "For showing that You Are The Boss (Useless Balloon)"
+	name = "For showing that you are The Boss"
+	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
 
 /datum/uplink_item/badass/random
-	name = "Random Item (??)"
+	name = "Random Item"
+	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 

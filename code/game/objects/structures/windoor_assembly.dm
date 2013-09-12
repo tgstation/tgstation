@@ -29,12 +29,17 @@ obj/structure/windoor_assembly
 obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 
 obj/structure/windoor_assembly/Del()
 	density = 0
-	update_nearby_tiles()
+	air_update_turf(1)
 	..()
+
+/obj/structure/windoor_assembly/Move()
+	air_update_turf(1)
+	..()
+	air_update_turf(1)
 
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure]windoor_assembly[state]"
@@ -44,6 +49,12 @@ obj/structure/windoor_assembly/Del()
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		if(air_group) return 0
+		return !density
+	else
+		return 1
+
+/obj/structure/windoor_assembly/CanAtmosPass(var/turf/T)
+	if(get_dir(loc, T) == dir)
 		return !density
 	else
 		return 1
@@ -263,13 +274,13 @@ obj/structure/windoor_assembly/Del()
 	if (src.anchored)
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
 		return 0
-	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+	//if(src.state != "01")
+		//update_nearby_tiles(need_rebuild=1) //Compel updates before
 
 	src.dir = turn(src.dir, 270)
 
-	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1)
+	//if(src.state != "01")
+		//update_nearby_tiles(need_rebuild=1)
 
 	src.ini_dir = src.dir
 	update_icon()
@@ -290,26 +301,3 @@ obj/structure/windoor_assembly/Del()
 
 	update_icon()
 	return
-
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(target))
-			if(target.parent)
-				air_master.groups_to_rebuild += target.parent
-			else
-				air_master.tiles_to_update += target
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(target)) air_master.tiles_to_update += target
-
-	return 1
