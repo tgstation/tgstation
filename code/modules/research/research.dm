@@ -277,3 +277,23 @@ datum/tech/robotics
 /obj/item/weapon/disk/tech_disk/New()
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
+
+
+/* For testing objectives and shit since varedit is muh tedium. */
+/obj/item/weapon/disk/tech_disk/max
+	name = "Max Technology Disk"
+	desc = "You imagine God facepalming right about now"
+	icon = 'icons/obj/cloning.dmi'
+	icon_state = "datadisk2"
+	item_state = "card-id"
+	w_class = 1.0
+	m_amt = 30
+	g_amt = 10
+	var/datum/tech/stored
+
+/obj/item/weapon/disk/tech_disk/max/New()
+	..()
+	stored.known_tech=stored.possible_tech
+	for(var/datum/tech/KT in known_tech)
+		if(KT.level < KT.max_level)
+			KT.level=KT.max_level
