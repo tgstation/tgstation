@@ -456,7 +456,7 @@
 			stabilize_temperature_from_calories()
 
 		//After then, it reacts to the surrounding atmosphere based on your thermal protection
-		if(!on_fire)
+		if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 			if(loc_temp < bodytemperature)
 				//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
@@ -529,9 +529,9 @@
 			return
 		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 		if(G.oxygen < 1)
-			ExtinguishMob()
+			ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 			return
-		var/thermal_protection = get_heat_protection(30000)
+		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
 		if(thermal_protection < 1)
 			bodytemperature += BODYTEMP_HEATING_MAX
 		return
