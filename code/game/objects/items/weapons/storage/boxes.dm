@@ -246,7 +246,7 @@
 
 /obj/item/weapon/storage/box/exileimp
 	name = "exile implant kit"
-	desc = "Box of stuff used to implant chemicals."
+	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
 	icon_state = "implant"
 
 	New()
