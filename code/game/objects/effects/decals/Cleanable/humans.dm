@@ -34,7 +34,7 @@
 	gender = PLURAL
 	random_icon_states = null
 
-/obj/effect/decal/cleanable/blood/trails
+/*/obj/effect/decal/cleanable/blood/trails
 	icon_state = "trails"
 	desc = "redrum"
 	gender = PLURAL
@@ -44,6 +44,13 @@
 	desc = "Looks like someone forgot their bodybags."
 	gender = PLURAL
 	random_icon_states = null
+*/
+/obj/effect/decal/cleanable/blood/trail_holder
+	icon_state = "blank"
+	desc = "Your instincts say you shouldn't be following these."
+	gender = PLURAL
+	random_icon_states = null
+	var/existing_dirs = list()
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"

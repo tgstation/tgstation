@@ -358,27 +358,39 @@
 
 						//this is the gay blood on floor shit -- Added back -- Skie
 						if (M.lying && (prob(M.getBruteLoss() / 2)))
-							var/trail_type = /obj/effect/decal/cleanable/blood/ltrails //default
-							if (istype(M.loc, /turf/simulated))
-								if(M.getBruteLoss() >= 300) //heavy trails, equalient to all limbs being mangled or 75% chest + 75% head damage
-									if(istype(M, /mob/living/carbon/alien)) //alien blood trails
-										trail_type = /obj/effect/decal/cleanable/blood/xtrails
-									else //human blood trails
-										trail_type = /obj/effect/decal/cleanable/blood/trails
-								else //light trails
-									if(istype(M, /mob/living/carbon/alien)) //alien blood trails
-										trail_type = /obj/effect/decal/cleanable/blood/xltrails
-								var/obj/B = new trail_type(M.loc)
-								var/newdir = get_dir(T, M.loc)
-								if(newdir == M.dir)
-									B.dir = newdir
+							var/blood_exists = 0
+							var/trail_type = "ltrails"
+							var/blood_overwrite = 1
+							for(var/obj/effect/decal/cleanable/blood/C in M.loc) //checks for blood splatter already on the floor
+								blood_exists = 1
+							if(M.getBruteLoss() >= 300) //this is ugly, but I'd rather not make a mob variable just for this
+								if(istype(M,/mob/living/carbon/alien))
+									trail_type = "xtrails"
 								else
+									trail_type = "trails"
+							else
+								if(istype(M,/mob/living/carbon/alien))
+									trail_type = "xltrails"
+								else
+									trail_type = "ltrails"
+								blood_overwrite = 0 //light blood trails do not overwrite other blood trails
+							if (istype(M.loc, /turf/simulated))
+								var/newdir = get_dir(T, M.loc)
+								if(newdir != M.dir)
 									newdir = newdir | M.dir
-									if(newdir == 3)
-										newdir = 1
-									else if(newdir == 12)
-										newdir = 4
-								B.dir = newdir
+									if(newdir == 3) //N + S
+										newdir = NORTH
+									else if(newdir == 12) //E + W
+										newdir = EAST
+								if(!blood_exists)
+									new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+								for(var/obj/effect/decal/cleanable/blood/trail_holder/H in M.loc)
+									if((!(newdir in H.existing_dirs) || blood_overwrite) && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+										H.existing_dirs += newdir
+										H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+										if(istype(M, /mob/living/carbon/human)) //blood DNA
+											var/mob/living/carbon/DNA_helper = pulling
+											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 						step(pulling, get_dir(pulling.loc, T))
 						M.start_pulling(t)
 				else
