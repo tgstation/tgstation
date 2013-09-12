@@ -306,6 +306,7 @@
 				if(istype(s))
 					O.implants -= s
 					H.contents -= s
+					del(s)
 			O.amputated = 0
 			O.brute_dam = 0
 			O.burn_dam = 0
