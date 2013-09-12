@@ -290,6 +290,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			if(word1 == wordtravel && word2 == wordother)
 				icon_state = "1"
 				src.icon += rgb(200, 0, 0)
+				return
 			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 				icon_state = "2"
 				src.icon += rgb(100, 0, 100)
@@ -577,8 +578,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					scribewords += entry
 
 			var/chosen_rune = null
-			
-			
+
+
 			if(usr)
 				chosen_rune = input ("Choose a rune to scribe.") in scribewords
 				if (!chosen_rune)
@@ -589,7 +590,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					dictionary[chosen_rune] += input ("Choose a destination word") in english
 				if (chosen_rune == "teleport other")
 					dictionary[chosen_rune] += input ("Choose a destination word") in english
-							
+
 			if(user.get_active_hand() != src)
 				return
 
