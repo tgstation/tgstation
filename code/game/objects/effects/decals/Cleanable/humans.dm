@@ -50,7 +50,7 @@
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
 	random_icon_states = null
-	var/existing_dirs = list()
+	var/list/existing_dirs = list()
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"

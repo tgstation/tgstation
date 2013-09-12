@@ -361,7 +361,7 @@
 							var/blood_exists = 0
 							var/trail_type = "ltrails"
 							var/blood_overwrite = 1
-							for(var/obj/effect/decal/cleanable/blood/C in M.loc) //checks for blood splatter already on the floor
+							for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 								blood_exists = 1
 							if(M.getBruteLoss() >= 300) //this is ugly, but I'd rather not make a mob variable just for this
 								if(istype(M,/mob/living/carbon/alien))
