@@ -19,6 +19,11 @@
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
 	minimal_player_age = 7
 
+	// All science-y guys get bonuses for maxing out their tech.
+	required_objectives=list(
+		/datum/job_objective/maximize_research
+	)
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/rd(H), slot_ears)

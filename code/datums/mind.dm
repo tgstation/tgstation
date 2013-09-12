@@ -99,6 +99,14 @@ datum/mind
 				output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 				obj_count++
 
+		if(job_objectives.len>0)
+			output += "<HR><B>Job Objectives:</B>"
+
+			var/obj_count = 1
+			for(var/datum/job_objective/objective in job_objectives)
+				output += "<B>Task #[obj_count]</B>: [objective.get_description()]"
+				obj_count++
+
 		recipient << browse(output,"window=memory")
 
 	proc/edit_memory()
