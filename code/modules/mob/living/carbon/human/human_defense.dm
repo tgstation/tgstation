@@ -198,11 +198,12 @@ emp_act
 			forcesay(hit_appends)	//forcesay checks stat already.
 
 ///Mobs on Fire code//
-/mob/living/carbon/human/proc/IgniteMob()
+/mob/living/carbon/human/IgniteMob()
 		on_fire = 1
+		fire_stacks = 0
 		update_fire()
 
-/mob/living/carbon/human/proc/ExtinguishMob()
+/mob/living/carbon/human/ExtinguishMob()
 	if(on_fire)
 		on_fire = 0
 		update_fire()
