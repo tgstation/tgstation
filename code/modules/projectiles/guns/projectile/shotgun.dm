@@ -20,8 +20,9 @@
 		if(in_chamber)
 			var/obj/item/ammo_casing/AC = current_shell
 			if(AC.reagents && AC.BB.reagents)
-				AC.reagents:trans_to(AC.BB, AC.reagents:total_volume) //For chemical darts
-				AC.reagents:delete()
+				var/datum/reagents/casting_reagents = AC.reagents
+				casting_reagents.trans_to(AC.BB, casting_reagents.total_volume) //For chemical darts
+				casting_reagents.delete()
 			AC.desc += " This one is spent."
 			AC.BB = null //remove the ammunition from the shell
 			return 1
@@ -95,8 +96,9 @@
 
 		if(AC.BB)
 			if(AC.reagents && AC.BB.reagents)
-				AC.reagents:trans_to(AC.BB, AC.reagents:total_volume) //For chemical darts
-				AC.reagents:delete()
+				var/datum/reagents/casting_reagents = AC.reagents
+				casting_reagents.trans_to(AC.BB, casting_reagents.total_volume) //For chemical darts
+				casting_reagents.delete()
 			in_chamber = AC.BB //Load projectile into chamber.
 			AC.BB.loc = src //Set projectile loc to gun.
 			AC.BB = null //Remove the ammunition from the shell
