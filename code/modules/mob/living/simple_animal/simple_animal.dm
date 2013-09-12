@@ -401,7 +401,7 @@
 				return
 			gib()
 			return
-	else
+	else if(O)
 		if(O.force)
 			var/damage = O.force
 			if (O.damtype == HALLOSS)

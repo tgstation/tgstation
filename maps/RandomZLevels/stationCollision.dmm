@@ -218,7 +218,7 @@
 "ej" = (/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/awaymission/northblock)
 "ek" = (/turf/simulated/floor{dir = 5; icon_state = "blue"},/area/awaymission/northblock)
 "el" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/airless{icon_state = "damaged3"},/area/awaymission/northblock)
-"em" = (/obj/structure/window/reinforced,/obj/machinery/computer/aiupload,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"em" = (/obj/structure/window/reinforced,/obj/machinery/computer/upload/ai,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "en" = (/obj/structure/window/reinforced,/obj/machinery/door/window/brigdoor/eastleft,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "eo" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{current_temperature = 80},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "ep" = (/obj/machinery/atmospherics/unary/vent_pump,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)

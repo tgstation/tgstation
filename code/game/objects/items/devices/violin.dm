@@ -25,3 +25,8 @@
 
 	user.set_machine(src)
 	song.interact(user)
+
+/obj/item/device/violin/Del()
+	if(song)
+		del(song)
+	..()

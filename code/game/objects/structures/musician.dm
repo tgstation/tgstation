@@ -333,3 +333,8 @@
 				src.anchored = 1
 	else
 		..()
+
+/obj/structure/piano/Del()
+	if(song)
+		del(song)
+	..()
