@@ -71,7 +71,7 @@
 	agent = "R2D2 Nanomachines"
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	hidden = list(0, 0)
-	stage1	= list()
+	stage1	= list("")
 	stage2	= list("Your joints feel stiff.", "\red Beep...boop..")
 	stage3	= list("\red Your joints feel very stiff.", "Your skin feels loose.", "\red You can feel something move...inside.")
 	stage4	= list("\red Your skin feels very loose.", "\red You can feel... something...inside you.")
@@ -100,7 +100,7 @@
 	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
 	hidden = list(0, 0)
-	stage1	= list()
+	stage1	= list("")
 	stage2	= list("Your throat feels scratchy.", "\red Kill...")
 	stage3	= list("\red Your throat feels very scratchy.", "Your skin feels tight.", "\red You can feel something move...inside.")
 	stage4	= list("\red Your skin feels very tight.", "\red Your blood boils!", "\red You can feel... something...inside you.")
