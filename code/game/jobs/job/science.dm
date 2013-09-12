@@ -53,6 +53,11 @@
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology)
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Plasma Researcher", "Xenobiologist")
 
+	// All science-y guys get bonuses for maxing out their tech.
+	required_objectives=list(
+		/datum/job_objective/maximize_research
+	)
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
