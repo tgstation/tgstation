@@ -54,7 +54,7 @@ var/list/ingredients_source = list(
 	density = 1
 	anchored = 0
 	var/list/ingredients = list()
-	var/dispense_flavour = 0
+	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container
 
 /obj/machinery/icecream_vat/New()
@@ -86,7 +86,10 @@ var/list/ingredients_source = list(
 	else
 		dat += "No beaker inserted. "
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
-	user << browse(dat,"window=icecreamvat;size=600x400")
+
+	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400, src)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers))
@@ -102,9 +105,9 @@ var/list/ingredients_source = list(
 
 						I.add_ice_cream(dispense_flavour)
 						if(held_container)
-							held_container.reagents.trans_to(I, 2)
-						else
-							reagents.add_reagent("sugar", 1, 2)
+							held_container.reagents.trans_to(I, 10)
+						if(I.reagents.total_volume < 10)
+							I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
 					else
 						user << "<span class='warning'>There is not enough [flavour_name] flavouring left! Insert more of the required ingredients.</span>"
 				else
@@ -217,10 +220,11 @@ var/list/ingredients_source = list(
 	layer = 3.1
 	var/ice_creamed = 0
 	var/cone_type
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/New()
-	create_reagents(5)
-	reagents.add_reagent("nutriment", 1, 1)
+	create_reagents(20)
+	reagents.add_reagent("nutriment", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour)
 	var/flavour_name = get_icecream_flavour_string(flavour)
