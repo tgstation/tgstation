@@ -79,6 +79,44 @@
 	return 0
 
 
+//Called by the gameticker
+/datum/game_mode/proc/process_job_tasks()
+	var/obj/machinery/message_server/useMS = null
+	if(message_servers)
+		for (var/obj/machinery/message_server/MS in message_servers)
+			if(MS.active)
+				useMS = MS
+				break
+	for(var/mob/M in player_list)
+		if(M.mind)
+			var/count=0
+			for(var/datum/job_objective/objective in M.mind.job_objectives)
+				count++
+				if(!objective.completed)
+					if(objective.is_completed())
+						var/msg="Task #[count] completed! "
+						var/acctNumber=0
+						if(M.mind.initial_account)
+							M.mind.initial_account.money += objective.completion_payment
+							var/datum/transaction/T = new()
+							T.target_name = command_name()
+							T.purpose = "Payment"
+							T.amount = objective.completion_payment
+							T.date = current_date_string
+							T.time = worldtime2text()
+							T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
+							M.mind.initial_account.transaction_log.Add(T)
+							msg += "You have been sent the $[objective.completion_payment], as agreed."
+							if(useMS)
+								useMS.send_pda_message("[M]", "[command_name()] Accounting", msg)
+							break
+						if(acctNumber==0)
+							msg += "However, we were unable to send you the $[objective.completion_payment] you're entitled."
+							if(useMS)
+								useMS.send_pda_message("[M]", "[command_name()] Accounting", msg)
+							continue
+
+
 /datum/game_mode/proc/check_finished() //to be called by ticker
 	if(emergency_shuttle.location==2 || station_was_nuked)
 		return 1
