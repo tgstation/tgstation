@@ -1322,7 +1322,7 @@ datum
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
 			color = "#E71B00" // rgb: 231, 27, 0
-			toxpwr = 2.5 //Not quite lethal
+			toxpwr = 3
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1337,18 +1337,18 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				O.atmos_spawn_air("fuel", 5)
+				O.atmos_spawn_air("toxin", 5)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air("fuel", 5)
+					T.atmos_spawn_air("toxin", 5)
 				return
 
 		toxin/lexorin
 			name = "Lexorin"
 			id = "lexorin"
-			description = "Lexorin temporarily stops respiration, causes tissue damage, burns, and is heavily toxic."
+			description = "Lexorin temporarily stops respiration, causes tissue damage, and is heavily toxic."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			toxpwr = 1
@@ -1358,8 +1358,8 @@ datum
 					return
 				if(!M) M = holder.my_atom
 				if(prob(33))
-					M.take_organ_damage(1*REM, 1*REM)
-				M.adjustOxyLoss(2)
+					M.take_organ_damage(1*REM, 0)
+				M.adjustOxyLoss(3)
 				if(prob(20)) M.emote("gasp")
 				..()
 				return
