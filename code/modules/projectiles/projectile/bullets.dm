@@ -35,6 +35,8 @@
 				M.eye_blurry += 10
 				M.drowsyness += 10
 				A.volume += 5 //Because we can
+			return 1
+		return 0
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
