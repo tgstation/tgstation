@@ -689,15 +689,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 //has it been enhanced before?
 
-	suicide_act(mob/living/carbon/user)
-		viewers(user) << "\red <b>[user] is ingesting the [src.name], and it's reacting inside \his stomach!</b>"
-		user.drop_item()
-		user.internal_organs += src
-		src.loc = user
-		spawn(5)
-			src.reagents.add_reagent("plasma", 5)
-		return (TOXLOSS)
-
 	attackby(obj/item/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/slimesteroid2))
 			if(enhanced == 1)
@@ -710,6 +701,19 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			Uses = 3
 			enhanced = 1
 			del (O)
+
+/obj/item/slime_extract/suicide_act(mob/living/carbon/user)
+	viewers(user) << "\red <b>[user] is ingesting the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	user.drop_item()
+	user.internal_organs += src
+	src.loc = user
+	spawn(5)
+		var/timeout = (world.time+70)
+		var/confirm = alert("Do you want to activate the [src.name]?\nYOU CAN STILL GET BANNED FOR IT", "Confirm Activation (7 second timeout)", "No", "Yes")
+		if (confirm == "Yes")
+			if (world.time <= timeout)
+				src.reagents.add_reagent("plasma", 5)
+	return (TOXLOSS)
 
 /obj/item/slime_extract/New()
 		..()

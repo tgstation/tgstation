@@ -243,9 +243,9 @@
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is slitting \his [pick("wrists", "throat")] with the shard of glass! It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS)
+/obj/item/weapon/shard/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is slitting \his [pick("wrists", "throat")] with the shard of glass! It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS)
 
 
 /obj/item/weapon/shard/New()

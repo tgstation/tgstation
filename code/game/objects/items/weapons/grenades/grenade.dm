@@ -12,11 +12,15 @@
 	var/active = 0
 	var/det_time = 50
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] arms the [src.name] and holds it against \his face!</b>"
-		spawn(1)
-			src.prime()
-		return (FIRELOSS)
+/obj/item/weapon/grenade/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] holds the [src.name] against \his face! It looks like \he's trying to commit suicide!</b>"
+	spawn(1)
+		var/timeout = (world.time+70)
+		var/confirm = alert("Do you want to activate the [src.name]?\nYOU CAN STILL GET BANNED FOR IT", "Confirm Activation (7 second timeout)", "No", "Yes")
+		if (confirm == "Yes")
+			if (world.time <= timeout)
+				src.prime()
+	return (FIRELOSS)
 
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)

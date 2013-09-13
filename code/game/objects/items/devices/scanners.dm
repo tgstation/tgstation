@@ -75,9 +75,9 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-	suicide_act(mob/user) //Suggested by Chocobro
-		viewers(user) << "\red <b>Switching [src.name]'s dial to 11, [user] begins scanning \himself medium style! It looks like \he's trying to commit suicide!</b>"
-		return (FIRELOSS|TOXLOSS)
+/obj/item/device/healthanalyzer/suicide_act(mob/user) //Suggested by Chocobro
+	viewers(user) << "\red <b>Switching [src.name]'s dial to 11, [user] begins scanning \himself medium style! It looks like \he's trying to commit suicide!</b>"
+	return (FIRELOSS|TOXLOSS)
 
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
 

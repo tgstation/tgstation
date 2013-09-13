@@ -323,10 +323,9 @@
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
 
-	suicide_act(mob/user) //Suggested by Jesusmod
-		viewers(user) << "\red <b>[user] is attempting to hemmorrhage \his anus with the [src.name]! It looks like \he's trying to commit suicide!</b>"
-		return (BRUTELOSS)
-
+/obj/item/weapon/bikehorn/rubberducky/suicide_act(mob/user)
+//	viewers(user) << "\red <b>[user] is attempting to hemmorrhage \his anus with the [src.name]! It looks like \he's trying to commit suicide!</b>" //Too much anal, come up with a better one
+	return //(BRUTELOSS)
 
 
 /obj/structure/sink

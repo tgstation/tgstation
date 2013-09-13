@@ -136,7 +136,7 @@
 			reagents.add_reagent("pacid", round(potency, 1))
 			force = round((5+potency/2.5), 1)
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS|TOXLOSS)
+/obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS|TOXLOSS)
 

@@ -6,9 +6,9 @@
 	due_date = 0 // Game time in 1/10th seconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] reads the book '[src.name]'. \His eyes widen as \he gazes at the horrible formatting and grammar.</b>"
-		return (TOXLOSS)
+/obj/item/weapon/book/manual/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] reads the book '[src.name]'. \His eyes widen as \he gazes at the horrible formatting and grammar.</b>"
+	return (TOXLOSS)
 
 
 /obj/item/weapon/book/manual/engineering_construction

@@ -13,11 +13,11 @@
 	var/mopping = 0
 	var/mopcount = 0
 
-	suicide_act(mob/living/carbon/user) //Suggested by Neerti and Anonus
-		viewers(user) << "\red <b>[user] mops up \his life with the [src.name]! It looks like \he's trying to commit suicide!</b>"
-		user.adjustCloneLoss(200)
-		user.Drain()
-		return (OXYLOSS)
+/obj/item/weapon/mop/suicide_act(mob/living/carbon/user) //Suggested by Neerti and Anonus
+	viewers(user) << "\red <b>[user] mops up \his life with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	user.adjustCloneLoss(200)
+	user.Drain()
+	return (OXYLOSS)
 
 
 /obj/item/weapon/mop/New()

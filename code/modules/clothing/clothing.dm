@@ -86,11 +86,11 @@ BLIND     // can't see anything
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-
-	suicide_act(mob/user) //Suggested by SkipsPro
-		viewers(user) << "\red <b>[user] is stuffing the [src.name] up \his ass! It looks like \he's trying to commit suicide!</b>"
-		return (BRUTELOSS)
-
+/* Too much ass, come up with a better less-assy one
+/obj/item/clothing/shoes/suicide_act(mob/user) //Suggested by SkipsPro
+	viewers(user) << "\red <b>[user] is stuffing the [src.name] up \his ass! It looks like \he's trying to commit suicide!</b>"
+	return (BRUTELOSS)
+*/
 //Suit
 /obj/item/clothing/suit
 	icon = 'icons/obj/clothing/suits.dmi'
@@ -158,9 +158,9 @@ BLIND     // can't see anything
 		*/
 	var/obj/item/clothing/tie/hastie = null
 
-	suicide_act(mob/user) //Suggested by SkipsPro
-		viewers(user) << "\red <b>[user] is stuffing the [src.name] into \his mouth! It looks like \he's trying to commit suicide!</b>"
-		return (OXYLOSS)
+/obj/item/clothing/under/suicide_act(mob/user) //Suggested by SkipsPro
+	viewers(user) << "\red <b>[user] is stuffing the [src.name] into \his mouth! It looks like \he's trying to commit suicide!</b>"
+	return (OXYLOSS)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/clothing/tie))

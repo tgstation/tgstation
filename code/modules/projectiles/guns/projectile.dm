@@ -13,26 +13,26 @@
 	var/load_method = 0 //0 = Single shells or quick loader, 1 = box, 2 = magazine
 	var/obj/item/ammo_magazine/empty_mag = null
 
-	suicide_act(mob/living/carbon/human/user) //Suggested by Intigracy
-		var/obj/item/organ/brain/B = null
-		B = user.getorgan(/obj/item/organ/brain)
-		if (B)
-			if (load_into_chamber())
-				viewers(user) << "\red <b>[user] is trying to blow \his brains out with the [src.name]! It looks like \he's tryi- </b>Nope, \he just committed suicide."
-				if(silenced)
-					playsound(user, fire_sound, 10, 1)
-				else
-					playsound(user, fire_sound, 50, 1)
-				B.loc = get_turf(user)
-				B.name = "[user]'s brain"
-				user.internal_organs -= B
-				for (var/datum/limb/head/H in user.organs)
-					H.take_damage(100, 25)
-				return (BRUTELOSS + FIRELOSS)
+/obj/item/weapon/gun/projectile/suicide_act(mob/living/carbon/human/user) //Suggested by Intigracy
+	var/obj/item/organ/brain/B = null
+	B = user.getorgan(/obj/item/organ/brain)
+	if (B)
+		if (load_into_chamber())
+			viewers(user) << "\red <b>[user] is trying to blow \his brains out with the [src.name]! It looks like \he's tryi- </b>Nope, \he just committed suicide."
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
 			else
-				viewers(user) << "\red <b>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b>"
-				return (OXYLOSS)
-		return
+				playsound(user, fire_sound, 50, 1)
+			B.loc = get_turf(user)
+			B.name = "[user]'s brain"
+			user.internal_organs -= B
+			for (var/datum/limb/head/H in user.organs)
+				H.take_damage(100, 25)
+			return (BRUTELOSS + FIRELOSS)
+		else
+			viewers(user) << "\red <b>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+			return (OXYLOSS)
+	return
 
 /obj/item/weapon/gun/projectile/New()
 	..()

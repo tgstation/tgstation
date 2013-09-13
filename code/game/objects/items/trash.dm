@@ -4,13 +4,6 @@
 	desc = "This is rubbish."
 	w_class = 1.0
 
-	suicide_act(mob/living/carbon/user)
-		viewers(user) << "\red <b>[user] eats the [src.name]! Yuck!</b>"
-		user.drop_item()
-		user.internal_organs += src
-		src.loc = usr
-		return (TOXLOSS)
-
 	raisins
 		name = "4no raisins"
 		icon_state= "4no_raisins"
@@ -54,6 +47,13 @@
 		name = "candle"
 		icon = 'icons/obj/candle.dmi'
 		icon_state = "candle4"
+
+/obj/item/trash/suicide_act(mob/living/carbon/user)
+	viewers(user) << "\red <b>[user] eats the [src.name]! Yuck!</b>"
+	user.drop_item()
+	user.internal_organs += src
+	src.loc = usr
+	return (TOXLOSS)
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

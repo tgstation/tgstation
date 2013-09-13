@@ -11,12 +11,12 @@
 	var/eatverb
 	var/wrapped = 0
 
-	suicide_act(mob/living/carbon/user)
-		viewers(user) << "\red <b>[user] is trying to devour the entire [src.name]! It looks like \he's trying to commit suicide!</b>"
-		user.drop_item()
-		user.internal_organs += src
-		src.loc = user
-		return (OXYLOSS)
+/obj/item/weapon/reagent_containers/food/snacks/suicide_act(mob/living/carbon/user)
+	viewers(user) << "\red <b>[user] is trying to devour the entire [src.name]! It looks like \he's trying to commit suicide!</b>"
+	user.drop_item()
+	user.internal_organs += src
+	src.loc = user
+	return (OXYLOSS)
 
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -291,9 +291,9 @@
 		reagents.add_reagent("nutriment", 5)
 		bitesize = 1
 
-	suicide_act(mob/user) //Suggested by S0ldi3rKr4s0
-		viewers(user) << "\red <b>[user] is attempting to chant \"One Mind\"! It looks like \he's trying to create a grandmapocalypse!</b>"
-		return (BRUTELOSS)
+/obj/item/weapon/reagent_containers/food/snacks/cookie/suicide_act(mob/user) //Suggested by S0ldi3rKr4s0
+	viewers(user) << "\red <b>[user] is attempting to chant \"One Mind\"! It looks like \he's trying to create a grandmapocalypse!</b>"
+	return (BRUTELOSS)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
@@ -592,17 +592,17 @@
 	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
 
-	suicide_act(mob/living/carbon/user) //Suggested by SkipsPro
-		viewers(user) << "\red <b>[user] is trying to do anal with the [src.name]! It looks like \he's trying to commit suicide!</b>"
-		user.drop_item()
-		user.internal_organs += src
-		src.loc = user
-		return (BRUTELOSS)
-
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/faggot/suicide_act(mob/living/carbon/user) //Suggested by SkipsPro
+	viewers(user) << "\red <b>[user] is trying to do anal with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	user.drop_item()
+	user.internal_organs += src
+	src.loc = user
+	return (BRUTELOSS)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
@@ -1033,17 +1033,17 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
-	suicide_act(mob/living/carbon/user)//Suggested by Chocobro
-		viewers(user) << "\red <b>[user] is wildly scoffing down the [src.name]! It's d-d-dangerously cheesy! It looks like \he's trying to commit suicide!</b>"
-		user.drop_item()
-		user.internal_organs += src
-		src.loc = user
-		spawn(10)
-			var/itr
-			for(itr=0, itr<2, itr++)
-				var/obj/item/weapon/reagent_containers/food/snacks/CHEESE = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel
-				CHEESE.loc = get_turf(user)
-		return (TOXLOSS)
+/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers/suicide_act(mob/living/carbon/user)//Suggested by Chocobro
+	viewers(user) << "\red <b>[user] is wildly scoffing down the [src.name]! It's d-d-dangerously cheesy! It looks like \he's trying to commit suicide!</b>"
+	user.drop_item()
+	user.internal_organs += src
+	src.loc = user
+	spawn(10)
+		var/itr
+		for(itr=0, itr<2, itr++)
+			var/obj/item/weapon/reagent_containers/food/snacks/CHEESE = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel
+			CHEESE.loc = get_turf(user)
+	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"

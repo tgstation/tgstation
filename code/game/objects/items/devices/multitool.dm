@@ -19,9 +19,9 @@
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] hooks the [src.name] up to \his nostrils and starts pulsing \himself to death!</b>"
-		return (FIRELOSS)
+/obj/item/device/multitool/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] hooks the [src.name] up to \his nostrils and starts pulsing \himself to death!</b>"
+	return (FIRELOSS)
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.

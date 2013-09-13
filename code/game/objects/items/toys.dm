@@ -18,12 +18,9 @@
 	throw_range = 20
 	force = 0
 
-	suicide_act(mob/living/carbon/user)
-		viewers(user) << "\red <b>[user] lubes up the [src.name] and jams it up \his [prob(25) ? "juicy kawaii " : ""]ass! It looks like \he's trying to commit suicide!</b>"
-		user.drop_item()
-		user.internal_organs += src
-		src.loc = user
-		return (BRUTELOSS)
+/obj/item/toy/suicide_act(mob/living/carbon/user)
+	viewers(user) << "\red <b>[user] steps on the [src.name]! Ouch!</b>"
+	return (BRUTELOSS)
 
 
 /*
@@ -118,11 +115,11 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
-	suicide_act(mob/living/carbon/user)
-		viewers(user) << "\red <b>[user] is consumed by the [src.name]! That's the last of \him.</b>"
-		user.drop_item()
-		user.gib()
-		return (BRUTELOSS+TOXLOSS)
+/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/user) //Suggested by.. somebody. Sorry, I forgot your name!
+	viewers(user) << "\red <b>[user] is consumed by the [src.name]! That's the last of \him.</b>"
+	user.drop_item()
+	user.gib()
+	return (BRUTELOSS+TOXLOSS)
 
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?
@@ -379,9 +376,9 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS|OXYLOSS)
+/obj/item/toy/crayon/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS|OXYLOSS)
 
 /*
  * Snap pops

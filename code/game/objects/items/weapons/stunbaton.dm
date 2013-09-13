@@ -15,9 +15,9 @@
 	var/obj/item/weapon/cell/high/bcell = null
 	var/hitcost = 1000
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
-		return (FIRELOSS)
+/obj/item/weapon/melee/baton/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
 	..()

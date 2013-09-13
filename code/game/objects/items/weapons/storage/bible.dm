@@ -9,11 +9,18 @@
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
-	suicide_act(mob/user) //Suggested by kingofkosmos
-		viewers(user) << "\red <b>Is sacrificing their body for the glory of [src.deity_name]!</b>"
-		user.drop_item()
-		user.dust()
-		return ((BRUTELOSS+FIRELOSS)|(BRUTELOSS|FIRELOSS))
+/obj/item/weapon/storage/bible/suicide_act(mob/living/carbon/user) //Suggested by kingofkosmos
+	viewers(user) << "\blue <b>[user] is sacrificing \his body for the glory of [src.deity_name]!</b>"
+	var/damagetype
+	var/obj/item/other_item = user.get_inactive_hand()
+	user.drop_item()
+	if (other_item)
+		user.swap_hand()
+		damagetype = other_item.suicide_act(user)
+	spawn(100)
+		if (user)
+			user.dust()
+	return (damagetype)
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
