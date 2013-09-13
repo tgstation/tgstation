@@ -149,7 +149,7 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5/*, "Adamantine" = 5*/)
+	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Phazite"=1/*, "Adamantine" = 5*/)
 	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
@@ -200,7 +200,8 @@
 	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Archaeo" = 2)
 
 /turf/simulated/mineral/random/high_chance_clown
-	mineralChance = 25
+	//icon_state="rock_Phazon"
+	mineralChance = 40
 	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 10, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 2, "Clown"=15, "Phazite"=10)
 
 /turf/simulated/mineral/random/Del()
@@ -272,7 +273,7 @@
 
 /turf/simulated/mineral/phazon
 	name = "Phazite deposit"
-	icon_state = "rock_Phazite"
+	icon_state = "rock_Phazon"
 	mineralName = "Phazite"
 	mineralAmt = 1
 	spreadChance = 0
