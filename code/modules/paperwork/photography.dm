@@ -295,26 +295,6 @@
 	aipictures += P
 
 
-/*obj/item/device/camera/ai_camera/proc/findpicture()
-	var/selection = input("Select picture (numbered in order taken)", "Pictures", null, null) in aipictures
-
-
-	var/dat = "<B>Showing list of pictures.</B><HR>"
-	dat += "<table cellspacing=5><tr><th>Name</th></tr>"
-	for(var/datum/picture/p in src.aipictures)
-		dat += "<tr>[p.fields["name"]]</tr>"
-		usr << "That loop (debug)"
-	dat += "</table>"
-	usr << browse(dat, "window=photo album;size=440x410")
-
-	<a href='?src=\ref[src];selection=[p.fields["name"]]'>  //For later use // WIP
-
-
-/obj/item/device/camera/ai_camera/Topic(picname, href_list[])
-	if(href_list["selection"])
-		src.find = picname
-*/															//Part of the above WIP
-
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
 	var/list/nametemp = list()
 	var/find
@@ -342,7 +322,6 @@
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
-
 
 	pictures_left--
 	desc = "A polaroid camera. It has [pictures_left] photos left."
