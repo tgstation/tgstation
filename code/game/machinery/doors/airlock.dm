@@ -634,7 +634,7 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/animate(animation)
+/obj/machinery/door/airlock/door_animate(animation)
 	switch(animation)
 		if("opening")
 			if(overlays) overlays.Cut()
