@@ -9,7 +9,7 @@
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/color = "yellow"
+	var/col = "yellow"
 	var/can_label = 1
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
@@ -21,32 +21,32 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
-	color = "redws"
+	col = "redws"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
-	color = "red"
+	col = "red"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
-	color = "blue"
+	col = "blue"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
-	color = "orange"
+	col = "orange"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
-	color = "black"
+	col = "black"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
-	color = "grey"
+	col = "grey"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
@@ -56,7 +56,7 @@
 		src.icon_state = text("[]-1", src.color)
 
 	else
-		icon_state = "[color]"
+		icon_state = "[col]"
 		if(holding)
 			overlays += "can-open"
 

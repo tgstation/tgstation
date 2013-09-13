@@ -167,16 +167,16 @@
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
-	color = "green"
+	col = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
-	color = pick("red", "blue", "green", "purple")
+	col = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
-		icon_state = "dualsaber[color][wielded]"
+		icon_state = "dualsaber[col][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
@@ -220,11 +220,11 @@
 
 /obj/item/weapon/twohanded/dualsaber/green
 	New()
-		color = "green"
+		col = "green"
 
 /obj/item/weapon/twohanded/dualsaber/red
 	New()
-		color = "red"
+		col = "red"
 
 
 //spears

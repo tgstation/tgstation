@@ -172,7 +172,7 @@
 	return
 
 
-/obj/machinery/door/proc/animate(animation)
+/obj/machinery/door/proc/animate_this(animation)
 	switch(animation)
 		if("opening")
 			if(p_open)

@@ -24,7 +24,7 @@
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
-	color
+	col
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"

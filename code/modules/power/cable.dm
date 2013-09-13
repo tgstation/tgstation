@@ -34,35 +34,35 @@
 	var/d1 = 0
 	var/d2 = 1
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
-	var/color = "red"
+	var/col = "red"
 	var/obj/structure/powerswitch/power_switch
 
 /obj/structure/cable/yellow
-	color = "yellow"
+	col = "yellow"
 	icon = 'icons/obj/power_cond/power_cond_yellow.dmi'
 
 /obj/structure/cable/green
-	color = "green"
+	col = "green"
 	icon = 'icons/obj/power_cond/power_cond_green.dmi'
 
 /obj/structure/cable/blue
-	color = "blue"
+	col = "blue"
 	icon = 'icons/obj/power_cond/power_cond_blue.dmi'
 
 /obj/structure/cable/pink
-	color = "pink"
+	col = "pink"
 	icon = 'icons/obj/power_cond/power_cond_pink.dmi'
 
 /obj/structure/cable/orange
-	color = "orange"
+	col = "orange"
 	icon = 'icons/obj/power_cond/power_cond_orange.dmi'
 
 /obj/structure/cable/cyan
-	color = "cyan"
+	col = "cyan"
 	icon = 'icons/obj/power_cond/power_cond_cyan.dmi'
 
 /obj/structure/cable/white
-	color = "white"
+	col = "white"
 	icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
 // the power cable object
@@ -575,35 +575,35 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	update_icon()
 
 /obj/item/weapon/cable_coil/yellow
-	color = "yellow"
+	col = "yellow"
 	icon_state = "coil_yellow"
 
 /obj/item/weapon/cable_coil/blue
-	color = "blue"
+	col = "blue"
 	icon_state = "coil_blue"
 	item_state = "coil_blue"
 
 /obj/item/weapon/cable_coil/green
-	color = "green"
+	col = "green"
 	icon_state = "coil_green"
 
 /obj/item/weapon/cable_coil/pink
-	color = "pink"
+	col = "pink"
 	icon_state = "coil_pink"
 
 /obj/item/weapon/cable_coil/orange
-	color = "orange"
+	col = "orange"
 	icon_state = "coil_orange"
 
 /obj/item/weapon/cable_coil/cyan
-	color = "cyan"
+	col = "cyan"
 	icon_state = "coil_cyan"
 
 /obj/item/weapon/cable_coil/white
-	color = "white"
+	col = "white"
 	icon_state = "coil_white"
 
 /obj/item/weapon/cable_coil/random/New()
-	color = pick("red","yellow","green","blue","pink")
+	col = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[color]"
 	..()

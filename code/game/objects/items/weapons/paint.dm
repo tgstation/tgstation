@@ -7,44 +7,44 @@ var/global/list/cached_icons = list()
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
-	color = "FFFFFF"
+	col = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3.0
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red
 	name = "Red paint"
-	color = "C73232" //"FF0000"
+	col = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
 /obj/item/weapon/paint/green
 	name = "Green paint"
-	color = "2A9C3B" //"00FF00"
+	col = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
 /obj/item/weapon/paint/blue
 	name = "Blue paint"
-	color = "5998FF" //"0000FF"
+	col = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
 /obj/item/weapon/paint/yellow
 	name = "Yellow paint"
-	color = "CFB52B" //"FFFF00"
+	col = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
 /obj/item/weapon/paint/violet
 	name = "Violet paint"
-	color = "AE4CCD" //"FF00FF"
+	col = "AE4CCD" //"FF00FF"
 	icon_state = "paint_violet"
 
 /obj/item/weapon/paint/black
 	name = "Black paint"
-	color = "333333"
+	col = "333333"
 	icon_state = "paint_black"
 
 /obj/item/weapon/paint/white
 	name = "White paint"
-	color = "FFFFFF"
+	col = "FFFFFF"
 	icon_state = "paint_white"
 
 
@@ -58,19 +58,19 @@ var/global/list/cached_icons = list()
 			return
 		switch(t1)
 			if("red")
-				color = "C73232"
+				col = "C73232"
 			if("blue")
-				color = "5998FF"
+				col = "5998FF"
 			if("green")
-				color = "2A9C3B"
+				col = "2A9C3B"
 			if("yellow")
-				color = "CFB52B"
+				col = "CFB52B"
 			if("violet")
-				color = "AE4CCD"
+				col = "AE4CCD"
 			if("white")
-				color = "FFFFFF"
+				col = "FFFFFF"
 			if("black")
-				color = "333333"
+				col = "333333"
 		icon_state = "paint_[t1]"
 		add_fingerprint(user)
 		return
@@ -82,10 +82,10 @@ var/global/list/cached_icons = list()
 		return
 	if(!istype(target) || istype(target, /turf/space))
 		return
-	var/ind = "[initial(target.icon)][color]"
+	var/ind = "[initial(target.icon)][col]"
 	if(!cached_icons[ind])
 		var/icon/overlay = new/icon(initial(target.icon))
-		overlay.Blend("#[color]",ICON_MULTIPLY)
+		overlay.Blend("#[col]",ICON_MULTIPLY)
 		overlay.SetIntensity(1.4)
 		target.icon = overlay
 		cached_icons[ind] = target.icon
