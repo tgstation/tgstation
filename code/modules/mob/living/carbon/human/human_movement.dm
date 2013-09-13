@@ -3,7 +3,7 @@
 
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
-	handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
+	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
 	if(reagents.has_reagent("hyperzine")) return -1
 
