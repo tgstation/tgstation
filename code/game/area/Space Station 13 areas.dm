@@ -637,6 +637,10 @@ proc/process_ghost_teleport_locs()
 	name = "Science Maintenance"
 	icon_state = "asmaint"
 
+/area/maintenance/xenomaint
+	name = "Xenobiology Maintenance"
+	icon_state = "asmaint"
+
 /area/maintenance/apmaint
 	name = "Cargo Maintenance"
 	icon_state = "apmaint"
@@ -1250,6 +1254,30 @@ proc/process_ghost_teleport_locs()
 /area/toxins/xenobiology
 	name = "\improper Xenobiology Lab"
 	icon_state = "toxlab"
+
+/area/toxins/xenobiology/specimen_1
+	name = "\improper Xenobiology Specimen Cage 1"
+	icon_state = "xenocell1"
+
+/area/toxins/xenobiology/specimen_2
+	name = "\improper Xenobiology Specimen Cage 2"
+	icon_state = "xenocell2"
+
+/area/toxins/xenobiology/specimen_3
+	name = "\improper Xenobiology Specimen Cage 3"
+	icon_state = "xenocell3"
+
+/area/toxins/xenobiology/specimen_4
+	name = "\improper Xenobiology Specimen Cage 4"
+	icon_state = "xenocell4"
+
+/area/toxins/xenobiology/specimen_5
+	name = "\improper Xenobiology Specimen Cage 5"
+	icon_state = "xenocell5"
+
+/area/toxins/xenobiology/specimen_6
+	name = "\improper Xenobiology Specimen Cage 6"
+	icon_state = "xenocell6"
 
 /area/toxins/storage
 	name = "\improper Toxins Storage"
