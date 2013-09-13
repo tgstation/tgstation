@@ -83,7 +83,7 @@
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
-		var/num = rand(6,24)
+		var/num = rand(4,6)
 		for(var/i=0, i<num, i++)
 			new /obj/effect/spider/spiderling(src.loc)
 		del(src)
@@ -95,16 +95,13 @@
 	anchored = 0
 	layer = 2.7
 	health = 3
-	var/amount_grown = -1
+	var/amount_grown = 0
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	New()
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
 		processing_objects.Add(src)
-		//50% chance to grow up
-		if(prob(50))
-			amount_grown = 1
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))

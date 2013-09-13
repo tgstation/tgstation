@@ -1277,6 +1277,9 @@ About the new airlock wires panel:
 			return
 	if(safe)
 		for(var/turf/turf in locs)
+			// Spider has jammed door open.
+			if(locate(/obj/effect/spider/stickyweb) in turf)
+				return
 			if(locate(/mob/living) in turf)
 			//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
 				spawn (60)
