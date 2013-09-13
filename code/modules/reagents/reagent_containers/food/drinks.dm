@@ -118,7 +118,7 @@
 		else
 			usr << "\blue \The [src] is full!"
 
-
+			
 /obj/item/weapon/reagent_containers/food/drinks/suicide_act(mob/user) //Suggested by HBL
 	if (reagents.total_volume)
 		viewers(user) << "\red <b>It looks like [user] is drinking \himself to death!</b>"
@@ -128,6 +128,7 @@
 			if (reagents.total_volume)
 				reagents.trans_to(user, reagents.total_volume)
 		return (TOXLOSS)
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
