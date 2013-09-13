@@ -189,7 +189,11 @@
 
 //copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
-
+/obj/machinery/computer/atmoscontrol/proc/fmtScrubberGasStatus(var/id_tag,var/code,var/list/data)
+	var/label=replacetext(uppertext(code),"2","<sub>2</sub>")
+	if(code=="tox")
+		label="Plasma"
+	return "<A href='?src=\ref[current];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
 
@@ -280,12 +284,10 @@ siphoning
 					if(data["scrubbing"])
 						sensor_data += {"
 <B>Filtering:</B>
-Carbon Dioxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=co2_scrub;val=[!data["filter_co2"]]'>[data["filter_co2"]?"on":"off"]</A>;
-Toxins
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_toxins"]]'>[data["filter_toxins"]?"on":"off"]</A>;
-Nitrous Oxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
+[fmtScrubberGasStatus(id_tag,"co2",data)],
+[fmtScrubberGasStatus(id_tag,"tox",data)],
+[fmtScrubberGasStatus(id_tag,"n2o",data)],
+[fmtScrubberGasStatus(id_tag,"o2",data)]
 <BR>
 "}
 					sensor_data += {"
@@ -316,6 +318,17 @@ Nitrous Oxide
 		if (AALARM_SCREEN_SENSORS)
 			output += {"
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
+<hr><br><b>Sensor presets:</b><br><i>(Note, this only sets sensors, air supplied to vents must still be changed.)</i><ul>"}
+			var/list/presets = list(
+				AALARM_PRESET_HUMAN   = "Human - Checks for Oxygen and Nitrogen",\
+				AALARM_PRESET_VOX 	= "Vox - Checks for Nitrogen only",\
+				AALARM_PRESET_SERVER 	= "Coldroom - For server rooms and freezers")
+			for(var/p=1;p<=presets.len;p++)
+				if (current.preset==p)
+					output += "<li><A href='?src=\ref[current];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
+				else
+					output += "<li><A href='?src=\ref[current];preset=[p]'>[presets[p]]</A></li>"
+			output += {"</ul>
 <b>Alarm thresholds:</b><br>
 Partial pressure for gases
 <style>/* some CSS woodoo here. Does not work perfect in ie6 but who cares? */
