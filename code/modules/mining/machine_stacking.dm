@@ -64,6 +64,8 @@
 		dat += text ("Adamantine: [machine.ore_adamantine] <A href='?src=\ref[src];release=adamantine'>Release</A><br>")
 	if(machine.ore_mythril)
 		dat += text ("Mythril: [machine.ore_mythril] <A href='?src=\ref[src];release=adamantine'>Release</A><br>")
+	if(machine.ore_phazon)
+		dat += text ("Phazon: [machine.ore_phazon] <A href='?src=\ref[src];release=phazon'>Release</A><br>")
 
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
@@ -173,6 +175,12 @@
 					G.amount = machine.ore_mythril
 					G.loc = machine.output.loc
 					machine.ore_mythril = 0
+			if ("phazon")
+				if (machine.ore_phazon > 0)
+					var/obj/item/stack/sheet/mineral/phazon/G = new /obj/item/stack/sheet/mineral/phazon
+					G.amount = machine.ore_phazon
+					G.loc = machine.output.loc
+					machine.ore_phazon = 0
 	src.updateUsrDialog()
 	return
 
@@ -207,6 +215,7 @@
 	var/ore_leather = 0;
 	var/ore_adamantine = 0;
 	var/ore_mythril = 0;
+	var/ore_phazon = 0
 	var/stack_amt = 50; //ammount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
@@ -289,6 +298,10 @@
 				continue
 			if (istype(O,/obj/item/stack/sheet/leather))
 				ore_leather+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/mineral/phazon))
+				ore_phazon += O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
@@ -390,5 +403,11 @@
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_mythril -= stack_amt
+		return
+	if (ore_phazon >= stack_amt)
+		var/obj/item/stack/sheet/mineral/phazon/G = new /obj/item/stack/sheet/mineral/phazon
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_phazon -= stack_amt
 		return
 	return

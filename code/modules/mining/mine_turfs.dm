@@ -175,6 +175,8 @@
 					M = new/turf/simulated/mineral/plasma(src)
 				if("Clown")
 					M = new/turf/simulated/mineral/clown(src)
+				if("Phazite")
+					M = new/turf/simulated/mineral/phazon(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -199,7 +201,7 @@
 
 /turf/simulated/mineral/random/high_chance_clown
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 25, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 2, "Clown"=15)
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 10, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 2, "Clown"=15, "Phazite"=10)
 
 /turf/simulated/mineral/random/Del()
 	return
@@ -264,6 +266,15 @@
 	icon_state = "rock_Clown"
 	mineralName = "Clown"
 	mineralAmt = 3
+	spreadChance = 0
+	spread = 0
+
+
+/turf/simulated/mineral/phazon
+	name = "Phazite deposit"
+	icon_state = "rock_Phazite"
+	mineralName = "Phazite"
+	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
 

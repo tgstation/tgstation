@@ -110,6 +110,16 @@
 		else
 			machine.selected_clown = 0
 
+		//Phazon
+		if(machine.ore_clown)
+			if (machine.selected_phazon==1)
+				dat += text("<A href='?src=\ref[src];sel_phazon=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_phazon=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Phazite: [machine.ore_phazon]<br>")
+		else
+			machine.selected_phazon = 0
+
 
 		//On or off
 		dat += text("Machine is currently ")
@@ -170,6 +180,11 @@
 			machine.selected_clown = 1
 		else
 			machine.selected_clown = 0
+	if(href_list["sel_phazon"])
+		if (href_list["sel_phazon"] == "yes")
+			machine.selected_phazon = 1
+		else
+			machine.selected_phazon = 0
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -199,6 +214,7 @@
 	var/ore_iron = 0;
 	var/ore_clown = 0;
 	var/ore_adamantine = 0;
+	var/ore_phazon = 0;
 	var/selected_gold = 0
 	var/selected_silver = 0
 	var/selected_diamond = 0
@@ -207,6 +223,7 @@
 	var/selected_uranium = 0
 	var/selected_iron = 0
 	var/selected_clown = 0
+	var/selected_phazon = 0;
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
@@ -227,14 +244,14 @@
 		var/i
 		for (i = 0; i < 10; i++)
 			if (on)
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_glass > 0)
 						ore_glass--;
 						new /obj/item/stack/sheet/glass(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_glass > 0 && ore_iron > 0)
 						ore_glass--;
 						ore_iron--;
@@ -242,49 +259,49 @@
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_gold > 0)
 						ore_gold--;
 						new /obj/item/stack/sheet/mineral/gold(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_silver > 0)
 						ore_silver--;
 						new /obj/item/stack/sheet/mineral/silver(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_diamond > 0)
 						ore_diamond--;
 						new /obj/item/stack/sheet/mineral/diamond(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_plasma > 0)
 						ore_plasma--;
 						new /obj/item/stack/sheet/mineral/plasma(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
 						new /obj/item/stack/sheet/mineral/uranium(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
 					if (ore_iron > 0 && ore_plasma > 0)
 						ore_iron--;
 						ore_plasma--;
@@ -292,10 +309,17 @@
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1 && selected_phazon == 0)
 					if (ore_clown > 0)
 						ore_clown--;
 						new /obj/item/stack/sheet/mineral/clown(output.loc)
+					else
+						on = 0
+					continue
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 1)
+					if (ore_phazon > 0)
+						ore_phazon--;
+						new /obj/item/stack/sheet/mineral/phazon(output.loc)
 					else
 						on = 0
 					continue
@@ -350,6 +374,9 @@
 				if (selected_clown == 1)
 					if (ore_clown <= 0)
 						b = 0
+				if (selected_phazon == 1)
+					if (ore_phazon <= 0)
+						b = 0
 
 				if (b) //if they are, deduct one from each, produce slag and shut the machine off
 					if (selected_gold == 1)
@@ -365,6 +392,8 @@
 					if (selected_iron == 1)
 						ore_iron--
 					if (selected_clown == 1)
+						ore_clown--
+					if (selected_phazon == 1)
 						ore_clown--
 					new /obj/item/weapon/ore/slag(output.loc)
 					on = 0
@@ -410,6 +439,10 @@
 					ore_clown++
 					del(O)
 					continue
+				if (istype(O,/obj/item/weapon/ore/phazon))
+					ore_phazon++
+					del(O)
+					continue
 				O.loc = src.output.loc
 			else
 				break
@@ -428,6 +461,7 @@
 	var/iron = 0;
 	var/clown = 0;
 	var/adamantine = 0;
+	var/phazon = 0;
 	var/list/ALLOWED_TYPES=list(
 		/obj/item,
 		/obj/machinery/portable_atmospherics/canister,
@@ -470,6 +504,10 @@
 			if (clown >= 1)
 				clown--;
 				new /obj/item/stack/sheet/mineral/clown(output.loc)
+
+			if (phazon >= 1)
+				clown--;
+				new /obj/item/stack/sheet/mineral/phazon(output.loc)
 
 		for (i = 0; i < 10; i++)
 			var/obj/O
@@ -535,6 +573,9 @@
 		found=1
 	if(uranium > 0.0)
 		html += "<li><b>Uranium:</b> [uranium]</li>"
+		found=1
+	if(phazon > 0.0)
+		html += "<li><b>Phazon:</b> [phazon]</li>"
 		found=1
 	if(!found)
 		html += "<li><i>(Nothing loaded yet!)</i></li>"

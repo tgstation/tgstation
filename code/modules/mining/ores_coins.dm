@@ -54,6 +54,12 @@
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 
+/obj/item/weapon/ore/phazon
+	name = "Phazite"
+	desc = "What the fuck?"
+	icon_state = "Phazon ore"
+	origin_tech = "materials=7"
+
 /obj/item/weapon/ore/slag
 	name = "Slag"
 	desc = "Completely useless"
