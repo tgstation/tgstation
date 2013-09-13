@@ -20,6 +20,15 @@
 
 	return GM
 
+// For new turfs
+/turf/proc/copy_air_from(var/turf/T)
+	oxygen = T.oxygen
+	carbon_dioxide = T.carbon_dioxide
+	nitrogen = T.nitrogen
+	toxins = T.toxins
+
+	temperature = T.temperature
+
 /turf/remove_air(amount as num)
 	var/datum/gas_mixture/GM = new
 
@@ -123,6 +132,12 @@
 			if(istype(tile) && !tile.blocks_air)
 				air_master.tiles_to_update.Add(tile)
 	..()
+
+/turf/simulated/copy_air_from(var/turf/T)
+	//if(istype(T,/turf/simulated))
+	//	var/turf/simulated/ST=T
+	//	air=ST.air
+	air=T.return_air()
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0
