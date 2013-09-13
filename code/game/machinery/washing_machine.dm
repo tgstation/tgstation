@@ -57,7 +57,7 @@
 			color = CR.colourName
 		else if(istype(crayon,/obj/item/weapon/stamp))
 			var/obj/item/weapon/stamp/ST = crayon
-			color = ST.color
+			color = ST._color
 
 		if(color)
 			var/new_jumpsuit_icon_state = ""
@@ -75,8 +75,8 @@
 			var/new_desc = "The colors are a bit dodgy."
 			for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(color == J.color)
+				//world << "DEBUG: [color] == [J._color]"
+				if(color == J._color)
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
@@ -86,8 +86,8 @@
 				del(J)
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(color == G.color)
+				//world << "DEBUG: [color] == [J._color]"
+				if(color == G._color)
 					new_glove_icon_state = G.icon_state
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
@@ -97,8 +97,8 @@
 				del(G)
 			for(var/T in typesof(/obj/item/clothing/shoes))
 				var/obj/item/clothing/shoes/S = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(color == S.color)
+				//world << "DEBUG: [color] == [J._color]"
+				if(color == S._color)
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
 					del(S)
@@ -107,8 +107,8 @@
 				del(S)
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
 				var/obj/item/weapon/bedsheet/B = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(color == B.color)
+				//world << "DEBUG: [color] == [J._color]"
+				if(color == B._color)
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
 					del(B)
@@ -117,8 +117,8 @@
 				del(B)
 			for(var/T in typesof(/obj/item/clothing/head/soft))
 				var/obj/item/clothing/head/soft/H = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(color == H.color)
+				//world << "DEBUG: [color] == [J._color]"
+				if(color == H._color)
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
 					del(H)
@@ -130,7 +130,7 @@
 					//world << "DEBUG: YUP! FOUND IT!"
 					J.item_state = new_jumpsuit_item_state
 					J.icon_state = new_jumpsuit_icon_state
-					J.color = color
+					J._color = color
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
 			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
@@ -138,7 +138,7 @@
 					//world << "DEBUG: YUP! FOUND IT!"
 					G.item_state = new_glove_item_state
 					G.icon_state = new_glove_icon_state
-					G.color = color
+					G._color = color
 					G.name = new_glove_name
 					if(!istype(G, /obj/item/clothing/gloves/black/thief))
 						G.desc = new_desc
@@ -150,21 +150,21 @@
 						S.slowdown = SHOES_SLOWDOWN
 						new /obj/item/weapon/handcuffs( src )
 					S.icon_state = new_shoe_icon_state
-					S.color = color
+					S._color = color
 					S.name = new_shoe_name
 					S.desc = new_desc
 			if(new_sheet_icon_state && new_sheet_name)
 				for(var/obj/item/weapon/bedsheet/B in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					B.icon_state = new_sheet_icon_state
-					B.color = color
+					B._color = color
 					B.name = new_sheet_name
 					B.desc = new_desc
 			if(new_softcap_icon_state && new_softcap_name)
 				for(var/obj/item/clothing/head/soft/H in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					H.icon_state = new_softcap_icon_state
-					H.color = color
+					H._color = color
 					H.name = new_softcap_name
 					H.desc = new_desc
 		del(crayon)
