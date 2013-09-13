@@ -460,7 +460,7 @@
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
 		if(isanimal(usr)) return //Animals can't do that
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-		if(usr:gloves)
+		if(ishuman(usr) && usr:gloves)
 			var/obj/item/clothing/gloves/G = usr:gloves
 			pickpocket = G.pickpocket
 		O.source = usr
