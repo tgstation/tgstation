@@ -5,13 +5,26 @@
 /obj/machinery/computer/atmoscontrol
 	name = "\improper Central Atmospherics Computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "computer_generic"
+	icon_state = "tank"
 	density = 1
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
+	var/list/filter=null
 	var/overridden = 0 //not set yet, can't think of a good way to do it
-	req_access = list(access_ce)
+	req_one_access = list(access_ce)
+
+
+/obj/machinery/computer/atmoscontrol/xeno
+	name = "\improper Xenobiology Atmospherics Computer"
+	filter=list(
+		/area/toxins/xenobiology/specimen_1,
+		/area/toxins/xenobiology/specimen_2,
+		/area/toxins/xenobiology/specimen_3,
+		/area/toxins/xenobiology/specimen_4,
+		/area/toxins/xenobiology/specimen_5,
+		/area/toxins/xenobiology/specimen_6)
+	req_one_access = list(access_xenobiology,access_ce)
 
 
 /obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
@@ -36,7 +49,9 @@
 	if(current)
 		dat += specific()
 	else
-		for(var/obj/machinery/alarm/alarm in machines)
+		for(var/obj/machinery/alarm/alarm in sortAtom(machines))
+			if(!is_in_filter(alarm.alarm_area.type))
+				continue // NO ACCESS 4 U
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
@@ -57,6 +72,11 @@
 		overridden = 1
 		return
 	return ..()
+
+
+/obj/machinery/computer/atmoscontrol/proc/is_in_filter(var/typepath)
+	if(!filter) return 1 // YEP.  TOTALLY.
+	return typepath in filter
 
 /obj/machinery/computer/atmoscontrol/proc/specific()
 	if(!current)
@@ -85,6 +105,7 @@
 					"co2_scrub",
 					"tox_scrub",
 					"n2o_scrub",
+					"o2_scrub",
 					"panic_siphon",
 					"scrubbing"
 				)
@@ -185,6 +206,13 @@
 			spawn(5)
 				src.updateUsrDialog()
 			return
+
+		if(href_list["preset"])
+			current.preset = text2num(href_list["preset"])
+			current.apply_preset()
+			spawn(5)
+				src.updateUsrDialog()
+			return
 	updateUsrDialog()
 
 //copypasta from alarm code, changed to work with this without derping hard
@@ -194,6 +222,7 @@
 	if(code=="tox")
 		label="Plasma"
 	return "<A href='?src=\ref[current];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
+
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
 
@@ -216,7 +245,7 @@
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 
-			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
+			//output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 		if (AALARM_SCREEN_VENT)
 			var/sensor_data = ""
 			if(current.alarm_area.air_vent_names.len)
@@ -325,9 +354,9 @@ siphoning
 				AALARM_PRESET_SERVER 	= "Coldroom - For server rooms and freezers")
 			for(var/p=1;p<=presets.len;p++)
 				if (current.preset==p)
-					output += "<li><A href='?src=\ref[current];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
+					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
 				else
-					output += "<li><A href='?src=\ref[current];preset=[p]'>[presets[p]]</A></li>"
+					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'>[presets[p]]</A></li>"
 			output += {"</ul>
 <b>Alarm thresholds:</b><br>
 Partial pressure for gases
