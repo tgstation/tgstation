@@ -87,7 +87,7 @@
 
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
-		AC.desc += " This one is spent."
+		AC.desc = "[initial(AC.desc)] This one is spent."
 
 		if(AC.BB)
 			in_chamber = AC.BB //Load projectile into chamber.
