@@ -74,6 +74,12 @@
 	projectile_type = "/obj/item/projectile/bullet/weakbullet"
 	m_amt = 500
 
+/obj/item/ammo_casing/shotgun/fakebeanbag
+	name = "beanbag shell"
+	desc = "A weak beanbag shell."
+	icon_state = "bshell"
+	projectile_type = "/obj/item/projectile/bullet/weakbullet/booze"
+	m_amt = 12500
 
 /obj/item/ammo_casing/shotgun/stunshell
 	name = "stun shell"

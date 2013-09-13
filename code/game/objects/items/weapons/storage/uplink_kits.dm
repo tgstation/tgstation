@@ -143,3 +143,15 @@
 		var/obj/item/weapon/implanter/O = new(src)
 		O.imp = new /obj/item/weapon/implant/traitor(O)
 		O.update()
+
+/obj/item/weapon/storage/box/syndie_kit/boolets
+	name = "Shotgun shells"
+
+	New()
+		..()
+		new /obj/item/ammo_casing/shotgun/fakebeanbag(src)
+		new /obj/item/ammo_casing/shotgun/fakebeanbag(src)
+		new /obj/item/ammo_casing/shotgun/fakebeanbag(src)
+		new /obj/item/ammo_casing/shotgun/fakebeanbag(src)
+		new /obj/item/ammo_casing/shotgun/fakebeanbag(src)
+		new /obj/item/ammo_casing/shotgun/fakebeanbag(src)

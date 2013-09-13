@@ -154,6 +154,14 @@ var/list/uplink_items = list()
 	cost = 7
 	job = "Assistant"
 
+//Bartender
+
+/datum/uplink_item/jobspecific/drunkbullets
+	name = "Boozey Shotgun Shells"
+	desc = "A box containing 6 shotgun shells that simulate the effects of extreme drunkeness on the target, more effective for each type of alcohol in the target's system."
+	item = /obj/item/weapon/storage/box/syndie_kit/boolets
+	cost = 3
+	job = "Bartender"
 
 // DANGEROUS WEAPONS
 
