@@ -8,6 +8,7 @@
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = "whisper"
 	range = 3
+	level_max = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/knock/cast(list/targets)
 	for(var/turf/T in targets)

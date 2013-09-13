@@ -8,6 +8,7 @@
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
+	level_max = 2
 
 	max_targets = 0
 
@@ -53,6 +54,7 @@
 	invocation = "EI NATH"
 	invocation_type = "shout"
 	range = 1
+	level_max = 3
 
 	destroys = "gib_brain"
 
@@ -70,6 +72,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
+	level_max = 5
 
 	smoke_spread = 2
 	smoke_amt = 10
@@ -83,6 +86,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
+	level_max = 4
 
 	emp_heavy = 6
 	emp_light = 10
@@ -98,6 +102,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
+	level_max = 5
 
 	smoke_spread = 1
 	smoke_amt = 10
@@ -118,6 +123,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
+	level_max = 3
 
 	smoke_spread = 1
 	smoke_amt = 5
@@ -132,6 +138,7 @@
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"
 	range = 0
+	level_max = 5
 
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
@@ -189,6 +196,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	message = "\blue Your eyes cry out in pain!"
+	level_max = 5
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
@@ -211,6 +219,7 @@
 	invocation = "STAUN EI"
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
+	level_max = 4
 
 	summon_type = "/obj/structure/closet/statue"
 
@@ -224,6 +233,7 @@
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
+	level_max = 3
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"

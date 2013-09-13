@@ -26,6 +26,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
+	var/spell_level = 1 //if a spell can be taken multiple times, this raises
+	var/level_max = 1 //The max possible level_max is 5, but most spells cap lower for balancing reasons
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'

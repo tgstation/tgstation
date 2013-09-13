@@ -8,6 +8,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
+	level_max = 3
 	include_user = 1
 	centcom_cancast = 0 //Prevent people from getting to centcom
 
