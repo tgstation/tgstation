@@ -323,7 +323,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			w_uniform.screen_loc = ui_iclothing
 			client.screen += w_uniform
 
-		var/t_color = w_uniform.color
+		var/t_color = w_uniform.col
 		if(!t_color)		t_color = icon_state
 		var/image/lying		= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l", "layer"=-UNIFORM_LAYER)
 		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)

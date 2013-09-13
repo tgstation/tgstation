@@ -7,20 +7,20 @@
 
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"
-	color = "redshorts"
+	col = "redshorts"
 
 /obj/item/clothing/under/shorts/green
 	icon_state = "greenshorts"
-	color = "greenshorts"
+	col = "greenshorts"
 
 /obj/item/clothing/under/shorts/blue
 	icon_state = "blueshorts"
-	color = "blueshorts"
+	col = "blueshorts"
 
 /obj/item/clothing/under/shorts/black
 	icon_state = "blackshorts"
-	color = "blackshorts"
+	col = "blackshorts"
 
 /obj/item/clothing/under/shorts/grey
 	icon_state = "greyshorts"
-	color = "greyshorts"
+	col = "greyshorts"

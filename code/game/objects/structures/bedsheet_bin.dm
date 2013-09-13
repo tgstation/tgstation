@@ -15,7 +15,7 @@ LINEN BINS
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
-	color = "white"
+	col = "white"
 
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
@@ -34,67 +34,67 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
-	color = "blue"
+	col = "blue"
 
 /obj/item/weapon/bedsheet/green
 	icon_state = "sheetgreen"
-	color = "green"
+	col = "green"
 
 /obj/item/weapon/bedsheet/orange
 	icon_state = "sheetorange"
-	color = "orange"
+	col = "orange"
 
 /obj/item/weapon/bedsheet/purple
 	icon_state = "sheetpurple"
-	color = "purple"
+	col = "purple"
 
 /obj/item/weapon/bedsheet/rainbow
 	icon_state = "sheetrainbow"
-	color = "rainbow"
+	col = "rainbow"
 
 /obj/item/weapon/bedsheet/red
 	icon_state = "sheetred"
-	color = "red"
+	col = "red"
 
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
-	color = "yellow"
+	col = "yellow"
 
 /obj/item/weapon/bedsheet/mime
 	icon_state = "sheetmime"
-	color = "mime"
+	col = "mime"
 
 /obj/item/weapon/bedsheet/clown
 	icon_state = "sheetclown"
-	color = "clown"
+	col = "clown"
 
 /obj/item/weapon/bedsheet/captain
 	icon_state = "sheetcaptain"
-	color = "captain"
+	col = "captain"
 
 /obj/item/weapon/bedsheet/rd
 	icon_state = "sheetrd"
-	color = "director"
+	col = "director"
 
 /obj/item/weapon/bedsheet/medical
 	icon_state = "sheetmedical"
-	color = "medical"
+	col = "medical"
 
 /obj/item/weapon/bedsheet/hos
 	icon_state = "sheethos"
-	color = "hosred"
+	col = "hosred"
 
 /obj/item/weapon/bedsheet/hop
 	icon_state = "sheethop"
-	color = "hop"
+	col = "hop"
 
 /obj/item/weapon/bedsheet/ce
 	icon_state = "sheetce"
-	color = "chief"
+	col = "chief"
 
 /obj/item/weapon/bedsheet/brown
 	icon_state = "sheetbrown"
-	color = "brown"
+	col = "brown"
 
 
 

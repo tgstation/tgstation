@@ -18,20 +18,20 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
-	var/color //brown, gray and white, leave blank for random
+	var/col	//brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()
 	..()
-	if(!color)
-		color = pick( list("brown","gray","white") )
-	icon_state = "mouse_[color]"
-	icon_living = "mouse_[color]"
-	icon_dead = "mouse_[color]_dead"
+	if(!col)
+		col = pick( list("brown","gray","white") )
+	icon_state = "mouse_[col]"
+	icon_living = "mouse_[col]"
+	icon_dead = "mouse_[col]_dead"
 
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
-	src.icon_dead = "mouse_[color]_splat"
+	src.icon_dead = "mouse_[col]_splat"
 	Die()
 
 /mob/living/simple_animal/mouse/Die()
@@ -53,15 +53,15 @@
  */
 
 /mob/living/simple_animal/mouse/white
-	color = "white"
+	col = "white"
 	icon_state = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
-	color = "gray"
+	col = "gray"
 	icon_state = "mouse_gray"
 
 /mob/living/simple_animal/mouse/brown
-	color = "brown"
+	col = "brown"
 	icon_state = "mouse_brown"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)

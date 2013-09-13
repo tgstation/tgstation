@@ -252,22 +252,22 @@ obj/machinery/atmospherics/pipe
 
 	simple/scrubbers
 		name="Scrubbers pipe"
-		color="red"
+		col="red"
 		icon_state = ""
 
 	simple/supply
 		name="Air supply pipe"
-		color="blue"
+		col="blue"
 		icon_state = ""
 
 	simple/supplymain
 		name="Main air supply pipe"
-		color="purple"
+		col="purple"
 		icon_state = ""
 
 	simple/general
 		name="Pipe"
-		color=""
+		col=""
 		icon_state = ""
 
 	simple/scrubbers/visible
@@ -304,7 +304,7 @@ obj/machinery/atmospherics/pipe
 
 	simple/yellow
 		name="Pipe"
-		color="yellow"
+		col="yellow"
 		icon_state = ""
 
 	simple/yellow/visible
