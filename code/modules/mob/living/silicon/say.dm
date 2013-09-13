@@ -22,7 +22,7 @@
 			(copytext(message, 1, 3) == "#b") || (copytext(message, 1, 3) == "#B") || \
 			(copytext(message, 1, 3) == ".b") || (copytext(message, 1, 3) == ".B"))
 			if(istype(src, /mob/living/silicon/pai))
-				return ..(message)
+				return ..(message, "R")
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			robot_talk(message)
@@ -38,9 +38,9 @@
 				src << "This function is not available to you."
 				return
 		else
-			return ..(message)
+			return ..(message, "R")
 	else
-		return ..(message)
+		return ..(message, "R")
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/message)
@@ -65,11 +65,18 @@
 		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message_a]</span></span></i>"//The AI can "hear" its own message.
+		var/list/speech_bubble_recipients = list()
 		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
 			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
 				M.show_message(rendered_a, 2)
 			else//If they do not.
 				M.show_message(rendered_b, 2)
+			if(M.client)
+				speech_bubble_recipients.Add(M.client)
+
+		//speech bubble
+		flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
 	else
