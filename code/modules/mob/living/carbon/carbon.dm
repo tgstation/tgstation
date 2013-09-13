@@ -533,10 +533,3 @@
 		return
 
 	..(message)
-
-/mob/living/carbon/proc/is_mutantrace(var/mrace)
-	if(mrace)
-		if(src.dna && src.dna.mutantrace == mrace)
-			return 1
-	else
-		return src.dna && src.dna.mutantrace ? 1 : 0

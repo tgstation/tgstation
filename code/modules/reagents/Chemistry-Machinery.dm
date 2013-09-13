@@ -441,13 +441,9 @@
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-obj/machinery/computer/pandemic/New()
-	..()
-	update_icon()
 
 /obj/machinery/computer/pandemic/set_broken()
 	icon_state = (src.beaker?"mixer1_b":"mixer0_b")
-	overlays.Cut()
 	stat |= BROKEN
 
 /obj/machinery/computer/pandemic/proc/GetVirusByIndex(var/index)
@@ -476,25 +472,22 @@ obj/machinery/computer/pandemic/New()
 		return D.GetDiseaseID()
 	return null
 
-obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
-	wait = 1
-	update_icon()
-	spawn(waittime)
-		src.wait = null
-		update_icon()
-		playsound(src.loc, 'sound/items/timer.ogg', 30, 1)
 
-/obj/machinery/computer/pandemic/update_icon()
+
+/obj/machinery/computer/pandemic/power_change()
+
 	if(stat & BROKEN)
 		icon_state = (src.beaker?"mixer1_b":"mixer0_b")
-		return
 
-	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
+	else if(powered())
+		icon_state = (src.beaker?"mixer1":"mixer0")
+		stat &= ~NOPOWER
 
-	if(wait)
-		overlays.Cut()
 	else
-		overlays += "waitlight"
+		spawn(rand(0, 15))
+			src.icon_state = (src.beaker?"mixer1_nopower":"mixer0_nopower")
+			stat |= NOPOWER
+
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	if(..())
@@ -527,7 +520,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 					B.name = "[vaccine_name] vaccine bottle"
 					B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
-					replicator_cooldown(200)
+					wait = 1
+					spawn(200)
+						src.wait = null
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
@@ -555,7 +550,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
-			replicator_cooldown(1000)
+			wait = 1
+			spawn(1000)
+				src.wait = null
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()

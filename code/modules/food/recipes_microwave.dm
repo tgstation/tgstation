@@ -154,7 +154,7 @@
 /datum/recipe/mimeburger
 	reagents = list("flour" = 5)
 	items = list(
-		/obj/item/clothing/mask/gas/mime
+		/obj/item/clothing/head/beret
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 

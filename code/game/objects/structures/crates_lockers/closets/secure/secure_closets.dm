@@ -5,7 +5,8 @@
 	icon_state = "secure1"
 	density = 1
 	opened = 0
-	locked = 1
+	var/locked = 1
+	var/broken = 0
 	icon_closed = "secure"
 	var/icon_locked = "secure1"
 	icon_opened = "secureopen"
@@ -15,7 +16,8 @@
 	health = 200
 
 /obj/structure/closet/secure_closet/can_open()
-	if(src.locked || src.welded)
+	..()
+	if(src.locked)
 		return 0
 	return 1
 

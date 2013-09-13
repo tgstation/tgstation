@@ -7,6 +7,7 @@
 	w_class = 2.0
 	m_amt = 100
 	g_amt = 0
+	w_amt = 0
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10

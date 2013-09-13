@@ -195,9 +195,9 @@
 				usr << "\red Access Denied."
 
 		else if (href_list["magbot"])
-			if(issilicon(usr) && is_special_character(usr))
+			if(src.allowed(usr))
 				var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-				if(R && !R.emagged && R.connected_ai == usr && !R.scrambledcodes)
+				if(R)
 					var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
 						if(R && istype(R))

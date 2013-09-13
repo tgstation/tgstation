@@ -4,6 +4,7 @@
 	icon_state = "igniter"
 	m_amt = 500
 	g_amt = 50
+	w_amt = 10
 	origin_tech = "magnets=1"
 
 	activate()
