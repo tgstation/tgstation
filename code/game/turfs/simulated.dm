@@ -33,7 +33,7 @@
 						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
-
+/* Removing bloody footprints
 			var/list/bloodDNA = null
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
@@ -58,7 +58,7 @@
 					there.blood_DNA |= bloodDNA.Copy()
 
 			bloodDNA = null
-
+*/
 		switch (src.wet)
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes

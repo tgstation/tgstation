@@ -32,7 +32,7 @@
 					del(B)
 	spawn(DRYING_TIME * (amount+1))
 		dry()
-
+/* Removing to prevent lag
 /obj/effect/decal/cleanable/blood/HasEntered(mob/living/carbon/human/perp)
 	if (!istype(perp))
 		return
@@ -55,7 +55,7 @@
 		perp.feet_blood_DNA |= blood_DNA.Copy()
 
 	amount--
-
+*/
 /obj/effect/decal/cleanable/blood/proc/dry()
 	name = "dried [src]"
 	desc = "It's dark red and crusty. Someone is not doing their job."
@@ -67,7 +67,7 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 	amount = 2
-
+/*
 /obj/effect/decal/cleanable/blood/footprints
 	name = "bloody footprints"
 	desc = "Whoops..."
@@ -75,13 +75,13 @@
 	icon_state = "blood1"
 	amount = 0
 	random_icon_states = null
-
+*/
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	gender = PLURAL
 	random_icon_states = null
-	amount = 0
+	//amount = 0
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
@@ -89,7 +89,7 @@
 	gender = PLURAL
 	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
-	amount = 0
+	//amount = 0
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
