@@ -48,9 +48,8 @@
 				if (copytext(message, 1, 2) == "*" && !stat)
 					return ..(message)
 				var/mob/living/silicon/robot/mommi/U = src
-				// TODO: MoMMI channel
 				if(U.keeper)
-					src << "\red Your KEEPER module has disabled your vocalizer.  Try :b to attempt to relay your message through the AI or borgs, or try an *emote (say \"*help\" for a listing)."
+					U.mommi_talk(message)
 					return
 			return ..(message)
 	else
