@@ -29,6 +29,7 @@ var/list/ai_list = list()
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
+	var/obj/item/device/camera/ai_camera/aicamera = null
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -84,6 +85,7 @@ var/list/ai_list = list()
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
+	aicamera = new/obj/item/device/camera/ai_camera(src)
 
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
@@ -689,3 +691,4 @@ var/list/ai_list = list()
 	set name = "State Laws"
 
 	checklaws()
+
