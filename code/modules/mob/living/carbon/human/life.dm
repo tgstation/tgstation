@@ -524,8 +524,6 @@
 ///FIRE CODE
 	proc/handle_fire()
 		if(!on_fire)
-			if(fire_stacks > 2) //Have we built enough fire stacks to combust?
-				IgniteMob()
 			return
 		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 		if(G.oxygen < 1)

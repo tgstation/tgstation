@@ -190,7 +190,7 @@
 		location.hotspot_expose(700, 5)
 
 
-/obj/item/weapon/weldingtool/afterattack(obj/O, mob/user)
+/obj/item/weapon/weldingtool/afterattack(atom/O, mob/user)
 	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
 		if(!welding)
 			O.reagents.trans_to(src, max_fuel)
@@ -211,6 +211,9 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 
+		if(istype(O, /mob/living))
+			var/mob/living/L = O
+			L.IgniteMob()
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)

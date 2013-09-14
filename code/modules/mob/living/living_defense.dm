@@ -83,4 +83,8 @@
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
 		on_fire = 0
+
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
+    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+
 //Mobs on Fire end
