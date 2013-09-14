@@ -162,13 +162,14 @@
 	throw_range = 5
 	w_class = 2.0
 	force_unwielded = 3
-	force_wielded = 40 // Was 30, Buffed - RR
+	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	color = pick("red", "blue", "green", "purple")
@@ -199,6 +200,24 @@
 	else
 		return 0
 
+/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues
+	wielded = 1
+	var/mob/living/M = loc
+	if(istype(loc, /mob/living))
+		if (HULK in M.mutations)
+			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
+	force = force_wielded
+	name = "[initial(name)] (Wielded)"
+	update_icon()
+
+/obj/item/weapon/twohanded/dualsaber/IsReflect()
+	if(wielded)
+		var/mob/living/M = loc
+		if(istype(loc, /mob/living))
+			if (HULK in M.mutations)
+				return
+			return 1
+
 /obj/item/weapon/twohanded/dualsaber/green
 	New()
 		color = "green"
@@ -226,3 +245,4 @@
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 	return
+
