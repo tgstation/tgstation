@@ -139,11 +139,7 @@
 	if(!circuitry_installed)
 		icon_state="intercom-frame"
 		return
-	var/open="[b_stat ? "-open":""]"
-	if(!on || b_stat)
-		icon_state = "intercom-p[open]"
-	else
-		icon_state = "intercom[open]"
+	icon_state = "intercom[!on?"-p":""][b_stat ? "-open":""]"
 
 /obj/item/device/radio/intercom/proc/checkpower()
 
