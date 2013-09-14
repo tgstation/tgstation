@@ -295,6 +295,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername = "chemical implant crate"
 
+/datum/supply_packs/security/armory/exileimp
+	name = "Exile implants crate"
+	contains = list (/obj/item/weapon/storage/box/exileimp)
+	cost = 30
+	containername = "exile implant crate"
+
 /datum/supply_packs/security/securitybarriers
 	name = "Security Barriers"
 	contains = list(/obj/machinery/deployable/barrier,
