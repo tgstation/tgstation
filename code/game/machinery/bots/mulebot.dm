@@ -612,33 +612,25 @@
 				if(next == loc)
 					path -= next
 					return
-
-
 				if(istype( next, /turf/simulated))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
-
-
 					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/tracks/wheels/B=locate(/obj/effect/decal/cleanable/blood/tracks/wheels) in loc
-						if(!B)
-							B= new(loc)
+						var/turf/simulated/T=loc
+						if(istype(T))
+							var/goingdir=0
 
-						var/goingdir=0
-
-						var/newdir = get_dir(next, loc)
-						if(newdir == dir)
-							goingdir = newdir
-						else
-							newdir = newdir | dir
-							if(newdir == 3)
-								newdir = 1
-							else if(newdir == 12)
-								newdir = 4
-							goingdir = newdir
-						B.AddTracks(list(),0,goingdir)
+							var/newdir = get_dir(next, loc)
+							if(newdir == dir)
+								goingdir = newdir
+							else
+								newdir = newdir | dir
+								if(newdir == 3)
+									newdir = 1
+								else if(newdir == 12)
+									newdir = 4
+								goingdir = newdir
+							loc.AddTracks(/obj/effect/decal/cleanable/blood/tracks/wheels,list(),0,goingdir)
 						bloodiness--
-
-
 
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
