@@ -1003,12 +1003,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("\blue [key_name_admin(usr)] haxed the powergrid with magic SMES.", 1)
 
 	for(var/obj/machinery/power/smes/SMES in world)
-		var/obj/machinery/power/smes/magical/magic = new(SMES.loc)
+		var/turf/T=SMES.loc
 		del(SMES)
+		var/obj/machinery/power/smes/magical/magic = new(T)
+		// Manually set up our powernets since stupid seems to reign in the powernet code.
+		magic.connect_to_network()
 		magic.output=200000 // AKA rape
 		magic.online=1
 
-	world << "<span style=\"color:red;font-size=5;font-weight:bold\">LET THERE BE JUICE</font>"
+	world << "<span style=\"color:red;font-size=5;font-weight:bold\">LET THERE BE JUICE</span>"
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
