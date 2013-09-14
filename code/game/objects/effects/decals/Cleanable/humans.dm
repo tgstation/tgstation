@@ -95,14 +95,14 @@
 
 	// dir = last wetting
 	var/list/wet=list(
-		TRACKS_COMING_NORTH=0,
-		TRACKS_COMING_SOUTH=0,
-		TRACKS_COMING_EAST=0,
-		TRACKS_COMING_WEST=0,
-		TRACKS_GOING_NORTH=0,
-		TRACKS_GOING_SOUTH=0,
-		TRACKS_GOING_EAST=0,
-		TRACKS_GOING_WEST=0
+		"1"=0,
+		"2"=0,
+		"4"=0,
+		"8"=0,
+		"16"=0,
+		"32"=0,
+		"64"=0,
+		"128"=0
 	)
 
 	/**
@@ -127,24 +127,24 @@
 		for(var/bi=0;bi<4;bi++)
 			b=1<<bi
 			// COMING BIT
-			if(comingdir&b && wet[b]!=t)
+			if(comingdir&b && wet["[b]"]!=t)
 				if(!(dirs&b))
 					newtracks|=b
-				wet[b]=t
+				wet["[b]"]=t
 				updated=1
-			else:
-				if(wet[b]<world.time && !(crustytracks&b))
+			else
+				if(wet["[b]"]<world.time && !(crustytracks&b))
 					updated=1
 
 			// GOING BIT (shift up 4)
 			b=b<<4
-			if(realgoing&b && wet[b]!=t)
+			if(realgoing&b && wet["[b]"]!=t)
 				if(!(dirs&b))
 					newtracks|=b
-				wet[b]=t
+				wet["[b]"]=t
 				updated=1
-			else:
-				if(wet[b]<world.time && !(crustytracks&b))
+			else
+				if(wet["[b]"]<world.time && !(crustytracks&b))
 					updated=1
 
 		dirs |= comingdir|realgoing
@@ -167,9 +167,9 @@
 			b=overlay.dir
 			if(overlay.icon_state==going_state)
 				b=b<<4
-			if(wet[b]<t && !(crustytracks&b)) // NEW crusty ones get special treatment
+			if(wet["[b]"]<t && !(crustytracks&b)) // NEW crusty ones get special treatment
 				crusty|=b
-			if(wet[b]>t || crusty&b) // Wet or crusty?  Nuke'em either way.
+			if(wet["[b]"]>t || crusty&b) // Wet or crusty?  Nuke'em either way.
 				overlays.Remove(overlay)
 				newtracks |= b // Mark as needing an update.
 
@@ -179,7 +179,7 @@
 			b=1<<bi
 			// New or crusty
 			if(newtracks&b)
-				var/icon/I= new /icon(icon, icon_state=coming_state, dir=b)
+				var/icon/I= new /icon(icon, icon_state=coming_state, dir=num2dir(b))
 				// If crusty, make them look crusty.
 				if(crusty&b)
 					I.SetIntensity(0.7)
@@ -188,9 +188,10 @@
 					crustytracks &= ~b // Unmark as crusty.
 				// Add to overlays
 				overlays += I
+			// GOING
 			b=b<<4
 			if(newtracks&b)
-				var/icon/I= new /icon(icon, icon_state=going_state, dir=b>>4)
+				var/icon/I= new /icon(icon, icon_state=going_state, dir=num2dir(b>>4))
 				if(crusty&b)
 					I.SetIntensity(0.7)
 					crustytracks |= b // Crusty? Don't update unless wetted again.
