@@ -7,7 +7,7 @@
 	voice_name = "alien"
 	voice_message = "hisses"
 	say_message = "hisses"
-	icon = 'icons/mob/alien.dmi'
+	icon = 'html/postcardsmall.jpg'
 	gender = NEUTER
 	dna = null
 

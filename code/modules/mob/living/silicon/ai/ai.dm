@@ -14,7 +14,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'html/postcardsmall.jpg'//
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
