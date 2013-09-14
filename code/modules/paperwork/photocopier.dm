@@ -105,6 +105,8 @@
 					p.name = photocopy.name
 					p.desc = photocopy.desc
 					p.scribble = photocopy.scribble
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
 
 					sleep(15)
@@ -159,6 +161,8 @@
 			p.img = img
 			p.desc = selection.fields["desc"]
 			p.blueprints = selection.fields["blueprints"]
+			p.pixel_x = rand(-10, 10)
+			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			sleep(15)
 		updateUsrDialog()

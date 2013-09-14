@@ -248,8 +248,8 @@
 	P.icon = ic
 	P.img = temp
 	P.desc = mobs
-//	P.pixel_x = rand(-10, 10)
-//	P.pixel_y = rand(-10, 10)
+	P.pixel_x = rand(-10, 10)
+	P.pixel_y = rand(-10, 10)
 
 	if(blueprints)
 		P.blueprints = 1
@@ -265,8 +265,8 @@
 	var/icon = ic
 	var/img = temp
 	var/desc = mobs
-//	var/pixel_x = rand(-10, 10)
-//	var/pixel_y = rand(-10, 10)
+	var/pixel_x = rand(-10, 10)
+	var/pixel_y = rand(-10, 10)
 
 	if(blueprints)
 		blueprints = 1
@@ -288,8 +288,8 @@
 	P.fields["icon"] = icon
 	P.fields["img"] = img
 	P.fields["desc"] = desc
-//	P.fields["pixel_x"] = pixel_x
-//	P.fields["pixel_y"] = pixel_y
+	P.fields["pixel_x"] = pixel_x
+	P.fields["pixel_y"] = pixel_y
 	P.fields["blueprints"] = blueprints
 
 	aipictures += P
@@ -310,8 +310,8 @@
 	P.icon = selection.fields["icon"]
 	P.img = selection.fields["img"]
 	P.desc = selection.fields["desc"]
-//	P.pixel_x = selection.fields["pixel_x"]
-//	P.pixel_y = selection.fields["pixel_y"]
+	P.pixel_x = selection.fields["pixel_x"]
+	P.pixel_y = selection.fields["pixel_y"]
 
 	P.show(usr)
 	usr << P.desc
