@@ -629,7 +629,7 @@
 								else if(newdir == 12)
 									newdir = 4
 								goingdir = newdir
-							loc.AddTracks(/obj/effect/decal/cleanable/blood/tracks/wheels,list(),0,goingdir)
+							T.AddTracks(/obj/effect/decal/cleanable/blood/tracks/wheels,list(),0,goingdir)
 						bloodiness--
 
 					var/moved = step_towards(src, next)	// attempt to move
