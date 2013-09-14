@@ -40,4 +40,4 @@
 	var/update_slimes = 1
 
 	var/on_fire = 0 //The "Are we on fire?" var
-	var/fire_stacks = 0 //Track how many fire stacks till we ignite, usual amount is 3
+	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20

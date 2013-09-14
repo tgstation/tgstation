@@ -603,5 +603,6 @@
 			xylophone = 0
 
 /mob/living/carbon/human/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Gain fire stacks when standing in a hotspot so ATMOS can light you up
-	if(!on_fire)
-		fire_stacks += 2
+	adjust_fire_stacks(5)
+	if(fire_stacks > 9 && !on_fire)
+		IgniteMob()

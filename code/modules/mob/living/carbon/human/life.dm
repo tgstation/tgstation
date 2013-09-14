@@ -524,8 +524,6 @@
 ///FIRE CODE
 	proc/handle_fire()
 		if(!on_fire)
-			if(fire_stacks > 2) //Have we built enough fire stacks to combust?
-				IgniteMob()
 			return
 		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 		if(G.oxygen < 1)
@@ -534,6 +532,8 @@
 		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
 		if(thermal_protection < 1)
 			bodytemperature += BODYTEMP_HEATING_MAX
+		var/turf/location = get_turf(src)
+		location.hotspot_expose(700, 50, 1)
 		return
 
 

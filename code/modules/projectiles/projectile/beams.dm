@@ -6,6 +6,8 @@
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 2
+	ignite_target = 1
+	add_fire_stacks = 5
 
 /obj/item/projectile/practice
 	name = "laser"
@@ -100,3 +102,4 @@
 	flag = "laser"
 	eyeblur = 2
 	ignite_target = 1
+	add_fire_stacks = 20

@@ -38,8 +38,12 @@ emp_act
 		P.on_hit(src, 2)
 		return 2
 
+	if(P.add_fire_stacks)
+		adjust_fire_stacks(P.add_fire_stacks)
+
 	if(P.ignite_target)
 		IgniteMob()
+
 
 	return (..(P , def_zone))
 
@@ -199,13 +203,14 @@ emp_act
 
 ///Mobs on Fire code//
 /mob/living/carbon/human/IgniteMob()
+	if(fire_stacks > 0)
 		on_fire = 1
-		fire_stacks = 0
 		update_fire()
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(on_fire)
 		on_fire = 0
+		fire_stacks = 0
 		update_fire()
 
 //End Fire
