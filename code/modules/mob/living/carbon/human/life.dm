@@ -532,6 +532,8 @@
 		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
 		if(thermal_protection < 1)
 			bodytemperature += BODYTEMP_HEATING_MAX
+		var/turf/location = get_turf(src)
+		location.hotspot_expose(700, 50, 1)
 		return
 
 
