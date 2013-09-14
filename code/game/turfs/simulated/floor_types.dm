@@ -9,6 +9,35 @@
 		..()
 		name = "floor"
 
+
+
+/turf/simulated/floor/plating/vox
+	icon_state = "plating"
+	name = "vox plating"
+	//icon = 'icons/turf/shuttle-debug.dmi'
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+
+	New()
+		..()
+		name = "plating"
+
+/turf/simulated/floor/vox
+	icon_state = "floor"
+	name = "vox floor"
+	//icon = 'icons/turf/shuttle-debug.dmi'
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+
+	New()
+		..()
+		name = "floor"
+
+/turf/simulated/floor/vox/wood
+	name = "floor"
+	icon_state = "wood"
+	floor_tile = new/obj/item/stack/tile/wood
+
 /turf/simulated/floor/light
 	name = "Light floor"
 	luminosity = 5

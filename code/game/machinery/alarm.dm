@@ -113,6 +113,7 @@
 
 /obj/machinery/alarm/vox/New()
 	..()
+	req_access = list()
 	preset = AALARM_PRESET_VOX
 	apply_preset()
 
