@@ -1398,7 +1398,7 @@
 			shock_stage = max(shock_stage, 61)
 
 		if(traumatic_shock >= 80)
-			if(rand(50))
+			if(prob(50))
 				shock_stage += 1
 		else
 			shock_stage = min(shock_stage, 100)
