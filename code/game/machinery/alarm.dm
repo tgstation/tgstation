@@ -108,16 +108,16 @@
 	..()
 	req_access = list(access_rd, access_atmospherics, access_engine_equip)
 	preset = AALARM_PRESET_SERVER
-	apply_preset()
+	apply_preset(1)
 
 
 /obj/machinery/alarm/vox/New()
 	..()
 	req_access = list()
 	preset = AALARM_PRESET_VOX
-	apply_preset()
+	apply_preset(1)
 
-/obj/machinery/alarm/proc/apply_preset()
+/obj/machinery/alarm/proc/apply_preset(var/no_cycle_after=0)
 
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
@@ -128,7 +128,7 @@
 	target_temperature = T0C+20
 	switch(preset)
 		if(AALARM_PRESET_VOX) // Same as usual, but without oxygen.
-			TLV["oxygen"] =			list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
+			TLV["oxygen"] =			list(-1.0, -1.0, 1, 5) // Partial pressure, kpa
 		if(AALARM_PRESET_SERVER) // Cold as fuck.
 			TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
 			TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
@@ -137,8 +137,9 @@
 			TLV["pressure"] =		list(0,ONE_ATMOSPHERE*0.10,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60) /* kpa */
 			TLV["temperature"] =	list(20, 40, 140, 160) // K
 			target_temperature = 90
-	mode = AALARM_MODE_CYCLE
-	apply_mode()
+	if(!no_cycle_after)
+		mode = AALARM_MODE_CYCLE
+		apply_mode()
 
 
 /obj/machinery/alarm/New(var/loc, var/dir, var/building = 0)
@@ -950,11 +951,7 @@ siphoning
 					output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
 				else
 					output += "<li><A href='?src=\ref[src];mode=[m]'>[modes[m]]</A></li>"
-			output += "</ul>"
-
-		if (AALARM_SCREEN_SENSORS)
-			output += {"
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
+			output += {"</ul>
 <hr><br><b>Sensor presets:</b><br><i>(Note, this only sets sensors, air supplied to vents must still be changed.)</i><ul>"}
 			var/list/presets = list(
 				AALARM_PRESET_HUMAN   = "Human - Checks for Oxygen and Nitrogen",\
@@ -965,7 +962,11 @@ siphoning
 					output += "<li><A href='?src=\ref[src];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
 				else
 					output += "<li><A href='?src=\ref[src];preset=[p]'>[presets[p]]</A></li>"
-			output += {"</ul>
+			output += "</ul>"
+
+		if (AALARM_SCREEN_SENSORS)
+			output += {"
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Alarm thresholds:</b><br>
 Partial pressure for gases
 <style>/* some CSS woodoo here. Does not work perfect in ie6 but who cares? */
@@ -1134,6 +1135,8 @@ table tr:first-child th:first-child { border: none;}
 		var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
 		var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
 		var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
+		if(input_temperature==null)
+			return
 		if(!input_temperature || input_temperature > max_temperature || input_temperature < min_temperature)
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else

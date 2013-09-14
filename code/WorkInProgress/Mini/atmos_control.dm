@@ -213,6 +213,19 @@
 			spawn(5)
 				src.updateUsrDialog()
 			return
+
+		if(href_list["temperature"])
+			var/list/selected = current.TLV["temperature"]
+			var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
+			var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
+			var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
+			if(input_temperature==null)
+				return
+			if(input_temperature > max_temperature || input_temperature < min_temperature)
+				usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
+			else
+				current.target_temperature = input_temperature + T0C
+			return
 	updateUsrDialog()
 
 //copypasta from alarm code, changed to work with this without derping hard
@@ -228,6 +241,7 @@
 
 	switch(current.screen)
 		if (AALARM_SCREEN_MAIN)
+			output += "<table width=\"100%\"><td align=\"center\"><b>Thermostat:</b><br><a href='?src=\ref[src];alarm=\ref[current];temperature=1'>[current.target_temperature - T0C]C</a></td></table>"
 			if(current.alarm_area.atmosalm)
 				output += {"<a href='?src=\ref[src];alarm=\ref[current];atmos_reset=1'>Reset - Atmospheric Alarm</a><hr>"}
 			else
@@ -343,10 +357,7 @@ siphoning
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
 				else
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'>[modes[m]]</A></li>"}
-			output += "</ul>"
-		if (AALARM_SCREEN_SENSORS)
-			output += {"
-<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
+			output += {"</ul>
 <hr><br><b>Sensor presets:</b><br><i>(Note, this only sets sensors, air supplied to vents must still be changed.)</i><ul>"}
 			var/list/presets = list(
 				AALARM_PRESET_HUMAN   = "Human - Checks for Oxygen and Nitrogen",\
@@ -357,7 +368,10 @@ siphoning
 					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
 				else
 					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'>[presets[p]]</A></li>"
-			output += {"</ul>
+			output += "</ul>"
+		if (AALARM_SCREEN_SENSORS)
+			output += {"
+<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Alarm thresholds:</b><br>
 Partial pressure for gases
 <style>/* some CSS woodoo here. Does not work perfect in ie6 but who cares? */
