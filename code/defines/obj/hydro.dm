@@ -33,6 +33,11 @@
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 
+/obj/item/seeds/examine()
+	..()
+	usr << "Plant Yield: \blue [(yield != -1) ? yield : "\red ERROR"]"
+	usr << "Plant Potency: \blue [(potency != -1) ? potency : "\red ERROR"]"
+
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
