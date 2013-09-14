@@ -5,7 +5,7 @@
 	view = "15x15"
 	cache_lifespan = 1
 
-#define RECOMMENDED_VERSION 500
+#define RECOMMENDED_VERSION 495
 
 /world/New()
 #if (PRELOAD_RSC == 0)
