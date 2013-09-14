@@ -1,7 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	4		//4 ticks is about 3/10ths of a second
+#define TOPIC_SPAM_DELAY	2		//2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 #define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
 									//I would just like the code ready should it ever need to be used.
@@ -229,6 +229,20 @@ var/next_external_rsc = 0
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 	getFiles(
+		'nano/js/libraries.min.js',
+		'nano/js/nano_update.js',
+		'nano/js/nano_config.js',
+		'nano/js/nano_base_helpers.js',
+		'nano/css/shared.css',
+		'nano/css/icons.css',
+		'nano/templates/chem_dispenser.tmpl',
+		'nano/templates/cryo.tmpl',
+		'nano/images/uiBackground.png',
+		'nano/images/uiIcons16.png',
+		'nano/images/uiIcons24.png',
+		'nano/images/uiLinkPendingIcon.gif',
+		'nano/images/uiNoticeBackground.jpg',
+		'nano/images/uiTitleFluff.png',
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',
