@@ -1,7 +1,7 @@
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
-	icon = 'icons/mob/robots.dmi'//
+	icon = 'html/postcardsmall.jpg'//
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100

@@ -1,7 +1,7 @@
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
-	icon = 'icons/mob/mob.dmi'
+	icon = 'html/postcardsmall.jpg'
 	icon_state = "ghost"
 	layer = 4
 	stat = DEAD
