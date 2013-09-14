@@ -1,7 +1,7 @@
 /*
 IconProcs README
 
-A BYOND library for manipulating icons and colors
+A BYOND library for manipulating icons and colours
 
 by Lummox JR
 
@@ -24,19 +24,19 @@ icon/ChangeOpacity(amount = 1)
     can make an icon lighter or darker. If amount is 0.5, the opacity of the icon will be cut in half.
     If amount is 2, opacity is doubled and anything more than half-opaque will become fully opaque.
 icon/GrayScale()
-    Converts the icon to grayscale instead of a fully colored icon. Alpha values are left intact.
-icon/ColorTone(tone)
+    Converts the icon to grayscale instead of a fully coloured icon. Alpha values are left intact.
+icon/colourTone(tone)
     Similar to GrayScale(), this proc converts the icon to a range of black -> tone -> white, where tone is an
-    RGB color (its alpha is ignored). This can be used to create a sepia tone or similar effect.
-    See also the global ColorTone() proc.
-icon/MinColors(icon)
+    RGB colour (its alpha is ignored). This can be used to create a sepia tone or similar effect.
+    See also the global colourTone() proc.
+icon/Mincolours(icon)
     The icon is blended with a second icon where the minimum of each RGB pixel is the result.
-    Transparency may increase, as if the icons were blended with ICON_ADD. You may supply a color in place of an icon.
-icon/MaxColors(icon)
+    Transparency may increase, as if the icons were blended with ICON_ADD. You may supply a colour in place of an icon.
+icon/Maxcolours(icon)
     The icon is blended with a second icon where the maximum of each RGB pixel is the result.
-    Opacity may increase, as if the icons were blended with ICON_OR. You may supply a color in place of an icon.
+    Opacity may increase, as if the icons were blended with ICON_OR. You may supply a colour in place of an icon.
 icon/Opaque(background = "#000000")
-    All alpha values are set to 255 throughout the icon. Transparent pixels become black, or whatever background color you specify.
+    All alpha values are set to 255 throughout the icon. Transparent pixels become black, or whatever background colour you specify.
 icon/BecomeAlphaMask()
     You can convert a simple grayscale icon into an alpha mask to use with other icons very easily with this proc.
     The black parts become transparent, the white parts stay white, and anything in between becomes a translucent shade of white.
@@ -47,17 +47,17 @@ icon/AddAlphaMask(mask)
 icon/UseAlphaMask(mask, mode)
     Sometimes you may want to take the alpha values from one icon and use them on a different icon.
     This proc will do that. Just supply the icon whose alpha mask you want to use, and src will change
-    so it has the same colors as before but uses the mask for opacity.
+    so it has the same colours as before but uses the mask for opacity.
 
-COLOR MANAGEMENT AND HSV
+colour MANAGEMENT AND HSV
 
-RGB isn't the only way to represent color. Sometimes it's more useful to work with a model called HSV, which stands for hue, saturation, and value.
+RGB isn't the only way to represent colour. Sometimes it's more useful to work with a model called HSV, which stands for hue, saturation, and value.
 
-    * The hue of a color describes where it is along the color wheel. It goes from red to yellow to green to
+    * The hue of a colour describes where it is along the colour wheel. It goes from red to yellow to green to
     cyan to blue to magenta and back to red.
-    * The saturation of a color is how much color is in it. A color with low saturation will be more gray,
+    * The saturation of a colour is how much colour is in it. A colour with low saturation will be more gray,
     and with no saturation at all it is a shade of gray.
-    * The value of a color determines how bright it is. A high-value color is vivid, moderate value is dark,
+    * The value of a colour determines how bright it is. A high-value colour is vivid, moderate value is dark,
     and no value at all is black.
 
 Just as BYOND uses "#rrggbb" to represent RGB values, a similar format is used for HSV: "#hhhssvv". The hue is three
@@ -73,9 +73,9 @@ hex digits because it ranges from 0 to 0x5FF.
 Knowing this, you can figure out that red is "#000ffff" in HSV format, which is hue 0 (red), saturation 255 (as colorful as possible),
 value 255 (as bright as possible). Green is "#200ffff" and blue is "#400ffff".
 
-More than one HSV color can match the same RGB color.
+More than one HSV colour can match the same RGB colour.
 
-Here are some procs you can use for color management:
+Here are some procs you can use for colour management:
 
 ReadRGB(rgb)
     Takes an RGB string like "#ffaa55" and converts it to a list such as list(255,170,85). If an RGBA format is used
@@ -87,33 +87,33 @@ ReadHSV(rgb)
     Takes an HSV string like "#100FF80" and converts it to a list such as list(256,255,128). If an HSVA format is used that
     includes alpha, the list will have a fourth item for the alpha value.
 RGBtoHSV(rgb)
-    Takes an RGB or RGBA string like "#ffaa55" and converts it into an HSV or HSVA color such as "#080aaff".
+    Takes an RGB or RGBA string like "#ffaa55" and converts it into an HSV or HSVA colour such as "#080aaff".
 HSVtoRGB(hsv)
-    Takes an HSV or HSVA string like "#080aaff" and converts it into an RGB or RGBA color such as "#ff55aa".
+    Takes an HSV or HSVA string like "#080aaff" and converts it into an RGB or RGBA colour such as "#ff55aa".
 BlendRGB(rgb1, rgb2, amount)
-    Blends between two RGB or RGBA colors using regular RGB blending. If amount is 0, the first color is the result;
-    if 1, the second color is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
-    The returned value is an RGB or RGBA color.
+    Blends between two RGB or RGBA colours using regular RGB blending. If amount is 0, the first colour is the result;
+    if 1, the second colour is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
+    The returned value is an RGB or RGBA colour.
 BlendHSV(hsv1, hsv2, amount)
-    Blends between two HSV or HSVA colors using HSV blending, which tends to produce nicer results than regular RGB
-    blending because the brightness of the color is left intact. If amount is 0, the first color is the result; if 1,
-    the second color is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
-    The returned value is an HSV or HSVA color.
+    Blends between two HSV or HSVA colours using HSV blending, which tends to produce nicer results than regular RGB
+    blending because the brightness of the colour is left intact. If amount is 0, the first colour is the result; if 1,
+    the second colour is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
+    The returned value is an HSV or HSVA colour.
 BlendRGBasHSV(rgb1, rgb2, amount)
-    Like BlendHSV(), but the colors used and the return value are RGB or RGBA colors. The blending is done in HSV form.
+    Like BlendHSV(), but the colours used and the return value are RGB or RGBA colours. The blending is done in HSV form.
 HueToAngle(hue)
     Converts a hue to an angle range of 0 to 360. Angle 0 is red, 120 is green, and 240 is blue.
 AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
     Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA colour with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
-    Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
-ColorTone(rgb, tone)
-    Similar to GrayScale(), this proc converts an RGB or RGBA color to a range of black -> tone -> white instead of
-    using strict shades of gray. The tone value is an RGB color; any alpha value is ignored.
+    Takes an RGB or RGBA colour and converts it to grayscale. Returns an RGB or RGBA string.
+colourTone(rgb, tone)
+    Similar to GrayScale(), this proc converts an RGB or RGBA colour to a range of black -> tone -> white instead of
+    using strict shades of gray. The tone value is an RGB colour; any alpha value is ignored.
 */
 
 /*
@@ -224,7 +224,7 @@ icon
 	proc/GrayScale()
 		MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
 
-	proc/ColorTone(tone)
+	proc/colourTone(tone)
 		GrayScale()
 
 		var/list/TONE = ReadRGB(tone)
@@ -241,20 +241,20 @@ icon
 			upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
 			Blend(upper, ICON_ADD)
 
-	// Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
-	proc/MinColors(icon)
+	// Take the minimum colour of two icons; combine transparency as if blending with ICON_ADD
+	proc/Mincolours(icon)
 		var/icon/I = new(src)
 		I.Opaque()
 		I.Blend(icon, ICON_SUBTRACT)
 		Blend(I, ICON_SUBTRACT)
 
-	// Take the maximum color of two icons; combine opacity as if blending with ICON_OR
-	proc/MaxColors(icon)
+	// Take the maximum colour of two icons; combine opacity as if blending with ICON_OR
+	proc/Maxcolours(icon)
 		var/icon/I
 		if(isicon(icon))
 			I = new(icon)
 		else
-			// solid color
+			// solid colour
 			I = new(src)
 			I.Blend("#000000", ICON_OVERLAY)
 			I.SwapColor("#000000", null)
@@ -269,7 +269,7 @@ icon
 		SwapColor(null, background)
 		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
-	// Change a grayscale icon into a white icon where the original color becomes the alpha
+	// Change a grayscale icon into a white icon where the original colour becomes the alpha
 	// I.e., black -> transparent, gray -> translucent white, white -> solid white
 	proc/BecomeAlphaMask()
 		SwapColor(null, "#000000ff")	// don't let transparent become gray
@@ -299,12 +299,12 @@ icon
 
 	Saturation is from 0 to 0xff (255)
 
-		More saturation = more color
+		More saturation = more colour
 		Less saturation = more gray
 
 	Value ranges from 0 to 0xff (255)
 
-		Higher value means brighter color
+		Higher value means brighter colour
  */
 
 proc/ReadRGB(rgb)
@@ -480,11 +480,11 @@ proc/hsv(hue, sat, val, alpha)
 		. += TO_HEX_DIGIT(alpha)
 
 /*
-	Smooth blend between HSV colors
+	Smooth blend between HSV colours
 
-	amount=0 is the first color
-	amount=1 is the second color
-	amount=0.5 is directly between the two colors
+	amount=0 is the first colour
+	amount=1 is the second colour
+	amount=0.5 is directly between the two colours
 
 	amount<0 or amount>1 are allowed
  */
@@ -505,10 +505,10 @@ proc/BlendHSV(hsv1, hsv2, amount)
 	if(!HSV1[3]) {HSV1[1] = 0; HSV1[2] = 0}
 	if(!HSV2[3]) {HSV2[1] = 0; HSV2[2] = 0}
 
-	// no value for one color means don't change saturation
+	// no value for one colour means don't change saturation
 	if(!HSV1[3]) HSV1[2] = HSV2[2]
 	if(!HSV2[3]) HSV2[2] = HSV1[2]
-	// no saturation for one color means don't change hues
+	// no saturation for one colour means don't change hues
 	if(!HSV1[2]) HSV1[1] = HSV2[1]
 	if(!HSV2[2]) HSV2[1] = HSV1[1]
 
@@ -534,11 +534,11 @@ proc/BlendHSV(hsv1, hsv2, amount)
 	return hsv(hue, sat, val, alpha)
 
 /*
-	Smooth blend between RGB colors
+	Smooth blend between RGB colours
 
-	amount=0 is the first color
-	amount=1 is the second color
-	amount=0.5 is directly between the two colors
+	amount=0 is the first colour
+	amount=1 is the second colour
+	amount=0.5 is directly between the two colours
 
 	amount<0 or amount>1 are allowed
  */
@@ -600,14 +600,14 @@ proc/RotateHue(hsv, angle)
 
 	return hsv(HSV[1], HSV[2], HSV[3], (HSV.len > 3 ? HSV[4] : null))
 
-// Convert an rgb color to grayscale
+// Convert an rgb colour to grayscale
 proc/GrayScale(rgb)
 	var/list/RGB = ReadRGB(rgb)
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
-// Change grayscale color to black->tone->white range
-proc/ColorTone(rgb, tone)
+// Change grayscale colour to black->tone->white range
+proc/colourTone(rgb, tone)
 	var/list/RGB = ReadRGB(rgb)
 	var/list/TONE = ReadRGB(tone)
 
@@ -751,7 +751,7 @@ proc
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
-	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
+	flat_icon.colourTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
 	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.

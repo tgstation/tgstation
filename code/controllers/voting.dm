@@ -35,14 +35,14 @@ datum/controller/vote
 			else
 				var/datum/browser/client_popup
 				while(i<=voting.len)
-					var/client/C = voting[i]					
+					var/client/C = voting[i]
 					if(C)
 						//C << browse(vote.interface(C),"window=vote;can_close=0")
 						client_popup = new(C, "vote", "Voting Panel")
 						client_popup.set_window_options("can_close=0")
 						client_popup.set_content(vote.interface(C))
 						client_popup.open(0)
-						
+
 						i++
 					else
 						voting.Cut(i,i+1)

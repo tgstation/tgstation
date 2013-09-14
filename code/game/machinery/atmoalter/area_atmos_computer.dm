@@ -34,35 +34,35 @@
 				<style type="text/css">
 					a.green:link
 					{
-						color:#00CC00;
+						colour:#00CC00;
 					}
 					a.green:visited
 					{
-						color:#00CC00;
+						colour:#00CC00;
 					}
 					a.green:hover
 					{
-						color:#00CC00;
+						colour:#00CC00;
 					}
 					a.green:active
 					{
-						color:#00CC00;
+						colour:#00CC00;
 					}
 					a.red:link
 					{
-						color:#FF0000;
+						colour:#FF0000;
 					}
 					a.red:visited
 					{
-						color:#FF0000;
+						colour:#FF0000;
 					}
 					a.red:hover
 					{
-						color:#FF0000;
+						colour:#FF0000;
 					}
 					a.red:active
 					{
-						color:#FF0000;
+						colour:#FF0000;
 					}
 				</style>
 			</head>

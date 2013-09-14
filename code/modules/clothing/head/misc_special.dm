@@ -110,7 +110,7 @@
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
-	color = "pumpkin"
+	colour = "pumpkin"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	var/brightness_on = 2 //luminosity when on
@@ -121,8 +121,8 @@
 			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
 			return
 		on = !on
-		icon_state = "hardhat[on]_[color]"
-		item_state = "hardhat[on]_[color]"
+		icon_state = "hardhat[on]_[colour]"
+		item_state = "hardhat[on]_[colour]"
 
 		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
 		else	user.SetLuminosity(user.luminosity - brightness_on)
@@ -159,8 +159,8 @@
 	if(!istype(user)) return
 	mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
 	mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
-	mob.Blend("#[user.hair_color]", ICON_ADD)
-	mob2.Blend("#[user.hair_color]", ICON_ADD)
+	mob.Blend("#[user.hair_colour]", ICON_ADD)
+	mob2.Blend("#[user.hair_colour]", ICON_ADD)
 
 	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
 	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")

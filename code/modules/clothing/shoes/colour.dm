@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/black
 	name = "black shoes"
 	icon_state = "black"
-	color = "black"
+	colour = "black"
 	desc = "A pair of black shoes."
 
 	cold_protection = FEET
@@ -10,74 +10,74 @@
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 	redcoat
-		color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
+		colour = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
 
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
-	color = "brown"
+	colour = "brown"
 
 	captain
-		color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
+		colour = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
 	hop
-		color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
+		colour = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
 	ce
-		color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
+		colour = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
 	rd
-		color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
+		colour = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
 	cmo
-		color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
+		colour = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
 	cmo
-		color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
+		colour = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/blue
 	name = "blue shoes"
 	icon_state = "blue"
-	color = "blue"
+	colour = "blue"
 
 /obj/item/clothing/shoes/green
 	name = "green shoes"
 	icon_state = "green"
-	color = "green"
+	colour = "green"
 
 /obj/item/clothing/shoes/yellow
 	name = "yellow shoes"
 	icon_state = "yellow"
-	color = "yellow"
+	colour = "yellow"
 
 /obj/item/clothing/shoes/purple
 	name = "purple shoes"
 	icon_state = "purple"
-	color = "purple"
+	colour = "purple"
 
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
 	icon_state = "brown"
-	color = "brown"
+	colour = "brown"
 
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
 	icon_state = "red"
-	color = "red"
+	colour = "red"
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.01
-	color = "white"
+	colour = "white"
 
 /obj/item/clothing/shoes/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
-	color = "rainbow"
+	colour = "rainbow"
 
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"
-	color = "orange"
+	colour = "orange"
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	if (src.chained)

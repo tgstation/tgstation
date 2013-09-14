@@ -190,8 +190,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(S)
 			var/icon/facial_s = icon("icon"=S.icon, "icon_state"="[S.icon_state]_s")
 			var/icon/facial_l = icon("icon"=S.icon, "icon_state"="[S.icon_state]_l")
-			facial_s.Blend("#[facial_hair_color]", ICON_ADD)
-			facial_l.Blend("#[facial_hair_color]", ICON_ADD)
+			facial_s.Blend("#[facial_hair_colour]", ICON_ADD)
+			facial_l.Blend("#[facial_hair_colour]", ICON_ADD)
 			standing	+= image("icon"=facial_s, "layer"=-HAIR_LAYER)
 			lying		+= image("icon"=facial_l, "layer"=-HAIR_LAYER)
 
@@ -204,8 +204,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(S)
 			var/icon/hair_s = icon("icon"=S.icon, "icon_state"="[S.icon_state]_s")
 			var/icon/hair_l = icon("icon"=S.icon, "icon_state"="[S.icon_state]_l")
-			hair_s.Blend("#[hair_color]", ICON_ADD)
-			hair_l.Blend("#[hair_color]", ICON_ADD)
+			hair_s.Blend("#[hair_colour]", ICON_ADD)
+			hair_l.Blend("#[hair_colour]", ICON_ADD)
 			standing	+= image("icon"=hair_s, "layer"=-HAIR_LAYER)
 			lying		+= image("icon"=hair_l, "layer"=-HAIR_LAYER)
 
@@ -264,8 +264,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(!dna || dna.mutantrace != "skeleton")
 		var/icon/eyes_s = icon('icons/mob/human_face.dmi', "eyes_s")
 		var/icon/eyes_l = icon('icons/mob/human_face.dmi', "eyes_l")
-		eyes_s.Blend("#[eye_color]", ICON_ADD)
-		eyes_l.Blend("#[eye_color]", ICON_ADD)
+		eyes_s.Blend("#[eye_colour]", ICON_ADD)
+		eyes_l.Blend("#[eye_colour]", ICON_ADD)
 		standing	+= image("icon"=eyes_s, "layer"=-BODY_LAYER)
 		lying		+= image("icon"=eyes_l, "layer"=-BODY_LAYER)
 
@@ -323,10 +323,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 			w_uniform.screen_loc = ui_iclothing
 			client.screen += w_uniform
 
-		var/t_color = w_uniform.color
-		if(!t_color)		t_color = icon_state
-		var/image/lying		= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l", "layer"=-UNIFORM_LAYER)
-		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
+		var/t_colour = w_uniform.colour
+		if(!t_colour)		t_colour = icon_state
+		var/image/lying		= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_colour]_l", "layer"=-UNIFORM_LAYER)
+		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_colour]_s", "layer"=-UNIFORM_LAYER)
 		overlays_lying[UNIFORM_LAYER]		= lying
 		overlays_standing[UNIFORM_LAYER]	= standing
 
@@ -335,10 +335,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 
 		if(U.hastie)
-			var/tie_color = U.hastie.color
-			if(!tie_color) tie_color = U.hastie.icon_state
-			lying.overlays		+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]2")
-			standing.overlays	+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+			var/tie_colour = U.hastie.colour
+			if(!tie_colour) tie_colour = U.hastie.icon_state
+			lying.overlays		+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_colour]2")
+			standing.overlays	+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_colour]")
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//

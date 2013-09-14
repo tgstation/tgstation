@@ -1,7 +1,7 @@
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
-/proc/random_eye_color()
+/proc/random_eye_colour()
 	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
 		if("brown")		return "630"
 		if("hazel")		return "542"
@@ -34,9 +34,9 @@ proc/random_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		if(gender==FEMALE)	. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 		else				. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-		
+
 		if(i != attempts_to_find_unique_name && !findname(.))
-			break		
+			break
 
 proc/random_skin_tone()
 	return pick(skin_tones)

@@ -39,7 +39,7 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
-	
+
 	var/client/C
 	if(istext(whom))
 		C = directory[whom]

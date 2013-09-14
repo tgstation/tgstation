@@ -1,6 +1,6 @@
 #define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
-#define FONT_COLOR "#09f"
+#define FONT_colour "#09f"
 #define FONT_STYLE "Arial Black"
 
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
@@ -241,7 +241,7 @@
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
 	proc/update_display(line1, line2)
-		var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
+		var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_colour];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 		if(maptext != new_text)
 			maptext = new_text
 
@@ -288,6 +288,6 @@
 	pixel_x = 32
 
 #undef FONT_SIZE
-#undef FONT_COLOR
+#undef FONT_colour
 #undef FONT_STYLE
 #undef CHARS_PER_LINE

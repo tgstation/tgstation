@@ -36,15 +36,15 @@
 		var/health_text = ""
 		if(src.occupant)
 			if(src.occupant.health <= -100)
-				health_text = "<FONT color=red>Dead</FONT>"
+				health_text = "<font color=red>Dead</FONT>"
 			else if(src.occupant.health < 0)
-				health_text = "<FONT color=red>[round(src.occupant.health,0.1)]</FONT>"
+				health_text = "<font color=red>[round(src.occupant.health,0.1)]</FONT>"
 			else
 				health_text = "[round(src.occupant.health,0.1)]"
 
 		var/dat ="<B>Implanter Status</B><BR>"
 
-		dat +="<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>" : "<FONT color=red>None</FONT>"]<BR>"
+		dat +="<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>" : "<font color=red>None</FONT>"]<BR>"
 		dat += "<B>Implants:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>"
 		if(src.occupant)
 			dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"

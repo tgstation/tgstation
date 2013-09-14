@@ -348,7 +348,7 @@ var/list/slot_equipment_priority = list( \
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	getFiles(
+	/*getFiles(
 		'html/postcardsmall.jpg',
 		'html/somerights20.png',
 		'html/88x31.png',
@@ -368,12 +368,12 @@ var/list/slot_equipment_priority = list( \
 		'html/changelog.css',
 		'html/changelog.js',
 		'html/changelog.html'
-		)
+		)*/
 	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
+/*	if(prefs.lastchangelog != changelog_hash)
 		prefs.lastchangelog = changelog_hash
 		prefs.save_preferences()
-		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+		winset(src, "rpane.changelog", "background-color=none;font-style=;")*/
 
 /mob/verb/observe()
 	set name = "Observe"

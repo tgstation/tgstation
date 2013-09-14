@@ -210,11 +210,11 @@
 			var/carddesc = {"<script type="text/javascript">
 								function markRed(){
 									var nameField = document.getElementById('namefield');
-									nameField.style.backgroundColor = "#FFDDDD";
+									nameField.style.backgroundcolour = "#FFDDDD";
 								}
 								function markGreen(){
 									var nameField = document.getElementById('namefield');
-									nameField.style.backgroundColor = "#DDFFDD";
+									nameField.style.backgroundcolour = "#DDFFDD";
 								}
 								function showAll(){
 									var allJobsSlot = document.getElementById('alljobsslot');

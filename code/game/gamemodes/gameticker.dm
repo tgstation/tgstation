@@ -47,7 +47,7 @@ var/global/datum/controller/gameticker/ticker
 		else
 			error("configuration was null when retrieving the lobby_countdown value.")
 			pregame_timeleft = 120
-		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
+		world << "<B><font color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
 		while(current_state == GAME_STATE_PREGAME)
 			sleep(10)
@@ -127,7 +127,7 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				del(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<font color='blue'><B>Enjoy the game!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
 		if(events.holiday)

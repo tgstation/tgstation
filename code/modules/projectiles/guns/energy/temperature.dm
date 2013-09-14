@@ -26,9 +26,9 @@
 		user.set_machine(src)
 		var/temp_text = ""
 		if(temperature > (T0C - 50))
-			temp_text = "<FONT color=black>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
+			temp_text = "<font color=black>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
 		else
-			temp_text = "<FONT color=blue>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
+			temp_text = "<font color=blue>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
 
 		var/dat = {"<B>Freeze Gun Configuration: </B><BR>
 		Current output temperature: [temp_text]<BR>

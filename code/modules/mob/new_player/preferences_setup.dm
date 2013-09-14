@@ -9,9 +9,9 @@ datum/preferences
 		skin_tone = random_skin_tone()
 		hair_style = random_hair_style(gender)
 		facial_hair_style = random_facial_hair_style(gender)
-		hair_color = random_short_color()
-		facial_hair_color = hair_color
-		eye_color = random_eye_color()
+		hair_colour = random_short_colour()
+		facial_hair_colour = hair_colour
+		eye_colour = random_eye_colour()
 		backbag = 2
 		age = rand(AGE_MIN,AGE_MAX)
 
@@ -32,18 +32,18 @@ datum/preferences
 				preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s")
-		eyes_s.Blend("#[eye_color]", ICON_ADD)
+		eyes_s.Blend("#[eye_colour]", ICON_ADD)
 
 		S = hair_styles_list[hair_style]
 		if(S)
 			var/icon/hair_s = new/icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-			hair_s.Blend("#[hair_color]", ICON_ADD)
+			hair_s.Blend("#[hair_colour]", ICON_ADD)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		S = facial_hair_styles_list[facial_hair_style]
 		if(S)
 			var/icon/facial_s = new/icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-			facial_s.Blend("#[facial_hair_color]", ICON_ADD)
+			facial_s.Blend("#[facial_hair_colour]", ICON_ADD)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		var/icon/clothes_s = null

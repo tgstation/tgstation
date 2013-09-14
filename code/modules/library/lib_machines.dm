@@ -219,9 +219,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					scanner = S
 					break
 			if(!scanner)
-				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
+				dat += "<font color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
-				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
+				dat += "<font color=red>No data found in scanner memory.</FONT><BR>"
 			else
 				dat += "<TT>Data marked for upload...</TT><BR>"
 				dat += "<TT>Title: </TT>[scanner.cache.name]<BR>"
@@ -415,7 +415,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
-		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
+		dat += "<font color=#005500>Data stored in memory.</FONT><BR>"
 	else
 		dat += "No data stored in memory.<BR>"
 	dat += "<A href='?src=\ref[src];scan=1'>\[Scan\]</A>"

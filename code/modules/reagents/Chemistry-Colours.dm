@@ -1,4 +1,4 @@
-/proc/GetColors(hex)
+/proc/Getcolours(hex)
 	hex = uppertext(hex)
 	var/hi1 = text2ascii(hex, 2)
 	var/lo1 = text2ascii(hex, 3)
@@ -10,30 +10,30 @@
 		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
-/proc/mix_color_from_reagents(var/list/reagent_list)
+/proc/mix_colour_from_reagents(var/list/reagent_list)
 	if(!reagent_list || !reagent_list.len) return 0
 
-	var/list/rgbcolor = list(0,0,0)
-	var/finalcolor = 0
-	for(var/datum/reagent/re in reagent_list) // natural color mixing bullshit/algorithm
-		if(!finalcolor)
-			rgbcolor = GetColors(re.color)
-			finalcolor = re.color
+	var/list/rgbcolour = list(0,0,0)
+	var/finalcolour = 0
+	for(var/datum/reagent/re in reagent_list) // natural colour mixing bullshit/algorithm
+		if(!finalcolour)
+			rgbcolour = Getcolours(re.colour)
+			finalcolour = re.colour
 		else
-			var/newcolor[3]
-			var/prergbcolor[3]
-			prergbcolor = rgbcolor
-			newcolor = GetColors(re.color)
+			var/newcolour[3]
+			var/prergbcolour[3]
+			prergbcolour = rgbcolour
+			newcolour = Getcolours(re.colour)
 
-			rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-			rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+			rgbcolour[1] = (prergbcolour[1]+newcolour[1])/2
+			rgbcolour[2] = (prergbcolour[2]+newcolour[2])/2
+			rgbcolour[3] = (prergbcolour[3]+newcolour[3])/2
 
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
+			finalcolour = rgb(rgbcolour[1], rgbcolour[2], rgbcolour[3])
 
-	return finalcolor
+	return finalcolour
 
-// This isn't a perfect color mixing system, the more reagents that are inside,
+// This isn't a perfect colour mixing system, the more reagents that are inside,
 // the darker it gets until it becomes absolutely pitch black! I dunno, maybe
-// that's pretty realistic? I don't do a whole lot of color-mixing anyway.
-// If you add brighter colors to it it'll eventually get lighter, though.
+// that's pretty realistic? I don't do a whole lot of colour-mixing anyway.
+// If you add brighter colours to it it'll eventually get lighter, though.

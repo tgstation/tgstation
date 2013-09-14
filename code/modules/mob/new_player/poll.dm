@@ -63,14 +63,14 @@
 		var/pollquestion
 
 		output += "<table>"
-		var/color1 = "#ececec"
-		var/color2 = "#e2e2e2"
+		var/colour1 = "#ececec"
+		var/colour2 = "#e2e2e2"
 		var/i = 0
 
 		while(select_query.NextRow())
 			pollid = select_query.item[1]
 			pollquestion = select_query.item[2]
-			output += "<tr bgcolor='[ (i % 2 == 1) ? color1 : color2 ]'><td><a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a></td></tr>"
+			output += "<tr bgcolor='[ (i % 2 == 1) ? colour1 : colour2 ]'><td><a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a></td></tr>"
 			i++
 
 		output += "</table>"
