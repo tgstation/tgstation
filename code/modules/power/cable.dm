@@ -352,7 +352,7 @@
 
 		var/obj/structure/cable/C = new(F)
 
-		C.cablecolour(colour)
+		C.cableColor(colour)
 
 		C.d1 = 0
 		C.d2 = dirn
@@ -415,7 +415,7 @@
 					return
 
 			var/obj/structure/cable/NC = new(U)
-			NC.cablecolour(colour)
+			NC.cableColor(colour)
 
 			NC.d1 = 0
 			NC.d2 = fdirn
@@ -453,7 +453,7 @@
 				return
 
 
-		C.cablecolour(colour)
+		C.cableColor(colour)
 
 		C.d1 = nd1
 		C.d2 = nd2
@@ -541,7 +541,7 @@
 				powernet.nodes[M] = M
 
 
-obj/structure/cable/proc/cablecolour(var/colourC)
+obj/structure/cable/proc/cableColor(var/colourC)
 	var/colour_n = "red"
 	if(colourC)
 		colour_n = colourC

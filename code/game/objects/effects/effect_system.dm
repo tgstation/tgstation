@@ -522,7 +522,7 @@ steam.start() -- spawns the effect
 	start()
 		var/i = 0
 
-		var/colour = mix_colour_from_reagents(chemholder.reagents.reagent_list)
+		var/colour = mix_color_from_reagents(chemholder.reagents.reagent_list)
 
 		for(i=0, i<src.number, i++)
 			if(src.total_smoke > 20)

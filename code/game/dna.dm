@@ -34,11 +34,11 @@
 		if(istype(character, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = character
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
-			L[DNA_HAIR_colour_BLOCK] = sanitize_hexcolour(H.hair_colour)
+			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolour(H.hair_colour)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
-			L[DNA_FACIAL_HAIR_colour_BLOCK] = sanitize_hexcolour(H.facial_hair_colour)
+			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolour(H.facial_hair_colour)
 			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
-			L[DNA_EYE_colour_BLOCK] = sanitize_hexcolour(H.eye_colour)
+			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolour(H.eye_colour)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])	. += L[i]
@@ -207,10 +207,10 @@
 	C.gender = (deconstruct_block(getblock(structure, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	if(istype(C, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
-		H.hair_colour = sanitize_hexcolour(getblock(structure, DNA_HAIR_colour_BLOCK))
-		H.facial_hair_colour = sanitize_hexcolour(getblock(structure, DNA_FACIAL_HAIR_colour_BLOCK))
+		H.hair_colour = sanitize_hexcolour(getblock(structure, DNA_HAIR_COLOR_BLOCK))
+		H.facial_hair_colour = sanitize_hexcolour(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 		H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
-		H.eye_colour = sanitize_hexcolour(getblock(structure, DNA_EYE_colour_BLOCK))
+		H.eye_colour = sanitize_hexcolour(getblock(structure, DNA_EYE_COLOR_BLOCK))
 		H.facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
 		H.hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 

@@ -10,7 +10,7 @@
 		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
-/proc/mix_colour_from_reagents(var/list/reagent_list)
+/proc/mix_color_from_reagents(var/list/reagent_list)
 	if(!reagent_list || !reagent_list.len) return 0
 
 	var/list/rgbcolour = list(0,0,0)

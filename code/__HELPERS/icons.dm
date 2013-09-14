@@ -25,14 +25,14 @@ icon/ChangeOpacity(amount = 1)
     If amount is 2, opacity is doubled and anything more than half-opaque will become fully opaque.
 icon/GrayScale()
     Converts the icon to grayscale instead of a fully coloured icon. Alpha values are left intact.
-icon/colourTone(tone)
+icon/ColorTone(tone)
     Similar to GrayScale(), this proc converts the icon to a range of black -> tone -> white, where tone is an
     RGB colour (its alpha is ignored). This can be used to create a sepia tone or similar effect.
-    See also the global colourTone() proc.
-icon/Mincolours(icon)
+    See also the global ColorTone() proc.
+icon/MinColors(icon)
     The icon is blended with a second icon where the minimum of each RGB pixel is the result.
     Transparency may increase, as if the icons were blended with ICON_ADD. You may supply a colour in place of an icon.
-icon/Maxcolours(icon)
+icon/MaxColours(icon)
     The icon is blended with a second icon where the maximum of each RGB pixel is the result.
     Opacity may increase, as if the icons were blended with ICON_OR. You may supply a colour in place of an icon.
 icon/Opaque(background = "#000000")
@@ -49,7 +49,7 @@ icon/UseAlphaMask(mask, mode)
     This proc will do that. Just supply the icon whose alpha mask you want to use, and src will change
     so it has the same colours as before but uses the mask for opacity.
 
-colour MANAGEMENT AND HSV
+COLOR MANAGEMENT AND HSV
 
 RGB isn't the only way to represent colour. Sometimes it's more useful to work with a model called HSV, which stands for hue, saturation, and value.
 
@@ -75,7 +75,7 @@ value 255 (as bright as possible). Green is "#200ffff" and blue is "#400ffff".
 
 More than one HSV colour can match the same RGB colour.
 
-Here are some procs you can use for colour management:
+Here are some procs you can use for COLOR MANAGEMENT:
 
 ReadRGB(rgb)
     Takes an RGB string like "#ffaa55" and converts it to a list such as list(255,170,85). If an RGBA format is used
@@ -111,7 +111,7 @@ RotateHue(hsv, angle)
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA colour and converts it to grayscale. Returns an RGB or RGBA string.
-colourTone(rgb, tone)
+ColorTone(rgb, tone)
     Similar to GrayScale(), this proc converts an RGB or RGBA colour to a range of black -> tone -> white instead of
     using strict shades of gray. The tone value is an RGB colour; any alpha value is ignored.
 */
@@ -224,7 +224,7 @@ icon
 	proc/GrayScale()
 		MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
 
-	proc/colourTone(tone)
+	proc/ColorTone(tone)
 		GrayScale()
 
 		var/list/TONE = ReadRGB(tone)
@@ -242,14 +242,14 @@ icon
 			Blend(upper, ICON_ADD)
 
 	// Take the minimum colour of two icons; combine transparency as if blending with ICON_ADD
-	proc/Mincolours(icon)
+	proc/MinColors(icon)
 		var/icon/I = new(src)
 		I.Opaque()
 		I.Blend(icon, ICON_SUBTRACT)
 		Blend(I, ICON_SUBTRACT)
 
 	// Take the maximum colour of two icons; combine opacity as if blending with ICON_OR
-	proc/Maxcolours(icon)
+	proc/MaxColours(icon)
 		var/icon/I
 		if(isicon(icon))
 			I = new(icon)
@@ -607,7 +607,7 @@ proc/GrayScale(rgb)
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
 // Change grayscale colour to black->tone->white range
-proc/colourTone(rgb, tone)
+proc/ColorTone(rgb, tone)
 	var/list/RGB = ReadRGB(rgb)
 	var/list/TONE = ReadRGB(tone)
 
@@ -751,7 +751,7 @@ proc
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
-	flat_icon.colourTone(rgb(125,180,225))//Let's make it bluish.
+	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
 	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.

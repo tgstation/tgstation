@@ -56,7 +56,7 @@
 
 	return crunch + .
 
-/proc/sanitize_ooccolour(colour)
+/proc/sanitize_ooccolor(colour)
 	var/list/HSL = rgb2hsl(hex2num(copytext(colour,2,4)),hex2num(copytext(colour,4,6)),hex2num(copytext(colour,6,8)))
 	HSL[3] = min(HSL[3],0.4)
 	var/list/RGB = hsl2rgb(arglist(HSL))

@@ -45,7 +45,7 @@
 				if (!conf_access || !conf_access.len || !(acc in conf_access))
 					t1 += "<a href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 				else
-					t1 += "<a style='colour: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
+					t1 += "<a style='color: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 
 		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 

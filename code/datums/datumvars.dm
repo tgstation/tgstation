@@ -49,7 +49,7 @@ client
 							{
 								try{
 									var li = lis\[i\];
-									if ( li.style.backgroundcolour == "#ffee88" )
+									if ( li.style.backgroundColor == "#ffee88" )
 									{
 										alist = lis\[i\].getElementsByTagName("a")
 										if(alist.length > 0){
@@ -68,12 +68,12 @@ client
 							{
 								try{
 									var li = lis\[i\];
-									if ( li.style.backgroundcolour == "#ffee88" )
+									if ( li.style.backgroundColor == "#ffee88" )
 									{
 										if( (i-1) >= 0){
 											var li_new = lis\[i-1\];
-											li.style.backgroundcolour = "white";
-											li_new.style.backgroundcolour = "#ffee88";
+											li.style.backgroundColor = "white";
+											li_new.style.backgroundColor = "#ffee88";
 											return
 										}
 									}
@@ -89,12 +89,12 @@ client
 							{
 								try{
 									var li = lis\[i\];
-									if ( li.style.backgroundcolour == "#ffee88" )
+									if ( li.style.backgroundColor == "#ffee88" )
 									{
 										if( (i+1) < lis.length){
 											var li_new = lis\[i+1\];
-											li.style.backgroundcolour = "white";
-											li_new.style.backgroundcolour = "#ffee88";
+											li.style.backgroundColor = "white";
+											li_new.style.backgroundColor = "#ffee88";
 											return
 										}
 									}
@@ -132,9 +132,9 @@ client
 						{
 							var li1 = lis\[j\];
 							if (j == 0){
-								li1.style.backgroundcolour = "#ffee88";
+								li1.style.backgroundColor = "#ffee88";
 							}else{
-								li1.style.backgroundcolour = "white";
+								li1.style.backgroundColor = "white";
 							}
 						}
 					}
@@ -327,7 +327,7 @@ client
 		var/html = ""
 
 		if(DA)
-			html += "<li style='backgroundcolour:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 		else
 			html += "<li>"
 

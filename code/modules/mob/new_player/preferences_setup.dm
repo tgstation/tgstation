@@ -11,7 +11,7 @@ datum/preferences
 		facial_hair_style = random_facial_hair_style(gender)
 		hair_colour = random_short_colour()
 		facial_hair_colour = hair_colour
-		eye_colour = random_eye_colour()
+		eye_colour = random_eye_color()
 		backbag = 2
 		age = rand(AGE_MIN,AGE_MAX)
 

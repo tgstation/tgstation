@@ -61,12 +61,12 @@
 	var/output = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
-						body {colour: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
-						hr {border: 1px solid #0f0; colour: #fff; background-color: #000;}
-						a {padding:2px 5px;;colour:#0f0;}
+						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
+						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
+						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
 						.header {cursor:pointer;}
-						.open, .closed {background: #32CD32; colour:#000; padding:1px 2px;}
+						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
 						.links a {margin-bottom: 2px;padding-top:3px;}
 						.visible {display: block;}
 						.hidden {display: none;}
@@ -153,7 +153,7 @@ obj/mecha/combat/honker/Topic(href, href_list)
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	return
 
-proc/rand_hex_colour()
+proc/rand_hex_color()
 	var/list/colours = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
 	var/colour=""
 	for (var/i=0;i<6;i++)

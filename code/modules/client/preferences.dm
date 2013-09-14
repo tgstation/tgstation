@@ -31,7 +31,7 @@ datum/preferences
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolour = "#002eb8"
+	var/ooccolor = "#002eb8"
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
@@ -82,7 +82,7 @@ datum/preferences
 
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
-	ooccolour = normal_ooc_colour
+	ooccolor = normal_ooc_colour
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -211,7 +211,7 @@ datum/preferences
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
 					if(unlock_content || check_rights_for(user.client, R_ADMIN))
-						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolour;task=input'>Change</a><br>"
+						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 					if(unlock_content)
 						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
@@ -530,7 +530,7 @@ datum/preferences
 					if("underwear")
 						underwear = random_underwear(gender)
 					if("eyes")
-						eye_colour = random_eye_colour()
+						eye_colour = random_eye_color()
 					if("s_tone")
 						skin_tone = random_skin_tone()
 					if("bag")
@@ -610,10 +610,10 @@ datum/preferences
 						if(new_s_tone)
 							skin_tone = new_s_tone
 
-					if("ooccolour")
-						var/new_ooccolour = input(user, "Choose your OOC colour:", "Game Preference") as color|null
-						if(new_ooccolour)
-							ooccolour = sanitize_ooccolour(new_ooccolour)
+					if("ooccolor")
+						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+						if(new_ooccolor)
+							ooccolor = sanitize_ooccolor(new_ooccolor)
 
 					if("bag")
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
