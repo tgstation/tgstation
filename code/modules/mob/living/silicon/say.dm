@@ -75,7 +75,8 @@
 				speech_bubble_recipients.Add(M.client)
 
 		//speech bubble
-		flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		spawn(0)
+			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
