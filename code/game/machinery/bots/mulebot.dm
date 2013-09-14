@@ -619,17 +619,23 @@
 
 
 					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
+						var/obj/effect/decal/cleanable/blood/tracks/wheels/B=locate(/obj/effect/decal/cleanable/blood/tracks/wheels) in loc
+						if(!B)
+							B= new(loc)
+
+						var/goingdir=0
+
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
-							B.dir = newdir
+							goingdir = newdir
 						else
 							newdir = newdir | dir
 							if(newdir == 3)
 								newdir = 1
 							else if(newdir == 12)
 								newdir = 4
-							B.dir = newdir
+							goingdir = newdir
+						B.AddTracks(list(),0,goingdir)
 						bloodiness--
 
 

@@ -1066,13 +1066,13 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1 //we applied blood to the item
-/*
+
 /mob/living/carbon/human/clean_blood()
 	.=..()
 	if(istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		del(feet_blood_DNA)
 		return 1
-*/
+
 mob/living/carbon/human/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"

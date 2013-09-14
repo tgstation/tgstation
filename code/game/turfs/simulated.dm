@@ -33,7 +33,7 @@
 						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
-/* Removing bloody footprints
+
 			var/list/bloodDNA = null
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
@@ -46,19 +46,18 @@
 					H.track_blood--
 
 			if (bloodDNA)
-				var/obj/effect/decal/cleanable/blood/footprints/here = new(src)
-				here.icon_state = "blood1"
-				here.dir = H.dir
-				here.blood_DNA |= bloodDNA.Copy()
+				var/obj/effect/decal/cleanable/blood/tracks/footprints/prints = locate(/obj/effect/decal/cleanable/blood/tracks/footprints) in src
+				if(!prints)
+					prints = new (src)
+				var/goingdir=H.dir
+				var/comingdir=0
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
 				if(from)
-					var/obj/effect/decal/cleanable/blood/footprints/there = new(from)
-					there.icon_state = "blood2"
-					there.dir = H.dir
-					there.blood_DNA |= bloodDNA.Copy()
+					comingdir = H.dir
+				prints.AddTracks(bloodDNA,comingdir,goingdir)
 
 			bloodDNA = null
-*/
+
 		switch (src.wet)
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
