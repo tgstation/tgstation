@@ -8,7 +8,7 @@
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
-	level_max = 2
+	cooldown_min = 75 //19 deciseconds reduction per rank
 
 	max_targets = 0
 
@@ -43,6 +43,7 @@
 
 	mutations = list(LASER, HULK)
 	duration = 300
+	cooldown_min = 300 //25 deciseconds reduction per rank
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
 	name = "Disintegrate"
@@ -54,7 +55,7 @@
 	invocation = "EI NATH"
 	invocation_type = "shout"
 	range = 1
-	level_max = 3
+	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	destroys = "gib_brain"
 
@@ -72,7 +73,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	level_max = 5
+	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
 	smoke_amt = 10
@@ -86,7 +87,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	level_max = 4
+	cooldown_min = 200 //50 deciseconds reduction per rank
 
 	emp_heavy = 6
 	emp_light = 10
@@ -102,7 +103,8 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	level_max = 5
+	cooldown_min = 5 //4 deciseconds reduction per rank
+
 
 	smoke_spread = 1
 	smoke_amt = 10
@@ -123,7 +125,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	level_max = 3
+	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
 	smoke_amt = 5
@@ -138,7 +140,7 @@
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"
 	range = 0
-	level_max = 5
+	cooldown_min = 50 //12 deciseconds reduction per rank
 
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
@@ -196,7 +198,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	message = "\blue Your eyes cry out in pain!"
-	level_max = 5
+	cooldown_min = 50 //12 deciseconds reduction per rank
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
@@ -219,7 +221,7 @@
 	invocation = "STAUN EI"
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
-	level_max = 4
+	cooldown_min = 100 //125 deciseconds reduction per rank
 
 	summon_type = "/obj/structure/closet/statue"
 
@@ -233,7 +235,7 @@
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
-	level_max = 3
+	cooldown_min = 20 //10 deciseconds reduction per rank
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"

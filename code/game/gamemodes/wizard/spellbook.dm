@@ -162,20 +162,20 @@
 						else
 							aspell.name = initial(aspell.name)
 							aspell.spell_level++
-							aspell.charge_max = initial(aspell.charge_max) / aspell.spell_level
+							aspell.charge_max = round(initial(aspell.charge_max) - aspell.spell_level * (initial(aspell.charge_max) - aspell.cooldown_min)/ aspell.level_max)
 							if(aspell.charge_max < aspell.charge_counter)
 								aspell.charge_counter = aspell.charge_max
 							switch(aspell.spell_level)
-								if(2)
+								if(1)
 									temp = "You have improved [aspell.name] into Efficient [aspell.name]."
 									aspell.name = "Efficient [aspell.name]"
-								if(3)
+								if(2)
 									temp = "You have further improved [aspell.name] into Quickened [aspell.name]."
 									aspell.name = "Quickened [aspell.name]"
-								if(4)
+								if(3)
 									temp = "You have further improved [aspell.name] into Free [aspell.name]."
 									aspell.name = "Free [aspell.name]"
-								if(5)
+								if(4)
 									temp = "You have further improved [aspell.name] into Instant [aspell.name]."
 									aspell.name = "Instant [aspell.name]"
 							if(aspell.spell_level >= aspell.level_max)
