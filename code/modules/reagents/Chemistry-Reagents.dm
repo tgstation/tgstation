@@ -233,7 +233,7 @@ datum
 
 				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,20))
-				for(var/mob/living/carbon/human/M in T)
+				for(var/mob/living/M in T)
 					M.ExtinguishMob()
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)

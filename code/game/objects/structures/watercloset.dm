@@ -219,6 +219,9 @@
 /obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
 
+	if(istype(O, /mob/living))
+		var/mob/living/L = O
+		L.ExtinguishMob()
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
 		if(M.r_hand)
@@ -278,7 +281,6 @@
 			if(H.belt)
 				if(H.belt.clean_blood())
 					H.update_inv_belt(0)
-			H.ExtinguishMob()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
 				if(M.wear_mask.clean_blood())
