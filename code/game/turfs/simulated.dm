@@ -13,6 +13,12 @@
 	..()
 	levelupdate()
 
+/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir)
+	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
+	if(!tracks)
+		tracks = new typepath(src)
+	tracks.AddTracks(bloodDNA,comingdir,goingdir)
+
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
@@ -46,16 +52,10 @@
 					H.track_blood--
 
 			if (bloodDNA)
-				var/obj/effect/decal/cleanable/blood/footprints/here = new(src)
-				here.icon_state = "blood1"
-				here.dir = H.dir
-				here.blood_DNA |= bloodDNA.Copy()
+				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
 				if(from)
-					var/obj/effect/decal/cleanable/blood/footprints/there = new(from)
-					there.icon_state = "blood2"
-					there.dir = H.dir
-					there.blood_DNA |= bloodDNA.Copy()
+					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir) // Going
 
 			bloodDNA = null
 

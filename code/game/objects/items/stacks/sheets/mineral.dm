@@ -166,6 +166,27 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+
+/*
+ * Phazon
+ */
+var/global/list/datum/stack_recipe/phazon_recipes = list()
+
+/obj/item/stack/sheet/mineral/phazon
+	name = "phazon"
+	singular_name = "phazon sheet"
+	desc = "Holy christ what is this?"
+	icon_state = "sheet-phazon"
+	item_state = "sheet-metal"
+	m_amt = 7500
+	throwforce = 15.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=7"
+
+/obj/item/stack/sheet/mineral/phazon/New(var/loc, var/amount=null)
+		recipes = phazon_recipes
+		return ..()
+
 /*
  * Silver
  */

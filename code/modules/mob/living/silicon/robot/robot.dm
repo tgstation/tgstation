@@ -11,7 +11,7 @@
 	var/custom_name = ""
 	var/base_icon
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
-	var/crisis //Admin-settable for combat module use.
+	//var/crisis //Admin-settable for combat module use.
 
 //Hud stuff
 
@@ -162,7 +162,7 @@
 	if(module)
 		return
 	var/list/modules = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Security")
-	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
+	if(security_level == SEC_LEVEL_RED) //Add crisis to this check if you want to make it available at an admin's whim
 		src << "\red Crisis mode active. Combat module available."
 		modules+="Combat"
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
@@ -442,7 +442,7 @@
 /mob/living/silicon/robot/proc/show_cable_lengths()
 	var/obj/item/weapon/cable_coil/coil = installed_module(/obj/item/weapon/cable_coil)
 	if(coil)
-		stat(null, text("Cable Lengths: [coil.amount]/30")) // MAXCOIL
+		stat(null, text("Cable Lengths: [coil.amount][isMoMMI(src) ? "/50" : "/30"]")) // MAXCOIL
 
 /mob/living/silicon/robot/proc/show_welder_fuel()
 	var/obj/item/weapon/weldingtool/WT = installed_module(/obj/item/weapon/weldingtool)

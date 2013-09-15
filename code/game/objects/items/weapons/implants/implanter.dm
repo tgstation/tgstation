@@ -37,7 +37,7 @@
 				msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 				user.show_message("\red You implanted the implant into [M].")
-				if(src.imp.implanted(M))
+				if(src.imp.implanted(M, user))
 					src.imp.loc = M
 					src.imp.imp_in = M
 					src.imp.implanted = 1
@@ -46,12 +46,21 @@
 						var/datum/organ/external/affected = H.get_organ(user.zone_sel.selecting)
 						affected.implants += src.imp
 						imp.part = affected
-
+				M:implanting = 0
 				src.imp = null
 				update()
 	return
 
 
+/obj/item/weapon/implanter/traitor
+	name = "implanter-greytide"
+	desc = "Greytide Stationwide."
+
+	New()
+		src.imp = new /obj/item/weapon/implant/traitor(src)
+		..()
+		update()
+		return
 
 /obj/item/weapon/implanter/loyalty
 	name = "implanter-loyalty"

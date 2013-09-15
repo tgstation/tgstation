@@ -1398,7 +1398,8 @@
 			shock_stage = max(shock_stage, 61)
 
 		if(traumatic_shock >= 80)
-			shock_stage += 1
+			if(prob(50))
+				shock_stage += 1
 		else
 			shock_stage = min(shock_stage, 100)
 			shock_stage = max(shock_stage-1, 0)
@@ -1424,7 +1425,7 @@
 		if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
 
-		if (shock_stage > 80)
+		if (shock_stage > 100)
 			Paralyse(rand(15,28))
 
 	proc/handle_pulse()

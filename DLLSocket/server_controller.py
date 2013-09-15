@@ -7,6 +7,9 @@ import urllib
 import json
 import logging
 import logging.handlers
+import shutil
+import cPickle
+import HTMLParser
 
 MONITOR = ('127.0.0.1',1336) # IP, port.
 RESTART_COMMAND="/home/gmod/byond/ss13.sh" # What shell script restarts SS13?
@@ -22,6 +25,29 @@ CONFIGPATH='/home/gmod/byond/config/' # Where is your current list of config fil
 
 GIT_REMOTE='origin'
 GIT_BRANCH='Bleeding-Edge'
+
+NUDGE_IP='localhost'
+
+def send_nudge(message):
+	if NUDGE_IP is None:
+		return
+
+	ht = HTMLParser.HTMLParser()
+	blocks = []
+	try:
+		for in_data in message.split(' '): #The rest of the arguments is data
+			blocks += {ht.unescape(in_data)}
+	except:
+		blocks = "NO DATA SPECIFIED"
+	dictionary = {"ip":NUDGE_IP,"data":blocks}
+	data = cPickle.dumps(dictionary)
+	HOST = "localhost"
+	PORT = 45678
+	size = 1024
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.connect((HOST,PORT))
+	s.send(data)
+	s.close()
 
 def git_commit():
 	try:
@@ -53,14 +79,15 @@ def checkForUpdate(serverState):
 	currentCommit = git_commit()
 	currentBranch = git_branch()
 	if currentCommit != lastCommit and lastCommit is not None:
+		send_nudge('Updating server to {GIT_REMOTE}/{GIT_COMMIT}!'.format(GIT_REMOTE=GIT_REMOTE,GIT_COMMIT=currentCommit))
 		subprocess.call('git reset --hard {0}/{1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True) 
 		subprocess.call('cp -av {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
 
 		# Copy bot config, if it exists.
 		botConfigSource=os.path.join(GAMEPATH,'config','CORE_DATA.py')
 		botConfigDest=os.path.join(GAMEPATH,'bot','CORE_DATA.py')
-		if os.file.exists(botConfigSource):
-			if os.file.exists(botConfigDest):
+		if os.path.isfile(botConfigSource):
+			if os.path.isfile(botConfigDest):
 				os.remove(botConfigDest)
 				log.warn('RM {0}'.format(botConfigDest))
 			shutil.move(botConfigSource,botConfigDest)
@@ -76,6 +103,7 @@ def checkForUpdate(serverState):
 			os.makedirs(os.path.dirname(updateTrigger))
 
 		if serverState:
+			send_nudge('Update completed.')
 			log.info('Server updated.')
 			with open(updateTrigger,'w') as f:
 				f.write('honk')
@@ -208,6 +236,7 @@ log.addHandler(consoleHandler)
 
 log.info('-----')
 log.info('/vg/station Watchdog: Started.')
+send_nudge('Watchdog script restarted.')
 lastState=True
 failChain=0
 firstRun=True
@@ -225,19 +254,24 @@ while True:
 		failChain += 1
 		if lastState == False:
 			if failChain > MAX_FAILURES:
+				send_nudge('Watchdog script has failed to restart the server.')
 				log.error('Too many failures, quitting!')
 				sys.exit(1)
 			log.error('Try {0}/{1}...'.format(failChain,MAX_FAILURES))
+			send_nudge('Try {0}/{1}...'.format(failChain,MAX_FAILURES))
 		else:
 			log.error("Detected a problem, attempting restart ({0}/{1}).".format(failChain,MAX_FAILURES))
+			send_nudge('Attempting restart ({0}/{1})...'.format(failChain,MAX_FAILURES))
 		subprocess.call(RESTART_COMMAND,shell=True)
 		time.sleep(50) # Sleep 50 seconds for a total of almost 2 minutes before we ping again.
 		lastState=False
 	else:
 		if lastState == False:
 			log.info('Server is confirmed to be back up and running.')
+			send_nudge('Server is back online and responding to queries.')
 		if firstRun:
 			log.info('Server is confirmed to be up and running.')
+			send_nudge('Server is online and responding to queries.')
 		else:
 			checkForUpdate(True)
 		

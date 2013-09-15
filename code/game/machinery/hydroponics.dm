@@ -955,7 +955,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if (podman.mind in ticker.mode:cult)
 					ticker.mode:add_cultist(podman.mind)
 					ticker.mode:update_all_cult_icons() //So the icon actually appears
-
+		if("\ref[podman.mind]" in ticker.mode.implanter || podman.mind in ticker.mode.implanted)
+			ticker.mode.update_traitor_icons_added(podman.mind) //So the icon actually appears
 			// -- End mode specific stuff
 
 		podman.gender = ghost.gender

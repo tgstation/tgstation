@@ -165,7 +165,8 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	objs += new /datum/objective/heist/inviolate_crew
 	objs += new /datum/objective/heist/inviolate_death */
 
-	raid_objectives += new /datum/objective/heist/kidnap
+	if(prob(25)) // This is an asspain.
+		raid_objectives += new /datum/objective/heist/kidnap
 	raid_objectives += new /datum/objective/heist/loot
 	raid_objectives += new /datum/objective/heist/salvage
 	raid_objectives += new /datum/objective/heist/inviolate_crew

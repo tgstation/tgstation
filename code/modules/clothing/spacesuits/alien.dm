@@ -21,7 +21,7 @@
 	desc = "Hey! Watch it with that thing! It's a knock-off of a Unathi battle-helm, and that spike could put someone's eye out."
 	icon_state = "unathi_helm_cheap"
 	item_state = "unathi_helm_cheap"
-	color = "unathi_helm_cheap"
+	_color = "unathi_helm_cheap"
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
@@ -99,14 +99,14 @@
 	name = "alien clothing"
 	desc = "This doesn't look very comfortable."
 	icon_state = "vox-casual-1"
-	color = "vox-casual-1"
+	_color = "vox-casual-1"
 	item_state = "vox-casual-1"
 
 /obj/item/clothing/under/vox/vox_robes
 	name = "alien robes"
 	desc = "Weird and flowing!"
 	icon_state = "vox-casual-2"
-	color = "vox-casual-2"
+	_color = "vox-casual-2"
 	item_state = "vox-casual-2"
 
 /obj/item/clothing/gloves/yellow/vox
@@ -116,7 +116,7 @@
 	item_state = "gloves-vox"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	color="gloves-vox"
+	_color="gloves-vox"
 
 /obj/item/clothing/gloves/yellow/vox/mob_can_equip(M as mob, slot)
 	var/mob/living/carbon/human/U = M

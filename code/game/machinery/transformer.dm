@@ -43,14 +43,14 @@
 		var/mob/living/carbon/human/H = AM
 		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
 			AM.loc = src.loc
-			transform(AM)
+			do_transform(AM)
 	//Shit bugs out if theres too many items on the enter side conveyer
 	else if(istype(AM, /obj/item))
 		var/move_dir = get_dir(loc, AM.loc)
 		if(move_dir == EAST)
 			AM.loc = src.loc
 
-/obj/machinery/transformer/proc/transform(var/mob/living/carbon/human/H)
+/obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown == 1)

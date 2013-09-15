@@ -49,6 +49,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
 
+/obj/machinery/computer/rdconsole/proc/Maximize()
+
+	files.known_tech=files.possible_tech
+	for(var/datum/tech/KT in files.known_tech)
+		if(KT.level < KT.max_level)
+			KT.level=KT.max_level
+
 /obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
 	var/return_name = null
@@ -208,6 +215,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		spawn(50)
 			screen = 1.2
 			files.AddTech2Known(t_disk.stored)
+			updateUsrDialog()
+			griefProtection() //Update centcomm too
+
+	else if(href_list["hax"]) // aww shit
+		if(!usr.client.holder) return
+		screen = 0.0
+		spawn(50)
+			Maximize()
+			screen = 1.0
 			updateUsrDialog()
 			griefProtection() //Update centcomm too
 
@@ -606,6 +622,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_destroy != null) dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
 			if(linked_lathe != null) dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
 			if(linked_imprinter != null) dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
+			if(user.client.holder) dat += "<A href='?src=\ref[src];hax=1'>MAXIMUM SCIENCE</A><BR>"
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings</A>"
 
 		if(1.1) //Research viewer
@@ -633,7 +650,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:617: dat += "The disk has no data stored on it.<HR>"
 				dat += {"The disk has no data stored on it.<HR>
-					Operations: 
+					Operations:
 					<A href='?src=\ref[src];menu=1.3'>Load Tech to Disk</A> || "}
 				// END AUTOFIX
 			else
@@ -643,8 +660,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += {"Name: [t_disk.stored.name]<BR>
 					Level: [t_disk.stored.level]<BR>
 					Description: [t_disk.stored.desc]<HR>
-					Operations: 
-					<A href='?src=\ref[src];updt_tech=1'>Upload to Database</A> || 
+					Operations:
+					<A href='?src=\ref[src];updt_tech=1'>Upload to Database</A> ||
 					<A href='?src=\ref[src];clear_tech=1'>Clear Disk</A> || "}
 				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
@@ -653,7 +670,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:630: dat += "<BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
+			dat += {"<BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A><HR>
 				Load Technology to Disk:<BR><BR>"}
 			// END AUTOFIX
@@ -661,7 +678,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:634: dat += "[T.name] "
-				dat += {"[T.name] 
+				dat += {"[T.name]
 					<A href='?src=\ref[src];copy_tech=1;copy_tech_ID=[T.id]'>(Copy to Disk)</A><BR>"}
 				// END AUTOFIX
 		if(1.4) //Design Disk menu.
@@ -671,7 +688,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:640: dat += "The disk has no data stored on it.<HR>"
 				dat += {"The disk has no data stored on it.<HR>
-					Operations: 
+					Operations:
 					<A href='?src=\ref[src];menu=1.5'>Load Design to Disk</A> || "}
 				// END AUTOFIX
 			else
@@ -692,8 +709,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:654: dat += "<HR>Operations: "
-				dat += {"<HR>Operations: 
-					<A href='?src=\ref[src];updt_design=1'>Upload to Database</A> || 
+				dat += {"<HR>Operations:
+					<A href='?src=\ref[src];updt_design=1'>Upload to Database</A> ||
 					<A href='?src=\ref[src];clear_design=1'>Clear Disk</A> || "}
 				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
@@ -702,7 +719,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:660: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><HR>
 				Load Design to Disk:<BR><BR>"}
 			// END AUTOFIX
@@ -710,7 +727,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:664: dat += "[D.name] "
-				dat += {"[D.name] 
+				dat += {"[D.name]
 					<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>(Copy to Disk)</A><BR>"}
 				// END AUTOFIX
 		if(1.6) //R&D console settings
@@ -740,8 +757,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:680: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
-				<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><HR> 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
+				<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><HR>
 				R&D Console Device Linkage Menu:<BR><BR>
 				<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR>
 				Linked Devices:<BR>"}
@@ -789,7 +806,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:715: dat += "<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> || "
-			dat += {"<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> || 
+			dat += {"<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> ||
 				<A href='?src=\ref[src];eject_item=1'>Eject Item</A> || "}
 			// END AUTOFIX
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
@@ -804,8 +821,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:724: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
-				<A href='?src=\ref[src];menu=3.2'>Material Storage</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
+				<A href='?src=\ref[src];menu=3.2'>Material Storage</A> ||
 				<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><HR>
 				Protolathe Menu:<BR><BR>
 				<B>Material Amount:</B> [linked_lathe.TotalMaterials()] cm<sup>3</sup> (MAX: [linked_lathe.max_material_storage])<BR>
@@ -847,7 +864,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:763: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><HR>
 				Material Storage<BR><HR>"}
 			// END AUTOFIX
@@ -855,7 +872,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:767: dat += "* [linked_lathe.m_amount] cm<sup>3</sup> of Metal || "
-			dat += {"* [linked_lathe.m_amount] cm<sup>3</sup> of Metal || 
+			dat += {"* [linked_lathe.m_amount] cm<sup>3</sup> of Metal ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -866,7 +883,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:774: dat += "* [linked_lathe.g_amount] cm<sup>3</sup> of Glass || "
-			dat += {"* [linked_lathe.g_amount] cm<sup>3</sup> of Glass || 
+			dat += {"* [linked_lathe.g_amount] cm<sup>3</sup> of Glass ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.g_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -877,7 +894,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:781: dat += "* [linked_lathe.gold_amount] cm<sup>3</sup> of Gold || "
-			dat += {"* [linked_lathe.gold_amount] cm<sup>3</sup> of Gold || 
+			dat += {"* [linked_lathe.gold_amount] cm<sup>3</sup> of Gold ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.gold_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -888,7 +905,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:788: dat += "* [linked_lathe.silver_amount] cm<sup>3</sup> of Silver || "
-			dat += {"* [linked_lathe.silver_amount] cm<sup>3</sup> of Silver || 
+			dat += {"* [linked_lathe.silver_amount] cm<sup>3</sup> of Silver ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.silver_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -899,7 +916,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:795: dat += "* [linked_lathe.plasma_amount] cm<sup>3</sup> of Solid Plasma || "
-			dat += {"* [linked_lathe.plasma_amount] cm<sup>3</sup> of Solid Plasma || 
+			dat += {"* [linked_lathe.plasma_amount] cm<sup>3</sup> of Solid Plasma ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.plasma_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -910,7 +927,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:802: dat += "* [linked_lathe.uranium_amount] cm<sup>3</sup> of Uranium || "
-			dat += {"* [linked_lathe.uranium_amount] cm<sup>3</sup> of Uranium || 
+			dat += {"* [linked_lathe.uranium_amount] cm<sup>3</sup> of Uranium ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -921,7 +938,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:809: dat += "* [linked_lathe.diamond_amount] cm<sup>3</sup> of Diamond || "
-			dat += {"* [linked_lathe.diamond_amount] cm<sup>3</sup> of Diamond || 
+			dat += {"* [linked_lathe.diamond_amount] cm<sup>3</sup> of Diamond ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -932,7 +949,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:816: dat += "* [linked_lathe.clown_amount] cm<sup>3</sup> of Bananium || "
-			dat += {"* [linked_lathe.clown_amount] cm<sup>3</sup> of Bananium || 
+			dat += {"* [linked_lathe.clown_amount] cm<sup>3</sup> of Bananium ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_lathe.clown_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -943,7 +960,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:823: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><HR>
 				Chemical Storage<BR><HR>"}
 			// END AUTOFIX
@@ -951,7 +968,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:827: dat += "Name: [R.name] | Units: [R.volume] "
-				dat += {"Name: [R.name] | Units: [R.volume] 
+				dat += {"Name: [R.name] | Units: [R.volume]
 					<A href='?src=\ref[src];disposeP=[R.id]'>(Purge)</A><BR>
 					<A href='?src=\ref[src];disposeallP=1'><U>Disposal All Chemicals in Storage</U></A><BR>"}
 				// END AUTOFIX
@@ -967,8 +984,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:837: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
-				<A href='?src=\ref[src];menu=4.3'>Material Storage</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
+				<A href='?src=\ref[src];menu=4.3'>Material Storage</A> ||
 				<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><HR>
 				Circuit Imprinter Menu:<BR><BR>
 				Material Amount: [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>
@@ -1002,7 +1019,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:869: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=4.1'>Imprinter Menu</A><HR>
 				Chemical Storage<BR><HR>"}
 			// END AUTOFIX
@@ -1010,7 +1027,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:873: dat += "Name: [R.name] | Units: [R.volume] "
-				dat += {"Name: [R.name] | Units: [R.volume] 
+				dat += {"Name: [R.name] | Units: [R.volume]
 					<A href='?src=\ref[src];disposeI=[R.id]'>(Purge)</A><BR>
 					<A href='?src=\ref[src];disposeallI=1'><U>Disposal All Chemicals in Storage</U></A><BR>"}
 				// END AUTOFIX
@@ -1018,7 +1035,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:878: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || 
+			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A><HR>
 				Material Storage<BR><HR>"}
 			// END AUTOFIX
@@ -1026,7 +1043,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:882: dat += "* [linked_imprinter.g_amount] cm<sup>3</sup> of Glass || "
-			dat += {"* [linked_imprinter.g_amount] cm<sup>3</sup> of Glass || 
+			dat += {"* [linked_imprinter.g_amount] cm<sup>3</sup> of Glass ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -1037,7 +1054,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:889: dat += "* [linked_imprinter.gold_amount] cm<sup>3</sup> of Gold || "
-			dat += {"* [linked_imprinter.gold_amount] cm<sup>3</sup> of Gold || 
+			dat += {"* [linked_imprinter.gold_amount] cm<sup>3</sup> of Gold ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_imprinter.gold_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -1048,7 +1065,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:896: dat += "* [linked_imprinter.diamond_amount] cm<sup>3</sup> of Diamond || "
-			dat += {"* [linked_imprinter.diamond_amount] cm<sup>3</sup> of Diamond || 
+			dat += {"* [linked_imprinter.diamond_amount] cm<sup>3</sup> of Diamond ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -1059,7 +1076,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:903: dat += "* [linked_imprinter.uranium_amount] cm<sup>3</sup> of Uranium || "
-			dat += {"* [linked_imprinter.uranium_amount] cm<sup>3</sup> of Uranium || 
+			dat += {"* [linked_imprinter.uranium_amount] cm<sup>3</sup> of Uranium ||
 				Eject: "}
 			// END AUTOFIX
 			if(linked_imprinter.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "

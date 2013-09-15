@@ -29,6 +29,8 @@
 	if(R.stat == DEAD)
 		usr << "\red The [src] will not function on a deceased robot."
 		return 1
+	if(isMoMMI(R))
+		usr << "\red The [src] only functions on Nanotrasen Cyborgs."
 	return 0
 
 

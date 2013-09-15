@@ -384,14 +384,23 @@
 			C.radiation = 0
 			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
 			C.reagents.clear_reagents()
+			C.germ_level = 0
+			C.next_pain_time = 0
+			C.traumatic_shock = 0
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.vessel.reagent_list = list()
 				H.vessel.add_reagent("blood",560)
+				H.shock_stage = 0
 				spawn(1)
 					H.fixblood()
 				for(var/organ_name in H.organs_by_name)
 					var/datum/organ/external/O = H.organs_by_name[organ_name]
+					for(var/obj/item/weapon/shard/shrapnel/s in O.implants)
+						if(istype(s))
+							O.implants -= s
+							H.contents -= s
+							del(s)
 					O.amputated = 0
 					O.brute_dam = 0
 					O.burn_dam = 0

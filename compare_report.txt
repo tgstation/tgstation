@@ -41,6 +41,10 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
  - hfrequency0
  - hfrequency2
+ - jetpack-red
+ - jetpack-red-on
+ - jetpack-red-on2
+ - jetpack-red2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
  - blob_resource
@@ -103,6 +107,12 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\head.dmi
  + brucehachert
  + brucehachert2
+ + corpsoft
+ + corpsoft2
+ + corpsoft_flipped
+ + corpsoft_flipped2
+ + e_beret_badge
+ + e_beret_badge2
  - ert_commander
  - ert_commander2
  - ert_engineer
@@ -123,6 +133,8 @@
  + rig0-ert_security2
  - rig0-sec2old
  - rig0-secold
+ + rig0-taj-helmet
+ + rig0-taj-helmet2
  + rig1-ert_commander
  + rig1-ert_commander2
  + rig1-ert_engineer
@@ -132,6 +144,18 @@
  + rig1-ert_security2
  - rig1-sec2old
  - rig1-secold
+ + rig1-taj-helmet
+ + rig1-taj-helmet2
+ + skrell_helmet_black
+ + skrell_helmet_black2
+ + skrell_helmet_white
+ + skrell_helmet_white2
+ + unathi_breacher
+ + unathi_breacher2
+ + vox-medic
+ + vox-medic2
+ + vox-stealth
+ + vox-stealth2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  + eleanorstone
@@ -148,6 +172,10 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  + konaahirano
  + konaahirano2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\monkey.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\monkey.dmi
+ + nymph0
+ + nymph1
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
  - eyes-Brobot
@@ -158,6 +186,7 @@
  - eyes-janitorrobot
  - eyes-keeper
  - eyes-keeper-emagged
+ - eyes-marina
  - eyes-medicalrobot
  - eyes-mommi
  - eyes-mommi-emagged
@@ -165,6 +194,9 @@
  - eyes-mommiold
  - eyes-securityrobot
  - keeper
+ - marina
+ - marina-heavyshading
+ - marina-noshading
  - mommi
  - mommiold
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_robot.dmi
@@ -181,20 +213,38 @@
  - paramedic-eva2
  - paramedic-vest
  - paramedic-vest2
+ + rig-taj
+ + rig-taj2
+ + skrell_suit_black
+ + skrell_suit_black2
+ + skrell_suit_white
+ + skrell_suit_white2
+ + unathi_breacher
+ + unathi_breacher2
+ + vox-medic
+ + vox-medic2
+ + vox-stealth
+ + vox-stealth2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\uniform.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\uniform.dmi
  + ana_uniform_l
  + ana_uniform_s
  + hopwhimsy_l
  + hopwhimsy_s
+ + hos_corporate_l
+ + hos_corporate_s
  + lilith_uniform_l
  + lilith_uniform_s
  + milohachert_l
  + milohachert_s
  - paramedic_l
  - paramedic_s
+ + sec_corporate_l
+ + sec_corporate_s
  + solara_dress_l
  + solara_dress_s
+ + warden_corporate_l
+ + warden_corporate_s
  - wardendnavy_l
  + wardendnavyclothes_l
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmos.dmi
@@ -259,6 +309,8 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
+ - jetpack-red
+ - jetpack-red-on
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
  - pussywagon_destroyed
@@ -289,25 +341,47 @@
  - paddle_righthand
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
+ + corpsoft
+ + corpsoft_flipped
+ + e_beret_badge
  - ert_commander
  - ert_engineer
  - ert_medical
  - ert_security
- - krinn_hat
  - paramedic-eva-helmet
  + rig0-ert_commander
  + rig0-ert_engineer
  + rig0-ert_medical
  + rig0-ert_security
+ + rig0-taj-helmet
  + rig1-ert_commander
  + rig1-ert_engineer
  + rig1-ert_medical
  + rig1-ert_security
+ + rig1-taj-helmet
+ + skrell_helmet_black
+ + skrell_helmet_white
+ + unathi_breacher
+ + vox-medic
+ + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
  - paramedic-eva
  - paramedic-vest
+ + rig-taj
+ + skrell_suit_black
+ + skrell_suit_white
+ + unathi_breacher
+ + vox-medic
+ + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
  + hopwhimsy
+ + hos_corporate
  - paramedic
+ + sec_corporate
+ + warden_corporate
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\space.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
+ - debug-east
+ - debug-north

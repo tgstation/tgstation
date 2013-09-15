@@ -9,7 +9,7 @@
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/color = "yellow"
+	var/_color = "yellow"
 	var/can_label = 1
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
@@ -31,42 +31,42 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
-	color = "redws"
+	_color = "redws"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
-	color = "red"
+	_color = "red"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
-	color = "blue"
+	_color = "blue"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
-	color = "orange"
+	_color = "orange"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
-	color = "black"
+	_color = "black"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
-	color = "grey"
+	_color = "grey"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	src.overlays = 0
 
 	if (src.destroyed)
-		src.icon_state = text("[]-1", src.color)
+		src.icon_state = text("[]-1", src._color)
 
 	else
-		icon_state = "[color]"
+		icon_state = "[_color]"
 		if(holding)
 			overlays += "can-open"
 
@@ -269,8 +269,9 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 				if (holding)
 					release_log += "Valve was <b>opened</b> by [usr]([ckey(usr.key)]), starting the transfer into the [holding]<br>"
 				else
-					if(src.air_contents.toxins > 0 || (locate(/datum/gas/sleeping_agent) in src.air_contents.trace_gases))
-						message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins " : ""] [locate(/datum/gas/sleeping_agent) in src.air_contents.trace_gases ? "N2O" : ""]\] at [formatJumpTo(loc)]!")
+					var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
+					if(src.air_contents.toxins > 0 || (istype(S)))
+						message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins " : ""] [istype(S) ? "N2O" : ""]\] at [formatJumpTo(loc)]!")
 						log_admin("[usr]([ckey(usr.key)]) opened a canister that contains plasma at [loc.x], [loc.y], [loc.z]")
 					release_log += "Valve was <b>opened</b> by [usr]([ckey(usr.key)]), starting the transfer into the <font color='red'><b>air</b></font><br>"
 			valve_open = !valve_open
@@ -300,7 +301,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 				)
 				var/label = input("Choose canister label", "Gas canister") as null|anything in colors
 				if (label)
-					src.color = colors[label]
+					src._color = colors[label]
 					src.icon_state = colors[label]
 					src.name = "Canister: [label]"
 		src.updateUsrDialog()

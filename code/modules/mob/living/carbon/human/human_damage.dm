@@ -225,6 +225,7 @@
 
 	//Embedded projectile code.
 	if(!organ) return
+/*VG EDIT
 	if(istype(used_weapon,/obj/item/weapon))
 		var/obj/item/weapon/W = used_weapon  //Sharp objects will always embed if they do enough damage.
 		if( (damage > (10*W.w_class)) && ( (sharp && !ismob(W.loc)) || prob(damage/W.w_class) ) )
@@ -236,8 +237,8 @@
 					var/mob/living/H = W.loc
 					H.drop_item()
 				W.loc = src
-
-	else if(istype(used_weapon,/obj/item/projectile)) //We don't want to use the actual projectile item, so we spawn some shrapnel.
+*/
+	if(istype(used_weapon,/obj/item/projectile)) //We don't want to use the actual projectile item, so we spawn some shrapnel.
 		if(prob(75) && damagetype == BRUTE)
 			var/obj/item/projectile/P = used_weapon
 			var/obj/item/weapon/shard/shrapnel/S = new()

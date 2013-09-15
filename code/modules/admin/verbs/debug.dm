@@ -945,6 +945,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
+	log_admin("[key_name(usr)] set up the singulo.")
+	message_admins("\blue [key_name_admin(usr)] set up the singulo.", 1)
+
 	for(var/obj/machinery/power/emitter/E in world)
 		if(E.anchored)
 			E.active = 1
@@ -986,6 +989,29 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/obj/machinery/power/smes/SMES in world)
 		if(SMES.anchored)
 			SMES.chargemode = 1
+
+/client/proc/cheat_power()
+
+	set category = "Debug"
+	set name = "Free Power"
+	set desc = "Replaces all SMES on the map with magical ones."
+
+	if(alert("Are you sure? This will completely fuck over your round!",,"Yes","No") != "Yes")
+		return
+
+	log_admin("[key_name(usr)] haxed the powergrid with magic SMES.")
+	message_admins("\blue [key_name_admin(usr)] haxed the powergrid with magic SMES.", 1)
+
+	for(var/obj/machinery/power/smes/SMES in world)
+		var/turf/T=SMES.loc
+		del(SMES)
+		var/obj/machinery/power/smes/magical/magic = new(T)
+		// Manually set up our powernets since stupid seems to reign in the powernet code.
+		magic.connect_to_network()
+		magic.output=200000 // AKA rape
+		magic.online=1
+
+	world << "<span style=\"color:red;font-size=5;font-weight:bold\">LET THERE BE JUICE</span>"
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"

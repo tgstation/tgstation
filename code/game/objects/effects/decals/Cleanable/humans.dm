@@ -1,4 +1,5 @@
 #define DRYING_TIME 5 * 60*10			//for 1 unit of depth in puddle (amount var)
+
 /obj/effect/decal/cleanable/blood
 	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
@@ -23,6 +24,8 @@
 	..()
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
 		return
+	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
+		return // We handle our own drying.
 	if(src.type == /obj/effect/decal/cleanable/blood)
 		if(src.loc && isturf(src.loc))
 			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
@@ -68,15 +71,143 @@
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 	amount = 2
 
-/obj/effect/decal/cleanable/blood/footprints
+// The idea is to have 4 bits for coming and 4 for going.
+#define TRACKS_COMING_NORTH 1
+#define TRACKS_COMING_SOUTH 2
+#define TRACKS_COMING_EAST  4
+#define TRACKS_COMING_WEST  8
+#define TRACKS_GOING_NORTH  16
+#define TRACKS_GOING_SOUTH  32
+#define TRACKS_GOING_EAST   64
+#define TRACKS_GOING_WEST   128
+// 5 seconds
+#define TRACKS_CRUSTIFY_TIME   50
+
+// Footprints, tire trails...
+/obj/effect/decal/cleanable/blood/tracks
+	amount = 0
+	random_icon_states = null
+	var/dirs=0
+	var/coming_state="blood1"
+	var/going_state="blood2"
+	var/newtracks=0 // Cleared after every icon_update
+	var/crustytracks=0 // Cleared after every icon_update
+
+	// dir = last wetting
+	var/list/wet=list(
+		"1"=0,
+		"2"=0,
+		"4"=0,
+		"8"=0,
+		"16"=0,
+		"32"=0,
+		"64"=0,
+		"128"=0
+	)
+
+	/**
+	* Add tracks to an existing trail.
+	*
+	* @param DNA bloodDNA to add to collection.
+	* @param comingdir Direction tracks come from, or 0.
+	* @param goingdir Direction tracks are going to (or 0).
+	*/
+	proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir)
+		var/updated=0
+		// Shift our goingdir 4 spaces to the left so it's in the GOING bitblock.
+		var/realgoing=goingdir<<4
+
+		// Current bit
+		var/b=0
+
+		// When tracks will start to dry out
+		var/t=world.time + TRACKS_CRUSTIFY_TIME
+
+		// Process 4 bits
+		for(var/bi=0;bi<4;bi++)
+			b=1<<bi
+			// COMING BIT
+			if(comingdir&b && wet["[b]"]!=t)
+				if(!(dirs&b))
+					newtracks|=b
+				wet["[b]"]=t
+				updated=1
+			else
+				if(wet["[b]"]<world.time && !(crustytracks&b))
+					updated=1
+
+			// GOING BIT (shift up 4)
+			b=b<<4
+			if(realgoing&b && wet["[b]"]!=t)
+				if(!(dirs&b))
+					newtracks|=b
+				wet["[b]"]=t
+				updated=1
+			else
+				if(wet["[b]"]<world.time && !(crustytracks&b))
+					updated=1
+
+		dirs |= comingdir|realgoing
+		blood_DNA |= DNA.Copy()
+		if(updated)
+			update_icon()
+
+	process()
+		return PROCESS_KILL // Do not process us or we'll lag like hell.
+
+	update_icon()
+		// Clear everything.
+		//overlays.Cut()
+		var/b=0
+
+		var/t=world.time
+		var/crusty=0
+		// Clear out any images that have been wetted or have crustified.
+		for(var/image/overlay in overlays)
+			b=overlay.dir
+			if(overlay.icon_state==going_state)
+				b=b<<4
+			if(wet["[b]"]<t && !(crustytracks&b)) // NEW crusty ones get special treatment
+				crusty|=b
+			if(wet["[b]"]>t || crusty&b) // Wet or crusty?  Nuke'em either way.
+				overlays.Remove(overlay)
+				newtracks |= b // Mark as needing an update.
+
+		// Update ONLY the overlays that have changed.
+		for(var/bi=0;bi<4;bi++)
+			// COMING
+			b=1<<bi
+			// New or crusty
+			if(newtracks&b)
+				var/icon/I= new /icon(icon, icon_state=coming_state, dir=num2dir(b))
+				// If crusty, make them look crusty.
+				if(crusty&b)
+					I.SetIntensity(0.7)
+					crustytracks |= b // Crusty? Don't update unless wetted again.
+				else
+					crustytracks &= ~b // Unmark as crusty.
+				// Add to overlays
+				overlays += I
+			// GOING
+			b=b<<4
+			if(newtracks&b)
+				var/icon/I= new /icon(icon, icon_state=going_state, dir=num2dir(b>>4))
+				if(crusty&b)
+					I.SetIntensity(0.7)
+					crustytracks |= b // Crusty? Don't update unless wetted again.
+				else
+					crustytracks &= ~b // Unmark as crusty.
+				overlays += I
+		newtracks=0 // Clear our memory of updated tracks.
+
+/obj/effect/decal/cleanable/blood/tracks/footprints
 	name = "bloody footprints"
 	desc = "Whoops..."
 	icon='icons/effects/footprints.dmi'
-	icon_state = "blood1"
-	amount = 0
-	random_icon_states = null
+	coming_state = "blood1"
+	going_state  = "blood2"
 
-/obj/effect/decal/cleanable/blood/tracks
+/obj/effect/decal/cleanable/blood/tracks/wheels
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	gender = PLURAL

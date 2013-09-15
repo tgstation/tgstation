@@ -82,6 +82,7 @@
 					if(!revsafe)
 						M.mind.has_been_rev = 1
 						ticker.mode.add_revolutionary(M.mind)
+						log_admin("[user]([ckey(user.key)]) has converted [M] ([ckey(M.key)]) to the revolution at [M.loc.x], [M.loc.y], [M.loc.z]")
 					else if(revsafe == 1)
 						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
 					else

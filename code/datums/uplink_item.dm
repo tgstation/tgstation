@@ -85,6 +85,83 @@ var/list/uplink_items = list()
 //	UPLINK ITEMS
 //
 */
+//Work in Progress, job specific antag tools
+
+/datum/uplink_item/jobspecific
+	category = "Job Specific Tools"
+
+//Clown
+/datum/uplink_item/jobspecific/clowngrenade
+	name = "1 Banana Grenade"
+	desc = "A grenade that explodes into HONK! brand banana peels that are genetically modified to be extra slippery and extrude caustic acid when stepped on"
+	item = /obj/item/weapon/grenade/clown_grenade
+	cost = 4
+	job = "Clown"
+
+//Detective
+/datum/uplink_item/jobspecific/evidenceforger
+	name = "Evidence Forger"
+	desc = "An evidence scanner that allows you forge evidence by setting the output before scanning the item."
+	item = /obj/item/device/detective_scanner/forger
+	cost = 3
+	job = "Detective"
+
+/datum/uplink_item/jobspecific/conversionkit
+	name = "Conversion Kit Bundle"
+	desc = "A bundle that comes with a professional revolver conversion kit and 1 box of .357 ammo. The kit allows you to convert your revolver to fire lethal rounds or vice versa, modification is nearly perfect and will not result in catastrophic failure."
+	item = /obj/item/weapon/storage/box/syndie_kit/conversion
+	cost = 6
+	job = "Detective"
+
+//Chef
+/datum/uplink_item/jobspecific/specialsauce
+	name = "Chef Excellence's Special Sauce"
+	desc = "A custom made sauce made from the toxin glands of 1000 space carp, if somebody ingests enough they'll be dead in 3 minutes or less guaranteed."
+	item = /obj/item/weapon/reagent_containers/food/condiment/syndisauce
+	cost = 2
+	job = "Chef"
+
+/datum/uplink_item/jobspecific/meatcleaver
+	name = "Meat Cleaver"
+	desc = "A mean looking meat cleaver that does damage comparable to an Energy Sword but with the added benefit of chopping your victim into hunks of meat after they've died and the chance to stun when thrown."
+	item = /obj/item/weapon/butch/meatcleaver
+	cost = 5
+	job = "Chef"
+
+//Janitor
+
+/datum/uplink_item/jobspecific/cautionsign
+	name = "Proximity Mine"
+	desc = "An Anti-Personnel proximity mine cleverly disguised as a wet floor caution sign that is triggered by running past it, activate it to start the 15 second timer and activate again to disarm."
+	item = /obj/item/weapon/caution/proximity_sign
+	cost = 2
+	job = "Janitor"
+
+
+//Assistant
+
+/datum/uplink_item/jobspecific/pickpocketgloves
+	name = "Pickpocket's Gloves"
+	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
+	item = /obj/item/clothing/gloves/black/thief
+	cost = 3
+	job = "Assistant"
+
+/datum/uplink_item/jobspecific/greytide
+	name = "Greytide Implant"
+	desc = "A box containing an implanter filled with a greytide implant when injected into another person makes them loyal to the greytide and your cause, unless of course they're loyal to someone else. Loyalty ends if the implant is no longer in their system."
+	item = /obj/item/weapon/storage/box/syndie_kit/greytide
+	cost = 7
+	job = "Assistant"
+
+//Bartender
+
+/datum/uplink_item/jobspecific/drunkbullets
+	name = "Boozey Shotgun Shells"
+	desc = "A box containing 6 shotgun shells that simulate the effects of extreme drunkeness on the target, more effective for each type of alcohol in the target's system."
+	item = /obj/item/weapon/storage/box/syndie_kit/boolets
+	cost = 3
+	job = "Bartender"
 
 // DANGEROUS WEAPONS
 
@@ -297,67 +374,6 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_compress
 	cost = 4
 
-//Work in Progress, job specific antag tools
-
-/datum/uplink_item/jobspecific
-	category = "Job Specific Tools"
-
-//Clown
-/datum/uplink_item/jobspecific/clowngrenade
-	name = "1 Banana Grenade"
-	desc = "A grenade that explodes into HONK! brand banana peels that are genetically modified to be extra slippery and extrude caustic acid when stepped on"
-	item = /obj/item/weapon/grenade/clown_grenade
-	cost = 4
-	job = "Clown"
-
-//Detective
-/datum/uplink_item/jobspecific/evidenceforger
-	name = "Evidence Forger"
-	desc = "An evidence scanner that allows you forge evidence by setting the output before scanning the item."
-	item = /obj/item/device/detective_scanner/forger
-	cost = 3
-	job = "Detective"
-
-/datum/uplink_item/jobspecific/conversionkit
-	name = "Conversion Kit Bundle"
-	desc = "A bundle that comes with a professional revolver conversion kit and 1 box of .357 ammo. The kit allows you to convert your revolver to fire lethal rounds or vice versa, modification is nearly perfect and will not result in catastrophic failure."
-	item = /obj/item/weapon/storage/box/syndie_kit/conversion
-	cost = 6
-	job = "Detective"
-
-//Chef
-/datum/uplink_item/jobspecific/specialsauce
-	name = "Chef Excellence's Special Sauce"
-	desc = "A custom made sauce made from the toxin glands of 1000 space carp, if somebody ingests enough they'll be dead in 3 minutes or less guaranteed."
-	item = /obj/item/weapon/reagent_containers/food/condiment/syndisauce
-	cost = 2
-	job = "Chef"
-
-/datum/uplink_item/jobspecific/meatcleaver
-	name = "Meat Cleaver"
-	desc = "A mean looking meat cleaver that does damage comparable to an Energy Sword but with the added benefit of chopping your victim into hunks of meat after they've died and the chance to stun when thrown."
-	item = /obj/item/weapon/butch/meatcleaver
-	cost = 5
-	job = "Chef"
-
-//Janitor
-
-/datum/uplink_item/jobspecific/cautionsign
-	name = "Proximity Mine"
-	desc = "An Anti-Personnel proximity mine cleverly disguised as a wet floor caution sign that is triggered by running past it, activate it to start the 15 second timer and activate again to disarm."
-	item = /obj/item/weapon/caution/proximity_sign
-	cost = 2
-	job = "Janitor"
-
-
-//Assistant
-
-/datum/uplink_item/jobspecific/pickpocketgloves
-	name = "Pickpocket's Gloves"
-	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
-	item = /obj/item/clothing/gloves/black/thief
-	cost = 3
-	job = "Assistant"
 
 // POINTLESS BADASSERY
 

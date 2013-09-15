@@ -5,13 +5,26 @@
 /obj/machinery/computer/atmoscontrol
 	name = "\improper Central Atmospherics Computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "computer_generic"
+	icon_state = "tank"
 	density = 1
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
+	var/list/filter=null
 	var/overridden = 0 //not set yet, can't think of a good way to do it
-	req_access = list(access_ce)
+	req_one_access = list(access_ce)
+
+
+/obj/machinery/computer/atmoscontrol/xeno
+	name = "\improper Xenobiology Atmospherics Computer"
+	filter=list(
+		/area/toxins/xenobiology/specimen_1,
+		/area/toxins/xenobiology/specimen_2,
+		/area/toxins/xenobiology/specimen_3,
+		/area/toxins/xenobiology/specimen_4,
+		/area/toxins/xenobiology/specimen_5,
+		/area/toxins/xenobiology/specimen_6)
+	req_one_access = list(access_xenobiology,access_ce)
 
 
 /obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
@@ -36,7 +49,9 @@
 	if(current)
 		dat += specific()
 	else
-		for(var/obj/machinery/alarm/alarm in machines)
+		for(var/obj/machinery/alarm/alarm in sortAtom(machines))
+			if(!is_in_filter(alarm.alarm_area.type))
+				continue // NO ACCESS 4 U
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
@@ -57,6 +72,11 @@
 		overridden = 1
 		return
 	return ..()
+
+
+/obj/machinery/computer/atmoscontrol/proc/is_in_filter(var/typepath)
+	if(!filter) return 1 // YEP.  TOTALLY.
+	return typepath in filter
 
 /obj/machinery/computer/atmoscontrol/proc/specific()
 	if(!current)
@@ -85,6 +105,7 @@
 					"co2_scrub",
 					"tox_scrub",
 					"n2o_scrub",
+					"o2_scrub",
 					"panic_siphon",
 					"scrubbing"
 				)
@@ -185,16 +206,42 @@
 			spawn(5)
 				src.updateUsrDialog()
 			return
+
+		if(href_list["preset"])
+			current.preset = text2num(href_list["preset"])
+			current.apply_preset()
+			spawn(5)
+				src.updateUsrDialog()
+			return
+
+		if(href_list["temperature"])
+			var/list/selected = current.TLV["temperature"]
+			var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
+			var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
+			var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
+			if(input_temperature==null)
+				return
+			if(input_temperature > max_temperature || input_temperature < min_temperature)
+				usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
+			else
+				current.target_temperature = input_temperature + T0C
+			return
 	updateUsrDialog()
 
 //copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
+/obj/machinery/computer/atmoscontrol/proc/fmtScrubberGasStatus(var/id_tag,var/code,var/list/data)
+	var/label=replacetext(uppertext(code),"2","<sub>2</sub>")
+	if(code=="tox")
+		label="Plasma"
+	return "<A href='?src=\ref[current];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
 
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
 
 	switch(current.screen)
 		if (AALARM_SCREEN_MAIN)
+			output += "<table width=\"100%\"><td align=\"center\"><b>Thermostat:</b><br><a href='?src=\ref[src];alarm=\ref[current];temperature=1'>[current.target_temperature - T0C]C</a></td></table>"
 			if(current.alarm_area.atmosalm)
 				output += {"<a href='?src=\ref[src];alarm=\ref[current];atmos_reset=1'>Reset - Atmospheric Alarm</a><hr>"}
 			else
@@ -212,7 +259,7 @@
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 
-			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
+			//output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 		if (AALARM_SCREEN_VENT)
 			var/sensor_data = ""
 			if(current.alarm_area.air_vent_names.len)
@@ -280,12 +327,10 @@ siphoning
 					if(data["scrubbing"])
 						sensor_data += {"
 <B>Filtering:</B>
-Carbon Dioxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=co2_scrub;val=[!data["filter_co2"]]'>[data["filter_co2"]?"on":"off"]</A>;
-Toxins
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_toxins"]]'>[data["filter_toxins"]?"on":"off"]</A>;
-Nitrous Oxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
+[fmtScrubberGasStatus(id_tag,"co2",data)],
+[fmtScrubberGasStatus(id_tag,"tox",data)],
+[fmtScrubberGasStatus(id_tag,"n2o",data)],
+[fmtScrubberGasStatus(id_tag,"o2",data)]
 <BR>
 "}
 					sensor_data += {"
@@ -312,6 +357,17 @@ Nitrous Oxide
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
 				else
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'>[modes[m]]</A></li>"}
+			output += {"</ul>
+<hr><br><b>Sensor presets:</b><br><i>(Note, this only sets sensors, air supplied to vents must still be changed.)</i><ul>"}
+			var/list/presets = list(
+				AALARM_PRESET_HUMAN   = "Human - Checks for Oxygen and Nitrogen",\
+				AALARM_PRESET_VOX 	= "Vox - Checks for Nitrogen only",\
+				AALARM_PRESET_SERVER 	= "Coldroom - For server rooms and freezers")
+			for(var/p=1;p<=presets.len;p++)
+				if (current.preset==p)
+					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
+				else
+					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'>[presets[p]]</A></li>"
 			output += "</ul>"
 		if (AALARM_SCREEN_SENSORS)
 			output += {"

@@ -9,6 +9,7 @@
 	anchored = 0.0
 	origin_tech = "materials=2"
 	var/darts = 5
+	w_class = 2
 
 /obj/item/weapon/dart_cartridge/update_icon()
 	if(!darts)
@@ -51,7 +52,7 @@
 	..()
 	if(starting_chems)
 		for(var/chem in starting_chems)
-			var/obj/item/weapon/reagent_containers/glass/beaker/vial/B = new(src)
+			var/obj/item/weapon/reagent_containers/glass/beaker/B = new(src)
 			B.reagents.add_reagent(chem, 50)
 			beakers += B
 	cartridge = new /obj/item/weapon/dart_cartridge(src)
@@ -133,7 +134,7 @@
 	var/obj/item/weapon/reagent_containers/syringe/dart = new(src)
 
 	if(mixing.len)
-		var/mix_amount = dart_reagent_amount/mixing.len
+		var/mix_amount =  5 //dart_reagent_amount/mixing.len | 5 per mixed should be fine enough.
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in mixing)
 			B.reagents.trans_to(dart,mix_amount)
 
@@ -209,9 +210,24 @@
 /obj/item/weapon/gun/dartgun/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
 	return 1
 
+/obj/item/weapon/gun/dartgun/updateUsrDialog()
+	if(in_use)
+		var/is_in_use = 0
+		if ((usr.client && usr.machine == src && src.loc == usr))
+			is_in_use = 1
+			src.attack_self(usr)
+		if (isMoMMI(usr))
+			if ((usr.client && usr.machine == src && src.loc == usr)) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+				is_in_use = 1
+				src.attack_self(usr)
+
+		// check for TK users
+		in_use = is_in_use
+
 /obj/item/weapon/gun/dartgun/attack_self(mob/user)
 
 	user.set_machine(src)
+	in_use = 1
 	var/dat = "<b>[src] mixing control:</b><br><br>"
 
 	if (beakers.len)

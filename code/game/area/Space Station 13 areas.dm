@@ -637,6 +637,10 @@ proc/process_ghost_teleport_locs()
 	name = "Science Maintenance"
 	icon_state = "asmaint"
 
+/area/maintenance/xenomaint
+	name = "Xenobiology Maintenance"
+	icon_state = "asmaint"
+
 /area/maintenance/apmaint
 	name = "Cargo Maintenance"
 	icon_state = "apmaint"
@@ -1251,6 +1255,30 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Xenobiology Lab"
 	icon_state = "toxlab"
 
+/area/toxins/xenobiology/specimen_1
+	name = "\improper Xenobiology Specimen Cage 1"
+	icon_state = "xenocell1"
+
+/area/toxins/xenobiology/specimen_2
+	name = "\improper Xenobiology Specimen Cage 2"
+	icon_state = "xenocell2"
+
+/area/toxins/xenobiology/specimen_3
+	name = "\improper Xenobiology Specimen Cage 3"
+	icon_state = "xenocell3"
+
+/area/toxins/xenobiology/specimen_4
+	name = "\improper Xenobiology Specimen Cage 4"
+	icon_state = "xenocell4"
+
+/area/toxins/xenobiology/specimen_5
+	name = "\improper Xenobiology Specimen Cage 5"
+	icon_state = "xenocell5"
+
+/area/toxins/xenobiology/specimen_6
+	name = "\improper Xenobiology Specimen Cage 6"
+	icon_state = "xenocell6"
+
 /area/toxins/storage
 	name = "\improper Toxins Storage"
 	icon_state = "toxstorage"
@@ -1537,6 +1565,46 @@ proc/process_ghost_teleport_locs()
 /area/generic
 	name = "Unknown"
 	icon_state = "storage"
+
+
+//////////////////////////////
+// VOX TRADING POST
+//////////////////////////////
+/area/vox_trading_post/trading_floor
+	name = "\improper Vox Trading Floor"
+	icon_state = "yellow"
+
+/area/vox_trading_post/trade_processing
+	name = "\improper Vox Trade Processing"
+	icon_state = "green"
+
+/area/vox_trading_post/armory
+	name = "\improper Vox Armory"
+	icon_state = "armory"
+
+/area/vox_trading_post/gardens
+	name = "\improper Vox Botanical Gardens"
+	icon_state = "hydro"
+
+/area/vox_trading_post/atmos
+	name = "\improper Vox Atmospherics"
+	icon_state = "atmos"
+
+/area/vox_trading_post/eva
+	name = "\improper Vox EVA"
+	icon_state = "eva"
+
+/area/vox_trading_post/storage_1
+	name = "\improper Vox Storage Room"
+	icon_state = "storage"
+
+/area/vox_trading_post/vault
+	name = "\improper Vox Vault"
+	icon_state = "vault"
+
+/area/vox_trading_post/hallway
+	name = "\improper Vox Hallways"
+	icon_state = "hallP"
 
 
 
