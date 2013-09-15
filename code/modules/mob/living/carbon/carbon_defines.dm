@@ -14,3 +14,6 @@
 	var/obj/item/weapon/tank/internal = null
 
 	var/datum/dna/dna = null//Carbon
+	var/trail_type = "ltrails"
+	var/blood_overwrite = 0
+	var/trail_set = 0
