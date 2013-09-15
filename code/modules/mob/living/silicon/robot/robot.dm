@@ -323,6 +323,13 @@
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
+
+	if(Proj.add_fire_stacks)
+		adjust_fire_stacks(Proj.add_fire_stacks)
+
+	if(Proj.ignite_target)
+		IgniteMob()
+
 	return 2
 
 

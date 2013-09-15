@@ -160,7 +160,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
-		
+
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
 			var/mob/M = loc
@@ -171,12 +171,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
+	var/mob/living/M = loc
+	if(istype(loc, /mob/living))
+		M.IgniteMob()
 	smoketime--
 	if(smoketime < 1)
 		new type_butt(location)
 		processing_objects.Remove(src)
 		if(ismob(loc))
-			var/mob/living/M = loc
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.u_equip(src)	//un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
@@ -381,11 +383,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 	return
 
-
 /obj/item/weapon/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M,/mob/living))
+		return
+	M.IgniteMob()
 	if(!istype(M,/mob/living/carbon))
 		return
-
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
