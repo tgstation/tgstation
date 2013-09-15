@@ -193,6 +193,7 @@
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
+		log_admin("[cult_mind.current] ([ckey(cult_mind.current.key)] has been deconverted from the cult")
 
 /datum/game_mode/proc/update_all_cult_icons()
 	spawn(0)

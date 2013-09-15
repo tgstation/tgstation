@@ -112,6 +112,7 @@ var/list/sacrificed = list()
 					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+					log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
 					return 1
 				else
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"

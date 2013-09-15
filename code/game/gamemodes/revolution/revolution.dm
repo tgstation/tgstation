@@ -216,6 +216,7 @@
 
 			else
 				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
+		log_admin("[rev_mind.current] ([ckey(rev_mind.current.key)] has been deconverted from the revolution")
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
