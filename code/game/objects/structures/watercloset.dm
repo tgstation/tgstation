@@ -222,6 +222,8 @@
 	if(istype(O, /mob/living))
 		var/mob/living/L = O
 		L.ExtinguishMob()
+		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
+		L << "<span class='warning'>You've been drenched in water!</span>"
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
 		if(M.r_hand)

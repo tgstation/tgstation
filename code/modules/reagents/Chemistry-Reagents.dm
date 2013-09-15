@@ -260,6 +260,16 @@ datum
 						cube.Expand()
 				return
 
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					M << "<span class='warning'>You've been drenched in water!</span>"
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
+
 		water/holywater
 			name = "Holy Water"
 			id = "holywater"
@@ -754,6 +764,14 @@ datum
 			description = "Required for welders. Flamable."
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with welding fuel to make them easy to ignite!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 10)
+					M << "<span class='warning'>You've been covered in fuel!</span>"
+					return
 
 //Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
 /*

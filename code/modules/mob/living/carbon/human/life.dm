@@ -523,6 +523,9 @@
 
 ///FIRE CODE
 	proc/handle_fire()
+		if(fire_stacks < 0)
+			fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
+			fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
 		if(!on_fire)
 			return
 		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
