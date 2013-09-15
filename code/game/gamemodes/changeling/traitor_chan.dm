@@ -4,15 +4,23 @@
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
 	required_players = 20
-	required_enemies = 2
+	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 
+	var/list/possible_changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
 
 /datum/game_mode/traitor/changeling/announce()
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"
 	world << "<B>There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the changelings or the traitors succeed!</B>"
 
+/datum/game_mode/traitor/changeling/can_start()
+	if(!..())
+		return 0
+	possible_changelings = get_players_for_role(BE_CHANGELING)
+	if(possible_changelings.len < required_enemies)
+		return 0
+	return 1
 
 /datum/game_mode/traitor/changeling/pre_setup()
 	if(config.protect_roles_from_antagonist)

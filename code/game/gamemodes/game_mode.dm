@@ -21,13 +21,16 @@
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
 	var/list/datum/mind/modePlayer = new
+	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
 	var/required_enemies = 0
 	var/recommended_enemies = 0
+	var/pre_setup_before_jobs = 0
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
+	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 
 // Items removed from above:
 /*
@@ -45,9 +48,12 @@
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(playerC >= required_players)
-		return 1
-	return 0
+	if(playerC < required_players)
+		return 0
+	antag_candidates = get_players_for_role(antag_flag)
+	if(antag_candidates.len < required_enemies)
+		return 0
+	return 1
 
 
 ///pre_setup()
@@ -203,7 +209,7 @@
 		set_security_level(SEC_LEVEL_BLUE)
 
 
-/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
+/datum/game_mode/proc/get_players_for_role(var/role)
 	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
@@ -264,13 +270,13 @@
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
-
+/*
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
 		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
 				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
-
+*/
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
 			for(var/job in restricted_jobs)
