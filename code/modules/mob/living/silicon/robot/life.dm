@@ -20,7 +20,7 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
-
+	handle_fire()
 
 
 
@@ -305,6 +305,46 @@
 				src << "\red <B>Weapon Lock Timed Out!"
 			weapon_lock = 0
 			weaponlock_time = 120
+
+//Robots on fire
+/mob/living/silicon/robot/proc/handle_fire()
+	if(fire_stacks < 0)
+		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+	if(!on_fire)
+		return
+	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+	if(G.oxygen < 1)
+		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		return
+	adjustFireLoss(3)
+	var/turf/location = get_turf(src)
+	location.hotspot_expose(700, 50, 1)
+	return
+
+/mob/living/silicon/robot/IgniteMob()
+	if(fire_stacks > 0)
+		on_fire = 1
+		update_fire()
+
+/mob/living/silicon/robot/ExtinguishMob()
+	if(on_fire)
+		on_fire = 0
+		fire_stacks = 0
+		update_fire()
+
+/mob/living/silicon/robot/proc/update_fire()
+	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	if(on_fire)
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	update_icons()
+	return
+
+/mob/living/silicon/robot/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Gain fire stacks when standing in a hotspot so ATMOS can light you up
+	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
+		IgniteMob()
+
+//Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
 	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0

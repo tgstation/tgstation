@@ -38,13 +38,6 @@ emp_act
 		P.on_hit(src, 2)
 		return 2
 
-	if(P.add_fire_stacks)
-		adjust_fire_stacks(P.add_fire_stacks)
-
-	if(P.ignite_target)
-		IgniteMob()
-
-
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
