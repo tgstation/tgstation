@@ -226,10 +226,14 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 		var/datum/gas/sleeping_agent/T = new
 		T.moles = amount
 		G += T
-	else if(text == "fuel")
-		var/datum/gas/volatile_fuel/T
-		T.moles = amount
-		G += T
+	else if(text == "toxin")
+		G.toxins = amount
+	else if(text == "oxygen")
+		G.oxygen = amount
+	else if(text == "nitrogen")
+		G.nitrogen = amount
+	else if(text == "co2")
+		G.carbon_dioxide = amount
 
 	air.merge(G)
 	air_master.add_to_active(src, 0)
