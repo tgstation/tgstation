@@ -444,6 +444,12 @@ datum
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			
+			reaction_turf(var/turf/simulated/T, var/volume)
+				src = null
+				if(istype(T))
+					T.atmos_spawn_air("oxygen", 5)
+				return
 
 		copper
 			name = "Copper"
@@ -457,6 +463,12 @@ datum
 			description = "A colorless, odorless, tasteless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			
+			reaction_turf(var/turf/simulated/T, var/volume)
+				src = null
+				if(istype(T))
+					T.atmos_spawn_air("nitrogen", 5)
+				return
 
 		hydrogen
 			name = "Hydrogen"
