@@ -1173,7 +1173,6 @@ datum/mind
 
 
 
-
 //Initialisation procs
 /mob/proc/mind_initialize() // vgedit: /mob instead of /mob/living
 	if(mind)

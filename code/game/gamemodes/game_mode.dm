@@ -97,44 +97,52 @@
 			var/count=0
 			for(var/datum/job_objective/objective in M.mind.job_objectives)
 				count++
-				if(!objective.completed)
+				var/msg=""
+				var/pay=0
+				if(objective.per_unit && objective.units_needing_compensation>0)
+					var/newunits = objective.units_needing_compensation
+					msg="We see that you completed [newunits] new unit[newunits>1?"s":""] for Task #[count]! "
+					pay=objective.completion_payment * newunits
+				else if(!objective.completed)
 					if(objective.is_completed())
-						var/msg="Task #[count] completed! "
-						if(M.mind.initial_account)
-							M.mind.initial_account.money += objective.completion_payment
-							var/datum/transaction/T = new()
-							T.target_name = "[command_name()] Payroll"
-							T.purpose = "Payment"
-							T.amount = objective.completion_payment
-							T.date = current_date_string
-							T.time = worldtime2text()
-							T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
-							M.mind.initial_account.transaction_log.Add(T)
-							msg += "You have been sent the $[objective.completion_payment], as agreed."
+						pay=objective.completion_payment
+						msg="Task #[count] completed! "
+				if(pay>0)
+					if(M.mind.initial_account)
+						M.mind.initial_account.money += objective.completion_payment
+						var/datum/transaction/T = new()
+						T.target_name = "[command_name()] Payroll"
+						T.purpose = "Payment"
+						T.amount = objective.completion_payment
+						T.date = current_date_string
+						T.time = worldtime2text()
+						T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
+						M.mind.initial_account.transaction_log.Add(T)
+						msg += "You have been sent the $[pay], as agreed."
+					else
+						msg += "However, we were unable to send you the $[pay] you're entitled."
+					if(useMS)
+						// THIS SHOULD HAVE DONE EVERYTHING FOR ME
+						useMS.send_pda_message("[P.owner]", "[command_name()] Payroll", msg)
+
+						// BUT NOPE, NEED TO DO THIS BULLSHIT.
+						P.tnote += "<i><b>&larr; From [command_name()] (Payroll):</b></i><br>[msg]<br>"
+
+						if (!P.silent)
+							playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+						for (var/mob/O in hearers(3, P.loc))
+							if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+						//Search for holder of the PDA.
+						var/mob/living/L = null
+						if(P.loc && isliving(P.loc))
+							L = P.loc
+						//Maybe they are a pAI!
 						else
-							msg += "However, we were unable to send you the $[objective.completion_payment] you're entitled."
-						if(useMS)
-							// THIS SHOULD HAVE DONE EVERYTHING FOR ME
-							useMS.send_pda_message("[P.owner]", "[command_name()] Payroll", msg)
+							L = get(P, /mob/living/silicon)
 
-							// BUT NOPE, NEED TO DO THIS BULLSHIT.
-							P.tnote += "<i><b>&larr; From [command_name()] (Payroll):</b></i><br>[msg]<br>"
-
-							if (!P.silent)
-								playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-							for (var/mob/O in hearers(3, P.loc))
-								if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
-							//Search for holder of the PDA.
-							var/mob/living/L = null
-							if(P.loc && isliving(P.loc))
-								L = P.loc
-							//Maybe they are a pAI!
-							else
-								L = get(P, /mob/living/silicon)
-
-							if(L)
-								L << "\icon[P] <b>Message from [command_name()] (Payroll), </b>\"[msg]\" (<i>Unable to Reply</i>)"
-						break
+						if(L)
+							L << "\icon[P] <b>Message from [command_name()] (Payroll), </b>\"[msg]\" (<i>Unable to Reply</i>)"
+					break
 
 
 /datum/game_mode/proc/check_finished() //to be called by ticker

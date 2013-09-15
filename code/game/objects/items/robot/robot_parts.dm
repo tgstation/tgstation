@@ -206,6 +206,10 @@
 
 			user.drop_item()
 
+			var/datum/job_objective/make_cyborg/task = user.mind.findJobTask(/datum/job_objective/make_cyborg)
+			if(istype(task))
+				task.unit_completed()
+
 			O.mmi = W
 			O.invisibility = 0
 			O.custom_name = created_name
