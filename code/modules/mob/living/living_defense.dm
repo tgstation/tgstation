@@ -44,6 +44,12 @@
 		src << "<span class='notice'>Your [C] was disrupted!</span>"
 		Stun(2)
 
+	if(P.add_fire_stacks)
+		adjust_fire_stacks(P.add_fire_stacks)
+
+	if(P.ignite_target)
+		IgniteMob()
+
 	var/absorb = run_armor_check(def_zone, P.flag)
 	if(absorb >= 2)
 		P.on_hit(src,2)
