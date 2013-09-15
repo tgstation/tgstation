@@ -221,7 +221,7 @@ atom/proc/UpdateAffectingLights()
 
 turf
 	var/lighting_lumcount = 0
-	var/accepts_lighting=1
+	var/accepts_lighting = 1
 	var/lighting_changed = 0
 
 turf/space
@@ -233,9 +233,11 @@ turf/proc/update_lumcount(amount)
 		lighting_lumcount += amount
 	else if(lighting_lumcount != initial(lighting_lumcount))
 		lighting_lumcount = initial(lighting_lumcount)
+	else
+		return
 //	if(lighting_lumcount < 0 || lighting_lumcount > 100)
 //		world.log << "## WARNING: [type] ([src]) lighting_lumcount = [lighting_lumcount]"
-	if(!lighting_changed && accepts_lighting)
+	if(!lighting_changed)
 		lighting_controller.changed_turfs += src
 		lighting_changed = 1
 
@@ -243,7 +245,7 @@ turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
 
-	if(!istype(Area) || !Area.lighting_use_dynamic || !accepts_lighting) return
+	if(!istype(Area) || !Area.lighting_use_dynamic /*|| !accepts_lighting*/) return
 
 	// change the turf's area depending on its brightness
 	// restrict light to valid levels
@@ -251,7 +253,8 @@ turf/proc/shift_to_subarea()
 
 	var/find = findtextEx(Area.tag, "sd_L")
 	var/new_tag = copytext(Area.tag, 1, find)
-	new_tag += "sd_L[light]"
+	if(accepts_lighting)
+		new_tag += "sd_L[light]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
 

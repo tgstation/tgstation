@@ -1,8 +1,12 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
+// Added spess ghoasts/cameras to this so they don't add to the lag. - N3X
 var/global/list/uneatable = list(
 	/turf/space,
-	/obj/effect/overlay
+	/obj/effect/overlay,
+	/mob/dead,
+	/mob/camera,
+	/mob/new_player
 	)
 
 /obj/machinery/singularity/
@@ -210,10 +214,13 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
+		// N3X: Move this up here since get_dist is slow.
+		if(is_type_in_list(X, uneatable))	continue
+
 		var/dist = get_dist(X, src)
+
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
