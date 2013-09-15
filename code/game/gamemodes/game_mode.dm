@@ -90,7 +90,7 @@
 	for(var/mob/M in player_list)
 		if(M.mind)
 			var/obj/item/device/pda/P=null
-			for(var/obj/item/device/pda/check_pda in sortAtom(PDAs))
+			for(var/obj/item/device/pda/check_pda in PDAs)
 				if (check_pda.owner==M.name)
 					P=check_pda
 					break
