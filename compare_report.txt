@@ -162,16 +162,24 @@
  - hfrequency0
  - hfrequency1
  + konaahirano
+ - telebaton0
+ - telebaton1
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  + eleanorstone
  - hfrequency0
  - hfrequency1
  + konaahirano
+ - telebaton0
+ - telebaton1
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  + konaahirano
  + konaahirano2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mob.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
+ - greytide
+ - greytide_head
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\monkey.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\monkey.dmi
  + nymph0
@@ -283,10 +291,15 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - rpd
+ - sheet-phazon
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\kitchen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\kitchen.dmi
  - mcleaver
  - mcleaverblood
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mining.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
+ + Phazon
+ - Phazon ore
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
@@ -381,7 +394,18 @@
  - paramedic
  + sec_corporate
  + warden_corporate
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\areas.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
+ - xenocell1
+ - xenocell2
+ - xenocell3
+ - xenocell4
+ - xenocell5
+ - xenocell6
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\space.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
  - debug-east
  - debug-north
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\walls.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\walls.dmi
+ - rock_Phazon
