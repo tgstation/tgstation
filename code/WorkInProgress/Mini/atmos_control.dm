@@ -27,6 +27,13 @@
 	req_one_access = list(access_xenobiology,access_ce)
 
 
+/obj/machinery/computer/atmoscontrol/gas_chamber
+	name = "\improper Gas Chamber Atmospherics Computer"
+	filter=list(
+		/area/security/gas_chamber)
+	req_one_access = list(access_ce,access_hos)
+
+
 /obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
 	return interact(user)
