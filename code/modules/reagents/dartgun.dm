@@ -225,7 +225,6 @@
 		in_use = is_in_use
 
 /obj/item/weapon/gun/dartgun/attack_self(mob/user)
-
 	user.set_machine(src)
 	in_use = 1
 	var/dat = "<b>[src] mixing control:</b><br><br>"
@@ -290,6 +289,10 @@
 				B.loc = get_turf(src)
 	else if (href_list["eject_cart"])
 		remove_cartridge()
+	else if (href_list["close"])
+		in_use = 0
+		usr.unset_machine(src)
+		return
 	src.updateUsrDialog()
 	return
 

@@ -35,7 +35,7 @@ var/list/ai_list = list()
 //Hud stuff
 
 	//MALFUNCTION
-	var/datum/AI_Module/module_picker/malf_picker
+	var/datum/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
