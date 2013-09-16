@@ -5,6 +5,8 @@
 #word: (noun|adjective|verb) "f aa" 'n iy m' 's'
 # NOTE: Doublequotes indicates primary stress, single indicates no stress.
 #
+# Phonemes are taken from here (must be lowercase): http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+#
 xenomorph: noun "z iy" 'n ow' 'm ao r f'
 cyborg: noun "s ay" 'b ao r g'
 vox: noun 'v aa k s'
