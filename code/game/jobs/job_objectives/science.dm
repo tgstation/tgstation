@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////
+// Research
+/////////////////////////////////////////////////////////////////////////////////////////
+
 // MAXIMUM SCIENCE
 /datum/job_objective/maximize_research
 	completion_payment=1000
@@ -24,3 +28,33 @@
 		if(KT.level<T.max_level)
 			return 0
 	return 1
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Robotics
+/////////////////////////////////////////////////////////////////////////////////////////
+
+// Mek cyburg
+/datum/job_objective/make_cyborg
+	completion_payment=100
+	per_unit=1
+
+/datum/job_objective/make_cyborg/get_description()
+	return "Make a cyborg. ([units_completed] created.)"
+
+// Mek MoMMI
+/datum/job_objective/make_mommi
+	completion_payment=150
+	per_unit=1
+
+/datum/job_objective/make_mommi/get_description()
+	return "Make a Mobile MMI. ([units_completed] created.)"
+
+// Mek Ripley
+/datum/job_objective/make_ripley
+	completion_payment=600
+	per_unit=1
+
+/datum/job_objective/make_ripley/get_description()
+	return "Make a Ripley. ([units_completed] created.)"
+
+

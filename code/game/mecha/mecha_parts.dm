@@ -479,4 +479,15 @@
 		name = "Circuit board (Odysseus Central Control module)"
 		icon_state = "mainboard"
 
+	phazon
+		origin_tech = "materials=7;bluespace=6"
+
+	phazon/peripherals
+		name = "Circuit board (Phazon Peripherals Control module)"
+		icon_state = "mcontroller"
+
+	phazon/main
+		name = "Circuit board (Phazon Central Control module)"
+		icon_state = "mainboard"
+
 

@@ -57,8 +57,18 @@
 		return 0
 
 
-	proc/spawn_result()
+	proc/spawn_result(mob/user as mob)
 		if(result)
+			// PAY ME
+			var/taskpath=null
+			switch(result)
+				if(/obj/mecha/working/ripley)
+					taskpath = /datum/job_objective/make_ripley
+			if(taskpath)
+				var/datum/job_objective/task = user.mind.findJobTask(taskpath)
+				if(istype(task))
+					task.unit_completed()
+
 			new result(get_turf(holder))
 			spawn()
 				del holder

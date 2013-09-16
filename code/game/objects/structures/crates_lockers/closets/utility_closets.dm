@@ -14,7 +14,7 @@
  */
 /obj/structure/closet/emcloset
 	name = "emergency closet"
-	desc = "It's a storage unit for emergency breathmasks and o2 tanks."
+	desc = "It's a storage unit for emergency breathmasks and o2/n2 tanks."
 	icon_state = "emergency"
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
@@ -26,22 +26,29 @@
 		if ("small")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 			new /obj/item/weapon/tank/emergency_oxygen(src)
+			new /obj/item/weapon/tank/emergency_nitrogen(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/clothing/mask/breath/vox(src)
 		if ("aid")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
+			new /obj/item/weapon/tank/emergency_nitrogen(src)
 			new /obj/item/weapon/storage/toolbox/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/clothing/mask/breath/vox(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 		if ("tank")
 			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/clothing/mask/breath/vox(src)
 		if ("both")
 			new /obj/item/weapon/storage/toolbox/emergency(src)
+			new /obj/item/weapon/tank/emergency_nitrogen(src)
 			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/clothing/mask/breath/vox(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 		if ("nothing")
 			// doot
@@ -58,6 +65,17 @@
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
+
+
+/obj/structure/closet/emcloset/vox
+	name = "vox emergency closet"
+	desc = "It's full of life-saving equipment.  Assuming, that is, that you breathe nitrogen."
+
+/obj/structure/closet/emcloset/vox/New()
+	new /obj/item/weapon/tank/nitrogen(src)
+	new /obj/item/weapon/tank/nitrogen(src)
+	new /obj/item/clothing/mask/breath/vox(src)
+	new /obj/item/clothing/mask/breath/vox(src)
 
 /*
  * Fire Closet

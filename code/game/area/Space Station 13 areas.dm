@@ -1600,7 +1600,7 @@ proc/process_ghost_teleport_locs()
 
 /area/vox_trading_post/vault
 	name = "\improper Vox Vault"
-	icon_state = "vault"
+	icon_state = "primarystorage"
 
 /area/vox_trading_post/hallway
 	name = "\improper Vox Hallways"

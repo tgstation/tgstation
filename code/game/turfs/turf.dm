@@ -232,7 +232,7 @@
 		//W.Assimilate_Air()
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -256,7 +256,7 @@
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
