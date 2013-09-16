@@ -540,3 +540,8 @@
 			return 1
 	else
 		return src.dna && src.dna.mutantrace ? 1 : 0
+
+/mob/living/carbon/getTrail()
+	if(getBruteLoss() < 300)
+		return "ltrails"
+	return "trails"
