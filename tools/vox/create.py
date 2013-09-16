@@ -93,7 +93,7 @@ def GenerateForWord(word,wordfile):
 	wordlist += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
 	oggfile = os.path.abspath(os.path.join('sounds',wordfile+'.ogg'))
-	cachefile = os.path.abspath(os.path.join('cache',wordfile+'.dat'))
+	cachefile = os.path.abspath(os.path.join('cache',wordfile.replace(os.sep,'_').replace('.','')+'.dat'))
 	
 	parent = os.path.dirname(oggfile)
 	if not os.path.isdir(parent):
@@ -109,7 +109,7 @@ def GenerateForWord(word,wordfile):
 			with open(cachefile,'r') as md5f:
 				old_md5=md5f.read()
 		if old_md5 == md5+lexmd5:
-			logging.info('--- Skipping {0}.ogg (exists)'.format(wordfile))
+			logging.info('Skipping {0}.ogg (exists)'.format(wordfile))
 			return
 	logging.info('Generating {0}.ogg ({1})'.format(wordfile,repr(word)))
 	with open('tmp/VOX-word.txt','w') as wf:
