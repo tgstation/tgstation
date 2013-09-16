@@ -53,12 +53,13 @@
 					W.loc = affected_mob.loc
 					W.dropped(affected_mob)
 				var/mob/living/new_mob = new new_form(affected_mob.loc)
-				new_mob.a_intent = "harm"
-				new_mob.universal_speak = 1
-				if(istype(new_mob))
-					affected_mob.mind.transfer_to(new_mob)
-				else
-					new_mob.key = affected_mob.key
+				if(istype(new_mob)) 
+					new_mob.a_intent = "harm"
+					new_mob.universal_speak = 1
+					if(affected_mob.mind)
+						affected_mob.mind.transfer_to(new_mob)
+					else
+						new_mob.key = affected_mob.key
 				del(affected_mob)
 
 
