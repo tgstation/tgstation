@@ -814,6 +814,8 @@
 			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
+
+	update_fire()
 	return
 
 
