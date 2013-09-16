@@ -34,17 +34,6 @@
 	gender = PLURAL
 	random_icon_states = null
 
-/*/obj/effect/decal/cleanable/blood/trails
-	icon_state = "trails"
-	desc = "redrum"
-	gender = PLURAL
-	random_icon_states = null
-/obj/effect/decal/cleanable/blood/ltrails
-	icon_state = "ltrails"
-	desc = "Looks like someone forgot their bodybags."
-	gender = PLURAL
-	random_icon_states = null
-*/
 /obj/effect/decal/cleanable/blood/trail_holder
 	icon_state = "blank"
 	desc = "Your instincts say you shouldn't be following these."
