@@ -195,6 +195,14 @@ Des: Removes all infected images from the alien.
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				del(I)
 	return
+mob/living/carbon/alien/add_trail(newdir)
+	var/mob/living/M = src
+	trail_set = 1
+	if(M.getBruteLoss() >= 300)
+		trail_type = "xtrails"
+	else
+		trail_type = "xltrails"
+	..()
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

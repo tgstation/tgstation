@@ -357,10 +357,17 @@
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
+						if (M.lying && (prob(M.getBruteLoss() / 2)))
+							var/mob/living/carbon/N = M
+							if (istype(N.loc, /turf/simulated))
+								var/newdir = get_dir(T, N.loc)
+								if(newdir != N.dir)
+									newdir = newdir | N.dir
+									if(newdir == 3) //N + S
+										newdir = NORTH
+									else if(newdir == 12) //E + W
+										newdir = EAST
+								N.add_trail(newdir)
 
 						step(pulling, get_dir(pulling.loc, T))
 						M.start_pulling(t)

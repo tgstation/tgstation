@@ -540,3 +540,20 @@
 			return 1
 	else
 		return src.dna && src.dna.mutantrace ? 1 : 0
+
+mob/living/carbon/proc/add_trail(newdir)
+	var/mob/living/carbon/M = src
+	var/blood_exists = 0
+	if(M.getBruteLoss() >= 300 && !trail_set)
+		trail_type = "trails"
+		blood_overwrite = 1
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc)
+		blood_exists = 1
+	if(!blood_exists && !(HUSK in M.mutations))
+		new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/H in M.loc)
+		if((!(newdir in H.existing_dirs) || blood_overwrite) && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			H.existing_dirs += newdir
+			H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+			if(!istype(M, /mob/living/carbon/alien))
+				H.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
