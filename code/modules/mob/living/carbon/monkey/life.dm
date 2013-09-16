@@ -52,6 +52,9 @@
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
 
+	//Check if we're on fire
+	handle_fire()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
@@ -327,10 +330,11 @@
 			var/turf/heat_turf = get_turf(src)
 			environment_heat_capacity = heat_turf.heat_capacity
 
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
+		if(!on_fire)
+			if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
+				var/transfer_coefficient = 1
 
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+				handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 
 		if(stat != 2)
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
@@ -570,3 +574,32 @@
 	proc/handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
+
+///FIRE CODE
+	proc/handle_fire()
+		if(fire_stacks < 0)
+			fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
+			fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+		if(!on_fire)
+			return
+		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+		if(G.oxygen < 1)
+			ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+			return
+		adjustFireLoss(6)
+		var/turf/location = get_turf(src)
+		location.hotspot_expose(700, 50, 1)
+		return
+
+/mob/living/carbon/monkey/IgniteMob()
+	if(fire_stacks > 0)
+		on_fire = 1
+		update_fire()
+
+/mob/living/carbon/monkey/ExtinguishMob()
+	if(on_fire)
+		on_fire = 0
+		fire_stacks = 0
+		update_fire()
+
+//END FIRE CODE
