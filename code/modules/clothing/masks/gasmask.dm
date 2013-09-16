@@ -110,7 +110,7 @@
 				phrase_text = "Stop in the name of the Law."
 				phrase_sound = "bobby"
 			if(3)
-				phrase_text = "Compliance is in your best interest"
+				phrase_text = "Compliance is in your best interest."
 				phrase_sound = "compliance"
 			if(4)
 				phrase_text = "Prepare for justice!"
