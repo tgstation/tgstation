@@ -8,7 +8,7 @@
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
-	cooldown_min = 75 //19 deciseconds reduction per rank
+	cooldown_min = 90 //15 deciseconds reduction per rank
 
 	max_targets = 0
 
@@ -221,7 +221,7 @@
 	invocation = "STAUN EI"
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
-	cooldown_min = 100 //125 deciseconds reduction per rank
+	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	summon_type = "/obj/structure/closet/statue"
 
