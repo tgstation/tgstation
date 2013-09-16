@@ -47,9 +47,12 @@
 				if(!makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("11")
+				usr << "\red Vox Raiders is removed indefinately."
+				/* REMOVED as requested
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
 					usr << "\red Unfortunately there weren't enough candidates available."
+				*/
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]

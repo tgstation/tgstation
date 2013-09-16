@@ -503,6 +503,7 @@
 					dat += "<tr><td><i>Wizard not found!</i></td></tr>"
 			dat += "</table>"
 
+		/* REMOVED as requested
 		if(ticker.mode.raiders.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Raiders</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/raider in ticker.mode.raiders)
@@ -516,6 +517,7 @@
 						<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"}
 					// END AUTOFIX
 			dat += "</table>"
+		*/
 
 		/*
 		if(ticker.mode.ninjas.len > 0)
