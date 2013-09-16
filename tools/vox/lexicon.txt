@@ -1,0 +1,29 @@
+# VOX LEXICON
+#
+# Parsed by create.py.
+# Format:
+#word: (noun|adjective|verb) "f aa" 'n iy m' 's'
+# NOTE: Doublequotes indicates primary stress, single indicates no stress.
+#
+xenomorph: noun "z iy" 'n ow' 'm ao r f'
+cyborg: noun "s ay" 'b ao r g'
+vox: noun 'v aa k s'
+centcomm: noun "s eh n t" 'k aa m'
+asimov: adjective "ae" 'z ih' 'm aa v'
+aft: adjective 'ae f t'
+fore: adjective 'f ao r'
+medbay: noun "m eh d" 'b ey'
+solar: noun "s ow" 'l er'
+array: noun 'ah r ey'
+sarah: noun "s eh" 'r ah'
+connor: noun "k ao n" 'n er'
+
+fuck: noun 'f ah k'
+shit: noun 'sh ih t'
+bitch: noun "b ih t" 'ch'
+coward: noun "k aw" 'w er d'
+asshole: noun "a s" 'h ow l'
+shitting: verb "sh ih t" 'iy ng'
+penis: noun "p iy" 'n ih s'
+
+to: noun 't uw'
