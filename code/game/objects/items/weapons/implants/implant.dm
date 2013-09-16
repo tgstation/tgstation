@@ -356,8 +356,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		H << "<B>\red You've been shown the Greytide by [user.name]!</B> You now must lay down your life to protect them and assist in their goals at any cost."
 		var/datum/objective/protect/p = new
 		p.owner = H.mind
-		p.find_target()
-		p.target = user.mind
+		p.target = user:mind
+		p.explanation_text = "Protect [user:real_name], the [user:mind:assigned_role=="MODE" ? (user:mind:special_role) : (user:mind:assigned_role)]."
 		H.mind.objectives += p
 		for(var/datum/objective/objective in H.mind.objectives)
 			H << "<B>Objective #1</B>: [objective.explanation_text]"
