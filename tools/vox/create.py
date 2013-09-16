@@ -35,6 +35,12 @@ def md5sum(filename):
              md5.update(chunk)
     return md5.hexdigest()
 REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
+SOX_ARGS  = 'stretch 1.1'
+#SOX_ARGS += ' phaser 0.89 0.85 2 0.24 1 -t'
+SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
+SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
+SOX_ARGS += ' norm'
+SOX_ARGS += ' reverb'
 wordlist=[]
 def cmd(command):
 	logging.debug('>>> '+command)
@@ -44,8 +50,8 @@ def cmd(command):
 		output = subprocess.check_output(command,stderr=subprocess.STDOUT,shell=True)
 		return True
 	except Exception as e:
-		print(output)
-		print(e)
+		logging.error(output)
+		logging.error(e)
 		return False
 	
 class Pronunciation:
@@ -83,13 +89,24 @@ class Pronunciation:
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
 def GenerateForWord(word,wordfile):
-	global wordlist, lexmd5
+	global wordlist, lexmd5, SOX_ARGS
 	wordlist += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
-	if os.path.isfile('sounds/'+wordfile+'.ogg'):
+	oggfile = os.path.abspath(os.path.join('sounds',wordfile+'.ogg'))
+	cachefile = os.path.abspath(os.path.join('cache',wordfile+'.dat'))
+	
+	parent = os.path.dirname(oggfile)
+	if not os.path.isdir(parent):
+		os.makedirs(parent)
+	
+	parent = os.path.dirname(cachefile)
+	if not os.path.isdir(parent):
+		os.makedirs(parent)
+	
+	if os.path.isfile(oggfile):
 		old_md5 = ''
-		if os.path.isfile('cache/'+wordfile):
-			with open('cache/'+wordfile,'r') as md5f:
+		if os.path.isfile(cachefile):
+			with open(cachefile,'r') as md5f:
 				old_md5=md5f.read()
 		if old_md5 == md5+lexmd5:
 			logging.info('--- Skipping {0}.ogg (exists)'.format(wordfile))
@@ -97,14 +114,16 @@ def GenerateForWord(word,wordfile):
 	logging.info('Generating {0}.ogg ({1})'.format(wordfile,repr(word)))
 	with open('tmp/VOX-word.txt','w') as wf:
 		wf.write(word)
+	
 	text2wave = 'text2wave tmp/VOX-word.txt -o tmp/VOX-word.wav'
 	if os.path.isfile('tmp/VOXdict.lisp'):
 		text2wave = 'text2wave -eval tmp/VOXdict.lisp tmp/VOX-word.txt -o tmp/VOX-word.wav'
-	with open('cache/'+wordfile,'w') as wf:
+	
+	with open(cachefile,'w') as wf:
 		wf.write(md5+lexmd5)
 	cmds=[]
 	cmds += [text2wave]
-	cmds += ['sox tmp/VOX-word.wav tmp/VOX-sox-word.wav stretch 1.1 phaser 0.89 0.85 2 0.24 1 -t echo 0.8 0.88 6.0 0.4 norm reverb']
+	cmds += ['sox tmp/VOX-word.wav tmp/VOX-sox-word.wav '+SOX_ARGS]
 	cmds += ['oggenc tmp/VOX-sox-word.wav -o sounds/'+wordfile+'.ogg']
 	for command in cmds:
 		if not cmd(command):

@@ -663,3 +663,17 @@ shitting = shitting
 
 # Beepsky's famous emag line:
 voxtest2 = Fuck your cunt you shit eating cocksucker, man eat a dong fucking ass ramming shit fuck eat penises in your fuck face and shit out abortions of fuck and do shit in your ass you cockfuck shit monkey ass wanker from the depths of shit
+
+########################
+## AI REPLACEMENT LINES
+########################
+AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
+AI/animes = Wow!  This is just like one of those japanese animes.
+AI/command_report = Attention: New command report created.
+AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
+AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
+AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
+AI/meteors = Meteors detected on collision course with the station.
+AI/newroundsexy = You want to put a banging donk on it.
+AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
+
