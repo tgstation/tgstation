@@ -29,6 +29,10 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 			locked = 1
 			update_icon()
 
+		if("toggle_lock")
+			locked = !locked
+			update_icon()
+
 		if("secure_open")
 			locked = 0
 			update_icon()
@@ -90,7 +94,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 
 			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	return
-		
+
 obj/machinery/door/airlock/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	if(new_frequency)

@@ -111,6 +111,7 @@ def PerformServerReadyCheck(serverState):
 		nudgemsg += "exited."
 	if srf_exists or not serverState:
 		send_nudge(nudgemsg+' Now recompiling.')
+		waiting_on_server_response=False
 		if srf_exists:
 			os.remove(serverreadyfile)
 		if os.path.isfile(updatereadyfile):
