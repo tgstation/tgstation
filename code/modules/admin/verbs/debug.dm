@@ -1011,7 +1011,31 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		magic.output=200000 // AKA rape
 		magic.online=1
 
-	world << "<span style=\"color:red;font-size=5;font-weight:bold\">LET THERE BE JUICE</span>"
+	world << "<b>LET THERE BE JUICE</b>"
+
+
+// Getting tired of doing this shit every fucking round when I'm testing something atmos-related
+/client/proc/setup_atmos()
+
+	set category = "Debug"
+	set name = "Start Atmos"
+	set desc = "WOW ATMOS DID THEIR JOBS!!!1"
+
+	if(alert("Are you sure? This will completely fuck over your round!",,"Yes","No") != "Yes")
+		return
+
+	log_admin("[key_name(usr)] haxed atmos.")
+	message_admins("\blue [key_name_admin(usr)] haxed atmos.", 1)
+
+	for(var/obj/machinery/atmospherics/binary/pump/P in world)
+		//if(p.name == "Air to Distro")
+		P.target_pressure=4500
+	for(var/obj/machinery/atmospherics/unary/vent_pump/high_volume/P in world)
+		if(P.id_tag=="air_out")
+			P.internal_pressure_bound=4500
+
+	world << "<b>LET THERE BE AIR</b>"
+
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
