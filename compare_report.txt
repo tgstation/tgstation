@@ -285,6 +285,7 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - handtv
+ + modkit
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
  - tea
@@ -314,6 +315,7 @@
  - mommispawner-building
  - mommispawner-idle
  - mommispawner-nopower
+ - mommispawner-recharging
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\shards.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\shards.dmi
  + shrapnellarge
