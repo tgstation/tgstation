@@ -20,7 +20,7 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -39,7 +39,7 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -58,7 +58,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0

@@ -134,6 +134,9 @@ var/shuttlecoming = 0
 var/join_motd = null
 var/forceblob = 0
 
+// nanomanager, the manager for Nano UIs
+var/datum/nanomanager/nanomanager = new()
+
 //This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
 var/MAX_EX_DEVESTATION_RANGE = 3
 var/MAX_EX_HEAVY_RANGE = 7

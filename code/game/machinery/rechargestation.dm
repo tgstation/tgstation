@@ -284,7 +284,7 @@
 			if(occupant.module.emag)
 				if(istype(occupant.module.emag, /obj/item/weapon/reagent_containers/spray))
 					var/obj/item/weapon/reagent_containers/spray/S = occupant.module.emag
-					if(S.name == "Polyacid spray")
+					if(S.name == "polyacid spray")
 						S.reagents.add_reagent("pacid", 2)
-					else if(S.name == "Lube spray")
+					else if(S.name == "lube spray")
 						S.reagents.add_reagent("lube", 2)
