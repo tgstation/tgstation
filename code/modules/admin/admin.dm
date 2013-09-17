@@ -428,14 +428,16 @@ var/global/floorIsLava = 0
 			<BR>
 			"}
 
-	if(check_rights(R_FUN,0))
+	if(check_rights(R_FUN,0))//TODO: Make all this hardcoded random event panel stuff its own proc so we can actually remove poor events without making the code stop compiling
 		dat += {"
 			<B>'Random' Events</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event.</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
-			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
+			<A href='?src=\ref[src];secretsfun=blackhole'>Spawn a black hole</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
+			<A href='?src=\ref[src];secretsfun=pyroanomalies'>Spawn a pyroclastic anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
