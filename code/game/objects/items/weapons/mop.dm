@@ -28,7 +28,8 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 
 
-/obj/item/weapon/mop/afterattack(atom/A, mob/user)
+/obj/item/weapon/mop/afterattack(atom/A, mob/user, proximity)
+	if(!proximity) return
 	if(istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
 		if(reagents.total_volume < 1)
 			user << "<span class='notice'>Your mop is dry!</span>"

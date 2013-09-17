@@ -338,3 +338,15 @@
 		initial_loc.air_vent_names -= id_tag
 	..()
 	return
+
+/*
+	Alt-click to ventcrawl - Monkeys, aliens, and slimes
+	This is a little buggy but somehow that just seems to plague ventcrawl.
+	I am sorry, I don't know why.
+*/
+/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/carbon/ML)
+	if(!istype(ML))
+		return
+	var/list/ventcrawl_verbs = list(/mob/living/carbon/monkey/verb/ventcrawl, /mob/living/carbon/alien/verb/ventcrawl, /mob/living/carbon/slime/verb/ventcrawl)
+	if(length(ML.verbs & ventcrawl_verbs)) // alien queens have this removed, an istype would be complicated
+		ML.handle_ventcrawl(src)

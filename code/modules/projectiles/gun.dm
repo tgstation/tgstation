@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_class = 3.0
@@ -41,7 +41,7 @@
 
 
 	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
-		if(flag)	//we're placing gun on a table or in backpack
+		if(flag)	//It's adjacent, is the user, or is on the user's person
 			return
 
 		//Exclude lasertag guns from the CLUMSY check.

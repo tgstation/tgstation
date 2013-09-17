@@ -99,7 +99,7 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS
+	flags = FPRINT | CONDUCT | TABLEPASS
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	var/pictures_max = 10
