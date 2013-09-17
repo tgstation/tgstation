@@ -51,7 +51,7 @@ var/list/doppler_arrays = list()
 	user << browse(listing, "window=bhangmeter")
 	onclose(user, "bhangmeter")
 	return
-/obj/machinery/doppler_array/proc/sense_explosion(var/x0,var/y0,var/z0,var/devastation_range,var/heavy_impact_range,var/light_impact_range,var/took)
+/obj/machinery/doppler_array/proc/sense_explosion(var/x0,var/y0,var/z0,var/devastation_range,var/heavy_impact_range,var/light_impact_range,var/took, cap = 0)
 	if(stat & NOPOWER)	return
 	if(z != z0)			return
 
@@ -74,12 +74,12 @@ var/list/doppler_arrays = list()
 	if(!(direct & dir))	return
 	*/
 
-	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0],[y0]). Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took]seconds.  Data logged."
+	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0],[y0]). [cap ? "\[Theoretical Results\] " : ""]Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took]seconds.  Data logged."
 	src.visible_message( \
 		"<span class='game say'><span class='name'>[src]</span> states coldly, \"[message]\"</span>", \
 		"You hear muffled speech." \
 	)
-	var/bang = "<tr><td>([x0],[y0])</td><td>([devastation_range],[heavy_impact_range],[light_impact_range])</td><td>[took]s</td></tr>"
+	var/bang = "<tr><td>([x0],[y0])</td><td>([cap ? "\[Theoretical Results\] " : ""][devastation_range],[heavy_impact_range],[light_impact_range])</td><td>[took]s</td></tr>"
 	bangs+=bang
 
 

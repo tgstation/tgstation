@@ -7,7 +7,7 @@
 	else		return dy + (0.5*dx)
 
 
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
+proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, squelch = 0)
 	src = null	//so we don't abort once src is deleted
 	spawn(0)
 		if(config.use_recursive_explosions)
@@ -67,10 +67,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		if(Debug2)	world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
 		//Machines which report explosions.
-		for(var/i,i<=doppler_arrays.len,i++)
-			var/obj/machinery/doppler_array/Array = doppler_arrays[i]
-			if(Array)
-				Array.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
+		if(!squelch)
+			for(var/i,i<=doppler_arrays.len,i++)
+				var/obj/machinery/doppler_array/Array = doppler_arrays[i]
+				if(Array)
+					Array.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
 
 		sleep(8)
 
