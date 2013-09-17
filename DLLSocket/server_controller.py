@@ -92,6 +92,10 @@ def Compile(serverState):
 	if serverState:
 		send_nudge('Update completed. Restarting...')
 		log.info('Server updated. Restarting...')
+	
+	# Recheck in a bit to be sure
+	lastState=False
+	
 	subprocess.call(RESTART_COMMAND,shell=True)
 	
 def PerformServerReadyCheck(serverState):

@@ -30,6 +30,9 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 			update_icon()
 
 		if("toggle_lock")
+			if(!density)
+				close(1)
+				sleep(2)
 			locked = !locked
 			update_icon()
 
