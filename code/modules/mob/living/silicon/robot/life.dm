@@ -322,18 +322,7 @@
 	location.hotspot_expose(700, 50, 1)
 	return
 
-/mob/living/silicon/robot/IgniteMob()
-	if(fire_stacks > 0)
-		on_fire = 1
-		update_fire()
-
-/mob/living/silicon/robot/ExtinguishMob()
-	if(on_fire)
-		on_fire = 0
-		fire_stacks = 0
-		update_fire()
-
-/mob/living/silicon/robot/proc/update_fire()
+/mob/living/silicon/robot/update_fire()
 	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 	if(on_fire)
 		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")

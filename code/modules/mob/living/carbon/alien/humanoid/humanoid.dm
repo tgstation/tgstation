@@ -411,14 +411,3 @@ In all, this is a lot like the monkey code. /N
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				u_equip(r_store)
 				u_equip(l_store)
-
-/mob/living/carbon/alien/humanoid/IgniteMob()
-	if(fire_stacks > 0)
-		on_fire = 1
-		update_fire()
-
-/mob/living/carbon/alien/humanoid/ExtinguishMob()
-	if(on_fire)
-		on_fire = 0
-		fire_stacks = 0
-		update_fire()

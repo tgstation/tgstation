@@ -285,7 +285,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	apply_overlay(BODY_LAYER)
 
 
-/mob/living/carbon/human/proc/update_fire()
+/mob/living/carbon/human/update_fire()
 
 	remove_overlay(FIRE_LAYER)
 	if(on_fire)
