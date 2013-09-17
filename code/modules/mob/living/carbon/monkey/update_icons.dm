@@ -154,7 +154,7 @@
 	if(client)
 		client.screen |= contents
 
-/mob/living/carbon/monkey/proc/update_fire()
+/mob/living/carbon/monkey/update_fire()
 	overlays_lying[M_FIRE_LAYER] = null
 	overlays_standing[M_FIRE_LAYER] = null
 	if(on_fire)

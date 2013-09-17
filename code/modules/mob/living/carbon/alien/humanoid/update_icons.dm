@@ -86,7 +86,7 @@
 	if(update_icons)
 		update_icons()
 
-/mob/living/carbon/alien/humanoid/proc/update_fire()
+/mob/living/carbon/alien/humanoid/update_fire()
 	if(on_fire)
 		overlays_lying[X_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"=-X_FIRE_LAYER)
 		overlays_standing[X_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-X_FIRE_LAYER)

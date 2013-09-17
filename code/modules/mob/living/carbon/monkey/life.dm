@@ -591,17 +591,6 @@
 		location.hotspot_expose(700, 50, 1)
 		return
 
-/mob/living/carbon/monkey/IgniteMob()
-	if(fire_stacks > 0)
-		on_fire = 1
-		update_fire()
-
-/mob/living/carbon/monkey/ExtinguishMob()
-	if(on_fire)
-		on_fire = 0
-		fire_stacks = 0
-		update_fire()
-
 /mob/living/carbon/monkey/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Gain fire stacks when standing in a hotspot so ATMOS can light you up
 	adjust_fire_stacks(5)
 	if(fire_stacks > 9 && !on_fire)

@@ -193,17 +193,3 @@ emp_act
 
 		if(I.force > 10 || I.force >= 5 && prob(33))
 			forcesay(hit_appends)	//forcesay checks stat already.
-
-///Mobs on Fire code//
-/mob/living/carbon/human/IgniteMob()
-	if(fire_stacks > 0)
-		on_fire = 1
-		update_fire()
-
-/mob/living/carbon/human/ExtinguishMob()
-	if(on_fire)
-		on_fire = 0
-		fire_stacks = 0
-		update_fire()
-
-//End Fire
