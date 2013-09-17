@@ -61,14 +61,6 @@
 	else
 		..()
 
-
-/obj/machinery/computer/card/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/card/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
-
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
 	return (jobtitle in blacklisted)

@@ -13,31 +13,10 @@
 	tracked = list()
 	..()
 
-
-/obj/machinery/computer/crew/attack_ai(mob/user)
-	attack_hand(user)
-	interact(user)
-
-
 /obj/machinery/computer/crew/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 	interact(user)
-
-
-/obj/machinery/computer/crew/update_icon()
-
-	if(stat & BROKEN)
-		icon_state = "crewb"
-	else
-		if(stat & NOPOWER)
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
-		else
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-
 
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return

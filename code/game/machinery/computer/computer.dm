@@ -85,12 +85,13 @@
 /obj/machinery/computer/power_change()
 	..()
 	update_icon()
-
+	return
 
 /obj/machinery/computer/proc/set_broken()
-	stat |= BROKEN
-	update_icon()
-
+	if(circuit) //no circuit, no breaking
+		stat |= BROKEN
+		update_icon()
+	return
 
 /obj/machinery/computer/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
@@ -112,12 +113,32 @@
 				A.state = 4
 				A.icon_state = "4"
 			del(src)
-	else
-		src.attack_hand(user)
 	return
 
+/obj/machinery/computer/attack_hand(user)
+	. = ..()
+	return
 
+/obj/machinery/computer/attack_paw(mob/user)
+	if(circuit)
+		if(prob(10))
+			user.visible_message("[user.name] smashes the [src.name] with /his paws.",\
+			"You smash the [src.name] with your paws.",\
+			"You hear a smashing sound")
+			set_broken()
+			return
+	user.visible_message("[user.name] smashes agaisnt the [src.name] with /his paws.",\
+	"You smash agaisnt the [src.name] with your paws.",\
+	"You hear a clicking sound")
 
-
-
-
+/obj/machinery/computer/attack_alien(mob/user)
+	if(circuit)
+		if(prob(80))
+			user.visible_message("[user.name] smashes the [src.name] with /his claws.",\
+			"You smash the [src.name] with your claws.",\
+			"You hear a smashing sound")
+			set_broken()
+			return
+	user.visible_message("[user.name] smashes agaisnt the [src.name] with /his claws.",\
+	"You smash agaisnt the [src.name] with your claws.",\
+	"You hear a clicking sound")

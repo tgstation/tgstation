@@ -269,15 +269,9 @@
 		if(authenticated == 1)
 			authenticated = 2
 		user << "You scramble the communication routing circuits!"
-	..()
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-
-/obj/machinery/computer/communications/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
+	else
+		..()
+	return
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())

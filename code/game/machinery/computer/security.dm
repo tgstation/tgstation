@@ -29,13 +29,8 @@
 		O.loc = src
 		scan = O
 		user << "You insert [O]."
-	..()
-
-/obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/secure_data/attack_paw(mob/user as mob)
-	return attack_hand(user)
+	else
+		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)

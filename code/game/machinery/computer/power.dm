@@ -22,51 +22,10 @@
 	if(attached)
 		powernet = attached.get_powernet()
 
-
-/obj/machinery/power/monitor/attack_ai(mob/user)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
-
 /obj/machinery/power/monitor/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 	interact(user)
-
-/obj/machinery/power/monitor/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/powermonitor/M = new /obj/item/weapon/circuitboard/powermonitor( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/powermonitor/M = new /obj/item/weapon/circuitboard/powermonitor( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else
-		src.attack_hand(user)
-	return
 
 /obj/machinery/power/monitor/interact(mob/user)
 
@@ -127,18 +86,3 @@
 	if( href_list["update"] )
 		src.updateDialog()
 		return
-
-
-/obj/machinery/power/monitor/power_change()
-
-	if(stat & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				stat |= NOPOWER
-

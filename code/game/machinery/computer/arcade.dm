@@ -51,13 +51,6 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-
-/obj/machinery/computer/arcade/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/arcade/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/arcade/attack_hand(mob/user as mob)
 	if(..())
 		return
@@ -241,27 +234,10 @@
 
 
 		src.updateUsrDialog()
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/arcade/M = new /obj/item/weapon/circuitboard/arcade( A )
-			for (var/obj/C in src)
-				C.loc = src.loc
-			A.circuit = M
-			A.anchored = 1
+	else
+		..()
+	return
 
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				user << "\blue You disconnect the monitor."
-				A.state = 4
-				A.icon_state = "4"
-
-			del(src)
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
 		..(severity)

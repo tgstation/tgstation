@@ -15,6 +15,7 @@
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
+	..()
 
 
 /obj/machinery/computer/pod/proc/alarm()
@@ -39,15 +40,6 @@
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
 		if(M.id == id)
 			M.close()
-
-
-/obj/machinery/computer/pod/attack_ai(mob/user)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/pod/attack_paw(mob/user)
-	return attack_hand(user)
-
 
 /obj/machinery/computer/pod/attack_hand(mob/user)
 	if(..())
