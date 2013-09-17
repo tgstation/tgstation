@@ -21,10 +21,13 @@
 		icon_state = mineralType
 		name = "[mineralType] door"
 		air_update_turf(1)
+		return
 
 	Del()
+		density = 0
 		air_update_turf(1)
 		..()
+		return
 
 	Move()
 		air_update_turf(1)

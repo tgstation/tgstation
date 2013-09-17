@@ -78,7 +78,7 @@ var/list/department_radio_keys = list(
 		if(!istype(dongle)) return
 		if(dongle.translate_hive) return 1
 
-/mob/living/say(var/message)
+/mob/living/say(var/message, var/bubble_type)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
@@ -371,31 +371,22 @@ var/list/department_radio_keys = list(
 			if(hascall(M,"show_message"))
 				M:show_message(rendered, 2)
 
-			/*
-			if(M.client)
-
-				if(!M.client.bubbles || M == src)
-					var/image/I = image('icons/effects/speechbubble.dmi', B, "override")
-					I.override = 1
-					M << I
-			*/ /*
-
-		flick("[presay]say", B)
-
-		if(istype(loc, /turf))
-			B.loc = loc
-		else
-			B.loc = loc.loc
-
-		spawn()
-			sleep(11)
-			del(B)
-		*/
-
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/M in heard_a + heard_b)
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
+	flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 	log_say("[name]/[key] : [message]")
 
 /mob/living/proc/GetVoice()
 	return name
 
-
+/mob/living/proc/say_test(var/text)
+	var/ending = copytext(text, length(text))
+	if (ending == "?")
+		return "1"
+	else if (ending == "!")
+		return "2"
+	return "0"
