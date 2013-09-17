@@ -59,6 +59,46 @@ class Pronunciation:
 		self.syllables=[]
 		self.name=[]
 		self.type='n'
+		self.validPhonemes=[
+			'aa',
+			'ae',
+			'ah',
+			'ao',
+			'aw',
+			'ay',
+			'b',
+			'ch',
+			'd',
+			'dh',
+			'eh',
+			'er',
+			'ey',
+			'f',
+			'g',
+			'hh',
+			'ih',
+			'iy',
+			'jh',
+			'k',
+			'l',
+			'm',
+			'n',
+			'ng',
+			'ow',
+			'oy',
+			'p',
+			'r',
+			's',
+			'sh',
+			't',
+			'th',
+			'uh',
+			'uw',
+			'v',
+			'w',
+			'y',
+			'z',
+			'zh']
 	"""
 	( "walkers" n ((( w oo ) 1) (( k @ z ) 0)) )
 	( "present" v ((( p r e ) 0) (( z @ n t ) 1)) )
@@ -86,6 +126,10 @@ class Pronunciation:
 			stressLevel=0
 			if match.group(1) == '"':
 				stressLevel=1
+			for phoneme in match.group(2).split(' '):
+				if phoneme not in self.validPhonemes:
+					logging.error('INVALID PHONEME "{0}" IN LEX ENTRY "{1}"'.format(phoneme,self.name))
+					sys.exit(1)
 			self.syllables += [(match.group(2), stressLevel)]
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
