@@ -40,7 +40,7 @@ SOX_ARGS  = 'stretch 1.1'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
 SOX_ARGS += ' norm'
-SOX_ARGS += ' reverb'
+#SOX_ARGS += ' reverb'
 wordlist=[]
 def cmd(command):
 	logging.debug('>>> '+command)
@@ -146,10 +146,6 @@ def ProcessLexicon(filename):
 					lisp.write(p.toLisp())
 
 logging.basicConfig(format='%(asctime)s [%(levelname)-8s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
-if not os.path.isdir('sounds'):
-	os.makedirs('sounds')
-if not os.path.isdir('cache'):
-	os.makedirs('cache')
 if not os.path.isdir('tmp'):
 	os.makedirs('tmp')
 lexmd5=md5sum('lexicon.txt')
