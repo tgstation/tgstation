@@ -49,6 +49,11 @@ var/global/datum/controller/gameticker/ticker
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
+				watchdog.check_for_update()
+				if(watchdog.waiting)
+					world << "\blue Server update detected, restarting momentarily."
+					watchdog.signal_ready()
+					return
 			if(going)
 				pregame_timeleft--
 
@@ -301,6 +306,7 @@ var/global/datum/controller/gameticker/ticker
 		mode.process_job_tasks()
 
 		emergency_shuttle.process()
+		watchdog.check_for_update()
 
 		var/force_round_end=0
 
