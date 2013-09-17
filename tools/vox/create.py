@@ -69,6 +69,7 @@ class Pronunciation:
 		for syllable in self.syllables:
 			lispSyllables.append('( ( {0} ) {1} )'.format(syllable[0],syllable[1]))
 		return '(lex.add.entry\n\t\'( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
+		#return '(lex.add.entry ( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
 		
 	"""
 	walkers: noun "w oo" 'k @ z'
@@ -90,7 +91,8 @@ class Pronunciation:
 	
 def GenerateForWord(word,wordfile):
 	global wordlist, lexmd5, SOX_ARGS
-	wordlist += [wordfile]
+	if '/' not in word:
+		wordlist += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
 	oggfile = os.path.abspath(os.path.join('sounds',wordfile+'.ogg'))
 	cachefile = os.path.abspath(os.path.join('cache',wordfile.replace(os.sep,'_').replace('.','')+'.dat'))
