@@ -842,6 +842,7 @@
 #include "code\modules\events\wallrot.dm"
 #include "code\modules\ext_scripts\irc.dm"
 #include "code\modules\ext_scripts\python.dm"
+#include "code\modules\ext_scripts\watchdog.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"
