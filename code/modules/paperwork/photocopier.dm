@@ -20,8 +20,9 @@
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/copies = 1	//how many copies to print!
-	var/toner = 30 //how much toner is left! woooooo~
+	var/toner = 40 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+	var/greytoggle = "Greyscale"
 
 
 /obj/machinery/photocopier/attack_ai(mob/user)
@@ -43,8 +44,12 @@
 			dat += "Printing: [copies] copies."
 			dat += "<a href='byond://?src=\ref[src];min=1'>-</a> "
 			dat += "<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"
+			if(photocopy)
+				dat += "Printing in <a href='byond://?src=\ref[src];colortoggle=1'>[greytoggle]</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
+	if(istype(user,/mob/living/silicon/ai))
+		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
@@ -78,36 +83,52 @@
 			updateUsrDialog()
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
-				if(toner > 0)
+				if(toner >= 5)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
 					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 					var/icon/img = icon(photocopy.img)
-					if(toner > 10)	//plenty of toner, go straight greyscale
-						I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))		//I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
-						img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-					else			//not much toner left, lighten the photo
-						I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-						img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+					if(greytoggle == "Greyscale")
+						if(toner > 10) //plenty of toner, go straight greyscale
+							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
+							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+						else //not much toner left, lighten the photo
+							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+						toner -= 5	//photos use a lot of ink!
+					else if(greytoggle == "Color")
+						if(toner >= 10)
+							toner -= 10 //Color photos use even more ink!
+						else
+							continue
 					p.icon = I
 					p.img = img
 					p.name = photocopy.name
 					p.desc = photocopy.desc
 					p.scribble = photocopy.scribble
-					toner -= 5	//photos use a lot of ink!
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
+					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
+
 					sleep(15)
 				else
 					break
 			updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			copy.loc = usr.loc
-			usr.put_in_hands(copy)
+			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
+				copy.loc = usr.loc
+				usr.put_in_hands(copy)
+			else
+				copy.loc = src.loc
 			usr << "<span class='notice'>You take [copy] out of [src].</span>"
 			copy = null
 			updateUsrDialog()
 		else if(photocopy)
-			photocopy.loc = usr.loc
-			usr.put_in_hands(photocopy)
+			if(!istype(usr,/mob/living/silicon/ai)) //same with this one, wtf
+				photocopy.loc = usr.loc
+				usr.put_in_hands(photocopy)
+			else
+				photocopy.loc = src.loc
 			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
 			photocopy = null
 			updateUsrDialog()
@@ -119,6 +140,38 @@
 		if(copies < maxcopies)
 			copies++
 			updateUsrDialog()
+	else if(href_list["aipic"])
+		if(!istype(usr,/mob/living/silicon/ai)) return
+		if(toner >= 5)
+			var/list/nametemp = list()
+			var/find
+			var/datum/picture/selection
+			var/mob/living/silicon/ai/tempAI = usr
+			for(var/datum/picture/t in tempAI.aicamera.aipictures)
+				nametemp += t.fields["name"]
+			find = input("Select picture (numbered in order taken)") in nametemp
+			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+			for(var/datum/picture/q in tempAI.aicamera.aipictures)
+				if(q.fields["name"] == find)
+					selection = q
+					break
+			var/icon/I = selection.fields["icon"]
+			var/icon/img = selection.fields["img"]
+			p.icon = I
+			p.img = img
+			p.desc = selection.fields["desc"]
+			p.blueprints = selection.fields["blueprints"]
+			p.pixel_x = rand(-10, 10)
+			p.pixel_y = rand(-10, 10)
+			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
+			sleep(15)
+		updateUsrDialog()
+	else if(href_list["colortoggle"])
+		if(greytoggle == "Greyscale")
+			greytoggle = "Color"
+		else
+			greytoggle ="Greyscale"
+		updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
@@ -145,7 +198,7 @@
 		if(toner == 0)
 			user.drop_item()
 			del(O)
-			toner = 30
+			toner = 40
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			updateUsrDialog()
 		else
