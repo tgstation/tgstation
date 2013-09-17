@@ -168,11 +168,6 @@
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(stat & BROKEN) return
-
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("SMES",src,user:wear_suit)
-			return
 	interact(user)
 
 

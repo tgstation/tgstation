@@ -180,15 +180,6 @@
 			A.transfer_ai("INACTIVE","AICARD",src,user)
 		return
 
-	attack_hand(var/mob/user as mob)
-		if(ishuman(user))//Checks to see if they are ninja
-			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-				if(user:wear_suit:s_control)
-					user:wear_suit:transfer_ai("INACTIVE","NINJASUIT",src,user)
-				else
-					user << "\red <b>ERROR</b>: \black Remote access channel disabled."
-		return
-
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
 If adding stuff to this, don't forget that an AI need to cancel_camera() whenever it physically moves to a different location.
