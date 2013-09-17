@@ -23,6 +23,9 @@
 /*
 	This runs the gamut of what ninja gloves can do
 	The other option would be a dedicated ninja touch bullshit proc on everything
+	which would probably more efficient, but ninjas are pretty rare.
+	This was mostly introduced to keep ninja code from contaminating other code;
+	with this in place it would be easier to untangle the rest of it.
 
 	For the drain proc, see events/ninja.dm
 */

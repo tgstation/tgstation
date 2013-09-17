@@ -1,8 +1,10 @@
 /*
 	Screen objects
-	Todo: do better
+	Todo: improve/re-implement
 
-	Screen objects are only used for the hud and should not appear anywhere else
+	Screen objects are only used for the hud and should not appear anywhere "in-game".
+	They are used with the client/screen list and the screen_loc var.
+	For more information, see the byond documentation on the screen_loc and screen vars.
 */
 /obj/screen
 	name = ""

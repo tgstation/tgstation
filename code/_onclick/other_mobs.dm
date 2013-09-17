@@ -1,12 +1,15 @@
+/*
+	Humans:
+	Adds an exception for gloves, to allow special glove types like the ninja ones.
 
-// Humans
+	Otherwise pretty standard.
+*/
 /mob/living/carbon/human/UnarmedAttack(var/atom/A, var/proximity)
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
@@ -38,8 +41,9 @@
 				return
 		A.attack_tk(src)
 
-
-// Animals & All Unspecified
+/*
+	Animals & All Unspecified
+*/
 /mob/living/UnarmedAttack(var/atom/A)
 	A.attack_animal(src)
 /atom/proc/attack_animal(mob/user as mob)
@@ -47,14 +51,21 @@
 /mob/living/RestrainedClickOn(var/atom/A)
 	return
 
-
-// Monkeys
+/*
+	Monkeys
+*/
 /mob/living/carbon/monkey/UnarmedAttack(var/atom/A)
 	A.attack_paw(src)
 /atom/proc/attack_paw(mob/user as mob)
 	return
 
-
+/*
+	Monkey RestrainedClickOn() was apparently the
+	one and only use of all of the restrained click code
+	(except to stop you from doing things while handcuffed);
+	moving it here instead of various hand_p's has simplified
+	things considerably
+*/
 /mob/living/carbon/monkey/RestrainedClickOn(var/atom/A)
 	if(a_intent != "harm" || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -80,13 +91,16 @@
 		for(var/mob/O in viewers(ML, null))
 			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)
 
-//Aliens - Defaults to same as monkey in most places
-/mob/living/carbon/alien/humanoid/UnarmedAttack(var/atom/A)
+/*
+	Aliens
+	Defaults to same as monkey in most places
+*/
+/mob/living/carbon/alien/UnarmedAttack(var/atom/A)
 	A.attack_alien(src)
 /atom/proc/attack_alien(mob/user as mob)
 	attack_paw(user)
 	return
-/mob/living/carbon/alien/humanoid/RestrainedClickOn(var/atom/A)
+/mob/living/carbon/alien/RestrainedClickOn(var/atom/A)
 	return
 
 // Babby aliens
@@ -96,7 +110,10 @@
 	return
 
 
-// Slimes
+/*
+	Slimes
+	Nothing happening here
+*/
 /mob/living/carbon/slime/UnarmedAttack(var/atom/A)
 	A.attack_slime(src)
 /atom/proc/attack_slime(mob/user as mob)
@@ -104,14 +121,9 @@
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
 	return
 
+/*
+	New Players:
+	Have no reason to click on anything at all.
+*/
 /mob/new_player/ClickOn()
 	return
-
-
-// Allow ventcrawling - Monkeys, aliens, and slimes
-/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/carbon/ML)
-	if(!istype(ML))
-		return
-	var/list/ventcrawl_verbs = list(/mob/living/carbon/monkey/verb/ventcrawl, /mob/living/carbon/alien/verb/ventcrawl, /mob/living/carbon/slime/verb/ventcrawl)
-	if(length(ML.verbs & ventcrawl_verbs)) // alien queens have this removed, an istype would be coplicated
-		ML.handle_ventcrawl(src)

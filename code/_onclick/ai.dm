@@ -1,7 +1,14 @@
-// Note currently ai restrained() returns 0 in all cases
+/*
+	AI ClickOn()
 
-// New feature: Double click on mobs as AI to track them
+	Note currently ai restrained() returns 0 in all cases,
+	therefore restrained code has been removed
 
+	The AI can double click to move the camera (this was already true but is cleaner),
+	or double click a mob to track them.
+
+	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
+*/
 /mob/living/silicon/ai/DblClickOn(var/atom/A)
 	if(control_disabled || stat) return
 	next_move = world.time + 9
@@ -11,7 +18,7 @@
 	else
 		A.move_camera_by_click()
 
-// No adjacency, no nothing
+
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
 	if(world.time <= next_click)
 		return
@@ -45,11 +52,25 @@
 	*/
 	A.attack_ai(src)
 
+/*
+	AI has no need for the UnarmedAttack() and RangedAttack() procs,
+	because the AI code is not generic;	attack_ai() is used instead.
+	The below is only really for safety, or you can alter the way
+	it functions and re-insert it above.
+*/
+/mob/living/silicon/ai/UnarmedAttack(atom/A)
+	A.attack_ai(src)
+/mob/living/silicon/ai/RangedAttack(atom/A)
+	A.attack_ai(src)
 
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
-
+/*
+	Since the AI handles shift, ctrl, and alt-click differently
+	than anything else in the game, atoms have separate procs
+	for AI shift, ctrl, and alt clicking.
+*/
 /mob/living/silicon/ai/ShiftClickOn(var/atom/A)
 	A.AIShiftClick(src)
 /mob/living/silicon/ai/CtrlClickOn(var/atom/A)
@@ -57,9 +78,10 @@
 /mob/living/silicon/ai/AltClickOn(var/atom/A)
 	A.AIAltClick(src)
 
-
-// The following criminally helpful code is just the previous code cleaned up
-// I have no idea why it was in atoms.dm instead of respective files
+/*
+	The following criminally helpful code is just the previous code cleaned up;
+	I have no idea why it was in atoms.dm instead of respective files.
+*/
 
 /atom/proc/AIShiftClick()
 	return

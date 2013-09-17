@@ -1,9 +1,7 @@
 /*
-	Hud datums and the global hud
-
-	I dunno.
+	The global hud:
+	Uses the same visual objects for all players.
 */
-
 var/datum/global_hud/global_hud = new()
 
 /datum/global_hud
@@ -76,6 +74,11 @@ var/datum/global_hud/global_hud = new()
 		O.layer = 17
 		O.mouse_opacity = 0
 
+/*
+	The hud datum
+	Used to show and hide huds for all the different mob types,
+	including inventories and item quick actions.
+*/
 
 /datum/hud
 	var/mob/mymob

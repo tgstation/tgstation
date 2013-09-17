@@ -5,13 +5,23 @@
 */
 var/const/tk_maxrange = 15
 
-// click on atom with an empty hand, not Adjacent
+/*
+	Telekinetic attack:
+
+	By default, emulate the user's unarmed attack
+*/
 /atom/proc/attack_tk(mob/user)
 	if(user.stat) return
-	user.UnarmedAttack(src) // attack_hand, attack_paw, etc
+	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	return
 
-// click on atom with itself using a tk_grab, by default do nothing
+/*
+	This is similar to item attack_self, but applies to anything
+	that you can grab with a telekinetic grab.
+
+	It is used for manipulating things at range, for example, opening and closing closets.
+	There are not a lot of defaults at this time, add more where appropriate.
+*/
 /atom/proc/attack_self_tk(mob/user)
 	return
 
@@ -42,7 +52,14 @@ var/const/tk_maxrange = 15
 /mob/attack_tk(mob/user)
 	return // needs more thinking about
 
+/*
+	TK Grab Item (the workhorse of old TK)
 
+	* If you have not grabbed something, do a normal tk attack
+	* If you have something, throw it at the target.  If it is already adjacent, do a normal attackby()
+	* If you click what you are holding, or attack_self(), do an attack_self_tk() on it.
+	* Deletes itself if it is ever not in your hand, or if you should have no access to TK.
+*/
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic"
