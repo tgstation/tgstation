@@ -41,6 +41,8 @@ SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
 SOX_ARGS += ' norm'
 #SOX_ARGS += ' reverb'
+
+PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.1s.
 wordlist=[]
 def cmd(command):
 	logging.debug('>>> '+command)
@@ -169,7 +171,8 @@ def GenerateForWord(word,wordfile):
 		wf.write(md5+lexmd5)
 	cmds=[]
 	cmds += [text2wave]
-	cmds += ['sox tmp/VOX-word.wav tmp/VOX-sox-word.wav '+SOX_ARGS]
+	cmds += ['sox tmp/VOX-word.wav tmp/VOX-soxpre-word.wav '+PRE_SOX_ARGS]
+	cmds += ['sox tmp/VOX-soxpre-word.wav tmp/VOX-sox-word.wav '+SOX_ARGS]
 	cmds += ['oggenc tmp/VOX-sox-word.wav -o sounds/'+wordfile+'.ogg']
 	for command in cmds:
 		if not cmd(command):
