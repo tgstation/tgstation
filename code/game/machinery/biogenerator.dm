@@ -92,8 +92,8 @@
 					dat += {"<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>
 						<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>
 						Food<BR>
-						<A href='?src=\ref[src];action=create;item=milk'>10 milk</A> <FONT COLOR=blue>(20)</FONT><BR>
-						<A href='?src=\ref[src];action=create;item=meat'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT><BR>
+						<A href='?src=\ref[src];action=create;item=milk'>10 milk</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=milk5'>50 milk</A><BR>
+						<A href='?src=\ref[src];action=create;item=meat'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT> | <A href='?src=\ref[src];action=create;item=meat5'>x5</A><BR>
 						Nutrient<BR>
 						<A href='?src=\ref[src];action=create;item=ez'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT> | <A href='?src=\ref[src];action=create;item=ez5'>x5</A><BR>
 						<A href='?src=\ref[src];action=create;item=l4z'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5'>x5</A><BR>
@@ -184,6 +184,17 @@
 		if("meat")
 			if (check_cost(50)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+		if("milk5")
+			if (check_cost(100)) return 0
+			else beaker.reagents.add_reagent("milk",50)
+		if("meat5")
+			if (check_cost(250)) return 0
+			else
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("ez")
 			if (check_cost(10)) return 0
 			else new/obj/item/nutrient/ez(src.loc)
