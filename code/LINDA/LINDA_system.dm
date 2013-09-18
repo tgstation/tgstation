@@ -219,21 +219,28 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 
 	var/datum/gas_mixture/G = new
 
-	if(text == "fire")
-		G.toxins = amount
-		G.temperature = 1000
-	else if(text == "n2o")
-		var/datum/gas/sleeping_agent/T = new
-		T.moles = amount
-		G += T
-	else if(text == "toxin")
-		G.toxins = amount
-	else if(text == "oxygen")
-		G.oxygen = amount
-	else if(text == "nitrogen")
-		G.nitrogen = amount
-	else if(text == "co2")
-		G.carbon_dioxide = amount
+	switch(text)
+		if("fire")
+			G.toxins = amount
+			G.temperature = 1000
+		if("n2o")
+			var/datum/gas/sleeping_agent/T = new
+			T.moles = amount
+			G += T
+			G.temperature = 120
+		if("toxin")
+			G.toxins = amount
+			G.temperature = 120
+		if("oxygen")
+			G.oxygen = amount
+			G.temperature = 120
+		if("nitrogen")
+			G.nitrogen = amount
+			G.temperature = 120
+		if("co2")
+			G.carbon_dioxide = amount
+			G.temperature = 120
+		else return //do not pass go, do not spawn 200 moles of plasma
 
 	air.merge(G)
 	air_master.add_to_active(src, 0)
