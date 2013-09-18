@@ -40,7 +40,8 @@
 	attackby(obj/item/I, mob/user)
 		return
 
-	afterattack(obj/target, mob/user , flag)
+	afterattack(obj/target, mob/user , proximity)
+		if(!proximity) return
 		if(!target.reagents) return
 
 		switch(mode)

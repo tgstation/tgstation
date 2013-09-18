@@ -337,20 +337,20 @@
 /obj/structure/sink/attack_hand(mob/user)
 	if(isrobot(user) || isAI(user))
 		return
+	if(!Adjacent(user))
+		return
 
 	if(busy)
 		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
 
-	var/turf/location = user.loc
-	if(!isturf(location)) return
 	user << "<span class='notice'>You start washing your hands.</span>"
 
 	busy = 1
 	sleep(40)
 	busy = 0
 
-	if(user.loc != location) return		//Person has moved away from the sink
+	if(!Adjacent(user)) return		//Person has moved away from the sink
 
 	user.clean_blood()
 	user.visible_message("<span class='notice'>[user] washes their hands in [src].</span>")

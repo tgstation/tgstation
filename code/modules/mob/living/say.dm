@@ -376,7 +376,8 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in heard_a + heard_b)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	spawn(0)
+		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 	log_say("[name]/[key] : [message]")
 
