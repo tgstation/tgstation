@@ -177,14 +177,14 @@
 	switch(word)
 		if("travel")
 			wordexp = "[wordtravel] is travel..."
-//		if("blood")
-//			wordexp = "[wordblood] is blood..."
-//		if("join")
-//			wordexp = "[wordjoin] is join..."
+		if("blood")
+			wordexp = "[wordblood] is blood..."
+		if("join")
+			wordexp = "[wordjoin] is join..."
 		if("hell")
 			wordexp = "[wordhell] is Hell..."
-//		if("self")
-//			wordexp = "[wordself] is self..."
+		if("self")
+			wordexp = "[wordself] is self..."
 		if("see")
 			wordexp = "[wordsee] is see..."
 		if("tech")
