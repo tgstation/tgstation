@@ -3,7 +3,7 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
-
+	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
 
 /proc/iscultist(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
@@ -34,8 +34,8 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
-	var/list/secondwords = list("blood","join","self","hell"))
-
+	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
+	
 	var/list/objectives = list()
 
 	var/eldergod = 1 //for the summon god objective
@@ -96,6 +96,7 @@
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
 		grant_secondword(cult_mind.current)
+		grant_thirdword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
 		memorize_cult_objectives(cult_mind)
@@ -121,8 +122,8 @@
 				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The convert rune is join blood self"
-	cult_mind.memory += "The convert rune is join blood self<BR>"
+	cult_mind.current << "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)"
+	cult_mind.memory += "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)<BR>"
 
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
@@ -151,26 +152,27 @@
 		mob.update_icons()
 		return 1
 
-/datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
-	if (!word)
-		if(secondwords.len > 0)
-			word=pick(secondwords)
-			secondwords -= word
-			grant_runeword(cult_mob,word)
 
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if (!word)
-		if(startwords.len > 0)
-			word=pick(startwords)
-			startwords -= word
+		word="join"
 	return ..(cult_mob,word)
 
+/datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
+	if (!word)
+		word="blood"
+		grant_runeword(cult_mob,word)
+			
+/datum/game_mode/cult/proc/grant_thirdword(mob/living/carbon/human/cult_mob, var/word)
+	if (!word)
+		word="self"
+		grant_runeword(cult_mob,word)
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if(!wordtravel)
 		runerandom()
 	if (!word)
-		word=pick(allwords)
+		word=pick(grantwords)
 	var/wordexp
 	switch(word)
 		if("travel")
@@ -197,7 +199,7 @@
 //			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
-	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You have a vision of a [pick("crow","raven","vulture","parrot")] it squawks","You catch a brief glimmer of the otherside")]... [wordexp]"
+	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
