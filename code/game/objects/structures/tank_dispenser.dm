@@ -67,7 +67,7 @@
 /obj/structure/dispenser/Topic(href, href_list)
 	if(usr.stat || usr.restrained())
 		return
-	if(Adjacent(usr))
+	if(get_dist(src, usr) <= 1)
 		usr.set_machine(src)
 		if(href_list["oxygen"])
 			if(oxygentanks > 0)

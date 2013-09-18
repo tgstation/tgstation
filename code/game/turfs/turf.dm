@@ -40,6 +40,17 @@
 					air_master.add_to_active(T)
 	..()
 
+/turf/DblClick()
+	if(istype(usr, /mob/living/silicon/ai))
+		return move_camera_by_click()
+	if(usr.stat || usr.restrained() || usr.lying)
+		return ..()
+	return ..()
+
+/turf/Click()
+	if(!isAI(usr))
+		..()
+
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 

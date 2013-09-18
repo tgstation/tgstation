@@ -14,7 +14,6 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
-	antag_flag = BE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 3
@@ -45,26 +44,28 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
+	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
+
 	var/head_check = 0
 	for(var/mob/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break
 
-	for(var/datum/mind/player in antag_candidates)
+	for(var/datum/mind/player in possible_headrevs)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
-				antag_candidates -= player
+				possible_headrevs -= player
 
 	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
+		if (possible_headrevs.len==0)
 			break
-		var/datum/mind/lenin = pick(antag_candidates)
-		antag_candidates -= lenin
+		var/datum/mind/lenin = pick(possible_headrevs)
+		possible_headrevs -= lenin
 		head_revolutionaries += lenin
 		log_game("[lenin.key] (ckey) has been selected as a head rev")
 
-	if((head_revolutionaries.len < required_enemies)||(!head_check))
+	if((head_revolutionaries.len==0)||(!head_check))
 		return 0
 
 	return 1

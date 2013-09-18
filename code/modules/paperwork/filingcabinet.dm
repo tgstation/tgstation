@@ -67,22 +67,6 @@
 	dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
-/obj/structure/filingcabinet/attack_tk(mob/user)
-	if(anchored)
-		attack_self_tk(user)
-	else
-		..()
-
-/obj/structure/filingcabinet/attack_self_tk(mob/user)
-	if(contents.len)
-		if(prob(40 + contents.len * 5))
-			var/obj/item/I = pick(contents)
-			I.loc = loc
-			if(prob(25))
-				step_rand(I)
-			user << "<span class='notice'>You pull \a [I] out of [src] at random.</span>"
-			return
-	user << "<span class='notice'>You find nothing in [src].</span>"
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
@@ -104,7 +88,7 @@
 /obj/structure/filingcabinet/security
 	var/virgin = 1
 
-/obj/structure/filingcabinet/security/proc/populate()
+/obj/structure/filingcabinet/security/attack_hand(mob/user)
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
@@ -121,12 +105,8 @@
 			P.name = "paper - '[G.fields["name"]]'"
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
-/obj/structure/filingcabinet/security/attack_hand()
-	populate()
 	..()
-/obj/structure/filingcabinet/security/attack_tk()
-	populate()
-	..()
+
 
 /*
  * Medical Record Cabinets
@@ -134,7 +114,7 @@
 /obj/structure/filingcabinet/medical
 	var/virgin = 1
 
-/obj/structure/filingcabinet/medical/proc/populate()
+/obj/structure/filingcabinet/medical/attack_hand(mob/user)
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
@@ -151,9 +131,4 @@
 			P.name = "paper - '[G.fields["name"]]'"
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
-/obj/structure/filingcabinet/medical/attack_hand()
-	populate()
-	..()
-/obj/structure/filingcabinet/medical/attack_tk()
-	populate()
 	..()

@@ -20,14 +20,12 @@ proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, 
 
 			if(x == 0 || x == x_size-1 || y == 0 || y == y_size-1)
 				var/wall = pickweight(walltypes)//totally-solid walls are pretty boring.
-				T = cur_loc
-				T.ChangeTurf(wall)
+				T = new wall(cur_loc)
 				room_turfs["walls"] += T
 
 
 			else
-				T = cur_loc
-				T.ChangeTurf(floor)
+				T = new floor(cur_loc)
 				room_turfs["floors"] += T
 
 			A.contents += T

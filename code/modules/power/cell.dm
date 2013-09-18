@@ -63,11 +63,8 @@
 /obj/item/weapon/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
-		if(!istype(SNG) || !SNG.candrain || !SNG.draining) return
-
-		SNG.drain("CELL",src,H.wear_suit)
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CELL",src,user:wear_suit)
 	return
 
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
