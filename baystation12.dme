@@ -53,6 +53,7 @@
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/Serithi"
 #define FILE_DIR "sound/vox"
+#define FILE_DIR "sound/vox_fem"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
@@ -187,6 +188,7 @@
 #include "code\datums\spells\turf_teleport.dm"
 #include "code\datums\spells\wizard.dm"
 #include "code\defines\obj.dm"
+#include "code\defines\vox_sounds.dm"
 #include "code\defines\obj\hydro.dm"
 #include "code\defines\obj\weapon.dm"
 #include "code\defines\procs\AStar.dm"

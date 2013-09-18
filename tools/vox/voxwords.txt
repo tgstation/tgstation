@@ -586,7 +586,7 @@ until = until
 up = up
 upper = upper
 uranium = uranium
-us = U.S
+us = us
 usa = U.S.A
 use = use
 used = used
@@ -673,6 +673,8 @@ hydroponics = hydroponics
 hacker = hacker
 hackers = hackers
 changed = changed
+money = money
+obtain = obtain
 
 fuck = fuck
 fucking = fucking
@@ -695,12 +697,12 @@ vox_login = Hello. The automatic diagnostic and announcement system welcomes you
 ########################
 ## AI REPLACEMENT LINES
 ########################
-sounds/announcements/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
-sounds/announcements/animes = Wow!  This is just like one of those japanese animes.
-sounds/announcements/command_report = Attention: New command report created.
-sounds/announcements/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
-sounds/announcements/intercept = Attention: Enemy communication intercepted.  Security level elevated.
-sounds/announcements/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
-sounds/announcements/meteors = Meteors detected on collision course with the station.
-sounds/announcements/newroundsexy = You want to put a banging donk on it.
-sounds/announcements/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
+sound/announcements/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
+sound/announcements/animes = Wow!  This is just like one of those japanese animes.
+sound/announcements/command_report = Attention: New command report created.
+sound/announcements/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
+sound/announcements/intercept = Attention: Enemy communication intercepted.  Security level elevated.
+sound/announcements/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
+sound/announcements/meteors = Meteors detected on collision course with the station.
+sound/announcements/newroundsexy = You want to put a banging donk on it.
+sound/announcements/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.

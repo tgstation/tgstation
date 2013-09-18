@@ -153,7 +153,7 @@ def GenerateForWord(word,wordfile):
 	if '/' not in wordfile:
 		wordlist += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
-	oggfile = os.path.abspath(os.path.join('sounds','vox_fem',wordfile+'.ogg'))
+	oggfile = os.path.abspath(os.path.join('sound','vox_fem',wordfile+'.ogg'))
 	if '/' in wordfile:
 		oggfile = os.path.abspath(os.path.join(wordfile+'.ogg'))
 	cachefile = os.path.abspath(os.path.join('cache',wordfile.replace(os.sep,'_').replace('.','')+'.dat'))
@@ -212,7 +212,7 @@ def ProcessLexicon(filename):
 logging.basicConfig(format='%(asctime)s [%(levelname)-8s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 if not os.path.isdir('tmp'):
 	os.makedirs('tmp')
-CODE_BASE=os.path.join('code','defines','vox_sounds')
+CODE_BASE=os.path.join('code','defines')
 if not os.path.isdir(CODE_BASE):
 	os.makedirs(CODE_BASE)
 lexmd5=md5sum('lexicon.txt')
@@ -228,7 +228,7 @@ with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
 		if '/' in word:
 			continue
 		if word in preexisting:
-			w.write('"{0}" = \'sounds/vox/{0}.wav\',\n'.format(word))
+			w.write('"{0}" = \'sound/vox/{0}.wav\',\n'.format(word))
 		else:
-			w.write('"{0}" = \'sounds/vox_fem/{0}.ogg\',\n'.format(word))
+			w.write('"{0}" = \'sound/vox_fem/{0}.ogg\',\n'.format(word))
 	w.write(')')
