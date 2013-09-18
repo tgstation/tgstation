@@ -49,6 +49,8 @@ preexisting=[
 	'.',
 	',',
 	'bloop',
+	'bizwarn', # Is this a misspelling of the below?
+	'buzwarn',
 	'doop',
 	'dadeda',
 	'woop',
