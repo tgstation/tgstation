@@ -331,19 +331,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		var/G = (gender == FEMALE) ? "f" : "m"
 		if(G == "f" && U.fitted == 1)
-			var/index = "[t_color]_l"
+			var/index = "[t_color]_s"
 			var/icon/female_uniform_icon = female_uniform_icons[index]
 			if(!female_uniform_icon ) 	//Create standing/laying icons if they don't exist
 				generate_uniform(index,t_color)
-				lying		= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)	//intentionally reversed
-				standing	= image("icon"=female_uniform_icons["[t_color]_l"], "layer"=-UNIFORM_LAYER)	//not an error
-				overlays_lying[UNIFORM_LAYER]		= lying
-				overlays_standing[UNIFORM_LAYER]	= standing
-				apply_overlay(UNIFORM_LAYER)	//this little shuffle is to trick blend into generating both icons at the same time
-				remove_overlay(UNIFORM_LAYER) 	//without it, there'd be a blink of nudity on the lying/standing transition
-			lying		= image("icon"=female_uniform_icons["[t_color]_l"], "layer"=-UNIFORM_LAYER)
 			standing	= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)
-			overlays_lying[UNIFORM_LAYER]		= lying
 			overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
