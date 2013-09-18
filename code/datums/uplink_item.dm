@@ -149,7 +149,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/jobspecific/greytide
 	name = "Greytide Implant"
-	desc = "A box containing an implanter filled with a greytide implant when injected into another person makes them loyal to the greytide and your cause, unless of course they're loyal to someone else. Loyalty ends if the implant is no longer in their system."
+	desc = "A box containing an implanter filled with a greytide implant when injected into another person makes them loyal to the greytide and your cause, unless of course they're already implanted by someone else. Loyalty ends if the implant is no longer in their system."
 	item = /obj/item/weapon/storage/box/syndie_kit/greytide
 	cost = 7
 	job = "Assistant"

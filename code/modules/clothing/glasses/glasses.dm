@@ -179,7 +179,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 
 /obj/item/clothing/glasses/thermal/monocle
-	name = "Thermoncle"
+	name = "Thermonocle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
