@@ -41,7 +41,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		// 9 = authentication before sending
 		// 10 = send announcement
 	var/silent = 0 // set to 1 for it not to beep all the time
-//	var/hackState = 0
+	var/hackState = 0
 		// 0 = not hacked
 		// 1 = hacked
 	var/announcementConsole = 0
@@ -61,11 +61,22 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	update_icon()
 
 /obj/machinery/requests_console/update_icon()
-	if(stat & NOPOWER)
+	if(open)
+		if(hackState == 0)
+			icon_state="req_comp_open"
+		else
+			icon_state="req_comp_rewired"
+	else if(stat & NOPOWER)
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
 	else
-		if(icon_state == "req_comp_off")
+		if(newmessagepriority == 1)
+			icon_state = "req_comp1"
+		else if(newmessagepriority == 2)
+			icon_state = "req_comp2"
+		else if(newmessagepriority == 3)
+			icon_state = "req_comp3"
+		else
 			icon_state = "req_comp0"
 
 /obj/machinery/requests_console/New()
@@ -119,10 +130,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (dpt != department)
 						dat += text("<tr>")
 						dat += text("<td width='55%'>[dpt]</td>")
-						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A></td>")
+						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>")
+						if (hackState == 1)
+							dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>")
+						dat += text("</td>")
 						dat += text("</tr>")
-//						if (hackState == 1)
-//							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
 				dat += "</table>"
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
@@ -133,10 +145,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (dpt != department)
 						dat += text("<tr>")
 						dat += text("<td width='55%'>[dpt]</td>")
-						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A></td>")
+						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>")
+						if (hackState == 1)
+							dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>")
+						dat += text("</td>")
 						dat += text("</tr>")
-//						if (hackState == 1)
-//							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
 				dat += "</table>"
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
@@ -147,10 +160,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (dpt != department)
 						dat += text("<tr>")
 						dat += text("<td width='55%'>[dpt]</td>")
-						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A></td>")
+						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>")
+						if (hackState == 1)
+							dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>")
+						dat += text("</td>")
 						dat += text("</tr>")
-//						if (hackState == 1)
-//							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
 				dat += "</table>"
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
 
@@ -166,12 +180,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (Console.department == department)
 						Console.newmessagepriority = 0
-						Console.icon_state = "req_comp0"
+						Console.update_icon()
 						Console.luminosity = 1
 				newmessagepriority = 0
-				icon_state = "req_comp0"
-				for(var/msg in messages)
-					dat += text("<div class='block'>[msg]</div>")
+				update_icon()
+				var/messageComposite = ""
+				for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
+					messageComposite = text("<div class='block'>[msg]</div>") + messageComposite
+				dat += messageComposite
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back to Main Menu</A><BR>")
 
 			if(9)	//authentication before sending
@@ -204,6 +220,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += text("<div class='notice'>There are new messages</div><BR>")
 				if (newmessagepriority == 2)
 					dat += text("<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>")
+				if (newmessagepriority == 3)
+					dat += text("<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>")
 
 				dat += text("<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>")
@@ -218,7 +236,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 		//user << browse("[dat]", "window=request_console")
 		//onclose(user, "req_console")
-		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 400, 440)
+		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
@@ -295,32 +313,47 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 							if(2)		//High priority
 								if(Console.newmessagepriority < 2)
 									Console.newmessagepriority = 2
-									Console.icon_state = "req_comp2"
+									Console.update_icon()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(5, Console.loc))
 										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
+								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
+								// Same message, but without the hyperlink.
+								slip.info = "<span class='bad'>High Priority</span><BR><b>From:</b> [department]<BR>[sending]"
+								slip.name = "Priority Request - [department]"
 
-		//					if(3)		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
-		//						if(Console.newmessagepriority < 3)
-		//							Console.newmessagepriority = 3
-		//							Console.icon_state = "req_comp3"
-		//						if(!Console.silent)
-		//							playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-		//							for (var/mob/O in hearers(7, Console.loc))
-		//								O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
-		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
+							if(3)		// Extreme Priority
+								if(Console.newmessagepriority < 3)
+									Console.newmessagepriority = 3
+									Console.update_icon()
+								if(1) // This is EXTREMELY important, so beep.
+									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+									for (var/mob/O in hearers(7, Console.loc))
+										O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
+								Console.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
+								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
+								// Same message, but without the hyperlink.
+								slip.info = "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [department]<BR>[sending]"
+								slip.name = "EXTREME Request - [department]"
+								var/mob/living/target = locate() in view(7,Console)
+								if(target)
+									visible_message("<span class='danger'>[Console] launches [slip] at [target]!</span>")
+									slip.throw_at(target, 16, 3)
 
 							else		// Normal priority
 								if(Console.newmessagepriority < 1)
 									Console.newmessagepriority = 1
-									Console.icon_state = "req_comp1"
+									Console.update_icon()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
+								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
+								slip.info = "<b>From:</b> [department]<BR>[sending]"
+								slip.name = "Request Slip - [department]"
 
 						screen = 6
 						Console.luminosity = 2
@@ -376,9 +409,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
-	/*
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
 			open = 0
@@ -398,7 +429,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				hackState = 0
 				icon_state="req_comp_open"
 		else
-			user << "You can't do much with that."*/
+			user << "You can't do much with that."
+	update_icon()
 
 	if (istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
