@@ -420,11 +420,11 @@ datum
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
-			
+
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air("oxygen", 5)
+					T.atmos_spawn_air(ASPAWN_OXYGEN, 5)
 				return
 
 		copper
@@ -439,11 +439,11 @@ datum
 			description = "A colorless, odorless, tasteless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
-			
+
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air("nitrogen", 5)
+					T.atmos_spawn_air(ASPAWN_NITROGEN, 5)
 				return
 
 		hydrogen
@@ -1325,12 +1325,12 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				O.atmos_spawn_air("toxin", 5)
+				O.atmos_spawn_air(ASPAWN_PLASMA, 5)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air("toxin", 5)
+					T.atmos_spawn_air(ASPAWN_PLASMA, 5)
 				return
 
 		toxin/lexorin

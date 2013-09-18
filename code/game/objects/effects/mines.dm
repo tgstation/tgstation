@@ -46,12 +46,12 @@
 		del(src)
 
 /obj/effect/mine/proc/triggern2o(obj)
-	atmos_spawn_air("n2o", 360)
+	atmos_spawn_air("ASPAWN_N2O", 360)
 	spawn(0)
 		del(src)
 
 /obj/effect/mine/proc/triggerplasma(obj)
-	atmos_spawn_air("fire", 360)
+	atmos_spawn_air("ASPAWN_FIRE", 360)
 	spawn(0)
 		del(src)
 

@@ -236,12 +236,12 @@
 #define SHOCK	8
 #define SAFE	16
 
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
-
+#define ASPAWN_OXYGEN "oxygen"
+#define ASPAWN_NITROGEN "nitrogen"
+#define ASPAWN_PLASMA "plasma"
+#define ASPAWN_CO2 "co2"
+#define ASPAWN_N2O "n2o"
+#define ASPAWN_FIRE "fire"
 
 var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.

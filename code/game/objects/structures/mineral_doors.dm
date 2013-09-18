@@ -218,7 +218,7 @@
 			TemperatureAct(exposed_temperature)
 
 	proc/TemperatureAct(temperature)
-		atmos_spawn_air("fire", 500)
+		atmos_spawn_air(ASPAWN_FIRE, 500)
 		hardness = 0
 		CheckHardness()
 
