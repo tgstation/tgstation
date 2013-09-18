@@ -100,6 +100,7 @@ def Compile(serverState):
 	
 def PerformServerReadyCheck(serverState):
 	global waiting_on_server_response
+	global last_response
 	if not waiting_on_server_response:
 		return
 	currentCommit = git_commit()
@@ -108,6 +109,8 @@ def PerformServerReadyCheck(serverState):
 	updatereadyfile=os.path.join(GAMEPATH,'data','UPDATE_READY.txt')
 	serverreadyfile=os.path.join(GAMEPATH,'data','SERVER_READY.txt')
 	srf_exists=os.path.isfile(serverreadyfile)
+	if not srf_exists and 'players' in last_response:
+		srf_exists = last_response['players'] == 0
 	nudgemsg="Server has "
 	if (srf_exists):
 		nudgemsg += "sent the READY signal."
@@ -200,6 +203,7 @@ def decode_packet(packet):
 	return b''
 				
 def ping_server(request):
+	global last_response
 	try:
 		# Snippet below from http://pastebin.com/TGhPBPGp
 		#==============================================================
@@ -250,6 +254,7 @@ def ping_server(request):
 					parsed_response[dt[0]] = ''
 					if len(dt) == 2:
 						parsed_response[dt[0]] = urllib.unquote(dt[1])
+			last_response=parsed_response
 			#print 'Received: ', repr(parsed_response) #, response
 			# {'ai': '1', 'respawn': '0', 'admins': '0', 'players': '0', 'host': '', 'version': '/vg/+Station+13', 'mode': 'secret', 'enter': '1', 'vote': '0'}
 			with open(STATS_FILE,'w') as f:
