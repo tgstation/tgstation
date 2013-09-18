@@ -959,6 +959,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 				var/area/A = get_area(src)
 				if(A)
 					G << "Golem rune created in [A.name]."
+
+/mob/living/carbon/slime/getTrail()
+	return null
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
