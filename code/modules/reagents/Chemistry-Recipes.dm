@@ -458,6 +458,13 @@ datum
 			required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
 			result_amount = 2
 
+		rezadone
+			name = "Rezadone"
+			id = "rezadone"
+			result = "rezadone"
+			required_reagents = list("carpotoxin" = 1, "cryptobiolin" = 1, "copper" = 1)
+			result_amount = 3
+
 		mindbreaker
 			name = "Mindbreaker Toxin"
 			id = "mindbreaker"

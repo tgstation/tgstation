@@ -83,6 +83,8 @@
 
 	sleep_offline = 1
 
+	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
+
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)
 		master_controller.setup()
