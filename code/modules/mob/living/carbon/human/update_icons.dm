@@ -87,7 +87,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human
 	var/list/overlays_lying[TOTAL_LAYERS]
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/global/list/female_uniform_icons = list()
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	var/race = dna ? dna.mutantrace : null
@@ -335,24 +334,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 			var/index = "[t_color]_l"
 			var/icon/female_uniform_icon = female_uniform_icons[index]
 			if(!female_uniform_icon ) 	//Create standing/laying icons if they don't exist
-				female_uniform_icon			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l")
-				var/icon/female_l			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_l")
-				female_uniform_icon.Blend(female_l, ICON_MULTIPLY)
-				female_uniform_icon 		= fcopy_rsc(female_uniform_icon)
-				female_uniform_icons[index] = female_uniform_icon
-				index = "[t_color]_s"
-				female_uniform_icon			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
-				var/icon/female_s			= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
-				female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
-				female_uniform_icon 		= fcopy_rsc(female_uniform_icon)
-				female_uniform_icons[index] = female_uniform_icon
+				generate_uniform(index,t_color)
 				lying		= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)	//intentionally reversed
 				standing	= image("icon"=female_uniform_icons["[t_color]_l"], "layer"=-UNIFORM_LAYER)	//not an error
 				overlays_lying[UNIFORM_LAYER]		= lying
 				overlays_standing[UNIFORM_LAYER]	= standing
 				apply_overlay(UNIFORM_LAYER)	//this little shuffle is to trick blend into generating both icons at the same time
 				remove_overlay(UNIFORM_LAYER) 	//without it, there'd be a blink of nudity on the lying/standing transition
-
 			lying		= image("icon"=female_uniform_icons["[t_color]_l"], "layer"=-UNIFORM_LAYER)
 			standing	= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)
 			overlays_lying[UNIFORM_LAYER]		= lying
