@@ -161,12 +161,12 @@
 //			secondwords -= word
 //			grant_runeword(cult_mob,word)
 
-/datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-	if (!word)
-		if(startwords.len > 0)
-			word=pick(startwords)
-			startwords -= word
-	return ..(cult_mob,word)
+//datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+//	if (!word)
+//		if(startwords.len > 0)
+//			word=pick(startwords)
+//			startwords -= word
+//	return ..(cult_mob,word)
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if(!wordtravel)
