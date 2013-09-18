@@ -5,7 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 10
 	w_class = 3.0
 	throw_speed = 2
@@ -24,7 +24,7 @@
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | USEDELAY | TABLEPASS
+	flags = FPRINT | TABLEPASS
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0

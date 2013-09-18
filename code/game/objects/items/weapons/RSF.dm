@@ -61,7 +61,8 @@ RSF
 		return
 	// Change mode
 
-/obj/item/weapon/rsf/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/rsf/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity) return
 	if (!(istype(A, /obj/structure/table) || istype(A, /turf/simulated/floor)))
 		return
 

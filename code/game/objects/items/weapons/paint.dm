@@ -76,7 +76,8 @@ var/global/list/cached_icons = list()
 		return
 
 
-/obj/item/weapon/paint/afterattack(turf/target, mob/user as mob)
+/obj/item/weapon/paint/afterattack(turf/target, mob/user as mob, proximity)
+	if(!proximity) return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
@@ -99,7 +100,8 @@ var/global/list/cached_icons = list()
 	name = "Paint remover"
 	icon_state = "paint_neutral"
 
-	afterattack(turf/target, mob/user as mob)
+	afterattack(turf/target, mob/user as mob,proximity)
+		if(!proximity) return
 		if(istype(target) && target.icon != initial(target.icon))
 			target.icon = initial(target.icon)
 		return
