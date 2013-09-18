@@ -107,7 +107,7 @@
 	t += "</table>"
 	//user << browse(t, "window=crewcomp;size=900x600")
 	//onclose(user, "crewcomp")
-	var/datum/browser/popup = new(user, "crewcomp", name, 900, 600)
+	var/datum/browser/popup = new/datum/browser(user, "crewcomp", name, 900, 600)
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
