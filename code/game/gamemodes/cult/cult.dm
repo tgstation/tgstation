@@ -94,9 +94,8 @@
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-		grant_runeword(cult_mind.current)
-		grant_secondword(cult_mind.current)
-		grant_thirdword(cult_mind.current)
+//		grant_runeword(cult_mind.current)
+//		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
 		memorize_cult_objectives(cult_mind)
@@ -124,7 +123,9 @@
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 	cult_mind.current << "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)"
 	cult_mind.memory += "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)<BR>"
-
+	grant_runeword(cult_mind.current,"join")
+	grant_runeword(cult_mind.current,"blood")
+	grant_runeword(cult_mind.current,"self")
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -153,20 +154,19 @@
 		return 1
 
 
+//datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
+//	if (!word)
+//		if(secondwords.len > 0)
+//			word=pick(secondwords)
+//			secondwords -= word
+//			grant_runeword(cult_mob,word)
+
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if (!word)
-		word="join"
+		if(startwords.len > 0)
+			word=pick(startwords)
+			startwords -= word
 	return ..(cult_mob,word)
-
-/datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
-	if (!word)
-		word="blood"
-		grant_runeword(cult_mob,word)
-			
-/datum/game_mode/cult/proc/grant_thirdword(mob/living/carbon/human/cult_mob, var/word)
-	if (!word)
-		word="self"
-		grant_runeword(cult_mob,word)
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if(!wordtravel)
@@ -177,14 +177,14 @@
 	switch(word)
 		if("travel")
 			wordexp = "[wordtravel] is travel..."
-		if("blood")
-			wordexp = "[wordblood] is blood..."
-		if("join")
-			wordexp = "[wordjoin] is join..."
+//		if("blood")
+//			wordexp = "[wordblood] is blood..."
+//		if("join")
+//			wordexp = "[wordjoin] is join..."
 		if("hell")
 			wordexp = "[wordhell] is Hell..."
-		if("self")
-			wordexp = "[wordself] is self..."
+//		if("self")
+//			wordexp = "[wordself] is self..."
 		if("see")
 			wordexp = "[wordsee] is see..."
 		if("tech")
