@@ -266,9 +266,12 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 
 
 
-obj/machinery/hydroponics/proc/plantpain() // The plant doesn't die instantly with radiation.
-	adjustHealth(-rand(1,3))
-	visible_message("\red[src] wilts slightly!")
+obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
+	health = 0
+	dead = 1
+	harvest = 0
+	update_icon()
+	visible_message("\red[src] is looking very unhealthy!")
 
 
 
@@ -325,7 +328,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				// There needs to be a good amount of mutagen to actually work
 				if(S.reagents.has_reagent("mutagen", 5))
 					switch(rand(100))
-						if(91  to 100)	plantpain()
+						if(91  to 100)	plantdies()
 						if(81  to 90)  mutatespecie()
 						if(66	to 80)	hardmutate()
 						if(41  to 65)  mutate()
@@ -440,7 +443,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					adjustToxic(round(S.reagents.get_reagent_amount("radium")*2))
 				if(S.reagents.has_reagent("radium", 10))
 					switch(rand(100))
-						if(91  to 100)	plantpain()
+						if(91  to 100)	plantdies()
 						if(81  to 90)  mutatespecie()
 						if(66	to 80)	hardmutate()
 						if(41  to 65)  mutate()
