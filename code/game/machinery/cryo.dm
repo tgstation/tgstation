@@ -33,6 +33,10 @@
 		updateDialog()
 		return
 
+	for(var/mob/M in contents) 
+		if(M != occupant)
+			M.loc = get_step(loc, SOUTH)
+			update_icon()
 	if(air_contents)
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
@@ -59,6 +63,17 @@
 	go_out()
 	return
 
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+	
+	if(in_range(usr, src))
+		if(contents.len > 0)
+			usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(!istype(O, /obj/item/weapon/reagent_containers/glass))
+				usr << O.name
+	else
+		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -275,9 +290,6 @@
 	if(occupant)
 		usr << "<span class='notice'>[src] is already occupied.</span>"
 		return
-	if(M.abiotic())
-		usr << "<span class='notice'>Subject may not have abiotic items on.</span>"
-		return
 	if(!node)
 		usr << "<span class='notice'>The cell is not correctly connected to its pipe network!</span>"
 		return
@@ -327,3 +339,12 @@
 	if(usr.stat || stat & (NOPOWER|BROKEN))
 		return
 	put_mob(usr)
+
+/obj/machinery/atmospherics/unary/cryo_cell/verb/eject_contents()
+	set name = "Eject contents"
+	set category = "Object"
+	set src in oview(1)
+
+	for(var/obj/O in src)
+		if(!istype(O, /obj/item/weapon/reagent_containers/glass))
+			O.loc = get_step(loc, SOUTH)
