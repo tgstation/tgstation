@@ -1,4 +1,10 @@
-voxtest = Ass Blast U.S.A.
+# VOX PHRASELIST
+#
+# Format:
+#filename = What you want VOX to say
+# If it's not pronouncing a word correctly, correct it with lexicon.txt
+# Do not specify a directory if you want it to go to sounds/vox_fem/.
+#
 a = Ay
 accelerating = accelerating
 accelerator = accelerator
@@ -19,7 +25,7 @@ after = after
 agent = agent
 alarm = alarm
 alert = alert
-alien = ay-lee-en
+alien = alien
 aligned = aligned
 all = all
 alpha = alpha
@@ -156,7 +162,7 @@ distance = distance
 distortion = distortion
 do = do
 doctor = doctor
-doop = doop
+#doop = doop # Sound?
 door = door
 down = down
 dual = dual
@@ -630,50 +636,69 @@ zero = zero
 zone = zone
 zulu = zulu
 
-xenomorph = Zee no morph
+xenomorph = xenomorph
+xenomorphs = xenomorphs
 syndicate = syndicate
 cyborg = cyborg
-vox = Vocks
+vox = vox
 raiders = raiders
-centcomm = Sent-com
+raider = raider
+centcomm = centcomm
 ai = A.I.
 law = law
-asimov = Assimov
+laws = laws
+asimov = asimov
 port = port
 aft = aft
 starboard = starboard
-fore = 4
+fore = fore
 hunger = hunger
-medbay = Medbay
+medbay = medbay
 solar = solar
-array = uh-ray
-sarah = Sarah
-connor = Connor
+solars = solars
+array = array
+sarah = sarah
+connor = connor
 stuck = stuck
 my=my
 come=come
+me=me
+welcome=welcome
+ss13 = Space Station thirteen
+xenobiology = xenobiology
+virology = virology
+removal = removal
+hydroponics = hydroponics
+
+hacker = hacker
+hackers = hackers
+changed = changed
+
 
 fuck = fuck
-shit = Shit
+fucking = fucking
+shit = shit
 bitch = bitch
+bitches=bitches
 coward = coward
+cowards = cowards
 abortions = abortions
 asshole = asshole
 shitting = shitting
 
+voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
 voxtest2 = Fuck your cunt you shit eating cocksucker, man eat a dong fucking ass ramming shit fuck eat penises in your fuck face and shit out abortions of fuck and do shit in your ass you cockfuck shit monkey ass wanker from the depths of shit
 
 ########################
 ## AI REPLACEMENT LINES
 ########################
-AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
-AI/animes = Wow!  This is just like one of those japanese animes.
-AI/command_report = Attention: New command report created.
-AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
-AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
-AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
-AI/meteors = Meteors detected on collision course with the station.
-AI/newroundsexy = You want to put a banging donk on it.
-AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
-
+sounds/announcements/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
+sounds/announcements/animes = Wow!  This is just like one of those japanese animes.
+sounds/announcements/command_report = Attention: New command report created.
+sounds/announcements/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
+sounds/announcements/intercept = Attention: Enemy communication intercepted.  Security level elevated.
+sounds/announcements/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
+sounds/announcements/meteors = Meteors detected on collision course with the station.
+sounds/announcements/newroundsexy = You want to put a banging donk on it.
+sounds/announcements/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.

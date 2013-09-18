@@ -44,6 +44,16 @@ SOX_ARGS += ' norm'
 
 PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.1s.
 wordlist=[]
+# Shit we shouldn't change or overwrite. (Boops, pauses, etc)
+preexisting=[
+	'.',
+	',',
+	'bloop',
+	'doop',
+	'dadeda',
+	'woop',
+]
+wordlist += preexisting
 def cmd(command):
 	logging.debug('>>> '+command)
 	output=''
@@ -136,11 +146,16 @@ class Pronunciation:
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
 def GenerateForWord(word,wordfile):
-	global wordlist, lexmd5, SOX_ARGS
-	if '/' not in word:
+	global wordlist, preexisting, lexmd5, SOX_ARGS
+	if wordfile in preexisting:
+		logging.info('Skipping {0}.ogg (Marked as PRE_EXISTING)'.format(wordfile))
+		return
+	if '/' not in wordfile:
 		wordlist += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
-	oggfile = os.path.abspath(os.path.join('sounds',wordfile+'.ogg'))
+	oggfile = os.path.abspath(os.path.join('sounds','vox_fem',wordfile+'.ogg'))
+	if '/' in wordfile:
+		oggfile = os.path.abspath(os.path.join(wordfile+'.ogg'))
 	cachefile = os.path.abspath(os.path.join('cache',wordfile.replace(os.sep,'_').replace('.','')+'.dat'))
 	
 	parent = os.path.dirname(oggfile)
@@ -173,7 +188,7 @@ def GenerateForWord(word,wordfile):
 	cmds += [text2wave]
 	cmds += ['sox tmp/VOX-word.wav tmp/VOX-soxpre-word.wav '+PRE_SOX_ARGS]
 	cmds += ['sox tmp/VOX-soxpre-word.wav tmp/VOX-sox-word.wav '+SOX_ARGS]
-	cmds += ['oggenc tmp/VOX-sox-word.wav -o sounds/'+wordfile+'.ogg']
+	cmds += ['oggenc tmp/VOX-sox-word.wav -o '+oggfile]
 	for command in cmds:
 		if not cmd(command):
 			sys.exit(1)
@@ -197,10 +212,23 @@ def ProcessLexicon(filename):
 logging.basicConfig(format='%(asctime)s [%(levelname)-8s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 if not os.path.isdir('tmp'):
 	os.makedirs('tmp')
+CODE_BASE=os.path.join('code','defines','vox_sounds')
+if not os.path.isdir(CODE_BASE):
+	os.makedirs(CODE_BASE)
 lexmd5=md5sum('lexicon.txt')
 ProcessLexicon('lexicon.txt')
 for arg in sys.argv[1:]:
 	ProcessWordList(arg)
-with open('wordlist.txt','w') as w:
+with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
+	w.write("// List is required to compile the resources into the game when it loads.\n")
+	w.write("// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.\n")
+	w.write("\n")
+	w.write("var/list/vox_sounds = list(")
 	for word in sorted(wordlist):
-		w.write(word+"\n")
+		if '/' in word:
+			continue
+		if word in preexisting:
+			w.write('"{0}" = \'sounds/vox/{0}.wav\',\n'.format(word))
+		else:
+			w.write('"{0}" = \'sounds/vox_fem/{0}.ogg\',\n'.format(word))
+	w.write(')')
