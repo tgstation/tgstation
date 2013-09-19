@@ -200,12 +200,6 @@
 		del(src)
 		return
 
-
-/obj/structure/table/hand_p(mob/user as mob)
-	return src.attack_paw(user)
-	return
-
-
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -260,6 +254,8 @@
 		density = 0
 		del(src)
 
+/obj/structure/table/attack_tk() // no telehulk sorry
+	return
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -281,9 +277,12 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/table/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user) < 2)
 		var/obj/item/weapon/grab/G = W
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -322,8 +321,7 @@
 		return
 
 	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc // Unnecessary -  see: mob/proc/drop_item(atom)    - Doohl
-	return
+	return 1
 
 
 /*
@@ -339,6 +337,9 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -357,6 +358,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		del(src)
 		return
+
 	if(isrobot(user))
 		return
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -373,7 +375,7 @@
 
 	user.drop_item(src)
 	//if(W && W.loc)	W.loc = src.loc
-	return
+	return 1
 
 
 /*
@@ -390,6 +392,9 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -451,7 +456,7 @@
 
 	user.drop_item(src)
 	//if(W && W.loc)	W.loc = src.loc
-	return
+	return 1
 
 
 /*
@@ -514,11 +519,12 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 		return
+
 	if(isrobot(user))
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
-	return
+	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)
 	del(src)
@@ -555,3 +561,5 @@
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0
 		del(src)
+/obj/structure/rack/attack_tk() // no telehulk sorry
+	return

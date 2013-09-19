@@ -33,6 +33,8 @@
 
 
 /mob/living/carbon/alien/New()
+	verbs += /mob/living/proc/mob_sleep
+	verbs += /mob/living/proc/lay_down
 	internal_organs += new /obj/item/organ/brain/alien
 
 	..()
@@ -168,6 +170,9 @@
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
+
+/mob/living/carbon/alien/getTrail()
+	return "xltrails"
 
 /*----------------------------------------
 Proc: AddInfectionImages()

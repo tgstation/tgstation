@@ -66,7 +66,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -99,7 +99,7 @@
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 
 		var/add_to = href_list["add_inv"]
@@ -126,6 +126,7 @@
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
 						/obj/item/device/radio,
+						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
 						/obj/item/weapon/tank/oxygen,
 						/obj/item/weapon/tank/air,
@@ -362,35 +363,31 @@
 					sleep(1)
 
 /mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-
-			tmob.LAssailant = src
-		now_pushing = 0
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	now_pushing = 1
+	if(ismob(AM))
+		var/mob/tmob = AM
+		if(!(tmob.status_flags & CANPUSH))
+			now_pushing = 0
+			return
+
+		tmob.LAssailant = src
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+	if (!( now_pushing ))
+		now_pushing = 1
+		if (!( AM.anchored ))
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 //PC stuff-Sieve
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
@@ -504,3 +501,17 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
+
+/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	switch(M.a_intent)
+		if("help")	wuv(1,M)
+		if("harm")	wuv(-1,M)
+
+/mob/living/simple_animal/corgi/proc/wuv(change, mob/M)
+	if(change)
+		if(change > 0)
+			if(M)	flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+			emote("yaps happily")
+		else
+			emote("growls")

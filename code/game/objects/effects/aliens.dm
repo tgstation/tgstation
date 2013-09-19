@@ -23,6 +23,26 @@
 	anchored = 1
 	var/health = 200
 
+/obj/structure/alien/resin/New(location)
+	..()
+	air_update_turf(1)
+	return
+
+/obj/structure/alien/resin/Del()
+	density = 0
+	air_update_turf(1)
+	..()
+	return
+
+/obj/structure/alien/resin/Move()
+	air_update_turf(1)
+	..()
+	air_update_turf(1)
+	return
+
+/obj/structure/alien/resin/CanAtmosPass()
+	return !density
+	
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Purple slime solidified into a wall."
@@ -34,18 +54,6 @@
 	icon_state = "resinmembrane"
 	opacity = 0
 	health = 120
-
-
-/obj/structure/alien/resin/New()
-	..()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-
-
-/obj/structure/alien/resin/Del()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = initial(T.thermal_conductivity)
-	..()
 
 
 /obj/structure/alien/resin/proc/healthcheck()

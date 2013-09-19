@@ -55,7 +55,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/icepepperseed)
+	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
 
 
 /obj/item/seeds/replicapod
@@ -1034,3 +1034,19 @@
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/spacevine_controller(user.loc)
 	del(src)
+
+/obj/item/seeds/chillighost
+	name = "pack of ghost chilli seeds"
+	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
+	icon_state = "seed-chilighost"
+	species = "chilighost"
+	plantname = "chilighost"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	lifespan = 20
+	endurance = 10
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 20
+	plant_type = 0
+	growthstages = 6

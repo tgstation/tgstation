@@ -25,16 +25,30 @@
 		set desc = "Click to rename your gun. If you're the detective."
 
 		var/mob/M = usr
-		if(!M.mind)	return 0
-		if(!M.mind.assigned_role == "Detective")
-			M << "<span class='notice'>You don't feel cool enough to name this gun, chump.</span>"
-			return 0
-
-		var/input = stripped_input(usr,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
+		var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
 		if(src && input && !M.stat && in_range(M,src))
 			name = input
 			M << "You name the gun [input]. Say hello to your new friend."
+			return 1
+
+	verb/reskin_gun()
+		set name = "Reskin gun"
+		set category = "Object"
+		set desc = "Click to reskin your gun. If you're the detective."
+
+		var/mob/M = usr
+		var/list/options = list()
+		options["The Original"] = "detective"
+		options["Leopard Spots"] = "detective_leopard"
+		options["Black Panther"] = "detective_panther"
+		options["Gold Trim"] = "detective_gold"
+		options["The Peacemaker"] = "detective_peacemaker"
+		var/choice = input(M,"What do you want to skin the gun to?","Reskin Gun") in options
+
+		if(src && choice && !M.stat && in_range(M,src))
+			icon_state = options[choice]
+			M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 			return 1
 
 	attackby(var/obj/item/A as obj, mob/user as mob)

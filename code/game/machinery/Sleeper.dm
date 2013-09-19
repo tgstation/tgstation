@@ -57,7 +57,7 @@
 			if(occupant.reagents)
 				//Left the text()s for readability.
 				dat += text("<div class='line'><div class='statusLabel'>Inaprovaline:</div><div class='statusValue'>[] units</div></div>", round(occupant.reagents.get_reagent_amount("inaprovaline"), 0.1))
-				dat += text("<div class='line'><div class='statusLabel'>Soporific:</div><div class='statusValue'>[] units</div></div>", round(occupant.reagents.get_reagent_amount("stoxin"), 0.1))
+				dat += text("<div class='line'><div class='statusLabel'>Sleep Toxin:</div><div class='statusValue'>[] units</div></div>", round(occupant.reagents.get_reagent_amount("stoxin"), 0.1))
 				dat += text("<div class='line'><div class='statusLabel'>Dermaline:</div><div class='statusValue'>[] units</div></div>", round(occupant.reagents.get_reagent_amount("dermaline"), 0.1))
 				dat += text("<div class='line'><div class='statusLabel'>Bicaridine:</div><div class='statusValue'>[] units</div></div>", round(occupant.reagents.get_reagent_amount("bicaridine"), 0.1))
 				dat += text("<div class='line'><div class='statusLabel'>Dexalin:</div><div class='statusValue'>[] units</div></div>", round(occupant.reagents.get_reagent_amount("dexalin"), 0.1))
@@ -71,18 +71,17 @@
 		else
 			dat += "<span class='linkOff'>Inject Inaprovaline</span>"
 		if(occupant && occupant.health > 0)
-			dat += {"<BR><A href='?src=\ref[src];stox=1'>Inject Soporific</A>
+			dat += {"<BR><A href='?src=\ref[src];stox=1'>Inject Sleep Toxin</A>
 					<BR><A href='?src=\ref[src];derm=1'>Inject Dermaline</A>
 					<BR><A href='?src=\ref[src];bic=1'>Inject Bicaridine</A>
 					<BR><A href='?src=\ref[src];dex=1'>Inject Dexalin</A>"}
 		else
-			dat += {"<BR><span class='linkOff'>Inject Soporific</span>
+			dat += {"<BR><span class='linkOff'>Inject Sleep Toxin</span>
 					<BR><span class='linkOff'>Inject Dermaline</span>
 					<BR><span class='linkOff'>Inject Bicaridine</span>
 					<BR><span class='linkOff'>Inject Dexalin</span>"}
 
 		var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
-		popup.add_stylesheet("sleeper", 'html/browser/sleeper.css')
 		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.set_content(dat)
 		popup.open()
@@ -269,7 +268,7 @@
 		if(occupant.reagents.get_reagent_amount("stoxin") + 20 < 41)
 			occupant.reagents.add_reagent("stoxin", 20)
 		var/units = round(occupant.reagents.get_reagent_amount("stoxin"))
-		user << "<span class='notice'>Occupant now has [units] unit\s of soporifics in their bloodstream.</span>"
+		user << "<span class='notice'>Occupant now has [units] unit\s of sleep toxins in their bloodstream.</span>"
 
 
 /obj/machinery/sleeper/proc/inject_dermaline(mob/user)

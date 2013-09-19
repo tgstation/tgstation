@@ -19,6 +19,7 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
+	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
 	required_players = 15
@@ -34,14 +35,13 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
+	var/list/secondwords = list("travel","see","tech","destroy", "other", "hide")
 
 	var/list/objectives = list()
 
 	var/eldergod = 1 //for the summon god objective
 
 	var/const/acolytes_needed = 5 //for the survive objective
-	var/const/min_cultists_to_start = 3
-	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
 
@@ -61,21 +61,20 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
-	for(var/datum/mind/player in cultists_possible)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
-				cultists_possible -= player
+				antag_candidates -= player
 
-	for(var/cultists_number = 1 to max_cultists_to_start)
-		if(!cultists_possible.len)
+	for(var/cultists_number = 1 to recommended_enemies)
+		if(!antag_candidates.len)
 			break
-		var/datum/mind/cultist = pick(cultists_possible)
-		cultists_possible -= cultist
+		var/datum/mind/cultist = pick(antag_candidates)
+		antag_candidates -= cultist
 		cult += cultist
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
-	return (cult.len>0)
+	return (cult.len>=required_enemies)
 
 
 /datum/game_mode/cult/post_setup()
@@ -94,6 +93,7 @@
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
+		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
 		memoize_cult_objectives(cult_mind)
@@ -149,6 +149,12 @@
 		mob.update_icons()
 		return 1
 
+/datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
+	if (!word)
+		if(secondwords.len > 0)
+			word=pick(secondwords)
+			secondwords -= word
+			grant_runeword(cult_mob,word)
 
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if (!word)
@@ -189,7 +195,7 @@
 //			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
-	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
+	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You have a vision of a [pick("crow","raven","vulture","parrot")] it squawks","You catch a brief glimmer of the otherside")]... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 

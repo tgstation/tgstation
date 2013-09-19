@@ -96,8 +96,13 @@
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
 
+/obj/structure/window/attack_tk(mob/user as mob)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
 /obj/structure/window/attack_hand(mob/user as mob)
+	if(!can_be_reached(user))
+		return
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
@@ -114,6 +119,8 @@
 
 
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+	if(!can_be_reached(user))
+		return
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
@@ -142,6 +149,8 @@
 
 
 /obj/structure/window/attackby(obj/item/I, mob/user)
+	if(!can_be_reached(user))
+		return 1 //returning 1 will skip the afterattack()
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state
@@ -173,6 +182,14 @@
 		..()
 	return
 
+/obj/structure/window/proc/can_be_reached(mob/user)
+	if(!is_fulltile())
+		if(get_dir(user,src) & dir)
+			for(var/obj/O in loc)
+				if(!O.CanPass(user, user.loc, 1, 0))
+					return 0
+	return 1
+
 /obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
 	if(reinf) damage *= 0.5
 	health = max(0, health - damage)
@@ -202,10 +219,9 @@
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	dir = turn(dir, 90)
 //	updateSilicate()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	ini_dir = dir
 	return
 
@@ -219,10 +235,9 @@
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	dir = turn(dir, 270)
 //	updateSilicate()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	ini_dir = dir
 	return
 
@@ -260,7 +275,7 @@
 	else
 		icon_state = "window"
 
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	update_nearby_icons()
 
 	return
@@ -268,41 +283,23 @@
 
 /obj/structure/window/Del()
 	density = 0
-	update_nearby_tiles()
+	air_update_turf(1)
 	playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
-	..()
+	loc = null //garbage collect
 
 
 /obj/structure/window/Move()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	..()
 	dir = ini_dir
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 
-
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
-/obj/structure/window/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(target))
-			if(target.parent)
-				air_master.groups_to_rebuild += target.parent
-			else
-				air_master.tiles_to_update += target
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(target)) air_master.tiles_to_update += target
-
+/obj/structure/window/CanAtmosPass(turf/T)
+	if(get_dir(loc, T) == dir)
+		return !density
+	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+		return !density
 	return 1
 
 //checks if this window is full-tile one
@@ -311,7 +308,7 @@
 		return 1
 	return 0
 
-//This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
+//This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	for(var/direction in cardinal)

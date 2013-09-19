@@ -9,6 +9,8 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/locked = 0
+	var/broken = 0
 	var/large = 1
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
@@ -175,6 +177,8 @@
 				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(istype(W,/obj/item/tk_grab))
+			return 0
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -190,10 +194,7 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item()
-
-		if(W)
-			W.loc = src.loc
+		user.drop_item(src)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -216,15 +217,13 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob, var/needs_opened = 1, var/show_message = 1, var/move_them = 1)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
 		return 0
-	if(O.loc == user)
+	if(!isturf(O.loc))
 		return 0
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.lying)
 		return 0
-	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
+	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1))
 		return 0
-	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return 0
-	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
+	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc? Will also check for null loc
 		return 0
 	if(needs_opened && !src.opened)
 		return 0
@@ -255,6 +254,13 @@
 	return src.attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user as mob)
+	src.add_fingerprint(user)
+
+	if(!src.toggle())
+		usr << "<span class='notice'>It won't budge!</span>"
+
+// tk grab then use on self
+/obj/structure/closet/attack_self_tk(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if(!src.toggle())

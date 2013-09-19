@@ -252,10 +252,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
 		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			for(var/datum/data/record/R in L)
-				if(R.fields["name"] == oldname)
-					R.fields["name"] = newname
-					break
+			var/datum/data/record/R = find_record("name", oldname, L)
+			if(R)	R.fields["name"] = newname
 
 		//update our pda and id if we have them on our person
 		var/list/searching = GetAllContents(searchDepth = 3)
@@ -334,30 +332,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
-//When an AI is activated, it can choose from a list of non-slaved borgs to have as a slave.
-/proc/freeborg()
-	var/select = null
-	var/list/names = list()
-	var/list/borgs = list()
-	var/list/namecounts = list()
-	for (var/mob/living/silicon/robot/A in player_list)
-		var/name = A.real_name
-		if (A.stat == 2)
+//Returns a list of unslaved cyborgs
+/proc/active_free_borgs()
+	. = list()
+	for(var/mob/living/silicon/robot/R in living_mob_list)
+		if(R.connected_ai)
 			continue
-		if (A.connected_ai)
+		if(R.stat == DEAD)
 			continue
-		else
-			if(A.module)
-				name += " ([A.module.name])"
-			names.Add(name)
-			namecounts[name] = 1
-		borgs[name] = A
+		if(R.emagged || R.scrambledcodes || R.syndicate)
+			continue
+		. += R
 
-	if (borgs.len)
-		select = input("Unshackled borg signals detected:", "Borg selection", null, null) as null|anything in borgs
-		return borgs[select]
-
-//When a borg is activated, it can choose which AI it wants to be slaved to
+//Returns a list of AI's
 /proc/active_ais()
 	. = list()
 	for(var/mob/living/silicon/ai/A in living_mob_list)
@@ -378,10 +365,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return selected
 
+/proc/select_active_free_borg(var/mob/user)
+	var/list/borgs = active_free_borgs()
+	if(borgs.len)
+		if(user)	. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
+		else		. = pick(borgs)
+	return .
+
 /proc/select_active_ai(var/mob/user)
 	var/list/ais = active_ais()
 	if(ais.len)
-		if(user)	. = input(usr,"AI signals detected:", "AI selection") in ais
+		if(user)	. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
 		else		. = pick(ais)
 	return .
 
@@ -416,6 +410,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/moblist = list()
 	var/list/sortmob = sortAtom(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/camera/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/silicon/pai/M in sortmob)
 		moblist.Add(M)
@@ -483,11 +479,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(!ckey)
 		include_link = 0
-	
+
 	if(key)
 		if(include_link)
 			. += "<a href='?priv_msg=[ckey]'>"
-		
+
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
 		else
@@ -865,7 +861,8 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						if(!istype(O,/obj)) continue
 						O.loc = X
 					for(var/mob/M in T)
-						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!M.move_on_shuttle)
+							continue
 						M.loc = X
 
 //					var/area/AR = X.loc
@@ -894,28 +891,16 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					refined_trg -= B
 					continue moving
 
-	var/list/doors = new/list()
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
-			for(var/obj/machinery/door/D2 in T1)
-				doors += D2
-			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
-			else
-				air_master.tiles_to_update += T1
+			T1.CalculateAdjacentTurfs()
+			air_master.add_to_active(T1,1)
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
-			for(var/obj/machinery/door/D2 in T2)
-				doors += D2
-			if(T2.parent)
-				air_master.groups_to_rebuild += T2.parent
-			else
-				air_master.tiles_to_update += T2
-
-	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+			T2.CalculateAdjacentTurfs()
+			air_master.add_to_active(T2,1)
 
 
 
@@ -1025,8 +1010,8 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 						O.loc = X
 
 					for(var/mob/M in T)
-
-						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!M.move_on_shuttle)
+							continue
 						mobs += M
 
 					for(var/mob/M in mobs)
@@ -1057,23 +1042,10 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 					continue moving
 
 
-
-
-	var/list/doors = new/list()
-
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
-			for(var/obj/machinery/door/D2 in T1)
-				doors += D2
-			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
-			else
-				air_master.tiles_to_update += T1
-
-	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
-
-
+			T1.CalculateAdjacentTurfs()
+			air_master.add_to_active(T1,1)
 
 
 	return copiedobjs

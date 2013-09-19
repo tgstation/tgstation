@@ -109,10 +109,7 @@
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
-/obj/structure/cable/attack_hand(mob/user)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
+/obj/structure/cable/attack_tk(mob/user)
 	return
 
 /obj/structure/cable/attackby(obj/item/W, mob/user)
@@ -138,21 +135,10 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		var/message = "A wire has been cut"
-		var/atom/A = user
-		if(A)
-			var/turf/Z = get_turf(A)
-			var/area/my_area = get_area(Z)
-			message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-			message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
-			var/mob/M = get(A, /mob)
-			if(M)
-				message += " - Cut By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-		message_admins(message, 0, 1)
 		del(src)
-
-		return	// not needed, but for clarity
+		return
 
 
 	else if(istype(W, /obj/item/weapon/cable_coil))
@@ -222,7 +208,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
+	flags = TABLEPASS | FPRINT | CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 

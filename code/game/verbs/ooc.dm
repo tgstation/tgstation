@@ -38,13 +38,16 @@
 
 	log_ooc("[mob.name]/[key] : [msg]")
 
-	var/keyname = unlock_content ? "<font color='[prefs.ooccolor]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[key]</font>" : key
+	var/keyname = key
+	if(prefs.unlock_content)
+		if(prefs.toggles & MEMBER_PUBLIC)
+			keyname = "<font color='[prefs.ooccolor]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
 	for(var/client/C in clients)
 		if(C.prefs.toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
-					if(holder.rights & R_ADMIN)
+					if(check_rights_for(src, R_ADMIN))
 						C << "<font color=[config.allow_admin_ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
@@ -65,13 +68,12 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "OOC Text Color"
 	set category = "Preferences"
 
-	if(!unlock_content && !(holder && (holder.rights & R_ADMIN)))
-		src << "You must be a byond member or admin with +ADMIN rights to access this feature. Sorry"
-		return
+	if(!holder || check_rights_for(src, R_ADMIN))
+		if(!is_content_unlocked())	return
 
 	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

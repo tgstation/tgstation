@@ -8,6 +8,7 @@
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
+	var/lobby_countdown = 120			// In between round countdown.
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -48,7 +49,6 @@
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
-	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
@@ -174,6 +174,8 @@
 					config.ban_legacy_system = 1
 				if("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1
+				if("lobby_countdown")
+					config.lobby_countdown = text2num(value)
 				if("log_ooc")
 					config.log_ooc = 1
 				if("log_access")
@@ -264,8 +266,6 @@
 					Ticklag = text2num(value)
 				if("tickcomp")
 					Tickcomp = 1
-				if("tor_ban")
-					ToRban = 1
 				if("automute_on")
 					automute_on = 1
 				else

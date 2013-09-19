@@ -33,10 +33,16 @@ datum/controller/vote
 					i++
 				reset()
 			else
+				var/datum/browser/client_popup
 				while(i<=voting.len)
-					var/client/C = voting[i]
+					var/client/C = voting[i]					
 					if(C)
-						C << browse(vote.interface(C),"window=vote;can_close=0")
+						//C << browse(vote.interface(C),"window=vote;can_close=0")
+						client_popup = new(C, "vote", "Voting Panel")
+						client_popup.set_window_options("can_close=0")
+						client_popup.set_content(vote.interface(C))
+						client_popup.open(0)
+						
 						i++
 					else
 						voting.Cut(i,i+1)
@@ -172,11 +178,10 @@ datum/controller/vote
 		var/trialmin = 0
 		if(C.holder)
 			admin = 1
-			if(C.holder.rights & R_ADMIN)
+			if(check_rights_for(C, R_ADMIN))
 				trialmin = 1
 		voting |= C
 
-		. = "<html><head><title>Voting Panel</title></head><body>"
 		if(mode)
 			if(question)	. += "<h2>Vote: '[question]'</h2>"
 			else			. += "<h2>Vote: [capitalize(mode)]</h2>"
@@ -211,7 +216,7 @@ datum/controller/vote
 			if(trialmin)
 				. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
 			. += "</ul><hr>"
-		. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a></body></html>"
+		. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
 		return .
 
 
@@ -250,4 +255,8 @@ datum/controller/vote
 	set name = "Vote"
 
 	if(vote)
-		src << browse(vote.interface(client),"window=vote;can_close=0")
+		//src << browse(vote.interface(client),"window=vote;can_close=0")
+		var/datum/browser/popup = new(src, "vote", "Voting Panel")
+		popup.set_window_options("can_close=0")
+		popup.set_content(vote.interface(client))
+		popup.open(0)

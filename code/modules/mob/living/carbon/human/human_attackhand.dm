@@ -33,7 +33,7 @@
 					src << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
-			if(M == src)
+			if(M == src || anchored)
 				return 0
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)

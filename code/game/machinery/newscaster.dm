@@ -175,7 +175,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
 		var/mob/living/human_or_robot_user = user
 		var/dat
-		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
 
 		src.scan_user(human_or_robot_user) //Newscaster scans you
 
@@ -418,9 +417,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
+		//human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
+		//onclose(human_or_robot_user, "newscaster_main")
 
-		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
-		onclose(human_or_robot_user, "newscaster_main")
+		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[src.unit_no]", 400, 600)
+		popup.set_content(dat)
+		popup.set_title_image(human_or_robot_user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
 
 	/*if(src.isbroken) //debugging shit
 		return
@@ -734,9 +737,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
 	src.update_icon()
 
-/obj/machinery/newscaster/attack_ai(mob/user as mob)
-	return src.attack_hand(user) //or maybe it'll have some special functions? No idea.
-
 
 /obj/machinery/newscaster/attack_paw(mob/user as mob)
 	user << "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>"
@@ -751,6 +751,23 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
+	if(istype(usr,/mob/living/silicon/ai))
+		var/list/nametemp = list()
+		var/find
+		var/datum/picture/selection
+		var/mob/living/silicon/ai/tempAI = user
+		for(var/datum/picture/t in tempAI.aicamera.aipictures)
+			nametemp += t.fields["name"]
+		find = input("Select picture (numbered in order taken)") in nametemp
+		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+		for(var/datum/picture/q in tempAI.aicamera.aipictures)
+			if(q.fields["name"] == find)
+				selection = q
+				break  	// just in case some AI decides to take 10 thousand pictures in a round
+		P.icon = selection.fields["icon"]
+		P.img = selection.fields["img"]
+		P.desc = selection.fields["desc"]
+		photo = P
 
 
 

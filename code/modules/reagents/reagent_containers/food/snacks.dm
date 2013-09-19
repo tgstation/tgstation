@@ -58,7 +58,7 @@
 				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
 				return 0
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
 				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if(wrapped)
 					return 0
@@ -100,7 +100,7 @@
 	return 0
 
 
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
 	return
 
 
@@ -122,10 +122,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
-	if(istype(W,/obj/item/weapon/storage))
-		..() // -> item/attackby()
+		return 0
 	if((slices_num <= 0 || !slices_num) || !slice_path)
-		return 1
+		return 0
 	var/inaccurate = 0
 	if( \
 			istype(W, /obj/item/weapon/kitchenknife) || \
@@ -143,7 +142,7 @@
 		inaccurate = 1
 	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 		if(!iscarbon(user))
-			return 1
+			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
 		user.u_equip(W)
 		if ((user.client && user.s_active != src))
@@ -151,9 +150,10 @@
 		W.dropped(user)
 		add_fingerprint(user)
 		contents += W
-		return
+		return 1 // no afterattack here
 	else
-		return 1
+		return 0 // --- this is everything that is NOT a slicing implement, and which is not being slipped into food; allow afterattack ---
+
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
@@ -162,6 +162,7 @@
 		)
 		user << "<span class='notice'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1
+
 	var/slices_lost = 0
 	if (!inaccurate)
 		user.visible_message( \
@@ -178,7 +179,7 @@
 	for(var/i=1 to (slices_num-slices_lost))
 		var/obj/slice = new slice_path (src.loc)
 		reagents.trans_to(slice,reagents_per_slice)
-	del(src)
+	del(src) // so long and thanks for all the fish
 
 
 /obj/item/weapon/reagent_containers/food/snacks/Del()
@@ -647,6 +648,15 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
+	icon_state = "hburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/appendixburger
+	name = "appendix burger"
+	desc = "Tastes like appendicitis."
 	icon_state = "hburger"
 	New()
 		..()
@@ -1313,7 +1323,8 @@
 		..()
 		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O, mob/user)
+	afterattack(obj/O, mob/user,proximity)
+		if(!proximity) return
 		if(istype(O,/obj/structure/sink) && !wrapped)
 			user << "<span class='notice'>You place [src] under a stream of water...</span>"
 			user.drop_item()

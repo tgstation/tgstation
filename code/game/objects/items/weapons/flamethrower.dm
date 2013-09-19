@@ -4,7 +4,7 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
-	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY // USEDELAY flag needed in order to use afterattack() for things that are not in reach. I.E: Shooting flames.
+	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -61,6 +61,7 @@
 	return
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
+	if(flag) return // too close
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -187,8 +188,8 @@
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
 	if(!lit || operating)	return
 	operating = 1
-	for(var/turf/T in turflist)
-		if(T.density || istype(T, /turf/space))
+	for(var/turf/simulated/T in turflist)
+		if(!T.air)
 			break
 		if(!previousturf && length(turflist)>1)
 			previousturf = get_turf(src)
@@ -214,6 +215,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500) // -- More of my "how do I shot fire?" dickery. -- TLE
 	//location.hotspot_expose(1000,500,1)
+	air_master.add_to_active(target, 0)
 	return
 
 

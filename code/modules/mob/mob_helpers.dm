@@ -115,13 +115,15 @@ proc/isobserver(A)
 		return 1
 	return 0
 
+proc/isovermind(A)
+	if(istype(A, /mob/camera/blob))
+		return 1
+	return 0
+
 proc/isorgan(A)
 	if(istype(A, /datum/limb))
 		return 1
 	return 0
-
-/proc/hsl2rgb(h, s, l)
-	return
 
 /proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
 	for(var/obj/item/weapon/implant/loyalty/L in A)
@@ -149,21 +151,23 @@ proc/isorgan(A)
 	return zone
 
 
-/proc/ran_zone(zone, probability)
+/proc/ran_zone(zone, probability = 80)
+
 	zone = check_zone(zone)
-	if(!probability)	probability = 90
-	if(probability == 100)	return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
-		var/t = rand(1, 9)
-		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+	if(prob(probability))
+		return zone
 
-	if(prob(probability * 0.75))	return zone
-	return "chest"
+	var/t = rand(1, 17) // randomly pick a different zone, or maybe the same one
+	switch(t)
+		if(1)		 return "head"
+		if(2)		 return "chest"
+		if(3 to 6)	 return "l_arm"
+		if(7 to 10)	 return "r_arm"
+		if(10 to 13) return "l_leg"
+		if(14 to 17) return "r_leg"
+
+	return zone
 
 
 /proc/stars(n, pr)
@@ -287,58 +291,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	return 0
 
-
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = 1
-
-	if(hud_used)
-		if(ishuman(src))
-			if(!src.client) return
-
-			if(hud_used.hud_shown)
-				hud_used.hud_shown = 0
-				if(src.hud_used.adding)
-					src.client.screen -= src.hud_used.adding
-				if(src.hud_used.other)
-					src.client.screen -= src.hud_used.other
-				if(src.hud_used.hotkeybuttons)
-					src.client.screen -= src.hud_used.hotkeybuttons
-				if(src.hud_used.item_action_list)
-					src.client.screen -= src.hud_used.item_action_list
-
-				//Due to some poor coding some things need special treatment:
-				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
-				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-
-				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
-
-			else
-				hud_used.hud_shown = 1
-				if(src.hud_used.adding)
-					src.client.screen += src.hud_used.adding
-				if(src.hud_used.other && src.hud_used.inventory_shown)
-					src.client.screen += src.hud_used.other
-				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
-					src.client.screen += src.hud_used.hotkeybuttons
-
-
-				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-				src.client.screen += src.zone_sel				//This one is a special snowflake
-
-			hud_used.hidden_inventory_update()
-			hud_used.persistant_inventory_update()
-			update_action_buttons()
-		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
-	else
-		usr << "\red This mob type does not use a HUD."
-
 //converts intent-strings into numbers and back
 /proc/intent_numeric(argument)
 	if(istext(argument))
@@ -438,3 +390,6 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 					return 2
 		return 1
 	return 0
+
+/mob/proc/has_mutation(var/mutation)
+	return mutation in src.mutations ? 1 : 0

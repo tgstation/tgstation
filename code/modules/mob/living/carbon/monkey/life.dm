@@ -100,7 +100,7 @@
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || prob(50))
+			if((COLD_RESISTANCE in mutations) && prob(50))
 				switch(getFireLoss())
 					if(1 to 50)
 						adjustFireLoss(-1)
@@ -156,7 +156,7 @@
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
 
 		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/air_group/breath
+		var/datum/gas_mixture/breath
 		if(health <= config.health_threshold_crit)
 			losebreath++
 		if(losebreath>0) //Suffocating so do not take a breath
@@ -332,7 +332,7 @@
 
 			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 
-		if(stat==2)
+		if(stat != 2)
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 		//Account for massive pressure differences
@@ -398,7 +398,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < config.health_threshold_dead || !getbrain(src))
+			if(health < config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				stat = DEAD

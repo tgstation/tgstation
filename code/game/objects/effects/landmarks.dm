@@ -109,13 +109,20 @@
 /obj/effect/landmark/costume/nyangirl/New()
 	new /obj/item/clothing/under/schoolgirl(src.loc)
 	new /obj/item/clothing/head/kitty(src.loc)
+	if (prob(50))
+		new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
+	else
+		new /obj/item/clothing/mask/muzzle/gag(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/maid/New()
 	new /obj/item/clothing/under/blackskirt(src.loc)
 	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
 	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
+	if (prob(50))
+		new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
+	else
+		new /obj/item/clothing/mask/muzzle/gag(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/butler/New()
@@ -189,6 +196,7 @@
 	del(src)
 
 /obj/effect/landmark/costume/marisawizard/fake/New()
+	new /obj/item/clothing/shoes/sandal/marisa(src.loc)
 	new /obj/item/clothing/head/wizard/marisa/fake(src.loc)
 	new/obj/item/clothing/suit/wizrobe/marisa/fake(src.loc)
 	del(src)
@@ -200,6 +208,7 @@
 	del(src)
 
 /obj/effect/landmark/costume/fakewizard/New()
+	new /obj/item/clothing/shoes/sandal(src.loc)
 	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
 	new /obj/item/clothing/head/wizard/fake(src.loc)
 	new /obj/item/weapon/staff/(src.loc)

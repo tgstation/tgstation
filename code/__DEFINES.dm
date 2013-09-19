@@ -26,7 +26,6 @@
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
 
-var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
 
 //ITEM INVENTORY SLOT BITMASKS
@@ -49,17 +48,17 @@ var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference whe
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
-#define TABLEPASS 2			// can pass by a table or rack
+#define TABLEPASS 2			// can pass by a table or rack ~ apparently actually unused, uses pass_flags instead
 
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
 
-#define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
-#define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
+#define USEDELAY 	16		// For adding extra delay to heavy items, not currently used
 #define NOSHIELD	32		// weapon not affected by shield
 #define CONDUCT		64		// conducts electricity (metal etc.)
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
+#define NOBLUDGEON	4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -389,8 +388,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
-#define R_HOST			65535
-
 //Preference toggles
 #define SOUND_ADMINHELP	1
 #define SOUND_MIDI		2
@@ -402,8 +399,9 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define CHAT_GHOSTSIGHT	128
 #define CHAT_PRAYER		256
 #define CHAT_RADIO		512
+#define MEMBER_PUBLIC	1024
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|MEMBER_PUBLIC)
 
 #define BE_TRAITOR		1
 #define BE_OPERATIVE	2
@@ -424,7 +422,7 @@ var/list/be_special_flags = list(
 	"Wizard" = BE_WIZARD,
 	"Malf AI" = BE_MALF,
 	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
+	"Alien Lifeform" = BE_ALIEN,
 	"pAI" = BE_PAI,
 	"Cultist" = BE_CULTIST,
 	"Monkey" = BE_MONKEY,

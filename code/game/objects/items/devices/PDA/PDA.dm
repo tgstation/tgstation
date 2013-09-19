@@ -46,23 +46,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
-	icon_state = "pda-m"
+	icon_state = "pda-medical"
 
 /obj/item/device/pda/viro
 	default_cartridge = /obj/item/weapon/cartridge/medical
-	icon_state = "pda-v"
+	icon_state = "pda-virology"
 
 /obj/item/device/pda/engineering
 	default_cartridge = /obj/item/weapon/cartridge/engineering
-	icon_state = "pda-e"
+	icon_state = "pda-engineer"
 
 /obj/item/device/pda/security
 	default_cartridge = /obj/item/weapon/cartridge/security
-	icon_state = "pda-s"
+	icon_state = "pda-security"
 
 /obj/item/device/pda/detective
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon_state = "pda-det"
+	icon_state = "pda-detective"
 
 /obj/item/device/pda/warden
 	default_cartridge = /obj/item/weapon/cartridge/security
@@ -70,12 +70,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
-	icon_state = "pda-j"
+	icon_state = "pda-janitor"
 	ttone = "slip"
 
 /obj/item/device/pda/toxins
 	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
-	icon_state = "pda-tox"
+	icon_state = "pda-science"
 	ttone = "boom"
 
 /obj/item/device/pda/clown
@@ -92,7 +92,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
-	icon_state = "pda-h"
+	icon_state = "pda-hop"
 
 /obj/item/device/pda/heads/hop
 	default_cartridge = /obj/item/weapon/cartridge/hop
@@ -116,7 +116,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
-	icon_state = "pda-c"
+	icon_state = "pda-captain"
 	toff = 1
 
 /obj/item/device/pda/cargo
@@ -125,20 +125,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/quartermaster
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
-	icon_state = "pda-q"
+	icon_state = "pda-qm"
 
 /obj/item/device/pda/shaftminer
 	icon_state = "pda-miner"
 
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
-	icon_state = "pda-syn"
+	icon_state = "pda-syndi"
 	name = "Military PDA"
 	owner = "John Doe"
 	hidden = 1
 
 /obj/item/device/pda/chaplain
-	icon_state = "pda-holy"
+	icon_state = "pda-chaplain"
 	ttone = "holy"
 
 /obj/item/device/pda/lawyer
@@ -151,16 +151,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-hydro"
 
 /obj/item/device/pda/roboticist
-	icon_state = "pda-robot"
+	icon_state = "pda-roboticist"
 
 /obj/item/device/pda/librarian
-	icon_state = "pda-libb"
+	icon_state = "pda-library"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
 
 /obj/item/device/pda/clear
-	icon_state = "pda-transp"
+	icon_state = "pda-clear"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
@@ -168,19 +168,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-chef"
 
 /obj/item/device/pda/bar
-	icon_state = "pda-bar"
+	icon_state = "pda-bartender"
 
 /obj/item/device/pda/atmos
 	default_cartridge = /obj/item/weapon/cartridge/atmos
-	icon_state = "pda-atmo"
+	icon_state = "pda-atmos"
 
 /obj/item/device/pda/chemist
 	default_cartridge = /obj/item/weapon/cartridge/chemistry
-	icon_state = "pda-chem"
+	icon_state = "pda-chemistry"
 
 /obj/item/device/pda/geneticist
 	default_cartridge = /obj/item/weapon/cartridge/medical
-	icon_state = "pda-gene"
+	icon_state = "pda-genetics"
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/device/pda/ai
@@ -269,9 +269,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
 				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
-				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br>")
+				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
-				dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
 
 				dat += "<br><br>"
 
@@ -887,49 +888,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user as mob)
 	if(istype(C))
 		switch(scanmode)
+
 			if(1)
-
-				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
-
-				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
-				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
-				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
-				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("\blue \t Time of Death: [C.tod]")
-				if(istype(C, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_organs(1,1)
-					user.show_message("\blue Localized Damage, Brute/Burn:",1)
-					if(length(damaged)>0)
-						for(var/datum/limb/org in damaged)
-							user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
-					else
-						user.show_message("\blue \t Limbs are OK.",1)
-
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+				user.visible_message(text("<span class='alert'>[] has analyzed []'s vitals!</span>", user, C))
+				healthscan(user, C, 1)
+				src.add_fingerprint(user)
 
 			if(2)
-				if(!istype(C.dna))
-					user << "\blue No fingerprints found on [C]"
-				else if(!istype(C, /mob/living/carbon/monkey))
-					if(!isnull(C:gloves))
-						user << "\blue No fingerprints found on [C]"
-				else
-					user << text("\blue [C]'s Fingerprints: [md5(C.dna.uni_identity)]")
-				if ( !(C:blood_DNA) )
-					user << "\blue No blood found on [C]"
-					if(C:blood_DNA)
-						del(C:blood_DNA)
-				else
-					user << "\blue Blood found on [C]. Analysing..."
-					spawn(15)
-						for(var/blood in C:blood_DNA)
-							user << "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]"
+				// Unused
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
@@ -941,7 +907,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					user.show_message("\blue No radiation detected.")
 
-/obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+/obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+	if(!proximity) return
 	switch(scanmode)
 
 		if(3)
@@ -987,18 +954,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
 				var/obj/icon = A
+				var/obj/machinery/atmospherics/pipe/tank/T = A
 				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
+					O << "\red [user] has used [src] on \icon[icon] [T]"
 
-				var/pressure = A:parent.air.return_pressure()
-				var/total_moles = A:parent.air.total_moles()
+				var/pressure = T.parent.air.return_pressure()
+				var/total_moles = T.parent.air.total_moles()
 
 				user << "\blue Results of analysis of \icon[icon]"
 				if (total_moles>0)
-					var/o2_concentration = A:parent.air.oxygen/total_moles
-					var/n2_concentration = A:parent.air.nitrogen/total_moles
-					var/co2_concentration = A:parent.air.carbon_dioxide/total_moles
-					var/plasma_concentration = A:parent.air.toxins/total_moles
+					var/o2_concentration = T.parent.air.oxygen/total_moles
+					var/n2_concentration = T.parent.air.nitrogen/total_moles
+					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
+					var/plasma_concentration = T.parent.air.toxins/total_moles
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
@@ -1009,7 +977,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user << "\blue Plasma: [round(plasma_concentration*100)]%"
 					if(unknown_concentration>0.01)
 						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(A:parent.air.temperature-T0C)]&deg;C"
+					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
 				else
 					user << "\blue Tank is empty!"
 
@@ -1140,7 +1108,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/weapon/storage/box/PDAs
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "pdabox"
 
 	New()

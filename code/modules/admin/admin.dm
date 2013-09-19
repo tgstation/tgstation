@@ -103,7 +103,6 @@ var/global/floorIsLava = 0
 				body += "<A href='?_src_=holder;makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob Fragment</A> | "
 				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> "
 
 			//Simple Animals
@@ -399,6 +398,14 @@ var/global/floorIsLava = 0
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
 
+	dat +={"
+			<B>General Secrets</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
+			<BR>
+			"}
+
 	if(check_rights(R_ADMIN,0))
 		dat += {"
 			<B>Admin Secrets</B><BR>
@@ -413,6 +420,11 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
 			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
+			<BR>
+			<B>Shuttles</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsadmin=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];secretsadmin=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<BR>
 			"}
 
@@ -441,11 +453,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
 			<A href='?src=\ref[src];secretsfun=energeticflux'>Trigger a hyper-energetic flux</A><BR>
 			<BR>
-			<B>Shuttles</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
-			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
 			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
@@ -459,8 +466,8 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<BR>
 			"}
 
 /* DEATH SQUADS
@@ -478,11 +485,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
 			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
 			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
-			<BR>
-			<B>Coder Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
 			<BR>
 			"}
 
@@ -840,3 +842,18 @@ proc/move_ferry()
 		ferry_location = 0
 	else
 		ferry_location = 1
+
+//Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
+//defaults to kicking everyone (afk + non afk clients in the lobby)
+//returns a list of ckeys of the kicked clients
+proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
+	var/list/kicked_client_names = list()
+	for(var/client/C in clients)
+		if(istype(C.mob, /mob/new_player))
+			if(kick_only_afk && !C.is_afk())	//Ignore clients who are not afk
+				continue
+			if(message)
+				C << message
+			kicked_client_names.Add("[C.ckey]")
+			del(C)
+	return kicked_client_names

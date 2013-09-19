@@ -368,11 +368,11 @@ var/list/binary = list("0","1")
 	if(!istext(into))	into = ""
 	if(!istext(from))	from = ""
 	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
-	
+
 	var/previous = 0
 	var/start = 1
 	var/end = length(into) + 1
-	
+
 	for(var/i=1, i<end, i++)
 		var/ascii = text2ascii(from, i)
 		if(ascii == null_ascii)
@@ -385,9 +385,19 @@ var/list/binary = list("0","1")
 				. += copytext(into, start, i)
 				start = i
 				previous = 0
-	
+
 	if(previous == 0)
 		. += copytext(from, start, end)
 	else
 		. += copytext(into, start, end)
-		
+
+//finds the first occurrence of one of the characters from needles argument inside haystack
+//it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
+//stupid byond :(
+/proc/findchar(haystack, needles, start=1, end=0)
+	var/temp
+	var/len = length(needles)
+	for(var/i=1, i<=len, i++)
+		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
+		if(temp)	end = temp
+	return end

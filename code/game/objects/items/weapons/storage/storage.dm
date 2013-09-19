@@ -26,8 +26,17 @@
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
 	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
+
+		if(over_object == M && Adjacent(M)) // this must come before the screen objects only block
+			orient2hud(M)					// dunno why it wasn't before
+			if(M.s_active)
+				M.s_active.close(M)
+			show_to(M)
+			return
+
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
+
 		if(!(loc == usr) || (loc && loc.loc == usr))
 			return
 		playsound(loc, "rustle", 50, 1, -5)
@@ -41,10 +50,6 @@
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
 
 
 /obj/item/weapon/storage/proc/return_inv()
@@ -238,7 +243,7 @@
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
-					usr << "<span class='notice'>You put the [W] into [src].</span>"
+					usr << "<span class='notice'>You put \the [W] into [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
@@ -292,32 +297,23 @@
 
 	if(isrobot(user))
 		user << "<span class='notice'>You're a robot. No.</span>"
-		return	//Robots can't interact with storage items.
+		return 1	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
-		return
+		return 1
 
 	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			user << "<span class='notice'>[T] won't fit in [src]."
-			return
+			return 1
 
 	handle_item_insertion(W)
+	return 1
 
 
 /obj/item/weapon/storage/dropped(mob/user)
 	return
-
-
-/obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
-	..()
-	orient2hud(usr)
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		if(usr.s_active)
-			usr.s_active.close(usr)
-		show_to(usr)
-
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	playsound(loc, "rustle", 50, 1, -5)
@@ -345,6 +341,8 @@
 				close(M)
 	add_fingerprint(user)
 
+/obj/item/weapon/storage/attack_paw(mob/user)
+	return attack_hand(user)
 
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"

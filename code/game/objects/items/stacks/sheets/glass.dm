@@ -87,6 +87,7 @@
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
+			W.air_update_turf(1)
 			src.use(1)
 		if("Full Window")
 			if(!src)	return 1
@@ -102,6 +103,7 @@
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
+			W.air_update_turf(1)
 			src.use(2)
 	return 0
 
@@ -266,7 +268,8 @@
 	..()
 
 
-/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user)
+/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+	if(!proximity || !(src in user)) return
 	if(isturf(A))
 		return
 	if(istype(A, /obj/item/weapon/storage))
@@ -301,17 +304,12 @@
 			del(src)
 	..()
 
-
-/obj/item/weapon/shard/HasEntered(AM as mob|obj)
-	if(ismob(AM))
+/obj/item/weapon/shard/HasEntered(var/mob/AM)
+	if(istype(AM))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(!H.shoes)
 				H << "<span class='userdanger'>You step in the broken glass!</span>"
-				var/datum/limb/affecting = H.get_organ(pick("l_leg", "r_leg"))
+				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
 				H.Weaken(3)
-				if(affecting.take_damage(5, 0))
-					H.update_damage_overlays(0)
-				H.updatehealth()
-	..()

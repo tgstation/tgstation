@@ -1,11 +1,11 @@
 /mob/living/carbon/human
 	//Hair colour and style
-	var/h_color = "000"
-	var/h_style = "Bald"
+	var/hair_color = "000"
+	var/hair_style = "Bald"
 
 	//Facial hair colour and style
-	var/f_color = "000"
-	var/f_style = "Shaved"
+	var/facial_hair_color = "000"
+	var/facial_hair_style = "Shaved"
 
 	//Eye colour
 	var/eye_color = "000"
@@ -15,7 +15,7 @@
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
 	var/age = 30		//Player's age (pure fluff)
-	var/b_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
+	var/blood_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.

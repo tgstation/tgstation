@@ -105,71 +105,68 @@
 
 
 /mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
+	if ((!( yes ) || now_pushing))
+		return
+	now_pushing = 1
 
-		if(isobj(AM))
-			if(!client && powerlevel > 0)
-				var/probab = 10
-				switch(powerlevel)
-					if(1 to 2) probab = 20
-					if(3 to 4) probab = 30
-					if(5 to 6) probab = 40
-					if(7 to 8) probab = 60
-					if(9) 	   probab = 70
-					if(10) 	   probab = 95
-				if(prob(probab))
+	if(isobj(AM))
+		if(!client && powerlevel > 0)
+			var/probab = 10
+			switch(powerlevel)
+				if(1 to 2) probab = 20
+				if(3 to 4) probab = 30
+				if(5 to 6) probab = 40
+				if(7 to 8) probab = 60
+				if(9) 	   probab = 70
+				if(10) 	   probab = 95
+			if(prob(probab))
 
 
-					if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
-						if(istype(src, /mob/living/carbon/slime/adult))
-							if(nutrition <= 600 && !Atkcool)
+				if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
+					if(istype(src, /mob/living/carbon/slime/adult))
+						if(nutrition <= 600 && !Atkcool)
+							AM.attack_slime(src)
+							spawn()
+								Atkcool = 1
+								sleep(15)
+								Atkcool = 0
+					else
+						if(nutrition <= 500 && !Atkcool)
+							if(prob(5))
 								AM.attack_slime(src)
 								spawn()
 									Atkcool = 1
 									sleep(15)
 									Atkcool = 0
-						else
-							if(nutrition <= 500 && !Atkcool)
-								if(prob(5))
-									AM.attack_slime(src)
-									spawn()
-										Atkcool = 1
-										sleep(15)
-										Atkcool = 0
 
-		if(ismob(AM))
-			var/mob/tmob = AM
+	if(ismob(AM))
+		var/mob/tmob = AM
 
-			if(istype(src, /mob/living/carbon/slime/adult))
-				if(istype(tmob, /mob/living/carbon/human))
-					if(prob(90))
-						now_pushing = 0
-						return
-			else
-				if(istype(tmob, /mob/living/carbon/human))
+		if(istype(src, /mob/living/carbon/slime/adult))
+			if(istype(tmob, /mob/living/carbon/human))
+				if(prob(90))
 					now_pushing = 0
 					return
+		else
+			if(istype(tmob, /mob/living/carbon/human))
+				now_pushing = 0
+				return
 
-		now_pushing = 0
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
 		return
-	return
+	if (!( now_pushing ))
+		now_pushing = 1
+		if (!( AM.anchored ))
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 
 /mob/living/carbon/slime/Process_Spacemove()
 	return 2
@@ -435,7 +432,7 @@
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
@@ -526,7 +523,7 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
@@ -592,86 +589,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /mob/living/carbon/slime/show_inv(mob/user)
 	return
 
-/mob/living/carbon/slime/proc/get_obstacle_ok(atom/A)
-	var/direct = get_dir(src, A)
-	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )
-	var/ok = 0
-	if ( (direct - 1) & direct)
-		var/turf/Step_1
-		var/turf/Step_2
-		switch(direct)
-			if(5.0)
-				Step_1 = get_step(src, NORTH)
-				Step_2 = get_step(src, EAST)
-
-			if(6.0)
-				Step_1 = get_step(src, SOUTH)
-				Step_2 = get_step(src, EAST)
-
-			if(9.0)
-				Step_1 = get_step(src, NORTH)
-				Step_2 = get_step(src, WEST)
-
-			if(10.0)
-				Step_1 = get_step(src, SOUTH)
-				Step_2 = get_step(src, WEST)
-
-			else
-		if(Step_1 && Step_2)
-			var/check_1 = 0
-			var/check_2 = 0
-			if(step_to(D, Step_1))
-				check_1 = 1
-				for(var/obj/border_obstacle in Step_1)
-					if(border_obstacle.flags & ON_BORDER)
-						if(!border_obstacle.CheckExit(D, A))
-							check_1 = 0
-				for(var/obj/border_obstacle in get_turf(A))
-					if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-						if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-							check_1 = 0
-
-			D.loc = src.loc
-			if(step_to(D, Step_2))
-				check_2 = 1
-
-				for(var/obj/border_obstacle in Step_2)
-					if(border_obstacle.flags & ON_BORDER)
-						if(!border_obstacle.CheckExit(D, A))
-							check_2 = 0
-				for(var/obj/border_obstacle in get_turf(A))
-					if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-						if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-							check_2 = 0
-			if(check_1 || check_2)
-				ok = 1
-	else
-		if(loc == src.loc)
-			ok = 1
-		else
-			ok = 1
-
-			//Now, check objects to block exit that are on the border
-			for(var/obj/border_obstacle in src.loc)
-				if(border_obstacle.flags & ON_BORDER)
-					if(!border_obstacle.CheckExit(D, A))
-						ok = 0
-
-			//Next, check objects to block entry that are on the border
-			for(var/obj/border_obstacle in get_turf(A))
-				if((border_obstacle.flags & ON_BORDER) && (A != border_obstacle))
-					if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-						ok = 0
-
-	//del(D)
-	//Garbage Collect Dummy
-	D.loc = null
-	D = null
-	if (!( ok ))
-
-		return 0
-
-	return 1
+/mob/living/carbon/slime/toggle_throw_mode()
+	return
 
 
 /obj/item/slime_extract
@@ -943,7 +862,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	slowdown = SHOES_SLOWDOWN+1
 
 
-/obj/item/clothing/mask/gas/golem
+/obj/item/clothing/mask/breath/golem
 	name = "golem's face"
 	desc = "the imposing face of an adamantine golem"
 	icon_state = "golem"
@@ -952,7 +871,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	siemens_coefficient = 0
 	unacidable = 1
 
-/obj/item/clothing/mask/gas/golem
+/obj/item/clothing/mask/breath/golem
 	name = "golem's face"
 	desc = "the imposing face of an adamantine golem"
 	icon_state = "golem"
@@ -1020,12 +939,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user << "The rune fizzles uselessly. There is no spirit nearby."
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
-		G.dna.mutantrace = "adamantine"
+		hardset_dna(G, null, null, null, "adamantine")
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
 		G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
 		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-		G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
+		G.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/golem(G), slot_wear_mask)
 		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
 		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
 		G.loc = src.loc
@@ -1040,6 +959,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 				var/area/A = get_area(src)
 				if(A)
 					G << "Golem rune created in [A.name]."
+
+/mob/living/carbon/slime/getTrail()
+	return null
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

@@ -8,6 +8,15 @@
 #define RECOMMENDED_VERSION 495
 
 /world/New()
+#if (PRELOAD_RSC == 0)
+	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
+	var/i=1
+	while(i<=external_rsc_urls.len)
+		if(external_rsc_urls[i])
+			i++
+		else
+			external_rsc_urls.Cut(i,i+1)
+#endif
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 //	if(revdata && istext(revdata.revision) && length(revdata.revision)>7)
@@ -80,8 +89,6 @@
 	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
-		if(config.ToRban)
-			ToRban_autoupdate()
 		if(config.kick_inactive)
 			KickInactiveClients()
 	return

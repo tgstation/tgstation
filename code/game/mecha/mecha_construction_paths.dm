@@ -237,7 +237,7 @@
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
 					holder.icon_state = "ripley10"
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "ripley8"
@@ -260,7 +260,7 @@
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 					holder.icon_state = "ripley13"
 				else
-					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
+					user.visible_message("[user] pries external armor layer from [holder].", "You pry external armor layer from [holder].")
 					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "ripley11"
@@ -519,7 +519,7 @@
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
 					holder.icon_state = "gygax16"
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "gygax14"
@@ -543,7 +543,7 @@
 					user.visible_message("[user] secures Gygax Armour Plates.", "You secure Gygax Armour Plates.")
 					holder.icon_state = "gygax19"
 				else
-					user.visible_message("[user] pries Gygax Armour Plates from [holder].", "You prie Gygax Armour Plates from [holder].")
+					user.visible_message("[user] pries Gygax Armour Plates from [holder].", "You pry Gygax Armour Plates from [holder].")
 					new /obj/item/mecha_parts/part/gygax_armour(get_turf(holder))
 					holder.icon_state = "gygax17"
 			if(1)
@@ -733,7 +733,7 @@
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
 					holder.icon_state = "fireripley10"
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
 					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "fireripley8"
@@ -765,7 +765,7 @@
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 					holder.icon_state = "fireripley14"
 				else
-					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
+					user.visible_message("[user] pries external armor layer from [holder].", "You pry external armor layer from [holder].")
 					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "fireripley12"
@@ -1101,7 +1101,7 @@
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
 					holder.icon_state = "durand16"
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "durand14"
@@ -1125,7 +1125,7 @@
 					user.visible_message("[user] secures Durand Armour Plates.", "You secure Durand Armour Plates.")
 					holder.icon_state = "durand19"
 				else
-					user.visible_message("[user] pries Durand Armour Plates from [holder].", "You prie Durand Armour Plates from [holder].")
+					user.visible_message("[user] pries Durand Armour Plates from [holder].", "You pry Durand Armour Plates from [holder].")
 					new /obj/item/mecha_parts/part/durand_armour(get_turf(holder))
 					holder.icon_state = "durand17"
 			if(1)
@@ -1332,7 +1332,7 @@
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
 					holder.icon_state = "odysseus10"
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "odysseus8"
@@ -1351,13 +1351,14 @@
 				else
 					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
 					holder.icon_state = "odysseus10"
+			if(2)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 					holder.icon_state = "odysseus13"
 				else
 					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
-					user.visible_message("[user] pries [MS] from [holder].", "You prie [MS] from [holder].")
+					user.visible_message("[user] pries [MS] from [holder].", "You pry [MS] from [holder].")
 					holder.icon_state = "odysseus11"
 			if(1)
 				if(diff==FORWARD)

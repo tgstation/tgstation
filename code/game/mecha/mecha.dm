@@ -151,7 +151,7 @@
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
+		if(!src || !user || !user.canmove || !(user.loc == T) || user.restrained())
 			return 0
 
 	return 1
@@ -417,11 +417,6 @@
 /obj/mecha/attack_hand(mob/user as mob)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("MECHA",src,user:wear_suit)
-			return
-
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -608,6 +603,10 @@
 				V.show_message("\blue The [user] rebounds off the [src.name] armor!", 1)
 	return
 */
+
+/obj/mecha/blob_act()
+	take_damage(30, "brute")
+	return
 
 //TODO
 /obj/mecha/meteorhit()
@@ -944,7 +943,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr))
+	if (usr.stat || !ishuman(usr) || usr.restrained())
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
@@ -1343,7 +1342,7 @@
 /obj/mecha/proc/get_log_html()
 	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
-		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] 2555</div>
+		output += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
 						"}
 	output += "</body></html>"
@@ -1407,7 +1406,7 @@
 
 /obj/mecha/proc/log_message(message as text,red=null)
 	log.len++
-	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
@@ -1415,6 +1414,8 @@
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
+var/year = time2text(world.realtime,"YYYY")
+var/year_integer = text2num(year) // = 2013???
 
 /////////////////
 ///// Topic /////

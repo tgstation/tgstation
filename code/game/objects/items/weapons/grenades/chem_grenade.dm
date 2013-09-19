@@ -157,6 +157,8 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
 
+	update_mob()
+
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
@@ -207,6 +209,8 @@
 		return
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
+
+	update_mob()
 
 	if(valid_core)
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)

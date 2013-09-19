@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	9
+#define SAVEFILE_VERSION_MAX	10
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -31,6 +31,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return -1
 
 /datum/preferences/proc/update_preferences(current_version)
+	if(current_version < 10)
+		toggles |= MEMBER_PUBLIC
 	return
 
 //should this proc get fairly long (say 3 versions long),
@@ -71,14 +73,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
 				if(13)	underwear = "Nude"
-
-	/*
-	if(current_version < 10)	//would be the step to upgrade 9 to 10
-		//do stuff
-	if(current_version < 11)	//and so on...
-		//more stuff
-	*/
-
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -104,20 +98,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
+	S["ghost_form"]			>> ghost_form
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update)		//needs_update = savefile_version if we need an update (positive integer)
 
-
-
 	//Sanitize
-	ooccolor		= sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor))
+	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 
 	return 1
 
@@ -136,6 +130,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["ghost_form"]			<< ghost_form
 
 	return 1
 
@@ -162,12 +157,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]				>> gender
 	S["age"]				>> age
-	S["hair_color"]			>> h_color
-	S["facial_hair_color"]	>> f_color
+	S["hair_color"]			>> hair_color
+	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
 	S["skin_tone"]			>> skin_tone
-	S["hair_style_name"]	>> h_style
-	S["facial_style_name"]	>> f_style
+	S["hair_style_name"]	>> hair_style
+	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
 
@@ -194,16 +189,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	if(gender == MALE)
-		h_style			= sanitize_inlist(h_style, hair_styles_male_list)
-		f_style			= sanitize_inlist(f_style, facial_hair_styles_male_list)
+		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
 		underwear		= sanitize_inlist(underwear, underwear_m)
 	else
-		h_style			= sanitize_inlist(h_style, hair_styles_female_list)
-		f_style			= sanitize_inlist(f_style, facial_hair_styles_female_list)
+		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	h_color			= sanitize_hexcolor(h_color, 3, 0)
-	f_color			= sanitize_hexcolor(f_color, 3, 0)
+	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
+	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
@@ -235,12 +230,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] << be_random_name
 	S["gender"]				<< gender
 	S["age"]				<< age
-	S["hair_color"]			<< h_color
-	S["facial_hair_color"]	<< f_color
+	S["hair_color"]			<< hair_color
+	S["facial_hair_color"]	<< facial_hair_color
 	S["eye_color"]			<< eye_color
 	S["skin_tone"]			<< skin_tone
-	S["hair_style_name"]	<< h_style
-	S["facial_style_name"]	<< f_style
+	S["hair_style_name"]	<< hair_style
+	S["facial_style_name"]	<< facial_hair_style
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
 

@@ -12,7 +12,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
 	if(ckey)
-		. = "<b>Notes for <a href='?_src_=holder;notes=show'>[ckey]</a>:</b> <a href='?_src_=holder;notes=add;ckey=[ckey]'>\[+\]</a> <a href='?_src_=holder;notes=remove;ckey=[ckey]'>\[-\]</a><br>"
+		. = "<b>Notes for <a href='?_src_=holder;notes=show'>[ckey]</a>:</b> <a href='?_src_=holder;notes=add;ckey=[ckey]'>\[+\]</a><br>"
 		notesfile.cd = "/[ckey]"
 		var/index = 1
 		while( !notesfile.eof )
@@ -21,7 +21,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 			. += "[note] <a href='?_src_=holder;notes=remove;ckey=[ckey];from=[index]'>\[-\]</a><br>"
 			index++
 	else
-		. = "<b>All Notes:</b> <a href='?_src_=holder;notes=add'>\[+\]</a> <a href='?_src_=holder;notes=remove'>\[-\]</a><br>"
+		. = "<b>All Notes:</b> <a href='?_src_=holder;notes=add'>\[+\]</a><br>"
 		notesfile.cd = "/"
 		for(var/dir in notesfile.dir)
 			. += "<a href='?_src_=holder;notes=show;ckey=[dir]'>[dir]</a><br>"
@@ -31,7 +31,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 //handles adding notes to the end of a ckey's buffer
 //originally had seperate entries such as var/by to record who left the note and when
 //but the current bansystem is a heap of dung.
-/proc/notes_add(var/ckey, var/note)
+/proc/notes_add(var/ckey, var/note, var/lognote = 0)
 	if(!ckey)
 		ckey = ckey(input(usr,"Who would you like to add notes for?","Enter a ckey",null) as text|null)
 		if(!ckey)	return
@@ -45,11 +45,17 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	notesfile.cd = "/[ckey]"
 	notesfile.eof = 1		//move to the end of the buffer
 	notesfile << "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]"
+
+	if(lognote)//don't need an admin log for the notes applied automatically during bans.
+		message_admins("[key_name(usr)] added note '[note]' to [ckey]")
+		log_admin("[key_name(usr)] added note '[note]' to [ckey]")
+
 	return
 
 //handles removing entries from the buffer, or removing the entire directory if no start_index is given
 /proc/notes_remove(var/ckey, var/start_index, var/end_index)
 	var/savefile/notesfile = new(NOTESFILE)
+	var/admin_msg
 	if(!notesfile)	return
 
 	if(!ckey)
@@ -67,17 +73,23 @@ datum/admins/proc/notes_gethtml(var/ckey)
 			var/temp
 			notesfile >> temp
 			if( (start_index <= index) && (index <= end_index) )
+				admin_msg = temp
 				continue
+
 			noteslist += temp
 
 		notesfile.eof = -2		//Move to the start of the buffer and then erase.
 
 		for( var/note in noteslist )
 			notesfile << note
-	else
-		notesfile.cd = "/"
-		if(alert(usr,"Are you sure you want to remove all their notes?","Confirmation","No","Yes - Remove all notes") == "Yes - Remove all notes")
+
+		message_admins("[key_name(usr)] removed a note '[admin_msg]' from [ckey]")
+		log_admin("[key_name(usr)] removed a note '[admin_msg]' from [ckey]")
+
+		if(noteslist.len == 0)
+			notesfile.cd = "/"
 			notesfile.dir.Remove(ckey)
+			message_admins("[ckey] has no notes and was removed from the notes list.")
 	return
 
 #undef NOTESFILE

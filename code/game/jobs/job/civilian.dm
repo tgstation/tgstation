@@ -202,8 +202,7 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/spray/waterflower(H), slot_in_backpack)
 		H.mutations.Add(CLUMSY)
 		return 1
 
@@ -292,6 +291,7 @@
 		H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 		return 1
 
 
@@ -324,6 +324,7 @@ var/global/lawyer = 0//Checks for another lawyer
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 		if(H.backbag == 1)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else

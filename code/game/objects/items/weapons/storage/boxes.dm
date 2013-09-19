@@ -172,6 +172,20 @@
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 
+/obj/item/weapon/storage/box/flashes
+	name = "box of flashbulbs"
+	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/device/flash(src)
+
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
@@ -229,6 +243,20 @@
 		new /obj/item/weapon/implantcase/chem(src)
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
+
+/obj/item/weapon/storage/box/exileimp
+	name = "exile implant kit"
+	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
+	icon_state = "implant"
+
+	New()
+		..()
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implanter(src)
 
 /obj/item/weapon/storage/box/rxglasses
 	name = "prescription glasses"
@@ -369,6 +397,16 @@
 		new /obj/item/weapon/handcuffs(src)
 		new /obj/item/weapon/handcuffs(src)
 		new /obj/item/weapon/handcuffs(src)
+
+/obj/item/weapon/storage/box/fakesyndiesuit
+	name = "Space Suit and Helmet"
+	desc = "A sleek, sturdy box used to hold replica spacesuits."
+	icon_state = "box_of_doom"
+
+	New()
+		..()
+		new /obj/item/clothing/head/syndicatefake(src)
+		new /obj/item/clothing/suit/syndicatefake(src)
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon Mousetraps"

@@ -1,4 +1,19 @@
 
+/obj/effect/datacore
+	name = "datacore"
+	var/medical[] = list()
+	var/general[] = list()
+	var/security[] = list()
+	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	var/locked[] = list()
+
+/datum/data
+	var/name = "data"
+
+/datum/data/record
+	name = "record"
+	var/list/fields = list()
+
 /obj/effect/datacore/proc/manifest(var/nosleep = 0)
 	spawn()
 		if(!nosleep)
@@ -8,18 +23,11 @@
 		return
 
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
-	var/datum/data/record/foundrecord
-
-	for(var/datum/data/record/t in data_core.general)
-		if(t.fields["name"] == name)
-			foundrecord = t
-			break
-
+	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
-
-
+var/record_id_num = 1001
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
@@ -30,8 +38,9 @@
 		else
 			assignment = "Unassigned"
 
-		var/id = num2hex(rand(1, 1.6777215E7),6)	//this was the best they could come up with? A large random number? *sigh*
+		var/id = num2hex(record_id_num++,6)
 
+		//These records should ~really~ be merged or something
 		//General Record
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
@@ -48,7 +57,7 @@
 		var/datum/data/record/M = new()
 		M.fields["id"]			= id
 		M.fields["name"]		= H.real_name
-		M.fields["b_type"]		= H.b_type
+		M.fields["blood_type"]	= H.blood_type
 		M.fields["b_dna"]		= H.dna.unique_enzymes
 		M.fields["mi_dis"]		= "None"
 		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
@@ -75,12 +84,12 @@
 
 		//Locked Record
 		var/datum/data/record/L = new()
-		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
+		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")	//surely this should just be id, like the others?
 		L.fields["name"]		= H.real_name
-		L.fields["rank"] = H.mind.assigned_role
+		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
 		L.fields["sex"]			= H.gender
-		L.fields["b_type"]		= H.b_type
+		L.fields["blood_type"]	= H.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity

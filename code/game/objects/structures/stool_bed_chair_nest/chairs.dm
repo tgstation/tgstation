@@ -26,6 +26,12 @@
 		SK.loc = E
 		SK.master = E
 		del(src)
+/obj/structure/stool/bed/chair/attack_tk(mob/user as mob)
+	if(buckled_mob)
+		..()
+	else
+		rotate()
+	return
 
 /obj/structure/stool/bed/chair/proc/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
 	if(src.dir == NORTH)

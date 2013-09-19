@@ -119,6 +119,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
+	hitsound = 'sound/items/bikehorn.ogg'
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 3
@@ -161,20 +162,6 @@
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0
-
-//TODO: Figure out wtf this is and possibly remove it -Nodrak
-/obj/item/weapon/dummy
-	name = "dummy"
-	invisibility = 101.0
-	anchored = 1.0
-	flags = TABLEPASS
-
-/obj/item/weapon/dummy/ex_act()
-	return
-
-/obj/item/weapon/dummy/blob_act()
-	return
-
 
 /*
 /obj/item/weapon/game_kit
@@ -440,7 +427,8 @@
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity) return
 	if(istype(A, /obj/effect/spacevine))
 		for(var/obj/effect/spacevine/B in orange(A,1))
 			if(prob(80))

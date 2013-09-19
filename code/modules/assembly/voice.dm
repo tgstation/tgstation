@@ -4,21 +4,19 @@
 	icon_state = "voice"
 	m_amt = 500
 	g_amt = 50
-	w_amt = 10
 	origin_tech = "magnets=1"
 	var/listening = 0
 	var/recorded	//the activation message
 
 	hear_talk(mob/living/M as mob, msg)
-		if(secured)
-			if(listening)
-				recorded = msg
-				listening = 0
-				var/turf/T = get_turf(src)	//otherwise it won't work in hand
-				T.visible_message("\icon[src] beeps, \"Activation message is '[recorded]'.\"")
-			else
-				if(findtext(msg, recorded))
-					pulse(0)
+		if(listening)
+			recorded = msg
+			listening = 0
+			var/turf/T = get_turf(src)	//otherwise it won't work in hand
+			T.visible_message("\icon[src] beeps, \"Activation message is '[recorded]'.\"")
+		else
+			if(findtext(msg, recorded))
+				pulse(0)
 
 	activate()
 		if(secured)

@@ -29,9 +29,10 @@ var/list/ai_list = list()
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
+	var/obj/item/device/camera/ai_camera/aicamera = null
 
 	//MALFUNCTION
-	var/datum/AI_Module/module_picker/malf_picker
+	var/datum/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
@@ -48,6 +49,7 @@ var/list/ai_list = list()
 	var/datum/trackable/track = null
 
 	var/last_paper_seen = null
+	var/can_shunt = 1
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -83,6 +85,7 @@ var/list/ai_list = list()
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
+	aicamera = new/obj/item/device/camera/ai_camera(src)
 
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
@@ -128,7 +131,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -145,6 +148,8 @@ var/list/ai_list = list()
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
 		icon_state = "ai-static"
+	else if(icontype == "Red October")
+		icon_state = "ai-redoctober"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -211,12 +216,8 @@ var/list/ai_list = list()
 	set name = "Show Crew Manifest"
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
-	var/list/L = list()
-	for (var/datum/data/record/t in data_core.general)
-		var/R = t.fields["name"] + " - " + t.fields["rank"]
-		L += R
-	for(var/R in sortList(L))
-		dat += "[R]<br>"
+	for(var/datum/data/record/t in sortRecord(data_core.general))
+		dat += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")
@@ -406,16 +407,6 @@ var/list/ai_list = list()
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
-
-/mob/living/silicon/ai/attack_hand(mob/living/carbon/M as mob)
-	if(ishuman(M))//Checks to see if they are ninja
-		if(istype(M:gloves, /obj/item/clothing/gloves/space_ninja)&&M:gloves:candrain&&!M:gloves:draining)
-			if(M:wear_suit:s_control)
-				M:wear_suit:transfer_ai("AICORE", "NINJASUIT", src, M)
-			else
-				M << "\red <b>ERROR</b>: \black Remote access channel disabled."
-	return
-
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -620,7 +611,8 @@ var/list/ai_list = list()
 	else
 		var/icon_list[] = list(
 		"default",
-		"floating face"
+		"floating face",
+		"xeno queen"
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
@@ -630,6 +622,8 @@ var/list/ai_list = list()
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 				if("floating face")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
+				if("xeno queen")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
@@ -687,3 +681,4 @@ var/list/ai_list = list()
 	set name = "State Laws"
 
 	checklaws()
+

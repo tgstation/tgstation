@@ -33,7 +33,7 @@ var/datum/cameranet/cameranet = new()
 
 // Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 
-/datum/cameranet/proc/visibility(mob/aiEye/ai)
+/datum/cameranet/proc/visibility(mob/camera/aiEye/ai)
 	// 0xf = 15
 	var/x1 = max(0, ai.x - 16) & ~(CHUNK_SIZE - 1)
 	var/y1 = max(0, ai.y - 16) & ~(CHUNK_SIZE - 1)
@@ -130,6 +130,10 @@ var/datum/cameranet/cameranet = new()
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
+	return checkTurfVis(position)
+
+
+/datum/cameranet/proc/checkTurfVis(var/turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)

@@ -1,0 +1,141 @@
+<div class='notice'>
+	{^{if locked}}
+		Swipe ID card to unlock interface
+	{{else}}
+		Swipe ID card to lock interface
+	{{/if}}
+</div>
+
+<h3>Status</h3>
+
+<div class="item">
+	<div class="itemLabel">
+		Main Breaker:
+	</div>
+	<div class="itemContent">
+		{^{if locked}}
+			{^{if isOperating}}
+				<span class='good'>On</span>
+			{{else}}
+				<span class='bad'>Off</span>
+			{{/if}}
+		{{else}}
+			{^{:~link('On', {'breaker' : 1}, isOperating ? 'selected' : null)}}{^{:~link('Off', {'breaker' : 1}, isOperating ? null : 'selected')}}
+		{{/if}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		External Power:
+	</div>
+	<div class="itemContent">
+		{^{if externalPower == 2}}
+			<span class='good'>Good</span>
+		{{else externalPower == 1}}
+			<span class='average'>Low</span>
+		{{else}}
+			<span class='bad'>None</span>
+		{{/if}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Power Cell:
+	</div>
+	<div class="itemContent">		
+		{^{if powerCellStatus == null}}
+			<span class='bad'>Not connected.</span>
+		{{else}}
+			{^{:powerCellStatus}}%
+		{{/if}}
+	</div>
+</div>
+
+{^{if powerCellStatus != null}}
+	<div class="item">
+		<div class="itemLabel">
+			Charge Mode:
+		</div>
+		<div class="itemContent">
+			{^{if locked}}
+				{^{if chargeMode}}
+					<span class='good'>Auto</span>
+				{{else}}
+					<span class='bad'>Off</span>
+				{{/if}}				
+			{{else}}
+				{^{:~link('Auto', {'cmode' : 1}, chargeMode ? 'selected' : null)}}{^{:~link('Off', {'cmode' : 1}, chargeMode ? null : 'selected')}}
+			{{/if}}
+			&nbsp;
+			{^{if chargingStatus > 1}}
+				(<span class='good'>Fully Charged</span>)
+			{{else chargingStatus == 1}}
+				(<span class='average'>Charging</span>)
+			{{else}}
+				(<span class='bad'>Not Charging</span>)
+			{{/if}}
+		</div>
+	</div>
+{{/if}}
+
+<h3>Power Channels</h3>
+
+{^{for powerChannels}}
+	<div class="item">
+		<div class="itemLabel">
+			{^{:title}}
+		</div>
+		<div class="itemContentSmall" style="width: 26%;">
+			{^{:powerLoad}} W
+		</div>
+		<div class="itemContentSmall" style="width: 40%;">		
+			{^{if !~root.locked}}
+				{^{:~link('Auto', topicParams.auto, (status == 1 || status == 3) ? 'selected' : null)}}
+				{^{:~link('On', topicParams.on, (status == 2) ? 'selected' : null)}}
+				{^{:~link('Off', topicParams.off, (status == 0) ? 'selected' : null)}}
+			{{/if}}
+			{^{if status <= 1}}
+				<span class='bad'>Off</span>
+			{{else status >= 2}}
+				<span class='good'>On</span>
+			{{/if}}
+			{^{if ~root.locked}}
+				{^{if status == 1 || status == 3}}
+					(Auto)
+				{{else}}
+					(Manual)
+				{{/if}}
+			{{/if}}			
+		</div>
+	</div>
+{{/for}}
+
+<div class="item">&nbsp;</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Total Load:
+	</div>
+	<div class="itemContent">
+		{{:totalLoad}} W
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Cover Lock:
+	</div>
+	<div class="itemContent">
+		{^{if locked}}
+			{^{if coverLocked}}
+				<span class='good'>Engaged</span>
+			{{else}}
+				<span class='bad'>Disengaged</span>
+			{{/if}}
+		{{else}}
+			{^{:~link('Engaged', {'lock' : 1}, coverLocked ? 'selected' : null)}}{^{:~link('Disengaged', {'lock' : 1}, coverLocked ? null : 'selected')}}
+		{{/if}}
+	</div>
+</div>

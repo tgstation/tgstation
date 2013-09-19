@@ -62,13 +62,13 @@
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
-			if(P)
+			if(istype(P) && P.loc == src)
 				P.loc = usr.loc
 				usr.put_in_hands(P)
 
 		if(href_list["read"])
 			var/obj/item/weapon/paper/P = locate(href_list["read"])
-			if(P)
+			if(istype(P) && P.loc == src)
 				P.examine()
 
 		//Update everything

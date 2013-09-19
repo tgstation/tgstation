@@ -83,7 +83,7 @@ PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
-PROBABILITY BLOB 0
+PROBABILITY BLOB 2
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
@@ -136,7 +136,7 @@ GATEWAY_DELAY 18000
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
 ## Also for servers where they don't want people to hide in their own departments.
-JOBS_HAVE_MINIMAL_ACCESS
+#JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
 #ASSISTANTS_HAVE_MAINT_ACCESS

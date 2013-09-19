@@ -111,10 +111,11 @@
 				usr << "Added a freeform law."
 
 			if(istype(P, /obj/item/device/mmi))
-				if(!P:brainmob)
+				var/obj/item/device/mmi/M = P
+				if(!M.brainmob)
 					user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
 					return
-				if(P:brainmob.stat == 2)
+				if(M.brainmob.stat == 2)
 					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 					return
 
@@ -122,17 +123,20 @@
 					user << "\red This MMI does not seem to fit."
 					return
 
-				if(jobban_isbanned(P:brainmob, "AI"))
+				if(jobban_isbanned(M.brainmob, "AI"))
 					user << "\red This MMI does not seem to fit."
 					return
 
-				if(P:brainmob.mind)
-					ticker.mode.remove_cultist(P:brainmob.mind, 1)
-					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
+				if(!M.brainmob.mind)
+					user << "\red This MMI is mindless."
+					return
+
+				ticker.mode.remove_cultist(M.brainmob.mind, 1)
+				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
 
 				user.drop_item()
-				P.loc = src
-				brain = P
+				M.loc = src
+				brain = M
 				usr << "Added a brain."
 				icon_state = "3b"
 
@@ -174,15 +178,6 @@
 	attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
 		if(istype(A, /obj/item/device/aicard))//Is it?
 			A.transfer_ai("INACTIVE","AICARD",src,user)
-		return
-
-	attack_hand(var/mob/user as mob)
-		if(ishuman(user))//Checks to see if they are ninja
-			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-				if(user:wear_suit:s_control)
-					user:wear_suit:transfer_ai("INACTIVE","NINJASUIT",src,user)
-				else
-					user << "\red <b>ERROR</b>: \black Remote access channel disabled."
 		return
 
 /*

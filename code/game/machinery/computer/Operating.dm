@@ -47,7 +47,7 @@
 		if(table.check_patient())
 			patient = table.patient
 			dat += {"<B>Patient Status:</B> [patient.stat ? "Non-Responsive" : "Stable"]<BR>
-					<B>Blood Type:</B> [patient.b_type]<BR>
+					<B>Blood Type:</B> [patient.blood_type]<BR>
 					<BR>
 					<B>Health:</B> [round(patient.health)]<BR>
 					<B>Brute Damage:</B> [round(patient.getBruteLoss())]<BR>

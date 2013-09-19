@@ -24,27 +24,24 @@
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/larva/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			tmob.LAssailant = src
-
-		now_pushing = 0
-		..()
-		if (!istype(AM, /atom/movable) || !istype(AM.loc, /turf))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	now_pushing = 1
+	if(ismob(AM))
+		var/mob/tmob = AM
+		tmob.LAssailant = src
+
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+	if (!( now_pushing ))
+		now_pushing = 1
+		if (!( AM.anchored ))
+			var/t = get_dir(src, AM)
+			step(AM, t)
+		now_pushing = null
+
 
 //This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
@@ -138,17 +135,6 @@
 		updatehealth()
 	return
 
-
-/mob/living/carbon/alien/larva/hand_p(mob/living/carbon/user)
-	if(user.a_intent == "harm")
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if(health > 0)
-			visible_message("<span class='danger'>[user] has bit [src]!</span>")
-			adjustBruteLoss(rand(1, 3))
-			updatehealth()
-
-
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
@@ -236,7 +222,7 @@
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
@@ -329,6 +315,8 @@
 /mob/living/carbon/alien/larva/show_inv(mob/user)
 	return
 
+/mob/living/carbon/alien/larva/toggle_throw_mode()
+	return
 
 /* Commented out because it's duplicated in life.dm
 /mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE

@@ -452,11 +452,6 @@
 		return
 	if(stat & (BROKEN|MAINT))
 		return
-
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
-			return
 	// do APC interaction
 	user.set_machine(src)
 	src.interact(user)
@@ -693,26 +688,21 @@
 			return 0
 	return 1
 
-/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
+/obj/machinery/power/apc/Topic(href, href_list)
+	if(..())
+		return
+
 	if(!isrobot(usr))
 		if(!can_use(usr, 1))
 			return
 
-	src.add_fingerprint(usr)
 	usr.set_machine(src)
 
 	if (href_list["lock"])
 		coverlocked = !coverlocked
 
 	else if (href_list["breaker"])
-		operating = !operating
-		if(malfai)
-			if (ticker.mode.config_tag == "malfunction")
-				if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
-					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
-
-		src.update()
-		update_icon()
+		toggle_breaker()
 
 	else if (href_list["cmode"])
 		chargemode = !chargemode
@@ -785,16 +775,28 @@
 	else if (href_list["deoccupyapc"])
 		malfvacate()
 
-	if(usingUI)
-		src.updateDialog()
+	src.updateDialog()
 
 	return
+
+/obj/machinery/power/apc/proc/toggle_breaker()
+	operating = !operating
+	if(malfai)
+		if (ticker.mode.config_tag == "malfunction")
+			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+				operating ? ticker.mode:apcs++ : ticker.mode:apcs--
+
+	src.update()
+	update_icon()
 
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
+		return
+	if(!malf.can_shunt)
+		malf << "<span class='warning'>You cannot shunt.</span>"
 		return
 	if(src.z != 1)
 		return

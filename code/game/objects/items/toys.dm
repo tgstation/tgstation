@@ -35,7 +35,8 @@
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
 		user << "\blue You fill the balloon with the contents of [A]."
@@ -120,7 +121,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
 	g_amt = 10
@@ -197,7 +198,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT | TABLEPASS
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -461,75 +462,6 @@
 			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
 			del(src)
-
-/*
- * Water flower
- */
-/obj/item/toy/waterflower
-	name = "Water Flower"
-	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'icons/obj/harvest.dmi'
-	icon_state = "sunflower"
-	item_state = "sunflower"
-	var/empty = 0
-	flags =  USEDELAY
-
-/obj/item/toy/waterflower/New()
-	create_reagents(10)
-	reagents.add_reagent("water", 10)
-
-/obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
-	return
-
-/obj/item/toy/waterflower/afterattack(atom/A as mob|obj, mob/user as mob)
-
-	if (istype(A, /obj/item/weapon/storage/backpack ))
-		return
-
-	else if (locate (/obj/structure/table, src.loc))
-		return
-
-	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 10)
-		user << "\blue You refill your flower!"
-		return
-
-	else if (src.reagents.total_volume < 1)
-		src.empty = 1
-		user << "\blue Your flower has run dry!"
-		return
-
-	else
-		src.empty = 0
-
-
-		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
-		D.name = "water"
-		D.icon = 'icons/obj/chemical.dmi'
-		D.icon_state = "chempuff"
-		D.create_reagents(5)
-		src.reagents.trans_to(D, 1)
-		playsound(src.loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-
-		spawn(0)
-			for(var/i=0, i<1, i++)
-				step_towards(D,A)
-				D.reagents.reaction(get_turf(D))
-				for(var/atom/T in get_turf(D))
-					D.reagents.reaction(T)
-					if(ismob(T) && T:client)
-						T:client << "\red [user] has sprayed you with water!"
-				sleep(4)
-			del(D)
-
-		return
-
-/obj/item/toy/waterflower/examine()
-        set src in usr
-        usr << text("\icon[] [] units of water left!", src, src.reagents.total_volume)
-        ..()
-        return
-
 
 /*
  * Mech prizes
