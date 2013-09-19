@@ -55,5 +55,5 @@
 
 /datum/round_event/anomaly_flux/end()
 	if(newflux)//If it hasn't been neutralized, it's time to blow up.
-		explosion(newflux, -1, 2, 4, 5)
+		explosion(newflux, -1, 3, 5, 5)
 		del(newflux)

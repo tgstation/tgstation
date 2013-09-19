@@ -6,8 +6,8 @@
 
 /datum/round_event/anomaly_pyro
 	startWhen	= 5
-	announceWhen = 10
-	endWhen = 50
+	announceWhen = 3
+	endWhen = 70
 
 	var/area/impact_area
 	var/obj/effect/anomaly/pyro/newpyro
