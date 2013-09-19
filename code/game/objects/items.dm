@@ -37,6 +37,7 @@
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
+	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -122,8 +123,7 @@
 	else
 		if(isliving(src.loc))
 			return
-		user.lastDblClick = world.time + 2
-		user.next_move = world.time + 2
+		user.next_move = max(user.next_move+2,world.time + 2)
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -148,8 +148,7 @@
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
-		user.lastDblClick = world.time + 2
-		user.next_move = world.time + 2
+		user.next_move = max(user.next_move+2,world.time + 2)
 
 	user.put_in_active_hand(src)
 	return
@@ -199,150 +198,7 @@
 
 	return
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-
-	if (!istype(M)) // not sure if this is the right thing...
-		return
-	var/messagesource = M
-
-	if (istype(M,/mob/living/carbon/brain))
-		messagesource = M:container
-	if (src.hitsound)
-		playsound(src.loc, hitsound, 50, 1, -1)
-	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
-
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
-	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
-
-	//spawn(1800)            // this wont work right
-	//	M.lastattacker = null
-	/////////////////////////
-
-	var/power = src.force
-	if(HULK in user.mutations)
-		power *= 2
-
-	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/slime))
-			var/mob/living/carbon/slime/slime = M
-			if(prob(25))
-				user << "\red [src] passes right through [M]!"
-				return
-
-			if(power > 0)
-				slime.attacked += 10
-
-			if(slime.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
-				slime.Discipline = 0
-
-			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
-					if(prob(5 + round(power/2)))
-
-						if(slime.Victim)
-							if(prob(80) && !slime.client)
-								slime.Discipline++
-						slime.Victim = null
-						slime.anchored = 0
-
-						spawn()
-							if(slime)
-								slime.SStun = 1
-								sleep(rand(5,20))
-								if(slime)
-									slime.SStun = 0
-
-						spawn(0)
-							if(slime)
-								slime.canmove = 0
-								step_away(slime, user)
-								if(prob(25 + power))
-									sleep(2)
-									if(slime && user)
-										step_away(slime, user)
-								slime.canmove = 1
-
-				else
-					if(prob(10 + power*2))
-						if(slime)
-							if(slime.Victim)
-								if(prob(80) && !slime.client)
-									slime.Discipline++
-
-									if(slime.Discipline == 1)
-										slime.attacked = 0
-
-								spawn()
-									if(slime)
-										slime.SStun = 1
-										sleep(rand(5,20))
-										if(slime)
-											slime.SStun = 0
-
-							slime.Victim = null
-							slime.anchored = 0
-
-
-						spawn(0)
-							if(slime && user)
-								step_away(slime, user)
-								slime.canmove = 0
-								if(prob(25 + power*4))
-									sleep(2)
-									if(slime && user)
-										step_away(slime, user)
-								slime.canmove = 1
-
-
-		var/showname = "."
-		if(user)
-			showname = " by [user]."
-		if(!(user in viewers(M, null)))
-			showname = "."
-
-		for(var/mob/O in viewers(messagesource, null))
-			if(src.attack_verb.len)
-				O.show_message("\red <B>[M] has been [pick(src.attack_verb)] with [src][showname] </B>", 1)
-			else
-				O.show_message("\red <B>[M] has been attacked with [src][showname] </B>", 1)
-
-		if(!showname && user)
-			if(user.client)
-				user << "\red <B>You attack [M] with [src]. </B>"
-
-
-
-	if(istype(M, /mob/living/carbon/human))
-		M:attacked_by(src, user, def_zone)
-	else
-		switch(src.damtype)
-			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
-					M.adjustBrainLoss(power)
-
-				else
-
-					M.take_organ_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
-							location.add_blood_floor(M)
-			if("fire")
-				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_organ_damage(0, power)
-					M << "Aargh it burns!"
-		M.updatehealth()
-	src.add_fingerprint(user)
-	return 1
-
-/obj/item/proc/attack_self()
-	return
-
-/obj/item/proc/afterattack()
-	return
+// afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/talk_into(mob/M as mob, text)
 	return
@@ -566,12 +422,12 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(src, usr))
+	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
 
 	if(ishuman(usr) || ismonkey(usr))
 		if(usr.get_active_hand() == null)
-			src.Click() // Let me know if this has any problems -Giacom
+			usr.UnarmedAttack(src) // Let me know if this has any problems -Giacom | Actually let me know now.  -Sayu
 		/*
 		if(usr.get_active_hand() == null)
 			src.attack_hand(usr)
@@ -591,6 +447,10 @@
 
 /obj/item/proc/IsShield()
 	return 0
+
+/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
+	if(prob(reflect_chance))
+		return 1
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 

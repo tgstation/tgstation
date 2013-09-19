@@ -8,14 +8,11 @@
 	item_state = ""
 	w_class = 1
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user as mob)
-	if(!in_range(I, user))
+/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user as mob,proximity)
+	if(!proximity)
 		return
 
 	if(!istype(I) || I.anchored == 1)
-		return ..()
-
-	if(istype(I, /obj/item/weapon/storage))
 		return ..()
 
 	if(istype(I, /obj/item/weapon/evidencebag))

@@ -446,7 +446,7 @@
 /obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
-		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
 			I.loc = src

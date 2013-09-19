@@ -59,6 +59,10 @@ BLIND     // can't see anything
 	..()
 	return
 
+// Called just before an attack_hand(), in mob/UnarmedAttack()
+/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+	return 0 // return 1 to cancel attack_hand()
+
 //Head
 /obj/item/clothing/head
 	name = "head"
