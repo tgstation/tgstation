@@ -267,6 +267,7 @@
 	occupant = M
 	add_fingerprint(usr)
 	update_icon()
+	M.ExtinguishMob()
 	return 1
 
 

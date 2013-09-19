@@ -522,24 +522,13 @@
 		return
 
 ///FIRE CODE
-	proc/handle_fire()
-		if(fire_stacks < 0)
-			fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-			fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
-		if(!on_fire)
-			return
-		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-		if(G.oxygen < 1)
-			ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+	handle_fire()
+		if(..())
 			return
 		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
 		if(thermal_protection < 1)
 			bodytemperature += BODYTEMP_HEATING_MAX
-		var/turf/location = get_turf(src)
-		location.hotspot_expose(700, 50, 1)
 		return
-
-
 //END FIRE CODE
 
 	/*

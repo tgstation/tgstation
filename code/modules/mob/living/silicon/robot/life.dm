@@ -307,19 +307,10 @@
 			weaponlock_time = 120
 
 //Robots on fire
-/mob/living/silicon/robot/proc/handle_fire()
-	if(fire_stacks < 0)
-		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
-	if(!on_fire)
-		return
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
 		return
 	adjustFireLoss(3)
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
 	return
 
 /mob/living/silicon/robot/update_fire()
@@ -329,7 +320,7 @@
 	update_icons()
 	return
 
-/mob/living/silicon/robot/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Gain fire stacks when standing in a hotspot so ATMOS can light you up
+/mob/living/silicon/robot/fire_act()//Gain fire stacks when standing in a hotspot so ATMOS can light you up
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
 

@@ -141,25 +141,11 @@
 				radiation -= 3
 				adjustToxLoss(3)
 
-/mob/living/carbon/alien/proc/handle_fire()//Aliens on fire code
-	if(fire_stacks < 0)
-		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
-	if(!on_fire)
-		return
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+/mob/living/carbon/alien/handle_fire()//Aliens on fire code
+	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)//On fire and standing in plasma? Ignite it!
 	return
-
-/mob/living/carbon/alien/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Gain fire stacks when standing in a hotspot so ATMOS can light you up
-	adjust_fire_stacks(5)
-	if(fire_stacks > 9 && !on_fire)
-		IgniteMob()
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation

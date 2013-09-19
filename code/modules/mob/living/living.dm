@@ -262,6 +262,8 @@
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	fire_stacks = 0
+	on_fire = 0
 	heal_overall_damage(1000, 1000)
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
@@ -276,6 +278,7 @@
 		dead_mob_list -= src
 		living_mob_list += src
 	stat = CONSCIOUS
+	update_fire()
 	regenerate_icons()
 	..()
 	return

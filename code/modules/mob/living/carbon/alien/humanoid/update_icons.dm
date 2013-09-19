@@ -95,7 +95,7 @@
 	else
 		overlays_lying[X_FIRE_LAYER] = null
 		overlays_standing[X_FIRE_LAYER] = null
-	update_icons()
+		update_icons()
 
 //Xeno Overlays Indexes//////////
 #undef X_L_HAND_LAYER
