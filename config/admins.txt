@@ -8,30 +8,6 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 
-<<<<<<< HEAD
-rolan7 - Game Master
-quarxink - Game Master
-tle - Game Master
-xsi - Game Master
-scaredofshadows - Game Master
-neofite - Game Master
-trubblebass - Game Master
-mport2004 - Game Master
-deuryn - Game Master
-agouri - Game Master
-errorage - Game Master
-superxpdude - Game Master
-petethegoat - Game Master
-korphaeron - Game Master
-nodrak - Game Master
-carnwennan - Game Master
-ikarrus - Game Master
-cheridan - Game Master
-giacomand - Game Master
-rockdtben - Game Master
-sieve - Game Master
-aranclanos - Game Master
-=======
 quarxink = Game Master
 tle = Game Master
 xsi = Game Master
@@ -55,4 +31,3 @@ sieve = Game Master
 aranclanos = Game Master
 intigracy = Game Master
 dumpdavidson = Game Master
->>>>>>> 91e4cbc4d71cd78d8b0fd5d1e25e386734c7f979
