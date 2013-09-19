@@ -218,7 +218,7 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 		return
 
 	var/datum/gas_mixture/G = new
-	G.temperature = 120
+	G.temperature = T20C
 
 	switch(text)
 		if(ASPAWN_FIRE)
