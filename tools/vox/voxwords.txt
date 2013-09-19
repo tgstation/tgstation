@@ -697,12 +697,13 @@ vox_login = Hello. The automatic diagnostic and announcement system welcomes you
 ########################
 ## AI REPLACEMENT LINES
 ########################
-sound/announcements/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
-sound/announcements/animes = Wow!  This is just like one of those japanese animes.
-sound/announcements/command_report = Attention: New command report created.
-sound/announcements/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
-sound/announcements/intercept = Attention: Enemy communication intercepted.  Security level elevated.
-sound/announcements/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
-sound/announcements/meteors = Meteors detected on collision course with the station.
-sound/announcements/newroundsexy = You want to put a banging donk on it.
-sound/announcements/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
+sound/AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
+sound/AI/animes = Wow!  This is just like one of those japanese animes.
+sound/AI/command_report = Attention: New command report created.
+sound/AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
+sound/AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
+sound/AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
+sound/AI/meteors = Meteors detected on collision course with the station.
+sound/AI/newroundsexy = You want to put a banging donk on it.
+sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
+sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.

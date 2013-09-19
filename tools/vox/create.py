@@ -34,11 +34,14 @@ def md5sum(filename):
         for chunk in iter(lambda: f.read(128*md5.block_size), b''): 
              md5.update(chunk)
     return md5.hexdigest()
+
 REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
+
 SOX_ARGS  = 'stretch 1.1'
 #SOX_ARGS += ' phaser 0.89 0.85 2 0.24 1 -t'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
+SOX_ARGS += ' bass -20'
 SOX_ARGS += ' norm'
 #SOX_ARGS += ' reverb'
 
@@ -121,7 +124,7 @@ class Pronunciation:
 	def toLisp(self):
 		lispSyllables=[]
 		for syllable in self.syllables:
-			lispSyllables.append('( ( {0} ) {1} )'.format(syllable[0],syllable[1]))
+			lispSyllables.append('( ( {0} ) {1} )'.format(' '.join(syllable[0]),syllable[1]))
 		return '(lex.add.entry\n\t\'( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
 		#return '(lex.add.entry ( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
 		
@@ -140,21 +143,29 @@ class Pronunciation:
 			stressLevel=0
 			if match.group(1) == '"':
 				stressLevel=1
+			phonemes=[]
 			for phoneme in match.group(2).split(' '):
 				if phoneme not in self.validPhonemes:
 					logging.error('INVALID PHONEME "{0}" IN LEX ENTRY "{1}"'.format(phoneme,self.name))
 					sys.exit(1)
-			self.syllables += [(match.group(2), stressLevel)]
+				phonemes += [phoneme]
+			self.syllables += [(phonemes, stressLevel)]
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
 def GenerateForWord(word,wordfile):
-	global wordlist, preexisting, lexmd5, SOX_ARGS
+	global wordlist, preexisting, SOX_ARGS, known_phonemes
+	my_phonemes={}
 	if wordfile in preexisting:
 		logging.info('Skipping {0}.ogg (Marked as PRE_EXISTING)'.format(wordfile))
 		return
 	if '/' not in wordfile:
 		wordlist += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
+	for w in word.split(' '):
+		w=w.lower()
+		if w in known_phonemes:
+			my_phonemes[w]=known_phonemes[w].toLisp().replace('\n','')
+	md5 += '\n'.join(my_phonemes.values())
 	oggfile = os.path.abspath(os.path.join('sound','vox_fem',wordfile+'.ogg'))
 	if '/' in wordfile:
 		oggfile = os.path.abspath(os.path.join(wordfile+'.ogg'))
@@ -173,7 +184,7 @@ def GenerateForWord(word,wordfile):
 		if os.path.isfile(cachefile):
 			with open(cachefile,'r') as md5f:
 				old_md5=md5f.read()
-		if old_md5 == md5+lexmd5:
+		if old_md5 == md5:
 			logging.info('Skipping {0}.ogg (exists)'.format(wordfile))
 			return
 	logging.info('Generating {0}.ogg ({1})'.format(wordfile,repr(word)))
@@ -185,7 +196,7 @@ def GenerateForWord(word,wordfile):
 		text2wave = 'text2wave -eval tmp/VOXdict.lisp tmp/VOX-word.txt -o tmp/VOX-word.wav'
 	
 	with open(cachefile,'w') as wf:
-		wf.write(md5+lexmd5)
+		wf.write(md5)
 	cmds=[]
 	cmds += [text2wave]
 	cmds += ['sox tmp/VOX-word.wav tmp/VOX-soxpre-word.wav '+PRE_SOX_ARGS]
@@ -196,12 +207,17 @@ def GenerateForWord(word,wordfile):
 			sys.exit(1)
 
 def ProcessWordList(filename):
+	toprocess={}
 	with open(filename,'r') as words:
 		for line in words:
 			if '=' in line and not line.startswith("#"):
 				(wordfile,phrase) = line.split('=')
-				GenerateForWord(phrase.strip(),wordfile.strip())
+				toprocess[wordfile.strip()]=phrase.strip()
+	for wordfile,phrase in iter(sorted(toprocess.iteritems())):
+		GenerateForWord(phrase,wordfile)
+known_phonemes={}
 def ProcessLexicon(filename):
+	global known_phonemes
 	with open('tmp/VOXdict.lisp','w') as lisp:
 		with open(filename,'r') as lines:
 			for line in lines:
@@ -210,6 +226,7 @@ def ProcessLexicon(filename):
 					p = Pronunciation()
 					p.parseWord(line)
 					lisp.write(p.toLisp())
+					known_phonemes[p.name]=p
 
 logging.basicConfig(format='%(asctime)s [%(levelname)-8s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 if not os.path.isdir('tmp'):
@@ -217,7 +234,6 @@ if not os.path.isdir('tmp'):
 CODE_BASE=os.path.join('code','defines')
 if not os.path.isdir(CODE_BASE):
 	os.makedirs(CODE_BASE)
-lexmd5=md5sum('lexicon.txt')
 ProcessLexicon('lexicon.txt')
 for arg in sys.argv[1:]:
 	ProcessWordList(arg)
