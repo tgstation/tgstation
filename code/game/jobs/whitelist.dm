@@ -63,4 +63,10 @@ proc/load_alienwhitelist()
 
 	return 0
 
+/proc/has_whitelist_entries(var/species)
+	if(!config.usealienwhitelist)
+		return 1
+	species=lowertext(species)
+	return species in alien_whitelist
+
 #undef WHITELISTFILE
