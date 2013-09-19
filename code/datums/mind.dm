@@ -606,7 +606,7 @@ datum/mind
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memorize_cult_objectives(src)
-						message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
+						message_admins("[key_name_admin(usr)] has cult'ed [current].")
 						log_admin("[key_name_admin(usr)] has cult'ed [current].")
 				if("tome")
 					var/mob/living/carbon/human/H = current
