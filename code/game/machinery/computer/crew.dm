@@ -8,6 +8,8 @@
 	circuit = "/obj/item/weapon/circuitboard/crew"
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
+	if(stat & (BROKEN|NOPOWER))
+		return
 	crewmonitor(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
