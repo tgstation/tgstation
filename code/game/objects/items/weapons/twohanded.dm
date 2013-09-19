@@ -169,11 +169,8 @@
 	origin_tech = "magnets=3;syndicate=4"
 	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-<<<<<<< HEAD
 	var/emagged = 0
-=======
 	reflect_chance = 0
->>>>>>> 91e4cbc4d71cd78d8b0fd5d1e25e386734c7f979
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	color = pick("red", "blue", "green", "purple")

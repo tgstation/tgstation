@@ -67,8 +67,8 @@
 			if(src.emagged) // That's right, we'll only check the "original" esword.
 				newSaber.emagged = 1
 				newSaber.color = "rainbow"
-			user.drop_l_hand()
-			user.drop_r_hand()
+			user.before_take_item(W)
+			user.before_take_item(src)
 			del(W)
 			del(src)
 	else if(istype(W, /obj/item/weapon/card/emag))
