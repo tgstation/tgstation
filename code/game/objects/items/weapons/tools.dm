@@ -211,7 +211,7 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 
-		if(istype(O, /mob/living))
+		if(isliving(O))
 			var/mob/living/L = O
 			L.IgniteMob()
 

@@ -172,7 +172,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
-	if(istype(loc, /mob/living))
+	if(isliving(loc))
 		M.IgniteMob()
 	smoketime--
 	if(smoketime < 1)
@@ -384,7 +384,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M,/mob/living))
+	if(!isliving(M))
 		return
 	M.IgniteMob()
 	if(!istype(M,/mob/living/carbon))
