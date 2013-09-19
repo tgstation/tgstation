@@ -441,10 +441,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		del(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
-
-
 /client/proc/cmd_switch_radio()
 	set category = "Debug"
 	set name = "Switch Radio Mode"
@@ -988,7 +984,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/obj/machinery/power/smes/SMES in world)
 		if(SMES.anchored)
+			SMES.connect_to_network() // Just in case.
 			SMES.chargemode = 1
+			SMES.online=1
 
 /client/proc/cheat_power()
 
@@ -1033,6 +1031,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/obj/machinery/atmospherics/unary/vent_pump/high_volume/P in world)
 		if(P.id_tag=="air_out")
 			P.internal_pressure_bound=4500
+	for(var/obj/machinery/atmospherics/trinary/filter/F in world)
+		F.target_pressure=4500
 
 	world << "<b>LET THERE BE AIR</b>"
 
