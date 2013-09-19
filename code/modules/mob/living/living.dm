@@ -357,11 +357,28 @@
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
-
+						if (M.lying && (prob(M.getBruteLoss() / 2)))
+							var/blood_exists = 0
+							var/trail_type = M.getTrail()
+							for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
+								blood_exists = 1
+							if (istype(M.loc, /turf/simulated))
+								var/newdir = get_dir(T, M.loc)
+								if(newdir != M.dir)
+									newdir = newdir | M.dir
+									if(newdir == 3) //N + S
+										newdir = NORTH
+									else if(newdir == 12) //E + W
+										newdir = EAST
+								if(!blood_exists)
+									new /obj/effect/decal/cleanable/trail_holder(M.loc)
+								for(var/obj/effect/decal/cleanable/trail_holder/H in M.loc)
+									if((!(newdir in H.existing_dirs) || trail_type == "trails") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+										H.existing_dirs += newdir
+										H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+										if(istype(M, /mob/living/carbon/human)) //blood DNA
+											var/mob/living/carbon/DNA_helper = pulling
+											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 						step(pulling, get_dir(pulling.loc, T))
 						M.start_pulling(t)
 				else
@@ -381,6 +398,9 @@
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+/mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
+    return null
 
 /mob/living/verb/resist()
 	set name = "Resist"
