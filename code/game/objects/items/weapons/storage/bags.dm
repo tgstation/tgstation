@@ -66,6 +66,22 @@
 
 
 // -----------------------------
+//      Borg Seed Manipulator
+// -----------------------------
+
+/obj/item/weapon/storage/bag/plants/seedmanipulator
+	name = "Cyborg seed manipulator"
+	desc = "It allows you to pick up and seeds."
+	icon = 'icons/obj/syringe.dmi'
+	item_state = "hypo"
+	icon_state = "Seeds"
+	storage_slots = 1; //the number of plant seeds it can carry
+	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	max_w_class = 3
+	w_class = 1
+	can_hold = list("/obj/item/seeds")
+
+// -----------------------------
 //          Plant bag
 // -----------------------------
 
@@ -96,6 +112,37 @@
 			if (M.s_active == src)
 				src.close(M)
 
+///////////
+
+/obj/item/weapon/storage/bag/plants/borgplantbag
+	name = "Cybernetic Plant Bag"
+	desc = "It has two functions: Seed Extraction and Produce Assimilator"
+	icon_state = "portaseeder"
+
+	verb/dissolve_contents()
+		set name = "Extract Seeds"
+		set category = "Object"
+		set desc = "Activate to remove the seeds from your plants, and turn the remaining nutrient into power."
+		var/mob/living/silicon/robot/R = src.loc
+		for(var/obj/item/O in contents)
+			seedify(O, 1)
+			R.cell.use(-50)
+		if(R.cell.charge >- R.cell.maxcharge)
+			R.cell.charge = R.cell.maxcharge
+	/*verb/convert_power()
+		set name = "Assimilate Produce"
+		set category = "Object"
+		set desc = "Activate to convert your plants into power for your power cell."
+		var/mob/living/silicon/robot/R = src.loc
+		var/produceamount = contents.len
+		contents.len = 0
+		R.cell.use(-100 * produceamount)
+
+		/*for(var/obj/item/O in contents)
+			del(O)
+			R.cell.use(-100)
+			if(R.cell.charge >= R.cell.maxcharge)
+				R.cell.charge = R.cell.maxcharge*/*/
 
 // -----------------------------
 //        Sheet Snatcher
