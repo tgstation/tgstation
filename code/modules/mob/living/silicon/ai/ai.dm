@@ -224,76 +224,16 @@ var/list/ai_list = list()
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
-/mob/living/silicon/ai/proc/crewmonitor()
-	src.cm_scan()
-	var/t = ""
-	t += "<A href='?src=\ref[src];cm_close=1'>Close</A><BR>"
-	t += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
-	var/list/logs = list()
-	for(var/obj/item/clothing/under/C in src.tracked)
-		var/log = ""
-		var/turf/pos = get_turf(C)
-		if((C) && (C.has_sensor) && (pos) && (pos.z == src.z) && C.sensor_mode)
-			if(istype(C.loc, /mob/living/carbon/human))
-
-				var/mob/living/carbon/human/H = C.loc
-				var/obj/item/ID = null
-
-				if(H.wear_id)
-					ID = H.wear_id.GetID()
-
-				var/dam1 = round(H.getOxyLoss(),1)
-				var/dam2 = round(H.getToxLoss(),1)
-				var/dam3 = round(H.getFireLoss(),1)
-				var/dam4 = round(H.getBruteLoss(),1)
-
-				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
-				var/damage_report = "(<font color='blue'>[dam1]</font>/<font color='green'>[dam2]</font>/<font color='orange'>[dam3]</font>/<font color='red'>[dam4]</font>)"
-
-				if(ID)
-					log += "<tr><td width='40%'>[ID.name]</td>"
-				else
-					log += "<tr><td width='40%'>Unknown</td>"
-
-				switch(C.sensor_mode)
-					if(1)
-						log += "<td width='30%'>[life_status]</td><td width='30%'>Not Available</td></tr>"
-					if(2)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>Not Available</td></tr>"
-					if(3)
-						var/area/player_area = get_area(H)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>[format_text(player_area.name)] ([pos.x], [pos.y])</td></tr>"
-		logs += log
-	logs = sortList(logs)
-	for(var/log in logs)
-		t += log
-	t += "</table>"
-	var/datum/browser/popup = new/datum/browser(src, "crewcomp", name, 900, 600)
-	popup.set_content(t)
-	popup.set_title_image(src.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
 /mob/living/silicon/ai/verb/ai_crew()
 	set category = "AI Commands"
 	set name = "Show Crew Monitoring Console"
-	src.crewmonitor()
+	crewmonitor(src)
 
 /mob/living/silicon/ai/verb/ai_crewhidden()
 	set category = "AI Commands"
 	set name = "crew"
 	set hidden = 1
-	src.crewmonitor()
-/mob/living/silicon/ai/proc/cm_scan()
-	for(var/obj/item/clothing/under/C in world)
-		if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
-			var/check = 0
-			for(var/O in src.tracked)
-				if(O == C)
-					check = 1
-					break
-			if(!check)
-				src.tracked.Add(C)
-	return 1
-
+	crewmonitor(src)
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
@@ -406,7 +346,7 @@ var/list/ai_list = list()
 	if (src.z > 6)
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
-	if( href_list["cm_close"] )
+	if( href_list["close"] )
 		usr << browse(null, "window=crewcomp")
 		usr.unset_machine()
 		return
