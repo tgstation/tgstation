@@ -127,3 +127,44 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
 		del(I)
 		del(src)
+
+/obj/item/weapon/hatchet
+	name = "hatchet"
+	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "hatchet"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 12.0
+	w_class = 1.0
+	throwforce = 15.0
+	throw_speed = 4
+	throw_range = 4
+	m_amt = 15000
+	origin_tech = "materials=2;combat=1"
+	attack_verb = list("chopped", "torn", "cut")
+
+/obj/item/weapon/hatchet/attack(mob/M, mob/user)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
+
+/obj/item/weapon/scythe
+	icon_state = "scythe0"
+	name = "scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	force = 13.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 3
+	w_class = 4.0
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	slot_flags = SLOT_BACK
+	origin_tech = "materials=2;combat=2"
+	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+/obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)	return
+	if(istype(A, /obj/effect/spacevine))
+		for(var/obj/effect/spacevine/B in orange(A,1))
+			if(prob(80))
+				del B
+		del A

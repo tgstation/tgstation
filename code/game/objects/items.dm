@@ -42,6 +42,8 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
 /obj/item/ex_act(severity)
 	switch(severity)
 		if(1.0)

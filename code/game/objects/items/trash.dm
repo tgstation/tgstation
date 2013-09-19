@@ -1,3 +1,8 @@
+/* CONTAINS:
+ *  Trash
+ *  Corn cobs
+ */
+
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
@@ -50,3 +55,14 @@
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
+
+/obj/item/weapon/corncob
+	name = "corn cob"
+	desc = "A reminder of meals gone by."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "corncob"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
