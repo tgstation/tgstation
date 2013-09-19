@@ -377,6 +377,7 @@
 							del(G)
 		if(resisting)
 			L.visible_message("<span class='warning'>[L] resists!</span>")
+			return
 
 
 	//unbuckling yourself
