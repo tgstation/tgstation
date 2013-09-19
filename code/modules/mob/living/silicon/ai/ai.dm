@@ -224,10 +224,8 @@ var/list/ai_list = list()
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
-/mob/living/silicon/ai/verb/ai_crew()
-	set category = "AI Commands"
-	set name = "Show Crew Monitoring Console"
-	src.scan()
+/mob/living/silicon/ai/proc/crewmonitor()
+	src.cm_scan()
 	var/t = ""
 	t += "<A href='?src=\ref[src];cm_close=1'>Close</A><BR>"
 	t += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
@@ -274,8 +272,17 @@ var/list/ai_list = list()
 	popup.set_content(t)
 	popup.set_title_image(src.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+/mob/living/silicon/ai/verb/ai_crew()
+	set category = "AI Commands"
+	set name = "Show Crew Monitoring Console"
+	src.crewmonitor()
 
-/mob/living/silicon/ai/proc/scan()
+/mob/living/silicon/ai/verb/ai_crewhidden()
+	set category = "AI Commands"
+	set name = "crew"
+	set hidden = 1
+	src.crewmonitor()
+/mob/living/silicon/ai/proc/cm_scan()
 	for(var/obj/item/clothing/under/C in world)
 		if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
 			var/check = 0
