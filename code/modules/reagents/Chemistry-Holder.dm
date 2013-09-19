@@ -268,8 +268,9 @@ datum
 									multiplier = max(multiplier, 1) //this shouldnt happen ...
 									add_reagent(C.result, C.result_amount*multiplier)
 								
+								var/list/seen = viewers(4, get_turf(my_atom))
+								
 								if(!istype(my_atom, /mob)) // No bubbling mobs
-									var/list/seen = viewers(4, get_turf(my_atom))
 									for(var/mob/M in seen)
 										M << "\blue \icon[my_atom] The solution begins to bubble."
 
