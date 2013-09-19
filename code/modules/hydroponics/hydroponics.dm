@@ -314,161 +314,176 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(O)
 		update_icon()
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
-		var/obj/item/weapon/reagent_containers/syringe/S = O
+	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+		var/obj/item/weapon/reagent_containers/reagent_source = O
 		if(planted)
-			if(S.mode == 1)
-				if(!S.reagents.total_volume)
-					user << "\red [S] is empty."
+			var/obj/item/weapon/reagent_containers/S = new /obj/item/weapon/reagent_containers()
+			if(!reagent_source.reagents.total_volume)
+				user << "\red [reagent_source] is empty."
+				return
+			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
+				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
+				if(syr.mode != 1)
+					user << "You can't get any extract out of this plant."
 					return
-				user << "\red You inject the [myseed.plantname] with a chemical solution."
-
-	//SOON
-
-				// There needs to be a good amount of mutagen to actually work
-				if(S.reagents.has_reagent("mutagen", 5))
-					switch(rand(100))
-						if(91  to 100)	plantdies()
-						if(81  to 90)  mutatespecie()
-						if(66	to 80)	hardmutate()
-						if(41  to 65)  mutate()
-						if(21  to 41)  user << "The plants don't seem to react..."
-						if(11	to 20)  mutateweed()
-						if(1   to 10)  mutatepest()
-						else 			user << "Nothing happens..."
-
-				// Antitoxin binds shit pretty well. So the tox goes significantly down
-				if(S.reagents.has_reagent("anti_toxin", 1))
-					adjustToxic(-round(S.reagents.get_reagent_amount("anti_toxin")*2))
-
-				// NIGGA, YOU JUST WENT ON FULL RETARD.
-				if(S.reagents.has_reagent("toxin", 1))
-					adjustToxic(round(S.reagents.get_reagent_amount("toxin")*2))
-
-				// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
-				if(S.reagents.has_reagent("milk", 1))
-					adjustNutri(round(S.reagents.get_reagent_amount("milk")*0.1))
-					adjustWater(round(S.reagents.get_reagent_amount("milk")*0.9))
-
-				// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
-				if(S.reagents.has_reagent("beer", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("beer")*0.05))
-					adjustNutri(round(S.reagents.get_reagent_amount("beer")*0.25))
-					adjustWater(round(S.reagents.get_reagent_amount("beer")*0.7))
-
-				// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-				if(S.reagents.has_reagent("fluorine", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("fluorine")*2))
-					adjustToxic(round(S.reagents.get_reagent_amount("flourine")*2.5))
-					adjustWater(-round(S.reagents.get_reagent_amount("flourine")*0.5))
-					adjustWeeds(-rand(1,4))
-
-				// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-				if(S.reagents.has_reagent("chlorine", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("chlorine")*1))
-					adjustToxic(round(S.reagents.get_reagent_amount("chlorine")*1.5))
-					adjustWater(-round(S.reagents.get_reagent_amount("chlorine")*0.5))
-					adjustWeeds(-rand(1,3))
-
-				// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
-				if(S.reagents.has_reagent("phosphorus", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("phosphorus")*0.75))
-					adjustNutri(round(S.reagents.get_reagent_amount("phosphorus")*0.1))
-					adjustWater(-round(S.reagents.get_reagent_amount("phosphorus")*0.5))
-					adjustWeeds(-rand(1,2))
-
-				// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-				if(S.reagents.has_reagent("sugar", 1))
-					adjustWeeds(rand(1,2))
-					adjustPests(rand(1,2))
-					adjustNutri(round(S.reagents.get_reagent_amount("sugar")*0.1))
-
-				// It is water!
-				if(S.reagents.has_reagent("water", 1))
-					adjustWater(round(S.reagents.get_reagent_amount("water")*1))
-
-				// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
-				if(S.reagents.has_reagent("holywater", 1))
-					adjustWater(round(S.reagents.get_reagent_amount("holywater")*1))
-					adjustHealth(round(S.reagents.get_reagent_amount("holywater")*0.1))
-
-				// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
-				if(S.reagents.has_reagent("sodawater", 1))
-					adjustWater(round(S.reagents.get_reagent_amount("sodawater")*1))
-					adjustHealth(round(S.reagents.get_reagent_amount("sodawater")*0.1))
-					adjustNutri(round(S.reagents.get_reagent_amount("sodawater")*0.1))
-
-				// Man, you guys are retards
-				if(S.reagents.has_reagent("sacid", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("sacid")*1))
-					adjustToxic(round(S.reagents.get_reagent_amount("sacid")*1.5))
-					adjustWeeds(-rand(1,2))
-
-				// SERIOUSLY
-				if(S.reagents.has_reagent("pacid", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("pacid")*2))
-					adjustToxic(round(S.reagents.get_reagent_amount("pacid")*3))
-					adjustWeeds(-rand(1,4))
-
-				// Plant-B-Gone is just as bad
-				if(S.reagents.has_reagent("plantbgone", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("plantbgone")*2))
-					adjustToxic(-round(S.reagents.get_reagent_amount("plantbgone")*3))
-					adjustWeeds(-rand(4,8))
-
-				// Healing
-				if(S.reagents.has_reagent("cryoxadone", 1))
-					adjustHealth(round(S.reagents.get_reagent_amount("cryoxadone")*3))
-					adjustToxic(-round(S.reagents.get_reagent_amount("cryoxadone")*3))
-
-				// Ammonia is bad ass.
-				if(S.reagents.has_reagent("ammonia", 1))
-					adjustHealth(round(S.reagents.get_reagent_amount("ammonia")*0.5))
-					adjustNutri(round(S.reagents.get_reagent_amount("ammonia")*1))
-
-				// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
-				if(S.reagents.has_reagent("diethylamine", 1))
-					adjustHealth(round(S.reagents.get_reagent_amount("diethylamine")*1))
-					adjustNutri(round(S.reagents.get_reagent_amount("diethylamine")*2))
-					adjustPests(-rand(1,2))
-
-				// Compost, effectively
-				if(S.reagents.has_reagent("nutriment", 1))
-					adjustHealth(round(S.reagents.get_reagent_amount("nutriment")*0.5))
-					adjustNutri(round(S.reagents.get_reagent_amount("nutriment")*1))
-
-				// Poor man's mutagen.
-				if(S.reagents.has_reagent("radium", 1))
-					adjustHealth(-round(S.reagents.get_reagent_amount("radium")*1.5))
-					adjustToxic(round(S.reagents.get_reagent_amount("radium")*2))
-				if(S.reagents.has_reagent("radium", 10))
-					switch(rand(100))
-						if(91  to 100)	plantdies()
-						if(81  to 90)  mutatespecie()
-						if(66	to 80)	hardmutate()
-						if(41  to 65)  mutate()
-						if(21  to 41)  user << "The plants don't seem to react..."
-						if(11	to 20)  mutateweed()
-						if(1   to 10)  mutatepest()
-						else 			user << "Nothing happens..."
-
-				// The best stuff there is. For testing/debugging.
-				if(S.reagents.has_reagent("adminordrazine", 1))
-					adjustWater(round(S.reagents.get_reagent_amount("adminordrazine")*1))
-					adjustHealth(round(S.reagents.get_reagent_amount("adminordrazine")*1))
-					adjustNutri(round(S.reagents.get_reagent_amount("adminordrazine")*1))
-					adjustPests(-rand(1,5))
-					adjustWeeds(-rand(1,5))
-				if(S.reagents.has_reagent("adminordrazine", 5))
-					switch(rand(100))
-						if(66  to 100)  mutatespecie()
-						if(33	to 65)  mutateweed()
-						if(1   to 32)  mutatepest()
-						else 			user << "Nothing happens..."
-
-				S.reagents.clear_reagents()
+			
+			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/))
+				visible_message("\red [user] uses [reagent_source] as compost.")
+				del(S)
+				S = reagent_source
 			else
-				user << "You can't get any extract out of this plant."
+				if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
+					visible_message("\red [user] injects [myseed.plantname] with a chemical solution.")
+				else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
+					visible_message("\red <B>[src] has been sprayed with [reagent_source] by [user].")
+					playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+				else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
+					visible_message("\red <B>[user] uses [reagent_source] on the [src].")
+				reagent_source.reagents.trans_to(S,reagent_source.amount_per_transfer_from_this)
+
+			// There needs to be a good amount of mutagen to actually work
+			if(S.reagents.has_reagent("mutagen", 5))
+				switch(rand(100))
+					if(91  to 100)	plantdies()
+					if(81  to 90)  mutatespecie()
+					if(66	to 80)	hardmutate()
+					if(41  to 65)  mutate()
+					if(21  to 41)  user << "The plants don't seem to react..."
+					if(11	to 20)  mutateweed()
+					if(1   to 10)  mutatepest()
+					else 			user << "Nothing happens..."
+
+			// Antitoxin binds shit pretty well. So the tox goes significantly down
+			if(S.reagents.has_reagent("anti_toxin", 1))
+				adjustToxic(-round(S.reagents.get_reagent_amount("anti_toxin")*2))
+
+			// NIGGA, YOU JUST WENT ON FULL RETARD.
+			if(S.reagents.has_reagent("toxin", 1))
+				adjustToxic(round(S.reagents.get_reagent_amount("toxin")*2))
+
+			// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
+			if(S.reagents.has_reagent("milk", 1))
+				adjustNutri(round(S.reagents.get_reagent_amount("milk")*0.1))
+				adjustWater(round(S.reagents.get_reagent_amount("milk")*0.9))
+
+			// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
+			if(S.reagents.has_reagent("beer", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("beer")*0.05))
+				adjustNutri(round(S.reagents.get_reagent_amount("beer")*0.25))
+				adjustWater(round(S.reagents.get_reagent_amount("beer")*0.7))
+
+			// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+			if(S.reagents.has_reagent("fluorine", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("fluorine")*2))
+				adjustToxic(round(S.reagents.get_reagent_amount("flourine")*2.5))
+				adjustWater(-round(S.reagents.get_reagent_amount("flourine")*0.5))
+				adjustWeeds(-rand(1,4))
+
+			// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+			if(S.reagents.has_reagent("chlorine", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("chlorine")*1))
+				adjustToxic(round(S.reagents.get_reagent_amount("chlorine")*1.5))
+				adjustWater(-round(S.reagents.get_reagent_amount("chlorine")*0.5))
+				adjustWeeds(-rand(1,3))
+
+			// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
+			if(S.reagents.has_reagent("phosphorus", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("phosphorus")*0.75))
+				adjustNutri(round(S.reagents.get_reagent_amount("phosphorus")*0.1))
+				adjustWater(-round(S.reagents.get_reagent_amount("phosphorus")*0.5))
+				adjustWeeds(-rand(1,2))
+
+			// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
+			if(S.reagents.has_reagent("sugar", 1))
+				adjustWeeds(rand(1,2))
+				adjustPests(rand(1,2))
+				adjustNutri(round(S.reagents.get_reagent_amount("sugar")*0.1))
+
+			// It is water!
+			if(S.reagents.has_reagent("water", 1))
+				adjustWater(round(S.reagents.get_reagent_amount("water")*1))
+
+			// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
+			if(S.reagents.has_reagent("holywater", 1))
+				adjustWater(round(S.reagents.get_reagent_amount("holywater")*1))
+				adjustHealth(round(S.reagents.get_reagent_amount("holywater")*0.1))
+
+			// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
+			if(S.reagents.has_reagent("sodawater", 1))
+				adjustWater(round(S.reagents.get_reagent_amount("sodawater")*1))
+				adjustHealth(round(S.reagents.get_reagent_amount("sodawater")*0.1))
+				adjustNutri(round(S.reagents.get_reagent_amount("sodawater")*0.1))
+
+			// Man, you guys are retards
+			if(S.reagents.has_reagent("sacid", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("sacid")*1))
+				adjustToxic(round(S.reagents.get_reagent_amount("sacid")*1.5))
+				adjustWeeds(-rand(1,2))
+
+			// SERIOUSLY
+			if(S.reagents.has_reagent("pacid", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("pacid")*2))
+				adjustToxic(round(S.reagents.get_reagent_amount("pacid")*3))
+				adjustWeeds(-rand(1,4))
+
+			// Plant-B-Gone is just as bad
+			if(S.reagents.has_reagent("plantbgone", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("plantbgone")*2))
+				adjustToxic(-round(S.reagents.get_reagent_amount("plantbgone")*3))
+				adjustWeeds(-rand(4,8))
+
+			// Healing
+			if(S.reagents.has_reagent("cryoxadone", 1))
+				adjustHealth(round(S.reagents.get_reagent_amount("cryoxadone")*3))
+				adjustToxic(-round(S.reagents.get_reagent_amount("cryoxadone")*3))
+
+			// Ammonia is bad ass.
+			if(S.reagents.has_reagent("ammonia", 1))
+				adjustHealth(round(S.reagents.get_reagent_amount("ammonia")*0.5))
+				adjustNutri(round(S.reagents.get_reagent_amount("ammonia")*1))
+
+			// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
+			if(S.reagents.has_reagent("diethylamine", 1))
+				adjustHealth(round(S.reagents.get_reagent_amount("diethylamine")*1))
+				adjustNutri(round(S.reagents.get_reagent_amount("diethylamine")*2))
+				adjustPests(-rand(1,2))
+
+			// Compost, effectively
+			if(S.reagents.has_reagent("nutriment", 1))
+				adjustHealth(round(S.reagents.get_reagent_amount("nutriment")*0.5))
+				adjustNutri(round(S.reagents.get_reagent_amount("nutriment")*1))
+
+			// Poor man's mutagen.
+			if(S.reagents.has_reagent("radium", 1))
+				adjustHealth(-round(S.reagents.get_reagent_amount("radium")*1.5))
+				adjustToxic(round(S.reagents.get_reagent_amount("radium")*2))
+			if(S.reagents.has_reagent("radium", 10))
+				switch(rand(100))
+					if(91  to 100)	plantdies()
+					if(81  to 90)  mutatespecie()
+					if(66	to 80)	hardmutate()
+					if(41  to 65)  mutate()
+					if(21  to 41)  user << "The plants don't seem to react..."
+					if(11	to 20)  mutateweed()
+					if(1   to 10)  mutatepest()
+					else 			user << "Nothing happens..."
+
+			// The best stuff there is. For testing/debugging.
+			if(S.reagents.has_reagent("adminordrazine", 1))
+				adjustWater(round(S.reagents.get_reagent_amount("adminordrazine")*1))
+				adjustHealth(round(S.reagents.get_reagent_amount("adminordrazine")*1))
+				adjustNutri(round(S.reagents.get_reagent_amount("adminordrazine")*1))
+				adjustPests(-rand(1,5))
+				adjustWeeds(-rand(1,5))
+			if(S.reagents.has_reagent("adminordrazine", 5))
+				switch(rand(100))
+					if(66  to 100)  mutatespecie()
+					if(33	to 65)  mutateweed()
+					if(1   to 32)  mutatepest()
+					else 			user << "Nothing happens..."
+
+			S.reagents.clear_reagents()
+			del(S)
 		else
 			user << "There's nothing to apply the solution into."
 		update_icon()
@@ -517,17 +532,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Water level: \blue [waterlevel]/100"
 			user << "-Nutrition level: \blue [nutrilevel]/10"
 			user << ""
-
-	else if(istype(O, /obj/item/weapon/reagent_containers/spray/plantbgone))
-		if(planted && myseed)
-			adjustHealth(-rand(5,20))
-			adjustPests(-2)
-			adjustWeeds(-3)
-			adjustToxic(4)//Oops
-			visible_message("\red <B>[src] has been sprayed with [O][(user ? " by [user]." : ".")]")
-			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-			update_icon()
-
+	
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
 			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from [src].")
