@@ -606,6 +606,7 @@
 		else
 			if( !(COLD_RESISTANCE in mutations))
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				if(istype(src.loc, /turf/space)) adjustBruteLoss( LOW_PRESSURE_DAMAGE ) //Space doubles damage
 				pressure_alert = -2
 			else
 				pressure_alert = -1
