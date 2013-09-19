@@ -10,19 +10,6 @@
 	var/valve_open = 0
 	var/toggle = 1
 
-/obj/item/device/transfer_valve/suicide_act(mob/user) //Suggested by NikNakFlak
-	if (!src.valve_open)
-		viewers(user) << "\red <b>[user] holds the [src.name] up to \his chest! It looks like \he's trying to commit suicide!</b>"
-		spawn(1)
-			var/timeout = (world.time+70)
-			var/confirm = alert("Do you want to activate the [src.name]?\nYOU CAN STILL GET BANNED FOR IT", "Confirm Activation (7 second timeout)", "No", "Yes")
-			if (confirm == "Yes")
-				if (world.time <= timeout)
-					src.toggle_valve()
-		return (TOXLOSS)
-	else
-		viewers(user) << "\red <b>[user] and starts breathing from the [src.name]! It looks like \he's trying to commit suicide!</b>"
-		return (OXYLOSS+TOXLOSS)
 
 /obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
 

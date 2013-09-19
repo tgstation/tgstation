@@ -118,15 +118,15 @@
 		else
 			usr << "\blue \The [src] is full!"
 
-			
+
 /obj/item/weapon/reagent_containers/food/drinks/suicide_act(mob/user) //Suggested by HBL
-	if (reagents.total_volume)
+	if (src.reagents.total_volume)
 		viewers(user) << "\red <b>It looks like [user] is drinking \himself to death!</b>"
 		src.attack(user, user)
-		reagents.reaction(user, INGEST)
+		src.reagents.reaction(user, INGEST)
 		spawn(5)
-			if (reagents.total_volume)
-				reagents.trans_to(user, reagents.total_volume)
+			if (src.reagents.total_volume)
+				src.reagents.trans_to(user, src.reagents.total_volume)
 		return (TOXLOSS)
 
 
@@ -392,11 +392,3 @@
 		reagents.add_reagent("dr_gibb", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/dr_gibb/suicide_act(mob/user) //Suggested by Anonus
-	if (reagents.get_reagent_amount("dr_gibb") >= 10)
-		viewers(user) << "\red <b>[user] is [src.name]ing themselves!</b>"
-		user.gib()
-		return (BRUTELOSS)
-	else
-		return (..(user))

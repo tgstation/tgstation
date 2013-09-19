@@ -65,7 +65,7 @@
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
 	viewers(user) << "\red <b>[user] is pressing [src] to \his [pick("temple", "chest", "eyes")] and activating it! It looks like \he's trying to commit suicide.</b>"
-	playsound(user, hitsound, 50, 1)
+	playsound(user, src.hitsound, 50, 1)
 	return (BRUTELOSS)
 
 
@@ -110,7 +110,7 @@
 
 /obj/item/weapon/circular_saw/suicide_act(mob/user)
 	viewers(user) << "\red <b>[user] is using the [src.name] to slice off \his [pick("arm", "leg", "head")]! It looks like \he's trying to commit suicide!</b>"
-	playsound(user, hitsound, 50, 1)
+	playsound(user, src.hitsound, 50, 1)
 	return (BRUTELOSS)
 
 

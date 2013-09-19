@@ -705,7 +705,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/slime_extract/suicide_act(mob/living/carbon/user)
 	viewers(user) << "\red <b>[user] is ingesting the [src.name]! It looks like \he's trying to commit suicide!</b>"
 	user.drop_item()
-	user.internal_organs += src
+	user.stomach_contents += src
 	src.loc = user
 	spawn(5)
 		var/timeout = (world.time+70)

@@ -51,7 +51,7 @@
 /obj/item/trash/suicide_act(mob/living/carbon/user)
 	viewers(user) << "\red <b>[user] eats the [src.name]! Yuck!</b>"
 	user.drop_item()
-	user.internal_organs += src
+	user.stomach_contents += src
 	src.loc = usr
 	return (TOXLOSS)
 

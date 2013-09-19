@@ -186,6 +186,7 @@
 	viewers(user) << "\red <b>[user] respectfully gentlemans \himself to death with the [src.name]. He died honourably.</b>" //I didn't use "\He" intentionally, as seen below.
 	if (user.gender != MALE) //If you aren't a gentleman then you shall die as one.
 		user.gender = MALE
+		user.regenerate_icons()
 	return (BRUTELOSS)
 
 /obj/item/weapon/disk
@@ -202,13 +203,13 @@
 /obj/item/weapon/disk/nuclear/suicide_act(mob/living/carbon/user)
 	range(world.view+5, user) << "\red <b>[user] swallows the [src.name], activating it!</b>"
 	user.drop_item()
-	user.internal_organs += src
+	user.stomach_contents += src
 	src.loc = user
 	playsound(user, 'sound/machines/Alarm.ogg', 100, 0, 5)
 	spawn(175)
 		playsound(user, 'sound/effects/explosionfar.ogg', 100, 0, 5)
 		src.loc = get_turf(user)
-		user.gib()
+		user.ChangeToHusk() //user.gib()
 	return (TOXLOSS)
 
 //TODO: Figure out wtf this is and possibly remove it -Nodrak

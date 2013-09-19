@@ -115,11 +115,13 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
+/* Come up with something that doesn't gib.
 /obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/user) //Suggested by.. somebody. Sorry, I forgot your name!
 	viewers(user) << "\red <b>[user] is consumed by the [src.name]! That's the last of \him.</b>"
 	user.drop_item()
 	user.gib()
 	return (BRUTELOSS+TOXLOSS)
+*/
 
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?

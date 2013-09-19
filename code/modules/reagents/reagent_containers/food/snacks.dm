@@ -14,9 +14,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/suicide_act(mob/living/carbon/user)
 	viewers(user) << "\red <b>[user] is trying to devour the entire [src.name]! It looks like \he's trying to commit suicide!</b>"
 	user.drop_item()
-	user.internal_organs += src
+	user.stomach_contents += src
 	src.loc = user
 	return (OXYLOSS)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/suicide_act(mob/living/carbon/user)
+	return
 
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -600,7 +603,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/faggot/suicide_act(mob/living/carbon/user) //Suggested by SkipsPro
 	viewers(user) << "\red <b>[user] is trying to do anal with the [src.name]! It looks like \he's trying to commit suicide!</b>"
 	user.drop_item()
-	user.internal_organs += src
+	user.stomach_contents += src
 	src.loc = user
 	return (BRUTELOSS)
 
@@ -1036,7 +1039,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers/suicide_act(mob/living/carbon/user)//Suggested by Chocobro
 	viewers(user) << "\red <b>[user] is wildly scoffing down the [src.name]! It's d-d-dangerously cheesy! It looks like \he's trying to commit suicide!</b>"
 	user.drop_item()
-	user.internal_organs += src
+	user.stomach_contents += src
 	src.loc = user
 	spawn(10)
 		var/itr

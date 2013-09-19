@@ -17,12 +17,12 @@
 	var/obj/item/organ/brain/B = null
 	B = user.getorgan(/obj/item/organ/brain)
 	if (B)
-		if (load_into_chamber())
+		if (src.load_into_chamber())
 			viewers(user) << "\red <b>[user] is trying to blow \his brains out with the [src.name]! It looks like \he's tryi- </b>Nope, \he just committed suicide."
-			if(silenced)
-				playsound(user, fire_sound, 10, 1)
+			if(src.silenced)
+				playsound(user, src.fire_sound, 10, 1)
 			else
-				playsound(user, fire_sound, 50, 1)
+				playsound(user, src.fire_sound, 50, 1)
 			B.loc = get_turf(user)
 			B.name = "[user]'s brain"
 			user.internal_organs -= B
