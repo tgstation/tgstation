@@ -267,10 +267,12 @@ datum
 									feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 									multiplier = max(multiplier, 1) //this shouldnt happen ...
 									add_reagent(C.result, C.result_amount*multiplier)
-
+								
 								var/list/seen = viewers(4, get_turf(my_atom))
-								for(var/mob/M in seen)
-									M << "\blue \icon[my_atom] The solution begins to bubble."
+								
+								if(!istype(my_atom, /mob)) // No bubbling mobs
+									for(var/mob/M in seen)
+										M << "\blue \icon[my_atom] The solution begins to bubble."
 
 								if(istype(my_atom, /obj/item/slime_extract))
 									var/obj/item/slime_extract/ME2 = my_atom
