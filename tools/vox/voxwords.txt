@@ -669,6 +669,19 @@ xenobiology = xenobiology
 virology = virology
 removal = removal
 hydroponics = hydroponics
+sensors = sensors
+plasma = plasma
+fire=fire
+station = station
+harm = harm
+human = human
+clown = clown
+move = move
+rest = rest
+shitlord = shit lord
+toxins = toxins
+glory = glory
+nanotrasen = nanotrasen
 
 hacker = hacker
 hackers = hackers
@@ -689,7 +702,7 @@ shitting = shitting
 
 voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
-voxtest2 = Fuck your cunt you shit eating cocksucker, man eat a dong fucking ass ramming shit fuck eat penises in your fuck face and shit out abortions of fuck and do shit in your ass you cockfuck shit monkey ass wanker from the depths of shit
+voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking ass-ramming shit-fuck. Eat penises in your fuck face, and shit out abortions of fuck, and do shit in your ass, you cockfuck shit monkey ass-wanker from the depths of shit!
 # Out with the old, in with the new:
 #vox_login = Hello. The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
 vox_login = Hello. The automatic diagnostic and announcement system welcomes you to Space Station 13.  Remember: Have a secure day.
