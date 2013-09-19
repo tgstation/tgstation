@@ -124,57 +124,57 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
-				dat += text("Which department do you need assistance from?<BR><BR>")
+				dat += "Which department do you need assistance from?<BR><BR>"
 				dat += "<table width='100%'>"
 				for(var/dpt in req_console_assistance)
 					if (dpt != department)
-						dat += text("<tr>")
-						dat += text("<td width='55%'>[dpt]</td>")
-						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>")
+						dat += "<tr>"
+						dat += "<td width='55%'>[dpt]</td>"
+						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
 						if (hackState == 1)
-							dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>")
-						dat += text("</td>")
-						dat += text("</tr>")
+							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+						dat += "</td>"
+						dat += "</tr>"
 				dat += "</table>"
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
+				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
 
 			if(2)	//req. supplies
-				dat += text("Which department do you need supplies from?<BR><BR>")
+				dat += "Which department do you need supplies from?<BR><BR>"
 				dat += "<table width='100%'>"
 				for(var/dpt in req_console_supplies)
 					if (dpt != department)
-						dat += text("<tr>")
-						dat += text("<td width='55%'>[dpt]</td>")
-						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>")
+						dat += "<tr>"
+						dat += "<td width='55%'>[dpt]</td>"
+						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
 						if (hackState == 1)
-							dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>")
-						dat += text("</td>")
-						dat += text("</tr>")
+							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+						dat += "</td>"
+						dat += "</tr>"
 				dat += "</table>"
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
+				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
 
 			if(3)	//relay information
-				dat += text("Which department would you like to send information to?<BR><BR>")
+				dat += "Which department would you like to send information to?<BR><BR>"
 				dat += "<table width='100%'>"
 				for(var/dpt in req_console_information)
 					if (dpt != department)
-						dat += text("<tr>")
-						dat += text("<td width='55%'>[dpt]</td>")
-						dat += text("<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>")
+						dat += "<tr>"
+						dat += "<td width='55%'>[dpt]</td>"
+						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
 						if (hackState == 1)
-							dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>")
-						dat += text("</td>")
-						dat += text("</tr>")
+							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+						dat += "</td>"
+						dat += "</tr>"
 				dat += "</table>"
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
+				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
 
 			if(6)	//sent successfully
-				dat += text("<span class='good'>Message sent.</span><BR><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
+				dat += "<span class='good'>Message sent.</span><BR><BR>"
+				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
 
 			if(7)	//unsuccessful; not sent
-				dat += text("<span class='bad'>An error occurred.</span><BR><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
+				dat += "<span class='bad'>An error occurred.</span><BR><BR>"
+				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in allConsoles)
@@ -186,53 +186,53 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				update_icon()
 				var/messageComposite = ""
 				for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
-					messageComposite = text("<div class='block'>[msg]</div>") + messageComposite
+					messageComposite = "<div class='block'>[msg]</div>" + messageComposite
 				dat += messageComposite
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back to Main Menu</A><BR>")
+				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back to Main Menu</A><BR>"
 
 			if(9)	//authentication before sending
-				dat += text("<B>Message Authentication</B><BR><BR>")
-				dat += text("<b>Message for [dpt]: </b>[message]<BR><BR>")
-				dat += text("<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>")
-				dat += text("<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>");
-				dat += text("<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>");
-				dat += text("<A href='?src=\ref[src];department=[dpt]'>Send Message</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Discard Message</A><BR>")
+				dat += "<B>Message Authentication</B><BR><BR>"
+				dat += "<b>Message for [dpt]: </b>[message]<BR><BR>"
+				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
+				dat += "<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>"
+				dat += "<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>"
+				dat += "<A href='?src=\ref[src];department=[dpt]'>Send Message</A><BR>"
+				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Discard Message</A><BR>"
 
 			if(10)	//send announcement
-				dat += text("<h3>Station-wide Announcement</h3>")
+				dat += "<h3>Station-wide Announcement</h3>"
 				if(announceAuth)
-					dat += text("<div class='notice'>Authentication accepted</div><BR>")
+					dat += "<div class='notice'>Authentication accepted</div><BR>"
 				else
-					dat += text("<div class='notice'>Swipe your card to authenticate yourself</div><BR>")
-				dat += text("<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>")
-				dat += text("<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>")
+					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
+				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
+				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
 				if (announceAuth && message)
-					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>");
+					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
-					dat += text("<span class='linkOff'>Announce Message</span><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>")
+					dat += "<span class='linkOff'>Announce Message</span><BR>"
+				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
 
 			else	//main menu
 				screen = 0
 				announceAuth = 0
 				if (newmessagepriority == 1)
-					dat += text("<div class='notice'>There are new messages</div><BR>")
+					dat += "<div class='notice'>There are new messages</div><BR>"
 				if (newmessagepriority == 2)
-					dat += text("<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>")
+					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
 				if (newmessagepriority == 3)
-					dat += text("<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>")
+					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
+				dat += "<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>"
 
-				dat += text("<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>")
+				dat += "<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>"
+				dat += "<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>"
+				dat += "<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
 				if(announcementConsole)
-					dat += text("<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>")
+					dat += "<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
 				if (silent)
-					dat += text("Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>")
+					dat += "Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>"
 				else
-					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
+					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
 
 		//user << browse("[dat]", "window=request_console")
 		//onclose(user, "req_console")
@@ -317,7 +317,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+										O.show_message("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'")
 								Console.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
 								// Same message, but without the hyperlink.
@@ -331,7 +331,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(1) // This is EXTREMELY important, so beep.
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(7, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
+										O.show_message("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'")
 								Console.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
 								// Same message, but without the hyperlink.
@@ -349,7 +349,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
+										O.show_message("\icon[Console] *The Requests Console beeps: 'Message from [department]'")
 								Console.messages += "<b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
 								slip.info = "<b>From:</b> [department]<BR>[sending]"
@@ -365,7 +365,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						messages += "<b>To: [dpt]</b><BR>[sending]"
 			else
 				for (var/mob/O in hearers(4, src.loc))
-					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
+					O.show_message("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'")
 
 
 	//Handle screen switching
@@ -435,7 +435,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if (istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
 			var/obj/item/weapon/card/id/T = O
-			msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
+			msgVerified = "<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O
@@ -448,6 +448,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
 			var/obj/item/weapon/stamp/T = O
-			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")
+			msgStamped = "<font color='blue'><b>Stamped with the [T.name]</b></font>"
 			updateUsrDialog()
 	return
