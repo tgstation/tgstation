@@ -392,10 +392,6 @@
 
 		item.throw_at(target, item.throw_range, item.throw_speed)
 
-/mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//To be edited when mobs on fire is finished
-		..()
-		bodytemperature = max(bodytemperature, BODYTEMP_HEAT_DAMAGE_LIMIT+10)
-
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
 		return 0

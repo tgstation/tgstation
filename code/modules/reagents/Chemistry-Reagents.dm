@@ -1365,6 +1365,14 @@ datum
 					T.atmos_spawn_air("fuel", 5)
 				return
 
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 5)
+					M << "<span class='warning'>You've been splashed with plasma!</span>"
+					return
+
 		toxin/lexorin
 			name = "Lexorin"
 			id = "lexorin"
@@ -2746,6 +2754,14 @@ datum
 					else
 						usr << "It wasn't enough..."
 				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with ethanol isn't quite as good as fuel.
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 15)
+					M << "<span class='warning'>You've been soaked in ethanol!</span>"
+					return
 
 		ethanol/beer
 			name = "Beer"

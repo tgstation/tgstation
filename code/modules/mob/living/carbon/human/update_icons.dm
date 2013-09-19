@@ -320,6 +320,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	update_inv_handcuffed()
 	update_inv_legcuffed()
 	update_inv_pockets()
+	update_fire()
 	//Hud Stuff
 	update_hud()
 
