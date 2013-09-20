@@ -17,7 +17,7 @@
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
 	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
+	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
 	if(istype(A, /obj/effect/proc_holder/spell))
@@ -234,14 +234,3 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/New()
 	..()
 	reagents.add_reagent("plantbgone", 100)
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
-	if(proximity)
-		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-			return
-
-		if (istype(A, /obj/effect/blob)) // blob damage in blob code
-			return
-
-	..()

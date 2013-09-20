@@ -310,7 +310,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		adjustNutri(10)
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
-		user << "You replace the nutrient solution in the [src]."
+		user << "You replace the nutrient solution in [src]."
 		del(O)
 		update_icon()
 
@@ -318,17 +318,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 		if(planted)
 			var/obj/item/weapon/reagent_containers/S = new /obj/item/weapon/reagent_containers()
-			if(!reagent_source.reagents.total_volume)
-				user << "\red [reagent_source] is empty."
-				return
+
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 				if(syr.mode != 1)
 					user << "You can't get any extract out of this plant."
 					return
+			if(!reagent_source.reagents.total_volume)
+				user << "\red [reagent_source] is empty."
+				return
 			
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/))
-				visible_message("\red [user] uses [reagent_source] as compost.")
+			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
+				visible_message("\red [user] composts [reagent_source], spreading it through the soil.")
 				del(S)
 				S = reagent_source
 			else
@@ -338,7 +339,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					visible_message("\red <B>[src] has been sprayed with [reagent_source] by [user].")
 					playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 				else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
-					visible_message("\red <B>[user] uses [reagent_source] on the [src].")
+					visible_message("\red <B>[user] uses [reagent_source] on [src].")
 				reagent_source.reagents.trans_to(S,reagent_source.amount_per_transfer_from_this)
 
 			// There needs to be a good amount of mutagen to actually work
@@ -485,7 +486,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			S.reagents.clear_reagents()
 			del(S)
 		else
-			user << "There's nothing to apply the solution into."
+			user << "There's no plant in the tray."
 		update_icon()
 
 	else if( istype(O, /obj/item/seeds/) )
@@ -546,7 +547,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user.u_equip(O)
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
-		user << "You apply the weedkiller solution into the [src]."
+		user << "You apply the weedkiller solution into [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		update_icon()
@@ -564,7 +565,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user.u_equip(O)
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
-		user << "You apply the pestkiller solution into the [src]."
+		user << "You apply the pestkiller solution into [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		update_icon()
@@ -602,9 +603,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user << "Water: [waterlevel]/100"
 		user << "Nutrient: [nutrilevel]/10"
 		if(weedlevel >= 5) // Visual aid for those blind
-			user << "The [src] is filled with weeds!"
+			user << "[src] is filled with weeds!"
 		if(pestlevel >= 5) // Visual aid for those blind
-			user << "The [src] is filled with tiny worms!"
+			user << "[src] is filled with tiny worms!"
 		user << "" // Empty line for readability.
 
 /obj/item/seeds/proc/harvest(mob/user = usr)

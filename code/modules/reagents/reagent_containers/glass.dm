@@ -90,6 +90,10 @@
 		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
 		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 			return
+		
+		// Hydroponics trays aren't reagent containers, technically.  Handled in their attackby.
+		else if(istype(target, /obj/machinery/hydroponics))
+			return
 
 		else if(reagents.total_volume)
 			user << "<span class='notice'>You splash the solution onto [target].</span>"
