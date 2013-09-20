@@ -132,16 +132,6 @@
 		updatehealth()
 	return
 
-
-/mob/living/carbon/alien/humanoid/hand_p(mob/living/carbon/user)
-	if(user.a_intent == "harm")
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if(health > 0)
-			visible_message("<span class='danger'>[user] has bit [src]!</span>")
-			adjustBruteLoss(rand(1, 3))
-			updatehealth()
-
 /mob/living/carbon/alien/humanoid/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
 

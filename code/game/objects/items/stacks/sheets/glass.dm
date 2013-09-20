@@ -268,7 +268,8 @@
 	..()
 
 
-/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user)
+/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+	if(!proximity || !(src in user)) return
 	if(isturf(A))
 		return
 	if(istype(A, /obj/item/weapon/storage))

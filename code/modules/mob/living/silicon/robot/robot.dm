@@ -323,13 +323,6 @@
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
-
-	if(Proj.add_fire_stacks)
-		adjust_fire_stacks(Proj.add_fire_stacks)
-
-	if(Proj.ignite_target)
-		IgniteMob()
-
 	return 2
 
 
@@ -741,12 +734,6 @@
 			user.visible_message("<span class='notice'>[user] pets [src]!</span>", \
 								"<span class='notice'>You pet [src]!</span>")
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
-			return
-
-
 /mob/living/silicon/robot/attack_paw(mob/user)
 
 	return attack_hand(user)
@@ -864,6 +851,9 @@
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()
+	if(usr && (src != usr))
+		return
+
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
@@ -881,6 +871,8 @@
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
+		if(!(locate(O) in src.module.modules) && O != src.module.emag)
+			return
 		if(activated(O))
 			src << "Already activated"
 			return

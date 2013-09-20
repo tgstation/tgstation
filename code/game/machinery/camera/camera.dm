@@ -182,6 +182,9 @@
 		playsound(loc, "sparks", 50, 1)
 		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
 		del(src)
+	else if(istype(W, /obj/item/device/laser_pointer))
+		var/obj/item/device/laser_pointer/L = W
+		L.laser_act(src, user)
 	else
 		..()
 	return

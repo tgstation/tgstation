@@ -35,7 +35,8 @@
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
 		user << "\blue You fill the balloon with the contents of [A]."
@@ -120,7 +121,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
 	g_amt = 10
@@ -197,7 +198,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT | TABLEPASS
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5

@@ -233,8 +233,6 @@ datum
 
 				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,20))
-				for(var/mob/living/M in T)
-					M.ExtinguishMob()
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -265,7 +263,6 @@ datum
 					return
 				if(method == TOUCH)
 					M.adjust_fire_stacks(-(volume / 10))
-					M << "<span class='warning'>You've been drenched in water!</span>"
 					if(M.fire_stacks <= 0)
 						M.ExtinguishMob()
 					return
@@ -342,33 +339,9 @@ datum
 			reagent_state = LIQUID
 			color = "#13BC5E" // rgb: 19, 188, 94
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "\red Your flesh rapidly mutates!"
-					if(M.monkeyizing)	return
-					M.monkeyizing = 1
-					M.canmove = 0
-					M.icon = null
-					M.overlays.Cut()
-					M.invisibility = 101
-					for(var/obj/item/W in M)
-						if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-							del(W)
-							continue
-						W.layer = initial(W.layer)
-						W.loc = M.loc
-						W.dropped(M)
-					var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-					new_mob.a_intent = "harm"
-					new_mob.universal_speak = 1
-					if(M.mind)
-						M.mind.transfer_to(new_mob)
-					else
-						new_mob.key = M.key
-					del(M)
-				..()
-				return
+			reaction_mob(var/mob/M, var/volume)
+				src = null
+				M.contract_disease(new /datum/disease/transformation/slime(0),1)
 
 		inaprovaline
 			name = "Inaprovaline"
@@ -770,7 +743,6 @@ datum
 					return
 				if(method == TOUCH)
 					M.adjust_fire_stacks(volume / 10)
-					M << "<span class='warning'>You've been covered in fuel!</span>"
 					return
 
 //Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
@@ -1226,7 +1198,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
+					M.contract_disease(new /datum/disease/transformation/robot(0),1)
 
 		xenomicrobes
 			name = "Xenomicrobes"
@@ -1238,7 +1210,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
+					M.contract_disease(new /datum/disease/transformation/xeno(0),1)
 
 		fluorosurfactant//foam precursor
 			name = "Fluorosurfactant"
@@ -1370,7 +1342,6 @@ datum
 					return
 				if(method == TOUCH)
 					M.adjust_fire_stacks(volume / 5)
-					M << "<span class='warning'>You've been splashed with plasma!</span>"
 					return
 
 		toxin/lexorin
@@ -2760,7 +2731,6 @@ datum
 					return
 				if(method == TOUCH)
 					M.adjust_fire_stacks(volume / 15)
-					M << "<span class='warning'>You've been soaked in ethanol!</span>"
 					return
 
 		ethanol/beer

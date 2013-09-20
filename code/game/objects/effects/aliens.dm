@@ -23,6 +23,26 @@
 	anchored = 1
 	var/health = 200
 
+/obj/structure/alien/resin/New(location)
+	..()
+	air_update_turf(1)
+	return
+
+/obj/structure/alien/resin/Del()
+	density = 0
+	air_update_turf(1)
+	..()
+	return
+
+/obj/structure/alien/resin/Move()
+	air_update_turf(1)
+	..()
+	air_update_turf(1)
+	return
+
+/obj/structure/alien/resin/CanAtmosPass()
+	return !density
+	
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Purple slime solidified into a wall."
