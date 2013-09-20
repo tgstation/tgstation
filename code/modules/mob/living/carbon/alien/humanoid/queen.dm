@@ -7,6 +7,7 @@
 	status_flags = CANPARALYSE
 	heal_rate = 5
 	plasma_rate = 20
+	var/auto_lay = 1
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
@@ -25,8 +26,13 @@
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
 	..()
 
-
 /mob/living/carbon/alien/humanoid/queen
+
+	Life()
+
+		if(auto_lay && storedPlasma == max_plasma)
+			lay_egg()
+		..()
 
 	handle_regular_hud_updates()
 
@@ -59,7 +65,8 @@
 	set category = "Alien"
 
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		src << "There's already an egg here."
+		if(!auto_lay)
+			src << "There's already an egg here."
 		return
 
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
@@ -69,6 +76,20 @@
 		new /obj/structure/alien/egg(loc)
 	return
 
+/mob/living/carbon/alien/humanoid/queen/verb/toggle_automatic_eggs()
+
+	set name = "Toggle Automatic Egg Laying"
+	set desc = "Toggle if you want to automatically lay an egg when at full plasma."
+	set category = "Alien"
+
+	if(!auto_lay)
+		auto_lay = 1
+		src << "You will now lay an egg whenever you have full plasma."
+	else
+		auto_lay = 0
+		src << "You will no longer lay eggs automatically."
+
+	return
 
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
