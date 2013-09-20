@@ -3,11 +3,12 @@
 /obj/effect/anomaly
 	name = "anomaly"
 	icon = 'icons/effects/effects.dmi'
-	desc = "A mysterious anomaly seen in the region of space that the station orbits."
+	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
 	unacidable = 1
 	density = 0
 	anchored = 1
+	luminosity = 3
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
@@ -45,7 +46,7 @@
 	density = 1
 	var/boing = 0
 
-obj/effect/anomaly/grav/New()
+/obj/effect/anomaly/grav/New()
 	..()
 	aSignal.origin_tech = "magnets=5;powerstorage=4"
 
@@ -77,25 +78,42 @@ obj/effect/anomaly/grav/New()
 
 /////////////////////
 
-obj/effect/anomaly/flux
+/obj/effect/anomaly/flux
 	name = "flux wave anomaly"
-	icon_state = "electricity"
+	icon_state = "electricity2"
 
-obj/effect/anomaly/flux/New()
+/obj/effect/anomaly/flux/New()
 	..()
 	aSignal.origin_tech = "powerstorage=5;programming=3;plasmatech=2"
 
 /////////////////////
 
-obj/effect/anomaly/pyro
+/obj/effect/anomaly/bluespace
+	name = "bluespace anomaly"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "bluespace"
+	density = 1
+
+/obj/effect/anomaly/bluespace/New()
+	..()
+	aSignal.origin_tech = "bluespace=5;magnets=3;powerstorage=2"
+
+/obj/effect/anomaly/bluespace/Bumped(atom/A)
+	if(isliving(A))
+		do_teleport(A, locate(A.x, A.y, A.z), 10)
+	return
+
+/////////////////////
+
+/obj/effect/anomaly/pyro
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 
-obj/effect/anomaly/pyro/New()
+/obj/effect/anomaly/pyro/New()
 	..()
 	aSignal.origin_tech = "plasmatech=5;powerstorage=3;biotech=3"
 
-obj/effect/anomaly/pyro/anomalyEffect()
+/obj/effect/anomaly/pyro/anomalyEffect()
 	..()
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
@@ -107,9 +125,8 @@ obj/effect/anomaly/pyro/anomalyEffect()
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
-//	var/blow = 0
 
-obj/effect/anomaly/bhole/New()
+/obj/effect/anomaly/bhole/New()
 	..()
 	aSignal.origin_tech = "materials=5;combat=4;engineering=3"
 
@@ -119,21 +136,18 @@ obj/effect/anomaly/bhole/New()
 		del(src)
 		return
 
-	//blow = 3
+	grav(rand(0,3), rand(2,3), 50, 25)
 
 	//Throwing stuff around!
 	for(var/obj/O in orange(1,src))
 		if(!O.anchored)
-		//	var/atom/target = get_edge_target_turf(O, get_dir(src, get_step_away(O, src)))
-			var/mob/living/target = locate() in view(7,src)
+			var/mob/living/target = locate() in view(5,src)
 			if(!target)
-				return 0
-			O.throw_at(target, 6, 10)
-	//		blow--
+				return
+			O.throw_at(target, 5, 10)
+			return
 		else
-			O.ex_act(1)
-
-	grav(rand(0,3), rand(2,3), 50, 25)//10, 75 // 0,25
+			O.ex_act(2)
 
 /obj/effect/anomaly/bhole/proc/grav(var/r, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
 	for(var/t = -r, t < r, t++)

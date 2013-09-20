@@ -5,7 +5,7 @@
 	weight = 15
 
 /datum/round_event/anomaly_pyro
-	startWhen	= 5
+	startWhen = 10
 	announceWhen = 3
 	endWhen = 70
 

@@ -5,15 +5,15 @@
 	weight = 15
 
 /datum/round_event/anomaly_grav
-	startWhen	= 5
+	startWhen = 3
 	announceWhen = 20
-	endWhen = 100
+	endWhen = 50
 
 	var/area/impact_area
 	var/obj/effect/anomaly/grav/newgrav
 
 
-/datum/round_event/anomaly_grav/setup()//TODO: Make this location stuff into a helper proc to be used in other events.
+/datum/round_event/anomaly_grav/setup()
 	var/list/safe_areas = list(
 	/area/turret_protected/ai,
 	/area/turret_protected/ai_upload,

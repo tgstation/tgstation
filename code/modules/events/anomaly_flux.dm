@@ -5,7 +5,7 @@
 	weight = 15
 
 /datum/round_event/anomaly_flux
-	startWhen	= 5
+	startWhen = 3
 	announceWhen = 20
 	endWhen = 60
 

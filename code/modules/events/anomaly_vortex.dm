@@ -7,14 +7,13 @@
 /datum/round_event/anomaly_vortex
 	startWhen = 10
 	announceWhen = 3
-	endWhen = 70
+	endWhen = 80
 
 	var/area/impact_area
 	var/obj/effect/anomaly/bhole/vortex
 
 
 /datum/round_event/anomaly_vortex/setup()
-//	endWhen = rand(20, 30)
 	var/list/safe_areas = list(
 	/area/turret_protected/ai,
 	/area/turret_protected/ai_upload,
