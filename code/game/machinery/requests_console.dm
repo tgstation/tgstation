@@ -339,7 +339,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								slip.name = "EXTREME Request - [department]"
 								var/mob/living/target = locate() in view(7,Console)
 								if(target)
-									visible_message("<span class='danger'>[Console] launches [slip] at [target]!</span>")
+									Console.visible_message("<span class='danger'>[Console] launches [slip] at [target]!</span>")
 									slip.throw_at(target, 16, 3)
 
 							else		// Normal priority
