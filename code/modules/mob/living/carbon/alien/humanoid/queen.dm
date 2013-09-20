@@ -26,15 +26,13 @@
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
 	..()
 
-/mob/living/carbon/alien/humanoid/queen
-
-	Life()
+/mob/living/carbon/alien/humanoid/queen/Life()
 
 		if(auto_lay && storedPlasma == max_plasma)
 			lay_egg()
 		..()
 
-	handle_regular_hud_updates()
+/mob/living/carbon/alien/humanoid/queen/handle_regular_hud_updates()
 
 		..() //-Yvarov
 
