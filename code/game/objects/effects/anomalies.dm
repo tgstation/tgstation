@@ -12,6 +12,7 @@
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
+	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 
