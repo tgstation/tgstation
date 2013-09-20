@@ -11,7 +11,7 @@ Click [here](https://github.com/Baystation12/Baystation12/archive/master.zip) to
 
 The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
 
-    git clone git@github.com:Baystation12/Baystation12.git
+    git clone https://github.com/Baystation12/Baystation12.git
 
 (hint: hold down ctrl and press insert to paste into git bash)
 
@@ -55,6 +55,12 @@ If you used the git method, you simply need to type this in to git bash:
 When this completes, copy over your /data and /config folders again, just in case.
 
 When you have done this, you'll need to recompile the code, but then it should work fine.
+
+---
+
+### Configuration
+
+For a basic setup, simply copy every file from config-example to config.
 
 ---
 
