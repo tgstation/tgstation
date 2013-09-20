@@ -155,12 +155,20 @@
 		client.screen |= contents
 
 /mob/living/carbon/monkey/update_fire()
-	overlays_lying[M_FIRE_LAYER] = null
-	overlays_standing[M_FIRE_LAYER] = null
+	overlays -= overlays_lying[M_FIRE_LAYER]
+	overlays -= overlays_standing[M_FIRE_LAYER]
 	if(on_fire)
-		overlays_lying[M_FIRE_LAYER] += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"=-M_FIRE_LAYER)
-		overlays_standing[M_FIRE_LAYER] += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-M_FIRE_LAYER)
-	update_icons()
+		overlays_lying[M_FIRE_LAYER] += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"= -M_FIRE_LAYER)
+		overlays_standing[M_FIRE_LAYER] += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"= -M_FIRE_LAYER)
+		if(src.lying)
+			overlays += overlays_lying[M_FIRE_LAYER]
+		else
+			overlays += overlays_standing[M_FIRE_LAYER]
+		return
+	else
+		overlays_lying[M_FIRE_LAYER] = null
+		overlays_standing[M_FIRE_LAYER] = null
+
 
 //Monkey Overlays Indexes////////
 #undef M_FIRE_LAYER
