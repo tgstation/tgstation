@@ -1,4 +1,19 @@
 
+/obj/effect/datacore
+	name = "datacore"
+	var/medical[] = list()
+	var/general[] = list()
+	var/security[] = list()
+	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	var/locked[] = list()
+
+/datum/data
+	var/name = "data"
+
+/datum/data/record
+	name = "record"
+	var/list/fields = list()
+
 /obj/effect/datacore/proc/manifest(var/nosleep = 0)
 	spawn()
 		if(!nosleep)

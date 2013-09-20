@@ -6,8 +6,6 @@
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 2
-	ignite_target = 1
-	add_fire_stacks = 5
 
 /obj/item/projectile/practice
 	name = "laser"
@@ -94,12 +92,3 @@
 			if((istype(M.wear_suit, /obj/item/clothing/suit/bluetag))||(istype(M.wear_suit, /obj/item/clothing/suit/redtag)))
 				M.Weaken(5)
 		return 1
-
-/obj/item/projectile/beam/heatray
-	name = "heat ray"
-	icon_state = "laser"
-	damage = 0
-	flag = "laser"
-	eyeblur = 2
-	ignite_target = 1
-	add_fire_stacks = 20

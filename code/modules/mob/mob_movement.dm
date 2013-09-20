@@ -158,7 +158,7 @@
 
 
 /atom/movable/Move(NewLoc, direct)
-	if (direct & direct - 1)
+	if (direct & (direct - 1))
 		if (direct & 1)
 			if (direct & 4)
 				if (step(src, NORTH))
@@ -251,9 +251,12 @@
 
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
-				if(M.pulling == mob && !M.restrained() && M.stat == 0 && M.canmove)
-					src << "\blue You're restrained! You can't move!"
-					return 0
+				if(M.pulling == mob)
+					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
+						src << "\blue You're restrained! You can't move!"
+						return 0
+					else
+						M.stop_pulling()
 
 		move_delay = world.time//set move delay
 
@@ -492,7 +495,7 @@
 		return
 	if (pulling.anchored)
 		return
-	if ((pulling.loc != loc && get_dist(src, pulling) > 1) || !isturf(pulling.loc))
+	if (pulling.Adjacent(src))
 		return
 	if (ismob(pulling))
 		var/mob/M = pulling

@@ -320,7 +320,7 @@
 	update_icons()
 	return
 
-/mob/living/silicon/robot/fire_act()//Gain fire stacks when standing in a hotspot so ATMOS can light you up
+/mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
 

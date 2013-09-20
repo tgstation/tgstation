@@ -48,8 +48,6 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	var/ignite_target = 0 //If a projectile wants to light a target on fire after striking them
-	var/add_fire_stacks = 0
 
 	proc/delete()
 		// Garbage collect the projectiles

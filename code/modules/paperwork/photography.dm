@@ -99,13 +99,34 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS
+	flags = FPRINT | CONDUCT | TABLEPASS
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
+	var/aipictures[] = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
+
+
+/obj/item/device/camera/ai_camera //camera AI can take pictures with
+	name = "AI photo camera"
+
+	verb/picture()
+		set category ="AI Commands"
+		set name = "Take Picture"
+		set src in usr
+		var/mob/living/silicon/ai/my_ai = usr
+		var/target = get_turf(my_ai.eyeobj)
+
+		captureimage(target, usr)
+
+	verb/viewpicture()
+		set category ="AI Commands"
+		set name = "View Pictures"
+		set src in usr
+
+		viewpictures()
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
@@ -125,7 +146,7 @@
 	..()
 
 
-/obj/item/device/camera/proc/get_icon(turf/the_turf)
+/obj/item/device/camera/proc/camera_get_icon(turf/the_turf, blueprints)
 	//Bigger icon base to capture those icons that were shifted to the next tile
 	//i.e. pretty much all wall-mounted machinery
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
@@ -165,7 +186,7 @@
 	return res
 
 
-/obj/item/device/camera/proc/get_mobs(turf/the_turf)
+/obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
@@ -185,9 +206,7 @@
 	return mob_detail
 
 
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
-
+/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/x_c = target.x - 1
 	var/y_c = target.y + 1
 	var/z_c	= target.z
@@ -203,12 +222,23 @@
 		for(var/j = 1; j <= 3; j++)
 			var/turf/T = locate(x_c, y_c, z_c)
 			if(T in seen)
-				temp.Blend(get_icon(T), ICON_OVERLAY, 32 * (j-1-1), 32 - 32 * (i-1))
-				mobs += get_mobs(T)
+				if(istype(user,/mob/living/silicon/ai))
+					if(0 == cameranet.checkTurfVis(T)) //Checks to see if this turf is visible to the AI's cameras
+						x_c++  //because continue would skip the x_c++ further down, and it is rather important to this proc to work right
+						continue
+				temp.Blend(camera_get_icon(T), ICON_OVERLAY, 32 * (j-1-1), 32 - 32 * (i-1))
+				mobs += camera_get_mobs(T)
 			x_c++
 		y_c--
 		x_c -= 3
+	if(!istype(usr,/mob/living/silicon/ai))
+		printpicture(user, temp, mobs, blueprints, flag)
+	else
+		aipicture(user, temp, mobs, blueprints)
 
+
+
+/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, blueprints, flag) //Normal camera proc for creating photos
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
@@ -224,6 +254,72 @@
 	if(blueprints)
 		P.blueprints = 1
 	blueprints = 0
+
+
+/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, blueprints) //instead of printing a picture like a regular camera would, we do this instead for the AI
+
+	var/icon/small_img = icon(temp)
+	var/icon/ic = icon('icons/obj/items.dmi',"photo")
+	small_img.Scale(8, 8)
+	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	var/icon = ic
+	var/img = temp
+	var/desc = mobs
+	var/pixel_x = rand(-10, 10)
+	var/pixel_y = rand(-10, 10)
+
+	if(blueprints)
+		blueprints = 1
+
+	injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprints)
+
+
+/datum/picture
+	var/name = "picture"
+	var/list/fields = list()
+
+
+/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprints) //stores image information to a list similar to that of the datacore
+	var/numberer = 1
+	for(var/datum/picture in src.aipictures)
+		numberer++
+	var/datum/picture/P = new()
+	P.fields["name"] = "Photo [numberer]"
+	P.fields["icon"] = icon
+	P.fields["img"] = img
+	P.fields["desc"] = desc
+	P.fields["pixel_x"] = pixel_x
+	P.fields["pixel_y"] = pixel_y
+	P.fields["blueprints"] = blueprints
+
+	aipictures += P
+
+
+/obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
+	var/list/nametemp = list()
+	var/find
+	var/datum/picture/selection
+	for(var/datum/picture/t in src.aipictures)
+		nametemp += t.fields["name"]
+	find = input("Select picture (numbered in order taken)") in nametemp
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	for(var/datum/picture/q in src.aipictures)
+		if(q.fields["name"] == find)
+			selection = q
+			break  	// just in case some AI decides to take 10 thousand pictures in a round
+	P.icon = selection.fields["icon"]
+	P.img = selection.fields["img"]
+	P.desc = selection.fields["desc"]
+	P.pixel_x = selection.fields["pixel_x"]
+	P.pixel_y = selection.fields["pixel_y"]
+
+	P.show(usr)
+	usr << P.desc
+	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
+
+/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || ismob(target.loc)) return
+	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
