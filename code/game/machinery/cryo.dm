@@ -69,10 +69,9 @@
 	..()
 	
 	if(in_range(usr, src))
-		if(contents.len > 0)
-			usr << "You can just about make out some loose objects floating in the murk:"
+		usr << "You can just about make out some loose objects floating in the murk:"
 		for(var/obj/O in src)
-			if(!istype(O, /obj/item/weapon/reagent_containers/glass))
+			if(O != beaker)
 				usr << O.name
 		for(var/mob/M in src)
 			if(M != occupant)
@@ -349,7 +348,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/eject_contents()
 	for(var/obj/O in src)
-		if(!istype(O, /obj/item/weapon/reagent_containers/glass))
+		if(O != beaker)
 			O.loc = get_step(loc, SOUTH)
 	for(var/mob/M in contents) 
 		M.loc = get_step(loc, SOUTH)
