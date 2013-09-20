@@ -2,7 +2,7 @@
 /mob/living/simple_animal/kobold
 	name = "kobold"
 	desc = "A small, rat-like creature."
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "kobold_idle"
 	icon_living = "kobold_idle"
 	icon_dead = "kobold_dead"

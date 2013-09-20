@@ -128,7 +128,10 @@
 	var/list/res = list()
 	for (var/ID in viruses)
 		var/datum/disease2/disease/V = viruses[ID]
-		res["[V.uniqueID]"] = V.getcopy()
+		if(istype(V))
+			res["[V.uniqueID]"] = V.getcopy()
+		else
+			testing("Got a NULL disease2 in virus_copylist!")
 	return res
 
 

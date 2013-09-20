@@ -3,8 +3,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
-	voice_message = "skree!"
-	say_message = "hums"
+	speak_emote = list("hums")
 
 	layer = 5
 
@@ -56,6 +55,7 @@
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey adult slime"
+	speak_emote = list("telepathically chirps")
 
 	health = 200
 	gender = NEUTER

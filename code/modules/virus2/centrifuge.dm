@@ -42,7 +42,7 @@
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:41: dat += "<BR>Blood sample:"
 		dat += {"<BR>Blood sample:
-			<br><table cellpadding='10'><tr><td>"}
+<br><table cellpadding='10'><tr><td>"}
 		// END AUTOFIX
 		if(sample)
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
@@ -53,8 +53,8 @@
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:48: dat += "</td></tr><tr><td>"
 					dat += {"</td></tr><tr><td>
-						Antibodies: [antigens2string(B.data["antibodies"])]
-						</td><td><A href='?src=\ref[src];action=antibody'>Isolate</a>"}
+Antibodies: [antigens2string(B.data["antibodies"])]
+</td><td><A href='?src=\ref[src];action=antibody'>Isolate</a>"}
 					// END AUTOFIX
 				var/list/virus = B.data["virus2"]
 				for (var/ID in virus)
@@ -63,7 +63,7 @@
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:55: dat += " </td></tr><tr><td> pathogen [V.name()]"
 					dat += {"</td></tr><tr><td> pathogen [V.name()]
-						</td><td><A href='?src=\ref[src];action=isolate;isolate=[V.uniqueID]'>Isolate</a>"}
+</td><td><A href='?src=\ref[src];action=isolate;isolate=[V.uniqueID]'>Isolate</a>"}
 					// END AUTOFIX
 			else
 				dat += "Please check container contents."

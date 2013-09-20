@@ -37,6 +37,10 @@
 		usr << "\red Speech is currently admin-disabled."
 		return
 
+	if(client && !(client.prefs.toggles & CHAT_DEAD))
+		usr << "\red You have deadchat muted."
+		return
+
 	if(mind && mind.name)
 		name = "[mind.name]"
 	else
@@ -57,49 +61,67 @@
 			M.show_message(rendered2, 2) //Takes into account blindness and such.
 	return
 
-/mob/proc/say_understands(var/mob/other)
+/mob/proc/say_understands(var/mob/other,var/datum/language/speaking = null)
+
 	if(!other)
 		return 1
-	if (src.stat == 2)
+	//Universal speak makes everything understandable, for obvious reasons.
+	else if(other.universal_speak || src.universal_speak)
 		return 1
-	else if (istype(other, src.type))
+	else if (src.stat == 2)
 		return 1
+	else if (speaking) //Language check.
+
+		var/understood
+		for(var/datum/language/L in src.languages)
+			if(speaking.name == L.name)
+				understood = 1
+				break
+
+		if(understood || universal_speak)
+			return 1
+		else
+			return 0
+
 	else if(other.universal_speak || src.universal_speak)
 		return 1
 	else if(isAI(src) && ispAI(other))
 		return 1
+	else if (istype(other, src.type) || istype(src, other.type))
+		return 1
 	return 0
 
-/mob/proc/say_quote(var/text,var/is_speaking_soghun,var/is_speaking_skrell,var/is_speaking_tajaran,var/is_speaking_vox)
+/mob/proc/say_quote(var/text,var/datum/language/speaking)
+
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 		//tcomms code is still runtiming somewhere here
 	var/ending = copytext(text, length(text))
-	if (is_speaking_soghun)
-		return "<span class='say_quote'>hisses</span>, \"<span class='soghun'>[text]</span>\"";
-	if (is_speaking_skrell)
-		return "<span class='say_quote'>warbles</span>, \"<span class='skrell'>[text]</span>\"";
-	if (is_speaking_tajaran)
-		return "<span class='say_quote'>mrowls</span>, \"<span class='tajaran'>[text]</span>\"";
-	if (is_speaking_vox)
-		return "<span class='say_quote'>chirps</span>, \"<span class='vox'>[text]</span>\"";
-//Needs Virus2
-//	if (src.disease_symptoms & DISEASE_HOARSE)
-//		return "rasps, \"[text]\"";
-	if (src.stuttering)
-		return "<span class='say_quote'>stammers</span>, \"[text]\"";
-	if (src.slurring)
-		return "<span class='say_quote'>slurrs</span>, \"[text]\"";
-	if(isliving(src))
+
+	var/speechverb = "<span class='say_quote'>"
+
+	if (speaking)
+		speechverb = "[speaking.speech_verb]</span>, \"<span class='[speaking.colour]'>"
+	else if(speak_emote && speak_emote.len)
+		speechverb = "[pick(speak_emote)], \""
+	else if (src.stuttering)
+		speechverb = "stammers, \""
+	else if (src.slurring)
+		speechverb = "slurrs, \""
+	else if (ending == "?")
+		speechverb = "asks, \""
+	else if (ending == "!")
+		speechverb = "exclaims, \""
+	else if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
-			return "<span class='say_quote'>gibbers</span>, \"[text]\"";
-	if (ending == "?")
-		return "<span class='say_quote'>asks</span>, \"[text]\"";
-	if (ending == "!")
-		return "<span class='say_quote'>exclaims</span>, \"[text]\"";
+			speechverb = "gibbers, \""
+		else
+			speechverb = "says, \""
+	else
+		speechverb = "says, \""
 
-	return "<span class='say_quote'>says</span>, \"[text]\"";
+	return "[speechverb][text]</span>\""
 
 /mob/proc/emote(var/act, var/type, var/message)
 	if(act == "me")

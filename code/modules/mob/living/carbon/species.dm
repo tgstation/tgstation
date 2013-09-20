@@ -15,7 +15,7 @@
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/mutantrace               // Safeguard due to old code.
 
-	var/breath_type     // Non-oxygen gas breathed, if any.
+	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/survival_gear = /obj/item/weapon/storage/box/survival // For spawnin'.
 
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
@@ -73,6 +73,14 @@
 	attack_verb = "scratch"
 	darksight = 8
 
+	cold_level_1 = 200
+	cold_level_2 = 140
+	cold_level_3 = 80
+
+	heat_level_1 = 330
+	heat_level_2 = 380
+	heat_level_3 = 800
+
 	primitive = /mob/living/carbon/monkey/tajara
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
@@ -92,6 +100,13 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
 
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 	survival_gear=/obj/item/weapon/storage/box/survival/vox
@@ -102,6 +117,19 @@
 	name = "Diona"
 	icobase = 'icons/mob/human_races/r_plant.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
+	language = "Rootspeak"
 	attack_verb = "slash"
+	primitive = /mob/living/carbon/monkey/diona
 
-	flags = WHITELISTED | NO_EAT | NO_BREATHE | REQUIRE_LIGHT | NON_GENDERED | NO_SCAN | IS_PLANT
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	flags = WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NON_GENDERED | NO_SCAN | IS_PLANT | RAD_ABSORB

@@ -9,7 +9,6 @@
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
 
 	var/list/speak = list()
-	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
 	var/speak_chance = 0
 	var/list/emote_hear = list()	//Hearable emotes
 	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
@@ -24,9 +23,9 @@
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
 
 	//Interaction
-	var/response_help   = "pokes"
-	var/response_disarm = "shoves"
-	var/response_harm   = "hits"
+	var/response_help   = "You try to help"
+	var/response_disarm = "You try to disarm"
+	var/response_harm   = "You try to hurt"
 	var/harm_intent_damage = 3
 
 	//Temperature effect
@@ -96,7 +95,7 @@
 		AdjustParalysis(-1)
 
 	//Movement
-	if(!client && !stop_automated_movement && wander)
+	if(!client && !stop_automated_movement && wander && !anchored)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -229,14 +228,10 @@
 			return "[emote], \"[text]\""
 	return "says, \"[text]\"";
 
-/mob/living/simple_animal/emote(var/act)
-	if(stat)
-		return
+/mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(act)
-		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
-		for (var/mob/O in viewers(src, null))
-			O.show_message("<B>[src]</B> [act].")
-
+		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
+		..(act, type, desc)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -265,7 +260,7 @@
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\blue [M] [response_help] [src].")
+						O.show_message("\blue [M] [response_help] [src]")
 
 		if("grab")
 			if (M == src || anchored)
@@ -290,7 +285,7 @@
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]!")
+					O.show_message("\red [M] [response_harm] [src]")
 
 	return
 
@@ -353,7 +348,7 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	visible_message("\red <B>[M.name] glomps [src]!</B>")
+	visible_message("\red <B>\The [M.name] glomps [src]!</B>")
 
 	var/damage = rand(1, 3)
 
@@ -375,32 +370,22 @@
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
-					if(MED.heal_brute >= 1)
-						adjustBruteLoss(-MED.heal_brute)
-						MED.amount -= 1
-						if(MED.amount <= 0)
-							del(MED)
-						for(var/mob/M in viewers(src, null))
-							if ((M.client && !( M.blinded )))
-								M.show_message("\blue [user] applies [MED] on [src]")
-						return
-					else
-						user << "\blue [MED] won't help at all."
-						return
-			else
-				user << "\blue [src] is at full health."
-				return
+					adjustBruteLoss(-MED.heal_brute)
+					MED.amount -= 1
+					if(MED.amount <= 0)
+						del(MED)
+					for(var/mob/M in viewers(src, null))
+						if ((M.client && !( M.blinded )))
+							M.show_message("\blue [user] applies the [MED] on [src]")
 		else
-			user << "\blue [src] is dead, medical items won't bring it back to life."
-			return
-	else if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+			user << "\blue this [src] is dead, medical items won't bring it back to life."
+	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
 			if(prob(95))
 				del(src)
 				return
 			gib()
-			return
 	else
 		if(O.force)
 			var/damage = O.force
@@ -409,12 +394,12 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b "+"[src] has been attacked with [O] by [user]. ")
+					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
 			usr << "\red This weapon is ineffective, it does no damage."
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with [O]. ")
+					M.show_message("\red [user] gently taps [src] with the [O]. ")
 
 
 
@@ -460,13 +445,25 @@
 	if(health < 1)
 		Die()
 
-/mob/living/simple_animal/proc/SA_attackable(target)
-	if (isliving(target))
-		var/mob/living/L = target
-		if(!L.stat)
-			return 0
-	if (istype(target,/obj/mecha))
-		var/obj/mecha/M = target
+/mob/living/simple_animal/proc/SA_attackable(target_mob)
+	if (isliving(target_mob))
+		var/mob/living/L = target_mob
+		if(!L.stat && L.health >= 0)
+			return (0)
+	if (istype(target_mob,/obj/mecha))
+		var/obj/mecha/M = target_mob
 		if (M.occupant)
-			return 0
-	return 1
+			return (0)
+	if (istype(target_mob,/obj/machinery/bot))
+		var/obj/machinery/bot/B = target_mob
+		if(B.health > 0)
+			return (0)
+	return (1)
+
+//Call when target overlay should be added/removed
+/mob/living/simple_animal/update_targeted()
+	if(!targeted_by && target_locked)
+		del(target_locked)
+	overlays = null
+	if (targeted_by && target_locked)
+		overlays += target_locked
