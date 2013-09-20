@@ -421,6 +421,12 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
+			reaction_turf(var/turf/simulated/T, var/volume)
+				src = null
+				if(istype(T))
+					T.atmos_spawn_air(ASPAWN_OXYGEN, 5)
+				return
+
 		copper
 			name = "Copper"
 			id = "copper"
@@ -433,6 +439,12 @@ datum
 			description = "A colorless, odorless, tasteless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+
+			reaction_turf(var/turf/simulated/T, var/volume)
+				src = null
+				if(istype(T))
+					T.atmos_spawn_air(ASPAWN_NITROGEN, 5)
+				return
 
 		hydrogen
 			name = "Hydrogen"
@@ -1313,21 +1325,21 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				O.atmos_spawn_air("fuel", 5)
+				O.atmos_spawn_air(ASPAWN_PLASMA, 5)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air("fuel", 5)
+					T.atmos_spawn_air(ASPAWN_PLASMA, 5)
 				return
 
 		toxin/lexorin
 			name = "Lexorin"
 			id = "lexorin"
-			description = "Lexorin temporarily stops respiration. Causes tissue damage."
+			description = "Lexorin temporarily stops respiration, causes tissue damage, and is heavily toxic."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
-			toxpwr = 0
+			toxpwr = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
