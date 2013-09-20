@@ -42,8 +42,6 @@
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
 /var/const/access_court = 42
-/var/const/access_clown = 43
-/var/const/access_mime = 44
 /var/const/access_surgery = 45
 /var/const/access_theatre = 46
 /var/const/access_research = 47
@@ -204,13 +202,13 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway)
 
 /proc/get_all_centcom_access()
-	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
+	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
 
 /proc/get_all_syndicate_access()
 	return list(access_syndicate)
@@ -230,7 +228,7 @@
 		if(5) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
+			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer)
 		if(7) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
 
@@ -338,10 +336,6 @@
 			return "CMO Office"
 		if(access_qm)
 			return "Quartermaster"
-		if(access_clown)
-			return "HONK! Access"
-		if(access_mime)
-			return "Silent Access"
 		if(access_surgery)
 			return "Surgery"
 		if(access_theatre)
