@@ -158,8 +158,8 @@
 	overlays -= overlays_lying[M_FIRE_LAYER]
 	overlays -= overlays_standing[M_FIRE_LAYER]
 	if(on_fire)
-		overlays_lying[M_FIRE_LAYER] += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"= -M_FIRE_LAYER)
-		overlays_standing[M_FIRE_LAYER] += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"= -M_FIRE_LAYER)
+		overlays_lying[M_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"= -M_FIRE_LAYER)
+		overlays_standing[M_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"= -M_FIRE_LAYER)
 		if(src.lying)
 			overlays += overlays_lying[M_FIRE_LAYER]
 		else
