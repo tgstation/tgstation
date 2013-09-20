@@ -6,7 +6,7 @@
 
 /datum/round_event/anomaly
 	var/area/impact_area
-	var/obj/effect/anomaly/A
+	var/obj/effect/anomaly/newAnomaly
 
 
 /datum/round_event/anomaly/setup()
@@ -18,14 +18,14 @@
 /datum/round_event/anomaly/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		A = new /obj/effect/anomaly/flux(T.loc)
+		newAnomaly = new /obj/effect/anomaly/flux(T.loc)
 
 /datum/round_event/anomaly/tick()
-	if(!A)
+	if(!newAnomaly)
 		kill()
 		return
-	A.anomalyEffect()
+	newAnomaly.anomalyEffect()
 
 /datum/round_event/anomaly/end()
-	if(A)//Kill the anomaly if it still exists at the end.
-		del(A)
+	if(newAnomaly)//Kill the anomaly if it still exists at the end.
+		del(newAnomaly)

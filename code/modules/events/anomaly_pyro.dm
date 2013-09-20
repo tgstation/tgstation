@@ -9,8 +9,6 @@
 	announceWhen = 3
 	endWhen = 70
 
-	var/obj/effect/anomaly/pyro/newpyro
-
 
 /datum/round_event/anomaly/anomaly_pyro/announce()
 	command_alert("Atmospheric anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -18,15 +16,11 @@
 /datum/round_event/anomaly/anomaly_pyro/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newpyro = new /obj/effect/anomaly/pyro(T.loc)
+		newAnomaly = new /obj/effect/anomaly/pyro(T.loc)
 
 /datum/round_event/anomaly/anomaly_pyro/tick()
-	if(!newpyro)
+	if(!newAnomaly)
 		kill()
 		return
 	if(IsMultiple(activeFor, 5))
-		newpyro.anomalyEffect()
-
-/datum/round_event/anomaly/anomaly_pyro/end()
-	if(newpyro)
-		del(newpyro)
+		newAnomaly.anomalyEffect()

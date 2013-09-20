@@ -9,8 +9,6 @@
 	announceWhen = 10
 	endWhen = 55
 
-	var/obj/effect/anomaly/bluespace/newblue
-
 
 /datum/round_event/anomaly/anomaly_bluespace/announce()
 	command_alert("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -19,15 +17,11 @@
 /datum/round_event/anomaly/anomaly_bluespace/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newblue = new /obj/effect/anomaly/bluespace(T.loc)
+		newAnomaly = new /obj/effect/anomaly/bluespace(T.loc)
 
-/datum/round_event/anomaly/anomaly_bluespace/tick()
-	if(!newblue)
-		kill()
-		return
 
 /datum/round_event/anomaly/anomaly_bluespace/end()
-	if(newblue)//If it hasn't been neutralized, it's time to warp half the station away jeez
+	if(newAnomaly)//If it hasn't been neutralized, it's time to warp half the station away jeez
 		var/turf/T = pick(get_area_turfs(impact_area))
 		if(T)
 				// Calculate new position (searches through beacons in world)
@@ -46,6 +40,7 @@
 				var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 				playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+				command_alert("Massive bluespace translocation detected.", "Anomaly Alert")
 
 				var/list/flashers = list()
 				for(var/mob/living/carbon/human/M in viewers(TO, null))
@@ -65,8 +60,6 @@
 					if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
 						A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
 
-					command_alert("Massive bluespace translocation detected.", "Anomaly Alert")
-
 					spawn()
 						if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
 							var/mob/M = A
@@ -81,4 +74,4 @@
 								sleep(20)
 								M.client.screen -= blueeffect
 								del(blueeffect)
-			del(newblue)
+			del(newAnomaly)
