@@ -115,7 +115,8 @@ class Pronunciation:
 			'w',
 			'y',
 			'z',
-			'zh']
+			'zh',
+			'pau']
 	"""
 	( "walkers" n ((( w oo ) 1) (( k @ z ) 0)) )
 	( "present" v ((( p r e ) 0) (( z @ n t ) 1)) )
@@ -197,14 +198,24 @@ def GenerateForWord(word,wordfile):
 	
 	with open(cachefile,'w') as wf:
 		wf.write(md5)
+	for fn in ('tmp/VOX-word.wav','tmp/VOX-soxpre-word.wav','tmp/VOX-sox-word.wav'):
+		if os.path.isfile(fn):
+			os.remove(fn)
 	cmds=[]
-	cmds += [text2wave]
-	cmds += ['sox tmp/VOX-word.wav tmp/VOX-soxpre-word.wav '+PRE_SOX_ARGS]
-	cmds += ['sox tmp/VOX-soxpre-word.wav tmp/VOX-sox-word.wav '+SOX_ARGS]
-	cmds += ['oggenc tmp/VOX-sox-word.wav -o '+oggfile]
-	for command in cmds:
+	cmds += [(text2wave,'tmp/VOX-word.wav')]
+	cmds += [('sox tmp/VOX-word.wav tmp/VOX-soxpre-word.wav '+PRE_SOX_ARGS,'tmp/VOX-soxpre-word.wav')]
+	cmds += [('sox tmp/VOX-soxpre-word.wav tmp/VOX-sox-word.wav '+SOX_ARGS,'tmp/VOX-sox-word.wav')]
+	cmds += [('oggenc tmp/VOX-sox-word.wav -o '+oggfile,oggfile)]
+	for command_spec in cmds:
+		(command, cfn)=command_spec
 		if not cmd(command):
 			sys.exit(1)
+	for command_spec in cmds:
+		(command, cfn)=command_spec
+		if not os.path.isfile(fn):
+			logging.error("File '{0}' doesn't exist, command '{1}' probably failed!".format(cfn,command))
+			sys.exit(1)
+	
 
 def ProcessWordList(filename):
 	toprocess={}

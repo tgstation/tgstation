@@ -6,6 +6,7 @@
 # NOTE: Doublequotes indicates primary stress, single indicates no stress.
 #
 # Phonemes are taken from here (must be lowercase): http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+# pau = short pause
 #
 aft: adjective 'ae f t'
 array: noun 'ah r ey'
@@ -22,6 +23,7 @@ cunt: noun 'k ah n' 't'
 cyborg: noun "s ay" 'b ao r g'
 fore: adjective 'f ao r'
 fuck: noun 'f ah' 'k'
+help: noun "hh eh l" 'p'
 medbay: noun "m eh d" 'b ey'
 nanotrasen: noun "n ae" 'n ow' 't r ey' 'z eh n'
 penis: noun "p iy" 'n ih s'
@@ -31,6 +33,7 @@ shit: noun 'sh ih t'
 shitting: verb "sh ih" 't iy ng'
 solar: noun "s ow" 'l er'
 thirteen: noun 'th er' "t iy n"
+tide: noun "t ay" 'd pau'
 to: noun 't uw'
 virology: noun "v ay" 'r aw l' 'l eh' 'g iy'
 vox: noun 'v aa k s'
