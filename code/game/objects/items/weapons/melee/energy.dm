@@ -36,7 +36,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/emagged = 0
+	var/hacked = 0
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"

@@ -319,14 +319,14 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
-	var/emagged = 0
+	var/hacked = 0
 
 	attack_self(mob/user as mob)
 		active = !( active )
 		if (active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-			if(emagged)
+			if(hacked)
 				icon_state = "swordrainbow"
 				item_state = "swordrainbow"
 			else
@@ -353,16 +353,16 @@
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
-			if(emagged) // That's right, we'll only check the "original" "sword".
-				newSaber.emagged = 1
+			if(hacked) // That's right, we'll only check the "original" "sword".
+				newSaber.hacked = 1
 				newSaber.color = "rainbow"
 			user.before_take_item(W)
 			user.before_take_item(src)
 			del(W)
 			del(src)
-	else if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
+	else if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
 			color = "rainbow"
 			user << "<span class='warning'>RNBW_ENGAGE</span>"
 			

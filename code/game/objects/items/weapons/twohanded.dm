@@ -169,7 +169,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/emagged = 0
+	var/hacked = 0
 	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
@@ -229,9 +229,9 @@
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
+	if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
 			user << "<span class='warning'>2XRNBW_ENGAGE</span>"
 			color = "rainbow"
 			update_icon()

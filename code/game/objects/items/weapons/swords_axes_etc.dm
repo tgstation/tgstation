@@ -64,16 +64,16 @@
 		else
 			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			if(src.emagged) // That's right, we'll only check the "original" esword.
-				newSaber.emagged = 1
+			if(src.hacked) // That's right, we'll only check the "original" esword.
+				newSaber.hacked = 1
 				newSaber.color = "rainbow"
 			user.before_take_item(W)
 			user.before_take_item(src)
 			del(W)
 			del(src)
-	else if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
+	else if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
 			color = "rainbow"
 			user << "<span class='warning'>RNBW_ENGAGE</span>"
 			
