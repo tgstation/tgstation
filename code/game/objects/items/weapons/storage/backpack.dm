@@ -42,9 +42,10 @@
 			user << "\red The Bluespace interfaces of the two devices conflict and malfunction."
 			del(W)
 			return
-			/* //BoH+BoH=Singularity, commented out.
+		//BoH+BoH=Singularity, WAS commented out
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			investigate_log("has become a singularity. Caused by [user.key]","singulo")
+			message_admins("[src] has become a singularity. Caused by [user.key]")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
 			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
@@ -53,7 +54,6 @@
 			log_game("[key_name(user)] detonated a bag of holding")
 			del(src)
 			return
-			*/
 		..()
 
 	proc/failcheck(mob/user as mob)
