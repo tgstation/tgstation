@@ -219,6 +219,8 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			channels = list("Engineering" = 1)
+			if(camera && "Robots" in camera.network)
+				camera.network.Add("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Landmate"] = "landmate"
