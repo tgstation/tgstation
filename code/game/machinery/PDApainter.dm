@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
-	var/list/colorlist = list()
+	var/list/colourlist = list()
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -34,10 +34,10 @@
 	for(var/P in typesof(/obj/item/device/pda)-blocked)
 		var/obj/item/device/pda/D = new P
 
-		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
+		//D.name = "PDA Style [colourlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
 		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
 
-		src.colorlist += D
+		src.colourlist += D
 
 
 /obj/machinery/pdapainter/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -62,7 +62,7 @@
 
 	if(storedpda)
 		var/obj/item/device/pda/P
-		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
+		P = input(user, "Select your colour!", "PDA Painting") as null|anything in colourlist
 		if(!P)
 			return
 		if(!in_range(src, user))

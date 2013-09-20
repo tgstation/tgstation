@@ -58,14 +58,14 @@
 
 var/global/normal_ooc_colour = "#002eb8"
 
-/client/proc/set_ooc(newColor as color)
+/client/proc/set_ooc(newcolour as color)
 	set name = "Set Player OOC Colour"
 	set desc = "Set to yellow for eye burning goodness."
 	set category = "Fun"
-	normal_ooc_colour = newColor
+	normal_ooc_colour = newcolour
 
-/client/verb/colorooc()
-	set name = "OOC Text Color"
+/client/verb/colourooc()
+	set name = "OOC Text colour"
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))

@@ -5,7 +5,7 @@
 	icon_state = "lipstick"
 	flags = FPRINT | TABLEPASS
 	w_class = 1
-	var/colour = "red"
+	colour = "red"
 	var/open = 0
 
 

@@ -512,7 +512,7 @@
 		t += "<h3>Status</h3>"
 		t += "Main Breaker: <B>[operating ? "<font class='good'>On</font>" : "<font class='bad'>Off</font>"]</B><br />"
 		t += "External Power: <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
-		t += "Power Cell: <B>[cell ? "[round(cell.percent())]%" : "<font COLOR=red>Not connected.</font>"]</B>"
+		t += "Power Cell: <B>[cell ? "[round(cell.percent())]%" : "<font color=red>Not connected.</font>"]</B>"
 		if(cell)
 			t += "<BR/>Charge Mode: [chargemode ? "Auto" : "Off"]"
 			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
@@ -539,7 +539,7 @@
 			t += "<BR/>Charge mode: [chargemode ? "<A href='?src=\ref[src];cmode=1'>Off</A> <span class='linkOn'>Auto</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];cmode=1'>Auto</A>"]"
 			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
 		else
-			t += "Power cell: <B><font COLOR=red>Not connected.</font></B>"
+			t += "Power cell: <B><font color=red>Not connected.</font></B>"
 
 		t += "<br /><h3>Power channels</h3><PRE>"
 

@@ -105,7 +105,7 @@
 				if("tequilla")
 					icon_state = "tequillaglass"
 					name = "Glass of Tequilla"
-					desc = "Now all that's missing is the weird colored shades!"
+					desc = "Now all that's missing is the weird coloured shades!"
 				if("patron")
 					icon_state = "patronglass"
 					name = "Glass of Patron"
@@ -329,7 +329,7 @@
 				if("red_mead")
 					icon_state = "red_meadglass"
 					name = "Red Mead"
-					desc = "A True Vikings Beverage, though its color is strange."
+					desc = "A True Vikings Beverage, though its colour is strange."
 				if("mead")
 					icon_state = "meadglass"
 					name = "Mead"

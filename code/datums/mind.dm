@@ -666,7 +666,7 @@ datum/mind
 						current.remove_changeling_powers()
 						current.verbs -= /datum/changeling/proc/EvolutionMenu
 						if(changeling)	del(changeling)
-						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
+						current << "<font color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 						log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
 				if("changeling")

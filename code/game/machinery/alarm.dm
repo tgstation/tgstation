@@ -261,9 +261,9 @@
 
 	output += {"
 <style>
-.dl0 { color: green; }
-.dl1 { color: orange; }
-.dl2 { color: red; font-weght: bold;}
+.dl0 { colour: green; }
+.dl1 { colour: orange; }
+.dl2 { colour: red; font-weght: bold;}
 </style>
 "}
 	var/datum/tlv/cur_tlv
@@ -460,9 +460,9 @@ table td { border-left: 1px solid black; border-top: 1px solid black;}
 table tr:first-child th { border-left: 1px solid black;}
 table th:first-child { border-top: 1px solid black; font-weight: normal;}
 table tr:first-child th:first-child { border: none;}
-.dl0 { color: green; }
-.dl1 { color: orange; }
-.dl2 { color: red; font-weght: bold;}
+.dl0 { colour: green; }
+.dl1 { colour: orange; }
+.dl2 { colour: red; font-weght: bold;}
 </style>
 <table cellspacing=0>
 <TR><th></th><th class=dl2>min2</th><th class=dl1>min1</th><th class=dl1>max1</th><th class=dl2>max2</th></TR>

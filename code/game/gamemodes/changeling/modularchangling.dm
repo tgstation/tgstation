@@ -395,23 +395,23 @@ var/list/powerinstances
 			ownsthis = 1
 
 
-		var/color
+		var/colour
 		if(ownsthis)
 			if(i%2 == 0)
-				color = "#d8ebd8"
+				colour = "#d8ebd8"
 			else
-				color = "#c3dec3"
+				colour = "#c3dec3"
 		else
 			if(i%2 == 0)
-				color = "#f2f2f2"
+				colour = "#f2f2f2"
 			else
-				color = "#e6e6e6"
+				colour = "#e6e6e6"
 
 
 		dat += {"
 
 			<tr id='data[i]' name='[i]' onClick="addToLocked('item[i]','data[i]','notice_span[i]')">
-				<td align='center' bgcolor='[color]'>
+				<td align='center' bgcolor='[colour]'>
 					<span id='notice_span[i]'></span>
 					<a id='link[i]'
 					onmouseover='expand("item[i]","[P.name]","[P.desc]","[P.helptext]","[P]",[ownsthis])'

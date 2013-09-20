@@ -165,12 +165,12 @@ About Reagents:
 			toxins to make them work slowly instead of instantly. You could also use this
 			for DNA in a blood reagent or ... well whatever you want.
 
-		color
-			This is a hexadecimal color that represents the reagent outside of containers,
+		colour
+			This is a hexadecimal colour that represents the reagent outside of containers,
 			you define it as "#RRGGBB", or, red green blue. You can also define it using the
-			rgb() proc, which returns a hexadecimal value too. The color is black by default.
+			rgb() proc, which returns a hexadecimal value too. The colour is black by default.
 
-			A good website for color calculations: http://www.psyclops.com/tools/rgb/
+			A good website for colour calculations: http://www.psyclops.com/tools/rgb/
 
 
 

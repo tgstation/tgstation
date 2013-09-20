@@ -31,18 +31,18 @@
 	return default
 
 
-/proc/sanitize_hexcolor(color, desired_format=3, include_crunch=0, default)
+/proc/sanitize_hexcolour(colour, desired_format=3, include_crunch=0, default)
 	var/crunch = include_crunch ? "#" : ""
-	if(!istext(color))
-		color = ""
+	if(!istext(colour))
+		colour = ""
 
-	var/start = 1 + (text2ascii(color,1)==35)
-	var/len = length(color)
+	var/start = 1 + (text2ascii(colour,1)==35)
+	var/len = length(colour)
 	var/step_size = 1 + ((len+1)-start != desired_format)
 
 	. = ""
 	for(var/i=start, i<=len, i+=step_size)
-		var/ascii = text2ascii(color,i)
+		var/ascii = text2ascii(colour,i)
 		switch(ascii)
 			if(48 to 57)	. += ascii2text(ascii)		//numbers 0 to 9
 			if(97 to 102)	. += ascii2text(ascii)		//letters a to f
@@ -56,8 +56,8 @@
 
 	return crunch + .
 
-/proc/sanitize_ooccolor(color)
-	var/list/HSL = rgb2hsl(hex2num(copytext(color,2,4)),hex2num(copytext(color,4,6)),hex2num(copytext(color,6,8)))
+/proc/sanitize_ooccolor(colour)
+	var/list/HSL = rgb2hsl(hex2num(copytext(colour,2,4)),hex2num(copytext(colour,4,6)),hex2num(copytext(colour,6,8)))
 	HSL[3] = min(HSL[3],0.4)
 	var/list/RGB = hsl2rgb(arglist(HSL))
 	return "#[num2hex(RGB[1],2)][num2hex(RGB[2],2)][num2hex(RGB[3],2)]"

@@ -76,7 +76,7 @@
 
 	if(priority_alarms.len)
 		for(var/zone in priority_alarms)
-			priority_text += "<FONT color='red'><B>[format_text(zone)]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
+			priority_text += "<font color='red'><B>[format_text(zone)]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
 	else
 		priority_text = "No priority alerts detected.<BR>"
 

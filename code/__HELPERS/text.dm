@@ -345,7 +345,7 @@ var/list/binary = list("0","1")
 	for(var/i=1, i<=times, i++)
 		. += string
 
-/proc/random_short_color()
+/proc/random_short_colour()
 	return random_string(3, hex_characters)
 
 /proc/add_zero2(t, u)

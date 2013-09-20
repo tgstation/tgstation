@@ -62,7 +62,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
-	selection_color = "#ffeeee"
+	selection_colour = "#ffeeee"
 
 
 	equip(var/mob/living/carbon/human/H)

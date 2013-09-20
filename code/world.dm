@@ -31,7 +31,7 @@
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's BYOND version does not meet the recommended requirements for /tg/station code. Please update BYOND."
+		world.log << "Your server's BYOND version does not meet the recommended requirements for /tg/station code. Please update to BYOND v[RECOMMENDED_VERSION]."
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 

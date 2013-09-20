@@ -206,16 +206,16 @@ var/global/chicken_count = 0
 	attacktext = "kicks"
 	health = 10
 	var/eggsleft = 0
-	var/color
+	var/colour
 	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/chicken/New()
 	..()
-	if(!color)
-		color = pick( list("brown","black","white") )
-	icon_state = "chicken_[color]"
-	icon_living = "chicken_[color]"
-	icon_dead = "chicken_[color]_dead"
+	if(!colour)
+		colour = pick( list("brown","black","white") )
+	icon_state = "chicken_[colour]"
+	icon_living = "chicken_[colour]"
+	icon_dead = "chicken_[colour]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	chicken_count += 1

@@ -111,8 +111,8 @@ var/list/radiochannels = list(
 )
 //depenging helpers
 var/list/DEPT_FREQS = list(1351,1355,1357,1213,1441,1347,1349)
-var/const/SEC_FREQ = 1359 //security, colored cyan in chat window
-var/const/COMM_FREQ = 1353 //command, colored gold in chat window
+var/const/SEC_FREQ = 1359 //security, coloured cyan in chat window
+var/const/COMM_FREQ = 1353 //command, coloured gold in chat window
 var/const/SYND_FREQ = 1213
 
 #define TRANSMISSION_WIRE	0

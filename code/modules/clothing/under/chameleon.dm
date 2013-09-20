@@ -3,7 +3,7 @@
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
-	color = "black"
+	colour = "black"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -37,17 +37,17 @@
 		name = "psychedelic"
 		desc = "Groovy!"
 		icon_state = "psyche"
-		color = "psyche"
+		colour = "psyche"
 		spawn(200)
 			name = "Black Jumpsuit"
 			icon_state = "bl_suit"
-			color = "black"
+			colour = "black"
 			desc = null
 		..()
 
 
 	verb/change()
-		set name = "Change Color"
+		set name = "Change Colour"
 		set category = "Object"
 		set src in usr
 
@@ -56,7 +56,7 @@
 			return
 
 		var/obj/item/clothing/under/A
-		A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
+		A = input("Select colour to change it to", "BOOYEA", A) in clothing_choices
 		if(!A)
 			return
 
@@ -67,7 +67,7 @@
 		name = A.name
 		icon_state = A.icon_state
 		item_state = A.item_state
-		color = A.color
+		colour = A.colour
 		usr.update_inv_w_uniform()	//so our overlays update.
 
 

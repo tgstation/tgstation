@@ -46,11 +46,11 @@ datum/preferences
 	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
 	var/hair_style = "Bald"				//Hair type
-	var/hair_color = "000"				//Hair color
+	var/hair_colour = "000"				//Hair colour
 	var/facial_hair_style = "Shaved"	//Face hair type
-	var/facial_hair_color = "000"		//Facial hair color
-	var/skin_tone = "caucasian1"		//Skin color
-	var/eye_color = "000"				//Eye color
+	var/facial_hair_colour = "000"		//Facial hair colour
+	var/skin_tone = "caucasian1"		//Skin colour
+	var/eye_colour = "000"				//Eye colour
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -172,7 +172,7 @@ datum/preferences
 				dat += "<h3>Hair Style</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
-				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[hair_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top' width='28%'>"
@@ -180,14 +180,14 @@ datum/preferences
 				dat += "<h3>Facial Hair Style</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top'>"
 
-				dat += "<h3>Eye Color</h3>"
+				dat += "<h3>Eye colour</h3>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[eye_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 
 				dat += "</td></tr></table>"
@@ -271,7 +271,7 @@ datum/preferences
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
 
-		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
+		//The job before the current job. I only use this to get the previous jobs colour when I'm filling in blank rows.
 		var/datum/job/lastJob
 
 		for(var/datum/job/job in job_master.occupations)
@@ -280,13 +280,13 @@ datum/preferences
 			if((index >= limit) || (job.title in splitJobs))
 				if((index < limit) && (lastJob != null))
 					//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-					//the last job's selection color. Creating a rather nice effect.
+					//the last job's selection colour. Creating a rather nice effect.
 					for(var/i = 0, i < (limit - index), i += 1)
-						HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
+						HTML += "<tr bgcolor='[lastJob.selection_colour]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 				HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
 				index = 0
 
-			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
+			HTML += "<tr bgcolor='[job.selection_colour]'><td width='60%' align='right'>"
 			var/rank = job.title
 			lastJob = job
 			if(jobban_isbanned(user, rank))
@@ -520,17 +520,17 @@ datum/preferences
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
-						hair_color = random_short_color()
+						hair_colour = random_short_colour()
 					if("hair_style")
 						hair_style = random_hair_style(gender)
 					if("facial")
-						facial_hair_color = random_short_color()
+						facial_hair_colour = random_short_colour()
 					if("facial_hair_style")
 						facial_hair_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = random_underwear(gender)
 					if("eyes")
-						eye_color = random_eye_color()
+						eye_colour = random_eye_color()
 					if("s_tone")
 						skin_tone = random_skin_tone()
 					if("bag")
@@ -565,7 +565,7 @@ datum/preferences
 					if("hair")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 						if(new_hair)
-							hair_color = sanitize_hexcolor(new_hair)
+							hair_colour = sanitize_hexcolour(new_hair)
 
 
 					if("hair_style")
@@ -580,7 +580,7 @@ datum/preferences
 					if("facial")
 						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
 						if(new_facial)
-							facial_hair_color = sanitize_hexcolor(new_facial)
+							facial_hair_colour = sanitize_hexcolour(new_facial)
 
 					if("facial_hair_style")
 						var/new_facial_hair_style
@@ -603,7 +603,7 @@ datum/preferences
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 						if(new_eyes)
-							eye_color = sanitize_hexcolor(new_eyes)
+							eye_colour = sanitize_hexcolour(new_eyes)
 
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
@@ -710,9 +710,9 @@ datum/preferences
 		character.age = age
 		character.blood_type = blood_type
 
-		character.eye_color = eye_color
-		character.hair_color = hair_color
-		character.facial_hair_color = facial_hair_color
+		character.eye_colour = eye_colour
+		character.hair_colour = hair_colour
+		character.facial_hair_colour = facial_hair_colour
 
 		character.skin_tone = skin_tone
 		character.hair_style = hair_style

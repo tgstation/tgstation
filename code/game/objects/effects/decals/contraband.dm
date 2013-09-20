@@ -85,7 +85,7 @@ obj/structure/sign/poster/New(serial)
 	switch(serial_number)
 		if(1)
 			name += " - Free Tonto"
-			desc += " A framed shred of a much larger flag, colors bled together and faded from age."
+			desc += " A framed shred of a much larger flag, colours bled together and faded from age."
 		if(2)
 			name += " - Atmosia Declaration of Independence"
 			desc += " A relic of a failed rebellion"

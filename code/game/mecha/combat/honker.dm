@@ -77,17 +77,17 @@
 						function ticker() {
 						    setInterval(function(){
 						        window.location='byond://?src=\ref[src]&update_content=1';
-						        document.body.style.color = get_rand_color_string();
-						      document.body.style.background = get_rand_color_string();
+						        document.body.style.colour = get_rand_colour_string();
+						      document.body.style.background = get_rand_colour_string();
 						    }, 1000);
 						}
 
-						function get_rand_color_string() {
-						    var color = new Array;
+						function get_rand_colour_string() {
+						    var colour = new Array;
 						    for(var i=0;i<3;i++){
-						        color.push(Math.floor(Math.random()*255));
+						        colour.push(Math.floor(Math.random()*255));
 						    }
-						    return "rgb("+color.toString()+")";
+						    return "rgb("+colour.toString()+")";
 						}
 
 						window.onload = function() {
@@ -154,10 +154,10 @@ obj/mecha/combat/honker/Topic(href, href_list)
 	return
 
 proc/rand_hex_color()
-	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-	var/color=""
+	var/list/colours = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
+	var/colour=""
 	for (var/i=0;i<6;i++)
-		color = color+pick(colors)
-	return color
+		colour = colour+pick(colours)
+	return colour
 
 

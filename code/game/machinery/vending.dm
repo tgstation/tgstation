@@ -2,7 +2,7 @@
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
-	var/display_color = "blue"
+	var/display_colour = "blue"
 
 
 /obj/machinery/vending
@@ -94,7 +94,7 @@
 		R.product_name = temp.name
 		R.product_path = typepath
 		R.amount = amount
-		R.display_color = pick("red","blue","green")
+		R.display_colour = pick("red","blue","green")
 
 		if(hidden)
 			hidden_records += R
@@ -177,7 +177,7 @@
 				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
 			else
 				dat += "<span class='linkOff'>Sold Out</span> "
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
+			dat += "<font color = '[R.display_colour]'><B>[R.product_name]</B>:</font>"
 			dat += " <b>[R.amount]</b>"
 			dat += "</li>"
 		dat += "</ul>"

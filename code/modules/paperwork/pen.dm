@@ -23,7 +23,7 @@
 	throw_range = 15
 	m_amt = 10
 	pressure_resistance = 2
-	var/colour = "black"	//what colour the ink is!
+	colour = "black"	//what colour the ink is!
 
 
 /obj/item/weapon/pen/blue

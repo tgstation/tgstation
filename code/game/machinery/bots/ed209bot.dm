@@ -15,7 +15,7 @@
 
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
-	var/lasercolor = ""
+	var/lasercolour = ""
 	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 
 	//var/lasers = 0
@@ -68,14 +68,14 @@
 	item_state = "ed209_frame"
 	var/build_step = 0
 	var/created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
-	var/lasercolor = ""
+	var/lasercolour = ""
 
 
-/obj/machinery/bot/ed209/New(loc,created_name,created_lasercolor)
+/obj/machinery/bot/ed209/New(loc,created_name,created_lasercolour)
 	..()
 	if(created_name)		name = created_name
-	if(created_lasercolor)	lasercolor = created_lasercolor
-	src.icon_state = "[lasercolor]ed209[src.on]"
+	if(created_lasercolour)	lasercolour = created_lasercolour
+	src.icon_state = "[lasercolour]ed209[src.on]"
 	spawn(3)
 		src.botcard = new /obj/item/weapon/card/id(src)
 		var/datum/job/detective/J = new/datum/job/detective
@@ -84,20 +84,20 @@
 		if(radio_controller)
 			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-		if(lasercolor)
+		if(lasercolour)
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
 			req_access = list(access_maint_tunnels,access_clown,access_mime)
 			arrest_type = 1
-			if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
+			if((lasercolour == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
-			if((lasercolor == "r") && (name == "ED-209 Security Robot"))
+			if((lasercolour == "r") && (name == "ED-209 Security Robot"))
 				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 /obj/machinery/bot/ed209/turn_on()
 	. = ..()
-	src.icon_state = "[lasercolor]ed209[src.on]"
+	src.icon_state = "[lasercolour]ed209[src.on]"
 	src.mode = SECBOT_IDLE
 	src.updateUsrDialog()
 
@@ -108,7 +108,7 @@
 	src.anchored = 0
 	src.mode = SECBOT_IDLE
 	walk_to(src,0)
-	src.icon_state = "[lasercolor]ed209[src.on]"
+	src.icon_state = "[lasercolour]ed209[src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/ed209/attack_hand(mob/user as mob)
@@ -126,7 +126,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
 	if(!src.locked || issilicon(user))
-		if(!lasercolor)
+		if(!lasercolour)
 			dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
@@ -153,11 +153,11 @@ Auto Patrol: []"},
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
+	if(lasercolour && (istype(usr,/mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = usr
-		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
+		if((lasercolour == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
 			return
-		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
+		else if((lasercolour == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
 			return
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if (src.on)
@@ -198,7 +198,7 @@ Auto Patrol: []"},
 		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
 				src.target = user
-				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
+				if(lasercolour)//To make up for the fact that lasertag bots don't hunt
 					src.shootAt(user)
 				src.mode = SECBOT_HUNT
 
@@ -215,7 +215,7 @@ Auto Patrol: []"},
 		src.anchored = 0
 		src.emagged = 2
 		src.on = 1
-		src.icon_state = "[lasercolor]ed209[src.on]"
+		src.icon_state = "[lasercolour]ed209[src.on]"
 		src.projectile = null
 		mode = SECBOT_IDLE
 
@@ -257,7 +257,7 @@ Auto Patrol: []"},
 				mode = SECBOT_START_PATROL	// switch to patrol mode
 
 		if(SECBOT_HUNT)		// hunting for perp
-			if(src.lasercolor)//Lasertag bots do not tase or arrest anyone, just patrol and shoot and whatnot
+			if(src.lasercolour)//Lasertag bots do not tase or arrest anyone, just patrol and shoot and whatnot
 				mode = SECBOT_IDLE
 				return
 			// if can't reach perp for long enough, go idle
@@ -273,9 +273,9 @@ Auto Patrol: []"},
 			if (target)		// make sure target exists
 				if (get_dist(src, src.target) <= 1)		// if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-					src.icon_state = "[lasercolor]ed209-c"
+					src.icon_state = "[lasercolour]ed209-c"
 					spawn(2)
-						src.icon_state = "[lasercolor]ed209[src.on]"
+						src.icon_state = "[lasercolour]ed209[src.on]"
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
@@ -306,7 +306,7 @@ Auto Patrol: []"},
 						src.frustration = 0
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
-			if(src.lasercolor)
+			if(src.lasercolour)
 				mode = SECBOT_IDLE
 				return
 			if (!target)
@@ -351,7 +351,7 @@ Auto Patrol: []"},
 				src.frustration = 0
 
 		if(SECBOT_ARREST)		// arresting
-			if(src.lasercolor)
+			if(src.lasercolour)
 				mode = SECBOT_IDLE
 				return
 			if (!target || src.target.handcuffed)
@@ -421,7 +421,7 @@ Auto Patrol: []"},
 				path -= loc
 
 				look_for_perp()
-				if(lasercolor)
+				if(lasercolour)
 					sleep(20)
 			else		// failed to move
 
@@ -630,7 +630,7 @@ Auto Patrol: []"},
 		if ((C.stat) || (C.handcuffed))
 			continue
 
-		if((src.lasercolor) && (C.lying))
+		if((src.lasercolour) && (C.lying))
 			continue//Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
 
 		if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
@@ -648,7 +648,7 @@ Auto Patrol: []"},
 			src.target = C
 			src.oldtarget_name = C.name
 			src.speak("Level [src.threatlevel] infraction alert!")
-			if(!src.lasercolor)
+			if(!src.lasercolour)
 				playsound(src.loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			src.visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
@@ -697,7 +697,7 @@ Auto Patrol: []"},
 		if((perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)) && src.idcheck)
 			threatcount -= 2
 
-	if(src.lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+	if(src.lasercolour == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 		threatcount = 0//They will not, however shoot at people who have guns, because it gets really fucking annoying
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
@@ -706,7 +706,7 @@ Auto Patrol: []"},
 		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
 
-	if(src.lasercolor == "r")
+	if(src.lasercolour == "r")
 		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
@@ -721,7 +721,7 @@ Auto Patrol: []"},
 		if(R && (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
-	if((src.idcheck) && (src.allowed(perp)) && !(src.lasercolor))
+	if((src.idcheck) && (src.allowed(perp)) && !(src.lasercolour))
 		threatcount = 0//Corrupt cops cannot exist beep boop
 
 	return threatcount
@@ -761,13 +761,13 @@ Auto Patrol: []"},
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if(!lasercolor)
+	if(!lasercolour)
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
-	else if(lasercolor == "b")
+	else if(lasercolour == "b")
 		var/obj/item/weapon/gun/energy/laser/bluetag/G = new /obj/item/weapon/gun/energy/laser/bluetag(Tsec)
 		G.power_supply.charge = 0
-	else if(lasercolor == "r")
+	else if(lasercolour == "r")
 		var/obj/item/weapon/gun/energy/laser/redtag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
 		G.power_supply.charge = 0
 
@@ -779,11 +779,11 @@ Auto Patrol: []"},
 		if (prob(50))
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
-			if(!lasercolor)
+			if(!lasercolour)
 				new /obj/item/clothing/suit/armor/vest(Tsec)
-			if(lasercolor == "b")
+			if(lasercolour == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
-			if(lasercolor == "r")
+			if(lasercolour == "r")
 				new /obj/item/clothing/suit/redtag(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -811,17 +811,17 @@ Auto Patrol: []"},
 	//	playsound(src.loc, 'ed209_shoot.ogg', 50, 0)
 
 	if(!projectile)
-		if(!lasercolor)
+		if(!lasercolour)
 			if (src.emagged == 2)
 				projectile = /obj/item/projectile/beam
 			else
 				projectile = /obj/item/projectile/energy/electrode
-		else if(lasercolor == "b")
+		else if(lasercolour == "b")
 			if (src.emagged == 2)
 				projectile = /obj/item/projectile/omnitag
 			else
 				projectile = /obj/item/projectile/bluetag
-		else if(lasercolor == "r")
+		else if(lasercolour == "r")
 			if (src.emagged == 2)
 				projectile = /obj/item/projectile/omnitag
 			else
@@ -910,17 +910,17 @@ Auto Patrol: []"},
 
 		if(2)
 			if( istype(W, /obj/item/clothing/suit/redtag) )
-				lasercolor = "r"
+				lasercolour = "r"
 			else if( istype(W, /obj/item/clothing/suit/bluetag) )
-				lasercolor = "b"
-			if( lasercolor || istype(W, /obj/item/clothing/suit/armor/vest) )
+				lasercolour = "b"
+			if( lasercolour || istype(W, /obj/item/clothing/suit/armor/vest) )
 				user.drop_item()
 				del(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
 				name = "vest/legs/frame assembly"
-				item_state = "[lasercolor]ed209_shell"
-				icon_state = "[lasercolor]ed209_shell"
+				item_state = "[lasercolour]ed209_shell"
+				icon_state = "[lasercolour]ed209_shell"
 
 		if(3)
 			if( istype(W, /obj/item/weapon/weldingtool) )
@@ -936,8 +936,8 @@ Auto Patrol: []"},
 				build_step++
 				user << "<span class='notice'>You add the helmet to [src].</span>"
 				name = "covered and shielded frame assembly"
-				item_state = "[lasercolor]ed209_hat"
-				icon_state = "[lasercolor]ed209_hat"
+				item_state = "[lasercolour]ed209_hat"
+				icon_state = "[lasercolour]ed209_hat"
 
 		if(5)
 			if( isprox(W) )
@@ -946,8 +946,8 @@ Auto Patrol: []"},
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
 				name = "covered, shielded and sensored frame assembly"
-				item_state = "[lasercolor]ed209_prox"
-				icon_state = "[lasercolor]ed209_prox"
+				item_state = "[lasercolour]ed209_prox"
+				icon_state = "[lasercolour]ed209_prox"
 
 		if(6)
 			if( istype(W, /obj/item/weapon/cable_coil) )
@@ -962,7 +962,7 @@ Auto Patrol: []"},
 					name = "wired ED-209 assembly"
 
 		if(7)
-			switch(lasercolor)
+			switch(lasercolour)
 				if("b")
 					if( !istype(W, /obj/item/weapon/gun/energy/laser/bluetag) )
 						return
@@ -979,8 +979,8 @@ Auto Patrol: []"},
 					return
 			build_step++
 			user << "<span class='notice'>You add [W] to [src].</span>"
-			src.item_state = "[lasercolor]ed209_taser"
-			src.icon_state = "[lasercolor]ed209_taser"
+			src.item_state = "[lasercolour]ed209_taser"
+			src.icon_state = "[lasercolour]ed209_taser"
 			user.drop_item()
 			del(W)
 
@@ -1000,7 +1000,7 @@ Auto Patrol: []"},
 				build_step++
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
-				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
+				new /obj/machinery/bot/ed209(T,created_name,lasercolour)
 				user.drop_item()
 				del(W)
 				user.drop_from_inventory(src)
@@ -1008,7 +1008,7 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
-	if((src.lasercolor == "b") && (src.disabled == 0))
+	if((src.lasercolour == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/redtag))
 			src.disabled = 1
 			del (Proj)
@@ -1016,7 +1016,7 @@ Auto Patrol: []"},
 			src.disabled = 0
 		else
 			..()
-	else if((src.lasercolor == "r") && (src.disabled == 0))
+	else if((src.lasercolour == "r") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/bluetag))
 			src.disabled = 1
 			del (Proj)
