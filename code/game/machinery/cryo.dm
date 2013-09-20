@@ -17,6 +17,12 @@
 	..()
 	initialize_directions = dir
 
+/obj/machinery/atmospherics/unary/cryo_cell/Del()
+	eject_contents()
+	var/obj/item/weapon/reagent_containers/glass/B = beaker
+	B.loc = get_step(loc, SOUTH)
+	..()
+
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
 	var/node_connect = dir
@@ -59,6 +65,19 @@
 	go_out()
 	return
 
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+	
+	if(in_range(usr, src))
+		usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(O != beaker)
+				usr << O.name
+		for(var/mob/M in src)
+			if(M != occupant)
+				usr << M.name
+	else
+		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -275,9 +294,6 @@
 	if(occupant)
 		usr << "<span class='notice'>[src] is already occupied.</span>"
 		return
-	if(M.abiotic())
-		usr << "<span class='notice'>Subject may not have abiotic items on.</span>"
-		return
 	if(!node)
 		usr << "<span class='notice'>The cell is not correctly connected to its pipe network!</span>"
 		return
@@ -297,21 +313,23 @@
 
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
-	set name = "Eject occupant"
+	set name = "Eject contents"
 	set category = "Object"
 	set src in oview(1)
-	if(usr == occupant)	//If the user is inside the tube...
+	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
 		if(usr.stat == DEAD)	//and he's not dead....
 			return
 		usr << "<span class='notice'>Release sequence activated. This will take about two minutes.</span>"
 		sleep(1200)
-		if(!src || !usr || !occupant || occupant != usr)	//Check if someone's released/replaced/bombed him already
+		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
 			return
 		go_out()	//and release him from the eternal prison.
+		eject_contents()
 	else
 		if(usr.stat || isslime(usr) || ispAI(usr))
 			return
 		go_out()
+		eject_contents()
 	add_fingerprint(usr)
 
 
@@ -327,3 +345,11 @@
 	if(usr.stat || stat & (NOPOWER|BROKEN))
 		return
 	put_mob(usr)
+
+/obj/machinery/atmospherics/unary/cryo_cell/proc/eject_contents()
+	for(var/obj/O in src)
+		if(O != beaker)
+			O.loc = get_step(loc, SOUTH)
+	for(var/mob/M in contents) 
+		M.loc = get_step(loc, SOUTH)
+		update_icon()
