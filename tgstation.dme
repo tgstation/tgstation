@@ -755,6 +755,7 @@
 #include "code\modules\detectivework\footprints_and_rag.dm"
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\events\alien_infestation.dm"
+#include "code\modules\events\anomaly.dm"
 #include "code\modules\events\anomaly_bluespace.dm"
 #include "code\modules\events\anomaly_flux.dm"
 #include "code\modules\events\anomaly_grav.dm"
