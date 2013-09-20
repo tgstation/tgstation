@@ -322,24 +322,24 @@
 	var/emagged = 0
 
 	attack_self(mob/user as mob)
-		src.active = !( src.active )
-		if (src.active)
+		active = !( active )
+		if (active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			if(emagged)
-				src.icon_state = "swordrainbow"
-				src.item_state = "swordrainbow"
+				icon_state = "swordrainbow"
+				item_state = "swordrainbow"
 			else
-				src.icon_state = "swordblue"
-				src.item_state = "swordblue"
-			src.w_class = 4
+				icon_state = "swordblue"
+				item_state = "swordblue"
+			w_class = 4
 		else
 			user << "\blue You push the plastic blade back down into the handle."
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-			src.icon_state = "sword0"
-			src.item_state = "sword0"
-			src.w_class = 2
-		src.add_fingerprint(user)
+			icon_state = "sword0"
+			item_state = "sword0"
+			w_class = 2
+		add_fingerprint(user)
 		return
 
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
@@ -353,7 +353,7 @@
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
-			if(src.emagged) // That's right, we'll only check the "original" "sword".
+			if(emagged) // That's right, we'll only check the "original" "sword".
 				newSaber.emagged = 1
 				newSaber.color = "rainbow"
 			user.before_take_item(W)
