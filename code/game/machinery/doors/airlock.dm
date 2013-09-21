@@ -996,17 +996,7 @@ About the new airlock wires panel:
 				close()
 			return
 
-	for(var/mob/living/M in get_turf(src))
-		if(isrobot(M))
-			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-		else
-			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			M.SetStunned(5)
-			M.SetWeakened(5)
-			M.emote("scream")
-		var/turf/location = src.loc
-		if(istype(location, /turf/simulated))
-			location.add_blood(M)
+	crush()
 
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))

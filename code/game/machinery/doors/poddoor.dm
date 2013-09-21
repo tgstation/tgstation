@@ -66,6 +66,7 @@
 
 	operating = 1
 	flick("closing", src)
+	crush()
 	icon_state = "closed"
 	density = 1
 	explosion_resistance = initial(explosion_resistance)

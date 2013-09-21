@@ -237,6 +237,19 @@
 	update_freelok_sight()
 	return
 
+/obj/machinery/door/proc/crush()
+	for(var/mob/living/L in get_turf(src))
+		if(isrobot(L))
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+		else
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.SetStunned(5)
+			L.SetWeakened(5)
+			L.emote("scream")
+			var/turf/location = src.loc
+			if(istype(location, /turf/simulated)) //Robots don't have blood
+				location.add_blood(L)
+
 /obj/machinery/door/proc/requiresID()
 	return 1
 
