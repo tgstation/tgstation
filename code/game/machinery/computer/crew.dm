@@ -13,6 +13,7 @@
 	crewmonitor(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
+	user.set_machine(src)
 	add_fingerprint(user)
 	if(stat & (BROKEN|NOPOWER))
 		return
