@@ -37,6 +37,8 @@
 
 	var/flags = 0       // Various specific features.
 
+/datum/species/proc/equip(var/mob/living/carbon/human/H)
+
 /datum/species/human
 	name = "Human"
 	primitive = /mob/living/carbon/monkey
@@ -109,9 +111,37 @@
 
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
-	survival_gear=/obj/item/weapon/storage/box/survival/vox
 
 	flags = WHITELISTED | NO_SCAN
+
+	equip(var/mob/living/carbon/human/H)
+		// Unequip existing suits and hats.
+		H.u_equip(H.wear_suit)
+		H.u_equip(H.head)
+
+		H.equip_to_slot_or_drop(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
+		var/suit=/obj/item/clothing/suit/space/vox/casual
+		var/helm=/obj/item/clothing/head/helmet/space/vox/casual
+		switch(H.mind.assigned_role)
+			if("Research Director","Scientist","Geneticist","Roboticist")
+				suit=/obj/item/clothing/suit/space/vox/casual/science
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/science
+			if("Chief Engineer","Station Engineer","Atmospheric Technician")
+				suit=/obj/item/clothing/suit/space/vox/casual/engineer
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/engineer
+			if("Head of Security","Warden","Detective","Security Officer")
+				suit=/obj/item/clothing/suit/space/vox/casual/security
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/security
+			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
+				suit=/obj/item/clothing/suit/space/vox/casual/medical
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
+		H.equip_to_slot_or_drop(new suit(H), slot_wear_suit)
+		H.equip_to_slot_or_drop(new helm(H), slot_head)
+		H.equip_to_slot_or_drop(new/obj/item/weapon/tank/nitrogen(H), slot_s_store)
+		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen only."
+		H.internal = H.s_store
+		if (H.internals)
+			H.internals.icon_state = "internal1"
 
 /datum/species/diona
 	name = "Diona"
