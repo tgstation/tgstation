@@ -740,7 +740,7 @@ datum/design/phazon_main
 	name = "Circuit Design (\"Phazon\" Central Control module)"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
-	req_tech = list("materials" = 7,"bluespace" = 6)
+	req_tech = list("materials" = 9,"bluespace" = 10)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
@@ -749,10 +749,20 @@ datum/design/phazon_peri
 	name = "Circuit Design (\"Phazon\" Peripherals Control module)"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
-	req_tech = list("materials" = 7,"bluespace" = 6)
+	req_tech = list("materials" = 9,"bluespace" = 10)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
+
+datum/design/phazon_phase_array
+	name = "Phazon Phase Array"
+	desc = "Show physics who's boss."
+	id = "sflash"
+	req_tech = list("bluespace" = 10, "programming" = 4)
+	build_type = MECHFAB
+	materials = list("$metal" = 5000, "$phazon" = 2000)
+	category = "Misc"
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/phase_array
 
 datum/design/gygax_main
 	name = "Circuit Design (\"Gygax\" Central Control module)"

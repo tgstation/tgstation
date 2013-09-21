@@ -100,7 +100,7 @@
 						/obj/item/mecha_parts/part/honker_left_leg,
 						/obj/item/mecha_parts/part/honker_right_leg
 						),
-/*	"Phazon"=list(
+	"Phazon"=list(
 						/obj/item/mecha_parts/chassis/phazon,
 						/obj/item/mecha_parts/part/phazon_torso,
 						/obj/item/mecha_parts/part/phazon_head,
@@ -108,7 +108,7 @@
 						/obj/item/mecha_parts/part/phazon_right_arm,
 						/obj/item/mecha_parts/part/phazon_left_leg,
 						/obj/item/mecha_parts/part/phazon_right_leg
-						),*/
+						),
 	"Exosuit Equipment"=list(
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
@@ -124,7 +124,8 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/honker
+						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
+						/obj/item/weapon/circuitboard/mecha/phazon/phase_array
 						),
 
 	"Robotic Upgrade Modules" = list(
@@ -135,13 +136,9 @@
 						/obj/item/borg/upgrade/tasercooler,
 						/obj/item/borg/upgrade/jetpack
 						),
-
-
-
-
-
-
-	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
+	"Misc"=list(
+						/obj/item/mecha_parts/mecha_tracking
+						)
 	)
 
 
