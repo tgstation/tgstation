@@ -35,7 +35,8 @@ var/global/list/underwear_m = list()	//stores only underwear name
 var/global/list/underwear_f = list()	//stores only underwear name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
-
+	//Female Uniforms
+var/global/list/female_uniform_icons = list()
 //////////////////////////
 /////Initial Building/////
 //////////////////////////
