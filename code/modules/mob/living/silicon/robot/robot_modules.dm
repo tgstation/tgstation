@@ -108,6 +108,10 @@
 		W.amount = 50
 		modules += W
 
+		var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
+		F.amount = 50
+		modules += F //'F' for floor tile - RR
+
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
