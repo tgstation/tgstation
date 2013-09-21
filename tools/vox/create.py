@@ -1,7 +1,7 @@
 import os, sys, re, subprocess, hashlib, logging
 """
 Usage:
-    $ python create.py vox_wordlist.txt
+    $ python create.py voxwords.txt
     
 Requires festival, sox, and vorbis-tools.
 
@@ -28,15 +28,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-def md5sum(filename):
-    md5 = hashlib.md5()
-    with open(filename,'rb') as f: 
-        for chunk in iter(lambda: f.read(128*md5.block_size), b''): 
-             md5.update(chunk)
-    return md5.hexdigest()
 
-REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
+###############################################
+## CONFIG
+###############################################
 
+##Voice you want to use 
+# This is the nitech-made ARCTIC voice, tut on how to install: 
+# http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
+VOICE='nitech_us_clb_arctic_hts'
+
+# What we do with SoX:
 SOX_ARGS  = 'stretch 1.1'
 #SOX_ARGS += ' phaser 0.89 0.85 2 0.24 1 -t'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
@@ -45,8 +47,9 @@ SOX_ARGS += ' bass -20'
 SOX_ARGS += ' norm'
 #SOX_ARGS += ' reverb'
 
-PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.1s.
-wordlist=[]
+# Have to do the trimming seperately.
+PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.2s.
+
 # Shit we shouldn't change or overwrite. (Boops, pauses, etc)
 preexisting=[
 	'.',
@@ -58,7 +61,24 @@ preexisting=[
 	'dadeda',
 	'woop',
 ]
-wordlist += preexisting
+
+################################################
+## ROB'S AWFUL CODE BELOW (cleanup planned)
+################################################
+
+REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
+
+wordlist=[]+preexisting
+
+known_phonemes={}
+
+def md5sum(filename):
+    md5 = hashlib.md5()
+    with open(filename,'rb') as f: 
+        for chunk in iter(lambda: f.read(128*md5.block_size), b''): 
+             md5.update(chunk)
+    return md5.hexdigest()
+
 def cmd(command):
 	logging.debug('>>> '+command)
 	output=''
@@ -226,10 +246,12 @@ def ProcessWordList(filename):
 				toprocess[wordfile.strip()]=phrase.strip()
 	for wordfile,phrase in iter(sorted(toprocess.iteritems())):
 		GenerateForWord(phrase,wordfile)
-known_phonemes={}
+		
 def ProcessLexicon(filename):
-	global known_phonemes
+	global known_phonemes, VOICE
 	with open('tmp/VOXdict.lisp','w') as lisp:
+		if VOICE != '':
+			lisp.write('(set! voice_default \'voice_{0})\n'.format(VOICE))
 		with open(filename,'r') as lines:
 			for line in lines:
 				line=line.strip()
