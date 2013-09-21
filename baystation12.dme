@@ -55,6 +55,14 @@
 #define FILE_DIR "sound/vox"
 #define FILE_DIR "sound/vox_fem"
 #define FILE_DIR "sound/weapons"
+#define FILE_DIR "tmp"
+#define FILE_DIR "vox"
+#define FILE_DIR "vox/hats"
+#define FILE_DIR "vox/head"
+#define FILE_DIR "vox/item_righthand"
+#define FILE_DIR "vox/items_lefthand"
+#define FILE_DIR "vox/suit"
+#define FILE_DIR "vox/suits"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG

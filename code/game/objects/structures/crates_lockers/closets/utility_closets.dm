@@ -18,6 +18,7 @@
 	icon_state = "emergency"
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
+	var/firstopen=1
 
 /obj/structure/closet/emcloset/New()
 	..()
@@ -57,9 +58,15 @@
 			new /obj/structure/closet/firecloset(src.loc)
 			del(src)
 			return*/
-	if(has_whitelist_entries("vox"))
-		new /obj/item/weapon/tank/emergency_nitrogen(src)
-		new /obj/item/clothing/mask/breath/vox(src)
+
+// Need to do this here so the config has enough time to load.
+/obj/structure/closet/emcloset/open()
+	if(src.type == /obj/structure/closet/emcloset)
+		if(firstopen && has_whitelist_entries("vox"))
+			new /obj/item/weapon/tank/emergency_nitrogen(src)
+			new /obj/item/clothing/mask/breath/vox(src)
+			firstopen=0
+	return ..()
 
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
