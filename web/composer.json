@@ -1,0 +1,12 @@
+{
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/N3X15/phinx.git"
+		}
+	],
+	"require": {
+		"N3X15/Phinx": "master"
+	}
+}
