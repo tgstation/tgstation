@@ -4,12 +4,12 @@
 	max_occurrences = 1
 
 /datum/round_event/radiation_storm
-	startWhen = 10
 	var/list/protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
 
 
 /datum/round_event/radiation_storm/setup()
 	startWhen = rand(10, 20)
+	endWhen = startWhen + 5
 
 /datum/round_event/radiation_storm/announce()
 	command_alert("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", "Anomaly Alert")
@@ -49,3 +49,7 @@
 		else if(istype(C, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/M = C
 			M.apply_effect((rand(15, 75)), IRRADIATE, 0)
+
+
+/datum/round_event/radiation_storm/end()
+	command_alert("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
