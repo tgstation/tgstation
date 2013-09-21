@@ -333,6 +333,26 @@ var/global/datum/controller/occupations/job_master
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
+					switch(H.disability)
+						if(1)
+							H.disabilities |= EPILEPSY
+						if(2)
+							var/obj/item/clothing/glasses/regular/DE = new/obj/item/clothing/glasses/regular(H)
+							H.equip_to_slot_or_del(DE, slot_glasses,1)
+							H.disabilities |= NEARSIGHTED
+						if(3)
+							var/obj/item/clothing/glasses/sunglasses/big/DE = new/obj/item/clothing/glasses/sunglasses/big(H)
+							H.equip_to_slot_or_del(DE, slot_glasses,1)
+							H.sdisabilities |= BLIND
+						if(4)
+							H.mutations |= CLUMSY
+						if(5)
+							H.disabilities |= NERVOUS
+						if(6)
+							var/obj/item/clothing/ears/earmuffs/DE = new/obj/item/clothing/ears/earmuffs(H)
+							H.equip_to_slot_or_del(DE, slot_ears,1)
+							H.sdisabilities |= DEAF
+							H.ear_deaf = 1
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"

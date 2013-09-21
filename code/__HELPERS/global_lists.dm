@@ -35,7 +35,8 @@ var/global/list/underwear_m = list()	//stores only underwear name
 var/global/list/underwear_f = list()	//stores only underwear name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
-
+	//Disabilities
+var/global/list/disabilitylist = list("Epilepsy", "Near-sightedness", "Blindness", "Clumsiness", "Stammering", "Deafness", "None")
 //////////////////////////
 /////Initial Building/////
 //////////////////////////

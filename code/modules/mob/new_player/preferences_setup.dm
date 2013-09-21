@@ -13,6 +13,7 @@ datum/preferences
 		facial_hair_color = hair_color
 		eye_color = random_eye_color()
 		backbag = 2
+		disability = 7
 		age = rand(AGE_MIN,AGE_MAX)
 
 	proc/update_preview_icon()		//seriously. This is horrendous.
