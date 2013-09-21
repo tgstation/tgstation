@@ -12,6 +12,17 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
 
+/obj/item/stack/tile/plasteel/cyborg
+	name = "floor tiles"
+	singular_name = "floor tile"
+	desc = "The ground you walk on" //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
+	icon_state = "tile"
+	force = 6.0
+	m_amt = 0
+	throwforce = 15.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	max_amount = 50
+
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	..()
 	src.pixel_x = rand(1, 14)
@@ -63,3 +74,6 @@
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()
 	return
+
+
+
