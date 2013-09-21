@@ -119,6 +119,7 @@
 			/obj/item/stack/sheet/rglass,
 			/obj/item/stack/rods,
 			/obj/item/weapon/cable_coil,
+			/obj/item/stack/tile/plasteel/cyborg,
 		)
 		for(var/T in what)
 			if(!(locate(T) in modules))
