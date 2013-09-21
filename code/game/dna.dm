@@ -466,7 +466,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	density = 1
-	circuit = "obj/item/weapon/circuitboard/scan_consolenew"
+	circuit = /obj/item/weapon/circuitboard/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
 

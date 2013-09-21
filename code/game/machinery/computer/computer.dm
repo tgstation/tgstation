@@ -122,23 +122,23 @@
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)
 		if(prob(10))
-			user.visible_message("[user.name] smashes the [src.name] with /his paws.",\
-			"You smash the [src.name] with your paws.",\
-			"You hear a smashing sound")
+			user.visible_message("<spanclass='danger'>[user.name] smashes the [src.name] with /his paws.</spanclass>",\
+			"<spanclass='danger'>You smash the [src.name] with your paws.</spanclass>",\
+			"<spanclass='danger'>You hear a smashing sound.</spanclass>")
 			set_broken()
 			return
-	user.visible_message("[user.name] smashes agaisnt the [src.name] with /his paws.",\
-	"You smash agaisnt the [src.name] with your paws.",\
-	"You hear a clicking sound")
+	user.visible_message("<spanclass='danger'>[user.name] smashes agaisnt the [src.name] with /his paws.</spanclass>",\
+	"<spanclass='danger'>You smash agaisnt the [src.name] with your paws.</spanclass>",\
+	"<spanclass='danger'>You hear a clicking sound.</spanclass>")
 
 /obj/machinery/computer/attack_alien(mob/user)
 	if(circuit)
 		if(prob(80))
-			user.visible_message("[user.name] smashes the [src.name] with /his claws.",\
-			"You smash the [src.name] with your claws.",\
-			"You hear a smashing sound")
+			user.visible_message("<spanclass='danger'>[user.name] smashes the [src.name] with /his claws.</spanclass>",\
+			"<spanclass='danger'>You smash the [src.name] with your claws.</spanclass>",\
+			"<spanclass='danger'>You hear a smashing sound.</spanclass>")
 			set_broken()
 			return
-	user.visible_message("[user.name] smashes agaisnt the [src.name] with /his claws.",\
-	"You smash agaisnt the [src.name] with your claws.",\
-	"You hear a clicking sound")
+	user.visible_message("<spanclass='danger'>[user.name] smashes agaisnt the [src.name] with /his claws.</spanclass>",\
+	"<spanclass='danger'>You smash agaisnt the [src.name] with your claws.</spanclass>",\
+	"<spanclass='danger'>You hear a clicking sound.</spanclass>")

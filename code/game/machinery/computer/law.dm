@@ -34,7 +34,7 @@
 	name = "AI Upload"
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/aiupload"
+	circuit = /obj/item/weapon/circuitboard/aiupload
 
 /obj/machinery/computer/upload/ai/attack_hand(var/mob/user as mob)
 	if(..())
@@ -59,7 +59,7 @@
 	name = "Cyborg Upload"
 	desc = "Used to upload laws to Cyborgs."
 	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/borgupload"
+	circuit = /obj/item/weapon/circuitboard/borgupload
 
 /obj/machinery/computer/upload/borg/attack_hand(var/mob/user as mob)
 	if(..())

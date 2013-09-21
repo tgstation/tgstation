@@ -78,6 +78,7 @@ obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
 
+	circuit = /obj/item/weapon/circuitboard/air_management
 	name = "Computer"
 
 	var/frequency = 1439

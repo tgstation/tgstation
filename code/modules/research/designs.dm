@@ -203,16 +203,16 @@ datum/design/air_management
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/air_management"
 
-/* Uncomment if someone makes these buildable
+
 datum/design/general_alert
-	name = "Circuit Design (General Alert Console)"
-	desc = "Allows for the construction of circuit boards used to build a General Alert console."
-	id = "general_alert"
+	name = "Circuit Design (Station Alert Console)"
+	desc = "Allows for the construction of circuit boards used to build a Station Alert console."
+	id = "station_alert"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/general_alert"
-*/
+	build_path = "/obj/item/weapon/circuitboard/station_alert"
+
 
 datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"

@@ -6,7 +6,7 @@
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = /obj/item/weapon/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()

@@ -5,7 +5,7 @@
 	desc = "You can use this to change ID's."
 	icon_state = "id"
 	req_access = list(access_change_ids)
-	circuit = "/obj/item/weapon/circuitboard/card"
+	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0.0
@@ -408,6 +408,6 @@
 
 /obj/machinery/computer/card/centcom
 	name = "Centcom Identification Console"
-	circuit = "/obj/item/weapon/circuitboard/card/centcom"
+	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)
 

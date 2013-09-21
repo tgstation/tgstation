@@ -5,6 +5,7 @@
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupant = null
 	var/active = 0
+	circuit = /obj/item/weapon/circuitboard/aifixer
 
 /obj/machinery/computer/aifixer/New()
 	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
@@ -14,10 +15,11 @@
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
 
 	if(istype(I, /obj/item/device/aicard))
+		var/obj/item/device/aicard/AIcard = I
 		if(stat & (NOPOWER|BROKEN))
 			user << "This terminal isn't functioning right now, get it working!"
 			return
-		I:transfer_ai("AIFIXER","AICARD",src,user)
+		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
 	else
 		..()
 	return

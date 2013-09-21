@@ -200,7 +200,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	circuit = "/obj/item/weapon/circuitboard/rdservercontrol"
+	circuit = /obj/item/weapon/circuitboard/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
