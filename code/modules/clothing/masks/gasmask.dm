@@ -85,6 +85,8 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
 
 	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null
