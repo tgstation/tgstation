@@ -49,7 +49,6 @@
 	var/eyeblur = 0
 	var/drowsy = 0
 
-
 	proc/delete()
 		// Garbage collect the projectiles
 		loc = null
