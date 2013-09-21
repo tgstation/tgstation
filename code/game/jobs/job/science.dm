@@ -26,16 +26,16 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/rd(H), slot_ears)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/device/pda/heads/rd(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
-		H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
+		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/rd(H), slot_ears)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
+		H.equip_to_slot_or_drop(new /obj/item/device/pda/heads/rd(H), slot_belt)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+		H.equip_to_slot_or_drop(new /obj/item/weapon/clipboard(H), slot_l_hand)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
 
@@ -60,15 +60,15 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/device/pda/toxins(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), slot_wear_suit)
+		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/white(H), slot_shoes)
+		H.equip_to_slot_or_drop(new /obj/item/device/pda/toxins(H), slot_belt)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/suit/storage/labcoat/science(H), slot_wear_suit)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
 
@@ -93,17 +93,17 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
-		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/device/pda/roboticist(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
-//		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/mechanical(H), slot_l_hand)
+		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
+		if(H.backbag == 2) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack(H), slot_back)
+		if(H.backbag == 3) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/under/rank/roboticist(H), slot_w_uniform)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_to_slot_or_drop(new /obj/item/device/pda/roboticist(H), slot_belt)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+//		H.equip_to_slot_or_drop(new /obj/item/clothing/gloves/black(H), slot_gloves)
+		H.equip_to_slot_or_drop(new /obj/item/weapon/storage/toolbox/mechanical(H), slot_l_hand)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
