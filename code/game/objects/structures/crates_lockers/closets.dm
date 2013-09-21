@@ -177,6 +177,8 @@
 				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(istype(W,/obj/item/tk_grab))
+			return 0
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -192,10 +194,7 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item()
-
-		if(W)
-			W.loc = src.loc
+		user.drop_item(src)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -255,6 +254,13 @@
 	return src.attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user as mob)
+	src.add_fingerprint(user)
+
+	if(!src.toggle())
+		usr << "<span class='notice'>It won't budge!</span>"
+
+// tk grab then use on self
+/obj/structure/closet/attack_self_tk(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
