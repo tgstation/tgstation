@@ -7,10 +7,10 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 10
-	w_class = 3.0
+	w_class = 4.0
 	throw_speed = 2
 	throw_range = 10
-	force = 10.0
+	force = 13.0
 	m_amt = 90
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	var/max_water = 50
@@ -119,6 +119,9 @@
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm)
+						if(isliving(atm)) //For extinguishing mobs on fire
+							var/mob/living/M = atm
+							M.ExtinguishMob()
 					if(W.loc == my_target) break
 					sleep(2)
 
