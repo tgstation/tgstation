@@ -13,6 +13,7 @@
 	crewmonitor(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
+	user.set_machine(src)
 	add_fingerprint(user)
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -47,7 +48,6 @@
 
 
 proc/crewmonitor(mob/user)
-	user.set_machine(src)
 	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
 	var/list/tracked = crewscan()
