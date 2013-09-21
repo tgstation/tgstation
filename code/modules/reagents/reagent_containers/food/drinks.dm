@@ -321,7 +321,7 @@
 		..()
 		reagents.add_reagent("sodawater", 50)
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_line
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "Lemon-Lime"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
