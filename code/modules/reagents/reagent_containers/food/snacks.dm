@@ -100,7 +100,7 @@
 	return 0
 
 
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
 	return
 
 
@@ -1323,7 +1323,8 @@
 		..()
 		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O, mob/user)
+	afterattack(obj/O, mob/user,proximity)
+		if(!proximity) return
 		if(istype(O,/obj/structure/sink) && !wrapped)
 			user << "<span class='notice'>You place [src] under a stream of water...</span>"
 			user.drop_item()

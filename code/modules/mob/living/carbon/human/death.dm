@@ -46,6 +46,11 @@
 	dizziness = 0
 	jitteriness = 0
 
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		if(M.occupant == src)
+			M.go_out()
+
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
