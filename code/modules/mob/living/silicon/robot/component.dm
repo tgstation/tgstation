@@ -143,9 +143,13 @@
 
 /obj/item/robot_parts/robot_component/armour
 	name = "armour plating"
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "bulletproof"
 
 /obj/item/robot_parts/robot_component/camera
 	name = "camera"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "cameracase"
 
 /obj/item/robot_parts/robot_component/diagnosis_unit
 	name = "diagnosis unit"
