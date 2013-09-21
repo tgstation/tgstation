@@ -165,6 +165,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
+	S["disability"]			>> disability
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
@@ -239,7 +240,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	<< facial_hair_style
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
-	S["disabilities"]       << disability
+	S["disability"]       << disability
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob

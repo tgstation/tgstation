@@ -45,7 +45,7 @@ datum/preferences
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
-	var/disability = 7					//disability type
+	var/disability = 9					//disability type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -538,7 +538,7 @@ datum/preferences
 					if("bag")
 						backbag = rand(1,3)
 					if("disability")
-						disability = rand(1,7)
+						disability = rand(1,9)
 					if("all")
 						random_character()
 
@@ -625,7 +625,7 @@ datum/preferences
 							backbag = backbaglist.Find(new_backbag)
 
 					if("disability")
-						var/new_disability = input(user, "Choose your cripple flavor:", "Character Preference") as null|anything in disabilitylist
+						var/new_disability = input(user, "Choose your disability type:", "Character Preference") as null|anything in disabilitylist
 						if(new_disability)
 							disability = disabilitylist.Find(new_disability)
 			else
@@ -732,8 +732,8 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		if(disability > 7 || disability < 1)
-			disability = 7 //Same as above
+		if(disability > 9 || disability < 1)
+			disability = 9 //Same as above
 		character.disability = disability
 
 		/*

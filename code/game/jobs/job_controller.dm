@@ -338,21 +338,27 @@ var/global/datum/controller/occupations/job_master
 							H.disabilities |= EPILEPSY
 						if(2)
 							var/obj/item/clothing/glasses/regular/DE = new/obj/item/clothing/glasses/regular(H)
-							H.equip_to_slot_or_del(DE, slot_glasses,1)
+							H.equip_to_slot(DE, slot_glasses,1)
 							H.disabilities |= NEARSIGHTED
 						if(3)
-							var/obj/item/clothing/glasses/sunglasses/big/DE = new/obj/item/clothing/glasses/sunglasses/big(H)
-							H.equip_to_slot_or_del(DE, slot_glasses,1)
+							var/obj/item/clothing/glasses/sunglasses/DE = new/obj/item/clothing/glasses/sunglasses(H)
+							H.equip_to_slot(DE, slot_glasses,1)
 							H.sdisabilities |= BLIND
 						if(4)
 							H.mutations |= CLUMSY
 						if(5)
 							H.disabilities |= NERVOUS
 						if(6)
-							var/obj/item/clothing/ears/earmuffs/DE = new/obj/item/clothing/ears/earmuffs(H)
-							H.equip_to_slot_or_del(DE, slot_ears,1)
 							H.sdisabilities |= DEAF
 							H.ear_deaf = 1
+						if(7)
+							var/obj/item/clothing/glasses/sunglasses/DE = new/obj/item/clothing/glasses/sunglasses(H)
+							H.equip_to_slot(DE, slot_glasses,1)
+							H.sdisabilities |= BLIND
+							H.sdisabilities |= DEAF
+							H.ear_deaf = 1
+						if(8)
+							H.miming = 1
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
