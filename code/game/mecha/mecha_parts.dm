@@ -480,7 +480,7 @@
 		icon_state = "mainboard"
 
 	phazon
-		origin_tech = "materials=7;bluespace=6"
+		origin_tech = "materials=9;bluespace=10"
 
 	phazon/peripherals
 		name = "Circuit board (Phazon Peripherals Control module)"
