@@ -1437,3 +1437,36 @@ var/list/WALLITEMS = list(
 				if(O.pixel_x == 0 && O.pixel_y == 0)
 					return 1
 	return 0
+
+
+proc/get_angle(atom/a, atom/b)
+    return atan2(b.y - a.y, b.x - a.x)
+
+proc/atan2(x, y)
+	if(!x && !y) return 0
+	return y >= 0 ? arccos(x / sqrt(x * x + y * y)) : -arccos(x / sqrt(x * x + y * y))
+
+proc/rotate_icon(file, state, step = 1, aa = FALSE)
+	var icon/base = icon(file, state)
+
+	var w, h, w2, h2
+
+	if(aa)
+		aa ++
+		w = base.Width()
+		w2 = w * aa
+		h = base.Height()
+		h2 = h * aa
+
+	var icon{result = icon(base); temp}
+
+	for(var/angle in 0 to 360 step step)
+		if(angle == 0  ) continue
+		if(angle == 360)   continue
+		temp = icon(base)
+		if(aa) temp.Scale(w2, h2)
+		temp.Turn(angle)
+		if(aa) temp.Scale(w,   h)
+		result.Insert(temp, "[angle]")
+
+	return result
