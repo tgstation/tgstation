@@ -72,7 +72,9 @@ var/event = 0
 var/hadevent = 0
 var/blobevent = 0
 	///////////////
-
+var/starticon = null
+var/midicon = null
+var/endicon = null
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null

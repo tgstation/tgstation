@@ -50,8 +50,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 			var/cost_text = ""
 			var/desc = "[item.desc]"
-			if(item.job)
-				if(item.job != job)
+			if(item.job && item.job.len)
+				if(!(item.job.Find(job)))
 					//world.log << "Skipping job item that doesn't match"
 					continue
 				else

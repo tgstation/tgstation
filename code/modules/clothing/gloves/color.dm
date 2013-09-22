@@ -7,6 +7,9 @@
 	permeability_coefficient = 0.05
 	_color="yellow"
 
+	power
+		var/next_shock = 0
+
 /obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
 	name = "budget insulated gloves"

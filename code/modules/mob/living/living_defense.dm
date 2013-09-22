@@ -59,6 +59,9 @@
 	if(!P.nodamage)
 		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, absorb, 0, P)
 	P.on_hit(src, absorb)
+	if(istype(P, /obj/item/projectile/beam/lightning))
+		if(src.health <= -100)
+			src.dust()
 	return absorb
 
 /mob/living/hitby(atom/movable/AM as mob|obj,var/speed = 5)//Standardization and logging -Sieve
