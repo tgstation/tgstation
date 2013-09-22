@@ -395,6 +395,10 @@ What are the archived variables for?
 	//Inputs: How many moles to remove.
 	//Outputs: Removed air.
 
+	// Fix a singuloth problem
+	if(group_multiplier==0)
+		return null
+
 	var/sum = total_moles()
 	amount = min(amount,sum) //Can not take more air than tile has!
 	if(amount <= 0)
