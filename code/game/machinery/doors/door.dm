@@ -239,16 +239,21 @@
 
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
-		if(isrobot(L))
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-		else
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.SetStunned(5)
-			L.SetWeakened(5)
+		else if(isalien(L))  //For xenos
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+			L.emote("roar")
+		else if(ishuman(L)) //For humans
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE) 
 			L.emote("scream")
-			var/turf/location = src.loc
-			if(istype(location, /turf/simulated)) //Robots don't have blood
-				location.add_blood(L)
+			L.Weaken(5)
+		else if(ismonkey(L)) //For monkeys
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.Weaken(5)
+		else //for simple_animals & borgs
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+		var/turf/location = src.loc
+		if(istype(location, /turf/simulated)) //add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+			location.add_blood_floor(L)
 
 /obj/machinery/door/proc/requiresID()
 	return 1
