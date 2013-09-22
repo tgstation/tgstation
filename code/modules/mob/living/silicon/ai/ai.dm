@@ -30,7 +30,6 @@ var/list/ai_list = list()
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/camera/ai_camera/aicamera = null
-	var/list/tracked = list(  )
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -226,13 +225,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/verb/ai_crew()
 	set category = "AI Commands"
-	set name = "Show Crew Monitoring Console"
-	crewmonitor(src)
-
-/mob/living/silicon/ai/verb/ai_crewhidden()
-	set category = "AI Commands"
-	set name = "crew"
-	set hidden = 1
+	set name = "Crew Monitoring Console"
 	crewmonitor(src)
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	set category = "AI Commands"
@@ -342,14 +335,6 @@ var/list/ai_list = list()
 				H.attack_ai(src) //may as well recycle
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
-	// Iamgoofball: Crew Monitoring Verb
-	if (src.z > 6)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
-		return
-	if( href_list["close"] )
-		usr << browse(null, "window=crewcomp")
-		usr.unset_machine()
-		return
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
 		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
@@ -425,16 +410,6 @@ var/list/ai_list = list()
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
-
-/mob/living/silicon/ai/attack_hand(mob/living/carbon/M as mob)
-	if(ishuman(M))//Checks to see if they are ninja
-		if(istype(M:gloves, /obj/item/clothing/gloves/space_ninja)&&M:gloves:candrain&&!M:gloves:draining)
-			if(M:wear_suit:s_control)
-				M:wear_suit:transfer_ai("AICORE", "NINJASUIT", src, M)
-			else
-				M << "\red <b>ERROR</b>: \black Remote access channel disabled."
-	return
-
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
