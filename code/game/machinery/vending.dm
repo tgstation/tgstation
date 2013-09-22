@@ -91,7 +91,7 @@
 
 		var/atom/temp = new typepath(null)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.product_name = temp.name
+		R.product_name = initial(temp.name)
 		R.product_path = typepath
 		R.amount = amount
 		R.display_color = pick("red","blue","green")
