@@ -11,13 +11,24 @@
 	check_eye(var/mob/user as mob)
 		if ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 			return null
+		var/list/viewing = viewers(src)
+		if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+			return null
 		user.reset_view(current)
+		attack_hand(user)
 		return 1
 
 
 	attack_hand(var/mob/user as mob)
 		if (src.z > 6)
 			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+			return
+
+		if (!network)
+			world.log << "A computer lacks a network at [x],[y],[z]."
+			return
+		if (!(istype(network,/list)))
+			world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 			return
 
 		if(..())
@@ -32,6 +43,12 @@
 		var/list/D = list()
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
+			if(!C.network)
+				world.log << "[C.c_tag] has no camera network."
+				continue
+			if(!(istype(C.network,/list)))
+				world.log << "[C.c_tag]'s camera network is not a list!"
+				continue
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)
 				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
@@ -48,7 +65,7 @@
 			return 0
 
 		if(C)
-			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)) || (!istype(user,/mob/living/silicon/robot)))
+			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
 				if(!C.can_use() && !isAI(user))
 					src.current = null
 				return 0
