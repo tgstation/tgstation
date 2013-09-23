@@ -1167,7 +1167,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					src.hand_al(usr, usr.hand)
 		else
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
-			if((istype(usr:gloves, /obj/item/clothing/gloves/yellow/power)) && usr:a_intent == "hurt" && world.time >= usr.next_move)
+			if(ishuman(usr) && (istype(usr:gloves, /obj/item/clothing/gloves/yellow/power)) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				var/obj/item/clothing/gloves/yellow/power/G = usr:gloves
 				var/time = 100
 				var/turf/T = get_turf(usr)
