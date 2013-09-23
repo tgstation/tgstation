@@ -40,6 +40,7 @@
 				else
 					playsound(src, "clownstep", 20, 1)
 
+			// Tracking blood
 			var/list/bloodDNA = null
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
@@ -58,6 +59,18 @@
 					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir) // Going
 
 			bloodDNA = null
+
+			// Floorlength braids?  Enjoy your tripping.
+			if((H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR))))
+				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+				if(hair_style.flags & HAIRSTYLE_CANTRIP)
+					if(H.m_intent == "run" && prob(5))
+						H.stop_pulling()
+						step(H, H.dir)
+						H << "\blue You tripped over your hair!"
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						H.Stun(4)
+						H.Weaken(5)
 
 		switch (src.wet)
 			if(1)
