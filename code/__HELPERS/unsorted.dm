@@ -1221,13 +1221,13 @@ var/list/WALLITEMS = list(
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
-/obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user)
-	var/obj/item/weapon/icon = src
-	user.visible_message("\red [user] has used the analyzer on \icon[icon] [src].</span>")
+/obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
+	var/obj/icon = target
+	user.visible_message("\red [user] has used the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	user << "\blue Results of analysis of \icon[icon] [src]."
+	user << "\blue Results of analysis of \icon[icon] [target]."
 	if(total_moles>0)
 		var/o2_concentration = air_contents.oxygen/total_moles
 		var/n2_concentration = air_contents.nitrogen/total_moles
@@ -1245,5 +1245,5 @@ var/list/WALLITEMS = list(
 			user << "\red Unknown: [round(unknown_concentration*100)]%"
 		user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
 	else
-		user << "\blue [src] is empty!"
+		user << "\blue [target] is empty!"
 	return
