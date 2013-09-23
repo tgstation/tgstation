@@ -59,6 +59,7 @@
 	item_state = "clown"
 	color = "clown"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	fitted = 0
 
 
 /obj/item/clothing/under/rank/head_of_personnel
@@ -132,7 +133,7 @@
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	color = "lawyer_purp"
-
+	fitted = 0
 
 /obj/item/clothing/under/librarian
 	name = "sensible suit"

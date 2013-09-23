@@ -4,7 +4,7 @@
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
 
-var/datum/controller/supply_shuttle/supply_shuttle = new()
+var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
@@ -137,13 +137,13 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 
 	New()
 		ordernum = rand(1,9000)
-
-	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcom and the station
-	proc/process()
 		for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 			var/datum/supply_packs/P = new typepath()
 			if(P.name == "HEADER") continue		// To filter out group headers
 			supply_packs[P.name] = P
+
+	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcom and the station
+	proc/process()
 
 		spawn(0)
 			set background = 1
@@ -230,6 +230,7 @@ var/datum/controller/supply_shuttle/supply_shuttle = new()
 
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
+
 
 			// Must be in a crate (or a critter crate)!
 			if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
