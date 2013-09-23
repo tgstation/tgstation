@@ -24,8 +24,11 @@ mob
 				sandbox.owner = src.ckey
 				if(src.client.holder)
 					sandbox.admin = 1
-				verbs += new/mob/proc/sandbox_panel
+				verbs += new /mob/proc/sandbox_panel
 		sandbox_panel()
+			set category = "Sandbox"
+			set name = "Sandbox Panel"
+
 			if(sandbox)
 				sandbox.update()
 
