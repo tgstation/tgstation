@@ -271,6 +271,8 @@ Auto Patrol: []"},
 				walk_to(src,0)
 
 			if (target)		// make sure target exists
+				if(!istype(target.loc, /turf))
+					return
 				if (get_dist(src, src.target) <= 1)		// if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "[lasercolor]ed209-c"

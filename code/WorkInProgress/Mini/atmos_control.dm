@@ -27,6 +27,13 @@
 	req_one_access = list(access_xenobiology,access_ce)
 
 
+/obj/machinery/computer/atmoscontrol/gas_chamber
+	name = "\improper Gas Chamber Atmospherics Computer"
+	filter=list(
+		/area/security/gas_chamber)
+	req_one_access = list(access_ce,access_hos)
+
+
 /obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
 	return interact(user)
@@ -234,7 +241,7 @@
 	var/label=replacetext(uppertext(code),"2","<sub>2</sub>")
 	if(code=="tox")
 		label="Plasma"
-	return "<A href='?src=\ref[current];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
+	return "<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
 
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"

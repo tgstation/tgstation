@@ -6,6 +6,7 @@ var/list
 					"hsbsuit" = "Suit Up (Space Travel Gear)",
 					"hsbmetal" = "Spawn 50 Metal",
 					"hsbglass" = "Spawn 50 Glass",
+					"hsbplasma" = "Spawn 50 Plasma",
 					"hsbairlock" = "Spawn Airlock",
 					"hsbregulator" = "Spawn Air Regulator",
 					"hsbfilter" = "Spawn Air Filter",
@@ -13,21 +14,67 @@ var/list
 					"hsbfueltank" = "Spawn Welding Fuel Tank",
 					"hsbwater	tank" = "Spawn Water Tank",
 					"hsbtoolbox" = "Spawn Toolbox",
-					"hsbmedkit" = "Spawn Medical Kit")
+					"hsbmedkit" = "Spawn Medical Kit",
+					"revive" = "Rejuvinate")
 
-mob
-	var/datum/hSB/sandbox = null
-	proc
-		CanBuild()
-			if(master_mode == "sandbox")
-				sandbox = new/datum/hSB
-				sandbox.owner = src.ckey
-				if(src.client.holder)
-					sandbox.admin = 1
-				verbs += new/mob/proc/sandbox_panel
-		sandbox_panel()
-			if(sandbox)
-				sandbox.update()
+/mob/var/datum/hSB/sandbox = null
+/mob/proc/CanBuild()
+	//if(ticker.mode.name == "sandbox")
+	sandbox = new/datum/hSB
+	sandbox.owner = src.ckey
+	if(src.client.holder)
+		sandbox.admin = 1
+	verbs += new /mob/proc/sandbox_panel
+	verbs += new /mob/proc/spawn_atom
+
+/mob/proc/sandbox_panel()
+	set name = "Sandbox Panel"
+	set category = "Sandbox"
+
+	if(sandbox)
+		sandbox.update()
+
+/mob/proc/spawn_atom(var/object as text)
+	set category = "Sandbox"
+	set desc = "Spawn any item or machine"
+	set name = "Sandbox Spawn"
+
+	var/list/types = typesof(/obj/item) + typesof(/obj/machinery)
+	var/list/matches = new()
+
+	for(var/path in types)
+		if(istype(path, /obj/item/weapon/gun))
+			continue
+		if(istype(path, /obj/item/assembly))
+			continue
+		if(istype(path, /obj/item/device/camera))
+			continue
+		if(istype(path, /obj/item/weapon/cloaking_device))
+			continue
+		if(istype(path, /obj/item/weapon/dummy))
+			continue
+		if(istype(path, /obj/item/weapon/melee/energy/sword))
+			continue
+		if(istype(path, /obj/structure))
+			continue
+		if(findtext("[path]", object))
+			matches += path
+
+	if(matches.len==0)
+		return
+
+	var/chosen
+	if(matches.len==1)
+		chosen = matches[1]
+	else
+		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		if(!chosen)
+			return
+
+	new chosen(usr.loc)
+
+	log_admin("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	feedback_add_details("admin_verb","hSBSA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 datum/hSB
 	var/owner = null
@@ -53,6 +100,10 @@ datum/hSB
 		if(!usr) return //I guess this is possible if they log out or die with the panel open? It happened.
 		if(href_list["hsb"])
 			switch(href_list["hsb"])
+				if("revive")
+					if(istype(usr,/mob/living))
+						var/mob/living/M = usr
+						M.revive()
 				if("hsbtobj")
 					if(!admin) return
 					if(hsboxspawn)
@@ -98,29 +149,34 @@ datum/hSB
 					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
+				if("hsbplasma")
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/plasma
+					hsb.amount = 50
+					hsb.loc = usr.loc
 				if("hsbairlock")
 					var/obj/machinery/door/hsb = new/obj/machinery/door/airlock
 
 					//TODO: DEFERRED make this better, with an HTML window or something instead of 15 popups
 					hsb.req_access = list()
+					/*
 					var/accesses = get_all_accesses()
 					for(var/A in accesses)
 						if(alert(usr, "Will this airlock require [get_access_desc(A)] access?", "Sandbox:", "Yes", "No") == "Yes")
 							hsb.req_access += A
+					*/
 
 					hsb.loc = usr.loc
 					usr << "<b>Sandbox:  Created an airlock."
 				if("hsbcanister")
 					var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister/) - /obj/machinery/portable_atmospherics/canister/
+//					hsbcanisters -= /obj/machinery/portable_atmospherics/canister/sleeping
 					var/hsbcanister = input(usr, "Choose a canister to spawn.", "Sandbox:") in hsbcanisters + "Cancel"
 					if(!(hsbcanister == "Cancel"))
 						new hsbcanister(usr.loc)
 				if("hsbfueltank")
-					//var/obj/hsb = new/obj/weldfueltank
-					//hsb.loc = usr.loc
+					new /obj/structure/reagent_dispensers/fueltank(usr.loc)
 				if("hsbwatertank")
-					//var/obj/hsb = new/obj/watertank
-					//hsb.loc = usr.loc
+					new /obj/structure/reagent_dispensers/watertank(usr.loc)
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)

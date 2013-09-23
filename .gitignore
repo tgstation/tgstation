@@ -17,3 +17,5 @@ info.json
 #ignore any files in config/, except those in subdirectories.
 /config/*
 !/config/*/*
+
+.metadata

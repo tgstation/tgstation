@@ -327,7 +327,7 @@
 			if(armed)
 				if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
 					var/mob/living/carbon/C = AM
-					if(C.move_speed < 12)
+					if(C.m_intent != "walk")
 						src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
 						explosion(src.loc,-1,2,0)
 						if(ishuman(C))
@@ -902,3 +902,66 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+
+/////////Random shit////////
+
+/obj/item/weapon/lightning
+	name = "lightning"
+	icon = 'icons/obj/lightning.dmi'
+	icon_state = "lightning"
+	desc = "test lightning"
+	flags = USEDELAY
+
+	New()
+		icon = midicon
+		icon_state = "1"
+
+	afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+		var/angle = get_angle(A, user)
+		//world << angle
+		angle = round(angle) + 45
+		if(angle > 180)
+			angle -= 180
+		else
+			angle += 180
+
+		if(!angle)
+			angle = 1
+		//world << "adjusted [angle]"
+		icon_state = "[angle]"
+		//world << "[angle] [(get_dist(user, A) - 1)]"
+		user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
+/*Testing
+proc/get_angle(atom/a, atom/b)
+    return atan2(b.y - a.y, b.x - a.x)
+proc/atan2(x, y)
+    if(!x && !y) return 0
+    return y >= 0 ? arccos(x / sqrt(x * x + y * y)) : -arccos(x / sqrt(x * x + y * y))
+proc
+    //  creates an /icon object with 360 states of rotation
+    rotate_icon(file, state, step = 1, aa = FALSE)
+        var icon/base = icon(file, state)
+
+        var w, h, w2, h2
+        if(aa)
+            aa ++
+            w = base.Width()
+            w2 = w * aa
+            h = base.Height()
+            h2 = h * aa
+
+        var icon{result = icon(base); temp}
+
+        for(var/angle in 0 to 360 step step)
+            if(angle == 0  ) continue
+            if(angle == 360)   continue
+
+            temp = icon(base)
+
+            if(aa) temp.Scale(w2, h2)
+            temp.Turn(angle)
+            if(aa) temp.Scale(w,   h)
+
+            result.Insert(temp, "[angle]")
+
+        return result*/

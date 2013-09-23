@@ -324,7 +324,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"name" = displayname,	// the mob's display name
 				"job" = jobname,		// the mob's job
 				"key" = mobkey,			// the mob's key
-				"vmessage" = M.voice_message, // the message to display if the voice wasn't understood
+				"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
 				"vname" = M.voice_name, // the name to display if the voice wasn't understood
 				"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
 
@@ -381,7 +381,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"name" = displayname,	// the mob's display name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
-			"vmessage" = M.voice_message, // the message to display if the voice wasn't understood
+			"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
 			"vname" = M.voice_name, // the name to display if the voice wasn't understood
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
@@ -414,7 +414,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		//THIS IS TEMPORARY.
 		if(!connection)	return	//~Carn
 
-		Broadcast_Message(connection, M, voicemask, M.voice_message,
+		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency)
 
@@ -477,10 +477,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				else
 					heard_normal += R
 			else
-				if (M.voice_message)
-					heard_voice += R
-				else
-					heard_garbled += R
+				heard_garbled += R
 
 		if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
 			var/part_a = "<span class='radio'><span class='name'>"
@@ -576,11 +573,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 						R.show_message(rendered, 2)
 
 			if (length(heard_voice))
-				var/rendered = "[part_a][M.voice_name][part_b][M.voice_message][part_c]"
+				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][M.voice_message][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", 2)
 					else
 						R.show_message(rendered, 2)
 

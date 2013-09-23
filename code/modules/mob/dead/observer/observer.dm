@@ -262,6 +262,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Become mouse"
 	set category = "Ghost"
 
+	if(!config.respawn_as_mouse)
+		src << "<span class='warning'>Respawning as mouse is disabled..</span>"
+		return
+
 	var/timedifference = world.time - client.time_died_as_mouse
 	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
 		var/timedifference_text
@@ -296,10 +300,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
-/*
+
 /mob/dead/observer/verb/become_mommi()
 	set name = "Become MoMMI"
 	set category = "Ghost"
+
+	if(!config.respawn_as_mommi)
+		src << "<span class='warning'>Respawning as MoMMI is disabled..</span>"
+		return
 
 	var/timedifference = world.time - client.time_died_as_mouse
 	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
@@ -324,7 +332,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(host)
 		host.ckey = src.ckey
 		//host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
-*/
 
 //BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)

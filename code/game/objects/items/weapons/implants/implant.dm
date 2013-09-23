@@ -335,11 +335,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!ishuman(M)) return 0
 		if(!M.mind) return 0
 		var/mob/living/carbon/human/H = M
-		if(/obj/item/weapon/implant/traitor in H.contents || /obj/item/weapon/implant/loyalty in H.contents)
-			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your skull that quickly dissipates.")
+		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
+			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
 			return 0
 		else if(H.mind in ticker.mode.traitors)
-			H.visible_message("[H] seems to resist the implant!", "You feel a familiar sensation in your skull that quickly dissipates.")
+			H.visible_message("[H] seems to resist the implant!", "You feel a familiar sensation in your head that quickly dissipates.")
 			return 0
 		H.implanting = 1
 		H << "\blue You feel a surge of loyalty towards [user.name]."

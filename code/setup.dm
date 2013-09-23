@@ -74,7 +74,7 @@
 #define HUNGER_FACTOR 0.12
 
 // How many units of reagent are consumed per tick, by default.
-#define REAGENTS_METABOLISM 0.4
+#define REAGENTS_METABOLISM 0.2
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
@@ -722,7 +722,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define NO_EAT 1
 #define NO_BREATHE 2
 #define NO_SLEEP 4
-#define NO_SHOCK 8
+#define RAD_ABSORB 8
 #define NO_SCAN 16
 #define NON_GENDERED 32
 #define REQUIRE_LIGHT 64

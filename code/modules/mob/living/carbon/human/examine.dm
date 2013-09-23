@@ -195,7 +195,6 @@
 		var/datum/organ/external/o = get_organ(organ)
 		if(o && o.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.display_name]!</span>\n"
-
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
@@ -205,6 +204,9 @@
 	var/distance = get_dist(usr,src)
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
 		distance = 1
+	if(distance <= 3)
+		if(brain_op_stage == 4)
+			msg += "<font color='blue'><b>[t_He] has had [t_his] brain removed.</b></font>\n"
 	if (src.stat == 1 || stat == 2 || status_flags & FAKEDEATH)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
@@ -224,10 +226,10 @@
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
-		/*if(usr.nutrition < 100)
+		if(usr.nutrition < 100)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
-		else*/
-		msg += "[t_He] [t_is] quite chubby.\n"
+		else
+			msg += "[t_He] [t_is] quite chubby.\n"
 
 	msg += "</span>"
 
@@ -240,7 +242,7 @@
 
 	if(!key && brain_op_stage != 4 && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD && status_flags & !FAKEDEATH)
+	else if(!client && brain_op_stage != 4 && stat != DEAD && !(status_flags & FAKEDEATH))
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	var/list/wound_flavor_text = list()

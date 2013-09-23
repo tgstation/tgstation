@@ -44,7 +44,7 @@ var/list/uplink_items = list()
 	var/last = 0 // Appear last
 	var/abstract = 0
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-	var/job = null
+	var/list/job = null
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	U.uses -= max(cost, 0)
@@ -96,7 +96,7 @@ var/list/uplink_items = list()
 	desc = "A grenade that explodes into HONK! brand banana peels that are genetically modified to be extra slippery and extrude caustic acid when stepped on"
 	item = /obj/item/weapon/grenade/clown_grenade
 	cost = 4
-	job = "Clown"
+	job = list("Clown")
 
 //Detective
 /datum/uplink_item/jobspecific/evidenceforger
@@ -104,14 +104,14 @@ var/list/uplink_items = list()
 	desc = "An evidence scanner that allows you forge evidence by setting the output before scanning the item."
 	item = /obj/item/device/detective_scanner/forger
 	cost = 3
-	job = "Detective"
+	job = list("Detective")
 
 /datum/uplink_item/jobspecific/conversionkit
 	name = "Conversion Kit Bundle"
 	desc = "A bundle that comes with a professional revolver conversion kit and 1 box of .357 ammo. The kit allows you to convert your revolver to fire lethal rounds or vice versa, modification is nearly perfect and will not result in catastrophic failure."
 	item = /obj/item/weapon/storage/box/syndie_kit/conversion
 	cost = 6
-	job = "Detective"
+	job = list("Detective")
 
 //Chef
 /datum/uplink_item/jobspecific/specialsauce
@@ -119,14 +119,14 @@ var/list/uplink_items = list()
 	desc = "A custom made sauce made from the toxin glands of 1000 space carp, if somebody ingests enough they'll be dead in 3 minutes or less guaranteed."
 	item = /obj/item/weapon/reagent_containers/food/condiment/syndisauce
 	cost = 2
-	job = "Chef"
+	job = list("Chef")
 
 /datum/uplink_item/jobspecific/meatcleaver
 	name = "Meat Cleaver"
 	desc = "A mean looking meat cleaver that does damage comparable to an Energy Sword but with the added benefit of chopping your victim into hunks of meat after they've died and the chance to stun when thrown."
 	item = /obj/item/weapon/butch/meatcleaver
 	cost = 5
-	job = "Chef"
+	job = list("Chef")
 
 //Janitor
 
@@ -135,7 +135,7 @@ var/list/uplink_items = list()
 	desc = "An Anti-Personnel proximity mine cleverly disguised as a wet floor caution sign that is triggered by running past it, activate it to start the 15 second timer and activate again to disarm."
 	item = /obj/item/weapon/caution/proximity_sign
 	cost = 2
-	job = "Janitor"
+	job = list("Janitor")
 
 
 //Assistant
@@ -145,15 +145,14 @@ var/list/uplink_items = list()
 	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
 	item = /obj/item/clothing/gloves/black/thief
 	cost = 3
-	job = "Assistant"
+	job = list("Assistant")
 
 /datum/uplink_item/jobspecific/greytide
 	name = "Greytide Implant"
-	desc = "A box containing an implanter filled with a greytide implant when injected into another person makes them loyal to the greytide and your cause, unless of course they're loyal to someone else. Loyalty ends if the implant is no longer in their system."
+	desc = "A box containing an implanter filled with a greytide implant when injected into another person makes them loyal to the greytide and your cause, unless of course they're already implanted by someone else. Loyalty ends if the implant is no longer in their system."
 	item = /obj/item/weapon/storage/box/syndie_kit/greytide
 	cost = 7
-	job = "Assistant"
-
+	job = list("Assistant")
 //Bartender
 
 /datum/uplink_item/jobspecific/drunkbullets
@@ -161,7 +160,16 @@ var/list/uplink_items = list()
 	desc = "A box containing 6 shotgun shells that simulate the effects of extreme drunkeness on the target, more effective for each type of alcohol in the target's system."
 	item = /obj/item/weapon/storage/box/syndie_kit/boolets
 	cost = 3
-	job = "Bartender"
+	job = list("Bartender")
+
+//Engineer
+
+/datum/uplink_item/jobspecific/powergloves
+	name = "Power Gloves"
+	desc = "Insulated gloves that can utilize the power of the station to deliver a short arc of electricity at a target. Must be standing on a powered cable to use."
+	item = /obj/item/clothing/gloves/yellow/power
+	cost = 7
+	job = list("Station Engineer","Chief Engineer")
 
 // DANGEROUS WEAPONS
 

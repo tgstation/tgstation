@@ -72,6 +72,7 @@ datum/shuttle_controller
 	// returns the time (in seconds) before shuttle arrival
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
 	proc/timeleft()
+
 		if(online)
 			var/timeleft = round((endtime - world.timeofday)/10 ,1)
 			if(direction == 1 || direction == 2)
@@ -105,6 +106,8 @@ datum/shuttle_controller
 				return
 			var/timeleft = timeleft()
 			if(timeleft > 1e5)		// midnight rollover protection
+				timeleft = 0
+			if(timeleft < 0)		// Sanity
 				timeleft = 0
 			switch(location)
 				if(0)

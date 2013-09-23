@@ -292,43 +292,43 @@
 	name="Phazon Torso"
 	icon_state = "phazon_harness"
 	construction_time = 300
-	construction_cost = list("metal"=35000,"glass"=10000,"plasma"=20000)
-	origin_tech = "programming=5;materials=7;bluespace=6;powerstorage=6"
+	construction_cost = list("metal"=35000,"glass"=10000,"plasma"=20000, "phazon"=5000)
+	origin_tech = "programming=5;materials=9;bluespace=10;powerstorage=6"
 
 /obj/item/mecha_parts/part/phazon_head
 	name="Phazon Head"
 	icon_state = "phazon_head"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"glass"=5000,"plasma"=10000)
-	origin_tech = "programming=4;materials=5;magnets=6"
+	construction_cost = list("metal"=15000,"glass"=5000,"plasma"=10000, "phazon"=2500)
+	origin_tech = "programming=9;materials=9;magnets=6"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="Phazon Left Arm"
 	icon_state = "phazon_l_arm"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
-	origin_tech = "materials=5;bluespace=2;magnets=2"
+	construction_cost = list("metal"=20000,"plasma"=10000, "phazon"=2500)
+	origin_tech = "materials=9;bluespace=6;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_right_arm
 	name="Phazon Right Arm"
 	icon_state = "phazon_r_arm"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
-	origin_tech = "materials=5;bluespace=2;magnets=2"
+	construction_cost = list("metal"=20000,"plasma"=10000, "phazon"=2500)
+	origin_tech = "materials=9;bluespace=6;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_left_leg
 	name="Phazon Left Leg"
 	icon_state = "phazon_l_leg"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
-	origin_tech = "materials=5;bluespace=3;magnets=3"
+	construction_cost = list("metal"=20000,"plasma"=10000, "phazon"=2500)
+	origin_tech = "materials=9;bluespace=6;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_right_leg
 	name="Phazon Right Leg"
 	icon_state = "phazon_r_leg"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
-	origin_tech = "materials=5;bluespace=3;magnets=3"
+	construction_cost = list("metal"=20000,"plasma"=10000, "phazon"=2500)
+	origin_tech = "materials=9;bluespace=6;magnets=3"
 
 ///////// Odysseus
 
@@ -480,7 +480,7 @@
 		icon_state = "mainboard"
 
 	phazon
-		origin_tech = "materials=7;bluespace=6"
+		origin_tech = "materials=9;bluespace=10"
 
 	phazon/peripherals
 		name = "Circuit board (Phazon Peripherals Control module)"
@@ -489,5 +489,12 @@
 	phazon/main
 		name = "Circuit board (Phazon Central Control module)"
 		icon_state = "mainboard"
+
+	// Cheating.
+	phazon/phase_array
+		name = "Phase Array"
+		name = "A peice of bluespace technology so advanced, it seems magical."
+		icon='icons/mecha/mecha_equipment.dmi'
+		icon_state = "mecha_phase_array"
 
 

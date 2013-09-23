@@ -18,9 +18,9 @@
 	turns_per_move = 5
 	see_in_dark = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "pokes the"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75 // Was 200
 	health = 75 // 150/2
@@ -34,6 +34,7 @@
 	var/busy = 0
 	pass_flags = PASSTABLE
 	move_to_delay = 6
+	speed = 3
 
 //nursemaids - these create webs and eggs
 // Slower
@@ -69,8 +70,8 @@
 
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
 	..()
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(target_mob))
+		var/mob/living/L = target_mob
 		if(L.reagents)
 			if(prob(poison_per_bite))
 				src.visible_message("\red \the [src] injects a powerful toxin!")
@@ -107,14 +108,14 @@
 						if(D.density==1) // Closed
 							busy=MOVING_TO_TARGET
 							Goto(D, move_to_delay)
-							target=D
+							target_mob=D
 							GiveUp(D)
 							return
 			if(busy)
-				if(busy == MOVING_TO_TARGET && target)
-					var/obj/machinery/door/D = target
+				if(busy == MOVING_TO_TARGET && target_mob)
+					var/obj/machinery/door/D = target_mob
 					if(D.density==1)
-						if(get_dist(src, target) > 1)
+						if(get_dist(src, target_mob) > 1)
 							return // keep movin'.
 						stop_automated_movement = 1
 						walk(src,0)
@@ -134,11 +135,12 @@
 				cocoon_target = null
 			busy = 0
 			stop_automated_movement = 0
+
 /mob/living/simple_animal/hostile/giant_spider/hunter/proc/GiveUp(var/C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
-			if(target == C && get_dist(src,target) > 1)
-				target = null
+			if(target_mob == C && get_dist(src,target_mob) > 1)
+				target_mob = null
 			busy = 0
 			stop_automated_movement = 0
 
@@ -146,7 +148,7 @@
 	..()
 	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)
-			var/list/can_see = ListTargets()
+			var/list/can_see = view(src, 10)
 			//30% chance to stop wandering and do something
 			if(!busy && prob(30))
 				//first, check for potential food nearby to cocoon
@@ -219,7 +221,6 @@
 								Goto(O, move_to_delay)
 								//give up if we can't reach them after 10 seconds
 								GiveUp(O)
-
 
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)

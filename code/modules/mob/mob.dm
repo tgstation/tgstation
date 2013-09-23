@@ -26,10 +26,10 @@
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "\red Temperature: [environment.temperature] \n"
 	t += {"\red Temperature: [environment.temperature] \n
-		\blue Nitrogen: [environment.nitrogen] \n
-		\blue Oxygen: [environment.oxygen] \n
-		\blue Plasma : [environment.toxins] \n
-		\blue Carbon Dioxide: [environment.carbon_dioxide] \n"}
+\blue Nitrogen: [environment.nitrogen] \n
+\blue Oxygen: [environment.oxygen] \n
+\blue Plasma : [environment.toxins] \n
+\blue Carbon Dioxide: [environment.carbon_dioxide] \n"}
 	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
 		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
@@ -142,10 +142,10 @@
 	if(istype(W))
 		equip_to_slot_if_possible(W, slot)
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, act_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+	if(equip_to_slot_if_possible(W, slot_l_hand, act_on_fail, disable_warning, redraw_mob))
 		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, slot_r_hand, act_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
 
@@ -153,17 +153,22 @@
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
+#define EQUIP_FAILACTION_DELETE 1
+#define EQUIP_FAILACTION_DROP 2
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, act_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
 	if(!istype(W)) return 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		switch(W.mob_can_equip(src, slot, disable_warning, automatic))
 			if(0)
-				if(del_on_fail)
-					del(W)
-				else
-					if(!disable_warning)
-						src << "\red You are unable to equip that." //Only print if del_on_fail is false
+				switch(act_on_fail)
+					if(EQUIP_FAILACTION_DELETE)
+						del(W)
+					if(EQUIP_FAILACTION_DROP)
+						W.loc=get_turf(src) // I think.
+					else
+						if(!disable_warning)
+							src << "\red You are unable to equip that." //Only print if del_on_fail is false
 				return 0
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
@@ -390,11 +395,14 @@
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))
-			if(del_on_fail)
-				del(W)
-			else
-				if(!disable_warning)
-					src << "\red You are unable to equip that." //Only print if del_on_fail is false
+			switch(act_on_fail)
+				if(EQUIP_FAILACTION_DELETE)
+					del(W)
+				if(EQUIP_FAILACTION_DROP)
+					W.loc=get_turf(src) // I think.
+				else
+					if(!disable_warning)
+						src << "\red You are unable to equip that." //Only print if del_on_fail is false
 			return 0
 
 		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -407,7 +415,11 @@
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
-	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DELETE, 1, 0)
+
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+/mob/proc/equip_to_slot_or_drop(obj/item/W as obj, slot)
+	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DROP, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 var/list/slot_equipment_priority = list( \
@@ -782,9 +794,9 @@ var/list/slot_equipment_priority = list( \
 	if (flavor_text && flavor_text != "")
 		var/msg = replacetext(flavor_text, "\n", " ")
 		if(lentext(msg) <= 40)
-			return "\blue [msg]"
+			return "<font color='#ffa000'><b>[msg]</b></font>"
 		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+			return "<font color='#ffa000'><b>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></b></font>"
 
 /*
 /mob/verb/help()
@@ -818,8 +830,8 @@ var/list/slot_equipment_priority = list( \
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
 		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-		if (deathtime < 18000)
-			usr << "You must wait 30 minutes to respawn!"
+		if (deathtime < config.respawn_delay*600)
+			usr << "You must wait [config.respawn_delay] minutes to respawn!"
 			return
 		else
 			usr << "You can respawn now, enjoy your new life!"

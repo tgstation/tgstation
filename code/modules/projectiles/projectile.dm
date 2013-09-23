@@ -94,7 +94,15 @@
 				var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 				if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
 					miss_modifier += -30
-			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
+			if(istype(src, /obj/item/projectile/beam/lightning)) //Lightning is quite accurate
+				miss_modifier += -200
+				def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
+				var/turf/simulated/floor/f = get_turf(A.loc)
+				if(f && istype(f))
+					f.break_tile()
+					f.hotspot_expose(1000,CELL_VOLUME)
+			else
+				def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier + 8*distance)
 
 			if(!def_zone)
 				visible_message("\blue \The [src] misses [M] narrowly!")
@@ -143,8 +151,9 @@
 						O.bullet_act(src)
 					for(var/mob/M in A)
 						M.bullet_act(src, def_zone)
-				density = 0
-				invisibility = 101
+				if(!istype(src, /obj/item/projectile/beam/lightning))
+					density = 0
+					invisibility = 101
 				del(src)
 		return 1
 

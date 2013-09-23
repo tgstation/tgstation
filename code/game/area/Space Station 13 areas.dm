@@ -1116,6 +1116,26 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 
+/area/security/gas_chamber
+	name = "\improper Execution Chamber"
+	icon_state = "bar" // Because it's all parties from here on.
+
+
+/obj/item/weapon/paper/Gaschamber
+	name = "paper - 'Gas Chambers for Idiots'"
+	info = {"<h4>Gas Chambers for Idiots</h4>
+<p>So here you are, with a fancy, new gas chamber thanks to cheap MoMMI labor.  Now you've got a guy you need to die and have no idea what to do.</p>
+<ol>
+	<li>First, use the computer in the witnessing room to shut off the scrubbers: Set Environmental Mode, Off.</li>
+	<li>Run down to the door for the room south of the witnessing room. You'll see a bunch of N2O or CO2 tanks.</li>
+	<li>Select the tank you want and drag it onto the connector.  N2O (same shit used in anesthesia tanks in surgery) makes you go sleepy and kills in high enough doses, while CO2 makes people fall over comically and eventually die. CO2 is best because it's easier to tell when Mr. Revpants is dead, and because the room is configured for CO2 executions..</li>
+	<li>Make sure everyone you don't want dead is out of the chamber and the door is closed.</li>
+	<li>Wrench the tank in and go watch the fun from witnessing.</li>
+	<li>Once he's dead, set environmentals to filtering (or Cycle, if you're an idiot and used N2O).</li>
+	<li>Run back down to gas control and unwrench the tank.</li>
+	<li>Drag the dead bastard out once the computer says it's safe to enter.</li>
+</ol>"}
+
 /area/security/warden
 	name = "\improper Warden"
 	icon_state = "Warden"

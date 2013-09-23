@@ -156,3 +156,75 @@
 		U << "<span class='warning'>This clearly isn't designed for your species!</span>"
 		return 0
 	return ..()
+
+// Vox Casual
+// Civvie
+/obj/item/clothing/suit/space/vox/casual
+	name = "vox civilian pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team."
+	icon_state = "vox-pressure-normal"
+	item_state = "vox-pressure-normal"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 10)
+
+/obj/item/clothing/head/helmet/space/vox/casual
+	name = "vox civilian pressure helmet"
+	icon_state = "vox-pressure-normal"
+	item_state = "vox-pressure-normal"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
+	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE|BLOCKHAIR
+	flags_inv = HIDEMASK
+
+/obj/item/clothing/suit/space/vox/casual/engineer
+	name = "vox engineering pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team.  This one comes with more radiation protection."
+	icon_state = "vox-pressure-engineer"
+	item_state = "vox-pressure-engineer"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 80)
+
+/obj/item/clothing/head/helmet/space/vox/casual/engineer
+	name = "vox engineering pressure helmet"
+	icon_state = "vox-pressure-engineer"
+	item_state = "vox-pressure-engineer"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is yellow."
+
+/obj/item/clothing/suit/space/vox/casual/science
+	name = "vox science pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team.  This one's for SCIENCE."
+	icon_state = "vox-pressure-science"
+	item_state = "vox-pressure-science"
+
+/obj/item/clothing/head/helmet/space/vox/casual/science
+	name = "vox science pressure helmet"
+	icon_state = "vox-pressure-science"
+	item_state = "vox-pressure-science"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is white."
+
+/obj/item/clothing/suit/space/vox/casual/medical
+	name = "vox medical pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team.  This one's for medical personnel."
+	icon_state = "vox-pressure-medical"
+	item_state = "vox-pressure-medical"
+	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/device/flashlight,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+
+/obj/item/clothing/head/helmet/space/vox/casual/medical
+	name = "vox medical pressure helmet"
+	icon_state = "vox-pressure-medical"
+	item_state = "vox-pressure-medical"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is white."
+
+/obj/item/clothing/suit/space/vox/casual/security
+	name = "vox medical pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for shitcurity."
+	icon_state = "vox-pressure-security"
+	item_state = "vox-pressure-security"
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/baton)
+
+/obj/item/clothing/head/helmet/space/vox/casual/security
+	name = "vox security pressure helmet"
+	icon_state = "vox-pressure-security"
+	item_state = "vox-pressure-security"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is for shitcurity."

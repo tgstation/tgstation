@@ -434,6 +434,7 @@ client/proc/one_click_antag()
 
 	return new_syndicate_commando
 
+/* REMOVED as requested
 /datum/admins/proc/makeVoxRaiders()
 
 	var/list/mob/dead/observer/candidates = list()
@@ -525,3 +526,4 @@ client/proc/one_click_antag()
 	new_vox.equip_vox_raider()
 
 	return new_vox
+*/

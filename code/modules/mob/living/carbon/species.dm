@@ -15,7 +15,7 @@
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/mutantrace               // Safeguard due to old code.
 
-	var/breath_type     // Non-oxygen gas breathed, if any.
+	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/survival_gear = /obj/item/weapon/storage/box/survival // For spawnin'.
 
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
@@ -36,6 +36,8 @@
 	var/burn_resist     // Burn damage reduction.
 
 	var/flags = 0       // Various specific features.
+
+/datum/species/proc/equip(var/mob/living/carbon/human/H)
 
 /datum/species/human
 	name = "Human"
@@ -73,6 +75,14 @@
 	attack_verb = "scratch"
 	darksight = 8
 
+	cold_level_1 = 200
+	cold_level_2 = 140
+	cold_level_3 = 80
+
+	heat_level_1 = 330
+	heat_level_2 = 380
+	heat_level_3 = 800
+
 	primitive = /mob/living/carbon/monkey/tajara
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
@@ -92,16 +102,64 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
 
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
-	survival_gear=/obj/item/weapon/storage/box/survival/vox
 
 	flags = WHITELISTED | NO_SCAN
+
+	equip(var/mob/living/carbon/human/H)
+		// Unequip existing suits and hats.
+		H.u_equip(H.wear_suit)
+		H.u_equip(H.head)
+
+		H.equip_to_slot_or_drop(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
+		var/suit=/obj/item/clothing/suit/space/vox/casual
+		var/helm=/obj/item/clothing/head/helmet/space/vox/casual
+		switch(H.mind.assigned_role)
+			if("Research Director","Scientist","Geneticist","Roboticist")
+				suit=/obj/item/clothing/suit/space/vox/casual/science
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/science
+			if("Chief Engineer","Station Engineer","Atmospheric Technician")
+				suit=/obj/item/clothing/suit/space/vox/casual/engineer
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/engineer
+			if("Head of Security","Warden","Detective","Security Officer")
+				suit=/obj/item/clothing/suit/space/vox/casual/security
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/security
+			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
+				suit=/obj/item/clothing/suit/space/vox/casual/medical
+				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
+		H.equip_to_slot_or_drop(new suit(H), slot_wear_suit)
+		H.equip_to_slot_or_drop(new helm(H), slot_head)
+		H.equip_to_slot_or_drop(new/obj/item/weapon/tank/nitrogen(H), slot_s_store)
+		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen only."
+		H.internal = H.s_store
+		if (H.internals)
+			H.internals.icon_state = "internal1"
 
 /datum/species/diona
 	name = "Diona"
 	icobase = 'icons/mob/human_races/r_plant.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
+	language = "Rootspeak"
 	attack_verb = "slash"
+	primitive = /mob/living/carbon/monkey/diona
 
-	flags = WHITELISTED | NO_EAT | NO_BREATHE | REQUIRE_LIGHT | NON_GENDERED | NO_SCAN | IS_PLANT
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	flags = WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NON_GENDERED | NO_SCAN | IS_PLANT | RAD_ABSORB

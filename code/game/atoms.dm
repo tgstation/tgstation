@@ -157,12 +157,15 @@ its easier to just keep the beam vertical.
 	//Icon_state is what icon state is used. Default is b_beam which is a blue beam.
 	//Maxdistance is the longest range the beam will persist before it gives up.
 	var/EndTime=world.time+time
+	var/broken = 0
+	var/obj/item/projectile/beam/lightning/light = new
 	while(BeamTarget&&world.time<EndTime&&get_dist(src,BeamTarget)<maxdistance&&z==BeamTarget.z)
+
 	//If the BeamTarget gets deleted, the time expires, or the BeamTarget gets out
 	//of range or to another z-level, then the beam will stop.  Otherwise it will
 	//continue to draw.
 
-		dir=get_dir(src,BeamTarget)	//Causes the source of the beam to rotate to continuosly face the BeamTarget.
+		//dir=get_dir(src,BeamTarget)	//Causes the source of the beam to rotate to continuosly face the BeamTarget.
 
 		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
@@ -205,6 +208,20 @@ its easier to just keep the beam vertical.
 					Pixel_y+=32
 			X.pixel_x=Pixel_x
 			X.pixel_y=Pixel_y
+			var/turf/TT = get_turf(X.loc)
+			if(TT.density)
+				del(X)
+				break
+			for(var/obj/O in TT)
+				if(!O.CanPass(light))
+					broken = 1
+					break
+				else if(O.density)
+					broken = 1
+					break
+			if(broken)
+				del(X)
+				break
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
 	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
@@ -1150,7 +1167,68 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					src.hand_al(usr, usr.hand)
 		else
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
-			if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
+			if((istype(usr:gloves, /obj/item/clothing/gloves/yellow/power)) && usr:a_intent == "hurt" && world.time >= usr.next_move)
+				var/obj/item/clothing/gloves/yellow/power/G = usr:gloves
+				var/time = 100
+				var/turf/T = get_turf(usr)
+				var/turf/U = get_turf(src)
+				var/obj/structure/cable/cable = locate() in T
+				if(!cable || !istype(cable))
+					return
+				if(world.time < G.next_shock)
+					usr << "<span class='warning'>[G] aren't ready to shock again!</span>"
+					return
+				usr.visible_message("<span class='warning'>[usr.name] fires an arc of electricity!</span>", \
+				"<span class='warning'>You fire an arc of electricity!</span>", \
+				"You hear the loud crackle of electricity!")
+				var/datum/powernet/PN = cable.get_powernet()
+				var/available = 0
+				var/obj/item/projectile/beam/lightning/A = new /obj/item/projectile/beam/lightning/( usr.loc )
+				if(PN)
+					available = PN.avail
+					A.damage = PN.get_electrocute_damage() + 10
+					if(available >= 4500000)
+						A.damage = 205
+					if(A.damage >= 200)
+						usr:apply_damage(15, BURN, (usr:hand ? "l_hand" : "r_hand"))
+						usr:Stun(10)
+						usr:Weaken(10)
+						if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
+							usr:stuttering += 15
+						time = 200
+						usr << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
+					else if(A.damage >= 100)
+						usr:apply_damage(5, BURN, (usr:hand ? "l_hand" : "r_hand"))
+						usr:Stun(5)
+						usr:Weaken(5)
+						if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
+							usr:stuttering += 5
+						time = 150
+						usr << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, usr)
+					s.start()
+				if(A.damage <= 0)
+					del(A)
+				if(A)
+					playsound(usr.loc, 'sound/effects/eleczap.ogg', 75, 1)
+					A.tang = A.adjustAngle(get_angle(U,T))
+					A.icon = midicon
+					A.icon_state = "[A.tang]"
+					A.firer = usr
+					A.def_zone = usr:get_organ_target()
+					A.original = src
+					A.current = U
+					A.starting = U
+					A.yo = U.y - T.y
+					A.xo = U.x - T.x
+					spawn( 1 )
+						A.process()
+
+				usr.next_move = world.time + 12
+
+				G.next_shock = world.time + time
+			else if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				// ------- YOU HAVE THE LASER MUTATION, YOUR INTENT SET TO HURT AND IT'S BEEN MORE THAN A DECISECOND SINCE YOU LAS TATTACKED -------
 
 				var/turf/T = get_turf(usr)
@@ -1170,6 +1248,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				A.def_zone = usr:get_organ_target()
 				A.original = src
 				A.current = T
+				A.starting = U
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x
 				spawn( 1 )

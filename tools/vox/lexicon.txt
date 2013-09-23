@@ -1,0 +1,42 @@
+# VOX LEXICON
+#
+# Parsed by create.py.
+# Format:
+#word: (noun|adjective|verb) "f aa" 'n iy m' 's'
+# NOTE: Doublequotes indicates primary stress, single indicates no stress.
+#
+# Phonemes are taken from here (must be lowercase): http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+# pau = short pause
+#
+aft: adjective 'ae f t'
+array: noun 'ah r ey'
+asimov: adjective "ae" 'z ih' 'm aa v'
+ass: noun 'ae s'
+asshole: noun "ae s" 'hh ow l'
+biohazard: adjective "b ay" 'ow' 'hh ae' 'z er d'
+bitch: noun "b ih t" 'ch'
+centcomm: noun "s eh n t" 'k aa m'
+code: noun "k ow d d"
+connor: noun "k ao n" 'n er'
+coward: noun "k aw" 'w er d'
+cunt: noun 'k ah n' 't'
+cyborg: noun "s ay" 'b ao r g'
+fore: adjective 'f ao r'
+fuck: noun 'f ah' 'k'
+help: noun "hh eh l" 'p'
+medbay: noun "m eh d" 'b ey'
+nanotrasen: noun "n ae" 'n ow' 't r ey' 'z eh n'
+penis: noun "p iy" 'n ih s'
+penises: noun "p iy" 'n ih s' 'eh s'
+sarah: noun "s eh" 'r ah'
+shit: noun 'sh ih t'
+shitting: verb "sh ih" 't iy ng'
+solar: noun "s ow" 'l er'
+thirteen: noun 'th er' "t iy n"
+tide: noun "t ay" 'd pau'
+to: noun 't uw'
+virology: noun "v ay" 'r aw l' 'l eh' 'g iy'
+vox: noun 'v aa k s'
+wanker: noun "w ae n" 'k er'
+xenobiology: noun "z iy" 'n ow' 'b ay' 'aw l' 'l eh' 'g iy'
+xenomorph: noun "z iy" 'n ow' 'm ao r f'

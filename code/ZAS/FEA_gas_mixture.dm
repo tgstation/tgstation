@@ -114,7 +114,7 @@ What are the archived variables for?
 
 	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins)
 
-	if(trace_gases.len)
+	if(trace_gases && trace_gases.len) //sanity check because somehow the tracegases gets nulled?
 		for(var/datum/gas/trace_gas in trace_gases)
 			heat_capacity += trace_gas.moles*trace_gas.specific_heat
 
@@ -394,6 +394,10 @@ What are the archived variables for?
 	//Called by: ?
 	//Inputs: How many moles to remove.
 	//Outputs: Removed air.
+
+	// Fix a singuloth problem
+	if(group_multiplier==0)
+		return null
 
 	var/sum = total_moles()
 	amount = min(amount,sum) //Can not take more air than tile has!

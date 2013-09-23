@@ -483,6 +483,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (!toff)
 					for (var/obj/item/device/pda/P in sortAtom(get_viewable_pdas()))
 						if (P == src)	continue
+						if(P.hidden) continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"

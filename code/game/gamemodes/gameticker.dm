@@ -49,6 +49,11 @@ var/global/datum/controller/gameticker/ticker
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
+				watchdog.check_for_update()
+				if(watchdog.waiting)
+					world << "\blue Server update detected, restarting momentarily."
+					watchdog.signal_ready()
+					return
 			if(going)
 				pregame_timeleft--
 
@@ -301,8 +306,15 @@ var/global/datum/controller/gameticker/ticker
 		mode.process_job_tasks()
 
 		emergency_shuttle.process()
+		watchdog.check_for_update()
 
-		var/mode_finished = mode.check_finished() || (emergency_shuttle.location == 2 && emergency_shuttle.alert == 1)
+		var/force_round_end=0
+
+		// If server's empty, force round end.
+		if(watchdog.waiting && player_list.len == 0)
+			force_round_end=1
+
+		var/mode_finished = mode.check_finished() || (emergency_shuttle.location == 2 && emergency_shuttle.alert == 1) || force_round_end
 		if(!mode.explosion_in_progress && mode_finished)
 			current_state = GAME_STATE_FINISHED
 
@@ -312,18 +324,20 @@ var/global/datum/controller/gameticker/ticker
 			spawn(50)
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
-					if(!delay_end)
+					if(!delay_end && !watchdog.waiting)
 						world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					if(!delay_end)
+					if(!delay_end && !watchdog.waiting)
 						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
-
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 
-				if(!delay_end)
+				if (watchdog.waiting)
+					world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+					watchdog.signal_ready()
+				else if(!delay_end)
 					sleep(restart_timeout)
 					if(!delay_end)
 						world.Reboot()

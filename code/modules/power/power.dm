@@ -358,7 +358,9 @@
 			return min(rand(20,65),rand(20,65))
 		if (1000 to 10000-1)
 			return min(rand(10,20),rand(10,20))*/
-		if (1000000 to INFINITY)
+		if (4000000 to INFINITY)
+			return min(rand(80,180),rand(80,180))
+		if (1000000 to 4000000)
 			return min(rand(50,160),rand(50,160))
 		if (200000 to 1000000)
 			return min(rand(25,80),rand(25,80))

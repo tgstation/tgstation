@@ -169,6 +169,114 @@
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 
+/mob/living/carbon/human/ex_act(severity)
+	if(!blinded)
+		flick("flash", flash)
+
+	var/shielded = 0
+	var/b_loss = null
+	var/f_loss = null
+	switch (severity)
+		if (1.0)
+			b_loss += 500
+			if (!prob(getarmor(null, "bomb")))
+				gib()
+				return
+			else
+				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				throw_at(target, 200, 4)
+			//return
+//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
+				//user.throw_at(target, 200, 4)
+
+		if (2.0)
+			if (!shielded)
+				b_loss += 60
+
+			f_loss += 60
+
+			if (prob(getarmor(null, "bomb")))
+				b_loss = b_loss/1.5
+				f_loss = f_loss/1.5
+
+			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+				ear_damage += 30
+				ear_deaf += 120
+			if (prob(70) && !shielded)
+				Paralyse(10)
+
+		if(3.0)
+			b_loss += 30
+			if (prob(getarmor(null, "bomb")))
+				b_loss = b_loss/2
+			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+				ear_damage += 15
+				ear_deaf += 60
+			if (prob(50) && !shielded)
+				Paralyse(10)
+
+	var/update = 0
+
+	// focus most of the blast on one organ
+	var/datum/organ/external/take_blast = pick(organs)
+	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+
+	// distribute the remaining 10% on all limbs equally
+	b_loss *= 0.1
+	f_loss *= 0.1
+
+	var/weapon_message = "Explosive Blast"
+
+	for(var/datum/organ/external/temp in organs)
+		switch(temp.name)
+			if("head")
+				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
+			if("chest")
+				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
+			if("l_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("l_leg")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_leg")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_foot")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("l_foot")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("r_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+			if("l_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
+	if(update)	UpdateDamageIcon()
+
+
+/mob/living/carbon/human/blob_act()
+	if(stat == 2)	return
+	show_message("\red The blob attacks you!")
+	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
+	return
+
+/mob/living/carbon/human/meteorhit(O as obj)
+	for(var/mob/M in viewers(src, null))
+		if ((M.client && !( M.blinded )))
+			M.show_message("\red [src] has been hit by [O]", 1)
+	if (health > 0)
+		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
+		if(!affecting)	return
+		if (istype(O, /obj/effect/immovablerod))
+			if(affecting.take_damage(101, 0))
+				UpdateDamageIcon()
+		else
+			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
+				UpdateDamageIcon()
+		updatehealth()
+	return
+
+
 /mob/living/carbon/human/hand_p(mob/M as mob)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))

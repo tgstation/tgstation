@@ -23,7 +23,8 @@
 										"diamond"=0,
 										"plasma"=0,
 										"uranium"=0,
-										"bananium"=0
+										"bananium"=0,
+										"phazon"=0
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -44,7 +45,13 @@
 						/obj/item/robot_parts/l_arm,
 						/obj/item/robot_parts/r_arm,
 						/obj/item/robot_parts/l_leg,
-						/obj/item/robot_parts/r_leg
+						/obj/item/robot_parts/r_leg,
+						/obj/item/robot_parts/robot_component/binary_communication_device,
+						/obj/item/robot_parts/robot_component/radio,
+						/obj/item/robot_parts/robot_component/actuator,
+						/obj/item/robot_parts/robot_component/diagnosis_unit,
+						/obj/item/robot_parts/robot_component/camera,
+						/obj/item/robot_parts/robot_component/armour
 					),
 	"Ripley"=list(
 						/obj/item/mecha_parts/chassis/ripley,
@@ -117,7 +124,8 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/honker
+						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
+						/obj/item/weapon/circuitboard/mecha/phazon/phase_array
 						),
 
 	"Robotic Upgrade Modules" = list(
@@ -128,13 +136,9 @@
 						/obj/item/borg/upgrade/tasercooler,
 						/obj/item/borg/upgrade/jetpack
 						),
-
-
-
-
-
-
-	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
+	"Misc"=list(
+						/obj/item/mecha_parts/mecha_tracking
+						)
 	)
 
 
@@ -690,6 +694,8 @@
 			type = /obj/item/stack/sheet/mineral/uranium
 		if("bananium")
 			type = /obj/item/stack/sheet/mineral/clown
+		if("phazon")
+			type = /obj/item/stack/sheet/mineral/phazon
 		else
 			return 0
 	var/result = 0
@@ -750,6 +756,9 @@
 			if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
+			if(src.resources["phazon"] >= 2000)
+				var/obj/item/stack/sheet/mineral/phazon/G = new /obj/item/stack/sheet/mineral/phazon(src.loc)
+				G.amount = round(src.resources["phazon"] / G.perunit)
 			del(src)
 			return 1
 		else
@@ -777,6 +786,8 @@
 			material = "bananium"
 		if(/obj/item/stack/sheet/mineral/uranium)
 			material = "uranium"
+		if(/obj/item/stack/sheet/mineral/phazon)
+			material = "phazon"
 		else
 			return ..()
 

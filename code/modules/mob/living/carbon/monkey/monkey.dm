@@ -1,8 +1,7 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	voice_message = "chimpers"
-	say_message = "chimpers"
+	speak_emote = list("chimpers")
 	icon_state = "monkey1"
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
@@ -17,24 +16,21 @@
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"
-	voice_message = "mews"
-	say_message = "mews"
+	speak_emote = list("mews")
 	ico = "tajkey"
 	uni_append = "0A0E00"
 
 /mob/living/carbon/monkey/skrell
 	name = "neaera"
 	voice_name = "neaera"
-	voice_message = "squicks"
-	say_message = "squicks"
+	speak_emote = list("squicks")
 	ico = "skrellkey"
 	uni_append = "01CC92"
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"
 	voice_name = "stok"
-	voice_message = "hisses"
-	say_message = "hisses"
+	speak_emote = list("hisses")
 	ico = "stokkey"
 	uni_append = "044C5D"
 
@@ -43,7 +39,7 @@
 	reagents = R
 	R.my_atom = src
 
-	if(name == "monkey" || name == "farwa" || name == "stok" || name == "neara") //Hideous but necessary to stop Pun-Pun becoming generic.
+	if(name == "monkey" || name == "farwa" || name == "stok" || name == "neara" || name == "diona nymph") //Hideous but necessary to stop Pun-Pun becoming generic.
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
@@ -71,18 +67,29 @@
 	..()
 	dna.mutantrace = "lizard"
 	greaterform = "Unathi"
+	add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New()
 
 	..()
 	dna.mutantrace = "skrell"
 	greaterform = "Skrell"
+	add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New()
 
 	..()
 	dna.mutantrace = "tajaran"
 	greaterform = "Tajaran"
+	add_language("Siik'tajr")
+
+/mob/living/carbon/monkey/diona/New()
+
+	..()
+	gender = NEUTER
+	dna.mutantrace = "plant"
+	greaterform = "Diona"
+	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0

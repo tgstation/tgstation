@@ -20,7 +20,7 @@
 	if (length(message) >= 2)
 		var/prefix = copytext(message, 1, 3)
 		if (department_radio_keys[prefix] == "binary")
-			if(istype(src, /mob/living/silicon/pai))
+			if(istype(src, /mob/living/silicon/pai) || istype(src, /mob/living/carbon/brain))
 				return ..(message)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))

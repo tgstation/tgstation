@@ -47,6 +47,10 @@
 
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
+			if (watchdog.waiting)
+				world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+				watchdog.signal_ready()
+				return
 			sleep(50)
 			world.Reboot()
 			return

@@ -128,7 +128,10 @@
 	var/list/res = list()
 	for (var/ID in viruses)
 		var/datum/disease2/disease/V = viruses[ID]
-		res["[V.uniqueID]"] = V.getcopy()
+		if(istype(V))
+			res["[V.uniqueID]"] = V.getcopy()
+		else
+			testing("Got a NULL disease2 in virus_copylist!")
 	return res
 
 
@@ -146,8 +149,8 @@ var/global/list/virusDB = list()
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\disease2.dm:145: r += "<BR>Infection rate : [infectionchance * 10]"
 	r += {"<BR>Infection rate : [infectionchance * 10]
-		<BR>Spread form : [spreadtype]
-		<BR>Progress Speed : [stageprob * 10]"}
+<BR>Spread form : [spreadtype]
+<BR>Progress Speed : [stageprob * 10]"}
 	// END AUTOFIX
 	for(var/datum/disease2/effectholder/E in effects)
 		r += "<BR>Effect:[E.effect.name]. Strength : [E.multiplier * 8]. Verosity : [E.chance * 15]. Type : [5-E.stage]."

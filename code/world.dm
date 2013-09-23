@@ -9,6 +9,9 @@
 
 #define RECOMMENDED_VERSION 495
 /world/New()
+	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
+	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
+	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
@@ -82,6 +85,8 @@
 	. = ..()
 
 	sleep_offline = 1
+
+	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
 
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)

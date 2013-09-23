@@ -80,8 +80,8 @@
 		return
 
 	load_into_chamber()
-//		if(in_chamber)
-//			return 1 {R}
+		if(in_chamber)
+			return 1
 		if(!loaded.len)
 			return 0
 

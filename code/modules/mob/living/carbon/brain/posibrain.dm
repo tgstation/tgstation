@@ -118,7 +118,7 @@
 	src.brainmob.real_name = src.brainmob.name
 	src.brainmob.loc = src
 	src.brainmob.container = src
-	src.brainmob.robot_talk_understand = 1
+	src.brainmob.robot_talk_understand = 0
 	src.brainmob.stat = 0
 	src.brainmob.silent = 0
 	src.brainmob.brain_op_stage = 4.0

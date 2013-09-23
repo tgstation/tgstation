@@ -235,6 +235,16 @@
 				radiation = 0
 
 			else
+				if(species.flags & RAD_ABSORB)
+					var/rads = radiation/25
+					radiation -= rads
+					nutrition += rads
+					heal_overall_damage(rads,rads)
+					adjustOxyLoss(-(rads))
+					adjustToxLoss(-(rads))
+					updatehealth()
+					return
+
 				var/damage = 0
 				switch(radiation)
 					if(1 to 49)
@@ -274,6 +284,7 @@
 		if(reagents.has_reagent("lexorin")) return
 		if(mNobreath in mutations) return // No breath mutation means no breathing.
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+		if(species && species.flags & NO_BREATHE) return
 
 		var/datum/organ/internal/lungs/L = internal_organs["lungs"]
 		L.process()
@@ -310,7 +321,6 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 					breath = loc.remove_air(breath_moles)
-
 
 					if(!is_lung_ruptured())
 						if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
@@ -529,7 +539,7 @@
 		if(istype(loc, /obj/mecha))
 			var/obj/mecha/M = loc
 			loc_temp =  M.return_temperature()
-		else if(istype(get_turf(src), /turf/space))
+		//else if(istype(get_turf(src), /turf/space))
 		else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			loc_temp = loc:air_contents.temperature
 		else
@@ -606,6 +616,7 @@
 		else
 			if( !(COLD_RESISTANCE in mutations))
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				if(istype(src.loc, /turf/space)) adjustBruteLoss( LOW_PRESSURE_DAMAGE ) //Space doubles damage
 				pressure_alert = -2
 			else
 				pressure_alert = -1

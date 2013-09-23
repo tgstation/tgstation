@@ -39,6 +39,11 @@
 			if(B)
 				Blood = B
 				break
+		// /vg/: Try to fix isolators
+		if(!Blood)
+			usr << "\red ERROR: Unable to locate blood within the beaker.  Bug?"
+			testing("Unable to locate blood in [beaker]!")
+			return
 		var/list/virus = virus_copylist(Blood.data["virus2"])
 		var/choice = text2num(href_list["isolate"]);
 		for (var/datum/disease2/disease/V in virus)
@@ -69,7 +74,7 @@
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\isolator.dm:68: dat = "Please insert sample into the isolator.<BR>"
 		dat = {"Please insert sample into the isolator.<BR>
-			<A href='?src=\ref[src];close=1'>Close</A>"}
+<A href='?src=\ref[src];close=1'>Close</A>"}
 		// END AUTOFIX
 	else if(isolating)
 		dat = "Isolating"
