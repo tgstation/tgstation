@@ -119,6 +119,17 @@
 			usr << "\blue \The [src] is full!"
 
 
+/obj/item/weapon/reagent_containers/food/drinks/suicide_act(mob/user) //Suggested by HBL
+	if (src.reagents.total_volume)
+		viewers(user) << "\red <b>It looks like [user] is drinking \himself to death!</b>"
+		src.attack(user, user)
+		src.reagents.reaction(user, INGEST)
+		spawn(5)
+			if (src.reagents.total_volume)
+				src.reagents.trans_to(user, src.reagents.total_volume)
+		return (TOXLOSS)
+
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////

@@ -20,9 +20,9 @@
 	var/construction_cost = list("metal"=750,"glass"=75)
 	var/construction_time=100
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (FIRELOSS)
+/obj/item/weapon/cell/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	return (FIRELOSS)
 
 /obj/item/weapon/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"

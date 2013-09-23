@@ -18,6 +18,10 @@
 	throw_range = 20
 	force = 0
 
+/obj/item/toy/suicide_act(mob/living/carbon/user)
+	viewers(user) << "\red <b>[user] steps on the [src.name]! Ouch!</b>"
+	return (BRUTELOSS)
+
 
 /*
  * Balloons
@@ -111,6 +115,14 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
+
+/* Come up with something that doesn't gib.
+/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/user) //Suggested by.. somebody. Sorry, I forgot your name!
+	viewers(user) << "\red <b>[user] is consumed by the [src.name]! That's the last of \him.</b>"
+	user.drop_item()
+	user.gib()
+	return (BRUTELOSS+TOXLOSS)
+*/
 
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?
@@ -425,9 +437,9 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS|OXYLOSS)
+/obj/item/toy/crayon/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS|OXYLOSS)
 
 /*
  * Snap pops

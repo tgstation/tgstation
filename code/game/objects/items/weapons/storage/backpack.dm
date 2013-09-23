@@ -67,6 +67,17 @@
 			crit_fail = 1
 			icon_state = "brokenpack"
 
+/obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
+	user.drop_item()
+	viewers(user) << "\red <b>[user] is trying to stuff \himself inside the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	var/list/disk_search = user.search_contents_for(/obj/item/weapon/disk/nuclear) //Hiding disk from ops? NOPE!
+	if (!isemptylist(disk_search))
+		for (var/obj/item/weapon/disk/nuclear/fukkendisk in disk_search)
+			fukkendisk.loc = get_turf(src)
+	user.loc = src
+	return (OXYLOSS + FIRELOSS)
+
+
 
 /obj/item/weapon/storage/backpack/santabag
 	name = "Santa's Gift Bag"

@@ -12,6 +12,13 @@
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
+/obj/item/weapon/phone/suicide_act(mob/user) //Suggested by FreakyM
+	if(locate(/obj/structure/stool) in user.loc)
+		viewers(user) << "\red <b>[user] is making a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</b>"
+	else
+		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</b>"
+	return(OXYLOSS)
+
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
@@ -39,6 +46,14 @@
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
+
+/obj/item/weapon/spacecash/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] sells \his body to Nar-Sie for double \his [src.name].</b>"
+	user.drop_item()
+	var/obj/item/weapon/spacecash/cash = new (src)
+	cash.loc = get_turf(src)
+	user.dust()
+	return (OXYLOSS)
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
@@ -79,6 +94,11 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/bananapeel/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] slipped on the [src.name] for the last time!</b>"
+	playsound(user, 'sound/misc/slip.ogg', 50, 1, -3)
+	return (BRUTELOSS)
+
 /obj/item/weapon/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
@@ -100,6 +120,10 @@
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
+
+/obj/item/weapon/soap/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] bites down on the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	return (TOXLOSS)
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
@@ -127,6 +151,12 @@
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
+/obj/item/weapon/bikehorn/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] presses firmly on the [src.name], releasing a noise with the power of seven suns, right into \his ears. Blood starts pouring from them, dripping down \his legs. \He stares blankly forward, then promptly falls to the ground, dead.</b>"
+	playsound(user, 'sound/items/AirHorn.ogg', 100, 1)
+	user.sdisabilities |= DEAF
+	return (TOXLOSS) //HONK
+
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -152,6 +182,13 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+/obj/item/weapon/cane/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] respectfully gentlemans \himself to death with the [src.name]. He died honourably.</b>" //I didn't use "\He" intentionally, as seen below.
+	if (user.gender != MALE) //If you aren't a gentleman then you shall die as one.
+		user.gender = MALE
+		user.regenerate_icons()
+	return (BRUTELOSS)
+
 /obj/item/weapon/disk
 	name = "disk"
 	icon = 'icons/obj/items.dmi'
@@ -163,6 +200,17 @@
 	item_state = "card-id"
 	w_class = 1.0
 
+/obj/item/weapon/disk/nuclear/suicide_act(mob/living/carbon/user)
+	range(world.view+5, user) << "\red <b>[user] swallows the [src.name], activating it!</b>"
+	user.drop_item()
+	user.stomach_contents += src
+	src.loc = user
+	playsound(user, 'sound/machines/Alarm.ogg', 100, 0, 5)
+	spawn(175)
+		playsound(user, 'sound/effects/explosionfar.ogg', 100, 0, 5)
+		src.loc = get_turf(user)
+		user.ChangeToHusk() //user.gib()
+	return (TOXLOSS)
 /*
 /obj/item/weapon/game_kit
 	name = "Gaming Kit"
@@ -196,9 +244,9 @@
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS)
+/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
@@ -408,6 +456,13 @@
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
+
+/obj/item/weapon/hatchet/suicide_act(mob/living/carbon/human/user) //Suggested by Chocobro
+	viewers(user) << "\red <b>[user] is decapitating \himself with the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	for (var/datum/limb/head/H in user.organs)
+		H.take_damage(200, 0)
+	return(BRUTELOSS)
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

@@ -48,5 +48,12 @@
 		icon = 'icons/obj/candle.dmi'
 		icon_state = "candle4"
 
+/obj/item/trash/suicide_act(mob/living/carbon/user)
+	viewers(user) << "\red <b>[user] eats the [src.name]! Yuck!</b>"
+	user.drop_item()
+	user.stomach_contents += src
+	src.loc = usr
+	return (TOXLOSS)
+
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

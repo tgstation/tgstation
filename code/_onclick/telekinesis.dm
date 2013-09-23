@@ -206,3 +206,8 @@ var/const/tk_maxrange = 15
 
 */
 
+/obj/item/tk_grab/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is using telekinesis to choke \himself! It looks like \he's trying to commit suicide!</b>"
+	return (OXYLOSS)
+
+

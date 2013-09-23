@@ -31,6 +31,15 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
+/obj/item/weapon/paper/suicide_act(mob/user) //Suggested by S0ldi3rKr4s0
+	viewers(user) << "\red <b>[user] draws nine boxes on the [src.name] with \his blood and starts writing numbers while making complex mathematical processes! It looks like \he's trying to commit sudoku!</b>"
+	user.drop_item()
+	var/obj/item/weapon/paper/C = new /obj/item/weapon/paper/crumpled/bloody
+	C.loc = src.loc
+	spawn(1)
+		del (src)
+	return(OXYLOSS)
+
 
 /obj/item/weapon/paper/New()
 	..()

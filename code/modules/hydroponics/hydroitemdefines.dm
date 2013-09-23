@@ -29,9 +29,9 @@
 	var/toxicity = 4
 	var/WeedKillStr = 2
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (TOXLOSS)
+/obj/item/weapon/weedspray/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
@@ -48,9 +48,9 @@
 	var/toxicity = 4
 	var/PestKillStr = 2
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (TOXLOSS)
+/obj/item/weapon/pestspray/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
 	name = "mini hoe"

@@ -68,6 +68,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 15
 
+/obj/item/clothing/mask/cigarette/suicide_act(mob/user) //Suggested by MrPerson
+	viewers(user) << "\red <b>[user] is huffing the [src.name] as fast as \he can! It looks like \he's trying to give \himself cancer!</b>"
+	return (TOXLOSS + OXYLOSS)
+
 /obj/item/clothing/mask/cigarette/New()
 	..()
 	flags |= NOREACT // so it doesn't react until you light it

@@ -13,6 +13,12 @@
 		light(var/flavor_text = "\red [usr] lights the [name].")
 
 
+
+
+/obj/item/candle/suicide_act(mob/user) //Suggested by SkipsPro
+	viewers(user) << "\red <b>[user] is trying to swallow the [src.name]! It looks like \he's trying to commit suicide!</b>"
+	return (OXYLOSS)
+
 /obj/item/candle/update_icon()
 	var/i
 	if(wax>150)

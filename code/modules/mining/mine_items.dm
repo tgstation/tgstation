@@ -263,6 +263,11 @@ proc/move_mining_shuttle()
 		digspeed = 15
 		desc = ""
 
+/obj/item/weapon/pickaxe/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] starts mining \his face! It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS)
+
+
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
@@ -279,6 +284,10 @@ proc/move_mining_shuttle()
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+
+/obj/item/weapon/shovel/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] smacks \himself in the head with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS)
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
