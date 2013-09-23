@@ -93,16 +93,6 @@
 	w_class = 4.0
 
 /*
- * Fake telebeacon
- */
-/obj/item/toy/blink
-	name = "electronic blink toy game"
-	desc = "Blink.  Blink.  Blink. Ages 8 and up."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "beacon"
-	item_state = "signaler"
-
-/*
  * Fake singularity
  */
 /obj/item/toy/spinningtoy
@@ -414,17 +404,19 @@
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
-	if(cooldown < world.time - 8)
+	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
 		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-		cooldown = world.time
+		cooldown = 1
+		spawn(30) cooldown = 0
 
 /obj/item/toy/prize/attack_hand(mob/user as mob)
 	if(loc == user)
-		if(cooldown < world.time - 8)
+		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
 			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
-			cooldown = world.time
+			cooldown = 1
+			spawn(30) cooldown = 0
 			return
 	..()
 
@@ -494,11 +486,13 @@
 
 /obj/item/toy/AI/attack_self(mob/user as mob)
 	if(loc == user) //Here comes AI ion law code, don't cry.
-		if(cooldown < world.time - 30) //for the sanity of everyone
+		if(!cooldown) //for the sanity of everyone
 			var/message = generate_ion_law()
 			user << "<span class='notice'>You press the button on [src].</span>"
 			playsound(user, 'sound/machines/click.ogg', 20, 1)
 			src.loc.visible_message("\red \icon[src] [message]")
-			cooldown = world.time
+			cooldown = 1
+			spawn(30) cooldown = 0
 			return
+
 	..()
