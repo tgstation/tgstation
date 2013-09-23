@@ -150,7 +150,7 @@ datum/controller/game_controller/proc/process()
 				timer = world.timeofday
 				process_diseases()
 				diseases_cost = (world.timeofday - timer) / 10
-				
+
 				sleep(breather_ticks)
 
 				//MACHINES
@@ -164,7 +164,7 @@ datum/controller/game_controller/proc/process()
 				timer = world.timeofday
 				process_objects()
 				objects_cost = (world.timeofday - timer) / 10
-				
+
 				sleep(breather_ticks)
 
 				//PIPENETS
@@ -186,8 +186,6 @@ datum/controller/game_controller/proc/process()
 				timer = world.timeofday
 				process_nano()
 				nano_cost = (world.timeofday - timer) / 10
-				
-				sleep(breather_ticks)
 
 				//EVENTS
 				timer = world.timeofday
