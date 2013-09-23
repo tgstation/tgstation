@@ -317,7 +317,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	//find a viable mouse candidate
-	var/mob/living/silicon/robot/mommi/host
 	var/obj/machinery/mommi_spawner/spawner
 	var/list/found_spawners = list()
 	for(var/obj/machinery/mommi_spawner/s in world)
@@ -325,13 +324,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			found_spawners.Add(s)
 	if(found_spawners.len)
 		spawner = pick(found_spawners)
-		host = new /mob/living/simple_animal/mouse(spawner.loc)
+		//host = new /mob/living/silicon/robot/mommi(spawner.loc)
+		spawner.attack_ghost(src)
 	else
 		src << "<span class='warning'>Unable to find any powered MoMMI Spawners to spawn MoMMIs at.</span>"
 
-	if(host)
-		host.ckey = src.ckey
-		//host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
+	//if(host)
+	//	host.ckey = src.ckey
+	//	//host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
 
 //BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)
