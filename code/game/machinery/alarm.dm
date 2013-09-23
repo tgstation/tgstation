@@ -87,6 +87,10 @@
 	var/AAlarmwires = 31
 	var/shorted = 0
 
+	// Waiting on a device to respond.
+	// Specifies an id_tag.  NULL means we aren't waiting.
+	var/waiting_on_device=null
+
 	var/mode = AALARM_MODE_SCRUBBING
 	var/preset = AALARM_PRESET_HUMAN
 	var/screen = AALARM_SCREEN_MAIN
@@ -349,10 +353,16 @@
 	var/dev_type = signal.data["device"]
 	if(!(id_tag in alarm_area.air_scrub_names) && !(id_tag in alarm_area.air_vent_names))
 		register_env_machine(id_tag, dev_type)
+	var/got_update=0
 	if(dev_type == "AScr")
 		alarm_area.air_scrub_info[id_tag] = signal.data
+		got_update=1
 	else if(dev_type == "AVP")
 		alarm_area.air_vent_info[id_tag] = signal.data
+		got_update=1
+	if(got_update && waiting_on_device==id_tag)
+		updateUsrDialog()
+		waiting_on_device=null
 
 /obj/machinery/alarm/proc/register_env_machine(var/m_id, var/device_type)
 	var/new_name
@@ -1027,6 +1037,7 @@ table tr:first-child th:first-child { border: none;}
 
 	if(href_list["command"])
 		var/device_id = href_list["id_tag"]
+		//world << href_list["command"]
 		switch(href_list["command"])
 			if( "power",
 				"adjust_external_pressure",
@@ -1040,7 +1051,8 @@ table tr:first-child th:first-child { border: none;}
 				"scrubbing")
 
 				send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
-				changed=1
+				changed=0 // We wait for the device to reply.
+				waiting_on_device=device_id
 
 			if("set_threshold")
 				var/env = href_list["env"]
