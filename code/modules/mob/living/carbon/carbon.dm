@@ -525,11 +525,11 @@
 	..()
 
 
-/mob/living/carbon/say(var/message)
+/mob/living/carbon/say(var/message, var/bubble_type)
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
-	..(message)
+	..(message, bubble_type)
 
 /mob/living/carbon/proc/is_mutantrace(var/mrace)
 	if(mrace)

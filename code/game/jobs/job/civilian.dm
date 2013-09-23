@@ -186,8 +186,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_clown, access_theatre, access_maint_tunnels)
-	minimal_access = list(access_clown, access_theatre)
+	access = list(access_theatre, access_maint_tunnels)
+	minimal_access = list(access_theatre)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -217,8 +217,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_mime, access_theatre, access_maint_tunnels)
-	minimal_access = list(access_mime, access_theatre)
+	access = list(access_theatre, access_maint_tunnels)
+	minimal_access = list(access_theatre)
 
 
 	equip(var/mob/living/carbon/human/H)
