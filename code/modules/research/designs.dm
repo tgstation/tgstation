@@ -406,14 +406,14 @@ datum/design/protectstation_module
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/protectStation"
 
-datum/design/notele_module
+/*datum/design/notele_module
 	name = "Module Design (TeleporterOffline Module)"
 	desc = "Allows for the construction of a TeleporterOffline AI Module."
 	id = "notele_module"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = "/obj/item/weapon/aiModule/teleporterOffline"
+	build_path = "/obj/item/weapon/aiModule/teleporterOffline"*/
 
 datum/design/quarantine_module
 	name = "Module Design (Quarantine)"

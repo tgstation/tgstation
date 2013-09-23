@@ -879,9 +879,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(!src.occupant) return
-	if(usr!=src.occupant)
-		return
+
+	if(usr.stat)			return
+	if(usr != src.occupant)	return
+
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
@@ -901,9 +902,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(!src.occupant) return
-	if(usr!=src.occupant)
-		return
+
+	if(usr.stat)			return
+	if(usr != src.occupant)	return
+
 	if(disconnect())
 		src.occupant_message("\blue [name] disconnects from the port.")
 		src.verbs -= /obj/mecha/verb/disconnect_from_port
@@ -916,7 +918,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=occupant)	return
+
+	if(usr.stat)		return
+	if(usr != occupant)	return
+
 	lights = !lights
 	if(lights)	SetLuminosity(luminosity + lights_power)
 	else		SetLuminosity(luminosity - lights_power)
@@ -930,8 +935,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
-		return
+
+	if(usr.stat)			return
+	if(usr != src.occupant)	return
+
 	use_internal_tank = !use_internal_tank
 	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -1090,8 +1097,9 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
-		return
+
+	if(usr != src.occupant)	return
+
 	src.go_out()
 	add_fingerprint(usr)
 	return
