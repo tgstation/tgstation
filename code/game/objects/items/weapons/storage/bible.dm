@@ -87,7 +87,8 @@
 		playsound(src.loc, "punch", 25, 1, -1)
 	return
 
-/obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity) return
 	if (istype(A, /turf/simulated/floor))
 		user << "\blue You hit the floor with the bible."
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))

@@ -186,8 +186,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_clown, access_theatre, access_maint_tunnels)
-	minimal_access = list(access_clown, access_theatre)
+	access = list(access_theatre, access_maint_tunnels)
+	minimal_access = list(access_theatre)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -202,7 +202,6 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/spray/waterflower(H), slot_in_backpack)
 		H.mutations.Add(CLUMSY)
 		return 1
@@ -218,8 +217,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_mime, access_theatre, access_maint_tunnels)
-	minimal_access = list(access_mime, access_theatre)
+	access = list(access_theatre, access_maint_tunnels)
+	minimal_access = list(access_theatre)
 
 
 	equip(var/mob/living/carbon/human/H)

@@ -6,7 +6,7 @@
 	max_shells = 4
 	w_class = 4.0
 	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
 	origin_tech = "combat=4;materials=2"
@@ -19,6 +19,10 @@
 	load_into_chamber()
 		if(in_chamber)
 			var/obj/item/ammo_casing/AC = current_shell
+			if(AC.reagents && AC.BB.reagents)
+				var/datum/reagents/casting_reagents = AC.reagents
+				casting_reagents.trans_to(AC.BB, casting_reagents.total_volume) //For chemical darts
+				casting_reagents.delete()
 			AC.desc += " This one is spent."
 			AC.BB = null //remove the ammunition from the shell
 			return 1
@@ -68,7 +72,7 @@
 	max_shells = 2
 	w_class = 4.0
 	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
 	origin_tech = "combat=3;materials=1"
@@ -91,6 +95,10 @@
 		loaded -= AC //Remove casing from loaded list.
 
 		if(AC.BB)
+			if(AC.reagents && AC.BB.reagents)
+				var/datum/reagents/casting_reagents = AC.reagents
+				casting_reagents.trans_to(AC.BB, casting_reagents.total_volume) //For chemical darts
+				casting_reagents.delete()
 			in_chamber = AC.BB //Load projectile into chamber.
 			AC.BB.loc = src //Set projectile loc to gun.
 			AC.BB = null //Remove the ammunition from the shell
@@ -135,6 +143,6 @@
 				item_state = "gun"
 				slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 				slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+				user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
 				name = "sawn-off shotgun"
 				desc = "Omar's coming!"
-				user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
