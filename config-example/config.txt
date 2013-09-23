@@ -209,6 +209,12 @@ USEALIENWHITELIST
 ## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
 #ALIEN_PLAYER_RATIO 0.2
 
+## Comment this to disallow respawning as a MoMMI from MoMMI fabricators.
+RESPAWN_AS_MOMMI
+
+## Uncomment this to disallow spawning as a mouse.
+#NO_RESPAWN_AS_MOUSE
+
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
