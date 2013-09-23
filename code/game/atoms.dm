@@ -1186,23 +1186,23 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				var/obj/item/projectile/beam/lightning/A = new /obj/item/projectile/beam/lightning/( usr.loc )
 				if(PN)
 					available = PN.avail
-					A.damage = PN.get_electrocute_damage() + 10
+					A.damage = PN.get_electrocute_damage()
 					if(available >= 4500000)
 						A.damage = 205
 					if(A.damage >= 200)
 						usr:apply_damage(15, BURN, (usr:hand ? "l_hand" : "r_hand"))
-						usr:Stun(10)
-						usr:Weaken(10)
+						usr:Stun(20)
+						usr:Weaken(20)
 						if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
-							usr:stuttering += 15
+							usr:stuttering += 20
 						time = 200
 						usr << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
 					else if(A.damage >= 100)
 						usr:apply_damage(5, BURN, (usr:hand ? "l_hand" : "r_hand"))
-						usr:Stun(5)
-						usr:Weaken(5)
+						usr:Stun(10)
+						usr:Weaken(10)
 						if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
-							usr:stuttering += 5
+							usr:stuttering += 10
 						time = 150
 						usr << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
