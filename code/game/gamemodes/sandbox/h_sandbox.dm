@@ -174,11 +174,9 @@ datum/hSB
 					if(!(hsbcanister == "Cancel"))
 						new hsbcanister(usr.loc)
 				if("hsbfueltank")
-					//var/obj/hsb = new/obj/weldfueltank
-					//hsb.loc = usr.loc
+					new /obj/structure/reagent_dispensers/fueltank(usr.loc)
 				if("hsbwatertank")
-					//var/obj/hsb = new/obj/watertank
-					//hsb.loc = usr.loc
+					new /obj/structure/reagent_dispensers/watertank(usr.loc)
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)

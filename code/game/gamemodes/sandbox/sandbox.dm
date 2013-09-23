@@ -19,3 +19,7 @@
 		M.CanBuild()
 	if(emergency_shuttle)
 		emergency_shuttle.always_fake_recall = 1
+
+/datum/game_mode/latespawn(var/mob/mob)
+	mob.CanBuild()
+	mob << "<B>Build your own station with the sandbox-panel command!</B>"
