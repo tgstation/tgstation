@@ -60,7 +60,7 @@
 		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, absorb, 0, P)
 	P.on_hit(src, absorb)
 	if(istype(P, /obj/item/projectile/beam/lightning))
-		if(src.health <= -100)
+		if(P.damage >= 200)
 			src.dust()
 	return absorb
 
