@@ -473,6 +473,8 @@ commented out in r5061, I left it because of the shroom thingies
 		O = new /obj/item/weapon/ore/diamond(src)
 	if (src.mineralName == "Clown")
 		O = new /obj/item/weapon/ore/clown(src)
+	if (src.mineralName == "Phazite")
+		O = new /obj/item/weapon/ore/phazon(src)
 	if(O)
 		src.geological_data.UpdateNearbyArtifactInfo(src)
 		O.geological_data = src.geological_data

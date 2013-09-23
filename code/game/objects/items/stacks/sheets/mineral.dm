@@ -181,7 +181,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	m_amt = 7500
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
-	origin_tech = "materials=7"
+	origin_tech = "materials=9"
 
 /obj/item/stack/sheet/mineral/phazon/New(var/loc, var/amount=null)
 		recipes = phazon_recipes
