@@ -1,9 +1,12 @@
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
+/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
-		if (equip_to_slot_if_possible(W, slots[slot], del_on_fail = 0))
+		if (equip_to_slot_if_possible(W, slots[slot], 0))
 			return slot
-	if (del_on_fail)
-		del(W)
+	switch (act_on_fail)
+		if(EQUIP_FAILACTION_DELETE)
+			del(W)
+		if(EQUIP_FAILACTION_DROP)
+			W.loc=get_turf(src) // I think.
 	return null
 
 

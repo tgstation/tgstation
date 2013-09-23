@@ -153,8 +153,6 @@
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-#define EQUIP_FAILACTION_DELETE 1
-#define EQUIP_FAILACTION_DROP 2
 /mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, act_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
 	if(!istype(W)) return 0
 	if(ishuman(src))
@@ -168,7 +166,7 @@
 						W.loc=get_turf(src) // I think.
 					else
 						if(!disable_warning)
-							src << "\red You are unable to equip that." //Only print if del_on_fail is false
+							src << "\red You are unable to equip that." //Only print if act_on_fail is NOTHING
 				return 0
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
@@ -402,7 +400,7 @@
 					W.loc=get_turf(src) // I think.
 				else
 					if(!disable_warning)
-						src << "\red You are unable to equip that." //Only print if del_on_fail is false
+						src << "\red You are unable to equip that." //Only print if act_on_fail is NOTHING
 			return 0
 
 		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -445,7 +443,7 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W)) return 0
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1, 1)) //act_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
 	return 0

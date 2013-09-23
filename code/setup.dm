@@ -740,3 +740,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 // Hairstyle flags
 #define HAIRSTYLE_CANTRIP 1 // 5% chance of tripping your stupid ass if you're running.
+
+// equip_to_slot_if_possible flags
+#define EQUIP_FAILACTION_NOTHING 0
+#define EQUIP_FAILACTION_DELETE 1
+#define EQUIP_FAILACTION_DROP 2
