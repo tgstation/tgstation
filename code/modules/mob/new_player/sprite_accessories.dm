@@ -34,6 +34,8 @@
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
 
+	var/flags = 0
+
 
 /*
 ////////////////////////////
@@ -263,6 +265,7 @@
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
 		gender = FEMALE
+		flags = HAIRSTYLE_CANTRIP
 
 	odango
 		name = "Odango"

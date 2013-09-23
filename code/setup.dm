@@ -732,8 +732,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define HAS_UNDERWEAR 1024
 #define HAS_TAIL 2048
 #define IS_PLANT 4096
-#define CAN_BE_FAT 8192
+#define CAN_BE_FAT 8192 // /vg/
 
 //Language flags.
 #define WHITELISTED 1  // Language is available if the speaker is whitelisted.
 #define RESTRICTED 2   // Language can only be accquired by spawning or an admin.
+
+// Hairstyle flags
+#define HAIRSTYLE_CANTRIP 1 // 5% chance of tripping your stupid ass if you're running.
+
+// equip_to_slot_if_possible flags
+#define EQUIP_FAILACTION_NOTHING 0
+#define EQUIP_FAILACTION_DELETE 1
+#define EQUIP_FAILACTION_DROP 2

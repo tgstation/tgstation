@@ -1187,7 +1187,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				if(PN)
 					available = PN.avail
 					A.damage = PN.get_electrocute_damage()
-					if(available >= 4500000)
+					if(available >= 5000000)
 						A.damage = 205
 					if(A.damage >= 200)
 						usr:apply_damage(15, BURN, (usr:hand ? "l_hand" : "r_hand"))
