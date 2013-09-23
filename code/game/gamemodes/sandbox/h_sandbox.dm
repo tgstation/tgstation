@@ -19,13 +19,13 @@ var/list
 
 /mob/var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
-	//if(ticker.mode.name == "sandbox")
-	sandbox = new/datum/hSB
-	sandbox.owner = src.ckey
-	if(src.client.holder)
-		sandbox.admin = 1
-	verbs += new /mob/proc/sandbox_panel
-	verbs += new /mob/proc/spawn_atom
+	if(ticker.mode.name == "sandbox")
+		sandbox = new/datum/hSB
+		sandbox.owner = src.ckey
+		if(src.client.holder)
+			sandbox.admin = 1
+		verbs += new /mob/proc/sandbox_panel
+		verbs += new /mob/proc/spawn_atom
 
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
