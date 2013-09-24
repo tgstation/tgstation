@@ -55,6 +55,11 @@ var/list
 			continue
 		if(istype(path, /obj/item/weapon/melee/energy/sword))
 			continue
+		// Griff
+		if(istype(path, /obj/item/weapon/veilrender))
+			continue
+		if(istype(path, /obj/item/weapon/spellbook))
+			continue
 		if(istype(path, /obj/structure))
 			continue
 		if(findtext("[path]", object))
