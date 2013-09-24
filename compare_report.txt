@@ -28,6 +28,9 @@
  + U-W
  + W
  + W-corner
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
+ - mecha_phase_array
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
@@ -154,6 +157,18 @@
  + unathi_breacher2
  + vox-medic
  + vox-medic2
+ - vox-pressure-engineer
+ - vox-pressure-engineer2
+ - vox-pressure-medical
+ - vox-pressure-medical2
+ - vox-pressure-normal
+ - vox-pressure-normal2
+ - vox-pressure-science
+ - vox-pressure-science2
+ - vox-pressure-security
+ - vox-pressure-security2
+ - vox-pressure-specops
+ - vox-pressure-specops2
  + vox-stealth
  + vox-stealth2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
@@ -164,6 +179,18 @@
  + konaahirano
  - telebaton0
  - telebaton1
+ - vox-helmet-engineer
+ - vox-helmet-medical
+ - vox-helmet-normal
+ - vox-helmet-science
+ - vox-helmet-security
+ - vox-helmet-specops
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-security
+ - vox-pressure-specops
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  + eleanorstone
@@ -172,6 +199,17 @@
  + konaahirano
  - telebaton0
  - telebaton1
+ - vox-helmet-engineer
+ - vox-helmet-medical
+ - vox-helmet-normal
+ - vox-helmet-science
+ - vox-helmet-security
+ - vox-helmet-specops
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-specops
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  + konaahirano
@@ -231,6 +269,17 @@
  + unathi_breacher2
  + vox-medic
  + vox-medic2
+ - vox-pressure-engineer
+ - vox-pressure-engineer2
+ - vox-pressure-medical
+ - vox-pressure-medical2
+ - vox-pressure-normal
+ - vox-pressure-normal2
+ - vox-pressure-science
+ - vox-pressure-science2
+ - vox-pressure-security
+ - vox-pressure-security2
+ - vox-pressure-specops
  + vox-stealth
  + vox-stealth2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\uniform.dmi
@@ -312,6 +361,7 @@
  - intercom-p-open
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\robotics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
+ - fab-load-phazon
  - mommispawner-building
  - mommispawner-idle
  - mommispawner-nopower
@@ -378,6 +428,12 @@
  + skrell_helmet_white
  + unathi_breacher
  + vox-medic
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-security
+ - vox-pressure-specops
  + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
@@ -388,6 +444,12 @@
  + skrell_suit_white
  + unathi_breacher
  + vox-medic
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-security
+ - vox-pressure-specops
  + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
