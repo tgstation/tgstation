@@ -948,6 +948,11 @@ About the new airlock wires panel:
 				else
 					spawn(0)	close(1)
 
+	else if(istype(C, /obj/item/weapon/airlock_painter))
+		var/obj/item/weapon/airlock_painter/WT = C
+		if(WT.ink.charges)
+			src.change_paintjob(user)
+			WT.use()
 	else
 		..()
 	return
@@ -1043,3 +1048,76 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/autoclose()
 	if(!density && !operating && !locked && !welded && autoclose)
 		close()
+
+/obj/machinery/door/airlock/proc/change_paintjob(user)
+	if(glass == 1)
+		//These airlocks have a glass version.
+		var optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+		var paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+		switch(paintjob)
+			if("Default")
+				icon = 'icons/obj/doors/Doorglass.dmi'
+				doortype = 7
+			if("Engineering")
+				icon = 'icons/obj/doors/Doorengglass.dmi'
+				doortype = 15
+			if("Atmospherics")
+				icon = 'icons/obj/doors/Dooratmoglass.dmi'
+				doortype = 23
+			if("Security")
+				icon = 'icons/obj/doors/Doorsecglass.dmi'
+				doortype = 16
+			if("Command")
+				icon = 'icons/obj/doors/Doorcomglass.dmi'
+				doortype = 14
+			if("Medical")
+				icon = 'icons/obj/doors/Doormedglass.dmi'
+				doortype = 17
+			if("Research")
+				icon = 'icons/obj/doors/Doorresearchglass.dmi'
+				doortype = 21
+				heat_proof = 1
+			if("Mining")
+				icon = 'icons/obj/doors/Doorminingglass.dmi'
+				doortype = 22
+	else
+		//These airlocks have a regular version.
+		var optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+		var paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+		switch(paintjob)
+			if("Default")
+				icon = 'icons/obj/doors/Doorint.dmi'
+				doortype = 0
+			if("Engineering")
+				icon = 'icons/obj/doors/Dooreng.dmi'
+				doortype = 3
+			if("Atmospherics")
+				icon = 'icons/obj/doors/Dooratmo.dmi'
+				doortype = 19
+			if("Security")
+				icon = 'icons/obj/doors/Doorsec.dmi'
+				doortype = 2
+			if("Command")
+				icon = 'icons/obj/doors/Doorcom.dmi'
+				doortype = 1
+			if("Medical")
+				icon = 'icons/obj/doors/Doormed.dmi'
+				doortype = 4
+			if("Research")
+				icon = 'icons/obj/doors/Doorresearch.dmi'
+				doortype = 20
+			if("Mining")
+				icon = 'icons/obj/doors/Doormining.dmi'
+				doortype = 18
+			if("Maintenance")
+				icon = 'icons/obj/doors/Doormaint.dmi'
+				doortype = 5
+			if("External")
+				icon = 'icons/obj/doors/Doorext.dmi'
+				doortype = 6
+			if("High Security")
+				icon = 'icons/obj/doors/hightechsecurity.dmi'
+				doortype = 33
+	update_icon()
+
+
