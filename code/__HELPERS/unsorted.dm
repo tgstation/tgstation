@@ -1220,3 +1220,30 @@ var/list/WALLITEMS = list(
 
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
+
+/obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
+	var/obj/icon = target
+	user.visible_message("\red [user] has used the analyzer on \icon[icon] [target].</span>")
+	var/pressure = air_contents.return_pressure()
+	var/total_moles = air_contents.total_moles()
+
+	user << "\blue Results of analysis of \icon[icon] [target]."
+	if(total_moles>0)
+		var/o2_concentration = air_contents.oxygen/total_moles
+		var/n2_concentration = air_contents.nitrogen/total_moles
+		var/co2_concentration = air_contents.carbon_dioxide/total_moles
+		var/plasma_concentration = air_contents.toxins/total_moles
+
+		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+
+		user << "\blue Pressure: [round(pressure,0.1)] kPa"
+		user << "\blue Nitrogen: [round(n2_concentration*100)]%"
+		user << "\blue Oxygen: [round(o2_concentration*100)]%"
+		user << "\blue CO2: [round(co2_concentration*100)]%"
+		user << "\blue Plasma: [round(plasma_concentration*100)]%"
+		if(unknown_concentration>0.01)
+			user << "\red Unknown: [round(unknown_concentration*100)]%"
+		user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
+	else
+		user << "\blue [target] is empty!"
+	return
