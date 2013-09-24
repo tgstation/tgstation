@@ -305,7 +305,7 @@
 		//handle mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.drop_item(src)
+			M.u_equip(src)
 		del(src)
 	else
 		amount -= used
