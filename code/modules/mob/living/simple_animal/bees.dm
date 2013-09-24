@@ -3,6 +3,7 @@
 	name = "bees"
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "bees1"
+	icon_dead = "bees1"
 	var/strength = 1
 	var/feral = 0
 	var/mut = 0
@@ -10,7 +11,7 @@
 	var/turf/target_turf
 	var/mob/target_mob
 	var/obj/machinery/apiary/parent
-	pass_flags = PASSGRILLE|PASSTABLE
+	pass_flags = PASSTABLE
 	turns_per_move = 6
 	var/obj/machinery/hydroponics/my_hydrotray
 
@@ -29,21 +30,19 @@
 
 	if(stat == CONSCIOUS)
 		//if we're strong enough, sting some people
-		var/overrun = strength - 5 + feral / 2
-		if(prob(max( overrun * 10 + feral * 10, 0)))
-			var/mob/living/carbon/human/M = pick(range(1,src))
-			if(M)
-				var/sting_prob = 100
+		var/mob/living/carbon/human/M = target_mob
+		var/sting_prob = 100 // Bees will always try to sting.
+		if(M in view(src,1)) // Can I see my target?
+			if(prob(max(feral * 10, 0)))	// Am I mad enough to want to sting? And yes, when I initially appear, I AM mad enough
 				var/obj/item/clothing/worn_suit = M.wear_suit
 				var/obj/item/clothing/worn_helmet = M.head
-				if(worn_suit)
-					sting_prob -= worn_suit.armor["bio"]
+				if(worn_suit) // Are you wearing clothes?
+					sting_prob -= min(worn_suit.armor["bio"],70) // Is it sealed? I can't get to 70% of your body.
 				if(worn_helmet)
-					sting_prob -= worn_helmet.armor["bio"]
-
-				if( prob(sting_prob) && (M.stat == CONSCIOUS || (M.stat == UNCONSCIOUS && prob(25))) )
-					M.apply_damage(overrun / 2 + mut / 2, BRUTE)
-					M.apply_damage(overrun / 2 + toxic / 2, TOX)
+					sting_prob -= min(worn_helmet.armor["bio"],30) // Is your helmet sealed? I can't get to 30% of your body.
+				if( prob(sting_prob) && (M.stat == CONSCIOUS || (M.stat == UNCONSCIOUS && prob(25))) ) // Try to sting! If you're not moving, think about stinging.
+					M.apply_damage(min(strength,2)+mut, BRUTE) // Stinging. The more mutated I am, the harder I sting.
+					M.apply_damage((round(feral/5,1)*(max((round(strength/10,1)),1)))+toxic, TOX) // Bee venom based on how angry I am and how many there are of me!
 					M << "\red You have been stung!"
 					M.flash_pain()
 
@@ -134,34 +133,37 @@
 			if(target_mob in view(src,7))
 				target_turf = get_turf(target_mob)
 				wander = 0
-			else
-				for(var/mob/living/carbon/M in view(src,7))
-					target_mob = M
+
+			else // My target's gone! But I might still be pissed! You there. You look like a good stinging target!
+				for(var/mob/living/carbon/G in view(src,7))
+					target_mob = G
 					break
 
-	if(target_turf)
-		Move(get_step(src, get_dir(src,target_turf)))
+		if(target_turf)
+			if (!(DirBlocked(get_step(src, get_dir(src,target_turf)),get_dir(src,target_turf)))) // Check for windows and doors!
+				Move(get_step(src, get_dir(src,target_turf)))
+				if (prob(0.1))
+					src.visible_message("\blue The bees swarm after [target_mob]!")
+			if(src.loc == target_turf)
+				target_turf = null
+				wander = 1
+		else
+			//find some flowers, harvest
+			//angry bee swarms don't hang around
+			if(feral > 0)
+				turns_per_move = rand(1,3)
+			else if(feral < 0)
+				turns_since_move = 0
+			else if(!my_hydrotray || my_hydrotray.loc != src.loc || !my_hydrotray.planted || my_hydrotray.dead || !my_hydrotray.myseed)
+				var/obj/machinery/hydroponics/my_hydrotray = locate() in src.loc
+				if(my_hydrotray)
+					if(my_hydrotray.planted && !my_hydrotray.dead && my_hydrotray.myseed)
+						turns_per_move = rand(20,50)
+					else
+						my_hydrotray = null
 
-		if(src.loc == target_turf)
-			target_turf = null
-			wander = 1
-	else
-		//find some flowers, harvest
-		//angry bee swarms don't hang around
-		if(feral > 0)
-			turns_per_move = rand(1,3)
-		else if(feral < 0)
-			turns_since_move = 0
-		else if(!my_hydrotray || my_hydrotray.loc != src.loc || !my_hydrotray.planted || my_hydrotray.dead || !my_hydrotray.myseed)
-			var/obj/machinery/hydroponics/my_hydrotray = locate() in src.loc
-			if(my_hydrotray)
-				if(my_hydrotray.planted && !my_hydrotray.dead && my_hydrotray.myseed)
-					turns_per_move = rand(20,50)
-				else
-					my_hydrotray = null
-
-	pixel_x = rand(-12,12)
-	pixel_y = rand(-12,12)
+		pixel_x = rand(-12,12)
+		pixel_y = rand(-12,12)
 
 	if(!parent && prob(10))
 		strength -= 1
