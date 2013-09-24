@@ -87,6 +87,8 @@
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
 			src.flags = OPENCONTAINER
+			src.updateUsrDialog()
+			return 0 // We allow the afterattack proc to generate the spray and noise.  Hand-cleaning a microwave with acid should hurt.
 		else
 			user << "\red You need more space cleaner!"
 			return 1
