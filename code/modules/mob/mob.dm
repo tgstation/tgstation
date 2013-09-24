@@ -1175,7 +1175,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
 	if(listed_turf)
-		if(get_dist(listed_turf,src) > 4)
+		if(get_dist(listed_turf,src) > 1)
 			listed_turf = null
 		else
 			statpanel(listed_turf.name,listed_turf.name,listed_turf)

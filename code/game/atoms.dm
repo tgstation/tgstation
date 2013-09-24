@@ -1336,8 +1336,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		usr.listed_turf = null
 	else
 		usr.listed_turf = src
-		if(usr.client)
+		if(usr.client && !(get_dist(src,usr) > 1))
 			usr.client.statpanel = "[src.name]"
+
 
 /atom/proc/AIShiftClick() // Opens and closes doors!
 	if(istype(src , /obj/machinery/door/airlock))
