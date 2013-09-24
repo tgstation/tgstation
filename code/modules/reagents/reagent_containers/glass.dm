@@ -91,10 +91,6 @@
 		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 			return
 		
-		// Hydroponics trays aren't reagent containers, technically.  Handled in their attackby.
-		else if(istype(target, /obj/machinery/hydroponics))
-			return
-
 		else if(reagents.total_volume)
 			user << "<span class='notice'>You splash the solution onto [target].</span>"
 			reagents.reaction(target, TOUCH)
