@@ -122,23 +122,23 @@
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)
 		if(prob(10))
-			user.visible_message("<spanclass='danger'>[user.name] smashes the [src.name] with /his paws.</spanclass>",\
-			"<spanclass='danger'>You smash the [src.name] with your paws.</spanclass>",\
-			"<spanclass='danger'>You hear a smashing sound.</spanclass>")
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
+			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<spanclass='danger'>[user.name] smashes agaisnt the [src.name] with /his paws.</spanclass>",\
-	"<spanclass='danger'>You smash agaisnt the [src.name] with your paws.</spanclass>",\
-	"<spanclass='danger'>You hear a clicking sound.</spanclass>")
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his paws.</span>",\
+	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
+	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
 	if(circuit)
 		if(prob(80))
-			user.visible_message("<spanclass='danger'>[user.name] smashes the [src.name] with /his claws.</spanclass>",\
-			"<spanclass='danger'>You smash the [src.name] with your claws.</spanclass>",\
-			"<spanclass='danger'>You hear a smashing sound.</spanclass>")
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
+			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<spanclass='danger'>[user.name] smashes agaisnt the [src.name] with /his claws.</spanclass>",\
-	"<spanclass='danger'>You smash agaisnt the [src.name] with your claws.</spanclass>",\
-	"<spanclass='danger'>You hear a clicking sound.</spanclass>")
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</spanclass>",\
+	"<span class='danger'>You smash against the [src.name] with your claws.</spanclass>",\
+	"<span class='danger'>You hear a clicking sound.</spanclass>")
