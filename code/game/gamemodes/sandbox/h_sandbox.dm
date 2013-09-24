@@ -33,7 +33,16 @@ var/list
 
 	if(sandbox)
 		sandbox.update()
-
+/mob/var/list/banned_types=list(
+	/obj/item/weapon/gun,
+	/obj/item/assembly,
+	/obj/item/device/camera,
+	/obj/item/weapon/cloaking_device,
+	/obj/item/weapon/dummy,
+	/obj/item/weapon/melee/energy/sword,
+	/obj/item/weapon/veilrender,
+	/obj/item/weapon/reagent_containers/glass/bottle/wizarditis,
+	/obj/item/weapon/spellbook)
 /mob/proc/spawn_atom(var/object as text)
 	set category = "Sandbox"
 	set desc = "Spawn any item or machine"
@@ -43,24 +52,7 @@ var/list
 	var/list/matches = new()
 
 	for(var/path in types)
-		if(istype(path, /obj/item/weapon/gun))
-			continue
-		if(istype(path, /obj/item/assembly))
-			continue
-		if(istype(path, /obj/item/device/camera))
-			continue
-		if(istype(path, /obj/item/weapon/cloaking_device))
-			continue
-		if(istype(path, /obj/item/weapon/dummy))
-			continue
-		if(istype(path, /obj/item/weapon/melee/energy/sword))
-			continue
-		// Griff
-		if(istype(path, /obj/item/weapon/veilrender))
-			continue
-		if(istype(path, /obj/item/weapon/spellbook))
-			continue
-		if(istype(path, /obj/structure))
+		if(is_type_in_list(path, banned_types))
 			continue
 		if(findtext("[path]", object))
 			matches += path
@@ -75,7 +67,9 @@ var/list
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-
+	if(is_type_in_list(chosen, banned_types))
+		src << "\red Denied."
+		return
 	new chosen(usr.loc)
 
 	log_admin("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
