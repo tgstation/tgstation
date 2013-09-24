@@ -102,6 +102,7 @@ def compare(theirsfile, minefile, parser, reportstream):
 	theirs = []
 	mine = []
 	states = []
+	o = ''
 	if(os.path.isfile(theirsfile)):
 		try:
 			theirsDMI = DMI(theirsfile)
@@ -114,6 +115,7 @@ def compare(theirsfile, minefile, parser, reportstream):
 			sys.exit(1)
 		except Exception as e:
 			print("Received error, continuing: %s" % traceback.format_exc())
+			o += "\n {0}: Received error, continuing: {1}".format(theirsfile,traceback.format_exc())
 		for stateName in theirs:
 			if stateName not in states:
 				states.append(stateName)
@@ -129,17 +131,21 @@ def compare(theirsfile, minefile, parser, reportstream):
 			sys.exit(1)
 		except Exception as e:
 			print("Received error, continuing: %s" % traceback.format_exc())
+			o += "\n {0}: Received error, continuing: {1}".format(minefile,traceback.format_exc())
 		for stateName in mine:
 			if stateName not in states:
 				states.append(stateName)
-	o = ''
 	for state in sorted(states):
 		inTheirs = state in theirs
 		inMine = state in mine 
 		if inTheirs and not inMine:
 			o += '\n + {1}'.format(minefile, state) 
-		if not inTheirs and inMine:
+		elif not inTheirs and inMine:
 			o += '\n - {1}'.format(theirsfile, state)
+		elif inTheirs and inMine:
+			if theirs[state].ToString() != mine[state].ToString():
+				o += '\n - {0}: {1}'.format(state,mine[state].ToString())
+				o += '\n + {0}: {1}'.format(state,theirs[state].ToString())
 	if o != '': 
 		reportstream.write('\n--- {0}'.format(theirsfile))
 		reportstream.write('\n+++ {0}'.format(minefile))
