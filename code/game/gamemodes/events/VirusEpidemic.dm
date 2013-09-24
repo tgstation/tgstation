@@ -8,7 +8,7 @@
 	Announce()
 		if(!virus)
 			for(var/mob/living/carbon/human/H in world)
-				if((H.virus2) || (H.stat == 2) || prob(30))
+				if((H.virus2.len) || (H.stat == 2) || prob(30))
 					continue
 				if(prob(100))	// no lethal diseases outside virus mode!
 					infect_mob_random_lesser(H)
@@ -74,7 +74,7 @@
 					break
 			spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
 				command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-				world << sound('outbreak7.ogg')
+				world << sound('sound/AI/outbreak7.ogg')
 	Tick()
 		ActiveFor = Lifetime //killme
 
