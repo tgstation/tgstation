@@ -38,15 +38,32 @@
 			ink_level = "dangerously high"
 		..()
 		//set src in usr
-		usr << "Its ink levels look [ink_level]."
+		usr << "<span class='notice'>Its ink levels look [ink_level].</span>"
 		return
 
-	/* Commented out for now. Might remove the comments if people often make mistakes.
+	attackby(obj/item/weapon/W, mob/user)
+		..()
+		if(istype(W, /obj/item/device/toner))
+			if(ink)
+				user << "<span class='notice'>The airlock painter already contains a toner cardridge.</span>"
+				return
+			user.drop_item()
+			var/obj/item/weapon/airlock_painter/WT = W
+			WT.loc = src
+			ink = WT
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			user << "<span class='notice'>You install the toner cardridge into the airlock painter.</span>"
+			return
+			user.drop_item()
+
+
 	attack_self(mob/user)
-		if(active)
-			user << "<span class='notice'>You switch [src] off.</span>"
-			active = 0
-		else
-			user << "<span class='notice'>You switch [src] on.</span>"
-			active = 1
-	*/
+		//Change the mode
+		if(ink)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			var/turf/T = loc
+			if(ismob(T))
+				T = T.loc
+			ink.loc = T
+			ink = null
+			user << "<span class='notice'>You remove the toner cardridge from the airlock painter.</span>"
