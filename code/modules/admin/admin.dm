@@ -37,8 +37,12 @@ var/global/floorIsLava = 0
 		usr << "Error: you are not an admin!"
 		return
 
-	var/body = "<html><head><title>Options for [M.key]</title></head>"
-	body += "<body>Options panel for <b>[M]</b>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:40: var/body = "<html><head><title>Options for [M.key]</title></head>"
+	var/body = {"<html><head><title>Options for [M.key]</title></head>
+<body>Options panel for <b>[M]</b>"}
+	// END AUTOFIX
 	if(M.client)
 
 		// AUTOFIXED BY fix_string_idiocy.py
@@ -244,9 +248,12 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		usr << "Error: you are not an admin!"
 		return
-	var/dat = "<html><head><title>Info on [key]</title></head>"
-	dat += "<body>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:247: var/dat = "<html><head><title>Info on [key]</title></head>"
+	var/dat = {"<html><head><title>Info on [key]</title></head>
+<body>"}
+	// END AUTOFIX
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos

@@ -56,8 +56,12 @@
 
 /obj/item/device/eftpos/attack_self(mob/user as mob)
 	if(get_dist(src,user) <= 1)
-		var/dat = "<b>[eftpos_name]</b><br>"
-		dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\EFTPOS.dm:59: var/dat = "<b>[eftpos_name]</b><br>"
+		var/dat = {"<b>[eftpos_name]</b><br>
+<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"}
+		// END AUTOFIX
 		if(transaction_locked)
 
 			// AUTOFIXED BY fix_string_idiocy.py

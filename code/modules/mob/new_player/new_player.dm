@@ -319,9 +319,12 @@
 		var/mins = (mills % 36000) / 600
 		var/hours = mills / 36000
 
-		var/dat = "<html><body><center>"
-		dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\new_player.dm:322: var/dat = "<html><body><center>"
+		var/dat = {"<html><body><center>
+Round Duration: [round(hours)]h [round(mins)]m<br>"}
+		// END AUTOFIX
 		if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
 			if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
 				dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
@@ -407,8 +410,12 @@
 		return new_character
 
 	proc/ViewManifest()
-		var/dat = "<html><body>"
-		dat += "<h4>Crew Manifest</h4>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\new_player.dm:410: var/dat = "<html><body>"
+		var/dat = {"<html><body>
+<h4>Crew Manifest</h4>"}
+		// END AUTOFIX
 		dat += data_core.get_manifest(OOC = 1)
 
 		src << browse(dat, "window=manifest;size=370x420;can_close=1")

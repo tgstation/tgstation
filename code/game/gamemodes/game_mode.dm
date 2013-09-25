@@ -227,10 +227,12 @@
 
 
 /datum/game_mode/proc/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
-	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"
 
-
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\game_mode.dm:230: var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
+	var/intercepttext = {"<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>
+<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"}
+	// END AUTOFIX
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option

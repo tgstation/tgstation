@@ -492,7 +492,7 @@
 		spawn()
 			has_sprites += user.client
 			for(var/i = 1 to MAX_PILL_SPRITE)
-				usr << browse_rsc(icon('chemical.dmi', "pill" + num2text(i)), "pill[i].png")
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill" + num2text(i)), "pill[i].png")
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				usr << browse_rsc(icon('chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 	var/dat = ""
@@ -518,12 +518,12 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:518: dat += "[G.name] , [G.volume] Units - "
-				dat += {"[G.name] , [G.volume] Units - 
-					<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A> 
-					<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A> 
-					<A href='?src=\ref[src];add=[G.id];amount=5'>(5)</A> 
-					<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A> 
-					<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A> 
+				dat += {"[G.name] , [G.volume] Units -
+					<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=5'>(5)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A>
 					<A href='?src=\ref[src];addcustom=[G.id]'>(Custom)</A><BR>"}
 				// END AUTOFIX
 
@@ -533,12 +533,12 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:529: dat += "[N.name] , [N.volume] Units - "
-				dat += {"[N.name] , [N.volume] Units - 
-					<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A> 
-					<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A> 
-					<A href='?src=\ref[src];remove=[N.id];amount=5'>(5)</A> 
-					<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A> 
-					<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A> 
+				dat += {"[N.name] , [N.volume] Units -
+					<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=5'>(5)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A>
 					<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"}
 				// END AUTOFIX
 		else

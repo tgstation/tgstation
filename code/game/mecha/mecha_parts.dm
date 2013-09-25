@@ -493,7 +493,7 @@
 	// Cheating.
 	phazon/phase_array
 		name = "Phase Array"
-		name = "A peice of bluespace technology so advanced, it seems magical."
+		desc = "A peice of bluespace technology so advanced, it seems magical."
 		icon='icons/mecha/mecha_equipment.dmi'
 		icon_state = "mecha_phase_array"
 

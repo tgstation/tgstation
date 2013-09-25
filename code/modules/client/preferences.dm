@@ -1280,9 +1280,12 @@ datum/preferences
 				character.gender = MALE
 
 	proc/open_load_dialog(mob/user)
-		var/dat = "<body>"
-		dat += "<tt><center>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:1283: var/dat = "<body>"
+		var/dat = {"<body>
+<tt><center>"}
+		// END AUTOFIX
 		var/savefile/S = new /savefile(path)
 		if(S)
 			dat += "<b>Select a character slot to load</b><hr>"

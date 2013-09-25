@@ -83,9 +83,12 @@
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	msg += "<span class='warning'>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\carbon\brain\posibrain.dm:86: var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
+	var/msg = {"<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n
+<span class='warning'>"}
+	// END AUTOFIX
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)

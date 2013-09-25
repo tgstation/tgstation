@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/cryo_cell
-	name = "cryo cell"
+	name = "Cryo Cell"
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cell-off"
 	density = 1
@@ -62,37 +62,66 @@
 	go_out()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user as mob)
-	user.set_machine(src)
-	var/beaker_text = ""
-	var/health_text = ""
-	var/temp_text = ""
-	if(occupant)
-		if(occupant.health <= -100)
-			health_text = "<FONT color=red>Dead</FONT>"
-		else if(occupant.health < 0)
-			health_text = "<FONT color=red>[round(occupant.health,0.1)]</FONT>"
-		else
-			health_text = "[round(occupant.health,0.1)]"
-	if(air_contents.temperature > T0C)
-		temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+/obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
+	ui_interact(user)
+
+/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
+	
+	var/data[0]
+	data["isOperating"] = on
+
+	data["hasOccupant"] = occupant ? 1 : 0
+	
+	var/occupantData[0]
+	if (!occupant)
+		occupantData["name"] = null
+		occupantData["stat"] = null
+		occupantData["health"] = null
+		occupantData["bruteLoss"] = null
+		occupantData["oxyLoss"] = null
+		occupantData["toxLoss"] = null
+		occupantData["fireLoss"] = null
+		occupantData["bodyTemperature"] = null
+	else
+		occupantData["name"] = occupant.name
+		occupantData["stat"] = occupant.stat
+		occupantData["health"] = round(occupant.health)
+		occupantData["bruteLoss"] = round(occupant.getBruteLoss())
+		occupantData["oxyLoss"] = round(occupant.getOxyLoss())
+		occupantData["toxLoss"] = round(occupant.getToxLoss())
+		occupantData["fireLoss"] = round(occupant.getFireLoss())
+		occupantData["bodyTemperature"] = round(occupant.bodytemperature)
+	data["occupant"] = occupantData;
+
+	data["cellTemperature"] = round(air_contents.temperature)
+	data["cellTemperatureStatus"] = "good"
+	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+		data["cellTemperatureStatus"] = "bad"
 	else if(air_contents.temperature > 225)
-		temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+		data["cellTemperatureStatus"] = "average"
+
+	data["isBeakerLoaded"] = beaker ? 1 : 0
+	var beakerContents[0]
+	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker:reagents.reagent_list)
+			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list... 
+	data["beakerContents"] = beakerContents
+	
+	//user << list2json(data)
+
+	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	if (!ui)
+		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
 	else
-		temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
-	if(beaker)
-		beaker_text = "<B>Beaker:</B> <A href='?src=\ref[src];eject=1'>Eject</A>"
-	else
-		beaker_text = "<B>Beaker:</B> <FONT color=red>No beaker loaded</FONT>"
-	var/dat = {"<B>Cryo cell control system</B><BR>
-		<B>Current cell temperature:</B> [temp_text]K<BR>
-		<B>Cryo status:</B> [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		[beaker_text]<BR><BR>
-		<B>Current occupant:</B> [occupant ? "<BR>Name: [occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(occupant.getFireLoss(),0.1)]<BR>Toxin damage: [round(occupant.getToxLoss(),0.1)]<BR>Body temperature: [occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
-		"}
-	user.set_machine(src)
-	user << browse(dat, "window=cryo")
-	onclose(user, "cryo")
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+	//user.set_machine(src)
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
 	if ((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))
@@ -103,9 +132,9 @@
 			if (beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = get_step(loc, SOUTH)
-				beaker = null
+				beaker = null		
 
-		updateUsrDialog()
+		nanomanager.update_uis(src) // update all UIs attached to this object
 		add_fingerprint(usr)
 		return
 

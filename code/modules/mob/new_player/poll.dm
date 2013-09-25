@@ -53,9 +53,12 @@
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT id, question FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime")
 		select_query.Execute()
 
-		var/output = "<div align='center'><B>Player polls</B>"
-		output +="<hr>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\poll.dm:56: var/output = "<div align='center'><B>Player polls</B>"
+		var/output = {"<div align='center'><B>Player polls</B>
+<hr>"}
+		// END AUTOFIX
 		var/pollid
 		var/pollquestion
 

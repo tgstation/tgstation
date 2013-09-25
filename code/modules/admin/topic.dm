@@ -2249,8 +2249,12 @@
 					alert("The game mode is [ticker.mode.name]")
 				else alert("For some reason there's a ticker, but not a game mode")
 			if("manifest")
-				var/dat = "<B>Showing Crew Manifest.</B><HR>"
-				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:2252: var/dat = "<B>Showing Crew Manifest.</B><HR>"
+				var/dat = {"<B>Showing Crew Manifest.</B><HR>
+<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"}
+				// END AUTOFIX
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.ckey)
 						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
@@ -2259,16 +2263,24 @@
 			if("check_antagonist")
 				check_antagonists()
 			if("DNA")
-				var/dat = "<B>Showing DNA from blood.</B><HR>"
-				dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:2262: var/dat = "<B>Showing DNA from blood.</B><HR>"
+				var/dat = {"<B>Showing DNA from blood.</B><HR>
+<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"}
+				// END AUTOFIX
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.dna && H.ckey)
 						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=DNA;size=440x410")
 			if("fingerprints")
-				var/dat = "<B>Showing Fingerprints.</B><HR>"
-				dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:2270: var/dat = "<B>Showing Fingerprints.</B><HR>"
+				var/dat = {"<B>Showing Fingerprints.</B><HR>
+<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"}
+				// END AUTOFIX
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.ckey)
 						if(H.dna && H.dna.uni_identity)

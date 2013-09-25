@@ -29,17 +29,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-REGEX_TO_COMBINE_AS_BLOCK = re.compile('^(?P<tabs>\t+)(?P<identifier>[A-Za-z\.]+) *(?P<operator>\+?)= *"(?P<content>.+)')
+REGEX_TO_COMBINE_AS_BLOCK = re.compile('^(?P<tabs>\t+)(?P<declaration>var/)?(?P<identifier>[A-Za-z\.]+)\s*(?P<operator>\+?)=\s*"(?P<content>.+)"\s*$')
 def ProcessFile(filename):
     fuckups = []
     with open(filename, 'r') as f:
         lastID = ''
+        declaring=False
         lastLevel = 0
         lastWasAlert = False
         buffa = ''
         tempbuffa = ''
         tempfuckup = ''
         tempBackup = ''
+        origIndentLevel=0
         ln = 0
         for line in f:
             ln += 1
@@ -47,9 +49,9 @@ def ProcessFile(filename):
             if m is not None:
                 level = m.group('tabs').count('\t')
                 ID = m.group('identifier')
-                content = m.group('content').strip()[:-1]
+                content = m.group('content').strip()
                 indent = '\t' * level
-                indentMore = '\t' * (level + 1)
+                #indentMore = '\t' * (level + 1)
                 if ID == lastID and level == lastLevel:
                     if not lastWasAlert:
                         buffa += '\n' + indent + '// AUTOFIXED BY fix_string_idiocy.py'
@@ -61,20 +63,24 @@ def ProcessFile(filename):
                     print(msg)
                     fuckups.append(msg)
                     buffa += '\n'
-                    buffa += indentMore
+                    #buffa += indentMore
                     buffa += content
                     lastWasAlert = True
                 else:
                     if lastWasAlert:
                         buffa += '"}'
-                        buffa += '\n' + indent + '// END AUTOFIX'
+                        buffa += '\n' + ('\t'*origIndentLevel) + '// END AUTOFIX'
                         buffa += '\n'
                         lastWasAlert = False
                     if tempBackup != '':
                         buffa += tempBackup
                     tempBackup = line
                     tempbuffa = indent
-                    tempbuffa += '{0} {2}= {{"{1}'.format(ID, content, m.group('operator'))
+                    origIndentLevel=level
+                    if m.group('declaration') is None:
+                        tempbuffa += '{0} {2}= {{"{1}'.format(ID, content, m.group('operator'))
+                    else:
+                        tempbuffa += 'var/{0} {2}= {{"{1}'.format(ID, content, m.group('operator'))
                     tempfuckup = '{0}:{1}: {2}'.format(filename, ln, line.strip())
                 lastID = ID
                 lastLevel = level
