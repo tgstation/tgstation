@@ -709,5 +709,4 @@ var/list/vox_sounds = list("," = 'sound/vox/,.wav',
 "z" = 'sound/vox_fem/z.ogg',
 "zero" = 'sound/vox_fem/zero.ogg',
 "zone" = 'sound/vox_fem/zone.ogg',
-"zulu" = 'sound/vox_fem/zulu.ogg',
-)
+"zulu" = 'sound/vox_fem/zulu.ogg')
