@@ -50,9 +50,9 @@
 			if(scrubbing)
 				icon_state = "[hidden]on[suffix]"
 			else
-				icon_state = "[hidden]in[suffix]"
+				icon_state = "[hidden]in"
 		else
-			icon_state = "[hidden]off[suffix]"
+			icon_state = "[hidden]off"
 		return
 
 	proc
