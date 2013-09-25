@@ -242,6 +242,19 @@
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 	getFiles(
+		'nano/js/libraries.min.js',
+		'nano/js/nano_update.js',
+		'nano/js/nano_config.js',
+		'nano/js/nano_base_helpers.js',
+		'nano/css/shared.css',
+		'nano/css/icons.css',
+		'nano/templates/cryo.tmpl',
+		'nano/images/uiBackground.png',
+		'nano/images/uiIcons16.png',
+		'nano/images/uiIcons24.png',
+		'nano/images/uiLinkPendingIcon.gif',
+		'nano/images/uiNoticeBackground.jpg',
+		'nano/images/uiTitleFluff.png',
 		'html/search.js',
 		'html/panels.css',
 		'icons/pda_icons/pda_atmos.png',
