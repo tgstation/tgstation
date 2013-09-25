@@ -6,11 +6,14 @@
 	fire_alert = 0
 
 	var/temperature_alert = 0
+	var/xeno_emote_counter = 0 //See Life()
 
 
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
 	set background = 1
+
+	xeno_emote_counter -= 1  //Hack to stop *deathgasp and *roar spam for xenos.
 
 	if (monkeyizing)
 		return

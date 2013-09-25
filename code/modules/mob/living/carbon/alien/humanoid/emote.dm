@@ -72,10 +72,12 @@
 
 	if ((message && src.stat == 0))
 		log_emote("[name]/[key] : [message]")
-		if (act == "roar")
+		if (act == "roar" && xeno_emote_counter <= 0)
 			playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
-		if (act == "deathgasp")
+			xeno_emote_counter = 4
+		if (act == "deathgasp" && xeno_emote_counter <= 0)
 			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+			xeno_emote_counter = 4
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
