@@ -575,17 +575,17 @@ Code:
 					else
 						menu += "[ldat]"
 
-					menu += "<h4>Located Janitorial Cart:</h4>"
+					menu += "<h4>Located Mop Buckets:</h4>"
 
 					ldat = null
-					for (var/obj/structure/janitorialcart/B in world)
+					for (var/obj/structure/mopbucket/B in world)
 						var/turf/bl = get_turf(B)
 
 						if(bl)
 							if (bl.z != cl.z)
 								continue
 							var/direction = get_dir(src, B)
-							ldat += "Cart - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+							ldat += "Bucket - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"

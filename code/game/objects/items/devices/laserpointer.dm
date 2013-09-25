@@ -6,7 +6,7 @@
 	icon_state = "pointer"
 	item_state = "pen"
 	var/pointer_icon_state
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
 	slot_flags = SLOT_BELT
 	m_amt = 500
 	g_amt = 500

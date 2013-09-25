@@ -109,7 +109,10 @@
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
-/obj/structure/cable/attack_tk(mob/user)
+/obj/structure/cable/attack_hand(mob/user)
+	if(ishuman(user))
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
 	return
 
 /obj/structure/cable/attackby(obj/item/W, mob/user)
@@ -208,7 +211,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS | FPRINT | CONDUCT
+	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
@@ -305,7 +308,7 @@
 		//handle mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.u_equip(src)
+			M.drop_item(src)
 		del(src)
 	else
 		amount -= used

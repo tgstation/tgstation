@@ -11,7 +11,6 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "blackf"
-	fitted = 0
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"

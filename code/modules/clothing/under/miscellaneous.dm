@@ -47,7 +47,6 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	color = "sexyclown"
-	fitted = 0
 
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
@@ -108,7 +107,6 @@
 	icon_state = "owl"
 	color = "owl"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	fitted = 0
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
@@ -177,7 +175,6 @@
 	icon_state = "blackskirt"
 	color = "blackskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -186,7 +183,6 @@
 	item_state = "schoolgirl"
 	color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -223,7 +219,6 @@
 	item_state = "kilt"
 	color = "kilt"
 	body_parts_covered = CHEST|GROIN|FEET
-	fitted = 0
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -232,7 +227,6 @@
 	item_state = "sexymime"
 	color = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS
-	fitted = 0
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -241,7 +235,6 @@
 	item_state = "gladiator"
 	color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -250,4 +243,3 @@
 	item_state = "sundress"
 	color = "sundress"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0

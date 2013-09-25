@@ -58,8 +58,8 @@
 
 
 
-/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
-	if(!proximity) return
+/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+	..()
 	if(wielded)
 		if(charged == 5)
 			charged = 0

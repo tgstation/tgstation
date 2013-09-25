@@ -31,6 +31,15 @@
 	var/def_zone
 	pass_flags = PASSTABLE
 
+/obj/effect/datacore
+	name = "datacore"
+	var/medical[] = list()
+	var/general[] = list()
+	var/security[] = list()
+	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	var/locked[] = list()
+
+
 /obj/effect/list_container
 	name = "list container"
 
@@ -75,7 +84,7 @@
 	throwforce = 0.0
 	throw_speed = 1
 	throw_range = 20
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | USEDELAY | TABLEPASS
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)

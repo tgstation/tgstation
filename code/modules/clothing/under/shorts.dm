@@ -4,7 +4,6 @@
 	gender = PLURAL
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = GROIN
-	fitted = 0
 
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"

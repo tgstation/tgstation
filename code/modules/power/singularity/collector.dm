@@ -51,11 +51,9 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/device/analyzer))
 		user << "\blue The [W.name] detects that [last_power]W were recently produced."
 		return 1
-	else if(istype(W, /obj/item/device/analyzer) && P)
-		atmosanalyzer_scan(P.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/plasma))
 		if(!src.anchored)
 			user << "\red The [src] needs to be secured to the floor first."

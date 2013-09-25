@@ -165,8 +165,7 @@ Frequency:
 	var/T = L[t1]
 	for(var/mob/O in hearers(user, null))
 		O.show_message("<span class='notice'>Locked In.</span>", 2)
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(src), T, src)
-	try_move_adjacent(P)
+	new /obj/effect/portal( get_turf(src), T, src )
 	active_portals++
 	src.add_fingerprint(user)
 	return
