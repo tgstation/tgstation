@@ -48,13 +48,10 @@
 				user << "<span class='notice'>The airlock painter already contains a toner cardridge.</span>"
 				return
 			user.drop_item()
-			var/obj/item/weapon/airlock_painter/WT = W
-			WT.loc = src
-			ink = WT
+			W.loc = src
+			ink = W
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user << "<span class='notice'>You install the toner cardridge into the airlock painter.</span>"
-			return
-			user.drop_item()
 
 
 	attack_self(mob/user)
