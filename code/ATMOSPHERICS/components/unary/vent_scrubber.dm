@@ -43,13 +43,16 @@
 		var/hidden=""
 		if(level == 1 && istype(loc, /turf/simulated))
 			hidden="h"
+		var/suffix=""
+		if(scrub_O2)
+			suffix="1"
 		if(node && on && !(stat & (NOPOWER|BROKEN)))
 			if(scrubbing)
-				icon_state = "[hidden]on"
+				icon_state = "[hidden]on[suffix]"
 			else
-				icon_state = "[hidden]in"
+				icon_state = "[hidden]in[suffix]"
 		else
-			icon_state = "[hidden]off"
+			icon_state = "[hidden]off[suffix]"
 		return
 
 	proc

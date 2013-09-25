@@ -51,15 +51,6 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  - mecha_phase_array
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\debug_rebuild.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\debug_rebuild.dmi
- + 
- + 1
- + 2
- + 3
- + 4
- + 5
- + 6
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen.dmi
  - title: title: 8 frames, 1 directions icons: [None, None, None, None, None, None, None, None]
@@ -498,6 +489,10 @@ OSError: cannot identify image file
  - kit_1
  - paddle_lefthand
  - paddle_righthand
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\vent_scrubber.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\vent_scrubber.dmi
+ - hon1
+ - on1
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
  + corpsoft
@@ -564,60 +559,6 @@ OSError: cannot identify image file
  + door_opening
  + welded
  + welded_open
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\particle_accelerator2.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\particle_accelerator2.dmi
- + control_box
- + control_boxc
- + control_boxp
- + control_boxp0
- + control_boxp1
- + control_boxp2
- + control_boxw
- + emitter_center
- + emitter_centerc
- + emitter_centerp
- + emitter_centerp0
- + emitter_centerp1
- + emitter_centerp2
- + emitter_centerw
- + emitter_left
- + emitter_leftc
- + emitter_leftp
- + emitter_leftp0
- + emitter_leftp1
- + emitter_leftp2
- + emitter_leftw
- + emitter_right
- + emitter_rightc
- + emitter_rightp
- + emitter_rightp0
- + emitter_rightp1
- + emitter_rightp2
- + emitter_rightw
- + end_cap
- + end_capc
- + end_capp
- + end_capp0
- + end_capp1
- + end_capp2
- + end_capw
- + fuel_chamber
- + fuel_chamberc
- + fuel_chamberp
- + fuel_chamberp0
- + fuel_chamberp1
- + fuel_chamberp2
- + fuel_chamberw
- + particle
- + power_box
- + power_boxc
- + power_boxp
- + power_boxp0
- + power_boxp1
- + power_boxp2
- + power_boxw
- + tank_holder
- + ucontrol_boxp
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):

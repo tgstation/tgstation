@@ -28,6 +28,8 @@
 	if(stat & NOPOWER || building || metal >= metalPerMoMMI)
 		return
 	metal+=metalPerTick
+	if(metal >= metalPerMoMMI)
+		update_icon()
 
 /obj/machinery/mommi_spawner/attack_ghost(var/mob/dead/observer/user as mob)
 	if(building)
