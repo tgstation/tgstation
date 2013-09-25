@@ -4,7 +4,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "alienh_running"
 	icon_living = "alienh_running"
-	icon_dead = "alien_l"
+	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	response_help = "pokes"
 	response_disarm = "shoves"
