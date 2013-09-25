@@ -25,7 +25,7 @@ var/list
 		if(src.client.holder)
 			sandbox.admin = 1
 		verbs += new /mob/proc/sandbox_panel
-		verbs += new /mob/proc/spawn_atom
+		verbs += new /mob/proc/sandbox_spawn_atom
 
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
@@ -33,7 +33,8 @@ var/list
 
 	if(sandbox)
 		sandbox.update()
-/mob/var/list/banned_types=list(
+
+var/global/list/banned_sandbox_types=list(
 	/obj/item/weapon/gun,
 	/obj/item/assembly,
 	/obj/item/device/camera,
@@ -43,16 +44,21 @@ var/list
 	/obj/item/weapon/veilrender,
 	/obj/item/weapon/reagent_containers/glass/bottle/wizarditis,
 	/obj/item/weapon/spellbook)
-/mob/proc/spawn_atom(var/object as text)
+
+/mob/proc/sandbox_spawn_atom(var/object as text)
 	set category = "Sandbox"
 	set desc = "Spawn any item or machine"
 	set name = "Sandbox Spawn"
 
 	var/list/types = typesof(/obj/item) + typesof(/obj/machinery)
+	for(var/type in types)
+		for(var/btype in banned_sandbox_types)
+			if(findtext("[btype]", "[type]"))
+				types -= type
 	var/list/matches = new()
 
 	for(var/path in types)
-		if(is_type_in_list(path, banned_types))
+		if(is_type_in_list(path, banned_sandbox_types))
 			continue
 		if(findtext("[path]", object))
 			matches += path
@@ -67,12 +73,12 @@ var/list
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-	if(is_type_in_list(chosen, banned_types))
+	if(is_type_in_list(chosen, banned_sandbox_types))
 		src << "\red Denied."
 		return
 	new chosen(usr.loc)
 
-	log_admin("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	message_admins("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","hSBSA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 datum/hSB
@@ -185,28 +191,3 @@ datum/hSB
 				if("hsbmedkit")
 					var/obj/item/weapon/storage/firstaid/hsb = new/obj/item/weapon/storage/firstaid/regular
 					hsb.loc = usr.loc
-				if("hsbobj")
-					if(!hsboxspawn) return
-
-					var/list/selectable = list()
-					for(var/O in typesof(/obj/item/))
-					//Note, these istypes don't work
-						if(istype(O, /obj/item/weapon/gun))
-							continue
-						if(istype(O, /obj/item/assembly))
-							continue
-						if(istype(O, /obj/item/device/camera))
-							continue
-						if(istype(O, /obj/item/weapon/cloaking_device))
-							continue
-						if(istype(O, /obj/item/weapon/dummy))
-							continue
-						if(istype(O, /obj/item/weapon/melee/energy/sword))
-							continue
-						if(istype(O, /obj/structure))
-							continue
-						selectable += O
-
-					var/hsbitem = input(usr, "Choose an object to spawn.", "Sandbox:") in selectable + "Cancel"
-					if(hsbitem != "Cancel")
-						new hsbitem(usr.loc)
