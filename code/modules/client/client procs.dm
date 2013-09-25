@@ -99,7 +99,7 @@
 		return null
 
 	if(IsGuestKey(key))
-		alert(src,"vgstation 13 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
+		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 		return
 
@@ -248,11 +248,14 @@
 		'nano/js/nano_base_helpers.js',
 		'nano/css/shared.css',
 		'nano/css/icons.css',
+		'nano/templates/chem_dispenser.tmpl',
 		'nano/templates/cryo.tmpl',
+		'nano/templates/dna_modifier.tmpl',
 		'nano/images/uiBackground.png',
 		'nano/images/uiIcons16.png',
 		'nano/images/uiIcons24.png',
 		'nano/images/uiLinkPendingIcon.gif',
+		'nano/images/uiMaskBackground.png',
 		'nano/images/uiNoticeBackground.jpg',
 		'nano/images/uiTitleFluff.png',
 		'html/search.js',

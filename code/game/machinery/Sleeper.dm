@@ -62,18 +62,23 @@
 					t1 = "<font color='red'>*dead*</font>"
 				else
 			dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
+			if(iscarbon(occupant))
+				var/mob/living/carbon/C = occupant
+				dat += text("[]\t-Pulse, bpm: []</FONT><BR>", (C.pulse == PULSE_NONE || C.pulse == PULSE_THREADY ? "<font color='red'>" : "<font color='blue'>"), C.get_pulse(GETPULSE_TOOL))
 			dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
 			dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
 			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
 			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
 			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
 			if(occupant.reagents)
-				dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
-				dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
-				dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
-				dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
-				dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
-			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src, src, src)
+				for(var/chemical in connected.available_chemicals)
+					dat += "[connected.available_chemicals[chemical]]: [occupant.reagents.get_reagent_amount(chemical)] units<br>"
+			dat += "<HR><A href='?src=\ref[src];refresh=1'>Refresh meter readings each second</A><BR>"
+			for(var/chemical in connected.available_chemicals)
+				dat += "Inject [connected.available_chemicals[chemical]]: "
+				for(var/amount in connected.amounts)
+					dat += "<a href ='?src=\ref[src];chemical=[chemical];amount=[amount]'>[amount] units</a> "
+				dat += "<br>"
 		else
 			dat += "The sleeper is empty."
 		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
@@ -86,27 +91,15 @@
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 		usr.set_machine(src)
-		if (src.connected)
-			if (src.connected.occupant)
-				if(src.connected.occupant.health > 0)
-					if (href_list["inap"])
-						src.connected.inject_inap(usr)
-					if (href_list["stox"])
-						src.connected.inject_stox(usr)
-					if (href_list["derm"])
-						src.connected.inject_dermaline(usr)
-					if (href_list["bic"])
-						src.connected.inject_bicaridine(usr)
-					if (href_list["dex"])
-						src.connected.inject_dexalin(usr)
-				else
-					if(src.connected.occupant.health > -100)
-						if (href_list["inap"])
-							src.connected.inject_inap(usr)
-						if (href_list["stox"] || href_list["derm"] || href_list["bic"] || href_list["dex"])
-							usr << "\red \b this person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!"
-					else
+		if (href_list["chemical"])
+			if (src.connected)
+				if (src.connected.occupant)
+					if (src.connected.occupant.stat == DEAD)
 						usr << "\red \b This person has no life for to preserve anymore. Take them to a department capable of reanimating them."
+					else if(src.connected.occupant.health > 0 || href_list["chemical"] == "inaprovaline")
+						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
+					else
+						usr << "\red \b This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!"
 		if (href_list["refresh"])
 			src.updateUsrDialog()
 		src.add_fingerprint(usr)
@@ -140,6 +133,8 @@
 	anchored = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
 	var/mob/living/occupant = null
+	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
+	var/amounts = list(5, 10)
 
 
 	New()
@@ -273,53 +268,13 @@
 		return
 
 
-	proc/inject_inap(mob/living/user as mob)
+	proc/inject_chemical(mob/living/user as mob, chemical, amount)
 		if(src.occupant && src.occupant.reagents)
-			if(src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 <= 60)
-				src.occupant.reagents.add_reagent("inaprovaline", 30)
-			user << text("Occupant now has [] units of Inaprovaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("inaprovaline"))
-		else
-			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
-		return
-
-
-	proc/inject_stox(mob/living/user as mob)
-		if(src.occupant && src.occupant.reagents)
-			if(src.occupant.reagents.get_reagent_amount("stoxin") + 20 <= 40)
-				src.occupant.reagents.add_reagent("stoxin", 20)
-			user << text("Occupant now has [] units of soporifics in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
-		else
-			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
-		return
-
-
-	proc/inject_dermaline(mob/living/user as mob)
-		if(src.occupant && src.occupant.reagents)
-			if(src.occupant.reagents.get_reagent_amount("dermaline") + 20 <= 40)
-				src.occupant.reagents.add_reagent("dermaline", 20)
-			user << text("Occupant now has [] units of Dermaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dermaline"))
-		else
-			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
-		return
-
-
-	proc/inject_bicaridine(mob/living/user as mob)
-		if(src.occupant && src.occupant.reagents)
-			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 20)
-				src.occupant.reagents.add_reagent("bicaridine", 10)
-			user << text("Occupant now has [] units of Bicaridine in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("bicaridine"))
-		else
-			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
-		return
-
-
-	proc/inject_dexalin(mob/living/user as mob)
-		if(src.occupant && src.occupant.reagents)
-			if(src.occupant.reagents.get_reagent_amount("dexalin") + 20 <= 40)
-				src.occupant.reagents.add_reagent("dexalin", 20)
-			user << text("Occupant now has [] units of Dexalin in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dexalin"))
-		else
-			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
+			if(src.occupant.reagents.get_reagent_amount(chemical) + amount <= 20)
+				src.occupant.reagents.add_reagent(chemical, amount)
+				user << "Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in his/her bloodstream."
+				return
+		user << "There's no occupant in the sleeper or the subject has too many chemicals!"
 		return
 
 

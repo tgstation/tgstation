@@ -1,3 +1,4 @@
+// NanoConfig is the place to store utility functions
 var NanoConfig = function () 
 {
     return {
