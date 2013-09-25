@@ -1,5 +1,5 @@
 /obj/item/weapon/syndie
-	icon = 'syndieweapons.dmi'
+	icon = 'icons/obj/syndieweapons.dmi'
 
 /*C-4 explosive charge and etc, replaces the old syndie transfer valve bomb.*/
 

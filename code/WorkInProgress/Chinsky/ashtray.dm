@@ -1,5 +1,5 @@
 /obj/item/ashtray
-	icon = 'ashtray.dmi'
+	icon = 'icons/ashtray.dmi'
 	var/
 		max_butts 	= 0
 		empty_desc 	= ""

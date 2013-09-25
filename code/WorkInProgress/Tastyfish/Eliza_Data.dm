@@ -391,12 +391,12 @@
 					ai.show_message("<i>Intercepted message from <b>[who]</b>: [object]</i>")
 
 			if (!pda.silent)
-				playsound(pda.loc, 'twobeep.ogg', 50, 1)
+				playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, pda.loc))
 					O.show_message(text("\icon[pda] *[pda.ttone]*"))
 
 			pda.overlays = null
-			pda.overlays += image('pda.dmi', "pda-r")
+			pda.overlays += image('icons/obj/pda.dmi', "pda-r")
 		else
 			var/list/href_list = list()
 			href_list["src"] = "\ref[eliza.speaker.loc.loc]"

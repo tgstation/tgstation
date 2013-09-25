@@ -2,7 +2,7 @@
 obj/machinery/scanner
 	name = "Identity Analyser"
 	var/outputdir = 0
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "scanner_idle"
 	density = 1
 	anchored = 1

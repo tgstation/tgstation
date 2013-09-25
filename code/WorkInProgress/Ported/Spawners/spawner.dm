@@ -3,7 +3,7 @@
 
 /obj/spawner/bomb
 	name = "bomb"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
 	var/btype = 0  //0 = radio, 1= prox, 2=time
 	var/explosive = 1	// 0= firebomb
@@ -30,7 +30,7 @@
 	// Going in depth: the reason we do not do a Del() in its New()is because then we cannot access its properties.
 	// I might be doing this wrong / not knowing of a Byond function. If I'm doing it wrong, let me know please.
 	name = "bomb"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
 	var/btype = 0 // 0=radio, 1=prox, 2=time
 	var/btemp1 = 1500

@@ -794,14 +794,14 @@ LOOK FOR SURGERY.DM*/
 //misc, formerly from code/defines/weapons.dm
 /obj/item/weapon/bonegel
 	name = "bone gel"
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone-gel"
 	force = 0
 	throwforce = 1.0
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fixovein"
 	force = 0
 	throwforce = 1.0
@@ -810,7 +810,7 @@ LOOK FOR SURGERY.DM*/
 
 /obj/item/weapon/bonesetter
 	name = "bone setter"
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone setter"
 	force = 8.0
 	throwforce = 9.0

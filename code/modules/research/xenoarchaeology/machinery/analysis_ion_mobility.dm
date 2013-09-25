@@ -4,7 +4,7 @@
 obj/machinery/anomaly/ion_mobility
 	name = "Ion Mobility Spectrometer"
 	desc = "A specialised, complex analysis machine."
-	icon = 'virology.dmi'
+	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 
 obj/machinery/anomaly/ion_mobility/ScanResults()

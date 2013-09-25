@@ -1,5 +1,5 @@
 /obj/structure/sign/barsign
-	icon = 'barsigns.dmi'
+	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	anchored = 1
 	New()

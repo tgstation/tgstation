@@ -4,7 +4,7 @@
 obj/machinery/anomaly/isotope_ratio
 	name = "Isotope ratio spectrometer"
 	desc = "A specialised, complex analysis machine."
-	icon = 'virology.dmi'
+	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 
 obj/machinery/anomaly/isotope_ratio/ScanResults()

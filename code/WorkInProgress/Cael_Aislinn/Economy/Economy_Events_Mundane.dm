@@ -147,6 +147,7 @@
 	//newMsg.is_admin_message = 1
 	var/datum/trade_destination/affected_dest = pick(weighted_mundaneevent_locations)
 	newMsg.body = pick(file2list("config/news/trivial.txt"))
+	newMsg.body = replacetext(newMsg.body,"{{AFFECTED}}",affected_dest.name)
 
 	for(var/datum/feed_channel/FC in news_network.network_channels)
 		if(FC.channel_name == "The Gibson Gazette")

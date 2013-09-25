@@ -78,7 +78,7 @@
 
 /obj/effect/meteor
 	name = "meteor"
-	icon = 'meteor.dmi'
+	icon = 'icons/obj/meteor.dmi'
 	icon_state = "flaming"
 	density = 1
 	anchored = 1.0
@@ -105,7 +105,7 @@
 				shake_camera(M, 3, 1)
 		if (A)
 			A.meteorhit(src)
-			playsound(get_turf(src), 'meteorimpact.ogg', 40, 1)
+			playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
 			if(prob(15))// && !istype(A, /obj/structure/grille))
 				explosion(get_turf(src), 4, 5, 6, 7, 0)
@@ -138,7 +138,7 @@
 					A.meteorhit(src)
 				src.hits--
 				return
-				playsound(get_turf(src), 'meteorimpact.ogg', 40, 1)
+				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 			if (--src.hits <= 0)
 				if(prob(15) && !istype(A, /obj/structure/grille))
 					explosion(get_turf(src), 1, 2, 3, 4, 0)
