@@ -111,7 +111,7 @@
 			machine.selected_clown = 0
 
 		//Phazon
-		if(machine.ore_clown)
+		if(machine.ore_phazon)
 			if (machine.selected_phazon==1)
 				dat += text("<A href='?src=\ref[src];sel_phazon=no'><font color='green'>Smelting</font></A> ")
 			else
