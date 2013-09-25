@@ -169,7 +169,7 @@ RCD
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
-	if(!isrobot(user))
+	if(!isrobot(user) && !ishuman(user))
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
