@@ -379,11 +379,9 @@ AI MODULES
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/toyAI/attack_self(mob/user as mob)
-	if(loc == user)
-		last_law = generate_ion_law()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("\red \icon[src] [last_law]")
-		return
-	..()
+/obj/item/weapon/aiModule/toyAI/attack_self(mob/user)
+	last_law = generate_ion_law()
+	user << "<span class='notice'>You press the button on [src].</span>"
+	playsound(user, 'sound/machines/click.ogg', 20, 1)
+	src.loc.visible_message("\red \icon[src] [last_law]")
+	return
