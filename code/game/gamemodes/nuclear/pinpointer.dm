@@ -62,9 +62,10 @@
 
 
 /obj/item/weapon/pinpointer/advpinpointer
-	name = "Advanced Pinpointer"
+	name = "Syndicate Pinpointer"
 	icon = 'icons/obj/device.dmi'
-	desc = "A larger version of the normal pinpointer, this unit features a helpful quantum entanglement detection system to locate various objects that do not broadcast a locator signal."
+	desc = "A larger version of the Nanotrasen pinpointer, this unit features a helpful quantum entanglement detection system to locate various objects that do not broadcast a locator signal."
+	origin_tech = "bluespace=3;magnets=3;syndicate=3"
 	var/mode = 0  // Mode 0 locates disk, mode 1 locates coordinates.
 	var/turf/location = null
 	var/obj/target = null
