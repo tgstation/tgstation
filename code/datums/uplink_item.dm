@@ -278,9 +278,9 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/advpinpointer
 	name = "Syndicate Pinpointer"
-	desc = "A special pinpointer capable of, in addition of being able to track the nuclear disk, is able to track coordinates, people with their DNA, and various items we may ask for you to get.  Please note that if we've asked you to secure a pinpointer, we will not accept this one."
+	desc = "A special pinpointer capable of, in addition of being able to track the nuclear disk, can track coordinates, people with their DNA, and various items we may ask for you to get.  Please note that if we've asked you to secure a pinpointer, we will not accept this one."
 	item = /obj/item/weapon/pinpointer/advpinpointer
-	cost = 10
+	cost = 4
 
 // IMPLANTS
 
