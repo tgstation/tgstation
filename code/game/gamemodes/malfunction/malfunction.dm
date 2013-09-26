@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	antag_flag = BE_MALF
-	required_players = 20 //##values changed for debugging, if you see this in a PR, tell me, then laugh at me.
+	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
@@ -25,8 +25,7 @@
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"
-	world << "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>"
-	world << "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it."
+	world << "<B>The AI on the station has malfunctioned and must be destroyed.</B>"
 
 /datum/game_mode/malfunction/can_start()
 	//Triumvirate?
@@ -36,10 +35,11 @@
 	return ..()
 
 /datum/game_mode/malfunction/get_players_for_role(var/role = BE_MALF)
+	var/datum/job/ai/DummyAIjob = new
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
 			if(player.client.prefs.be_special & BE_MALF)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI"))
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
 					antag_candidates += player.mind
 	antag_candidates = shuffle(antag_candidates)
 	return antag_candidates
