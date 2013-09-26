@@ -6,11 +6,42 @@
  *		Rack Parts
  */
 
+/obj/item/weapon/rack_parts
+	name = "rack parts"
+	desc = "Parts of a rack."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rack_parts"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	m_amt = 3750
 
+/obj/item/weapon/table_parts
+	name = "table parts"
+	desc = "Parts of a table. Poor table."
+	gender = PLURAL
+	icon = 'icons/obj/items.dmi'
+	icon_state = "table_parts"
+	m_amt = 3750
+	flags = FPRINT | TABLEPASS| CONDUCT
+	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+
+/obj/item/weapon/table_parts/reinforced
+	name = "reinforced table parts"
+	desc = "Hard table parts. Well...harder..."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "reinf_tableparts"
+	m_amt = 7500
+	flags = FPRINT | TABLEPASS| CONDUCT
+
+/obj/item/weapon/table_parts/wood
+	name = "wooden table parts"
+	desc = "Keep away from fire."
+	icon_state = "wood_tableparts"
+	flags = null
 
 /*
  * Table Parts
  */
+
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))

@@ -540,3 +540,20 @@
 	name = "toy phazon"
 	desc = "Mini-Mecha action figure! Collect them all! 11/11."
 	icon_state = "phazonprize"
+
+/obj/item/toy/beach_ball
+	name = "beach ball"
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "ball"
+	item_state = "beachball"
+	density = 0
+	anchored = 0
+	w_class = 3
+	force = 0
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 20
+
+/obj/item/weapon/beach_ball/afterattack(atom/target, mob/user)
+	user.drop_item()
+	throw_at(target, throw_range, throw_speed)
