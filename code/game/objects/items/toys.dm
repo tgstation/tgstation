@@ -484,15 +484,14 @@
 	icon_state = "AI"
 	var/cooldown = 0
 
-/obj/item/toy/AI/attack_self(mob/user as mob)
-	if(loc == user) //Here comes AI ion law code, don't cry.
-		if(!cooldown) //for the sanity of everyone
-			var/message = generate_ion_law()
-			user << "<span class='notice'>You press the button on [src].</span>"
-			playsound(user, 'sound/machines/click.ogg', 20, 1)
-			src.loc.visible_message("\red \icon[src] [message]")
-			cooldown = 1
-			spawn(30) cooldown = 0
-			return
+/obj/item/toy/AI/attack_self(mob/user)
+	if(!cooldown) //for the sanity of everyone
+		var/message = generate_ion_law()
+		user << "<span class='notice'>You press the button on [src].</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("\red \icon[src] [message]")
+		cooldown = 1
+		spawn(30) cooldown = 0
+		return
 
 	..()
