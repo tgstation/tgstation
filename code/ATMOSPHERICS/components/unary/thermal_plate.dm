@@ -13,7 +13,7 @@
 
 	update_icon()
 		var/prefix="_idle" // Also available: _heat, _cool
-		var/suffix=""
+		//var/suffix=""
 		if(level == 1 && istype(loc, /turf/simulated))
 			prefix="h"
 		icon_state = "[prefix]off"
