@@ -1513,6 +1513,21 @@ datum
 				..()
 				return
 
+
+		toxin/spore
+			name = "Spore Toxin"
+			id = "spore"
+			description = "A toxic spore cloud which blocks vision when ingested."
+			reagent_state = LIQUID
+			color = "#9ACD32"
+			toxpwr = 0.5
+
+			on_mob_life(var/mob/living/M as mob)
+				..()
+				M.damageoverlaytemp = 60
+				M.eye_blurry = max(M.eye_blurry, 3)
+				return
+
 		toxin/chloralhydrate
 			name = "Chloral Hydrate"
 			id = "chloralhydrate"
