@@ -77,6 +77,9 @@
 	if(reagents.has_reagent("lube"))
 		message_admins("[key_name_admin(user)] fired Space lube from a spray bottle.")
 		log_game("[key_name(user)] fired Space lube from a spray bottle.")
+	if(reagents.has_reagent("fuel"))
+		message_admins("[key_name_admin(user)] fired Welder fuel from a spray bottle.")
+		log_game("[key_name(user)] fired Welder fuel from a spray bottle.")
 	return
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
