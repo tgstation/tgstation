@@ -176,8 +176,8 @@
 		source.SetParalysis(0)
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("An adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
-	source << "<span class='notice'>The implanted adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.</span>"
+	source.mind.store_memory("An adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.  It will only work three times. Upon using it, you will instantly recover from stuns.", 0, 0)
+	source << "<span class='notice'>The implanted adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate. It will only work three times. Upon using it, you will instantly recover from stuns.</span>"
 	return 1
 
 
@@ -201,6 +201,6 @@
 	return
 
 /obj/item/weapon/implant/emp/implanted(mob/living/carbon/source)
-		source.mind.store_memory("EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+		source.mind.store_memory("EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.  It will only work once.", 0, 0)
+		source << "The implanted EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.  It will only work once."
 		return 1
