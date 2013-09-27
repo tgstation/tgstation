@@ -16,10 +16,7 @@
 		var/suffix=""
 		if(level == 1 && istype(loc, /turf/simulated))
 			prefix="h"
-		if(on && !(stat & (NOPOWER|BROKEN)))
-			icon_state = "[prefix]on[suffix]"
-		else
-			icon_state = "[prefix]off"
+		icon_state = "[prefix]off"
 
 	process()
 		..()
