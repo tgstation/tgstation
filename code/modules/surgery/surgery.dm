@@ -71,7 +71,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	var/germ_level = user.germ_level
 	if(user.gloves)
 		germ_level = user.gloves.germ_level
-	if(!(E.status & ORGAN_ROBOT)) //Germs on robotic limbs bad
+	if(!(E.status & (ORGAN_ROBOT|ORGAN_PEG))) //Germs on robotic limbs bad
 		E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)

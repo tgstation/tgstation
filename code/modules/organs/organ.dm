@@ -75,7 +75,7 @@
 
 		//Robotic limb malfunctions
 		var/malfunction = 0
-		if (E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
+		if (E.status & (ORGAN_ROBOT|ORGAN_PEG) && prob(E.brute_dam + E.burn_dam))
 			malfunction = 1
 
 		//Broken limbs hurt too
