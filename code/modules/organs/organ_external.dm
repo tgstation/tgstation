@@ -627,11 +627,12 @@
 	if(isFat && has_fat)
 		fat="_fat"
 	var/icon_state="[icon_name][gender][fat]"
-	//testing("[src].get_icon('[gender]', '[fat]') = /icon([owner.race_icon], [icon_state])")
+	var/baseicon=owner.race_icon
 	if (status & ORGAN_MUTATED)
-		return new /icon(owner.deform_icon, icon_state)
-	else
-		return new /icon(owner.race_icon, icon_state)
+		baseicon=owner.deform_icon
+	if (status & ORGAN_PEG)
+		baseicon='icons/mob/human_races/o_peg.dmi'
+	return new /icon(baseicon, icon_state)
 
 
 /datum/organ/external/proc/is_usable()
@@ -738,13 +739,15 @@
 
 /datum/organ/external/head/get_icon()
 	if (!owner)
-	 return ..()
+		return ..()
 	var/g = "m"
 	if(owner.gender == FEMALE)	g = "f"
+	var/baseicon=owner.race_icon
 	if (status & ORGAN_MUTATED)
-		. = new /icon(owner.deform_icon, "[icon_name]_[g]")
-	else
-		. = new /icon(owner.race_icon, "[icon_name]_[g]")
+		baseicon=owner.deform_icon
+	if (status & ORGAN_PEG)
+		baseicon='icons/mob/human_races/o_peg.dmi'
+	return new /icon(baseicon, "[icon_name]_[g]")
 
 /datum/organ/external/head/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 	..(brute, burn, sharp, used_weapon, forbidden_limbs)

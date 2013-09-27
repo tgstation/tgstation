@@ -75,7 +75,7 @@
 
 		//Robotic limb malfunctions
 		var/malfunction = 0
-		if (E.status & (ORGAN_ROBOT) && prob(E.brute_dam + E.burn_dam))
+		if (E.status & (ORGAN_ROBOT|ORGAN_PEG) && prob(E.brute_dam + E.burn_dam))
 			malfunction = 1
 
 		//Broken limbs hurt too
@@ -137,12 +137,14 @@
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		canstand_l = 0
 		hasleg_l = 0
-		legispeg_l=E.status & ORGAN_PEG
+	legispeg_l=E.status & ORGAN_PEG
+
 	E = get_organ("r_leg")
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		canstand_r = 0
 		hasleg_r = 0
-		legispeg_r=E.status & ORGAN_PEG
+	legispeg_r=E.status & ORGAN_PEG
+
 
 	// We CAN stand if we're on a peg.
 	E = get_organ("l_foot")
