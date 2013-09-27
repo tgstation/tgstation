@@ -24,6 +24,7 @@ Buildable meters
 #define PIPE_MTVALVE			19
 #define PIPE_MANIFOLD4W			20
 #define PIPE_CAP				21
+#define PIPE_THERMAL_PLATE		22
 
 /obj/item/pipe_spawner
 	name = "Used for placing piping parts on the map."
@@ -113,6 +114,8 @@ Buildable meters
 			src.pipe_type = PIPE_MANIFOLD4W
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/cap))
 			src.pipe_type = PIPE_CAP
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/thermal_plate))
+			src.pipe_type = PIPE_THERMAL_PLATE
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -147,6 +150,7 @@ Buildable meters
 		"t-valve", \
 		"4-way manifold", \
 		"pipe cap", \
+		"thermal plate", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -168,15 +172,13 @@ Buildable meters
 		"passivegate", \
 		"volumepump", \
 		"heunary", \
-		"valve0nopower", \
+		"dvalve", \
 		"mtvalve", \
 		"manifold4w", \
 		"cap", \
+		"thermalplate", \
 	)
-	if(pipe_type==PIPE_DVALVE) // Nothing there for d-valves.
-		icon = 'icons/obj/atmospherics/digital_valve.dmi'
-	else
-		icon = 'icons/obj/pipe-item.dmi'
+	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = islist[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
@@ -239,7 +241,7 @@ Buildable meters
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE)
 			return dir
 		if(PIPE_MANIFOLD4W)
 			return dir|flip|cw|acw
@@ -384,7 +386,7 @@ Buildable meters
 			if (M.node3)
 				M.node3.initialize()
 				M.node3.build_network()
-			
+
 		if(PIPE_MANIFOLD4W)		//4-way manifold
 			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
 			M.dir = dir
@@ -571,7 +573,7 @@ Buildable meters
 			if (P.node2)
 				P.node2.initialize()
 				P.node2.build_network()
-				
+
 		if(PIPE_MTVALVE)		//manual t-valve
 			var/obj/machinery/atmospherics/tvalve/V = new(src.loc)
 			V.dir = dir
@@ -591,7 +593,7 @@ Buildable meters
 			if (V.node3)
 				V.node3.initialize()
 				V.node3.build_network()
-				
+
 		if(PIPE_CAP)
 			var/obj/machinery/atmospherics/pipe/cap/C = new(src.loc)
 			C.dir = dir
@@ -650,11 +652,25 @@ Buildable meters
 				C.node.initialize()
 				C.node.build_network()
 
+		if(PIPE_THERMAL_PLATE)		//unary vent
+			var/obj/machinery/atmospherics/unary/thermal_plate/P = new( src.loc )
+			P.dir = dir
+			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
+			P.initialize()
+			P.build_network()
+			if (P.node)
+				P.node.initialize()
+				P.node.build_network()
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens the [src].", \
 		"\blue You have fastened the [src].", \
-		"You hear ratchet.")
+		"You hear a ratchet.")
 	del(src)	// remove the pipe item
 
 	return

@@ -61,6 +61,7 @@ RCD
 <A href='?src=\ref[src];makemeter=1;type=3'>Meter</A><BR>
 <A href='?src=\ref[src];makepipe=13;dir=1;type=2'>Gas Filter</A><BR>
 <A href='?src=\ref[src];makepipe=14;dir=1;type=2'>Gas Mixer</A><BR>
+<A href='?src=\ref[src];makepipe=[PIPE_THERMAL_PLATE];dir=1;type=3'>Thermal Plate</A><BR>
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];makepipe=2;dir=1;type=0'>Pipe</A><BR>
 <A href='?src=\ref[src];makepipe=3;dir=5;type=1'>Bent Pipe</A><BR>
