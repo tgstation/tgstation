@@ -6,17 +6,20 @@
 //Transfers heat between a pipe system and environment, based on which has a greater thermal energy concentration
 
 	icon = 'icons/obj/atmospherics/cold_sink.dmi'
-	icon_state = "intact_off"
+	icon_state = "off"
 
 	name = "Thermal Transfer Plate"
 	desc = "Transfers heat to and from an area"
 
 	update_icon()
-		if(node)
-			icon_state = "intact_off"
+		var/prefix="_idle" // Also available: _heat, _cool
+		var/suffix=""
+		if(level == 1 && istype(loc, /turf/simulated))
+			prefix="h"
+		if(on && !(stat & (NOPOWER|BROKEN)))
+			icon_state = "[prefix]on[suffix]"
 		else
-			icon_state = "exposed"
-		return
+			icon_state = "[prefix]off"
 
 	process()
 		..()
