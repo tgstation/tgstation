@@ -277,7 +277,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					if(!search_id)	break
 					search_pda = 0
 
-		for(var/datum/mind/T in ticker.mode.traitors)
+		for(var/datum/mind/T in ticker.minds)
 			for(var/datum/objective/obj in T.objectives)
 				// Only update if this player is a target
 				if(obj.target && obj.target.current.real_name == name)
