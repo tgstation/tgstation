@@ -193,7 +193,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 				user.set_machine(src)
 				interact(user)
 				return 1
-
+		if(isrobot(user))
+			user << "\red You're a robot. No."
+			return 1
 		if (src.m_amount + O.m_amt > max_m_amount)
 			user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
 			return 1
