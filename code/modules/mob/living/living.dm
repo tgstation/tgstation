@@ -263,6 +263,8 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
+	fire_stacks = 0
+	on_fire = 0 
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -276,6 +278,7 @@
 		dead_mob_list -= src
 		living_mob_list += src
 	stat = CONSCIOUS
+	update_fire()
 	regenerate_icons()
 	..()
 	return
@@ -434,7 +437,7 @@
 							del(G)
 		if(resisting)
 			L.visible_message("<span class='warning'>[L] resists!</span>")
-
+			return
 
 	//unbuckling yourself
 	if(L.buckled && L.last_special <= world.time)
@@ -489,9 +492,19 @@
 				BD.attack_hand(usr)
 			C.open()
 
-	//breaking out of handcuffs
+	//Stop drop and roll & Handcuffs 
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
+		if(CM.on_fire && CM.canmove)
+			CM.fire_stacks -= 5
+			CM.weakened = 5
+			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
+				"<span class='notice'>You stop, drop, and roll!</span>")
+			if(fire_stacks <= 0)
+				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
+					"<span class='notice'>You extinguish yourself.</span>")
+				ExtinguishMob()
+			return
 		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
