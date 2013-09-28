@@ -130,6 +130,10 @@ var/datum/cameranet/cameranet = new()
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
+	return checkTurfVis(position)
+
+
+/datum/cameranet/proc/checkTurfVis(var/turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)

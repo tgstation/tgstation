@@ -168,3 +168,19 @@
 	receive_signal(datum/signal/signal)
 		if(!on) return
 		return ..(signal)
+
+
+// Embedded signaller used in anomalies.
+/obj/item/device/assembly/signaler/anomaly
+	name = "anomaly core"
+	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
+	icon_state = "anomaly core"
+	item_state = "electronic"
+
+/obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
+	..()
+	for(var/obj/effect/anomaly/A in orange(0, src))
+		A.anomalyNeutralize()
+
+/obj/item/device/assembly/signaler/anomaly/attack_self()
+	return

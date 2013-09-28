@@ -330,6 +330,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_lying[UNIFORM_LAYER]		= lying
 		overlays_standing[UNIFORM_LAYER]	= standing
 
+
+		var/G = (gender == FEMALE) ? "f" : "m"
+		if(G == "f" && U.fitted == 1)
+			var/index = "[t_color]_s"
+			var/icon/female_uniform_icon = female_uniform_icons[index]
+			if(!female_uniform_icon ) 	//Create standing/laying icons if they don't exist
+				generate_uniform(index,t_color)
+			standing	= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)
+			overlays_standing[UNIFORM_LAYER]	= standing
+
 		if(w_uniform.blood_DNA)
 			lying.overlays		+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood2")
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")

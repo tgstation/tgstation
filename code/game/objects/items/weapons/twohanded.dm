@@ -134,8 +134,8 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	..()
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+	if(!proximity) return
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
@@ -169,6 +169,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/hacked = 0
 	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
@@ -225,6 +226,17 @@
 /obj/item/weapon/twohanded/dualsaber/red
 	New()
 		color = "red"
+
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
+			user << "<span class='warning'>2XRNBW_ENGAGE</span>"
+			color = "rainbow"
+			update_icon()
+		else
+			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
 
 
 //spears

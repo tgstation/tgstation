@@ -483,7 +483,9 @@ steam.start() -- spawns the effect
 		chemholder.reagents = R
 		R.my_atom = chemholder
 
-	set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, admin_log = 1)
+
+	set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
+
 		if(n > 20)
 			n = 20
 		number = n
@@ -498,7 +500,7 @@ steam.start() -- spawns the effect
 		if(direct)
 			direction = direct
 
-		if(admin_log)
+		if(!silent)
 			var/contained = ""
 			for(var/reagent in carry.reagent_list)
 				contained += " [reagent] "

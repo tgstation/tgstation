@@ -81,7 +81,7 @@
 
 		// Attach the smoke spreader and setup/start it.
 		S.attach(location)
-		S.set_up(reagents, 1, 1, location, 15, 0) // only 1-2 smoke cloud
+		S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
 		S.start()
 
 		del(src)
