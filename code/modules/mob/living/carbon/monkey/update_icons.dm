@@ -1,10 +1,11 @@
 //Monkey Overlays Indexes////////
+#define M_FIRE_LAYER			6
 #define M_MASK_LAYER			5
 #define M_BACK_LAYER			4
 #define M_HANDCUFF_LAYER		3
 #define M_L_HAND_LAYER			2
 #define M_R_HAND_LAYER			1
-#define M_TOTAL_LAYERS			5
+#define M_TOTAL_LAYERS			6
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -18,6 +19,7 @@
 	update_inv_r_hand(0)
 	update_inv_l_hand(0)
 	update_inv_handcuffed(0)
+	update_fire()
 	update_icons()
 	//Hud Stuff
 	update_hud()
@@ -152,7 +154,24 @@
 	if(client)
 		client.screen |= contents
 
+/mob/living/carbon/monkey/update_fire()
+	overlays -= overlays_lying[M_FIRE_LAYER]
+	overlays -= overlays_standing[M_FIRE_LAYER]
+	if(on_fire)
+		overlays_lying[M_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"= -M_FIRE_LAYER)
+		overlays_standing[M_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"= -M_FIRE_LAYER)
+		if(src.lying)
+			overlays += overlays_lying[M_FIRE_LAYER]
+		else
+			overlays += overlays_standing[M_FIRE_LAYER]
+		return
+	else
+		overlays_lying[M_FIRE_LAYER] = null
+		overlays_standing[M_FIRE_LAYER] = null
+
+
 //Monkey Overlays Indexes////////
+#undef M_FIRE_LAYER
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER
 #undef M_HANDCUFF_LAYER

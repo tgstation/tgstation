@@ -22,7 +22,6 @@
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	B.loc = get_step(loc, SOUTH)
 	..()
-
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
 	var/node_connect = dir
@@ -309,6 +308,7 @@
 	occupant = M
 	add_fingerprint(usr)
 	update_icon()
+	M.ExtinguishMob()
 	return 1
 
 
