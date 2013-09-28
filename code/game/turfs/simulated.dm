@@ -55,7 +55,7 @@
 			if (bloodDNA)
 				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
-				if(from)
+				if(istype(from) && from)
 					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir) // Going
 
 			bloodDNA = null
