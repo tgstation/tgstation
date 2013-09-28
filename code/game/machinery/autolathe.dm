@@ -194,8 +194,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 				interact(user)
 				return 1
 		if(isrobot(user))
-			user << "\red You're a robot. No."
-			return 1
+			if(!isMoMMI(user))
+				user << "\red You're a robot. No."
+				return 1
+			else
+				var/mob/living/silicon/robot/mommi/M = user
+				if(M.is_in_modules(O))
+					user << "\red You can't put something built into you in [src]."
+					return 1
 		if (src.m_amount + O.m_amt > max_m_amount)
 			user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
 			return 1
