@@ -4,7 +4,7 @@
 /obj/machinery/computer/atmos_alert
 	name = "Atmospheric Alert Console"
 	desc = "Used to access the station's atmospheric sensors."
-	circuit = "/obj/item/weapon/circuitboard/atmos_alert"
+	circuit = /obj/item/weapon/circuitboard/atmos_alert
 	icon_state = "alert:0"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
@@ -56,10 +56,13 @@
 		src.updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
-	..()
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & BROKEN)
+		icon_state = "alert:b"
 		return
-	if(priority_alarms.len)
+	else if (stat & NOPOWER)
+		icon_state = "alert:O"
+		return
+	else if(priority_alarms.len)
 		icon_state = "alert:2"
 
 	else if(minor_alarms.len)
