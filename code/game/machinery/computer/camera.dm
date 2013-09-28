@@ -2,25 +2,20 @@
 	name = "Security Cameras"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
-	circuit = "/obj/item/weapon/circuitboard/security"
+	circuit = /obj/item/weapon/circuitboard/security
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
-
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
-
-	attack_paw(var/mob/user as mob)
-		return attack_hand(user)
-
-
 	check_eye(var/mob/user as mob)
 		if ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 			return null
+		var/list/viewing = viewers(src)
+		if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+			return null
 		user.reset_view(current)
+		attack_hand(user)
 		return 1
 
 
@@ -28,10 +23,16 @@
 		if (src.z > 6)
 			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 			return
-		if(stat & (NOPOWER|BROKEN))	return
 
-		if(!isAI(user))
-			user.set_machine(src)
+		if (!network)
+			world.log << "A computer lacks a network at [x],[y],[z]."
+			return
+		if (!(istype(network,/list)))
+			world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+			return
+
+		if(..())
+			return
 
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameranet.cameras)
@@ -42,6 +43,12 @@
 		var/list/D = list()
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
+			if(!C.network)
+				world.log << "[C.c_tag] has no camera network."
+				continue
+			if(!(istype(C.network,/list)))
+				world.log << "[C.c_tag]'s camera network is not a list!"
+				continue
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)
 				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C

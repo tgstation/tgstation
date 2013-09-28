@@ -10,15 +10,7 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-
-
-	attack_ai(var/mob/user as mob)
-		return src.attack_hand(user)
-
-
-	attack_paw(var/mob/user as mob)
-		return
-
+	circuit = /obj/item/weapon/circuitboard/prisoner
 
 	attack_hand(var/mob/user as mob)
 		if(..())
