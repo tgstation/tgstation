@@ -535,5 +535,9 @@
 
 /mob/living/carbon/getTrail()
 	if(getBruteLoss() < 300)
-		return "ltrails"
-	return "trails"
+		if(prob(50))
+			return "ltrails_1"
+		return "ltrails_2"
+	else if(prob(50))
+		return "trails_1"
+	return "trails_2"
