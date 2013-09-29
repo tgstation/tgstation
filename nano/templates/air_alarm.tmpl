@@ -117,7 +117,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 				<div class="line">
 					<div class="statusLabel">Operating:</div>
 					<div class="statusValue">
-						{^{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':!power},null,(power?'linkOn':'red'))}}
+						{^{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
 						{^{if direction=="siphon"}}
 							{^{:~link('Siphoning','arrowthickstop-1-s',{'id_tag':id_tag,'command':'set_dir','dir':'release'})}}
 						{{else}}
