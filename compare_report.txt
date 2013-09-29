@@ -439,6 +439,10 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
  + psychbed
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipe-item.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
+ - dvalve
+ - thermalplate
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
  - intercom-frame

@@ -117,6 +117,12 @@ NanoBaseHelpers = function ()
 				
 				return '<div class="displayBar ' + styleClass + '"><div class="displayBarFill ' + styleClass + '" style="width: ' + percentage + '%;"></div><div class="displayBarText ' + styleClass + '">' + showText + '</div></div>';
 			},
+			// Convert danger level to class (for the air alarm)
+			dangerToClass: function(level) {
+				if(level==0) return 'good';
+				if(level==1) return 'average';
+				return 'bad';
+			},
 			// Display DNA Blocks (for the DNA Modifier UI)
 			displayDNABlocks: function(dnaString, selectedBlock, selectedSubblock, blockSize, paramKey) {		
 			    if (!dnaString)

@@ -125,7 +125,7 @@ NanoUpdate = function ()
 						}
 						catch(error)
 						{
-							alert('An error occurred while loading the UI: ' + error.message);
+							alert('An error occurred while loading the UI: ' + error.message+"\n"+error.stack);
 							return;
 						}
 					});    
@@ -144,7 +144,7 @@ NanoUpdate = function ()
 		}
 		catch (error)
 		{
-			alert(error.Message);
+			alert(error.Message+error.stack);
 			return;
 		}
 		
