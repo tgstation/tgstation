@@ -6,7 +6,6 @@
 	fire_alert = 0
 
 	var/temperature_alert = 0
-	var/xeno_emote_counter = 0 //See Life()
 
 
 /mob/living/carbon/alien/humanoid/Life()

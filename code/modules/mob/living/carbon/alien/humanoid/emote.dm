@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/humanoid/emote(var/act)
 
-	var/cooldown = 0 //Used to limit *roar and *deathgasp spam.
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
