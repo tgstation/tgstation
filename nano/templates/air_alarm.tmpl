@@ -135,7 +135,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 				<div class="line">
 					<div class="statusLabel">External pressure target:</div>
 					<div class="statusValue">
-						{^{:~precisionRound(external,4)}}
+						{^{:~precisionRound(external,4)}} kPa
 					</div>
 					{^{:~link('Set','gear',{'id_tag':id_tag,'command':'set_external_pressure'})}}
 					{^{:~link('Reset','arrowrefresh-1-n',{'id_tag':id_tag,'command':'set_external_pressure','val':101.325},null,'linkOn')}}

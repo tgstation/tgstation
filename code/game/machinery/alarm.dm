@@ -1181,8 +1181,16 @@ table tr:first-child th:first-child { border: none;}
 				"o2_scrub",
 				"panic_siphon",
 				"scrubbing")
+				var/val
+				if(href_list["val"])
+					val=text2num(href_list["val"])
+				else
+					var/newval = input("Enter new value") as num|null
+					if(isnull(newval))
+						return
+					val = newval
 
-				send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
+				send_signal(device_id, list(href_list["command"] = val ) )
 				changed=0 // We wait for the device to reply.
 				waiting_on_device=device_id
 
