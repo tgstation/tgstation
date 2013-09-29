@@ -483,7 +483,9 @@ steam.start() -- spawns the effect
 		chemholder.reagents = R
 		R.my_atom = chemholder
 
+
 	set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
+
 		if(n > 20)
 			n = 20
 		number = n
