@@ -19,16 +19,27 @@
 	New()
 		ink = new /obj/item/device/toner(src)
 
+	//This proc doesn't just check if the painter can be used, but also uses it.
+	//Only call this if you are certain that the painter will be used right after this check!
 	proc/use(mob/user as mob)
+		if(can_use(user))
+			ink.charges--
+			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+			return 1
+		else
+			return 0
+
+	//This proc only checks if the painter can be used.
+	//Call this if you don't want the painter to be used right after this check, for example
+	//because you're expecting user input.
+	proc/can_use(mob/user as mob)
 		if(!ink)
 			user << "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>"
 			return 0
 		else if(ink.charges < 1)
-			user << "<span class='notice'>\the [name] is out of ink!.</span>"
+			user << "<span class='notice'>\The [name] is out of ink!</span>"
 			return 0
 		else
-			ink.charges--
-			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
 			return 1
 
 	examine()

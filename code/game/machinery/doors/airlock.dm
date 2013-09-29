@@ -1051,9 +1051,10 @@ About the new airlock wires panel:
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		W = C
 	else
+		user << "If you see this, it means airlock/change_paintjob() was called with something other than an airlock painter. Check your code!"
 		return
 
-	if(!W.ink)
+	if(!W.can_use(user))
 		return
 
 	if(glass == 1)

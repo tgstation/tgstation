@@ -312,7 +312,7 @@ obj/structure/door_assembly
 	//Do NOT add your airlock to a list if it does not have a version for that list,
 	//	or you will get broken icons.
 		var/obj/item/weapon/airlock_painter/WT = W
-		if(WT.ink && WT.ink.charges)
+		if(WT.can_use(user))
 			var/icontype
 			var/optionlist
 			if(mineral && mineral == "glass")
