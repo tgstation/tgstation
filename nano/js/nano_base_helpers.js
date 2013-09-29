@@ -48,6 +48,13 @@ NanoBaseHelpers = function ()
 			round: function(number) {								
 				return Math.round(number);
 			},
+			// Round a number to X decimal places.
+            precisionRound: function (value, places) {
+                if(places==0)
+                    return Math.round(number);
+                var multiplier = Math.pow(10, places);
+                return (Math.round(value * multiplier) / multiplier);
+            },
 			// Round a number down to integer
 			floor: function(number) {								
 				return Math.floor(number);
@@ -158,7 +165,7 @@ NanoBaseHelpers = function ()
                         status = 'selected';
                     }
                     
-                    html += '<div class="link ' + status + ' dnaSubBlock" data-href="' + generateHref(parameters) + '" id="dnaBlock' + index + '">' + characters[index] + '</div>'
+                    html += '<div class="link ' + status + ' dnaSubBlock" data-href="' + generateHref(parameters) + '" id="dnaBlock' + index + '">' + characters[index] + '</div>';
                     
                     index++;
                     if (index % blockSize == 0 && index < characters.length)
@@ -178,7 +185,7 @@ NanoBaseHelpers = function ()
 				return html;
 			}
 		});
-	}
+	};
 	
 	// generate a Byond href, combines _urlParameters with parameters
 	var generateHref = function (parameters)
@@ -209,7 +216,7 @@ NanoBaseHelpers = function ()
 			}
 		}
 		return queryString;
-	}
+	};
 
 	return {
         init: function () 
@@ -223,9 +230,4 @@ $(document).ready(function()
 {
 	NanoBaseHelpers.init();
 });
-
-
-
-
-
 

@@ -11,7 +11,7 @@ nanoui is used to open and update nano browser uis
 #define STATUS_UPDATE 1 // ORANGE Visability
 #define STATUS_DISABLED 0 // RED Visability
 
-/datum/nanoui	
+/datum/nanoui
 	// the user who opened this ui
 	var/mob/user
 	// the object this ui "belongs" to
@@ -180,7 +180,7 @@ nanoui is used to open and update nano browser uis
 	data["ui"] = list(
 			"status" = status,
 			"user" = list("name" = user.name)
-		)	
+		)
 	return data
 
  /**
@@ -348,7 +348,11 @@ nanoui is used to open and update nano browser uis
 	if (width && height)
 		window_size = "size=[width]x[height];"
 	update_status(0)
-	user << browse(get_html(), "window=[window_id];[window_size][window_options]")
+	var/html=get_html()
+	var/f = file("nano/debug.html")
+	fdel(f)
+	f << html
+	user << browse(html, "window=[window_id];[window_size][window_options]")
 	on_close_winset()
 	//onclose(user, window_id)
 	nanomanager.ui_opened(src)

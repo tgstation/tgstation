@@ -89,7 +89,7 @@
 	if(!current)
 		return ""
 	var/dat = "<h3>[current.name]</h3><hr>"
-	dat += current.return_status()
+	//dat += current.return_status()
 	if(current.remote_control || overridden)
 		dat += "<hr>[return_controls()]"
 	return dat

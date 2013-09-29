@@ -124,6 +124,7 @@
 /obj/machinery/alarm/proc/apply_preset(var/no_cycle_after=0)
 
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
+	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
 	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
@@ -178,6 +179,7 @@
 
 	// breathable air according to human/Life()
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
+	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
 	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
@@ -283,6 +285,7 @@
 
 	var/pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
 	var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, TLV["oxygen"])
+	var/nitrogen_dangerlevel = get_danger_level(environment.nitrogen*partial_pressure, TLV["nitrogen"])
 	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, TLV["carbon dioxide"])
 	var/plasma_dangerlevel = get_danger_level(environment.toxins*partial_pressure, TLV["plasma"])
 	var/temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
@@ -292,6 +295,7 @@
 		pressure_dangerlevel,
 		oxygen_dangerlevel,
 		co2_dangerlevel,
+		nitrogen_dangerlevel,
 		plasma_dangerlevel,
 		other_dangerlevel,
 		temperature_dangerlevel
@@ -679,13 +683,142 @@
 
 /obj/machinery/alarm/attack_ai(mob/user)
 	src.add_hiddenprint(user)
-	return interact(user)
+	return ui_interact(user)
+
+/obj/machinery/alarm/attack_robot(mob/user)
+	if(isMoMMI(user) && wiresexposed)
+		return interact(user)
+	else
+		return attack_ai(user)
 
 /obj/machinery/alarm/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	return interact(user)
+
+/obj/machinery/alarm/proc/ui_air_status()
+	var/turf/location = get_turf(src)
+	var/datum/gas_mixture/environment = location.return_air()
+	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
+	if(total==0)
+		return null
+
+	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
+
+	var/list/current_settings = TLV["pressure"]
+	var/environment_pressure = environment.return_pressure()
+	var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
+
+	current_settings = TLV["oxygen"]
+	var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, current_settings)
+	var/oxygen_percent = round(environment.oxygen / total * 100, 2)
+
+	current_settings = TLV["nitrogen"]
+	var/nitrogen_dangerlevel = get_danger_level(environment.nitrogen*partial_pressure, current_settings)
+	var/nitrogen_percent = round(environment.nitrogen / total * 100, 2)
+
+	current_settings = TLV["carbon dioxide"]
+	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, current_settings)
+	var/co2_percent = round(environment.carbon_dioxide / total * 100, 2)
+
+	current_settings = TLV["plasma"]
+	var/plasma_dangerlevel = get_danger_level(environment.toxins*partial_pressure, current_settings)
+	var/plasma_percent = round(environment.toxins / total * 100, 2)
+
+	current_settings = TLV["other"]
+	var/other_moles = 0.0
+	for(var/datum/gas/G in environment.trace_gases)
+		other_moles+=G.moles
+	var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, current_settings)
+
+	current_settings = TLV["temperature"]
+	var/temperature_dangerlevel = get_danger_level(environment.temperature, current_settings)
+
+
+	var/data[0]
+	data["pressure"]=environment_pressure
+	data["temperature"]=environment.temperature
+	data["temperature_c"]=round(environment.temperature - T0C, 0.1)
+
+	var/percentages[0]
+	percentages["oxygen"]=oxygen_percent
+	percentages["nitrogen"]=nitrogen_percent
+	percentages["co2"]=co2_percent
+	percentages["plasma"]=plasma_percent
+	percentages["other"]=other_moles
+	data["contents"]=percentages
+
+	var/danger[0]
+	danger["pressure"]=pressure_dangerlevel
+	danger["temperature"]=temperature_dangerlevel
+	danger["oxygen"]=oxygen_dangerlevel
+	danger["nitrogen"]=nitrogen_dangerlevel
+	danger["co2"]=co2_dangerlevel
+	danger["plasma"]=plasma_dangerlevel
+	danger["other"]=other_dangerlevel
+	danger["overall"]=max(pressure_dangerlevel,oxygen_dangerlevel,nitrogen_dangerlevel,co2_dangerlevel,plasma_dangerlevel,other_dangerlevel,temperature_dangerlevel)
+	data["danger"]=danger
+	return data
+
+
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(user.stat)
+		return
+	var/data[0]
+	data["air"]=ui_air_status()
+	data["sensors"]=TLV
+	data["locked"]=(!(istype(user, /mob/living/silicon)) && locked)
+	data["rcon"]=rcon_setting
+	data["target_temp"] = target_temperature - T0C
+	data["atmos_alarm"] = alarm_area.atmosalm
+	data["mode"]=mode
+	data["preset"]=preset
+	data["screen"]=screen
+
+	var/vents[0]
+	if(alarm_area.air_vent_names.len)
+		for(var/id_tag in alarm_area.air_vent_names)
+			var/vent_info[0]
+			var/long_name = alarm_area.air_vent_names[id_tag]
+			var/list/vent_data = alarm_area.air_vent_info[id_tag]
+			if(!vent_data)
+				continue
+			vent_info["id_tag"]=id_tag
+			vent_info["name"]=long_name
+			vent_info += vent_data
+			vents[id_tag]=vent_info
+	data["vents"]=vents
+
+	var/scrubbers[0]
+	if(alarm_area.air_scrub_names.len)
+		for(var/id_tag in alarm_area.air_scrub_names)
+			var/long_name = alarm_area.air_scrub_names[id_tag]
+			var/list/scrubber_data = alarm_area.air_scrub_info[id_tag]
+			if(!scrubber_data)
+				continue
+			scrubber_data["id_tag"]=id_tag
+			scrubber_data["long_name"]=long_name
+			scrubbers[id_tag]=scrubber_data
+	data["scrubbers"]=scrubbers
+
+	if (!ui) // no ui has been passed, so we'll search for one
+	{
+		ui = nanomanager.get_open_ui(user, src, ui_key)
+	}
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 520, 410)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+
 
 /obj/machinery/alarm/interact(mob/user)
 	user.set_machine(src)
@@ -730,13 +863,11 @@
 		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p></body></html>")
 		user << browse(t1, "window=AAlarmwires")
 		onclose(user, "AAlarmwires")
-
 	if(!shorted)
-		user << browse(return_text(user),"window=air_alarm")
-		onclose(user, "air_alarm")
+		ui_interact(user)
 
 	return
-
+/*
 /obj/machinery/alarm/proc/return_text(mob/user)
 	if(!(istype(user, /mob/living/silicon)) && locked)
 		return "<html><head><title>\The [src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
@@ -1017,6 +1148,7 @@ table tr:first-child th:first-child { border: none;}
 			output += "</TR></table>"
 
 	return output
+*/
 
 /obj/machinery/alarm/Topic(href, href_list)
 	var/changed=0

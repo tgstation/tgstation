@@ -107,7 +107,7 @@
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
-	
+
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
 
@@ -250,6 +250,7 @@
 		'nano/css/icons.css',
 		'nano/templates/chem_dispenser.tmpl',
 		'nano/templates/cryo.tmpl',
+		'nano/templates/air_alarm.tmpl',
 		'nano/templates/dna_modifier.tmpl',
 		'nano/images/uiBackground.png',
 		'nano/images/uiIcons16.png',
