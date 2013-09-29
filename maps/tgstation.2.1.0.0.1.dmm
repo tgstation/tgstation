@@ -1750,7 +1750,7 @@
 "aHH" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "aHI" = (/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor{dir = 8; icon_state = "bluecorner"},/area/hallway/primary/central)
 "aHJ" = (/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor,/area/hallway/primary/central)
-"aHK" = (/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor{icon_state = "blue"; dir = 4},/area/hallway/primary/central)
+"aHK" = (/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor{icon_state = "bluecorner"},/area/hallway/primary/central)
 "aHL" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "aHM" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/maintenance/fsmaint)
 "aHN" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/glass{name = "Dormitory"},/turf/simulated/floor{icon_state = "neutral"; dir = 8},/area/crew_quarters/sleep)
