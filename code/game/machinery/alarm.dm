@@ -125,7 +125,7 @@
 
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
-	TLV["carbon dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
+	TLV["carbon_dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
 	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
@@ -136,7 +136,7 @@
 			TLV["oxygen"] =			list(-1.0, -1.0, 1, 5) // Partial pressure, kpa
 		if(AALARM_PRESET_SERVER) // Cold as fuck.
 			TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
-			TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
+			TLV["carbon_dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
 			TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 			TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 			TLV["pressure"] =		list(0,ONE_ATMOSPHERE*0.10,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60) /* kpa */
@@ -180,7 +180,7 @@
 	// breathable air according to human/Life()
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
-	TLV["carbon dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
+	TLV["carbon_dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
 	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
@@ -286,7 +286,7 @@
 	var/pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
 	var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, TLV["oxygen"])
 	var/nitrogen_dangerlevel = get_danger_level(environment.nitrogen*partial_pressure, TLV["nitrogen"])
-	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, TLV["carbon dioxide"])
+	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, TLV["carbon_dioxide"])
 	var/plasma_dangerlevel = get_danger_level(environment.toxins*partial_pressure, TLV["plasma"])
 	var/temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
 	var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, TLV["other"])
@@ -718,7 +718,7 @@
 	var/nitrogen_dangerlevel = get_danger_level(environment.nitrogen*partial_pressure, current_settings)
 	var/nitrogen_percent = round(environment.nitrogen / total * 100, 2)
 
-	current_settings = TLV["carbon dioxide"]
+	current_settings = TLV["carbon_dioxide"]
 	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, current_settings)
 	var/co2_percent = round(environment.carbon_dioxide / total * 100, 2)
 
@@ -772,7 +772,18 @@
 	data["rcon"]=rcon_setting
 	data["target_temp"] = target_temperature - T0C
 	data["atmos_alarm"] = alarm_area.atmosalm
+	data["modes"] = list(
+		AALARM_MODE_SCRUBBING   = list("name"="Filtering","desc"="Scrubs out contaminants"),\
+		AALARM_MODE_REPLACEMENT = list("name"="Replace Air","desc"="Siphons out air while replacing"),\
+		AALARM_MODE_PANIC       = list("name"="Panic","desc"="Siphons air out of the room"),\
+		AALARM_MODE_CYCLE       = list("name"="Cycle","desc"="Siphons air before replacing"),\
+		AALARM_MODE_FILL        = list("name"="Fill","desc"="Shuts off scrubbers and opens vents"),\
+		AALARM_MODE_OFF         = list("name"="Off","desc"="Shuts off vents and scrubbers"))
 	data["mode"]=mode
+	data["presets"]=list(
+		AALARM_PRESET_HUMAN		= list("name"="Human","desc"="Checks for Oxygen and Nitrogen"),\
+		AALARM_PRESET_VOX 		= list("name"="Vox","desc"="Checks for Nitrogen only"),\
+		AALARM_PRESET_SERVER 	= list("name"="Coldroom","desc"="For server rooms and freezers"))
 	data["preset"]=preset
 	data["screen"]=screen
 
@@ -904,7 +915,7 @@
 	var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, current_settings)
 	var/oxygen_percent = round(environment.oxygen / total * 100, 2)
 
-	current_settings = TLV["carbon dioxide"]
+	current_settings = TLV["carbon_dioxide"]
 	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, current_settings)
 	var/co2_percent = round(environment.carbon_dioxide / total * 100, 2)
 
@@ -1123,7 +1134,7 @@ table tr:first-child th:first-child { border: none;}
 "}
 			var/list/gases = list(
 				"oxygen"         = "O<sub>2</sub>",
-				"carbon dioxide" = "CO<sub>2</sub>",
+				"carbon_dioxide" = "CO<sub>2</sub>",
 				"plasma"         = "Toxin",
 				"other"          = "Other",)
 
@@ -1188,6 +1199,11 @@ table tr:first-child th:first-child { border: none;}
 					var/newval = input("Enter new value") as num|null
 					if(isnull(newval))
 						return
+					if(href_list["command"]=="set_external_pressure")
+						if(newval>1000+ONE_ATMOSPHERE)
+							newval = 1000+ONE_ATMOSPHERE
+						if(newval<0)
+							newval = 0
 					val = newval
 
 				send_signal(device_id, list(href_list["command"] = val ) )

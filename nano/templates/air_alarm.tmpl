@@ -93,19 +93,19 @@ Used In File(s): /code/game/machinery/alarm.dm
 {{/if}}
 
 {^{if locked}}
-<div class="notice">Swipe card to unlock.</div>
+	<div class="notice">Swipe card to unlock.</div>
 {{else}}
-<div class="notice">Remember to lock with ID card after use.</div>
-<div class="item">
-	<div class="itemLabel">Screen:</div>
-	<div class="itemContents">
-		{^{:~link('Main',      'gear',{'screen':1},(screen==1)?'linkOn':'')}}
-		{^{:~link('Vents',     'gear',{'screen':2},(screen==2)?'linkOn':'')}}
-		{^{:~link('Scrubbers', 'gear',{'screen':3},(screen==3)?'linkOn':'')}}
-		{^{:~link('Mode',      'gear',{'screen':4},(screen==4)?'linkOn':'')}}
-		{^{:~link('Thresholds','gear',{'screen':5},(screen==5)?'linkOn':'')}}
+	<div class="notice">Remember to lock with ID card after use.</div>
+	<div class="item">
+		<div class="itemLabel">Screen:</div>
+		<div class="itemContents">
+			{^{:~link('Main',      'gear',{'screen':1},(screen==1)?'linkOn':'')}}
+			{^{:~link('Vents',     'gear',{'screen':2},(screen==2)?'linkOn':'')}}
+			{^{:~link('Scrubbers', 'gear',{'screen':3},(screen==3)?'linkOn':'')}}
+			{^{:~link('Mode',      'gear',{'screen':4},(screen==4)?'linkOn':'')}}
+			{^{:~link('Thresholds','gear',{'screen':5},(screen==5)?'linkOn':'')}}
+		</div>
 	</div>
-</div>
 	{{!-- VENTS --}}
 	{^{if screen == 2}}
 		<h3>Vent Pump Settings</h3>
@@ -183,5 +183,82 @@ Used In File(s): /code/game/machinery/alarm.dm
 		{{else}}
 			<i>No scrubbers located in this area.</i>
 		{{/for}}
+	{{!-- MODES --}}
+	{{else screen == 4}}
+		<h3>System Mode</h3>
+		<div class="statusDisplay">
+			{^{for modes}}
+			<div class="line">
+				<div class="statusLabel">{^{:~link(name,'gear',{'mode':#index+1},null,(#index+1==~root.mode?'linkOn':''))}}</div>
+				<div class="statusValue">
+					{^{:desc}}
+				</div>
+			</div>
+			{{/for}}
+		</div>
+		<h3>System Preset</h3>
+		<div class="notice">After making a selection, the system will automatically cycle in order to remove contaminants.</div>
+		<div class="statusDisplay">
+			{^{for presets}}
+			<div class="line">
+				<div class="statusLabel">{^{:~link(name,'gear',{'preset':#index+1},null,(#index+1==~root.preset?'linkOn':''))}}</div>
+				<div class="statusValue">
+					{^{:desc}}
+				</div>
+			</div>
+			{{/for}}
+		</div>
+	{{!-- SENSORS --}}
+	{{else screen == 5}}
+		<h3>Sensor Thresholds</h3>
+		<div class="statusDisplay">
+			<table>
+				<thead>
+					<th>&nbsp;</th>
+					<th class="bad">min2</th>
+					<th class="average">min1</th>
+					<th class="average">max1</th>
+					<th class="bad">max2</th>
+				</thead>
+				<tbody>
+					<tr>
+						<th>O<sub>2</sub></th>
+						{^{for sensors.oxygen}}
+							<td>{^{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'oxygen','var':#index+1})}}</td>
+						{{/for}}
+					</tr>
+					<tr>
+						<th>N<sub>2</sub></th>
+						{^{for sensors.nitrogen}}
+							<td>{^{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'nitrogen','var':#index+1})}}</td>
+						{{/for}}
+					</tr>
+					<tr>
+						<th>CO<sub>2</sub></th>
+						{^{for sensors.carbon_dioxide}}
+							<td>{^{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'carbon_dioxide','var':#index+1})}}</td>
+						{{/for}}
+					</tr>
+					<tr>
+						<th>Toxins</th>
+						{^{for sensors.plasma}}
+							<td>{^{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'plasma','var':#index+1})}}</td>
+						{{/for}}
+					</tr>
+					<tr>
+						<th>Pressure</th>
+						{^{for sensors.pressure}}
+							<td>{^{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'pressure','var':#index+1})}}</td>
+						{{/for}}
+					</tr>
+					<tr>
+						<th>Temperature (K)</th>
+						{^{for sensors.temperature}}
+							<td>{^{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'temperature','var':#index+1})}}</td>
+						{{/for}}
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	{{/if}}
 {{/if}}

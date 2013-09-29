@@ -14,7 +14,26 @@ NanoBaseHelpers = function ()
 	
 	var initHelpers = function ()
 	{
-		$.views.helpers({
+	    $.views.tags({
+            fields: function(object) {
+                var key;
+                var ret = "";
+                for (key in object) {
+                    if (object.hasOwnProperty(key)) {
+                        // For each property/field, render the content of the {{fields object}} tag, with "~key" as template parameter
+                        ret += this.tagCtx.render(object[key], { key: key });
+                    }
+                }
+                return ret;
+            }
+	    });
+		$.views.helpers({ 
+            combine: function( arr1, arr2 ) {
+                return arr1 && arr2 ? arr1.concat(arr2) : arr1 || arr2;
+            },  
+            dump: function( arr1 ) {
+                return JSON.stringify(arr1);
+            },
 			// Generate a Byond link
 			link: function( text, icon, parameters, status, elementClass, elementId) {
 	
@@ -234,4 +253,9 @@ $(document).ready(function()
 {
 	NanoBaseHelpers.init();
 });
+
+
+
+
+
 
