@@ -15,13 +15,16 @@
 	slot_flags = SLOT_BELT
 
 	var/obj/item/device/toner/ink = null
-	//var/active = 0
 
 	New()
 		ink = new /obj/item/device/toner(src)
 
-	proc/use()
-		if(/*!active ||*/ !ink || ink.charges < 1)
+	proc/use(mob/user as mob)
+		if(!ink)
+			user << "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>"
+			return 0
+		else if(ink.charges < 1)
+			user << "<span class='notice'>\the [name] is out of ink!.</span>"
 			return 0
 		else
 			ink.charges--
@@ -29,38 +32,36 @@
 			return 1
 
 	examine()
+		..()
+		if(!ink)
+			usr << "<span class='notice'>It doesn't have a toner cardridge installed.</span>"
+			return
 		var/ink_level = "high"
-		if(!ink || ink.charges < 1)
+		if(ink.charges < 1)
 			ink_level = "empty"
 		else if((ink.charges/ink.max_charges) <= 0.25) //25%
 			ink_level = "low"
 		else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 			ink_level = "dangerously high"
-		..()
-		//set src in usr
 		usr << "<span class='notice'>Its ink levels look [ink_level].</span>"
-		return
 
 	attackby(obj/item/weapon/W, mob/user)
 		..()
 		if(istype(W, /obj/item/device/toner))
 			if(ink)
-				user << "<span class='notice'>The airlock painter already contains a toner cardridge.</span>"
+				user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
 				return
 			user.drop_item()
 			W.loc = src
+			user << "<span class='notice'>You install \the [W] into \the [name].</span>"
 			ink = W
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>You install the toner cardridge into the airlock painter.</span>"
 
 
 	attack_self(mob/user)
-		//Change the mode
 		if(ink)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			var/turf/T = loc
-			if(ismob(T))
-				T = T.loc
-			ink.loc = T
+			ink.loc = user.loc
+			user.put_in_hands(ink)
+			user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"
 			ink = null
-			user << "<span class='notice'>You remove the toner cardridge from the airlock painter.</span>"

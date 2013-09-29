@@ -308,69 +308,94 @@ obj/structure/door_assembly
 	//INFORMATION ABOUT ADDING A NEW AIRLOCK TO THE PAINT LIST:
 	//If your airlock has a regular version, add it to the list with regular versions.
 	//If your airlock has a glass version, add it to the list with glass versions.
+	//Don't forget to also set has_solid and has_glass to the proper value.
 	//Do NOT add your airlock to a list if it does not have a version for that list,
 	//	or you will get broken icons.
 		var/obj/item/weapon/airlock_painter/WT = W
-		if(WT.ink.charges)
+		if(WT.ink && WT.ink.charges)
 			var/icontype
 			var/optionlist
-			if(src.mineral)
-				if(src.mineral == "glass")
-					//These airlocks have a glass version.
-					optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
-				else
-					user << "The painter does not work on airlocks coated in minerals!"
-					return
+			if(mineral && mineral == "glass")
+				//These airlocks have a glass version.
+				optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
 			else
 				//These airlocks have a regular version.
 				optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 
 			icontype = input(user, "Please select a paintjob for this airlock.") in optionlist
-			if(!in_range(src, usr) && src.loc != usr)	return
+			if((!in_range(src, usr) && src.loc != usr) || !WT.use(user))	return
+			var/has_solid = 0
+			var/has_glass = 0
 			switch(icontype)
-				if("Default")
-					typetext = ""
-					icontext = ""
+				//For Default the standard options suffice.
 				if("Engineering")
 					typetext = "engineering"
 					icontext = "eng"
+					has_solid = 1
+					has_glass = 1
 				if("Atmospherics")
 					typetext = "atmos"
 					icontext = "atmo"
+					has_solid = 1
+					has_glass = 1
 				if("Security")
 					typetext = "security"
 					icontext = "sec"
+					has_solid = 1
+					has_glass = 1
 				if("Command")
 					typetext = "command"
 					icontext = "com"
+					has_solid = 1
+					has_glass = 1
 				if("Medical")
 					typetext = "medical"
 					icontext = "med"
+					has_solid = 1
+					has_glass = 1
 				if("Research")
 					typetext = "research"
 					icontext = "res"
+					has_solid = 1
+					has_glass = 1
 				if("Mining")
 					typetext = "mining"
 					icontext = "min"
+					has_solid = 1
+					has_glass = 1
 				if("Maintenance")
 					typetext = "maintenance"
 					icontext = "mai"
+					has_solid = 1
+					has_glass = 0
 				if("External")
 					typetext = "external"
 					icontext = "ext"
+					has_solid = 1
+					has_glass = 0
 				if("High Security")
 					typetext = "highsecurity"
 					icontext = "highsec"
-			src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
-			src.glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
-			src.base_icon_state = "door_as_[icontext]"
-			src.glass_base_icon_state = "door_as_g[icontext]"
+					has_solid = 1
+					has_glass = 0
+			if(has_solid)
+				airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
+				base_icon_state = "door_as_[icontext]"
+			else
+				airlock_type = /obj/machinery/door/airlock
+				base_icon_state = "door_as_"
+
+			if(has_glass)
+				glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
+				glass_base_icon_state = "door_as_g[icontext]"
+			else
+				glass_type = /obj/machinery/door/airlock/glass
+				glass_base_icon_state = "door_as_g"
+
+			if(mineral && mineral != "glass")
+				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
 			user << "\blue You change the paintjob on the airlock assembly."
-			WT.use()
-		else
-			user << "\blue There aren't any charges left!"
-			return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W
@@ -477,20 +502,20 @@ obj/structure/door_assembly
 					if(do_after(user, 40))
 						user << "\blue You've installed reinforced glass windows into the airlock assembly."
 						G.use(1)
-						src.mineral = "glass"
-						src.name = "Near finished Window Airlock Assembly"
+						mineral = "glass"
+						name = "Near finished Window Airlock Assembly"
 						//This list contains the airlock paintjobs that have a glass version:
 						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min"))
 							src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
 							src.glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
 						else
 							//This airlock is default or does not have a glass version, so we revert to the default glass airlock. |- Ricotez
-							src.airlock_type = /obj/machinery/door/airlock
-							src.glass_type = /obj/machinery/door/airlock/glass
+							airlock_type = /obj/machinery/door/airlock
+							glass_type = /obj/machinery/door/airlock/glass
 							typetext = ""
 							icontext = ""
-						src.base_icon_state = "door_as_[icontext]"
-						src.glass_base_icon_state = "door_as_g[icontext]"
+						base_icon_state = "door_as_[icontext]"
+						glass_base_icon_state = "door_as_g[icontext]"
 				else if(istype(G, /obj/item/stack/sheet/mineral))
 					var/M = G.sheettype
 					if(G.amount>=2)
@@ -499,10 +524,12 @@ obj/structure/door_assembly
 						if(do_after(user, 40))
 							user << "\blue You've installed [M] plating into the airlock assembly."
 							G.use(2)
-							src.mineral = "[M]"
-							src.name = "Near finished [M] Airlock Assembly"
-							src.airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
-							src.base_icon_state = "door_as_[M]"
+							mineral = "[M]"
+							name = "Near finished [M] Airlock Assembly"
+							airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
+							base_icon_state = "door_as_[M]"
+							glass_base_icon_state = "door_as_g"
+							glass_type = /obj/machinery/door/airlock/glass
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
