@@ -382,6 +382,8 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
 				new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
 				new_character.rename_self("clown")
+			else if(mind.assigned_role == "Mime")
+				new_character.rename_self("mime")
 			mind.original = new_character
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
