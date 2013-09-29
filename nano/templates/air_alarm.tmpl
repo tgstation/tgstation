@@ -1,7 +1,8 @@
 <!-- 
 Title: Air Alarm UI
 Used In File(s): /code/game/machinery/alarm.dm
-
+-->
+{{!--
 #define AALARM_MODE_SCRUBBING	1
 #define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
 #define AALARM_MODE_PANIC		3 //constantly sucks all air
@@ -14,7 +15,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 #define AALARM_SCREEN_SCRUB		3
 #define AALARM_SCREEN_MODE		4
 #define AALARM_SCREEN_SENSORS	5
- -->
+ --}}
 <h3>{^{:name}}</h3>
 {^{if !air}}
 <div class="notice">Unable to acquire air sample.</div>
@@ -99,10 +100,47 @@ Used In File(s): /code/game/machinery/alarm.dm
 	<div class="itemLabel">Screen:</div>
 	<div class="itemContents">
 		{^{:~link('Main',      'gear',{'screen':1},(screen==1)?'linkOn':'')}}
-		{^{:~link('Scrubbers', 'gear',{'screen':2},(screen==2)?'linkOn':'')}}
-		{^{:~link('Vents',     'gear',{'screen':3},(screen==3)?'linkOn':'')}}
+		{^{:~link('Vents',     'gear',{'screen':2},(screen==2)?'linkOn':'')}}
+		{^{:~link('Scrubbers', 'gear',{'screen':3},(screen==3)?'linkOn':'')}}
 		{^{:~link('Mode',      'gear',{'screen':4},(screen==4)?'linkOn':'')}}
 		{^{:~link('Thresholds','gear',{'screen':5},(screen==5)?'linkOn':'')}}
 	</div>
 </div>
+	{{!-- VENTS --}}
+	{^{if screen == 2}}
+		<h3>Vent Pump Settings</h3>
+		{^{for vents}}
+			<div class="statusDisplay">
+				<div class="line">
+					<b>{^{:name}}:</b> {^{:state}}
+				</div>
+				<div class="line">
+					<div class="statusLabel">Operating:</div>
+					<div class="statusValue">
+						{^{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':!power},null,(power?'linkOn':'red'))}}
+						{^{if direction=="siphon"}}
+							{^{:~link('Siphoning','arrowthickstop-1-s',{'id_tag':id_tag,'command':'set_dir','dir':'release'})}}
+						{{else}}
+							{^{:~link('Blowing','arrowthick-1-n',{'id_tag':id_tag,'command':'set_dir','dir':'siphon'})}}
+						{{/if}}
+					</div>
+				</div>
+				<div class="line">
+					<div class="statusLabel">Pressure checks:</div>
+					<div class="statusValue">
+						{^{:~link('External','power',{'id_tag':id_tag,'command':'checks','val':~xor(checks,1)},null,(checks & 1 ?'linkOn':'red'))}}
+						{^{:~link('Internal','power',{'id_tag':id_tag,'command':'checks','val':~xor(checks,2)},null,(checks & 2 ?'linkOn':'red'))}}
+					</div>
+				</div>
+				<div class="line">
+					<div class="statusLabel">External pressure target:</div>
+					<div class="statusValue">
+						{^{:~precisionRound(external,4)}}
+					</div>
+					{^{:~link('Set','gear',{'id_tag':id_tag,'command':'set_external_pressure'})}}
+					{^{:~link('Reset','arrowrefresh-1-n',{'id_tag':id_tag,'command':'set_external_pressure','val':101.325},null,'linkOn')}}
+				</div>
+			</div>
+		{{/for}}
+	{{/if}}
 {{/if}}

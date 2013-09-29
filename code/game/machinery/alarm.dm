@@ -776,7 +776,7 @@
 	data["preset"]=preset
 	data["screen"]=screen
 
-	var/vents[0]
+	var/list/vents=list()
 	if(alarm_area.air_vent_names.len)
 		for(var/id_tag in alarm_area.air_vent_names)
 			var/vent_info[0]
@@ -787,10 +787,10 @@
 			vent_info["id_tag"]=id_tag
 			vent_info["name"]=long_name
 			vent_info += vent_data
-			vents[id_tag]=vent_info
+			vents+=list(vent_info)
 	data["vents"]=vents
 
-	var/scrubbers[0]
+	var/list/scrubbers=list()
 	if(alarm_area.air_scrub_names.len)
 		for(var/id_tag in alarm_area.air_scrub_names)
 			var/long_name = alarm_area.air_scrub_names[id_tag]
@@ -798,8 +798,8 @@
 			if(!scrubber_data)
 				continue
 			scrubber_data["id_tag"]=id_tag
-			scrubber_data["long_name"]=long_name
-			scrubbers[id_tag]=scrubber_data
+			scrubber_data["name"]=long_name
+			scrubbers+=list(scrubber_data)
 	data["scrubbers"]=scrubbers
 
 	if (!ui) // no ui has been passed, so we'll search for one
@@ -808,7 +808,7 @@
 	}
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 520, 410)
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 550, 410)
 		// When the UI is first opened this is the data it will use
 		ui.set_initial_data(data)
 		ui.open()

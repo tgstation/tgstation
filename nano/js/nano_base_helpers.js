@@ -44,6 +44,10 @@ NanoBaseHelpers = function ()
 				
 				return '<div unselectable="on" class="link linkActive ' + iconClass + ' ' + elementClass + '" data-href="' + generateHref(parameters) + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
 			},
+            // Since jsrender breaks the ^ operator
+            xor: function(number,bit) {                               
+                return number ^ bit;
+            },
 			// Round a number to the nearest integer
 			round: function(number) {								
 				return Math.round(number);
