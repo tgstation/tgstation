@@ -13,8 +13,6 @@
 	set invisibility = 0
 	set background = 1
 
-	xeno_emote_counter -= 1  //Hack to stop *deathgasp and *roar spam for xenos.
-
 	if (monkeyizing)
 		return
 
