@@ -26,9 +26,9 @@ Used In File(s): /code/game/machinery/alarm.dm
 		<div class="statusValue" style="margin-left:5px;">
 		{^{if !locked}}
 			{^{if mode == 3}}
-				{^{:~link("DEACTIVATE PANIC SYPHON","power",{"mode":1})}}
+				{^{:~link("DEACTIVATE PANIC SYPHON",null,{"mode" : 1},null,'linkOn')}}
 			{{else}}
-				{^{:~link("ACTIVATE PANIC SYPHON","power",{"mode":1})}}
+				{^{:~link("ACTIVATE PANIC SYPHON",null,{"mode" : 3},null,'red')}}
 			{{/if}}
 		{{/if}}
 		</div>
@@ -91,7 +91,10 @@ Used In File(s): /code/game/machinery/alarm.dm
 </div>
 {{/if}}
 
-{^{if !locked}}
+{^{if locked}}
+<div class="notice">Swipe card to unlock.</div>
+{{else}}
+<div class="notice">Remember to lock with ID card after use.</div>
 <div class="item">
 	<div class="itemLabel">Screen:</div>
 	<div class="itemContents">

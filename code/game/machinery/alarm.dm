@@ -1167,9 +1167,9 @@ table tr:first-child th:first-child { border: none;}
 	add_fingerprint(usr)
 	usr.machine = src
 
+	//testing(href)
 	if(href_list["command"])
 		var/device_id = href_list["id_tag"]
-		//world << href_list["command"]
 		switch(href_list["command"])
 			if( "power",
 				"adjust_external_pressure",
