@@ -191,7 +191,7 @@ RCD
 			user << "The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 			return 0
 		if(0)
-			if(!(istype(A, /turf))
+			if(!(istype(A, /turf)))
 				return 0
 			user << "Building Pipes ..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -204,7 +204,7 @@ RCD
 			return 0
 
 		if(1)
-			if(!(istype(A, /turf))
+			if(!(istype(A, /turf)))
 				return 0
 			user << "Building Meter..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -215,7 +215,7 @@ RCD
 			return 0
 
 		if(2)
-			if(!(istype(A, /turf))
+			if(!(istype(A, /turf)))
 				return 0
 			user << "Building Pipes..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
