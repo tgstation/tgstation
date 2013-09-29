@@ -20,6 +20,10 @@
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
 	if (src.health < -50)
 		msg += "It looks barely operational.\n"
+	if (src.fire_stacks < 0)
+		msg += "It's covered in water.\n"
+	if (src.fire_stacks > 0)
+		msg += "It's coated in something flammable.\n"
 	msg += "</span>"
 
 	if(opened)

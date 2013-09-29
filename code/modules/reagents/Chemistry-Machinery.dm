@@ -445,6 +445,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
+	circuit = "/obj/item/weapon/circuitboard/pandemic"
 	use_power = 1
 	idle_power_usage = 20
 	var/temp_html = ""
@@ -605,12 +606,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/pandemic/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/pandemic/attack_hand(mob/user as mob)
 	if(..())
 		return
@@ -706,33 +701,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe(src.loc)
-				new /obj/item/weapon/shard(src.loc)
-				var/obj/item/weapon/circuitboard/pandemic/M = new /obj/item/weapon/circuitboard/pandemic(A)
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/pandemic/M = new /obj/item/weapon/circuitboard/pandemic(A)
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
 			user << "A beaker is already loaded into the machine."
@@ -745,6 +714,11 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(src.beaker)
+			beaker.loc = get_turf(src)
+		..()
+		return
 	else
 		..()
 	return

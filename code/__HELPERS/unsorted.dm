@@ -236,7 +236,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda and id
+//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(var/oldname,var/newname)
 	if(!newname)	return 0
@@ -276,6 +276,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					PDA.name = "PDA-[newname] ([PDA.ownjob])"
 					if(!search_id)	break
 					search_pda = 0
+
+		for(var/datum/mind/T in ticker.minds)
+			for(var/datum/objective/obj in T.objectives)
+				// Only update if this player is a target
+				if(obj.target && obj.target.current.real_name == name)
+					obj.update_explanation_text()
+
 	return 1
 
 
@@ -1220,3 +1227,30 @@ var/list/WALLITEMS = list(
 
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
+
+/obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
+	var/obj/icon = target
+	user.visible_message("\red [user] has used the analyzer on \icon[icon] [target].</span>")
+	var/pressure = air_contents.return_pressure()
+	var/total_moles = air_contents.total_moles()
+
+	user << "\blue Results of analysis of \icon[icon] [target]."
+	if(total_moles>0)
+		var/o2_concentration = air_contents.oxygen/total_moles
+		var/n2_concentration = air_contents.nitrogen/total_moles
+		var/co2_concentration = air_contents.carbon_dioxide/total_moles
+		var/plasma_concentration = air_contents.toxins/total_moles
+
+		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+
+		user << "\blue Pressure: [round(pressure,0.1)] kPa"
+		user << "\blue Nitrogen: [round(n2_concentration*100)]%"
+		user << "\blue Oxygen: [round(o2_concentration*100)]%"
+		user << "\blue CO2: [round(co2_concentration*100)]%"
+		user << "\blue Plasma: [round(plasma_concentration*100)]%"
+		if(unknown_concentration>0.01)
+			user << "\red Unknown: [round(unknown_concentration*100)]%"
+		user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
+	else
+		user << "\blue [target] is empty!"
+	return
