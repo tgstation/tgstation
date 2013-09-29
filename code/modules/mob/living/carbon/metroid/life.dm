@@ -103,7 +103,7 @@
 							sleep(15)
 							Atkcool = 0
 
-						if(get_obstacle_ok(Target))
+						if(Target.Adjacent(src))
 							Target.attack_slime(src)
 					//world << "retrun 1"
 					return
@@ -116,7 +116,7 @@
 								sleep(25)
 								Atkcool = 0
 
-							if(get_obstacle_ok(Target))
+							if(Target.Adjacent(src))
 								Target.attack_slime(src)
 
 
@@ -124,16 +124,16 @@
 							step_to(src, Target)
 
 					else
-						if(!Atkcool && get_obstacle_ok(Target))
+						if(!Atkcool && Target.Adjacent(src))
 							Feedon(Target)
 
 				else
-					if(!Atkcool && get_obstacle_ok(Target))
+					if(!Atkcool && Target.Adjacent(src))
 						Feedon(Target)
 
 			else
 				if(Target in view(7, src))
-					if(get_obstacle_ok(Target))
+					if(Target.Adjacent(src))
 						step_to(src, Target)
 
 				else

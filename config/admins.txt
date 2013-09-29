@@ -8,6 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 
+rolan7 = Game Master
 quarxink = Game Master
 tle = Game Master
 xsi = Game Master
@@ -30,3 +31,5 @@ rockdtben = Game Master
 sieve = Game Master
 aranclanos = Game Master
 intigracy = Game Master
+dumpdavidson = Game Master
+kazeespada = Game Master

@@ -244,6 +244,20 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
+/obj/item/weapon/storage/box/exileimp
+	name = "exile implant kit"
+	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
+	icon_state = "implant"
+
+	New()
+		..()
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implanter(src)
+
 /obj/item/weapon/storage/box/rxglasses
 	name = "prescription glasses"
 	desc = "This box contains nerd glasses."

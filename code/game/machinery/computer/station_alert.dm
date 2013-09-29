@@ -3,21 +3,14 @@
 	name = "Station Alert Console"
 	desc = "Used to access the station's automated alert system."
 	icon_state = "alert:0"
-	circuit = "/obj/item/weapon/circuitboard/stationalert"
+	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
 
-	attack_ai(mob/user)
-		add_fingerprint(user)
-		if(stat & (BROKEN|NOPOWER))
-			return
-		interact(user)
-		return
 
 
 	attack_hand(mob/user)
-		add_fingerprint(user)
-		if(stat & (BROKEN|NOPOWER))
+		if(..())
 			return
 		interact(user)
 		return
@@ -98,17 +91,24 @@
 		return !cleared
 
 
-	process()
-		if(stat & (BROKEN|NOPOWER))
-			icon_state = "atmos0"
-			return
-		var/active_alarms = 0
-		for (var/cat in src.alarms)
-			var/list/L = src.alarms[cat]
-			if(L.len) active_alarms = 1
-		if(active_alarms)
-			icon_state = "alert:2"
-		else
-			icon_state = "alert:0"
-		..()
+/obj/machinery/computer/station_alert/process()
+	update_icon()
+	..()
+	return
+
+/obj/machinery/computer/station_alert/update_icon()
+	if(stat & BROKEN)
+		icon_state = "alert:b"
 		return
+	else if (stat & NOPOWER)
+		icon_state = "alert:O"
+		return
+	var/active_alarms = 0
+	for (var/cat in src.alarms)
+		var/list/L = src.alarms[cat]
+		if(L.len) active_alarms = 1
+	if(active_alarms)
+		icon_state = "alert:2"
+	else
+		icon_state = "alert:0"
+	return

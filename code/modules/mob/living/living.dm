@@ -263,6 +263,8 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
+	fire_stacks = 0
+	on_fire = 0 
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -276,6 +278,7 @@
 		dead_mob_list -= src
 		living_mob_list += src
 	stat = CONSCIOUS
+	update_fire()
 	regenerate_icons()
 	..()
 	return
@@ -357,11 +360,28 @@
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
-
+						if (M.lying && (prob(M.getBruteLoss() / 2)))
+							var/blood_exists = 0
+							var/trail_type = M.getTrail()
+							for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
+								blood_exists = 1
+							if (istype(M.loc, /turf/simulated))
+								var/newdir = get_dir(T, M.loc)
+								if(newdir != M.dir)
+									newdir = newdir | M.dir
+									if(newdir == 3) //N + S
+										newdir = NORTH
+									else if(newdir == 12) //E + W
+										newdir = EAST
+								if(!blood_exists)
+									new /obj/effect/decal/cleanable/trail_holder(M.loc)
+								for(var/obj/effect/decal/cleanable/trail_holder/H in M.loc)
+									if((!(newdir in H.existing_dirs) || trail_type == "trails") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+										H.existing_dirs += newdir
+										H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+										if(istype(M, /mob/living/carbon/human)) //blood DNA
+											var/mob/living/carbon/DNA_helper = pulling
+											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 						step(pulling, get_dir(pulling.loc, T))
 						M.start_pulling(t)
 				else
@@ -381,3 +401,175 @@
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+/mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
+    return null
+
+/mob/living/verb/resist()
+	set name = "Resist"
+	set category = "IC"
+
+	if(!isliving(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
+
+	var/mob/living/L = usr
+
+	//resisting grabs (as if it helps anyone...)
+	if(!L.stat && L.canmove && !L.restrained())
+		var/resisting = 0
+		for(var/obj/O in L.requests)
+			del(O)
+			resisting++
+		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
+			resisting++
+			if(G.state == GRAB_PASSIVE)
+				del(G)
+			else
+				if(G.state == GRAB_AGGRESSIVE)
+					if(prob(25))
+						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
+						del(G)
+				else
+					if(G.state == GRAB_NECK)
+						if(prob(5))
+							L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
+							del(G)
+		if(resisting)
+			L.visible_message("<span class='warning'>[L] resists!</span>")
+			return
+
+	//unbuckling yourself
+	if(L.buckled && L.last_special <= world.time)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.handcuffed)
+				C.next_move = world.time + 100
+				C.last_special = world.time + 100
+				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
+							"<span class='notice'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stay still.)</span>")
+				spawn(0)
+					if(do_after(usr, 1200))
+						if(!C.buckled)
+							return
+						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", \
+											"<span class='notice'>You successfully unbuckle yourself.</span>")
+						C.buckled.manual_unbuckle(C)
+			else
+				L.buckled.manual_unbuckle(L)
+		else
+			L.buckled.manual_unbuckle(L)
+
+	//Breaking out of a locker?
+	else if(loc && istype(loc, /obj/structure/closet))
+		var/obj/structure/closet/C = L.loc
+		var/breakout_time = 2 //2 minutes by default
+		if(istype(L.loc, /obj/structure/closet/critter) && !C.welded)
+			breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
+
+		if(C.opened || (!C.welded && !C.locked))
+			return	//Door's open, not locked or welded, no point in resisting.
+
+		//okay, so the closet is either welded or locked... resist!!!
+		usr.next_move = world.time + 100
+		L.last_special = world.time + 100
+		L << "<span class='notice'>You lean on the back of [C] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+		for(var/mob/O in viewers(C))
+			O << "<span class='warning'>[C] begins to shake violently!</span>"
+
+		if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+			if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened || (!C.locked && !C.welded))
+				return
+			//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+
+			C.welded = 0 //applies to all lockers lockers
+			C.locked = 0 //applies to critter crates and secure lockers only
+			C.broken = 1 //applies to secure lockers only
+			L.visible_message("<span class='danger'>[L] successfully broke out of [C]!</span>", \
+							"<span class='notice'>You successfully break out of [C]!</span>")
+			if(istype(C.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
+				var/obj/structure/bigDelivery/BD = C.loc
+				BD.attack_hand(usr)
+			C.open()
+
+	//Stop drop and roll & Handcuffs 
+	else if(iscarbon(L))
+		var/mob/living/carbon/CM = L
+		if(CM.on_fire && CM.canmove)
+			CM.fire_stacks -= 5
+			CM.weakened = 5
+			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
+				"<span class='notice'>You stop, drop, and roll!</span>")
+			if(fire_stacks <= 0)
+				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
+					"<span class='notice'>You extinguish yourself.</span>")
+				ExtinguishMob()
+			return
+		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
+			CM.next_move = world.time + 100
+			CM.last_special = world.time + 100
+			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+				CM.visible_message("<span class='warning'>[CM] is trying to break [CM.handcuffed]!</span>", \
+							"<span class='notice'>You attempt to break [CM.handcuffed]. (This will take around 5 seconds and you need to stand still.)</span>")
+				spawn(0)
+					if(do_after(CM, 50))
+						if(!CM.handcuffed || CM.buckled)
+							return
+						CM.visible_message("<span class='danger'>[CM] manages to break [CM.handcuffed]!</span>" , \
+										"<span class='notice'>You successfully break [CM.handcuffed]!</span>")
+						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						del(CM.handcuffed)
+						CM.handcuffed = null
+						CM.update_inv_handcuffed(0)
+			else
+				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
+				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
+					breakouttime = HC.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				CM.visible_message("<span class='warning'>[usr] attempts to remove [HC]!</span>", \
+						"<span class='notice'>You attempt to remove [HC]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
+				spawn(0)
+					if(do_after(CM, breakouttime))
+						if(!CM.handcuffed || CM.buckled)
+							return // time leniency for lag which also might make this whole thing pointless but the server
+						CM.visible_message("<span class='danger'>[CM] manages to remove [CM.handcuffed]!</span>", \
+										"<span class='notice'>You successfully remove [CM.handcuffed].</span>")
+						CM.handcuffed.loc = usr.loc
+						CM.handcuffed = null
+						CM.update_inv_handcuffed(0)
+		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
+			CM.next_move = world.time + 100
+			CM.last_special = world.time + 100
+			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+				CM.visible_message("<span class='warning'>[CM] is trying to break [CM.legcuffed]!</span>", \
+						"<span class='notice'>You attempt to break [CM.legcuffed]. (This will take around 5 seconds and you need to stand still.)</span>")
+				spawn(0)
+					if(do_after(CM, 50))
+						if(!CM.legcuffed || CM.buckled)
+							return
+						CM.visible_message("<span class='danger'>[CM] manages to break [CM.legcuffed]!</span>", \
+											"<span class='notice'>You successfully break [CM.legcuffed].</span>")
+						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						del(CM.legcuffed)
+						CM.legcuffed = null
+						CM.update_inv_legcuffed(0)
+			else
+				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
+				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
+					breakouttime = HC.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				CM.visible_message("<span class='warning'>[CM] attempts to remove [HC]!</span>", \
+						"<span class='notice'>You attempt to remove [HC]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
+				spawn(0)
+					if(do_after(CM, breakouttime))
+						if(!CM.legcuffed || CM.buckled)
+							return	//time leniency for lag which also might make this whole thing pointless but the server
+						CM.visible_message("<span class='danger'>[CM] manages to remove [CM.legcuffed]!</span>", \
+											"<span class='notice'>You successfully remove [CM.legcuffed].</span>")
+						CM.legcuffed.loc = usr.loc
+						CM.legcuffed = null
+						CM.update_inv_legcuffed(0)

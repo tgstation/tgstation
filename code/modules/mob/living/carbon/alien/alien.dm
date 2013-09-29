@@ -85,14 +85,15 @@
 	// Aliens are now weak to fire.
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
-	if(loc_temp > bodytemperature)
-		//Place is hotter than we are
-		var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-		if(thermal_protection < 1)
-			bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-	else
-		bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-	//	bodytemperature -= max((loc_temp - bodytemperature / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+	if(!on_fire) // If you're on fire, ignore local air temperature
+		if(loc_temp > bodytemperature)
+			//Place is hotter than we are
+			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(thermal_protection < 1)
+				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+		else
+			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+		//	bodytemperature -= max((loc_temp - bodytemperature / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
@@ -140,6 +141,12 @@
 				radiation -= 3
 				adjustToxLoss(3)
 
+/mob/living/carbon/alien/handle_fire()//Aliens on fire code
+	if(..())
+		return
+	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
+	return
+
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
@@ -170,6 +177,9 @@
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
+
+/mob/living/carbon/alien/getTrail()
+	return "xltrails"
 
 /*----------------------------------------
 Proc: AddInfectionImages()

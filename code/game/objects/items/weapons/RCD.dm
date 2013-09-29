@@ -141,7 +141,8 @@ RCD
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
-	afterattack(atom/A, mob/user)
+	afterattack(atom/A, mob/user, proximity)
+		if(!proximity) return 0
 		if(disabled && !isrobot(user))
 			return 0
 		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))

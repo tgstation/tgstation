@@ -59,6 +59,10 @@ BLIND     // can't see anything
 	..()
 	return
 
+// Called just before an attack_hand(), in mob/UnarmedAttack()
+/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+	return 0 // return 1 to cancel attack_hand()
+
 //Head
 /obj/item/clothing/head
 	name = "head"
@@ -145,6 +149,7 @@ BLIND     // can't see anything
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/fitted = 1// For use in alternate clothing styles for women, if clothes vary from a jumpsuit in shape, set this to 0
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
@@ -187,6 +192,13 @@ BLIND     // can't see anything
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
 		usr << "\A [hastie] is clipped to it."
+
+atom/proc/generate_uniform(index,t_color)
+	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
+	female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
+	female_uniform_icon 			= fcopy_rsc(female_uniform_icon)
+	female_uniform_icons[index] = female_uniform_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

@@ -3,7 +3,7 @@
 	icon_state = "operating"
 	density = 1
 	anchored = 1.0
-	circuit = "/obj/item/weapon/circuitboard/operating"
+	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/patient = null
 	var/obj/structure/optable/table = null
 
@@ -18,20 +18,9 @@
 
 
 /obj/machinery/computer/operating/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 	interact(user)
-
-
-/obj/machinery/computer/operating/attack_ai(mob/user)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/cloning/attack_paw(mob/user)
-	return attack_hand(user)
-
 
 /obj/machinery/computer/operating/interact(mob/user)
 	if(get_dist(src, user) > 1 || stat & (BROKEN|NOPOWER))

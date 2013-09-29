@@ -20,7 +20,7 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
-
+	handle_fire()
 
 
 
@@ -305,6 +305,26 @@
 				src << "\red <B>Weapon Lock Timed Out!"
 			weapon_lock = 0
 			weaponlock_time = 120
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
+		return
+	adjustFireLoss(3)
+	return
+
+/mob/living/silicon/robot/update_fire()
+	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	if(on_fire)
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	update_icons()
+	return
+
+/mob/living/silicon/robot/fire_act()
+	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
+		IgniteMob()
+
+//Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
 	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0

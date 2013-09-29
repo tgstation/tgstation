@@ -4,9 +4,11 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
+	antag_flag = BE_MALF
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
+	pre_setup_before_jobs = 1
 
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 10
@@ -23,18 +25,38 @@
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"
-	world << "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>"
-	world << "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it."
+	world << "<B>The AI on the station has malfunctioned and must be destroyed.</B>"
 
+/datum/game_mode/malfunction/can_start()
+	//Triumvirate?
+	if (ticker.triai == 1)
+		required_enemies = 3
+	required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
+	return ..()
+
+/datum/game_mode/malfunction/get_players_for_role(var/role = BE_MALF)
+	var/datum/job/ai/DummyAIjob = new
+	for(var/mob/new_player/player in player_list)
+		if(player.client && player.ready)
+			if(player.client.prefs.be_special & BE_MALF)
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
+					antag_candidates += player.mind
+	antag_candidates = shuffle(antag_candidates)
+	return antag_candidates
 
 /datum/game_mode/malfunction/pre_setup()
-	for(var/mob/new_player/player in player_list)
-		if(player.mind && player.mind.assigned_role == "AI")
-			malf_ai+=player.mind
-			log_game("[malf_ai.key] (ckey) has been selected as a malf AI")
-	if(malf_ai.len)
-		return 1
-	return 0
+	var/datum/mind/chosen_ai
+	for(var/i = required_enemies, i > 0, i--)
+		chosen_ai=pick(antag_candidates)
+		malf_ai += chosen_ai
+		antag_candidates -= malf_ai
+	if (malf_ai.len < required_enemies)
+		return 0
+	for(var/datum/mind/ai_mind in malf_ai)
+		ai_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		ai_mind.special_role = "malfunctioning AI"//So they actually have a special role/N
+		log_game("[ai_mind.key] (ckey) has been selected as a malf AI")
+	return 1
 
 
 /datum/game_mode/malfunction/post_setup()

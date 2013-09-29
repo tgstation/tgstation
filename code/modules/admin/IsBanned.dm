@@ -1,8 +1,7 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
 world/IsBanned(key,address,computer_id)
-	var/ckey = ckey(key)
-	if(ckey in admin_datums)
+	if(ckey(key) in admin_datums)
 		//It has proven to be a bad idea to make admins completely immune to bans, making them have to wait for someone with daemon access
 		//to add a daemon ban to finally stop them. Admin tempbans and admin permabans are special, high-level ban types, which are there to help
 		//deal with rogue admins quicker. If admin tempbans or admin permabans are ever needed, it should be consider a big deal. The same applies if
@@ -10,12 +9,14 @@ world/IsBanned(key,address,computer_id)
 		//computer id, set it on his computer, get himself banned, resulting in the admin getting banned aswell. - this happens to also be the reason why
 		//admins were immune to bans in the first place.
 		if(!config.ban_legacy_system)
+			var/ckeytext = ckey(key)
+
 			if(!establish_db_connection())
-				world.log << "Ban database connection failure. Admin [ckey] not checked"
-				diary << "Ban database connection failure. Admin [ckey] not checked"
+				world.log << "Ban database connection failure. Admin [ckeytext] not checked"
+				diary << "Ban database connection failure. Admin [ckeytext] not checked"
 				return
 
-			var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_Ban WHERE (ckey = '[ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+			var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_Ban WHERE (ckey = '[ckeytext]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 
 			query.Execute()
 
@@ -46,19 +47,10 @@ world/IsBanned(key,address,computer_id)
 		message_admins("\blue Failed Login: [key] - Guests not allowed")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 
-	//check if the IP address is a known TOR node
-	if(config && config.ToRban && ToRban_isbanned(address))
-		log_access("Failed Login: [src] - Banned: ToR")
-		message_admins("\blue Failed Login: [src] - Banned: ToR")
-		//ban their computer_id and ckey for posterity
-		AddBan(ckey, computer_id, "Use of ToR", "Automated Ban", 0, 0)
-		return list("reason"="Using ToR", "desc"="\nReason: The network you are using to connect has been banned.\nIf you believe this is a mistake, please request help at [config.banappeals]")
-
-
 	if(config.ban_legacy_system)
 
 		//Ban Checking
-		. = CheckBan( ckey, computer_id, address )
+		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
@@ -67,9 +59,12 @@ world/IsBanned(key,address,computer_id)
 		return ..()	//default pager ban stuff
 
 	else
+
+		var/ckeytext = ckey(key)
+
 		if(!establish_db_connection())
-			world.log << "Ban database connection failure. Key [ckey] not checked"
-			diary << "Ban database connection failure. Key [ckey] not checked"
+			world.log << "Ban database connection failure. Key [ckeytext] not checked"
+			diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
 		var/failedcid = 1
@@ -85,7 +80,7 @@ world/IsBanned(key,address,computer_id)
 			failedcid = 0
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_Ban WHERE (ckey = '[ckey]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_Ban WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 
 		query.Execute()
 

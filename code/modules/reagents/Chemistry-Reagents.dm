@@ -258,6 +258,15 @@ datum
 						cube.Expand()
 				return
 
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
+
 		water/holywater
 			name = "Holy Water"
 			id = "holywater"
@@ -330,33 +339,9 @@ datum
 			reagent_state = LIQUID
 			color = "#13BC5E" // rgb: 19, 188, 94
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "\red Your flesh rapidly mutates!"
-					if(M.monkeyizing)	return
-					M.monkeyizing = 1
-					M.canmove = 0
-					M.icon = null
-					M.overlays.Cut()
-					M.invisibility = 101
-					for(var/obj/item/W in M)
-						if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-							del(W)
-							continue
-						W.layer = initial(W.layer)
-						W.loc = M.loc
-						W.dropped(M)
-					var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-					new_mob.a_intent = "harm"
-					new_mob.universal_speak = 1
-					if(M.mind)
-						M.mind.transfer_to(new_mob)
-					else
-						new_mob.key = M.key
-					del(M)
-				..()
-				return
+			reaction_mob(var/mob/M, var/volume)
+				src = null
+				M.contract_disease(new /datum/disease/transformation/slime(0),1)
 
 		inaprovaline
 			name = "Inaprovaline"
@@ -752,6 +737,13 @@ datum
 			description = "Required for welders. Flamable."
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with welding fuel to make them easy to ignite!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 10)
+					return
 
 //Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
 /*
@@ -1206,7 +1198,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
+					M.contract_disease(new /datum/disease/transformation/robot(0),1)
 
 		xenomicrobes
 			name = "Xenomicrobes"
@@ -1218,7 +1210,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
+					M.contract_disease(new /datum/disease/transformation/xeno(0),1)
 
 		fluorosurfactant//foam precursor
 			name = "Fluorosurfactant"
@@ -1344,6 +1336,13 @@ datum
 				if(istype(T))
 					T.atmos_spawn_air("fuel", 5)
 				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 5)
+					return
 
 		toxin/lexorin
 			name = "Lexorin"
@@ -1511,6 +1510,21 @@ datum
 						M.drowsyness  = max(M.drowsyness, 30)
 				data++
 				..()
+				return
+
+
+		toxin/spore
+			name = "Spore Toxin"
+			id = "spore"
+			description = "A toxic spore cloud which blocks vision when ingested."
+			reagent_state = LIQUID
+			color = "#9ACD32"
+			toxpwr = 0.5
+
+			on_mob_life(var/mob/living/M as mob)
+				..()
+				M.damageoverlaytemp = 60
+				M.eye_blurry = max(M.eye_blurry, 3)
 				return
 
 		toxin/chloralhydrate
@@ -2726,6 +2740,13 @@ datum
 					else
 						usr << "It wasn't enough..."
 				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with ethanol isn't quite as good as fuel.
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 15)
+					return
 
 		ethanol/beer
 			name = "Beer"

@@ -244,6 +244,12 @@
 		else
 			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
+	if(fire_stacks > 0)
+		msg += "[t_He] [t_is] covered in something flammable.\n"
+	if(fire_stacks < 0)
+		msg += "[t_He] looks a little soaked.\n"
+
+
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)

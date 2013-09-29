@@ -35,16 +35,6 @@
 	moving = 0
 	return 1
 
-
-/obj/machinery/computer/syndicate_station/attackby(obj/item/I as obj, mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/syndicate_station/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/syndicate_station/attack_paw(mob/user as mob)
-	return attack_hand(user)
-
 /obj/machinery/computer/syndicate_station/attack_hand(mob/user as mob)
 	if(!allowed(user))
 		user << "\red Access Denied"
@@ -98,6 +88,3 @@
 
 	updateUsrDialog()
 	return
-
-/obj/machinery/computer/syndicate_station/bullet_act(var/obj/item/projectile/Proj)
-	visible_message("[Proj] ricochets off [src]!")	//let's not let them fuck themselves in the rear

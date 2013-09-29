@@ -74,7 +74,7 @@
 			if(/obj/item/weapon/gun/energy/laser/bluetag)
 				eprojectile = /obj/item/projectile/omnitag	//This bolt will stun ERRYONE with a vest
 				lasercolor = "b"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
+				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
 				criminals = 0
 				auth_weapons = 1
@@ -85,7 +85,7 @@
 			if(/obj/item/weapon/gun/energy/laser/redtag)
 				eprojectile = /obj/item/projectile/omnitag
 				lasercolor = "r"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
+				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
 				criminals = 0
 				auth_weapons = 1

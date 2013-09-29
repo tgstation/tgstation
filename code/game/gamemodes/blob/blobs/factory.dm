@@ -71,6 +71,19 @@
 		..()
 
 	Die()
+		// On death, create a small smoke of harmful gas (s-Acid)
+		var/datum/effect/effect/system/chem_smoke_spread/S = new
+		var/turf/location = get_turf(src)
+
+		// Create the reagents to put into the air, s-acid is yellow and stings a little
+		create_reagents(25)
+		reagents.add_reagent("spore", 25)
+
+		// Attach the smoke spreader and setup/start it.
+		S.attach(location)
+		S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
+		S.start()
+
 		del(src)
 
 	Del()

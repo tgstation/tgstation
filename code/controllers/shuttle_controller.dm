@@ -35,7 +35,10 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
 			if(always_fake_recall)
-				fake_recall = rand(300,500)
+				if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+					fake_recall = rand(180,300)
+				else
+					fake_recall = rand(300,500)
 
 	proc/recall()
 		if(direction == 1)

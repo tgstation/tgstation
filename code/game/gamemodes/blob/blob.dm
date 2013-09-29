@@ -9,8 +9,11 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
+	antag_flag = BE_ALIEN
 
 	required_players = 30
+	required_enemies = 1
+	recommended_enemies = 1
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -28,26 +31,19 @@ var/list/blob_nodes = list()
 	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
-
-	var/list/possible_blobs = get_players_for_role(BE_ALIEN)
-
-	// stop setup if no possible traitors
-	if(!possible_blobs.len)
-		return 0
-
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
 
 	for(var/j = 0, j < cores_to_spawn, j++)
-		if (!possible_blobs.len)
+		if (!antag_candidates.len)
 			break
-		var/datum/mind/blob = pick(possible_blobs)
+		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
 		blob.special_role = "Blob"
 		log_game("[blob.key] (ckey) has been selected as a Blob")
-		possible_blobs -= blob
+		antag_candidates -= blob
 
 	if(!infected_crew.len)
 		return 0

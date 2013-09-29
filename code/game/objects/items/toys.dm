@@ -35,7 +35,8 @@
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
 		user << "\blue You fill the balloon with the contents of [A]."
@@ -93,16 +94,6 @@
 	w_class = 4.0
 
 /*
- * Fake telebeacon
- */
-/obj/item/toy/blink
-	name = "electronic blink toy game"
-	desc = "Blink.  Blink.  Blink. Ages 8 and up."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "beacon"
-	item_state = "signaler"
-
-/*
  * Fake singularity
  */
 /obj/item/toy/spinningtoy
@@ -120,7 +111,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
 	g_amt = 10
@@ -197,7 +188,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT | TABLEPASS
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -318,23 +309,81 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
+	var/hacked = 0
 
 	attack_self(mob/user as mob)
-		src.active = !( src.active )
-		if (src.active)
+		active = !( active )
+		if (active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-			src.icon_state = "swordblue"
-			src.item_state = "swordblue"
-			src.w_class = 4
+			if(hacked)
+				icon_state = "swordrainbow"
+				item_state = "swordrainbow"
+			else
+				icon_state = "swordblue"
+				item_state = "swordblue"
+			w_class = 4
 		else
 			user << "\blue You push the plastic blade back down into the handle."
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-			src.icon_state = "sword0"
-			src.item_state = "sword0"
-			src.w_class = 2
-		src.add_fingerprint(user)
+			icon_state = "sword0"
+			item_state = "sword0"
+			w_class = 2
+		add_fingerprint(user)
 		return
+
+// Copied from /obj/item/weapon/melee/energy/sword/attackby
+/obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user)
+	..()
+	if(istype(W, /obj/item/toy/sword))
+		if(W == src)
+			user << "<span class='notice'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
+			if(ishuman(user))
+				user.adjustBrainLoss(10)
+		else
+			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
+			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
+			if(hacked) // That's right, we'll only check the "original" "sword".
+				newSaber.hacked = 1
+				newSaber.color = "rainbow"
+			user.before_take_item(W)
+			user.before_take_item(src)
+			del(W)
+			del(src)
+	else if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
+			color = "rainbow"
+			user << "<span class='warning'>RNBW_ENGAGE</span>"
+			
+			if(active)
+				icon_state = "swordrainbow"
+				// Updating overlays, copied from welder code.  
+				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
+				if(user.r_hand == src)
+					user.update_inv_r_hand(0)
+				else if(user.l_hand == src)
+					user.update_inv_l_hand(0)
+		else
+			user << "<span class='warning'>It's already fabulous!</span>"
+
+/*
+ * Subtype of Double-Bladed Energy Swords
+ */
+/obj/item/weapon/twohanded/dualsaber/toy
+	name = "double-bladed toy sword"
+	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
+	force = 0
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 5
+	force_unwielded = 0
+	force_wielded = 0
+	origin_tech = ""
+	attack_verb = list("attacked", "struck", "hit")
+
+/obj/item/weapon/twohanded/dualsaber/toy/IsShield()
+	return 0
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -414,17 +463,19 @@
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
-	if(cooldown < world.time - 8)
+	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
 		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-		cooldown = world.time
+		cooldown = 1
+		spawn(30) cooldown = 0
 
 /obj/item/toy/prize/attack_hand(mob/user as mob)
 	if(loc == user)
-		if(cooldown < world.time - 8)
+		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
 			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
-			cooldown = world.time
+			cooldown = 1
+			spawn(30) cooldown = 0
 			return
 	..()
 
@@ -481,3 +532,25 @@
 	name = "toy phazon"
 	desc = "Mini-Mecha action figure! Collect them all! 11/11."
 	icon_state = "phazonprize"
+
+/*
+ * AI core prizes
+ */
+/obj/item/toy/AI
+	name = "toy AI"
+	desc = "A little toy model AI core with real law announcing action!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "AI"
+	var/cooldown = 0
+
+/obj/item/toy/AI/attack_self(mob/user)
+	if(!cooldown) //for the sanity of everyone
+		var/message = generate_ion_law()
+		user << "<span class='notice'>You press the button on [src].</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("\red \icon[src] [message]")
+		cooldown = 1
+		spawn(30) cooldown = 0
+		return
+
+	..()

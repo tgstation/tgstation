@@ -6,7 +6,7 @@
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = /obj/item/weapon/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -269,15 +269,9 @@
 		if(authenticated == 1)
 			authenticated = 2
 		user << "You scramble the communication routing circuits!"
-	..()
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-
-/obj/machinery/computer/communications/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
+	else
+		..()
+	return
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
@@ -453,7 +447,11 @@
 		user << "The emergency shuttle is already on its way."
 		return
 
-	emergency_shuttle.incall()
+	if (seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
+		emergency_shuttle.incall(0.6)
+	else
+		emergency_shuttle.incall()
+
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
@@ -463,10 +461,17 @@
 
 
 /proc/cancel_call_proc(var/mob/user)
-	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0 || emergency_shuttle.timeleft() < 300))
+	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
 		return
 	if(ticker.mode.name == "meteor")
 		return
+
+	if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+		if (emergency_shuttle.timeleft() < 180)
+			return
+	else if (emergency_shuttle.timeleft() < 300)
+		return
+
 
 	if(emergency_shuttle.direction != -1 && emergency_shuttle.online) //check that shuttle isn't already heading to centcom
 		emergency_shuttle.recall()

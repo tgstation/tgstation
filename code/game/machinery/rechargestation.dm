@@ -243,7 +243,7 @@
 			// ^ makes sinle list of active (occupant.contents) and inactive modules (occupant.module.modules)
 			for(var/obj/O in um)
 				// Engineering
-				if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/rods) || istype(O,/obj/item/weapon/cable_coil))
+				if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/rods) || istype(O,/obj/item/weapon/cable_coil)|| istype(O,/obj/item/stack/tile/plasteel))
 					if(O:amount < 50)
 						O:amount += 1
 				// Security
@@ -284,7 +284,7 @@
 			if(occupant.module.emag)
 				if(istype(occupant.module.emag, /obj/item/weapon/reagent_containers/spray))
 					var/obj/item/weapon/reagent_containers/spray/S = occupant.module.emag
-					if(S.name == "Polyacid spray")
+					if(S.name == "polyacid spray")
 						S.reagents.add_reagent("pacid", 2)
-					else if(S.name == "Lube spray")
+					else if(S.name == "lube spray")
 						S.reagents.add_reagent("lube", 2)

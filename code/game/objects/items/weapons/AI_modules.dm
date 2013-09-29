@@ -355,3 +355,33 @@ AI MODULES
 	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
 	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+
+/******************* Ion Module *******************/
+
+/obj/item/weapon/aiModule/toyAI // -- Incoming
+	name = "toy AI"
+	desc = "A little toy model AI core with real law uploading action!" //Note: subtle tell
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "AI"
+	origin_tech = "programming=3;materials=6;syndicate=7"
+	var/last_law = ""
+
+
+/obj/item/weapon/aiModule/toyAI/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	//..()
+	target << "\red KRZZZT"
+	target.add_ion_law(last_law)
+	return last_law
+
+/obj/item/weapon/aiModule/toyAI/install(var/mob/living/silicon/S,var/mob/user)
+	if(!last_law)
+		user << "No law detected on module, please generate one."
+		return 0
+	..()
+
+/obj/item/weapon/aiModule/toyAI/attack_self(mob/user)
+	last_law = generate_ion_law()
+	user << "<span class='notice'>You press the button on [src].</span>"
+	playsound(user, 'sound/machines/click.ogg', 20, 1)
+	src.loc.visible_message("\red \icon[src] [last_law]")
+	return
