@@ -1008,6 +1008,9 @@
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
+		if(user.a_intent == "help")
+			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+			return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
