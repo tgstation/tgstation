@@ -341,6 +341,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
+		if(user.a_intent == "help")
+			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+			return
+
+
 
 	if(!istype(user, /mob/living/silicon))
 		switch(user.a_intent)
