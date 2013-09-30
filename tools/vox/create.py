@@ -96,6 +96,7 @@ class Pronunciation:
 		self.syllables=[]
 		self.name=[]
 		self.type='n'
+		# DMU phonemes + pau
 		self.validPhonemes=[
 			'aa',
 			'ae',
