@@ -73,6 +73,11 @@ Used In File(s): /code/game/machinery/alarm.dm
 		{{else}}
 			<div class="notice">DANGER: Internals Required</div>
 		{{/if}}
+		{^{if atmos_alarm}}
+			{^{:~link('Reset Alarm',null,{'atmos_reset':1},null,'linkOn')}}
+		{{else}}
+			{^{:~link('Activate Alarm',null,{'atmos_alarm':1},null,'red')}}
+		{{/if}}
 	</div>
 	<div class="line">
 		<!--

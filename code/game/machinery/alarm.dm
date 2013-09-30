@@ -108,20 +108,22 @@
 	var/list/TLV = list()
 
 
-/obj/machinery/alarm/server/New()
-	..()
-	req_access = list(access_rd, access_atmospherics, access_engine_equip)
+/obj/machinery/alarm/server
 	preset = AALARM_PRESET_SERVER
-	apply_preset(1)
+	req_access = list(access_rd, access_atmospherics, access_engine_equip)
 
 
-/obj/machinery/alarm/vox/New()
-	..()
-	req_access = list()
+/obj/machinery/alarm/vox
 	preset = AALARM_PRESET_VOX
-	apply_preset(1)
+	req_access = list()
 
 /obj/machinery/alarm/proc/apply_preset(var/no_cycle_after=0)
+	// Propogate settings.
+	for (var/area/A in alarm_area.related)
+		for (var/obj/machinery/alarm/AA in A)
+			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.preset != src.preset)
+				AA.preset=preset
+				apply_preset(1) // Only this air alarm should send a cycle.
 
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
@@ -132,8 +134,9 @@
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
 	target_temperature = T0C+20
 	switch(preset)
-		if(AALARM_PRESET_VOX) // Same as usual, but without oxygen.
-			TLV["oxygen"] =			list(-1.0, -1.0, 1, 5) // Partial pressure, kpa
+		if(AALARM_PRESET_VOX) // Same as usual, s/nitrogen/oxygen
+			TLV["nitrogen"] = 		list(16, 19, 135, 140) // Vox use same partial pressure values for N2 as humans do for O2.
+			TLV["oxygen"] =			list(-1.0, -1.0, 1, 2) // Under 1 kPa (PP), vox don't notice squat (vox_oxygen_max)
 		if(AALARM_PRESET_SERVER) // Cold as fuck.
 			TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
 			TLV["carbon_dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
@@ -178,6 +181,7 @@
 		name = "[alarm_area.name] Air Alarm"
 
 	// breathable air according to human/Life()
+	/*
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
 	TLV["carbon_dioxide"] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
@@ -185,6 +189,8 @@
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
+	*/
+	apply_preset(1) // Don't cycle.
 
 
 /obj/machinery/alarm/initialize()
@@ -453,17 +459,18 @@
 	if (alarm_area.atmosalert(new_danger_level))
 		post_alert(new_danger_level)
 
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in A)
-			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.danger_level != new_danger_level)
-				AA.update_icon()
-
 	if(danger_level > 1)
 		air_doors_close(0)
 	else
 		air_doors_open(0)
 
 	update_icon()
+
+	for (var/area/A in alarm_area.related)
+		for (var/obj/machinery/alarm/AA in A)
+			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.danger_level != new_danger_level)
+				AA.danger_level=new_danger_level
+				AA.update_icon()
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
@@ -1302,7 +1309,7 @@ table tr:first-child th:first-child { border: none;}
 		var/list/selected = TLV["temperature"]
 		var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
 		var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
-		var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
+		var/input_temperature = input("What temperature would you like the system to maintain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
 		if(input_temperature==null)
 			return
 		if(!input_temperature || input_temperature > max_temperature || input_temperature < min_temperature)

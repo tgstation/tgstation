@@ -92,6 +92,9 @@
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
 		atmosalm = danger_level
+		for (var/obj/machinery/alarm/AA in src)
+			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+				AA.update_icon()
 		return 1
 	return 0
 
