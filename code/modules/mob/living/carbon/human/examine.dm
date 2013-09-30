@@ -199,6 +199,13 @@
 		else
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
 
+	if(augmented_arms) //someone didn't ask for this - RobRichards
+		msg += "[t_He] has augmented arms!\n"
+
+	if(augmented_legs) //someone didn't ask for this - RobRichards
+		msg += "[t_He] has agumented legs!\n"
+
+
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
