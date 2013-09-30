@@ -342,6 +342,7 @@ mass = mass
 materials = materials
 maximum = maximum
 may = may
+#medical = Medickul
 medical = Medickul
 men = men
 mercy = mercy
@@ -639,7 +640,7 @@ cargo = cargo
 centcomm = centcomm
 changed = changed
 clown = clown
-come=come
+come = come
 connor = connor
 contraband = contraband
 cyborg = cyborg
@@ -695,6 +696,7 @@ updating = updating
 upload = upload
 virology = virology
 vox = vox
+wanker = wanker
 welcome = welcome
 woody = wood E.
 xenobiology = xenobiology
@@ -721,20 +723,20 @@ voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
 voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking ass-ramming shit-fuck. Eat penises in your fuck face, and shit out abortions of fuck, and do shit in your ass, you cockfuck shit monkey ass-wanker from the depths of shit!
 # Out with the old, in with the new:
-#vox_login = Hello. The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
-vox_login = Hello. The automatic diagnostic and announcement system welcomes you to Space Station 13.  Remember: Have a secure day.
+#vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
+vox_login = Hello! The automatic diagnostic and announcement system welcomes you to Space Station 13.  Remember: Have a secure day.
 
 ########################
 ## AI REPLACEMENT LINES
 ########################
-sound/AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
-sound/AI/animes = Wow!  This is just like one of those japanese animes.
-sound/AI/command_report = Attention: New command report created.
-sound/AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
-sound/AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
-sound/AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
-sound/AI/meteors = Meteors detected on collision course with the station.
-sound/AI/newroundsexy = You want to put a banging donk on it.
-sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
-sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
-sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard about this station. All personnel must bontain the outbreak.
+#sound/AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
+#sound/AI/animes = Wow!  This is just like one of those japanese animes.
+#sound/AI/command_report = Attention: New command report created.
+#sound/AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
+#sound/AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
+#sound/AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
+#sound/AI/meteors = Meteors detected on collision course with the station.
+#sound/AI/newroundsexy = You want to put a banging donk on it.
+#sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
+#sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
+#sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard about this station. All personnel must bontain the outbreak.
