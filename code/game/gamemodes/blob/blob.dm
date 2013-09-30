@@ -10,8 +10,8 @@ var/list/blob_nodes = list()
 	name = "blob"
 	config_tag = "blob"
 
-	required_players = 30
-
+	required_players = 15
+	required_players_secret = 25
 	restricted_jobs = list("Cyborg", "AI", "Mobile MMI")
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)

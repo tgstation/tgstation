@@ -126,6 +126,9 @@
 
 		else if(reagents.total_volume)
 			user << "\blue You splash the solution onto [target]."
+			if(reagents.has_reagent("fuel"))
+				message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
 			return

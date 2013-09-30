@@ -17,8 +17,8 @@
 	..()
 	for(var/mob/M in player_list)
 		M.CanBuild()
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	//if(emergency_shuttle)
+	//	emergency_shuttle.always_fake_recall = 1
 
 /datum/game_mode/sandbox/latespawn(var/mob/mob)
 	mob.CanBuild()

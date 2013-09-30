@@ -6,7 +6,7 @@
 /obj/item/device/depth_scanner
 	name = "depth analysis scanner"
 	desc = "Used to check spatial depth and density of rock outcroppings."
-	icon = 'pda.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "crap"
 	item_state = "analyzer"
 	w_class = 1.0
@@ -77,8 +77,12 @@
 	return src.interact(user)
 
 /obj/item/device/depth_scanner/interact(var/mob/user as mob)
-	var/dat = "<b>Co-ordinates with positive matches</b><br>"
-	dat += "<A href='?src=\ref[src];clear=0'>== Clear all ==</a><br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\tools_depthscanner.dm:80: var/dat = "<b>Co-ordinates with positive matches</b><br>"
+	var/dat = {"<b>Co-ordinates with positive matches</b><br>
+<A href='?src=\ref[src];clear=0'>== Clear all ==</a><br>"}
+	// END AUTOFIX
 	if(current)
 
 		// AUTOFIXED BY fix_string_idiocy.py

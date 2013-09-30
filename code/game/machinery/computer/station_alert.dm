@@ -26,8 +26,12 @@
 
 	interact(mob/user)
 		usr.set_machine(src)
-		var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-		dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\station_alert.dm:29: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
+		var/dat = {"<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
+<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"}
+		// END AUTOFIX
 		for (var/cat in src.alarms)
 			dat += text("<B>[]</B><BR>\n", cat)
 			var/list/L = src.alarms[cat]

@@ -40,13 +40,19 @@
 		..()
 
 	update_icon()
+		var/hidden=""
+		if(level == 1 && istype(loc, /turf/simulated))
+			hidden="h"
+		var/suffix=""
+		if(scrub_O2)
+			suffix="1"
 		if(node && on && !(stat & (NOPOWER|BROKEN)))
 			if(scrubbing)
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
+				icon_state = "[hidden]on[suffix]"
 			else
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
+				icon_state = "[hidden]in"
 		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+			icon_state = "[hidden]off"
 		return
 
 	proc
@@ -106,7 +112,12 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if(scrubbing)
-			if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
+			// Are we scrubbing gasses that are present?
+			if(\
+				(scrub_Toxins && environment.toxins > 0) ||\
+				(scrub_CO2 && environment.carbon_dioxide > 0) ||\
+				(scrub_N2O && environment.trace_gases.len > 0) ||\
+				(scrub_O2 && environment.oxygen > 0))
 				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 				//Take a gas sample
@@ -117,12 +128,15 @@
 				//Filter it
 				var/datum/gas_mixture/filtered_out = new
 				filtered_out.temperature = removed.temperature
+
 				if(scrub_Toxins)
 					filtered_out.toxins = removed.toxins
 					removed.toxins = 0
+
 				if(scrub_CO2)
 					filtered_out.carbon_dioxide = removed.carbon_dioxide
 					removed.carbon_dioxide = 0
+
 				if(scrub_O2)
 					filtered_out.oxygen = removed.oxygen
 					removed.oxygen = 0
@@ -184,7 +198,7 @@
 			on = !on
 
 		if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
-			panic = text2num(signal.data["panic_siphon"] != null)
+			panic = text2num(signal.data["panic_siphon"]) // We send 0 for false in the alarm.
 			if(panic)
 				on = 1
 				scrubbing = 0

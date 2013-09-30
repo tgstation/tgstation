@@ -87,7 +87,7 @@
 		if(harvestable_honey > 0)
 			if(health > 0)
 				user << "\red You begin to harvest the honey. The bees don't seem to like it."
-				angry_swarm()
+				angry_swarm(user)
 			else
 				user << "\blue You begin to harvest the honey."
 			if(do_after(user,50))
@@ -97,7 +97,7 @@
 		else
 			user << "\blue There is no honey left to harvest."
 	else
-		angry_swarm()
+		angry_swarm(user)
 		..()
 
 /obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -171,16 +171,19 @@
 		//find some plants, harvest
 		for(var/obj/machinery/hydroponics/H in view(7, src))
 			if(H.planted && !H.dead && H.myseed && prob(owned_bee_swarms.len * 10))
+				src.nutrilevel++
+				H.nutrilevel++
 				if(mut < H.mutmod - 1)
 					mut = H.mutmod - 1
 				else if(mut > H.mutmod - 1)
 					H.mutmod = mut
 
 				//flowers give us pollen (nutrients)
+/* - All plants should be giving nutrients to the hive.
 				if(H.myseed.type == /obj/item/seeds/harebell || H.myseed.type == /obj/item/seeds/sunflowerseed)
 					src.nutrilevel++
 					H.nutrilevel++
-
+*/
 				//have a few beneficial effects on nearby plants
 				if(prob(10))
 					H.lastcycle -= 5
@@ -206,7 +209,7 @@
 
 /obj/machinery/apiary/proc/angry_swarm(var/mob/M)
 	for(var/mob/living/simple_animal/bee/B in owned_bee_swarms)
-		B.feral = 50
+		B.feral = 25
 		B.target_mob = M
 
 	swarming = 25
@@ -219,7 +222,7 @@
 		var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
 		B.target_mob = M
 		B.strength = spawn_strength
-		B.feral = 5
+		B.feral = 25
 		B.mut = mut
 		B.toxic = toxic
 		bees_in_hive -= spawn_strength

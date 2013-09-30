@@ -1,4 +1,24 @@
 # DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi
+ C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/DMITool/DMI.py", line 109, in compare
+    theirsDMI.parse()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+    img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
+ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/DMITool/DMI.py", line 125, in compare
+    mineDMI.parse()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+    img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\genetics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\genetics.dmi
  - cold_l
@@ -28,6 +48,13 @@
  + U-W
  + W
  + W-corner
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
+ - mecha_phase_array
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen.dmi
+ - title: title: 8 frames, 1 directions icons: [None, None, None, None, None, None, None, None]
+ + title: title: 5 frames, 1 directions icons: [None, None, None, None, None]
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
@@ -154,6 +181,18 @@
  + unathi_breacher2
  + vox-medic
  + vox-medic2
+ - vox-pressure-engineer
+ - vox-pressure-engineer2
+ - vox-pressure-medical
+ - vox-pressure-medical2
+ - vox-pressure-normal
+ - vox-pressure-normal2
+ - vox-pressure-science
+ - vox-pressure-science2
+ - vox-pressure-security
+ - vox-pressure-security2
+ - vox-pressure-specops
+ - vox-pressure-specops2
  + vox-stealth
  + vox-stealth2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
@@ -164,6 +203,18 @@
  + konaahirano
  - telebaton0
  - telebaton1
+ - vox-helmet-engineer
+ - vox-helmet-medical
+ - vox-helmet-normal
+ - vox-helmet-science
+ - vox-helmet-security
+ - vox-helmet-specops
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-security
+ - vox-pressure-specops
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  + eleanorstone
@@ -172,6 +223,17 @@
  + konaahirano
  - telebaton0
  - telebaton1
+ - vox-helmet-engineer
+ - vox-helmet-medical
+ - vox-helmet-normal
+ - vox-helmet-science
+ - vox-helmet-security
+ - vox-helmet-specops
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-specops
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  + konaahirano
@@ -231,6 +293,17 @@
  + unathi_breacher2
  + vox-medic
  + vox-medic2
+ - vox-pressure-engineer
+ - vox-pressure-engineer2
+ - vox-pressure-medical
+ - vox-pressure-medical2
+ - vox-pressure-normal
+ - vox-pressure-normal2
+ - vox-pressure-science
+ - vox-pressure-science2
+ - vox-pressure-security
+ - vox-pressure-security2
+ - vox-pressure-specops
  + vox-stealth
  + vox-stealth2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\uniform.dmi
@@ -259,6 +332,10 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
  - aircond1
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\bureaucracy.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
+ + paper_stamp-intaff
+ + stamp-intaff
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\custom_items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\custom_items.dmi
  + aeneasrinil
@@ -285,18 +362,75 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - handtv
+ + megaphone
  + modkit
+ + robotanalyzer
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
+ + bigteacup
  - tea
+ + vacuumflask
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
+ C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/DMITool/DMI.py", line 109, in compare
+    theirsDMI.parse()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+    img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
+ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/DMITool/DMI.py", line 125, in compare
+    mineDMI.parse()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+    img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - rpd
  - sheet-phazon
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\janitor.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\janitor.dmi
+ + 4no_raisins
+ + candy
+ + cart
+ + cart_garbage
+ + cart_mop
+ + cart_replacer
+ + cart_sign1
+ + cart_sign2
+ + cart_sign3
+ + cart_sign4
+ + cart_spray
+ + cheesie_honkers
+ + chips
+ + pistachios_pack
+ + plate
+ + popcorn
+ + semki_pack
+ + snack_bowl
+ + sosjerky
+ + syndi_cakes
+ + trashbag0
+ + trashbag1
+ + trashbag2
+ + trashbag3
+ + tray
+ + waffles
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\kitchen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\kitchen.dmi
  - mcleaver
  - mcleaverblood
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\library.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\library.dmi
+ + fax
+ + faxreceive
+ + faxsend
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
  + Phazon
@@ -305,6 +439,10 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
  + psychbed
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipe-item.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
+ - dvalve
+ - thermalplate
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
  - intercom-frame
@@ -312,6 +450,7 @@
  - intercom-p-open
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\robotics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
+ - fab-load-phazon
  - mommispawner-building
  - mommispawner-idle
  - mommispawner-nopower
@@ -354,6 +493,26 @@
  - kit_1
  - paddle_lefthand
  - paddle_righthand
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\cold_sink.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
+ + exposed
+ - hoff
+ - hon_cool
+ - hon_heat
+ - hon_idle
+ + intact_off
+ + intact_on
+ - off
+ - old_exposed
+ - old_intact_off
+ - old_intact_on
+ - on_cool
+ - on_heat
+ - on_idle
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\vent_scrubber.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\vent_scrubber.dmi
+ - hon1
+ - on1
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
  + corpsoft
@@ -378,6 +537,12 @@
  + skrell_helmet_white
  + unathi_breacher
  + vox-medic
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-security
+ - vox-pressure-specops
  + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
@@ -388,6 +553,12 @@
  + skrell_suit_white
  + unathi_breacher
  + vox-medic
+ - vox-pressure-engineer
+ - vox-pressure-medical
+ - vox-pressure-normal
+ - vox-pressure-science
+ - vox-pressure-security
+ - vox-pressure-specops
  + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
@@ -396,6 +567,38 @@
  - paramedic
  + sec_corporate
  + warden_corporate
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\DoorHazard2x1.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\DoorHazard2x1.dmi
+ - door_closed: door_closed: 1 frames, 1 directions icons: [None]
+ + door_closed: door_closed: 1 frames, 4 directions icons: [None, None, None, None]
+ + door_closing
+ + door_deny
+ + door_locked
+ - door_open: door_open: 1 frames, 1 directions icons: [None]
+ + door_open: door_open: 1 frames, 4 directions icons: [None, None, None, None]
+ + door_opening
+ + welded
+ + welded_open
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
+ C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/DMITool/DMI.py", line 109, in compare
+    theirsDMI.parse()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+    img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
+ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/DMITool/DMI.py", line 125, in compare
+    mineDMI.parse()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+    img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\areas.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
  - xenocell1

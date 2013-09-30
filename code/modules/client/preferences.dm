@@ -327,6 +327,12 @@ datum/preferences
 				if(ind > 1)
 					dat += ", "
 				dat += "\tMechanical [organ_name] prothesis"
+
+			else if(status == "peg")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tWooden [organ_name] prothesis"
 			else if(status == "amputated")
 				++ind
 				if(ind > 1)
@@ -1085,13 +1091,16 @@ datum/preferences
 						var/limb = null
 						var/second_limb = null // if you try to change the arm, the hand should also change
 						var/third_limb = null  // if you try to unchange the hand, the arm should also change
+						var/valid_limb_states=list("Normal","Amputated","Prothesis")
 						switch(limb_name)
 							if("Left Leg")
 								limb = "l_leg"
 								second_limb = "l_foot"
+								valid_limb_states += "Peg Leg"
 							if("Right Leg")
 								limb = "r_leg"
 								second_limb = "r_foot"
+								valid_limb_states += "Peg Leg"
 							if("Left Arm")
 								limb = "l_arm"
 								second_limb = "l_hand"
@@ -1111,7 +1120,7 @@ datum/preferences
 								limb = "r_hand"
 								third_limb = "r_arm"
 
-						var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
+						var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in valid_limb_states
 						if(!new_state) return
 
 						switch(new_state)
@@ -1127,6 +1136,10 @@ datum/preferences
 								organ_data[limb] = "cyborg"
 								if(second_limb)
 									organ_data[second_limb] = "cyborg"
+							if("Peg Leg")
+								organ_data[limb] = "peg"
+								if(second_limb)
+									organ_data[second_limb] = "amputated"
 
 					if("skin_style")
 						var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
@@ -1250,11 +1263,17 @@ datum/preferences
 
 			var/status = organ_data[name]
 			if(status == "amputated")
+				O.status &= ~ORGAN_ROBOT
+				O.status &= ~ORGAN_PEG
 				O.amputated = 1
 				O.status |= ORGAN_DESTROYED
 				O.destspawn = 1
 			else if(status == "cyborg")
+				O.status &= ~ORGAN_PEG
 				O.status |= ORGAN_ROBOT
+			else if(status == "peg")
+				O.status &= ~ORGAN_ROBOT
+				O.status |= ORGAN_PEG
 
 		if(disabilities & DISABILITY_FLAG_FAT && species=="Human")//character.species.flags & CAN_BE_FAT)
 			character.mutations += FAT
@@ -1280,9 +1299,12 @@ datum/preferences
 				character.gender = MALE
 
 	proc/open_load_dialog(mob/user)
-		var/dat = "<body>"
-		dat += "<tt><center>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:1283: var/dat = "<body>"
+		var/dat = {"<body>
+<tt><center>"}
+		// END AUTOFIX
 		var/savefile/S = new /savefile(path)
 		if(S)
 			dat += "<b>Select a character slot to load</b><hr>"

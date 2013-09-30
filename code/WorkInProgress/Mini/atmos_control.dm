@@ -89,7 +89,7 @@
 	if(!current)
 		return ""
 	var/dat = "<h3>[current.name]</h3><hr>"
-	dat += current.return_status()
+	//dat += current.return_status()
 	if(current.remote_control || overridden)
 		dat += "<hr>[return_controls()]"
 	return dat
@@ -116,7 +116,15 @@
 					"panic_siphon",
 					"scrubbing"
 				)
-					current.send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
+					var/val
+					if(href_list["val"])
+						val=text2num(href_list["val"])
+					else
+						var/newval = input("Enter new value") as num|null
+						if(isnull(newval))
+							return
+						val = newval
+					current.send_signal(device_id, list (href_list["command"] = val))
 					spawn(3)
 						src.updateUsrDialog()
 				//if("adjust_threshold") //was a good idea but required very wide window

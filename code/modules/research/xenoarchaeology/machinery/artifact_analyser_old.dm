@@ -4,7 +4,7 @@
 /obj/machinery/artifact_analyser
 	name = "Artifact Analyser"
 	desc = "Studies the structure of artifacts to discover their uses."
-	icon = 'virology.dmi'
+	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 	anchored = 1
 	density = 1
@@ -302,7 +302,7 @@
 /obj/machinery/analyser_pad
 	name = "artifact analysis pad"
 	desc = "Studies the structure of artifacts to discover their uses."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "tele0"
 	anchored = 1
 	density = 0

@@ -55,8 +55,7 @@
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
-	var/title = "Sheet-Glass"
-	title += " ([src.amount] sheet\s left)"
+	var/title = "Sheet-Glass ([src.amount] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
 			if(!src)	return 1
@@ -138,8 +137,7 @@
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
-	var/title = "Sheet Reinf. Glass"
-	title += " ([src.amount] sheet\s left)"
+	var/title = "Sheet Reinf. Glass ([src.amount] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)	return 1

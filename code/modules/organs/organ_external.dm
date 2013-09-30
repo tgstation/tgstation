@@ -78,7 +78,7 @@
 
 	if(status & ORGAN_DESTROYED)
 		return 0
-	if(status & ORGAN_ROBOT)
+	if(status & (ORGAN_ROBOT|ORGAN_PEG))
 		brute *= 0.66 //~2/3 damage for ROBOLIMBS
 		burn *= 0.66 //~2/3 damage for ROBOLIMBS
 
@@ -101,7 +101,7 @@
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 
-	var/can_cut = (prob(brute*2) || sharp) && !(status & ORGAN_ROBOT)
+	var/can_cut = (prob(brute*2) || sharp) && !(status & (ORGAN_ROBOT|ORGAN_PEG))
 	// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
 	if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
 		if(brute)
@@ -135,7 +135,7 @@
 				burn = max(0, burn - can_inflict)
 		//If there are still hurties to dispense
 		if (burn || brute)
-			if (status & ORGAN_ROBOT)
+			if (status & (ORGAN_ROBOT|ORGAN_PEG))
 				droplimb(1) //Robot limbs just kinda fail at full damage.
 			else
 				//List organs we can pass it to
@@ -160,6 +160,10 @@
 
 /datum/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 	if(status & ORGAN_ROBOT && !robo_repair)
+		return
+
+	// Can't fix peglegs.
+	if(status & ORGAN_PEG)
 		return
 
 	//Heal damage on the individual wounds
@@ -219,7 +223,7 @@
 
 	//Possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
-	if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && !(status & ORGAN_ROBOT))
+	if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && !(status & (ORGAN_ROBOT|ORGAN_PEG)))
 		var/datum/wound/internal_bleeding/I = new (15)
 		wounds += I
 		owner.custom_pain("You feel something rip in your [display_name]!", 1)
@@ -263,7 +267,7 @@
 			return
 
 	//Bone fracurtes
-	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & (ORGAN_ROBOT|ORGAN_PEG)))
 		src.fracture()
 	if(!(status & ORGAN_BROKEN))
 		perma_injury = 0
@@ -278,6 +282,10 @@
 #define GANGREN_LEVEL_TERMINAL	2500
 #define GERM_TRANSFER_AMOUNT	germ_level/500
 /datum/organ/external/proc/update_germs()
+	if(status & (ORGAN_ROBOT|ORGAN_PEG)) //how does robot limb have da germs?
+		if(germ_level > 0)
+			germ_level = 0
+		return
 	if(germ_level > 0 && owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
 		//Syncing germ levels with external wounds
 		for(var/datum/wound/W in wounds)
@@ -302,17 +310,17 @@
 			if (prob(10))	//Spreading the fun
 				if (children)	//To child organs
 					for (var/datum/organ/external/child in children)
-						if (!(child.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT)))
+						if (!(child.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT|ORGAN_PEG)))
 							child.germ_level += round(GERM_TRANSFER_AMOUNT)
 				if (parent)
-					if (!(parent.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT)))
+					if (!(parent.status & (ORGAN_DEAD|ORGAN_DESTROYED|ORGAN_ROBOT|ORGAN_PEG)))
 						parent.germ_level += round(GERM_TRANSFER_AMOUNT)
 */
 
-//Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
+//Updating wounds. Handles wound natural healing, internal bleedings and infections
 /datum/organ/external/proc/update_wounds()
 
-	if((status & ORGAN_ROBOT)) //Robotic limbs don't heal or get worse.
+	if((status & (ORGAN_ROBOT|ORGAN_PEG))) //Robotic limbs don't heal or get worse.
 		return
 
 	for(var/datum/wound/W in wounds)
@@ -368,7 +376,7 @@
 		else if(W.damage_type == BURN)
 			burn_dam += W.damage
 
-		if(!(status & ORGAN_ROBOT) && W.bleeding())
+		if(!(status & (ORGAN_ROBOT|ORGAN_PEG)) && W.bleeding())
 			W.bleed_timer--
 			status |= ORGAN_BLEEDING
 
@@ -471,11 +479,23 @@
 			if(LEG_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_leg(owner.loc)
+				else if(status & ORGAN_PEG)
+					//organ = new /obj/item/stack/sheet/wood(owner.loc)
+					owner.visible_message(\
+						"\red \The [owner]'s [display_name] snaps!",\
+						"\red <b>Your [display_name] snaps!</b>",\
+						"You hear wood being split.")
 				else
 					organ= new /obj/item/weapon/organ/r_leg(owner.loc, owner)
 			if(LEG_LEFT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/l_leg(owner.loc)
+				else if(status & ORGAN_PEG)
+					//organ = new /obj/item/stack/sheet/wood(owner.loc)
+					owner.visible_message(\
+						"\red \The [owner]'s [display_name] snaps!",\
+						"\red <b>Your [display_name] snaps!</b>",\
+						"You hear wood being split.")
 				else
 					organ= new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 			if(HAND_RIGHT)
@@ -564,10 +584,23 @@
 	src.status &= ~ORGAN_SPLINTED
 	src.status &= ~ORGAN_ATTACHABLE
 	src.status &= ~ORGAN_DESTROYED
+	src.status &= ~ORGAN_PEG
 	src.status |= ORGAN_ROBOT
 	for (var/datum/organ/external/T in children)
 		if(T)
 			T.robotize()
+
+/datum/organ/external/proc/peggify()
+	src.status &= ~ORGAN_BROKEN
+	src.status &= ~ORGAN_BLEEDING
+	src.status &= ~ORGAN_SPLINTED
+	src.status &= ~ORGAN_ATTACHABLE
+	src.status &= ~ORGAN_DESTROYED
+	src.status &= ~ORGAN_ROBOT
+	src.status |= ORGAN_PEG
+	for (var/datum/organ/external/T in children)
+		if(T)
+			T.droplimb(1,1)
 
 /datum/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
@@ -594,11 +627,12 @@
 	if(isFat && has_fat)
 		fat="_fat"
 	var/icon_state="[icon_name][gender][fat]"
-	//testing("[src].get_icon('[gender]', '[fat]') = /icon([owner.race_icon], [icon_state])")
+	var/baseicon=owner.race_icon
 	if (status & ORGAN_MUTATED)
-		return new /icon(owner.deform_icon, icon_state)
-	else
-		return new /icon(owner.race_icon, icon_state)
+		baseicon=owner.deform_icon
+	if (status & ORGAN_PEG)
+		baseicon='icons/mob/human_races/o_peg.dmi'
+	return new /icon(baseicon, icon_state)
 
 
 /datum/organ/external/proc/is_usable()
@@ -705,13 +739,15 @@
 
 /datum/organ/external/head/get_icon()
 	if (!owner)
-	 return ..()
+		return ..()
 	var/g = "m"
 	if(owner.gender == FEMALE)	g = "f"
+	var/baseicon=owner.race_icon
 	if (status & ORGAN_MUTATED)
-		. = new /icon(owner.deform_icon, "[icon_name]_[g]")
-	else
-		. = new /icon(owner.race_icon, "[icon_name]_[g]")
+		baseicon=owner.deform_icon
+	if (status & ORGAN_PEG)
+		baseicon='icons/mob/human_races/o_peg.dmi'
+	return new /icon(baseicon, "[icon_name]_[g]")
 
 /datum/organ/external/head/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 	..(brute, burn, sharp, used_weapon, forbidden_limbs)

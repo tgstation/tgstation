@@ -163,3 +163,40 @@
 		user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [affected.display_name]!", \
 		"\red Your hand slips, damaging connectors on [target]'s [affected.display_name]!")
 		target.apply_damage(10, BRUTE, affected)
+
+/datum/surgery_step/limb/attach_plank
+	allowed_tools = list(/obj/item/stack/sheet/wood=100)
+	can_infect = 0
+
+	min_duration = 80
+	max_duration = 100
+
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/obj/item/robot_parts/p = tool
+		if (p.part)
+			if (!(target_zone in p.part))
+				return 0
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		return ..() && affected.status & ORGAN_ATTACHABLE
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("[user] starts attaching [tool] where [target]'s [affected.display_name] used to be.", \
+		"You start attaching [tool] where [target]'s [affected.display_name] used to be.")
+
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("\blue [user] has attached [tool] where [target]'s [affected.display_name] used to be.",	\
+		"\blue You have attached [tool] where [target]'s [affected.display_name] used to be.")
+		affected.peggify()
+		target.update_body()
+		target.updatehealth()
+		target.UpdateDamageIcon()
+		var/obj/item/stack/sheet/wood/peg = tool
+		peg.use(1)
+
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [affected.display_name]!", \
+		"\red Your hand slips, damaging connectors on [target]'s [affected.display_name]!")
+		target.apply_damage(10, BRUTE, affected)

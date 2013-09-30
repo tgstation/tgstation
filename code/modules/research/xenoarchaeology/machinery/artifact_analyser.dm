@@ -34,8 +34,12 @@
 		user.unset_machine(src)
 		return
 
-	var/dat = "<B>Anomalous material analyser</B><BR>"
-	dat += "<HR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_analyser.dm:37: var/dat = "<B>Anomalous material analyser</B><BR>"
+	var/dat = {"<B>Anomalous material analyser</B><BR>
+<HR>"}
+	// END AUTOFIX
 	if(!owned_scanner)
 		owned_scanner = locate() in orange(1, src)
 

@@ -2,7 +2,7 @@
 /obj/item/device/portalathe
 	name = "portable autolathe"
 	desc = "A device which can repair broken lights instantly. Must be advanced."
-	icon = 'janitor.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "portalathe"
 
 	afterattack(var/atom/target, mob/user as mob)

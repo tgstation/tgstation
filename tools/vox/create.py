@@ -43,7 +43,7 @@ SOX_ARGS  = 'stretch 1.1'
 #SOX_ARGS += ' phaser 0.89 0.85 2 0.24 1 -t'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
-SOX_ARGS += ' bass -20'
+SOX_ARGS += ' bass -40'
 SOX_ARGS += ' norm'
 #SOX_ARGS += ' reverb'
 
@@ -96,6 +96,7 @@ class Pronunciation:
 		self.syllables=[]
 		self.name=[]
 		self.type='n'
+		# DMU phonemes + pau
 		self.validPhonemes=[
 			'aa',
 			'ae',
@@ -187,6 +188,7 @@ def GenerateForWord(word,wordfile):
 		if w in known_phonemes:
 			my_phonemes[w]=known_phonemes[w].toLisp().replace('\n','')
 	md5 += '\n'.join(my_phonemes.values())
+	md5 += SOX_ARGS + PRE_SOX_ARGS
 	oggfile = os.path.abspath(os.path.join('sound','vox_fem',wordfile+'.ogg'))
 	if '/' in wordfile:
 		oggfile = os.path.abspath(os.path.join(wordfile+'.ogg'))

@@ -352,7 +352,7 @@ area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blu
 	if(ul_CachedOverlay)
 		ul_Overlay = ul_CachedOverlay
 	else
-		ul_IconCache["[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]"] = image('ULIcons.dmi', , "[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]", ul_Layer)
+		ul_IconCache["[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]"] = image('icons/effects/ULIcons.dmi', , "[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]", ul_Layer)
 		ul_Overlay = ul_IconCache["[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]"]
 
 	overlays += ul_Overlay

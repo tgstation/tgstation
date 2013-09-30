@@ -54,6 +54,7 @@
 		R.module.modules += new/obj/item/weapon/circular_saw
 		R.module.modules += new/obj/item/weapon/scalpel
 		R.module.modules += new/obj/item/weapon/bonesetter
+		R.module.modules += new/obj/item/weapon/bonegel // Requested by Hoshi-chan
 		R.module.modules += new/obj/item/weapon/FixOVein
 		R.module.modules += new/obj/item/weapon/surgicaldrill
 		R.module.modules += new/obj/item/weapon/cautery

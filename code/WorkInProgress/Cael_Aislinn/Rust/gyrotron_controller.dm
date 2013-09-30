@@ -30,8 +30,12 @@
 				user.machine = null
 				user << browse(null, "window=gyrotron_controller")
 				return
-		var/t = "<B>Gyrotron Remote Control Console</B><BR>"
-		t += "<hr>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron_controller.dm:33: var/t = "<B>Gyrotron Remote Control Console</B><BR>"
+		var/t = {"<B>Gyrotron Remote Control Console</B><BR>
+<hr>"}
+		// END AUTOFIX
 		for(var/obj/machinery/rust/gyrotron/gyro in world)
 			if(gyro.remoteenabled && gyro.on)
 
@@ -55,8 +59,12 @@
 				t += "<b><font color=red>Gyrotron unresponsive</font></b>"
 			t += "<hr>"
 		/*
-		var/t = "<B>Reactor Core Fuel Control</B><BR>"
-		t += "Current fuel injection stage: [active_stage]<br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron_controller.dm:58: var/t = "<B>Reactor Core Fuel Control</B><BR>"
+		var/t = {"<B>Reactor Core Fuel Control</B><BR>
+Current fuel injection stage: [active_stage]<br>"}
+		// END AUTOFIX
 		if(active_stage == "Cooling")
 			//t += "<a href='?src=\ref[src];restart=1;'>Restart injection cycle</a><br>"
 			t += "----<br>"

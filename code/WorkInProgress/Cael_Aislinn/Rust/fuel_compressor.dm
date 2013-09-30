@@ -36,8 +36,12 @@ var/const/max_assembly_amount = 300
 			user << browse(null, "window=fuelcomp")
 			return
 
-	var/t = "<B>Reactor Fuel Rod Compressor / Assembler</B><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\fuel_compressor.dm:39: var/t = "<B>Reactor Fuel Rod Compressor / Assembler</B><BR>"
+	var/t = {"<B>Reactor Fuel Rod Compressor / Assembler</B><BR>
+<A href='?src=\ref[src];close=1'>Close</A><BR>"}
+	// END AUTOFIX
 	if(locked)
 		t += "Swipe your ID to unlock this console."
 	else

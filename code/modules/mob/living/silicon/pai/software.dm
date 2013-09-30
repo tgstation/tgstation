@@ -580,9 +580,12 @@
 
 // Camera Jack - Clearly not finished
 /mob/living/silicon/pai/proc/softwareCamera()
-	var/dat = "<h3>Camera Jack</h3>"
-	dat += "Cable status : "
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:583: var/dat = "<h3>Camera Jack</h3>"
+	var/dat = {"<h3>Camera Jack</h3>
+Cable status :"}
+	// END AUTOFIX
 	if(!src.cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
 		return dat
@@ -599,8 +602,12 @@
 
 // Door Jack
 /mob/living/silicon/pai/proc/softwareDoor()
-	var/dat = "<h3>Airlock Jack</h3>"
-	dat += "Cable status : "
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\software.dm:602: var/dat = "<h3>Airlock Jack</h3>"
+	var/dat = {"<h3>Airlock Jack</h3>
+Cable status :"}
+	// END AUTOFIX
 	if(!src.cable)
 
 		// AUTOFIXED BY fix_string_idiocy.py

@@ -3,7 +3,7 @@
 /obj/item/wardrobe
 	name = "\improper Wardrobe"
 	desc = "A standard-issue bag for clothing and equipment. Usually comes sealed, stocked with everything you need for a particular job."
-	icon = 'suits.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "wardrobe_sealed"
 	item_state = "wardrobe"
 	w_class = 4

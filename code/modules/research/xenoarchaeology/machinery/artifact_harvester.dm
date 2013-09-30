@@ -1,7 +1,7 @@
 
 /obj/machinery/artifact_harvester
 	name = "Exotic Particle Harvester"
-	icon = 'virology.dmi'
+	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"	//incubator_on
 	anchored = 1
 	density = 1
@@ -41,8 +41,12 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
-	var/dat = "<B>Artifact Power Harvester</B><BR>"
-	dat += "<HR><BR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:44: var/dat = "<B>Artifact Power Harvester</B><BR>"
+	var/dat = {"<B>Artifact Power Harvester</B><BR>
+<HR><BR>"}
+	// END AUTOFIX
 	//
 	if(owned_scanner)
 		if(harvesting)

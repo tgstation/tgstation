@@ -229,12 +229,13 @@ turf/space
 	accepts_lighting=0 			// Don't apply overlays
 
 turf/proc/update_lumcount(amount)
-	if(accepts_lighting)
-		lighting_lumcount += amount
-	else if(lighting_lumcount != initial(lighting_lumcount))
-		lighting_lumcount = initial(lighting_lumcount)
-	else
-		return
+	//if(accepts_lighting)
+	//	lighting_lumcount += amount
+	//else if(lighting_lumcount != initial(lighting_lumcount))
+	//	lighting_lumcount = initial(lighting_lumcount)
+	//else
+	//	return
+	lighting_lumcount += amount
 //	if(lighting_lumcount < 0 || lighting_lumcount > 100)
 //		world.log << "## WARNING: [type] ([src]) lighting_lumcount = [lighting_lumcount]"
 	if(!lighting_changed)
@@ -253,8 +254,9 @@ turf/proc/shift_to_subarea()
 
 	var/find = findtextEx(Area.tag, "sd_L")
 	var/new_tag = copytext(Area.tag, 1, find)
-	if(accepts_lighting)
-		new_tag += "sd_L[light]"
+	//if(accepts_lighting)
+	//	new_tag += "sd_L[light]"
+	new_tag += "sd_L[light]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
 

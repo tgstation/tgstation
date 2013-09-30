@@ -404,14 +404,18 @@ var/list/solars_list = list()
 	add_fingerprint(user)
 	user.set_machine(src)
 
-	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
-	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
-	t += "Station Rotational Period: [60/abs(sun.rate)] minutes<BR>"
-	t += "Station Rotational Direction: [sun.rate<0 ? "CCW" : "CW"]<BR>"
-	t += "Star Orientation: [sun.angle]&deg ([angle2text(sun.angle)])<BR>"
-	t += "Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])<BR>"
-	t += "<BR><HR><BR>"
-	t += "Tracking: "
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:407: var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	var/t = {"<TT><B>Solar Generator Control</B><HR><PRE>
+<B>Generated power</B> : [round(lastgen)] W<BR>
+Station Rotational Period: [60/abs(sun.rate)] minutes<BR>
+Station Rotational Direction: [sun.rate<0 ? "CCW" : "CW"]<BR>
+Star Orientation: [sun.angle]&deg ([angle2text(sun.angle)])<BR>
+Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])<BR>
+<BR><HR><BR>
+Tracking:"}
+	// END AUTOFIX
 	switch(track)
 		if(0)
 			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Manual</A> <A href='?src=\ref[src];track=2'>Automatic</A><BR>"
@@ -420,8 +424,12 @@ var/list/solars_list = list()
 		if(2)
 			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Manual</A> <B>Automatic</B><BR>"
 
-	t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
-	t += "Manual Tracking Direction: "
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:423: t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
+	t += {"Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>
+Manual Tracking Direction:"}
+	// END AUTOFIX
 	switch(trackdir)
 		if(-1)
 			t += "<A href='?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"

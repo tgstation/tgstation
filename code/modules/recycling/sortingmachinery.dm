@@ -171,9 +171,12 @@
 	slot_flags = SLOT_BELT
 
 	proc/openwindow(mob/user as mob)
-		var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
-		dat += "<table style='width:100%; padding:4px;'><tr>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\recycling\sortingmachinery.dm:174: var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+		var/dat = {"<tt><center><h1><b>TagMaster 2.2</b></h1></center>
+<table style='width:100%; padding:4px;'><tr>"}
+		// END AUTOFIX
 		for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
 			dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
 

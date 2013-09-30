@@ -3,7 +3,7 @@
 ///////////////////////////////////////
 
 /obj/multiz
-	icon = 'multiz.dmi'
+	icon = 'code/TriDimension/multiz.dmi'
 	density = 0
 	opacity = 0
 	anchored = 1
