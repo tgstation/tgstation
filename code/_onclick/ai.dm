@@ -9,7 +9,11 @@
 
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
-/mob/living/silicon/ai/DblClickOn(var/atom/A)
+/mob/living/silicon/ai/DblClickOn(var/atom/A, params)
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
+
 	if(control_disabled || stat) return
 	next_move = world.time + 9
 

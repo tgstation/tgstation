@@ -79,7 +79,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
-	circuit = "/obj/item/weapon/circuitboard/supplycomp"
+	circuit = /obj/item/weapon/circuitboard/supplycomp
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/hacked = 0
@@ -91,7 +91,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	name = "Supply Ordering Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
-	circuit = "/obj/item/weapon/circuitboard/ordercomp"
+	circuit = /obj/item/weapon/circuitboard/ordercomp
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
@@ -381,19 +381,6 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points = 0
 	var/ordernumber = 0
 
-
-/obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/ordercomp/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
-
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
 	if(..())
 		return
@@ -554,36 +541,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		user << "\blue Special supplies unlocked."
 		hacked = 1
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-				new /obj/item/weapon/shard( loc )
-				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
-				for (var/obj/C in src)
-					C.loc = loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
-				if(can_order_contraband)
-					M.contraband_enabled = 1
-				for (var/obj/C in src)
-					C.loc = loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
 	else
-		attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
