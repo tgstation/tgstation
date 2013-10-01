@@ -261,6 +261,20 @@ Please contact me on #coderbus IRC. ~Carnie x
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer"=-BODY_LAYER)
 		lying		+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_l", "layer"=-BODY_LAYER)
 
+	//Augmented Limbs
+	if(augmented_arms)
+		standing 	+= image("icon"="icons/mob/human.dmi", "icon_state"="augmented_arms_s", "layer"=-BODY_LAYER)
+		lying 	    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_arms_l", "layer"=-BODY_LAYER)
+
+	if(augmented_legs)
+		standing 	+= image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_s", "layer"=-BODY_LAYER)
+		lying 	    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_l", "layer"=-BODY_LAYER)
+
+	if(augmented_arms && augmented_legs)
+		standing    += image("icon"="icons/mob/human,dmi", "icon_state"="augmented_both_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/human,dmi", "icon_state"="augmented_both_l", "layer"=-BODY_LAYER)
+
+
 	//Eyes
 	if(!dna || dna.mutantrace != "skeleton")
 		var/icon/eyes_s = icon('icons/mob/human_face.dmi', "eyes_s")

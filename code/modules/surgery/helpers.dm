@@ -107,5 +107,11 @@ proc/get_location_modifier(mob/M)
 		if("r_foot")
 			if(covered_locations & FOOT_RIGHT)
 				return 0
+		if("arms") // Robo Limbs Only
+			if(covered_locations & ARM_LEFT && ARM_RIGHT)
+				return 0
+		if("legs") // Robo Limbs Only
+			if(covered_locations & LEG_LEFT && LEG_RIGHT)
+				return 0
 
 	return 1
