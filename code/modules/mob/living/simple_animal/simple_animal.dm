@@ -82,7 +82,7 @@
 		return 0
 
 
-	if(health < 1)
+	if(health < 1 && stat != DEAD)
 		Die()
 
 	if(health > maxHealth)
@@ -457,7 +457,7 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
-	if(health < 1)
+	if(health < 1 && stat != DEAD)
 		Die()
 
 /mob/living/simple_animal/proc/SA_attackable(target)
