@@ -16,11 +16,13 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 		Dispense:
 	</div>
 	<div class="itemContent">
-		{^{:~link('5', 'gear', {'amount' : 5}, (amount == 5) ? 'selected' : null)}}
-		{^{:~link('10', 'gear', {'amount' : 10}, (amount == 10) ? 'selected' : null)}}
-		{^{:~link('20', 'gear', {'amount' : 20}, (amount == 20) ? 'selected' : null)}}
-		{^{:~link('30', 'gear', {'amount' : 30}, (amount == 30) ? 'selected' : null)}}
-		{^{:~link('50', 'gear', {'amount' : 50}, (amount == 50) ? 'selected' : null)}}
+		{^{:~link('5', 'gear', {'amount' : 5}, (amount == 5 && !custom) ? 'selected' : null)}}
+		{^{:~link('10', 'gear', {'amount' : 10}, (amount == 10 && !custom) ? 'selected' : null)}}
+		{^{:~link('20', 'gear', {'amount' : 20}, (amount == 20 && !custom) ? 'selected' : null)}}
+		{^{:~link('30', 'gear', {'amount' : 30}, (amount == 30 && !custom) ? 'selected' : null)}}
+		{^{:~link('50', 'gear', {'amount' : 50}, (amount == 50 && !custom) ? 'selected' : null)}}
+		{^{:~link('100', 'gear', {'amount' : 100}, (amount == 100 && !custom) ? 'selected' : null)}}
+		{^{:~link((custom) ? 'Custom: ' + amount : 'Custom', 'gear', {'amount' : 0}, null, (custom) ? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">&nbsp;</div>
