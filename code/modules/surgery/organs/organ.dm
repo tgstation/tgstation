@@ -44,40 +44,41 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
+	icon = "icons/effects/blood.dmi"
 
 /obj/item/organ/limb/chest
 	name = "chest"
-	icon_name = "chest"
+	icon_name = "gibtorso"
 	max_damage = 200
 	body_part = CHEST
 
 /obj/item/organ/limb/head
 	name = "head"
-	icon_name = "head"
+	icon_name = "gibhead"
 	max_damage = 200
 	body_part = HEAD
 
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
-	icon_name = "l_arm"
+	icon_name = "gibarm"
 	max_damage = 75
 	body_part = ARM_LEFT
 
 /obj/item/organ/limb/l_leg
 	name = "l_leg"
-	icon_name = "l_leg"
+	icon_name = "gibleg"
 	max_damage = 75
 	body_part = LEG_LEFT
 
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
-	icon_name = "r_arm"
+	icon_name = "gibarm"
 	max_damage = 75
 	body_part = ARM_RIGHT
 
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
-	icon_name = "r_leg"
+	icon_name = "gibleg"
 	max_damage = 75
 	body_part = LEG_RIGHT
 
@@ -85,37 +86,37 @@
 
 /obj/item/organ/limb/chest/robot // We Going full Cyborg on this shit, ALL limbs can have robotic versions, EVEN HEADS AND CHESTS!
 	name = "chest"
-	icon_name = "chest"
+	icon_name = "robogibchest"
 	max_damage = 150 //Less damage can be done to these robot versions, Fighting augmented crew should be a case of tactics not "hurr I wack arm for 50th time"
 	body_part = CHEST
 
 /obj/item/organ/limb/head/robot
 	name = "head"
-	icon_name = "head"
+	icon_name = "robogibhead"
 	max_damage = 150
 	body_part = HEAD
 
 /obj/item/organ/limb/l_arm/robot
 	name = "l_arm"
-	icon_name = "l_arm"
+	icon_name = "robogibarm"
 	max_damage = 50
 	body_part = ARM_LEFT
 
 /obj/item/organ/limb/l_leg/robot
 	name = "l_leg"
-	icon_name = "l_leg"
+	icon_name = "robogibleg"
 	max_damage = 50
 	body_part = LEG_LEFT
 
 /obj/item/organ/limb/r_arm/robot
 	name = "r_arm"
-	icon_name = "r_arm"
+	icon_name = "robogibarm"
 	max_damage = 50
 	body_part = ARM_RIGHT
 
 /obj/item/organ/limb/r_leg/robot
 	name = "r_leg"
-	icon_name = "r_leg"
+	icon_name = "robogibleg"
 	max_damage = 50
 	body_part = LEG_RIGHT
 
