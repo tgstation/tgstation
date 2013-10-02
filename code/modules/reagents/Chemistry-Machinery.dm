@@ -16,6 +16,7 @@
 	var/beaker = null
 	var/recharged = 0
 	var/opened = 0
+	var/custom = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
@@ -89,6 +90,7 @@
 	data["energy"] = energy
 	data["maxEnergy"] = max_energy
 	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["custom"] = custom
 
 	var beakerContents[0]
 	var beakerCurrentVolume = 0
@@ -132,7 +134,14 @@
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["amount"])
-		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
+		if(href_list["amount"] == "0")
+			var/num = input("Enter desired output amount", "Amount", "30") as num
+			if (num)
+				amount = round(text2num(num), 5)
+				custom = 1
+		else
+			custom = 0
+			amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
 		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
 			amount = 0
 		if (amount > 100)
