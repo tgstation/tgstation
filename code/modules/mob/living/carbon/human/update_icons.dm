@@ -161,7 +161,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	overlays_standing[DAMAGE_LAYER]	= standing
 	overlays_lying[DAMAGE_LAYER]	= lying
 
-	for(var/datum/limb/O in organs)
+	for(var/obj/item/organ/limb/O in organs)
 		if(O.brutestate)
 			standing.overlays	+= "[O.icon_name]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
 			lying.overlays		+= "[O.icon_name]2_[O.brutestate]0"
@@ -270,9 +270,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 		standing 	+= image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_s", "layer"=-BODY_LAYER)
 		lying 	    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_l", "layer"=-BODY_LAYER)
 
-	if(augmented_arms && augmented_legs)
+	if(augmented_arms && augmented_legs) //Couldn't think of a Cleaner way than with a seperate "both" sprite - RR
 		standing    += image("icon"="icons/mob/human,dmi", "icon_state"="augmented_both_s", "layer"=-BODY_LAYER)
 		lying       += image("icon"="icons/mob/human,dmi", "icon_state"="augmented_both_l", "layer"=-BODY_LAYER)
+
+
+
+	if(organs == (/obj/item/organ/limb/r_leg/robot))
+		standing    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_l", "layer"=-BODY_LAYER)
+
+
 
 
 	//Eyes

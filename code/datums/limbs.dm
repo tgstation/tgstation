@@ -1,4 +1,4 @@
-/datum/limb
+/*/datum/limb
 	var/name = "limb"
 	var/mob/owner = null
 	var/icon_name = null
@@ -138,3 +138,6 @@
 		if("l_arm")		return "left arm"
 		if("r_arm")		return "right arm"
 		else			return name
+
+*/
+//Just checking if the obj versions work
