@@ -34,7 +34,7 @@
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\paperwork\photocopier.dm:32: dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
 				dat += {"<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>
 					Printing: [copies] copies.
-					<a href='byond://?src=\ref[src];min=1'>-</a> 
+					<a href='byond://?src=\ref[src];min=1'>-</a>
 					<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"}
 				// END AUTOFIX
 		else if(toner)
@@ -185,12 +185,12 @@
 					del(src)
 				else
 					if(toner > 0)
-						new /obj/effect/decal/cleanable/oil(get_turf(src))
+						new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 						toner = 0
 			else
 				if(prob(50))
 					if(toner > 0)
-						new /obj/effect/decal/cleanable/oil(get_turf(src))
+						new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 						toner = 0
 		return
 
@@ -199,7 +199,7 @@
 			del(src)
 		else
 			if(toner > 0)
-				new /obj/effect/decal/cleanable/oil(get_turf(src))
+				new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 				toner = 0
 		return
 

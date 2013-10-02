@@ -47,6 +47,22 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
+// MULEBOT SMASH
+/mob/living/carbon/alien/HasEntered(var/atom/movable/AM)
+	var/obj/machinery/bot/mulebot/MB = AM
+	if(istype(MB))
+		MB.RunOverCreature(src,"#00ff00")
+
+		var/damage = rand(5,15)
+		apply_damage(2*damage, BRUTE, "head")
+		apply_damage(2*damage, BRUTE, "chest")
+		apply_damage(0.5*damage, BRUTE, "l_leg")
+		apply_damage(0.5*damage, BRUTE, "r_leg")
+		apply_damage(0.5*damage, BRUTE, "l_arm")
+		apply_damage(0.5*damage, BRUTE, "r_arm")
+
+		new /obj/effect/decal/cleanable/blood/xeno(src.loc)
+
 /mob/living/carbon/alien/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth

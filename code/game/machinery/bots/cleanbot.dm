@@ -295,15 +295,15 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	src.target_types = new/list()
 
-	target_types += /obj/effect/decal/cleanable/oil
+	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/vomit
-	target_types += /obj/effect/decal/cleanable/robot_debris
+	target_types += /obj/effect/decal/cleanable/blood/robot
 	target_types += /obj/effect/decal/cleanable/crayon
 	target_types += /obj/effect/decal/cleanable/liquid_fuel
 
 	if(src.blood)
-		target_types += /obj/effect/decal/cleanable/xenoblood/
-		target_types += /obj/effect/decal/cleanable/xenoblood/xgibs
+		target_types += /obj/effect/decal/cleanable/blood/xeno/
+		target_types += /obj/effect/decal/cleanable/blood/xeno/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/tracks
 		target_types += /obj/effect/decal/cleanable/blood/gibs/

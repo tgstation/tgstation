@@ -431,7 +431,19 @@
 /mob/living/carbon/human/HasEntered(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOver(src)
+		MB.RunOverCreature(src,"#ff0000")
+
+		var/damage = rand(5,15)
+		apply_damage(2*damage, BRUTE, "head")
+		apply_damage(2*damage, BRUTE, "chest")
+		apply_damage(0.5*damage, BRUTE, "l_leg")
+		apply_damage(0.5*damage, BRUTE, "r_leg")
+		apply_damage(0.5*damage, BRUTE, "l_arm")
+		apply_damage(0.5*damage, BRUTE, "r_arm")
+
+		var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+		B.blood_DNA = list()
+		B.blood_DNA[src.dna.unique_enzymes] = src.dna.b_type
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
@@ -1179,6 +1191,7 @@
 	.=..()
 	if(istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		del(feet_blood_DNA)
+		del(feet_blood_color)
 		return 1
 
 mob/living/carbon/human/yank_out_object()
