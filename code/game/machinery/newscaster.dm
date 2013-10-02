@@ -756,7 +756,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/find
 		var/datum/picture/selection
 		var/mob/living/silicon/ai/tempAI = user
-		if(tempAI.aicamera.aipictures.len == 0) //bad way of checking the pictures list to see if it has any elements
+		if(tempAI.aicamera.aipictures.len == 0)
 			usr << "<FONT COLOR=red><B>No images saved</B>"
 			return
 		for(var/datum/picture/t in tempAI.aicamera.aipictures)

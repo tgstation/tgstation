@@ -117,11 +117,8 @@
 		set category ="AI Commands"
 		set name = "Take Image"
 		set src in usr
-//		var/mob/living/silicon/ai/my_ai = usr
-//		var/target = get_turf(my_ai.eyeobj)
 
 		toggle_camera_mode()
-//		captureimage(target, usr)
 
 	verb/viewpicture()
 		set category ="AI Commands"
