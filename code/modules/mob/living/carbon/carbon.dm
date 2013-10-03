@@ -258,6 +258,13 @@
 					if(!selection)
 						src << "\red You didn't choose anything."
 						return
+
+					if(!do_after(src, 45))
+						return
+
+					if(!src||!selection)
+						return
+
 					if(loc==startloc)
 						if(contents.len && !isrobot(src))
 							for(var/obj/item/carried_item in contents)//If the monkey got on objects.

@@ -54,7 +54,24 @@
 	dizziness = 0
 	jitteriness = 0
 
+	//Handle brain slugs.
+	var/datum/organ/external/head = get_organ("head")
+	var/mob/living/simple_animal/borer/B
 
+	for(var/I in head.implants)
+		if(istype(I,/mob/living/simple_animal/borer))
+			B = I
+	if(B)
+		if(!B.ckey && ckey && B.controlling)
+			B.ckey = ckey
+			B.controlling = 0
+		if(B.host_brain.ckey)
+			ckey = B.host_brain.ckey
+			B.host_brain.ckey = null
+			B.host_brain.name = "host brain"
+			B.host_brain.real_name = "host brain"
+
+		verbs -= /mob/living/carbon/proc/release_control
 
 	//Check for heist mode kill count.
 	// REMOVED as requested.
