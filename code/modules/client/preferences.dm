@@ -1104,9 +1104,11 @@ datum/preferences
 							if("Left Arm")
 								limb = "l_arm"
 								second_limb = "l_hand"
+								valid_limb_states += "Wooden Prosthesis"
 							if("Right Arm")
 								limb = "r_arm"
 								second_limb = "r_hand"
+								valid_limb_states += "Wooden Prosthesis"
 							if("Left Foot")
 								limb = "l_foot"
 								third_limb = "l_leg"
@@ -1116,9 +1118,11 @@ datum/preferences
 							if("Left Hand")
 								limb = "l_hand"
 								third_limb = "l_arm"
+								valid_limb_states += "Hook Prosthesis"
 							if("Right Hand")
 								limb = "r_hand"
 								third_limb = "r_arm"
+								valid_limb_states += "Hook Prosthesis"
 
 						var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in valid_limb_states
 						if(!new_state) return
@@ -1136,10 +1140,13 @@ datum/preferences
 								organ_data[limb] = "cyborg"
 								if(second_limb)
 									organ_data[second_limb] = "cyborg"
-							if("Peg Leg")
+							if("Peg Leg","Wooden Prosthesis","Hook Prosthesis")
 								organ_data[limb] = "peg"
 								if(second_limb)
-									organ_data[second_limb] = "amputated"
+									if(limb == "l_arm" || limb == "r_arm")
+										organ_data[second_limb] = "peg"
+									else
+										organ_data[second_limb] = "amputated"
 
 					if("skin_style")
 						var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")

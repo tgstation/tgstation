@@ -82,8 +82,13 @@
 			M << "\red Your meaty finger is much too large for the trigger guard!"
 			return
 	if(ishuman(user))
+		var/mob/living/carbon/human/H=user
 		if(user.dna && user.dna.mutantrace == "adamantine")
 			user << "\red Your metal fingers don't fit in the trigger guard!"
+			return
+		var/datum/organ/external/a_hand = H.get_active_hand_organ()
+		if(!a_hand.can_use_advanced_tools())
+			user << "\red Your [a_hand] doesn't have the dexterity to do this!"
 			return
 
 	add_fingerprint(user)

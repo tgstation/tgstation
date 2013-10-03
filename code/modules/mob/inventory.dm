@@ -11,6 +11,15 @@
 		if(hand)	return l_hand
 		else		return r_hand
 
+// Get the organ of the active hand
+/mob/proc/get_active_hand_organ()
+	if(!istype(src, /mob/living/carbon)) return
+	if (hasorgans(src))
+		var/datum/organ/external/temp = src:organs_by_name["r_hand"]
+		if (hand)
+			temp = src:organs_by_name["l_hand"]
+		return temp
+
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
 	if(hand)	return r_hand
