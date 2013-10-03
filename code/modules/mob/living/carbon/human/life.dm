@@ -83,6 +83,9 @@
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
+	//Check if we're on fire
+	handle_fire()
+
 	//stuff in the stomach
 	handle_stomach()
 
@@ -444,8 +447,8 @@
 	proc/handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
-		var/loc_temp = get_temperature(environment)
 
+		var/loc_temp = get_temperature(environment)
 		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
 		//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
@@ -453,16 +456,17 @@
 			stabilize_temperature_from_calories()
 
 		//After then, it reacts to the surrounding atmosphere based on your thermal protection
-		if(loc_temp < bodytemperature)
-			//Place is colder than we are
-			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
-		else
-			//Place is hotter than we are
-			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+		if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+			if(loc_temp < bodytemperature)
+				//Place is colder than we are
+				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+				if(thermal_protection < 1)
+					bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+			else
+				//Place is hotter than we are
+				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+				if(thermal_protection < 1)
+					bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -516,6 +520,16 @@
 					pressure_alert = -1
 
 		return
+
+///FIRE CODE
+	handle_fire()
+		if(..())
+			return
+		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
+		if((1 - thermal_protection) > 0.0001)
+			bodytemperature += BODYTEMP_HEATING_MAX
+		return
+//END FIRE CODE
 
 	/*
 	proc/adjust_body_temperature(current, loc_temp, boost)

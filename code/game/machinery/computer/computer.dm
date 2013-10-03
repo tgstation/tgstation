@@ -85,12 +85,13 @@
 /obj/machinery/computer/power_change()
 	..()
 	update_icon()
-
+	return
 
 /obj/machinery/computer/proc/set_broken()
-	stat |= BROKEN
-	update_icon()
-
+	if(circuit) //no circuit, no breaking
+		stat |= BROKEN
+		update_icon()
+	return
 
 /obj/machinery/computer/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
@@ -112,12 +113,32 @@
 				A.state = 4
 				A.icon_state = "4"
 			del(src)
-	else
-		src.attack_hand(user)
 	return
 
+/obj/machinery/computer/attack_hand(user)
+	. = ..()
+	return
 
+/obj/machinery/computer/attack_paw(mob/user)
+	if(circuit)
+		if(prob(10))
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
+			"<span class='danger'>You hear a smashing sound.</span>")
+			set_broken()
+			return
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his paws.</span>",\
+	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
+	"<span class='danger'>You hear a clicking sound.</span>")
 
-
-
-
+/obj/machinery/computer/attack_alien(mob/user)
+	if(circuit)
+		if(prob(80))
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
+			"<span class='danger'>You hear a smashing sound.</span>")
+			set_broken()
+			return
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</spanclass>",\
+	"<span class='danger'>You smash against the [src.name] with your claws.</spanclass>",\
+	"<span class='danger'>You hear a clicking sound.</spanclass>")

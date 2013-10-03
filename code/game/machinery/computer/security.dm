@@ -5,7 +5,7 @@
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
 	req_one_access = list(access_security, access_forensics_lockers)
-	circuit = "/obj/item/weapon/circuitboard/secure_data"
+	circuit = /obj/item/weapon/circuitboard/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -29,13 +29,8 @@
 		O.loc = src
 		scan = O
 		user << "You insert [O]."
-	..()
-
-/obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/secure_data/attack_paw(mob/user as mob)
-	return attack_hand(user)
+	else
+		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)

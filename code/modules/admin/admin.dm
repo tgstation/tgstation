@@ -428,19 +428,22 @@ var/global/floorIsLava = 0
 			<BR>
 			"}
 
-	if(check_rights(R_FUN,0))
+	if(check_rights(R_FUN,0))//TODO: Make all this hardcoded random event panel stuff its own proc so we can actually remove poor events without making the code stop compiling
 		dat += {"
 			<B>'Random' Events</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event.</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
-			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
+			<A href='?src=\ref[src];secretsfun=blackhole'>Spawn a vortex anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=pyroanomalies'>Spawn a pyroclastic anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=energeticflux'>Spawn a flux wave anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Spawn a bluespace anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
 			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
-			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Trigger a Bluespace Anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
@@ -451,7 +454,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
-			<A href='?src=\ref[src];secretsfun=energeticflux'>Trigger a hyper-energetic flux</A><BR>
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>

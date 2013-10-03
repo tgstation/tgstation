@@ -74,3 +74,41 @@
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with [O], last touched by [M.name] ([assailant.ckey])</font>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with [O]</font>")
 			log_attack("<font color='red'>[src.name] ([src.ckey]) was hit by [O], last touched by [M.name] ([assailant.ckey])</font>")
+
+//Mobs on Fire
+/mob/living/proc/IgniteMob()
+	if(fire_stacks > 0)
+		on_fire = 1
+		update_fire()
+
+/mob/living/proc/ExtinguishMob()
+	if(on_fire)
+		on_fire = 0
+		fire_stacks = 0
+		update_fire()
+
+/mob/living/proc/update_fire()
+	return
+
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
+    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+
+/mob/living/proc/handle_fire()
+	if(fire_stacks < 0)
+		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+	if(!on_fire)
+		return 1
+	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+	if(G.oxygen < 1)
+		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		return
+	var/turf/location = get_turf(src)
+	location.hotspot_expose(700, 50, 1)
+
+/mob/living/fire_act()
+	adjust_fire_stacks(5)
+	if(fire_stacks > 9 && !on_fire)
+		IgniteMob()
+
+//Mobs on Fire end
