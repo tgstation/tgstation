@@ -64,20 +64,23 @@ Used In File(s): /code/game/machinery/alarm.dm
 		<div class="statusLabel">Local Status:</div>
 		{^{if air.danger.overall == 0}}
 			{^{if atmos_alarm}}
-				<div class="average">Caution: Atmos alert in area</div>
+				<div class="average">Caution: Atmos alert in area
 			{{else}}
-				<div class="good">Optimal</div>
+				<div class="good">Optimal
 			{{/if}}
 		{{else air.danger.overall == 1}}
-			<div class="average">Caution</div>
+			<div class="average">Caution
 		{{else}}
-			<div class="notice">DANGER: Internals Required</div>
+			<div class="notice">DANGER: Internals Required
 		{{/if}}
-		{^{if atmos_alarm}}
-			{^{:~link('Reset Alarm',null,{'atmos_reset':1},null,'linkOn')}}
-		{{else}}
-			{^{:~link('Activate Alarm',null,{'atmos_alarm':1},null,'red')}}
+		{^{if !locked}}
+			{^{if atmos_alarm}}
+				{^{:~link('Reset Alarm',null,{'atmos_reset':1},null,'linkOn')}}
+			{{else}}
+				{^{:~link('Activate Alarm',null,{'atmos_alarm':1},null,'red')}}
+			{{/if}}
 		{{/if}}
+		</div>
 	</div>
 	<div class="line">
 		<!--
