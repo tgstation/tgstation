@@ -114,7 +114,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		//Bleeding out
 		var/blood_max = 0
 		for(var/datum/organ/external/temp in organs)
-			if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
+			if(!(temp.status & ORGAN_BLEEDING) || temp.status & (ORGAN_ROBOT|ORGAN_PEG))
 				continue
 			for(var/datum/wound/W in temp.wounds) if(W.bleeding())
 				blood_max += W.damage / 4

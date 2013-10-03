@@ -286,7 +286,7 @@
 			var/mob/living/carbon/human/H = M
 			if(!H.shoes)
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
+				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
 					return
 
 				H.Weaken(3)

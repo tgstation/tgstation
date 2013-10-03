@@ -17,6 +17,8 @@
 			return 0
 		if (affected.status & ORGAN_ROBOT)
 			return 0
+		if (affected.status & ORGAN_PEG)
+			return 0
 		return 1
 
 /datum/surgery_step/generic/cut_open

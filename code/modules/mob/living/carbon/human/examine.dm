@@ -254,7 +254,26 @@
 				is_destroyed["[temp.display_name]"] = 1
 				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
 				continue
-			if(temp.status & ORGAN_ROBOT)
+			if(temp.status & ORGAN_PEG)
+				if(!(temp.brute_dam + temp.burn_dam))
+					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a peg [temp.display_name]!</span>\n"
+					continue
+				else
+					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a peg [temp.display_name], it has"
+				if(temp.brute_dam) switch(temp.brute_dam)
+					if(0 to 20)
+						wound_flavor_text["[temp.display_name]"] += " some marks"
+					if(21 to INFINITY)
+						wound_flavor_text["[temp.display_name]"] += pick(" a lot of damage"," severe cracks and splintering")
+				if(temp.brute_dam && temp.burn_dam)
+					wound_flavor_text["[temp.display_name]"] += " and"
+				if(temp.burn_dam) switch(temp.burn_dam)
+					if(0 to 20)
+						wound_flavor_text["[temp.display_name]"] += " some burns"
+					if(21 to INFINITY)
+						wound_flavor_text["[temp.display_name]"] += pick(" a lot of burns"," severe charring")
+				wound_flavor_text["[temp.display_name]"] += "!</span>\n"
+			else if(temp.status & ORGAN_ROBOT)
 				if(!(temp.brute_dam + temp.burn_dam))
 					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
 					continue

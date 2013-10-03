@@ -607,6 +607,14 @@ OSError: cannot identify image file
  - xenocell4
  - xenocell5
  - xenocell6
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\floors.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\floors.dmi
+ - checker
+ - enginebot
+ - enginedelivery
+ - engineloadingarea
+ - enginewarn
+ - enginewarncorner
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\space.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
  - debug-east
