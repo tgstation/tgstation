@@ -193,13 +193,15 @@
 
 	update_icon()
 		// Clear everything.
+		// Comment after the FIXME below is fixed.
 		overlays.Cut()
-		var/truedir=0
-		//var/b=0
 
+		var/truedir=0
 		var/t=world.time
 
-		/* This shit doesn't work for some reason.
+		/* FIXME: This shit doesn't work for some reason.
+		   The Remove line doesn't remove the overlay given, so this is defunct.
+		var/b=0
 		for(var/image/overlay in overlays)
 			b=overlay.dir
 			if(overlay.icon_state==going_state)
@@ -210,6 +212,7 @@
 		*/
 		// Update ONLY the overlays that have changed.
 		for(var/datum/fluidtrack/track in stack)
+			// TODO: Uncomment when the block above is fixed.
 			//if(!(updatedtracks&track.direction) && !track.fresh)
 			//	continue
 			var/stack_idx=setdirs["[track.direction]"]
