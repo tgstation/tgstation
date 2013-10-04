@@ -42,3 +42,4 @@ misterperson = Game Master
 crimsonvision = Game Master
 iamgoofball = Game Master
 zelacks = Game Master
+androidsfv = Game Master
