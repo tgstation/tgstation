@@ -61,7 +61,5 @@ var/global/datum/store/centcomm_store=new
 	if(!charge(usr.mind,item.cost,item))
 		return 0
 	// Give them the item.
-	var/obj/item/weapon/storage/box/box=new(usr.loc)
-	new item.typepath(box)
-	usr.put_in_hands(box)
+	item.deliver(usr)
 	return 1
