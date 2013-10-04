@@ -713,28 +713,24 @@
 	else if (href_list["eqp"])
 		var/val = text2num(href_list["eqp"])
 
-		if(cell && cell.charge > 0)
-			equipment = (val==1) ? 0 : val
-
+		equipment = setsubsystem(val)
 		update_icon()
 		update()
 
 	else if (href_list["lgt"])
 		var/val = text2num(href_list["lgt"])
 
-		if(cell && cell.charge > 0)
-			lighting = (val==1) ? 0 : val
-
+		lighting = setsubsystem(val)
 		update_icon()
 		update()
+
 	else if (href_list["env"])
 		var/val = text2num(href_list["env"])
 
-		if(cell && cell.charge > 0)
-			environ = (val==1) ? 0 :val
-
+		environ = setsubsystem(val)
 		update_icon()
 		update()
+
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
 		usr.unset_machine()
@@ -783,10 +779,8 @@
 	return
 
 /obj/machinery/power/apc/proc/toggle_breaker()
-	if(cell && cell.charge >= 0)
-		operating = !operating
-	else
-		operating = 0
+	operating = !operating
+
 	if(malfai)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
@@ -1165,6 +1159,14 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(isalien(user))
 		return 0
 	if (electrocute_mob(user, src, src))
+		return 1
+	else
+		return 0
+
+/obj/machinery/power/apc/proc/setsubsystem(val)
+	if(cell && cell.charge > 0)
+		return (val==1) ? 0 : val
+	else if(val == 3)
 		return 1
 	else
 		return 0
