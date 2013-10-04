@@ -263,9 +263,9 @@
 		name = "Skinhead"
 		icon_state = "hair_skinhead"
 
-	curly
-		name = "Curly"
-		icon_state = "hair_curly"
+	longbangs
+		name = "Long Bangs"
+		icon_state = "hair_lbangs"
 		gender = FEMALE
 
 	balding
