@@ -313,7 +313,7 @@ datum/preferences
 
 			if(GetJobDepartment(job, 1) & job.flag)
 				prefLevelLabel = "High"
-				prefLevelColor = "black"
+				prefLevelColor = "slateblue"
 				prefUpperLevel = 4
 				prefLowerLevel = 2
 			else if(GetJobDepartment(job, 2) & job.flag)
