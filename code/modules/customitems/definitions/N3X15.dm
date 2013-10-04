@@ -2,6 +2,7 @@
 * N3X15's Testing Shit
 *
 * Used to test this on /fail/station.  Not used, so left out.  A decent example though.
+* Added back in for the store
 */
 
 /obj/item/clothing/suit/storage/labcoat/custom/N3X15
@@ -24,4 +25,4 @@
 	name = "roboticist's jumpsuit"
 	icon_state = "robotics"
 	item_state = "robotics"
-	color = "robotics"
+	_color = "robotics"

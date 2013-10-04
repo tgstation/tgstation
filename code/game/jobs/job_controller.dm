@@ -347,7 +347,8 @@ var/global/datum/controller/occupations/job_master
 
 		//give them an account in the station database
 		if(centcomm_account_db)
-			var/datum/money_account/M = create_account(H.real_name, rand(50,500)*10, null)
+			var/balance = round(rand(1,5))*100 // Between $100 and $500
+			var/datum/money_account/M = create_account(H.real_name, balance , null)
 			if(H.mind)
 				var/remembered_info = ""
 				remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
