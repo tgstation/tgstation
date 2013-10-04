@@ -494,9 +494,6 @@ datum/preferences
 		if(!istype(user, /mob/new_player))	return
 
 		if(href_list["preference"] == "job")
-			var/dbghlpjobname = href_list["text"]
-			var/dbghlpjoblevel = href_list["level"]
-
 			switch(href_list["task"])
 				if("close")
 					user << browse(null, "window=mob_occupation")
@@ -508,7 +505,6 @@ datum/preferences
 					userandomjob = !userandomjob
 					SetChoices(user)
 				if("setJobLevel")
-					user << "PREFDEBUG: request to set [dbghlpjobname] to level [dbghlpjoblevel]"
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else
 					SetChoices(user)
