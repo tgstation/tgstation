@@ -5,7 +5,7 @@
 	desc = "You can use this to change ID's."
 	icon_state = "id"
 	req_access = list(access_change_ids)
-	circuit = "/obj/item/weapon/circuitboard/card"
+	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0.0
@@ -60,14 +60,6 @@
 				modify = idcard
 	else
 		..()
-
-
-/obj/machinery/computer/card/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/card/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
 
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
@@ -416,6 +408,6 @@
 
 /obj/machinery/computer/card/centcom
 	name = "Centcom Identification Console"
-	circuit = "/obj/item/weapon/circuitboard/card/centcom"
+	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)
 

@@ -9,7 +9,11 @@
 
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
-/mob/living/silicon/ai/DblClickOn(var/atom/A)
+/mob/living/silicon/ai/DblClickOn(var/atom/A, params)
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
+
 	if(control_disabled || stat) return
 	next_move = world.time + 9
 
@@ -43,6 +47,11 @@
 		return
 	if(control_disabled || stat || world.time <= next_move) return
 	next_move = world.time + 9
+
+	if(aicamera.in_camera_mode)
+		aicamera.camera_mode_off()
+		aicamera.captureimage(A, usr)
+		return
 
 	/*
 		AI restrained() currently does nothing

@@ -6,7 +6,7 @@
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = /obj/item/weapon/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -269,15 +269,9 @@
 		if(authenticated == 1)
 			authenticated = 2
 		user << "You scramble the communication routing circuits!"
-	..()
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-
-/obj/machinery/computer/communications/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
+	else
+		..()
+	return
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())

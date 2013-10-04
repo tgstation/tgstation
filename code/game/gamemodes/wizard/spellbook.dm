@@ -153,11 +153,33 @@
 				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
-					if(available_spells[href_list["spell_choice"]] == aspell.name)
+					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
 						already_knows = 1
-						temp = "You already know that spell."
-						uses++
-						break
+						if(aspell.spell_level >= aspell.level_max)
+							temp = "This spell cannot be improved further."
+							uses++
+							break
+						else
+							aspell.name = initial(aspell.name)
+							aspell.spell_level++
+							aspell.charge_max = round(initial(aspell.charge_max) - aspell.spell_level * (initial(aspell.charge_max) - aspell.cooldown_min)/ aspell.level_max)
+							if(aspell.charge_max < aspell.charge_counter)
+								aspell.charge_counter = aspell.charge_max
+							switch(aspell.spell_level)
+								if(1)
+									temp = "You have improved [aspell.name] into Efficient [aspell.name]."
+									aspell.name = "Efficient [aspell.name]"
+								if(2)
+									temp = "You have further improved [aspell.name] into Quickened [aspell.name]."
+									aspell.name = "Quickened [aspell.name]"
+								if(3)
+									temp = "You have further improved [aspell.name] into Free [aspell.name]."
+									aspell.name = "Free [aspell.name]"
+								if(4)
+									temp = "You have further improved [aspell.name] into Instant [aspell.name]."
+									aspell.name = "Instant [aspell.name]"
+							if(aspell.spell_level >= aspell.level_max)
+								temp += " This spell cannot be strengthened any further."
 			/*
 			*/
 				if(!already_knows)

@@ -82,12 +82,14 @@
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/weapon/shield/riot(src)
+		new /obj/item/clothing/mask/gas/sechailer/red(src)
+		new /obj/item/clothing/mask/gas/sechailer/blue(src)
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/weapon/storage/belt/security(src)
 		return
 
 
@@ -117,11 +119,12 @@
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/mask/gas/sechailer/red(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/weapon/storage/belt/security(src)
 		return
 
 
@@ -146,12 +149,13 @@
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		return
 
@@ -159,33 +163,33 @@
 /obj/structure/closet/secure_closet/security/cargo
 
 	New()
-		..()
 		new /obj/item/clothing/tie/armband/cargo(src)
 		new /obj/item/device/encryptionkey/headset_cargo(src)
+		..()
 		return
 
 /obj/structure/closet/secure_closet/security/engine
 
 	New()
-		..()
 		new /obj/item/clothing/tie/armband/engine(src)
 		new /obj/item/device/encryptionkey/headset_eng(src)
+		..()
 		return
 
 /obj/structure/closet/secure_closet/security/science
 
 	New()
-		..()
 		new /obj/item/clothing/tie/armband/science(src)
 		new /obj/item/device/encryptionkey/headset_sci(src)
+		..()
 		return
 
 /obj/structure/closet/secure_closet/security/med
 
 	New()
-		..()
 		new /obj/item/clothing/tie/armband/medgreen(src)
 		new /obj/item/device/encryptionkey/headset_med(src)
+		..()
 		return
 
 

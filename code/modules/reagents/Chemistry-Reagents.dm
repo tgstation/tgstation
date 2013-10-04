@@ -258,6 +258,15 @@ datum
 						cube.Expand()
 				return
 
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
+
 		water/holywater
 			name = "Holy Water"
 			id = "holywater"
@@ -728,6 +737,13 @@ datum
 			description = "Required for welders. Flamable."
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with welding fuel to make them easy to ignite!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 10)
+					return
 
 //Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
 /*
@@ -1321,6 +1337,13 @@ datum
 					T.atmos_spawn_air("fuel", 5)
 				return
 
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 5)
+					return
+
 		toxin/lexorin
 			name = "Lexorin"
 			id = "lexorin"
@@ -1487,6 +1510,21 @@ datum
 						M.drowsyness  = max(M.drowsyness, 30)
 				data++
 				..()
+				return
+
+
+		toxin/spore
+			name = "Spore Toxin"
+			id = "spore"
+			description = "A toxic spore cloud which blocks vision when ingested."
+			reagent_state = LIQUID
+			color = "#9ACD32"
+			toxpwr = 0.5
+
+			on_mob_life(var/mob/living/M as mob)
+				..()
+				M.damageoverlaytemp = 60
+				M.eye_blurry = max(M.eye_blurry, 3)
 				return
 
 		toxin/chloralhydrate
@@ -2702,6 +2740,13 @@ datum
 					else
 						usr << "It wasn't enough..."
 				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with ethanol isn't quite as good as fuel.
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 15)
+					return
 
 		ethanol/beer
 			name = "Beer"

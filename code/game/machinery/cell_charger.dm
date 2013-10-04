@@ -67,12 +67,22 @@
 
 	attack_hand(mob/user)
 		if(charging)
-			usr.put_in_hands(charging)
+			user.put_in_hands(charging)
 			charging.add_fingerprint(user)
 			charging.updateicon()
 
-			src.charging = null
+			charging = null
 			user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
+			chargelevel = -1
+			updateicon()
+
+	attack_tk(mob/user)
+		if(charging)
+			charging.loc = loc
+			charging.updateicon()
+			user << "<span class='notice'>You telekinetically remove [charging] from [src].</span>"
+
+			charging = null
 			chargelevel = -1
 			updateicon()
 
