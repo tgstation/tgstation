@@ -7,12 +7,16 @@
 	var/typepath=/obj/item/weapon/storage/box
 	var/cost=0
 
-/datum/storeitem/deliver(var/mob/usr)
-	if(istype(typepath,/obj/item))
-
-	var/obj/item/weapon/storage/box/box=new(usr.loc)
-	new item.typepath(box)
-	usr.put_in_hands(box)
+/datum/storeitem/proc/deliver(var/mob/usr)
+	if(!istype(typepath,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/box/box=new(usr.loc)
+		new typepath(box)
+		box.name="[name] package"
+		box.desc="A special gift for doing your job."
+		usr.put_in_hands(box)
+	else
+		var/thing = new typepath(usr.loc)
+		usr.put_in_hands(thing)
 
 
 /////////////////////////////
@@ -24,7 +28,7 @@
 	typepath = /obj/item/clothing/suit/storage/labcoat/custom/N3X15/robotics
 	cost = 350
 
-/datum/storeitem/robotik_jumpsuit
+/datum/storeitem/robotnik_jumpsuit
 	name = "Robotics Interface Suit"
 	desc = "A modern black and red design with reinforced seams and brass neural interface fittings."
 	typepath = /obj/item/clothing/under/custom/N3X15/robotics
