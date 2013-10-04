@@ -492,3 +492,8 @@
 		name = "Tankini"
 		icon_state = "female_tankini"
 		gender = FEMALE
+
+	female_pantyhose
+		name = "Pantyhose"
+		icon_state = "female_pantyhose"
+		gender = FEMALE

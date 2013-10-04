@@ -72,7 +72,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(10)	underwear = "Ladies Pink"
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
-				if(13)	underwear = "Nude"
+				if(13)	underwear = "Pantyhose"
+				if(14)	underwear = "Nude"
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")

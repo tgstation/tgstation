@@ -35,13 +35,10 @@ var/global/list/underwear_m = list()	//stores only underwear name
 var/global/list/underwear_f = list()	//stores only underwear name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
-<<<<<<< HEAD
 	//Disabilities
 var/global/list/disabilitylist = list("Epilepsy", "Near-sightedness", "Blindness", "Clumsiness", "Stammering", "Deafness", "Deaf-blind", "Mute", "None")
-=======
 	//Female Uniforms
 var/global/list/female_uniform_icons = list()
->>>>>>> 35d73f1986e8684155d9d6b2d66b6998603d1816
 //////////////////////////
 /////Initial Building/////
 //////////////////////////
