@@ -174,6 +174,7 @@
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		stat = DEAD //new robot shit doesnt care about oxyloss
 		updatehealth()
 
 /mob/living/silicon/pai/verb/suicide()
