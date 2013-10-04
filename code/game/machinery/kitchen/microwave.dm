@@ -77,7 +77,8 @@
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
-		if(clean_spray.reagents.has_reagent("cleaner",10))
+		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
+			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
 				"\blue [user]  has cleaned  the microwave.", \
@@ -88,7 +89,7 @@
 			src.icon_state = "mw"
 			src.flags = OPENCONTAINER
 			src.updateUsrDialog()
-			return 0 // We allow the afterattack proc to generate the spray and noise.  Hand-cleaning a microwave with acid should hurt.
+			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
 			user << "\red You need more space cleaner!"
 			return 1
