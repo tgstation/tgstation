@@ -49,7 +49,8 @@
 		AM.loc = src.loc
 	..()
 
-/obj/machinery/disposal/initialize() //this will remove around 5kpa from a turf, add it to the disposal air and then add it back to the turf, basically it spawns air depending on the turf air.
+/obj/machinery/disposal/initialize()
+	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
 	var/datum/gas_mixture/env = new
 	env.copy_from(L.return_air())
