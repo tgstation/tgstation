@@ -87,6 +87,9 @@
 // 5 seconds
 #define TRACKS_CRUSTIFY_TIME   50
 
+// color-dir-dry
+var/global/list/image/fluidtrack_cache=list()
+
 /datum/fluidtrack
 	var/direction=0
 	var/basecolor="#ff0000"
@@ -189,7 +192,7 @@
 			update_icon()
 
 	process()
-		return PROCESS_KILL // Do not process us or we'll lag like hell.
+		return PROCESS_KILL
 
 	update_icon()
 		// Clear everything.
@@ -197,7 +200,7 @@
 		overlays.Cut()
 
 		var/truedir=0
-		var/t=world.time
+		//var/t=world.time
 
 		/* FIXME: This shit doesn't work for some reason.
 		   The Remove line doesn't remove the overlay given, so this is defunct.
@@ -221,14 +224,26 @@
 			if(truedir&240) // Check if we're in the GOING block
 				state=going_state
 				truedir=truedir>>4
+
 			if(track.overlay)
-				del(track.overlay)
-			var/icon/I = new /icon(icon, icon_state=state, dir=num2dir(truedir))
-			I.SwapColor("#000000",track.basecolor);
-			// This track is crusty.
-			if(track.wet<t)
-				I.SetIntensity(0.7)
-				track.crusty=1
+				track.overlay=null
+
+			//var/cache_key="[track.basecolor]|[state]|[track.direction]|[track.wet<t?"1":"0"]"
+			var/cache_key="[track.basecolor]|[state]|[track.direction]"
+			var/icon/I=null
+			if(cache_key in fluidtrack_cache)
+				I = fluidtrack_cache[cache_key]
+			else
+				I = new /icon(icon, icon_state=state, dir=num2dir(truedir))
+				I.SwapColor("#000000",track.basecolor);
+				// This track is crusty.
+				//if(track.wet<t)
+				//	I.SetIntensity(0.7)
+				fluidtrack_cache[cache_key]=I
+
+			//if(track.wet<t)
+			//	track.crusty=1
+
 			track.fresh=0
 			track.overlay=I
 			stack[stack_idx]=track
