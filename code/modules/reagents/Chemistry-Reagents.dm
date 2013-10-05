@@ -1673,7 +1673,8 @@ datum
 			description = "A powder made by grinding down crayons, good for colouring chemical reagents."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 207, 54, 0
-
+			New()
+				description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
 
 		crayonpowder/red
@@ -1682,13 +1683,15 @@ datum
 			colorname = "red"
 			color = "#DA0000" // red
 			New()
-				description = "A [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
+				..()
 
 		crayonpowder/orange
 			name = "Orange Crayon Powder"
 			id = "orangecrayonpowder"
 			colorname = "orange"
 			color = "#FF9300" // orange
+			New()
+				..()
 
 
 		crayonpowder/yellow
@@ -1696,6 +1699,8 @@ datum
 			id = "yellowcrayonpowder"
 			colorname = "yellow"
 			color = "#FFF200" // yellow
+			New()
+				..()
 
 
 		crayonpowder/green
@@ -1703,6 +1708,8 @@ datum
 			id = "greencrayonpowder"
 			colorname = "green"
 			color = "#A8E61D" // green
+			New()
+				..()
 
 
 		crayonpowder/blue
@@ -1710,13 +1717,16 @@ datum
 			id = "bluecrayonpowder"
 			colorname = "blue"
 			color = "#00B7EF" // blue
-
+			New()
+				..()
 
 		crayonpowder/purple
 			name = "Purple Crayon Powder"
 			id = "purplecrayonpowder"
 			colorname = "purple"
 			color = "#DA00FF" // purple
+			New()
+				..()
 
 
 /////////////////////////Food Reagents////////////////////////////
