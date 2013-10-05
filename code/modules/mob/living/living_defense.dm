@@ -77,16 +77,16 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if(fire_stacks > 0)
+	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		luminosity += 3
+		src.SetLuminosity(src.luminosity + 3)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		luminosity -= 3
+		src.SetLuminosity(src.luminosity - 3)
 		update_fire()
 
 /mob/living/proc/update_fire()
