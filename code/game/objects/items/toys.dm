@@ -419,7 +419,6 @@
 		return (BRUTELOSS|OXYLOSS)
 	New()
 		name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
-		create_reagents(10)  //creates the reagents container with a capacity of 10
 /*
  * Snap pops
  */

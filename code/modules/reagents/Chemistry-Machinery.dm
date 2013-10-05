@@ -953,7 +953,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			return 1
 	return 0
 
-/obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/weapon/grown/O)
+/obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/O)
 	for (var/i in blend_items)
 		if (istype(O, i))
 			return blend_items[i]
@@ -1098,7 +1098,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		remove_object(O)
 
 
-	//Crayons
+        //Crayons
+        //With some input from aranclanos, now 30% less shoddily copypasta
 	for (var/obj/item/toy/crayon/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
@@ -1106,15 +1107,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		for (var/r_id in allowed)
 			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 			var/amount = allowed[r_id]
-			if (amount == 0)
-				if (O.reagents != null && O.reagents.has_reagent(r_id))
-					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
-			else
-				beaker.reagents.add_reagent(r_id,min(amount, space))
-
-			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			beaker.reagents.add_reagent(r_id,min(amount, space))
+			if (space < amount)
 				break
-		remove_object(O)
+			remove_object(O)
 
 	//Everything else - Transfers reagents from it into beaker
 	for (var/obj/item/weapon/reagent_containers/O in holdingitems)

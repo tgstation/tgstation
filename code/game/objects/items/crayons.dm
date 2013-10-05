@@ -3,10 +3,6 @@
 	colour = "#DA0000"
 	shadeColour = "#810C0C"
 	colourName = "red"
-	New()
-		..()
-		spawn(5)
-			reagents.add_reagent("redcrayonpowder", 10)
 
 
 /obj/item/toy/crayon/orange
@@ -14,10 +10,6 @@
 	colour = "#FF9300"
 	shadeColour = "#A55403"
 	colourName = "orange"
-	New()
-		..()
-		spawn(5)
-			reagents.add_reagent("orangecrayonpowder", 10)
 
 
 /obj/item/toy/crayon/yellow
@@ -25,10 +17,6 @@
 	colour = "#FFF200"
 	shadeColour = "#886422"
 	colourName = "yellow"
-	New()
-		..()
-		spawn(5)
-			reagents.add_reagent("yellowcrayonpowder", 10)
 
 
 
@@ -37,10 +25,6 @@
 	colour = "#A8E61D"
 	shadeColour = "#61840F"
 	colourName = "green"
-	New()
-		..()
-		spawn(5)
-			reagents.add_reagent("greencrayonpowder", 10)
 
 
 /obj/item/toy/crayon/blue
@@ -48,10 +32,6 @@
 	colour = "#00B7EF"
 	shadeColour = "#0082A8"
 	colourName = "blue"
-	New()
-		..()
-		spawn(5)
-			reagents.add_reagent("bluecrayonpowder", 10)
 
 
 /obj/item/toy/crayon/purple
@@ -59,10 +39,7 @@
 	colour = "#DA00FF"
 	shadeColour = "#810CFF"
 	colourName = "purple"
-	New()
-		..()
-		spawn(5)
-			reagents.add_reagent("purplecrayonpowder", 10)
+
 
 
 /obj/item/toy/crayon/mime
