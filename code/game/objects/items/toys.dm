@@ -355,10 +355,10 @@
 			hacked = 1
 			color = "rainbow"
 			user << "<span class='warning'>RNBW_ENGAGE</span>"
-			
+
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.  
+				// Updating overlays, copied from welder code.
 				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
 				if(user.r_hand == src)
 					user.update_inv_r_hand(0)
@@ -383,6 +383,9 @@
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsShield()
+	return 0
+
+/obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
 	return 0
 
 /obj/item/toy/katana
