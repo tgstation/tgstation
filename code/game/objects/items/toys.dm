@@ -355,10 +355,10 @@
 			hacked = 1
 			color = "rainbow"
 			user << "<span class='warning'>RNBW_ENGAGE</span>"
-			
+
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.  
+				// Updating overlays, copied from welder code.
 				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
 				if(user.r_hand == src)
 					user.update_inv_r_hand(0)
@@ -414,11 +414,12 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
-
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|OXYLOSS)
-
+	New()
+		name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
+		create_reagents(10)  //creates the reagents container with a capacity of 10
 /*
  * Snap pops
  */

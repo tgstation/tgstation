@@ -81,7 +81,7 @@
 	if(stat & (BROKEN|NOPOWER)) return
 	if(user.stat || user.restrained()) return
 
-	// this is the data which will be sent to the ui	
+	// this is the data which will be sent to the ui
 	var/data[0]
 	data["amount"] = amount
 	data["energy"] = energy
@@ -755,6 +755,14 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
 		/obj/item/weapon/grown/novaflower = list("capsaicin" = 0),
 
+		//Crayons (for overriding colours)
+		/obj/item/toy/crayon/red = list("redcrayonpowder" = 10),
+		/obj/item/toy/crayon/orange = list("orangecrayonpowder" = 10),
+		/obj/item/toy/crayon/yellow = list("yellowcrayonpowder" = 10),
+		/obj/item/toy/crayon/green = list("greencrayonpowder" = 10),
+		/obj/item/toy/crayon/blue = list("bluecrayonpowder" = 10),
+		/obj/item/toy/crayon/purple = list("purplecrayonpowder" = 10),
+
 		//Blender Stuff
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
@@ -1073,6 +1081,25 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				break
 	//Plants
 	for (var/obj/item/weapon/grown/O in holdingitems)
+		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		var/allowed = get_allowed_by_id(O)
+		for (var/r_id in allowed)
+			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+			var/amount = allowed[r_id]
+			if (amount == 0)
+				if (O.reagents != null && O.reagents.has_reagent(r_id))
+					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
+			else
+				beaker.reagents.add_reagent(r_id,min(amount, space))
+
+			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				break
+		remove_object(O)
+
+
+	//Crayons
+	for (var/obj/item/toy/crayon/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/allowed = get_allowed_by_id(O)

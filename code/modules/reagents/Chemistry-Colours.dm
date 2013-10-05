@@ -15,21 +15,39 @@
 
 	var/list/rgbcolor = list(0,0,0)
 	var/finalcolor = 0
-	for(var/datum/reagent/re in reagent_list) // natural color mixing bullshit/algorithm
-		if(!finalcolor)
-			rgbcolor = GetColors(re.color)
-			finalcolor = re.color
-		else
-			var/newcolor[3]
-			var/prergbcolor[3]
-			prergbcolor = rgbcolor
-			newcolor = GetColors(re.color)
+	var/n = reagent_list.Find(/datum/reagent/crayonpowder)
+	if(n == 0) //No crayon powder found, proceed normally.
+		for(var/datum/reagent/re in reagent_list) // natural color mixing bullshit/algorithm
+			if(!finalcolor)
+				rgbcolor = GetColors(re.color)
+				finalcolor = re.color
+			else
+				var/newcolor[3]
+				var/prergbcolor[3]
+				prergbcolor = rgbcolor
+				newcolor = GetColors(re.color)
 
-			rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-			rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+				rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
+				rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
+				rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
 
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
+				finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
+	else //This is a colour battle only crayons may participate in
+		for(var/datum/reagent/crayonpowder/p in reagent_list)
+			if(!finalcolor)
+				rgbcolor = GetColors(p.color)
+				finalcolor = p.color
+			else
+				var/newcolor[3]
+				var/prergbcolor[3]
+				prergbcolor = rgbcolor
+				newcolor = GetColors(p.color)
+
+				rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
+				rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
+				rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+
+				finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
 
 	return finalcolor
 
