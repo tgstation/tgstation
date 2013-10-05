@@ -68,7 +68,7 @@
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
-
+		log_attack("[user.name] ([user.ckey]) fired \the [src] at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])" )
 		for(var/i=0, i<6, i++)
 			if(!D) break
 			if(D.loc == trg) break
