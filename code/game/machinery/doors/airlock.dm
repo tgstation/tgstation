@@ -235,7 +235,7 @@
 		PlasmaBurn(exposed_temperature)
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
-	atmos_spawn_air("fire", 500)
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
 	new/obj/structure/door_assembly/door_assembly_0( src.loc )
 	del (src)
 

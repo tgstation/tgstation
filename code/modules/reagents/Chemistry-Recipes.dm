@@ -350,7 +350,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/simulated/T = get_turf(holder.my_atom)
 				if(istype(T))
-					T.atmos_spawn_air("fire", created_volume)
+					T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
 				holder.del_reagent(id)
 				return
 
@@ -1222,7 +1222,7 @@ datum
 				sleep(50)
 				var/turf/simulated/T = get_turf(holder.my_atom)
 				if(istype(T))
-					T.atmos_spawn_air("fire", 50)
+					T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
 
 //Yellow
 		slimeoverload

@@ -1329,12 +1329,12 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				O.atmos_spawn_air("toxins", volume)
+				O.atmos_spawn_air(SPAWN_TOXINS, volume)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air("toxins", volume)
+					T.atmos_spawn_air(SPAWN_TOXINS, volume)
 				return
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
