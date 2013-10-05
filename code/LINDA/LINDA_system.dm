@@ -235,7 +235,7 @@ var/const/SPAWN_AIR = 256
 	if(flag & SPAWN_HEAT)
 		G.temperature += 1000
 	if(flag & SPAWN_COLD)
-		G.temperature -= 1000
+		G.temperature = max(1, G.temperature - 1000)
 
 	if(flag & SPAWN_TOXINS)
 		G.toxins += amount
