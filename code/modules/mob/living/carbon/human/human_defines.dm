@@ -46,8 +46,3 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
-
-	//Augments / Cyber limbs
-
-	var/augmented_legs = 0 //if the human has cyber limbs, this is just for examining and overlay purposes
-	var/augmented_arms = 0 //same as above but arms

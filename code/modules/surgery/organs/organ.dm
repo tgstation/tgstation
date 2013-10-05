@@ -44,41 +44,41 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
-	icon = "icons/effects/blood.dmi"
+
 
 /obj/item/organ/limb/chest
 	name = "chest"
-	icon_name = "gibtorso"
+	icon_state = "gibtorso"
 	max_damage = 200
 	body_part = CHEST
 
 /obj/item/organ/limb/head
 	name = "head"
-	icon_name = "gibhead"
+	icon_state = "gibhead"
 	max_damage = 200
 	body_part = HEAD
 
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
-	icon_name = "gibarm"
+	icon_state = "gibarm"
 	max_damage = 75
 	body_part = ARM_LEFT
 
 /obj/item/organ/limb/l_leg
 	name = "l_leg"
-	icon_name = "gibleg"
+	icon_state = "gibleg"
 	max_damage = 75
 	body_part = LEG_LEFT
 
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
-	icon_name = "gibarm"
+	icon_state = "gibarm"
 	max_damage = 75
 	body_part = ARM_RIGHT
 
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
-	icon_name = "gibleg"
+	icon_state = "gibleg"
 	max_damage = 75
 	body_part = LEG_RIGHT
 
@@ -86,68 +86,40 @@
 
 /obj/item/organ/limb/chest/robot // We Going full Cyborg on this shit, ALL limbs can have robotic versions, EVEN HEADS AND CHESTS!
 	name = "chest"
-	icon_name = "robogibchest"
+	icon_state = "robogibchest"
 	max_damage = 150 //Less damage can be done to these robot versions, Fighting augmented crew should be a case of tactics not "hurr I wack arm for 50th time"
 	body_part = CHEST
 
 /obj/item/organ/limb/head/robot
 	name = "head"
-	icon_name = "robogibhead"
+	icon_state = "robogibhead"
 	max_damage = 150
 	body_part = HEAD
 
 /obj/item/organ/limb/l_arm/robot
 	name = "l_arm"
-	icon_name = "robogibarm"
+	icon_state = "robogibarm"
 	max_damage = 50
 	body_part = ARM_LEFT
 
 /obj/item/organ/limb/l_leg/robot
 	name = "l_leg"
-	icon_name = "robogibleg"
+	icon_state = "robogibleg"
 	max_damage = 50
 	body_part = LEG_LEFT
 
 /obj/item/organ/limb/r_arm/robot
 	name = "r_arm"
-	icon_name = "robogibarm"
+	icon_state = "robogibarm"
 	max_damage = 50
 	body_part = ARM_RIGHT
 
 /obj/item/organ/limb/r_leg/robot
 	name = "r_leg"
-	icon_name = "robogibleg"
+	icon_state = "robogibleg"
 	max_damage = 50
 	body_part = LEG_RIGHT
 
-
-
-/*Leaving these here in case we want to use them later //Not converting these to the new paths, They were left as an "incase" in the first place - RR
-/datum/limb/l_foot
-	name = "l foot"
-	icon_name = "l_foot"
-	body_part = FOOT_LEFT
-
-/datum/limb/r_foot
-	name = "r foot"
-	icon_name = "r_foot"
-	body_part = FOOT_RIGHT
-
-/datum/limb/r_hand
-	name = "r hand"
-	icon_name = "r_hand"
-	body_part = HAND_RIGHT
-
-/datum/limb/l_hand
-	name = "l hand"
-	icon_name = "l_hand"
-	body_part = HAND_LEFT
-
-/datum/limb/groin
-	name = "groin"
-	icon_name = "groin"
-	body_part = GROIN
-*/
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -179,7 +151,6 @@
 				return 0
 	return update_icon()
 
-
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
@@ -207,6 +178,7 @@
 		return 1
 	return 0
 
+
 //Returns a display name for the organ
 /obj/item/organ/limb/proc/getDisplayName()
 	switch(name)
@@ -214,7 +186,7 @@
 		if("r_leg")		return "right leg"
 		if("l_arm")		return "left arm"
 		if("r_arm")		return "right arm"
-		else			return name
+		else		return name
 
 
 

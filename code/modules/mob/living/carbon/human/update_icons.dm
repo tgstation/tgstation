@@ -200,6 +200,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(!getorgan(/obj/item/organ/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="debrained_s", "layer"=-HAIR_LAYER)
 		lying		+= image("icon"='icons/mob/human_face.dmi', "icon_state"="debrained_l", "layer"=-HAIR_LAYER)
+
 	else if(hair_style)
 		S = hair_styles_list[hair_style]
 		if(S)
@@ -262,26 +263,34 @@ Please contact me on #coderbus IRC. ~Carnie x
 		lying		+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_l", "layer"=-BODY_LAYER)
 
 	//Augmented Limbs
-	if(augmented_arms)
-		standing 	+= image("icon"="icons/mob/human.dmi", "icon_state"="augmented_arms_s", "layer"=-BODY_LAYER)
-		lying 	    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_arms_l", "layer"=-BODY_LAYER)
+	if(/obj/item/organ/limb/r_leg/robot in organs)
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_legr_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_legr_l", "layer"=-BODY_LAYER)
 
-	if(augmented_legs)
-		standing 	+= image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_s", "layer"=-BODY_LAYER)
-		lying 	    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_l", "layer"=-BODY_LAYER)
+	if(/obj/item/organ/limb/l_leg/robot in organs)
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_legl_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_legl_l", "layer"=-BODY_LAYER)
 
-	if(augmented_arms && augmented_legs) //Couldn't think of a Cleaner way than with a seperate "both" sprite - RR
-		standing    += image("icon"="icons/mob/human,dmi", "icon_state"="augmented_both_s", "layer"=-BODY_LAYER)
-		lying       += image("icon"="icons/mob/human,dmi", "icon_state"="augmented_both_l", "layer"=-BODY_LAYER)
+	if(/obj/item/organ/limb/r_arm/robot in organs)
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_armr_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_armr_l", "layer"=-BODY_LAYER)
 
+	if(/obj/item/organ/limb/l_arm/robot in organs)
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_arml_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_arml_l", "layer"=-BODY_LAYER)
 
+	if(/obj/item/organ/limb/r_arm/robot in organs && /obj/item/organ/limb/l_arm/robot in organs) //Theres a special sprite for Both arms.
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_arms_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_arms_l", "layer"=-BODY_LAYER)
 
-	if(organs == (/obj/item/organ/limb/r_leg/robot))
-		standing    += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_s", "layer"=-BODY_LAYER)
-		lying       += image("icon"="icons/mob/human.dmi", "icon_state"="augmented_legs_l", "layer"=-BODY_LAYER)
+	if(/obj/item/organ/limb/chest/robot in organs)
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_chest_s", "layer"=-BODY_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_chest_l", "layer"=-BODY_LAYER)
 
-
-
+	if(/obj/item/organ/limb/head/robot in organs)
+		//remove_overlay(HAIR_LAYER) //This is to prevent Hair showing over the Cyberhead.
+		standing    += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_head_s", "layer"=-HAIR_LAYER)
+		lying       += image("icon"="icons/mob/augments.dmi", "icon_state"="augmented_head_l", "layer"=-HAIR_LAYER)
 
 	//Eyes
 	if(!dna || dna.mutantrace != "skeleton")
