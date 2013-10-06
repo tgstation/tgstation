@@ -1631,15 +1631,27 @@ proc/process_ghost_teleport_locs()
 // Telecommunications Satellite
 
 /area/tcommsat/entrance
-	name = "\improper Telecoms Teleporter"
+	name = "\improper Satellite Teleporter"
 	icon_state = "tcomsatentrance"
 
 /area/tcommsat/chamber
 	name = "\improper Telecoms Central Compartment"
 	icon_state = "tcomsatcham"
 
+/area/tcomms/chamber
+	name = "\improper Telecoms Central Compartment"
+	icon_state = "ai"
+
+/area/tcomms/storage
+	name = "\improper Telecoms Central Compartment"
+	icon_state = "primarystorage"
+
+/area/turret_protected/tcomms_control_room
+	name = "\improper Telecomms Control Room"
+	icon_state = "tcomsatcomp"
+
 /area/turret_protected/tcomsat
-	name = "\improper Telecoms Satellite"
+	name = "\improper Satellite Entrance"
 	icon_state = "tcomsatlob"
 
 /area/turret_protected/tcomfoyer
@@ -1655,11 +1667,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "tcomsateast"
 
 /area/tcommsat/computer
-	name = "\improper Telecoms Control Room"
+	name = "\improper Satellite Control Room"
 	icon_state = "tcomsatcomp"
 
 /area/tcommsat/lounge
-	name = "\improper Telecommunications Satellite Lounge"
+	name = "\improper Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
 
