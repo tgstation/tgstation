@@ -330,6 +330,7 @@ obj/machinery/atmospherics/pipe
 
 
 	simple/insulated
+		name = "Insulated pipe"
 		icon = 'icons/obj/atmospherics/red_pipe.dmi'
 		icon_state = "intact"
 
@@ -813,6 +814,17 @@ obj/machinery/atmospherics/pipe
 		_color="green"
 		icon_state = ""
 
+	manifold/insulated
+		//thermal_conductivity = 0
+		name="Insulated pipe"
+		icon = 'icons/obj/atmospherics/red_pipe.dmi'
+		icon_state = "manifold"
+		//minimum_temperature_difference = 10000
+		//maximum_pressure = 1000*ONE_ATMOSPHERE
+		//fatigue_pressure = 900*ONE_ATMOSPHERE
+		alert_pressure = 900*ONE_ATMOSPHERE
+		level = 2
+
 	manifold/scrubbers/visible
 		level = 2
 		icon_state = "manifold-r"
@@ -842,6 +854,14 @@ obj/machinery/atmospherics/pipe
 		icon_state = "manifold"
 
 	manifold/general/hidden
+		level = 1
+		icon_state = "manifold-f"
+
+	manifold/insulated/visible
+		level = 2
+		icon_state = "manifold"
+
+	manifold/insulated/hidden
 		level = 1
 		icon_state = "manifold-f"
 
@@ -1028,6 +1048,16 @@ obj/machinery/atmospherics/pipe
 		_color="gray"
 		icon_state = ""
 
+	manifold4w/insulated
+		name="Insulated pipe"
+		_color=""
+		//minimum_temperature_difference = 10000
+		//maximum_pressure = 1000*ONE_ATMOSPHERE
+		//fatigue_pressure = 900*ONE_ATMOSPHERE
+		alert_pressure = 900*ONE_ATMOSPHERE
+		level = 2
+		icon_state = "manifold4w"
+
 	manifold4w/scrubbers/visible
 		level = 2
 		icon_state = "manifold4w-r"
@@ -1057,6 +1087,10 @@ obj/machinery/atmospherics/pipe
 		icon_state = "manifold4w"
 
 	manifold4w/general/hidden
+		level = 1
+		icon_state = "manifold4w-f"
+
+	manifold4w/insulated/hidden
 		level = 1
 		icon_state = "manifold4w-f"
 
