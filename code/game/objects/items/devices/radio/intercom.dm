@@ -8,10 +8,14 @@
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
+	var/last_tick //used to delay the powercheck
 
 /obj/item/device/radio/intercom/New()
-	spawn(5)
-		checkpower()
+	..()
+	processing_objects += src
+
+/obj/item/device/radio/intercom/Del()
+	processing_objects -= src
 	..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
@@ -51,10 +55,9 @@
 		return
 	..()
 
-/obj/item/device/radio/intercom/proc/checkpower()
-
-	// Simple loop, checks for power. Strictly for intercoms
-	while(src)
+/obj/item/device/radio/intercom/process()
+	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
+		last_tick = world.timeofday
 
 		if(!src.loc)
 			on = 0
@@ -69,5 +72,3 @@
 			icon_state = "intercom-p"
 		else
 			icon_state = "intercom"
-
-		sleep(30)
