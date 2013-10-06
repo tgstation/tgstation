@@ -2,7 +2,7 @@
 	name = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
-	color = "b"
+	item_color = "b"
 	var/allow_reagents = 0
 
 
