@@ -263,6 +263,11 @@
 		name = "Skinhead"
 		icon_state = "hair_skinhead"
 
+	longbangs
+		name = "Long Bangs"
+		icon_state = "hair_lbangs"
+		gender = FEMALE
+
 	balding
 		name = "Balding Hair"
 		icon_state = "hair_e"
@@ -486,4 +491,9 @@
 	female_tankini
 		name = "Tankini"
 		icon_state = "female_tankini"
+		gender = FEMALE
+
+	female_pantyhose
+		name = "Pantyhose"
+		icon_state = "female_pantyhose"
 		gender = FEMALE

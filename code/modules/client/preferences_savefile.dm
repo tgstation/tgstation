@@ -72,7 +72,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(10)	underwear = "Ladies Pink"
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
-				if(13)	underwear = "Nude"
+				if(13)	underwear = "Pantyhose"
+				if(14)	underwear = "Nude"
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -165,6 +166,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
+	S["disability"]			>> disability
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
@@ -202,6 +204,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	disability	= sanitize_integer(disability, 1, disabilitylist.len, initial(disability))
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -238,6 +241,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	<< facial_hair_style
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
+	S["disability"]       << disability
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob
