@@ -428,6 +428,7 @@
 #include "code\game\objects\effects\decals\cleanable.dm"
 #include "code\game\objects\effects\decals\contraband.dm"
 #include "code\game\objects\effects\decals\crayon.dm"
+#include "code\game\objects\effects\decals\decal.dm"
 #include "code\game\objects\effects\decals\misc.dm"
 #include "code\game\objects\effects\decals\remains.dm"
 #include "code\game\objects\effects\decals\Cleanable\aliens.dm"
