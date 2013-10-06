@@ -75,24 +75,42 @@
 		else
 			user << "\red It's broken!"
 			return 1
-	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		if(istype(O, /obj/item/weapon/reagent_containers/spray/cleaner) || istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
+		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
+		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
+			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
+			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
-				"\blue [user] starts to clean the microwave.", \
-				"\blue You start to clean the microwave." \
+				"\blue [user]  has cleaned  the microwave.", \
+				"\blue You have cleaned the microwave." \
 			)
-			if (do_after(user,20))
-				user.visible_message( \
-					"\blue [user]  has cleaned  the microwave.", \
-					"\blue You have cleaned the microwave." \
-				)
-				src.dirty = 0 // It's clean!
-				src.broken = 0 // just to be sure
-				src.icon_state = "mw"
-				src.flags = OPENCONTAINER
-		else //Otherwise bad luck!!
-			user << "\red It's dirty!"
+			src.dirty = 0 // It's clean!
+			src.broken = 0 // just to be sure
+			src.icon_state = "mw"
+			src.flags = OPENCONTAINER
+			src.updateUsrDialog()
+			return 1 // Disables the after-attack so we don't spray the floor/user.
+		else
+			user << "\red You need more space cleaner!"
 			return 1
+			
+	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+		user.visible_message( \
+			"\blue [user] starts to clean the microwave.", \
+			"\blue You start to clean the microwave." \
+		)
+		if (do_after(user,20))
+			user.visible_message( \
+				"\blue [user]  has cleaned  the microwave.", \
+				"\blue You have cleaned the microwave." \
+			)
+			src.dirty = 0 // It's clean!
+			src.broken = 0 // just to be sure
+			src.icon_state = "mw"
+			src.flags = OPENCONTAINER
+	else if(src.dirty==100) // The microwave is all dirty so can't be used!
+		user << "\red It's dirty!"
+		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
 			user << "\red This [src] is full of ingredients, you cannot put more."
