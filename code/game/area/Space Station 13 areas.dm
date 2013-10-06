@@ -1877,11 +1877,13 @@ var/list/the_station_areas = list (
 	/area/hydroponics,
 	/area/toxins,
 	/area/storage,
+	/area/tcomms,
 	/area/construction,
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 	/area/ai_monitored/storage/secure,
 	/area/ai_monitored/storage/emergency,
 	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
+	/area/turret_protected/tcomms_control_room,
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
