@@ -1184,7 +1184,7 @@ datum/mind
 	mind.special_role = ""
 
 //BLOB
-/mob/camera/overmind/mind_initialize()
+/mob/camera/blob/mind_initialize()
 	..()
 	mind.special_role = "Blob"
 
