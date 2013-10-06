@@ -222,7 +222,6 @@ var/const/SPAWN_CO2 = 16
 var/const/SPAWN_NITROGEN = 32
 
 var/const/SPAWN_N2O = 64
-var/const/SPAWN_FUEL = 128
 
 var/const/SPAWN_AIR = 256
 
@@ -248,10 +247,6 @@ var/const/SPAWN_AIR = 256
 
 	if(flag & SPAWN_N2O)
 		var/datum/gas/sleeping_agent/T = new
-		T.moles += amount
-		G.trace_gases += T
-	if(flag & SPAWN_FUEL) // Not working at the moment, use SPAWN_TOXINS | SPAWN_HEAT instead.
-		var/datum/gas/volatile_fuel/T = new
 		T.moles += amount
 		G.trace_gases += T
 
