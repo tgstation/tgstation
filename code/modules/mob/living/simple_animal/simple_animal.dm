@@ -474,3 +474,7 @@
 
 /mob/living/simple_animal/update_fire()
 	return
+/mob/living/simple_animal/IgniteMob()
+	return
+/mob/living/simple_animal/ExtinguishMob()
+	return

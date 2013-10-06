@@ -263,8 +263,8 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
+	ExtinguishMob()
 	fire_stacks = 0
-	on_fire = 0 
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -494,7 +494,7 @@
 				BD.attack_hand(usr)
 			C.open()
 
-	//Stop drop and roll & Handcuffs 
+	//Stop drop and roll & Handcuffs
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire && CM.canmove)

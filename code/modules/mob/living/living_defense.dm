@@ -77,14 +77,16 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if(fire_stacks > 0)
+	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
+		src.SetLuminosity(src.luminosity + 3)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
+		src.SetLuminosity(src.luminosity - 3)
 		update_fire()
 
 /mob/living/proc/update_fire()
@@ -107,8 +109,7 @@
 	location.hotspot_expose(700, 50, 1)
 
 /mob/living/fire_act()
-	adjust_fire_stacks(5)
-	if(fire_stacks > 9 && !on_fire)
-		IgniteMob()
+	adjust_fire_stacks(0.5)
+	IgniteMob()
 
 //Mobs on Fire end
