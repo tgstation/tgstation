@@ -5043,7 +5043,7 @@
 "bSY" = (/obj/structure/table,/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
 "bSZ" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
 "bTa" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/maintenance/aft)
-"bTb" = (/obj/machinery/turret{lasers = 1; lasertype = 2},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
+"bTb" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/turret{dir = 2},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
 "bTc" = (/obj/machinery/alarm{frequency = 1439; pixel_y = 23},/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
 "bTd" = (/obj/structure/closet/toolcloset,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9; pixel_y = 0},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
 "bTe" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall/r_wall,/area/turret_protected/tcomms_control_room)
