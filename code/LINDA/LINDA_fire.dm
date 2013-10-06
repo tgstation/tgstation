@@ -57,6 +57,7 @@
 /obj/effect/hotspot/New()
 	..()
 	air_master.hotspots += src
+	perform_exposure()
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/floor/location = loc
@@ -80,7 +81,6 @@
 	for(var/atom/item in loc)
 		if(item) // It's possible that the item is deleted in temperature_expose
 			item.fire_act(null, temperature, volume)
-
 	return 0
 
 
@@ -175,3 +175,7 @@
 	air_update_turf()
 	return
 
+/obj/effect/hotspot/HasEntered(mob/living/L)
+	..()
+	if(isliving(L))
+		L.fire_act()

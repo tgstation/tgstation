@@ -5,8 +5,8 @@
 #define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 #define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
 #define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
@@ -476,12 +476,16 @@
 				if(360 to 400)
 					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
 					fire_alert = max(fire_alert, 2)
-				if(400 to 1000)
+				if(400 to 460)
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 					fire_alert = max(fire_alert, 2)
-				if(1000 to INFINITY)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-					fire_alert = max(fire_alert, 2)
+				if(460 to INFINITY)
+					if(on_fire)
+						apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+						fire_alert = max(fire_alert, 2)
+					else
+						apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+						fire_alert = max(fire_alert, 2)
 
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			fire_alert = max(fire_alert, 1)
