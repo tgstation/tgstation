@@ -51,7 +51,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerplasma(obj)
-	atmos_spawn_air("fire", 360)
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 360)
 	spawn(0)
 		del(src)
 
