@@ -74,7 +74,7 @@
 	new /obj/item/weapon/caution(src)
 	new /obj/item/device/lightreplacer(src)
 	new /obj/item/weapon/storage/bag/trash(src)
-	new /obj/item/clothing/shoes/galoshes(src)
+	new /obj/item/clothing/shoes/black(src)
 
 /*
  * Lawyer
