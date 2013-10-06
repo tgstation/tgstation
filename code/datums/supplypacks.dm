@@ -857,8 +857,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "janitorial supplies"
 
 /datum/supply_packs/misc/janitor/janicart
-	name = "Janitorial Cart crate"
-	contains = list(/obj/structure/janitorialcart)
+	name = "Janitorial Cart & Galoshes crate"
+	contains = list(/obj/structure/janitorialcart,
+					/obj/item/clothing/shoes/galoshes)
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "janitorial cart crate"
