@@ -193,8 +193,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return itemport(src.word3)
 		if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 			return runestun()
-		if(word1 == worddestr && word2 == wordhell && word3 == wordother)
-			return clown()
 		else
 			user.take_overall_damage(30, 0)
 			user << "\red You feel the life draining from you, as if Lord Nar-Sie is displeased with you."
@@ -298,8 +296,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				icon_state = "2"
 				src.icon += rgb(100, 0, 100)
 				return
-			if(word1 == worddestr && word2 == wordhell && word3 == wordother)
-				icon_state = "[rand(1,6)]"
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
 			src.icon -= rgb(255,255,255)
 			src.icon += rgb(rand(1,255),rand(1,255),rand(1,255))
@@ -565,7 +561,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				"stun" = list("join","hide","technology"),
 				"armor" = list("hell","destroy","other"),
 				"teleport" = list("travel","self"),
-				"teleport other" = list("travel","other"),
+				"teleport other" = list("travel","other")
 				)
 
 
