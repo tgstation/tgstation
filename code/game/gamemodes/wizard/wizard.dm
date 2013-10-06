@@ -237,7 +237,7 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
-			if(wizard.current.spell_list)
+			if(wizard.current && wizard.current.spell_list)
 				text += "<br><br><B>[wizard.name] used the following spells:</B>"
 				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
 					text += "<br>[S.name]"
