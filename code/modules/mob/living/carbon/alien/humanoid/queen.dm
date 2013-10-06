@@ -7,6 +7,7 @@
 	status_flags = CANPARALYSE
 	heal_rate = 5
 	plasma_rate = 20
+	var/auto_lay = 1
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
@@ -25,30 +26,33 @@
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
 	..()
 
+/mob/living/carbon/alien/humanoid/queen/Life()
 
-/mob/living/carbon/alien/humanoid/queen
+	if(auto_lay && storedPlasma == max_plasma & !stat)
+		lay_egg()
+	..()
 
-	handle_regular_hud_updates()
+/mob/living/carbon/alien/humanoid/queen/handle_regular_hud_updates()
 
-		..() //-Yvarov
+	..() //-Yvarov
 
-		if (src.healths)
-			if (src.stat != 2)
-				switch(health)
-					if(250 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(175 to 250)
-						src.healths.icon_state = "health1"
-					if(100 to 175)
-						src.healths.icon_state = "health2"
-					if(50 to 100)
-						src.healths.icon_state = "health3"
-					if(0 to 50)
-						src.healths.icon_state = "health4"
-					else
-						src.healths.icon_state = "health5"
-			else
-				src.healths.icon_state = "health6"
+	if (src.healths)
+		if (src.stat != 2)
+			switch(health)
+				if(250 to INFINITY)
+					src.healths.icon_state = "health0"
+				if(175 to 250)
+					src.healths.icon_state = "health1"
+				if(100 to 175)
+					src.healths.icon_state = "health2"
+				if(50 to 100)
+					src.healths.icon_state = "health3"
+				if(0 to 50)
+					src.healths.icon_state = "health4"
+				else
+					src.healths.icon_state = "health5"
+		else
+			src.healths.icon_state = "health6"
 
 
 //Queen verbs
@@ -59,7 +63,8 @@
 	set category = "Alien"
 
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		src << "There's already an egg here."
+		if(!auto_lay)
+			src << "There's already an egg here."
 		return
 
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
@@ -69,6 +74,20 @@
 		new /obj/structure/alien/egg(loc)
 	return
 
+/mob/living/carbon/alien/humanoid/queen/verb/toggle_automatic_eggs()
+
+	set name = "Toggle Automatic Egg Laying"
+	set desc = "Toggle if you want to automatically lay an egg when at full plasma."
+	set category = "Alien"
+
+	if(!auto_lay)
+		auto_lay = 1
+		src << "You will now lay an egg whenever you have full plasma."
+	else
+		auto_lay = 0
+		src << "You will no longer lay eggs automatically."
+
+	return
 
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
