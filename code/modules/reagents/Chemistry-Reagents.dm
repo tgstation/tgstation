@@ -1856,8 +1856,8 @@ datum
 				if(volume >= 5)
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(15,30))
-					if(istype(T))
-						T.atmos_spawn_air(SPAWN_COLD)
+					//if(istype(T))
+					//	T.atmos_spawn_air(SPAWN_COLD)
 
 		sodiumchloride
 			name = "Table Salt"

@@ -214,7 +214,6 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 	T.atmos_spawn_air(text, amount)
 
 var/const/SPAWN_HEAT = 1
-var/const/SPAWN_COLD = 2
 
 var/const/SPAWN_TOXINS = 4
 var/const/SPAWN_OXYGEN = 8
@@ -233,8 +232,6 @@ var/const/SPAWN_AIR = 256
 
 	if(flag & SPAWN_HEAT)
 		G.temperature += 1000
-	if(flag & SPAWN_COLD)
-		G.temperature = max(1, G.temperature - 1000)
 
 	if(flag & SPAWN_TOXINS)
 		G.toxins += amount
