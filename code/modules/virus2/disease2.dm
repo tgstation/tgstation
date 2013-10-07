@@ -1,7 +1,7 @@
 /datum/disease2/disease
-	var/infectionchance = 10
+	var/infectionchance = 70
 	var/speed = 1
-	var/spreadtype = "Blood" // Can also be "Airborne"
+	var/spreadtype = "Contact" // Can also be "Airborne"
 	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
@@ -25,10 +25,10 @@
 			holder.getrandomeffect()
 		effects += holder
 	uniqueID = rand(0,10000)
-	infectionchance = rand(1,10)
+	infectionchance = rand(60,90)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = "Airborne"
+	spreadtype = prob(70) ? "Airborne" : "Contact"
 
 /datum/disease2/disease/proc/activate(var/mob/living/carbon/mob)
 	if(dead)
@@ -38,9 +38,9 @@
 	if(mob.stat == 2)
 		return
 	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
-		if(prob(20))
+		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
-		else
+
 	if(mob.radiation > 50)
 		if(prob(1))
 			majormutate()
@@ -65,6 +65,12 @@
 	for(var/datum/disease2/effectholder/e in effects)
 		e.runeffect(mob,stage)
 
+	//Short airborne spread
+	if(src.spreadtype == "Airborne")
+		for(var/mob/living/carbon/M in oview(1,mob))
+			if(airborne_can_reach(get_turf(mob), get_turf(M)))
+				infect_virus2(M,src)
+
 	//fever
 	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+5*stage))
 	clicks+=speed
@@ -75,10 +81,10 @@
 	mob.virus2.Remove("[uniqueID]")
 
 /datum/disease2/disease/proc/minormutate()
-	uniqueID = rand(0,10000)
+	//uniqueID = rand(0,10000)
 	var/datum/disease2/effectholder/holder = pick(effects)
 	holder.minormutate()
-	infectionchance = min(10,infectionchance + rand(0,1))
+	infectionchance = min(50,infectionchance + rand(0,10))
 
 /datum/disease2/disease/proc/majormutate()
 	uniqueID = rand(0,10000)
