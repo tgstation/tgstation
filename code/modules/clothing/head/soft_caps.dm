@@ -4,11 +4,11 @@
 	icon_state = "cargosoft"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
-	color = "cargo"
+	item_color = "cargo"
 	var/flipped = 0
 
 	dropped()
-		src.icon_state = "[color]soft"
+		src.icon_state = "[item_color]soft"
 		src.flipped=0
 		..()
 
@@ -19,10 +19,10 @@
 		if(usr.canmove && !usr.stat && !usr.restrained())
 			src.flipped = !src.flipped
 			if(src.flipped)
-				icon_state = "[color]soft_flipped"
+				icon_state = "[item_color]soft_flipped"
 				usr << "You flip the hat backwards."
 			else
-				icon_state = "[color]soft"
+				icon_state = "[item_color]soft"
 				usr << "You flip the hat back in normal position."
 			usr.update_inv_head(0)	//so our mob-overlays update
 
@@ -30,58 +30,58 @@
 	name = "red cap"
 	desc = "It's a baseball hat in a tasteless red colour."
 	icon_state = "redsoft"
-	color = "red"
+	item_color = "red"
 
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
 	desc = "It's a baseball hat in a tasteless blue colour."
 	icon_state = "bluesoft"
-	color = "blue"
+	item_color = "blue"
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
 	desc = "It's a baseball hat in a tasteless green colour."
 	icon_state = "greensoft"
-	color = "green"
+	item_color = "green"
 
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "yellowsoft"
-	color = "yellow"
+	item_color = "yellow"
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
-	color = "grey"
+	item_color = "grey"
 
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
 	desc = "It's a baseball hat in a tasteless orange colour."
 	icon_state = "orangesoft"
-	color = "orange"
+	item_color = "orange"
 
 /obj/item/clothing/head/soft/mime
 	name = "white cap"
 	desc = "It's a baseball hat in a tasteless white colour."
 	icon_state = "mimesoft"
-	color = "mime"
+	item_color = "mime"
 
 /obj/item/clothing/head/soft/purple
 	name = "purple cap"
 	desc = "It's a baseball hat in a tasteless purple colour."
 	icon_state = "purplesoft"
-	color = "purple"
+	item_color = "purple"
 
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
 	icon_state = "rainbowsoft"
-	color = "rainbow"
+	item_color = "rainbow"
 
 /obj/item/clothing/head/soft/sec
 	name = "security cap"
 	desc = "It's baseball hat in tasteful red colour."
 	icon_state = "secsoft"
-	color = "sec"
+	item_color = "sec"
