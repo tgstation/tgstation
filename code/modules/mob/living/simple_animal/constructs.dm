@@ -26,6 +26,7 @@
 	faction = "cult"
 
 /mob/living/simple_animal/construct/New()
+	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 
