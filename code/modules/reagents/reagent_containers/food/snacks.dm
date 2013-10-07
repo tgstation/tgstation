@@ -1567,6 +1567,17 @@
 		reagents.add_reagent("tomatojuice", 10)
 		bitesize = 4
 
+/obj/item/weapon/reagent_containers/food/snacks/copypasta
+	name = "copypasta"
+	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."
+	icon_state = "copypasta"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("tomatojuice", 20)
+		bitesize = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 	name = "spagetti and meatballs"
 	desc = "Now thats a nic'e meatball!"
