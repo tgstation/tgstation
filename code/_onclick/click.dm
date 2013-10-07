@@ -43,16 +43,16 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if("middle" in modifiers)
+	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
-	if("shift" in modifiers)
+	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-	if("ctrl" in modifiers)
+	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	if("alt" in modifiers)
+	if(modifiers["alt"])
 		AltClickOn(A)
 		return
 
@@ -216,6 +216,7 @@
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
 		examine()
+		user.face_atom(src)
 	return
 
 /*
