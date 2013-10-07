@@ -22,13 +22,13 @@
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
+	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+		AltClickOn(A)
+		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	if(modifiers["alt"])
-		AltClickOn(A)
-		return
-
+	
 	if(stat || lockcharge || weakened || stunned || paralysis)
 		return
 
