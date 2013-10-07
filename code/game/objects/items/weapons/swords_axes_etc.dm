@@ -176,11 +176,20 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-		if(!..()) return
-		if(!isrobot(target))
-			playsound(src.loc, "swing_hit", 50, 1, -1)
-			//target.Stun(4)	//naaah
-			target.Weaken(4)
+		if (user.a_intent == "hurt")
+			if(!..()) return
+			if(!isrobot(target))
+				playsound(src.loc, "swing_hit", 50, 1, -1)
+				//target.Stun(4)	//naaah
+				target.Weaken(4)
+		else
+			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+			target.Weaken(2)
+			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+			src.add_fingerprint(user)
+			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 		return
 	else
 		return ..()
