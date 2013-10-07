@@ -336,7 +336,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			w_uniform.screen_loc = ui_iclothing
 			client.screen += w_uniform
 
-		var/t_color = w_uniform.color
+		var/t_color = w_uniform.item_color
 		if(!t_color)		t_color = icon_state
 		var/image/lying		= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_l", "layer"=-UNIFORM_LAYER)
 		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
@@ -358,7 +358,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 
 		if(U.hastie)
-			var/tie_color = U.hastie.color
+			var/tie_color = U.hastie.item_color
 			if(!tie_color) tie_color = U.hastie.icon_state
 			lying.overlays		+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]2")
 			standing.overlays	+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
