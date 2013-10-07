@@ -756,9 +756,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/find
 		var/datum/picture/selection
 		var/mob/living/silicon/ai/tempAI = user
+		if(tempAI.aicamera.aipictures.len == 0)
+			usr << "<FONT COLOR=red><B>No images saved</B>"
+			return
 		for(var/datum/picture/t in tempAI.aicamera.aipictures)
 			nametemp += t.fields["name"]
-		find = input("Select picture (numbered in order taken)") in nametemp
+		find = input("Select image (numbered in order taken)") in nametemp
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 		for(var/datum/picture/q in tempAI.aicamera.aipictures)
 			if(q.fields["name"] == find)

@@ -1,6 +1,6 @@
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 /mob/living/carbon/alien
 	name = "alien"
@@ -103,12 +103,16 @@
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
 				fire_alert = max(fire_alert, 2)
-			if(400 to 1000)
+			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 				fire_alert = max(fire_alert, 2)
-			if(1000 to INFINITY)
-				apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-				fire_alert = max(fire_alert, 2)
+			if(460 to INFINITY)
+				if(on_fire)
+					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					fire_alert = max(fire_alert, 2)
+				else
+					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+					fire_alert = max(fire_alert, 2)
 	return
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()

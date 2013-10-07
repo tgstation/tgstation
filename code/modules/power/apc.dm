@@ -532,7 +532,7 @@
 		if (!istype(user, /mob/living/silicon))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "<h3>Status</h3>"
-		t += "Main breaker: [operating ? "<span class='linkOn'>On</span> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <span class='linkOn'>Off</span>" ]<br />"
+		t += "Main Breaker: [operating ? "<span class='linkOn'>On</span> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <span class='linkOn'>Off</span>" ]<br />"
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
 		if(cell)
 			t += "Power cell: <B>[round(cell.percent())]%</B>"
@@ -713,25 +713,24 @@
 	else if (href_list["eqp"])
 		var/val = text2num(href_list["eqp"])
 
-		equipment = (val==1) ? 0 : val
-
+		equipment = setsubsystem(val)
 		update_icon()
 		update()
 
 	else if (href_list["lgt"])
 		var/val = text2num(href_list["lgt"])
 
-		lighting = (val==1) ? 0 : val
-
+		lighting = setsubsystem(val)
 		update_icon()
 		update()
+
 	else if (href_list["env"])
 		var/val = text2num(href_list["env"])
 
-		environ = (val==1) ? 0 :val
-
+		environ = setsubsystem(val)
 		update_icon()
 		update()
+
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
 		usr.unset_machine()
@@ -781,6 +780,7 @@
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
+
 	if(malfai)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
@@ -927,8 +927,8 @@
 
 	if(cell && !shorted)
 
-		// draw power from cell as before
 
+		// draw power from cell as before
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
@@ -1047,8 +1047,7 @@
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
 
-/proc/autoset(var/val, var/on)
-
+obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(on==0)
 		if(val==2)			// if on, return off
 			return 0
@@ -1160,6 +1159,14 @@
 	if(isalien(user))
 		return 0
 	if (electrocute_mob(user, src, src))
+		return 1
+	else
+		return 0
+
+/obj/machinery/power/apc/proc/setsubsystem(val)
+	if(cell && cell.charge > 0)
+		return (val==1) ? 0 : val
+	else if(val == 3)
 		return 1
 	else
 		return 0
