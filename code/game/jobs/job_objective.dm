@@ -43,13 +43,17 @@
 
 /datum/game_mode/proc/declare_job_completion()
 	var/text = "<FONT size = 2><B>Job Completion:</B></FONT>"
-	for(var/datum/mind/employee in player_list)
+	var/numEmployees=0
+	for(var/datum/mind/employee in ticker.minds)
 		if(!employee.job_objectives.len)//If the employee had no objectives, don't need to process this.
-			return
+			continue
+		if(!employee.assigned_role=="MODE")//If the employee is a gamemode thing, skip.
+			continue
+		numEmployees++
 		var/tasks_completed=0
 
 		//text += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job]:\n"
-		text += "<br>[employee.key] was [employee.name] ("
+		text += "<br>[employee.key] was [employee.name], the [employee.assigned_role] ("
 		if(employee.current)
 			if(employee.current.stat == DEAD)
 				text += "died"
@@ -78,6 +82,6 @@
 		else
 			text += "<br><font color='red'><B>The [employee.assigned_role] was a worthless sack of shit!</B></font>"
 			feedback_add_details("employee_success","FAIL")
-
-	world << text
+	if(numEmployees>0)
+		world << text
 	return 1

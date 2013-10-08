@@ -118,6 +118,7 @@
 		// Unequip existing suits and hats.
 		H.u_equip(H.wear_suit)
 		H.u_equip(H.head)
+		H.u_equip(H.wear_mask) // CLOOOOWN
 
 		H.equip_to_slot_or_drop(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
 		var/suit=/obj/item/clothing/suit/space/vox/casual

@@ -13,11 +13,11 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir)
+/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#ff0000")
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
-	tracks.AddTracks(bloodDNA,comingdir,goingdir)
+	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
@@ -42,21 +42,24 @@
 
 			// Tracking blood
 			var/list/bloodDNA = null
+			var/bloodcolor=""
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(S.track_blood && S.blood_DNA)
 					bloodDNA = S.blood_DNA
+					bloodcolor=S.blood_color
 					S.track_blood--
 			else
 				if(H.track_blood && H.feet_blood_DNA)
 					bloodDNA = H.feet_blood_DNA
+					bloodcolor=H.feet_blood_color
 					H.track_blood--
 
 			if (bloodDNA)
-				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0) // Coming
+				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
 				if(istype(from) && from)
-					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir) // Going
+					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
 
 			bloodDNA = null
 
@@ -158,8 +161,8 @@
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
 	else if( istype(M, /mob/living/carbon/alien ))
-		var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(src)
+		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
 		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 
 	else if( istype(M, /mob/living/silicon/robot ))
-		new /obj/effect/decal/cleanable/oil(src)
+		new /obj/effect/decal/cleanable/blood/oil(src)

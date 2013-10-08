@@ -550,12 +550,31 @@ var/list/liftable_structures = list(\
 // Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
 // the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
 // tagged for the Cargo Bay.
-var/list/TAGGERLOCATIONS = list("Disposals",
-	"Cargo Bay", "QM Office", "Engineering", "CE Office",
-	"Atmospherics", "Security", "HoS Office", "Medbay",
-	"CMO Office", "Chemistry", "Research", "RD Office",
-	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+var/list/TAGGERLOCATIONS = list(
+	"Disposals",     // 1
+	"Cargo Bay",     // 2
+	"QM Office",     // 3
+	"Engineering",   // 4
+	"CE Office",     // 5
+	"Atmospherics",  // 6
+	"Security",      // 7
+	"HoS Office",    // 8
+	"Medbay",        // 9
+	"CMO Office",    // 10
+	"Chemistry",     // 11
+	"Research",      // 12
+	"RD Office",     // 13
+	"Robotics",      // 14
+	"HoP Office",    // 15
+	"Library",       // 16
+	"Chapel",        // 17
+	"Theatre",       // 18
+	"Bar",           // 19
+	"Kitchen",       // 20
+	"Hydroponics",   // 21
+	"Janitor Closet",// 22
+	"Genetics",      // 23
+	"Telecomms")     // 24
 
 #define HOSTILE_STANCE_IDLE 1
 #define HOSTILE_STANCE_ALERT 2
@@ -597,7 +616,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define ORGAN_SPLINTED		256
 #define SALVED				512
 #define ORGAN_DEAD			1024
-#define ORGAN_MUTATED		2048 
+#define ORGAN_MUTATED		2048
 #define ORGAN_PEG			4096 // ROB'S MAGICAL PEGLEGS v2
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.

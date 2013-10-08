@@ -6,6 +6,7 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
+	var/blood_color
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
@@ -1191,8 +1192,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 						A.damage = 205
 					if(A.damage >= 200)
 						usr:apply_damage(15, BURN, (usr:hand ? "l_hand" : "r_hand"))
-						usr:Stun(20)
-						usr:Weaken(20)
+						usr:Stun(15)
+						usr:Weaken(15)
 						if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
 							usr:stuttering += 20
 						time = 200

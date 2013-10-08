@@ -25,6 +25,10 @@ OSError: cannot identify image file
  - cold_s
  - coldfire_l
  - coldfire_s
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\tile_effects.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\tile_effects.dmi
+ - plasma-orange
+ + plasma-purple
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\warning_stripes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\warning_stripes.dmi
  + 
@@ -51,6 +55,32 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  - mecha_phase_array
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\beach.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\beach.dmi
+ + beach
+ + beachcorner
+ + desert
+ + desert0
+ + desert1
+ + desert2
+ + desert3
+ + desert4
+ + desert5
+ + desert6
+ + desert7
+ + desert_dug
+ + dgrass0
+ + dgrass1
+ + dgrass2
+ + dgrass3
+ + dgrass4
+ + fullgrass0
+ + fullgrass1
+ + fullgrass2
+ + fullgrass3
+ + fullgrass4
+ + seadeep
+ + seashallow
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen.dmi
  - title: title: 8 frames, 1 directions icons: [None, None, None, None, None, None, None, None]
@@ -442,6 +472,8 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipe-item.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
  - dvalve
+ - insulated_manifold
+ - insulated_manifold4w
  - thermalplate
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
@@ -509,6 +541,12 @@ OSError: cannot identify image file
  - on_cool
  - on_heat
  - on_idle
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\red_pipe.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\red_pipe.dmi
+ - manifold
+ - manifold-f
+ - manifold4w
+ - manifold4w-f
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\vent_scrubber.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\vent_scrubber.dmi
  - hon1
@@ -607,6 +645,14 @@ OSError: cannot identify image file
  - xenocell4
  - xenocell5
  - xenocell6
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\floors.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\floors.dmi
+ - checker
+ - enginebot
+ - enginedelivery
+ - engineloadingarea
+ - enginewarn
+ - enginewarncorner
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\space.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
  - debug-east

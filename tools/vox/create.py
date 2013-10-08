@@ -37,6 +37,7 @@ THE SOFTWARE.
 # This is the nitech-made ARCTIC voice, tut on how to install: 
 # http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
 VOICE='nitech_us_clb_arctic_hts'
+#VOICE='nitech_us_slt_arctic_hts'
 
 # What we do with SoX:
 SOX_ARGS  = 'stretch 1.1'
@@ -253,7 +254,7 @@ def ProcessLexicon(filename):
 	global known_phonemes, VOICE
 	with open('tmp/VOXdict.lisp','w') as lisp:
 		if VOICE != '':
-			lisp.write('(set! voice_default \'voice_{0})\n'.format(VOICE))
+			lisp.write('(voice_{0})\n'.format(VOICE))
 		with open(filename,'r') as lines:
 			for line in lines:
 				line=line.strip()

@@ -635,7 +635,7 @@
 
 	throw_impact(atom/hit_atom)
 		..()
-		new/obj/effect/decal/cleanable/oil(src.loc)
+		new/obj/effect/decal/cleanable/blood/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
@@ -967,7 +967,7 @@
 		var/list/turfs = new/list()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
-			new/obj/effect/decal/cleanable/oil(src.loc)
+			new/obj/effect/decal/cleanable/blood/oil(src.loc)
 			src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 			del(src)
 			return
@@ -1004,7 +1004,7 @@
 					sleep(1)
 					s.set_up(3, 1, A)
 					s.start()
-		new/obj/effect/decal/cleanable/oil(src.loc)
+		new/obj/effect/decal/cleanable/blood/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
 		del(src)
 		return

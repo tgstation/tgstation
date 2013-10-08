@@ -289,6 +289,7 @@
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	reagents.clear_reagents()
 	heal_overall_damage(1000, 1000)
 	if(buckled)
 		buckled.unbuckle()

@@ -111,11 +111,24 @@ MASS SPECTROMETER
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
 			for(var/datum/organ/external/org in damaged)
-				user.show_message(text("\blue \t []: [][]\blue - []",	\
-				capitalize(org.display_name),					\
-				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
-				(org.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"\t", 		\
-				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
+				var/organ_msg="\blue \t "
+				organ_msg+=capitalize(org.display_name)
+				organ_msg+=": "
+				if(org.brute_dam>0)
+					organ_msg+="\red [org.brute_dam]"
+				else
+					organ_msg+="0"
+				if(org.burn_dam > 0)
+					organ_msg+="/<font color='#FFA500'>[org.burn_dam]</font>"
+				else
+					organ_msg+="/0"
+				if(org.status & ORGAN_BLEEDING)
+					organ_msg+="\red <b>\[BLEEDING\]</b>"
+				if(org.status & ORGAN_PEG)
+					organ_msg+="\blue <b>\[WOOD DETECTED?\]</b>"
+				if(org.status & ORGAN_ROBOT)
+					organ_msg+="\blue <b>\[METAL DETECTED?\]</b>"
+				user.show_message(organ_msg,1)
 		else
 			user.show_message("\blue \t Limbs are OK.",1)
 

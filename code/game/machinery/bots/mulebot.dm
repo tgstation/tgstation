@@ -69,6 +69,7 @@
 
 
 	var/bloodiness = 0		// count of bloodiness
+	var/currentBloodColor = "#ff0000"
 
 /obj/machinery/bot/mulebot/New()
 	..()
@@ -629,7 +630,7 @@
 								else if(newdir == 12)
 									newdir = 4
 								goingdir = newdir
-							T.AddTracks(/obj/effect/decal/cleanable/blood/tracks/wheels,list(),0,goingdir)
+							T.AddTracks(/obj/effect/decal/cleanable/blood/tracks/wheels,list(),0,goingdir,currentBloodColor)
 						bloodiness--
 
 					var/moved = step_towards(src, next)	// attempt to move
@@ -817,6 +818,13 @@
 	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	bloodiness += 4
+	currentBloodColor="#ff0000" // For if species get different blood colors.
+
+/obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
+	src.visible_message("\red [src] drives over [H]!")
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	bloodiness += 4
+	currentBloodColor=bloodcolor // For if species get different blood colors.
 
 // player on mulebot attempted to move
 /obj/machinery/bot/mulebot/relaymove(var/mob/user)
@@ -973,6 +981,6 @@
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/oil(src.loc)
+	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	unload(0)
 	del(src)
