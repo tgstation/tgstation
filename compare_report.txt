@@ -55,6 +55,22 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  - mecha_phase_array
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mech_construction.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_construction.dmi
+ - phazon_0
+ - phazon_1
+ - phazon_10
+ - phazon_11
+ - phazon_12
+ - phazon_13
+ - phazon_2
+ - phazon_3
+ - phazon_4
+ - phazon_5
+ - phazon_6
+ - phazon_7
+ - phazon_8
+ - phazon_9
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\beach.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\beach.dmi
  + beach
@@ -225,6 +241,10 @@ OSError: cannot identify image file
  - vox-pressure-specops2
  + vox-stealth
  + vox-stealth2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_face.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_face.dmi
+ - facial_robotnik_l
+ - facial_robotnik_s
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  + eleanorstone
