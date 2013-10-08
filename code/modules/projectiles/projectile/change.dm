@@ -45,7 +45,7 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
-				if(!isanimal(M) && !isrobot(M))	Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("slime")
 				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
 				else				new_mob = new /mob/living/carbon/slime(M.loc)
@@ -91,7 +91,7 @@
 				var/mob/living/carbon/human/H = new_mob
 				ready_dna(H)
 				if(H.dna)
-					H.dna.mutantrace = pick("lizard","golem","slime","plant","fly","plant","shadow","adamantine","skeleton",8;"")
+					H.dna.mutantrace = pick("lizard","golem","slime","plant","fly","shadow","adamantine","skeleton",8;"")
 					H.update_body()
 			else
 				return
