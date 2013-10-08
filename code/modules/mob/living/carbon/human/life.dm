@@ -1437,14 +1437,14 @@
 
 		if (shock_stage >= 60)
 			if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
-			if (prob(5))
+			if (prob(5) && health <= 20)
 				Stun(20)
 				lying = 1
 
 		if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
 
-		if (shock_stage > 100)
+		if (shock_stage > 100 && health <= 20)
 			Paralyse(rand(15,28))
 
 	proc/handle_pulse()
