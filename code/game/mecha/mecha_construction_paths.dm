@@ -1529,7 +1529,7 @@
 					user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
 				else
 					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
-		holder.icon_state="phazon[index-diff]"
+		holder.icon_state="phazon_[index-diff]"
 		return 1
 
 	spawn_result()
