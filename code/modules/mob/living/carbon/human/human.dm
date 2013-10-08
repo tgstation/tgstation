@@ -433,7 +433,7 @@
 /mob/living/carbon/human/HasEntered(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOverCreature(src,"#ff0000")
+		MB.RunOverCreature(src,"#A10808")
 
 		var/damage = rand(5,15)
 		apply_damage(2*damage, BRUTE, "head")

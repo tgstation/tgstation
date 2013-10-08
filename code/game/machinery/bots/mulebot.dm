@@ -69,7 +69,7 @@
 
 
 	var/bloodiness = 0		// count of bloodiness
-	var/currentBloodColor = "#ff0000"
+	var/currentBloodColor = "#A10808"
 
 /obj/machinery/bot/mulebot/New()
 	..()
@@ -818,7 +818,7 @@
 	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	bloodiness += 4
-	currentBloodColor="#ff0000" // For if species get different blood colors.
+	currentBloodColor="#A10808" // For if species get different blood colors.
 
 /obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
 	src.visible_message("\red [src] drives over [H]!")
