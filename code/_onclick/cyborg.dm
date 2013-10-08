@@ -28,7 +28,7 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	
+
 	if(stat || lockcharge || weakened || stunned || paralysis)
 		return
 
@@ -94,6 +94,12 @@
 			W.afterattack(A, src, 0, params)
 			return
 	return
+
+//Middle click cycles through selected modules.
+/mob/living/silicon/robot/MiddleClickOn(var/atom/A)
+	cycle_modules()
+	return
+
 /*
 	As with AI, these are not used in click code,
 	because the code for robots is specific, not generic.
