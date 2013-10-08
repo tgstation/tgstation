@@ -83,7 +83,7 @@ proc/crewmonitor(mob/user)
 
 proc/crewscan()
 	var/list/tracked = list()
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in mob_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = H.w_uniform
 			if(U.has_sensor && U.sensor_mode)
