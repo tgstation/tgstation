@@ -379,6 +379,14 @@
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
 
+	// Before Goon gets all hot and bothered for "stealing":
+	// A. It's property of SEGA in the first place
+	// B. I sprited this by hand, despite Steve's pleas to the contrary.  I've never played on your server and probably never will.
+	// - Nexypoo
+	robotnik
+		name = "Robotnik Mustache"
+		icon_state = "facial_robotnik"
+
 /*
 ///////////////////////////////////
 /  =---------------------------=  /
