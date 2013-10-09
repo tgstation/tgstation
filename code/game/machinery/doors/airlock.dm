@@ -972,6 +972,10 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
 	else
 		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+		if(events.holiday == "Halloween") // 2SPOOKY
+			if(prob(40))
+				var/spookysound = pick('sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg', 'sound/hallucinations/turn_around1.ogg')
+				playsound(src.loc, spookysound, 70, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 
