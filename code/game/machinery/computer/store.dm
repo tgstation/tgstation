@@ -21,7 +21,10 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/balance=user.mind.initial_account.money
+	var/balance=0
+	if(user.mind)
+		if(user.mind.initial_account)
+			balance = user.mind.initial_account.money
 
 	var/dat = {"
 <html>
