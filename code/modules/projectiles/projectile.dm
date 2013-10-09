@@ -48,6 +48,7 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/forcedodge = 0
 
 
 	proc/delete()
@@ -97,7 +98,7 @@
 		spawn(0)
 			if(A)
 				var/permutation = A.bullet_act(src, def_zone) // searches for return value
-				if(permutation == -1 || forcedodge) // the bullet passes through a dense object!
+				if(permutation == -1 || forcedodge || !istype(A, /turf)) // the bullet passes through a dense object!
 					bumped = 0 // reset bumped variable!
 					if(istype(A, /turf))
 						loc = A
