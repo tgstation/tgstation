@@ -292,37 +292,16 @@
 				usr:uneq_active()
 
 		if("module1")
-			if(usr:module_state_1)
-				if(usr:module_active != usr:module_state_1)
-					usr:inv1.icon_state = "inv1 +a"
-					usr:inv2.icon_state = "inv2"
-					usr:inv3.icon_state = "inv3"
-					usr:module_active = usr:module_state_1
-				else
-					usr:inv1.icon_state = "inv1"
-					usr:module_active = null
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(1)
 
 		if("module2")
-			if(usr:module_state_2)
-				if(usr:module_active != usr:module_state_2)
-					usr:inv1.icon_state = "inv1"
-					usr:inv2.icon_state = "inv2 +a"
-					usr:inv3.icon_state = "inv3"
-					usr:module_active = usr:module_state_2
-				else
-					usr:inv2.icon_state = "inv2"
-					usr:module_active = null
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(2)
 
 		if("module3")
-			if(usr:module_state_3)
-				if(usr:module_active != usr:module_state_3)
-					usr:inv1.icon_state = "inv1"
-					usr:inv2.icon_state = "inv2"
-					usr:inv3.icon_state = "inv3 +a"
-					usr:module_active = usr:module_state_3
-				else
-					usr:inv3.icon_state = "inv3"
-					usr:module_active = null
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(3)
 
 		else
 			return 0

@@ -247,6 +247,7 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
+	if(flags & NOBLOODY) return
 	if(!initial(icon) || !initial(icon_state))
 		return 0
 	if(!istype(M))
