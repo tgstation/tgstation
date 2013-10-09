@@ -237,6 +237,14 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
+			if(wizard.current && wizard.current.spell_list)
+				text += "<br><B>[wizard.name] used the following spells: </B>"
+				var/i = 1
+				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+					text += "[S.name]"
+					if(wizard.current.spell_list.len > i)
+						text += ", "
+					i++
 
 		world << text
 	return 1
