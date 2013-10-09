@@ -19,18 +19,22 @@
 	..()
 	keyslot1 = new /obj/item/device/encryptionkey/
 	recalculateChannels()
+	if(!istype(src.loc,/mob))
+		listening = 0
 
 /obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
 	if (!listening)
 		return
 	..()
 
+/* damn entitled humans
 /obj/item/device/radio/headset/receive_range(freq, level)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
 	return -1
+*/
 
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
