@@ -196,8 +196,6 @@
 			empty_shuttle_turfs.Remove(T)
 			new spawn_type(T)
 
-		command_alert("Don't forget to clean up after yourself.","Cargo shuttle on it's way home.")
-
 		supply_shuttle.buy()
 		//supply_shuttle.send()
 		//supply_shuttle.moving = 0
