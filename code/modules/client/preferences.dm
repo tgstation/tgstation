@@ -266,7 +266,7 @@ datum/preferences
 		HTML += "<b>Choose occupation chances</b><br>"
 		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
-		HTML += "<script type='text/javascript'>function lowerJobPreference(rank) { window.location.href='?_src_=prefs;preference=job;task=decreaseJobLevel;text=' + encodeURIComponent(rank); return false; }</script>"
+		HTML += "<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=setJobLevel;level=' + level + ';text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -306,7 +306,34 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=increaseJobLevel;text=[rank]' oncontextmenu='javascript:return lowerJobPreference(\"[rank]\");'>"
+			var/prefLevelLabel = "ERROR"
+			var/prefLevelColor = "pink"
+			var/prefUpperLevel = -1 // level to assign on left click
+			var/prefLowerLevel = -1 // level to assign on right click
+
+			if(GetJobDepartment(job, 1) & job.flag)
+				prefLevelLabel = "High"
+				prefLevelColor = "slateblue"
+				prefUpperLevel = 4
+				prefLowerLevel = 2
+			else if(GetJobDepartment(job, 2) & job.flag)
+				prefLevelLabel = "Medium"
+				prefLevelColor = "green"
+				prefUpperLevel = 1
+				prefLowerLevel = 3
+			else if(GetJobDepartment(job, 3) & job.flag)
+				prefLevelLabel = "Low"
+				prefLevelColor = "orange"
+				prefUpperLevel = 2
+				prefLowerLevel = 4
+			else
+				prefLevelLabel = "NEVER"
+				prefLevelColor = "red"
+				prefUpperLevel = 3
+				prefLowerLevel = 1
+
+
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -316,14 +343,7 @@ datum/preferences
 				HTML += "</a></td></tr>"
 				continue
 
-			if(GetJobDepartment(job, 1) & job.flag)
-				HTML += "High"
-			else if(GetJobDepartment(job, 2) & job.flag)
-				HTML += "<font color=green>Medium</font>"
-			else if(GetJobDepartment(job, 3) & job.flag)
-				HTML += "<font color=orange>Low</font>"
-			else
-				HTML += "<font color=red>NEVER</font>"
+			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
@@ -345,7 +365,8 @@ datum/preferences
 		if (!job)
 			return 0
 
-		if (level == 1) // set all current high preferred to medium
+		if (level == 1) // to high
+			// remove any other job(s) set to high
 			job_civilian_med |= job_civilian_high
 			job_engsec_med |= job_engsec_high
 			job_medsci_med |= job_medsci_high
@@ -398,23 +419,16 @@ datum/preferences
 
 		return 0
 
-	proc/GetJobLevel(var/datum/job/job)
-		if (!job) return 0
-
-		if (job.flag & (job_civilian_high | job_engsec_high | job_medsci_high))
-			return 1
-		else if (job.flag & (job_civilian_med | job_engsec_med | job_medsci_med))
-			return 2
-		else if (job.flag & (job_civilian_low | job_engsec_low | job_medsci_low))
-			return 3
-
-		return 0
-
-	proc/UpdateJobPreference(mob/user, role, upOrDown)
+	proc/UpdateJobPreference(mob/user, role, desiredLvl)
 		var/datum/job/job = job_master.GetJob(role)
 
 		if(!job)
 			user << browse(null, "window=mob_occupation")
+			ShowChoices(user)
+			return
+
+		if (!isnum(desiredLvl))
+			user << "\red UpdateJobPreference - desired level was not a number. Please notify coders!"
 			ShowChoices(user)
 			return
 
@@ -426,21 +440,7 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-
-		var/targetLvl = GetJobLevel(job)
-		if (upOrDown == 1) // increasing from low to high, i.e. lowering the level value
-			if (targetLvl == 0)
-				targetLvl = 3 // low
-			else
-				targetLvl = targetLvl - 1
-		else // decreasing from high to low, i.e. raising the level value
-			if (targetLvl == 3)
-				targetLvl = 0
-			else
-				targetLvl = targetLvl + 1
-
-
-		SetJobPreferenceLevel(job, targetLvl)
+		SetJobPreferenceLevel(job, desiredLvl)
 		SetChoices(user)
 
 		return 1
@@ -504,10 +504,8 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
-				if("increaseJobLevel")
-					UpdateJobPreference(user, href_list["text"], 1)
-				if ("decreaseJobLevel")
-					UpdateJobPreference(user, href_list["text"], -1)
+				if("setJobLevel")
+					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else
 					SetChoices(user)
 			return 1
