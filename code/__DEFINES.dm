@@ -59,6 +59,7 @@
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON	4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
+#define NOBLOODY	2048	// used by objects that don't want to get bloodied
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags

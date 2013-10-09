@@ -39,12 +39,13 @@
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
+	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+		AltClickOn(A)
+		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	if(modifiers["alt"])
-		AltClickOn(A)
-		return
+	
 	if(control_disabled || stat || world.time <= next_move) return
 	next_move = world.time + 9
 
