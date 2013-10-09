@@ -778,6 +778,7 @@
 #include "code\modules\events\ninja.dm"
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
+#include "code\modules\events\shuttle_loan.dm"
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
