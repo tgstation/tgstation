@@ -44,7 +44,8 @@ var/global/list/banned_sandbox_types=list(
 	/obj/item/weapon/veilrender,
 	/obj/item/weapon/reagent_containers/glass/bottle/wizarditis,
 	/obj/item/weapon/spellbook,
-	/obj/machinery/singularity)
+	/obj/machinery/singularity,
+	/obj/item/weapon/gun/energy/staff)
 
 /mob/proc/sandbox_spawn_atom(var/object as text)
 	set category = "Sandbox"
