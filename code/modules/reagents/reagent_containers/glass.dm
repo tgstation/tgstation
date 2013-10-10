@@ -151,6 +151,16 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/noreact
+	name = "split beaker"
+	desc = "A split beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	icon_state = "beakernoreact"
+	g_amt = 500
+	volume = 50
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
+
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 500 units."

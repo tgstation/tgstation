@@ -1324,11 +1324,22 @@ datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 500 units."
 	id = "bluespacebeaker"
-	req_tech = list("plasma" = 2)
+	req_tech = list("bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$plasma" = 3000)
 	reliability_base = 76
 	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
+	category = "Misc"
+
+datum/design/noreactbeaker
+	name = "Split Beaker"
+	desc = "A split beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	id = "splitbeaker"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000)
+	reliability_base = 76
+	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/noreact"
 	category = "Misc"
 
 /////////////////////////////////////////
