@@ -90,7 +90,7 @@
 		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
 		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 			return
-		
+
 		else if(reagents.total_volume)
 			user << "<span class='notice'>You splash the solution onto [target].</span>"
 			reagents.reaction(target, TOUCH)
@@ -149,6 +149,16 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace
+	name = "bluespace beaker"
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 500 units."
+	icon_state = "beakerbluespace"
+	g_amt = 5000
+	volume = 500
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,500)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone

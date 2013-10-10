@@ -1320,6 +1320,17 @@ datum/design/synthetic_flash
 	build_path = "/obj/item/device/flash/synthetic"
 	category = "Misc"
 
+datum/design/bluespacebeaker
+	name = "Bluespace Beaker"
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 500 units."
+	id = "bluespacebeaker"
+	req_tech = list("plasma" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 750, "$plasma" = 750)
+	reliability_base = 76
+	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
+	category = "Misc"
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
