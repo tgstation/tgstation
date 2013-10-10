@@ -25,7 +25,9 @@
 /obj/item/projectile/beam/xray
 	name = "xray beam"
 	icon_state = "xray"
-	damage = 30
+	damage = 15
+	irradiate = 30
+	forcedodge = 1
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
