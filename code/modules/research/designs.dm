@@ -1326,7 +1326,7 @@ datum/design/bluespacebeaker
 	id = "bluespacebeaker"
 	req_tech = list("plasma" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 750, "$plasma" = 750)
+	materials = list("$metal" = 3000, "$plasma" = 3000)
 	reliability_base = 76
 	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
 	category = "Misc"
