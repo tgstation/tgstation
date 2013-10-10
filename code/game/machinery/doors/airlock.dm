@@ -82,7 +82,7 @@
 
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorele.dmi'
-	opacity = 0
+	opacity = 1
 	doortype = 8
 
 /obj/machinery/door/airlock/vault
