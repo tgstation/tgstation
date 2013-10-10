@@ -152,8 +152,8 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
-	name = "split beaker"
-	desc = "A split beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	name = "cryostasis beaker"
+	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	g_amt = 500
 	volume = 50
