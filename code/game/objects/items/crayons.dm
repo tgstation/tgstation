@@ -4,11 +4,13 @@
 	shadeColour = "#810C0C"
 	colourName = "red"
 
+
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#FF9300"
 	shadeColour = "#A55403"
 	colourName = "orange"
+
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
@@ -16,11 +18,14 @@
 	shadeColour = "#886422"
 	colourName = "yellow"
 
+
+
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#A8E61D"
 	shadeColour = "#61840F"
 	colourName = "green"
+
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
@@ -28,11 +33,14 @@
 	shadeColour = "#0082A8"
 	colourName = "blue"
 
+
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#DA00FF"
 	shadeColour = "#810CFF"
 	colourName = "purple"
+
+
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile
 	faction = "hostile"
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
-	var/target
+	var/atom/target
 	var/attack_same = 0
 	var/ranged = 0
 	var/rapid = 0
@@ -11,7 +11,7 @@
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
 	var/vision_range = 10
-	var/idle_env_destroyer = 1
+	var/idle_env_destroyer = 0
 	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
@@ -46,7 +46,7 @@
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)
 	target = new_target
-	if(target != null || src.idle_env_destroyer == 1)
+	if(target != null)
 		stance = HOSTILE_STANCE_ATTACK
 	return
 
@@ -79,7 +79,7 @@
 	if(!(target in ListTargets()))
 		LostTarget()
 		return 0
-	if(get_dist(src, target) <= 1)	//Attacking
+	if(isturf(loc) && target.Adjacent(src))	//Attacking
 		AttackingTarget()
 		return 1
 
@@ -134,6 +134,8 @@
 			if(HOSTILE_STANCE_IDLE)
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
+				if(idle_env_destroyer)
+					DestroySurroundings()
 
 			if(HOSTILE_STANCE_ATTACK)
 				DestroySurroundings()
@@ -144,6 +146,7 @@
 				AttackTarget()
 
 /mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
+
 	var/target = the_target
 	visible_message("\red <b>[src]</b> fires at [target]!", 1)
 
@@ -166,8 +169,7 @@
 		if(casingtype)
 			new casingtype
 
-	stance = HOSTILE_STANCE_IDLE
-	target = null
+	LoseTarget()
 	return
 
 
@@ -191,6 +193,8 @@
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	for(var/dir in cardinal) // North, South, East, West
-		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
-			obstacle.attack_animal(src)
+		for(var/obj/structure/obstacle in get_step(src, dir))
+			if(!obstacle.Adjacent(src))
+				continue
+			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+				obstacle.attack_animal(src)
