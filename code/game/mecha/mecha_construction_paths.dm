@@ -86,7 +86,7 @@
 	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/reversible/mecha/ripley(const_holder)
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
@@ -100,6 +100,7 @@
 
 /datum/construction/reversible/mecha/ripley
 	result = "/obj/mecha/working/ripley"
+	taskpath = /datum/job_objective/make_ripley
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -272,7 +273,7 @@
 					holder.icon_state = "ripley12"
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_ripley_created",1)
 		return
@@ -297,7 +298,7 @@
 	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/reversible/mecha/gygax(const_holder)
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
@@ -554,7 +555,7 @@
 					holder.icon_state = "gygax18"
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_gygax_created",1)
 		return
@@ -578,7 +579,7 @@
 	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/reversible/mecha/firefighter(const_holder)
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
@@ -778,7 +779,7 @@
 					holder.icon_state = "fireripley13"
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_firefighter_created",1)
 		return
@@ -803,7 +804,7 @@
 		del used_atom
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/mecha/honker(const_holder)
 		const_holder.density = 1
@@ -857,7 +858,7 @@
 				del used_atom
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_honker_created",1)
 		return
@@ -880,7 +881,7 @@
 	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/reversible/mecha/durand(const_holder)
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
@@ -1137,7 +1138,7 @@
 					holder.icon_state = "durand18"
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_durand_created",1)
 		return
@@ -1163,7 +1164,7 @@
 	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/reversible/mecha/odysseus(const_holder)
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
@@ -1349,7 +1350,7 @@
 					holder.icon_state = "odysseus12"
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_odysseus_created",1)
 		return
@@ -1532,7 +1533,7 @@
 		holder.icon_state="phazon_[index-diff]"
 		return 1
 
-	spawn_result()
+	spawn_result(mob/user as mob)
 		..()
 		feedback_inc("mecha_phazon_created",1)
 		return

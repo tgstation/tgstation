@@ -99,10 +99,11 @@
 				count++
 				var/msg=""
 				var/pay=0
-				if(objective.per_unit && objective.units_needing_compensation>0)
-					var/newunits = objective.units_needing_compensation
+				if(objective.per_unit && objective.units_compensated<objective.units_completed)
+					var/newunits = objective.units_completed - objective.units_compensated
 					msg="We see that you completed [newunits] new unit[newunits>1?"s":""] for Task #[count]! "
 					pay=objective.completion_payment * newunits
+					objective.units_compensated += newunits
 				else if(!objective.completed)
 					if(objective.is_completed())
 						pay=objective.completion_payment

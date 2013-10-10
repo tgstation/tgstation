@@ -6,6 +6,7 @@
 	var/atom/holder
 	var/result
 	var/list/steps_desc
+	var/taskpath = null // Path of job objective completed.
 
 	New(atom)
 		..()
@@ -16,10 +17,10 @@
 		set_desc(steps.len)
 		return
 
-	proc/next_step()
+	proc/next_step(mob/user as mob)
 		steps.len--
 		if(!steps.len)
-			spawn_result()
+			spawn_result(user)
 		else
 			set_desc(steps.len)
 		return
@@ -31,7 +32,7 @@
 		var/valid_step = is_right_key(used_atom)
 		if(valid_step)
 			if(custom_action(valid_step, used_atom, user))
-				next_step()
+				next_step(user)
 				return 1
 		return 0
 
@@ -52,20 +53,17 @@
 					steps[i]=null;//stupid byond list from list removal...
 					listclearnulls(steps);
 					if(!steps.len)
-						spawn_result()
+						spawn_result(user)
 					return 1
 		return 0
 
 
 	proc/spawn_result(mob/user as mob)
 		if(result)
-			// PAY ME
-			var/taskpath=null
-			switch(result)
-				if(/obj/mecha/working/ripley)
-					taskpath = /datum/job_objective/make_ripley
+			testing("[user] finished a [result]!")
 			if(taskpath)
 				var/datum/job_objective/task = user.mind.findJobTask(taskpath)
+				testing("task is [task==null?"null":task]")
 				if(istype(task))
 					task.unit_completed()
 
@@ -87,10 +85,10 @@
 		index = steps.len
 		return
 
-	proc/update_index(diff as num)
+	proc/update_index(diff as num, mob/user as mob)
 		index+=diff
 		if(index==0)
-			spawn_result()
+			spawn_result(user)
 		else
 			set_desc(index)
 		return
@@ -107,7 +105,7 @@
 		var/diff = is_right_key(used_atom)
 		if(diff)
 			if(custom_action(index, diff, used_atom, user))
-				update_index(diff)
+				update_index(diff,user)
 				return 1
 		return 0
 
