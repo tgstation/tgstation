@@ -122,7 +122,7 @@
 	examine()
 		set src in usr
 
-		src.desc = text("There are [] caps\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
+		src.desc = text("There are [] cap\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
 		..()
 		return
 
@@ -133,14 +133,14 @@
 				user << "\blue It's already fully loaded!"
 				return 1
 			if (A.amount_left <= 0)
-				user << "\red There is no more caps!"
+				user << "\red There are no more caps!"
 				return 1
 			if (A.amount_left < (7 - src.bullets))
 				src.bullets += A.amount_left
-				user << text("\red You reload [] caps\s!", A.amount_left)
+				user << text("\red You reload [] cap\s!", A.amount_left)
 				A.amount_left = 0
 			else
-				user << text("\red You reload [] caps\s!", 7 - src.bullets)
+				user << text("\red You reload [] cap\s!", 7 - src.bullets)
 				A.amount_left -= 7 - src.bullets
 				src.bullets = 7
 			A.update_icon()
@@ -175,7 +175,7 @@
 
 	update_icon()
 		src.icon_state = text("357-[]", src.amount_left)
-		src.desc = text("There are [] caps\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
+		src.desc = text("There are [] cap\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
 		return
 
 /*
