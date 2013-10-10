@@ -175,14 +175,14 @@ var/global/list/image/fluidtrack_cache=list()
 		updatedtracks=0 // Clear our memory of updated tracks.
 
 /obj/effect/decal/cleanable/blood/tracks/footprints
-	name = "bloody footprints"
+	name = "wet footprints"
 	desc = "Whoops..."
 	coming_state = "human1"
 	going_state  = "human2"
 	amount = 0
 
 /obj/effect/decal/cleanable/blood/tracks/wheels
-	name = "bloody tracks"
+	name = "wet tracks"
 	desc = "Whoops..."
 	coming_state = "wheels"
 	going_state  = ""
