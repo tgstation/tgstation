@@ -35,9 +35,8 @@ field_generator power level display
 
 /obj/machinery/field_generator/update_icon()
 	overlays.Cut()
-	if(!active)
-		if(warming_up)
-			overlays += "+a[warming_up]"
+	if(warming_up)
+		overlays += "+a[warming_up]"
 	if(fields.len)
 		overlays += "+on"
 	// Power level indicator
@@ -80,8 +79,11 @@ field_generator power level display
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
-				user << "You are unable to turn off the [src.name] once it is online."
-				return 1
+				user.visible_message("[user.name] turns off the [src.name]", \
+					"You turn off the [src.name].", \
+					"Droning disappeared")
+				turn_off()
+				investigate_log("<font color='green'>deactivated</font> by [user.key].","singulo")
 			else
 				user.visible_message("[user.name] turns on the [src.name]", \
 					"You turn on the [src.name].", \
@@ -89,7 +91,7 @@ field_generator power level display
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 
-				src.add_fingerprint(user)
+			src.add_fingerprint(user)
 	else
 		user << "The [src] needs to be firmly secured to the floor first."
 		return
@@ -181,21 +183,20 @@ field_generator power level display
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = 0
-	spawn(1)
-		src.cleanup()
-	update_icon()
+	src.cleanup()
+	while (warming_up>0 && !active)
+		sleep(50)
+		warming_up--
+		update_icon()
 
 /obj/machinery/field_generator/proc/turn_on()
 	active = 1
-	warming_up = 1
-	spawn(1)
-		while (warming_up<3 && active)
-			sleep(50)
-			warming_up++
-			update_icon()
-			if(warming_up >= 3)
-				start_fields()
-	update_icon()
+	while (warming_up<3 && active)
+		sleep(50)
+		warming_up++
+		update_icon()
+		if(warming_up >= 3)
+			start_fields()
 
 
 /obj/machinery/field_generator/proc/calc_power()
