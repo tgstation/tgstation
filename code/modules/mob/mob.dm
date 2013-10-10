@@ -1167,6 +1167,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(spell_list && spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
+			if(istype(S, /obj/effect/proc_holder/spell/noclothes))
+				continue //Not showing the noclothes spell
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
