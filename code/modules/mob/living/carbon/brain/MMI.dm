@@ -23,27 +23,30 @@
 	var/obj/item/organ/brain/brain = null //The actual brain
 
 /obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O,/obj/item/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
-		if(!O:brainmob)
+	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/brain/newbrain = O
+		if(brain)
+			user << "\red There's already a brain in the MMI!"
+			return
+		if(!newbrain.brainmob)
 			user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."
 			return
-		for(var/mob/V in viewers(src, null))
-			V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+		visible_message("\blue [user] sticks \a [newbrain] into \the [src]")
 
-		brainmob = O:brainmob
-		O:brainmob = null
+		brainmob = newbrain.brainmob
+		newbrain.brainmob = null
 		brainmob.loc = src
 		brainmob.container = src
 		brainmob.stat = 0
-		dead_mob_list -= brainmob//Update dem lists
+		dead_mob_list -= brainmob //Update dem lists
 		living_mob_list += brainmob
 
 		user.drop_item()
-		O.loc = src //P-put your brain in it
-		brain = O
+		newbrain.loc = src //P-put your brain in it
+		brain = newbrain
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
-		if(istype(O,/obj/item/organ/brain/alien))
+		if(istype(newbrain,/obj/item/organ/brain/alien))
 			icon_state = "mmi_alien"
 		else
 			icon_state = "mmi_full"
@@ -90,8 +93,13 @@
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna
+	if(check_dna_integrity(H))
+		brainmob.dna = H.dna
 	brainmob.container = src
+
+	var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+	newbrain.loc = src
+	brain = newbrain
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_full"
