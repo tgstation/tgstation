@@ -1639,11 +1639,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "tcomsatcham"
 
 /area/tcomms/chamber
-	name = "\improper Telecoms Central Compartment"
+	name = "\improper Telecoms Chamber"
 	icon_state = "ai"
 
 /area/tcomms/storage
-	name = "\improper Telecoms Central Compartment"
+	name = "\improper Telecoms Storage"
 	icon_state = "primarystorage"
 
 /area/turret_protected/tcomms_control_room
