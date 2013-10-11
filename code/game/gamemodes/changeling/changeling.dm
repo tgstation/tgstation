@@ -170,18 +170,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)
-		var/text = "<FONT size = 2><B>The changelings were:</B></FONT>"
+		var/text = "<br><b><FONT size=3><B>The changelings were:</B></FONT>"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
 
-			text += "<br>[changeling.key] was [changeling.name] ("
+			text += "<br><b>[changeling.key]</b> was <b>[changeling.name]</b> ("
 			if(changeling.current)
 				if(changeling.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(changeling.current.real_name != changeling.name)
-					text += " as [changeling.current.real_name]"
+					text += " as <b>[changeling.current.real_name]</b>"
 			else
 				text += "body destroyed"
 				changelingwin = 0
@@ -209,6 +209,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			else
 				text += "<br><font color='red'><B>The changeling has failed.</B></font>"
 				feedback_add_details("changeling_success","FAIL")
+			text += "<br>"
 
 		world << text
 

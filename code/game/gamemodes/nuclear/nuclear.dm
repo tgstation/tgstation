@@ -298,21 +298,22 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
-		var/text = "<FONT size = 2><B>The syndicate operatives were:</B></FONT>"
+		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 
 		for(var/datum/mind/syndicate in syndicates)
 
-			text += "<br>[syndicate.key] was [syndicate.name] ("
+			text += "<br><b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("
 			if(syndicate.current)
 				if(syndicate.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(syndicate.current.real_name != syndicate.name)
-					text += " as [syndicate.current.real_name]"
+					text += " as <b>[syndicate.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
+		text += "<br>"
 
 		world << text
 	return 1
