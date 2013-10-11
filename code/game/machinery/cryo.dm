@@ -19,9 +19,8 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/Del()
 	eject_contents()
-	var/obj/item/weapon/reagent_containers/glass/B = beaker
-	B.loc = get_step(loc, SOUTH)
-	..()
+	..() 
+
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
 	var/node_connect = dir
