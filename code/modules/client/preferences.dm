@@ -45,7 +45,6 @@ datum/preferences
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
-	var/disability = 9					//disability type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -166,7 +165,6 @@ datum/preferences
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
-				dat += "<b>Disability:</b><BR><a href='?_src_=prefs;preference=disability;task=input'>[disabilitylist[disability]]</a><BR>"
 
 
 				dat += "</td><td valign='top' width='28%'>"
@@ -537,8 +535,6 @@ datum/preferences
 						skin_tone = random_skin_tone()
 					if("bag")
 						backbag = rand(1,3)
-					if("disability")
-						disability = rand(1,9)
 					if("all")
 						random_character()
 
@@ -624,10 +620,6 @@ datum/preferences
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
 
-					if("disability")
-						var/new_disability = input(user, "Choose your disability type:", "Character Preference") as null|anything in disabilitylist
-						if(new_disability)
-							disability = disabilitylist.Find(new_disability)
 			else
 				switch(href_list["preference"])
 					if("publicity")
@@ -731,10 +723,6 @@ datum/preferences
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above
 		character.backbag = backbag
-
-		if(disability > 9 || disability < 1)
-			disability = 9 //Same as above
-		character.disability = disability
 
 		/*
 		//Debugging report to track down a bug, which randomly assigned the plural gender to people.

@@ -19,7 +19,6 @@
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
-	var/disability = 9  //What kind of disability the playet wants at roundstart. Epilepsy, Near-sightedness, Blindness, Clumsiness, Stammering, Deafness or None.
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
