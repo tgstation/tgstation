@@ -1321,7 +1321,7 @@ datum/design/synthetic_flash
 	category = "Misc"
 
 datum/design/bluespacebeaker
-	name = "Bluespace Beaker"
+	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
 	req_tech = list("bluespace" = 2, "materials" = 6)
@@ -1332,7 +1332,7 @@ datum/design/bluespacebeaker
 	category = "Misc"
 
 datum/design/noreactbeaker
-	name = "Cryostasis Beaker"
+	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	id = "splitbeaker"
 	req_tech = list("materials" = 2)

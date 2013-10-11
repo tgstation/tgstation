@@ -158,7 +158,6 @@
 	g_amt = 500
 	volume = 50
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
