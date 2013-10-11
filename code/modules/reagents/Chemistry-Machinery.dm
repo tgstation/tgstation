@@ -135,7 +135,7 @@
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
-			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
+			var/obj/item/weapon/reagent_containers/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
 
@@ -151,21 +151,21 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/B as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
 
-	if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+	if(!istype(B, /obj/item/weapon/reagent_containers))
 		return
 
 	if(src.beaker)
-		user << "A beaker is already loaded into the machine."
+		user << "Something is already loaded into the machine."
 		return
 
 	src.beaker =  B
 	user.drop_item()
 	B.loc = src
-	user << "You add the beaker to the machine!"
+	user << "You set [B] on the machine."
 	nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
@@ -179,7 +179,19 @@
 		return
 
 	ui_interact(user)
+/obj/machinery/chem_dispenser/soda
+	name = "soda fountain"
+	desc = "A drink fabricating machine, capable of producing many sugary drinks with just one touch."
+	energy = 100
+	max_energy = 100
+	dispensable_reagents = list("water","ice","coffee","tea","icetea","space_cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_line","sugar","orangejuice","limejuice","lemonjuice","tomatojuice","banana","berryjuice","potato_juice","watermelonjuice","carrotjuice")
 
+/obj/machinery/chem_dispenser/beer
+	name = "booze-o-mat"
+	energy = 100
+	max_energy = 100
+	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
+	dispensable_reagents = list("water","ice","coffee","tea","cream","sodawater","lemon_line","sugar","orangejuice","limejuice","lemonjuice","tomatojuice","banana","berryjuice","potato_juice","cola","sodawater","tonic","watermelonjuice","carrotjuice","beer","kahlua","whisky","wine","vodka","gin","rum","tequila","vermouth","cognac","ale","goldschlager","patron","mead")
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
