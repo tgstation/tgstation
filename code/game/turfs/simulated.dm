@@ -83,8 +83,8 @@
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(8)
-						M.Weaken(5)
+						M.Stun(5)
+						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
@@ -94,8 +94,8 @@
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(8)
-						M.Weaken(5)
+						M.Stun(5)
+						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
@@ -120,7 +120,7 @@
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(4)
-						M.Weaken(5)
+						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
@@ -131,7 +131,7 @@
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(4)
-						M.Weaken(5)
+						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
