@@ -1322,11 +1322,11 @@ datum/design/synthetic_flash
 
 datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 500 units."
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
-	req_tech = list("bluespace" = 2, "materials" = 4)
+	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$plasma" = 3000)
+	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
 	reliability_base = 76
 	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
 	category = "Misc"
