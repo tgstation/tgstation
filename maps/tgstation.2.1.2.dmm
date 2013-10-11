@@ -1841,7 +1841,7 @@
 "aJu" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aJv" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 4},/obj/item/device/radio/intercom{pixel_y = 25},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aJw" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
-"aJx" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/machinery/chem_dispenser/beer,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
+"aJx" = (/obj/item/weapon/packageWrap,/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/structure/table,/obj/item/weapon/reagent_containers/glass/rag,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aJy" = (/obj/machinery/door/airlock{name = "Kitchen cold room"; req_access_txt = "28"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aJz" = (/obj/machinery/atmospherics/pipe/simple{pipe_color = "blue"; icon_state = "intact-b-f"; level = 1; name = "pipe"},/turf/simulated/wall,/area/crew_quarters/kitchen)
 "aJA" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{dir = 9; icon_state = "green"},/area/hydroponics)
@@ -2053,10 +2053,10 @@
 "aNy" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aNz" = (/obj/structure/table/reinforced,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aNA" = (/obj/effect/landmark/start{name = "Bartender"},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
-"aNB" = (/obj/machinery/requests_console{department = "Bar"; departmentType = 2; pixel_x = 30; pixel_y = 0},/obj/machinery/camera{c_tag = "Bar"; dir = 8; network = list("SS13")},/obj/machinery/chem_dispenser/soda,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
+"aNB" = (/obj/machinery/requests_console{department = "Bar"; departmentType = 2; pixel_x = 30; pixel_y = 0},/obj/item/weapon/book/manual/barman_recipes,/obj/machinery/camera{c_tag = "Bar"; dir = 8; network = list("SS13")},/obj/structure/table,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aNC" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 4; icon_state = "off"; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aND" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/mint,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
-"aNE" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/obj/machinery/chem_dispenser/soda,/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
+"aNE" = (/obj/structure/table,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aNF" = (/obj/structure/table,/obj/item/weapon/kitchen/rollingpin,/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aNG" = (/obj/machinery/atmospherics/pipe/simple{pipe_color = "blue"; icon_state = "intact-b-f"; level = 1; name = "pipe"},/obj/structure/table,/obj/item/weapon/book/manual/chef_recipes,/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aNH" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
@@ -2126,7 +2126,7 @@
 "aOT" = (/obj/machinery/camera{c_tag = "Bridge East Entrance"; dir = 2},/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/hallway/primary/central)
 "aOU" = (/obj/machinery/hologram/holopad,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "aOV" = (/obj/structure/table/reinforced,/obj/item/clothing/head/that{throwforce = 1; throwing = 1},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
-"aOW" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/pie,/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/obj/item/weapon/book/manual/barman_recipes,/obj/item/weapon/reagent_containers/glass/rag,/obj/item/weapon/packageWrap,/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
+"aOW" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/pie,/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aOX" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/condiment/enzyme{layer = 5},/obj/item/weapon/packageWrap,/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aOY" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets{pixel_x = 3; pixel_y = 3},/obj/item/weapon/reagent_containers/glass/beaker{pixel_x = 5},/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aOZ" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -3; pixel_y = 0},/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 3},/turf/simulated/floor{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
@@ -9514,4 +9514,3 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
-
