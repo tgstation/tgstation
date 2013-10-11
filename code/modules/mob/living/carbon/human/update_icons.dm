@@ -161,7 +161,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	overlays_standing[DAMAGE_LAYER]	= standing
 	overlays_lying[DAMAGE_LAYER]	= lying
 
-	for(var/datum/limb/O in organs)
+	for(var/obj/item/organ/limb/O in organs)
 		if(O.brutestate)
 			standing.overlays	+= "[O.icon_name]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
 			lying.overlays		+= "[O.icon_name]2_[O.brutestate]0"

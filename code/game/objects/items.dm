@@ -501,7 +501,7 @@
 			"\red You stab yourself in the eyes with [src]!" \
 		)
 	if(istype(M, /mob/living/carbon/human))
-		var/datum/limb/affecting = M:get_organ("head")
+		var/obj/item/organ/limb/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
 			M:update_damage_overlays(0)
 	else
