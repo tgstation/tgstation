@@ -142,6 +142,29 @@
 		src.updateUsrDialog()
 
 
+	verb/rotate_clock()
+		set category = "Object"
+		set name = "Rotate Freezer (Clockwise)"
+		set src in view(1)
+
+		if (usr.stat || usr.restrained()  || anchored)
+			return
+
+		src.dir = turn(src.dir, 90)
+		initialize_directions = dir
+
+	verb/rotate_anticlock()
+		set category = "Object"
+		set name = "Rotate Freezer (Counterclockwise)"
+		set src in view(1)
+
+		if (usr.stat || usr.restrained()  || anchored)
+			return
+
+		src.dir = turn(src.dir, -90)
+		initialize_directions = dir
+
+
 
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
@@ -283,3 +306,26 @@
 	process()
 		..()
 		src.updateUsrDialog()
+
+
+	verb/rotate_clock()
+		set category = "Object"
+		set name = "Rotate Heater (Clockwise)"
+		set src in view(1)
+
+		if (usr.stat || usr.restrained()  || anchored)
+			return
+
+		src.dir = turn(src.dir, 90)
+		initialize_directions = dir
+
+	verb/rotate_anticlock()
+		set category = "Object"
+		set name = "Rotate Heater (Counterclockwise)"
+		set src in view(1)
+
+		if (usr.stat || usr.restrained()  || anchored)
+			return
+
+		src.dir = turn(src.dir, -90)
+		initialize_directions = dir

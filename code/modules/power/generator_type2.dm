@@ -114,14 +114,14 @@
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator_type2.dm:113: t += "Output : [round(lastgen)] W<BR><BR>"
 	t += {"Output : [round(lastgen)] W<BR><BR>
-		<B>Cold loop</B><BR>
-		Temperature: [round(input1.air_contents.temperature, 0.1)] K<BR>
-		Pressure: [round(input1.air_contents.return_pressure(), 0.1)] kPa<BR>
-		<B>Hot loop</B><BR>
-		Temperature: [round(input2.air_contents.temperature, 0.1)] K<BR>
-		Pressure: [round(input2.air_contents.return_pressure(), 0.1)] kPa<BR>
-		<BR><HR><A href='?src=\ref[src];close=1'>Close</A>
-		</PRE>"}
+<B>Cold loop</B><BR>
+Temperature: [round(input1.air_contents.temperature, 0.1)] K<BR>
+Pressure: [round(input1.air_contents.return_pressure(), 0.1)] kPa<BR>
+<B>Hot loop</B><BR>
+Temperature: [round(input2.air_contents.temperature, 0.1)] K<BR>
+Pressure: [round(input2.air_contents.return_pressure(), 0.1)] kPa<BR>
+<BR><HR><A href='?src=\ref[src];close=1'>Close</A>
+</PRE>"}
 	// END AUTOFIX
 	user << browse(t, "window=teg;size=460x300")
 	onclose(user, "teg")
