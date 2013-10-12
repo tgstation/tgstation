@@ -430,6 +430,38 @@
 					icon_state = "dr_gibb_glass"
 					name = "Glass of welder fuel"
 					desc = "Unless you are an industrial tool, this is probably not safe for consumption."
+				if("goone")
+					icon_state = "goone"
+					name = "Goone"
+					desc = "God, this drink is old!"
+				if("marsduster")
+					icon_state = "marsduster"
+					name = "Mars Duster"
+					desc = "It reminds you of the long lost fourty second outpost on Mars."
+				if("europeanfreeze")
+					icon_state = "europeanfreeze"
+					name = "European Freeze"
+					desc = "Reminds you of the old abandoned Sealab on Europa."
+				if("catte")
+					icon_state = "catte"
+					name = "Catte"
+					desc = "The tg-4407 Extermination of the Tajara went exceedingly well."
+				if("stickyresidue")
+					icon_state = "stickyresidue"
+					name = "Sticky Residue"
+					desc = "The leftover milk of a Pricey woman."
+				if("moonmixture")
+					icon_state = "moonmixture"
+					name = "Moon Mixture"
+					desc = "SPACE MADDEN, SPACE MADDEN, SPACE MADDEN."
+				if("assserpent")
+					icon_state = "assserpent"
+					name = "Ass Serpent"
+					desc = "Created from the nether regions of space serpents."
+				if("publicreader")
+					icon_state = "publicreader"
+					name = "Public Reader"
+					desc = "Guaranteed to get you lynched!"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
