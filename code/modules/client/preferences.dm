@@ -619,7 +619,6 @@ datum/preferences
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
-
 			else
 				switch(href_list["preference"])
 					if("publicity")
