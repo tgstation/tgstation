@@ -155,7 +155,7 @@
 	if(isrobot(user))
 		return
 
-	if(!istype(B, /obj/item/weapon/reagent_containers))
+	if(!istype(B, /obj/item/weapon/reagent_containers/glass||/obj/item/weapon/reagent_containers/food))
 		return
 
 	if(src.beaker)
