@@ -191,7 +191,7 @@
 	energy = 100
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
-	dispensable_reagents = list("water","ice","coffee","tea","cream","sodawater","lemon_line","sugar","orangejuice","limejuice","lemonjuice","tomatojuice","banana","berryjuice","potato_juice","cola","sodawater","tonic","watermelonjuice","carrotjuice","beer","kahlua","whisky","wine","vodka","gin","rum","tequila","vermouth","cognac","ale","goldschlager","patron","mead")
+	dispensable_reagents = list("water","ice","coffee","tea","cream","lemon_line","sugar","orangejuice","limejuice","lemonjuice","tomatojuice","banana","berryjuice","potato_juice","cola","sodawater","tonic","watermelonjuice","carrotjuice","beer","kahlua","whisky","wine","vodka","gin","rum","tequila","vermouth","cognac","ale","goldschlager","patron","mead")
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
