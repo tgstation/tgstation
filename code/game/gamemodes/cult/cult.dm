@@ -36,7 +36,7 @@
 
 	var/list/startwords = list("blood","join","self","hell")
 	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
-	
+
 	var/list/objectives = list()
 
 	var/eldergod = 1 //for the summon god objective
@@ -213,8 +213,8 @@
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
-		memorize_cult_objectives(cult_mind)
 		return
+	memorize_cult_objectives(cult_mind)
 
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
