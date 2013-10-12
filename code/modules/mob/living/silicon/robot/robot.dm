@@ -104,6 +104,19 @@
 			camera.status = 0
 	..()
 
+	//MMI stuff. Held togheter by magic. ~Miauw
+	mmi = new(src)
+	mmi.brain = new /obj/item/organ/brain(mmi)
+	mmi.brain.name = "[src.real_name]'s brain"
+	mmi.locked = 1
+	mmi.icon_state = "mmi_full"
+	mmi.name = "Man-Machine Interface: [src.real_name]"
+	mmi.brainmob = new(src)
+	mmi.brainmob.name = src.real_name
+	mmi.brainmob.real_name = src.real_name
+	mmi.brainmob.container = mmi
+	mmi.contents += mmi.brainmob
+
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 
