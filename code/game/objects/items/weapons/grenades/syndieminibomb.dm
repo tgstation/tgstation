@@ -8,5 +8,5 @@
 
 /obj/item/weapon/grenade/syndieminibomb/prime()
 	update_mob()
-	explosion(src.loc,1,2,4,,,,4)
+	explosion(src.loc,1,2,4,null,null,null,4)
 	del(src)

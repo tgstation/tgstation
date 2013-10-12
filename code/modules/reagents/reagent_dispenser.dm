@@ -97,7 +97,7 @@
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2,,,,2)
+			explosion(src.loc,-1,0,2,null,null,null,2)
 			if(src)
 				del(src)
 

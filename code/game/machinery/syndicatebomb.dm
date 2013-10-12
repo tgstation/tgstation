@@ -23,7 +23,7 @@
 		active = 0
 		timer = 60
 		processing_objects.Remove(src)
-		explosion(src.loc,2,5,11,,,,11)
+		explosion(src.loc,2,5,11,null,null,null,11)
 		del(src)
 		return
 	if(!active || defused)					//Counter terrorists win
