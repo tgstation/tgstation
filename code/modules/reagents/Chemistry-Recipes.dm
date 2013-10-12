@@ -1756,6 +1756,55 @@ datum
 			required_reagents = list("vodka" = 2, "orangejuice" = 1)
 			result_amount = 3
 
+		marsduster
+			name = "Mars Duster"
+			id = "marsduster"
+			result = "marsduster"
+			required_reagents = list("carbon" = 1, "iron" = 1, "nitrogen" = 1)
+			result_amount = 3
+		europeanfreeze
+			name = "European Freeze"
+			id = "europeanfreeze"
+			result = "europeanfreeze"
+			required_reagents = list("antifreeze" = 1, "water" = 1, "ice" = 1)
+			result_amount = 3
+		stickyresidue
+			name = "Sticky Residue"
+			id = "stickyresidue"
+			result = "stickyresidue"
+			required_reagents = list("neurotoxin" = 1, "watermelonjuice" = 1, "mercury" = 1, "ice" = 1, "milk" = 1, "cream" = 1)
+			result_amount = 3
+		moonmixture
+			name = "Moon Mixture"
+			id = "moonmixture"
+			result = "moonmixture"
+			required_reagents = list("ice" = 1, "carbon" = 1, "fuel" = 1)
+			result_amount = 3
+		catte
+			name = "Catte"
+			id = "catte"
+			result = "catte"
+			required_reagents = list("cream" = 1, "milk" = 1,"blood" = 1)
+			result_amount = 3
+		publicreader
+			name = "Public Reader"
+			id = "publicreader"
+			result = "publicreader"
+			required_reagents = list("lemonjuice" = 1, "cream" = 1)
+			result_amount = 3
+		assserpent
+			name = "Ass Serpent"
+			id = "assserpent"
+			result = "assserpent"
+			required_reagents = list("gold" = 1, "neurotoxin" = 1)
+			result_amount = 3
+		goone
+			name = "Goone"
+			id = "goone"
+			result = "goone"
+			required_reagents = list("water" = 1, "salt" = 1)
+			result_amount = 3
+
 		bloody_mary
 			name = "Bloody Mary"
 			id = "bloodymary"
