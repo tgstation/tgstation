@@ -7,6 +7,7 @@
 # Replace FOLDER/FOLDER with the folder on the FTP server where you want to store tgstation.rsc, for example: cd www/rsc
 # Replace FTP.DOMAIN.COM with the IP-address or domain name of your FTP server
 # Add the URL to the location of tgstation.rsc on your webserver into data\external_rsc_urls.txt
+#
 @echo off
 echo user USERNAME> ftpcmd.dat
 echo PASSWORD>> ftpcmd.dat
