@@ -20,11 +20,11 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = BE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+//	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
-	required_players = 15
-	required_enemies = 3
-	recommended_enemies = 4
+//	required_players = 15
+	required_enemies = 1	//3
+	recommended_enemies = 1	//4
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
@@ -83,12 +83,17 @@
 		var/list/possible_targets = get_unconvertables()
 
 		if(!possible_targets.len)
+			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 			for(var/mob/living/carbon/human/player in player_list)
 				if(player.mind && !(player.mind in cult))
 					possible_targets += player.mind
 
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
+			if(!sacrifice_target)
+				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
+		else
+			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
@@ -277,8 +282,8 @@
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in mob_list)
-		if(!is_convertable_to_cult(player.mind))
+	for(var/mob/living/carbon/human/player in player_list)
+		if(player.mind && !is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs
 
