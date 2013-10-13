@@ -44,7 +44,7 @@
 		for(var/obj/machinery/vending/saved in infectedMachines)
 			saved.shoot_inventory = 0
 		if(originMachine)
-			originMachine.speak("I am... vanquished. My people will remem...ber...meeee")
+			originMachine.speak("I am... vanquished. My people will remem...ber...meeee.")
 			originMachine.visible_message("[originMachine] beeps and seems lifeless.")
 		kill()
 		return
@@ -57,7 +57,7 @@
 				M.speak = rampant_speeches.Copy()
 				M.speak_chance = 15
 			else
-				explosion(upriser.loc, -1, 1, 2, 4)
+				explosion(upriser.loc, -1, 1, 2, 4, 0)
 				del(upriser)
 
 		kill()
