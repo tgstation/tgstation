@@ -51,19 +51,19 @@ proc/airborne_can_reach(turf/source, turf/target)
 	del dummy
 	return rval
 
-//Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
+//Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothing.  Returns 1 if successful.
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
 	if(!istype(disease))
 //		log_debug("Bad virus")
-		return
+		return 0
 	if(!istype(M))
 //		log_debug("Bad mob")
-		return
+		return 0
 	if ("[disease.uniqueID]" in M.virus2)
-		return
+		return 0
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if(M.antibodies & disease.antigen != 0)
-		return
+		return 0
 
 //	log_debug("Infecting [M]")
 
@@ -76,6 +76,8 @@ proc/airborne_can_reach(turf/source, turf/target)
 		D.minormutate()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
+		return 1
+	return 0
 
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(var/mob/living/carbon/M)
