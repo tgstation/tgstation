@@ -248,15 +248,15 @@
 	else if (!station_captured &&  malf_dead && !station_was_nuked)
 		feedback_set_details("round_end_result","loss - staff win")
 		world << "<FONT size = 3><B>Human Victory</B></FONT>"
-		world << "<B>The AI has been killed!</B> The staff is victorious."
+		world << "<B>The AI has been destroyed!</B> The staff is victorious."
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - evacuated")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
+		world << "<B>The Corporation has lost [station_name()]! All survived personnel will be fired!</B>"
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
-		feedback_set_details("round_end_result","nalfwin - interrupted")
+		feedback_set_details("round_end_result","halfwin - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
 	..()
@@ -265,21 +265,22 @@
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
-		var/text = "<FONT size = 2><B>The malfunctioning AI were:</B></FONT>"
+		var/text = "<br><FONT size=3><B>The malfunctioning AI were:</B></FONT>"
 
 		for(var/datum/mind/malf in malf_ai)
 
-			text += "<br>[malf.key] was [malf.name] ("
+			text += "<br><b>[malf.key]</b> was <b>[malf.name]</b> ("
 			if(malf.current)
 				if(malf.current.stat == DEAD)
 					text += "deactivated"
 				else
 					text += "operational"
 				if(malf.current.real_name != malf.name)
-					text += " as [malf.current.real_name]"
+					text += " as <b>[malf.current.real_name]</b>"
 			else
 				text += "hardware destroyed"
 			text += ")"
+		text += "<br>"
 
 		world << text
 	return 1
