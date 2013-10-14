@@ -107,6 +107,7 @@ GUEST_BAN
 # USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
+# Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 # SERVER ss13.example.com:2506
 
 ## forum address
