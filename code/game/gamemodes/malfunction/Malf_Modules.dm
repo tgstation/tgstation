@@ -1,5 +1,4 @@
 
-
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -102,8 +101,8 @@
 /datum/AI_Module/small/override_machine
 	module_name = "Machine override"
 	mod_pick_name = "override"
-	description = "Overrides a machine's programming, causing it to rise up attack everyone except you (WARNING: It will attack cyborgs). 2 uses."
-	uses = 2
+	description = "Overrides a machine's programming, causing it to rise up attack everyone except you (WARNING: It will attack cyborgs). 4 uses."
+	uses = 4
 	cost = 15
 
 	power_type = /mob/living/silicon/ai/proc/override_machine
