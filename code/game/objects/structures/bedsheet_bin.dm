@@ -95,7 +95,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cmo
 	name = "chief medical officer's bedsheet"
-	desc = "It's a steralized blanket that has a cross emblem.  There's some cat fur on it, likely from Runtime."
+	desc = "It's a sterilized blanket that has a cross emblem.  There's some cat fur on it, likely from Runtime."
 	icon_state = "sheetcmo"
 	item_color = "cmo"
 
@@ -119,7 +119,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/qm
 	name = "quartermaster's bedsheet"
-	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard say of pushing paper."
+	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	item_color = "qm"
 
@@ -129,7 +129,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/centcom
 	name = "centcom bedsheet"
-	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essental for all officials."
+	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
 	item_color = "centcom"
 
@@ -141,7 +141,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
-	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an elderich presence."
+	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
 	item_color = "cult"
 
