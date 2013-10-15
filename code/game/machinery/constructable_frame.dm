@@ -388,6 +388,128 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/weapon/cable_coil" = 2,)
+							
+/obj/item/weapon/circuitboard/biogenerator
+	name = "Circuit Board (Biogenerator)"
+	build_path = "/obj/machinery/biogenerator"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3"
+	frame_desc = "Requires 2 Manipulators, 3 Cable Coil, 2 Matter Bins, 3 Micro-Lasers, 2 Scanning Modules,2 Console Screens, and 1 Large Beaker.   "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 2,
+							"/obj/item/weapon/reagent_containers/glass/beaker/large" = 1)
+
+/obj/item/weapon/circuitboard/seed_extractor
+	name = "Circuit Board (Seed Extractor)"
+	build_path = "/obj/machinery/seed_extractor"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3"
+	frame_desc = "Requires 2 Manipulators, 3 Cable Coil, 1 Matter Bins, 1 Micro-Lasers, 1 Scanning Modules, and 1 Console Screens.   "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/microwave
+	name = "Circuit Board (Microwave)"
+	build_path = "/obj/machinery/microwave"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;magnets=3"
+	frame_desc = "Requires 3 Cable Coil, 3 Matter Bins, 3 Micro-Lasers, 2 Scanning Modules, and 1 Console Screens.   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 3,
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/reagentgrinder
+	name = "Circuit Board (All-In-One Grinder)"
+	build_path = "/obj/machinery/reagentgrinder"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2"
+	frame_desc = "Requires 3 Cable Coil, 2 Matter Bins, 1 Micro-Lasers, 1 Scanning Modules, and 1 Large Beaker.   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/reagent_containers/glass/beaker/large" = 1)	
+																		
+/obj/item/weapon/circuitboard/smartfridge
+	name = "Circuit Board (SmartFridge)"
+	build_path = "/obj/machinery/smartfridge"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2"
+	frame_desc = "Requires 3 Cable Coil, 2 Manipulators, 4 Matter Bins, ,1 Scanning Module, and 2 Console Screens.   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 4,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,	
+							"/obj/item/weapon/stock_parts/console_screen" = 2)			
+							
+/obj/item/weapon/circuitboard/hydroponics
+	name = "Circuit Board (Hydroponics Tray)"
+	build_path = "/obj/machinery/hydroponics"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
+	frame_desc = "Requires 3 Cable Coil, 2 Matter Bins, 1 Scanning Module, 2 Beakers, 1 Capacitor, and 1 Console Screen.   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,	
+							"/obj/item/weapon/stock_parts/capacitor" = 1,
+							"/obj/item/weapon/reagent_containers/glass/beaker" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)				
+							
+/obj/item/weapon/circuitboard/gibber
+	name = "Circuit Board (gibber)"
+	build_path = "/obj/machinery/gibber"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
+	frame_desc = "Requires 3 Cable Coil, 2 Matter Bins, 2 Capacitors, 2 Scanning Module, 4 Manipulator and 4 High Powered Micro-Lasers   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 4,
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 4,)
+
+/obj/item/weapon/circuitboard/hydroseeds
+	name = "Circuit Board (MegaSeed Servitor)"
+	build_path = "/obj/machinery/vending/hydroseeds"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
+	frame_desc = "Requires 3 Cable Coil, 2 Matter Bins, 1 Capacitors, 2 Scanning Module, and 2 Manipulators   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,)	
+							
+/obj/item/weapon/circuitboard/hydronutrients
+	name = "Circuit Board (Nutrimax)"
+	build_path = "/obj/machinery/vending/hydronutrients"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
+	frame_desc = "Requires 3 Cable Coil, 2 Matter Bins, 1 Capacitors, 2 Scanning Module, and 2 Manipulators   "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 3,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,)
 
 
 // Telecomms circuit boards:
