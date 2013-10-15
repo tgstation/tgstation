@@ -172,10 +172,6 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/robot_parts/p = tool
-		if (p.part)
-			if (!(target_zone in p.part))
-				return 0
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && affected.status & ORGAN_ATTACHABLE
 
