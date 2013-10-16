@@ -266,9 +266,10 @@
 
 /obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
-		for(var/obj/item/I in O)
-			if(!accept_check(I))
-				return 0
+		if(O.contents.len)
+			for(var/obj/item/I in O)
+				if(!accept_check(I))
+					return 0
 			return 1
 		return 0
 	if(!istype(O,/obj/item/weapon/reagent_containers))
