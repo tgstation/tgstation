@@ -27,6 +27,7 @@
 	var/const/STATE_STATUSDISPLAY = 7
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
+	var/const/STATE_TOGGLE_EMERGENCY = 10
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -160,6 +161,26 @@
 		if("status")
 			src.state = STATE_STATUSDISPLAY
 
+		if("securitylevel")
+			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+			if(!tmp_alertlevel) tmp_alertlevel = 0
+			state = STATE_CONFIRM_LEVEL
+		if("changeseclevel")
+			state = STATE_ALERT_LEVEL
+
+		if("emergencyaccess")
+			state = STATE_TOGGLE_EMERGENCY
+		if("enableemergency")
+			make_maint_all_access()
+			log_game("[key_name(usr)] enabled emergency maintenance access.")
+			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+			src.state = STATE_DEFAULT
+		if("disableemergency")
+			revoke_maint_all_access()
+			log_game("[key_name(usr)] disabled emergency maintenance access.")
+			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+			src.state = STATE_DEFAULT
+
 		// Status display stuff
 		if("setstat")
 			switch(href_list["statdisp"])
@@ -251,15 +272,40 @@
 		if("ai-status")
 			src.aistate = STATE_STATUSDISPLAY
 
-		if("securitylevel")
+		if("ai-securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
-			state = STATE_CONFIRM_LEVEL
+			var/old_level = security_level
+			if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
+			if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
+			if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
+			set_security_level(tmp_alertlevel)
+			if(security_level != old_level)
+				//Only notify the admins if an actual change happened
+				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
+				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+				switch(security_level)
+					if(SEC_LEVEL_GREEN)
+						feedback_inc("alert_comms_green",1)
+					if(SEC_LEVEL_BLUE)
+						feedback_inc("alert_comms_blue",1)
+			tmp_alertlevel = 0
+			src.aistate = STATE_DEFAULT
+		if("ai-changeseclevel")
+			src.aistate = STATE_ALERT_LEVEL
 
-		if("changeseclevel")
-			state = STATE_ALERT_LEVEL
-
-
+		if("ai-emergencyaccess")
+			src.aistate = STATE_TOGGLE_EMERGENCY
+		if("ai-enableemergency")
+			make_maint_all_access()
+			log_game("[key_name(usr)] enabled emergency maintenance access.")
+			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+			src.aistate = STATE_DEFAULT
+		if("ai-disableemergency")
+			revoke_maint_all_access()
+			log_game("[key_name(usr)] disabled emergency maintenance access.")
+			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+			src.aistate = STATE_DEFAULT
 
 	src.updateUsrDialog()
 
@@ -304,16 +350,9 @@
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
-				if (src.authenticated==2)
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
-					if(src.emagged == 0)
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A> \]"
-					else
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageSyndicate'>Send an emergency message to \[UNKNOWN\]</A> \]"
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
-
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change alert level</A> \]"
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
+				dat += "<BR><B>General Functions</B>"
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
 				if(emergency_shuttle.location==0)
 					if (emergency_shuttle.online)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
@@ -321,9 +360,18 @@
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
+				if (src.authenticated==2)
+					dat += "<BR><BR><B>Captain Functions</B>"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Priority Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
+					if(src.emagged == 0)
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send Message to Centcom</A> \]"
+					else
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
 			else
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=login'>Log In</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_CANCELSHUTTLE)
@@ -370,8 +418,15 @@
 			dat += "Current alert level: [get_security_level()]<BR>"
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
+		if(STATE_TOGGLE_EMERGENCY)
+			if(emergency_access == 1)
+				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
+				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=\ref[src];operation=disableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
+			else
+				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
+				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 
-	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
+	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	//user << browse(dat, "window=communications;size=400x500")
 	//onclose(user, "communications")
 	popup.set_content(dat)
@@ -384,10 +439,12 @@
 	var/dat = ""
 	switch(src.aistate)
 		if(STATE_DEFAULT)
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
 			if(emergency_shuttle.location==0 && !emergency_shuttle.online)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=ai-callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-main'>Cancel</A> \]"
 		if(STATE_MESSAGELIST)
@@ -422,8 +479,23 @@
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
 
+		if(STATE_ALERT_LEVEL)
+			dat += "Current alert level: [get_security_level()]<BR>"
+			if(security_level == SEC_LEVEL_DELTA)
+				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
+			else
+				dat += "<A HREF='?src=\ref[src];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
+				dat += "<A HREF='?src=\ref[src];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
 
-	dat += "<BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
+		if(STATE_TOGGLE_EMERGENCY)
+			if(emergency_access == 1)
+				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
+				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=\ref[src];operation=ai-disableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
+			else
+				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
+				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=ai-enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
+
+	dat += "<BR><BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
 
@@ -449,12 +521,13 @@
 
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
 		emergency_shuttle.incall(0.6)
+		captain_announce("The emergency shuttle has been called. Red Alert state confirmed: Dispatching priority shuttle. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	else
 		emergency_shuttle.incall()
+		captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return
