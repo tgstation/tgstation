@@ -55,7 +55,7 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	
+
 	if(stat || paralysis || stunned || weakened)
 		return
 
@@ -65,6 +65,8 @@
 		return
 
 	if(istype(loc,/obj/mecha))
+		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
+			return
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
 
