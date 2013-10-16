@@ -186,52 +186,70 @@ datum/hud/New(mob/owner)
 	else if(isovermind(mymob))
 		blob_hud()
 
+	if(istype(mymob.loc,/obj/mecha))
+		hide_hud()
+
+
+/datum/hud/proc/hide_hud() // hide hands is not currently used by anything but could be
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
+	if(hud_shown)
+		hud_shown = 0
+		if(adding)
+			mymob.client.screen -= adding
+		if(other)
+			mymob.client.screen -= other
+		if(hotkeybuttons)
+			mymob.client.screen -= hotkeybuttons
+		if(item_action_list)
+			mymob.client.screen -= item_action_list
+
+		//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+		mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+
+		//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
+		mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
+		mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
+		mymob.client.screen += action_intent		//we want the intent swticher visible
+		action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+
+		hidden_inventory_update()
+		persistant_inventory_update()
+		mymob.update_action_buttons()
+
+/datum/hud/proc/show_hud()
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
+	if(!hud_shown)
+		hud_shown = 1
+		if(adding)
+			mymob.client.screen += adding
+		if(other && inventory_shown)
+			mymob.client.screen += other
+		if(hotkeybuttons && !hotkey_ui_hidden)
+			mymob.client.screen += hotkeybuttons
+
+		action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+		mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
+		hidden_inventory_update()
+		persistant_inventory_update()
+		mymob.update_action_buttons()
+
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1
 
-	if(hud_used)
+	if(hud_used && client)
 		if(ishuman(src))
-			if(!src.client) return
-
 			if(hud_used.hud_shown)
-				hud_used.hud_shown = 0
-				if(src.hud_used.adding)
-					src.client.screen -= src.hud_used.adding
-				if(src.hud_used.other)
-					src.client.screen -= src.hud_used.other
-				if(src.hud_used.hotkeybuttons)
-					src.client.screen -= src.hud_used.hotkeybuttons
-				if(src.hud_used.item_action_list)
-					src.client.screen -= src.hud_used.item_action_list
-
-				//Due to some poor coding some things need special treatment:
-				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
-				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-
-				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
-
+				hud_used.hide_hud()
 			else
-				hud_used.hud_shown = 1
-				if(src.hud_used.adding)
-					src.client.screen += src.hud_used.adding
-				if(src.hud_used.other && src.hud_used.inventory_shown)
-					src.client.screen += src.hud_used.other
-				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
-					src.client.screen += src.hud_used.hotkeybuttons
-
-
-				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-				src.client.screen += src.zone_sel				//This one is a special snowflake
-
-			hud_used.hidden_inventory_update()
-			hud_used.persistant_inventory_update()
-			update_action_buttons()
+				hud_used.show_hud()
 		else
 			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
 	else
