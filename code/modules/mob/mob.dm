@@ -656,7 +656,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"MasterController-ERROR")
 
 	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
+		if(get_dist(listed_turf,src) > 1)
 			listed_turf = null
 		else
 			statpanel(listed_turf.name, null, listed_turf)

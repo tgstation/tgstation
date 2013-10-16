@@ -6,11 +6,10 @@
 	max_occurrences = 6
 
 /datum/round_event/carp_migration
-	announceWhen	= 3
-	startWhen = 50
+	announceWhen	= 50
 
 /datum/round_event/carp_migration/setup()
-	startWhen = rand(40, 60)
+	announceWhen = rand(40, 60)
 
 /datum/round_event/carp_migration/announce()
 	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")

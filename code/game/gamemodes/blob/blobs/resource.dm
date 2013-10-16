@@ -7,28 +7,20 @@
 	var/mob/camera/blob/overmind = null
 	var/resource_delay = 0
 
-/obj/effect/blob/resource/update_icon()
-	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Delete()
+	update_icon()
+		if(health <= 0)
+			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			Delete()
+			return
 		return
-	return
 
-/obj/effect/blob/resource/PulseAnimation(var/activate = 0)
-	if(activate)
-		..()
-	return
+	run_action()
+		if(resource_delay > world.time)
+			return 0
 
-/obj/effect/blob/resource/run_action()
+		resource_delay = world.time + 40 // 4 seconds
 
-	if(resource_delay > world.time)
-		return 0
-
-	PulseAnimation(1)
-
-	resource_delay = world.time + 40 // 4 seconds
-
-	if(overmind)
-		overmind.add_points(1)
-	return 1
+		if(overmind)
+			overmind.add_points(1)
+		return 1
 

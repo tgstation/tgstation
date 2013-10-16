@@ -355,10 +355,10 @@
 	var/list/targets = list()
 
 	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
+		var/text = "<FONT size = 2><B>The head revolutionaries were:</B></FONT>"
 
 		for(var/datum/mind/headrev in head_revolutionaries)
-			text += "<br><b>[headrev.key]</b> was <b>[headrev.name]</b> ("
+			text += "<br>[headrev.key] was [headrev.name] ("
 			if(headrev.current)
 				if(headrev.current.stat == DEAD)
 					text += "died"
@@ -367,22 +367,21 @@
 				else
 					text += "survived the revolution"
 				if(headrev.current.real_name != headrev.name)
-					text += " as <b>[headrev.current.real_name]</b>"
+					text += " as [headrev.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"
 
 			for(var/datum/objective/mutiny/objective in headrev.objectives)
 				targets |= objective.target
-		text += "<br>"
 
 		world << text
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
+		var/text = "<FONT size = 2><B>The revolutionaries were:</B></FONT>"
 
 		for(var/datum/mind/rev in revolutionaries)
-			text += "<br><b>[rev.key]</b> was <b>[rev.name]</b> ("
+			text += "<br>[rev.key] was [rev.name] ("
 			if(rev.current)
 				if(rev.current.stat == DEAD)
 					text += "died"
@@ -391,24 +390,23 @@
 				else
 					text += "survived the revolution"
 				if(rev.current.real_name != rev.name)
-					text += " as <b>[rev.current.real_name]</b>"
+					text += " as [rev.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"
-		text += "<br>"
 
 		world << text
 
 
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
-		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
+		var/text = "<FONT size = 2><B>The heads of staff were:</B></FONT>"
 
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
 				text += "<font color='red'>"
-			text += "<br><b>[head.key]</b> was <b>[head.name]</b> ("
+			text += "<br>[head.key] was [head.name] ("
 			if(head.current)
 				if(head.current.stat == DEAD)
 					text += "died"
@@ -417,13 +415,12 @@
 				else
 					text += "survived the revolution"
 				if(head.current.real_name != head.name)
-					text += " as <b>[head.current.real_name]</b>"
+					text += " as [head.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"
 			if(target)
 				text += "</font>"
-		text += "<br>"
 
 		world << text
 

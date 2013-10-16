@@ -35,8 +35,9 @@ field_generator power level display
 
 /obj/machinery/field_generator/update_icon()
 	overlays.Cut()
-	if(warming_up)
-		overlays += "+a[warming_up]"
+	if(!active)
+		if(warming_up)
+			overlays += "+a[warming_up]"
 	if(fields.len)
 		overlays += "+on"
 	// Power level indicator
@@ -182,13 +183,11 @@ field_generator power level display
 	active = 0
 	spawn(1)
 		src.cleanup()
-		while (warming_up>0 && !active)
-			sleep(50)
-			warming_up--
-			update_icon()
+	update_icon()
 
 /obj/machinery/field_generator/proc/turn_on()
 	active = 1
+	warming_up = 1
 	spawn(1)
 		while (warming_up<3 && active)
 			sleep(50)
@@ -196,6 +195,7 @@ field_generator power level display
 			update_icon()
 			if(warming_up >= 3)
 				start_fields()
+	update_icon()
 
 
 /obj/machinery/field_generator/proc/calc_power()

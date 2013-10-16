@@ -172,18 +172,18 @@
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
-		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
+		var/text = "<FONT size = 2><B>The [traitor_name]s were:</B></FONT>"
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b> ("
+			text += "<br>[traitor.key] was [traitor.name] ("
 			if(traitor.current)
 				if(traitor.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(traitor.current.real_name != traitor.name)
-					text += " as <b>[traitor.current.real_name]</b>"
+					text += " as [traitor.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"
@@ -212,7 +212,6 @@
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
-			text += "<br>"
 
 		world << text
 	return 1
