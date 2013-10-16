@@ -44,6 +44,6 @@ datum/game_mode/proc/auto_declare_completion_blob()
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
 
 			for(var/datum/mind/blob in blob_mode.infected_crew)
-				text += "<br>[blob.key] was [blob.name]"
+				text += "<br><b>[blob.key]</b> was <b>[blob.name]</b>"
 			world << text
 		return 1
