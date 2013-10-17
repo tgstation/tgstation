@@ -17,6 +17,7 @@
 
 /obj/item/weapon/ore/glass
 	name = "Sand"
+	desc = "Pocket Sand!"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	w_class = 2 //sand is smaller than other ores(also: POCKET SAND!).
