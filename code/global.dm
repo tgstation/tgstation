@@ -142,6 +142,7 @@ var/MAX_EX_DEVESTATION_RANGE = 3
 var/MAX_EX_HEAVY_RANGE = 7
 var/MAX_EX_LIGHT_RANGE = 14
 var/MAX_EX_FLASH_RANGE = 14
+var/MAX_EX_FLAME_RANGE = 14
 
 var/list/liftable_structures = list(
 	/obj/machinery/autolathe,
