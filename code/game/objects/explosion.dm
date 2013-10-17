@@ -7,7 +7,7 @@
 	else		return dy + (0.5*dx)
 
 
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0)
+proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0)
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
 
@@ -17,6 +17,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		heavy_impact_range = min (MAX_EX_HEAVY_RANGE, heavy_impact_range)
 		light_impact_range = min (MAX_EX_LIGHT_RANGE, light_impact_range)
 		flash_range = min (MAX_EX_FLASH_RANGE, flash_range)
+		flame_range = min (MAX_EX_FLAME_RANGE, flame_range)
 
 	spawn(0)
 		if(config.use_recursive_explosions)
@@ -32,8 +33,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		if(!epicenter) return
 
 		if(adminlog)
-			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
-			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
+			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ")
 
 		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
@@ -54,19 +55,33 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range)))
+		for(var/turf/T in range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range, flame_range)))
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
+			var/flame_dist = 0
+			var/hotspot_exists
+
+			if(dist < flame_range)
+				flame_dist = 1
 
 			if(dist < devastation_range)		dist = 1
 			else if(dist < heavy_impact_range)	dist = 2
 			else if(dist < light_impact_range)	dist = 3
-			else								continue
+			else 								dist = 0
 
-			T.ex_act(dist)
+			if(flame_dist && prob(40) && !istype(T, /turf/space))
+				new /obj/effect/hotspot(T) //Mostly for ambience!
+				hotspot_exists = 1
+			if(dist)
+				T.ex_act(dist)
 			if(T)
 				for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
 					var/atom/movable/AM = atom_movable
-					if(AM)	AM.ex_act(dist)
+					if(flame_dist)
+						if(isliving(AM) && !hotspot_exists && !istype(T, /turf/space))
+							new /obj/effect/hotspot(AM.loc)
+							//Just in case we missed a mob while they were in flame_range, but a hotspot didn't spawn on them, otherwise it looks weird when you just burst into flame out of nowhere
+					if(dist)
+						AM.ex_act(dist)
 
 		var/took = (world.timeofday-start)/10
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
