@@ -10,6 +10,7 @@ LINEN BINS
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sheet"
 	item_state = "bedsheet"
+	slot_flags = SLOT_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1
@@ -49,6 +50,8 @@ LINEN BINS
 	item_color = "purple"
 
 /obj/item/weapon/bedsheet/rainbow
+	name = "rainbow bedsheet"
+	desc = "A multicolored blanket.  It's actually several different sheets cut up and sewn together."
 	icon_state = "sheetrainbow"
 	item_color = "rainbow"
 
@@ -61,42 +64,92 @@ LINEN BINS
 	item_color = "yellow"
 
 /obj/item/weapon/bedsheet/mime
+	name = "mime's blanket"
+	desc = "A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this."
 	icon_state = "sheetmime"
 	item_color = "mime"
 
 /obj/item/weapon/bedsheet/clown
+	name = "clown's blanket"
+	desc = "A rainbow blanket with a clown mask woven in.  It smells faintly of bananas."
 	icon_state = "sheetclown"
 	item_color = "clown"
 
 /obj/item/weapon/bedsheet/captain
+	name = "captain's bedsheet."
+	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
 	icon_state = "sheetcaptain"
 	item_color = "captain"
 
 /obj/item/weapon/bedsheet/rd
+	name = "research director's bedsheet"
+	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
 	item_color = "director"
 
 /obj/item/weapon/bedsheet/medical
+	name = "medical blanket"
+	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
 	icon_state = "sheetmedical"
 	item_color = "medical"
 
+/obj/item/weapon/bedsheet/cmo
+	name = "chief medical officer's bedsheet"
+	desc = "It's a sterilized blanket that has a cross emblem.  There's some cat fur on it, likely from Runtime."
+	icon_state = "sheetcmo"
+	item_color = "cmo"
+
 /obj/item/weapon/bedsheet/hos
+	name = "head of security's bedsheet"
+	desc = "It is decorated with a shield emblem.  While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
 	item_color = "hosred"
 
 /obj/item/weapon/bedsheet/hop
+	name = "head of personnel's bedsheet"
+	desc = "It is decorated with a key emblem.  For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
 	icon_state = "sheethop"
 	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
+	name = "chief engineer's bedsheet"
+	desc = "It is decorated with a wrench emblem.  It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
 	item_color = "chief"
 
+/obj/item/weapon/bedsheet/qm
+	name = "quartermaster's bedsheet"
+	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
+	icon_state = "sheetqm"
+	item_color = "qm"
+
 /obj/item/weapon/bedsheet/brown
 	icon_state = "sheetbrown"
-	item_color = "brown"
+	item_color = "cargo"
 
+/obj/item/weapon/bedsheet/centcom
+	name = "centcom bedsheet"
+	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
+	icon_state = "sheetcentcom"
+	item_color = "centcom"
 
+/obj/item/weapon/bedsheet/syndie
+	name = "syndicate bedsheet"
+	desc = "It has a syndicate emblem and it has an aura of evil."
+	icon_state = "sheetsyndie"
+	item_color = "syndie"
+
+/obj/item/weapon/bedsheet/cult
+	name = "cultist's bedsheet"
+	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an eldritch presence."
+	icon_state = "sheetcult"
+	item_color = "cult"
+
+/obj/item/weapon/bedsheet/wiz
+	name = "wizard's bedsheet"
+	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
+	icon_state = "sheetwiz"
+	item_color = "wiz"
 
 
 /obj/structure/bedsheetbin
