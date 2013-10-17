@@ -97,7 +97,7 @@
 	return owner.dna
 
 /proc/check_dna_integrity(mob/living/carbon/character)
-	if(!istype(character))
+	if(!(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
 		return
 	if(!character.dna)
 		if(ready_dna(character))
