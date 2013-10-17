@@ -97,19 +97,19 @@
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2)
+			explosion(src.loc,-1,0,2, flame_range = 2)
 			if(src)
 				del(src)
 
 
 
 	blob_act()
-		explosion(src.loc,0,1,5,7,10)
+		explosion(src.loc,0,1,5,7,10, flame_range = 5)
 		if(src)
 			del(src)
 
 	ex_act()
-		explosion(src.loc,-1,0,2)
+		explosion(src.loc,-1,0,2, flame_range = 2)
 		if(src)
 			del(src)
 
