@@ -950,7 +950,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr) || usr.restrained())
+	if (usr.stat || !ishuman(usr) || usr.restrained() || !usr.Adjacent(src))
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
