@@ -74,7 +74,7 @@
 					break
 			if(i<10)
 				user << "\blue You empty the plant bag into the biogenerator."
-	if (istype(O, /obj/item/weapon/screwdriver))
+	else if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
 			src.opened = 1
 			user << "You open the maintenance hatch of [src]."
