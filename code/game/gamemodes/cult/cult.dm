@@ -36,7 +36,7 @@
 
 	var/list/startwords = list("blood","join","self","hell")
 	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
-	
+
 	var/list/objectives = list()
 
 	var/eldergod = 1 //for the summon god objective
@@ -83,12 +83,17 @@
 		var/list/possible_targets = get_unconvertables()
 
 		if(!possible_targets.len)
+			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 			for(var/mob/living/carbon/human/player in player_list)
 				if(player.mind && !(player.mind in cult))
 					possible_targets += player.mind
 
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
+			if(!sacrifice_target)
+				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
+		else
+			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
@@ -213,8 +218,8 @@
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
-		memorize_cult_objectives(cult_mind)
 		return
+	memorize_cult_objectives(cult_mind)
 
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
@@ -277,8 +282,8 @@
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in mob_list)
-		if(!is_convertable_to_cult(player.mind))
+	for(var/mob/living/carbon/human/player in player_list)
+		if(player.mind && !is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs
 

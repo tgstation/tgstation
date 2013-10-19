@@ -467,9 +467,9 @@
 		return
 
 	if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
-		if (emergency_shuttle.timeleft() < 180)
+		if (emergency_shuttle.timeleft() < SHUTTLEARRIVETIME / 4)
 			return
-	else if (emergency_shuttle.timeleft() < 300)
+	else if (emergency_shuttle.timeleft() < SHUTTLEARRIVETIME / 2)
 		return
 
 
