@@ -1489,6 +1489,12 @@ datum
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
 				return
+		Cream
+			name = "Cream"
+			id = "cream"
+			result = "cream"
+			required_reagents = list("milk" = 10,"sacid" = 1)
+			result_amount = 5
 
 		syntiflesh
 			name = "Syntiflesh"

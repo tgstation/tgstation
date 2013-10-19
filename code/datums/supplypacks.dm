@@ -993,3 +993,29 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Beekeeping crate"
 	access = access_hydroponics
 	group = "Hydroponics"
+	
+/datum/supply_packs/Hydroponics_Trays
+	name = "Hydroponic Trays Components Crate"
+	contains = list(
+					/obj/item/weapon/circuitboard/hydroponics,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/capacitor,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/console_screen,
+					/obj/item/weapon/circuitboard/hydroponics,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/capacitor,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/console_screen)
+	cost = 12
+	containertype = /obj/structure/closet/crate/hydroponics
+	containername = "Hydroponic Trays Components Crate"
+	access = access_hydroponics
+	group = "Hydroponics"	
+
