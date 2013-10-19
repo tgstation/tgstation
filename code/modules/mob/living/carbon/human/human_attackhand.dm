@@ -179,6 +179,10 @@
 				apply_effect(4, WEAKEN, run_armor_check(affecting, "melee"))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has pushed [src]!</B>")
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Pushed [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been pushed by [M.name] ([M.ckey])</font>")
+
+				log_attack("[M.name] ([M.ckey]) pushed [src.name] ([src.ckey])")
 				return
 
 			var/talked = 0	// BubbleWrap
