@@ -60,6 +60,10 @@ obj/machinery/gibber/New()
 				I.loc = src.loc
 			del(src)
 			return 1
+	if(istype(O,/obj/item/weapon/grab))
+		return handleGrab(O,user)
+	else
+		user << "\red This item is not suitable for the gibber!"
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -141,7 +145,8 @@ obj/machinery/gibber/New()
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+// OLD /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
