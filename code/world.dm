@@ -145,6 +145,7 @@
 		s["players"] = n
 
 		s["revision"] = revdata.revision
+		s["revision_date"] = revdata.date
 		s["admins"] = admins
 
 		return list2params(s)

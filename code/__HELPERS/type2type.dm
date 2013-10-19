@@ -300,3 +300,57 @@ proc/tg_list2text(list/list, glue=",")
 	if(2*hue < 1)	return b
 	if(3*hue < 2)	return (a+(b-a)*((2/3)-hue)*6)
 	return a
+
+// Very ugly, BYOND doesn't support unix time and rounding errors make it really hard to convert it to BYOND time.
+// returns "YYYY-MM-DD" by default
+/proc/unix2date(timestamp, seperator = "-")
+
+	if(timestamp < 0)
+		return 0 //Do not accept negative values
+
+	var/year = 1970 //Unix Epoc begins 1970-01-01
+	var/dayInSeconds = 86400 //60secs*60mins*24hours
+	var/daysInYear = 365 //Non Leap Year
+	var/daysInLYear = daysInYear + 1//Leap year
+	var/days = round(timestamp / dayInSeconds) //Days passed since UNIX Epoc
+	var/tmpDays = days + 1 //If passed (timestamp < dayInSeconds), it will return 0, so add 1
+	var/monthsInDays = list() //Months will be in here ***Taken from the PHP source code***
+	var/month = 1 //This will be the returned MONTH NUMBER.
+	var/day //This will be the returned day number.
+
+	while(tmpDays > daysInYear) //Start adding years to 1970
+		year++
+		if(isLeap(year))
+			tmpDays -= daysInLYear
+		else
+			tmpDays -= daysInYear
+
+	if(isLeap(year)) //The year is a leap year
+		monthsInDays = list(-1,30,59,90,120,151,181,212,243,273,304,334)
+	else
+		monthsInDays = list(0,31,59,90,120,151,181,212,243,273,304,334)
+
+	var/mDays = 0;
+	var/monthIndex = 0;
+
+	for(var/m in monthsInDays)
+		monthIndex++
+		if(tmpDays > m)
+			mDays = m
+			month = monthIndex
+
+	day = tmpDays - mDays //Setup the date
+
+	return "[year][seperator][((month < 10) ? "0[month]" : month)][seperator][((day < 10) ? "0[day]" : day)]"
+
+/*
+var/list/test_times = list("December" = 1323522004, "August" = 1123522004, "January" = 1011522004,
+						   "Jan Leap" = 946684800, "Jan Normal" = 978307200, "New Years Eve" = 1009670400,
+						   "New Years" = 1009836000, "New Years 2" = 1041372000, "New Years 3" = 1104530400,
+						   "July Month End" = 744161003, "July Month End 12" = 1343777003, "End July" = 1091311200)
+for(var/t in test_times)
+	world.log << "TEST: [t] is [unix2date(test_times[t])]"
+*/
+
+/proc/isLeap(y)
+	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
