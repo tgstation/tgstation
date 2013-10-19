@@ -19,8 +19,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	RefreshParts()
 	src.initialize(); //Agouri
 
@@ -289,8 +289,8 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:289: dat += "[S.name] || "
-				dat += {"[S.name] || 
-					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | 
+				dat += {"[S.name] ||
+					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> |
 					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
 				// END AUTOFIX
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
@@ -331,7 +331,7 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:319: dat += "* [T.name] "
-				dat += {"* [T.name] 
+				dat += {"* [T.name]
 					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings"}
 				// END AUTOFIX
 			dat += "Known Designs<BR>"
@@ -339,7 +339,7 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:323: dat += "* [D.name] "
-				dat += {"* [D.name] 
+				dat += {"* [D.name]
 					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
 				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
