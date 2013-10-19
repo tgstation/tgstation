@@ -11,6 +11,10 @@
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/teleporter
+	RefreshParts()
+
 	return
 
 
@@ -144,9 +148,59 @@
 	desc = "It's the hub of a teleporting machine."
 	icon_state = "tele0"
 	var/accurate = 0
+	var/opened = 0.0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+
+/obj/machinery/teleport/hub/attackby(obj/item/weapon/O as obj, mob/user as mob)
+	if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			src.opened = 0
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+			return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/teleport/hub/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telehub
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
+	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
+	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter
+	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment
+	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal
+	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	RefreshParts()
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -273,12 +327,56 @@
 	icon_state = "controller"
 	var/active = 0
 	var/engaged = 0
+	var/opened = 0.0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W)
-	src.attack_hand()
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+obj/machinery/teleport/station/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telestation
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
+	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
+	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
+	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
+	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
+	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
+	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
+	RefreshParts()
+
+
+/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, var/mob/user as mob)
+	if (istype(W, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			src.opened = 0
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+			return 1
+	else if(istype(W, /obj/item/weapon/crowbar))
+		if (opened)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+	else src.attack_hand()
 
 /obj/machinery/teleport/station/attack_paw()
 	src.attack_hand()
