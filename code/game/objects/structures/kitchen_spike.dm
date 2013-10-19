@@ -1,7 +1,7 @@
 //////Kitchen Spike
 
 /obj/structure/kitchenspike
-	name = "a meat spike"
+	name = "meat spike"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals"
@@ -19,7 +19,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		if(occupied)
-			user << "\red You can't disassemble the [src] with meat and gore all over it."
+			user << "\red You can't disassemble [src] with meat and gore all over it."
 			return
 		new /obj/item/stack/sheet/metal( user.loc )
 		del(src)
