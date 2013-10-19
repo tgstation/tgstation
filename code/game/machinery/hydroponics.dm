@@ -23,6 +23,19 @@
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
 
+/obj/machinery/hydroponics/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/hydroponics
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
 		if(planted)
