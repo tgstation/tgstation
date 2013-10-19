@@ -78,3 +78,12 @@
 					usr << "You remove the last piece of meat from the alien!"
 					src.icon_state = "spike"
 					src.occupied = 0
+					
+/obj/structure/kitchenspike/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(src.occupied == 0)
+		if (istype(W, /obj/item/weapon/wrench))
+			new /obj/item/stack/sheet/metal( user.loc )
+			del(src)
+			return
+		return

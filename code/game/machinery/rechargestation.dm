@@ -12,6 +12,13 @@
 	New()
 		..()
 		build_icon()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/recharge_station
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+		RefreshParts()
 
 	Del()
 		src.go_out()
