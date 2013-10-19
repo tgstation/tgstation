@@ -304,7 +304,7 @@ datum/design/chemmaster3000
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chemmaster3000
 
-datum/design/chemmaster3000
+datum/design/condimaster
 	name = "Circuit Design (CondiMaster)"
 	desc = "Allows for the cosntruction of circuit boards used to build CondiMasters"
 	id="condimaster"
