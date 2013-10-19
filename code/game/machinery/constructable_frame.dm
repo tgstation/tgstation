@@ -469,7 +469,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/gibber
-	name = "Circuit Board (gibber)"
+	name = "Circuit Board (Gibber)"
 	build_path = "/obj/machinery/gibber"
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
