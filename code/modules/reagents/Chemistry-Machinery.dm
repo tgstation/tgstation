@@ -337,10 +337,10 @@
 		src.updateUsrDialog()
 	else if(istype(B, /obj/item/weapon/screwdriver))
 		if(src.beaker)
-			user << "A beaker is loaded in [src]."
+			user << "\red A beaker is loaded in [src]."
 			return
 		if(src.loaded_pill_bottle)
-			user << "A pill bottle is loaded in [src]."
+			user << "\red A pill bottle is loaded in [src]."
 			return
 		if(!opened)
 			src.opened = 1
@@ -352,9 +352,13 @@
 			user << "You close the maintenance hatch of [src]."
 		return 1
 	if(opened)
-		if(src.beaker || src.loaded_pill_bottle)
-			return
 		if(istype(B, /obj/item/weapon/crowbar))
+			if(src.beaker)
+				user << "\red A beaker is loaded in [src]."
+				return
+			if(src.loaded_pill_bottle)
+				user << "\red A pill bottle is loaded in [src]."
+				return
 			user << "You begin to remove the circuits from the [src]."
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
@@ -1048,6 +1052,9 @@
 		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
+			if(beaker)
+				user << "\red A beaker is loaded, you cannot deconstruct [src]."
+				return 1
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
