@@ -271,7 +271,10 @@
 	R.my_atom = src
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
+	if(istype(src, /obj/machinery/chem_master/condimaster))
+		component_parts += new /obj/item/weapon/circuitboard/condimaster
+	else
+		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
 	component_parts += new /obj/item/weapon/stock_parts/manipulator
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module
@@ -334,10 +337,10 @@
 		src.updateUsrDialog()
 	else if(istype(B, /obj/item/weapon/screwdriver))
 		if(src.beaker)
-			user << "A beaker is loaded in [src]."
+			user << "\red A beaker is loaded in [src]."
 			return
 		if(src.loaded_pill_bottle)
-			user << "A pill bottle is loaded in [src]."
+			user << "\red A pill bottle is loaded in [src]."
 			return
 		if(!opened)
 			src.opened = 1
@@ -349,9 +352,13 @@
 			user << "You close the maintenance hatch of [src]."
 		return 1
 	if(opened)
-		if(src.beaker || src.loaded_pill_bottle)
-			return
 		if(istype(B, /obj/item/weapon/crowbar))
+			if(src.beaker)
+				user << "\red A beaker is loaded in [src]."
+				return
+			if(src.loaded_pill_bottle)
+				user << "\red A pill bottle is loaded in [src]."
+				return
 			user << "You begin to remove the circuits from the [src]."
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
@@ -1015,7 +1022,7 @@
 			return 0
 
 	if(holdingitems && holdingitems.len >= limit)
-		usr << "The machine cannot hold anymore items."
+		usr << "The machine cannot hold any more items."
 		return 1
 
 	//Fill machine with the plantbag!
@@ -1034,18 +1041,20 @@
 
 		src.updateUsrDialog()
 		return 0
-	if (istype(O, /obj/item/weapon/screwdriver))
+	else if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
-			src.opened = 1
 			user << "You open the maintenance hatch of [src]."
 			//src.icon_state = "autolathe_t"
 		else
-			src.opened = 0
 			user << "You close the maintenance hatch of [src]."
 			//src.icon_state = "autolathe"
-			return 1
+		opened = !opened
+		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
+			if(beaker)
+				user << "\red A beaker is loaded, you cannot deconstruct [src]."
+				return 1
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2

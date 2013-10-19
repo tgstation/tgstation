@@ -41,14 +41,13 @@ obj/machinery/gibber/New()
 /obj/machinery/gibber/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
-			src.opened = 1
 			user << "You open the maintenance hatch of [src]."
 			//src.icon_state = "autolathe_t"
 		else
-			src.opened = 0
 			user << "You close the maintenance hatch of [src]."
 			//src.icon_state = "autolathe"
-			return 1
+		opened = !opened
+		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -61,6 +60,10 @@ obj/machinery/gibber/New()
 				I.loc = src.loc
 			del(src)
 			return 1
+	if(istype(O,/obj/item/weapon/grab))
+		return handleGrab(O,user)
+	else
+		user << "\red This item is not suitable for the gibber!"
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -142,7 +145,8 @@ obj/machinery/gibber/New()
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+// OLD /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
