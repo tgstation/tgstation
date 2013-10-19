@@ -41,14 +41,13 @@ obj/machinery/gibber/New()
 /obj/machinery/gibber/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
-			src.opened = 1
 			user << "You open the maintenance hatch of [src]."
 			//src.icon_state = "autolathe_t"
 		else
-			src.opened = 0
 			user << "You close the maintenance hatch of [src]."
 			//src.icon_state = "autolathe"
-			return 1
+		opened = !opened
+		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
