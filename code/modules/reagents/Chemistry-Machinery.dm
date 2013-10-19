@@ -271,7 +271,10 @@
 	R.my_atom = src
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
+	if(istype(src, /obj/machinery/chem_master/condimaster))
+		component_parts += new /obj/item/weapon/circuitboard/condimaster
+	else
+		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
 	component_parts += new /obj/item/weapon/stock_parts/manipulator
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module

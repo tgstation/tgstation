@@ -304,6 +304,15 @@ datum/design/chemmaster3000
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chemmaster3000
 
+datum/design/chemmaster3000
+	name = "Circuit Design (CondiMaster)"
+	desc = "Allows for the cosntruction of circuit boards used to build CondiMasters"
+	id="condimaster"
+	req_tech = list ("engineering" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/condimaster
+
 datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
@@ -474,7 +483,7 @@ datum/design/aifixer
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aifixer
-	
+
 datum/design/pipedispenser
 	name = "Circuit Design (Pipe Dispenser)"
 	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
