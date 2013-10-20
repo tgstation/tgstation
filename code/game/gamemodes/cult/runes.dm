@@ -1018,22 +1018,60 @@ var/list/sacrificed = list()
 /////////////////////////////////////////TWENTY-FIFTH RUNE
 
 		armor()
+			var/list/armors = list("zealot", "summoner")
+			var/armorworn
+			
 			var/mob/living/carbon/human/user = usr
+			if(istype(user.wear_suit, /obj/item/clothing/suit/space) && istype(user.head, /obj/item/clothing/head/helmet/space))
+				armors += "traveler"
+			if(istype(user.wear_suit, /obj/item/clothing/suit/armor/captain))
+				armors += "marauder"
 			if(istype(src,/obj/effect/rune))
-				usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				armorworn = input ("Choose your attire.") in armors
 			else
-				usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				armorworn = "zealot"
+			
+			if (armorworn == "zealot")
+				usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+				user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+				user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+			if (armorworn == "summoner")
+				usr.say("Uln Shogg Hafh[pick("'","`")]drn!")
+				user << "\red You quietly prick your finger and make a pact with the geometer of blood to acquire more power."
+				user.take_overall_damage(rand(5,20))
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/magus(user), slot_head)
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/magusred(user), slot_wear_suit)
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+				user.put_in_hands(new /obj/item/weapon/staff(user))
+				user.spellremove(user)
+				user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult(user)
+				user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult(user)
+			if (armorworn == "traveler")
+				usr.say("Tharanak n[pick("'","`")]ghft!")
+				del(user.head)
+				del(user.wear_suit)
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(user), slot_head)
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult(user), slot_wear_suit)
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+				user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+				user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+				user.spellremove(user)
+			if (armorworn == "marauder")
+				user.say("Tharanak n[pick("'","`")]ghft!")
+				del(user.head)
+				del(user.wear_suit)
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(user), slot_head)
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult(user), slot_wear_suit)
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+				user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+				user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+				user.spellremove(user)
+				user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult(user)
+				
 			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
-
-			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
-			//the above update their overlay icons cache but do not call update_icons()
-			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
-			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
-
 			del(src)
 			return
-
