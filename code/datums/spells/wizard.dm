@@ -187,6 +187,12 @@
 	range = 3
 
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
+	
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
+	name = "Summon Creatures (DANGEROUS)"
+	cult_req = 1
+	charge_max = 5000
+	summon_amt = 2
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
