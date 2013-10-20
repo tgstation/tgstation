@@ -99,10 +99,11 @@
 				count++
 				var/msg=""
 				var/pay=0
-				if(objective.per_unit && objective.units_needing_compensation>0)
-					var/newunits = objective.units_needing_compensation
+				if(objective.per_unit && objective.units_compensated<objective.units_completed)
+					var/newunits = objective.units_completed - objective.units_compensated
 					msg="We see that you completed [newunits] new unit[newunits>1?"s":""] for Task #[count]! "
 					pay=objective.completion_payment * newunits
+					objective.units_compensated += newunits
 				else if(!objective.completed)
 					if(objective.is_completed())
 						pay=objective.completion_payment
@@ -231,7 +232,7 @@
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\game_mode.dm:230: var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
 	var/intercepttext = {"<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>
-<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"}
+<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br> <I>Reminder: Acting upon this information without solid evidence will result in termination of your working contract with Nanotrasen.</I></br>"}
 	// END AUTOFIX
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)

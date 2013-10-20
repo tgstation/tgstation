@@ -1351,6 +1351,22 @@
 			if(!currentTurf.lighting_lumcount)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
+	// Separate proc so we can jump out of it when we've succeeded in spreading disease.
+	proc/findAirborneVirii()
+		for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
+			if(B.virus2.len)
+				for (var/ID in B.virus2)
+					var/datum/disease2/disease/V = B.virus2[ID]
+					if (infect_virus2(src,V))
+						return 1
+
+		for(var/obj/effect/decal/cleanable/mucus/M in get_turf(src))
+			if(M.virus2.len)
+				for (var/ID in M.virus2)
+					var/datum/disease2/disease/V = M.virus2[ID]
+					if (infect_virus2(src,V))
+						return 1
+		return 0
 	proc/handle_virus_updates()
 		if(status_flags & GODMODE)	return 0	//godmode
 		if(bodytemperature > 406)
@@ -1360,17 +1376,7 @@
 				var/datum/disease2/disease/V = virus2[ID]
 				V.cure(src)
 
-		for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
-			if(B.virus2.len)
-				for (var/ID in B.virus2)
-					var/datum/disease2/disease/V = B.virus2[ID]
-					infect_virus2(src,V)
-
-		for(var/obj/effect/decal/cleanable/mucus/M in view(1,src))
-			if(M.virus2.len)
-				for (var/ID in M.virus2)
-					var/datum/disease2/disease/V = M.virus2[ID]
-					infect_virus2(src,V)
+		src.findAirborneVirii()
 
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]

@@ -818,6 +818,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		var/dmi='icons/mob/items_righthand.dmi'
 		if(r_hand.custom)
 			dmi=r_hand.icon
+			t_state="[t_state]_rhand"
 		overlays_standing[R_HAND_LAYER] = image("icon" = dmi, "icon_state" = "[t_state]")
 		if (handcuffed) drop_r_hand()
 	else
@@ -834,6 +835,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		var/dmi='icons/mob/items_lefthand.dmi'
 		if(l_hand.custom)
 			dmi=l_hand.icon
+			t_state="[t_state]_lhand"
 		overlays_standing[L_HAND_LAYER] = image("icon" = dmi, "icon_state" = "[t_state]")
 		if (handcuffed) drop_l_hand()
 	else

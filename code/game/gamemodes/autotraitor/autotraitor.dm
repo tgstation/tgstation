@@ -4,7 +4,7 @@
 
 /datum/game_mode/traitor/autotraitor
 	name = "AutoTraitor"
-	config_tag = "Extend-A-Traitormongous"
+	config_tag = "autotraitor"
 
 	var/list/possible_traitors
 	var/num_players = 0

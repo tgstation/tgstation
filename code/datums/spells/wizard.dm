@@ -1,3 +1,7 @@
+/obj/effect/proc_holder/spell/noclothes
+	name = "No Clothes"
+	desc = "This is a placeholder for knowing if you dont need clothes for any spell"
+
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	name = "Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."

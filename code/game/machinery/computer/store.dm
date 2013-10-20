@@ -4,6 +4,10 @@
 	icon_state = "comm_logs"
 	circuit = "/obj/item/weapon/circuitboard/merch"
 
+/obj/item/weapon/circuitboard/merch
+	name = "\improper Merchandise Computer Circuitboard"
+	build_path = /obj/machinery/computer/merch
+
 /obj/machinery/computer/merch/New()
 	..()
 
@@ -21,7 +25,10 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/balance=user.mind.initial_account.money
+	var/balance=0
+	if(user.mind)
+		if(user.mind.initial_account)
+			balance = user.mind.initial_account.money
 
 	var/dat = {"
 <html>

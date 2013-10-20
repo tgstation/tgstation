@@ -1,22 +1,20 @@
 /datum/mind/var/list/job_objectives=list()
 
 #define FINDJOBTASK_DEFAULT_NEW 1 // Make a new task of this type if one can't be found.
-/datum/mind/proc/findJobTask(var/typepath,var/options)
+/datum/mind/proc/findJobTask(var/typepath,var/options=0)
 	var/datum/job_objective/task = locate(typepath) in src.job_objectives
 	if(!istype(task,typepath))
 		if(options & FINDJOBTASK_DEFAULT_NEW)
 			task = new typepath()
 			src.job_objectives += task
-			return task
-		else
-			return null
+	return task
 
 /datum/job_objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/completed = 0					//currently only used for custom objectives.
 	var/per_unit = 0
 	var/units_completed = 0
-	var/units_needing_compensation = 0 // Shit not yet paid for
+	var/units_compensated = 0 // Shit paid for
 	var/units_requested = INFINITY
 	var/completion_payment = 0			// Credits paid to owner when completed
 
@@ -31,7 +29,6 @@
 
 /datum/job_objective/proc/unit_completed(var/count=1)
 	units_completed += count
-	units_needing_compensation += count
 
 /datum/job_objective/proc/is_completed()
 	if(!completed)

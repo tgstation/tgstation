@@ -160,6 +160,8 @@
 	if(zone)
 		var/datum/gas_mixture/removed = null
 		removed = zone.air.remove(amount)
+		if(zone.air.check_tile_graphic())
+			update_visuals(zone.air)
 		return removed
 	else if(air)
 		var/datum/gas_mixture/removed = null
@@ -209,6 +211,8 @@
 			air_master.connections_to_check |= C
 
 	if(zone && !zone.rebuild)
+		if(zone.air.check_tile_graphic())
+			update_visuals(zone.air)
 		for(var/direction in cardinal)
 			var/turf/T = get_step(src,direction)
 			if(!istype(T))

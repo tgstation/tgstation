@@ -17,7 +17,7 @@
 		M.stop_pulling()
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(4)
+		M.Stun(2)
 		M.Weaken(2)
 
 /*
@@ -43,6 +43,24 @@
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 		del(target)
+	else if(istype(target,/turf/simulated))
+		var/turf/simulated/T = target
+		var/list/cleanables = list()
+		for(var/obj/effect/decal/cleanable/CC in T)
+			if(!istype(CC) || !CC)
+				continue
+			cleanables += CC
+		if(!cleanables.len)
+			user << "<span class='notice'>You fail to clean anything.</span>"
+			return
+		cleanables = shuffle(cleanables)
+		var/obj/effect/decal/cleanable/C
+		for(var/obj/effect/decal/cleanable/d in cleanables)
+			if(d && istype(d))
+				C = d
+				break
+		user << "<span class='notice'>You scrub \the [C.name] out.</span>"
+		del(C)
 	else
 		user << "<span class='notice'>You clean \the [target.name].</span>"
 		target.clean_blood()

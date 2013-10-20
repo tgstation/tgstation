@@ -363,7 +363,7 @@
 	icon_state = "crayonred"
 	w_class = 1.0
 	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
+	var/colour = "#A10808" //RGB
 	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0

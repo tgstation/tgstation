@@ -189,7 +189,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			src.add_fingerprint(user)
-			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>")
 		return
 	else
 		return ..()
