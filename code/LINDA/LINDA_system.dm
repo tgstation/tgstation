@@ -24,6 +24,8 @@ datum/controller/air_system
 
 	setup_allturfs()
 
+	global_activeturfs = active_turfs.len
+
 	world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"
 
 /datum/controller/air_system/proc/process()

@@ -41,6 +41,9 @@ datum/controller/game_controller/New()
 
 	createRandomZlevel()			//probably shouldn't be here!
 
+	for(var/i=0, i<max_secret_rooms, i++)
+		make_mining_asteroid_secret()
+
 	if(!events)
 		new /datum/controller/event()
 
@@ -67,9 +70,6 @@ datum/controller/game_controller/proc/setup()
 	setup_objects()
 	setupgenetics()
 	setupfactions()
-
-	for(var/i=0, i<max_secret_rooms, i++)
-		make_mining_asteroid_secret()
 
 	spawn(0)
 		if(ticker)
@@ -129,6 +129,7 @@ datum/controller/game_controller/proc/process()
 					last_thing_processed = air_master.type
 					air_master.process()
 					air_cost = (world.timeofday - timer) / 10
+					global_activeturfs = air_master.active_turfs.len
 
 				sleep(breather_ticks)
 
