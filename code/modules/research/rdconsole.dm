@@ -471,6 +471,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
+		if (desired_num_sheets <= 0) return
+
 		var/res_amount, type
 		switch(href_list["lathe_ejectsheet"])
 			if("metal")
@@ -507,6 +509,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				del sheet
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
+		if (desired_num_sheets <= 0) return
+		
 		var/res_amount, type
 		switch(href_list["imprinter_ejectsheet"])
 			if("glass")
