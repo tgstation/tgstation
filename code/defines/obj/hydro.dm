@@ -68,6 +68,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/chillighost
+	name = "pack of ghost chilli seeds"
+	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
+	icon_state = "seed-chilighost"
+	mypath = "/obj/item/seeds/chillighost"
+	species = "chilighost"
+	plantname = "Ghost Chili Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli"
+	lifespan = 20
+	endurance = 10
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 20
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/plastiseed
 	name = "plastellium mycelium"
 	desc = "This mycelium grows into Plastellium"
@@ -417,6 +434,23 @@
 	potency = 5
 	plant_type = 0
 	growthstages = 6
+	
+/obj/item/seeds/koiseed
+	name = "pack of koibean seeds"
+	desc = "These seeds grow into koibean plants."
+	icon_state = "seed-koibean"
+	mypath = "/obj/item/seeds/koiseed"
+	species = "koibean"
+	plantname = "Koibean Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans"
+	lifespan = 25
+	endurance = 15
+	maturation = 4
+	production = 4
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 4
 
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
@@ -723,6 +757,42 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 1
+	
+/obj/item/seeds/moonflowerseed
+	name = "pack of moonflower seeds"
+	desc = "These seeds grow into moonflowers."
+	icon_state = "seed-moonflower"
+	mypath = "/obj/item/seeds/moonflowerseed"
+	species = "moonflower"
+	plantname = "Moonflowers"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
+
+/obj/item/seeds/novaflowerseed
+	name = "pack of novaflower seeds"
+	desc = "These seeds grow into novaflowers."
+	icon_state = "seed-novaflower"
+	mypath = "/obj/item/seeds/novaflowerseed"
+	species = "novaflower"
+	plantname = "Novaflowers"
+	productname = "/obj/item/weapon/grown/novaflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 20
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
 
 /obj/item/seeds/brownmold
 	name = "pack of brown mold"
