@@ -59,7 +59,7 @@
 "bg" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate3)
 "bh" = (/obj/structure/table/reinforced,/obj/item/clothing/suit/space/rig/syndi,/obj/item/clothing/head/helmet/space/rig/syndi,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate1)
 "bi" = (/obj/structure/table/reinforced,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate1)
-"bj" = (/obj/structure/table/reinforced,/obj/item/clothing/gloves/swat,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate1)
+"bj" = (/obj/structure/table/reinforced,/obj/item/clothing/gloves/combat,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate1)
 "bk" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate1)
 "bl" = (/obj/structure/table/reinforced,/obj/item/clothing/head/helmet/swat,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate3)
 "bm" = (/obj/machinery/computer/pod{id = "spacebattlepod3"; name = "Hull Door Control"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate2)
