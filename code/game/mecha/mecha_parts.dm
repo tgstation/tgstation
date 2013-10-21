@@ -332,10 +332,8 @@
 
 /obj/item/mecha_parts/part/phazon_phase_array
 	name="Phase Array"
-	//desc = "A peice of bluespace technology so advanced, it seems magical."
-	//icon='icons/mecha/mecha_equipment.dmi'
 	icon_state = "phazon_phase_array"
-	origin_tech = "materials=9;bluespace=10,magnets"
+	origin_tech = "materials=9;bluespace=10;magnets=3"
 	construction_time = 1200
 	construction_cost = list("metal"=5000,"phazon"=2000)
 
