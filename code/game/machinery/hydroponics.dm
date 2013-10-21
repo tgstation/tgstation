@@ -22,6 +22,7 @@
 	var/planted = 0 // Is it occupied?
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
+	var/opened = 0.0
 
 /obj/machinery/hydroponics/New()
 	..()
