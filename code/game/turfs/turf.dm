@@ -128,14 +128,6 @@
 			M:inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in src)
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
-			return
-	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++

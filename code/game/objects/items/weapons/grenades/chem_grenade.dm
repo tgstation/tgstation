@@ -128,9 +128,9 @@
 	if(nadeassembly)
 		nadeassembly.HasProximity(AM)
 
-/obj/item/weapon/grenade/chem_grenade/HasEntered(atom/movable/AM)
+/obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
 	if(nadeassembly)
-		nadeassembly.HasEntered(AM)
+		nadeassembly.Crossed(AM)
 
 /obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(nadeassembly)

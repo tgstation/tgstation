@@ -33,7 +33,7 @@
 	if(cooldown == 1)
 		return
 
-	// HasEntered didn't like people lying down.
+	// Crossed didn't like people lying down.
 	if(ishuman(AM))
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)

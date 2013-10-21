@@ -443,7 +443,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		del(src)
 
-/obj/item/toy/snappop/HasEntered(H as mob|obj)
+/obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")

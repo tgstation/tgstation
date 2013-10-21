@@ -23,6 +23,11 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+/atom/movable/Crossed(atom/movable/AM)
+	return
+
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	if(src.throwing)
 		src.throw_impact(A)
@@ -41,6 +46,8 @@
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
 		return 1
 	return 0
 
