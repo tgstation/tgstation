@@ -143,13 +143,5 @@
 		if("l_arm")		return "left arm"
 		if("r_arm")		return "right arm"
 		else			return name
-/*
-/mob/living/carbon/human/proc/LimbRemoved()
-	for(/obj/item/organ/limb in organs)
-		var/mob/living/carbon/human/H
-		if(H.HasLimb(/obj/item/organ/limb))
-			//do the thing
-		else
-			return
-*/
+
 
