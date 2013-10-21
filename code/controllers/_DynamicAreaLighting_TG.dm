@@ -223,7 +223,44 @@ turf/proc/shift_to_subarea()
 
 			A.tag = new_tag
 			A.lighting_subarea = 1
+			A.lighting_space = 0 // in case it was copied from a space subarea
 			A.SetLightLevel(light)
+
+			Area.related += A
+
+		A.contents += src	// move the turf into the area
+
+// Dedicated lighting sublevel for space turfs
+// helps us depower things in space, remove space fire alarms,
+// and evens out space lighting
+turf/space/shift_to_subarea()
+	lighting_changed = 0
+	var/area/Area = loc
+
+	var/find = findtextEx(Area.tag, "sd_L")
+	var/new_tag = copytext(Area.tag, 1, find)
+	new_tag += "sd_L_space"
+	if(Area.tag!=new_tag)	//skip if already in this area
+
+		var/area/A = locate(new_tag)	// find an appropriate area
+
+		if(!A)
+
+			A = new Area.type()    // create area if it wasn't found
+			// replicate vars
+			for(var/V in Area.vars)
+				switch(V)
+					if("contents","lighting_overlay","overlays")	continue
+					else
+						if(issaved(Area.vars[V])) A.vars[V] = Area.vars[V]
+
+			A.tag = new_tag
+			A.lighting_subarea = 1
+			A.lighting_space = 1
+			A.icon_state = null // in case the replicated area had an alert
+
+			//var/light = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
+			A.SetLightLevel(4)
 
 			Area.related += A
 
@@ -233,6 +270,7 @@ area
 	var/lighting_use_dynamic = 1	//Turn this flag off to prevent sd_DynamicAreaLighting from affecting this area
 	var/image/lighting_overlay		//tracks the darkness image of the area for easy removal
 	var/lighting_subarea = 0		//tracks whether we're a lighting sub-area
+	var/lighting_space = 0			// true for space-only lighting subareas
 
 	proc/SetLightLevel(light)
 		if(!src) return
