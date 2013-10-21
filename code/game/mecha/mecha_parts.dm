@@ -330,6 +330,15 @@
 	construction_cost = list("metal"=20000,"plasma"=10000, "phazon"=2500)
 	origin_tech = "materials=9;bluespace=6;magnets=3"
 
+/obj/item/mecha_parts/part/phazon_phase_array
+	name="Phase Array"
+	//desc = "A peice of bluespace technology so advanced, it seems magical."
+	//icon='icons/mecha/mecha_equipment.dmi'
+	icon_state = "phazon_phase_array"
+	origin_tech = "materials=9;bluespace=10,magnets"
+	construction_time = 1200
+	construction_cost = list("metal"=5000,"phazon"=2000)
+
 ///////// Odysseus
 
 
@@ -489,12 +498,5 @@
 	phazon/main
 		name = "Circuit board (Phazon Central Control module)"
 		icon_state = "mainboard"
-
-	// Cheating.
-	phazon/phase_array
-		name = "Phase Array"
-		desc = "A peice of bluespace technology so advanced, it seems magical."
-		icon='icons/mecha/mecha_equipment.dmi'
-		icon_state = "mecha_phase_array"
 
 

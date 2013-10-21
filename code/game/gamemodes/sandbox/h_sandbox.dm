@@ -7,6 +7,7 @@ var/list
 					"hsbmetal" = "Spawn 50 Metal",
 					"hsbglass" = "Spawn 50 Glass",
 					"hsbplasma" = "Spawn 50 Plasma",
+					"phazon" = "Spawn 50 Phazon",
 					"hsbairlock" = "Spawn Airlock",
 					"hsbregulator" = "Spawn Air Regulator",
 					"hsbfilter" = "Spawn Air Filter",
@@ -158,6 +159,10 @@ datum/hSB
 					hsb.loc = usr.loc
 				if("hsbplasma")
 					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/plasma
+					hsb.amount = 50
+					hsb.loc = usr.loc
+				if("phazon")
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/phazon
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbairlock")

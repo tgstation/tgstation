@@ -783,12 +783,12 @@ datum/design/phazon_peri
 datum/design/phazon_phase_array
 	name = "Phazon Phase Array"
 	desc = "Show physics who's boss."
-	id = "sflash"
+	id = "phazon_phasearray"
 	req_tech = list("bluespace" = 10, "programming" = 4)
 	build_type = MECHFAB
 	materials = list("$metal" = 5000, "$phazon" = 2000)
 	category = "Misc"
-	build_path = /obj/item/weapon/circuitboard/mecha/phazon/phase_array
+	build_path = /obj/item/mecha_parts/part/phazon_phase_array
 
 datum/design/gygax_main
 	name = "Circuit Design (\"Gygax\" Central Control module)"
