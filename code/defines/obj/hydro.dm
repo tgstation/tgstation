@@ -1260,6 +1260,30 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/sunflower"
+	
+/obj/item/weapon/grown/novaflower
+	name = "novaflower"
+	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "novaflower"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 0
+	seed = "/obj/item/seeds/novaflower"
+	attack_verb = list("seared", "heated", "whacked", "steamed")
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("capsaicin", round(potency, 1))
+			force = round((5+potency/5), 1)
+	
 /*
 /obj/item/weapon/grown/gibtomato
 	desc = "A plump tomato."
