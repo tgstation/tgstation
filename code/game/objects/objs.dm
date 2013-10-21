@@ -14,6 +14,17 @@
 	var/damtype = "brute"
 	var/force = 0
 
+/obj/New()
+	..()
+	if(flags&ON_BORDER && isturf(loc))
+		var/turf/T = loc
+		T.border_objects += src
+/obj/Del()
+	if(flags&ON_BORDER && isturf(loc))
+		var/turf/T = loc
+		T.border_objects -= src
+	..()
+
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0
