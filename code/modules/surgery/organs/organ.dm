@@ -33,7 +33,6 @@
 /obj/item/organ/limb
 	name = "limb"
 	var/mob/owner = null
-	var/icon_name = null
 	var/body_part = null
 	var/brutestate = 0
 	var/burnstate = 0
@@ -43,37 +42,37 @@
 
 /obj/item/organ/limb/chest
 	name = "chest"
-	icon_name = "chest"
+	icon_state = "chest"
 	max_damage = 200
 	body_part = CHEST
 
 /obj/item/organ/limb/head
 	name = "head"
-	icon_name = "head"
+	icon_state = "head"
 	max_damage = 200
 	body_part = HEAD
 
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
-	icon_name = "l_arm"
+	icon_state = "l_arm"
 	max_damage = 75
 	body_part = ARM_LEFT
 
 /obj/item/organ/limb/l_leg
 	name = "l_leg"
-	icon_name = "l_leg"
+	icon_state = "l_leg"
 	max_damage = 75
 	body_part = LEG_LEFT
 
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
-	icon_name = "r_arm"
+	icon_state = "r_arm"
 	max_damage = 75
 	body_part = ARM_RIGHT
 
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
-	icon_name = "r_leg"
+	icon_state = "r_leg"
 	max_damage = 75
 	body_part = LEG_RIGHT
 
@@ -144,3 +143,13 @@
 		if("l_arm")		return "left arm"
 		if("r_arm")		return "right arm"
 		else			return name
+/*
+/mob/living/carbon/human/proc/LimbRemoved()
+	for(/obj/item/organ/limb in organs)
+		var/mob/living/carbon/human/H
+		if(H.HasLimb(/obj/item/organ/limb))
+			//do the thing
+		else
+			return
+*/
+
