@@ -40,7 +40,7 @@
 	M.icon_state = src.icon_dead
 	del (src)
 
-/mob/living/simple_animal/mouse/HasEntered(AM as mob|obj)
+/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
