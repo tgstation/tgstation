@@ -251,18 +251,20 @@
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/device/flash))
+		var/obj/item/device/flash/F = W
 		if(src.flash1 && src.flash2)
 			user << "\blue You have already inserted the eyes!"
 			return
-		else if(src.flash1)
-			user.drop_item()
-			W.loc = src
-			src.flash2 = W
-			user << "\blue You insert the flash into the eye socket!"
+		else if(F.broken)
+			user << "\blue You can't use a broken flash!"
+			return
 		else
 			user.drop_item()
-			W.loc = src
-			src.flash1 = W
+			F.loc = src
+			if(src.flash1)
+				src.flash2 = F
+			else
+				src.flash1 = F
 			user << "\blue You insert the flash into the eye socket!"
 	return
 
