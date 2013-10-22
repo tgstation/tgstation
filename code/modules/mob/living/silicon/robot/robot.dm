@@ -482,25 +482,29 @@
 		updateicon()
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 50))
-			user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
-			var/turf/T = get_turf(src)
-			new /obj/item/robot_parts/robot_suit(T)
-			new /obj/item/robot_parts/l_leg(T)
-			new /obj/item/robot_parts/r_leg(T)
-			new /obj/item/weapon/cable_coil(T, 1)
-			new /obj/item/robot_parts/chest(T)
-			new /obj/item/robot_parts/l_arm(T)
-			new /obj/item/robot_parts/r_arm(T)
-			var/b
-			for(b=0, b!=2, b++)
-				var/obj/item/device/flash/F = new /obj/item/device/flash(T)
-				F.broken = 1
-				F.icon_state = "flashburnt"
-				playsound(F, 'sound/weapons/flash.ogg', 50, 1)
-			new /obj/item/robot_parts/head(T)
-			del(src)
+		if(!lockcharge)
+			user << "\red <b>[src]'s bolts spark! Maybe you should lock them down first!</b>"
+			spark_system.start()
+			return
+		else
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 50))
+				user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
+				var/turf/T = get_turf(src)
+				new /obj/item/robot_parts/robot_suit(T)
+				new /obj/item/robot_parts/l_leg(T)
+				new /obj/item/robot_parts/r_leg(T)
+				new /obj/item/weapon/cable_coil(T, 1)
+				new /obj/item/robot_parts/chest(T)
+				new /obj/item/robot_parts/l_arm(T)
+				new /obj/item/robot_parts/r_arm(T)
+				var/b
+				for(b=0, b!=2, b++)
+					var/obj/item/device/flash/F = new /obj/item/device/flash(T)
+					F.broken = 1
+					F.icon_state = "flashburnt"
+				new /obj/item/robot_parts/head(T)
+				del(src)
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
