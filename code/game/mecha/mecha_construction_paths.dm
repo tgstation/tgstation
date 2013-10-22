@@ -1513,6 +1513,7 @@
 			if(7)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures the phase array.", "You secure the phase array.")
+					del used_atom
 				else
 					user.visible_message("[user] remove the phase array.", "You remove the phase array.")
 					new /obj/item/mecha_parts/part/phazon_phase_array(get_turf(holder))
