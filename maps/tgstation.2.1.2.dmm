@@ -4825,7 +4825,7 @@
 "bOO" = (/obj/machinery/atmospherics/pipe/simple{pipe_color = "green"; icon_state = "intact-g"; level = 2},/turf/simulated/floor,/area/atmos)
 "bOP" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1441; input_tag = "n2o_in"; name = "Nitrous Oxide Supply Control"; output_tag = "n2o_out"; sensors = list("n2o_sensor" = "Tank")},/turf/simulated/floor{icon_state = "escape"; dir = 4},/area/atmos)
 "bOQ" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "n2o_sensor"},/turf/simulated/floor/engine/n20,/area/atmos)
-"bOR" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller{valve_open = 1},/turf/simulated/floor/engine/n20,/area/atmos)
+"bOR" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent,/turf/simulated/floor/engine/n20,/area/atmos)
 "bOS" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/engine/n20,/area/atmos)
 "bOT" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "bOU" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/asmaint)
