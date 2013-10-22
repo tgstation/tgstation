@@ -794,6 +794,8 @@
 
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)
+	if(istype(user,/mob/living/silicon/ai))
+		return
 	switch(build_step)
 		if(4)
 			if(!installation)
