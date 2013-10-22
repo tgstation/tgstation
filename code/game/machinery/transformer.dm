@@ -5,7 +5,7 @@
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
-	density = 1
+	density = 0
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 600 // 1 minute
@@ -42,6 +42,13 @@
 			AM.loc = src.loc
 			do_transform(AM)
 
+/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(!ishuman(mover)) // Allows items to go through, to stop them from blocking the conveyour belt.
+		var/dir = get_dir(src, mover)
+		if(dir == EAST)
+			return ..()
+	return 0
+
 /obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -51,6 +58,13 @@
 	if(!transform_dead && H.stat == DEAD)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
+
+	// Activate the cooldown
+	cooldown = 1
+	update_icon()
+	spawn(cooldown_duration)
+		cooldown = 0
+		update_icon()
 
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
@@ -73,13 +87,6 @@
 		sleep(30)
 		if(R)
 			R.SetLockdown(0)
-
-	// Activate the cooldown
-	cooldown = 1
-	update_icon()
-	spawn(cooldown_duration)
-		cooldown = 0
-		update_icon()
 
 /obj/machinery/transformer/conveyor/New()
 	..()
