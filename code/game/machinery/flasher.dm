@@ -105,8 +105,7 @@
 		return
 	if(bulb && prob(75/severity))
 		flash()
-		bulb.broken = 1
-		bulb.icon_state = "flashburnt"
+		bulb.burn_out()
 		power_change()
 	..(severity)
 
@@ -123,8 +122,7 @@
 	if(!..())
 		return
 	if(prob(4))	//Small chance to burn out on use
-		bulb.broken = 1
-		bulb.icon_state = "flashburnt"
+		bulb.burn_out()
 		power_change()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
