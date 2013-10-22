@@ -608,6 +608,17 @@
 		spark_system.start()
 		return ..()
 
+/mob/living/silicon/robot/verb/unlock_own_panel()
+	set category = "Robot Commands"
+	set name = "Unlock Panel"
+	set desc = "Unlocks your own panel if it is locked. You can not lock it again. A human will have to lock it for you."
+	if(locked)
+		switch(alert("You can not lock your panel again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Panel", "Yes", "No"))
+			if("Yes")
+				locked = 0
+				updateicon()
+				usr << "You unlock your access panel."
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
