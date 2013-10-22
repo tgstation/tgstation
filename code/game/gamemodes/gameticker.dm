@@ -71,7 +71,7 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 		if(secret_force_mode != "secret")
 			for (var/datum/game_mode/M in runnable_modes)
-				if (M.name == secret_force_mode)
+				if (M.config_tag && M.config_tag == secret_force_mode)
 					src.mode = M
 					break
 			if	(!src.mode)
