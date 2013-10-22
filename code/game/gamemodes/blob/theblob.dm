@@ -112,7 +112,6 @@
 		A.blob_act()
 	return 1
 
-
 /obj/effect/blob/ex_act(severity)
 	var/damage = 150
 	health -= ((damage/brute_resist) - (severity * 5))
@@ -144,6 +143,17 @@
 		if("brute")
 			damage = (W.force / max(src.brute_resist,1))
 
+	health -= damage
+	update_icon()
+	return
+
+/obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
+	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	if(!damage) // Avoid divide by zero errors
+		return
+	damage /= max(src.brute_resist, 1)
 	health -= damage
 	update_icon()
 	return

@@ -125,7 +125,7 @@ MASS SPECTROMETER
 		var/list/damaged = H.get_damaged_organs(1,1)
 		user.show_message("<span class='notice'>Localized Damage, <font color='#FF8000'>Burn</font>/<font color='red'>Brute</font>:</span>",1)
 		if(length(damaged)>0)
-			for(var/datum/limb/org in damaged)
+			for(var/obj/item/organ/limb/org in damaged)
 				user.show_message(text("<span class='notice'>\t []: []-[]", capitalize(org.getDisplayName()), (org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : 0, (org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : 0), 1)
 		else
 			user.show_message("<span class='notice'>\t Limbs are OK.</span>",1)

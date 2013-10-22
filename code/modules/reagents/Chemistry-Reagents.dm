@@ -1628,7 +1628,7 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 3)
 							var/mob/living/carbon/human/H = M
-							var/datum/limb/affecting = H.get_organ("head")
+							var/obj/item/organ/limb/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
 									H.update_damage_overlays(0)
