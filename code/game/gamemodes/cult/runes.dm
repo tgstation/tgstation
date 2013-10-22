@@ -267,7 +267,7 @@ var/list/sacrificed = list()
 				usr << "\red You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie."
 				return fizzle()
 
-			for(var/datum/limb/affecting in corpse_to_raise.organs)
+			for(var/obj/item/organ/limb/affecting in corpse_to_raise.organs)
 				affecting.heal_damage(1000, 1000)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)
