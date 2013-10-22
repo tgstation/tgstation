@@ -340,13 +340,13 @@
 	return
 
 /*
-	Alt-click to ventcrawl - Monkeys, aliens, and slimes
+	Alt-click to ventcrawl - Monkeys, aliens, slimes, and some simple animals
 	This is a little buggy but somehow that just seems to plague ventcrawl.
 	I am sorry, I don't know why.
 */
-/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/carbon/ML)
+/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/ML)
 	if(istype(ML))
-		var/list/ventcrawl_verbs = list(/mob/living/carbon/monkey/verb/ventcrawl, /mob/living/carbon/alien/verb/ventcrawl, /mob/living/carbon/slime/verb/ventcrawl)
+		var/list/ventcrawl_verbs = list(/mob/living/carbon/monkey/verb/ventcrawl, /mob/living/carbon/alien/verb/ventcrawl, /mob/living/carbon/slime/verb/ventcrawl, /mob/living/simple_animal/verb/ventcrawl)
 		if(length(ML.verbs & ventcrawl_verbs)) // alien queens have this removed, an istype would be complicated
 			ML.handle_ventcrawl(src)
 			return
