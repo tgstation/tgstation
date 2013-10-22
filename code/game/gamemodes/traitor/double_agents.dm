@@ -48,6 +48,9 @@
 	return
 
 /datum/game_mode/traitor/double_agents/add_latejoin_traitor(var/mob/living/carbon/human/character)
+
+	check_potential_agents()
+
 	// As soon as we get 3 or 4 extra latejoin traitors, make them traitors and kill each other.
 	if(late_joining_list.len >= rand(3, 4))
 		// True randomness
@@ -69,3 +72,15 @@
 	else
 		late_joining_list += character
 	return // TODO: Have late joining double agents.
+
+/datum/game_mode/traitor/double_agents/proc/check_potential_agents()
+
+	for(var/M in late_joining_list)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.stat != DEAD)
+				if(H.client)
+					continue // It all checks out.
+
+		// If any check fails, remove them from our list
+		late_joining_list -= M
