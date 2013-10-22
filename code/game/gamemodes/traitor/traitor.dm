@@ -21,6 +21,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
+	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
 /datum/game_mode/traitor/announce()
@@ -36,6 +37,7 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling_coeff)
+		config.traitor_scaling_coeff *= scale_modifier
 		num_traitors = max(1, round((num_players())/(config.traitor_scaling_coeff)))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
@@ -79,8 +81,12 @@
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
-					character.mind.make_Traitor()
+					add_latejoin_traitor(character)
 	..()
+
+/datum/game_mode/traitor/proc/add_latejoin_traitor(var/mob/living/carbon/human/character)
+	character.mind.make_Traitor()
+
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
