@@ -501,9 +501,11 @@
 			"\red You stab yourself in the eyes with [src]!" \
 		)
 	if(istype(M, /mob/living/carbon/human))
-		var/datum/limb/affecting = M:get_organ("head")
+		var/mob/living/carbon/human/U = M
+		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
-			M:update_damage_overlays(0)
+			U.update_damage_overlays(0)
+
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
