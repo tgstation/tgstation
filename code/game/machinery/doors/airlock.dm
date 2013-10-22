@@ -46,6 +46,7 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/autoclose = 1
+	var/frozen = 0 //special condition for airlocks that are frozen shut, this will look weird on not normal airlocks because of a lack of special overlays.
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -409,6 +410,8 @@ About the new airlock wires panel:
 				overlays += image(icon, "panel_open")
 			if(welded)
 				overlays += image(icon, "welded")
+			if(frozen)
+				overlays += image(icon, "frozen")
 	else
 		icon_state = "door_open"
 
@@ -531,7 +534,10 @@ About the new airlock wires panel:
 
 
 	if(src.welded)
-		t1 += text("Door appears to have been welded shut.<br>\n")
+		if(frozen)
+			t1 += text("Door appears to have been frozen shut.<br>\n")
+		else
+			t1 += text("Door appears to have been welded shut.<br>\n")
 	else if(!src.locked)
 		if(src.density)
 			t1 += text("<A href='?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
@@ -711,7 +717,10 @@ About the new airlock wires panel:
 				if(7)
 					//close door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!")
+						if(frozen)
+							usr << text("The airlock has been frozen shut!")
+						else
+							usr << text("The airlock has been welded shut!")
 					else if(src.locked)
 						usr << text("The door bolts are down!")
 					else if(!src.density)
@@ -809,7 +818,10 @@ About the new airlock wires panel:
 				if(7)
 					//open door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!")
+						if(frozen)
+							usr << text("The airlock has been frozen shut!")
+						else
+							usr << text("The airlock has been welded shut!")
 					else if(src.locked)
 						usr << text("The door bolts are down!")
 					else if(src.density)
@@ -846,6 +858,8 @@ About the new airlock wires panel:
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0,user))
+			if(frozen)
+				frozen = 0
 			if(!src.welded)
 				src.welded = 1
 			else
@@ -960,7 +974,7 @@ About the new airlock wires panel:
 	..()
 
 /obj/machinery/door/airlock/open(var/forced=0)
-	if( operating || welded || locked )
+	if( operating || welded || locked)
 		return 0
 	if(!forced)
 		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
@@ -1023,6 +1037,9 @@ About the new airlock wires panel:
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
+	if(frozen)
+		welded = 1
+	update_icon()
 
 
 /obj/machinery/door/airlock/proc/prison_open()
