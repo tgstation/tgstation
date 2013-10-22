@@ -43,9 +43,9 @@ mob/living/carbon/human/proc/handle_pain()
 	if(reagents.has_reagent("oxycodone"))
 		return
 	var/maxdam = 0
-	var/datum/limb/damaged_organ = null
+	var/obj/item/organ/limb/damaged_organ = null
 	for(var/name in organs)
-		var/datum/limb/E = organs[name]
+		var/obj/item/organ/limb/E = organs[name]
 		var/dam = E.get_damage()
 		// make the choice of the organ depend on damage,
 		// but also sometimes use one of the less damaged ones

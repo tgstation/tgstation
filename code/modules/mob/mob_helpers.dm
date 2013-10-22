@@ -121,7 +121,7 @@ proc/isovermind(A)
 	return 0
 
 proc/isorgan(A)
-	if(istype(A, /datum/limb))
+	if(istype(A, /obj/item/organ/limb))
 		return 1
 	return 0
 
