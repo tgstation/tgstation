@@ -205,13 +205,15 @@
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
-			O.cell.loc = O
+			chest.cell.loc = O
+			chest.cell = null
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			O.mmi = W
 
 			feedback_inc("cyborg_birth",1)
 
-			del(src)
+			src.loc = O
+			O.robot_suit = src
 		else
 			user << "\blue The MMI must go in after everything else!"
 
