@@ -24,7 +24,7 @@
 	protected_jobs = list()
 	required_players = 15
 	required_enemies = 3
-	recommended_enemies = 4
+	recommended_enemies = 3
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
@@ -204,6 +204,9 @@
 			wordexp = "[wordhide] is hide..."
 	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
+	cult_mob.mind.cult_words += word
+	if(cult_mob.mind.cult_words.len == allwords.len)
+		cult_mob << "\green You feel enlightened, as if you have gained all the secrets of the other side."
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
@@ -227,6 +230,7 @@
 		cult -= cult_mind
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
+		cult_mind.cult_words = initial(cult_mind.cult_words)
 		update_cult_icons_removed(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the cult!</font>"
 		if(show_message)
