@@ -5,6 +5,7 @@ var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
 
+var/global/list/global_activeturfs
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
