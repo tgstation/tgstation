@@ -241,7 +241,8 @@
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
-				src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
+				var/turf/TL = get_turf(target)
+				src.path = AStar(src.loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
 			else
 				src.path = AStar(src.loc, src.target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
 			if(!src.path)
