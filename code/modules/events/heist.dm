@@ -5,48 +5,45 @@ VOX HEIST ROUNDTYPE
 #define MAX_VOX_KILLS 10 //Number of kills during the round before the Inviolate is broken.
 						 //Would be nice to use vox-specific kills but is currently not feasible.
 
-//var/global/vox_kills = 0 //Used to check the Inviolate.
+var/global/vox_kills = 0 //Used to check the Inviolate.
+var/global/vox_sent=0
 
-/datum/game_mode/
-	var/list/datum/mind/raiders = list()  //Antags.
+var/global/list/datum/mind/raiders = list()  //Antags.
 
-/datum/game_mode/heist
-	name = "heist"
-	config_tag = "heist"
-	required_players = 15
-	required_players_secret = 25
-	required_enemies = 4
-	recommended_enemies = 6
-
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
+/datum/event/heist
 	var/list/raid_objectives = list()     //Raid objectives.
 	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
-/datum/game_mode/heist/announce()
-	world << {"
-		<B>The current game mode is - Heist!</B>
-		<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>
-		Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!
-		<B>Raiders:</B> Loot [station_name()] for anything and everything you need.
-		<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."}
+	announceWhen	= 600
+	oneShot			= 1
 
-/datum/game_mode/heist/can_start()
+	var/required_candidates = 4
+	var/max_candidates = 6
+	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+
+/datum/event/heist/setup()
+	announceWhen = rand(announceWhen, announceWhen + 50)
+	sent_aliens_to_station = 1
+
+/datum/event/heist/announce()
+	return
+
+
+/datum/event/heist/start()
 
 	if(!..())
 		return 0
 
-	var/list/candidates = get_players_for_role(BE_RAIDER)
+	var/list/candidates = get_candidates(BE_RAIDER)
 	var/raider_num = 0
 
 	//Check that we have enough vox.
-	if(candidates.len < required_enemies)
+	if(candidates.len < required_candidates)
 		return 0
-	else if(candidates.len < recommended_enemies)
+	else if(candidates.len < max_candidates)
 		raider_num = candidates.len
 	else
-		raider_num = recommended_enemies
+		raider_num = max_candidates
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
@@ -58,12 +55,6 @@ VOX HEIST ROUNDTYPE
 	for(var/datum/mind/raider in raiders)
 		raider.assigned_role = "MODE"
 		raider.special_role = "Vox Raider"
-	return 1
-
-/datum/game_mode/heist/pre_setup()
-	return 1
-
-/datum/game_mode/heist/post_setup()
 
 	//Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
@@ -116,10 +107,9 @@ VOX HEIST ROUNDTYPE
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	vox_sent=1
 
-/datum/game_mode/heist/proc/is_raider_crew_safe()
+/datum/event/heist/proc/is_raider_crew_safe()
 
 	if(cortical_stacks.len == 0)
 		return 0
@@ -129,7 +119,7 @@ VOX HEIST ROUNDTYPE
 			return 0
 	return 1
 
-/datum/game_mode/heist/proc/is_raider_crew_alive()
+/datum/event/heist/proc/is_raider_crew_alive()
 
 	for(var/datum/mind/raider in raiders)
 		if(raider.current)
@@ -137,7 +127,7 @@ VOX HEIST ROUNDTYPE
 				return 1
 	return 0
 
-/datum/game_mode/heist/proc/forge_vox_objectives()
+/datum/event/heist/proc/forge_vox_objectives()
 
 
 	//Commented out for testing.
@@ -177,18 +167,18 @@ VOX HEIST ROUNDTYPE
 
 	return raid_objectives
 
-/datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
+/datum/event/heist/proc/greet_vox(var/datum/mind/raider)
 	raider.current << {"\blue <B>You are a Vox Raider, fresh from the Shoal!</b>
-The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.
+The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the [station_name()] for plunder, trade or both.
 Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.
-Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!"}
+Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!</b>"}
 	var/obj_count = 1
 	for(var/datum/objective/objective in raider.objectives)
 		raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
 
-/datum/game_mode/heist/declare_completion()
+/datum/event/heist/proc/declare_completion()
 
 	//No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
@@ -255,7 +245,7 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 
 	..()
 
-/datum/game_mode/heist/check_finished()
+/datum/event/heist/proc/check_finished()
 	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
 		return 1
 	return ..()
