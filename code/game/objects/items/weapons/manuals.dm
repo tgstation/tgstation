@@ -811,3 +811,56 @@
 			Intelligence Analysts believe that normal Nanotrasen procedure is for the Captain to secure the nuclear authorisation disk.<br>
 			Good luck!
 			</html>"}
+
+/obj/item/weapon/book/manual/medical_healing
+	name = "Basic Medical 101: Being a Good Doctor"
+	icon_state ="bookCloning"
+	author = "Nanotrasen"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Basic Medical 101: Being a Good Doctor"
+
+	dat = {"
+<html>
+	<head>
+		<style>
+		h1 {font-size: 18px; margin: 15px 0px 5px;}
+		h2 {font-size: 15px; margin: 15px 0px 5px;}
+		li {margin: 2px 0px 2px 15px;}
+		ul {list-style: none; margin: 5px; padding: 0px;}
+		ol {margin: 5px; padding: 0px 15px;}
+		</style>
+	</head>
+	<body>
+
+		<h3>Medical 101</h3>
+		<p>Congratulations on passing your final Medical Exam!</p>
+		<p>We trust you will rarely need use of this book as it covers the basics of diagnosing and healing a patient, but just in case you ever find your memory failing you feel free to refer to the information below:</p>
+
+
+		<ol>
+			<li><a href='#diagnosis'>Diagnosis</a></li>
+			<li><a href='#basictreatement'>Basic Treatement</a></li>
+			<li><a href='#sleepers'>Sleepers</a></li>
+			<li><a href='#cryo'>Cryogenics</a></li>
+		</ol>
+
+		<a name='diagnosis'><h4>Diagnosis</h4></a>
+		<p>When you need to find out what is wrong with a patient you should first try examining them with your eyes.</p>
+		<p>Assuming you aren't blind and they appear to be injured you should then go about scanning them with your Health Analyzer or PDA. This should show you in detail what is wrong with them.</p>
+		<p>If they are dead then refer them to the Geneticist and reflect on what a bad doctor you are.</p>
+
+		<a name='basictreatement'><h4>Basic Treatement</h4></a>
+		<p>If the Medical Analyzer shows brute or fire damage apply the appropriate item to the affectted area as soon as possible (ointment for burns, Anti-Toxins for toxin damage, and bruise packs for brute damage).</p>
+		<p>If they are below 0 health according to the scanner you should first inject them with Inaprovaline, if you have any, and will then need to take them to a Cryogenics tube (covered below) for immediate stabilization.</p>
+
+		<a name='sleepers'><h4>Sleepers</h4></a>
+		<p>Sleepers can be used to stabilize critical patients while setting up or waiting for a Cryogenics tube or to heal non critical patients of damage.</p>
+		<p>Simply place the patient inside and use the attached console to adminster the correct drug according to the patients aliment.</p>
+
+		<a name='cryo'><h4>Cryogenics</h4></a>
+		<p>Before placing the patient into the Cryotube make sure to remove all insulated items from their body. You will also need to make sure the tubes have been set up. This involves making sure that the O2 tanks are attached, filling them with Cryoxadone, and making sure that the temperature is below 200</p>
+		<p>Once placed inside rejoice at a job well done! And don't forget to take the patient out when they are healed.</p>
+
+
+	</body>
+</html>
+"}

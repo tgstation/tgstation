@@ -130,6 +130,7 @@
 	New()
 		..()
 		new /obj/item/weapon/book/manual/medical_cloning(src)
+		new /obj/item/weapon/book/manual/medical_healing(src)
 		update_icon()
 
 
