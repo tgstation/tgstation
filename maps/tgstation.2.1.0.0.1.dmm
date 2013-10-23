@@ -7681,7 +7681,7 @@
 "cRK" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "cRL" = (/obj/machinery/door/poddoor,/turf/simulated/floor/airless,/area)
 "cRM" = (/obj/machinery/computer/station_alert,/turf/simulated/shuttle/floor/vox{tag = "icon-floor4"; icon_state = "floor4"},/area/shuttle/vox/station)
-"cRN" = (/obj/machinery/computer,/turf/simulated/shuttle/floor/vox{tag = "icon-floor4"; icon_state = "floor4"},/area/shuttle/vox/station)
+"cRN" = (/obj/machinery/computer/vox_station,/turf/simulated/shuttle/floor/vox{tag = "icon-floor4"; icon_state = "floor4"},/area/shuttle/vox/station)
 "cRO" = (/obj/machinery/computer/crew{track_special_role = "Vox Raider"},/turf/simulated/shuttle/floor/vox{tag = "icon-floor4"; icon_state = "floor4"},/area/shuttle/vox/station)
 "cRP" = (/obj/machinery/door/airlock/hatch,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "cRQ" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/shuttle/floor/vox{tag = "icon-floor4"; icon_state = "floor4"},/area/shuttle/vox/station)
