@@ -329,7 +329,7 @@
 			/obj/item/weapon/gun/energy/xray;50,\
 			/obj/item/weapon/gun/energy/laser/captain;25,\
 			)
-			if(isnull(spawn_type))
+			if(isnull(spawn_type) || !spawn_type)
 				spawn_type = /obj/item/weapon/gun/energy/laser
 			var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 			new_item = new_gun
