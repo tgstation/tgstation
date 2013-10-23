@@ -52,9 +52,6 @@
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-#define shuttle_time_in_station	1800 // 1800 = 3 minutes in the station
-#define shuttle_time_to_arrive	6000 // 6000 = 10 minutes to arrive
-
 
 
 //stuff you should probably leave well alone!

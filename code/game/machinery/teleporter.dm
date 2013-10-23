@@ -49,14 +49,8 @@
 
 	return
 
-/obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
-
 /obj/machinery/computer/teleporter/attack_hand()
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
 
 	var/list/L = list()

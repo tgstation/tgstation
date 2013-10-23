@@ -14,7 +14,6 @@ var/list/blob_nodes = list()
 	required_players = 30
 	required_enemies = 1
 	recommended_enemies = 1
-	pre_setup_before_jobs = 1
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -36,6 +35,10 @@ var/list/blob_nodes = list()
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
+	for(var/datum/mind/player in antag_candidates)
+		for(var/job in restricted_jobs)//Removing robots from the list
+			if(player.assigned_role == job)
+				antag_candidates -= player
 
 	for(var/j = 0, j < cores_to_spawn, j++)
 		if (!antag_candidates.len)

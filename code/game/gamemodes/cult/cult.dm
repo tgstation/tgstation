@@ -3,7 +3,7 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
-
+	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
 
 /proc/iscultist(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
@@ -35,7 +35,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
-	var/list/secondwords = list("travel","see","tech","destroy", "other", "hide")
+	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
 
 	var/list/objectives = list()
 
@@ -83,20 +83,25 @@
 		var/list/possible_targets = get_unconvertables()
 
 		if(!possible_targets.len)
+			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 			for(var/mob/living/carbon/human/player in player_list)
 				if(player.mind && !(player.mind in cult))
 					possible_targets += player.mind
 
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
+			if(!sacrifice_target)
+				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
+		else
+			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-		grant_runeword(cult_mind.current)
-		grant_secondword(cult_mind.current)
+//		grant_runeword(cult_mind.current)
+//		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
-		memoize_cult_objectives(cult_mind)
+		memorize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
 
 	spawn (rand(waittime_l, waittime_h))
@@ -104,7 +109,7 @@
 	..()
 
 
-/datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
+/datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
 		var/explanation
 		switch(objectives[obj_count])
@@ -119,9 +124,11 @@
 				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The convert rune is join blood self"
-	cult_mind.memory += "The convert rune is join blood self<BR>"
-
+	cult_mind.current << "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)"
+	cult_mind.memory += "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)<BR>"
+	grant_runeword(cult_mind.current,"join")
+	grant_runeword(cult_mind.current,"blood")
+	grant_runeword(cult_mind.current,"self")
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -149,26 +156,26 @@
 		mob.update_icons()
 		return 1
 
-/datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
-	if (!word)
-		if(secondwords.len > 0)
-			word=pick(secondwords)
-			secondwords -= word
-			grant_runeword(cult_mob,word)
 
-/datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-	if (!word)
-		if(startwords.len > 0)
-			word=pick(startwords)
-			startwords -= word
-	return ..(cult_mob,word)
+//datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
+//	if (!word)
+//		if(secondwords.len > 0)
+//			word=pick(secondwords)
+//			secondwords -= word
+//			grant_runeword(cult_mob,word)
 
+//datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+//	if (!word)
+//		if(startwords.len > 0)
+//			word=pick(startwords)
+//			startwords -= word
+//	return ..(cult_mob,word)
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if(!wordtravel)
 		runerandom()
 	if (!word)
-		word=pick(allwords)
+		word=pick(grantwords)
 	var/wordexp
 	switch(word)
 		if("travel")
@@ -195,7 +202,7 @@
 //			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
-	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You have a vision of a [pick("crow","raven","vulture","parrot")] it squawks","You catch a brief glimmer of the otherside")]... [wordexp]"
+	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
@@ -212,7 +219,7 @@
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
 		return
-	memoize_cult_objectives(cult_mind)
+	memorize_cult_objectives(cult_mind)
 
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
@@ -275,8 +282,8 @@
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in mob_list)
-		if(!is_convertable_to_cult(player.mind))
+	for(var/mob/living/carbon/human/player in player_list)
+		if(player.mind && !is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs
 
@@ -359,19 +366,20 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
-		var/text = "<FONT size = 2><B>The cultists were:</B></FONT>"
+		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
 
-			text += "<br>[cultist.key] was [cultist.name] ("
+			text += "<br><b>[cultist.key]</b> was <b>[cultist.name]</b> ("
 			if(cultist.current)
 				if(cultist.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(cultist.current.real_name != cultist.name)
-					text += " as [cultist.current.real_name]"
+					text += " as <b>[cultist.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
+		text += "<br>"
 
 		world << text

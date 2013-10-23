@@ -32,6 +32,12 @@
 				msg += "It has minor burns.\n"
 			else
 				msg += "<B>It has severe burns!</B>\n"
+
+		if (src.fire_stacks > 0)
+			msg += "It's covered in something flammable.\n"
+		if (src.fire_stacks < 0)
+			msg += "It's soaked in water.\n"
+
 		if (src.stat == UNCONSCIOUS)
 			msg += "It isn't responding to anything around it; it seems to be asleep.\n"
 		msg += "</span>"

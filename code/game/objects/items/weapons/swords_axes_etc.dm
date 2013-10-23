@@ -24,7 +24,7 @@
 	return 0
 
 /obj/item/weapon/melee/energy/sword/New()
-	color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -37,7 +37,7 @@
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
-			icon_state = "sword[color]"
+			icon_state = "sword[item_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
@@ -63,9 +63,31 @@
 				user.adjustBrainLoss(10)
 		else
 			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			if(src.hacked) // That's right, we'll only check the "original" esword.
+				newSaber.hacked = 1
+				newSaber.item_color = "rainbow"
+			user.before_take_item(W)
+			user.before_take_item(src)
 			del(W)
 			del(src)
+	else if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
+			item_color = "rainbow"
+			user << "<span class='warning'>RNBW_ENGAGE</span>"
+
+			if(active)
+				icon_state = "swordrainbow"
+				// Updating overlays, copied from welder code.
+				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
+				if(user.r_hand == src)
+					user.update_inv_r_hand(0)
+				else if(user.l_hand == src)
+					user.update_inv_l_hand(0)
+
+		else
+			user << "<span class='warning'>It's already fabulous!</span>"
 
 /*
  * Classic Baton
@@ -125,11 +147,11 @@
 
 /obj/item/weapon/melee/energy/sword/green
 	New()
-		color = "green"
+		item_color = "green"
 
 /obj/item/weapon/melee/energy/sword/red
 	New()
-		color = "red"
+		item_color = "red"
 
 /obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effect/effect/system/spark_spread()

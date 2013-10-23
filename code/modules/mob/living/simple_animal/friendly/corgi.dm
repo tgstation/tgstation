@@ -163,7 +163,7 @@
 		return
 
 	if(inventory_head)
-		usr << "\red You can't put more than one hat on [src]!"
+		if(usr)	usr << "\red You can't put more than one hat on [src]!"
 		return
 	if(!item_to_add)
 		usr.visible_message("\blue [usr] pets [src]","\blue You rest your hand on [src]'s head for a moment.")
@@ -278,10 +278,11 @@
 			valid = 1
 
 	if(valid)
-		usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
-			"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
-			"You hear a friendly-sounding bark.")
-		usr.drop_item()
+		if(usr)
+			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
+				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
+				"You hear a friendly-sounding bark.")
+			usr.drop_item()
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		regenerate_icons()

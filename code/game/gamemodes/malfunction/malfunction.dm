@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	antag_flag = BE_MALF
-	required_players = 20 //##values changed for debugging, if you see this in a PR, tell me, then laugh at me.
+	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
@@ -25,8 +25,7 @@
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"
-	world << "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>"
-	world << "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it."
+	world << "<B>The AI on the station has malfunctioned and must be destroyed.</B>"
 
 /datum/game_mode/malfunction/can_start()
 	//Triumvirate?
@@ -36,10 +35,11 @@
 	return ..()
 
 /datum/game_mode/malfunction/get_players_for_role(var/role = BE_MALF)
+	var/datum/job/ai/DummyAIjob = new
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
 			if(player.client.prefs.be_special & BE_MALF)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI"))
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
 					antag_candidates += player.mind
 	antag_candidates = shuffle(antag_candidates)
 	return antag_candidates
@@ -248,15 +248,15 @@
 	else if (!station_captured &&  malf_dead && !station_was_nuked)
 		feedback_set_details("round_end_result","loss - staff win")
 		world << "<FONT size = 3><B>Human Victory</B></FONT>"
-		world << "<B>The AI has been killed!</B> The staff is victorious."
+		world << "<B>The AI has been destroyed!</B> The staff is victorious."
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - evacuated")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
+		world << "<B>The Corporation has lost [station_name()]! All survived personnel will be fired!</B>"
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
-		feedback_set_details("round_end_result","nalfwin - interrupted")
+		feedback_set_details("round_end_result","halfwin - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
 	..()
@@ -265,21 +265,22 @@
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
-		var/text = "<FONT size = 2><B>The malfunctioning AI were:</B></FONT>"
+		var/text = "<br><FONT size=3><B>The malfunctioning AI were:</B></FONT>"
 
 		for(var/datum/mind/malf in malf_ai)
 
-			text += "<br>[malf.key] was [malf.name] ("
+			text += "<br><b>[malf.key]</b> was <b>[malf.name]</b> ("
 			if(malf.current)
 				if(malf.current.stat == DEAD)
 					text += "deactivated"
 				else
 					text += "operational"
 				if(malf.current.real_name != malf.name)
-					text += " as [malf.current.real_name]"
+					text += " as <b>[malf.current.real_name]</b>"
 			else
 				text += "hardware destroyed"
 			text += ")"
+		text += "<br>"
 
 		world << text
 	return 1

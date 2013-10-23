@@ -591,7 +591,7 @@ datum/mind
 						special_role = null
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
-							cult.memoize_cult_objectives(src)
+							cult.memorize_cult_objectives(src)
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
 						memory = ""
 						message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
@@ -605,8 +605,8 @@ datum/mind
 						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
-							cult.memoize_cult_objectives(src)
-						message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
+							cult.memorize_cult_objectives(src)
+						message_admins("[key_name_admin(usr)] has cult'ed [current].")
 						log_admin("[key_name_admin(usr)] has cult'ed [current].")
 				if("tome")
 					var/mob/living/carbon/human/H = current
@@ -1055,7 +1055,7 @@ datum/mind
 			current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 			var/datum/game_mode/cult/cult = ticker.mode
 			if (istype(cult))
-				cult.memoize_cult_objectives(src)
+				cult.memorize_cult_objectives(src)
 			else
 				var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 				current << "<B>Objective #1</B>: [explanation]"
@@ -1184,7 +1184,7 @@ datum/mind
 	mind.special_role = ""
 
 //BLOB
-/mob/camera/overmind/mind_initialize()
+/mob/camera/blob/mind_initialize()
 	..()
 	mind.special_role = "Blob"
 

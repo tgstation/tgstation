@@ -447,41 +447,41 @@
 
 			usr << "<span class='notice'>You colour [src] [clr].</span>"
 			icon_state = "egg-[clr]"
-			color = clr
+			item_color = clr
 		else
 			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
-	color = "blue"
+	item_color = "blue"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
-	color = "green"
+	item_color = "green"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
-	color = "mime"
+	item_color = "mime"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
-	color = "orange"
+	item_color = "orange"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
-	color = "purple"
+	item_color = "purple"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
-	color = "rainbow"
+	item_color = "rainbow"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
-	color = "red"
+	item_color = "red"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
-	color = "yellow"
+	item_color = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "fried egg"
@@ -1566,6 +1566,17 @@
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("tomatojuice", 10)
 		bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/copypasta
+	name = "copypasta"
+	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."
+	icon_state = "copypasta"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("tomatojuice", 20)
+		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 	name = "spagetti and meatballs"

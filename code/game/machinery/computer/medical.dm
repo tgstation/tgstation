@@ -5,7 +5,7 @@
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
 	req_one_access = list(access_medical, access_forensics_lockers)
-	circuit = "/obj/item/weapon/circuitboard/med_data"
+	circuit = /obj/item/weapon/circuitboard/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -15,12 +15,6 @@
 	var/a_id = null
 	var/temp = null
 	var/printing = null
-
-/obj/machinery/computer/med_data/attack_ai(user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/med_data/attack_paw(user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/med_data/attack_hand(mob/user as mob)
 	if(..())

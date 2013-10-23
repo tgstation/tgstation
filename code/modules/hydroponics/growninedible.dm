@@ -62,6 +62,7 @@
 	damtype = "fire"
 	force = 0
 	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -77,6 +78,7 @@
 	damtype = "fire"
 	force = 0
 	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1

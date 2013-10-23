@@ -5,9 +5,11 @@
 
 // these define the time taken for the shuttle to get to SS13
 // and the time before it leaves again
+
 #define SHUTTLEARRIVETIME 600		// 10 minutes = 600 seconds
 #define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
 #define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
+#define SHUTTLEAUTOCALLTIMER 2.5    // 25 minutes
 
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
@@ -35,15 +37,16 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
 			if(always_fake_recall)
+
 				if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
-					fake_recall = rand(180,300)
+					fake_recall = rand(SHUTTLEARRIVETIME / 4, SHUTTLEARRIVETIME - 100 / 2)
 				else
-					fake_recall = rand(300,500)
+					fake_recall = rand(SHUTTLEARRIVETIME / 2, SHUTTLEARRIVETIME - 100)
 
 	proc/recall()
 		if(direction == 1)
 			var/timeleft = timeleft()
-			if(timeleft >= 600)
+			if(timeleft >= SHUTTLEARRIVETIME)
 				online = 0
 				direction = 1
 				endtime = null
@@ -100,7 +103,7 @@ datum/shuttle_controller
 
 		if(callshuttle)
 			if(!online && direction == 1) //we don't call the shuttle if it's already coming
-				incall(2.5) //25 minutes! If they want to recall, they have 20 minutes to do so
+				incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
 				log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 				message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 				captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")

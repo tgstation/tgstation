@@ -776,6 +776,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 
+/datum/recipe/copypasta
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastatomato,
+		/obj/item/weapon/reagent_containers/food/snacks/pastatomato,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/copypasta
+
 /datum/recipe/poppypretzel
 	reagents = list("flour" = 5)
 	items = list(
