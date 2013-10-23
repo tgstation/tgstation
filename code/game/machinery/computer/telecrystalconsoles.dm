@@ -29,11 +29,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item))
 		if(O.hidden_uplink)
-			var/obj/item/P = usr.get_active_hand()
+			var/obj/item/P = user.get_active_hand()
 			user.drop_item()
 			uplinkholder = P
 			P.loc = src
-			P.add_fingerprint(usr)
+			P.add_fingerprint(user)
 			update_icon()
 			updateUsrDialog()
 		else
@@ -53,7 +53,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		update_icon()
 
 /obj/machinery/computer/telecrystals/uplinker/proc/donateTC(var/amt)
-	if(uplinkholder && linkedboss) //the linkedboss check shouldn't be needed, but I prefer the extra sanity here.
+	if(uplinkholder && linkedboss)
 		if(amt <= uplinkholder.hidden_uplink.uses)
 			uplinkholder.hidden_uplink.uses -= amt
 			linkedboss.storedcrystals += amt
@@ -67,19 +67,16 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 ///////
 
 /obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user as mob)
-	..()
-
-	src.add_fingerprint(user)
 	if(..())
 		return
+	src.add_fingerprint(user)
 	user.set_machine(src)
 
 	var/dat = ""
 	if(linkedboss)
-		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR>"
-		dat += "<BR>"
+		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR><BR>"
 	else
-		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR>"
+		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
 
 	if(uplinkholder)
 		dat += "[uplinkholder.hidden_uplink.uses] telecrystals remain in this uplink.<BR>"
@@ -88,7 +85,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
 
 
-	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 400, 500)
+	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -107,7 +104,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(href_list["eject"])
 		ejectuplink()
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 
 
@@ -147,6 +143,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/attack_hand(var/mob/user as mob)
 	if(..())
 		return
+	src.add_fingerprint(user)
 	user.set_machine(src)
 
 
@@ -167,7 +164,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(TCstations.len)
 		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a>"
 
-	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 400, 500)
+	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)//400,500
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -195,6 +192,5 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 				A.giveTC(1)
 			sanity++
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
