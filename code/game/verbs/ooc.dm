@@ -35,6 +35,10 @@
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
+		for(var/word in ooc_filter)
+			if(findtext(msg,word))
+				src << "<B>The word [word] has been filtered from OOC.</B>"
+				return
 
 	log_ooc("[mob.name]/[key] : [msg]")
 
