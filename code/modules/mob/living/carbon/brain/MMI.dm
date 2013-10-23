@@ -97,9 +97,10 @@
 		brainmob.dna = H.dna
 	brainmob.container = src
 
-	var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
-	newbrain.loc = src
-	brain = newbrain
+	if(istype(H))
+		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+		newbrain.loc = src
+		brain = newbrain
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_full"
