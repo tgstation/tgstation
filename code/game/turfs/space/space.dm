@@ -106,6 +106,27 @@
 				return
 
 			var/move_to_z = src.z
+
+			// Prevent MoMMIs from leaving the derelict.
+			if(istype(A, /mob/living))
+				var/mob/living/MM = A
+				if(MM.client && !MM.stat)
+					if(MM.locked_to_z!=0)
+						if(src.z == MM.locked_to_z)
+							MM << "\red You cannot leave this area."
+							if(MM.x <= TRANSITIONEDGE)
+								MM.inertia_dir = 4
+							else if(MM.x >= world.maxx -TRANSITIONEDGE)
+								MM.inertia_dir = 8
+							else if(MM.y <= TRANSITIONEDGE)
+								MM.inertia_dir = 1
+							else if(MM.y >= world.maxy -TRANSITIONEDGE)
+								MM.inertia_dir = 2
+							return
+						else
+							MM << "\red You find your way back."
+							move_to_z=MM.locked_to_z
+
 			var/safety = 1
 
 			while(move_to_z == src.z)
