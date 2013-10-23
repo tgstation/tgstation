@@ -38,6 +38,7 @@
 		for(var/word in ooc_filter)
 			if(findtext(msg,word))
 				src << "<B>The word [word] has been filtered from OOC.</B>"
+				log_ooc("[mob.name]/[key] (Filtered [word]) : [msg]")
 				return
 
 	log_ooc("[mob.name]/[key] : [msg]")
