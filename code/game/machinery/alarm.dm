@@ -342,7 +342,7 @@
 			icon_state = "alarm1"
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || !alarm_area)
 		return
 	if (alarm_area.master_air_alarm != src)
 		if (master_is_operating())
