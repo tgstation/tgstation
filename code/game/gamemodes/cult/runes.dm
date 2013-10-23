@@ -126,7 +126,7 @@ var/list/sacrificed = list()
 							usr << "\red This Convert was unworthy of knowledge of the other side!"
 						else
 							usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-							ticker.mode:grant_runeword(usr, convert_word)
+							ticker.mode.grant_runeword(usr, convert_word)
 						return 1
 				else
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
@@ -700,7 +700,7 @@ var/list/sacrificed = list()
 				var/convert_word
 				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
 				convert_word = pick(pick_list)
-				ticker.mode:grant_runeword(usr, convert_word)
+				ticker.mode.grant_runeword(usr, convert_word)
 
 
 /////////////////////////////////////////SIXTEENTH RUNE
