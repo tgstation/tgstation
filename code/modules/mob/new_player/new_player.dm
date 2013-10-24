@@ -339,12 +339,6 @@
 
 		if(mind)
 			mind.active = 0					//we wish to transfer the key manually
-			switch(mind.assigned_role)				//give them a clownname if they are a clown, mimes may assume a stage persona as well
-				if("Clown")
-					new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
-					new_character.rename_self("clown")
-				if("Mime")
-					new_character.rename_self("mime")
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 		new_character.name = real_name
