@@ -1508,12 +1508,12 @@
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the phase array into [holder].", "You install the phase array into [holder].")
+					del used_atom
 				else
 					user.visible_message("[user] unfastens the phase array.", "You unfasten the phase array.")
 			if(7)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures the phase array.", "You secure the phase array.")
-					del used_atom
 				else
 					user.visible_message("[user] remove the phase array.", "You remove the phase array.")
 					new /obj/item/mecha_parts/part/phazon_phase_array(get_turf(holder))
