@@ -10,6 +10,12 @@
 	spawn()
 		world << sound('sound/AI/radiation.ogg')
 		command_alert("High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.", "Anomaly Alert")
+
+		for(var/area/A in the_station_areas)
+			if(istype(A, /area/maintenance) || istype(A, /area/crew_quarters) || istype(A, /area/security/prison) || istype(A, /area/security/gas_chamber) || istype(A, /area/security/brig))
+				continue
+			A.radiation_alert()
+
 		make_maint_all_access()
 
 
@@ -51,6 +57,11 @@
 
 
 		command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
+
+		for(var/area/A in the_station_areas)
+			if(istype(A, /area/maintenance) || istype(A, /area/crew_quarters) || istype(A, /area/security/prison) || istype(A, /area/security/gas_chamber) || istype(A, /area/security/brig))
+				continue
+			A.reset_radiation_alert()
 
 
 		sleep(600) // Want to give them time to get out of maintenance.

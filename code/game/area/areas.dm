@@ -142,6 +142,22 @@
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
 
+/area/proc/radiation_alert()
+	if(name == "Space")
+		return
+	if(!radalert)
+		radalert = 1
+		updateicon()
+	return
+
+/area/proc/reset_radiation_alert()
+	if(name == "Space")
+		return
+	if(radalert)
+		radalert = 0
+		updateicon()
+	return
+
 /area/proc/readyalert()
 	if(name == "Space")
 		return
@@ -181,7 +197,10 @@
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
+		// Highest priority at the top.
+		if(radalert && !fire)
+			icon_state = "radiation"
+		else if(fire && !radalert && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
 			icon_state = "bluenew"*/
