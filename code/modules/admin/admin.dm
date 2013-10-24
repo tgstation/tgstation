@@ -558,6 +558,38 @@ var/global/floorIsLava = 0
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.", 1)
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/filterooc(word as text)
+	set category = "Server"
+	set desc="Filter what word?"
+	set name="OOC Filter - Add"
+	if(ooc_filter.Find(word))
+		src << "[word] is already filtered."
+		return
+	ooc_filter += word
+	log_admin("[key_name(usr)] filtered [word] from OOC.")
+	message_admins("[key_name(usr)] filtered [word] from OOC.", 1)
+	feedback_add_details("admin_verb", "FOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/unfilterooc(word as text)
+	set category = "Server"
+	set desc="Allow what word?"
+	set name="OOC Filter - Remove"
+	if(ooc_filter.Remove(word))
+		log_admin("[key_name(usr)] allowed [word] in OOC.")
+		message_admins("[key_name(usr)] allowed [word] in OOC.", 1)
+		feedback_add_details("admin_verb", "REMFOOC")
+	else src << "[word] is not filtered."
+
+/datum/admins/proc/clearoocfilter()
+	set category = "Server"
+	set desc="Free Speech"
+	set name="OOC Filter - Clear"
+	ooc_filter = new /list()
+	log_admin("[key_name(usr)] unfiltered OOC.")
+	message_admins("[key_name(usr)] unfiltered OOC.", 1)
+	feedback_add_details("admin_verb", "UNFOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /*
 /datum/admins/proc/toggletraitorscaling()
 	set category = "Server"
