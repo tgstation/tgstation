@@ -148,3 +148,6 @@
 	dump_contents()
 	visible_message("\red [src] shatters!. ")
 	del(src)
+
+/obj/structure/closet/statue/container_resist()
+	return
