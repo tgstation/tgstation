@@ -147,11 +147,11 @@ research holder datum.
 				CMTLs[id] = PD.req_tech[id]
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
-	testing("--- CMTLs calculated.")
-	for(var/datum/tech/T in possible_tech)
-		// If CMTL != MTL, bitch.
-		if(CMTLs[T.id] != T.max_level)
-			testing("CMTL != MTL for [T.id]: [CMTLs[T.id]] != [T.max_level]")
+	//testing("--- CMTLs calculated.")
+	//for(var/datum/tech/T in possible_tech)
+	//	// If CMTL != MTL, bitch.
+	//	if(CMTLs[T.id] != T.max_level)
+	//		testing("CMTL != MTL for [T.id]: [CMTLs[T.id]] != [T.max_level]")
 	for(var/datum/tech/T in known_tech)
 		T = between(1,T.level,20)
 	for(var/datum/design/D in known_designs)
