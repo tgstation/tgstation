@@ -491,44 +491,7 @@
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 50))
 				user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
-				var/turf/T = get_turf(src)
-				if(robot_suit)
-					robot_suit.loc = T
-					robot_suit.l_leg.loc = T
-					robot_suit.l_leg = null
-					robot_suit.r_leg.loc = T
-					robot_suit.r_leg = null
-					new /obj/item/weapon/cable_coil(T, 1) //The wires break off of the torso from the fall. I'm doing this so that they won't get confused when trying to build another cyborg.
-					robot_suit.chest.loc = T
-					robot_suit.chest.wires = 0.0
-					robot_suit.chest = null
-					robot_suit.l_arm.loc = T
-					robot_suit.l_arm = null
-					robot_suit.r_arm.loc = T
-					robot_suit.r_arm = null
-					robot_suit.head.loc = T
-					robot_suit.head.flash1.loc = T
-					robot_suit.head.flash1.burn_out()
-					robot_suit.head.flash1 = null
-					robot_suit.head.flash2.loc = T
-					robot_suit.head.flash2.burn_out()
-					robot_suit.head.flash2 = null
-					robot_suit.head = null
-					robot_suit.updateicon()
-				else
-					new /obj/item/robot_parts/robot_suit(T)
-					new /obj/item/robot_parts/l_leg(T)
-					new /obj/item/robot_parts/r_leg(T)
-					new /obj/item/weapon/cable_coil(T, 1)
-					new /obj/item/robot_parts/chest(T)
-					new /obj/item/robot_parts/l_arm(T)
-					new /obj/item/robot_parts/r_arm(T)
-					new /obj/item/robot_parts/head(T)
-					var/b
-					for(b=0, b!=2, b++)
-						var/obj/item/device/flash/F = new /obj/item/device/flash(T)
-						F.burn_out()
-				del(src)
+				deconstruct()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
@@ -1088,3 +1051,43 @@
 	set name = "State Laws"
 
 	checklaws()
+
+/mob/living/silicon/robot/proc/deconstruct()
+	var/turf/T = get_turf(src)
+	if(robot_suit)
+		robot_suit.loc = T
+		robot_suit.l_leg.loc = T
+		robot_suit.l_leg = null
+		robot_suit.r_leg.loc = T
+		robot_suit.r_leg = null
+		new /obj/item/weapon/cable_coil(T, 1) //The wires break off of the torso from the fall. I'm doing this so that they won't get confused when trying to build another cyborg.
+		robot_suit.chest.loc = T
+		robot_suit.chest.wires = 0.0
+		robot_suit.chest = null
+		robot_suit.l_arm.loc = T
+		robot_suit.l_arm = null
+		robot_suit.r_arm.loc = T
+		robot_suit.r_arm = null
+		robot_suit.head.loc = T
+		robot_suit.head.flash1.loc = T
+		robot_suit.head.flash1.burn_out()
+		robot_suit.head.flash1 = null
+		robot_suit.head.flash2.loc = T
+		robot_suit.head.flash2.burn_out()
+		robot_suit.head.flash2 = null
+		robot_suit.head = null
+		robot_suit.updateicon()
+	else
+		new /obj/item/robot_parts/robot_suit(T)
+		new /obj/item/robot_parts/l_leg(T)
+		new /obj/item/robot_parts/r_leg(T)
+		new /obj/item/weapon/cable_coil(T, 1)
+		new /obj/item/robot_parts/chest(T)
+		new /obj/item/robot_parts/l_arm(T)
+		new /obj/item/robot_parts/r_arm(T)
+		new /obj/item/robot_parts/head(T)
+		var/b
+		for(b=0, b!=2, b++)
+			var/obj/item/device/flash/F = new /obj/item/device/flash(T)
+			F.burn_out()
+	del(src)
