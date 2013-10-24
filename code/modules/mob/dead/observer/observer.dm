@@ -1,4 +1,4 @@
-#define GHOST_DARK_ALPHA 2.55
+#define GHOST_DARK_ALPHA 10
 #define GHOST_LIGHT_ALPHA 255
 #define GHOST_DARK_CUTOFF 1
 /mob/dead/observer
