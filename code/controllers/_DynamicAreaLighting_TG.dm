@@ -80,15 +80,24 @@ datum/light_source
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
-			effect = new_effect()						// identify the effects of this light source
-			for(var/turf/T in effect)
-				T.update_lumcount(effect[T])			// apply the effect
+//			effect = new_effect()						// identify the effects of this light source
+//			for(var/turf/T in effect)
+//				T.update_lumcount(effect[T])			// apply the effect
+
+			// why was this looping through all the turfs twice
+			effect = list()
+			for(var/turf/T in view(owner.get_light_range(),owner))
+				var/delta_lumen = lum(T)
+				if(delta_lumen > 0)
+					effect[T] = delta_lumen
+					T.update_lumcount(delta_lumen)
+
 			return 0
 		else
 			owner.light = null
 			return 1	//cause the light to be removed from the lights list and garbage collected once it's no
 						//longer referenced by the queue
-
+/*
 	proc/new_effect()
 		. = list()
 		var/range = owner.get_light_range()
@@ -97,6 +106,7 @@ datum/light_source
 			if(change_in_lumcount > 0)
 				.[T] = change_in_lumcount
 		return .
+*/
 
 
 	proc/lum(turf/A)
