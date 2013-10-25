@@ -96,7 +96,7 @@
 		..()
 
 
-	HasEntered(var/atom/movable/AM as mob|obj)
+	Crossed(var/atom/movable/AM as mob|obj)
 		if(armed)
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM

@@ -304,7 +304,7 @@
 			del(src)
 	..()
 
-/obj/item/weapon/shard/HasEntered(var/mob/AM)
+/obj/item/weapon/shard/Crossed(var/mob/AM)
 	if(istype(AM))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))

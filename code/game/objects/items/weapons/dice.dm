@@ -75,7 +75,7 @@
 	else if(src.throwing == 0) //Dice was thrown and is coming to rest
 		src.loc.visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
-/obj/item/weapon/dice/d4/HasEntered(var/mob/living/carbon/human/H)
+/obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
 		H << "<span class='userdanger'>You step on the D4!</span>"
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
