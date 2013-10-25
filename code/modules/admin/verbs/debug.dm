@@ -1018,7 +1018,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 		if(E.anchored)
 			E.active = 1
 
-	for(var/obj/machinery/field_generator/F in world)
+	for(var/obj/machinery/field/generator/F in world)
 		if(F.anchored)
 			F.Varedit_start = 1
 	spawn(30)
