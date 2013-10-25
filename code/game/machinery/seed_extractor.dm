@@ -10,7 +10,7 @@
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
-/obj/machinery/microwave/New()
+/obj/machinery/seed_extractor/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/seed_extractor
@@ -67,7 +67,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 
-	if (istype(O, /obj/item/weapon/screwdriver))
+	else if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
 			src.opened = 1
 			user << "You open the maintenance hatch of [src]."
