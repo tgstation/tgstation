@@ -176,7 +176,7 @@
 
 
 
-//Griff
+
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
@@ -204,6 +204,8 @@
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/spray/waterflower(H), slot_in_backpack)
 		H.mutations.Add(CLUMSY)
+		H.real_name = pick(clown_names)
+		H.rename_self("clown")
 		return 1
 
 
@@ -245,6 +247,7 @@
 		H.mind.special_verbs += /client/proc/mimespeak
 		H.mind.special_verbs += /client/proc/mimewall
 		H.miming = 1
+		H.rename_self("mime")
 		return 1
 
 
