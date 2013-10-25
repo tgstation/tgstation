@@ -207,7 +207,7 @@
 							src << "\red You feel weak."
 							emote("collapse")
 						if(prob(15))
-							if(!( hair_style == "Shaved") || !(hair_style == "Bald"))
+							if(!(facial_hair_style == "Shaved") || !(hair_style == "Bald"))
 								src << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
 									facial_hair_style = "Shaved"
@@ -483,6 +483,12 @@
 					if(on_fire)
 						apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 						fire_alert = max(fire_alert, 2)
+						//Hair burns off if it's not protected
+						if(!head || (head && !(head.flags & BLOCKHAIR)))
+							if(!(facial_hair_style == "Shaved") || !(hair_style == "Bald"))
+								facial_hair_style = "Shaved"
+								hair_style = "Bald"
+								update_hair(0)
 					else
 						apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 						fire_alert = max(fire_alert, 2)
