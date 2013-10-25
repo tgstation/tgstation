@@ -24,7 +24,7 @@
 	protected_jobs = list()
 	required_players = 15
 	required_enemies = 3
-	recommended_enemies = 3
+	recommended_enemies = 4
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
