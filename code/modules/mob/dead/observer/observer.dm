@@ -106,16 +106,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		alpha=GHOST_LIGHT_ALPHA
 		invisibility=INVISIBILITY_OBSERVER
 
-/mob/dead/observer/SetLuminosity(new_luminosity, max_luminosity)
-	..()
-	updateSpookyAlpha()
+///mob/dead/observer/SetLuminosity(new_luminosity, max_luminosity)
+//	..()
+//	updateSpookyAlpha()
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.HasEntered(src)
-		//updateSpookyAlpha() // Added SetLuminosity above, probably not worth it.
+		updateSpookyAlpha() // Added SetLuminosity above, probably not worth it.
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -129,7 +129,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.HasEntered(src)
-	//updateSpookyAlpha()
+	updateSpookyAlpha()
 
 /mob/dead/observer/examine()
 	if(usr)
