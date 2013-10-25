@@ -2,6 +2,8 @@
 
 var/list/preferences_datums = list()
 
+#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
+
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
 	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
