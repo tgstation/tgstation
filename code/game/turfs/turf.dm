@@ -11,8 +11,6 @@
 	var/nitrogen = 0
 	var/toxins = 0
 
-	var/list/border_objects = list()
-
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
@@ -54,35 +52,23 @@
 		return
 	if (!mover)
 		return 1
+	// First, make sure it can leave its square
 	if(isturf(mover.loc))
-		var/turf/T0 = mover.loc
-		/*
-			This is a waste of processing, currently; only border
-			objects will stop you from leaving a square.
-			If anything is added which changes this, you can uncomment this.
-
-		for(var/obj/obstacle in T0.contents - T0.border_objects)
-			if(obstacle == mover || obstacle == forget) continue
-			if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, 1)
-				return 0
-		*/
-		for(var/obj/obstacle in T0.border_objects)
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in mover.loc)
 			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
-				if(obstacle.loc != T0) // if loc is changed automagically
-					T0.border_objects -= obstacle
-					continue
 				mover.Bump(obstacle, 1)
 				return 0
 
+	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in border_objects)
-		if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
-			if(border_obstacle.loc != src) // if loc is changed automagically
-				border_objects -= border_obstacle
-				continue
-			mover.Bump(border_obstacle, 1)
-			return 0
+	for(var/atom/movable/border_obstacle in src)
+		if(border_obstacle.flags&ON_BORDER)
+			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
+				mover.Bump(border_obstacle, 1)
+				return 0
+		else
+			large_dense += border_obstacle
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
@@ -90,7 +76,7 @@
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in contents - border_objects)
+	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
 			mover.Bump(obstacle, 1)
 			return 0
@@ -116,8 +102,6 @@
 		return
 
 	var/atom/movable/M = atom
-	if(M.flags&ON_BORDER)
-		border_objects += M
 
 	var/loopsanity = 100
 	if(ismob(M))
@@ -145,11 +129,6 @@
 				A.HasProximity(M, 1)
 			return
 	return
-
-/turf/Exited(atom/movable/AM)
-	..()
-	if(AM.flags&ON_BORDER)
-		border_objects -= AM
 
 /turf/proc/is_plating()
 	return 0
