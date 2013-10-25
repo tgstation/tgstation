@@ -47,3 +47,4 @@ miauw62 = Game Master
 jordie0608 = Game Master
 s0ldi3rkr4s0 = Game Master
 ergosavi = Game Master
+vistapowa = Game Master

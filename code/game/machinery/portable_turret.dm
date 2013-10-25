@@ -812,6 +812,9 @@
 			new /obj/item/device/assembly/prox_sensor(loc)
 			build_step = 4
 
+/obj/machinery/porta_turret_construct/attack_ai()
+	return
+
 
 /************************
 * PORTABLE TURRET COVER *
