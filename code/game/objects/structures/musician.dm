@@ -54,7 +54,10 @@
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
 
 /datum/song/proc/shouldStopPlaying()
-	return !instrumentObj.anchored		// add special cases to stop in subclasses
+	if(instrumentObj)
+		return !instrumentObj.anchored		// add special cases to stop in subclasses
+	else
+		return 1
 
 /datum/song/proc/playsong(mob/user as mob)
 	while(repeat >= 0)
@@ -270,11 +273,14 @@
 // subclass for handheld instruments, like violin
 /datum/song/handheld
 
-	updateDialog(mob/user as mob)
-		instrumentObj.interact(user)
+/datum/song/handheld/updateDialog(mob/user as mob)
+	instrumentObj.interact(user)
 
-	shouldStopPlaying()
+/datum/song/handheld/shouldStopPlaying()
+	if(instrumentObj)
 		return !isliving(instrumentObj.loc)
+	else
+		return 1
 
 
 //////////////////////////////////////////////////////////////////////////

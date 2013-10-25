@@ -30,6 +30,10 @@
 				cooldown = world.time
 		else
 			..()
+/obj/item/weapon/shield/riot/roman
+	name = "roman shield"
+	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
+	icon_state = "roman_shield"
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
