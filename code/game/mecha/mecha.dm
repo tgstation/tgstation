@@ -38,6 +38,7 @@
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
+	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
 	//inner atmos
 	var/use_internal_tank = 0
@@ -982,6 +983,10 @@
 		*/
 		H.stop_pulling()
 		H.forceMove(src)
+		if(H.hud_used)
+			last_user_hud = H.hud_used.hud_shown
+			H.hud_used.hide_hud()
+
 		src.occupant = H
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
@@ -1127,6 +1132,9 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
+		if(src.occupant.hud_used && src.last_user_hud)
+			src.occupant.hud_used.show_hud()
+
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
