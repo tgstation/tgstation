@@ -27,8 +27,8 @@ Buildable meters
 #define PIPE_THERMAL_PLATE		22
 
 /obj/item/pipe_spawner
-	name = "Used for placing piping parts on the map."
-	desc = "A pipe"
+	name = "Pipe Spawner"
+	desc = "Used for placing piping parts on the map."
 
 	var/pipe_type = 0
 	icon = 'icons/obj/pipe-item.dmi'
