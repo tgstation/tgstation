@@ -206,7 +206,7 @@ datum/controller/game_controller/proc/process()
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
-					start_time -= 864000    //deciseconds in a day
+					start_time -= MIDNIGHT_ROLLOVER    //deciseconds in a day
 				sleep( round(minimum_ticks - (end_time - start_time),1) )
 			else
 				sleep(10)
