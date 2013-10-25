@@ -346,60 +346,28 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					use_power(power)
 					spawn(16)
 						for(var/M in being_built.materials)
+							if(!check_mat(being_built, M))
+								src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
+								g2g = 0
+								break
 							switch(M)
 								if("$metal")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]))
 								if("$glass")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.g_amount = max(0, (linked_lathe.g_amount-being_built.materials[M]))
 								if("$gold")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]))
 								if("$silver")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
 								if("$plasma")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
 								if("$uranium")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
 								if("$diamond")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
 								if("$clown")
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
 								else
-									if(!check_mat(being_built, M))
-										src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-										g2g = 0
-										break
 									linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
 
 						if(being_built.build_path && g2g)
