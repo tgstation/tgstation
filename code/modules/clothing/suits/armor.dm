@@ -19,6 +19,16 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/hos
+	name = "armored coat"
+	desc = "A greatcoat enchanced with a special alloy for some protection and style."
+	icon_state = "hos"
+	item_state = "hos"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
