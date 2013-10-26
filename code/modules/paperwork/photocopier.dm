@@ -38,7 +38,7 @@
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
-	if(copy || photocopy || ass)
+	if(copy || photocopy || (ass.loc == src.loc))
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
 			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
@@ -115,23 +115,27 @@
 					break
 		else if(ass) //ASS COPY. By Miauw
 			for(var/i = 0, i < copies, i++)
-				if(toner >= 5 && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
+				var/icon/temp_img
+				if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
+					usr << "<span class='notice'>You feel kind of silly copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>"
+				else if(toner >= 5 && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
+					if(isalien(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+						temp_img = icon("icons/ass/assalien.png")
+					else if(ishuman(ass)) //Suit checks are in check_ass
+						if(ass.gender == MALE)
+							temp_img = icon("icons/ass/assmale.png")
+						else if(ass.gender == FEMALE)
+							temp_img = icon("icons/ass/assfemale.png")
+						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
+							temp_img = icon("icons/ass/assmale.png")
+					else
+						break
 					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 					p.desc = "You see [ass]'s ass on the photo."
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
-					if(istype(ass,/mob/living/carbon/alien) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
-						p.img = icon("icons/ass/assalien.png")
-					else if(istype(ass,/mob/living/carbon/human)) //Suit checks are in check_ass
-						if(ass.gender == MALE)
-							p.img = icon("icons/ass/assmale.png")
-						else if(ass.gender == FEMALE)
-							p.img = icon("icons/ass/assfemale.png")
-						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
-							p.img = icon("icons/ass/assmale.png")
-					else
-						break
-					var/icon/small_img = icon(p.img) //Icon() is needed or else p.img will be rescaled too >.>
+					p.img = temp_img
+					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
 					var/icon/ic = icon('icons/obj/items.dmi',"photo")
 					small_img.Scale(8, 8)
 					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
