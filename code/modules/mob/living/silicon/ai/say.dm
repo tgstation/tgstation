@@ -73,6 +73,10 @@ var/const/VOX_DELAY = 600
 		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
 		return
 
+	if(control_disabled)
+		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
+		return
+
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
 	last_announcement = message
@@ -104,6 +108,13 @@ var/const/VOX_DELAY = 600
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
+
+	for(var/mob/M in player_list)
+		if(M.client)
+			var/turf/T = get_turf(M)
+			var/turf/our_turf = get_turf(src)
+			if(T.z == our_turf.z)
+				M << "<b><font size = 3><font color = red>AI announcement:</font color> [message]</font size></b>"
 
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
