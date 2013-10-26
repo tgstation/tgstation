@@ -490,17 +490,18 @@
 
 	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
 	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
+		if (!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=apc")
 			return
-		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
+		else if (issilicon(user) && src.aidisabled && !src.malfhack)
 			user << "AI control for this APC interface has been disabled."
 			user.unset_machine()
 			user << browse(null, "window=apc")
 			return
-		else if (src.malfai)
-			if ((src.malfai != user && src.malfai != user:parent) && !islinked(user, malfai))
+		else if (src.malfai && isAI(user))
+			var/mob/living/silicon/ai/AI = user
+			if ((src.malfai != AI && src.malfai != AI.parent) && !islinked(AI, malfai))
 				user << "AI control for this APC interface has been disabled."
 				user.unset_machine()
 				user << browse(null, "window=apc")
