@@ -108,13 +108,14 @@ var/const/VOX_DELAY = 600
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
-
+/*
 	for(var/mob/M in player_list)
 		if(M.client)
 			var/turf/T = get_turf(M)
 			var/turf/our_turf = get_turf(src)
 			if(T.z == our_turf.z)
 				M << "<b><font size = 3><font color = red>AI announcement:</font color> [message]</font size></b>"
+*/
 
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
