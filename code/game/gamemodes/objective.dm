@@ -288,6 +288,7 @@ datum/objective/steal
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 		"the reactive teleport armor" = /obj/item/clothing/suit/armor/reactive,
 		"a laser pointer" = /obj/item/device/laser_pointer,
+		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 /*
 Nobody takes these seriously anyways -- Ikki
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
@@ -300,7 +301,6 @@ Nobody takes these seriously anyways -- Ikki
 	)
 
 	var/global/possible_items_special[] = list(
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"a diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"a bag of holding" = /obj/item/weapon/storage/backpack/holding,
@@ -377,6 +377,12 @@ Nobody takes these seriously anyways -- Ikki
 					if(E.Uses > 0)
 						return 1
 
+			if("the captain's pinpointer")
+				for(var/obj/item/weapon/pinpointer/I in all_items) //Check for items
+					if(I.type != /obj/item/weapon/pinpointer) //A pinpointer other than the captain's, keep going
+						continue
+					else
+						return 1
 			else
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
