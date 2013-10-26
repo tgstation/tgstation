@@ -74,7 +74,7 @@
 					copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 					c.info += copied
 					c.info += "</font>"
-					c.name = copy.name	//-- Doohl
+					c.name = copy.name
 					c.fields = copy.fields
 					c.updateinfolinks()
 					toner--
@@ -162,8 +162,6 @@
 			updateUsrDialog()
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
-		else if(!check_ass())
-			ass = null
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -210,7 +208,7 @@
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		if(check_copier_contents())
+		if(copier_empty())
 			user.drop_item()
 			copy = O
 			O.loc = src
@@ -220,7 +218,7 @@
 		else
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/weapon/photo))
-		if(check_copier_contents())
+		if(copier_empty())
 			user.drop_item()
 			photocopy = O
 			O.loc = src
@@ -244,9 +242,9 @@
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
 	else if(istype(O, /obj/item/weapon/grab)) //For ass-copying.
 		var/obj/item/weapon/grab/G = O
-		if(ismob(G.affecting))
+		if(ismob(G.affecting) && G.affecting != ass)
 			var/mob/GM = G.affecting
-			visible_message("\red [usr] drags [GM.name] onto the photocopier!")
+			visible_message("<span class='warning'>[usr] drags [GM.name] onto the photocopier!</span>")
 			GM.loc = get_turf(src)
 			ass = GM
 			if(photocopy)
@@ -284,49 +282,48 @@
 			toner = 0
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
+	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai) || target == ass)
 		return
 	src.add_fingerprint(user)
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		visible_message("\red [usr] jumps onto the photocopier!")
+		visible_message("<span class='warning'>[usr] jumps onto the photocopier!</span>")
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 		if(target.anchored) return
 		if(!ishuman(user) && !ismonkey(user)) return
-		visible_message("\red [usr] drags [target.name] onto the photocopier!")
+		visible_message("<span class='warning'>[usr] drags [target.name] onto the photocopier!</span>")
 	target.loc = get_turf(src)
 	ass = target
 	if(photocopy)
 		photocopy.loc = src.loc
+		visible_message("<span class='notice'>[photocopy] is shoved out of the way by [ass]!</span>")
 		photocopy = null
-		visible_message("\red [photocopy] is shoved out of the way by [ass]!")
 	else if(copy)
 		copy.loc = src.loc
+		visible_message("<span class='notice'>[copy] is shoved out of the way by [ass]!</span>")
 		copy = null
-		visible_message("\red [copy] is shoved out of the way by [ass]!")
 	updateUsrDialog()
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
 	if(!ass)
-		return
+		return 0
 	if(ass.loc != src.loc)
-		return
+		ass = null
+		updateUsrDialog()
+		return 0
 	else if(istype(ass,/mob/living/carbon/human))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
 			return 1
 		else
-			return
+			return 0
 	else
 		return 1
 
-/obj/machinery/photocopier/proc/check_copier_contents()
-	if(!copy && !photocopy)
-		if(!check_ass())
-			return 1
-		else
-			ass = null //Gotta deinitialize ass whenever we can.
-			return
+/obj/machinery/photocopier/proc/copier_empty()
+	if(copy || photocopy || check_ass())
+		return 0
 	else
-		return
+		return 1
 
 /*
  * Toner cartridge
