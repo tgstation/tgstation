@@ -35,10 +35,17 @@ def main():
 	_compare.add_argument('theirs', type=str, help='One side of the difference', metavar='theirs.dmi')
 	_compare.add_argument('mine', type=str, help='The other side.', metavar='mine.dmi')
 	
-	_compare_all = command.add_parser('compare-all', help='Compare two DMI files and note the differences')
+	_compare_all = command.add_parser('compare-all', help='Compare two DMI file directories and note the differences')
 	_compare_all.add_argument('theirs', type=str, help='One side of the difference', metavar='theirs/')
 	_compare_all.add_argument('mine', type=str, help='The other side.', metavar='mine/')
-	# compare.add_argument('diff',type=str,help='The difference report location',metavar='report.txt', nargs='?')
+	
+	_get_dmi_data = command.add_parser('get-dmi-data', help='Extract DMI header')
+	_get_dmi_data.add_argument('file', type=str, help='DMI file', metavar='file.dmi')
+	_get_dmi_data.add_argument('dest', type=str, help='The file where the DMI header will be saved', metavar='dest.txt')
+	
+	_get_dmi_data = command.add_parser('set-dmi-data', help='Set DMI header')
+	_get_dmi_data.add_argument('file', type=str, help='One side of the difference', metavar='file.dmi')
+	_get_dmi_data.add_argument('metadata', type=str, help='DMI header file', metavar='metadata.txt')
 	"""
 	opt.add_argument('-d', '--disassemble',		dest='disassemble', 	type=str, nargs=2, action=ModeAction, help='Disassemble a single .dmi file to a destination.', metavar='file.dmi dest/')
 	opt.add_argument('-D', '--disassemble-all',	dest='disassemble_all', type=str, nargs=2, action=ModeAction, help='Disassemble a directory of DMI files recursively to a destination.', metavar='dmi_files/ dest/')
@@ -58,6 +65,10 @@ def main():
 		disassemble(args.file, args.destination, args)
 	elif args.MODE == 'disassemble-all':
 		disassemble_all(args.source, args.destination, args)
+	elif args.MODE == 'get-dmi-data':
+		get_dmi_data(args.file, args.dest, args)
+	elif args.MODE == 'set-dmi-data':
+		set_dmi_data(args.file, args.metadata, args)
 	else:
 		print('!!! Error, unknown MODE=%r' % args.MODE)
 
@@ -66,6 +77,18 @@ class ModeAction(argparse.Action):
 		# print('%s %s %s' % (namespace, values, option_string))
 		namespace.MODE = self.dest
 		namespace.args = values
+
+def get_dmi_data(path, dest, parser):
+	if(os.path.isfile(path)):
+		dmi = DMI(path)
+		with open(dest,'w') as f:
+			f.write(dmi.getHeader())
+				
+def set_dmi_data(path, headerFile, parser):
+	if(os.path.isfile(path)):
+		dmi = DMI(path)
+		with open(headerFile, 'r') as f:
+			dmi.setHeader(f.read(), path)
 
 def make_dmi(path, dest, parser):
 	if(os.path.isfile(path)):

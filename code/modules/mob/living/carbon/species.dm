@@ -87,6 +87,21 @@
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
 
+/*
+Placeholders for now - N3X
+*/
+/datum/species/grey
+	name = "Grey"
+	icobase = 'icons/mob/human_races/r_grey.dmi'
+	deform = 'icons/mob/human_races/r_def_grey.dmi'
+	language = "Galactic Standard"
+	attack_verb = "punch"
+	darksight = 8
+
+	primitive = /mob/living/carbon/monkey // TODO
+
+	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
+
 /datum/species/skrell
 	name = "Skrell"
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
