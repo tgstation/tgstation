@@ -370,8 +370,8 @@
 			return
 
 		locked = 0
-		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>", \
-				"<span class='notice'>You successfully break out of [src]!</span>")
+		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
 		if(istype(loc, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/BD = loc
