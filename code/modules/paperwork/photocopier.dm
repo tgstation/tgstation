@@ -162,6 +162,8 @@
 			updateUsrDialog()
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
+		else if(!check_ass())
+			ass = null
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -208,7 +210,7 @@
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		if(!copy && !photocopy && !ass)
+		if(check_copier_contents())
 			user.drop_item()
 			copy = O
 			O.loc = src
@@ -218,7 +220,7 @@
 		else
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/weapon/photo))
-		if(!copy && !photocopy && !ass)
+		if(check_copier_contents())
 			user.drop_item()
 			photocopy = O
 			O.loc = src
@@ -253,6 +255,7 @@
 			else if(copy)
 				copy.loc = src.loc
 				copy = null
+			updateUsrDialog()
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
@@ -295,13 +298,16 @@
 	if(photocopy)
 		photocopy.loc = src.loc
 		photocopy = null
+		visible_message("\red [photocopy] is shoved out of the way by [ass]!")
 	else if(copy)
 		copy.loc = src.loc
 		copy = null
-
-	return
+		visible_message("\red [copy] is shoved out of the way by [ass]!")
+	updateUsrDialog()
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
+	if(!ass)
+		return
 	if(ass.loc != src.loc)
 		return
 	else if(istype(ass,/mob/living/carbon/human))
@@ -311,6 +317,16 @@
 			return
 	else
 		return 1
+
+/obj/machinery/photocopier/proc/check_copier_contents()
+	if(!copy && !photocopy)
+		if(!check_ass())
+			return 1
+		else
+			ass = null //Gotta deinitialize ass whenever we can.
+			return
+	else
+		return
 
 /*
  * Toner cartridge
