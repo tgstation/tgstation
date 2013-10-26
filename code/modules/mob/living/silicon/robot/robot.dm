@@ -851,38 +851,42 @@
 	if(!module)
 		pick_module()
 		return
-	var/dat = "<HEAD><TITLE>Modules</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
+	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
 	<BR>
 	<BR>
 	<B>Activated Modules</B>
 	<BR>
-	Module 1: [module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
-	Module 2: [module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
-	Module 3: [module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
-	<BR>
-	<B>Installed Modules</B><BR><BR>"}
+	<table border='0'>
+	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
+	<tr><td>Module 2:</td><td>[module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]</td></tr>
+	<tr><td>Module 3:</td><td>[module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]</td></tr>
+	</table><BR>
+	<B>Installed Modules</B><BR><BR>
 
+	<table border='0'>"}
 
 	for (var/obj in module.modules)
 		if (!obj)
-			dat += text("<B>Resource depleted</B><BR>")
+			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
 		else if(activated(obj))
-			dat += text("[obj]: <B>Activated</B><BR>")
+			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
 		else
-			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
+			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
 	if (emagged)
 		if(activated(module.emag))
-			dat += text("[module.emag]: <B>Activated</B><BR>")
+			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
 		else
-			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
+			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
+	dat += "</table>"
 /*
 		if(activated(obj))
 			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
 		else
 			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
 */
-	src << browse(dat, "window=robotmod&can_close=0")
+	var/datum/browser/popup = new(src, "robotmod", "Modules")
+	popup.set_content(dat)
+	popup.open()
 
 
 /mob/living/silicon/robot/Topic(href, href_list)
