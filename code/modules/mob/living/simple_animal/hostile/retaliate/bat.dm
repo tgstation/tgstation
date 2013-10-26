@@ -5,7 +5,7 @@
 	icon_living = "bat"
 	icon_dead = "bat_dead"
 	icon_gib = "bat_dead"
-	turns_per_move = 5
+	turns_per_move = 1
 	response_help = "brushes aside"
 	response_disarm = "flails at"
 	response_harm = "hits"
@@ -14,7 +14,6 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 15
 	health = 15
-	turns_per_move = 5
 	see_in_dark = 10
 	harm_intent_damage = 6
 	melee_damage_lower = 6
