@@ -35,8 +35,13 @@
 		return
 
 	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
+<<<<<<< HEAD
 		user << "<span class='warning'>*click*</span>"
 		return
+=======
+       	user << "<span class='warning'>*click*</span>"
+       	return
+>>>>>>> cec73fb2af4eb69f5a60f1e26871ec2f587dd3a1
 
 
 	emp_act(severity)
