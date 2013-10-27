@@ -86,6 +86,9 @@
 			return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
+			if(beaker)
+				user << "\red A beaker is loaded, you cannot deconstruct [src]."
+				return 1
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
@@ -138,14 +141,19 @@
 						<A href='?src=\ref[src];action=create;item=rh'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5'>x5</A><BR>
 						Leather<BR>
 						<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>
-						<A href='?src=\ref[src];action=create;item=cardboard'>Cardboard Sheet</A> <FONT COLOR=blue>(200)</FONT> | <A href='?src=\ref[src];action=create;item=cardboard5'>x5</A><BR>
 						<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>
 						<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>
 						<A href='?src=\ref[src];action=create;item=plants'>Plant Bag</A> <FONT COLOR=blue>(350)</FONT><BR>
-						<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"}
+						<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>
+						Misc<BR>
+						<A href='?src=\ref[src];action=create;item=pest'>Pest Spray</A> <FONT COLOR=blue>(40)</FONT> | <A href='?src=\ref[src];action=create;item=pest5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=beez'>BeezEez</A> <FONT COLOR=blue>(40)</FONT> | <A href='?src=\ref[src];action=create;item=beez5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=cardboard'>Cardboard Sheet</A> <FONT COLOR=blue>(200)</FONT> | <A href='?src=\ref[src];action=create;item=cardboard5'>x5</A><BR>"}
+/*						<A href='?src=\ref[src];action=create;item=portaseed'>Portable Seed Extractor</A> <FONT COLOR=blue>(700)</FONT><BR>*/
 					// END AUTOFIX
 					//dat += "Other<BR>"
 					//dat += "<A href='?src=\ref[src];action=create;item=monkey'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
+
 				else
 					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
 			if("nopoints")
@@ -268,6 +276,30 @@
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
+		if("pest")
+			if (check_cost(40)) return 0
+			else
+				new/obj/item/weapon/pestspray(src.loc)
+		if("pest5")
+			if (check_cost(200)) return 0
+			else
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+		if("beez")
+			if (check_cost(40)) return 0
+			else
+				new/obj/item/beezeez(src.loc)
+		if("beez5")
+			if (check_cost(200)) return 0
+			else
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
 		if("wallet")
 			if (check_cost(100)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
@@ -297,6 +329,9 @@
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
+		//if("portaseed")
+		//	if (check_cost(700)) return 0
+		//	else new/obj/item/weapon/storage/bag/plants/portaseeder(src.loc) - Borked the sextractor. commenting out until its fixed.
 	processing = 0
 	menustat = "complete"
 	update_icon()

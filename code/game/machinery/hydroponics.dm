@@ -22,7 +22,7 @@
 	var/planted = 0 // Is it occupied?
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
-	var/opened=0
+	var/opened = 0.0
 
 /obj/machinery/hydroponics/New()
 	..()
@@ -351,7 +351,11 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 	else if ( istype(myseed, /obj/item/seeds/chiliseed ))
 		del(myseed)
-		myseed = new /obj/item/seeds/icepepperseed
+		switch(rand(1,100))
+			if(1 to 60)
+				myseed = new /obj/item/seeds/icepepperseed
+			if(61 to 100)
+				myseed = new /obj/item/seeds/chillighost
 
 	else if ( istype(myseed, /obj/item/seeds/appleseed ))
 		del(myseed)
@@ -394,8 +398,18 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))
 		del(myseed)
 		myseed = new /obj/item/seeds/eggyseed
+	else if ( istype(myseed, /obj/item/seeds/soyaseed ))
+		del(myseed)
+		myseed = new /obj/item/seeds/koiseed
 
-	else
+	else if ( istype(myseed, /obj/item/seeds/sunflowerseed ))
+		del(myseed)
+		switch(rand(1,100))
+			if(1 to 60)
+				myseed = new /obj/item/seeds/moonflowerseed
+			if(61 to 100)
+				myseed = new /obj/item/seeds/novaflowerseed
+
 		return
 
 	dead = 0
@@ -796,6 +810,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.hydrotray_type = src.type
 			del(src)
 	else if(istype(O, /obj/item/weapon/screwdriver))
+		if(anchored)
+			user << "You have to unanchor the [src] first!"
+			return
 		if(!opened)
 			src.opened = 1
 			//src.icon_state = "chem_dispenser_t"
