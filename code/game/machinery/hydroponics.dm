@@ -810,6 +810,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.hydrotray_type = src.type
 			del(src)
 	else if(istype(O, /obj/item/weapon/screwdriver))
+		if(anchored)
+			user << "You have to unanchor the [src] first!"
+			return
 		if(!opened)
 			src.opened = 1
 			//src.icon_state = "chem_dispenser_t"
