@@ -14,6 +14,7 @@
 	var/locked = 0
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/opened = 0.0
 
 /obj/machinery/dna_scannernew/New()
 	..()
