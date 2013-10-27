@@ -64,6 +64,10 @@ obj/item/weapon/gun/energy/staff
 	update_icon()
 		return
 
+	shoot_with_empty_chamber(mob/living/user as mob|obj)
+		user << "<span class='warning'>The [name] whizzles quietly.<span>"
+		return
+
 /obj/item/weapon/gun/energy/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
