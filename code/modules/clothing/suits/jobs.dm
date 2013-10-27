@@ -2,7 +2,7 @@
  * Job related
  */
 
-//Botonist
+//Botanist
 /obj/item/clothing/suit/apron
 	name = "apron"
 	desc = "A basic blue apron."
@@ -11,13 +11,6 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
-
-//Surgeon
-/obj/item/clothing/suit/apron/surgical
-	name = "surgical apron"
-	desc = "A sterile blue surgical apron."
-	icon_state = "surgical"
-	allowed = list(/obj/item/weapon/scalpel, /obj/item/weapon/surgical_drapes, /obj/item/weapon/cautery, /obj/item/weapon/hemostat, /obj/item/weapon/retractor)
 
 //Captain
 /obj/item/clothing/suit/captunic
@@ -111,3 +104,36 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
+
+//Security
+/obj/item/clothing/suit/security/officer
+	name = "security officer's jacket"
+	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
+	icon_state = "officerbluejacket"
+	item_state = "officerbluejacket"
+	body_parts_covered = CHEST|ARMS
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/security/warden
+	name = "warden's jacket"
+	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
+	icon_state = "wardenbluejacket"
+	item_state = "wardenbluejacket"
+	body_parts_covered = CHEST|ARMS
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/security/hos
+	name = "head of security's jacket"
+	desc = "This piece of clothing was specifically designed for asserting superior authority."
+	icon_state = "hosbluejacket"
+	item_state = "hosbluejacket"
+	body_parts_covered = CHEST|ARMS
+	flags_inv = HIDEJUMPSUIT
+
+
+//Surgeon
+/obj/item/clothing/suit/apron/surgical
+	name = "surgical apron"
+	desc = "A sterile blue surgical apron."
+	icon_state = "surgical"
+	allowed = list(/obj/item/weapon/scalpel, /obj/item/weapon/surgical_drapes, /obj/item/weapon/cautery, /obj/item/weapon/hemostat, /obj/item/weapon/retractor)
