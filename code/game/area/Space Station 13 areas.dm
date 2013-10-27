@@ -421,6 +421,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "honk"
 	requires_power = 0
 
+/area/asteroid/clown
+	name = "\improper Clown Roid"
+	icon_state = "honk"
+	requires_power = 0
+
 /area/tdome
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
