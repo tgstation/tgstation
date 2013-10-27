@@ -22,7 +22,6 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS
 	var/opened = 0.0
-	var/mob/living/carbon/occupant = null
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
