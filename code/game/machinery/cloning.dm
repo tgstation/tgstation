@@ -21,6 +21,8 @@
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS
+	var/opened = 0.0
+	var/mob/living/carbon/occupant = null
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -302,6 +304,9 @@
 			//src.icon_state = "autolathe"
 			return 1
 	else if(istype(W, /obj/item/weapon/crowbar))
+		if (occupant)
+			user << "\red You cannot disassemble this [src], it's occupado."
+			return 1
 		if (opened)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
