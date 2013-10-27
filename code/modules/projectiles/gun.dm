@@ -35,8 +35,8 @@
 		return
 
 	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-       	user << "<span class='warning'>*click*</span>"
-       	return
+		user << "<span class='warning'>*click*</span>"
+		return
 
 
 	emp_act(severity)

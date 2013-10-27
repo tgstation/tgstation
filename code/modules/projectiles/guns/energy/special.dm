@@ -65,8 +65,8 @@ obj/item/weapon/gun/energy/staff
 		return
 
 	shoot_with_empty_chamber(mob/living/user as mob|obj)
-       user << "<span class='warning'>The [name] whizzles quietly.<span>"
-       return
+		user << "<span class='warning'>The [name] whizzles quietly.<span>"
+		return
 
 
 /obj/item/weapon/gun/energy/staff/animate
