@@ -202,6 +202,9 @@
 			//src.icon_state = "autolathe"
 			return 1
 	else if(istype(W, /obj/item/weapon/crowbar))
+		if (occupant)
+			user << "\red You cannot disassemble this [src], it's occupado."
+			return 1
 		if (opened)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
