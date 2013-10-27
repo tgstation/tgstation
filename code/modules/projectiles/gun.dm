@@ -34,10 +34,6 @@
 		proj.silenced = silenced
 		return
 
-	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-		user << "<span class='warning'>*click*</span>"
-		return
-
 
 	emp_act(severity)
 		for(var/obj/O in contents)
@@ -82,7 +78,7 @@
 		if(!special_check(user))
 			return
 		if(!load_into_chamber())
-			shoot_with_empty_chamber(user)
+			user << "<span class='warning'>*click*</span>"
 			return
 
 		if(!in_chamber)
