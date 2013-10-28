@@ -279,6 +279,7 @@ OSError: cannot identify image file
  - hfrequency0
  - hfrequency1
  + konaahirano
+ - prod
  - telebaton0
  - telebaton1
  - vox-helmet-engineer
@@ -299,6 +300,7 @@ OSError: cannot identify image file
  - hfrequency0
  - hfrequency1
  + konaahirano
+ - prod
  - telebaton0
  - telebaton1
  - vox-helmet-engineer
@@ -606,6 +608,10 @@ OSError: cannot identify image file
  + shrapnellarge
  + shrapnelmedium
  + shrapnelsmall
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\stationobjs.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stationobjs.dmi
+ - recharger3
+ - wrecharger3
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
  + rtableflip0
@@ -653,6 +659,9 @@ OSError: cannot identify image file
  - kit_1
  - paddle_lefthand
  - paddle_righthand
+ - stunprod
+ - stunprod_active
+ - stunprod_nocell
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
