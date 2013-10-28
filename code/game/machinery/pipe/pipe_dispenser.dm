@@ -73,7 +73,7 @@
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	src.add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		usr << "\blue You put [W] back to [src]."
+		usr << "\blue You put [W] back into [src]."
 		user.drop_item()
 		del(W)
 		return
@@ -91,7 +91,7 @@
 				src.unwrenched = 1
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
-		else /*if (unwrenched==1)*/
+		else if (!istype(get_turf(src), /turf/space/))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "\blue You begin to fasten \the [src] to the floor..."
 			if (do_after(user, 20))
