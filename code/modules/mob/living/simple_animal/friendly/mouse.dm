@@ -18,6 +18,9 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
+	pass_flags = PASSTABLE
+	can_ventcrawl = 1
+	can_hide = 1
 	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()

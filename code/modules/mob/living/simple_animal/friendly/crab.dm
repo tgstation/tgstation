@@ -18,6 +18,7 @@
 	friendly = "pinches"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
+	can_hide = 1
 
 /mob/living/simple_animal/crab/Life()
 	..()
