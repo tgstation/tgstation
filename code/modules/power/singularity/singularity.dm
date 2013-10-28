@@ -479,7 +479,7 @@ var/global/list/uneatable = list(
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
 	if(emergency_shuttle)
-		emergency_shuttle.incall(0.5) // Cannot recall
+		emergency_shuttle.incall(0.3) // Cannot recall
 
 /obj/machinery/singularity/narsie/process()
 	eat()

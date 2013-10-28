@@ -91,9 +91,6 @@
 /atom/proc/CheckExit()
 	return 1
 
-/atom/proc/HasEntered(atom/movable/AM as mob|obj)
-	return
-
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
@@ -247,6 +244,8 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
+	if(flags & NOBLOODY)
+		return 0
 	if(!initial(icon) || !initial(icon_state))
 		return 0
 	if(!istype(M))

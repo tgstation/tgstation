@@ -280,7 +280,7 @@
 		if(!H.gloves)
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
-			var/datum/limb/affecting = H.get_organ(organ)
+			var/obj/item/organ/limb/affecting = H.get_organ(organ)
 			if(affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
 	else if(isliving(user))
@@ -304,7 +304,7 @@
 			del(src)
 	..()
 
-/obj/item/weapon/shard/HasEntered(var/mob/AM)
+/obj/item/weapon/shard/Crossed(var/mob/AM)
 	if(istype(AM))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))

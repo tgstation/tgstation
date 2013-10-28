@@ -43,17 +43,17 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if("middle" in modifiers)
+	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
-	if("shift" in modifiers)
+	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-	if("ctrl" in modifiers)
-		CtrlClickOn(A)
-		return
-	if("alt" in modifiers)
+	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
+		return
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
 		return
 
 	if(stat || paralysis || stunned || weakened)
@@ -65,6 +65,8 @@
 		return
 
 	if(istype(loc,/obj/mecha))
+		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
+			return
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
 
@@ -216,6 +218,7 @@
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
 		examine()
+		user.face_atom(src)
 	return
 
 /*
@@ -241,7 +244,17 @@
 	return
 
 /atom/proc/AltClick(var/mob/user)
+	var/turf/T = get_turf(src)
+	if(T && user.TurfAdjacent(T))
+		if(user.listed_turf == T)
+			user.listed_turf = null
+		else
+			user.listed_turf = T
+			user.client.statpanel = T.name
 	return
+
+/mob/proc/TurfAdjacent(var/turf/T)
+	return T.Adjacent(src)
 
 /*
 	Misc helpers
@@ -284,11 +297,16 @@
 	if( buckled || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
-	if(!dx && !dy) return
+	if(!dx && !dy) // Wall items are graphically shifted but on the floor
+		if(A.pixel_y > 16)		dir = NORTH
+		else if(A.pixel_y < -16)dir = SOUTH
+		else if(A.pixel_x > 16)	dir = EAST
+		else if(A.pixel_x < -16)dir = WEST
+		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)	dir = NORTH
+		else		dir = SOUTH
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)	dir = EAST
+		else		dir = WEST

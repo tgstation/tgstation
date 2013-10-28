@@ -244,6 +244,8 @@ var/list/slot_equipment_priority = list( \
 	set category = "Object"
 	set src = usr
 
+	if(istype(loc,/obj/mecha)) return
+
 	if(hand)
 		var/obj/item/W = l_hand
 		if (W)
@@ -643,7 +645,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t#[air_master.active_turfs.len]")
+				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
 				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
@@ -655,6 +657,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				stat(null,"MasterController-ERROR")
 
+	if(listed_turf && client)
+		if(!TurfAdjacent(listed_turf))
+			listed_turf = null
+		else
+			statpanel(listed_turf.name, null, listed_turf)
+			for(var/atom/A in listed_turf)
+				if(A.invisibility > see_invisible)
+					continue
+				statpanel(listed_turf.name, null, A)
 
 	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)

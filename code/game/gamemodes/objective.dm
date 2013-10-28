@@ -19,6 +19,7 @@ datum/objective
 				possible_targets += possible_target
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
+		update_explanation_text()
 
 
 	proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
@@ -26,25 +27,22 @@ datum/objective
 			if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
 				target = possible_target
 				break
+		update_explanation_text()
 
+	proc/update_explanation_text()
+		//Default does nothing, override where needed
 
 
 datum/objective/assassinate
+	var/target_role_type=0
+
 	find_target()
 		..()
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
-		else
-			explanation_text = "Free Objective"
 		return target
 
-
 	find_target_by_role(role, role_type=0)
+		target_role_type = role_type
 		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
 		return target
 
 
@@ -55,25 +53,25 @@ datum/objective/assassinate
 			return 0
 		return 1
 
-
-
-datum/objective/mutiny
-	find_target()
+	update_explanation_text()
 		..()
 		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+			explanation_text = "Assassinate [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
 		else
 			explanation_text = "Free Objective"
-		return target
 
+datum/objective/mutiny
+	var/target_role_type=0
+
+	find_target()
+		..()
+		return target
 
 	find_target_by_role(role, role_type=0)
+		target_role_type = role_type
 		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
 		return target
+
 
 	check_completion()
 		if(target && target.current)
@@ -85,24 +83,25 @@ datum/objective/mutiny
 			return 0
 		return 1
 
-
-datum/objective/debrain//I want braaaainssss
-	find_target()
+	update_explanation_text()
 		..()
 		if(target && target.current)
-			explanation_text = "Steal the brain of [target.current.real_name]."
+			explanation_text = "Assassinate [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
 		else
 			explanation_text = "Free Objective"
-		return target
 
+datum/objective/debrain//I want braaaainssss
+	var/target_role_type=0
+
+	find_target()
+		..()
+		return target
 
 	find_target_by_role(role, role_type=0)
+		target_role_type = role_type
 		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Steal the brain of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
 		return target
+
 
 	check_completion()
 		if(!target)//If it's a free objective.
@@ -118,24 +117,25 @@ datum/objective/debrain//I want braaaainssss
 				return 1
 		return 0
 
-
-datum/objective/protect//The opposite of killing a dude.
-	find_target()
+	update_explanation_text()
 		..()
 		if(target && target.current)
-			explanation_text = "Protect [target.current.real_name], the [target.assigned_role]."
+			explanation_text = "Steal the brain of [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
 		else
 			explanation_text = "Free Objective"
-		return target
 
+datum/objective/protect//The opposite of killing a dude.
+	var/target_role_type=0
+
+	find_target()
+		..()
+		return target
 
 	find_target_by_role(role, role_type=0)
+		target_role_type = role_type
 		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Protect [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
 		return target
+
 
 	check_completion()
 		if(!target)			//If it's a free objective.
@@ -146,6 +146,12 @@ datum/objective/protect//The opposite of killing a dude.
 			return 1
 		return 0
 
+	update_explanation_text()
+		..()
+		if(target && target.current)
+			explanation_text = "Protect [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		else
+			explanation_text = "Free Objective"
 
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."

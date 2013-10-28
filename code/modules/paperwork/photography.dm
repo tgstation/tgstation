@@ -106,24 +106,23 @@
 	var/pictures_left = 10
 	var/on = 1
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
-	var/aipictures[] = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
+	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
+	var/in_camera_mode = 0
 
 	verb/picture()
 		set category ="AI Commands"
-		set name = "Take Picture"
+		set name = "Take Image"
 		set src in usr
-		var/mob/living/silicon/ai/my_ai = usr
-		var/target = get_turf(my_ai.eyeobj)
 
-		captureimage(target, usr)
+		toggle_camera_mode()
 
 	verb/viewpicture()
 		set category ="AI Commands"
-		set name = "View Pictures"
+		set name = "View Images"
 		set src in usr
 
 		viewpictures()
@@ -215,9 +214,13 @@
 	temp.Blend("#000", ICON_OVERLAY)
 	var/mobs = ""
 	var/viewer = user
-	if(user.client)		//To make shooting through security cameras possible
-		viewer = user.client.eye
-	var/list/seen = hear(world.view, viewer)
+	var/list/seen
+	if(!istype(user,/mob/living/silicon/ai)) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
+		if(user.client)		//To make shooting through security cameras possible
+			viewer = user.client.eye
+		seen = hear(world.view, viewer)
+	else
+		seen = hear(world.view, target)
 	for(var/i = 1; i <= 3; i++)
 		for(var/j = 1; j <= 3; j++)
 			var/turf/T = locate(x_c, y_c, z_c)
@@ -275,7 +278,7 @@
 
 
 /datum/picture
-	var/name = "picture"
+	var/name = "image"
 	var/list/fields = list()
 
 
@@ -284,7 +287,7 @@
 	for(var/datum/picture in src.aipictures)
 		numberer++
 	var/datum/picture/P = new()
-	P.fields["name"] = "Photo [numberer]"
+	P.fields["name"] = "Image [numberer]"
 	P.fields["icon"] = icon
 	P.fields["img"] = img
 	P.fields["desc"] = desc
@@ -293,15 +296,19 @@
 	P.fields["blueprints"] = blueprints
 
 	aipictures += P
+	usr << "<FONT COLOR=blue><B>Image recorded</B>"	//feedback to the AI player that the picture was taken
 
 
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection
+	if(src.aipictures.len == 0)
+		usr << "<FONT COLOR=red><B>No images saved</B>"
+		return
 	for(var/datum/picture/t in src.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select picture (numbered in order taken)") in nametemp
+	find = input("Select image (numbered in order taken)") in nametemp
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	for(var/datum/picture/q in src.aipictures)
 		if(q.fields["name"] == find)
@@ -331,3 +338,17 @@
 	spawn(64)
 		icon_state = "camera"
 		on = 1
+
+/obj/item/device/camera/ai_camera/proc/toggle_camera_mode()
+	if(in_camera_mode)
+		camera_mode_off()
+	else
+		camera_mode_on()
+
+/obj/item/device/camera/ai_camera/proc/camera_mode_off()
+	src.in_camera_mode = 0
+	usr << "<B>Camera Mode deactivated</B>"
+
+/obj/item/device/camera/ai_camera/proc/camera_mode_on()
+	src.in_camera_mode = 1
+	usr << "<B>Camera Mode activated</B>"

@@ -94,16 +94,6 @@
 	w_class = 4.0
 
 /*
- * Fake telebeacon
- */
-/obj/item/toy/blink
-	name = "electronic blink toy game"
-	desc = "Blink.  Blink.  Blink. Ages 8 and up."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "beacon"
-	item_state = "signaler"
-
-/*
  * Fake singularity
  */
 /obj/item/toy/spinningtoy
@@ -132,7 +122,7 @@
 	examine()
 		set src in usr
 
-		src.desc = text("There are [] caps\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
+		src.desc = text("There are [] cap\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
 		..()
 		return
 
@@ -143,14 +133,14 @@
 				user << "\blue It's already fully loaded!"
 				return 1
 			if (A.amount_left <= 0)
-				user << "\red There is no more caps!"
+				user << "\red There are no more caps!"
 				return 1
 			if (A.amount_left < (7 - src.bullets))
 				src.bullets += A.amount_left
-				user << text("\red You reload [] caps\s!", A.amount_left)
+				user << text("\red You reload [] cap\s!", A.amount_left)
 				A.amount_left = 0
 			else
-				user << text("\red You reload [] caps\s!", 7 - src.bullets)
+				user << text("\red You reload [] cap\s!", 7 - src.bullets)
 				A.amount_left -= 7 - src.bullets
 				src.bullets = 7
 			A.update_icon()
@@ -170,7 +160,7 @@
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires a cap gun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
@@ -185,7 +175,7 @@
 
 	update_icon()
 		src.icon_state = text("357-[]", src.amount_left)
-		src.desc = text("There are [] caps\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
+		src.desc = text("There are [] cap\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
 		return
 
 /*
@@ -355,7 +345,7 @@
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
-				newSaber.color = "rainbow"
+				newSaber.item_color = "rainbow"
 			user.before_take_item(W)
 			user.before_take_item(src)
 			del(W)
@@ -363,12 +353,12 @@
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
-			color = "rainbow"
+			item_color = "rainbow"
 			user << "<span class='warning'>RNBW_ENGAGE</span>"
-			
+
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.  
+				// Updating overlays, copied from welder code.
 				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
 				if(user.r_hand == src)
 					user.update_inv_r_hand(0)
@@ -393,6 +383,9 @@
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsShield()
+	return 0
+
+/obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
 	return 0
 
 /obj/item/toy/katana
@@ -424,11 +417,12 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
-
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|OXYLOSS)
-
+	New()
+		..()
+		name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
 /*
  * Snap pops
  */
@@ -449,7 +443,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		del(src)
 
-/obj/item/toy/snappop/HasEntered(H as mob|obj)
+/obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")
@@ -473,17 +467,19 @@
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
-	if(cooldown < world.time - 8)
+	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
 		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-		cooldown = world.time
+		cooldown = 1
+		spawn(30) cooldown = 0
 
 /obj/item/toy/prize/attack_hand(mob/user as mob)
 	if(loc == user)
-		if(cooldown < world.time - 8)
+		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
 			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
-			cooldown = world.time
+			cooldown = 1
+			spawn(30) cooldown = 0
 			return
 	..()
 
@@ -540,3 +536,25 @@
 	name = "toy phazon"
 	desc = "Mini-Mecha action figure! Collect them all! 11/11."
 	icon_state = "phazonprize"
+
+/*
+ * AI core prizes
+ */
+/obj/item/toy/AI
+	name = "toy AI"
+	desc = "A little toy model AI core with real law announcing action!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "AI"
+	var/cooldown = 0
+
+/obj/item/toy/AI/attack_self(mob/user)
+	if(!cooldown) //for the sanity of everyone
+		var/message = generate_ion_law()
+		user << "<span class='notice'>You press the button on [src].</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("\red \icon[src] [message]")
+		cooldown = 1
+		spawn(30) cooldown = 0
+		return
+
+	..()

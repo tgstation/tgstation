@@ -167,17 +167,17 @@
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
-	color = "green"
+	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
 	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
-	color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
-		icon_state = "dualsaber[color][wielded]"
+		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
@@ -221,11 +221,11 @@
 
 /obj/item/weapon/twohanded/dualsaber/green
 	New()
-		color = "green"
+		item_color = "green"
 
 /obj/item/weapon/twohanded/dualsaber/red
 	New()
-		color = "red"
+		item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -233,7 +233,7 @@
 		if(hacked == 0)
 			hacked = 1
 			user << "<span class='warning'>2XRNBW_ENGAGE</span>"
-			color = "rainbow"
+			item_color = "rainbow"
 			update_icon()
 		else
 			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"

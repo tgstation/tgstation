@@ -203,16 +203,16 @@ datum/design/air_management
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/air_management"
 
-/* Uncomment if someone makes these buildable
+
 datum/design/general_alert
-	name = "Circuit Design (General Alert Console)"
-	desc = "Allows for the construction of circuit boards used to build a General Alert console."
-	id = "general_alert"
+	name = "Circuit Design (Station Alert Console)"
+	desc = "Allows for the construction of circuit boards used to build a Station Alert console."
+	id = "station_alert"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/general_alert"
-*/
+	build_path = "/obj/item/weapon/circuitboard/station_alert"
+
 
 datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"
@@ -1320,6 +1320,28 @@ datum/design/synthetic_flash
 	build_path = "/obj/item/device/flash/synthetic"
 	category = "Misc"
 
+datum/design/bluespacebeaker
+	name = "Bluespace Beaker"
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
+	id = "bluespacebeaker"
+	req_tech = list("bluespace" = 2, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
+	reliability_base = 76
+	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
+	category = "Misc"
+
+datum/design/noreactbeaker
+	name = "Cryostasis Beaker"
+	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	id = "splitbeaker"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000)
+	reliability_base = 76
+	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/noreact"
+	category = "Misc"
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
@@ -1430,6 +1452,16 @@ datum/design/smg
 	build_type = PROTOLATHE
 	materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
 	build_path = "/obj/item/weapon/gun/projectile/automatic"
+	locked = 1
+
+datum/design/xray
+	name = "Xray Laser Gun"
+	desc = "Not quite as menacing as it sounds"
+	id = "xray"
+	req_tech = list("combat" = 6, "materials" = 5, "biotech" = 5, "powerstorage" = 4)
+	build_type = PROTOLATHE
+	materials = list("$gold" = 5000,"$uranium" = 10000, "$metal" = 4000)
+	build_path = "/obj/item/weapon/gun/energy/xray"
 	locked = 1
 
 datum/design/ammo_9mm

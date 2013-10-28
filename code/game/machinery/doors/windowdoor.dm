@@ -93,7 +93,7 @@
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		src.operating = 0
@@ -112,7 +112,7 @@
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	sleep(10)
 
 	src.operating = 0

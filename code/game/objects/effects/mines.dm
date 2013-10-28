@@ -12,7 +12,7 @@
 /obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/HasEntered(AM as mob|obj)
+/obj/effect/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/mine/Bumped(mob/M as mob|obj)
@@ -51,7 +51,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerplasma(obj)
-	atmos_spawn_air("fire", 360)
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 360)
 	spawn(0)
 		del(src)
 
