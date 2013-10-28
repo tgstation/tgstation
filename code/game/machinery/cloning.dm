@@ -200,6 +200,11 @@
 			//Premature clones may have brain damage.
 			src.occupant.adjustBrainLoss(-heal_level/100)
 
+			//Heal the clonee some so getting burnt by fire doesn't trap them forever.
+			src.occupant.adjustOxyLoss(-2)
+			src.occupant.adjustToxLoss(-2)
+			src.occupant.heal_organ_damage(2,2)
+
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
