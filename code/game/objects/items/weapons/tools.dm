@@ -35,7 +35,7 @@
  */
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
-	desc = "You can be totally screwwy with this."
+	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -118,6 +118,7 @@
 		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
 		"You cut \the [C]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
+		C.handcuffed.loc = null	//garbage collector awaaaaay
 		C.handcuffed = null
 		C.update_inv_handcuffed()
 		return

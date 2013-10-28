@@ -122,3 +122,16 @@
 	if(charges < 1)
 		status = 0
 		update_icon()
+
+//Makeshift stun baton. Replacement for stun gloves.
+/obj/item/weapon/melee/baton/cattleprod
+	name = "stunprod"
+	desc = "An improvised stun baton."
+	icon_state = "stunprod_nocell"
+	item_state = "prod"
+	force = 3
+	throwforce = 5
+	stunforce = 5
+	hitcost = 2500
+	slot_flags = null
+
