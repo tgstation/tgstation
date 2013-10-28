@@ -1116,6 +1116,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/friedegg,
 		/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/benedict
 
@@ -1143,8 +1144,9 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 
 /datum/recipe/notasandwich
-	reagents = list("flour" = 5)
 	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 		/obj/item/clothing/mask/fakemoustache,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/notasandwich
