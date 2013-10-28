@@ -130,7 +130,7 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		anchored = !anchored
 
-		if (!anchored)
+		if (!anchored && !istype(get_turf(src), /turf/space/))
 			user.show_message(text("\red [src] can now be moved."))
 			overlays.Cut()
 			power_change()

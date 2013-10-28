@@ -482,14 +482,14 @@
 			user << "Turn off the field generator first."
 			return
 
-		else if(state == 0)
+		else if(state == 0 && !istype(get_turf(src), /turf/space/)) //Can't fasten this thing in space
 			state = 1
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user << "You secure the external reinforcing bolts to the floor."
 			src.anchored = 1
 			return
 
-		else if(state == 1)
+		else if(state == 1) //You can unfasten it tough, if you somehow manage to fasten it.
 			state = 0
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user << "You undo the external reinforcing bolts."
