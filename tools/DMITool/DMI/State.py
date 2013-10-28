@@ -84,7 +84,7 @@ state = "void"
     def ToString(self):
         o = '%s: %d frames, ' % (self.name, self.frames)
         o += '%d directions' % self.dirs
-        o += ' icons: ' + repr(self.icons)
+        #o += ' icons: ' + repr(self.icons)
         return o
     
     def numIcons(self):

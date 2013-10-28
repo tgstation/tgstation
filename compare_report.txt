@@ -2,18 +2,18 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 109, in compare
+  File "tools/DMITool/DMI.py", line 133, in compare
     theirsDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
     img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 125, in compare
+  File "tools/DMITool/DMI.py", line 149, in compare
     mineDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
     img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -105,8 +105,8 @@ OSError: cannot identify image file
  + seashallow
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen.dmi
- - title: title: 8 frames, 1 directions icons: [None, None, None, None, None, None, None, None]
- + title: title: 5 frames, 1 directions icons: [None, None, None, None, None]
+ - title: title: 8 frames, 1 directions
+ + title: title: 5 frames, 1 directions
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
@@ -126,7 +126,7 @@ OSError: cannot identify image file
  - jetpack-red2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\belt.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt.dmi
- + inflatable1
+ + inflatable
  + inflatable2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
@@ -316,7 +316,7 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  + konaahirano
  + konaahirano2
- + snorkel1
+ + snorkel
  + snorkel2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
@@ -477,23 +477,57 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 109, in compare
+  File "tools/DMITool/DMI.py", line 133, in compare
     theirsDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
     img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 125, in compare
+  File "tools/DMITool/DMI.py", line 149, in compare
     mineDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
     img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\harvest.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
+ - ghostchilipepper
+ - koibeans
+ - moonflower
+ - novaflower
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\hydroponics.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\hydroponics.dmi
+ - chilighost-dead
+ - chilighost-grow1
+ - chilighost-grow2
+ - chilighost-grow3
+ - chilighost-grow4
+ - chilighost-grow5
+ - chilighost-grow6
+ - chilighost-harvest
+ - koibean-dead
+ - koibean-grow1
+ - koibean-grow2
+ - koibean-grow3
+ - koibean-grow4
+ - koibean-grow5
+ - koibean-grow6
+ - koibean-harvest
+ - moonflower-dead
+ - moonflower-grow1
+ - moonflower-grow2
+ - moonflower-grow3
+ - moonflower-harvest
+ - novaflower-grow1
+ - novaflower-grow2
+ - novaflower-grow3
+ - novaflower-harvest
+ - portaseeder
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - rpd
@@ -561,6 +595,12 @@ OSError: cannot identify image file
  - mommispawner-idle
  - mommispawner-nopower
  - mommispawner-recharging
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\seeds.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\seeds.dmi
+ - seed-chilighost
+ - seed-koibean
+ - seed-moonflower
+ - seed-novaflower
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\shards.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\shards.dmi
  + shrapnellarge
@@ -728,13 +768,13 @@ OSError: cannot identify image file
  + warden_corporate
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\DoorHazard2x1.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\DoorHazard2x1.dmi
- - door_closed: door_closed: 1 frames, 1 directions icons: [None]
- + door_closed: door_closed: 1 frames, 4 directions icons: [None, None, None, None]
+ - door_closed: door_closed: 1 frames, 1 directions
+ + door_closed: door_closed: 1 frames, 4 directions
  + door_closing
  + door_deny
  + door_locked
- - door_open: door_open: 1 frames, 1 directions icons: [None]
- + door_open: door_open: 1 frames, 4 directions icons: [None, None, None, None]
+ - door_open: door_open: 1 frames, 1 directions
+ + door_open: door_open: 1 frames, 4 directions
  + door_opening
  + welded
  + welded_open
@@ -747,18 +787,18 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 109, in compare
+  File "tools/DMITool/DMI.py", line 133, in compare
     theirsDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
     img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 125, in compare
+  File "tools/DMITool/DMI.py", line 149, in compare
     mineDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 124, in parse
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
     img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -766,6 +806,8 @@ OSError: cannot identify image file
 
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\areas.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
+ - honk
+ - radiation
  - xenocell1
  - xenocell2
  - xenocell3

@@ -38,14 +38,15 @@ def main():
 	_compare_all = command.add_parser('compare-all', help='Compare two DMI file directories and note the differences')
 	_compare_all.add_argument('theirs', type=str, help='One side of the difference', metavar='theirs/')
 	_compare_all.add_argument('mine', type=str, help='The other side.', metavar='mine/')
+	_compare_all.add_argument('report', type=str, help='The file the report is saved to', metavar='report.txt')
 	
 	_get_dmi_data = command.add_parser('get-dmi-data', help='Extract DMI header')
 	_get_dmi_data.add_argument('file', type=str, help='DMI file', metavar='file.dmi')
 	_get_dmi_data.add_argument('dest', type=str, help='The file where the DMI header will be saved', metavar='dest.txt')
 	
-	_get_dmi_data = command.add_parser('set-dmi-data', help='Set DMI header')
-	_get_dmi_data.add_argument('file', type=str, help='One side of the difference', metavar='file.dmi')
-	_get_dmi_data.add_argument('metadata', type=str, help='DMI header file', metavar='metadata.txt')
+	_set_dmi_data = command.add_parser('set-dmi-data', help='Set DMI header')
+	_set_dmi_data.add_argument('file', type=str, help='One side of the difference', metavar='file.dmi')
+	_set_dmi_data.add_argument('metadata', type=str, help='DMI header file', metavar='metadata.txt')
 	"""
 	opt.add_argument('-d', '--disassemble',		dest='disassemble', 	type=str, nargs=2, action=ModeAction, help='Disassemble a single .dmi file to a destination.', metavar='file.dmi dest/')
 	opt.add_argument('-D', '--disassemble-all',	dest='disassemble_all', type=str, nargs=2, action=ModeAction, help='Disassemble a directory of DMI files recursively to a destination.', metavar='dmi_files/ dest/')
@@ -60,7 +61,7 @@ def main():
 	if args.MODE == 'compare':
 		compare(args.theirs, args.mine, args, sys.stdout)
 	if args.MODE == 'compare-all':
-		compare_all(args.theirs, args.mine, args)
+		compare_all(args.theirs, args.mine, args.report, args)
 	elif args.MODE == 'disassemble':
 		disassemble(args.file, args.destination, args)
 	elif args.MODE == 'disassemble-all':
@@ -184,8 +185,8 @@ def disassemble_all(in_dir, out_dir, parser):
 			disassemble(path, to, parser)
 	
 
-def compare_all(in_dir, out_dir, parser):
-	with open('compare_report.txt', 'w') as report:
+def compare_all(in_dir, out_dir, report, parser):
+	with open(report, 'w') as report:
 		report.write('# DMITool Difference Report: {0} {1}'.format(os.path.abspath(in_dir), os.path.abspath(out_dir)))
 		for root, dirnames, filenames in os.walk(in_dir):
 			for filename in fnmatch.filter(filenames, '*.dmi'):
