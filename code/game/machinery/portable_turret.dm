@@ -272,7 +272,7 @@
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return
 		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored)
+		if(!anchored && !istype(get_turf(src), /turf/space/))
 			anchored = 1
 			invisibility = INVISIBILITY_LEVEL_TWO
 			icon_state = "[lasercolor]grey_target_prism"
