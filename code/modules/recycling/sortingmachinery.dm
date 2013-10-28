@@ -125,6 +125,7 @@
 				var/i = round(O.w_class)
 				if(i in list(1,2,3,4,5))
 					P.icon_state = "deliverycrate[i]"
+					P.w_class = i
 				P.add_fingerprint(usr)
 				O.add_fingerprint(usr)
 				add_fingerprint(usr)
