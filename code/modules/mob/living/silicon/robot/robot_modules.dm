@@ -177,7 +177,7 @@
 		modules += L
 
 		modules += new /obj/item/weapon/tray(src)
-		modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+		modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
 		emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)

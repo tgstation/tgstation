@@ -1,3 +1,13 @@
+/*
+Contains:
+Borg Hypospray
+Borg Shaker
+Nothing to do with hydroponics in here. Sorry to dissapoint you.
+*/
+
+/*
+Borg Hypospray
+*/
 /obj/item/weapon/reagent_containers/borghypo
 	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
@@ -14,14 +24,16 @@
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("doctorsdelight", "inaprovaline", "spaceacillin")
+	var/list/reagent_ids = list("doctorsdelight", "inaprovaline", "spac eacillin")
 	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
+	var/list/modes = list()
 
 
 /obj/item/weapon/reagent_containers/borghypo/New()
 	..()
 	for(var/R in reagent_ids)
 		add_reagent(R)
+		modes[R] = reagent_ids.Find(R)
 
 	processing_objects.Add(src)
 
@@ -82,14 +94,15 @@
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
-	mode++
-	if(mode > reagent_list.len)
-		mode = 1
+	mode = modes[input(user, "What reagent do you want to dispense?") as anything in reagent_ids]
 
-	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
+	/*user << "mode is [mode]"
+	user << "input result is [tempmode]"*/
+
+	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
+
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'>Synthesizer is now producing '[R.name]'.</span>"
+	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/examine()
@@ -108,3 +121,56 @@
 
 	if(empty)
 		usr << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
+/*
+Borg Shaker
+*/
+/obj/item/weapon/reagent_containers/borghypo/borgshaker
+	name = "cyborg shaker"
+	desc = "An advanced drink synthesizer and mixer."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "shaker"
+	amount_per_transfer_from_this = 5
+	volume = 40
+	possible_transfer_amounts = list(5,10,20)
+	flags = FPRINT
+	mode = 1
+	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower.
+	charge_tick = 0
+	recharge_time = 3
+
+	reagent_ids = list("orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "beer", "whiskey", "vodka", "rum", "gin", "tequilla", "vermouth", "wine", "kahlua", "cognac", "ale")
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M as mob, mob/user as mob)
+	return //Can't inject stuff with a shaker, can we?
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/process() 
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			for(var/i in modes) //Lots of reagents in this one, so it's best to regenrate them all at once to keep it from being tedious.
+				var/valueofi = modes[i]
+				var/datum/reagents/RG = reagent_list[valueofi]
+				if(RG.total_volume < RG.maximum_volume)
+					R.cell.use(charge_cost)
+					RG.add_reagent(reagent_ids[valueofi], 5)
+	return 1
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
+	if(!proximity) return
+
+	else if(target.is_open_container() && target.reagents)
+		var/datum/reagents/R = reagent_list[mode]
+		if(!R.total_volume)
+			user << "<span class='notice'>[src] is empty.</span>"
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			user << "<span class='notice'>[target] is full.</span>"
+			return
+
+		var/trans = R.trans_to(target, amount_per_transfer_from_this)
+		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
