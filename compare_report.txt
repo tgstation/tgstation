@@ -398,6 +398,8 @@ OSError: cannot identify image file
  + hos_corporate_s
  + lilith_uniform_l
  + lilith_uniform_s
+ + medical_short_l
+ + medical_short_s
  + milohachert_l
  + milohachert_s
  - paramedic_l
@@ -416,8 +418,18 @@ OSError: cannot identify image file
  - aircond1
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\bureaucracy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
+ - paper_stamp-cent
  + paper_stamp-intaff
+ + paper_stamped_cent
  + stamp-intaff
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\chemical.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\chemical.dmi
+ + beakerbluespace
+ + beakernoreact
+ + booze_dispenser
+ + lid_beakerbluespace
+ + lid_beakernoreact
+ + soda_dispenser
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\coatrack.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\coatrack.dmi
  + coat_cmo
@@ -453,6 +465,7 @@ OSError: cannot identify image file
  + williamhackett
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
+ + dest_tagger
  - handtv
  + megaphone
  + modkit
@@ -496,6 +509,14 @@ OSError: cannot identify image file
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\grenade.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
+ - improvised_grenade
+ - improvised_grenade_active
+ - improvised_grenade_filled
+ - improvised_grenade_wired
+ - syndicate
+ - syndicate_active
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\harvest.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
  - ghostchilipepper
@@ -568,9 +589,11 @@ OSError: cannot identify image file
  - mcleaverblood
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\library.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\library.dmi
+ + evabook
  + fax
  + faxreceive
  + faxsend
+ + pipingbook
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
  + Phazon
@@ -579,6 +602,12 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
  + psychbed
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\paper.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\paper.dmi
+ + paper_stamp-cap
+ + paper_stamp-intaff
+ - paper_stamped_cap
+ + stamp-intaff
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipe-item.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
  - dvalve
@@ -662,6 +691,7 @@ OSError: cannot identify image file
  - stunprod
  - stunprod_active
  - stunprod_nocell
+ - wiredrod
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
