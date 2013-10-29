@@ -229,6 +229,16 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
 
+/area/shuttle/siberia
+	name = "\improper Labor Camp Shuttle"
+	music = "music/escape.ogg"
+
+/area/shuttle/siberia/station
+	icon_state = "shuttle"
+
+/area/shuttle/siberia/outpost
+	icon_state = "shuttle"
+
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle Centcom"
@@ -961,6 +971,10 @@ proc/process_ghost_teleport_locs()
 
 /area/security/prison
 	name = "\improper Prison Wing"
+	icon_state = "sec_prison"
+
+/area/security/processing
+	name = "\improper Prisoner Processing"
 	icon_state = "sec_prison"
 
 /area/security/warden
