@@ -1341,7 +1341,7 @@ mob/living/carbon/human/yank_out_object()
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species)
+/mob/living/carbon/human/proc/set_species(var/new_species,var/on_spawn=0)
 
 	if(!new_species)
 		new_species = "Human"
@@ -1356,6 +1356,9 @@ mob/living/carbon/human/yank_out_object()
 		see_invisible = SEE_INVISIBLE_LEVEL_ONE
 	else
 		see_invisible = SEE_INVISIBLE_LIVING
+
+	if(mutations.len==0)
+		mutations=species.default_mutations
 
 	spawn(0)
 		update_icons()
