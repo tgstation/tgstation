@@ -62,7 +62,7 @@
 		var/i = 0
 		for(var/mob/living/carbon/human/traitor in late_joining_list)
 			i++
-			if(i + 1 > traitors.len)
+			if(i + 1 > late_joining_list.len)
 				i = 0
 			target_list[traitor] = late_joining_list[i + 1]
 
@@ -71,7 +71,7 @@
 			..(traitor)
 	else
 		late_joining_list += character
-	return // TODO: Have late joining double agents.
+	return
 
 /datum/game_mode/traitor/double_agents/proc/check_potential_agents()
 
