@@ -432,8 +432,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			user << "You can't do much with that."
 	update_icon()
 
-	if (istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
-		var/obj/item/weapon/card/id/ID = O.GetID()
+	var/obj/item/weapon/card/id/ID = O.GetID()
+	if (ID)
 		if(screen == 9)
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
