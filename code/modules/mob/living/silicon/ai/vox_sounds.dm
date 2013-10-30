@@ -2,8 +2,8 @@
 // Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.
 #ifdef AI_VOX
 
-var/list/vox_sounds = list("," = 'sound/vox_fem/,.wav',
-"." = 'sound/vox_fem/..wav',
+var/list/vox_sounds = list("," = 'sound/vox_fem/,.ogg',
+"." = 'sound/vox_fem/..ogg',
 "a" = 'sound/vox_fem/a.ogg',
 "abortions" = 'sound/vox_fem/abortions.ogg',
 "accelerating" = 'sound/vox_fem/accelerating.ogg',
