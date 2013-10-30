@@ -115,7 +115,7 @@
 			//Prevent meteors from blowing up the singularity's containment.
 			//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
 			if(!istype(A,/obj/machinery/power/emitter) && \
-				!istype(A,/obj/machinery/field_generator) && \
+				!istype(A,/obj/machinery/field/generator) && \
 				prob(15))
 
 				explosion(src.loc, 4, 5, 6, 7, 0)
@@ -142,7 +142,7 @@
 			//Prevent meteors from blowing up the singularity's containment.
 			//Changing emitter and generator ex_act would result in them being bomb and C4 proof
 			if(!istype(A,/obj/machinery/power/emitter) && \
-				!istype(A,/obj/machinery/field_generator))
+				!istype(A,/obj/machinery/field/generator))
 				if(--src.hits <= 0)
 					del(src) //Dont blow up singularity containment if we get stuck there.
 
