@@ -88,7 +88,7 @@
 
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
-	if(isturf(usr.loc))
+	if(isturf(usr.loc) && src.loc == usr)
 		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
