@@ -26,7 +26,7 @@ field_generator power level display
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20  // Current amount of power
-	var/state = 0
+	var/welded = 0
 	var/warming_up = 0
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
@@ -61,7 +61,7 @@ field_generator power level display
 	if(Varedit_start == 1)
 		if(active == 0)
 			active = 1
-			state = 2
+			welded = 1
 			power = field_generator_max_power
 			anchored = 1
 			warming_up = 3
@@ -75,8 +75,13 @@ field_generator power level display
 	return
 
 
+<<<<<<< HEAD
 /obj/machinery/field/generator/attack_hand(mob/user as mob)
 	if(state == 2)
+=======
+/obj/machinery/field_generator/attack_hand(mob/user as mob)
+	if(welded)
+>>>>>>> cc6e5e9... [MAP]Fixed space-fastening properly.
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
 				user << "You are unable to turn off the [src.name] once it is online."
@@ -94,6 +99,7 @@ field_generator power level display
 		return
 
 
+<<<<<<< HEAD
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user)
 	if(active)
 		user << "The [src] needs to be off."
@@ -117,36 +123,60 @@ field_generator power level display
 			if(2)
 				user << "\red The [src.name] needs to be unwelded from the floor."
 				return
+=======
+/obj/machinery/field_generator/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(active)
+			user << "Turn off the [src] first."
+		else if(welded)
+			user << "<span class='notice'>The [src.name] needs to be unwelded from the floor.</span>"
+		else if(!anchored && !isinspace())
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			user.visible_message("[user.name] secures [src.name] to the floor.", \
+				"You secure the external reinforcing bolts to the floor.", \
+				"You hear a ratchet")
+			anchored = 1
+		else if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
+				"You undo the external reinforcing bolts.", \
+				"You hear a ratchet")
+			anchored = 0
+
+>>>>>>> cc6e5e9... [MAP]Fixed space-fastening properly.
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		switch(state)
-			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
-				return
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld the [src] to the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 2
-						user << "You weld the field generator to the floor."
-				else
-					return
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut the [src] free from the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 1
-						user << "You cut the [src] free from the floor."
-				else
-					return
+		if(active)
+			user << "Turn off the [src] first."
+			return
+
+		if(!anchored)
+			user << "<span class='warning'>The [src.name] needs to be wrenched to the floor.</span>"
+		else if(welded)
+			if (WT.remove_fuel(0,user))
+				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
+					"You start to cut the [src] free from the floor.", \
+					"You hear welding")
+				if (do_after(user,20))
+					if(!src || !WT.isOn()) return
+					welded = 0
+					user << "You cut the [src] free from the floor."
+			else
+				user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+		else
+			if (WT.remove_fuel(0,user))
+				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
+					"You start to weld the [src] to the floor.", \
+					"You hear welding")
+				if (do_after(user,20))
+					if(!src || !WT.isOn()) return
+					welded = 0
+					user << "You weld the [src] to the floor."
+			else
+				user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+
 	else
 		..()
 		return
@@ -249,8 +279,13 @@ field_generator power level display
 					return 0
 
 
+<<<<<<< HEAD
 /obj/machinery/field/generator/proc/start_fields()
 	if(!src.state == 2 || !anchored)
+=======
+/obj/machinery/field_generator/proc/start_fields()
+	if(!welded || !anchored)
+>>>>>>> cc6e5e9... [MAP]Fixed space-fastening properly.
 		turn_off()
 		return
 	spawn(1)

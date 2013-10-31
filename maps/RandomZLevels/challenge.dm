@@ -29,4 +29,4 @@
 
 	active = 1
 	locked = 1
-	state = 2
+	welded = 1
