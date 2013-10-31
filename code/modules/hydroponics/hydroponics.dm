@@ -577,9 +577,14 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(O)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		user << "You [anchored ? "wrench" : "unwrench"] [src]."
+		if(!anchored && !isinspace())
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = 1
+			user << "You wrench [src] in place."
+		else if(anchored)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = 0
+			user << "You unwrench [src]."
 	else if(istype(O, /obj/item/weapon/shovel))
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			user << "You clear up [src]!"
