@@ -189,6 +189,10 @@
 	name = "Circuit board (Mining Shuttle)"
 	build_path = "/obj/machinery/computer/mining_shuttle"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/labor_shuttle
+	name = "Circuit Board (Labor Shuttle)"
+	build_path = "/obj/machinery/computer/labor_shuttle"
+	origin_tech = "programming 2"
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = "/obj/machinery/computer/HolodeckControl"
