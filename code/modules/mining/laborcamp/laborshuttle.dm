@@ -10,12 +10,12 @@ proc/move_labor_shuttle() //TODO: Security Access only; add moving the shuttle t
 		var/area/fromArea
 		var/area/toArea
 		if (labor_shuttle_location == 1)
-			fromArea = locate(/area/shuttle/siberia/outpost)
-			toArea = locate(/area/shuttle/siberia/station)
+			fromArea = locate(/area/shuttle/laborcamp/outpost)
+			toArea = locate(/area/shuttle/laborcamp/station)
 
 		else
-			fromArea = locate(/area/shuttle/siberia/station)
-			toArea = locate(/area/shuttle/siberia/outpost)
+			fromArea = locate(/area/shuttle/laborcamp/station)
+			toArea = locate(/area/shuttle/laborcamp/outpost)
 
 		var/list/dstturfs = list()
 		var/throwy = world.maxy

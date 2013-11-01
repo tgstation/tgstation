@@ -127,23 +127,27 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 	var/push_dir = SOUTH
+	var/area/shuttle/destination_area
+	var/destination
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
+	destination = "station"
 
 /area/shuttle/arrival/station
 	icon_state = "shuttle"
+	destination = "pre_game"
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape/station
 	name = "\improper Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	destination = "centcom"
 
 /area/shuttle/escape/centcom
 	name = "\improper Emergency Shuttle Centcom"
@@ -155,7 +159,6 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
@@ -171,7 +174,6 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
@@ -187,7 +189,6 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
-	music = "music/escape.ogg"
 	push_dir = WEST
 
 /area/shuttle/escape_pod3/station
@@ -204,7 +205,6 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
-	music = "music/escape.ogg"
 	push_dir = WEST
 
 /area/shuttle/escape_pod5/station
@@ -221,7 +221,6 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
@@ -229,14 +228,13 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
 
-/area/shuttle/siberia
+/area/shuttle/laborcamp
 	name = "\improper Labor Camp Shuttle"
-	music = "music/escape.ogg"
 
-/area/shuttle/siberia/station
+/area/shuttle/laborcamp/station
 	icon_state = "shuttle"
 
-/area/shuttle/siberia/outpost
+/area/shuttle/laborcamp/outpost
 	icon_state = "shuttle"
 
 /area/shuttle/transport1/centcom

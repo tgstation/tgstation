@@ -23,13 +23,11 @@
 		else if(screen == 1)
 			dat += "<H3>Prisoner ID Management</H3>"
 			if(istype(inserted_id))
-				var/p = inserted_id:points
-				var/g = inserted_id:goal
-				dat += text("<A href='?src=\ref[src];id = 1'>[inserted_id]</A><br>")
-				dat += text("Collectd Points: [p]. <A href='?src=\ref[src];id=2'>Reset.</A><br>")
-				dat += text("Card goal: [g].  <A href='?src=\ref[src];id=3'>Set </A><br>")
+				dat += text("<A href='?src=\ref[src];id=eject'>[inserted_id]</A><br>")
+				dat += text("Collectd Points: [inserted_id.points]. <A href='?src=\ref[src];id=reset'>Reset.</A><br>")
+				dat += text("Card goal: [inserted_id.goal].  <A href='?src=\ref[src];id=setgoal'>Set </A><br>")
 			else
-				dat += text("<A href='?src=\ref[src];id=0'>Insert Prisoner ID.</A><br>")
+				dat += text("<A href='?src=\ref[src];id=insert'>Insert Prisoner ID.</A><br>")
 			dat += "<H3>Prisoner Implant Management</H3>"
 			dat += "<HR>Chemical Implants<BR>"
 			var/turf/Tr = null
@@ -71,6 +69,10 @@
 		popup.open()
 		return
 
+	attackby(obj/item/I as obj, mob/user as mob)
+		if(istype(I, /obj/item/weapon/card/id))
+			return attack_hand(user)
+		..()
 
 	process()
 		if(!..())
@@ -85,27 +87,28 @@
 			usr.set_machine(src)
 
 			if(href_list["id"])
-				switch(href_list["id"])
-					if("0")
-						var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
-						if(istype(I))
-							usr.drop_item()
-							I.loc = src
-							inserted_id = I
-						else usr << "\red No valid ID."
-					if("1")
-						inserted_id.loc = get_turf(src)
-						inserted_id = null
-					if("2")
-						inserted_id.points = 0
-					if("3")
-						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
-						if(num >= 0)
-							inserted_id.goal = num
-			if(href_list["inject1"])
+				if(href_list["id"] =="insert" && !istype(inserted_id))
+					var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
+					if(istype(I))
+						usr.drop_item()
+						I.loc = src
+						inserted_id = I
+					else usr << "\red No valid ID."
+				else if(istype(inserted_id))
+					switch(href_list["id"])
+						if("eject")
+							inserted_id.loc = get_turf(src)
+							inserted_id.verb_pickup()
+							inserted_id = null
+						if("reset")
+							inserted_id.points = 0
+						if("setgoal")
+							var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
+							if(num >= 0)
+								inserted_id.goal = num
+			else if(href_list["inject1"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject1"])
 				if(I)	I.activate(1)
-
 			else if(href_list["inject5"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject5"])
 				if(I)	I.activate(5)

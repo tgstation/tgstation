@@ -2,10 +2,11 @@
 
 /obj/machinery/mineral/labor_claim_console
 	name = "Point Claim Console"
+	desc = "A stacking console with an electromagnetic writer, used to track ore mined by prisoners."
+	name = "stacking machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	desc = "A stacking console with an electromagnetic writer, used to track ore mined by prisoners."
-	density = 1
+	density = 0
 	anchored = 1
 	var/obj/machinery/mineral/stacking_machine/laborstacker/machine = null
 	var/machinedir = SOUTH
@@ -27,24 +28,30 @@
 		else
 			del(src)
 
+/obj/machinery/mineral/labor_claim_console/proc/check_auth()
+	if(emagged) return 1 //Shuttle is emagged, let any ol' person through
+	return (istype(inserted_id) && inserted_id.points >= inserted_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
+
+
 /obj/machinery/mineral/labor_claim_console/attack_hand(user as mob)
+	name = "Point Claim Console"
+	icon = 'icons/obj/machines/mining_machines.dmi'
+	icon_state = "console"
+	desc = "A stacking console with an electromagnetic writer, used to track ore mined by prisoners."
+	density = 0
+	anchored = 1
 	var/dat
 	dat += text("<b>Point Claim Console</b><br><br>")
-	if(emagged)
+	if(emagged) //Shit's broken
 		dat += text("<b>QU&#t0A In%aL*D</b><br>")
-		dat += text("<A href='?src=\ref[src];choice=3'>Proceed to Station.</A><br>")
-		dat += text("<A href='?src=\ref[src];choice=4'>Open release door.</A><br>")
-	if(istype(inserted_id))
-		var/p = inserted_id.points
-		var/g = inserted_id.goal
-		dat += text("[p] / [g] collected. <A href='?src=\ref[src];choice=1'>Eject ID.</A><br>")
-		dat += text("Unclaimed Collection Points: [machine.points].  <A href='?src=\ref[src];choice=2'>Claim points.</A><br>")
-		if(p >= g)
-			dat += text("<b>Quota met.</b><br>")
-			dat += text("<A href='?src=\ref[src];choice=3'>Proceed to Station.</A><br>")
-			dat += text("<A href='?src=\ref[src];choice=4'>Open release door.</A><br>")
-	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=0'>Insert ID.</A><br>")
+	else if(istype(inserted_id)) //There's an ID in there.
+		dat += text("[inserted_id.points] / [inserted_id.goal] collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
+		dat += text("Unclaimed Collection Points: [machine.points].  <A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
+	else	//No ID in sight.  Complain about it.
+		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
+	if(check_auth())
+		dat += text("<A href='?src=\ref[src];choice=station'>Proceed to Station.</A><br>")
+		dat += text("<A href='?src=\ref[src];choice=release'>Open release door.</A><br>")
 
 
 	user << browse("[dat]", "window=console_stacking_machine")
@@ -67,24 +74,24 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["choice"])
-		switch(href_list["choice"])
-			if("0")
-				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
-				if(istype(I))
-					usr.drop_item()
-					I.loc = src
-					inserted_id = I
-				else usr << "\red No valid ID."
-			if("1")
-				inserted_id.loc = get_step(src,get_turf(usr))
+		if(istype(inserted_id)) //Sanity check against href spoofs
+			if(href_list["choice"] == "eject")
+				inserted_id.loc = loc
+				inserted_id.verb_pickup()
 				inserted_id = null
-			if("2")
-				var/p = inserted_id.points
-				var/m = machine.points
-				p += m
-				m = 0
+			if(href_list["choice"] == "claim")
+				inserted_id.points += machine.points
+				machine.points = 0
 				src << "Points transferred."
-			if("3")
+		else if(href_list["choice"] == "insert")
+			var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
+			if(istype(I))
+				usr.drop_item()
+				I.loc = src
+				inserted_id = I
+			else usr << "\red No valid ID."
+		if(check_auth()) //Sanity check against hef spoofs
+			if(href_list["choice"] == "station")
 				if(labor_shuttle_location == 1)
 					if (!labor_shuttle_moving)
 						usr << "\blue Shuttle recieved message and will be sent shortly."
@@ -93,11 +100,10 @@
 						usr << "\blue Shuttle is already moving."
 				else
 					usr << "\blue Shuttle is already on-station."
-			if("4")
+			if(href_list["choice"] == "release")
 				if(release_door.density)
 					release_door.open()
-
-	src.updateUsrDialog()
+		src.updateUsrDialog()
 	return
 
 
