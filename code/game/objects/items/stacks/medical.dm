@@ -10,7 +10,7 @@
 	var/heal_brute = 0
 	var/heal_burn = 0
 
-/obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob, mob/living/carbon/target, target_zone)
+/obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if (M.stat == 2)
 		var/t_him = "it"
 		if (M.gender == MALE)
