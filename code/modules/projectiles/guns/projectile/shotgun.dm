@@ -1,10 +1,17 @@
 /obj/item/weapon/gun/projectile/shotgun
 	name = "shotgun"
-	desc = "This almost certainly shouldn't be here."
+	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	ammo_type = /obj/item/ammo_casing/shotgun
+	w_class = 4.0
+	force = 10
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BACK
+	origin_tech = "combat=4;materials=2"
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
+	var/recentpump = 0 // to prevent spammage
+	var/pumped = 0
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
 	var/num_loaded = 0
@@ -27,22 +34,7 @@
 		A.update_icon()
 		update_icon()
 
-/obj/item/weapon/gun/projectile/shotgun/pump
-	name = "shotgun"
-	desc = "Useful for sweeping alleys."
-	icon_state = "shotgun"
-	item_state = "shotgun"
-	w_class = 4.0
-	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BACK
-	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	var/recentpump = 0 // to prevent spammage
-	var/pumped = 0
-
-
-/obj/item/weapon/gun/projectile/shotgun/pump/process_chambered()
+/obj/item/weapon/gun/projectile/shotgun/process_chambered()
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))
 		return 0
@@ -59,7 +51,7 @@
 	return 0
 
 
-/obj/item/weapon/gun/projectile/shotgun/pump/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user as mob)
 	if(recentpump)	return
 	pump()
 	recentpump = 1
@@ -68,7 +60,7 @@
 	return
 
 
-/obj/item/weapon/gun/projectile/shotgun/pump/proc/pump(mob/M as mob)
+/obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M as mob)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
@@ -82,12 +74,12 @@
 	update_icon()	//I.E. fix the desc
 	return 1
 
-/obj/item/weapon/gun/projectile/shotgun/pump/examine()
+/obj/item/weapon/gun/projectile/shotgun/examine()
 	..()
 	if (chambered)
 		usr << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
-/obj/item/weapon/gun/projectile/shotgun/pump/combat
+/obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"

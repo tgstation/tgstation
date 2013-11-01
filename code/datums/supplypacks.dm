@@ -247,9 +247,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/security/armory/ballistic
 	name = "Combat Shotguns crate"
-	contains = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat,
-					/obj/item/weapon/gun/projectile/shotgun/pump/combat,
-					/obj/item/weapon/gun/projectile/shotgun/pump/combat)
+	contains = list(/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/gun/projectile/shotgun/combat)
 	cost = 20
 	containername = "combat shotgun crate"
 
