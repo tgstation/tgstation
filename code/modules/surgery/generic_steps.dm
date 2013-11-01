@@ -15,7 +15,6 @@
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to clamp bleeders in [target]'s [target_zone].</span>")
 
-
 //retract skin
 /datum/surgery_step/retract_skin
 	implements = list(/obj/item/weapon/retractor = 100, /obj/item/weapon/screwdriver = 45, /obj/item/weapon/wirecutters = 35)
@@ -59,3 +58,5 @@
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to saw through the bone in [target]'s [target_zone].</span>")
+
+

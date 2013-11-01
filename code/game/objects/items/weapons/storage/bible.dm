@@ -27,8 +27,9 @@
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
 		for(var/obj/item/organ/limb/affecting in H.organs)
-			if(affecting.heal_damage(heal_amt, heal_amt))
-				H.update_damage_overlays(0)
+			if(!istype(affecting, /obj/item/organ/limb/robot)) //No Bible can heal a robotic arm!
+				if(affecting.heal_damage(heal_amt, heal_amt))
+					H.update_damage_overlays(0)
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)

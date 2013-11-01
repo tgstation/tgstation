@@ -7,6 +7,8 @@
 	var/location = "chest"
 	var/target_must_be_dead = 0
 	var/target_must_be_fat = 0
+	var/requires_organic_chest = 0
+
 
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
@@ -25,20 +27,26 @@
 	src = null
 
 
+
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
 //As of Feb 21 2013 they are in code/modules/mob/living/carbon/carbon.dm, lines 459 and 51 respectively.
-//Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon).
+//Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
+// var/list/organs (/mob/living/carbon/human) is the LIMBS of a Mob.
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
+// /code/modules/surgery/multiple_location_example.dm contains steps to setup a multiple location operation.
 
 
 //TODO
 //specific steps for some surgeries (fluff text)
 //R&D researching new surgeries (especially for non-humans)
-//surgeries (not steps) that can be initiated on any body part (corresponding with damage locations)
 //more interesting failure options
 //randomised complications
 //more surgeries!
 //add a probability modifier for the state of the surgeon- health, twitching, etc. blindness, god forbid.
 //helper for converting a zone_sel.selecting to body part (for damage)
-//combine hands/feet into the arms
+
+
+//RESOLVED ISSUES //"Todo" jobs that have been completed
+//combine hands/feet into the arms - Hands/feet were removed - RR
+//surgeries (not steps) that can be initiated on any body part (corresponding with damage locations) - Call this one done, see multiple_location_example.dm - RobRichards

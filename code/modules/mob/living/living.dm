@@ -32,6 +32,8 @@
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
+		if (getlimb(/obj/item/organ/limb/robot/r_arm) && (getlimb(/obj/item/organ/limb/robot/l_arm)))
+			return 0 //Both your arms are Robotic, no shocks - RR
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
@@ -40,6 +42,8 @@
 		var/extradam = 0	//added to when organ is at max dam
 		for(var/obj/item/organ/limb/affecting in H.organs)
 			if(!affecting)	continue
+			if(istype(affecting, /obj/item/organ/limb/robot)) //We only have to check one limb, "Robot" is specific enough - RR
+				return 0 //if the one limb we check is Robotic we cancel the damage - RR
 			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 				H.update_damage_overlays(0)
 		H.updatehealth()

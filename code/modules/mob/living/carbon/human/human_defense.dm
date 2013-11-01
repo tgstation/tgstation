@@ -122,6 +122,43 @@ emp_act
 
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 
+//--------------------- Cyber limb stuff ---------------------\\
+
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if (WT.remove_fuel(0))
+			if(istype(affecting, /obj/item/organ/limb/robot))
+				if(affecting.brute_dam > 0)
+					affecting.heal_damage(30,0) //Repair Brute
+					update_damage_overlays(0)
+					updatehealth()
+					for(var/mob/O in viewers(user, null))
+						O.show_message(text("\red [user] has fixed some of the dents on [src]'s [affecting.getDisplayName()]!"), 1) //Tell everyone [src]'s limb (by its real name) has been repaired
+					return //So we don't attack them as well
+				else
+					user << "[src]'s [affecting.getDisplayName()] is already in good condidtion"
+					return
+		else
+			user << "Need more welding fuel!"
+			return
+
+
+	if(istype(I, /obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/coil = I
+		if(istype(affecting, /obj/item/organ/limb/robot))
+			if(affecting.burn_dam > 0)
+				affecting.heal_damage(0,30) //Repair Burn
+				updatehealth()
+				coil.use(1)
+				for(var/mob/O in viewers(user, null))
+					O.show_message(text("\red [user] has fixed some of the burnt wires on [src]'s [affecting.getDisplayName()]!"), 1)
+				return //So we don't attack them as well
+			else
+				user << "[src]'s [affecting.getDisplayName()] is already in good condidtion"
+				return
+
+//-------------------- End of Cyber limb stuff ---------------------\\
+
 	var/hit_area = parse_zone(affecting.name)
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
@@ -141,7 +178,7 @@ emp_act
 	apply_damage(I.force, I.damtype, affecting, armor , I)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)) && !istype(affecting, /obj/item/organ/limb/robot)) //Robotic limbs don't bleed.
 		I.add_blood(src)	//Make the weapon bloody, not the person.
 		if(prob(I.force * 2))	//blood spatter!
 			bloody = 1
@@ -204,3 +241,19 @@ emp_act
 
 		if(I.force > 10 || I.force >= 5 && prob(33))
 			forcesay(hit_appends)	//forcesay checks stat already.
+
+/mob/living/carbon/human/emp_act(severity, mob/user) //HUMAN EMP_ACT WOO - RR
+
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting)) //Where was hit by EMP?
+
+	if(istype(affecting, /obj/item/organ/limb/robot)) //if where we were hit was Robotic
+
+		//Handle EMP stuff.
+		switch(severity)
+			if(1)
+				affecting.take_damage(20, 0)
+				Stun(rand(5,10))
+			if(2)
+				affecting.take_damage(10, 0)
+				Stun(rand(1,5))
+		..()

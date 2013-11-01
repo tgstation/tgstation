@@ -30,6 +30,9 @@
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
+//Old Datum Limbs:
+// code/modules/unused/limbs.dm
+
 /obj/item/organ/limb
 	name = "limb"
 	var/mob/owner = null
@@ -40,38 +43,45 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 
+
 /obj/item/organ/limb/chest
 	name = "chest"
+	desc = "why is it detached..."
 	icon_state = "chest"
 	max_damage = 200
 	body_part = CHEST
 
 /obj/item/organ/limb/head
 	name = "head"
+	desc = "what a way to get a head in life..."
 	icon_state = "head"
 	max_damage = 200
 	body_part = HEAD
 
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
+	desc = "why is it detached..."
 	icon_state = "l_arm"
 	max_damage = 75
 	body_part = ARM_LEFT
 
 /obj/item/organ/limb/l_leg
 	name = "l_leg"
+	desc = "why is it detached..."
 	icon_state = "l_leg"
 	max_damage = 75
 	body_part = LEG_LEFT
 
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
+	desc = "why is it detached..."
 	icon_state = "r_arm"
 	max_damage = 75
 	body_part = ARM_RIGHT
 
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
+	desc = "why is it detached..."
 	icon_state = "r_leg"
 	max_damage = 75
 	body_part = LEG_RIGHT
@@ -136,12 +146,14 @@
 	return 0
 
 //Returns a display name for the organ
-/obj/item/organ/limb/proc/getDisplayName()
+/obj/item/organ/limb/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed - RR.
 	switch(name)
 		if("l_leg")		return "left leg"
 		if("r_leg")		return "right leg"
 		if("l_arm")		return "left arm"
 		if("r_arm")		return "right arm"
+		if("chest")     return "chest"
+		if("head")		return "head"
 		else			return name
 
 

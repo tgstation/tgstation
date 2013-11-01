@@ -12,6 +12,9 @@
 					continue
 				if(S.target_must_be_fat && !(FAT in M.mutations))
 					continue
+				if(S.requires_organic_chest && M.getlimb(/obj/item/organ/limb/robot/chest))
+					continue
+
 				for(var/path in S.species)
 					if(istype(M, path))
 						available_surgeries[S.name] = S
@@ -23,19 +26,32 @@
 				var/datum/surgery/procedure = new S.type
 				if(procedure)
 					if(get_location_accessible(M, procedure.location))
-						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [procedure.location] to prepare for \an [procedure.name].</span>")
+						if(procedure.location == "anywhere")
+							procedure.location = user.zone_sel.selecting
+							M.surgeries += procedure
+							user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [procedure.location] to prepare for \an [procedure.name].</span>")
 
-						user.attack_log += "\[[time_stamp()]\]<font color='red'>Initiated a [procedure.name] on [M.name] ([M.ckey])</font>"
-						M.attack_log += "\[[time_stamp()]\]<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name]</font>"
-						log_attack("<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name] on [M.name] ([M.ckey])</font>")
-						return 1
+							user.attack_log += "\[[time_stamp()]\]<font color='red'>Initiated a [procedure.name] on [M.name] ([M.ckey])</font>"
+							M.attack_log += "\[[time_stamp()]\]<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name]</font>"
+							log_attack("<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name] on [M.name] ([M.ckey])</font>")
+							return 1
+
+
+						else
+							M.surgeries += procedure
+							user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [procedure.location] to prepare for \an [procedure.name].</span>")
+
+							user.attack_log += "\[[time_stamp()]\]<font color='red'>Initiated a [procedure.name] on [M.name] ([M.ckey])</font>"
+							M.attack_log += "\[[time_stamp()]\]<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name]</font>"
+							log_attack("<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name] on [M.name] ([M.ckey])</font>")
+							return 1
 					else
 						user << "<span class='notice'>You need to expose [M]'s [procedure.location] first.</span>"
 						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
 			else
 				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
 	return 0
+
 
 
 proc/get_location_modifier(mob/M)
@@ -109,3 +125,4 @@ proc/get_location_modifier(mob/M)
 				return 0
 
 	return 1
+
