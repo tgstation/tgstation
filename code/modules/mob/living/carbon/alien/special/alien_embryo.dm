@@ -1,5 +1,6 @@
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
+var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 /obj/item/alien_embryo
 	name = "alien embryo"
@@ -72,7 +73,7 @@
 				AttemptGrow()
 
 /obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
-	var/list/candidates = get_candidates(BE_ALIEN)
+	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 	var/client/C = null
 
 	// To stop clientless larva, we will check that our host has a client
