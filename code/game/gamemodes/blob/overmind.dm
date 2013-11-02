@@ -25,7 +25,7 @@
 	..()
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
-	src << "You are the overmind and can control the blob! You can expand, which will attack peple, and place new blob pieces such as..."
+	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
 	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
 	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
 	src << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
