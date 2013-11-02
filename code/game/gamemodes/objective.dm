@@ -210,7 +210,7 @@ datum/objective/silence
 					var/turf/T = get_turf(player)
 					if(!T)	continue
 					switch(T.loc.type)
-						if(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+						if(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom)
 							return 0
 		return 1
 
@@ -244,7 +244,7 @@ datum/objective/escape
 			return 1
 		if(istype(check_area, /area/shuttle/escape_pod3/centcom))
 			return 1
-		if(istype(check_area, /area/shuttle/escape_pod5/centcom))
+		if(istype(check_area, /area/shuttle/escape_pod4/centcom))
 			return 1
 		else
 			return 0
