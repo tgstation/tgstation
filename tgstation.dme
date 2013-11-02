@@ -8,6 +8,7 @@
 #define FILE_DIR .
 #define FILE_DIR "html"
 #define FILE_DIR "icons"
+#define FILE_DIR "icons/ass"
 #define FILE_DIR "icons/effects"
 #define FILE_DIR "icons/mecha"
 #define FILE_DIR "icons/misc"
@@ -42,6 +43,7 @@
 #define FILE_DIR "sound/violin"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/complionator"
+#define FILE_DIR "sound/vox_fem"
 #define FILE_DIR "sound/weapons"
 #define FILE_DIR "tools"
 #define FILE_DIR "tools/AddToChangelog"
