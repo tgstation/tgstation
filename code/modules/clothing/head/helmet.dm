@@ -12,7 +12,7 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
 /obj/item/clothing/head/helmet/HoS
-	name = "Head of Security Hat"
+	name = "head of security hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES

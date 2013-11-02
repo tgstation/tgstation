@@ -112,7 +112,6 @@
 	icon_state = "officerbluejacket"
 	item_state = "officerbluejacket"
 	body_parts_covered = CHEST|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/security/warden
 	name = "warden's jacket"
@@ -120,7 +119,6 @@
 	icon_state = "wardenbluejacket"
 	item_state = "wardenbluejacket"
 	body_parts_covered = CHEST|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/security/hos
 	name = "head of security's jacket"
@@ -128,7 +126,6 @@
 	icon_state = "hosbluejacket"
 	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 
 //Surgeon
