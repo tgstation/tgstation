@@ -117,7 +117,7 @@ datum/shuttle_controller
 				world << sound('sound/AI/shuttlecalled.ogg')
 
 	proc/move_shuttles()
-		var/obj/shuttle_manager/s
+		var/datum/shuttle_manager/s
 		for(var/t in pods)
 			s = shuttles[t]
 			s.move_shuttle()
@@ -143,7 +143,7 @@ datum/shuttle_controller
 						fake_recall = 0
 						return 0
 				else if(timeleft <= 0)
-					var/obj/shuttle_manager/s = shuttles["escape"]
+					var/datum/shuttle_manager/s = shuttles["escape"]
 					s.move_shuttle()
 					location = DOCKED
 					settimeleft(SHUTTLELEAVETIME)

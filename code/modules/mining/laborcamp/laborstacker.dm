@@ -92,7 +92,7 @@
 			else usr << "\red No valid ID."
 		if(check_auth()) //Sanity check against hef spoofs
 			if(href_list["choice"] == "station")
-				var/obj/shuttle_manager/s = shuttles["laborcamp"]
+				var/datum/shuttle_manager/s = shuttles["laborcamp"]
 				if(s.location == /area/shuttle/laborcamp/outpost)
 					if (s.move_shuttle())
 						usr << "\blue Shuttle recieved message and will be sent shortly."

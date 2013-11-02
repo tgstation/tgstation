@@ -1,16 +1,16 @@
-var/obj/list/shuttles = list(("escape" = new /obj/shuttle_manager(/area/shuttle/escape/centcom, 0)), ("pod1" =  new /obj/shuttle_manager(/area/shuttle/escape_pod1/station, 0)), ("pod2" = new /obj/shuttle_manager(/area/shuttle/escape_pod2/station, 0)), ("pod3" = new /obj/shuttle_manager(/area/shuttle/escape_pod3/station, 0)), ("pod4" = new /obj/shuttle_manager(/area/shuttle/escape_pod4/station, 0)), ("mining" = new /obj/shuttle_manager(/area/shuttle/mining/station, 10)), ("laborcamp" = new /obj/shuttle_manager(/area/shuttle/laborcamp/station, 10)), ("ferry" = new /obj/shuttle_manager(/area/shuttle/transport1/centcom, 0)))
+var/obj/list/shuttles = list(("escape" = new /datum/shuttle_manager(/area/shuttle/escape/centcom, 0)), ("pod1" =  new /datum/shuttle_manager(/area/shuttle/escape_pod1/station, 0)), ("pod2" = new /datum/shuttle_manager(/area/shuttle/escape_pod2/station, 0)), ("pod3" = new /datum/shuttle_manager(/area/shuttle/escape_pod3/station, 0)), ("pod4" = new /datum/shuttle_manager(/area/shuttle/escape_pod4/station, 0)), ("mining" = new /datum/shuttle_manager(/area/shuttle/mining/station, 10)), ("laborcamp" = new /datum/shuttle_manager(/area/shuttle/laborcamp/station, 10)), ("ferry" = new /datum/shuttle_manager(/area/shuttle/transport1/centcom, 0)))
 		//Pre-made shuttles should have non-number keys, so that buildable shuttles can use numbered keys without allowing 'I build a shuttle console with the escape number as its ID.'
-obj/shuttle_manager
+datum/shuttle_manager
 	var/tickstomove = 10 //How long does it take to move the shuttle?
 	var/moving = 0 //Is it moving?
 	var/area/shuttle/location //The current location of the actual shuttle
 
-obj/shuttle_manager/New(var/area, var/delay) //Create a new shuttle manager for the shuttle starting area, "area" and with a movement delay of tickstomove
+datum/shuttle_manager/New(var/area, var/delay) //Create a new shuttle manager for the shuttle starting area, "area" and with a movement delay of tickstomove
 	location = area
 	tickstomove = delay
 
 
-obj/shuttle_manager/proc/move_shuttle()
+datum/shuttle_manager/proc/move_shuttle()
 	if(moving)	return 0
 	moving = 1
 	spawn(tickstomove*10)
@@ -97,7 +97,7 @@ obj/shuttle_manager/proc/move_shuttle()
 		return
 	if(href_list["move"])
 		if(id in shuttles)
-			var/obj/shuttle_manager/s = shuttles[id]
+			var/datum/shuttle_manager/s = shuttles[id]
 			if (s.move_shuttle())
 				usr << "\blue Shuttle recieved message and will be sent shortly."
 			else

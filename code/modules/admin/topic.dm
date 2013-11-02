@@ -1922,14 +1922,14 @@
 			if("moveminingshuttle")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
-				var/obj/shuttle_manager/s = shuttles["mining"]
+				var/datum/shuttle_manager/s = shuttles["mining"]
 				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
 				log_admin("[key_name(usr)] moved the mining shuttle")
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
-				var/obj/shuttle_manager/s = shuttles["ferry"]
+				var/datum/shuttle_manager/s = shuttles["ferry"]
 				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")

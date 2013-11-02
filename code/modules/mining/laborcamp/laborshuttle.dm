@@ -15,7 +15,7 @@
 
 /obj/machinery/computer/shuttle/labor/one_way/Topic(href, href_list)
 	if(href_list["move"])
-		var/obj/shuttle_manager/s = shuttles["laborcamp"]
+		var/datum/shuttle_manager/s = shuttles["laborcamp"]
 		if(s.location == /area/shuttle/laborcamp/outpost)
 			usr << "\blue Shuttle is already at the outpost."
 			return 0
