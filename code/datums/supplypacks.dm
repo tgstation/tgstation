@@ -411,8 +411,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/engine/field_gen
 	name = "Field Generator crate"
-	contains = list(/obj/machinery/field_generator,
-					/obj/machinery/field_generator)
+	contains = list(/obj/machinery/field/generator,
+					/obj/machinery/field/generator)
 	cost = 10
 	containername = "field generator crate"
 

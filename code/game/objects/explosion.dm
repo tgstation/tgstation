@@ -11,6 +11,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
 
+	// Archive the uncapped explosion for the doppler array
+	var/orig_dev_range = devastation_range
+	var/orig_heavy_range = heavy_impact_range
+	var/orig_light_range = light_impact_range
+
 	if(!ignorecap)
 		// Clamp all values to MAX_EXPLOSION_RANGE
 		devastation_range = min (MAX_EX_DEVESTATION_RANGE, devastation_range)
@@ -91,7 +96,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		for(var/i,i<=doppler_arrays.len,i++)
 			var/obj/machinery/doppler_array/Array = doppler_arrays[i]
 			if(Array)
-				Array.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
+				Array.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
 
 		sleep(8)
 

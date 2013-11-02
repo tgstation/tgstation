@@ -50,6 +50,7 @@ var/list/ai_list = list()
 
 	var/last_paper_seen = null
 	var/can_shunt = 1
+	var/last_announcement = "" // For AI VOX, if enabled
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -324,6 +325,11 @@ var/list/ai_list = list()
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
+#ifdef AI_VOX
+	if(href_list["say_word"])
+		play_vox_word(href_list["say_word"], null, src)
+		return
+#endif
 	if(href_list["show_paper"])
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
