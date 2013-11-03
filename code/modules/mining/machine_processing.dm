@@ -316,6 +316,21 @@
 					else
 						on = 0
 					continue
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
+					if (ore_glass > 0 && ore_plasma > 0)
+						ore_glass--;
+						ore_plasma--;
+						new /obj/item/stack/sheet/glass/plasmaglass(output.loc)
+					else
+						on = 0
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
+					if (ore_glass > 0 && ore_plasma > 0 && ore_iron > 0)
+						ore_glass--;
+						ore_iron--;
+						ore_plasma--;
+						new /obj/item/stack/sheet/glass/plasmarglass(output.loc)
+					else
+						on = 0
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 1)
 					if (ore_phazon > 0)
 						ore_phazon--;
@@ -409,38 +424,47 @@
 			if (O)
 				if (istype(O,/obj/item/weapon/ore/iron))
 					ore_iron++;
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/glass))
 					ore_glass++;
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/diamond))
 					ore_diamond++;
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/plasma))
 					ore_plasma++
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/gold))
 					ore_gold++
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/silver))
 					ore_silver++
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/uranium))
 					ore_uranium++
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/clown))
 					ore_clown++
+					O.loc = null
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/phazon))
 					ore_phazon++
+					O.loc = null
 					del(O)
 					continue
 				O.loc = src.output.loc
