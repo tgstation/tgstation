@@ -103,15 +103,37 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/a357
 	cost = 2
 
+/datum/uplink_item/dangerous/smg
+	name = "C-20r Submachine Gun"
+	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
+	item = /obj/item/weapon/gun/projectile/automatic/c20r
+	cost = 8
+	gamemodes = list("nuclear emergency")
+
+/datum/uplink_item/dangerous/machinegun
+	name = "L6 SAW Machine Gun"
+	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
+	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
+	cost = 20
+	gamemodes = list("nuclear emergency")
+
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
+	gamemodes = list("traitor", "traitor+changeling")
+
+/datum/uplink_item/dangerous/flamethrower
+	name = "Flamethrower"
+	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen stations. Make a statement by roasting the filth in their own greed. Use with caution."
+	item = /obj/item/weapon/flamethrower/full/tank
+	cost = 6
+	gamemodes = list("nuclear emergency")
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
-	desc = "The esword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
+	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 4
 
@@ -127,6 +149,62 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
 
+/datum/uplink_item/dangerous/viscerators
+	name = "Viscerator Delivery Grenade"
+	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
+	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
+	cost = 4
+	gamemodes = list("nuclear emergency")
+
+/datum/uplink_item/dangerous/bioterror
+	name = "Biohazardous Chemical Sprayer"
+	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
+	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
+	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
+	cost = 15
+	gamemodes = list("nuclear emergency")
+
+/datum/uplink_item/dangerous/mauler
+	name = "Mauler Exosuit"
+	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
+	item = /obj/mecha/combat/marauder/mauler
+	cost = 40
+	gamemodes = list("nuclear emergency")
+
+
+
+// AMMUNITION
+
+/datum/uplink_item/ammo
+	category = "Ammunition"
+
+/datum/uplink_item/ammo/revolver
+	name = "Ammo-357"
+	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	item = /obj/item/ammo_box/a357
+	cost = 2
+
+/datum/uplink_item/ammo/smg
+	name = "Ammo-12mm"
+	desc = "A 20-round 12mm magazine for use in the C-20r submachine gun."
+	item = /obj/item/ammo_box/magazine/m12mm
+	cost = 1
+	gamemodes = list("nuclear emergency")
+
+/datum/uplink_item/ammo/pistol
+	name = "Ammo-10mm"
+	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
+	item = /obj/item/ammo_box/magazine/m10mm
+	cost = 2
+	gamemodes = list("nuclear emergency")
+
+/datum/uplink_item/ammo/machinegun
+	name = "Ammo-7.62×51mm"
+	desc = "A 50-round magazine of 7.62×51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
+	item = /obj/item/ammo_box/magazine/m762
+	cost = 6
+	gamemodes = list("nuclear emergency")
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons
@@ -137,6 +215,7 @@ var/list/uplink_items = list()
 	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
+	gamemodes = list("traitor", "traitor+changeling")
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -150,6 +229,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
+/datum/uplink_item/stealthy_weapons/silencer
+	name = "Stetchkin Silencer"
+	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
+	item = /obj/item/weapon/silencer
+	cost = 3
+	gamemodes = list("nuclear emergency")
 
 // STEALTHY TOOLS
 
@@ -215,6 +300,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
 
+/datum/uplink_item/device_tools/medkit
+	name = "Syndicate Medical Supply Kit"
+	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, and other medical supplies helpful for a medical field operative.."
+	item = /obj/item/weapon/storage/firstaid/tactical
+	cost = 5
+	gamemodes = list("nuclear emergency")
+
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
@@ -276,6 +368,13 @@ var/list/uplink_items = list()
 	cost = 20
 	gamemodes = list("nuclear emergency")
 
+/datum/uplink_item/device_tools/shield
+	name = "Energy Shield"
+	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
+	item = /obj/item/weapon/shield/energy
+	cost = 8
+	gamemodes = list("nuclear emergency")
+
 
 // IMPLANTS
 
@@ -294,6 +393,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
+/datum/uplink_item/implants/adrenal
+	name = "Adrenal Implant"
+	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	cost = 4
 
 // POINTLESS BADASSERY
 
@@ -305,6 +409,7 @@ var/list/uplink_items = list()
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
+	gamemodes = list("traitor", "traitor+changeling")
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"
