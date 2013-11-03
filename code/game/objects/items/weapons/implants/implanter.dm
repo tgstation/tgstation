@@ -75,3 +75,11 @@
 	imp = new /obj/item/weapon/implant/emp(src)
 	..()
 	update_icon()
+
+/obj/item/weapon/implanter/syndicate
+	name ="implanter-syndicate"
+
+/obj/item/weapon/implanter/syndicate/New()
+	imp = new /obj/item/weapon/implant/syndicate(src)
+	..()
+	update_icon()

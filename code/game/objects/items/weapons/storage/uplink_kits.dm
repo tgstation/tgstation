@@ -92,6 +92,18 @@
 	O.update_icon()
 	return
 
+/obj/item/weapon/storage/box/syndie_kit/imp_syndicate
+	name = "Syndicate Implant (with injector and syndiHUD)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_syndicate/New()
+	..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/syndicate(O)
+	O.update_icon()
+	new /obj/item/clothing/glasses/sunglasses/syndicatehud(src)
+	return
+
+
 /*/obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "Compressed Matter Implant (with injector)"
 

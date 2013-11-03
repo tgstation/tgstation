@@ -128,10 +128,25 @@
 			user << "<span class='warning'>It is already emagged!</span>" */ //Fuck emags
 
 /obj/item/clothing/glasses/sunglasses/sechud/emp_act(severity)
+	hud_emp_act()
+
+
+/obj/item/clothing/glasses/sunglasses/syndicatehud // concealed as sunglasses
+	var/obj/item/clothing/glasses/hud/syndicate/hud = null
+	origin_tech = "syndicate=1"
+
+	New()
+		..()
+		src.hud = new/obj/item/clothing/glasses/hud/syndicate(src)
+		return
+
+/obj/item/clothing/glasses/sunglasses/syndicatehud/emp_act(severity)
+	hud_emp_act()
+
+obj/item/clothing/glasses/sunglasses/proc/hud_emp_act()
 	if(emagged == 0)
 		emagged = 1
 		desc = desc + " The display flickers slightly."
-
 
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"

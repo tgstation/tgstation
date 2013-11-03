@@ -26,7 +26,7 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 
-	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
+	for(var/i=0;i<8;i++) // 2 for medHUDs, 5 for secHUDs, 1 for syndicateHud
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
 	..()

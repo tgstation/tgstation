@@ -932,6 +932,8 @@
 	proc/handle_regular_hud_updates()
 		if(!client)	return 0
 
+
+		// Remove hud icons (medical hud, security hud, syndicate hud)
 		for(var/image/hud in client.images)
 			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 				client.images.Remove(hud)
@@ -1094,6 +1096,11 @@
 						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
 						if(O.hud)		O.hud.process_hud(src)
 						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+					else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/syndicatehud))
+						var/obj/item/clothing/glasses/sunglasses/syndicatehud/O = glasses
+						if(O.hud)		O.hud.process_hud(src)
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+
 
 				else if(istype(glasses, /obj/item/clothing/glasses/hud))
 					var/obj/item/clothing/glasses/hud/O = glasses

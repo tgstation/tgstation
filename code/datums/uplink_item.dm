@@ -294,6 +294,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
+/datum/uplink_item/implants/syndicate
+	name = "Syndicate Implant"
+	desc ="An implant injected into the body, which can be detected with the included syndicateHUD. Only useful if you want other syndicates with the same gear to be able to recognize you, and vice versa."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_syndicate
+	cost = 1
 
 // POINTLESS BADASSERY
 

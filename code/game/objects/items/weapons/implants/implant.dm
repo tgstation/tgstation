@@ -204,3 +204,7 @@
 		source.mind.store_memory("EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return 1
+
+/obj/item/weapon/implant/syndicate
+	name ="syndicate"
+	desc ="The syndicate version of the loyalty implant."
