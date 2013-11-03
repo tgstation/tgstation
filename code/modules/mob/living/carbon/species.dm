@@ -103,6 +103,7 @@ Placeholders for now - N3X
 	language = "Galactic Standard"
 	attack_verb = "punch"
 	darksight = 5 // BOOSTED from 2
+	eyes = "grey_eyes_s"
 
 	max_hurt_damage = 3 // From 5 (for humans)
 	default_mutations=list(mRemotetalk) // TK is also another candidate, but TK is overpowered as fuck.
