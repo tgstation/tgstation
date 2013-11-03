@@ -1357,8 +1357,9 @@ mob/living/carbon/human/yank_out_object()
 	else
 		see_invisible = SEE_INVISIBLE_LIVING
 
-	if(mutations.len==0)
-		mutations=species.default_mutations
+	//testing("Mutations = "+english_list(mutations))
+	mutations+=species.default_mutations
+	//testing("SpeciesMut + Mutations = "+english_list(mutations))
 
 	spawn(0)
 		update_icons()
