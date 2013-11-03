@@ -273,6 +273,8 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_face.dmi
  - facial_robotnik_l
  - facial_robotnik_s
+ - grey_eyes_l
+ - grey_eyes_s
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  + eleanorstone
@@ -412,6 +414,22 @@ OSError: cannot identify image file
  + warden_corporate_s
  - wardendnavy_l
  + wardendnavyclothes_l
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_races\robotic.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_races\robotic.dmi
+ + groin_f
+ + groin_m
+ + head_f
+ + head_m
+ + l_arm
+ + l_foot
+ + l_hand
+ + l_leg
+ + r_arm
+ + r_foot
+ + r_hand
+ + r_leg
+ + torso_f
+ + torso_m
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmos.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
@@ -472,11 +490,13 @@ OSError: cannot identify image file
  + robotanalyzer
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
+ + (mdr)grapejuice
  + absintheglass
  + bigteacup
  + curacaoglass
  + emeraldglass
  + grapejuice
+ + grapesoda
  + grenadinebottle
  + grenadineglass
  + icedteaglass
@@ -555,6 +575,8 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - rpd
  - sheet-phazon
+ + sheet-plasmaglass
+ + sheet-plasmarglass
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\janitor.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\janitor.dmi
  + 4no_raisins
@@ -601,6 +623,7 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
+ + coolanttank
  + psychbed
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\paper.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\paper.dmi
@@ -643,18 +666,40 @@ OSError: cannot identify image file
  - wrecharger3
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
- + rtableflip0
- + rtableflip1+
- + rtableflip1-
- + rtableflip2
- + tableflip0
- + tableflip1+
- + tableflip1-
- + tableflip2
- + woodflip0
- + woodflip1+
- + woodflip1-
- + woodflip2
+ + plasmarwindow
+ + plasmarwindow0
+ + plasmarwindow1
+ + plasmarwindow10
+ + plasmarwindow11
+ + plasmarwindow12
+ + plasmarwindow13
+ + plasmarwindow14
+ + plasmarwindow15
+ + plasmarwindow2
+ + plasmarwindow3
+ + plasmarwindow4
+ + plasmarwindow5
+ + plasmarwindow6
+ + plasmarwindow7
+ + plasmarwindow8
+ + plasmarwindow9
+ + plasmawindow
+ + plasmawindow0
+ + plasmawindow1
+ + plasmawindow10
+ + plasmawindow11
+ + plasmawindow12
+ + plasmawindow13
+ + plasmawindow14
+ + plasmawindow15
+ + plasmawindow2
+ + plasmawindow3
+ + plasmawindow4
+ + plasmawindow5
+ + plasmawindow6
+ + plasmawindow7
+ + plasmawindow8
+ + plasmawindow9
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
@@ -692,6 +737,9 @@ OSError: cannot identify image file
  - stunprod_active
  - stunprod_nocell
  - wiredrod
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\xenoarchaeology.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\xenoarchaeology.dmi
+ + flashgun
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
