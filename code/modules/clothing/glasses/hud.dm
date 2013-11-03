@@ -140,3 +140,28 @@
 					else
 						continue
 				C.images += holder
+
+
+/*
+ * Syndicate hud shows 'T' icon for characters that have a syndicate implant in them
+ */
+/obj/item/clothing/glasses/hud/syndicate
+
+/obj/item/clothing/glasses/hud/syndicate/process_hud(var/mob/M)
+	if(!M)	return
+	if(!M.client)	return
+	var/client/C = M.client
+	var/image/holder
+	for(var/mob/living/carbon/human/perp in view(M))
+
+		for(var/obj/item/weapon/implant/I in perp)
+			if(I.implanted)
+				if(istype(I,/obj/item/weapon/implant/syndicate))
+					holder = perp.hud_list[IMPSYNDICATE_HUD]
+					holder.icon_state = "hudtraitor"
+				else
+					continue
+				C.images += holder
+				break
+
+
