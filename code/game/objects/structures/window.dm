@@ -327,19 +327,9 @@
 /obj/structure/window/New(Loc,re=0)
 	..()
 
-	if(re)	reinf = re
+//	if(re)	reinf = re
 
 	ini_dir = dir
-	if(reinf)
-		icon_state = "rwindow"
-		desc = "A reinforced window."
-		name = "reinforced window"
-		state = 2*anchored
-		health = 40
-		if(opacity)
-			icon_state = "twindow"
-	else
-		icon_state = "window"
 
 	update_nearby_tiles(need_rebuild=1)
 	update_nearby_icons()
