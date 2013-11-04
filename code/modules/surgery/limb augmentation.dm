@@ -37,7 +37,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
 	species = list(/mob/living/carbon/human)
 	location = "anywhere" //Check attempt_initate_surgery() (in code/modules/surgery/helpers) to see what this does if you can't tell
-	has_multi_loc = 1 //Multi location stuff, See multiple_location_example.dm //TEST 1
+	has_multi_loc = 1 //Multi location stuff, See multiple_location_example.dm
 
 //SURGERY STEP SUCCESSES
 
