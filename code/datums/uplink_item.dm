@@ -13,9 +13,9 @@ var/list/uplink_items = list()
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
-			if(I.gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
+			if(I.gamemodes.len && ticker && !(ticker.mode.type in I.gamemodes))
 				continue
-			if(I.excludefrom.len && ticker && (ticker.mode.name in I.excludefrom))
+			if(I.excludefrom.len && ticker && (ticker.mode.type in I.excludefrom))
 				continue
 			if(I.last)
 				last += I
@@ -105,14 +105,14 @@ var/list/uplink_items = list()
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 8
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 20
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -120,14 +120,14 @@ var/list/uplink_items = list()
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
-	excludefrom = list("nuclear emergency")
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/weapon/flamethrower/full/tank
 	cost = 6
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
@@ -152,7 +152,7 @@ var/list/uplink_items = list()
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 4
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
@@ -160,7 +160,7 @@ var/list/uplink_items = list()
 	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	cost = 15
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
@@ -168,14 +168,14 @@ var/list/uplink_items = list()
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark/loaded
 	cost = 45
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 70
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 
@@ -195,21 +195,21 @@ var/list/uplink_items = list()
 	desc = "A 20-round 12mm magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 1
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/pistol
 	name = "Ammo-10mm"
 	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 2
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62×51mm"
 	desc = "A 50-round magazine of 7.62×51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 6
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 // STEALTHY WEAPONS
 
@@ -222,7 +222,7 @@ var/list/uplink_items = list()
 	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
-	excludefrom = list("nuclear emergency")
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -242,7 +242,7 @@ var/list/uplink_items = list()
 	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
 	item = /obj/item/weapon/silencer
 	cost = 3
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
 
@@ -315,7 +315,7 @@ var/list/uplink_items = list()
 	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 5
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
@@ -383,14 +383,14 @@ var/list/uplink_items = list()
 	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
 	item = /obj/item/weapon/shield/energy
 	cost = 8
-	gamemodes = list("nuclear emergency")
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 // IMPLANTS
@@ -427,7 +427,7 @@ var/list/uplink_items = list()
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
-	excludefrom = list("nuclear emergency")
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"
