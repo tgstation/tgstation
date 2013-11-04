@@ -28,6 +28,13 @@
 
 	initialize_directions = dir
 
+/obj/machinery/atmospherics/unary/cryo_cell/Del()
+	go_out()
+	var/obj/item/weapon/reagent_containers/glass/B = beaker
+	if(beaker)
+		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+	..() 
+
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
 	var/node_connect = dir
@@ -69,6 +76,20 @@
 		return
 	go_out()
 	return
+
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+	
+	if(in_range(usr, src))
+		usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(O != beaker)
+				usr << O.name
+		for(var/mob/M in src)
+			if(M != occupant)
+				usr << M.name
+	else
+		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -345,6 +366,7 @@
 //	M.metabslow = 1
 	add_fingerprint(usr)
 	update_icon()
+	M.ExtinguishMob()
 	return 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
