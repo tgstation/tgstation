@@ -15,6 +15,8 @@ var/list/uplink_items = list()
 				continue
 			if(I.gamemodes.len && ticker && !(ticker.mode.name in I.gamemodes))
 				continue
+			if(I.excludefrom.len && ticker && (ticker.mode.name in I.excludefrom))
+				continue
 			if(I.last)
 				last += I
 				continue
@@ -44,6 +46,7 @@ var/list/uplink_items = list()
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -97,12 +100,6 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 6
 
-/datum/uplink_item/dangerous/ammo
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
-	item = /obj/item/ammo_box/a357
-	cost = 2
-
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
@@ -111,7 +108,7 @@ var/list/uplink_items = list()
 	gamemodes = list("nuclear emergency")
 
 /datum/uplink_item/dangerous/machinegun
-	name = "L6 SAW Machine Gun"
+	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 20
@@ -119,10 +116,11 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. Its bolts stun enemies for short periods, and replenish automatically."
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
+	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
-	gamemodes = list("traitor", "traitor+changeling")
+	excludefrom = list("nuclear emergency")
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -164,11 +162,19 @@ var/list/uplink_items = list()
 	cost = 15
 	gamemodes = list("nuclear emergency")
 
+/datum/uplink_item/dangerous/gygax
+	name = "Gygax Exosuit"
+	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
+	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
+	item = /obj/mecha/combat/gygax/dark/loaded
+	cost = 45
+	gamemodes = list("nuclear emergency")
+
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
-	item = /obj/mecha/combat/marauder/mauler
-	cost = 40
+	item = /obj/mecha/combat/marauder/mauler/loaded
+	cost = 70
 	gamemodes = list("nuclear emergency")
 
 
@@ -212,10 +218,11 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
-	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
+	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
+	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
-	gamemodes = list("traitor", "traitor+changeling")
+	excludefrom = list("nuclear emergency")
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -225,7 +232,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
+	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \
+	The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
@@ -249,7 +257,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_stamp
 	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp™. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; it can also be used in a washing machine to forge clothing."
+	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp™. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
+	it can also be used in a washing machine to forge clothing."
 	item = /obj/item/weapon/stamp/chameleon
 	cost = 1
 
@@ -302,7 +311,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
-	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, and other medical supplies helpful for a medical field operative.."
+	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
+	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 5
 	gamemodes = list("nuclear emergency")
@@ -315,7 +325,9 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
-	desc = "These glasses are thermals disguised as engineers' optical meson scanners. They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
+	desc = "These glasses are thermals disguised as engineers' optical meson scanners. \
+	They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. \
+	Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 3
 
@@ -339,25 +351,30 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
-	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. It has a modifiable timer with a minimum setting of 10 seconds."
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. \
+	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 2
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
-	desc = "When screwed to wiring attached to an electric grid, then activated, this large device places excessive load on the grid, causing a stationwide blackout. The sink cannot be carried because of its excessive size. Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
+	desc = "When screwed to wiring attached to an electric grid, then activated, this large device places excessive load on the grid, causing a stationwide blackout. The sink cannot be carried because of its excessive size. \
+	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 5
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
-	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
+	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
+	Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, \
+	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
-	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 30 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. You can wrench the bomb down to prevent removal. The crew may defuse the bomb."
+	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 30 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
+	You can wrench the bomb down to prevent removal. The crew may defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
 
@@ -389,7 +406,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
+	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. \
+	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
 
@@ -409,7 +427,7 @@ var/list/uplink_items = list()
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
-	gamemodes = list("traitor", "traitor+changeling")
+	excludefrom = list("nuclear emergency")
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"
