@@ -48,6 +48,12 @@ var/global/list/banned_sandbox_types=list(
 	/obj/machinery/singularity,
 	/obj/item/weapon/gun/energy/staff)
 
+proc/is_banned_type(typepath)
+	for(var/btype in banned_sandbox_types)
+		if(findtext("[typepath]", "[btype]")!=0)
+			return 1
+	return 0
+
 /mob/proc/sandbox_spawn_atom(var/object as text)
 	set category = "Sandbox"
 	set desc = "Spawn any item or machine"
@@ -55,15 +61,14 @@ var/global/list/banned_sandbox_types=list(
 
 	var/list/types = typesof(/obj/item) + typesof(/obj/machinery)
 	for(var/type in types)
-		for(var/btype in banned_sandbox_types)
-			if(findtext("[btype]", "[type]"))
-				types -= type
+		if(is_banned_type(type))
+			types -= type
 	var/list/matches = new()
 
 	for(var/path in types)
-		if(is_type_in_list(path, banned_sandbox_types))
+		if(is_banned_type(path))
 			continue
-		if(findtext("[path]", object))
+		if(findtext("[path]", object)!=0)
 			matches += path
 
 	if(matches.len==0)
@@ -76,7 +81,7 @@ var/global/list/banned_sandbox_types=list(
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-	if(is_type_in_list(chosen, banned_sandbox_types))
+	if(is_banned_type(chosen))
 		src << "\red Denied."
 		return
 	new chosen(usr.loc)
