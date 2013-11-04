@@ -4,6 +4,8 @@
 	var/accept_hand = 0				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10					//how long does the step take?
+	var/list/allowed_organs = list() //Used for multilocation operations
+	var/new_organ = null //Used for multilocation operations
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -34,6 +36,9 @@
 
 /datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	surgery.step_in_progress = 1
+
+	if(surgery.has_multi_loc) //if it is multi-location, handle that
+		Handle_Multi_Loc(user, target)
 
 	preop(user, target, target_zone, tool)
 	if(do_after(user, time))
@@ -72,7 +77,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","[target_zone]")
-		user.visible_message("<span class='notice'>[user] saws [target]'s [target_zone] open!")	
+		user.visible_message("<span class='notice'>[user] saws [target]'s [target_zone] open!")
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -82,3 +87,34 @@
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return 1
+
+/datum/surgery_step/proc/Handle_Multi_Loc(mob/user, mob/living/carbon/target) //this is here so MultiLoc Surgeries don't need to rewrite it each time - RR
+
+
+	if(user.zone_sel.selecting in allowed_organs)
+
+		if(user.zone_sel.selecting == "r_arm")
+			new_organ = target.getlimb(/obj/item/organ/limb/r_arm)
+		if(user.zone_sel.selecting == "l_arm")
+			new_organ = target.getlimb(/obj/item/organ/limb/l_arm)
+		if(user.zone_sel.selecting == "r_leg")
+			new_organ = target.getlimb(/obj/item/organ/limb/r_leg)
+		if(user.zone_sel.selecting == "l_leg")
+			new_organ = target.getlimb(/obj/item/organ/limb/l_leg)
+		if(user.zone_sel.selecting == "chest")
+			new_organ = target.getlimb(/obj/item/organ/limb/chest)
+		if(user.zone_sel.selecting == "groin")
+			new_organ = target.getlimb(/obj/item/organ/limb/chest)
+		if(user.zone_sel.selecting == "head")
+			new_organ = target.getlimb(/obj/item/organ/limb/head)
+		if(user.zone_sel.selecting == "eyes")
+			new_organ = target.getlimb(/obj/item/organ/limb/head)
+		if(user.zone_sel.selecting == "mouth")
+			new_organ = target.getlimb(/obj/item/organ/limb/head)
+
+		return new_organ
+
+	else
+		return 0
+
+

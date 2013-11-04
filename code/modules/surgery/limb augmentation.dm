@@ -17,22 +17,12 @@
 	implements = list(/obj/item/robot_parts = 100)
 	time = 32
 	var/obj/item/organ/limb/L = null // L because "limb"
+	allowed_organs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
+
 
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-
-	if(user.zone_sel.selecting == "r_arm") //Yes all this is Necessary, if I use L = target.getlimb(user.zone_sel.selecting) then the game loses track of the Limb due to user.zone_sel.selecting not being a typepath - RR
-		L = target.getlimb(/obj/item/organ/limb/r_arm)
-	if(user.zone_sel.selecting == "l_arm")
-		L = target.getlimb(/obj/item/organ/limb/l_arm)
-	if(user.zone_sel.selecting == "r_leg")
-		L = target.getlimb(/obj/item/organ/limb/r_leg)
-	if(user.zone_sel.selecting == "l_leg")
-		L = target.getlimb(/obj/item/organ/limb/l_leg)
-	if(user.zone_sel.selecting == "head")
-		L = target.getlimb(/obj/item/organ/limb/head)
-	if(user.zone_sel.selecting == "chest")
-		L = target.getlimb(/obj/item/organ/limb/chest)
+	L = new_organ
 	if(L)
 		user.visible_message("<span class ='notice'>[user] begins to augment [target]'s [target_zone].</span>")
 	else
@@ -47,6 +37,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
 	species = list(/mob/living/carbon/human)
 	location = "anywhere" //Check attempt_initate_surgery() (in code/modules/surgery/helpers) to see what this does if you can't tell
+	has_multi_loc = 1 //Multi location stuff, See multiple_location_example.dm //TEST 1
 
 //SURGERY STEP SUCCESSES
 

@@ -8,6 +8,7 @@
 	var/target_must_be_dead = 0
 	var/target_must_be_fat = 0
 	var/requires_organic_chest = 0
+	var/has_multi_loc = 0
 
 
 
