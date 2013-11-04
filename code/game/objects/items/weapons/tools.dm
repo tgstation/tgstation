@@ -263,12 +263,14 @@
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, 1)
+			if(isliving(O))
+				var/mob/living/L = O
+				L.IgniteMob()
 	return
 
+/obj/item/weapon/weldingtool/attack_self(mob/user)
+	toggle(user)
 
-/obj/item/weapon/weldingtool/attack_self(mob/user as mob)
-	toggle()
-	return
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()

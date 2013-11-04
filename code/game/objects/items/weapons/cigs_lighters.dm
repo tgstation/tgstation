@@ -108,10 +108,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
-	//can't think of any other way to update the overlays :<
-	user.update_inv_wear_mask(0)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand(1)
+	else if(istype(W, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/M = W
+		if(M.lit)
+			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+	else if(istype(W, /obj/item/candle))
+		var/obj/item/candle/C = W
+		if(C.lit)
+			light("<span class='notice'>[user] lights their [name] with the [W].</span>")
 	return
 
 
@@ -136,12 +140,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			var/datum/effect/effect/system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
 			e.start()
+			if(ismob(loc))
+				var/mob/M = loc
+				M.drop_from_inventory(src)
 			del(src)
 			return
 		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
 			var/datum/effect/effect/system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("fuel") / 5, 1), get_turf(src), 0, 0)
 			e.start()
+			if(ismob(loc))
+				var/mob/M = loc
+				M.drop_from_inventory(src)
 			del(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
@@ -155,15 +165,24 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
 
+		//can't think of any other way to update the overlays :<
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_inv_wear_mask(0)
+			M.update_inv_l_hand(0)
+			M.update_inv_r_hand(1)
+
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
+	var/mob/living/M = loc
+	if(isliving(loc))
+		M.IgniteMob()
 	smoketime--
 	if(smoketime < 1)
 		new type_butt(location)
 		processing_objects.Remove(src)
 		if(ismob(loc))
-			var/mob/living/M = loc
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.u_equip(src)	//un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
@@ -191,7 +210,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		del(src)
 	return ..()
 
+/obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!istype(M))
+		return ..()
 
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel && user.zone_sel.selecting == "mouth" && lit)
+		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+	else
+		return ..()
 
 ////////////
 // CIGARS //
@@ -386,9 +416,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
+	if(!isliving(M))
 		return
-
+	M.IgniteMob()
+	if(!istype(M,/mob/living/carbon))
+		return
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
