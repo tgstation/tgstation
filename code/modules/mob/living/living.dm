@@ -464,8 +464,9 @@
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
-		var/obj/C = loc
-		C.container_resist(L)
+		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
+			var/obj/C = loc
+			C.container_resist(L)
 
 	//Stop drop and roll & Handcuffs
 	else if(iscarbon(L))

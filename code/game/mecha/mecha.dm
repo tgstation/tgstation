@@ -1086,6 +1086,9 @@
 	add_fingerprint(usr)
 	return
 
+/obj/mecha/container_resist()
+	go_out()
+
 
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return

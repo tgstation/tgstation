@@ -358,6 +358,7 @@
 	var/mob/living/user = usr
 	var/breakout_time = 2
 	if(open || !locked)	//Open and unlocked, no need to escape
+		open = 1
 		return
 	user.next_move = world.time + 100
 	user.last_special = world.time + 100
@@ -373,9 +374,6 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
-		if(istype(loc, /obj/structure/bigDelivery))
-			var/obj/structure/bigDelivery/BD = loc
-			BD.attack_hand(user)
 		open()
 
 /obj/machinery/dna_scannernew/proc/close()

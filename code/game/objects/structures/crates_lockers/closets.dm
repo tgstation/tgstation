@@ -314,7 +314,4 @@
 		broken = 1 //applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
-		if(istype(loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
-			var/obj/structure/bigDelivery/BD = loc
-			BD.attack_hand(user)
 		open()
