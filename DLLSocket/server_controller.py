@@ -71,12 +71,25 @@ def git_branch():
 	return '[UNKNOWN]'
 	
 def Compile(serverState):
+	global waiting_for_next_commit
 	currentCommit = git_commit()
 	currentBranch = git_branch()
 	
 	# Compile
 	log.info('Code is at {0} ({1}).  Triggering compile.'.format(currentCommit,currentBranch))
-	subprocess.call(COMPILE_COMMAND,shell=True)
+	stdout,stderr = subprocess.Popen(COMPILE_COMMAND,shell=True, stdout=subprocess.PIPE).communicate()
+	failed=False
+	if stdout:
+		for line in stdout.split():
+			if line.contains('error: '):
+				send_nudge('COMPILE ERROR: {0}'.format('line'))
+				failed=True
+				
+	waiting_for_next_commit = not failed
+	if failed:
+		send_nudge('Compile failed. Waiting for next commit.')
+		log.info('Compile failed. Waiting for next commit.')
+		return
 	
 	# Update MOTD
 	inputRules=os.path.join(CONFIGPATH,'motd.txt')
@@ -134,6 +147,7 @@ def checkForUpdate(serverState):
 	global WAIT_FOR_SERVER_RESPONSE
 	global lastCommit
 	global waiting_on_server_response
+	global waiting_for_next_commit
 	cwd=os.getcwd()
 	os.chdir(GAMEPATH)
 	#subprocess.call('git pull -q -s recursive -X theirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
@@ -145,7 +159,7 @@ def checkForUpdate(serverState):
 		lastCommit=currentCommit
 		send_nudge('Updating server to {GIT_REMOTE}/{GIT_COMMIT}!'.format(GIT_REMOTE=GIT_REMOTE,GIT_COMMIT=currentCommit))
 		subprocess.call('git reset --hard {0}/{1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True) 
-		subprocess.call('cp -av {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
+		subprocess.call('cp -a {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
 
 		# Copy bot config, if it exists.
 		botConfigSource=os.path.join(GAMEPATH,'config','CORE_DATA.py')
@@ -156,6 +170,20 @@ def checkForUpdate(serverState):
 				log.warn('rm {0}'.format(botConfigDest))
 			shutil.move(botConfigSource,botConfigDest)
 			log.warn('mv {0} {1}'.format(botConfigSource,botConfigDest))
+
+		# Copy gamemode, if it exists.
+		botConfigSource=os.path.join(GAMEPATH,'config','mode.txt')
+		botConfigDest=os.path.join(GAMEPATH,'data','mode.txt')
+		if os.path.isfile(botConfigSource):
+			if os.path.isfile(botConfigDest):
+				os.remove(botConfigDest)
+				log.warn('rm {0}'.format(botConfigDest))
+			shutil.move(botConfigSource,botConfigDest)
+			log.warn('mv {0} {1}'.format(botConfigSource,botConfigDest))
+	
+		if waiting_for_next_commit:
+			Compile(serverState)
+			return
 			
 		if WAIT_FOR_SERVER_RESPONSE:
 			if not waiting_on_server_response:
@@ -292,14 +320,21 @@ lastState=True
 failChain=0
 firstRun=True
 lastCommit=None
+lastResponse={}
 cwd=os.getcwd()
 os.chdir(GAMEPATH)
 lastCommit=git_commit()
 currentBranch=git_branch()
 waiting_on_server_response=False
+waiting_for_next_commit=False
 os.chdir(cwd)
 log.info('Git repository on branch {1}, commit {0}.'.format(lastCommit,currentBranch))
 while True:
+	if waiting_for_next_commit:
+		checkForUpdate(False)
+		if waiting_for_next_commit:
+			time.sleep(50)
+			continue
 	if not ping_server(b'?status'):
 		# try to start the server again
 		checkForUpdate(False)
