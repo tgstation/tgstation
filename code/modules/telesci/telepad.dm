@@ -8,10 +8,6 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
-/obj/machinery/telepad/New()
-	..()
-/obj/machinery/telepad/Del()
-	..()
 //CARGO TELEPAD//
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"
@@ -23,39 +19,35 @@
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
-/obj/machinery/telepad_cargo/New()
-	..()
-/obj/machinery/telepad_cargo/Del()
-	..()
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "\blue The [src] can now be moved."
+			user << "<span class = 'caution'> The [src] can now be moved."
 		else if(!anchored)
 			anchored = 1
-			user << "\blue The [src] is now secured."
+			user << "<span class = 'caution'> The [src] is now secured."
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "\blue You unscrew the telepad's tracking beacon."
+			user << "<span class = 'caution'> You unscrew the telepad's tracking beacon."
 			stage = 1
 		else if(stage == 1)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "\blue You screw in the telepad's tracking beacon."
+			user << "<span class = 'caution'> You screw in the telepad's tracking beacon."
 			stage = 0
 	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user << "\blue You disassemble the telepad."
+		user << "<span class = 'caution'> You disassemble the telepad."
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		del(src)
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
-	name = "Telepad Beacon"
+	name = "telepad beacon"
 	desc = "Use to warp in a cargo telepad."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
@@ -64,7 +56,7 @@
 
 /obj/item/device/telepad_beacon/attack_self(mob/user as mob)
 	if(user)
-		user << "\blue Locked In"
+		user << "<span class = 'caution'> Locked In"
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		del(src)
@@ -115,11 +107,11 @@
 		if(mode == 0)
 			mode = 1
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "\red The telepad locator has become uncalibrated."
+			user << "<span class = 'caution'> The telepad locator has become uncalibrated."
 		else
 			mode = 0
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "\blue You calibrate the telepad locator."
+			user << "<span class = 'caution'> You calibrate the telepad locator."
 
 /obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
@@ -127,5 +119,5 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		user << "\red You emag the RCS. Click on it to toggle between modes."
+		user << "<span class = 'caution'> You emag the RCS. Click on it to toggle between modes."
 		return

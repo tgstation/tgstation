@@ -1,5 +1,5 @@
 /obj/machinery/computer/telescience
-	name = "Telepad Control Console"
+	name = "telepad control console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
 
@@ -32,7 +32,7 @@
 	return
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
-	src.attack_hand()
+	src.attack_hand(user)
 
 /obj/machinery/computer/telescience/attack_hand(mob/user)
 	if(..())
@@ -53,101 +53,27 @@
 	popup.open()
 	return
 /obj/machinery/computer/telescience/proc/sparks()
-	for(var/obj/machinery/telepad/E in machines)
+	for(var/obj/machinery/telepad/E in world)
 		var/L = get_turf(E)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, L)
 		s.start()
 /obj/machinery/computer/telescience/proc/telefail()
-	if(prob(75))
-		sparks()
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\red The telepad weakly fizzles.", 2)
-		return
-	if(prob(10))
-		// Irradiate everyone in telescience!
-		for(var/obj/machinery/telepad/E in machines)
-			var/L = get_turf(E)
-			sparks()
-			for(var/mob/living/carbon/human/M in viewers(L, null))
-				M.apply_effect((rand(25, 50)), IRRADIATE, 0)
-				M << "\red You feel strange."
-		return
-	if(prob(1))
-		// AI CALL SHUTTLE I SAW RUNE, SUPER LOW CHANCE, CAN HARDLY HAPPEN
-		for(var/mob/living/carbon/O in viewers(src, null))
-			var/datum/game_mode/cult/temp = new
-			O.show_message("\red The telepad flashes with a strange light, and you have a sudden surge of allegiance toward the true dark one!", 2)
-			O.mind.make_Cultist()
-			temp.grant_runeword(O)
-			sparks()
-		return
-	if(prob(1))
-		// VIVA LA FUCKING REVOLUTION BITCHES, SUPER LOW CHANCE, CAN HARDLY HAPPEN
-		for(var/mob/living/carbon/O in viewers(src, null))
-			O.show_message("\red The telepad flashes with a strange light, and you see all kind of images flash through your mind, of murderous things Nanotrasen has done, and you decide to rebel!", 2)
-			O.mind.make_Rev()
-			sparks()
-		return
-	if(prob(5))
-		// damn it meteors event, low chance
-		for(var/mob/living/carbon/O in viewers(src, null))
-			O.show_message("\red You get a ominous feeling as the teleporter fizzles out.", 2)
-			spawn_meteors(number = 5)
-			sparks()
-		return
-	if(prob(10))
-		// HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONK
-		for(var/mob/living/carbon/M in hearers(src, null))
-			M << sound('sound/items/AirHorn.ogg')
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-					continue
-			M << "<font color='red' size='7'>HONK</font>"
-			M.sleeping = 0
-			M.stuttering += 20
-			M.ear_deaf += 30
-			M.Weaken(3)
-			if(prob(30))
-				M.Stun(10)
-				M.Paralyse(4)
-			else
-				M.make_jittery(500)
-			sparks()
-		return
-	if(prob(5))
-		// They did the mash! (They did the monster mash!) The monster mash! (It was a graveyard smash!)
-		sparks()
-		for(var/obj/machinery/telepad/E in machines)
-			var/L = get_turf(E)
-			var/blocked = list(/mob/living/simple_animal/hostile,
-				/mob/living/simple_animal/hostile/alien/queen/large,
-				/mob/living/simple_animal/hostile/retaliate,
-				/mob/living/simple_animal/hostile/retaliate/clown,
-				/mob/living/simple_animal/hostile/giant_spider/nurse) // Makes sure certain monsters don't spawn, add your monster to the list if you don't want it to spawn here.
-			var/list/hostiles = typesof(/mob/living/simple_animal/hostile) - blocked
-			playsound(L, 'sound/effects/phasein.ogg', 100, 1)
-			for(var/mob/living/carbon/human/M in viewers(L, null))
-				flick("e_flash", M.flash)
-			var/chosen = pick(hostiles)
-			var/mob/living/simple_animal/hostile/H = new chosen
-			H.loc = L
-			return
-		return
+	sparks()
+	for(var/mob/O in hearers(src, null))
+		O.show_message("<span class = 'caution'>The telepad weakly fizzles.", 2)
 	return
-
-/obj/machinery/computer/telescience/proc/dosend()
+/obj/machinery/computer/telescience/proc/dosend(mob/user)
 	var/trueX = (x_co + x_off)
 	var/trueY = (y_co + y_off)
-	for(var/obj/machinery/telepad/E in machines)
+	for(var/obj/machinery/telepad/E in world)
 		var/L = get_turf(E)
 		var/target = locate(trueX, trueY, z_co)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, L)
 		s.start()
 		flick("pad-beam", E)
-		usr << "\blue Teleport successful."
+		usr << "<span class = 'caution'> Teleport successful."
 		var/sparks = get_turf(target)
 		var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
 		y.set_up(5, 1, sparks)
@@ -163,10 +89,10 @@
 		return
 	return
 
-/obj/machinery/computer/telescience/proc/doreceive()
+/obj/machinery/computer/telescience/proc/doreceive(mob/user)
 	var/trueX = (x_co + x_off)
 	var/trueY = (y_co + y_off)
-	for(var/obj/machinery/telepad/E in machines)
+	for(var/obj/machinery/telepad/E in world)
 		var/L = get_turf(E)
 		var/T = locate(trueX, trueY, z_co)
 		var/G = get_turf(T)
@@ -174,7 +100,7 @@
 		s.set_up(5, 1, L)
 		s.start()
 		flick("pad-beam", E)
-		usr << "\blue Teleport successful."
+		usr << "<span class = 'caution'> Teleport successful."
 		var/sparks = get_turf(T)
 		var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
 		y.set_up(5, 1, sparks)
@@ -192,25 +118,25 @@
 
 /obj/machinery/computer/telescience/proc/telesend()
 	if(x_co == "")
-		usr << "\red Error: set coordinates."
+		usr << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(y_co == "")
-		usr << "\red Error: set coordinates."
+		usr << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(z_co == "")
-		usr << "\red Error: set coordinates."
+		usr << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(x_co < 1 || x_co > 255)
 		telefail()
-		usr << "\red Error: X is less than 11 or greater than 245."
+		usr << "<span class = 'caution'>  Error: X is less than 11 or greater than 245."
 		return
 	if(y_co < 1 || y_co > 255)
 		telefail()
-		usr << "\red Error: Y is less than 11 or greater than 245."
+		usr << "<span class = 'caution'>  Error: Y is less than 11 or greater than 245."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 6)
 		telefail()
-		usr << "\red Error: Z is less than 1, greater than 6, or equal to 2."
+		usr << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2."
 		return
 	if(teles_left > 0)
 		teles_left -= 1
@@ -223,25 +149,25 @@
 /obj/machinery/computer/telescience/proc/telereceive()
 	// basically the same thing
 	if(x_co == "")
-		usr << "\red Error: set coordinates."
+		usr << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(y_co == "")
-		usr << "\red Error: set coordinates."
+		usr << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(z_co == "")
-		usr << "\red Error: set coordinates."
+		usr << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(x_co < 1 || x_co > 255)
 		telefail()
-		usr << "\red Error: X is less than 11 or greater than 200."
+		usr << "<span class = 'caution'>  Error: X is less than 11 or greater than 200."
 		return
 	if(y_co < 1 || y_co > 255)
 		telefail()
-		usr << "\red Error: Y is less than 11 or greater than 200."
+		usr << "<span class = 'caution'>  Error: Y is less than 11 or greater than 200."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 6)
 		telefail()
-		usr << "\red Error: Z is less than 1, greater than 6, or equal to 2."
+		usr << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2."
 		return
 	if(teles_left > 0)
 		teles_left -= 1
@@ -285,7 +211,7 @@
 		teles_left = rand(9,12)
 		x_off = rand(-10,10)
 		y_off = rand(-10,10)
-		for(var/obj/machinery/telepad/E in machines)
+		for(var/obj/machinery/telepad/E in world)
 			var/L = get_turf(E)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, L)

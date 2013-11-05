@@ -1,5 +1,5 @@
 /obj/item/device/gps
-	name = "Global Positioning System"
+	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
@@ -11,7 +11,7 @@
 	var/emped = 0
 
 /obj/item/device/gps/New()
-	name = "Global Positioning System ([gpstag])"
+	name = "global positioning system ([gpstag])"
 	overlays += "working"
 
 /obj/item/device/gps/emp_act(severity)
@@ -54,7 +54,7 @@
 			return
 		else
 			gpstag = a
-			name = "Global Positioning System ([gpstag])"
+			name = "global positioning system ([gpstag])"
 			return
 
 /obj/item/device/gps/science
