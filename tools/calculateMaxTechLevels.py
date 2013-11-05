@@ -294,7 +294,7 @@ if os.path.isdir(sys.argv[1]):
             for atom in sorted(AtomTechOrigins.keys()):
                 row = []
                 row.append(atom)
-                row.append(path2name.get(atom,"<Unknown>"))
+                row.append('"'+path2name.get(atom,"").replace('"','""')+'"')
                 for tech in tech_columns:
                     if tech in AtomTechOrigins[atom]:
                         row.append(str(AtomTechOrigins[atom][tech]))
