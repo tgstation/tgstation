@@ -81,7 +81,7 @@ def Compile(serverState):
 	failed=False
 	if stdout:
 		for line in stdout.split():
-			if line.contains('error: '):
+			if 'error:' in line:
 				send_nudge('COMPILE ERROR: {0}'.format('line'))
 				failed=True
 				
