@@ -4,12 +4,8 @@
 	if(blob_points < cost)
 		src << "<span class='warning'>You cannot afford this.</span>"
 		return 0
-	blob_points -= cost
+	add_points(-cost)
 	return 1
-
-/mob/camera/blob/proc/add_points(var/points = 0)
-	if(points)
-		blob_points = min(max_blob_points, blob_points + points)
 
 // Power verbs
 
@@ -188,7 +184,7 @@
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand Blob (5)"
+	set name = "Expand/Attack Blob (5)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
 
 	var/turf/T = get_turf(src)
