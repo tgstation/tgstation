@@ -50,6 +50,10 @@ datum/shuttle_manager/proc/move_shuttle()
 		fromArea.move_contents_to(toArea)
 		location = toArea.type
 
+		for(var/obj/machinery/door/D in toArea) //Close any doors on the shuttle
+			spawn(0)
+				D.close()
+
 		for(var/mob/M in toArea)
 			if(M.client)
 				spawn(0)
