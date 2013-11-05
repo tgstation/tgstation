@@ -166,6 +166,7 @@
 /obj/item/weapon/tank/emergency_nitrogen
 	name = "emergency nitrogen tank"
 	icon_state = "emergency_nitrogen"
+	w_class = 2.0
 	volume = 2
 
 	New()
