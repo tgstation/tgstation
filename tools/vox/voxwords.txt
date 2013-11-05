@@ -645,8 +645,10 @@ connor = connor
 contraband = contraband
 cyborg = cyborg
 cyborgs = cyborgs
+dorms = dorms
 fire = fire
 fore = fore
+every = every
 gas = gas
 glory = glory
 gray = gray
@@ -659,6 +661,7 @@ hydroponics = hydroponics
 law = law
 laws = laws
 loose = loose
+love = love
 me = me
 medbay = medbay
 money = money
@@ -669,6 +672,7 @@ obtain = obtain
 plasma = plasma
 port = port
 queen = queen
+quarters = quarters
 raider = raider
 raiders = raiders
 removal = removal
@@ -679,6 +683,7 @@ shitlord = shit lord
 shirt = shirt
 shuttle = shuttle
 singularity = singularity
+smoke = smoke
 solar = solar
 solars = solars
 ss13 = Space Station thirteen
@@ -697,6 +702,7 @@ upload = upload
 virology = virology
 vox = vox
 wanker = wanker
+weed = weed
 welcome = welcome
 woody = wood E.
 xenobiology = xenobiology
@@ -708,6 +714,7 @@ asshole = asshole
 assholes = assholes
 bitch = bitch
 bitches = bitches
+cancer = cancer
 coward = coward
 cowards = cowards
 cunt = cunt
@@ -718,6 +725,7 @@ fucks = fucks
 shit = shit
 shits = shits
 shitting = shitting
+wiggle = wiggle
 
 voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
@@ -725,6 +733,7 @@ voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking a
 # Out with the old, in with the new:
 #vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
 vox_login = Hello! The automatic diagnostic and announcement system welcomes you to Space Station 13.  Remember: Have a secure day.
+vox_420 = Smoke weed every day.
 
 ########################
 ## AI REPLACEMENT LINES
