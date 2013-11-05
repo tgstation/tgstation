@@ -80,7 +80,7 @@ def Compile(serverState):
 	stdout,stderr = subprocess.Popen(COMPILE_COMMAND,shell=True, stdout=subprocess.PIPE).communicate()
 	failed=False
 	if stdout:
-		for line in stdout.split():
+		for line in stdout.split('\n'):
 			if 'error:' in line:
 				send_nudge('COMPILE ERROR: {0}'.format(line))
 				failed=True
