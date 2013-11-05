@@ -116,27 +116,27 @@
 		return
 	return
 
-/obj/machinery/computer/telescience/proc/telesend()
+/obj/machinery/computer/telescience/proc/telesend(mob/user)
 	if(x_co == "")
-		usr << "<span class = 'caution'>  Error: set coordinates."
+		user << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(y_co == "")
-		usr << "<span class = 'caution'>  Error: set coordinates."
+		user << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(z_co == "")
-		usr << "<span class = 'caution'>  Error: set coordinates."
+		user << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(x_co < 1 || x_co > 255)
 		telefail()
-		usr << "<span class = 'caution'>  Error: X is less than 11 or greater than 245."
+		user << "<span class = 'caution'>  Error: X is less than 1 or greater than 255."
 		return
 	if(y_co < 1 || y_co > 255)
 		telefail()
-		usr << "<span class = 'caution'>  Error: Y is less than 11 or greater than 245."
+		user << "<span class = 'caution'>  Error: Y is less than 1 or greater than 255."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 6)
 		telefail()
-		usr << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2."
+		user << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2."
 		return
 	if(teles_left > 0)
 		teles_left -= 1
@@ -146,28 +146,28 @@
 		return
 	return
 
-/obj/machinery/computer/telescience/proc/telereceive()
+/obj/machinery/computer/telescience/proc/telereceive(mob/user)
 	// basically the same thing
 	if(x_co == "")
-		usr << "<span class = 'caution'>  Error: set coordinates."
+		user << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(y_co == "")
-		usr << "<span class = 'caution'>  Error: set coordinates."
+		user << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(z_co == "")
-		usr << "<span class = 'caution'>  Error: set coordinates."
+		user << "<span class = 'caution'>  Error: set coordinates."
 		return
 	if(x_co < 1 || x_co > 255)
 		telefail()
-		usr << "<span class = 'caution'>  Error: X is less than 11 or greater than 200."
+		user << "<span class = 'caution'>  Error: X is less than 1 or greater than 255."
 		return
 	if(y_co < 1 || y_co > 255)
 		telefail()
-		usr << "<span class = 'caution'>  Error: Y is less than 11 or greater than 200."
+		user << "<span class = 'caution'>  Error: Y is less than 1 or greater than 255."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 6)
 		telefail()
-		usr << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2."
+		user << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2."
 		return
 	if(teles_left > 0)
 		teles_left -= 1
@@ -216,5 +216,5 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, L)
 			s.start()
-		usr << "\blue Calibration successful."
+		usr << "<span class = 'caution'> Calibration successful."
 		return

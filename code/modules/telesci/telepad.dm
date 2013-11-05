@@ -90,6 +90,7 @@
 	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
 
 /obj/item/weapon/rcs/Del()
+	..()
 	processing_objects.Remove(src)
 
 /obj/item/weapon/rcs/process()

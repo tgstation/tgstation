@@ -50,7 +50,7 @@
 		var/a = input("Please enter desired tag.", name, gpstag) as text
 		a = copytext(sanitize(a), 1, 20)
 		if(length(a) != 4)
-			usr << "\blue The tag must be four letters long!"
+			usr << "<span class = 'caution'> The tag must be four letters long!"
 			return
 		else
 			gpstag = a
