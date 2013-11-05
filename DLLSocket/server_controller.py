@@ -82,8 +82,11 @@ def Compile(serverState):
 	if stdout:
 		for line in stdout.split():
 			if 'error:' in line:
-				send_nudge('COMPILE ERROR: {0}'.format('line'))
+				send_nudge('COMPILE ERROR: {0}'.format(line))
 				failed=True
+				logging.error(line)
+			else:
+				logging.info(line)
 				
 	waiting_for_next_commit = not failed
 	if failed:

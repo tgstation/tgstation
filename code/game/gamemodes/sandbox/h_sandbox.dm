@@ -8,7 +8,6 @@ var/list
 					"hsbglass" = "Spawn 50 Glass",
 					"hsbplasma" = "Spawn 50 Plasma",
 					"phazon" = "Spawn 50 Phazon",
-					"hsbairlock" = "Spawn Airlock",
 					"hsbregulator" = "Spawn Air Regulator",
 					"hsbfilter" = "Spawn Air Filter",
 					"hsbcanister" = "Spawn Canister",
@@ -170,20 +169,6 @@ datum/hSB
 					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/phazon
 					hsb.amount = 50
 					hsb.loc = usr.loc
-				if("hsbairlock")
-					var/obj/machinery/door/hsb = new/obj/machinery/door/airlock
-
-					//TODO: DEFERRED make this better, with an HTML window or something instead of 15 popups
-					hsb.req_access = list()
-					/*
-					var/accesses = get_all_accesses()
-					for(var/A in accesses)
-						if(alert(usr, "Will this airlock require [get_access_desc(A)] access?", "Sandbox:", "Yes", "No") == "Yes")
-							hsb.req_access += A
-					*/
-
-					hsb.loc = usr.loc
-					usr << "<b>Sandbox:  Created an airlock."
 				if("hsbcanister")
 					var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister/) - /obj/machinery/portable_atmospherics/canister/
 //					hsbcanisters -= /obj/machinery/portable_atmospherics/canister/sleeping
