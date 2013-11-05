@@ -29,6 +29,7 @@
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"
+#include "code\_onclick\adjacent.dm"
 #include "code\ATMOSPHERICS\atmospherics.dm"
 #include "code\ATMOSPHERICS\chiller.dm"
 #include "code\ATMOSPHERICS\datum_pipe_network.dm"
