@@ -633,40 +633,43 @@ zone
 zulu
 
 aft
-andy
 ai = A.I.
+andy
+antimov
 array
 asimov
-antimov
 atmospherics
 bar
+botanist
+botanists
 brig
 cargo
 catbeast
 centcomm
 changed
-changer
 changeling
 changelings
+changer
+chef
+chefs
 clown
 clowns
-come
 comdom
-connor
+come
 conflict
+connor
 contraband
 court
 cyborg
 cyborgs
 dorms
+every
 execution
 fire
 fore
-every
 gas
 glory
 gray
-iaa = internal affairs agent
 hacker
 hackers
 hacking
@@ -675,6 +678,8 @@ human
 humans
 hunger
 hydroponics
+iaa = internal affairs agent
+kitchen
 law
 laws
 lawyer
@@ -694,8 +699,9 @@ ninjas
 obtain
 plasma
 port
-queen
+qm = quartermaster
 quarters
+queen
 raider
 raiders
 removal
@@ -703,10 +709,10 @@ requested
 rest
 sarah
 sensors
-shitlord = shit lord
-shitcurity
 shirt
 shirts
+shitcurity
+shitlord = shit lord
 shuttle
 singularity
 smoke
@@ -720,12 +726,12 @@ stuck
 suffer
 suffering
 syndicate
-tide
 tajaran
 telecomms
+tide
+toxins
 traitor
 traitors
-toxins
 update
 updated
 updating
