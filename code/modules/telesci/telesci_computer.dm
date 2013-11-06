@@ -103,9 +103,9 @@
 		telefail()
 		user << "<span class = 'caution'>  Error: Y is less than 1 or greater than 255.</span>"
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(z_co == 2 || z_co < 1 || z_co > 7)
 		telefail()
-		user << "<span class = 'caution'>  Error: Z is less than 1, greater than 6, or equal to 2.</span>"
+		user << "<span class = 'caution'>  Error: Z is less than 1, greater than 7, or equal to 2.</span>"
 		return
 	if(teles_left > 0)
 		teles_left -= 1
