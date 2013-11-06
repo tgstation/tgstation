@@ -470,7 +470,7 @@
 				del(C)
 				return
 
-		C.denode()// this may have disconnected some cables that terminated on the centre of the turf, disconnect them.
+		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
 		return
 
 /obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
