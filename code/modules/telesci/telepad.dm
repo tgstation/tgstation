@@ -68,9 +68,6 @@
 	desc = "Use this to send crates and closets to cargo telepads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "rcs"
-	opacity = 0
-	density = 0
-	anchored = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 10.0
 	throwforce = 10.0
@@ -86,6 +83,7 @@
 	var/teleporting = 0
 
 /obj/item/weapon/rcs/New()
+	..()
 	processing_objects.Add(src)
 /obj/item/weapon/rcs/examine()
 	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."

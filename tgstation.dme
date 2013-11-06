@@ -43,7 +43,6 @@
 #define FILE_DIR "sound/violin"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/complionator"
-#define FILE_DIR "sound/vox_fem"
 #define FILE_DIR "sound/weapons"
 #define FILE_DIR "tools"
 #define FILE_DIR "tools/AddToChangelog"
