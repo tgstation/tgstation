@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 """
 REGEX_TECH_ORIGIN = re.compile('^(?P<tabs>\t+)(?:var/)?origin_tech\s*=\s*"(?P<content>.+)"\s*$')
+REGEX_VARIABLE = re.compile('^(?P<tabs>\t+)(?:var/)?(?P<type>[a-zA-Z0-9_]*/)?(?P<variable>[a-zA-Z0-9_]+)\s*=\s*(?P<qmark>[\'"])(?P<content>.+)(?P=qmark)\s*$')
 REGEX_ATOMDEF = re.compile('^(?P<tabs>\t*)(?P<atom>[a-zA-Z0-9_/]+)\s*$')
 
 #Calculated Max Tech Levels.
@@ -34,6 +35,43 @@ CMTLs = {}
 
 # All known atoms with tech origins.
 AtomTechOrigins = {}
+Atoms={}
+Nodes={}
+
+class BYONDFileRef:
+    """
+    Just to format file references differently.
+    """
+    def __init__(self,string):
+        self.value=string
+        
+    def __repr__(self):
+        return "'{0}'".format(self.value)
+
+class BYONDString:
+    """
+    Just to format file references differently.
+    """
+    def __init__(self,string):
+        self.value=string
+        
+    def __repr__(self):
+        return '"{0}"'.format(self.value)
+    
+class Atom:
+    def __init__(self,path):
+        self.path=path
+        self.properties={}
+        self.children={}
+        self.parent=None
+
+    def InheritProperties(self):
+        if self.parent:
+            for key,value in self.parent.properties.items():
+                if key not in self.properties:
+                    self.properties[key]=value
+        for k in self.children.iterkeys():
+            self.children[k].InheritProperties()
 
 def debug(filename, line, path, message):
     print('{0}:{1}: {2} - {3}'.format(filename, line, '/'.join(path), message))
@@ -61,8 +99,12 @@ def ProcessFile(filename):
                 numtabs = len(m.group('tabs'))
                 atom = m.group('atom')
                 atom_path = m.group('atom').split('/')
+                
+                # Reserved words that show up on their own
                 if atom in ('else', 'break', 'return', 'continue', 'spawn', 'proc'):
                     continue
+                
+                # Other things to ignore (false positives, comments)
                 if atom.startswith('var/') or atom.startswith('//') or (numtabs > 0 and atom.strip().startswith('/')):
                     continue
                 
@@ -99,6 +141,7 @@ def ProcessFile(filename):
                 pindent = numtabs
                 continue
             path = '/'.join(cpath)
+            """
             m = REGEX_TECH_ORIGIN.match(line)
             if m is not None:
                 tech_origin = {}
@@ -114,6 +157,86 @@ def ProcessFile(filename):
                     if CMTLs[tech] < level:
                         CMTLs[tech] = level
                 AtomTechOrigins[path] = tech_origin
+            """
+            m = REGEX_VARIABLE.match(line)
+            if m is not None:
+                if path not in Atoms:
+                    Atoms[path] = Atom(path)
+                name=m.group('variable')
+                content=m.group('content')
+                qmark=m.group('qmark')
+                if qmark == '"':
+                    Atoms[path].properties[name]=BYONDString(content)
+                else:
+                    Atoms[path].properties[name]=BYONDFileRef(content)
+    
+def Nodify(root='/',parent=None):
+    Branch={}
+    root_path=root.split('/')
+    for path in Atoms.keys():
+        cpath=path.split('/')
+        if path.startswith(root) and (len(cpath)-len(root_path)) == 1:
+            nodeName=cpath[-1]
+            Branch[nodeName]=Atoms[path]
+            Branch[nodeName].parent=parent
+            Branch[nodeName].children=Nodify(path,Branch[nodeName])
+    return Branch
+
+def MakeTree():
+    AtomTree=Atom('/')
+    for key in Atoms:
+        atom=Atoms[key]
+        cpath=[]
+        cNode=AtomTree
+        fullpath=atom.path.split('/')
+        truncatedPath=fullpath[1:]
+        for path_item in truncatedPath:
+            cpath+=[path_item]
+            cpath_str='/'.join(['']+cpath)
+            #if path_item == 'var':
+            #    if path_item not in cNode.properties:
+            #        cNode.properties[fullpath[-1]]='???'
+            if path_item not in cNode.children:
+                if cpath_str in Atoms:
+                    cNode.children[path_item] = Atoms[cpath_str]
+                else:
+                    cNode.children[path_item]=Atom('/'.join(['']+cpath))
+                cNode.children[path_item].parent=cNode
+            cNode=cNode.children[path_item]
+    AtomTree.InheritProperties()
+    return AtomTree
+
+def ProcessTechLevels(atom,path=''):
+    global CMTLs, AtomTechOrigins, path2name
+    for key,val in atom.properties.iteritems():
+        if key == 'name':
+            path2name[path]=val.value
+        elif key == 'origin_tech':
+            tech_origin = {}
+            # materials=9;bluespace=10;magnets=3
+            techchunks = val.value.split(';')
+            for techchunk in techchunks:
+                parts = techchunk.split('=')
+                tech = parts[0]
+                level = int(parts[1])
+                tech_origin[tech] = level
+                if tech not in CMTLs:
+                    CMTLs[tech] = level
+                if CMTLs[tech] < level:
+                    CMTLs[tech] = level
+            AtomTechOrigins[path] = tech_origin
+            break
+    for key,child in atom.children.iteritems():
+        ProcessTechLevels(child,path+'/'+key)
+
+def prettify(tree, indent=0):
+    prefix=' '*indent
+    for key in tree.iterkeys():
+        atom=tree[key]
+        print('{}{}/'.format(prefix,key))
+        prettify(atom.children,indent+len(key))
+        for propkey,value in atom.properties.iteritems():
+            print('{}var/{} = {}'.format(' '*(indent+len(key)),propkey,repr(value)))
         
 def ProcessFilesFromDME(dmefile='baystation12.dme', ext='.dm'):
     numFilesTotal = 0
@@ -157,6 +280,9 @@ if os.path.isdir(sys.argv[1]):
                 ProcessFilesFromDME(filepath, sys.argv[2])
                 selectedDMEs.append(filepath)
                 break
+    tree = MakeTree()
+    path2name={}
+    ProcessTechLevels(tree)
     with open(os.path.join(sys.argv[1], 'tech_origin_list.csv'), 'w') as w:
         with open(os.path.join(sys.argv[1], 'max_tech_origins.txt'), 'w') as mto:
             tech_columns = []
@@ -164,14 +290,17 @@ if os.path.isdir(sys.argv[1]):
             for tech in sorted(CMTLs.keys()):
                 tech_columns.append(tech)
                 mto.write('{:>15}: {}\n'.format(tech, CMTLs[tech]))
-            w.write(','.join(['Atom'] + tech_columns) + "\n")
+            w.write(','.join(['Atom','Name'] + tech_columns) + "\n")
             for atom in sorted(AtomTechOrigins.keys()):
-                techs = []
+                row = []
+                row.append(atom)
+                row.append('"'+path2name.get(atom,"").replace('"','""')+'"')
                 for tech in tech_columns:
                     if tech in AtomTechOrigins[atom]:
-                        techs.append(str(AtomTechOrigins[atom][tech]))
+                        row.append(str(AtomTechOrigins[atom][tech]))
                     else:
-                        techs.append('')
-                w.write(','.join([atom] + techs) + "\n")
+                        row.append('')
+                w.write(','.join(row) + "\n")
+    #prettify(tree.children)
 if os.path.isfile(sys.argv[1]):
     ProcessFilesFromDME(sys.argv[1], sys.argv[2])

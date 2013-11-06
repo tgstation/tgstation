@@ -208,6 +208,8 @@
  + holo3
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\animal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
+ + bat
+ + bat_dead
  - brainslug
  - brainslug_dead
  - drone0
@@ -289,6 +291,8 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt.dmi
  - holobadge
  - holobadge2
+ + military
+ + military2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
  + blob_core_glow
@@ -751,6 +755,8 @@
  - facial_sideburns_s
  - facial_smallstache_l
  - facial_smallstache_s
+ - grey_eyes_l
+ - grey_eyes_s
  - hair_clean_l
  - hair_clean_s
  + hair_lbangs_l
@@ -1023,11 +1029,6 @@
  - stokkey1
  - tajkey0
  - tajkey1
---- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\OnFire.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\OnFire.dmi
- + Generic_mob_burning
- + Lying
- + Standing
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
  - droid
@@ -1442,37 +1443,6 @@
  + temp2
  + template
  + zone_sel
---- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\slimes.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\slimes.dmi
- + bluespace adult slime
- + bluespace adult slime eat
- + bluespace baby slime
- + bluespace baby slime dead
- + bluespace baby slime dead-nocore
- + bluespace baby slime eat
- + bluespace slime extract
- + cerulean adult slime
- + cerulean adult slime eat
- + cerulean baby slime
- + cerulean baby slime dead
- + cerulean baby slime dead-nocore
- + cerulean baby slime eat
- + cerulean slime extract
- + platinum slime extract
- + pyrite adult slime
- + pyrite adult slime eat
- + pyrite baby slime
- + pyrite baby slime dead
- + pyrite baby slime dead-nocore
- + pyrite baby slime eat
- + pyrite slime extract
- + sepia adult slime
- + sepia adult slime eat
- + sepia baby slime
- + sepia baby slime dead
- + sepia baby slime dead-nocore
- + sepia baby slime eat
- + sepia slime extract
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\suit.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\suit.dmi
  - armorsec
@@ -1518,7 +1488,9 @@
  - paramedic-eva
  - paramedic-eva2
  - paramedic-vest
+ - paramedic-vest-old
  - paramedic-vest2
+ - paramedic-vest2-old
  - psyamp
  - psyamp2
  - rad_old
@@ -1713,7 +1685,9 @@
  - orderly_l
  - orderly_s
  - paramedic_l
+ - paramedic_l_old
  - paramedic_s
+ - paramedic_s_old
  - plaid_blue_l
  - plaid_blue_s
  - plaid_purple_l
@@ -1782,12 +1756,62 @@
  + pai-what
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\ammo.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\ammo.dmi
+ + 12mm-10
+ + 12mm-12
+ + 12mm-14
+ + 12mm-16
+ + 12mm-18
+ + 12mm-2
+ + 12mm-4
+ + 12mm-6
+ + 12mm-8
+ + 45
+ + 45-1
+ - 45-10
+ + 45-2
+ + 45-3
+ + 45-4
+ + 45-5
+ + 45-6
+ + 45-7
+ + 45-8
+ + 50ae-1
+ + 50ae-2
+ + 50ae-3
+ + 50ae-4
+ + 50ae-5
+ + 50ae-6
+ + blshell-live
+ + bshell-live
  - darts-0
  - darts-1
  - darts-2
  - darts-3
  - darts-4
  - darts-5
+ + gshell-live
+ - s-casing: s-casing: 1 frames, 4 directions
+ + s-casing: s-casing: 1 frames, 8 directions
+ + s-casing-live
+ + smg9mm
+ + smg9mm-0
+ + smg9mm-12
+ + smg9mm-15
+ + smg9mm-18
+ + smg9mm-3
+ + smg9mm-6
+ + smg9mm-9
+ + stunshell-live
+ + uzi45
+ + uzi45-0
+ + uzi45-10
+ + uzi45-12
+ + uzi45-14
+ + uzi45-16
+ + uzi45-2
+ + uzi45-4
+ + uzi45-6
+ + uzi45-8
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\assemblies.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\assemblies.dmi
  + mmi_alien
@@ -1845,6 +1869,13 @@
  - recharge_comp_broken
  - recharge_comp_nopower
  + recharge_compb
+ + tcboss
+ + tcboss0
+ + tcbossb
+ + tcstation
+ + tcstation-closed
+ + tcstation0
+ + tcstationb
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\contraband.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\contraband.dmi
  + poster11
@@ -2101,15 +2132,11 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\grenade.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
  - chemg_primed
- + improvised_grenade
- + improvised_grenade_active
- + improvised_grenade_filled
- + improvised_grenade_wired
  - large_grenade_primed
- + syndicate
- + syndicate_active
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\gun.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gun.dmi
+ + c20r-0-e
+ + c20r-e
  - dartgun-0
  - dartgun-1
  - dartgun-2
@@ -2117,14 +2144,25 @@
  - dartgun-4
  - dartgun-5
  - dartgun-empty
+ + deagle-e
+ + deaglecamo-e
+ + deagleg-e
  + detective_gold
  + detective_leopard
  + detective_panther
  + detective_peacemaker
+ + mini-uzi-16
+ + mini-uzi-16-e
+ + mini-uzi-e
+ + pistol-e
+ + pistol-silencer-e
  - pneumatic
  - pneumatic-tank
  - pulse: pulse: 4 frames, 1 directions
  + pulse: pulse: 1 frames, 1 directions
+ + saber-18
+ + saber-18-e
+ + saber-e
  + staffofanimation
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\harvest.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
@@ -2204,6 +2242,8 @@
  - sheet-mythril
  - sheet-phazon
  - sheet-plasma
+ - sheet-plasmaglass
+ - sheet-plasmarglass
  - sheet-plastic
  - sheet-sandstone
  - sheet-silver
@@ -2275,6 +2315,9 @@
  + bookempty
  - chemistry
  - excavation
+ - fax
+ - faxreceive
+ - faxsend
  - stasis
  - triangulate
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\lighting.dmi
@@ -2545,6 +2588,40 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
  + 
+ - plasmarwindow
+ - plasmarwindow0
+ - plasmarwindow1
+ - plasmarwindow10
+ - plasmarwindow11
+ - plasmarwindow12
+ - plasmarwindow13
+ - plasmarwindow14
+ - plasmarwindow15
+ - plasmarwindow2
+ - plasmarwindow3
+ - plasmarwindow4
+ - plasmarwindow5
+ - plasmarwindow6
+ - plasmarwindow7
+ - plasmarwindow8
+ - plasmarwindow9
+ - plasmawindow
+ - plasmawindow0
+ - plasmawindow1
+ - plasmawindow10
+ - plasmawindow11
+ - plasmawindow12
+ - plasmawindow13
+ - plasmawindow14
+ - plasmawindow15
+ - plasmawindow2
+ - plasmawindow3
+ - plasmawindow4
+ - plasmawindow5
+ - plasmawindow6
+ - plasmawindow7
+ - plasmawindow8
+ - plasmawindow9
  - reinf_1tileendtable
  - reinf_1tilethick
  - reinf_middle
@@ -2699,7 +2776,6 @@
  - telebaton_1
  - toddler
  - unathiknife
- + wiredrod
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\wizard.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\wizard.dmi
  - focus
@@ -2813,6 +2889,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\belts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\belts.dmi
  - gearbelt
+ + militarybelt
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\glasses.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\glasses.dmi
  - rwelding-g
@@ -2891,6 +2968,7 @@
  - mantle-unathi
  - paramedic-eva
  - paramedic-vest
+ - paramedic-vest-old
  - psyamp
  - rig-atmos
  + rig-atmospherics
@@ -3741,6 +3819,7 @@ OSError: cannot identify image file
  + recharge_floor
  + recharge_floor_asteroid
  - snow
+ - vault-border
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\turf\shuttle.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\shuttle.dmi
  - vcorner1

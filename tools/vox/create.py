@@ -41,12 +41,10 @@ VOICE='nitech_us_clb_arctic_hts'
 
 # What we do with SoX:
 SOX_ARGS  = 'stretch 1.1'
-#SOX_ARGS += ' phaser 0.89 0.85 2 0.24 1 -t'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
 SOX_ARGS += ' bass -40'
 SOX_ARGS += ' norm'
-#SOX_ARGS += ' reverb'
 
 # Have to do the trimming seperately.
 PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.2s.
@@ -149,7 +147,6 @@ class Pronunciation:
 		for syllable in self.syllables:
 			lispSyllables.append('( ( {0} ) {1} )'.format(' '.join(syllable[0]),syllable[1]))
 		return '(lex.add.entry\n\t\'( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
-		#return '(lex.add.entry ( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
 		
 	"""
 	walkers: noun "w oo" 'k @ z'
@@ -244,9 +241,16 @@ def ProcessWordList(filename):
 	toprocess={}
 	with open(filename,'r') as words:
 		for line in words:
-			if '=' in line and not line.startswith("#"):
+			if line.startswith("#"):
+				continue
+			if line.strip() == '':
+				continue
+			if '=' in line:
 				(wordfile,phrase) = line.split('=')
 				toprocess[wordfile.strip()]=phrase.strip()
+			elif line != '' and ' ' not in line and len(line) > 0:
+				word = line.strip()
+				toprocess[word]=word
 	for wordfile,phrase in iter(sorted(toprocess.iteritems())):
 		GenerateForWord(phrase,wordfile)
 		
@@ -273,16 +277,27 @@ if not os.path.isdir(CODE_BASE):
 ProcessLexicon('lexicon.txt')
 for arg in sys.argv[1:]:
 	ProcessWordList(arg)
+soundsToKeep=set()
 with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
 	w.write("// List is required to compile the resources into the game when it loads.\n")
 	w.write("// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.\n")
 	w.write("\n")
-	w.write("var/list/vox_sounds = list(")
+	w.write("var/list/vox_sounds = list(\n")
 	for word in sorted(wordlist):
 		if '/' in word:
 			continue
+		filename=''
 		if word in preexisting:
-			w.write('"{0}" = \'sound/vox/{0}.wav\',\n'.format(word))
+			filename = 'sound/vox/{0}.wav'.format(word)
 		else:
-			w.write('"{0}" = \'sound/vox_fem/{0}.ogg\',\n'.format(word))
+			filename = 'sound/vox_fem/{0}.ogg'.format(word)
+		w.write('\t"{0}" = \'{1}\',\n'.format(word,filename))
+		soundsToKeep.add(filename)
 	w.write(')')
+
+for root, dirs, files in os.walk('sound/', topdown=False):
+    for name in files:
+	filename = os.path.join(root,name)
+	if filename not in soundsToKeep:
+		logging.warning('Removing {0} (no longer defined)'.format(filename))
+		os.remove(filename)

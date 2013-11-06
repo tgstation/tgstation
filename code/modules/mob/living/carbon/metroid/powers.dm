@@ -179,7 +179,10 @@
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
 			new_slime.a_intent = "hurt"
-			new_slime.key = key
+			if(src.mind)
+				src.mind.transfer_to(new_slime)
+			else
+				new_slime.key = src.key
 			new_slime.universal_speak = universal_speak
 			new_slime << "<B>You are now an adult slime.</B>"
 			del(src)
@@ -207,44 +210,26 @@
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
-				if(prob(80))
-					var/mob/living/carbon/slime/M = new primarytype(loc)
-					M.nutrition = new_nutrition
-					M.powerlevel = new_powerlevel
-					if(i != 1) step_away(M,src)
-					babies += M
+				var/newslime
+				if(prob(70))
+					newslime = primarytype
 				else
-					var/mutations = pick("one","two","three","four")
-					switch(mutations)
-						if("one")
-							var/mob/living/carbon/slime/M = new mutationone(loc)
-							M.nutrition = new_nutrition
-							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
-							babies += M
-						if("two")
-							var/mob/living/carbon/slime/M = new mutationtwo(loc)
-							M.nutrition = new_nutrition
-							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
-							babies += M
-						if("three")
-							var/mob/living/carbon/slime/M = new mutationthree(loc)
-							M.nutrition = new_nutrition
-							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
-							babies += M
-						if("four")
-							var/mob/living/carbon/slime/M = new mutationfour(loc)
-							M.nutrition = new_nutrition
-							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
-							babies += M
+					newslime = slime_mutation[rand(1,4)]
+
+				var/mob/living/carbon/slime/M = new newslime(loc)
+				M.nutrition = new_nutrition
+				M.powerlevel = new_powerlevel
+				if(i != 1) step_away(M,src)
+				babies += M
+				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "hurt"
 			new_slime.universal_speak = universal_speak
-			new_slime.key = key
+			if(src.mind)
+				src.mind.transfer_to(new_slime)
+			else
+				new_slime.key = src.key
 
 			new_slime << "<B>You are now a slime!</B>"
 			del(src)
