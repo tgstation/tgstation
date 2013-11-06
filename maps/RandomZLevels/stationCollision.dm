@@ -68,31 +68,29 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate silenced pistol. This definition is not necessary, it's just habit.
-/obj/item/weapon/gun/projectile/automatic/silenced/sc_silenced
+/obj/item/weapon/gun/projectile/silenced/sc_silenced
 
 //Make it so that these guns only spawn with a couple bullets... if any
-/obj/item/weapon/gun/projectile/automatic/silenced/sc_silenced/New()
-	for(var/ammo in magazine.stored_ammo)
+/obj/item/weapon/gun/projectile/silenced/sc_silenced/New()
+	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
+			loaded -= ammo
 
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
-	..()
-	for(var/ammo in magazine.stored_ammo)
+	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
+			loaded -= ammo
 
 //Barman's shotgun
 /obj/item/weapon/gun/projectile/shotgun/pump/sc_pump
 
 /obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/New()
-	..()
-	for(var/ammo in magazine.stored_ammo)
+	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
+			loaded -= ammo
 
 //Lasers
 /obj/item/weapon/gun/energy/laser/practice/sc_laser

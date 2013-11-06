@@ -3,19 +3,11 @@
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
 	w_class = 3.0
+	max_shells = 18
+	caliber = "9mm"
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	mag_type = /obj/item/ammo_box/magazine/msmg9mm
-	var/alarmed = 0
+	ammo_type = "/obj/item/ammo_casing/c9mm"
 
-/obj/item/weapon/gun/projectile/automatic/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
-	return
-
-/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
-	if(..() && chambered)
-		alarmed = 0
 
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
@@ -23,9 +15,10 @@
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
 	w_class = 3.0
+	max_shells = 16
+	caliber = ".45"
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
-	mag_type = /obj/item/ammo_box/magazine/uzim45
+	ammo_type = "/obj/item/ammo_casing/c45"
 
 
 
@@ -35,31 +28,38 @@
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = 3.0
+	max_shells = 20
+	caliber = "12mm"
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/a12mm
-	mag_type = /obj/item/ammo_box/magazine/m12mm
+	ammo_type = "/obj/item/ammo_casing/a12mm"
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	load_method = 2
 
 
-/obj/item/weapon/gun/projectile/automatic/c20r/New()
-	..()
-	update_icon()
-	return
-
-
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+	New()
+		..()
+		empty_mag = new /obj/item/ammo_magazine/a12mm/empty(src)
 		update_icon()
-		alarmed = 1
-	return
+		return
 
 
-/obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
-	..()
-	icon_state = "c20r[magazine ? "-[round(get_ammo(0),4)]" : ""][chambered ? "" : "-e"]"
-	return
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+		..()
+		if(!loaded.len && empty_mag)
+			empty_mag.loc = get_turf(src.loc)
+			empty_mag = null
+			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+			update_icon()
+		return
+
+
+	update_icon()
+		..()
+		if(empty_mag)
+			icon_state = "c20r-[round(loaded.len,4)]"
+		else
+			icon_state = "c20r"
+		return
 
 
 
@@ -70,11 +70,14 @@
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
+	max_shells = 50
+	caliber = "a762"
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/a762
-	mag_type = /obj/item/ammo_box/magazine/m762
+	ammo_type = "/obj/item/ammo_casing/a762"
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	load_method = 2
 	var/cover_open = 0
+	var/mag_inserted = 1
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
@@ -84,7 +87,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? round(magazine.ammo_count() * 2, 25) : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][mag_inserted ? round(loaded.len, 25) : "-empty"]"
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
@@ -99,14 +102,19 @@
 	if(loc != user)
 		..()
 		return	//let them pick it up
-	if(!cover_open || (cover_open && !magazine))
+	if(!cover_open || (cover_open && !mag_inserted))
 		..()
-	else if(cover_open && magazine)
+	else if(cover_open && mag_inserted)
 		//drop the mag
-		magazine.update_icon()
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine = null
+		empty_mag = new /obj/item/ammo_magazine/a762(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "a762-[round(loaded.len, 10)]"
+		empty_mag.desc = "There are [loaded.len] shells left!"
+		empty_mag.loc = get_turf(src.loc)
+		user.put_in_hands(empty_mag)
+		empty_mag = null
+		mag_inserted = 0
+		loaded = list()
 		update_icon()
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
@@ -115,6 +123,13 @@
 	if(!cover_open)
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
+	else if(cover_open && mag_inserted)
+		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
+		return
+	else if(cover_open && !mag_inserted)
+		mag_inserted = 1
+		user << "<span class='notice'>You insert the magazine!</span>"
+		update_icon()
 	..()
 
 
@@ -124,5 +139,3 @@
    around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
    when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
    rough and poor attempt at making that happen. -Ausops */
-
-/* Where Ausops failed, I have not. -SirBayer */

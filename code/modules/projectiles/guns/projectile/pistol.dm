@@ -1,103 +1,114 @@
-/obj/item/weapon/gun/projectile/automatic/silenced
+/obj/item/weapon/gun/projectile/silenced
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
 	w_class = 3.0
+	max_shells = 12
+	caliber = ".45"
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
-	mag_type = /obj/item/ammo_box/magazine/sm45
+	ammo_type = "/obj/item/ammo_casing/c45"
 	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]"
-	return
 
-
-/obj/item/weapon/gun/projectile/automatic/deagle
+/obj/item/weapon/gun/projectile/deagle
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo"
 	icon_state = "deagle"
 	force = 14.0
-	ammo_type = /obj/item/ammo_casing/a50
-	mag_type = /obj/item/ammo_box/magazine/m50
-
-
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+	max_shells = 7
+	caliber = ".50"
+	ammo_type ="/obj/item/ammo_casing/a50"
+	load_method = 2
+	New()
+		..()
+		empty_mag = new /obj/item/ammo_magazine/a50/empty(src)
 		update_icon()
-		alarmed = 1
-	return
+		return
 
-/obj/item/weapon/gun/projectile/automatic/deagle/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 
-/obj/item/weapon/gun/projectile/automatic/deagle/gold
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+		..()
+		if(!loaded.len && empty_mag)
+			empty_mag.loc = get_turf(src.loc)
+			empty_mag = null
+			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+			update_icon()
+		return
+
+/obj/item/weapon/gun/projectile/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
 
 
-/obj/item/weapon/gun/projectile/automatic/deagle/camo
+/obj/item/weapon/gun/projectile/deagle/camo
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
 	item_state = "deagleg"
 
 
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol
+/obj/item/weapon/gun/projectile/gyropistol
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds"
 	icon_state = "gyropistol"
+	max_shells = 8
+	caliber = "75"
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/a75
-	mag_type = /obj/item/ammo_box/magazine/m75
-
-/obj/item/weapon/gun/projectile/automatic/gyropistol/New()
-	..()
-	update_icon()
-	return
-
-
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+	ammo_type = "/obj/item/ammo_casing/a75"
+	load_method = 2
+	New()
+		..()
+		empty_mag = new /obj/item/ammo_magazine/a75/empty(src)
 		update_icon()
-		alarmed = 1
-	return
+		return
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
-	return
 
-/obj/item/weapon/gun/projectile/automatic/pistol
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+		..()
+		if(!loaded.len && empty_mag)
+			empty_mag.loc = get_turf(src.loc)
+			empty_mag = null
+			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+			update_icon()
+		return
+
+	update_icon()
+		..()
+		if(empty_mag)
+			icon_state = "gyropistolloaded"
+		else
+			icon_state = "gyropistol"
+		return
+
+/obj/item/weapon/gun/projectile/pistol
 	name = "\improper Stechtkin pistol"
 	desc = "A small, easily concealable gun. Uses 10mm rounds."
 	icon_state = "pistol"
 	w_class = 2
+	max_shells = 8
+	caliber = "10mm"
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	mag_type = /obj/item/ammo_box/magazine/m10mm
+	ammo_type = "/obj/item/ammo_casing/c10mm"
+	load_method = 2
 
-/obj/item/weapon/gun/projectile/automatic/pistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/pistol/New()
 	..()
-	if(magazine)
-		if(!chambered && !magazine.ammo_count())
-			magazine.update_icon()
-			magazine.loc = get_turf(src.loc)
-			magazine = null
+	empty_mag = new /obj/item/ammo_magazine/mc10mm/empty(src)
 	return
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/pistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+	..()
+	if(!loaded.len && empty_mag)
+		empty_mag.loc = get_turf(src.loc)
+		empty_mag = null
+	return
+
+/obj/item/weapon/gun/projectile/pistol/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(silenced)
 			if(user.l_hand != src && user.r_hand != src)
@@ -114,7 +125,7 @@
 	..()
 
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/pistol/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/silencer))
 		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
 			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
@@ -131,10 +142,12 @@
 		return
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
+/obj/item/weapon/gun/projectile/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][silenced ? "-silencer" : ""][chambered ? "" : "-e"]"
-	return
+	if(silenced)
+		icon_state = "pistol-silencer"
+	else
+		icon_state = "pistol"
 
 /obj/item/weapon/silencer
 	name = "silencer"

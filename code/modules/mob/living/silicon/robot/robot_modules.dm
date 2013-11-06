@@ -165,7 +165,6 @@
 		modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 		modules += new /obj/item/weapon/pen(src)
 		modules += new /obj/item/weapon/razor(src)
-		modules += new /obj/item/device/violin(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
@@ -178,7 +177,7 @@
 		modules += L
 
 		modules += new /obj/item/weapon/tray(src)
-		modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
+		modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 		emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)

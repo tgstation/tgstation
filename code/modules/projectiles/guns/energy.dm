@@ -26,7 +26,7 @@
 		return
 
 
-	process_chambered()
+	load_into_chamber()
 		if(in_chamber)	return 1
 		if(!power_supply)	return 0
 		if(!power_supply.use(charge_cost))	return 0

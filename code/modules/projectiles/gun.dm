@@ -1,6 +1,6 @@
 /obj/item/weapon/gun
 	name = "gun"
-	desc = "It's a gun. It's pretty terrible, though."
+	desc = "Its a gun. It's pretty terrible, though."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
@@ -17,11 +17,13 @@
 
 	var/fire_sound = "gunshot"
 	var/obj/item/projectile/in_chamber = null
+	var/caliber = ""
 	var/silenced = 0
 	var/recoil = 0
+	var/ejectshell = 1
 	var/clumsy_check = 1
 
-	proc/process_chambered()
+	proc/load_into_chamber()
 		return 0
 
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
@@ -50,7 +52,7 @@
 			if(istype(user, /mob/living))
 				var/mob/living/M = user
 				if ((CLUMSY in M.mutations) && prob(40))
-					M << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+					M << "<span class='danger'>You shoot yourself in the foot with the [src]!</span>"
 					afterattack(user, user)
 					M.drop_item()
 					return
@@ -78,8 +80,9 @@
 
 		if(!special_check(user))
 			return
-		if(!process_chambered())
+		if(!load_into_chamber())
 			shoot_with_empty_chamber(user)
+			return
 
 		if(!in_chamber)
 			return

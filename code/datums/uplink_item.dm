@@ -94,13 +94,13 @@ var/list/uplink_items = list()
 /datum/uplink_item/dangerous/revolver
 	name = "Full Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
-	item = /obj/item/weapon/gun/projectile/revolver
+	item = /obj/item/weapon/gun/projectile
 	cost = 6
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
 	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
-	item = /obj/item/ammo_box/a357
+	item = /obj/item/ammo_magazine/a357
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow

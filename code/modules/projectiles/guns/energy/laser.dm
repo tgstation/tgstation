@@ -50,7 +50,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 
 
-/obj/item/weapon/gun/energy/laser/cyborg/process_chambered()
+/obj/item/weapon/gun/energy/laser/cyborg/load_into_chamber()
 	if(in_chamber)
 		return 1
 	if(isrobot(src.loc))

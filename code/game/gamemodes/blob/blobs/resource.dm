@@ -30,5 +30,5 @@
 
 	if(overmind)
 		overmind.add_points(1)
-	return 0
+	return 1
 
