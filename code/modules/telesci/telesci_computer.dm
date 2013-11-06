@@ -38,8 +38,6 @@
 /obj/machinery/computer/telescience/attack_hand(mob/user)
 	if(..())
 		return
-	if(stat & (NOPOWER|BROKEN))
-		return
 	var/t = ""
 	t += "<A href='?src=\ref[src];setx=1'>Set X</A>"
 	t += "<A href='?src=\ref[src];sety=1'>Set Y</A>"
