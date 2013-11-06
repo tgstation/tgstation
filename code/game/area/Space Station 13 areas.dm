@@ -127,115 +127,141 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 	var/push_dir = SOUTH
+	var/destination
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
+	destination = /area/shuttle/arrival/station
 
 /area/shuttle/arrival/station
 	icon_state = "shuttle"
+	destination = /area/shuttle/arrival/pre_game
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape/station
 	name = "\improper Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape/transit
 
 /area/shuttle/escape/centcom
 	name = "\improper Emergency Shuttle Centcom"
-	icon_state = "shuttle"
+	destination = /area/shuttle/escape/station
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
-	icon_state = "shuttle"
+	destination = /area/shuttle/escape/centcom
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod1/transit
 
 /area/shuttle/escape_pod1/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod1/station
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod1/centcom
+
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod2/transit
 
 /area/shuttle/escape_pod2/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod2/station
 
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod2/centcom
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
-	music = "music/escape.ogg"
 	push_dir = WEST
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod3/transit
 
 /area/shuttle/escape_pod3/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod3/station
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod3/centcom
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
-/area/shuttle/escape_pod5 //Pod 4 was lost to meteors
-	name = "\improper Escape Pod Five"
-	music = "music/escape.ogg"
+/area/shuttle/escape_pod4 //Renaming areas 2hard
+	name = "\improper Escape Pod Four"
 	push_dir = WEST
 
-/area/shuttle/escape_pod5/station
+/area/shuttle/escape_pod4/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod4/transit
 
-/area/shuttle/escape_pod5/centcom
+/area/shuttle/escape_pod4/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod4/station
 
-/area/shuttle/escape_pod5/transit
+/area/shuttle/escape_pod4/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod4/centcom
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/mining/outpost
 
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
+	destination = /area/shuttle/mining/station
+
+/area/shuttle/laborcamp
+	name = "\improper Labor Camp Shuttle"
+
+/area/shuttle/laborcamp/station
+	icon_state = "shuttle"
+	destination = /area/shuttle/laborcamp/outpost
+
+/area/shuttle/laborcamp/outpost
+	icon_state = "shuttle"
+	destination = /area/shuttle/laborcamp/station
 
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle Centcom"
+	destination = /area/shuttle/transport1/station
 
 /area/shuttle/transport1/station
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle"
+	destination = /area/shuttle/transport1/centcom
 
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
@@ -243,10 +269,12 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/specops/centcom
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered"
+	destination = /area/shuttle/specops/station
 
 /area/shuttle/specops/station
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered2"
+	destination = /area/shuttle/specops/centcom
 
 /area/shuttle/thunderdome
 	name = "honk"
@@ -963,6 +991,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 
+/area/security/processing
+	name = "\improper Prisoner Processing"
+	icon_state = "sec_prison"
+
 /area/security/warden
 	name = "\improper Armory"
 	icon_state = "Warden"
@@ -1495,7 +1527,7 @@ var/list/centcom_areas = list (
 	/area/shuttle/escape_pod1/centcom,
 	/area/shuttle/escape_pod2/centcom,
 	/area/shuttle/escape_pod3/centcom,
-	/area/shuttle/escape_pod5/centcom,
+	/area/shuttle/escape_pod4/centcom,
 	/area/shuttle/transport1/centcom,
 	/area/shuttle/specops/centcom,
 )
@@ -1507,7 +1539,7 @@ var/list/the_station_areas = list (
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod5/station,
+	/area/shuttle/escape_pod4/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 //	/area/shuttle/transport2/station,	//not present on map

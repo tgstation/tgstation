@@ -825,25 +825,7 @@ var/global/floorIsLava = 0
 //
 //
 
-
-/**********************Centcom Ferry**************************/
-
-var/ferry_location = 0 // 0 = centcom , 1 = station
-
-proc/move_ferry()
-	var/area/fromArea
-	var/area/toArea
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-	fromArea.move_contents_to(toArea)
-	if (ferry_location)
-		ferry_location = 0
-	else
-		ferry_location = 1
+//RIP ferry snowflakes
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)

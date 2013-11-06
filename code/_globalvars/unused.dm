@@ -1,7 +1,6 @@
 var/dna_ident = 1 // unused global variable
 var/shuttle_z = 2	//unused, was written to by a shuttle landmark
 var/list/reg_dna = list(  ) // unused, was written to when making unique DNA
-var/list/shuttles = list(  ) // unused global list
 
 	/////////////// old events system global variables
 var/eventchance = 3 //% per 5 mins
