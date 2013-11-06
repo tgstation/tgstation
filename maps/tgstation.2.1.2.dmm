@@ -6389,7 +6389,7 @@
 "csS" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "csT" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/obj/item/weapon/storage/backpack/satchel,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/wizard_station)
 "csU" = (/obj/structure/mirror{pixel_y = 28},/turf/unsimulated/floor{dir = 1; icon_state = "carpetside"},/area/wizard_station)
-"csV" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/rd,/turf/unsimulated/floor{dir = 5; icon_state = "carpetside"},/area/wizard_station)
+"csV" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/wiz,/turf/unsimulated/floor{dir = 5; icon_state = "carpetside"},/area/wizard_station)
 "csW" = (/turf/unsimulated/wall,/area/tdome)
 "csX" = (/obj/machinery/igniter,/turf/simulated/floor,/area/tdome)
 "csY" = (/turf/simulated/floor,/area/tdome)
