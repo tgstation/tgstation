@@ -69,11 +69,13 @@
 		var/L = get_turf(E)
 		var/T = locate(trueX, trueY, z_co)
 		var/G = get_turf(T)
+		var/area/A = get_area(T)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, L)
 		s.start()
 		flick("pad-beam", E)
-		usr << "<span class = 'caution'> Teleport successful.</span>"
+		user << "<span class = 'caution'> Teleport successful.</span>"
+		investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[src.z_co], in [A.name].","telesci")
 		var/sparks = get_turf(T)
 		var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
 		y.set_up(5, 1, sparks)
