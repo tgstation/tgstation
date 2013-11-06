@@ -9,7 +9,7 @@
 	traitor_name = "double agent"
 
 	traitors_possible = 8 //hard limit on traitors if scaling is turned off
-	scale_modifier = 1.5 // Nearly twice as many double agents
+	scale_modifier = 0.5 // Nearly twice as many double agents
 
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
