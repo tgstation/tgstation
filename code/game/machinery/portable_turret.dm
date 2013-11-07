@@ -524,10 +524,10 @@
 			if(allowed(perp) && !lasercolor) //if the perp has security access, return 0
 				return 0
 
-			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun/doublebarrel)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
+			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/revolver/doublebarrel)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
-			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun/doublebarrel)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
+			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/revolver/doublebarrel)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
 			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
@@ -811,6 +811,9 @@
 			user << "<span class='notice'>You remove the prox sensor from the turret frame.</span>"
 			new /obj/item/device/assembly/prox_sensor(loc)
 			build_step = 4
+
+/obj/machinery/porta_turret_construct/attack_ai()
+   return
 
 
 /************************
