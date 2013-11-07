@@ -38,6 +38,8 @@ var/next_mob_id = 0
 
 	if(!client)	return
 
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+
 	if (type)
 		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
 			if (!( alt ))
