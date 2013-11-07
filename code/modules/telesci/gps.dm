@@ -46,6 +46,7 @@
 	popup.open()
 
 /obj/item/device/gps/Topic(href, href_list)
+	..()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
 		a = copytext(sanitize(a), 1, 20)
