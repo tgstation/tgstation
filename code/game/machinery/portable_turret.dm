@@ -371,7 +371,7 @@
 	invisibility = 0
 	spark_system.start()	//creates some sparks because they look cool
 	density = 1
-	del(cover)	//deletes the cover - no need on keeping it there!
+
 
 
 
@@ -524,10 +524,10 @@
 			if(allowed(perp) && !lasercolor) //if the perp has security access, return 0
 				return 0
 
-			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/revolver/doublebarrel)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
+			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun/doublebarrel)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
-			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/revolver/doublebarrel)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
+			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun/doublebarrel)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
 			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
@@ -812,9 +812,6 @@
 			new /obj/item/device/assembly/prox_sensor(loc)
 			build_step = 4
 
-/obj/machinery/porta_turret_construct/attack_ai()
-	return
-
 
 /************************
 * PORTABLE TURRET COVER *
@@ -828,6 +825,15 @@
 	layer = 3.5
 	density = 0
 	var/obj/machinery/porta_turret/Parent_Turret = null
+
+
+/obj/machinery/porta_turret_cover/ex_act(severity) //Cover Ex_act to fix Runtimes - RR
+	if(severity < 3)
+		src.die()
+
+/obj/machinery/porta_turret_cover/proc/die() //Cover die() to assit with the Ex_act fix - RR
+	src.density = 0
+	del(src)
 
 
 //The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
