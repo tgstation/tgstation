@@ -371,7 +371,7 @@
 	invisibility = 0
 	spark_system.start()	//creates some sparks because they look cool
 	density = 1
-	del(cover)	//deletes the cover - no need on keeping it there!
+
 
 
 
@@ -825,6 +825,15 @@
 	layer = 3.5
 	density = 0
 	var/obj/machinery/porta_turret/Parent_Turret = null
+
+
+/obj/machinery/porta_turret_cover/ex_act(severity) //Cover Ex_act to fix Runtimes - RR
+	if(severity < 3)
+		src.die()
+
+/obj/machinery/porta_turret_cover/proc/die() //Cover die() to assit with the Ex_act fix - RR
+	src.density = 0
+	del(src)
 
 
 //The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
