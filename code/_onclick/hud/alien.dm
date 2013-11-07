@@ -143,7 +143,7 @@
 
 	alien_plasma_display = new /obj/screen()
 	alien_plasma_display.icon = 'icons/mob/screen_gen.dmi'
-	alien_plasma_display.icon_state = "power_display"
+	alien_plasma_display.icon_state = "power_display2"
 	alien_plasma_display.name = "plasma stored"
 	alien_plasma_display.screen_loc = ui_alienplasmadisplay
 
