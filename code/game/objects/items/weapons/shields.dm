@@ -104,6 +104,7 @@
 		user << "\blue The cloaking device is now inactive."
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
+	user.update_icons()
 	return
 
 /obj/item/weapon/cloaking_device/emp_act(severity)

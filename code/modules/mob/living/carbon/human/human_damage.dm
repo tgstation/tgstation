@@ -139,15 +139,6 @@
 
 ////////////////////////////////////////////
 
-/mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	var/obj/item/organ/limb/E = get_organ(zone)
-	if(istype(E, /obj/item/organ/limb))
-		if (E.heal_damage(brute, burn))
-			update_damage_overlays(0)
-	else
-		return 0
-	return
-
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
 	if(!zone)	zone = "chest"
