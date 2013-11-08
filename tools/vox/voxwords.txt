@@ -688,6 +688,7 @@ loose
 love
 me
 medbay
+mommi = mommy
 money
 monkey
 monkeys
@@ -706,6 +707,7 @@ raider
 raiders
 removal
 requested
+respond
 rest
 sarah
 sensors

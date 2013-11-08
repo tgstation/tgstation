@@ -36,8 +36,12 @@ THE SOFTWARE.
 ##Voice you want to use 
 # This is the nitech-made ARCTIC voice, tut on how to install: 
 # http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
-VOICE='nitech_us_clb_arctic_hts'
-#VOICE='nitech_us_slt_arctic_hts'
+#VOICE='nitech_us_bdl_arctic_hts'
+#VOICE='nitech_us_jmk_arctic_hts'
+#VOICE='nitech_us_awb_arctic_hts'
+#VOICE='nitech_us_slt_arctic_hts' # less bored US female
+VOICE='nitech_us_clb_arctic_hts' # DEFAULT, bored US female (occasionally comes up with british pronunciations?!)
+#VOICE='nitech_us_rms_arctic_hts'
 
 # What we do with SoX:
 SOX_ARGS  = 'stretch 1.1'
