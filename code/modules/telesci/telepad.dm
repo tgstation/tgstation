@@ -90,15 +90,13 @@
 	..()
 
 /obj/item/weapon/rcs/Del()
-	..()
 	processing_objects.Remove(src)
-
+	..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
 		rcharges = 10
 	if(last_charge == 0)
 		rcharges++
-		desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
 		last_charge = 30
 	else
 		last_charge--

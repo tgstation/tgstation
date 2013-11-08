@@ -14,6 +14,7 @@
 	var/z_co	// Z coordinate
 
 /obj/machinery/computer/telescience/New()
+	..()
 	teles_left = rand(8,12)
 	x_off = rand(-10,10)
 	y_off = rand(-10,10)
@@ -76,7 +77,6 @@
 	trueX = Clamp(trueX, 1, world.maxx)
 	trueY = Clamp(trueY, 1, world.maxy)
 	if(telepad)
-		error("debug machine: [telepad]")
 		var/turf/target = locate(trueX, trueY, z_co)
 		var/area/A = get_area(target)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -101,32 +101,25 @@
 	return
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
-	error("debug start")
 	if(x_co == null || y_co == null || z_co == null)
-		error("debug A")
 		user << "<span class = 'caution'>  Error: set coordinates.</span>"
 		return
 	if(x_co < 1 || x_co > 255)
-		error("debug B")
 		telefail()
 		user << "<span class = 'caution'>  Error: X is less than 1 or greater than 255.</span>"
 		return
 	if(y_co < 1 || y_co > 255)
-		error("debug C")
 		telefail()
 		user << "<span class = 'caution'>  Error: Y is less than 1 or greater than 255.</span>"
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 7)
-		error("debug D")
 		telefail()
 		user << "<span class = 'caution'>  Error: Z is less than 1, greater than 7, or equal to 2.</span>"
 		return
 	if(teles_left > 0)
-		error("debug E")
 		teles_left -= 1
 		doteleport(user)
 	else
-		error("debug F")
 		telefail()
 		return
 	return
@@ -134,7 +127,6 @@
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(..())
 		return
-	error("debug 1")
 	if(href_list["setx"])
 		var/new_x = input("Please input desired X coordinate.", name, x_co) as num
 		x_co = Clamp(new_x, 1, 9999)
@@ -148,17 +140,14 @@
 		z_co = Clamp(new_z, 1, 9999)
 		return
 	if(href_list["send"])
-		error("debug 2")
 		sending = 1
 		teleport(usr)
 		return
 	if(href_list["receive"])
-		error("debug 3")
 		sending = 0
 		teleport(usr)
 		return
 	if(href_list["recal"])
-		error("debug 4")
 		teles_left = rand(9,12)
 		x_off = rand(-10,10)
 		y_off = rand(-10,10)
