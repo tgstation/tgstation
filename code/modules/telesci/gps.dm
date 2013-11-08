@@ -1,3 +1,4 @@
+var/list/GPS_list = list()
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
@@ -9,7 +10,6 @@
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
 	var/emped = 0
-	var/list/GPS_list = list()
 
 /obj/item/device/gps/New()
 	..()
