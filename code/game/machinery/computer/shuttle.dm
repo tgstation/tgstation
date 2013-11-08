@@ -1,5 +1,5 @@
-/obj/machinery/computer/shuttle
-	name = "Shuttle"
+/obj/machinery/computer/emergency_shuttle
+	name = "Emergency Shuttle Console"
 	desc = "For shuttle control."
 	icon_state = "shuttle"
 	var/auth_need = 3.0
@@ -8,7 +8,7 @@
 
 	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))	return
-		if ((!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || emergency_shuttle.location != 1 || !( user )))	return
+		if ((!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || emergency_shuttle.location != DOCKED || !( user )))	return
 		if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 			if (istype(W, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = W
@@ -27,7 +27,7 @@
 				return 0
 
 			var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
-			if(emergency_shuttle.location != 1 && user.get_active_hand() != W)
+			if(emergency_shuttle.location != DOCKED && user.get_active_hand() != W)
 				return 0
 			switch(choice)
 				if("Authorize")
@@ -59,7 +59,7 @@
 		else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 			var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
 
-			if(!emagged && emergency_shuttle.location == 1 && user.get_active_hand() == W)
+			if(!emagged && emergency_shuttle.location == DOCKED && user.get_active_hand() == W)
 				switch(choice)
 					if("Launch")
 						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)

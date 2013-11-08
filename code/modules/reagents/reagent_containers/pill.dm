@@ -127,6 +127,14 @@
 		..()
 		reagents.add_reagent("kelotane", 30)
 
+/obj/item/weapon/reagent_containers/pill/dermaline
+	name = "dermaline pill"
+	desc = "Used to treat severe burns."
+	icon_state = "pill12"
+	New()
+		..()
+		reagents.add_reagent("dermaline", 30)
+
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "inaprovaline pill"
 	desc = "Used to stabilize patients."

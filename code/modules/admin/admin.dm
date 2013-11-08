@@ -817,6 +817,26 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
+/datum/admins/proc/list_free_slots()
+	if(!check_rights())
+		return
+	var/dat = "<html><head><title>List Free Slots</title></head><body>"
+	var/count = 0
+
+	if(job_master)
+		for(var/datum/job/job in job_master.occupations)
+			count++
+			var/J_title = html_encode(job.title)
+			var/J_totPos = html_encode(job.total_positions)
+			dat += "[J_title]: [J_totPos]<br>"
+
+	dat += "</body>"
+	var/winheight = 100 + (count * 20)
+	winheight = min(winheight, 690)
+	usr << browse(dat, "window=players;size=316x[winheight]")
+
+
+
 //
 //
 //ALL DONE
@@ -825,25 +845,7 @@ var/global/floorIsLava = 0
 //
 //
 
-
-/**********************Centcom Ferry**************************/
-
-var/ferry_location = 0 // 0 = centcom , 1 = station
-
-proc/move_ferry()
-	var/area/fromArea
-	var/area/toArea
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-	fromArea.move_contents_to(toArea)
-	if (ferry_location)
-		ferry_location = 0
-	else
-		ferry_location = 1
+//RIP ferry snowflakes
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)

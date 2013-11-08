@@ -121,6 +121,18 @@
 	O.update_icon()
 	return
 
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	name = "Adrenal Implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenal/New()
+	..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/adrenalin(O)
+	O.update_icon()
+	return
+
+
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "Space Suit and Helmet"
 
