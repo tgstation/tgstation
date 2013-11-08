@@ -9,11 +9,16 @@
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
 	var/emped = 0
+	var/list/GPS_list = list()
 
 /obj/item/device/gps/New()
+	..()
+	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	overlays += "working"
-
+/obj/item/device/gps/Del()
+	GPS_list.Remove(src)
+	..()
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
 	overlays -= "working"
@@ -31,7 +36,7 @@
 		t += "<BR><A href='?src=\ref[src];tag=1'>Set Tag</A> "
 		t += "<BR>Tag: [gpstag]"
 
-		for(var/obj/item/device/gps/G in world)
+		for(var/obj/item/device/gps/G in GPS_list)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
