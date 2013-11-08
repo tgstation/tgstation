@@ -172,6 +172,24 @@
 				. += C
 	return .
 
+/obj/machinery/power/proc/get_marked_connections()
+
+	. = list()
+
+	if(!directwired)
+		return get_indirect_connections()
+
+	var/cdir
+
+	for(var/card in cardinal)
+		var/turf/T = get_step(loc,card)
+		cdir = get_dir(T,loc)
+
+		for(var/obj/structure/cable/C in T)
+			if(C.d1 == cdir || C.d2 == cdir)
+				. += C
+	return .
+
 /obj/machinery/power/proc/get_indirect_connections()
 	. = list()
 	for(var/obj/structure/cable/C in loc)
