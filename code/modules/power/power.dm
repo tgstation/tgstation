@@ -226,36 +226,39 @@
 //remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
 	//world.log << "propagating new network"
-	var/list/P = list()
-	if( istype(O,/obj/structure/cable))
-		//world.log << "is cable"
-		var/obj/structure/cable/C = O
-		if(C.powernet==PN)
-			//world.log << "already has correct network"
-			return
-		//world.log << "removing from old powernet[C.powernet]"
-		C.powernet.cables-=C
-		C.powernet = PN
-		PN.cables+=C
-		P = C.get_marked_connections()
-		//world.log << "found [P.len] children"
-	else if(O.anchored && istype(O,/obj/machinery/power))
-		//world.log << "is machine"
-		var/obj/machinery/power/M = O
-		if(M.powernet==PN)
-			//world.log << "already has correct network"
-			return
-		//world.log << "removing from old powernet[M.powernet]"
-		M.powernet.nodes-=M
-		M.powernet = PN
-		PN.nodes+=M
-		P = M.get_connections()
-		//world.log << "found [P.len] children"
-	else
-		return
-	for(var/L in P)
-		propagate_network(L, PN)
-
+	var/list/worklist = list()
+	worklist+=O
+	var/index = 1
+	while(index<=worklist.len)
+		var/obj/P = worklist[index++]
+		if( istype(P,/obj/structure/cable))
+			//world.log << "is cable"
+			var/obj/structure/cable/C = P
+			if(C.powernet==PN)
+				//world.log << "already has correct network"
+				continue
+			//world.log << "removing from old powernet[C.powernet]"
+			C.powernet.cables-=C
+			C.powernet = PN
+			PN.cables+=C
+			for(var/obj/newP in C.get_marked_connections())
+				worklist+=newP
+			//world.log << "found [P.len] children"
+		else if(P.anchored && istype(P,/obj/machinery/power))
+			//world.log << "is machine"
+			var/obj/machinery/power/M = P
+			if(M.powernet==PN)
+				//world.log << "already has correct network"
+				continue
+			//world.log << "removing from old powernet[M.powernet]"
+			M.powernet.nodes-=M
+			M.powernet = PN
+			PN.nodes+=M
+			for(var/obj/newP in M.get_marked_connections())
+				worklist+=newP
+			//world.log << "found [P.len] children"
+		else
+			continue
 //should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
 //needed as this can, unlike other placements, disconnect cables
 /obj/structure/cable/proc/denode()
