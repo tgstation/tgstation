@@ -13,6 +13,10 @@
 	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
+
+	// For Aghosts dicking with telecoms equipment.
+	var/obj/item/device/multitool/ghostMulti = null
+
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -54,6 +58,9 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
+
+	ghostMulti = new(src)
+
 	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -69,6 +76,7 @@ Works together with spawning an observer, noted above.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = timeofdeath //BS12 EDIT
 		ghost.key = key
+
 		return ghost
 
 /*

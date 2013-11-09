@@ -99,7 +99,7 @@
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
-	if(user.stat || user.restrained()) return
+	if((user.stat && !isobserver(user)) || user.restrained()) return
 
 	// this is the data which will be sent to the ui
 	var/data[0]

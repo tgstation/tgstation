@@ -33,7 +33,7 @@
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
-	..() 
+	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
@@ -79,7 +79,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine()
 	..()
-	
+
 	if(in_range(usr, src))
 		usr << "You can just about make out some loose objects floating in the murk:"
 		for(var/obj/O in src)
@@ -107,7 +107,7 @@
   */
 /obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
-	if(user == occupant || user.stat)
+	if(user == occupant || (user.stat && !isobserver(user)))
 		return
 
 	// this is the data which will be sent to the ui

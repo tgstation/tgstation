@@ -782,7 +782,7 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 				src.updateDialog()
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
-	if (user.stat)
+	if (user.stat && !isobserver(user))
 		user << "\red You must be conscious to use this [src]!"
 		return 0
 	if(!user.client)

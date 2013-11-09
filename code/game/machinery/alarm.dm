@@ -770,7 +770,7 @@
 
 
 /obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	if(user.stat)
+	if(user.stat && !isobserver(user))
 		return
 	var/data[0]
 	data["air"]=ui_air_status()
@@ -1652,7 +1652,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !isobserver(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)
@@ -1850,7 +1850,7 @@ Code shamelessly copied from apc_frame
 	return attack_hand(user)
 
 /obj/machinery/partyalarm/attack_hand(mob/user as mob)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !isobserver(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	user.machine = src

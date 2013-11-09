@@ -168,25 +168,26 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
-	if(usr.restrained() || usr.lying || usr.stat)
-		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
-		return 1
-
-	var/norange = 0
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
-			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
-			norange = 1
-
-	if(!norange)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+	if(!isAdminGhost(usr))
+		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
+		if ( ! (istype(usr, /mob/living/carbon/human) || \
+				istype(usr, /mob/living/silicon) || \
+				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			usr << "\red You don't have the dexterity to do this!"
+			return 1
+
+		var/norange = 0
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.l_hand, /obj/item/tk_grab))
+				norange = 1
+			else if(istype(H.r_hand, /obj/item/tk_grab))
+				norange = 1
+
+		if(!norange)
+			if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+				return 1
 
 	src.add_fingerprint(usr)
 	return 0
@@ -201,17 +202,22 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
+/obj/machinery/attack_ghost(mob/user as mob)
+	src.add_hiddenprint(user)
+	return src.attack_hand(user)
+
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying /*|| user.stat*/) // Ghost read-only
+	if(user.lying || (user.stat && !isobserver(user))) // Ghost read-only
 		return 1
 
 	if(istype(usr,/mob/dead/observer))
 		return 0
+
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )

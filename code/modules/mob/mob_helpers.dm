@@ -115,6 +115,12 @@
 		return 1
 	return 0
 
+/proc/isAdminGhost(A)
+	if(isobserver(A))
+		var/mob/dead/observer/O = A
+		if(O.check_rights(R_ADMIN|R_FUN))
+			return 1
+	return 0
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1
