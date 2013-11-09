@@ -1112,7 +1112,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 						src.attack_alien(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/alien/larva))
 						src.attack_larva(usr)
-					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || isAdminGhost(usr))
+					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || isobserver(usr))
 						src.attack_ai(usr, usr.hand)
 					else if(istype(usr, /mob/living/carbon/slime))
 						src.attack_slime(usr)
