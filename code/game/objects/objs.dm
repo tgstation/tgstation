@@ -93,6 +93,9 @@
 /obj/proc/interact(mob/user)
 	return
 
+/obj/proc/container_resist()
+	return
+
 /obj/proc/update_icon()
 	return
 
