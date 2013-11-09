@@ -620,7 +620,6 @@
 
 	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict.
 	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		if(1)//if(!isAdminGhost(usr))
-			usr << browse(null, "window=recyk_furnace")
-			onclose(usr, "recyk_furnace")
-			return
+		usr << browse(null, "window=recyk_furnace")
+		onclose(usr, "recyk_furnace")
+		return

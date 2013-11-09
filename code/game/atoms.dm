@@ -875,6 +875,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if(!isAI(usr) && !isAdminGhost(usr))
 				ShiftClick(usr)
 			else
+				if(isAdminGhost(usr))
+					log_adminghost("[key_name(usr)] shift-clicked on [src]!")
 				AIShiftClick(usr)
 			return
 		}
@@ -887,6 +889,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			else if(isovermind(usr))
 				OvermindAltClick(usr)
 			else if(!isAI(usr) && !isAdminGhost(usr))
+				if(isAdminGhost(usr))
+					log_adminghost("[key_name(usr)] alt-clicked on [src]!")
 				AltClick(usr)
 			else
 				AIAltClick(usr)
@@ -901,6 +905,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			else if(!isAI(usr) && !isAdminGhost(usr))
 				CtrlClick(usr)
 			else
+				if(isAdminGhost(usr))
+					log_adminghost("[key_name(usr)] ctrl-clicked on [src]!")
 				AICtrlClick(usr)
 			return
 		}

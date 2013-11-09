@@ -530,8 +530,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon) || isobserver(usr)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] set channel name of [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
@@ -539,15 +542,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			//src.update_icon()
 
 		else if(href_list["set_channel_lock"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] locked a channel via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			src.c_locked = !src.c_locked
 			src.updateUsrDialog()
 			//src.update_icon()
 
 		else if(href_list["submit_new_channel"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] created a new channel with [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			//var/list/existing_channels = list() //OBSOLETE
 			var/list/existing_authors = list()
 			for(var/datum/feed_channel/FC in news_network.network_channels)
@@ -579,8 +588,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			//src.update_icon()
 
 		else if(href_list["set_channel_receiving"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] set receiving channel on [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			//var/list/datum/feed_channel/available_channels = list()
 			var/list/available_channels = list()
 			for(var/datum/feed_channel/F in news_network.network_channels)
@@ -590,22 +602,31 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] wrote a feed story via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 			src.updateUsrDialog()
 
 		else if(href_list["set_attachment"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] added an attachment to a story via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			AttachPhoto(usr)
 			src.updateUsrDialog()
 
 		else if(href_list["submit_new_message"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] added a story via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
@@ -643,8 +664,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.screen=8
 			src.updateUsrDialog()
 		else if(href_list["print_paper"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] printed a paper from [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			if(!src.paper_remaining)
 				src.screen=21
 			else
@@ -678,24 +702,33 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_wanted_name"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] is trying to set the name of a wanted person via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			src.channel_name = strip_html(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
 			src.updateUsrDialog()
 
 		else if(href_list["set_wanted_desc"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] is trying to set the description of a wanted person via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			src.msg = strip_html(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 			src.updateUsrDialog()
 
 		else if(href_list["submit_wanted"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] submitted a wanted poster via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			var/input_param = text2num(href_list["submit_wanted"])
 			if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 				src.screen = 16
@@ -743,8 +776,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.screen=18
 			src.updateUsrDialog()
 		else if(href_list["censor_channel_author"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] is trying to censor an author via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			var/datum/feed_channel/FC = locate(href_list["censor_channel_author"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
@@ -757,8 +793,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["censor_channel_story_author"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] is trying to censor a story's author via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 			if(MSG.is_admin_message)
 				alert("This message was created by a Nanotrasen Officer. You cannot censor its author.","Ok")
@@ -771,8 +810,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["censor_channel_story_body"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] is trying to censor a story via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
@@ -798,8 +840,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["toggle_d_notice"])
-			if(isobserver(usr) && !isAdminGhost(usr))
-				usr << "\red You can't do that."
+			if(isAdminGhost(usr))
+				log_adminghost("[key_name(usr)] is trying to set a D-notice on a channel via [src]!")
+			else
+				if(isobserver(usr))
+					usr << "\red You can't do that."
 			var/datum/feed_channel/FC = locate(href_list["toggle_d_notice"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it.","Ok")

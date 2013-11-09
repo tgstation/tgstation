@@ -108,6 +108,7 @@ Class Procs:
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
+	var/custom_aghost_alerts=0
 
 /obj/machinery/New()
 	..()
@@ -188,6 +189,8 @@ Class Procs:
 		if(!norange)
 			if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
 				return 1
+	else if(!custom_aghost_alerts)
+		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
 	return 0
