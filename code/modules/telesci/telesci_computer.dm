@@ -1,10 +1,10 @@
 /obj/machinery/computer/telescience
-	name = "telepad control console"
+	name = "\improper Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
-	var/temp_msg = "Telescience control console initialized.<BR>"
+	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
 	// VARIABLES //
 	var/teles_left	// How many teleports left until it becomes uncalibrated
@@ -110,11 +110,11 @@
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
 
 	if(teleport_cooldown > world.time)
-		temp_msg = "Telepad is recharging power, please wait [round((teleport_cooldown - world.time) / 10)] seconds."
+		temp_msg = "Telepad is recharging power.<BR>Please wait [round((teleport_cooldown - world.time) / 10)] seconds."
 		return
 
 	if(teleporting)
-		temp_msg = "Telepad is in use. Please wait.<BR>"
+		temp_msg = "Telepad is in use.<BR>Please wait."
 		return
 
 	if(telepad)
@@ -127,24 +127,36 @@
 
 		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
 		var/trueY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
+		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
 		var/area/A = get_area(target)
 		flick("pad-beam", telepad)
 
-		// Wait depending on the time the projectile took to get there
-		teleporting = 1
-		temp_msg = "Powering up bluespace crystals."
+		if(spawn_time > 15) // 1.5 seconds
+			playsound(telepad.loc, 'sound/weapons/flash.ogg', 25, 1)
+			// Wait depending on the time the projectile took to get there
+			teleporting = 1
+			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
+
 
 		spawn(round(proj_data.time) * 10) // in seconds
 			teleporting = 0
 			teleport_cooldown = world.time + (power * 2)
+			teles_left -= 1
+
+			// use a lot of power
+			use_power(power * 10)
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 
 			s.set_up(5, 1, telepad)
 			s.start()
-			temp_msg = "Teleport successful."
+			temp_msg = "Teleport successful.<BR>"
+			if(teles_left < 10)
+				temp_msg += "<BR>Calibration required soon."
+			else
+				temp_msg += "Data printed below."
 			investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
 			var/sparks = get_turf(target)
 			var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
@@ -156,33 +168,35 @@
 				source = dest
 				dest = target
 			flick("pad-beam", telepad)
+			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
 			for(var/atom/movable/ROI in source)
 				if(!ismob(ROI) && ROI.anchored) continue
 				do_teleport(ROI, dest, 0)
+			updateDialog()
 
 // TO DO: add projectile_trajectory to telesci
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
 	if(rotation == null || angle == null || z_co == null)
-		temp_msg = "Error: set a angle, rotation and sector."
+		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
 		return
 	if(rotation < 0 || rotation > 360)
 		telefail()
-		temp_msg = "Error: Bearing is less than 0 or greater than 360."
+		temp_msg = "ERROR!<BR>Bearing is less than 0 or greater than 360."
 		return
 	if(angle < 1 || angle > 90)
 		telefail()
-		temp_msg = "Error: Elevation is less than 1 or greater than 90."
+		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 7)
 		telefail()
-		temp_msg = "Error: Sector is less than 1, greater than 7, or equal to 2."
+		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 7, or equal to 2."
 		return
 	if(teles_left > 0)
-		teles_left -= 1
 		doteleport(user)
 	else
 		telefail()
+		temp_msg = "ERROR!<BR>Calibration required."
 		return
 	return
 
@@ -193,13 +207,14 @@
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = Clamp(new_rot, 0, 9999)
+		rotation = Clamp(round(new_rot, 0.1), -9999, 9999)
+		rotation = SimplifyDegrees(rotation)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(..())
 			return
-		angle = Clamp(new_angle, 1, 9999)
+		angle = Clamp(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
 		var/pwr = href_list["setpower"]
@@ -224,10 +239,10 @@
 	if(href_list["recal"])
 		recalibrate()
 		sparks()
-		temp_msg = "Calibration successful."
+		temp_msg = "NOTICE:<BR>Calibration successful."
 
 	updateDialog()
 
 /obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(20,30)
+	teles_left = rand(40, 50)
 	power_off = rand(-10, 10)
