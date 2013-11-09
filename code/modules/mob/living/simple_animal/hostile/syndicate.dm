@@ -34,6 +34,7 @@
 	wall_smash = 1
 	faction = "syndicate"
 	status_flags = CANPUSH
+	idle_env_destroyer = 0
 
 /mob/living/simple_animal/hostile/syndicate/Die()
 	..()

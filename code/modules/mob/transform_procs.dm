@@ -261,11 +261,14 @@
 
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize()
+/mob/living/carbon/human/proc/Robotize(var/delete_items = 0)
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		if(delete_items)
+			del(W)
+		else
+			drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0

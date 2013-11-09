@@ -216,10 +216,9 @@
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	dir = turn(dir, 90)
 //	updateSilicate()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	ini_dir = dir
 	return
 
@@ -233,10 +232,9 @@
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	dir = turn(dir, 270)
 //	updateSilicate()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	ini_dir = dir
 	return
 
@@ -274,7 +272,7 @@
 	else
 		icon_state = "window"
 
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	update_nearby_icons()
 
 	return
@@ -282,41 +280,23 @@
 
 /obj/structure/window/Del()
 	density = 0
-	update_nearby_tiles()
+	air_update_turf(1)
 	playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	..()
 
 
 /obj/structure/window/Move()
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 	..()
 	dir = ini_dir
-	update_nearby_tiles(need_rebuild=1)
+	air_update_turf(1)
 
-
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
-/obj/structure/window/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(target))
-			if(target.parent)
-				air_master.groups_to_rebuild += target.parent
-			else
-				air_master.tiles_to_update += target
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(target)) air_master.tiles_to_update += target
-
+/obj/structure/window/CanAtmosPass(turf/T)
+	if(get_dir(loc, T) == dir)
+		return !density
+	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+		return !density
 	return 1
 
 //checks if this window is full-tile one
@@ -325,7 +305,7 @@
 		return 1
 	return 0
 
-//This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
+//This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	for(var/direction in cardinal)
