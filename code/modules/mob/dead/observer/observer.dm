@@ -1,3 +1,6 @@
+#define GHOST_DARK_ALPHA 10
+#define GHOST_LIGHT_ALPHA 255
+#define GHOST_DARK_CUTOFF 1
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -10,6 +13,10 @@
 	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
+
+	// For Aghosts dicking with telecoms equipment.
+	var/obj/item/device/multitool/ghostMulti = null
+
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -18,6 +25,7 @@
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	universal_speak = 1
 	var/atom/movable/following = null
+
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -50,6 +58,9 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
+
+	ghostMulti = new(src)
+
 	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -65,6 +76,7 @@ Works together with spawning an observer, noted above.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = timeofdeath //BS12 EDIT
 		ghost.key = key
+
 		return ghost
 
 /*
@@ -85,12 +97,33 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 
+// In darkness over a certain threshold, ghosts become slightly visible for the spooky value.
+/mob/dead/observer/proc/amInDarkPlace()
+	var/turf/simulated/T = get_turf(src)
+	if(!istype(T))
+		return 0
+	if(T.lighting_lumcount <= GHOST_DARK_CUTOFF)
+		return 1
+	return 0
+
+/mob/dead/observer/proc/updateSpookyAlpha()
+	if(amInDarkPlace())
+		alpha=GHOST_DARK_ALPHA
+		invisibility=0
+	else
+		alpha=GHOST_LIGHT_ALPHA
+		invisibility=INVISIBILITY_OBSERVER
+
+///mob/dead/observer/SetLuminosity(new_luminosity, max_luminosity)
+//	..()
+//	updateSpookyAlpha()
+
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.HasEntered(src)
-
+		updateSpookyAlpha() // Added SetLuminosity above, probably not worth it.
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -104,6 +137,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.HasEntered(src)
+	updateSpookyAlpha()
 
 /mob/dead/observer/examine()
 	if(usr)
@@ -327,7 +361,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		//host = new /mob/living/silicon/robot/mommi(spawner.loc)
 		spawner.attack_ghost(src)
 	else
-		src << "<span class='warning'>Unable to find any powered MoMMI Spawners to spawn MoMMIs at.</span>"
+		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level to spawn MoMMIs at.</span>"
 
 	//if(host)
 	//	host.ckey = src.ckey

@@ -21,6 +21,23 @@
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
 
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/chem_dispenser/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
 	var/addenergy = 2
@@ -82,7 +99,7 @@
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
-	if(user.stat || user.restrained()) return
+	if((user.stat && !isobserver(user)) || user.restrained()) return
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -245,10 +262,28 @@
 	var/pillsprite = "1"
 	var/client/has_sprites = list()
 
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
 /obj/machinery/chem_master/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
+	..()
+	component_parts = list()
+	if(istype(src, /obj/machinery/chem_master/condimaster))
+		component_parts += new /obj/item/weapon/circuitboard/condimaster
+	else
+		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
@@ -302,10 +337,10 @@
 		src.updateUsrDialog()
 	else if(istype(B, /obj/item/weapon/screwdriver))
 		if(src.beaker)
-			user << "A beaker is loaded in [src]."
+			user << "\red A beaker is loaded in [src]."
 			return
 		if(src.loaded_pill_bottle)
-			user << "A pill bottle is loaded in [src]."
+			user << "\red A pill bottle is loaded in [src]."
 			return
 		if(!opened)
 			src.opened = 1
@@ -317,9 +352,13 @@
 			user << "You close the maintenance hatch of [src]."
 		return 1
 	if(opened)
-		if(src.beaker || src.loaded_pill_bottle)
-			return
 		if(istype(B, /obj/item/weapon/crowbar))
+			if(src.beaker)
+				user << "\red A beaker is loaded in [src]."
+				return
+			if(src.loaded_pill_bottle)
+				user << "\red A pill bottle is loaded in [src]."
+				return
 			user << "You begin to remove the circuits from the [src]."
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
@@ -570,8 +609,6 @@
 	else
 		return 0
 
-
-
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
@@ -590,6 +627,15 @@
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/computer/pandemic/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/pandemic
+	RefreshParts()
 
 
 /obj/machinery/computer/pandemic/set_broken()
@@ -886,6 +932,7 @@
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
+	var/opened = 0.0
 	var/list/blend_items = list (
 
 		//Sheets
@@ -935,9 +982,21 @@
 
 	var/list/holdingitems = list()
 
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+//Leaving large beakers out of the component part list to try and dodge beaker cloning.
 /obj/machinery/reagentgrinder/New()
 	..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/reagentgrinder
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	RefreshParts()
+
 	return
 
 /obj/machinery/reagentgrinder/update_icon()
@@ -963,7 +1022,7 @@
 			return 0
 
 	if(holdingitems && holdingitems.len >= limit)
-		usr << "The machine cannot hold anymore items."
+		usr << "The machine cannot hold any more items."
 		return 1
 
 	//Fill machine with the plantbag!
@@ -982,6 +1041,30 @@
 
 		src.updateUsrDialog()
 		return 0
+	else if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+		opened = !opened
+		return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			if(beaker)
+				user << "\red A beaker is loaded, you cannot deconstruct [src]."
+				return 1
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
 
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "Cannot refine into a reagent."

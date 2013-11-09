@@ -112,7 +112,7 @@
 
 			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
-			var/damage = rand(0, 5)//BS12 EDIT
+			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT
 			if(!damage)
 				if(M.species.attack_verb == "punch")
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)

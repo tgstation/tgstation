@@ -975,7 +975,7 @@ datum/preferences
 							for(var/L in all_languages)
 								var/datum/language/lang = all_languages[L]
 								if(!(lang.flags & RESTRICTED))
-									new_languages += lang
+									new_languages += lang.name
 
 						language = input("Please select a secondary language", "Character Generation", null) in new_languages
 

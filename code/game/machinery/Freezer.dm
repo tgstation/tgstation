@@ -11,6 +11,17 @@
 
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/freezer
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
 		initialize_directions = dir
 
 	initialize()
@@ -142,29 +153,6 @@
 		src.updateUsrDialog()
 
 
-	verb/rotate_clock()
-		set category = "Object"
-		set name = "Rotate Freezer (Clockwise)"
-		set src in view(1)
-
-		if (usr.stat || usr.restrained()  || anchored)
-			return
-
-		src.dir = turn(src.dir, 90)
-		initialize_directions = dir
-
-	verb/rotate_anticlock()
-		set category = "Object"
-		set name = "Rotate Freezer (Counterclockwise)"
-		set src in view(1)
-
-		if (usr.stat || usr.restrained()  || anchored)
-			return
-
-		src.dir = turn(src.dir, -90)
-		initialize_directions = dir
-
-
 
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
@@ -180,6 +168,17 @@
 
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/heater
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
 		initialize_directions = dir
 
 	initialize()
@@ -306,26 +305,3 @@
 	process()
 		..()
 		src.updateUsrDialog()
-
-
-	verb/rotate_clock()
-		set category = "Object"
-		set name = "Rotate Heater (Clockwise)"
-		set src in view(1)
-
-		if (usr.stat || usr.restrained()  || anchored)
-			return
-
-		src.dir = turn(src.dir, 90)
-		initialize_directions = dir
-
-	verb/rotate_anticlock()
-		set category = "Object"
-		set name = "Rotate Heater (Counterclockwise)"
-		set src in view(1)
-
-		if (usr.stat || usr.restrained()  || anchored)
-			return
-
-		src.dir = turn(src.dir, -90)
-		initialize_directions = dir

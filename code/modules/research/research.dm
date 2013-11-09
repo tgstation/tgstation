@@ -133,12 +133,25 @@ research holder datum.
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
+	var/list/CMTLs=list() // Calculated Max Tech Levels
 	for(var/datum/tech/PT in possible_tech)
+		if(!(PT.id in CMTLs))
+			CMTLs[PT.id]=0
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
 	for(var/datum/design/PD in possible_designs)
+		for(var/id in PD.req_tech)
+			// If calculated max_level is less than the required tech level of this design,
+			// Update calculated max techlevel
+			if(CMTLs[id] < PD.req_tech[id])
+				CMTLs[id] = PD.req_tech[id]
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
+	//testing("--- CMTLs calculated.")
+	//for(var/datum/tech/T in possible_tech)
+	//	// If CMTL != MTL, bitch.
+	//	if(CMTLs[T.id] != T.max_level)
+	//		testing("CMTL != MTL for [T.id]: [CMTLs[T.id]] != [T.max_level]")
 	for(var/datum/tech/T in known_tech)
 		T = between(1,T.level,20)
 	for(var/datum/design/D in known_designs)
@@ -179,7 +192,7 @@ datum/tech/materials
 	name = "Materials Research"
 	desc = "Development of new and improved materials."
 	id = "materials"
-	max_level=6
+	max_level=9
 
 datum/tech/engineering
 	name = "Engineering Research"
@@ -191,13 +204,13 @@ datum/tech/plasmatech
 	name = "Plasma Research"
 	desc = "Research into the mysterious substance colloqually known as 'plasma'."
 	id = "plasmatech"
-	max_level=3
+	max_level=4
 
 datum/tech/powerstorage
 	name = "Power Manipulation Technology"
 	desc = "The various technologies behind the storage and generation of electicity."
 	id = "powerstorage"
-	max_level=6
+	max_level=8
 
 datum/tech/bluespace
 	name = "'Blue-space' Research"
@@ -209,25 +222,25 @@ datum/tech/biotech
 	name = "Biological Technology"
 	desc = "Research into the deeper mysteries of life and organic substances."
 	id = "biotech"
-	max_level=7
+	max_level=8
 
 datum/tech/combat
 	name = "Combat Systems Research"
 	desc = "The development of offensive and defensive systems."
 	id = "combat"
-	max_level=6
+	max_level=8
 
 datum/tech/magnets
 	name = "Electromagnetic Spectrum Research"
 	desc = "Research into the electromagnetic spectrum. No clue how they actually work, though."
 	id = "magnets"
-	max_level=5
+	max_level=8
 
 datum/tech/programming
 	name = "Data Theory Research"
 	desc = "The development of new computer and artificial intelligence and data storage systems."
 	id = "programming"
-	max_level=4
+	max_level=9
 
 datum/tech/syndicate
 	name = "Illegal Technologies Research"

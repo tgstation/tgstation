@@ -166,6 +166,10 @@
 
 			M.job = "Mobile MMI"
 
+			if(M.z==4) // Derelict Z-level?
+				M.add_ion_law("The Derelict is your station.  Do not leave the derelict.")
+				M.locked_to_z=4
+
 			//M.cell = locate(/obj/item/weapon/cell) in contents
 			//M.cell.loc = M
 			src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.

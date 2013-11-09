@@ -839,6 +839,46 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Empty Box crate"
 	group = "Operations"
 
+/datum/supply_packs/engine/amrcontrol
+	name = "Antimatter control unit crate"
+	contains = list(/obj/machinery/power/am_control_unit)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Antimatter Control Unit crate"
+	access = access_engine
+	group = "Engineering"
+
+/datum/supply_packs/engine/amrparts
+	name = "AMR Parts crate"
+	contains  = list(/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "packaged antimatter reactor crate"
+	access = access_engine
+	group = "Engineering"
+
+/datum/supply_packs/engine/amrcontainment
+	name = "Antimatter containment jar crate"
+	contains = list(/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment)
+	cost = 25
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Antimatter containment jar crate"
+	access = access_engine
+	group = "Engineering"
+
 /datum/supply_packs/surgery
 	name = "Surgery crate"
 	contains = list(/obj/item/weapon/cautery,
@@ -993,3 +1033,29 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Beekeeping crate"
 	access = access_hydroponics
 	group = "Hydroponics"
+	
+/datum/supply_packs/Hydroponics_Trays
+	name = "Hydroponic Trays Components Crate"
+	contains = list(
+					/obj/item/weapon/circuitboard/hydroponics,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/capacitor,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/console_screen,
+					/obj/item/weapon/circuitboard/hydroponics,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/capacitor,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/console_screen)
+	cost = 12
+	containertype = /obj/structure/closet/crate/hydroponics
+	containername = "Hydroponic Trays Components Crate"
+	access = access_hydroponics
+	group = "Hydroponics"	
+

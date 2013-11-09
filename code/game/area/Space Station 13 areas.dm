@@ -20,6 +20,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/atmosalm = 0
 	var/poweralm = 1
 	var/party = null
+	var/radalert = 0
 	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
@@ -417,6 +418,11 @@ proc/process_ghost_teleport_locs()
 
 /area/planet/clown
 	name = "\improper Clown Planet"
+	icon_state = "honk"
+	requires_power = 0
+
+/area/asteroid/clown
+	name = "\improper Clown Roid"
 	icon_state = "honk"
 	requires_power = 0
 

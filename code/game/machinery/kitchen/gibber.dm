@@ -10,9 +10,60 @@
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/mob/living/occupant // Mob who has been put inside
+	var/opened = 0.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+obj/machinery/gibber/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/gibber
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	RefreshParts()
+
+/obj/machinery/gibber/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+		opened = !opened
+		return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+	if(istype(O,/obj/item/weapon/grab))
+		return handleGrab(O,user)
+	else
+		user << "\red This item is not suitable for the gibber!"
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -94,7 +145,8 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+// OLD /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
@@ -253,5 +305,4 @@
 				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
 		src.operating = 0
 		update_icon()
-
 

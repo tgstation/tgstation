@@ -63,6 +63,7 @@
 			syringestab(target, user)
 			return
 
+		if(istype(target, /obj/item/weapon/gun/syringe)) return
 
 		switch(mode)
 			if(SYRINGE_DRAW)

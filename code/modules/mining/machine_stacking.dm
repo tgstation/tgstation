@@ -42,6 +42,10 @@
 		dat += text("Reinforced Glass: [machine.ore_rglass] <A href='?src=\ref[src];release=rglass'>Release</A><br>")
 	if(machine.ore_plasma)
 		dat += text("Plasma: [machine.ore_plasma] <A href='?src=\ref[src];release=plasma'>Release</A><br>")
+	if(machine.ore_plasmaglass)
+		dat += text("Plasma Glass: [machine.ore_plasmaglass] <A href='?src=\ref[src];release=plasmaglass'>Release</A><br>")
+	if(machine.ore_plasmarglass)
+		dat += text("Reinforced Plasma Glass: [machine.ore_plasmarglass] <A href='?src=\ref[src];release=plasmarglass'>Release</A><br>")
 	if(machine.ore_gold)
 		dat += text("Gold: [machine.ore_gold] <A href='?src=\ref[src];release=gold'>Release</A><br>")
 	if(machine.ore_silver)
@@ -85,6 +89,18 @@
 					G.amount = machine.ore_plasma
 					G.loc = machine.output.loc
 					machine.ore_plasma = 0
+			if ("plasmaglass")
+				if (machine.ore_plasmaglass > 0)
+					var/obj/item/stack/sheet/glass/plasmaglass/G = new /obj/item/stack/sheet/glass/plasmaglass
+					G.amount = machine.ore_plasmaglass
+					G.loc = machine.output.loc
+					machine.ore_plasmaglass = 0
+			if ("plasmarglass")
+				if (machine.ore_plasmarglass > 0)
+					var/obj/item/stack/sheet/glass/plasmarglass/G = new /obj/item/stack/sheet/glass/plasmarglass
+					G.amount = machine.ore_plasmarglass
+					G.loc = machine.output.loc
+					machine.ore_plasmarglass = 0
 			if ("uranium")
 				if (machine.ore_uranium > 0)
 					var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium
@@ -203,6 +219,8 @@
 	var/ore_silver = 0;
 	var/ore_diamond = 0;
 	var/ore_plasma = 0;
+	var/ore_plasmaglass = 0;
+	var/ore_plasmarglass = 0;
 	var/ore_iron = 0;
 	var/ore_uranium = 0;
 	var/ore_clown = 0;
@@ -270,6 +288,14 @@
 				continue
 			if (istype(O,/obj/item/stack/sheet/rglass))
 				ore_rglass+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/glass/plasmaglass))
+				ore_plasmaglass+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/glass/plasmarglass))
+				ore_plasmarglass+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/plasteel))
@@ -361,6 +387,18 @@
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_rglass -= stack_amt
+		return
+	if (ore_plasmaglass >= stack_amt)
+		var/obj/item/stack/sheet/glass/plasmaglass/G = new /obj/item/stack/sheet/glass/plasmaglass
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_plasmaglass -= stack_amt
+		return
+	if (ore_plasmarglass >= stack_amt)
+		var/obj/item/stack/sheet/glass/plasmarglass/G = new /obj/item/stack/sheet/glass/plasmarglass
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_plasmarglass -= stack_amt
 		return
 	if (ore_plasteel >= stack_amt)
 		var/obj/item/stack/sheet/plasteel/G = new /obj/item/stack/sheet/plasteel

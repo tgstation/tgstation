@@ -457,6 +457,16 @@
 				O.droplimb(1)
 
 		var/obj/organ	//Dropped limb object
+		if(status & ORGAN_PEG)
+			owner.visible_message(\
+				"\red \The [owner]'s [display_name] snaps!",\
+				"\red <b>Your [display_name] snaps!</b>",\
+				"You hear wood being split.")
+
+			owner.regenerate_icons()
+			return
+
+
 		switch(body_part)
 			if(LOWER_TORSO)
 				owner << "\red You are now sterile."
@@ -469,53 +479,29 @@
 			if(ARM_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_arm(owner.loc)
-				else if(status & ORGAN_PEG)
-					//organ = new /obj/item/stack/sheet/wood(owner.loc)
-					owner.visible_message(\
-						"\red \The [owner]'s [display_name] snaps!",\
-						"\red <b>Your [display_name] snaps!</b>",\
-						"You hear wood being split.")
 				else
 					organ= new /obj/item/weapon/organ/r_arm(owner.loc, owner)
 			if(ARM_LEFT)
 				if(status & ORGAN_ROBOT)
 					organ= new /obj/item/robot_parts/l_arm(owner.loc)
-				else if(status & ORGAN_PEG)
-					//organ = new /obj/item/stack/sheet/wood(owner.loc)
-					owner.visible_message(\
-						"\red \The [owner]'s [display_name] snaps!",\
-						"\red <b>Your [display_name] snaps!</b>",\
-						"You hear wood being split.")
 				else
 					organ= new /obj/item/weapon/organ/l_arm(owner.loc, owner)
 			if(LEG_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_leg(owner.loc)
-				else if(status & ORGAN_PEG)
-					//organ = new /obj/item/stack/sheet/wood(owner.loc)
-					owner.visible_message(\
-						"\red \The [owner]'s [display_name] snaps!",\
-						"\red <b>Your [display_name] snaps!</b>",\
-						"You hear wood being split.")
 				else
 					organ= new /obj/item/weapon/organ/r_leg(owner.loc, owner)
 			if(LEG_LEFT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/l_leg(owner.loc)
-				else if(status & ORGAN_PEG)
-					//organ = new /obj/item/stack/sheet/wood(owner.loc)
-					owner.visible_message(\
-						"\red \The [owner]'s [display_name] snaps!",\
-						"\red <b>Your [display_name] snaps!</b>",\
-						"You hear wood being split.")
 				else
 					organ= new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 			if(HAND_RIGHT)
-				if(!(status & (ORGAN_ROBOT|ORGAN_PEG)))
+				if(!(status & (ORGAN_ROBOT)))
 					organ= new /obj/item/weapon/organ/r_hand(owner.loc, owner)
 				owner.u_equip(owner.gloves)
 			if(HAND_LEFT)
-				if(!(status & (ORGAN_ROBOT|ORGAN_PEG)))
+				if(!(status & (ORGAN_ROBOT)))
 					organ= new /obj/item/weapon/organ/l_hand(owner.loc, owner)
 				owner.u_equip(owner.gloves)
 			if(FOOT_RIGHT)

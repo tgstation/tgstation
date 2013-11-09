@@ -124,3 +124,34 @@
 
 /obj/item/weapon/handcuffs/cyborg
 	dispenser = 1
+
+/obj/item/weapon/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
+		R.use(1)
+
+		user.before_take_item(src)
+
+		user.put_in_hands(W)
+		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+
+		del(src)
+
+/* mite b cool - N3X
+/obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
+	if(isrobot(user))
+		if(!C.handcuffed)
+			var/turf/user_loc = user.loc
+			var/turf/C_loc = C.loc
+			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+			C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
+								"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
+			if(do_after(user, 30))
+				if(!C || C.handcuffed)
+					return
+				if(user_loc == user.loc && C_loc == C.loc)
+					C.handcuffed = new /obj/item/weapon/handcuffs(C)
+					C.update_inv_handcuffed(0)
+*/

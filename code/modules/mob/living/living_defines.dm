@@ -36,7 +36,12 @@
 	var/tod = null // Time of death
 	var/update_slimes = 1
 
+	var/on_fire = 0 //The "Are we on fire?" var
+	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
+
 	var/specialsauce = 0 //Has this person consumed enough special sauce? IF so they're a ticking time bomb of death.
 
 	var/implanting = 0 //Used for the mind-slave implant
 	var/silent = null 		//Can't talk. Value goes down every life proc.
+
+	var/locked_to_z = 0 // Locked to a Z-level if nonzero.

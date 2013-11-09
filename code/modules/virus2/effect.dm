@@ -327,6 +327,14 @@
 		if (prob(30))
 			mob.jitteriness += 10
 
+/datum/disease2/effect/drunk
+	name = "Glasgow Syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob << "<span class='notice'>You feel like you had one hell of a party!</span>"
+		if (mob.reagents.get_reagent_amount("ethanol") < 325)
+			mob.reagents.add_reagent("ethanol", 5*multiplier)
+
 ////////////////////////STAGE 1/////////////////////////////////
 
 /datum/disease2/effect/sneeze
@@ -335,8 +343,13 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*sneeze")
 		if (prob(50))
-			var/obj/effect/decal/cleanable/mucus/M = new(get_turf(mob))
-			M.virus2 = virus_copylist(mob.virus2)
+			var/obj/effect/decal/cleanable/mucus/M= locate(/obj/effect/decal/cleanable/mucus) in get_turf(mob)
+			if(M==null)
+				M = new(get_turf(mob))
+			else
+				if(M.dry)
+					M.dry=0
+			M.virus2 |= virus_copylist(mob.virus2)
 
 /datum/disease2/effect/gunck
 	name = "Flemmingtons"

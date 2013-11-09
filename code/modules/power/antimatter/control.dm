@@ -43,7 +43,8 @@
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
-		explosion(get_turf(src),8,12,18,12)
+		message_admins("AME explosion at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) - Last touched by [fingerprintslast]",0,1)
+		explosion(get_turf(src),8,10,12,15)
 		if(src) del(src)
 
 	if(update_shield_icons && !shield_icon_delay)
@@ -176,6 +177,7 @@
 			user.client.screen -= W
 		user.u_equip(W)
 		user.update_icons()
+		message_admins("AME loaded with fuel by [user.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"You load an [W.name].", \
 				"You hear a thunk.")
@@ -269,34 +271,31 @@
 	user.set_machine(src)
 
 	var/dat = ""
+	dat += "AntiMatter Control Panel<BR>"
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
+	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
+	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
+	dat += "<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\antimatter\control.dm:272: dat += "AntiMatter Control Panel<BR>"
-	dat += {"AntiMatter Control Panel<BR>
-		<A href='?src=\ref[src];close=1'>Close</A><BR>
-		<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>
-		<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>
-		Status: [(active?"Injecting":"Standby")] <BR>
-		<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>
-		Stability: [stability]%<BR>
-		Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability chec
-		Cores: [linked_cores.len]<BR><BR>
-		-Current Efficiency: [reported_core_efficiency]<BR>
-		-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>
-		Last Produced: [stored_power]<BR>
-		Fuel: "}
-	// END AUTOFIX
+	dat += "Stability: [stability]%<BR>"
+	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
+	dat += "Cores: [linked_cores.len]<BR><BR>"
+	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
+	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
+	dat += "Last Produced: [stored_power]<BR>"
+
+	dat += "Fuel: "
 	if(!fueljar)
 		dat += "<BR>No fuel receptacle detected."
 	else
+		dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
+		dat += "- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\antimatter\control.dm:290: dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
-		dat += {"<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>
-			- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>
-			- Injecting: [fuel_injection] units<BR>
-			- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"}
-		// END AUTOFIX
+		dat += "- Injecting: [fuel_injection] units<BR>"
+		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
+
+
 	user << browse(dat, "window=AMcontrol;size=420x500")
 	onclose(user, "AMcontrol")
 	return
@@ -317,12 +316,14 @@
 
 	if(href_list["togglestatus"])
 		toggle_power()
+		message_admins("AME toggled [active?"on":"off"] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 
 	if(href_list["refreshicons"])
 		update_shield_icons = 1
 
 	if(href_list["ejectjar"])
 		if(fueljar)
+			message_admins("AME fuel jar ejected by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			fueljar.loc = src.loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
@@ -330,10 +331,12 @@
 
 	if(href_list["strengthup"])
 		fuel_injection++
+		message_admins("AME injection strength increased to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 
 	if(href_list["strengthdown"])
 		fuel_injection--
 		if(fuel_injection < 0) fuel_injection = 0
+		message_admins("AME injection strength decreased to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 
 	if(href_list["refreshstability"])
 		check_core_stability()

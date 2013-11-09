@@ -125,7 +125,7 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
-						/obj/item/weapon/circuitboard/mecha/phazon/phase_array
+						/obj/item/mecha_parts/part/phazon_phase_array
 						),
 
 	"Robotic Upgrade Modules" = list(

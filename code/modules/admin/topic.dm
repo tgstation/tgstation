@@ -2065,6 +2065,12 @@
 				message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 				//makeAliens()
 				new /datum/event/alien_infestation
+			if("radiation")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","RAD")
+				message_admins("[key_name_admin(usr)] has started a radiation event", 1)
+				//makeAliens()
+				new /datum/event/radiation_storm
 			if("floorlava")
 				if(floorIsLava)
 					usr << "The floor is lava already."

@@ -17,10 +17,51 @@
 	var/item_quants = list()
 	var/ispowered = 1 //starts powered
 	var/isbroken = 0
+	var/opened = 0.0
 
-/obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/smartfridge/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
+/obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
 		return 1
+	else if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			src.opened = 0
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+			return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
 	return 0
 
 /obj/machinery/smartfridge/seeds

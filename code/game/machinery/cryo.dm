@@ -16,7 +16,24 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cryo
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
 	initialize_directions = dir
+
+/obj/machinery/atmospherics/unary/cryo_cell/Del()
+	go_out()
+	var/obj/item/weapon/reagent_containers/glass/B = beaker
+	if(beaker)
+		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
@@ -60,6 +77,20 @@
 	go_out()
 	return
 
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+
+	if(in_range(usr, src))
+		usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(O != beaker)
+				usr << O.name
+		for(var/mob/M in src)
+			if(M != occupant)
+				usr << M.name
+	else
+		usr << "<span class='notice'>Too far away to view contents.</span>"
+
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
 
@@ -69,18 +100,18 @@
   * ui_interact is currently defined for /atom/movable
   *
   * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")  
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
   * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
   *
   * @return nothing
   */
 /obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
-	if(user == occupant || user.stat)
+	if(user == occupant || (user.stat && !isobserver(user)))
 		return
 
 	// this is the data which will be sent to the ui
-	var/data[0]	
+	var/data[0]
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
 
@@ -116,7 +147,7 @@
 	else if(air_contents.temperature > 225)
 		data["cellTemperatureStatus"] = "average"
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0	
+	data["isBeakerLoaded"] = beaker ? 1 : 0
 	/* // Removing beaker contents list from front-end, replacing with a total remaining volume
 	var beakerContents[0]
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
@@ -131,12 +162,12 @@
 		if (beaker.reagents && beaker.reagents.reagent_list.len)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				data["beakerVolume"] += R.volume
-	
+
 	if (!ui) // no ui has been passed, so we'll search for one
 	{
 		ui = nanomanager.get_open_ui(user, src, ui_key)
-	}	
-	if (!ui) 
+	}
+	if (!ui)
 		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
 		// When the UI is first opened this is the data it will use
@@ -335,6 +366,7 @@
 //	M.metabslow = 1
 	add_fingerprint(usr)
 	update_icon()
+	M.ExtinguishMob()
 	return 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()

@@ -32,8 +32,14 @@
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
+	// This shit is apparently not even wired up.
 	var/brute_resist    // Physical damage reduction.
 	var/burn_resist     // Burn damage reduction.
+
+	// For grays
+	var/max_hurt_damage = 5 // Max melee damage dealt + 5 if hulk
+
+	var/default_mutations = list()
 
 	var/flags = 0       // Various specific features.
 
@@ -86,6 +92,25 @@
 	primitive = /mob/living/carbon/monkey/tajara
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+
+/*
+Placeholders for now - N3X
+*/
+/datum/species/grey
+	name = "Grey"
+	icobase = 'icons/mob/human_races/r_grey.dmi'
+	deform = 'icons/mob/human_races/r_def_grey.dmi'
+	language = "Galactic Standard"
+	attack_verb = "punch"
+	darksight = 5 // BOOSTED from 2
+	eyes = "grey_eyes_s"
+
+	max_hurt_damage = 3 // From 5 (for humans)
+	default_mutations=list(mRemotetalk) // TK is also another candidate, but TK is overpowered as fuck.
+
+	primitive = /mob/living/carbon/monkey // TODO
+
+	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
 
 /datum/species/skrell
 	name = "Skrell"

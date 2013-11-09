@@ -213,6 +213,44 @@ datum
 			color = "#0064C8" // rgb: 0, 100, 200
 			custom_metabolism = 0.01
 
+			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.name=="Grey")
+						if(!M) M = holder.my_atom
+						M.adjustToxLoss(1*REM)
+						M.take_organ_damage(0, 1*REM)
+				..()
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return
+
+				// Grays treat water like acid.
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.name=="Grey")
+						if(method == TOUCH)
+							if(H.wear_mask)
+								H << "\red Your mask protects you from the water!"
+								return
+
+							if(H.head)
+								H << "\red Your helmet protects you from the water!"
+								return
+							if(!M.unacidable)
+								if(prob(15) && volume >= 30)
+									var/datum/organ/external/affecting = H.get_organ("head")
+									if(affecting)
+										if(affecting.take_damage(25, 0))
+											H.UpdateDamageIcon()
+										H.status_flags |= DISFIGURED
+										H.emote("scream")
+								else
+									M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+						else
+							if(!M.unacidable)
+								M.take_organ_damage(min(15, volume * 2))
+
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
@@ -259,6 +297,15 @@ datum
 					if(!cube.wrapped)
 						cube.Expand()
 				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
 
 		lube
 			name = "Space Lube"
@@ -778,6 +825,13 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
+
+				if(ishuman(M))
+					var/mob/living/carbon/human/H=M
+					if(H.species.name=="Grey")
+						..()
+						return // Greys lurve dem some sacid
+
 				M.adjustToxLoss(1*REM)
 				M.take_organ_damage(0, 1*REM)
 				..()
@@ -821,6 +875,9 @@ datum
 					if(!M.unacidable)
 						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
 							var/mob/living/carbon/human/H = M
+							if(H.species.name=="Grey")
+								..()
+								return // Greys lurve dem some sacid
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
@@ -831,6 +888,11 @@ datum
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if(H.species.name=="Grey")
+								..()
+								return // Greys lurve dem some sacid
 						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
@@ -2100,6 +2162,11 @@ datum
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
 							victim.drop_item()
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(prob(5))
+					M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+				return
 
 		frostoil
 			name = "Frost Oil"

@@ -304,6 +304,15 @@ datum/design/chemmaster3000
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chemmaster3000
 
+datum/design/condimaster
+	name = "Circuit Design (CondiMaster)"
+	desc = "Allows for the cosntruction of circuit boards used to build CondiMasters"
+	id="condimaster"
+	req_tech = list ("engineering" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/condimaster
+
 datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
@@ -475,6 +484,23 @@ datum/design/aifixer
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aifixer
 
+datum/design/pipedispenser
+	name = "Circuit Design (Pipe Dispenser)"
+	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
+	id = "pipedispenser"
+	req_tech = list("programming" = 3, "materials" = 3,"engineering" = 2, "powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pipedispenser
+
+datum/design/pipedispenser/disposal
+	name = "Circuit Design (Disposal Pipe Dispenser)"
+	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
+	id = "pipedispenser"
+	req_tech = list("programming" = 3, "materials" = 3,"engineering" = 2, "powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pipedispenser/disposal
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -757,12 +783,12 @@ datum/design/phazon_peri
 datum/design/phazon_phase_array
 	name = "Phazon Phase Array"
 	desc = "Show physics who's boss."
-	id = "sflash"
+	id = "phazon_phasearray"
 	req_tech = list("bluespace" = 10, "programming" = 4)
 	build_type = MECHFAB
 	materials = list("$metal" = 5000, "$phazon" = 2000)
 	category = "Misc"
-	build_path = /obj/item/weapon/circuitboard/mecha/phazon/phase_array
+	build_path = /obj/item/mecha_parts/part/phazon_phase_array
 
 datum/design/gygax_main
 	name = "Circuit Design (\"Gygax\" Central Control module)"
@@ -1749,3 +1775,120 @@ datum/design/borg_syndicate_module
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
 	category = "Cyborg Upgrade Modules"
+
+/////////////////////////////////////////
+//////////Teleporter Machines////////////
+/////////////////////////////////////////
+datum/design/telehub
+	name = "Circuit Design (Teleporter Hub)"
+	desc = "Allows for the construction of circuit boards used to build a Teleporter Hub"
+	id = "telehub"
+	req_tech = list("programming" = 4, "engineering"=3, "bluespace" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telehub
+
+datum/design/telestation
+	name = "Circuit Design (Teleporter Station)"
+	desc = "Allows for the construction of circuit boards used to build a Teleporter Station."
+	id = "telestation"
+	req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telestation
+
+/////////////////////////////////////////
+///////////////Hospitality///////////////
+/////////////////////////////////////////
+
+datum/design/biogenerator
+	name = "Circuit Design (Biogenerator)"
+	desc = "Allows for the construction of circuit boards used to build a Biogenerator."
+	id = "biogenerator"
+	req_tech = list("programming" = 3,"engineering" = 2, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/biogenerator
+
+datum/design/seed_extractor
+	name = "Circuit Design (Seed Extractor)"
+	desc = "Allows for the construction of circuit boards used to build a Seed Extractor."
+	id = "seed_extractor"
+	req_tech = list("programming" = 3,"engineering" = 2, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/seed_extractor
+
+datum/design/microwave
+	name = "Circuit Design (Microwave)"
+	desc = "Allows for the construction of circuit boards used to build a Microwave."
+	id = "microwave"
+	req_tech = list("programming" = 3,"engineering" = 2,"magnets" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/microwave
+
+datum/design/reagentgrinder
+	name = "Circuit Design (All-In-One Grinder)"
+	desc = "Allows for the construction of circuit boards used to build an All-In-One Grinder."
+	id = "reagentgrinder"
+	req_tech = list("programming" = 3,"engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/reagentgrinder
+
+datum/design/smartfridge
+	name = "Circuit Design (SmartFridge)"
+	desc = "Allows for the construction of circuit boards used to build a smartfridge."
+	id = "smartfridge"
+	req_tech = list("programming" = 3,"engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge
+
+datum/design/hydroponics
+	name = "Circuit Design (Hydroponics Tray)"
+	desc = "Allows for the construction of circuit boards used to build a Hydroponics Tray."
+	id = "hydroponics"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/hydroponics
+
+datum/design/gibber
+	name = "Circuit Design (Gibber)"
+	desc = "Allows for the construction of circuit boards used to build a gibber."
+	id = "gibber"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/gibber
+
+datum/design/processor
+	name = "Circuit Design (Food Processor)"
+	desc = "Allows for the construction of circuit boards used to build a Food Processor."
+	id = "processor"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/processor
+
+/*
+datum/design/hydroseeds
+	name = "Circuit Design (MegaSeed Servitor)"
+	desc = "Allows for the construction of circuit boards used to build a MegaSeedServitor."
+	id = "hydroseeds"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/hydroseeds
+
+datum/design/hydronutrients
+	name = "Circuit Design (Nutrimax)"
+	desc = "Allows for the construction of circuit boards used to build a Nutrimax."
+	id = "hydronutrients"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/hydronutrients
+	*/

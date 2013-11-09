@@ -97,29 +97,30 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
-#define MUTANTRACE_LAYER		1		//TODO: make part of body?
-#define MUTATIONS_LAYER			2
-#define DAMAGE_LAYER			3
-#define UNIFORM_LAYER			4
-#define ID_LAYER				5
-#define SHOES_LAYER				6
-#define GLOVES_LAYER			7
-#define EARS_LAYER				8
-#define SUIT_LAYER				9
-#define GLASSES_LAYER			10
-#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		12
-#define BACK_LAYER				13
-#define HAIR_LAYER				14		//TODO: make part of head layer?
-#define FACEMASK_LAYER			15
-#define HEAD_LAYER				16
-#define HANDCUFF_LAYER			17
-#define LEGCUFF_LAYER			18
-#define L_HAND_LAYER			19
-#define R_HAND_LAYER			20
-#define TAIL_LAYER				21		//bs12 specific. this hack is probably gonna come back to haunt me
-#define TARGETED_LAYER			22		//BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS			22
+#define FIRE_LAYER				1		//If you're on fire (/tg/ shit)
+#define MUTANTRACE_LAYER		2		//TODO: make part of body?
+#define MUTATIONS_LAYER			3
+#define DAMAGE_LAYER			4
+#define UNIFORM_LAYER			5
+#define ID_LAYER				6
+#define SHOES_LAYER				7
+#define GLOVES_LAYER			8
+#define EARS_LAYER				9
+#define SUIT_LAYER				10
+#define GLASSES_LAYER			11
+#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		13
+#define BACK_LAYER				14
+#define HAIR_LAYER				15		//TODO: make part of head layer?
+#define FACEMASK_LAYER			16
+#define HEAD_LAYER				17
+#define HANDCUFF_LAYER			18
+#define LEGCUFF_LAYER			19
+#define L_HAND_LAYER			20
+#define R_HAND_LAYER			21
+#define TAIL_LAYER				22		//bs12 specific. this hack is probably gonna come back to haunt me
+#define TARGETED_LAYER			23		//BS12: Layer for the target overlay from weapon targeting system
+#define TOTAL_LAYERS			24
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -128,6 +129,21 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
 	var/icon/race_icon
 	var/icon/deform_icon
+
+// /tg/
+/mob/living/carbon/human/proc/apply_overlay(cache_index)
+	var/image/I = lying ? overlays_lying[cache_index] : overlays_standing[cache_index]
+	if(I)
+		overlays += I
+
+// /tg/
+/mob/living/carbon/human/proc/remove_overlay(cache_index)
+	if(overlays_lying[cache_index])
+		overlays -= overlays_lying[cache_index]
+		overlays_lying[cache_index] = null
+	if(overlays_standing[cache_index])
+		overlays -= overlays_standing[cache_index]
+		overlays_standing[cache_index] = null
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
@@ -213,8 +229,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	overlays_standing[DAMAGE_LAYER]	= standing_image
 	overlays_lying[DAMAGE_LAYER]	= lying_image
-
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(DAMAGE_LAYER)
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
@@ -375,7 +391,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	overlays_lying[HAIR_LAYER]		= image(face_lying)
 	overlays_standing[HAIR_LAYER]	= image(face_standing)
 
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(HAIR_LAYER)
 
 /mob/living/carbon/human/update_mutations(var/update_icons=1)
 	var/fat
@@ -426,7 +443,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[MUTATIONS_LAYER]		= null
 		overlays_standing[MUTATIONS_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(MUTATIONS_LAYER)
 
 
 /mob/living/carbon/human/proc/update_mutantrace(var/update_icons=1)
@@ -457,7 +475,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 		update_body(0)
 
 	update_hair(0)
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(MUTANTRACE_LAYER)
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted(var/update_icons=1)
@@ -469,7 +488,17 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if (!targeted_by)
 		overlays_lying[TARGETED_LAYER]		= null
 		overlays_standing[TARGETED_LAYER]	= null
-	if(update_icons)		update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(TARGETED_LAYER)
+
+/mob/living/carbon/human/update_fire()
+
+	remove_overlay(FIRE_LAYER)
+	if(on_fire)
+		overlays_lying[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"=-FIRE_LAYER)
+		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
+
+	apply_overlay(FIRE_LAYER)
 
 
 /* --------------------------------------- */
@@ -554,7 +583,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 					thing.loc = loc																//
 					thing.dropped(src)															//
 					thing.layer = initial(thing.layer)
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(UNIFORM_LAYER)
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
 	if(wear_id)
@@ -568,7 +598,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[ID_LAYER]	= null
 		overlays_standing[ID_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(ID_LAYER)
 
 /mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
 	if(gloves)
@@ -589,7 +620,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 		else
 			overlays_lying[GLOVES_LAYER]	= null
 			overlays_standing[GLOVES_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(GLOVES_LAYER)
 
 
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
@@ -602,7 +634,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[GLASSES_LAYER]		= null
 		overlays_standing[GLASSES_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(GLASSES_LAYER)
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
 	if(ears)
@@ -614,7 +647,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[EARS_LAYER]		= null
 		overlays_standing[EARS_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(EARS_LAYER)
 
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
@@ -631,7 +665,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[SHOES_LAYER]			= null
 		overlays_standing[SHOES_LAYER]		= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(SHOES_LAYER)
 
 /mob/living/carbon/human/update_inv_s_store(var/update_icons=1)
 	if(s_store)
@@ -647,7 +682,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[SUIT_STORE_LAYER]	= null
 		overlays_standing[SUIT_STORE_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(SUIT_STORE_LAYER)
 
 
 /mob/living/carbon/human/update_inv_head(var/update_icons=1)
@@ -672,7 +708,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[HEAD_LAYER]		= null
 		overlays_standing[HEAD_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_inv_belt(var/update_icons=1)
 	if(belt)
@@ -688,7 +725,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[BELT_LAYER]		= null
 		overlays_standing[BELT_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(BELT_LAYER)
 
 
 /mob/living/carbon/human/update_inv_wear_suit(var/update_icons=1)
@@ -733,13 +771,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 		overlays_standing[SUIT_LAYER]	= null
 
 		update_tail_showing(0)
-
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(SUIT_LAYER)
 
 /mob/living/carbon/human/update_inv_pockets(var/update_icons=1)
 	if(l_store)			l_store.screen_loc = ui_storage1	//TODO
 	if(r_store)			r_store.screen_loc = ui_storage2	//TODO
-	if(update_icons)	update_icons()
+	if(update_icons)   update_icons()
 
 
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
@@ -758,7 +796,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[FACEMASK_LAYER]		= null
 		overlays_standing[FACEMASK_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(FACEMASK_LAYER)
 
 
 /mob/living/carbon/human/update_inv_back(var/update_icons=1)
@@ -772,7 +811,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[BACK_LAYER]		= null
 		overlays_standing[BACK_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(BACK_LAYER)
 
 
 /mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
@@ -792,7 +832,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[HANDCUFF_LAYER]		= null
 		overlays_standing[HANDCUFF_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(HANDCUFF_LAYER)
 
 /mob/living/carbon/human/update_inv_legcuffed(var/update_icons=1)
 	if(legcuffed)
@@ -806,7 +847,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_lying[LEGCUFF_LAYER]		= null
 		overlays_standing[LEGCUFF_LAYER]	= null
-	if(update_icons)   update_icons()
+	//if(update_icons)   update_icons()
+	apply_overlay(LEGCUFF_LAYER)
 
 
 /mob/living/carbon/human/update_inv_r_hand(var/update_icons=1)
@@ -890,6 +932,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	return face_lying_image
 
 //Human Overlays Indexes/////////
+#undef FIRE_LAYER
 #undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER

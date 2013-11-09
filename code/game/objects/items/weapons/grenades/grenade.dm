@@ -88,6 +88,11 @@
 	if(T)
 		T.hotspot_expose(700,125)
 
+/obj/item/weapon/grenade/proc/update_mob()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.drop_from_inventory(src)
+
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(isscrewdriver(W))
