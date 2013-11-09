@@ -84,6 +84,23 @@
 	</html>
 	"}
 
+/obj/item/weapon/book/manual/telescience
+	name = "Teleportation Science - Bluespace for dummies!"
+	icon_state = "book7"
+	author = "University of Bluespace"
+	title = "Teleportation Science - Bluespace for dummies!"
+
+	dat = {"
+	<html><head>
+	</head>
+
+	<body>
+	<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Telescience&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+	</body>
+
+	</html>
+	"}
+
 /obj/item/weapon/book/manual/engineering_hacking
 	name = "Hacking"
 	icon_state ="bookHacking"

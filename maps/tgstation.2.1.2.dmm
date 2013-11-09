@@ -4736,7 +4736,7 @@
 "bNd" = (/obj/structure/closet,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bNe" = (/obj/structure/rack{dir = 1},/obj/item/clothing/suit/fire/firefighter,/obj/item/weapon/tank/oxygen,/obj/item/clothing/mask/gas,/obj/item/weapon/extinguisher,/obj/item/clothing/head/hardhat/red,/obj/item/clothing/glasses/meson,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bNf" = (/obj/item/device/radio/beacon,/turf/simulated/floor/engine,/area/toxins/telesci)
-"bNg" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/obj/item/weapon/clipboard,/turf/simulated/floor{icon_state = "white"},/area/toxins/telesci)
+"bNg" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/obj/item/weapon/clipboard,/obj/item/weapon/book/manual/telescience,/turf/simulated/floor{icon_state = "white"},/area/toxins/telesci)
 "bNh" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bNi" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/poddoor/preopen{id = "telelab"; name = "test chamber blast door"},/turf/simulated/floor/plating,/area/toxins/telesci)
 "bNj" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "white"},/area/toxins/telesci)
