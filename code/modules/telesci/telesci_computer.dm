@@ -8,17 +8,24 @@
 
 	// VARIABLES //
 	var/teles_left	// How many teleports left until it becomes uncalibrated
-	var/x_off	// X offset
-	var/y_off	// Y offset
-	var/x_co	// X coordinate
-	var/y_co	// Y coordinate
-	var/z_co	// Z coordinate
+	var/datum/projectile_data/last_tele_data = null
+	var/z_co = 1
+	var/rotation_off
+	var/power_off
+
+	var/rotation
+	var/angle
+	var/power = 25
+
+	// Based on the power used
+	var/teleport_cooldown = 0
+	var/list/power_options = list(50, 200, 500) //
 
 /obj/machinery/computer/telescience/New()
 	..()
 	teles_left = rand(8,12)
-	x_off = rand(-10,10)
-	y_off = rand(-10,10)
+	rotation_off = rand(-10,10)
+	power_off = rand(-10,10)
 	initialize()
 
 /obj/machinery/computer/telescience/initialize()
@@ -51,14 +58,37 @@
 /obj/machinery/computer/telescience/interact(mob/user)
 
 	var/t = "<div class='statusDisplay'>[temp_msg]</div>"
-	t += "<A href='?src=\ref[src];setx=1'>Set X</A>"
-	t += "<A href='?src=\ref[src];sety=1'>Set Y</A>"
-	t += "<A href='?src=\ref[src];setz=1'>Set Z</A>"
-	t += "<BR><BR>Current set coordinates:"
-	t += "([x_co ? x_co : "null"], [y_co ? y_co : "null"], [z_co ? z_co : "null"])"
+	t += "<A href='?src=\ref[src];setrotation=1'>Set Rotation</A>"
+	t += "<div class='statusDisplay'>[rotation ? rotation : "NULL"]°</div>"
+	t += "<A href='?src=\ref[src];setangle=1'>Set Angle</A>:"
+	t += "<div class='statusDisplay'>[angle ? angle : "NULL"]°</div>"
+	t += "<span class='linkOn'>Set Power</span>:"
+	t += "<div class='statusDisplay'>"
+
+	for(var/pwr in power_options)
+		if(power == pwr)
+			t += "<span class='linkOn'>[pwr]</span>"
+			continue
+		t += "<A href='?src=\ref[src];setpower=[pwr]'>[pwr]</A>"
+
+	t += "</div>"
+	t += "<A href='?src=\ref[src];setz=1'>Set Z Level</A>:"
+	t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
+
 	t += "<BR><BR><A href='?src=\ref[src];send=1'>Send</A>"
 	t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
 	t += "<BR><BR><A href='?src=\ref[src];recal=1'>Recalibrate</A>"
+
+	// Information about the last teleport
+	t += "<BR><div class='statusDisplay'>"
+	if(!last_tele_data)
+		t += "No teleport data found."
+	else
+		t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])"
+		t += "Distance: [last_tele_data.distance]ft<BR>"
+		t += "Time: [last_tele_data.time]secs<BR>"
+	t += "</div>"
+
 	var/datum/browser/popup = new(user, "telesci", name)
 	popup.set_content(t)
 	popup.open()
@@ -79,11 +109,15 @@
 	return
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
-	var/trueX = (x_co + x_off)
-	var/trueY = (y_co + y_off)
-	trueX = Clamp(trueX, 1, world.maxx)
-	trueY = Clamp(trueY, 1, world.maxy)
+
 	if(telepad)
+		var/truePower = Clamp(power - power_off, 0, 1000)
+		var/trueRotation = SimplifyDegrees(rotation - rotation_off)
+		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, angle, truePower)
+
+		var/trueX = proj_data.dest_x
+		var/trueY = proj_data.dest_y
+
 		var/turf/target = locate(trueX, trueY, z_co)
 		var/area/A = get_area(target)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -104,20 +138,21 @@
 		for(var/atom/movable/ROI in source)
 			if(!ismob(ROI) && ROI.anchored) continue
 			do_teleport(ROI, dest, 0)
-		return
-	return
+		last_tele_data = proj_data
+
+// TO DO: add projectile_trajectory to telesci
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
-	if(x_co == null || y_co == null || z_co == null)
-		temp_msg = "Error: set coordinates."
+	if(rotation == null || angle == null || z_co == null)
+		temp_msg = "Error: set a angle, rotation and z level."
 		return
-	if(x_co < 1 || x_co > 255)
+	if(rotation < 0 || rotation > 360)
 		telefail()
-		temp_msg = "Error: X is less than 1 or greater than 255."
+		temp_msg = "Error: Rotation is less than 0 or greater than 360."
 		return
-	if(y_co < 1 || y_co > 255)
+	if(angle < 1 || angle > 90)
 		telefail()
-		temp_msg = "Error: Y is less than 1 or greater than 255."
+		temp_msg = "Error: Angle is less than 1 or greater than 90."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 7)
 		telefail()
@@ -134,17 +169,22 @@
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(..())
 		return
-	if(href_list["setx"])
-		var/new_x = input("Please input desired X coordinate.", name, x_co) as num
+	if(href_list["setrotation"])
+		var/new_rot = input("Please input desired rotation in degrees.", name, rotation) as num
 		if(..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		x_co = Clamp(new_x, 1, 9999)
+		rotation = Clamp(new_rot, 1, 9999)
 
-	if(href_list["sety"])
-		var/new_y = input("Please input desired Y coordinate.", name, y_co) as num
+	if(href_list["setangle"])
+		var/new_angle = input("Please input desired angle in degrees.", name, angle) as num
 		if(..())
 			return
-		y_co = Clamp(new_y, 1, 9999)
+		angle = Clamp(new_angle, 1, 9999)
+
+	if(href_list["setpower"])
+		var/pwr = href_list["setpower"]
+		if(pwr in power_options)
+			power = pwr
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired Z coordinate.", name, z_co) as num
@@ -162,8 +202,8 @@
 
 	if(href_list["recal"])
 		teles_left = rand(9,12)
-		x_off = rand(-10,10)
-		y_off = rand(-10,10)
+		rotation_off = rand(-10,10)
+		power_off = rand(-10,10)
 		sparks()
 		temp_msg = "Calibration successful."
 
