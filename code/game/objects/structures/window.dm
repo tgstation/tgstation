@@ -170,6 +170,16 @@
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
+		/var/glass_type
+		if(reinf)
+			glass_type = /obj/item/stack/sheet/rglass
+		else
+			glass_type = /obj/item/stack/sheet/glass
+		new glass_type(user.loc)
+		if(is_fulltile())//fulltiles drop two panes
+			new glass_type(user.loc)
+		del(src)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			hit(I.force)
