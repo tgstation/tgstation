@@ -146,6 +146,9 @@
 		s["revision"] = revdata.revision
 		s["revision_date"] = revdata.date
 		s["admins"] = admins
+		s["gamestate"] = 1
+		if(ticker)
+			s["gamestate"] = ticker.current_state
 
 		return list2params(s)
 
