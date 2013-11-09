@@ -1,6 +1,6 @@
 /obj/item/weapon/watertank
-	name = "S.U.N.S.H.I.N.E. water sprayer"
-	desc = "A watertank backpack with nozzle to water plants."
+	name = "backpack water tank"
+	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
