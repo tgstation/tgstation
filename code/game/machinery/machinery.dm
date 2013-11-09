@@ -207,8 +207,11 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || user.stat)
+	if(user.lying /*|| user.stat*/) // Ghost read-only
 		return 1
+
+	if(istype(usr,/mob/dead/observer))
+		return 0
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
