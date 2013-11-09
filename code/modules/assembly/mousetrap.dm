@@ -3,7 +3,6 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	m_amt = 100
-	w_amt = 10
 	origin_tech = "combat=1"
 	var/armed = 0
 
@@ -40,7 +39,7 @@
 	proc/triggered(mob/target as mob, var/type = "feet")
 		if(!armed)
 			return
-		var/datum/limb/affecting = null
+		var/obj/item/organ/limb/affecting = null
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			switch(type)
@@ -97,7 +96,7 @@
 		..()
 
 
-	HasEntered(var/atom/movable/AM as mob|obj)
+	Crossed(var/atom/movable/AM as mob|obj)
 		if(armed)
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM

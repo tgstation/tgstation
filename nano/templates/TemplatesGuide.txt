@@ -1,0 +1,13 @@
+--------------------------------
+Nano UI Template Guide
+--------------------------------
+
+Nano UI uses templates, which are comprised of HTML and a markup syntax. The markup allows you 
+to easily add conditionals (if statements), loops (for loops) and custom formatting (using helpers).
+
+Templates are stored in the /nano/templates folder and the file extension is .tmpl.
+
+This guide is a work in progress. However the templating system is "JSRender", and documentation for it's
+markup syntax can be found here: http://www.jsviews.com/#jsrtags
+
+

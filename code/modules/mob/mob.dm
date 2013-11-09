@@ -38,6 +38,8 @@ var/next_mob_id = 0
 
 	if(!client)	return
 
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+
 	if (type)
 		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
 			if (!( alt ))
@@ -81,11 +83,6 @@ var/next_mob_id = 0
 	for(var/mob/M in viewers(src))
 		M.show_message( message, 1, blind_message, 2)
 
-
-//This is awful, still.
-/mob/attackby(obj/item/I, mob/user)
-	if(I && istype(I))	//The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
-		I.attack(src, user)
 
 /mob/proc/movement_delay()
 	return 0
@@ -246,8 +243,10 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
-	set category = "IC"
+	set category = "Object"
 	set src = usr
+
+	if(istype(loc,/obj/mecha)) return
 
 	if(hand)
 		var/obj/item/W = l_hand
@@ -259,6 +258,8 @@ var/list/slot_equipment_priority = list( \
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand(0)
+	if(next_move < world.time)
+		next_move = world.time + 2
 	return
 
 /*
@@ -380,7 +381,7 @@ var/list/slot_equipment_priority = list( \
 	set category = "OOC"
 	var/is_admin = 0
 
-	if(client.holder && (client.holder.rights & R_ADMIN))
+	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "\blue You must be observing to use this!"
@@ -477,7 +478,7 @@ var/list/slot_equipment_priority = list( \
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(!usr.stat && usr.canmove && !usr.restrained() && Adjacent(usr))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
@@ -487,28 +488,30 @@ var/list/slot_equipment_priority = list( \
 								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
 				what.add_fingerprint(usr)
 				if(do_mob(usr, src, STRIP_DELAY))
-					if(what)
+					if(what && Adjacent(usr))
 						u_equip(what)
 			else
 				what = usr.get_active_hand()
 				if(what && what.mob_can_equip(src, slot, 1))
 					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
 					if(do_mob(usr, src, STRIP_DELAY * 0.5))
-						if(what)
+						if(what && Adjacent(usr))
 							usr.u_equip(what)
 							equip_to_slot_if_possible(what, slot, 0, 1)
 
-	if(usr.machine == src && in_range(src, usr))
-		show_inv(usr)
+	if(usr.machine == src)
+		if(Adjacent(usr))
+			show_inv(usr)
+		else
+			usr << browse(null,"window=mob\ref[src]")
 
 
 /mob/MouseDrop(mob/M)
 	..()
 	if(M != usr)	return
 	if(usr == src)	return
-	if(!in_range(usr, src))	return
+	if(!Adjacent(usr))	return
 	if(istype(M, /mob/living/silicon/ai))	return
-	if(LinkBlocked(usr.loc, loc))			return
 	show_inv(usr)
 
 
@@ -644,17 +647,27 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t#[air_master.active_turfs.len]")
+				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
 				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
 				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
+				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
 
+	if(listed_turf && client)
+		if(!TurfAdjacent(listed_turf))
+			listed_turf = null
+		else
+			statpanel(listed_turf.name, null, listed_turf)
+			for(var/atom/A in listed_turf)
+				if(A.invisibility > see_invisible)
+					continue
+				statpanel(listed_turf.name, null, A)
 
 	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)

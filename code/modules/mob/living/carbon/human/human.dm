@@ -15,11 +15,12 @@
 
 /mob/living/carbon/human/New()
 	create_reagents(1000)
-
+	verbs += /mob/living/proc/mob_sleep
+	verbs += /mob/living/proc/lay_down
 	//initialise organs
-	organs = newlist(/datum/limb/chest, /datum/limb/head, /datum/limb/l_arm,
-					 /datum/limb/r_arm, /datum/limb/r_leg, /datum/limb/l_leg)
-	for(var/datum/limb/O in organs)
+	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
+					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
+	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
@@ -185,7 +186,7 @@
 				Paralyse(10)
 
 	var/update = 0
-	for(var/datum/limb/temp in organs)
+	for(var/obj/item/organ/limb/temp in organs)
 		switch(temp.name)
 			if("head")
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
@@ -206,7 +207,7 @@
 	if(stat == 2)	return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(20,30), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
@@ -215,7 +216,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/datum/limb/affecting = get_organ(pick("chest", "chest", "chest", "head"))
+		var/obj/item/organ/limb/affecting = get_organ(pick("chest", "chest", "chest", "head"))
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
@@ -225,23 +226,6 @@
 				update_damage_overlays(0)
 		updatehealth()
 	return
-
-
-/mob/living/carbon/human/hand_p(mob/M as mob)
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
-	var/armor = run_armor_check(affecting, "melee")
-	apply_damage(rand(1,2), BRUTE, affecting, armor)
-	if(armor >= 2)	return
-
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			var/mob/living/carbon/human/H = src
-			src = null
-			src = H.monkeyize()
-			contract_disease(D,1,0)
-	return
-
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
@@ -256,7 +240,7 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
 		if(armor >= 2)	return
@@ -281,7 +265,7 @@
 
 		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-		var/datum/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
@@ -323,15 +307,6 @@
 		updatehealth()
 
 	return
-
-
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
-	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
-	return 0
-
 
 
 /mob/living/carbon/human/var/co2overloadtime = null
@@ -388,76 +363,10 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
-
-//gets assignment from ID or ID inside PDA or PDA itself
-//Useful when player do something with computers
-/mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
-	var/obj/item/weapon/card/id/id = get_idcard()
-	if(id)
-		. = id.assignment
-	else
-		var/obj/item/device/pda/pda = wear_id
-		if(istype(pda))
-			. = pda.ownjob
-		else
-			return if_no_id
-	if(!.)
-		return if_no_job
-
-//gets name from ID or ID inside PDA or PDA itself
-//Useful when player do something with computers
-/mob/living/carbon/human/proc/get_authentification_name(var/if_no_id = "Unknown")
-	var/obj/item/weapon/card/id/id = get_idcard()
-	if(id)
-		return id.registered_name
-	var/obj/item/device/pda/pda = wear_id
-	if(istype(pda))
-		return pda.owner
-	return if_no_id
-
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
-/mob/living/carbon/human/proc/get_visible_name()
-	var/face_name = get_face_name("")
-	var/id_name = get_id_name("")
-	if(face_name)
-		if(id_name && (id_name != face_name))
-			return "[face_name] (as [id_name])"
-		return face_name
-	if(id_name)
-		return id_name
-	return "Unknown"
-
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
-/mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
-		return if_no_face
-	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face		//Likewise for hats
-	var/datum/limb/O = get_organ("head")
-	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
-		return if_no_face
-	return real_name
-
-//gets name from ID or PDA itself, ID inside PDA doesn't matter
-//Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
-	var/obj/item/weapon/storage/wallet/wallet = wear_id
-	var/obj/item/device/pda/pda = wear_id
-	var/obj/item/weapon/card/id/id = wear_id
-	if(istype(wallet))		id = wallet.front_id
-	if(istype(id))			. = id.registered_name
-	else if(istype(pda))	. = pda.owner
-	if(!.) 					. = if_no_id	//to prevent null-names making the mob unclickable
-	return
-
-//gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/proc/get_idcard()
-	if(wear_id)
-		return wear_id.GetID()
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
@@ -510,7 +419,8 @@
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-
+				if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+					return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/allowed_access = 0
 				var/obj/item/clothing/glasses/G = H.glasses
@@ -529,7 +439,7 @@
 
 
 				var/modified = 0
-				var/perpname = H.get_face_name(H.get_id_name(""))
+				var/perpname = get_face_name(get_id_name(""))
 				if(perpname)
 					var/datum/data/record/R = find_record("name", perpname, data_core.security)
 					if(R)
@@ -545,51 +455,6 @@
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."
-
-
-///eyecheck()
-///Returns a number between -1 to 2
-/mob/living/carbon/human/eyecheck()
-	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
-		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
-		number += HFP.flash_protect
-	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
-		var/obj/item/clothing/glasses/GFP = src.glasses
-		number += GFP.flash_protect
-	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-	return number
-
-///tintcheck()
-///Checks eye covering items for visually impairing tinting, such as welding masks
-///Checked in life.dm. 0 & 1 = no impairment, 2 = welding mask overlay, 3 = You can see jack, but you can't see shit.
-/mob/living/carbon/human/tintcheck()
-	var/tinted = 0
-	if(istype(src.head, /obj/item/clothing/head))
-		var/obj/item/clothing/head/HT = src.head
-		tinted += HT.tint
-	if(istype(src.glasses, /obj/item/clothing/glasses))
-		var/obj/item/clothing/glasses/GT = src.glasses
-		tinted += GT.tint
-	if(istype(src.wear_mask, /obj/item/clothing/mask))
-		var/obj/item/clothing/mask/MT = src.wear_mask
-		tinted += MT.tint
-	return tinted
-
-/mob/living/carbon/human/IsAdvancedToolUser()
-	return 1//Humans can use guns and such
-
-
-/mob/living/carbon/human/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
-		return 1
-
-	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
-		return 1
-
-	return 0
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)

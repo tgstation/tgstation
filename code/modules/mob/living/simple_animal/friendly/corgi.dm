@@ -66,7 +66,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -99,7 +99,7 @@
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 
 		var/add_to = href_list["add_inv"]
@@ -163,7 +163,7 @@
 		return
 
 	if(inventory_head)
-		usr << "\red You can't put more than one hat on [src]!"
+		if(usr)	usr << "\red You can't put more than one hat on [src]!"
 		return
 	if(!item_to_add)
 		usr.visible_message("\blue [usr] pets [src]","\blue You rest your hand on [src]'s head for a moment.")
@@ -278,10 +278,11 @@
 			valid = 1
 
 	if(valid)
-		usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
-			"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
-			"You hear a friendly-sounding bark.")
-		usr.drop_item()
+		if(usr)
+			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
+				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
+				"You hear a friendly-sounding bark.")
+			usr.drop_item()
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		regenerate_icons()
@@ -501,3 +502,17 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
+
+/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	switch(M.a_intent)
+		if("help")	wuv(1,M)
+		if("harm")	wuv(-1,M)
+
+/mob/living/simple_animal/corgi/proc/wuv(change, mob/M)
+	if(change)
+		if(change > 0)
+			if(M)	flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+			emote("yaps happily")
+		else
+			emote("growls")

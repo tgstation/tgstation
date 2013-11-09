@@ -9,7 +9,7 @@
 	damage_absorption = list("brute"=1.2,"fire"=1.5,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
 	max_temperature = 25000
 	infra_luminosity = 5
-	operation_req_access = list(access_clown)
+	operation_req_access = list(access_theatre)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
@@ -129,7 +129,7 @@
 		return
 	var/output = "<b>Honk-ON-Systems:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "[selected==MT?"<b id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+		output += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
 	output += "</div>"
 	return output
 

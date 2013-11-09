@@ -24,8 +24,8 @@
 				return
 
 			if("guns")
-				new /obj/item/weapon/gun/projectile(src)
-				new /obj/item/ammo_magazine/a357(src)
+				new /obj/item/weapon/gun/projectile/revolver(src)
+				new /obj/item/ammo_box/a357(src)
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/weapon/plastique(src)
 				return
@@ -48,6 +48,7 @@
 				new /obj/item/weapon/aiModule/syndicate(src)
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/device/encryptionkey/binary(src)
+				new /obj/item/weapon/aiModule/toyAI(src)
 				return
 
 			if("lordsingulo")
@@ -58,7 +59,7 @@
 				return
 
 			if("smoothoperator")
-				new /obj/item/weapon/gun/projectile/pistol(src)
+				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
 				new /obj/item/weapon/silencer(src)
 				new /obj/item/weapon/soap/syndie(src)
 				new /obj/item/weapon/storage/bag/trash(src)
@@ -120,6 +121,18 @@
 	O.update_icon()
 	return
 
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	name = "Adrenal Implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenal/New()
+	..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/adrenalin(O)
+	O.update_icon()
+	return
+
+
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "Space Suit and Helmet"
 
@@ -127,4 +140,14 @@
 	..()
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/emp
+	name = "EMP kit"
+
+/obj/item/weapon/storage/box/syndie_kit/emp/New()
+	..()
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/implanter/emp/(src)
+	new /obj/item/device/flashlight/emp/(src)
 	return

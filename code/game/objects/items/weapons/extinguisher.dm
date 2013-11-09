@@ -5,12 +5,12 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 10
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
-	force = 10.0
+	force = 10
 	m_amt = 90
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	var/max_water = 50
@@ -24,7 +24,7 @@
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | USEDELAY | TABLEPASS
+	flags = FPRINT | TABLEPASS
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
@@ -119,6 +119,9 @@
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm)
+						if(isliving(atm)) //For extinguishing mobs on fire
+							var/mob/living/M = atm
+							M.ExtinguishMob()
 					if(W.loc == my_target) break
 					sleep(2)
 

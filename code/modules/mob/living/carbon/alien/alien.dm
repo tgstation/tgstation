@@ -1,6 +1,6 @@
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 /mob/living/carbon/alien
 	name = "alien"
@@ -33,12 +33,15 @@
 
 
 /mob/living/carbon/alien/New()
+	verbs += /mob/living/proc/mob_sleep
+	verbs += /mob/living/proc/lay_down
 	internal_organs += new /obj/item/organ/brain/alien
 
 	..()
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
+	hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='magenta'>[storedPlasma]</font></div>"
 	return
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
@@ -83,14 +86,15 @@
 	// Aliens are now weak to fire.
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
-	if(loc_temp > bodytemperature)
-		//Place is hotter than we are
-		var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-		if(thermal_protection < 1)
-			bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-	else
-		bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-	//	bodytemperature -= max((loc_temp - bodytemperature / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+	if(!on_fire) // If you're on fire, ignore local air temperature
+		if(loc_temp > bodytemperature)
+			//Place is hotter than we are
+			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(thermal_protection < 1)
+				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+		else
+			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+		//	bodytemperature -= max((loc_temp - bodytemperature / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
@@ -100,12 +104,16 @@
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
 				fire_alert = max(fire_alert, 2)
-			if(400 to 1000)
+			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 				fire_alert = max(fire_alert, 2)
-			if(1000 to INFINITY)
-				apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-				fire_alert = max(fire_alert, 2)
+			if(460 to INFINITY)
+				if(on_fire)
+					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					fire_alert = max(fire_alert, 2)
+				else
+					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+					fire_alert = max(fire_alert, 2)
 	return
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
@@ -138,6 +146,12 @@
 				radiation -= 3
 				adjustToxLoss(3)
 
+/mob/living/carbon/alien/handle_fire()//Aliens on fire code
+	if(..())
+		return
+	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
+	return
+
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
@@ -168,6 +182,9 @@
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
+
+/mob/living/carbon/alien/getTrail()
+	return "xltrails"
 
 /*----------------------------------------
 Proc: AddInfectionImages()

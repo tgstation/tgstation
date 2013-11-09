@@ -61,7 +61,9 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					culcount++
-			if(culcount>=3)
+			if(user.loc==src.loc)
+				return fizzle()
+			if(culcount>=1)
 				user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
 				user.visible_message("\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
 				"\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
@@ -74,7 +76,6 @@ var/list/sacrificed = list()
 				return
 
 			return fizzle()
-
 
 /////////////////////////////////////////SECOND RUNE
 
@@ -112,7 +113,21 @@ var/list/sacrificed = list()
 					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-					return 1
+					//picking which word to use
+					if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
+						var/convert_word
+						for(var/i=1, i<=3, i++)
+							convert_word = pick(ticker.mode.grantwords)
+							if(convert_word in usr.mind.cult_words)
+								if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
+							else
+								break
+						if(!convert_word)
+							usr << "\red This Convert was unworthy of knowledge of the other side!"
+						else
+							usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
+							ticker.mode.grant_runeword(usr, convert_word)
+						return 1
 				else
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"
@@ -264,7 +279,7 @@ var/list/sacrificed = list()
 				usr << "\red You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie."
 				return fizzle()
 
-			for(var/datum/limb/affecting in corpse_to_raise.organs)
+			for(var/obj/item/organ/limb/affecting in corpse_to_raise.organs)
 				affecting.heal_damage(1000, 1000)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)
@@ -530,7 +545,6 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
 					H.current << "\red \b [input]"
-			del(src)
 			return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE
@@ -566,25 +580,25 @@ var/list/sacrificed = list()
 							else
 								H.gib()
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+							usr << "\red He is pleased!"
+							sac_grant_word()
+							sac_grant_word()
+							sac_grant_word()	//Little reward for completing the objective
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 					else
 						if(cultsinrange.len >= 3)
 							if(H.stat !=2)
-								if(prob(80))
-									usr << "\red The Geometer of Blood accepts this sacrifice."
-									ticker.mode:grant_runeword(usr)
-								else
-									usr << "\red The Geometer of blood accepts this sacrifice."
-									usr << "\red However, this soul was not enough to gain His favor."
+								usr << "\red The Geometer of Blood accepts this sacrifice."
+								sac_grant_word()
 								if(isrobot(H))
 									H.dust()//To prevent the MMI from remaining
 								else
 									H.gib()
 							else
-								if(prob(40))
+								if(prob(60))
 									usr << "\red The Geometer of blood accepts this sacrifice."
-									ticker.mode:grant_runeword(usr)
+									sac_grant_word()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -596,9 +610,9 @@ var/list/sacrificed = list()
 							if(H.stat !=2)
 								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
 							else
-								if(prob(40))
+								if(prob(60))
 									usr << "\red The Geometer of blood accepts this sacrifice."
-									ticker.mode:grant_runeword(usr)
+									sac_grant_word()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -609,20 +623,16 @@ var/list/sacrificed = list()
 				else
 					if(cultsinrange.len >= 3)
 						if(H.stat !=2)
-							if(prob(80))
-								usr << "\red The Geometer of Blood accepts this sacrifice."
-								ticker.mode:grant_runeword(usr)
-							else
-								usr << "\red The Geometer of blood accepts this sacrifice."
-								usr << "\red However, this soul was not enough to gain His favor."
+							usr << "\red The Geometer of Blood accepts this sacrifice."
+							sac_grant_word()
 							if(isrobot(H))
 								H.dust()//To prevent the MMI from remaining
 							else
 								H.gib()
 						else
-							if(prob(40))
+							if(prob(60))
 								usr << "\red The Geometer of blood accepts this sacrifice."
-								ticker.mode:grant_runeword(usr)
+								sac_grant_word()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -634,9 +644,9 @@ var/list/sacrificed = list()
 						if(H.stat !=2)
 							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
 						else
-							if(prob(40))
+							if(prob(60))
 								usr << "\red The Geometer of blood accepts this sacrifice."
-								ticker.mode:grant_runeword(usr)
+								sac_grant_word()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -650,19 +660,23 @@ var/list/sacrificed = list()
 						if(cultsinrange.len >= 3)
 							sacrificed += M.mind
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+							usr << "\red He is pleased!"
+							sac_grant_word()
+							sac_grant_word()
+							sac_grant_word()	//Little reward for completing the objective
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 							continue
 					else
-						if(prob(20))
+						if(prob(30))
 							usr << "\red The Geometer of Blood accepts your meager sacrifice."
-							ticker.mode:grant_runeword(usr)
+							sac_grant_word()
 						else
 							usr << "\red The Geometer of blood accepts this sacrifice."
 							usr << "\red However, a mere monkey is not enough to satisfy Him."
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
-					if(prob(20))
+					if(prob(30))
 						ticker.mode.grant_runeword(usr)
 				M.gib()
 /*			for(var/mob/living/carbon/alien/A)
@@ -672,7 +686,7 @@ var/list/sacrificed = list()
 				if (ticker.mode.name == "cult")
 					if(prob(75))
 						usr << "\red The Geometer of Blood accepts your exotic sacrifice."
-						ticker.mode:grant_runeword(usr)
+						sac_grant_word()
 					else
 						usr << "\red The Geometer of Blood accepts your exotic sacrifice."
 						usr << "\red However, this alien is not enough to gain His favor."
@@ -680,6 +694,14 @@ var/list/sacrificed = list()
 					usr << "\red The Geometer of Blood accepts your exotic sacrifice."
 				return
 			return fizzle() */
+
+		sac_grant_word()	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
+			if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
+				var/convert_word
+				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
+				convert_word = pick(pick_list)
+				ticker.mode.grant_runeword(usr, convert_word)
+
 
 /////////////////////////////////////////SIXTEENTH RUNE
 
@@ -750,7 +772,7 @@ var/list/sacrificed = list()
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					users+=C
-			if(users.len>=3)
+			if(users.len>=1)
 				var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 				if(!cultist)
 					return fizzle()
@@ -1034,3 +1056,4 @@ var/list/sacrificed = list()
 
 			del(src)
 			return
+

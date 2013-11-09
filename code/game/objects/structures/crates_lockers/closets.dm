@@ -9,6 +9,8 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/locked = 0
+	var/broken = 0
 	var/large = 1
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
@@ -175,6 +177,8 @@
 				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(istype(W,/obj/item/tk_grab))
+			return 0
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -190,10 +194,7 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item()
-
-		if(W)
-			W.loc = src.loc
+		user.drop_item(src)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -258,6 +259,13 @@
 	if(!src.toggle())
 		usr << "<span class='notice'>It won't budge!</span>"
 
+// tk grab then use on self
+/obj/structure/closet/attack_self_tk(mob/user as mob)
+	src.add_fingerprint(user)
+
+	if(!src.toggle())
+		usr << "<span class='notice'>It won't budge!</span>"
+
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
 	set category = "Object"
@@ -279,3 +287,12 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
+
+// Objects that try to exit a locker by stepping were doing so successfully,
+// and due to an oversight in turf/Enter() were going through walls.  That
+// should be independently resolved, but this is also an interesting twist.
+/obj/structure/closet/Exit(atom/movable/AM)
+	open()
+	if(AM.loc == src) return 0
+	return 1
+

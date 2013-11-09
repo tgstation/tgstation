@@ -2,7 +2,6 @@
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
-	var/w_amt = 0	// waster amounts
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
@@ -42,8 +41,11 @@
 	//		null if object handles breathing logic for lifeform
 	//		datum/air_group to tell lifeform to process using that breath return
 	//DEFAULT: Take air from turf to give to have mob process
+
 	if(breath_request>0)
-		return remove_air(breath_request)
+		var/datum/gas_mixture/environment = return_air()
+		var/breath_percentage = BREATH_VOLUME / environment.return_volume()
+		return remove_air(environment.total_moles() * breath_percentage)
 	else
 		return null
 

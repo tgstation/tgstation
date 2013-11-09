@@ -21,10 +21,13 @@
 		icon_state = mineralType
 		name = "[mineralType] door"
 		air_update_turf(1)
+		return
 
 	Del()
+		density = 0
 		air_update_turf(1)
 		..()
+		return
 
 	Move()
 		air_update_turf(1)
@@ -215,7 +218,7 @@
 			TemperatureAct(exposed_temperature)
 
 	proc/TemperatureAct(temperature)
-		atmos_spawn_air("fire", 500)
+		atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
 		hardness = 0
 		CheckHardness()
 

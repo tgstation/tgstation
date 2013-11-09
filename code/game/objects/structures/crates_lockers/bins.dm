@@ -37,7 +37,7 @@
 			if(T.can_be_inserted(O, 1))
 				O.loc = T
 		T.update_icon()
-		animate()
+		do_animate()
 	else if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -73,7 +73,7 @@
 	. = ..()
 	update_icon()
 
-/obj/structure/closet/crate/bin/proc/animate()
+/obj/structure/closet/crate/bin/proc/do_animate()
 	playsound(src.loc, sound_effect_open, 15, 1, -3)
 	flick(animation, src)
 	spawn(13)
@@ -83,7 +83,7 @@
 /obj/structure/closet/crate/bin/insert(var/obj/item/I, var/include_mobs = 0, var/animate = 0)
 	. = ..(I, include_mobs)
 	if(animate && .)
-		animate()
+		do_animate()
 
 /obj/structure/closet/crate/bin/place(var/mob/user, var/obj/item/I)
 	if(contents.len >= storage_capacity)

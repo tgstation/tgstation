@@ -27,7 +27,7 @@
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
 	var/datum/data/record/active3 = null //Security
-	var/obj/machinery/power/monitor/powmonitor = null // Power Monitor
+	var/obj/machinery/computer/monitor/powmonitor = null // Power Monitor
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
 	var/message2
@@ -300,7 +300,7 @@ Code:
 
 
 
-				for(var/obj/machinery/power/monitor/pMon in world)
+				for(var/obj/machinery/computer/monitor/pMon in world)
 					if(!(pMon.stat & (NOPOWER|BROKEN)) )
 						powercount++
 						powermonitors += pMon
@@ -312,7 +312,7 @@ Code:
 
 					menu += "<FONT SIZE=-1>"
 					var/count = 0
-					for(var/obj/machinery/power/monitor/pMon in powermonitors)
+					for(var/obj/machinery/computer/monitor/pMon in powermonitors)
 						count++
 						menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'> [pMon] </a><BR>"
 
@@ -575,17 +575,17 @@ Code:
 					else
 						menu += "[ldat]"
 
-					menu += "<h4>Located Mop Buckets:</h4>"
+					menu += "<h4>Located Janitorial Cart:</h4>"
 
 					ldat = null
-					for (var/obj/structure/mopbucket/B in world)
+					for (var/obj/structure/janitorialcart/B in world)
 						var/turf/bl = get_turf(B)
 
 						if(bl)
 							if (bl.z != cl.z)
 								continue
 							var/direction = get_dir(src, B)
-							ldat += "Bucket - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+							ldat += "Cart - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"

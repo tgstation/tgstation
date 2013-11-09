@@ -96,6 +96,9 @@
 		if(reinf) new /obj/item/stack/rods(loc)
 		del(src)
 
+/obj/structure/window/attack_tk(mob/user as mob)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
 /obj/structure/window/attack_hand(mob/user as mob)
 	if(!can_be_reached(user))
@@ -283,7 +286,7 @@
 	air_update_turf(1)
 	playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
-	..()
+	loc = null //garbage collect
 
 
 /obj/structure/window/Move()

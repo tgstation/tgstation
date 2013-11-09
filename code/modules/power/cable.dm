@@ -34,35 +34,35 @@
 	var/d1 = 0
 	var/d2 = 1
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
-	var/color = "red"
+	var/cable_color = "red"
 	var/obj/structure/powerswitch/power_switch
 
 /obj/structure/cable/yellow
-	color = "yellow"
+	cable_color = "yellow"
 	icon = 'icons/obj/power_cond/power_cond_yellow.dmi'
 
 /obj/structure/cable/green
-	color = "green"
+	cable_color = "green"
 	icon = 'icons/obj/power_cond/power_cond_green.dmi'
 
 /obj/structure/cable/blue
-	color = "blue"
+	cable_color = "blue"
 	icon = 'icons/obj/power_cond/power_cond_blue.dmi'
 
 /obj/structure/cable/pink
-	color = "pink"
+	cable_color = "pink"
 	icon = 'icons/obj/power_cond/power_cond_pink.dmi'
 
 /obj/structure/cable/orange
-	color = "orange"
+	cable_color = "orange"
 	icon = 'icons/obj/power_cond/power_cond_orange.dmi'
 
 /obj/structure/cable/cyan
-	color = "cyan"
+	cable_color = "cyan"
 	icon = 'icons/obj/power_cond/power_cond_cyan.dmi'
 
 /obj/structure/cable/white
-	color = "white"
+	cable_color = "white"
 	icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
 // the power cable object
@@ -109,10 +109,7 @@
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
-/obj/structure/cable/attack_hand(mob/user)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
+/obj/structure/cable/attack_tk(mob/user)
 	return
 
 /obj/structure/cable/attackby(obj/item/W, mob/user)
@@ -131,28 +128,17 @@
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/weapon/cable_coil(T, 2, color)
+			new/obj/item/weapon/cable_coil(T, 2, cable_color)
 		else
-			new/obj/item/weapon/cable_coil(T, 1, color)
+			new/obj/item/weapon/cable_coil(T, 1, cable_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		var/message = "A wire has been cut"
-		var/atom/A = user
-		if(A)
-			var/turf/Z = get_turf(A)
-			var/area/my_area = get_area(Z)
-			message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-			message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
-			var/mob/M = get(A, /mob)
-			if(M)
-				message += " - Cut By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-		message_admins(message, 0, 1)
 		del(src)
-
-		return	// not needed, but for clarity
+		return
 
 
 	else if(istype(W, /obj/item/weapon/cable_coil))
@@ -196,12 +182,12 @@
 			del(src)
 		if(2.0)
 			if (prob(50))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, cable_color)
 				del(src)
 
 		if(3.0)
 			if (prob(25))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, cable_color)
 				del(src)
 	return
 
@@ -214,7 +200,7 @@
 	icon_state = "coil_red"
 	item_state = "coil_red"
 	var/amount = MAXCOIL
-	color = "red"
+	item_color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
 	w_class = 2.0
@@ -222,7 +208,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
+	flags = TABLEPASS | FPRINT | CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
@@ -238,22 +224,22 @@
 	..()
 	src.amount = length
 	if (param_color)
-		color = param_color
+		item_color = param_color
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
 
 /obj/item/weapon/cable_coil/update_icon()
-	if (!color)
-		color = pick("red", "yellow", "blue", "green")
+	if (!item_color)
+		item_color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
-		icon_state = "coil_[color]1"
+		icon_state = "coil_[item_color]1"
 		name = "cable piece"
 	else if(amount == 2)
-		icon_state = "coil_[color]2"
+		icon_state = "coil_[item_color]2"
 		name = "cable piece"
 	else
-		icon_state = "coil_[color]"
+		icon_state = "coil_[item_color]"
 		name = "cable coil"
 
 /obj/item/weapon/cable_coil/examine()
@@ -277,7 +263,7 @@
 			usr << "\red You need at least 15 lengths to make restraints!"
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
-		B.icon_state = "cuff_[color]"
+		B.icon_state = "cuff_[item_color]"
 		usr << "\blue You wind some cable together to make some restraints."
 		src.use(15)
 	else
@@ -288,7 +274,7 @@
 	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
 		src.amount--
-		new/obj/item/weapon/cable_coil(user.loc, 1,color)
+		new/obj/item/weapon/cable_coil(user.loc, 1,item_color)
 		user << "You cut a piece off the cable coil."
 		src.update_icon()
 		return
@@ -319,7 +305,7 @@
 		//handle mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.drop_item(src)
+			M.u_equip(src)
 		del(src)
 	else
 		amount -= used
@@ -363,7 +349,7 @@
 
 		var/obj/structure/cable/C = new(F)
 
-		C.cableColor(color)
+		C.cableColor(item_color)
 
 		C.d1 = 0
 		C.d2 = dirn
@@ -381,7 +367,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 1, C.color)
+				new/obj/item/weapon/cable_coil(C.loc, 1, C.cable_color)
 				del(C)
 		//src.laying = 1
 		//last = C
@@ -426,7 +412,7 @@
 					return
 
 			var/obj/structure/cable/NC = new(U)
-			NC.cableColor(color)
+			NC.cableColor(item_color)
 
 			NC.d1 = 0
 			NC.d2 = fdirn
@@ -441,7 +427,7 @@
 			use(1)
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
+					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.cable_color)
 					del(NC)
 
 			return
@@ -464,7 +450,7 @@
 				return
 
 
-		C.cableColor(color)
+		C.cableColor(item_color)
 
 		C.d1 = nd1
 		C.d2 = nd2
@@ -480,7 +466,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 2, C.color)
+				new/obj/item/weapon/cable_coil(C.loc, 2, C.cable_color)
 				del(C)
 
 		return
@@ -556,7 +542,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	var/color_n = "red"
 	if(colorC)
 		color_n = colorC
-	color = color_n
+	cable_color = color_n
 	switch(colorC)
 		if("red")
 			icon = 'icons/obj/power_cond/power_cond_red.dmi'
@@ -586,35 +572,35 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	update_icon()
 
 /obj/item/weapon/cable_coil/yellow
-	color = "yellow"
+	item_color = "yellow"
 	icon_state = "coil_yellow"
 
 /obj/item/weapon/cable_coil/blue
-	color = "blue"
+	item_color = "blue"
 	icon_state = "coil_blue"
 	item_state = "coil_blue"
 
 /obj/item/weapon/cable_coil/green
-	color = "green"
+	item_color = "green"
 	icon_state = "coil_green"
 
 /obj/item/weapon/cable_coil/pink
-	color = "pink"
+	item_color = "pink"
 	icon_state = "coil_pink"
 
 /obj/item/weapon/cable_coil/orange
-	color = "orange"
+	item_color = "orange"
 	icon_state = "coil_orange"
 
 /obj/item/weapon/cable_coil/cyan
-	color = "cyan"
+	item_color = "cyan"
 	icon_state = "coil_cyan"
 
 /obj/item/weapon/cable_coil/white
-	color = "white"
+	item_color = "white"
 	icon_state = "coil_white"
 
 /obj/item/weapon/cable_coil/random/New()
-	color = pick("red","yellow","green","blue","pink")
-	icon_state = "coil_[color]"
+	item_color = pick("red","yellow","green","blue","pink")
+	icon_state = "coil_[item_color]"
 	..()

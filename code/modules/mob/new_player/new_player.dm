@@ -312,10 +312,10 @@
 					position_class = "commandPosition"
 				dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 		dat += "</div></div>"
-		
+
 		// Removing the old window method but leaving it here for reference
 		//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
-		
+
 		// Added the new browser window method
 		var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
 		popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
@@ -330,7 +330,7 @@
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
 
-		if(config.force_random_names || appearance_isbanned(new_character))
+		if(config.force_random_names || appearance_isbanned(src))
 			client.prefs.random_character()
 			client.prefs.real_name = random_name(gender)
 		client.prefs.copy_to(new_character)
@@ -339,9 +339,6 @@
 
 		if(mind)
 			mind.active = 0					//we wish to transfer the key manually
-			if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-				new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
-				new_character.rename_self("clown")
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 		new_character.name = real_name

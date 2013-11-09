@@ -27,22 +27,36 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/New()
 	..()
-	spawn(5)
-		trunk = locate() in src.loc
-		if(!trunk)
-			mode = 0
-			flush = 0
-		else
-			trunk.linked = src	// link the pipe trunk to self
 
-		air_contents = new/datum/gas_mixture()
-		//gas.volume = 1.05 * CELLSTANDARD
-		update()
+	trunk_check()
+
+	air_contents = new/datum/gas_mixture()
+	//gas.volume = 1.05 * CELLSTANDARD
+	update()
+
+/obj/machinery/disposal/proc/trunk_check()
+	trunk = locate() in src.loc
+	if(!trunk)
+		mode = 0
+		flush = 0
+	else
+		mode = initial(mode)
+		flush = initial(flush)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/Del()
 	for(var/atom/movable/AM in contents)
 		AM.loc = src.loc
 	..()
+
+/obj/machinery/disposal/initialize()
+	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
+	var/atom/L = loc
+	var/datum/gas_mixture/env = new
+	env.copy_from(L.return_air())
+	var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
+	air_contents.merge(removed)
+	trunk_check()
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
@@ -247,7 +261,7 @@
 	else
 		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
 
-	var/per = 100* air_contents.return_pressure() / (SEND_PRESSURE)
+	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
 
 	dat += "Pressure: [round(per, 1)]%<BR></body>"
 
@@ -440,7 +454,7 @@
 /obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
-		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
 			I.loc = src

@@ -5,39 +5,7 @@ bullet_act
 ex_act
 meteor_act
 emp_act
-
 */
-
-/mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			var/reflectchance = 40 - round(P.damage/3)
-			if(!(def_zone in list("chest", "groin")))
-				reflectchance /= 2
-			if(prob(reflectchance))
-				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>", \
-								"<span class='userdanger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
-
-				// Find a turf near or on the original location to bounce to
-				if(P.starting)
-					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/turf/curloc = get_turf(src)
-
-					// redirect the projectile
-					P.original = locate(new_x, new_y, P.z)
-					P.starting = curloc
-					P.current = curloc
-					P.firer = src
-					P.yo = new_y - curloc.y
-					P.xo = new_x - curloc.x
-
-				return -1 // complete projectile permutation
-
-	if(check_shields(P.damage, "the [P.name]"))
-		P.on_hit(src, 2)
-		return 2
-	return (..(P , def_zone))
 
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
@@ -47,18 +15,18 @@ emp_act
 	if(def_zone)
 		if(isorgan(def_zone))
 			return checkarmor(def_zone, type)
-		var/datum/limb/affecting = get_organ(ran_zone(def_zone))
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
 		return checkarmor(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/datum/limb/organ in organs)
+	for(var/obj/item/organ/limb/organ in organs)
 		armorval += checkarmor(organ, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(var/datum/limb/def_zone, var/type)
+/mob/living/carbon/human/proc/checkarmor(var/obj/item/organ/limb/def_zone, var/type)
 	if(!type)	return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
@@ -70,6 +38,49 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
+/mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
+	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+							"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+			// Find a turf near or on the original location to bounce to
+			if(P.starting)
+				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/turf/curloc = get_turf(src)
+
+				// redirect the projectile
+				P.original = locate(new_x, new_y, P.z)
+				P.starting = curloc
+				P.current = curloc
+				P.firer = src
+				P.yo = new_y - curloc.y
+				P.xo = new_x - curloc.x
+
+			return -1 // complete projectile permutation
+
+	if(check_shields(P.damage, "the [P.name]"))
+		P.on_hit(src, 2)
+		return 2
+	return (..(P , def_zone))
+
+/mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
+	if(wear_suit && istype(wear_suit, /obj/item/))
+		var/obj/item/I = wear_suit
+		if(I.IsReflect(def_zone) == 1)
+			return 1
+	if(l_hand && istype(l_hand, /obj/item/))
+		var/obj/item/I = l_hand
+		if(I.IsReflect(def_zone) == 1)
+			return 1
+	if(r_hand && istype(r_hand, /obj/item/))
+		var/obj/item/I = r_hand
+		if(I.IsReflect(def_zone) == 1)
+			return 1
+	return 0
+
+
+//End Here
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
@@ -109,7 +120,7 @@ emp_act
 /mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
-	var/datum/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 
 	var/hit_area = parse_zone(affecting.name)
 

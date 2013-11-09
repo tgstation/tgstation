@@ -50,7 +50,7 @@
 	density = 0
 	explosion_resistance = 0
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	operating = 0
 
 	return 1
@@ -66,12 +66,13 @@
 
 	operating = 1
 	flick("closing", src)
+	crush()
 	icon_state = "closed"
 	density = 1
 	explosion_resistance = initial(explosion_resistance)
 	SetOpacity(1)
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	sleep(10)
 
 	operating = 0

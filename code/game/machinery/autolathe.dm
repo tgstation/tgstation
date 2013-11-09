@@ -34,7 +34,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
-		new /obj/item/ammo_magazine/c38(), \
+		new /obj/item/ammo_box/c38(), \
 		new /obj/item/device/taperecorder/empty(), \
 		new /obj/item/device/tape(), \
 		new /obj/item/device/assembly/igniter(), \
@@ -43,6 +43,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/radio/off(), \
 		new /obj/item/device/assembly/infra(), \
 		new /obj/item/device/assembly/timer(), \
+		new /obj/item/device/assembly/voice(), \
 		new /obj/item/weapon/light/tube(), \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/weapon/camera_assembly(), \
@@ -54,7 +55,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/device/radio/electropack(), \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/weapon/handcuffs(), \
-		new /obj/item/ammo_magazine/a357(), \
+		new /obj/item/ammo_box/a357(), \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		/* new /obj/item/weapon/shield/riot(), */ \

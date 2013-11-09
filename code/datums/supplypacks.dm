@@ -57,7 +57,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 		if(!path)	continue
 		var/atom/movable/AM = new path()
 		manifest += "<li>[AM.name]</li>"
-		AM.loc = null	//just to make sure they're deleted by the garbage collector
+		del AM	//just to make sure they're deleted, no longer garbage collected, as there are way to many objects in crates that have other references.
 	manifest += "</ul>"
 
 
@@ -247,9 +247,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/security/armory/ballistic
 	name = "Combat Shotguns crate"
-	contains = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat,
-					/obj/item/weapon/gun/projectile/shotgun/pump/combat,
-					/obj/item/weapon/gun/projectile/shotgun/pump/combat)
+	contains = list(/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/gun/projectile/shotgun/combat)
 	cost = 20
 	containername = "combat shotgun crate"
 
@@ -295,14 +295,37 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername = "chemical implant crate"
 
+/datum/supply_packs/security/armory/exileimp
+	name = "Exile implants crate"
+	contains = list (/obj/item/weapon/storage/box/exileimp)
+	cost = 30
+	containername = "exile implant crate"
+
 /datum/supply_packs/security/securitybarriers
-	name = "Security Barriers"
+	name = "Security barriers"
 	contains = list(/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier)
 	cost = 20
 	containername = "security barriers crate"
+
+/datum/supply_packs/security/securityclothes
+	name = "Security clothing crate"
+	contains = list(/obj/item/clothing/under/rank/security/navyblue,
+					/obj/item/clothing/under/rank/security/navyblue,
+					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/head/beret/sec/navyofficer,
+					/obj/item/clothing/head/beret/sec/navyofficer,
+					/obj/item/clothing/under/rank/warden/navyblue,
+					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/head/beret/sec/navywarden,
+					/obj/item/clothing/under/rank/head_of_security/navyblue,
+					/obj/item/clothing/suit/security/hos,
+					/obj/item/clothing/head/beret/sec/navyhos)
+	cost = 30
+	containername = "security clothing crate"
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -405,8 +428,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/engine/field_gen
 	name = "Field Generator crate"
-	contains = list(/obj/machinery/field_generator,
-					/obj/machinery/field_generator)
+	contains = list(/obj/machinery/field/generator,
+					/obj/machinery/field/generator)
 	cost = 10
 	containername = "field generator crate"
 
@@ -641,27 +664,36 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/organic/cow
 	name = "Cow Crate"
 	cost = 30
-	containertype = /obj/structure/largecrate/cow
+	containertype = /obj/structure/closet/critter/cow
 	containername = "cow crate"
 
 /datum/supply_packs/organic/goat
 	name = "Goat Crate"
 	cost = 25
-	containertype = /obj/structure/largecrate/goat
+	containertype = /obj/structure/closet/critter/goat
 	containername = "goat crate"
 
 /datum/supply_packs/organic/chicken
 	name = "Chicken Crate"
 	cost = 20
-	containertype = /obj/structure/largecrate/chick
+	containertype = /obj/structure/closet/critter/chick
 	containername = "chicken crate"
 
-/datum/supply_packs/organic/lisa
+/datum/supply_packs/organic/corgi
 	name = "Corgi Crate"
-	contains = list()
 	cost = 50
-	containertype = /obj/structure/largecrate/lisa
+	containertype = /obj/structure/closet/critter/corgi
 	containername = "corgi crate"
+/datum/supply_packs/organic/cat
+	name = "Cat crate"
+	cost = 40
+	containertype = /obj/structure/closet/critter/cat
+	containername = "cat crate"
+/datum/supply_packs/organic/pug
+	name = "Pug crate"
+	cost = 50
+	containertype = /obj/structure/closet/critter/pug
+	containername = "pug crate"
 
 ////// hippy gear
 
@@ -842,8 +874,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "janitorial supplies"
 
 /datum/supply_packs/misc/janitor/janicart
-	name = "Janitorial Cart crate"
-	contains = list(/obj/structure/janitorialcart)
+	name = "Janitorial Cart and Galoshes crate"
+	contains = list(/obj/structure/janitorialcart,
+					/obj/item/clothing/shoes/galoshes)
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "janitorial cart crate"
@@ -927,10 +960,3 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
-
-/datum/supply_packs/pug
-	name = "Pug Crate"
-	contains = list()
-	cost = 50
-	containertype = /obj/structure/largecrate/pug
-	containername = "pug crate"

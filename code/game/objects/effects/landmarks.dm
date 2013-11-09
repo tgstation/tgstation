@@ -109,13 +109,20 @@
 /obj/effect/landmark/costume/nyangirl/New()
 	new /obj/item/clothing/under/schoolgirl(src.loc)
 	new /obj/item/clothing/head/kitty(src.loc)
+	if (prob(50))
+		new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
+	else
+		new /obj/item/clothing/mask/muzzle/gag(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/maid/New()
 	new /obj/item/clothing/under/blackskirt(src.loc)
 	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
 	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
+	if (prob(50))
+		new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
+	else
+		new /obj/item/clothing/mask/muzzle/gag(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/butler/New()
@@ -151,6 +158,7 @@
 /obj/effect/landmark/costume/plaguedoctor/New()
 	new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(src.loc)
 	new /obj/item/clothing/head/plaguedoctorhat(src.loc)
+	new /obj/item/clothing/mask/gas/plaguedoctor(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/nightowl/New()

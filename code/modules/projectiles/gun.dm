@@ -1,10 +1,10 @@
 /obj/item/weapon/gun
 	name = "gun"
-	desc = "Its a gun. It's pretty terrible, though."
+	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_class = 3.0
@@ -15,16 +15,13 @@
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 
-	var/fire_sound = 'sound/weapons/Gunshot.ogg'
+	var/fire_sound = "gunshot"
 	var/obj/item/projectile/in_chamber = null
-	var/caliber = ""
 	var/silenced = 0
 	var/recoil = 0
-	var/ejectshell = 1
 	var/clumsy_check = 1
 
-
-	proc/load_into_chamber()
+	proc/process_chambered()
 		return 0
 
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
@@ -35,6 +32,9 @@
 		proj.silenced = silenced
 		return
 
+	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
+		user << "<span class='warning'>*click*</span>"
+		return
 
 	emp_act(severity)
 		for(var/obj/O in contents)
@@ -42,7 +42,7 @@
 
 
 	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
-		if(flag)	//we're placing gun on a table or in backpack
+		if(flag)	//It's adjacent, is the user, or is on the user's person
 			return
 
 		//Exclude lasertag guns from the CLUMSY check.
@@ -50,7 +50,7 @@
 			if(istype(user, /mob/living))
 				var/mob/living/M = user
 				if ((CLUMSY in M.mutations) && prob(40))
-					M << "<span class='danger'>You shoot yourself in the foot with the [src]!</span>"
+					M << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
 					afterattack(user, user)
 					M.drop_item()
 					return
@@ -78,9 +78,8 @@
 
 		if(!special_check(user))
 			return
-		if(!load_into_chamber())
-			user << "<span class='warning'>*click*</span>"
-			return
+		if(!process_chambered())
+			shoot_with_empty_chamber(user)
 
 		if(!in_chamber)
 			return
@@ -100,7 +99,7 @@
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 		prepare_shot(in_chamber)				//Set the projectile's properties
-		
+
 
 
 		if(targloc == curloc)			//Fire the projectile
@@ -108,7 +107,7 @@
 			del(in_chamber)
 			update_icon()
 			return
-		in_chamber.original = target		
+		in_chamber.original = target
 		in_chamber.loc = get_turf(user)
 		in_chamber.starting = get_turf(user)
 		in_chamber.current = curloc

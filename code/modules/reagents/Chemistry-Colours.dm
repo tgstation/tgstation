@@ -30,7 +30,6 @@
 			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
 
 			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-
 	return finalcolor
 
 // This isn't a perfect color mixing system, the more reagents that are inside,

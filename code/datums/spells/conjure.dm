@@ -30,6 +30,9 @@
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
 			if(ispath(summoned_object_type,/turf))
+				if(istype(get_turf(usr),/turf/simulated/shuttle))
+					usr << "\red You can't build things on shuttles!"
+					break
 				var/turf/O = spawn_place
 				var/N = summoned_object_type
 				O.ChangeTurf(N)

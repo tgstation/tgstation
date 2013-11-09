@@ -7,6 +7,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
+	antag_flag = BE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
@@ -39,15 +40,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 
 /datum/game_mode/changeling/announce()
-	world << "<B>The current game mode is - Changeling!</B>"
-	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
+	world << "<b>The current game mode is - Changeling!</b>"
+	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
 
 /datum/game_mode/changeling/pre_setup()
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
-
-	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
 	var/num_changelings = 1
 
@@ -56,16 +55,16 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
-	for(var/datum/mind/player in possible_changelings)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
-				possible_changelings -= player
+				antag_candidates -= player
 
-	if(possible_changelings.len>0)
+	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)
-			if(!possible_changelings.len) break
-			var/datum/mind/changeling = pick(possible_changelings)
-			possible_changelings -= changeling
+			if(!antag_candidates.len) break
+			var/datum/mind/changeling = pick(antag_candidates)
+			antag_candidates -= changeling
 			changelings += changeling
 			modePlayer += changelings
 		return 1
@@ -132,9 +131,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
-		changeling.current << "<B>\red You are a changeling!</B>"
+		changeling.current << "<b>\red You are a changeling!</b>"
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings.</b>"
-	changeling.current << "<B>You must complete the following tasks:</B>"
+	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)
 		if (changeling.current.mind.assigned_role == "Clown")
@@ -143,7 +142,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
-		changeling.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		changeling.current << "<b>Objective #[obj_count]</b>: [objective.explanation_text]"
 		obj_count++
 	return
 
@@ -171,18 +170,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)
-		var/text = "<FONT size = 2><B>The changelings were:</B></FONT>"
+		var/text = "<br><font size=3><b>The changelings were:</b></font>"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
 
-			text += "<br>[changeling.key] was [changeling.name] ("
+			text += "<br><b>[changeling.key]</b> was <b>[changeling.name]</b> ("
 			if(changeling.current)
 				if(changeling.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(changeling.current.real_name != changeling.name)
-					text += " as [changeling.current.real_name]"
+					text += " as <b>[changeling.current.real_name]</b>"
 			else
 				text += "body destroyed"
 				changelingwin = 0
@@ -196,20 +195,21 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				var/count = 1
 				for(var/datum/objective/objective in changeling.objectives)
 					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
 						feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						feedback_add_details("changeling_objective","[objective.type]|FAIL")
 						changelingwin = 0
 					count++
 
 			if(changelingwin)
-				text += "<br><font color='green'><B>The changeling was successful!</B></font>"
+				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
 				feedback_add_details("changeling_success","SUCCESS")
 			else
-				text += "<br><font color='red'><B>The changeling has failed.</B></font>"
+				text += "<br><font color='red'><b>The changeling has failed.</b></font>"
 				feedback_add_details("changeling_success","FAIL")
+			text += "<br>"
 
 		world << text
 

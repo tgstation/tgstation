@@ -93,15 +93,16 @@
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
+	flags = FPRINT | NOBLUDGEON
 	w_class = 3.0
 	var/amount = 25.0
 
 
-	afterattack(var/obj/target as obj, mob/user as mob)
+	afterattack(var/obj/target as obj, mob/user as mob, proximity)
+		if(!proximity) return
 		if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 			return
-		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
-		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
+		if(istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
 		|| istype(target, /obj/item/weapon/evidencebag) || istype(target, /obj/structure/closet/body_bag))
 			return
 		if(target.anchored)
@@ -124,6 +125,7 @@
 				var/i = round(O.w_class)
 				if(i in list(1,2,3,4,5))
 					P.icon_state = "deliverycrate[i]"
+					P.w_class = i
 				P.add_fingerprint(usr)
 				O.add_fingerprint(usr)
 				add_fingerprint(usr)
@@ -229,7 +231,7 @@
 		return
 
 	Bumped(var/atom/movable/AM) //Go straight into the chute
-		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
+		if(istype(AM, /obj/item/projectile))	return
 		switch(dir)
 			if(NORTH)
 				if(AM.loc.y != loc.y+1) return

@@ -402,6 +402,8 @@ client
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return
+	if(!check_rights(R_VAREDIT))
+		return
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
 

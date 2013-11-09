@@ -266,6 +266,12 @@ proc/isInSight(var/atom/A, var/atom/B)
 		else
 			return get_step(start, EAST)
 
+/proc/try_move_adjacent(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	for(var/direction in cardinal)
+		if(AM.Move(get_step(T, direction)))
+			break
+
 /proc/get_mob_by_key(var/key)
 	for(var/mob/M in mob_list)
 		if(M.ckey == lowertext(key))
@@ -298,3 +304,25 @@ proc/isInSight(var/atom/A, var/atom/B)
 		spawn(delay)
 			for(var/client/C in group)
 				C.screen -= O
+
+/proc/flick_overlay(image/I, list/show_to, duration)
+	for(var/client/C in show_to)
+		C.images += I
+	sleep(duration)
+	for(var/client/C in show_to)
+		C.images -= I
+
+/proc/get_active_player_count()
+	// Get active players who are playing in the round
+	var/active_players = 0
+	for(var/i = 1; i <= player_list.len; i++)
+		var/mob/M = player_list[i]
+		if(M && M.client)
+			if(istype(M, /mob/new_player)) // exclude people in the lobby
+				continue
+			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
+				var/mob/dead/observer/O = M
+				if(O.started_as_observer) // Exclude people who started as observers
+					continue
+			active_players++
+	return active_players

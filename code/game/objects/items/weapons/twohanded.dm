@@ -3,6 +3,7 @@
  * 		Twohanded
  *		Fireaxe
  *		Double-Bladed Energy Swords
+ *		Spears
  */
 
 /*##################################################################
@@ -12,6 +13,9 @@
 //Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
+
+
+
 
 /*
  * Twohanded
@@ -103,6 +107,14 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	del(src)
 
+/obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+	var/mob/user = loc
+	if(!istype(user)) return 0
+	var/obj/item/I = user.get_active_hand()
+	if(I == src) I = user.get_inactive_hand()
+	if(!I) return 0
+	return I.IsShield()
+
 
 /*
  * Fireaxe
@@ -115,15 +127,15 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
-	force_wielded = 18
+	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	..()
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+	if(!proximity) return
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
@@ -150,20 +162,22 @@
 	throw_range = 5
 	w_class = 2.0
 	force_unwielded = 3
-	force_wielded = 30
+	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
-	color = "green"
+	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/hacked = 0
+	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
-	color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
-		icon_state = "dualsaber[color][wielded]"
+		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
@@ -187,13 +201,42 @@
 	else
 		return 0
 
+/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues
+	wielded = 1
+	var/mob/living/M = loc
+	if(istype(loc, /mob/living))
+		if (HULK in M.mutations)
+			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
+	force = force_wielded
+	name = "[initial(name)] (Wielded)"
+	update_icon()
+
+/obj/item/weapon/twohanded/dualsaber/IsReflect()
+	if(wielded)
+		var/mob/living/M = loc
+		if(istype(loc, /mob/living))
+			if (HULK in M.mutations)
+				return
+			return 1
+
 /obj/item/weapon/twohanded/dualsaber/green
 	New()
-		color = "green"
+		item_color = "green"
 
 /obj/item/weapon/twohanded/dualsaber/red
 	New()
-		color = "red"
+		item_color = "red"
+
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/device/multitool))
+		if(hacked == 0)
+			hacked = 1
+			user << "<span class='warning'>2XRNBW_ENGAGE</span>"
+			item_color = "rainbow"
+			update_icon()
+		else
+			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
 
 
 //spears
@@ -205,7 +248,7 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 13
+	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -214,3 +257,4 @@
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 	return
+
