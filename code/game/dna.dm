@@ -354,6 +354,28 @@
 	if(open)	return close()
 	else		return open()
 
+/obj/machinery/dna_scannernew/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2
+	if(open || !locked)	//Open and unlocked, no need to escape
+		open = 1
+		return
+	user.next_move = world.time + 100
+	user.last_special = world.time + 100
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	for(var/mob/O in viewers(src))
+		O << "<span class='warning'>You hear a metallic creaking from [src]!</span>"
+
+	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+		if(!user || user.stat != CONSCIOUS || user.loc != src || open || !locked)
+			return
+
+		locked = 0
+		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+
+		open()
+
 /obj/machinery/dna_scannernew/proc/close()
 	if(open)
 		open = 0
