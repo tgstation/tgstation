@@ -457,6 +457,17 @@
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 
 
+/obj/machinery/vending/sustenance
+	name = "\improper Sustenance Vendor"
+	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
+	product_slogans = "Enjoy your meal.;Enough calories to support strenuous labor."
+	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
+	icon_state = "sustenance"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 24,
+					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
+					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6)
+	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
+
 
 /obj/machinery/vending/cola
 	name = "\improper Robust Softdrinks"
