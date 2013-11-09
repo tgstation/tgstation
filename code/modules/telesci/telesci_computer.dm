@@ -57,9 +57,9 @@
 /obj/machinery/computer/telescience/interact(mob/user)
 
 	var/t = "<div class='statusDisplay'>[temp_msg]</div><BR>"
-	t += "<A href='?src=\ref[src];setrotation=1'>Set Rotation</A>"
+	t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
 	t += "<div class='statusDisplay'>[rotation]°</div>"
-	t += "<A href='?src=\ref[src];setangle=1'>Set Angle</A>"
+	t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
 	t += "<div class='statusDisplay'>[angle ? angle : "NULL"]°</div>"
 	t += "<span class='linkOn'>Set Power</span>"
 	t += "<div class='statusDisplay'>"
@@ -168,11 +168,11 @@
 		return
 	if(rotation < 0 || rotation > 360)
 		telefail()
-		temp_msg = "Error: Rotation is less than 0 or greater than 360."
+		temp_msg = "Error: Bearing is less than 0 or greater than 360."
 		return
 	if(angle < 1 || angle > 90)
 		telefail()
-		temp_msg = "Error: Angle is less than 1 or greater than 90."
+		temp_msg = "Error: Elevation is less than 1 or greater than 90."
 		return
 	if(z_co == 2 || z_co < 1 || z_co > 7)
 		telefail()
@@ -190,13 +190,13 @@
 	if(..())
 		return
 	if(href_list["setrotation"])
-		var/new_rot = input("Please input desired rotation in degrees.", name, rotation) as num
+		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(..()) // Check after we input a value, as they could've moved after they entered something
 			return
 		rotation = Clamp(new_rot, 0, 9999)
 
 	if(href_list["setangle"])
-		var/new_angle = input("Please input desired angle in degrees.", name, angle) as num
+		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(..())
 			return
 		angle = Clamp(new_angle, 1, 9999)
