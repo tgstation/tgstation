@@ -57,7 +57,7 @@ var/list/GPS_list = list()
 	..()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = copytext(sanitize(a), 1, 20)
+		a = uppertext(copytext(sanitize(a), 1, 20))
 		if(src.loc == usr)
 			if(length(a) != 4)
 				usr << "<span class = 'caution'> The tag must be four letters long!</span>"

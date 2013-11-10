@@ -13,7 +13,7 @@
 	var/power_off
 
 	var/rotation = 0
-	var/angle
+	var/angle = 45
 	var/power
 
 	// Based on the power used
@@ -60,7 +60,7 @@
 	t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
 	t += "<div class='statusDisplay'>[rotation]°</div>"
 	t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-	t += "<div class='statusDisplay'>[angle ? angle : "NULL"]°</div>"
+	t += "<div class='statusDisplay'>[angle]°</div>"
 	t += "<span class='linkOn'>Set Power</span>"
 	t += "<div class='statusDisplay'>"
 
