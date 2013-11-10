@@ -99,11 +99,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // In darkness over a certain threshold, ghosts become slightly visible for the spooky value.
 /mob/dead/observer/proc/amInDarkPlace()
-	var/turf/simulated/T = get_turf(src)
-	if(!istype(T))
-		return 0
-	if(T.lighting_lumcount <= GHOST_DARK_CUTOFF)
-		return 1
+	//var/turf/simulated/T = get_turf(src)
+	//if(!istype(T))
+	//	return 0
+	//if(T.lighting_lumcount <= GHOST_DARK_CUTOFF)
+	//	return 1
 	return 0
 
 /mob/dead/observer/proc/updateSpookyAlpha()
