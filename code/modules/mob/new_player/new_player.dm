@@ -18,12 +18,7 @@
 		tag = "mob_[next_mob_id++]"
 		mob_list += src
 
-	verb/new_player_panel()
-		set src = usr
-		new_player_panel_proc()
-
-
-	proc/new_player_panel_proc()
+	proc/new_player_panel()
 
 		var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -68,7 +63,7 @@
 		..()
 
 		statpanel("Lobby")
-		if(client.statpanel=="Lobby" && ticker)
+		if(client.statpanel == "Lobby" && ticker)
 			if(ticker.hide_mode)
 				stat("Game Mode:", "Secret")
 			else
@@ -89,6 +84,9 @@
 					if(player.ready)totalPlayersReady++
 
 	Topic(href, href_list[])
+		if(src != usr)
+			return 0
+
 		if(!client)	return 0
 
 		if(href_list["show_preferences"])
@@ -100,7 +98,7 @@
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
-			new_player_panel_proc()
+			new_player_panel()
 
 		if(href_list["observe"])
 
@@ -264,8 +262,12 @@
 			AnnounceArrival(character, rank)
 		else
 			character.Robotize()
-		del(src)
 
+		joined_player_list += character.ckey
+
+		if(config.allow_latejoin_antagonists && emergency_shuttle.timeleft() > 300) //Don't make them antags if the station is evacuating
+			ticker.mode.make_antag_chance(character)
+		del(src)
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
@@ -284,22 +286,41 @@
 		var/mins = (mills % 36000) / 600
 		var/hours = mills / 36000
 
-		var/dat = "<html><body><center>"
-		dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
+		var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
 
-		if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-			if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
-				dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
+		if(emergency_shuttle) //In case Nanotrasen decides reposess Centcom's shuttles.
+			if(emergency_shuttle.direction == 2) //Shuttle is going to centcom, not recalled
+				dat += "<div class='notice red'>The station has been evacuated.</div><br>"
 			if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
-				dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
+				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
-		dat += "Choose from the following open positions:<br>"
+		var/available_job_count = 0
 		for(var/datum/job/job in job_master.occupations)
 			if(job && IsJobAvailable(job.title))
-				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+				available_job_count++;
 
-		dat += "</center>"
-		src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+		dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
+		dat += "<div class='jobs'><div class='jobsColumn'>"
+		var/job_count = 0
+		for(var/datum/job/job in job_master.occupations)
+			if(job && IsJobAvailable(job.title))
+				job_count++;
+				if (job_count > round(available_job_count / 2))
+					dat += "</div><div class='jobsColumn'>"
+				var/position_class = "otherPosition"
+				if (job.title in command_positions)
+					position_class = "commandPosition"
+				dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+		dat += "</div></div>"
+
+		// Removing the old window method but leaving it here for reference
+		//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+
+		// Added the new browser window method
+		var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+		popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
+		popup.set_content(dat)
+		popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
 	proc/create_character()
@@ -309,7 +330,7 @@
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
 
-		if(config.force_random_names || appearance_isbanned(new_character))
+		if(config.force_random_names || appearance_isbanned(src))
 			client.prefs.random_character()
 			client.prefs.real_name = random_name(gender)
 		client.prefs.copy_to(new_character)
@@ -318,14 +339,11 @@
 
 		if(mind)
 			mind.active = 0					//we wish to transfer the key manually
-			if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-				new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
-				new_character.rename_self("clown")
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 		new_character.name = real_name
-		new_character.dna.ready_dna(new_character)
-		new_character.dna.b_type = client.prefs.b_type
+
+		ready_dna(new_character, client.prefs.blood_type)
 
 		new_character.key = key		//Manually transfer the key to log them in
 

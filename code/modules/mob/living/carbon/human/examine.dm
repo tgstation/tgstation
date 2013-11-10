@@ -48,7 +48,7 @@
 		t_is = "are"
 	else
 		if(icon)
-			msg += "\icon[icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
+			msg += "\icon[src] " //note, should we ever go back to runtime-generated icons (please don't), you will need to change this to \icon[icon] to prevent crashes.
 		switch(gender)
 			if(MALE)
 				t_He = "He"
@@ -199,8 +199,10 @@
 		else
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
 
+	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
-		if(getbrain(src))//Only perform these checks if there is no brain
+		appears_dead = 1
+		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
 			if(!key)
@@ -242,6 +244,12 @@
 		else
 			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
+	if(fire_stacks > 0)
+		msg += "[t_He] [t_is] covered in something flammable.\n"
+	if(fire_stacks < 0)
+		msg += "[t_He] looks a little soaked.\n"
+
+
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
@@ -252,48 +260,35 @@
 
 	msg += "</span>"
 
-	if(stat == UNCONSCIOUS)
-		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-	else if(getBrainLoss() >= 60)
-		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+	if(!appears_dead)
+		if(stat == UNCONSCIOUS)
+			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
+		else if(getBrainLoss() >= 60)
+			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && getbrain(src) && stat != DEAD)
-		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && getbrain(src) && stat != DEAD)
-		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+		if(getorgan(/obj/item/organ/brain))
+			if(!key)
+				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+			else if(!client)
+				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
-	if(digitalcamo)
-		msg += "[t_He] [t_is] repulsively uncanny!\n"
+		if(digitalcamo)
+			msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 
 	if(istype(usr, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-			if(usr.stat ||  H != usr) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
-				return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
+			if(!usr.stat && usr != src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+				var/criminal = "None"
 
-			var/perpname = "wot"
-			var/criminal = "None"
+				var/perpname = get_face_name(get_id_name(""))
+				if(perpname)
+					var/datum/data/record/R = find_record("name", perpname, data_core.security)
+					if(R)
+						criminal = R.fields["criminal"]
 
-			if(wear_id)
-				var/obj/item/weapon/card/id/I = wear_id.GetID()
-				if(I)
-					perpname = I.registered_name
-				else
-					perpname = name
-			else
-				perpname = name
-
-			if(perpname)
-				for (var/datum/data/record/E in data_core.general)
-					if(E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if(R.fields["id"] == E.fields["id"])
-								criminal = R.fields["criminal"]
-
-
-				msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-				//msg += "\[Set Hostile Identification\]\n"
+					msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
 
 	msg += "*---------*</span>"
 

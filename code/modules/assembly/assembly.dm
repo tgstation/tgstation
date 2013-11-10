@@ -7,7 +7,6 @@
 	w_class = 2.0
 	m_amt = 100
 	g_amt = 0
-	w_amt = 0
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10
@@ -110,7 +109,7 @@
 			if((!A.secured) && (!secured))
 				attach_assembly(A,user)
 				return
-		if(isscrewdriver(W))
+		if(istype(W, /obj/item/weapon/screwdriver))
 			if(toggle_secure())
 				user << "\blue \The [src] is ready!"
 			else

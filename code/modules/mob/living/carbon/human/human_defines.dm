@@ -1,27 +1,21 @@
 /mob/living/carbon/human
 	//Hair colour and style
-	var/r_hair = 0
-	var/g_hair = 0
-	var/b_hair = 0
-	var/h_style = "Bald"
+	var/hair_color = "000"
+	var/hair_style = "Bald"
 
 	//Facial hair colour and style
-	var/r_facial = 0
-	var/g_facial = 0
-	var/b_facial = 0
-	var/f_style = "Shaved"
+	var/facial_hair_color = "000"
+	var/facial_hair_style = "Shaved"
 
 	//Eye colour
-	var/r_eyes = 0
-	var/g_eyes = 0
-	var/b_eyes = 0
+	var/eye_color = "000"
 
-	var/s_tone = 0	//Skin tone
+	var/skin_tone = "caucasian1"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
 	var/age = 30		//Player's age (pure fluff)
-	var/b_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
+	var/blood_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
@@ -40,9 +34,7 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-
-	var/icon/stand_icon = null
-	var/icon/lying_icon = null
+	var/base_icon_state = "caucasian1_m"
 
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 

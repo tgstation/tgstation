@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
 
@@ -169,7 +169,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
+				src.visible_message("\blue \The [src] skitters[pick(" away"," around","")].")
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -191,11 +191,25 @@
 	icon_state = "cocoon1"
 	health = 60
 
-	New()
+/obj/effect/spider/cocoon/New()
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
+/obj/effect/spider/cocoon/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2
+	user.next_move = world.time + 100
+	user.last_special = world.time + 100
+	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
+	visible_message("You see something struggling and writhing in the [src]!")
+	if(do_after(user,(breakout_time*60*10)))
+		if(!user || user.stat != CONSCIOUS || user.loc != src)
+			return
+		Del()
+
+
+
 /obj/effect/spider/cocoon/Del()
-	src.visible_message("\red \the [src] splits open.")
+	src.visible_message("\red \The [src] splits open.")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()

@@ -38,6 +38,7 @@
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
+	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
 	//inner atmos
 	var/use_internal_tank = 0
@@ -151,7 +152,7 @@
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
+		if(!src || !user || !user.canmove || !(user.loc == T) || user.restrained())
 			return 0
 
 	return 1
@@ -330,7 +331,7 @@
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
-			O.HasEntered(src)
+			O.Crossed(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
 				src.anchored = 1
 		else if(!O.anchored)
@@ -417,11 +418,6 @@
 /obj/mecha/attack_hand(mob/user as mob)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("MECHA",src,user:wear_suit)
-			return
-
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -469,6 +465,9 @@
 			src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
 			visible_message("\blue The [user] rebounds off [src.name]'s armor!")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+	return
+
+/obj/mecha/attack_tk()
 	return
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
@@ -608,6 +607,10 @@
 				V.show_message("\blue The [user] rebounds off the [src.name] armor!", 1)
 	return
 */
+
+/obj/mecha/blob_act()
+	take_damage(30, "brute")
+	return
 
 //TODO
 /obj/mecha/meteorhit()
@@ -794,45 +797,27 @@
 ////////  Atmospheric stuff  ////////
 /////////////////////////////////////
 
-/obj/mecha/proc/get_turf_air()
-	var/turf/T = get_turf(src)
-	if(T)
-		. = T.return_air()
-	return
-
 /obj/mecha/remove_air(amount)
 	if(use_internal_tank)
 		return cabin_air.remove(amount)
-	else
-		var/turf/T = get_turf(src)
-		if(T)
-			return T.remove_air(amount)
-	return
+	return ..()
 
 /obj/mecha/return_air()
 	if(use_internal_tank)
 		return cabin_air
-	return get_turf_air()
+	return ..()
 
 /obj/mecha/proc/return_pressure()
-	. = 0
-	if(use_internal_tank)
-		. =  cabin_air.return_pressure()
-	else
-		var/datum/gas_mixture/t_air = get_turf_air()
-		if(t_air)
-			. = t_air.return_pressure()
+	var/datum/gas_mixture/t_air = return_air()
+	if(t_air)
+		. = t_air.return_pressure()
 	return
 
 
 /obj/mecha/proc/return_temperature()
-	. = 0
-	if(use_internal_tank)
-		. = cabin_air.return_temperature()
-	else
-		var/datum/gas_mixture/t_air = get_turf_air()
-		if(t_air)
-			. = t_air.return_temperature()
+	var/datum/gas_mixture/t_air = return_air()
+	if(t_air)
+		. = t_air.return_temperature()
 	return
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
@@ -880,9 +865,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(!src.occupant) return
-	if(usr!=src.occupant)
-		return
+
+	if(usr.stat)			return
+	if(usr != src.occupant)	return
+
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
@@ -902,9 +888,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(!src.occupant) return
-	if(usr!=src.occupant)
-		return
+
+	if(usr.stat)			return
+	if(usr != src.occupant)	return
+
 	if(disconnect())
 		src.occupant_message("\blue [name] disconnects from the port.")
 		src.verbs -= /obj/mecha/verb/disconnect_from_port
@@ -917,7 +904,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=occupant)	return
+
+	if(usr.stat)		return
+	if(usr != occupant)	return
+
 	lights = !lights
 	if(lights)	SetLuminosity(luminosity + lights_power)
 	else		SetLuminosity(luminosity - lights_power)
@@ -931,8 +921,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
-		return
+
+	if(usr.stat)			return
+	if(usr != src.occupant)	return
+
 	use_internal_tank = !use_internal_tank
 	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -944,7 +936,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr))
+	if (usr.stat || !ishuman(usr) || usr.restrained() || !usr.Adjacent(src))
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
@@ -958,8 +950,10 @@
 */
 	var/passed
 	if(src.dna)
-		if(usr.dna.unique_enzymes==src.dna)
-			passed = 1
+		if(check_dna_integrity(usr))
+			var/mob/living/carbon/C = usr
+			if(C.dna.unique_enzymes==src.dna)
+				passed = 1
 	else if(src.operation_allowed(usr))
 		passed = 1
 	if(!passed)
@@ -992,6 +986,10 @@
 		*/
 		H.stop_pulling()
 		H.forceMove(src)
+		if(H.hud_used)
+			last_user_hud = H.hud_used.hud_shown
+			H.hud_used.hide_hud()
+
 		src.occupant = H
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
@@ -1089,11 +1087,15 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
-		return
+
+	if(usr != src.occupant)	return
+
 	src.go_out()
 	add_fingerprint(usr)
 	return
+
+/obj/mecha/container_resist()
+	go_out()
 
 
 /obj/mecha/proc/go_out()
@@ -1136,6 +1138,9 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
+		if(src.occupant.hud_used && src.last_user_hud)
+			src.occupant.hud_used.show_hud()
+
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
@@ -1341,7 +1346,7 @@
 /obj/mecha/proc/get_log_html()
 	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
-		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] 2555</div>
+		output += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
 						"}
 	output += "</body></html>"
@@ -1405,7 +1410,7 @@
 
 /obj/mecha/proc/log_message(message as text,red=null)
 	log.len++
-	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
@@ -1413,6 +1418,8 @@
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
+var/year = time2text(world.realtime,"YYYY")
+var/year_integer = text2num(year) // = 2013???
 
 /////////////////
 ///// Topic /////
@@ -1687,7 +1694,7 @@
 					var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
 					cabin_air.merge(removed)
 			else if(pressure_delta < 0) //cabin pressure higher than release pressure
-				var/datum/gas_mixture/t_air = mecha.get_turf_air()
+				var/datum/gas_mixture/t_air = mecha.return_air()
 				pressure_delta = cabin_pressure - release_pressure
 				if(t_air)
 					pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)

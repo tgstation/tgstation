@@ -35,16 +35,6 @@
 	moving = 0
 	return 1
 
-
-/obj/machinery/computer/syndicate_station/attackby(obj/item/I as obj, mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/syndicate_station/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/syndicate_station/attack_paw(mob/user as mob)
-	return attack_hand(user)
-
 /obj/machinery/computer/syndicate_station/attack_hand(mob/user as mob)
 	if(!allowed(user))
 		user << "\red Access Denied"
@@ -70,11 +60,12 @@
 
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)
-	if(!isliving(usr))	return
+	if(..())
+		return
+
 	var/mob/living/user = usr
 
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	user.set_machine(src)
 
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/syndicate_station/start)
@@ -95,9 +86,5 @@
 	else if(href_list["mining"])
 		syndicate_move_to(/area/syndicate_station/mining)
 
-	add_fingerprint(usr)
 	updateUsrDialog()
 	return
-
-/obj/machinery/computer/syndicate_station/bullet_act(var/obj/item/projectile/Proj)
-	visible_message("[Proj] ricochets off [src]!")	//let's not let them fuck themselves in the rear

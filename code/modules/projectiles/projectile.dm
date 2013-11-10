@@ -48,6 +48,7 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/forcedodge = 0
 
 
 	proc/delete()
@@ -69,7 +70,6 @@
 			return 0 //cannot shoot yourself
 
 		if(bumped)	return 0
-		var/forcedodge = 0 // force the projectile to pass
 
 		bumped = 1
 		if(ismob(A))
@@ -78,8 +78,8 @@
 				loc = A.loc
 				return 0// nope.avi
 
-			var/distance = get_dist(original,loc)
-			def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
+			var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
+			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
 				M << "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by [src]!</span>"
 			else
@@ -96,21 +96,20 @@
 
 		spawn(0)
 			if(A)
-				var/permutation = A.bullet_act(src, def_zone) // searches for return value
-				if(permutation == -1 || forcedodge) // the bullet passes through a dense object!
+				// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
+				var/turf/new_loc = null
+				if(istype(A, /turf))
+					new_loc = A
+				else
+					new_loc = A.loc
+
+				var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
+
+				if(permutation == -1 || (forcedodge && !istype(A, /turf)))// the bullet passes through a dense object!
 					bumped = 0 // reset bumped variable!
-					if(istype(A, /turf))
-						loc = A
-					else
-						loc = A.loc
+					loc = new_loc
 					permutated.Add(A)
 					return 0
-
-				if(istype(A,/turf))
-					for(var/obj/O in A)
-						O.bullet_act(src)
-					for(var/mob/M in A)
-						M.bullet_act(src, def_zone)
 
 				density = 0
 				invisibility = 101

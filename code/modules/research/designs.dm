@@ -61,7 +61,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
 			new_reliability += T.level
-	new_reliability = between(reliability_base, new_reliability, 100)
+	new_reliability = Clamp(new_reliability, reliability_base, 100)
 	reliability = new_reliability
 	return
 
@@ -203,16 +203,16 @@ datum/design/air_management
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/air_management"
 
-/* Uncomment if someone makes these buildable
+
 datum/design/general_alert
-	name = "Circuit Design (General Alert Console)"
-	desc = "Allows for the construction of circuit boards used to build a General Alert console."
-	id = "general_alert"
+	name = "Circuit Design (Station Alert Console)"
+	desc = "Allows for the construction of circuit boards used to build a Station Alert console."
+	id = "station_alert"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/general_alert"
-*/
+	build_path = "/obj/item/weapon/circuitboard/station_alert"
+
 
 datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"
@@ -406,14 +406,14 @@ datum/design/protectstation_module
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/protectStation"
 
-datum/design/notele_module
+/*datum/design/notele_module
 	name = "Module Design (TeleporterOffline Module)"
 	desc = "Allows for the construction of a TeleporterOffline AI Module."
 	id = "notele_module"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = "/obj/item/weapon/aiModule/teleporterOffline"
+	build_path = "/obj/item/weapon/aiModule/teleporterOffline"*/
 
 datum/design/quarantine_module
 	name = "Module Design (Quarantine)"
@@ -900,10 +900,10 @@ datum/design/basic_capacitor
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/stock_parts/capacitor"
 
-datum/design/basic_sensor
-	name = "Basic Sensor Module"
+datum/design/basic_scanning
+	name = "Basic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
-	id = "basic_sensor"
+	id = "basic_scanning"
 	req_tech = list("magnets" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20)
@@ -945,10 +945,10 @@ datum/design/adv_capacitor
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/stock_parts/capacitor/adv"
 
-datum/design/adv_sensor
-	name = "Advanced Sensor Module"
+datum/design/adv_scanning
+	name = "Advanced Scanning Module"
 	desc = "A stock part used in the construction of various devices."
-	id = "adv_sensor"
+	id = "adv_scanning"
 	req_tech = list("magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20)
@@ -991,10 +991,10 @@ datum/design/super_capacitor
 	materials = list("$metal" = 50, "$glass" = 50, "$gold" = 20)
 	build_path = "/obj/item/weapon/stock_parts/capacitor/super"
 
-datum/design/phasic_sensor
-	name = "Phasic Sensor Module"
+datum/design/phasic_scanning
+	name = "Phasic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
-	id = "phasic_sensor"
+	id = "phasic_scanning"
 	req_tech = list("magnets" = 5, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20, "$silver" = 10)
@@ -1184,7 +1184,7 @@ datum/design/circuit_imprinter
 
 datum/design/autolathe
 	name = "Autolathe Board"
-	desc = "The circuit board for a autolathe."
+	desc = "The circuit board for an autolathe."
 	id = "autolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
@@ -1193,7 +1193,7 @@ datum/design/autolathe
 
 datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
-	desc = "The circuit board for a R&D Server Control Console"
+	desc = "The circuit board for an R&D Server Control Console"
 	id = "rdservercontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
@@ -1218,6 +1218,15 @@ datum/design/mechfab
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mechfab"
 
+
+datum/design/cyborgrecharger
+	name = "Cyborg Recharger Board"
+	desc = "The circuit board for a Cyborg Recharger"
+	id = "cyborgrecharger"
+	req_tech = list("powerstorage" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/cyborgrecharger"
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
@@ -1309,6 +1318,28 @@ datum/design/synthetic_flash
 	materials = list("$metal" = 750, "$glass" = 750)
 	reliability_base = 76
 	build_path = "/obj/item/device/flash/synthetic"
+	category = "Misc"
+
+datum/design/bluespacebeaker
+	name = "Bluespace Beaker"
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
+	id = "bluespacebeaker"
+	req_tech = list("bluespace" = 2, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
+	reliability_base = 76
+	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
+	category = "Misc"
+
+datum/design/noreactbeaker
+	name = "Cryostasis Beaker"
+	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	id = "splitbeaker"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000)
+	reliability_base = 76
+	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/noreact"
 	category = "Misc"
 
 /////////////////////////////////////////
@@ -1423,6 +1454,16 @@ datum/design/smg
 	build_path = "/obj/item/weapon/gun/projectile/automatic"
 	locked = 1
 
+datum/design/xray
+	name = "Xray Laser Gun"
+	desc = "Not quite as menacing as it sounds"
+	id = "xray"
+	req_tech = list("combat" = 6, "materials" = 5, "biotech" = 5, "powerstorage" = 4)
+	build_type = PROTOLATHE
+	materials = list("$gold" = 5000,"$uranium" = 10000, "$metal" = 4000)
+	build_path = "/obj/item/weapon/gun/energy/xray"
+	locked = 1
+
 datum/design/ammo_9mm
 	name = "Ammunition Box (9mm)"
 	desc = "A box of prototype 9mm ammunition."
@@ -1430,7 +1471,16 @@ datum/design/ammo_9mm
 	req_tech = list("combat" = 4, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3750, "$silver" = 100)
-	build_path = "/obj/item/ammo_magazine/c9mm"
+	build_path = "/obj/item/ammo_box/c9mm"
+
+datum/design/mag_smg
+	name = "Submachine Gun Magazine (9mm)"
+	desc = "A prototype magazine for the submachine gun."
+	id = "mag_smg"
+	req_tech = list("combat" = 4, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3750, "$silver" = 100)
+	build_path = "/obj/item/ammo_box/magazine/msmg9mm"
 
 datum/design/stunshell
 	name = "Stun Shell"
@@ -1591,3 +1641,17 @@ datum/design/borg_syndicate_module
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = "/obj/item/borg/upgrade/syndicate"
 	category = "Cyborg Upgrade Modules"
+
+/////////////////////////////////////////
+//////////////////Misc///////////////////
+/////////////////////////////////////////
+
+
+datum/design/welding_mask
+	name = "Welding Gas Mask"
+	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	id = "weldingmask"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 2000)
+	build_path = "/obj/item/clothing/mask/gas/welding"

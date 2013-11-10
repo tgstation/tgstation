@@ -72,7 +72,18 @@ obj/machinery/atmospherics/trinary
 		..()
 
 	initialize()
-		if(node1 && node2 && node3) return
+		if(node1)
+			node1.disconnect(src)
+			del(network1)
+			node1 = null
+		if(node2)
+			node2.disconnect(src)
+			del(network2)
+			node2 = null
+		if(node3)
+			node3.disconnect(src)
+			del(network3)
+			node3 = null
 
 		var/node1_connect = turn(dir, -180)
 		var/node2_connect = turn(dir, -90)

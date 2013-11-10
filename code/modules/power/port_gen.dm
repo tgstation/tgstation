@@ -218,15 +218,16 @@ display round(lastgen) and plasmatank amount
 
 		if(istype(O, /obj/item/weapon/wrench))
 
-			if(!anchored)
+			if(!anchored && !isinspace())
 				connect_to_network()
 				user << "\blue You secure the generator to the floor."
-			else
+				anchored = 1
+			else if(anchored)
 				disconnect_from_network()
 				user << "\blue You unsecure the generator from the floor."
+				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			anchored = !anchored
 
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			open = !open

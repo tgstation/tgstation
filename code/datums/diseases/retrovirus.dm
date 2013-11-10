@@ -84,10 +84,8 @@
 				affected_mob << "\red Your entire body vibrates."
 
 			if (prob(35))
-				if(prob(50))
-					scramble(1, affected_mob, rand(15,45))
-				else
-					scramble(0, affected_mob, rand(15,45))
+				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(15,45))
+				else			scramble_dna(affected_mob, 0, 1, rand(15,45))
 
 		if(4)
 			if(restcure)
@@ -102,7 +100,5 @@
 					cure()
 					return
 			if (prob(60))
-				if(prob(50))
-					scramble(1, affected_mob, rand(50,75))
-				else
-					scramble(0, affected_mob, rand(50,75))
+				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(50,75))
+				else			scramble_dna(affected_mob, 0, 1, rand(50,75))

@@ -1,0 +1,17 @@
+1. Install java(http://www.java.com/en/download/index.jsp)
+2. Make sure java is in your PATH. To test this, open git bash, and type "java". If it says unknown command, you need to add JAVA/bin to your PATH variable (A guide for this can be found at https://www.java.com/en/download/help/path.xml ).
+
+Committing
+1. Before starting to edit the map, double-click "prepare_map.bat" in the tools/mapmerge/ directory.
+2. After finishing your edit, and before your commit, double-click "clean_map.bat" in the tools/mapmerge/ directory.
+
+This will make sure in the new version of your map, no paths are needlessly changed, thus instead of 8000 lines changed you'll get 50 lines changed. This not only reduces size of your commit, it also makes it possible to get an overview of your map changes on the "files changed" page in your pull request.
+
+Merging
+The easiest way to do merging is to install the merge driver. For this, open -tg-station/.git/config in a text editor, and paste the following lines to the end of it:
+
+[merge "merge-dmm"]
+	name = mapmerge driver
+	driver = ./tools/mapmerge/mapmerge.sh %O %A %B
+
+After this, merging maps should happen automagically unless there are conflicts(a tile that both you and someone else changed). If there are conflicts, you will unfortunately still be stuck with opening both versions in a map editor, and manually resolving the issues.

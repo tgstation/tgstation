@@ -10,9 +10,9 @@
 	update_icon = 0		///no need to call regenerate_icon
 
 /mob/living/carbon/monkey/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
+	verbs += /mob/living/proc/mob_sleep
+	verbs += /mob/living/proc/lay_down
 
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/heart
@@ -21,23 +21,7 @@
 	if(name == "monkey")
 		name = text("monkey ([rand(1, 1000)])")
 	real_name = name
-	if (!(dna))
-		if(gender == NEUTER)
-			gender = pick(MALE, FEMALE)
-		dna = new /datum/dna( null )
-		dna.real_name = real_name
-		dna.uni_identity = "00600200A00E0110148FC01300B009"
-		dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-		dna.unique_enzymes = md5(name)
-				//////////blah
-		var/gendervar
-		if (gender == MALE)
-			gendervar = add_zero2(num2hex((rand(1,2049)),1), 3)
-		else
-			gendervar = add_zero2(num2hex((rand(2051,4094)),1), 3)
-		dna.uni_identity += gendervar
-		dna.uni_identity += "12C"
-		dna.uni_identity += "4E2"
+	gender = pick(MALE, FEMALE)
 
 	..()
 
@@ -56,40 +40,31 @@
 	return tally+config.monkey_delay
 
 /mob/living/carbon/monkey/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (HULK in tmob.mutations))
-				if(prob(70))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-
-			tmob.LAssailant = src
-		now_pushing = 0
-		..()
-		if (!( istype(AM, /atom/movable) ))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	now_pushing = 1
+	if(ismob(AM))
+		var/mob/tmob = AM
+		if(!(tmob.status_flags & CANPUSH))
+			now_pushing = 0
+			return
+
+		tmob.LAssailant = src
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+	if (!( now_pushing ))
+		now_pushing = 1
+		if (!( AM.anchored ))
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
@@ -104,24 +79,6 @@
 	return
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
-
-/mob/living/carbon/monkey/hand_p(mob/M as mob)
-	if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-		if ((prob(75) && health > 0))
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 5)
-			if (HULK in mutations) damage += 10
-			adjustBruteLoss(damage)
-			updatehealth()
-
-			for(var/datum/disease/D in M.viruses)
-				if(istype(D, /datum/disease/jungle_fever))
-					contract_disease(D,1,0)
-		else
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-	return
 
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
@@ -162,7 +119,7 @@
 
 	else
 		if (M.a_intent == "harm")
-			if ((prob(75) && health > 0))
+			if (prob(75))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
@@ -171,7 +128,7 @@
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
-					if (paralysis < 5)
+					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
 						spawn( 0 )
 							for(var/mob/O in viewers(src, null))
@@ -187,7 +144,7 @@
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
-				if (M == src)
+				if (M == src || anchored)
 					return
 
 				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
@@ -257,7 +214,7 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
@@ -372,8 +329,8 @@
 	if(client && mind)
 		if (client.statpanel == "Status")
 			if(mind.changeling)
-				stat("Chemical Storage", mind.changeling.chem_charges)
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Absorbed DNA", mind.changeling.absorbedcount)
 	return
 
 

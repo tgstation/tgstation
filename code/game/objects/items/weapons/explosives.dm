@@ -1,3 +1,5 @@
+//In this file: Plastic explosives (C4) and Syndicate Bombs
+
 /obj/item/weapon/plastique
 	name = "plastic explosives"
 	desc = "Used to put holes in specific areas without too much extra hole."
@@ -5,7 +7,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT | TABLEPASS | NOBLUDGEON
 	w_class = 2.0
 	origin_tech = "syndicate=2"
 	var/datum/wires/explosive/plastic/wires = null
@@ -17,11 +19,29 @@
 	wires = new(src)
 	..()
 
+/obj/item/weapon/plastique/suicide_act(var/mob/user)
+	. = (BRUTELOSS)
+	viewers(user) << "\red <b>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</b>"
+	var/message_say = "FOR NO RAISIN!"
+	if(user.mind)
+		if(user.mind.special_role)
+			var/role = lowertext(user.mind.special_role)
+			if(role == "traitor" || role == "syndicate")
+				message_say = "FOR THE SYNDICATE!"
+			else if(role == "changeling")
+				message_say = "FOR THE HIVE!"
+			else if(role == "cultist")
+				message_say = "FOR NARSIE!"
+	user.say(message_say)
+	target = user
+	explode(get_turf(user))
+	return .
+
 /obj/item/weapon/plastique/attackby(var/obj/item/I, var/mob/user)
-	if(isscrewdriver(I))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-	else if(iswirecutter(I) || ismultitool(I) || istype(I, /obj/item/device/assembly/signaler ))
+	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
 		wires.Interact(user)
 	else
 		..()

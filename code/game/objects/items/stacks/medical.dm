@@ -50,17 +50,17 @@
 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/limb/affecting = H.get_organ("chest")
+		var/obj/item/organ/limb/affecting = H.get_organ("chest")
 
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/user2 = user
 			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
 		else
-			if(!istype(affecting, /datum/limb) || affecting:burn_dam <= 0)
+			if(!istype(affecting, /obj/item/organ/limb) || affecting:burn_dam <= 0)
 				affecting = H.get_organ("head")
 
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-			H.UpdateDamageIcon(0)
+			H.update_damage_overlays(0)
 		M.updatehealth()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))

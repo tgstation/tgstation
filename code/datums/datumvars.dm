@@ -402,6 +402,8 @@ client
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return
+	if(!check_rights(R_VAREDIT))
+		return
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
 
@@ -649,6 +651,20 @@ client
 			if("left")	A.dir = turn(A.dir, 45)
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
+	else if(href_list["makehuman"])
+		if(!check_rights(0))	return
+
+		var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"])
+		if(!istype(Mo))
+			usr << "This can only be done to instances of type /mob/living/carbon/monkey"
+			return
+
+		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(!Mo)
+			usr << "Mob doesn't exist anymore"
+			return
+		holder.Topic(href, list("humanone"=href_list["makehuman"]))
+
 	else if(href_list["makemonkey"])
 		if(!check_rights(0))	return
 
@@ -727,7 +743,7 @@ client
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow", "fly")
+		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow", "fly", "skeleton")
 		switch(new_mutantrace)
 			if(null)		return
 			if("NONE")		new_mutantrace = ""
@@ -736,7 +752,8 @@ client
 			return
 		if(H.dna)
 			H.dna.mutantrace = new_mutantrace
-			H.update_mutantrace()
+			H.update_body()
+			H.update_hair()
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return

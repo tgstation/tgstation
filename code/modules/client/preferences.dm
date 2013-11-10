@@ -2,6 +2,8 @@
 
 var/list/preferences_datums = list()
 
+#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
+
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
 	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
@@ -10,20 +12,18 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
 	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
 	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien candidate" = 1, //always show                 // 6
+	"alien lifeform" = 1, //always show                 // 6
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 )
 
 
-var/const/MAX_SAVE_SLOTS = 3
-
-
 datum/preferences
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
+	var/max_save_slots = 3
 
 	//non-preference stuff
 	var/warns = 0
@@ -33,31 +33,26 @@ datum/preferences
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = "#b82e00"
+	var/ooccolor = "#002eb8"
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
+	var/ghost_form = "ghost"
 
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/b_type = "A+"					//blood type (not-chooseable)
+	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/backbag = 2						//backpack type
-	var/h_style = "Bald"				//Hair type
-	var/r_hair = 0						//Hair color
-	var/g_hair = 0						//Hair color
-	var/b_hair = 0						//Hair color
-	var/f_style = "Shaved"				//Face hair type
-	var/r_facial = 0					//Face hair color
-	var/g_facial = 0					//Face hair color
-	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin color
-	var/r_eyes = 0						//Eye color
-	var/g_eyes = 0						//Eye color
-	var/b_eyes = 0						//Eye color
+	var/hair_style = "Bald"				//Hair type
+	var/hair_color = "000"				//Hair color
+	var/facial_hair_style = "Shaved"	//Face hair type
+	var/facial_hair_color = "000"		//Facial hair color
+	var/skin_tone = "caucasian1"		//Skin color
+	var/eye_color = "000"				//Eye color
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -85,11 +80,17 @@ datum/preferences
 		// OOC Metadata:
 	var/metadata = ""
 
+	var/unlock_content = 0
+
 /datum/preferences/New(client/C)
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	blood_type = random_blood_type()
+	ooccolor = normal_ooc_colour
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
+			unlock_content = C.IsByondMember()
+			if(unlock_content)
+				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -127,12 +128,12 @@ datum/preferences
 					if(S)
 						dat += "<center>"
 						var/name
-						for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
+						for(var/i=1, i<=max_save_slots, i++)
 							S.cd = "/character[i]"
 							S["real_name"] >> name
 							if(!name)	name = "Character[i]"
 							//if(i!=1) dat += " | "
-							dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
+							dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 						dat += "</center>"
 
 				dat += "<center><h2>Occupation Choices</h2>"
@@ -162,8 +163,8 @@ datum/preferences
 
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
-				dat += "<b>Blood Type:</b> [b_type]<BR>"
-				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a><BR>"
+				dat += "<b>Blood Type:</b> [blood_type]<BR>"
+				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
@@ -172,23 +173,23 @@ datum/preferences
 
 				dat += "<h3>Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: rgb([r_hair],[g_hair],[b_hair]);'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top' width='28%'>"
 
 				dat += "<h3>Facial Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: rgb([r_facial],[g_facial],[b_facial]);'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
 
 				dat += "</td><td valign='top'>"
 
 				dat += "<h3>Eye Color</h3>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: rgb([r_eyes],[g_eyes],[b_eyes]);'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 
 				dat += "</td></tr></table>"
@@ -206,13 +207,18 @@ datum/preferences
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
-				if(user.client && user.client.holder)
-					dat += "<b>Adminhelp Sound</b>: "
-					dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
+				if(user.client)
+					if(user.client.holder)
+						dat += "<b>Adminhelp Sound:</b> "
+						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
-					if(config.allow_admin_ooccolor && check_rights(R_ADMIN,0))
-						dat += "<br><b>OOC</b><br>"
-						dat += "<span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					if(unlock_content || check_rights_for(user.client, R_ADMIN))
+						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+
+					if(unlock_content)
+						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
+						dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
+
 
 				dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -245,11 +251,11 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 560)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 580)
 		popup.set_content(dat)
 		popup.open(0)
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 580, height = 560)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 555, height = 585)
 		if(!job_master)	return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -260,7 +266,9 @@ datum/preferences
 
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
+		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
+		HTML += "<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=setJobLevel;level=' + level + ';text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -300,7 +308,34 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+			var/prefLevelLabel = "ERROR"
+			var/prefLevelColor = "pink"
+			var/prefUpperLevel = -1 // level to assign on left click
+			var/prefLowerLevel = -1 // level to assign on right click
+
+			if(GetJobDepartment(job, 1) & job.flag)
+				prefLevelLabel = "High"
+				prefLevelColor = "slateblue"
+				prefUpperLevel = 4
+				prefLowerLevel = 2
+			else if(GetJobDepartment(job, 2) & job.flag)
+				prefLevelLabel = "Medium"
+				prefLevelColor = "green"
+				prefUpperLevel = 1
+				prefLowerLevel = 3
+			else if(GetJobDepartment(job, 3) & job.flag)
+				prefLevelLabel = "Low"
+				prefLevelColor = "orange"
+				prefUpperLevel = 2
+				prefLowerLevel = 4
+			else
+				prefLevelLabel = "NEVER"
+				prefLevelColor = "red"
+				prefUpperLevel = 3
+				prefLowerLevel = 1
+
+
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -310,15 +345,11 @@ datum/preferences
 				HTML += "</a></td></tr>"
 				continue
 
-			if(GetJobDepartment(job, 1) & job.flag)
-				HTML += "High"
-			else if(GetJobDepartment(job, 2) & job.flag)
-				HTML += "<font color=green>Medium</font>"
-			else if(GetJobDepartment(job, 3) & job.flag)
-				HTML += "<font color=orange>Low</font>"
-			else
-				HTML += "<font color=red>NEVER</font>"
+			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 			HTML += "</a></td></tr>"
+
+		for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
+			HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 
 		HTML += "</td'></tr></table>"
 
@@ -335,11 +366,74 @@ datum/preferences
 		popup.open(0)
 		return
 
+	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
+		if (!job)
+			return 0
 
-	proc/SetJob(mob/user, role)
+		if (level == 1) // to high
+			// remove any other job(s) set to high
+			job_civilian_med |= job_civilian_high
+			job_engsec_med |= job_engsec_high
+			job_medsci_med |= job_medsci_high
+			job_civilian_high = 0
+			job_engsec_high = 0
+			job_medsci_high = 0
+
+		if (job.department_flag == CIVILIAN)
+			job_civilian_low &= ~job.flag
+			job_civilian_med &= ~job.flag
+			job_civilian_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_civilian_high |= job.flag
+				if (2)
+					job_civilian_med |= job.flag
+				if (3)
+					job_civilian_low |= job.flag
+
+			return 1
+		else if (job.department_flag == ENGSEC)
+			job_engsec_low &= ~job.flag
+			job_engsec_med &= ~job.flag
+			job_engsec_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_engsec_high |= job.flag
+				if (2)
+					job_engsec_med |= job.flag
+				if (3)
+					job_engsec_low |= job.flag
+
+			return 1
+		else if (job.department_flag == MEDSCI)
+			job_medsci_low &= ~job.flag
+			job_medsci_med &= ~job.flag
+			job_medsci_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_medsci_high |= job.flag
+				if (2)
+					job_medsci_med |= job.flag
+				if (3)
+					job_medsci_low |= job.flag
+
+			return 1
+
+		return 0
+
+	proc/UpdateJobPreference(mob/user, role, desiredLvl)
 		var/datum/job/job = job_master.GetJob(role)
+
 		if(!job)
 			user << browse(null, "window=mob_occupation")
+			ShowChoices(user)
+			return
+
+		if (!isnum(desiredLvl))
+			user << "\red UpdateJobPreference - desired level was not a number. Please notify coders!"
 			ShowChoices(user)
 			return
 
@@ -351,17 +445,11 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-		if(GetJobDepartment(job, 1) & job.flag)
-			SetJobDepartment(job, 1)
-		else if(GetJobDepartment(job, 2) & job.flag)
-			SetJobDepartment(job, 2)
-		else if(GetJobDepartment(job, 3) & job.flag)
-			SetJobDepartment(job, 3)
-		else//job = Never
-			SetJobDepartment(job, 4)
-
+		SetJobPreferenceLevel(job, desiredLvl)
 		SetChoices(user)
+
 		return 1
+
 
 	proc/ResetJobs()
 
@@ -407,59 +495,7 @@ datum/preferences
 						return job_engsec_low
 		return 0
 
-
-	proc/SetJobDepartment(var/datum/job/job, var/level)
-		if(!job || !level)	return 0
-		switch(level)
-			if(1)//Only one of these should ever be active at once so clear them all here
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-				return 1
-			if(2)//Set current highs to med, then reset them
-				job_civilian_med |= job_civilian_high
-				job_medsci_med |= job_medsci_high
-				job_engsec_med |= job_engsec_high
-				job_civilian_high = 0
-				job_medsci_high = 0
-				job_engsec_high = 0
-
-		switch(job.department_flag)
-			if(CIVILIAN)
-				switch(level)
-					if(2)
-						job_civilian_high = job.flag
-						job_civilian_med &= ~job.flag
-					if(3)
-						job_civilian_med |= job.flag
-						job_civilian_low &= ~job.flag
-					else
-						job_civilian_low |= job.flag
-			if(MEDSCI)
-				switch(level)
-					if(2)
-						job_medsci_high = job.flag
-						job_medsci_med &= ~job.flag
-					if(3)
-						job_medsci_med |= job.flag
-						job_medsci_low &= ~job.flag
-					else
-						job_medsci_low |= job.flag
-			if(ENGSEC)
-				switch(level)
-					if(2)
-						job_engsec_high = job.flag
-						job_engsec_med &= ~job.flag
-					if(3)
-						job_engsec_med |= job.flag
-						job_engsec_low &= ~job.flag
-					else
-						job_engsec_low |= job.flag
-		return 1
-
-
 	proc/process_link(mob/user, list/href_list)
-		if(!user)	return
 		if(!istype(user, /mob/new_player))	return
 
 		if(href_list["preference"] == "job")
@@ -473,8 +509,8 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
-				if("input")
-					SetJob(user, href_list["text"])
+				if("setJobLevel")
+					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else
 					SetChoices(user)
 			return 1
@@ -487,25 +523,19 @@ datum/preferences
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
-						r_hair = rand(0,255)
-						g_hair = rand(0,255)
-						b_hair = rand(0,255)
-					if("h_style")
-						h_style = random_hair_style(gender)
+						hair_color = random_short_color()
+					if("hair_style")
+						hair_style = random_hair_style(gender)
 					if("facial")
-						r_facial = rand(0,255)
-						g_facial = rand(0,255)
-						b_facial = rand(0,255)
-					if("f_style")
-						f_style = random_facial_hair_style(gender)
+						facial_hair_color = random_short_color()
+					if("facial_hair_style")
+						facial_hair_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = random_underwear(gender)
 					if("eyes")
-						r_eyes = rand(0,255)
-						g_eyes = rand(0,255)
-						b_eyes = rand(0,255)
+						eye_color = random_eye_color()
 					if("s_tone")
-						s_tone = random_skin_tone()
+						skin_tone = random_skin_tone()
 					if("bag")
 						backbag = rand(1,3)
 					if("all")
@@ -513,6 +543,11 @@ datum/preferences
 
 			if("input")
 				switch(href_list["preference"])
+					if("ghostform")
+						if(unlock_content)
+							var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
+							if(new_form)
+								ghost_form = new_form
 					if("name")
 						var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
 						if(new_name)
@@ -531,36 +566,33 @@ datum/preferences
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 					if("hair")
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
+						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 						if(new_hair)
-							r_hair = hex2num(copytext(new_hair, 2, 4))
-							g_hair = hex2num(copytext(new_hair, 4, 6))
-							b_hair = hex2num(copytext(new_hair, 6, 8))
+							hair_color = sanitize_hexcolor(new_hair)
 
-					if("h_style")
-						var/new_h_style
+
+					if("hair_style")
+						var/new_hair_style
 						if(gender == MALE)
-							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
+							new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
 						else
-							new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
-						if(new_h_style)
-							h_style = new_h_style
+							new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
+						if(new_hair_style)
+							hair_style = new_hair_style
 
 					if("facial")
-						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
+						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
 						if(new_facial)
-							r_facial = hex2num(copytext(new_facial, 2, 4))
-							g_facial = hex2num(copytext(new_facial, 4, 6))
-							b_facial = hex2num(copytext(new_facial, 6, 8))
+							facial_hair_color = sanitize_hexcolor(new_facial)
 
-					if("f_style")
-						var/new_f_style
+					if("facial_hair_style")
+						var/new_facial_hair_style
 						if(gender == MALE)
-							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
+							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
 						else
-							new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
-						if(new_f_style)
-							f_style = new_f_style
+							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
+						if(new_facial_hair_style)
+							facial_hair_style = new_facial_hair_style
 
 					if("underwear")
 						var/new_underwear
@@ -574,19 +606,17 @@ datum/preferences
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 						if(new_eyes)
-							r_eyes = hex2num(copytext(new_eyes, 2, 4))
-							g_eyes = hex2num(copytext(new_eyes, 4, 6))
-							b_eyes = hex2num(copytext(new_eyes, 6, 8))
+							eye_color = sanitize_hexcolor(new_eyes)
 
 					if("s_tone")
-						var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 						if(new_s_tone)
-							s_tone = 35 - max(min( round(new_s_tone), 220),1)
+							skin_tone = new_s_tone
 
 					if("ooccolor")
 						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
 						if(new_ooccolor)
-							ooccolor = new_ooccolor
+							ooccolor = sanitize_ooccolor(new_ooccolor)
 
 					if("bag")
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
@@ -594,14 +624,17 @@ datum/preferences
 							backbag = backbaglist.Find(new_backbag)
 			else
 				switch(href_list["preference"])
+					if("publicity")
+						if(unlock_content)
+							toggles ^= MEMBER_PUBLIC
 					if("gender")
 						if(gender == MALE)
 							gender = FEMALE
 						else
 							gender = MALE
 						underwear = random_underwear(gender)
-						f_style = random_facial_hair_style(gender)
-						h_style = random_hair_style(gender)
+						facial_hair_style = random_facial_hair_style(gender)
+						hair_style = random_hair_style(gender)
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
@@ -678,23 +711,15 @@ datum/preferences
 
 		character.gender = gender
 		character.age = age
-		character.b_type = b_type
+		character.blood_type = blood_type
 
-		character.r_eyes = r_eyes
-		character.g_eyes = g_eyes
-		character.b_eyes = b_eyes
+		character.eye_color = eye_color
+		character.hair_color = hair_color
+		character.facial_hair_color = facial_hair_color
 
-		character.r_hair = r_hair
-		character.g_hair = g_hair
-		character.b_hair = b_hair
-
-		character.r_facial = r_facial
-		character.g_facial = g_facial
-		character.b_facial = b_facial
-
-		character.s_tone = s_tone
-		character.h_style = h_style
-		character.f_style = f_style
+		character.skin_tone = skin_tone
+		character.hair_style = hair_style
+		character.facial_hair_style = facial_hair_style
 		character.underwear = underwear
 
 		if(backbag > 3 || backbag < 1)

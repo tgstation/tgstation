@@ -8,7 +8,7 @@
 	icon_state = "forensic1"
 	w_class = 3.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
@@ -43,9 +43,8 @@
 	scan(M, user)
 
 
-/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob)
-
-	if(!in_range(A,user))
+/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob,proximity)
+	if(!proximity)
 		return
 	if(!isturf(A) && !isobj(A))
 		return
@@ -74,35 +73,43 @@
 
 		// Start gathering
 
+		if(A.blood_DNA && A.blood_DNA.len)
+			blood = A.blood_DNA.Copy()
+
+		if(A.suit_fibers && A.suit_fibers.len)
+			fibers = A.suit_fibers.Copy()
+
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
 			if (istype(H.dna, /datum/dna) && !H.gloves)
 				fingerprints += md5(H.dna.uni_identity)
 
-			if(H.blood_DNA && H.blood_DNA.len)
-				blood = H.blood_DNA.Copy()
-		else
+		else if(!ismob(A))
 
 			if(A.fingerprints && A.fingerprints.len)
 				fingerprints = A.fingerprints.Copy()
 
-			if(A.blood_DNA && A.blood_DNA.len)
-				blood = A.blood_DNA.Copy()
+			// Only get reagents from non-mobs.
+			if(A.reagents && A.reagents.reagent_list.len)
 
-		if(A.reagents && A.reagents.reagent_list.len)
-			for(var/datum/reagent/R in A.reagents.reagent_list)
-				reagents[R.name] = R.volume
+				for(var/datum/reagent/R in A.reagents.reagent_list)
+					reagents[R.name] = R.volume
 
-		if(A.suit_fibers && A.suit_fibers.len)
-			fibers = A.suit_fibers.Copy()
+					// Get blood data from the blood reagent.
+					if(istype(R, /datum/reagent/blood))
+
+						if(R.data["blood_DNA"] && R.data["blood_type"])
+							var/blood_DNA = R.data["blood_DNA"]
+							var/blood_type = R.data["blood_type"]
+							blood[blood_DNA] = blood_type
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		spawn(0)
 
 			var/found_something = 0
-			add_log("<B>[get_timestamp()] - [target_name]</B>", 0)
+			add_log("<B>[worldtime2text()][get_timestamp()] - [target_name]</B>", 0)
 
 			// Fingerprints
 			if(fingerprints && fingerprints.len)
@@ -163,4 +170,4 @@
 		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
 
 /proc/get_timestamp()
-	return time2text(world.time + 432000, "hh:mm:ss")
+	return time2text(world.time + 432000, ":ss")

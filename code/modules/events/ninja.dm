@@ -102,6 +102,7 @@
 					if(2)	//steal
 						var/datum/objective/steal/O = new /datum/objective/steal()
 						O.set_target(pick(O.possible_items_special))
+						O.owner = Mind
 						Mind.objectives += O
 
 					if(3)	//protect/kill
@@ -347,7 +348,7 @@ ________________________________________________________________________________
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
-	new_ninja.dna.ready_dna(new_ninja)
+	ready_dna(new_ninja)
 	new_ninja.equip_space_ninja()
 	return new_ninja
 
@@ -1640,7 +1641,7 @@ ________________________________________________________________________________
 			dat += "</ul>"
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
-			var/turf/T = get_turf_or_move(U.loc)
+			var/turf/T = get_turf(U.loc)
 			if (isnull(T))
 				dat += "Unable to obtain a reading."
 			else
@@ -2359,7 +2360,7 @@ ________________________________________________________________________________
 				spark_system.set_up(5, 0, A.loc)
 
 				var/obj/machinery/power/apc/B = A.loc.loc:get_apc()//Object.turf.area find APC
-				if(B)//If APC exists. Might not if the area is unpowered like CentCom.
+				if(B)//If APC exists. Might not if the area is unpowered like Centcom.
 					var/datum/powernet/PN = B.terminal.powernet
 					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.
 						drain = rand(G.mindrain,G.maxdrain)
@@ -2719,7 +2720,7 @@ It is possible to destroy the net by the occupant or someone else.
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= Proj.damage
 		healthcheck()
-		return 0
+		..()
 
 	ex_act(severity)
 		switch(severity)

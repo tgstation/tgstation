@@ -109,6 +109,5 @@
 	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
 	icon_state = "yellow slime extract" //"potato_battery"
 	maxcharge = 10000
-	maxcharge = 10000
 	m_amt = 0
 	g_amt = 0

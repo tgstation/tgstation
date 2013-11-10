@@ -34,6 +34,9 @@
 			oct++
 		note++
 		acc = "n"
+	else if(acc == "#" && (note == 7)) //G#
+		note = 1
+		acc = "b"
 	else if(acc == "#") // mass convert all sharps to flats, octave jump already handled
 		acc = "b"
 		note++
@@ -51,7 +54,10 @@
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
 
 /datum/song/proc/shouldStopPlaying()
-	return !instrumentObj.anchored		// add special cases to stop in subclasses
+	if(instrumentObj)
+		return !instrumentObj.anchored		// add special cases to stop in subclasses
+	else
+		return 1
 
 /datum/song/proc/playsong(mob/user as mob)
 	while(repeat >= 0)
@@ -158,7 +164,7 @@
 
 
 /datum/song/Topic(href, href_list)
-	if(!in_range(instrumentObj, usr) || issilicon(usr) || !isliving(usr) || !usr.canmove || usr.restrained())
+	if(!in_range(instrumentObj, usr) || (issilicon(usr) && instrumentObj.loc != usr) || !isliving(usr) || !usr.canmove || usr.restrained())
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -187,7 +193,7 @@
 		spawn()
 			lines = text2list(t, "\n")
 			if(copytext(lines[1],1,6) == "BPM: ")
-				tempo = 600 / text2num(copytext(lines[1],6))
+				tempo = 600 / max(1, text2num(copytext(lines[1],6)))
 				lines.Cut(1,2)
 			else
 				tempo = 5 // default 120 BPM
@@ -267,17 +273,20 @@
 // subclass for handheld instruments, like violin
 /datum/song/handheld
 
-	updateDialog(mob/user as mob)
-		instrumentObj.interact(user)
+/datum/song/handheld/updateDialog(mob/user as mob)
+	instrumentObj.interact(user)
 
-	shouldStopPlaying()
+/datum/song/handheld/shouldStopPlaying()
+	if(instrumentObj)
 		return !isliving(instrumentObj.loc)
+	else
+		return 1
 
 
 //////////////////////////////////////////////////////////////////////////
 
 
-/obj/structure/device/piano
+/obj/structure/piano
 	name = "space minimoog"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "minimoog"
@@ -286,7 +295,7 @@
 	var/datum/song/song
 
 
-/obj/structure/device/piano/New()
+/obj/structure/piano/New()
 	song = new("piano", src)
 
 	if(prob(50))
@@ -298,35 +307,35 @@
 		desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
 		icon_state = "piano"
 
-/obj/structure/device/piano/attack_hand(mob/user as mob)
+/obj/structure/piano/attack_hand(mob/user as mob)
 	interact(user)
 
-/obj/structure/device/piano/interact(mob/user as mob)
+/obj/structure/piano/interact(mob/user as mob)
 	if(!user || !anchored)
 		return
 
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/wrench))
-		if (anchored)
+		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to loosen \the [src]'s casters..."
-			if (do_after(user, 40))
-				user.visible_message( \
-					"[user] loosens \the [src]'s casters.", \
-					"\blue You have loosened \the [src]. Now it can be pulled somewhere else.", \
-					"You hear ratchet.")
-				src.anchored = 0
-		else
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to tighten \the [src] to the floor..."
+			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
 			if (do_after(user, 20))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
-					"\blue You have tightened \the [src]'s casters. Now it can be played again.", \
+					"<span class='notice'> You have tightened \the [src]'s casters. Now it can be played again.</span>", \
 					"You hear ratchet.")
-				src.anchored = 1
+				anchored = 1
+		else if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
+			if (do_after(user, 40))
+				user.visible_message( \
+					"[user] loosens \the [src]'s casters.", \
+					"<span class='notice'> You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
+					"You hear ratchet.")
+				anchored = 0
 	else
 		..()

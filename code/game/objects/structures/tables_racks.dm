@@ -154,55 +154,21 @@
 						dir_sum = 2 //These translate the dir_sum to the correct dirs from the 'tabledir' icon_state.
 		if(dir_sum%16 == 15)
 			table_type = 4 //4-way intersection, the 'middle' table sprites will be used.
-
-		if(istype(src,/obj/structure/table/reinforced))
-			switch(table_type)
-				if(0)
-					icon_state = "reinf_table"
-				if(1)
-					icon_state = "reinf_1tileendtable"
-				if(2)
-					icon_state = "reinf_1tilethick"
-				if(3)
-					icon_state = "reinf_tabledir"
-				if(4)
-					icon_state = "reinf_middle"
-				if(5)
-					icon_state = "reinf_tabledir2"
-				if(6)
-					icon_state = "reinf_tabledir3"
-		else if(istype(src,/obj/structure/table/woodentable))
-			switch(table_type)
-				if(0)
-					icon_state = "wood_table"
-				if(1)
-					icon_state = "wood_1tileendtable"
-				if(2)
-					icon_state = "wood_1tilethick"
-				if(3)
-					icon_state = "wood_tabledir"
-				if(4)
-					icon_state = "wood_middle"
-				if(5)
-					icon_state = "wood_tabledir2"
-				if(6)
-					icon_state = "wood_tabledir3"
-		else
-			switch(table_type)
-				if(0)
-					icon_state = "table"
-				if(1)
-					icon_state = "table_1tileendtable"
-				if(2)
-					icon_state = "table_1tilethick"
-				if(3)
-					icon_state = "tabledir"
-				if(4)
-					icon_state = "table_middle"
-				if(5)
-					icon_state = "tabledir2"
-				if(6)
-					icon_state = "tabledir3"
+		switch(table_type)
+			if(0)
+				icon_state = "[initial(icon_state)]"
+			if(1)
+				icon_state = "[initial(icon_state)]_1tileendtable"
+			if(2)
+				icon_state = "[initial(icon_state)]_1tilethick"
+			if(3)
+				icon_state = "[initial(icon_state)]_dir"
+			if(4)
+				icon_state = "[initial(icon_state)]_middle"
+			if(5)
+				icon_state = "[initial(icon_state)]_dir2"
+			if(6)
+				icon_state = "[initial(icon_state)]_dir3"
 		if (dir_sum in list(1,2,4,8,5,6,9,10))
 			dir = dir_sum
 		else
@@ -233,12 +199,6 @@
 		new /obj/item/weapon/table_parts( src.loc )
 		del(src)
 		return
-
-
-/obj/structure/table/hand_p(mob/user as mob)
-	return src.attack_paw(user)
-	return
-
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
@@ -294,6 +254,8 @@
 		density = 0
 		del(src)
 
+/obj/structure/table/attack_tk() // no telehulk sorry
+	return
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -315,9 +277,12 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/table/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user) < 2)
 		var/obj/item/weapon/grab/G = W
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -356,8 +321,7 @@
 		return
 
 	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc // Unnecessary -  see: mob/proc/drop_item(atom)    - Doohl
-	return
+	return 1
 
 
 /*
@@ -366,13 +330,16 @@
 /obj/structure/table/woodentable
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
-	icon_state = "wood_table"
+	icon_state = "woodtable"
 
 
 /obj/structure/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -391,6 +358,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		del(src)
 		return
+
 	if(isrobot(user))
 		return
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -407,7 +375,7 @@
 
 	user.drop_item(src)
 	//if(W && W.loc)	W.loc = src.loc
-	return
+	return 1
 
 
 /*
@@ -416,7 +384,7 @@
 /obj/structure/table/reinforced
 	name = "reinforced table"
 	desc = "A version of the four legged table. It is stronger."
-	icon_state = "reinf_table"
+	icon_state = "reinftable"
 	var/status = 2
 
 
@@ -424,6 +392,9 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='notice'>You need a better grip to do that!</span>"
 			return
@@ -485,7 +456,7 @@
 
 	user.drop_item(src)
 	//if(W && W.loc)	W.loc = src.loc
-	return
+	return 1
 
 
 /*
@@ -548,17 +519,18 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 		return
+
 	if(isrobot(user))
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
-	return
+	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)
 	del(src)
 
 
-/obj/structure/table/attack_hand(mob/user)
+/obj/structure/rack/attack_hand(mob/user)
 	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -589,3 +561,5 @@
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0
 		del(src)
+/obj/structure/rack/attack_tk() // no telehulk sorry
+	return

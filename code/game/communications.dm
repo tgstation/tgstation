@@ -107,9 +107,10 @@ var/list/radiochannels = list(
 	"Deathsquad" = 1441,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
+	"Service" = 1349,
 )
 //depenging helpers
-var/list/DEPT_FREQS = list(1351,1355,1357,1213,1441,1347)
+var/list/DEPT_FREQS = list(1351,1355,1357,1213,1441,1347,1349)
 var/const/SEC_FREQ = 1359 //security, colored cyan in chat window
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213

@@ -9,19 +9,19 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/locked = 0
+	var/broken = 0
+	var/large = 1
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
-/obj/structure/closet/New()
+/obj/structure/closet/initialize()
 	..()
-	spawn(1)
-		if(!opened)		// if closed, any item at the crate's loc is put in the contents
-			for(var/obj/item/I in src.loc)
-				if(I.density || I.anchored || I == src) continue
-				I.loc = src
+	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+		take_contents()
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -42,18 +42,21 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	//Cham Projector Exception
-	for(var/obj/effect/dummy/chameleon/AD in src)
-		AD.loc = src.loc
 
-	for(var/obj/item/I in src)
-		I.loc = src.loc
+	for(var/obj/O in src)
+		O.loc = src.loc
 
 	for(var/mob/M in src)
 		M.loc = src.loc
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
+
+/obj/structure/closet/proc/take_contents()
+
+	for(var/atom/movable/AM in src.loc)
+		if(insert(AM) == -1) // limit reached
+			break
 
 /obj/structure/closet/proc/open()
 	if(src.opened)
@@ -73,42 +76,32 @@
 	density = 0
 	return 1
 
+/obj/structure/closet/proc/insert(var/atom/movable/AM)
+
+	if(contents.len >= storage_capacity)
+		return -1
+
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		if(L.buckled)
+			return 0
+		if(L.client)
+			L.client.perspective = EYE_PERSPECTIVE
+			L.client.eye = src
+	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
+		return 0
+	else if(AM.density || AM.anchored)
+		return 0
+	AM.loc = src
+	return 1
+
 /obj/structure/closet/proc/close()
 	if(!src.opened)
 		return 0
 	if(!src.can_close())
 		return 0
 
-	var/itemcount = 0
-
-	//Cham Projector Exception
-	for(var/obj/effect/dummy/chameleon/AD in src.loc)
-		if(itemcount >= storage_capacity)
-			break
-		AD.loc = src
-		itemcount++
-
-	for(var/obj/item/I in src.loc)
-		if(itemcount >= storage_capacity)
-			break
-		if(!I.anchored)
-			I.loc = src
-			itemcount++
-
-	for(var/mob/M in src.loc)
-		if(itemcount >= storage_capacity)
-			break
-		if(istype (M, /mob/dead/observer))
-			continue
-		if(M.buckled)
-			continue
-
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
-
-		M.loc = src
-		itemcount++
+	take_contents()
 
 	src.icon_state = src.icon_closed
 	src.opened = 0
@@ -179,7 +172,13 @@
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
-			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
+			if(src.large)
+				var/obj/item/weapon/grab/G = W
+				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
+			else
+				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(istype(W,/obj/item/tk_grab))
+			return 0
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -195,10 +194,7 @@
 		if(isrobot(user))
 			return
 
-		usr.drop_item()
-
-		if(W)
-			W.loc = src.loc
+		user.drop_item(src)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -211,32 +207,34 @@
 		src.update_icon()
 		for(var/mob/M in viewers(src))
 			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
-	else
+	else if(!place(user, W))
 		src.attack_hand(user)
 	return
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+/obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
+	return 0
+
+/obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob, var/needs_opened = 1, var/show_message = 1, var/move_them = 1)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
-		return
-	if(O.loc == user)
-		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
-		return
-	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
-		return
-	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return
-	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
-		return
-	if(!src.opened)
-		return
+		return 0
+	if(!isturf(O.loc))
+		return 0
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.lying)
+		return 0
+	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1))
+		return 0
+	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc? Will also check for null loc
+		return 0
+	if(needs_opened && !src.opened)
+		return 0
 	if(istype(O, /obj/structure/closet))
-		return
-	step_towards(O, src.loc)
-	if(user != O)
+		return 0
+	if(move_them)
+		step_towards(O, src.loc)
+	if(show_message && user != O)
 		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
 	src.add_fingerprint(user)
-	return
+	return 1
 
 /obj/structure/closet/relaymove(mob/user as mob)
 	if(user.stat || !isturf(src.loc))
@@ -256,6 +254,13 @@
 	return src.attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user as mob)
+	src.add_fingerprint(user)
+
+	if(!src.toggle())
+		usr << "<span class='notice'>It won't budge!</span>"
+
+// tk grab then use on self
+/obj/structure/closet/attack_self_tk(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
@@ -282,3 +287,39 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
+
+// Objects that try to exit a locker by stepping were doing so successfully,
+// and due to an oversight in turf/Enter() were going through walls.  That
+// should be independently resolved, but this is also an interesting twist.
+/obj/structure/closet/Exit(atom/movable/AM)
+	open()
+	if(AM.loc == src) return 0
+	return 1
+
+/obj/structure/closet/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2 //2 minutes by default
+	if(istype(user.loc, /obj/structure/closet/critter) && !welded)
+		breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
+
+	if(opened || (!welded && !locked))
+		return  //Door's open, not locked or welded, no point in resisting.
+
+	//okay, so the closet is either welded or locked... resist!!!
+	user.next_move = world.time + 100
+	user.last_special = world.time + 100
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	for(var/mob/O in viewers(src))
+		O << "<span class='warning'>[src] begins to shake violently!</span>"
+
+	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
+			return
+		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+
+		welded = 0 //applies to all lockers lockers
+		locked = 0 //applies to critter crates and secure lockers only
+		broken = 1 //applies to secure lockers only
+		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		open()

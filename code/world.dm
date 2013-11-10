@@ -8,12 +8,21 @@
 #define RECOMMENDED_VERSION 495
 
 /world/New()
+#if (PRELOAD_RSC == 0)
+	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
+	var/i=1
+	while(i<=external_rsc_urls.len)
+		if(external_rsc_urls[i])
+			i++
+		else
+			external_rsc_urls.Cut(i,i+1)
+#endif
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	if(revdata && istext(revdata.revision) && length(revdata.revision)>7)
-		log = file("data/logs/runtime/[copytext(revdata.revision,1,8)].log")
-	else
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
+//	if(revdata && istext(revdata.revision) && length(revdata.revision)>7)
+//		log = file("data/logs/runtime/[copytext(revdata.revision,1,8)].log")
+//	else
+//		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
@@ -80,8 +89,6 @@
 	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
-		if(config.ToRban)
-			ToRban_autoupdate()
 		if(config.kick_inactive)
 			KickInactiveClients()
 	return
@@ -99,12 +106,13 @@
 //		world << "End of Topic() call."
 //		..()
 
+
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	if (T == "ping")
 		var/x = 1
-		for (var/client/C)
+		for (var/client/C in clients)
 			x++
 		return x
 
@@ -117,6 +125,7 @@
 
 	else if (T == "status")
 		var/list/s = list()
+		// Please add new status indexes under the old ones, for the server banner (until that gets reworked)
 		s["version"] = game_version
 		s["mode"] = master_mode
 		s["respawn"] = config ? abandon_allowed : 0
@@ -124,20 +133,18 @@
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
-		s["players"] = list()
-		var/n = 0
-		var/admins = 0
 
-		for(var/client/C in clients)
+		var/admins = 0
+		for(var/client/C in admins)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
 				admins++
-			s["player[n]"] = C.key
-			n++
-		s["players"] = n
 
+		s["active_players"] = get_active_player_count()
+		s["players"] = clients.len
 		s["revision"] = revdata.revision
+		s["revision_date"] = revdata.date
 		s["admins"] = admins
 
 		return list2params(s)
@@ -159,8 +166,8 @@
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-		else
-			C << link("byond://[world.address]:[world.port]")
+
+	// Note: all clients automatically connect to the world after it restarts
 
 	..(reason)
 

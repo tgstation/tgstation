@@ -42,8 +42,10 @@
 
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	add_fingerprint(user)
+	if(issilicon(user))
+		return
 
+	add_fingerprint(user)
 	if(charging)
 		charging.update_icon()
 		charging.loc = loc
@@ -52,10 +54,16 @@
 		use_power = 1
 		update_icon()
 
-
 /obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/recharger/attack_tk(mob/user)
+	if(charging)
+		charging.update_icon()
+		charging.loc = loc
+		charging = null
+		use_power = 1
+		update_icon()
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -74,11 +82,13 @@
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
-				B.bcell.give(175)
-				icon_state = "recharger1"
-				use_power(200)
+				if(B.bcell.give(175))
+					icon_state = "recharger1"
+					use_power(200)
+				else
+					icon_state = "recharger2"
 			else
-				icon_state = "recharger2"
+				icon_state = "recharger3"
 
 
 /obj/machinery/recharger/emp_act(severity)

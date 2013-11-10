@@ -117,7 +117,7 @@ datum/controller/lighting/proc/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] lighting_controller restarted. Reports:\n"
 	for(var/varname in lighting_controller.vars)
 		switch(varname)
-			if("tag","bestF","type","parent_type","vars")	continue
+			if("tag","type","parent_type","vars")	continue
 			else
 				var/varval1 = lighting_controller.vars[varname]
 				var/varval2 = vars[varname]

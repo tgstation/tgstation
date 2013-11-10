@@ -80,6 +80,9 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>"
 		dat += "<I>This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require wizard garb.</I><BR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>"
+		dat += "<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>"
+
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
 		dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>"
 
@@ -147,14 +150,36 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
-					if(available_spells[href_list["spell_choice"]] == aspell.name)
+					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
 						already_knows = 1
-						temp = "You already know that spell."
-						uses++
-						break
+						if(aspell.spell_level >= aspell.level_max)
+							temp = "This spell cannot be improved further."
+							uses++
+							break
+						else
+							aspell.name = initial(aspell.name)
+							aspell.spell_level++
+							aspell.charge_max = round(initial(aspell.charge_max) - aspell.spell_level * (initial(aspell.charge_max) - aspell.cooldown_min)/ aspell.level_max)
+							if(aspell.charge_max < aspell.charge_counter)
+								aspell.charge_counter = aspell.charge_max
+							switch(aspell.spell_level)
+								if(1)
+									temp = "You have improved [aspell.name] into Efficient [aspell.name]."
+									aspell.name = "Efficient [aspell.name]"
+								if(2)
+									temp = "You have further improved [aspell.name] into Quickened [aspell.name]."
+									aspell.name = "Quickened [aspell.name]"
+								if(3)
+									temp = "You have further improved [aspell.name] into Free [aspell.name]."
+									aspell.name = "Free [aspell.name]"
+								if(4)
+									temp = "You have further improved [aspell.name] into Instant [aspell.name]."
+									aspell.name = "Instant [aspell.name]"
+							if(aspell.spell_level >= aspell.level_max)
+								temp += " This spell cannot be strengthened any further."
 			/*
 			*/
 				if(!already_knows)
@@ -215,6 +240,10 @@
 							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.spell_list += new /obj/effect/proc_holder/spell/targeted/horsemask(H)
 							temp = "You have learned curse of the horseman."
+						if("fleshtostone")
+							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(H)
+							temp = "You have learned flesh to stone."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.rightandwrong()

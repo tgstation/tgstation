@@ -55,7 +55,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/icepepperseed)
+	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
 
 
 /obj/item/seeds/replicapod
@@ -374,11 +374,28 @@
 	yield = 3
 	potency = 5
 	plant_type = 0
-	growthstages = 6
+	growthstages = 4
+	mutatelist = list(/obj/item/seeds/koiseed)
+
+/obj/item/seeds/koiseed
+	name = "pack of koibean seeds"
+	desc = "These seeds grow into koibean plants."
+	icon_state = "seed-koibean"
+	species = "soybean"
+	plantname = "Koibean Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
+	lifespan = 25
+	endurance = 15
+	maturation = 4
+	production = 4
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 4
 
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
-	desc = "These may, or may not, grow into weed."
+	desc = "These may, or may not, grow into wheat."
 	icon_state = "seed-wheat"
 	species = "wheat"
 	plantname = "Wheat Stalks"
@@ -849,7 +866,6 @@
 	plant_type = 0
 	growthstages = 3
 
-
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
 	desc = "These are very sour seeds."
@@ -966,10 +982,10 @@
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
-	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The tress ARE spelled cacao.
+	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The trees are spelled cacao.
 	icon_state = "seed-cocoapod"
 	species = "cocoapod"
-	plantname = "Cocao Tree" //SIC: see above
+	plantname = "Cocao Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	lifespan = 20
 	endurance = 15
@@ -1018,3 +1034,19 @@
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/spacevine_controller(user.loc)
 	del(src)
+
+/obj/item/seeds/chillighost
+	name = "pack of ghost chilli seeds"
+	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
+	icon_state = "seed-chilighost"
+	species = "chilighost"
+	plantname = "chilighost"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	lifespan = 20
+	endurance = 10
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 20
+	plant_type = 0
+	growthstages = 6

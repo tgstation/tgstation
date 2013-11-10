@@ -83,7 +83,7 @@
 		emag = new /obj/item/borg/stun(src)
 		modules += new /obj/item/weapon/rcd/borg(src)
 		modules += new /obj/item/weapon/extinguisher(src)
-		modules += new /obj/item/weapon/weldingtool/largetank(src)
+		modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 		modules += new /obj/item/weapon/screwdriver(src)
 		modules += new /obj/item/weapon/wrench(src)
 		modules += new /obj/item/weapon/crowbar(src)
@@ -100,16 +100,26 @@
 		G.amount = 50
 		modules += G
 
+		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+		R.amount = 50
+		modules += R
+
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
 		modules += W
+
+		var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
+		F.amount = 50
+		modules += F //'F' for floor tile - RR
 
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
 			/obj/item/stack/sheet/metal,
 			/obj/item/stack/sheet/rglass,
+			/obj/item/stack/rods,
 			/obj/item/weapon/cable_coil,
+			/obj/item/stack/tile/plasteel/cyborg,
 		)
 		for(var/T in what)
 			if(!(locate(T) in modules))
@@ -155,6 +165,7 @@
 		modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 		modules += new /obj/item/weapon/pen(src)
 		modules += new /obj/item/weapon/razor(src)
+		modules += new /obj/item/device/violin(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
@@ -167,7 +178,7 @@
 		modules += L
 
 		modules += new /obj/item/weapon/tray(src)
-		modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+		modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
 		emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)

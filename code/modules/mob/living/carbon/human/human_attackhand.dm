@@ -33,7 +33,7 @@
 					src << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
-			if(M == src)
+			if(M == src || anchored)
 				return 0
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
@@ -80,7 +80,7 @@
 				return 0
 
 
-			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)
@@ -96,7 +96,7 @@
 							"<span class='userdanger'>[M] has [attack_verb]ed [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if(damage >= 9)
+			if((stat != DEAD) && damage >= 9)
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
@@ -111,7 +111,7 @@
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/datum/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/randn = rand(1, 100)
 			if(randn <= 25)
 				apply_effect(2, WEAKEN, run_armor_check(affecting, "melee"))

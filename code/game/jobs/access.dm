@@ -42,8 +42,6 @@
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
 /var/const/access_court = 42
-/var/const/access_clown = 43
-/var/const/access_mime = 44
 /var/const/access_surgery = 45
 /var/const/access_theatre = 46
 /var/const/access_research = 47
@@ -181,7 +179,7 @@
 			return list(access_cent_general, access_cent_living, access_cent_storage)
 		if("Thunderdome Overseer")
 			return list(access_cent_general, access_cent_thunder)
-		if("Intel Officer")
+		if("Centcom Official")
 			return list(access_cent_general, access_cent_living)
 		if("Medical Officer")
 			return list(access_cent_general, access_cent_living, access_cent_medical)
@@ -189,9 +187,11 @@
 			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
-		if("BlackOps Commander")
+		if("Special Ops Officer")
 			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
-		if("Supreme Commander")
+		if("Admiral")
+			return get_all_centcom_access()
+		if("Centcom Commander")
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
@@ -202,13 +202,13 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway)
 
 /proc/get_all_centcom_access()
-	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
+	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
 
 /proc/get_all_syndicate_access()
 	return list(access_syndicate)
@@ -228,7 +228,7 @@
 		if(5) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
+			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer)
 		if(7) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
 
@@ -257,7 +257,7 @@
 		if(access_cargo)
 			return "Cargo Bay"
 		if(access_cargo_bot)
-			return "Cargo Bot Delivery"
+			return "Delivery Chutes"
 		if(access_security)
 			return "Security"
 		if(access_brig)
@@ -279,7 +279,7 @@
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)
-			return "Research Director"
+			return "RD Office"
 		if(access_bar)
 			return "Bar"
 		if(access_janitor)
@@ -319,7 +319,7 @@
 		if(access_armory)
 			return "Armory"
 		if(access_construction)
-			return "Construction Areas"
+			return "Construction"
 		if(access_kitchen)
 			return "Kitchen"
 		if(access_hydroponics)
@@ -333,13 +333,9 @@
 		if(access_virology)
 			return "Virology"
 		if(access_cmo)
-			return "Chief Medical Officer"
+			return "CMO Office"
 		if(access_qm)
 			return "Quartermaster"
-		if(access_clown)
-			return "HONK! Access"
-		if(access_mime)
-			return "Silent Access"
 		if(access_surgery)
 			return "Surgery"
 		if(access_theatre)
@@ -365,15 +361,15 @@
 		if(access_xenobiology)
 			return "Xenobiology Lab"
 		if(access_hop)
-			return "Head of Personnel"
+			return "HoP Office"
 		if(access_hos)
-			return "Head of Security"
+			return "HoS Office"
 		if(access_ce)
-			return "Chief Engineer"
+			return "CE Office"
 		if(access_RC_announce)
 			return "RC Announcements"
 		if(access_keycard_auth)
-			return "Keycode Auth. Device"
+			return "Keycode Auth."
 		if(access_tcomsat)
 			return "Telecommunications"
 		if(access_gateway)
@@ -408,22 +404,18 @@
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
+proc/get_all_job_icons() //For all existing HUD icons
+	return get_all_jobs() + list("Prisoner")
+
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander")
 
-/obj/proc/GetJobName()
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/jobName
-
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			jobName = src:id:assignment
-	if(istype(src, /obj/item/weapon/card/id))
-		jobName = src:assignment
-
-	if(jobName in get_all_jobs())
+/obj/item/proc/GetJobName() //Used in secHUD icon generation
+	var/obj/item/weapon/card/id/I = GetID()
+	if(!I)	return
+	var/jobName = I.assignment
+	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
-	else
-		return "Unknown"
+	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
+		return "Centcom"
+	return "Unknown" //Return unknown if none of the above apply

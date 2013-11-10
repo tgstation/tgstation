@@ -14,7 +14,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
@@ -27,7 +27,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
@@ -39,7 +39,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 	delay = 50
 
 	summon_type = list(/turf/simulated/wall/r_wall)
@@ -69,7 +69,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/obj/effect/forcefield)
-	summon_lifespan = 50
+	summon_lifespan = 200
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
@@ -85,4 +85,17 @@
 	include_user = 1
 	phaseshift = 1
 	jaunt_duration = 50 //in deciseconds
-	centcomm_cancast = 0 //Stop people from getting to centcomm
+	centcom_cancast = 0 //Stop people from getting to centcom
+
+
+/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
+	name = "Lesser Magic Missile"
+	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
+
+	school = "evocation"
+	charge_max = 400
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	proj_lifespan = 10
+	max_targets = 6

@@ -7,7 +7,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robot"
 	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/robotics"
+	circuit = /obj/item/weapon/circuitboard/robotics
 
 	var/id = 0.0
 	var/temp = null
@@ -15,15 +15,6 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
-
-
-/obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/robotics/attack_paw(var/mob/user as mob)
-
-	return src.attack_hand(user)
-	return
 
 /obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
 	if(..())
@@ -195,9 +186,9 @@
 				usr << "\red Access Denied."
 
 		else if (href_list["magbot"])
-			if(src.allowed(usr))
+			if(issilicon(usr) && is_special_character(usr))
 				var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-				if(R)
+				if(R && !R.emagged && R.connected_ai == usr && !R.scrambledcodes)
 					var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
 						if(R && istype(R))

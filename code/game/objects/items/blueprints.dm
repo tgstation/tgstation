@@ -74,7 +74,7 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/get_area()
-	var/turf/T = get_turf_loc(usr)
+	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
 	A = A.master
 	return A
@@ -101,7 +101,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/create_area()
 	//world << "DEBUG: create_area"
-	var/res = detect_room(get_turf_loc(usr))
+	var/res = detect_room(get_turf(usr))
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
@@ -131,6 +131,8 @@ move an amendment</a> to the drawing.</p>
 	A.power_environ = 0
 	A.always_unpowered = 0
 	move_turfs_to_area(turfs, A)
+	A.SetDynamicLighting()
+
 	spawn(5)
 		//ma = A.master ? "[A.master]" : "(null)"
 		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"

@@ -87,6 +87,17 @@
 		..()
 		reagents.add_reagent("mutagen", 30)
 
+
+/obj/item/weapon/reagent_containers/glass/bottle/synaptizine
+	name = "synaptizine bottle"
+	desc = "A small bottle of synaptizine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle20"
+
+	New()
+		..()
+		reagents.add_reagent("synaptizine", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A small bottle."
@@ -204,12 +215,10 @@
 	amount_per_transfer_from_this = 5
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/gbs
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/fake_gbs
 	name = "GBS culture bottle"
@@ -230,9 +239,7 @@
 	amount_per_transfer_from_this = 5
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/rhumba_beat
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)

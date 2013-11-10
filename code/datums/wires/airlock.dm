@@ -58,7 +58,12 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 					A.shock(usr, 50)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
-			if(mended)
+
+			if(!mended)
+				//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
+				A.loseBackupPower()
+				A.shock(usr, 50)
+			else
 				if((!IsIndexCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!IsIndexCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 					A.regainBackupPower()
 					A.shock(usr, 50)
@@ -70,13 +75,6 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				if(A.locked!=1)
 					A.locked = 1
 				A.update_icon()
-
-		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
-
-			if(!mended)
-				//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
-				A.loseBackupPower()
-				A.shock(usr, 50)
 
 		if(AIRLOCK_WIRE_AI_CONTROL)
 
@@ -127,7 +125,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 		if(AIRLOCK_WIRE_IDSCAN)
 			//Sending a pulse through this flashes the red light on the door (if the door has power).
 			if((A.arePowerSystemsOn()) && (!(A.stat & NOPOWER)))
-				A.animate("deny")
+				A.do_animate("deny")
 		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
 			A.loseMainPower()
@@ -192,3 +190,4 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
+			A.update_icon()

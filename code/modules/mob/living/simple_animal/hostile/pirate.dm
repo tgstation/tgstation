@@ -6,9 +6,9 @@
 	icon_dead = "piratemelee_dead"
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "pushes the"
+	response_help = "pushes"
 	response_disarm = "shoves"
-	response_harm = "hits the"
+	response_harm = "hits"
 	speed = -1
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
@@ -33,6 +33,7 @@
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
 	faction = "pirate"
+	idle_env_destroyer = 0
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"

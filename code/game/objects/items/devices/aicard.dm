@@ -1,6 +1,6 @@
 /obj/item/device/aicard
 	name = "inteliCard"
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
 	w_class = 2.0
@@ -39,14 +39,15 @@
 		for(var/mob/living/silicon/ai/A in src)
 			dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
 
+			if (A.laws.zeroth)
+				laws += "0: [A.laws.zeroth]<BR>"
+
 			for (var/index = 1, index <= A.laws.ion.len, index++)
 				var/law = A.laws.ion[index]
 				if (length(law) > 0)
 					var/num = ionnum()
-					laws += "[num]. [law]"
+					laws += "[num]. [law]<BR>"
 
-			if (A.laws.zeroth)
-				laws += "0: [A.laws.zeroth]<BR>"
 
 			var/number = 1
 			for (var/index = 1, index <= A.laws.inherent.len, index++)
@@ -117,9 +118,9 @@
 					A.control_disabled = !A.control_disabled
 					A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
 					if (A.control_disabled)
-						overlays -= image('icons/obj/pda.dmi', "aicard-on")
+						overlays -= image('icons/obj/aicards.dmi', "aicard-on")
 					else
-						overlays += image('icons/obj/pda.dmi', "aicard-on")
+						overlays += image('icons/obj/aicards.dmi', "aicard-on")
 		attack_self(U)
 
 

@@ -9,9 +9,9 @@
 	speak_chance = 0
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
-	response_help = "brushes the"
-	response_disarm = "pushes the"
-	response_harm = "hits the"
+	response_help = "brushes"
+	response_disarm = "pushes"
+	response_harm = "hits"
 	speed = -1
 	maxHealth = 250
 	health = 250

@@ -57,7 +57,10 @@
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	sleep(10)
+
+	cover = new /obj/machinery/porta_turret_cover(loc)
+	cover.Parent_Turret = src
+
 	if(!installation)	//if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 		projectile = /obj/item/projectile/energy/electrode	//holder for the projectile, here it is being set
 		eprojectile = /obj/item/projectile/beam				//holder for the projectile when emagged, if it is different
@@ -71,7 +74,7 @@
 			if(/obj/item/weapon/gun/energy/laser/bluetag)
 				eprojectile = /obj/item/projectile/omnitag	//This bolt will stun ERRYONE with a vest
 				lasercolor = "b"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
+				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
 				criminals = 0
 				auth_weapons = 1
@@ -82,7 +85,7 @@
 			if(/obj/item/weapon/gun/energy/laser/redtag)
 				eprojectile = /obj/item/projectile/omnitag
 				lasercolor = "r"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
+				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
 				criminals = 0
 				auth_weapons = 1
@@ -95,15 +98,15 @@
 				iconholder = 1
 				eprojectile = /obj/item/projectile/beam
 
-			if(/obj/item/weapon/gun/energy/laser/practice/sc_laser)
-				iconholder = 1
-				eprojectile = /obj/item/projectile/beam
+//			if(/obj/item/weapon/gun/energy/laser/practice/sc_laser)
+//				iconholder = 1
+//				eprojectile = /obj/item/projectile/beam
 
 			if(/obj/item/weapon/gun/energy/laser/retro)
 				iconholder = 1
 
-			if(/obj/item/weapon/gun/energy/laser/retro/sc_retro)
-				iconholder = 1
+//			if(/obj/item/weapon/gun/energy/laser/retro/sc_retro)
+//				iconholder = 1
 
 			if(/obj/item/weapon/gun/energy/laser/captain)
 				iconholder = 1
@@ -269,14 +272,14 @@
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return
 		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored)
+		if(!anchored && !isinspace())
 			anchored = 1
 			invisibility = INVISIBILITY_LEVEL_TWO
 			icon_state = "[lasercolor]grey_target_prism"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 			cover.Parent_Turret = src //make the cover's parent src
-		else
+		else if(anchored)
 			anchored = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			icon_state = "turretCover"
@@ -521,10 +524,10 @@
 			if(allowed(perp) && !lasercolor) //if the perp has security access, return 0
 				return 0
 
-			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun/doublebarrel)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
+			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/revolver/doublebarrel)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
-			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun/doublebarrel)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
+			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/revolver/doublebarrel)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
 			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
@@ -549,18 +552,10 @@
 			threatcount += 2
 
 	if(check_records)	//if the turret can check the records, check if they are set to *Arrest* on records
-		for(var/datum/data/record/E in data_core.general)
-			var/perpname = perp.name
-			if(perp.wear_id)
-				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
-				if(id)
-					perpname = id.registered_name
-
-			if(E.fields["name"] == perpname)
-				for(var/datum/data/record/R in data_core.security)
-					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-						threatcount = 4
-						break
+		var/perpname = perp.get_face_name(perp.get_id_name())
+		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		if(!R || (R.fields["criminal"] == "*Arrest*"))
+			threatcount += 4
 
 	return threatcount
 
@@ -657,8 +652,11 @@
 					I:amount -= 2
 					icon_state = "turret_frame2"
 					if(I:amount <= 0)
+						user.before_take_item(I)
 						del(I)
-					return
+				else
+					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -702,6 +700,7 @@
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
+				user.before_take_item(I)
 				del(I) //delete the gun :(
 				return
 
@@ -715,6 +714,7 @@
 			if(isprox(I))
 				build_step = 5
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
+				user.before_take_item(I)
 				del(I)
 				return
 
@@ -736,8 +736,11 @@
 					build_step = 7
 					I:amount -= 2
 					if(I:amount <= 0)
+						user.before_take_item(I)
 						del(I)
-					return
+				else
+					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -768,7 +771,6 @@
 //					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
 //					Turret.cover.Parent_Turret=Turret
 //					Turret.cover.name = finish_name
-					Turret.New()
 					del(src)
 
 			else if(istype(I, /obj/item/weapon/crowbar))
@@ -809,6 +811,9 @@
 			user << "<span class='notice'>You remove the prox sensor from the turret frame.</span>"
 			new /obj/item/device/assembly/prox_sensor(loc)
 			build_step = 4
+
+/obj/machinery/porta_turret_construct/attack_ai()
+	return
 
 
 /************************

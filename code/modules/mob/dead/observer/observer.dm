@@ -37,10 +37,7 @@
 			if(body.real_name)
 				name = body.real_name
 			else
-				if(gender == MALE)
-					name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-				else
-					name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+				name = random_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
@@ -48,7 +45,7 @@
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
-		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+		name = random_name(gender)
 	real_name = name
 	..()
 
@@ -74,6 +71,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	if(stat != DEAD)
+		succumb()
 	if(stat == DEAD)
 		ghostize(1)
 	else
@@ -88,7 +87,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
-			S.HasEntered(src)
+			S.Crossed(src)
 
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
@@ -102,7 +101,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		x--
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
-		S.HasEntered(src)
+		S.Crossed(src)
 
 /mob/dead/observer/examine()
 	if(usr)

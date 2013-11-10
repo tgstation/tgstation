@@ -20,7 +20,7 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
-
+	handle_fire()
 
 
 
@@ -67,7 +67,7 @@
 		else
 			src.camera.status = 1
 
-	health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
+	health = maxHealth - (getOxyLoss() + getFireLoss() + getBruteLoss())
 
 	if(getOxyLoss() > 50) Paralyse(3)
 
@@ -78,10 +78,20 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != 2) //die only once
+	if(health <= config.health_threshold_dead && src.stat != 2) //die only once
 		death()
 
 	if (src.stat != 2) //Alive.
+		if(health < 50) //Gradual break down of modules as more damage is sustained
+			if(uneq_module(module_state_3))
+				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
+			if(health < 0)
+				if(uneq_module(module_state_2))
+					src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
+				if(health < -50)
+					if(uneq_module(module_state_1))
+						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
+
 		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
 			src.stat = 1
 			if (src.stunned > 0)
@@ -167,17 +177,15 @@
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
-				if(200 to INFINITY)
+				if(100 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(150 to 200)
-					src.healths.icon_state = "health1"
-				if(100 to 150)
-					src.healths.icon_state = "health2"
 				if(50 to 100)
-					src.healths.icon_state = "health3"
+					src.healths.icon_state = "health2"
 				if(0 to 50)
+					src.healths.icon_state = "health3"
+				if(-50 to 0)
 					src.healths.icon_state = "health4"
-				if(config.health_threshold_dead to 0)
+				if(config.health_threshold_dead to -50)
 					src.healths.icon_state = "health5"
 				else
 					src.healths.icon_state = "health6"
@@ -297,6 +305,26 @@
 				src << "\red <B>Weapon Lock Timed Out!"
 			weapon_lock = 0
 			weaponlock_time = 120
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
+		return
+	adjustFireLoss(3)
+	return
+
+/mob/living/silicon/robot/update_fire()
+	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	if(on_fire)
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	update_icons()
+	return
+
+/mob/living/silicon/robot/fire_act()
+	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
+		IgniteMob()
+
+//Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
 	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0

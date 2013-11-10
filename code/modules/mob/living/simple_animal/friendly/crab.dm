@@ -11,9 +11,9 @@
 	speak_chance = 1
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "stomps the"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "stomps"
 	stop_automated_movement = 1
 	friendly = "pinches"
 	var/obj/item/inventory_head
@@ -60,20 +60,20 @@
 						del(MED)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies the [MED] on [src]")
+							M.show_message("\blue [user] applies [MED] on [src]")
 		else
-			user << "\blue this [src] is dead, medical items won't bring it back to life."
+			user << "\blue this crab is dead, medical items won't bring it back to life."
 	else
 		if(O.force)
 			health -= O.force
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
 			usr << "\red This weapon is ineffective, it does no damage."
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+					M.show_message("\red [user] gently taps [src] with [O]. ")
 
 /mob/living/simple_animal/crab/GetMad()
 	name = "MEGAMADCRAB"

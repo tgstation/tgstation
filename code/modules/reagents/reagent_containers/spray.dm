@@ -4,7 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -57,14 +57,14 @@
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from a spray bottle.")
-		log_game("[key_name(user)] fired sulphuric acid from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
+		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
 	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from a spray bottle.")
-		log_game("[key_name(user)] fired Polyacid from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired Polyacid from \a [src].")
+		log_game("[key_name(user)] fired Polyacid from \a [src].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from a spray bottle.")
-		log_game("[key_name(user)] fired Space lube from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired Space lube from \a [src].")
+		log_game("[key_name(user)] fired Space lube from \a [src].")
 	return
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
@@ -88,8 +88,8 @@
 
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
-	if(isturf(usr.loc))
-		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"
+	if(isturf(usr.loc) && src.loc == usr)
+		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
 
@@ -118,6 +118,22 @@
 	..()
 	reagents.add_reagent("condensedcapsaicin", 40)
 
+//water flower
+/obj/item/weapon/reagent_containers/spray/waterflower
+	name = "water flower"
+	desc = "A seemingly innocent sunflower...with a twist."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "sunflower"
+	item_state = "sunflower"
+	amount_per_transfer_from_this = 1
+	volume = 10
+
+/obj/item/weapon/reagent_containers/spray/waterflower/New()
+	..()
+	reagents.add_reagent("water", 10)
+
+/obj/item/weapon/reagent_containers/spray/waterflower/attack_self(var/mob/user) //Don't allow changing how much the flower sprays
+	return
 
 //chemsprayer
 /obj/item/weapon/reagent_containers/spray/chemsprayer
@@ -205,6 +221,14 @@
 		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
 	return
 
+/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
+	..()
+	reagents.add_reagent("spore", 150)
+	reagents.add_reagent("cryptobiolin", 150)
+	reagents.add_reagent("mutagen", 150)
+	reagents.add_reagent("chloralhydrate", 150)
+
+
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
@@ -218,13 +242,3 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/New()
 	..()
 	reagents.add_reagent("plantbgone", 100)
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-		return
-
-	if (istype(A, /obj/effect/blob)) // blob damage in blob code
-		return
-
-	..()

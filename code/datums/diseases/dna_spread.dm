@@ -44,7 +44,7 @@
 
 				affected_mob << "\red You don't feel like yourself.."
 				affected_mob.dna.uni_identity = strain_data["UI"]
-				updateappearance(affected_mob, affected_mob.dna.uni_identity)
+				updateappearance(affected_mob)
 				affected_mob.dna.struc_enzymes = strain_data["SE"]
 				affected_mob.real_name = strain_data["name"]
 				domutcheck(affected_mob)
@@ -57,7 +57,7 @@
 /datum/disease/dnaspread/Del()
 	if ((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
 		affected_mob.dna.uni_identity = original_dna["UI"]
-		updateappearance(affected_mob, affected_mob.dna.uni_identity)
+		updateappearance(affected_mob)
 		affected_mob.dna.struc_enzymes = original_dna["SE"]
 		affected_mob.real_name = original_dna["name"]
 

@@ -9,7 +9,7 @@
 	name = "record"
 	extension = "REC"
 
-	var/list/fields = list(  )
+	var/list/fields = list()
 
 
 //base pda program

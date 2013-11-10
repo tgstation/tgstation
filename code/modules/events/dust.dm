@@ -87,7 +87,7 @@
 
 				if(ismob(A))
 					A.meteorhit(src)//This should work for now I guess
-				else if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator)) //Protect the singularity from getting released every round!
+				else if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field/generator)) //Protect the singularity from getting released every round!
 					A.ex_act(strength) //Changing emitter/field gen ex_act would make it immune to bombs and C4
 
 				life--

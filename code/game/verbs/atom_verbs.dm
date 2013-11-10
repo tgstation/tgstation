@@ -1,9 +1,10 @@
 /atom/movable/verb/pull()
 	set name = "Pull"
-	set category = "IC"
+	set category = "Object"
 	set src in oview(1)
 
-	usr.start_pulling(src)
+	if(Adjacent(usr))
+		usr.start_pulling(src)
 	return
 
 /atom/verb/point()
@@ -24,8 +25,9 @@
 	if (!tile)
 		return
 
-	var/P = new /obj/effect/decal/point(tile)
+	var/obj/P = new /obj/effect/decal/point(tile)
 	spawn (20)
-		if(P)	del(P)
+		if(P)
+			P.loc = null
 
 	usr.visible_message("<b>[usr]</b> points to [this]")

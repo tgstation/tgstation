@@ -17,9 +17,7 @@
 	var/potency = 1
 	var/plant_type = 0
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+		create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -64,6 +62,7 @@
 	damtype = "fire"
 	force = 0
 	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -79,6 +78,7 @@
 	damtype = "fire"
 	force = 0
 	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1

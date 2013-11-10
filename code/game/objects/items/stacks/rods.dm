@@ -64,3 +64,6 @@
 		F.add_fingerprint(usr)
 		use(2)
 	return
+
+/obj/item/stack/rods/cyborg/
+	m_amt = 0

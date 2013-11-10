@@ -156,7 +156,7 @@ turf/simulated
 			else
 				air_master.active_singletons.Remove(src)
 		if(active_hotspot)
-			active_hotspot.Kill()
+			active_hotspot.garbage_collect()
 		if(air_master && blocks_air)
 			for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 				var/turf/simulated/tile = get_step(src,direction)
@@ -262,16 +262,14 @@ turf/simulated
 						//See what kind of border it is
 						if(istype(T,/turf/space))
 							if(parent.space_borders)
-								parent.space_borders -= src
-								parent.space_borders += src
+								parent.space_borders |= src
 							else
 								parent.space_borders = list(src)
 							length_space_border++
 
 						else
 							if(parent.borders)
-								parent.borders -= src
-								parent.borders += src
+								parent.borders |= src
 							else
 								parent.borders = list(src)
 

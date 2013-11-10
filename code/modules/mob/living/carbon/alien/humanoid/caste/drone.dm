@@ -7,9 +7,7 @@
 	plasma_rate = 15
 
 /mob/living/carbon/alien/humanoid/drone/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 	if(src.name == "alien drone")
 		src.name = text("alien drone ([rand(1, 1000)])")
 	src.real_name = src.name
@@ -27,7 +25,7 @@
 		// Queen check
 		var/no_queen = 1
 		for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-			if(!Q.key || !getbrain(Q))
+			if(!Q.key || !Q.getorgan(/obj/item/organ/brain))
 				continue
 			no_queen = 0
 

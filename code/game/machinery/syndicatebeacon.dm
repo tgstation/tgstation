@@ -39,6 +39,8 @@
 		onclose(user, "syndbeacon")
 
 	Topic(href, href_list)
+		if(..())
+			return
 		if(href_list["betraitor"])
 			if(charges < 1)
 				src.updateUsrDialog()
@@ -90,7 +92,6 @@
 					M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 					obj_count++
 
-		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		return
 
@@ -106,17 +107,23 @@
 	name = "suspicious beacon"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
-	desc = "A label on it reads: <i>Activate to have a singularity beacon teleported to your location</i>."
+	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
 	origin_tech = "bluespace=1;syndicate=7"
 	w_class = 2
+	var/droptype = /obj/machinery/singularity_beacon/syndicate
+
 
 /obj/item/device/sbeacondrop/attack_self(mob/user as mob)
 	if(user)
 		user << "\blue Locked In"
-		new /obj/machinery/singularity_beacon/syndicate( user.loc )
+		new droptype( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		del(src)
 	return
+
+/obj/item/device/sbeacondrop/bomb
+	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
+	droptype = /obj/machinery/syndicatebomb
 
 #define SCREWED 32
 

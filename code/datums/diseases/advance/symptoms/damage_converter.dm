@@ -26,7 +26,7 @@ Bonus
 
 /datum/symptom/damage_converter/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
@@ -35,7 +35,7 @@ Bonus
 
 /datum/symptom/damage_converter/proc/Convert(var/mob/living/M)
 
-	if(M.getFireLoss() < M.getMaxHealth() || M.getBruteLoss() < M.getMaxHealth())
+	if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
 		var/get_damage = rand(1, 2)
 		M.adjustFireLoss(-get_damage)
 		M.adjustBruteLoss(-get_damage)

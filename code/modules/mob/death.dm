@@ -13,8 +13,7 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
-//	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
+	gibs(loc, viruses)
 
 	dead_mob_list -= src
 	spawn(15)

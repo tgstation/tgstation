@@ -30,18 +30,6 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
-	meat2
-		input = /obj/item/weapon/syntiflesh
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-/*
-	monkeymeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-
-	humanmeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-*/
 	potato
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 		output = /obj/item/weapon/reagent_containers/food/snacks/fries
@@ -96,8 +84,9 @@
 				for(var/datum/disease/D in O.viruses)
 					if(D.spread_type != SPECIAL)
 						B.data["viruses"] += D.Copy()
+				if(check_dna_integrity(O))
+					B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 
-				B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 				if(O.resistances&&O.resistances.len)
 					B.data["resistances"] = O.resistances.Copy()
 				bucket_of_blood.reagents.reagent_list += B

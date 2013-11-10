@@ -9,13 +9,6 @@
 	var/damaged = 0
 	var/last_change = 0
 
-
-	attack_ai(var/mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_paw(var/mob/user as mob)
-		return
-
 	attack_hand(var/mob/user as mob)
 
 		if(..())
@@ -24,7 +17,7 @@
 
 		var/dat = "<h3>Current Loaded Programs</h3>"
 		dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
-		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Boxing Court)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Dodgeball Arena)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
@@ -122,43 +115,16 @@
 
 
 /obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-//Warning, uncommenting this can have concequences. For example, deconstructing the computer may cause holographic eswords to never derez
 
-/*		if(istype(D, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(do_after(user, 20))
-				if (src.stat & BROKEN)
-					user << "\blue The broken glass falls out."
-					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					new /obj/item/weapon/shard( src.loc )
-					var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
-					for (var/obj/C in src)
-						C.loc = src.loc
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					del(src)
-				else
-					user << "\blue You disconnect the monitor."
-					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
-					for (var/obj/C in src)
-						C.loc = src.loc
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					del(src)
-
-*/
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
 		log_game("[key_name(usr)] emagged the Holodeck Control Console")
-	src.updateUsrDialog()
+		src.updateUsrDialog()
+	else
+		..()
 	return
 
 /obj/machinery/computer/HolodeckControl/New()
@@ -249,32 +215,10 @@
 
 	return 1
 
-/obj/machinery/computer/HolodeckControl/proc/togglePower(var/toggleOn = 0)
-
-	if(toggleOn)
-		var/area/targetsource = locate(/area/holodeck/source_emptycourt)
-		holographic_items = targetsource.copy_contents_to(linkedholodeck)
-
-		spawn(30)
-			for(var/obj/effect/landmark/L in linkedholodeck)
-				if(L.name=="Atmospheric Test Start")
-					spawn(20)
-						var/turf/T = get_turf(L)
-						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-						s.set_up(2, 1, T)
-						s.start()
-						if(T)
-							T.temperature = 5000
-							T.hotspot_expose(50000,50000,1)
-
-		active = 1
-	else
-		for(var/item in holographic_items)
-			derez(item)
-		var/area/targetsource = locate(/area/holodeck/source_plating)
-		targetsource.copy_contents_to(linkedholodeck , 1)
-		active = 0
-
+/obj/machinery/computer/HolodeckControl/power_change()
+	..()
+	if(stat & NOPOWER)
+		emergencyShutdown()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
 
@@ -320,16 +264,17 @@
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
-	//Get rid of any items
-	for(var/item in holographic_items)
-		derez(item)
-	//Turn it back to the regular non-holographic room
-	target = locate(/area/holodeck/source_plating)
-	if(target)
-		loadProgram(target)
+	if(!istype(target,/area/holodeck/source_plating))
+		//Get rid of any items
+		for(var/item in holographic_items)
+			derez(item)
+		//Turn it back to the regular non-holographic room
+		target = locate(/area/holodeck/source_plating)
+		if(target)
+			loadProgram(target)
 
-	var/area/targetsource = locate(/area/holodeck/source_plating)
-	targetsource.copy_contents_to(linkedholodeck , 1)
+		var/area/targetsource = locate(/area/holodeck/source_plating)
+		targetsource.copy_contents_to(linkedholodeck , 1)
 	active = 0
 
 
@@ -363,25 +308,8 @@
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
 
-
-
-
-
-
-
-
-
-
 /obj/structure/table/holotable
 	name = "table"
-	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "table"
-	density = 1
-	anchored = 1.0
-	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.
-
 
 /obj/structure/table/holotable/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -415,14 +343,6 @@
 	if(isrobot(user))
 		return
 
-
-
-/obj/item/clothing/gloves/boxing/hologlove
-	name = "boxing gloves"
-	desc = "Because you really needed another excuse to punch your crewmates."
-	icon_state = "boxing"
-	item_state = "boxing"
-
 /obj/structure/holowindow
 	name = "reinforced window"
 	icon = 'icons/obj/structures.dmi'
@@ -454,11 +374,11 @@
 
 /obj/item/weapon/holo/esword/green
 	New()
-		color = "green"
+		item_color = "green"
 
 /obj/item/weapon/holo/esword/red
 	New()
-		color = "red"
+		item_color = "red"
 
 /obj/item/weapon/holo/esword/IsShield()
 	if(active)
@@ -469,13 +389,13 @@
 	..()
 
 /obj/item/weapon/holo/esword/New()
-	color = pick("red","blue","green","purple")
+	item_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[color]"
+		icon_state = "sword[item_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
@@ -491,16 +411,31 @@
 //BASKETBALL OBJECTS
 
 /obj/item/weapon/beach_ball/holoball
+	name = "basketball"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
-	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = 4 //Stops people from hiding it in their bags/pockets
 
+/obj/item/weapon/beach_ball/holoball/dodgeball
+	name = "dodgeball"
+	icon_state = "dodgeball"
+	item_state = "dodgeball"
+	desc = "Used for playing the most violent and degrading of childhood games."
+
+/obj/item/weapon/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+	if((ishuman(hit_atom)))
+		var/mob/living/carbon/M = hit_atom
+		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
+		M.apply_damage(10, HALLOSS)
+		if(prob(5))
+			M.Weaken(3)
+			visible_message("\red [M] is knocked right off \his feet!", 3)
+
 /obj/structure/holohoop
 	name = "basketball hoop"
-	desc = "Boom, Shakalaka!."
+	desc = "Boom, shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
 	anchored = 1
@@ -526,7 +461,7 @@
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
-		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(50))
 			I.loc = src.loc

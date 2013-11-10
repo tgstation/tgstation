@@ -58,7 +58,7 @@
 				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
 				return 0
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
 				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if(wrapped)
 					return 0
@@ -100,7 +100,7 @@
 	return 0
 
 
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
 	return
 
 
@@ -122,10 +122,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
-	if(istype(W,/obj/item/weapon/storage))
-		..() // -> item/attackby()
+		return 0
 	if((slices_num <= 0 || !slices_num) || !slice_path)
-		return 1
+		return 0
 	var/inaccurate = 0
 	if( \
 			istype(W, /obj/item/weapon/kitchenknife) || \
@@ -143,7 +142,7 @@
 		inaccurate = 1
 	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 		if(!iscarbon(user))
-			return 1
+			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
 		user.u_equip(W)
 		if ((user.client && user.s_active != src))
@@ -151,9 +150,10 @@
 		W.dropped(user)
 		add_fingerprint(user)
 		contents += W
-		return
+		return 1 // no afterattack here
 	else
-		return 1
+		return 0 // --- this is everything that is NOT a slicing implement, and which is not being slipped into food; allow afterattack ---
+
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
@@ -162,6 +162,7 @@
 		)
 		user << "<span class='notice'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1
+
 	var/slices_lost = 0
 	if (!inaccurate)
 		user.visible_message( \
@@ -178,7 +179,7 @@
 	for(var/i=1 to (slices_num-slices_lost))
 		var/obj/slice = new slice_path (src.loc)
 		reagents.trans_to(slice,reagents_per_slice)
-	del(src)
+	del(src) // so long and thanks for all the fish
 
 
 /obj/item/weapon/reagent_containers/food/snacks/Del()
@@ -348,8 +349,7 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sprinkles", 1)
 		bitesize = 10
-		var/chaosselect = pick(1,2,3,4,5,6,7,8,9,10)
-		switch(chaosselect)
+		switch(rand(1,10))
 			if(1)
 				reagents.add_reagent("nutriment", 3)
 			if(2)
@@ -447,41 +447,41 @@
 
 			usr << "<span class='notice'>You colour [src] [clr].</span>"
 			icon_state = "egg-[clr]"
-			color = clr
+			item_color = clr
 		else
 			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
-	color = "blue"
+	item_color = "blue"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
-	color = "green"
+	item_color = "green"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
-	color = "mime"
+	item_color = "mime"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
-	color = "orange"
+	item_color = "orange"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
-	color = "purple"
+	item_color = "purple"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
-	color = "rainbow"
+	item_color = "rainbow"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
-	color = "red"
+	item_color = "red"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
-	color = "yellow"
+	item_color = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "fried egg"
@@ -502,13 +502,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
-/*/obj/item/weapon/reagent_containers/food/snacks/flour //Has been converted into a reagent. Use that instead of the item!
-	name = "flour"
-	desc = "Some flour"
-	icon_state = "flour"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)*/
+// /obj/item/weapon/reagent_containers/food/snacks/flour //Has been converted into a reagent. Use that instead of the item!
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "tofu"
@@ -518,7 +512,6 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 3
-
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
@@ -530,6 +523,10 @@
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
+	name = "imitation carp fillet"
+	desc = "Almost just like the real thing, kinda."
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "fish fingers"
@@ -657,6 +654,15 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/appendixburger
+	name = "appendix burger"
+	desc = "Tastes like appendicitis."
+	icon_state = "hburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "fillet -o- carp sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
@@ -754,12 +760,22 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "muffin"
-	desc = "A delicious and spongy little cake"
+	desc = "A delicious and spongy little cake."
 	icon_state = "muffin"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin/berry
+	name = "berry muffin"
+	icon_state = "berrymuffin"
+	desc = "A delicious and spongy little cake, with berries."
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
+	name = "booberry muffin"
+	icon_state = "booberrymuffin"
+	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "banana cream pie"
@@ -1079,7 +1095,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "meat steak"
 	desc = "A piece of hot spicy meat."
-	icon_state = "meatstake"
+	icon_state = "meatsteak"
 	trash = /obj/item/trash/plate
 	New()
 		..()
@@ -1120,7 +1136,6 @@
 		..()
 		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
-
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
 	name = "meatball soup"
@@ -1171,7 +1186,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 	name = "vegetable soup"
-	desc = "A true vegan meal" //TODO
+	desc = "A true vegan meal"
 	icon_state = "vegetablesoup"
 	trash = /obj/item/trash/snack_bowl
 	New()
@@ -1202,8 +1217,7 @@
 	New()
 		..()
 		eatverb = pick("slurp","sip","suck","inhale","drink")
-		var/mysteryselect = pick(1,2,3,4,5,6,7,8,9,10)
-		switch(mysteryselect)
+		switch(rand(1,10))
 			if(1)
 				reagents.add_reagent("nutriment", 6)
 				reagents.add_reagent("capsaicin", 3)
@@ -1309,7 +1323,8 @@
 		..()
 		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O, mob/user)
+	afterattack(obj/O, mob/user,proximity)
+		if(!proximity) return
 		if(istype(O,/obj/structure/sink) && !wrapped)
 			user << "<span class='notice'>You place [src] under a stream of water...</span>"
 			user.drop_item()
@@ -1361,7 +1376,6 @@
 	name = "enchiladas"
 	desc = "Viva La Mexico!"
 	icon_state = "enchiladas"
-	trash = /obj/item/trash/tray
 	New()
 		..()
 		reagents.add_reagent("nutriment",8)
@@ -1370,9 +1384,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 	name = "monkey's delight"
-	desc = "Eeee Eee!"
+	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
-	trash = /obj/item/trash/tray
+	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -1460,6 +1474,7 @@
 	name = "stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
+	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
 		eatverb = pick("slurp","sip","suck","inhale","drink")
@@ -1551,6 +1566,17 @@
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("tomatojuice", 10)
 		bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/copypasta
+	name = "copypasta"
+	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."
+	icon_state = "copypasta"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("tomatojuice", 20)
+		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 	name = "spagetti and meatballs"
@@ -2325,3 +2351,81 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
+
+
+////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/wrap
+	name = "egg wrap"
+	desc = "The precursor to Pigs in a Blanket."
+	icon_state = "wrap"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/beans
+	name = "tin of beans"
+	desc = "Musical fruit in a slightly less musical container."
+	icon_state = "beans"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/benedict
+	name = "eggs benedict"
+	desc = "There is only one egg on this, how rude."
+	icon_state = "benedict"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/hotdog
+	name = "hotdog"
+	desc = "Fresh footlong ready to go down on."
+	icon_state = "hotdog"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("ketchup", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbun
+	name = "meat bun"
+	desc = "Has the potential to not be Dog."
+	icon_state = "meatbun"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+	name = "icecream sandwich"
+	desc = "Portable Ice-cream in it's own packaging."
+	icon_state = "icecreamsandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("ice", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/notasandwich
+	name = "not-a-sandwich"
+	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
+	icon_state = "notasandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+	name = "sugar cookie"
+	desc = "Just like your little sister used to make."
+	icon_state = "sugarcookie"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 5)
+		bitesize = 2

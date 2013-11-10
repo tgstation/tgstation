@@ -1,5 +1,10 @@
 /obj/item/clothing
 	name = "clothing"
+	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = null
+	var/visor_flags_inv = null
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -25,6 +30,7 @@
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
+	var/emagged = 0
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -53,13 +59,16 @@ BLIND     // can't see anything
 	..()
 	return
 
+// Called just before an attack_hand(), in mob/UnarmedAttack()
+/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+	return 0 // return 1 to cancel attack_hand()
+
 //Head
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-
 
 //Mask
 /obj/item/clothing/mask
@@ -109,6 +118,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flash_protect = 2
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -139,6 +149,7 @@ BLIND     // can't see anything
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/fitted = 1// For use in alternate clothing styles for women, if clothes vary from a jumpsuit in shape, set this to 0
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
@@ -181,6 +192,13 @@ BLIND     // can't see anything
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
 		usr << "\A [hastie] is clipped to it."
+
+atom/proc/generate_uniform(index,t_color)
+	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
+	female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
+	female_uniform_icon 			= fcopy_rsc(female_uniform_icon)
+	female_uniform_icons[index] = female_uniform_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
@@ -227,3 +245,29 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)
 	..()
+
+/obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(up)
+			up = !up
+			flags |= (visor_flags)
+			flags_inv |= (visor_flags_inv)
+			icon_state = initial(icon_state)
+			usr << "You flip the [src] down to protect your eyes."
+			flash_protect = initial(flash_protect)
+			tint = initial(tint)
+		else
+			up = !up
+			flags &= ~(visor_flags)
+			flags_inv &= ~(visor_flags_inv)
+			icon_state = "[initial(icon_state)]up"
+			usr << "You push the [src] up out of your face."
+			flash_protect = 0
+			tint = 0
+
+	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
+		usr.update_inv_head(0)
+	if(istype(src, /obj/item/clothing/glasses))
+		usr.update_inv_glasses(0)
+	if(istype(src, /obj/item/clothing/mask))
+		usr.update_inv_wear_mask(0)

@@ -60,26 +60,28 @@
 			active = 1
 			icon_state = initial(icon_state) + "_active"
 			add_fingerprint(user)
+			var/turf/bombturf = get_turf(src)
+			var/area/A = get_area(bombturf)
+			var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+			message_admins(log_str)
+			log_game(log_str)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 			spawn(det_time)
-				if(user)
-					user.drop_item()
 				prime()
-				return
-	return
 
 
 /obj/item/weapon/grenade/proc/prime()
-//	playsound(loc, 'sound/items/Welder2.ogg', 25, 1)
-	var/turf/T = get_turf(src)
-	if(T)
-		T.hotspot_expose(700,125)
+
+/obj/item/weapon/grenade/proc/update_mob()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.drop_from_inventory(src)
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isscrewdriver(W))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(det_time)
 			if ("1")
 				det_time = 10
@@ -95,12 +97,10 @@
 				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
 		add_fingerprint(user)
 	..()
-	return
 
 /obj/item/weapon/grenade/attack_hand()
 	walk(src, null, null)
 	..()
-	return
 
 /obj/item/weapon/grenade/attack_paw(mob/user as mob)
 	return attack_hand(user)

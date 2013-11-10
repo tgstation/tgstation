@@ -9,7 +9,7 @@
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/color = "yellow"
+	var/canister_color = "yellow"
 	var/can_label = 1
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
@@ -21,42 +21,42 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
-	color = "redws"
+	canister_color = "redws"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
-	color = "red"
+	canister_color = "red"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
-	color = "blue"
+	canister_color = "blue"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
-	color = "orange"
+	canister_color = "orange"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
-	color = "black"
+	canister_color = "black"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
-	color = "grey"
+	canister_color = "grey"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	src.overlays = 0
 
 	if (src.destroyed)
-		src.icon_state = text("[]-1", src.color)
+		src.icon_state = "[src.canister_color]-1"
 
 	else
-		icon_state = "[color]"
+		icon_state = "[canister_color]"
 		if(holding)
 			overlays += "can-open"
 
@@ -129,7 +129,9 @@
 				environment.merge(removed)
 			else
 				loc.assume_air(removed)
+				air_update_turf()
 			src.update_icon()
+
 
 	if(air_contents.return_pressure() < 1)
 		can_label = 1
@@ -168,6 +170,28 @@
 /obj/machinery/portable_atmospherics/canister/meteorhit(var/obj/O as obj)
 	src.health = 0
 	healthcheck()
+	return
+
+/obj/machinery/portable_atmospherics/canister/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			if(destroyed || prob(30))
+				del(src)
+			else
+				src.health = 0
+				healthcheck()
+			return
+		if(2.0)
+			if(destroyed)
+				del(src)
+			else
+				src.health -= rand(40, 100)
+				healthcheck()
+			return
+		if(3.0)
+			src.health -= rand(15,40)
+			healthcheck()
+			return
 	return
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -275,7 +299,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 				)
 				var/label = input("Choose canister label", "Gas canister") as null|anything in colors
 				if (label)
-					src.color = colors[label]
+					src.canister_color = colors[label]
 					src.icon_state = colors[label]
 					src.name = "Canister: [label]"
 		src.updateUsrDialog()

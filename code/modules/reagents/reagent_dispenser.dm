@@ -17,9 +17,7 @@
 		return
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		create_reagents(1000)
 		if (!possible_transfer_amounts)
 			src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 		..()
@@ -95,22 +93,23 @@
 
 
 	bullet_act(var/obj/item/projectile/Proj)
+		..()
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2)
+			explosion(src.loc,-1,0,2, flame_range = 2)
 			if(src)
 				del(src)
 
 
 
 	blob_act()
-		explosion(src.loc,0,1,5,7,10)
+		explosion(src.loc,0,1,5,7,10, flame_range = 5)
 		if(src)
 			del(src)
 
 	ex_act()
-		explosion(src.loc,-1,0,2)
+		explosion(src.loc,-1,0,2, flame_range = 2)
 		if(src)
 			del(src)
 

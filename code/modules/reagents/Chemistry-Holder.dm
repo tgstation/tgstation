@@ -95,9 +95,13 @@ datum
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 				if (!target )
 					return
-				if (!target.reagents || src.total_volume<=0)
-					return
-				var/datum/reagents/R = target.reagents
+				var/datum/reagents/R
+				if(istype(target,/datum/reagents/))
+					R = target
+				else
+					if (!target.reagents || src.total_volume<=0)
+						return
+					R = target.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 				var/part = amount / src.total_volume
 				var/trans_data = null
@@ -248,17 +252,11 @@ datum
 							if(!C.required_other)
 								matching_other = 1
 
-							else
-								/*if(istype(my_atom, /obj/item/slime_core))
-									var/obj/item/slime_core/M = my_atom
+							else if(istype(my_atom, /obj/item/slime_extract))
+								var/obj/item/slime_extract/M = my_atom
 
-									if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-										matching_other = 1*/
-								if(istype(my_atom, /obj/item/slime_extract))
-									var/obj/item/slime_extract/M = my_atom
-
-									if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-										matching_other = 1
+								if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+									matching_other = 1
 
 
 
@@ -273,18 +271,13 @@ datum
 									feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 									multiplier = max(multiplier, 1) //this shouldnt happen ...
 									add_reagent(C.result, C.result_amount*multiplier)
-
+								
 								var/list/seen = viewers(4, get_turf(my_atom))
-								for(var/mob/M in seen)
-									M << "\blue \icon[my_atom] The solution begins to bubble."
+								
+								if(!istype(my_atom, /mob)) // No bubbling mobs
+									for(var/mob/M in seen)
+										M << "\blue \icon[my_atom] The solution begins to bubble."
 
-							/*	if(istype(my_atom, /obj/item/slime_core))
-									var/obj/item/slime_core/ME = my_atom
-									ME.Uses--
-									if(ME.Uses <= 0) // give the notification that the slime core is dead
-										for(var/mob/M in viewers(4, get_turf(my_atom)) )
-											M << "\blue \icon[my_atom] The innards begin to boil!"
-								*/
 								if(istype(my_atom, /obj/item/slime_extract))
 									var/obj/item/slime_extract/ME2 = my_atom
 									ME2.Uses--

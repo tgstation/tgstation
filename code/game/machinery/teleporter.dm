@@ -49,14 +49,8 @@
 
 	return
 
-/obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
-
 /obj/machinery/computer/teleporter/attack_hand()
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
 
 	var/list/L = list()
@@ -84,7 +78,7 @@
 				if (M.timeofdeath + 6000 < world.time)
 					continue
 			var/turf/T = get_turf(M)
-			if(T)	continue
+			if(!T)	continue
 			if(T.z == 2)	continue
 			var/tmpname = M.real_name
 			if(areaindex[tmpname])
@@ -159,10 +153,11 @@
 			do_teleport(M, com.locked)
 			if(ishuman(M))//don't remove people from the round randomly you jerks
 				var/mob/living/carbon/human/human = M
-				if(human.dna.mutantrace == null)
+				if(human.dna && !human.dna.mutantrace)
 					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
 					human.dna.mutantrace = "fly"
-					human.update_mutantrace()
+					human.update_body()
+					human.update_hair()
 				human.apply_effect((rand(90, 150)), IRRADIATE, 0)
 				randmutb(human)
 				domutcheck(human, null)
@@ -368,15 +363,3 @@
 			com.icon_state = "tele0"
 	else
 		icon_state = "controller"
-
-
-/obj/effect/laser/Bump()
-	src.range--
-	return
-
-/obj/effect/laser/Move()
-	src.range--
-	return
-
-/atom/proc/laserhit(L as obj)
-	return 1

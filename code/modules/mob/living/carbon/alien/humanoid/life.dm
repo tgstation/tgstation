@@ -53,6 +53,8 @@
 	//stuff in the stomach
 	handle_stomach()
 
+	//Handle being on fire
+	handle_fire()
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
@@ -95,9 +97,9 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/air_group/breath
+		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
-		if(health < 0)
+		if(health <= config.health_threshold_crit)
 			losebreath++
 
 		if(losebreath>0) //Suffocating so do not take a breath
@@ -304,7 +306,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < config.health_threshold_dead || !getbrain(src))
+			if(health < config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				stat = DEAD
@@ -312,7 +314,7 @@
 				return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
 				if( health <= 20 && prob(1) )
 					spawn(0)
 						emote("gasp")

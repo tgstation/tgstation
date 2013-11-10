@@ -1,11 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/secure_data//TODO:SANITY
-	name = "Security Records"
+	name = "Security Records Console"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
 	req_one_access = list(access_security, access_forensics_lockers)
-	circuit = "/obj/item/weapon/circuitboard/secure_data"
+	circuit = /obj/item/weapon/circuitboard/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -29,13 +29,8 @@
 		O.loc = src
 		scan = O
 		user << "You insert [O]."
-	..()
-
-/obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/secure_data/attack_paw(mob/user as mob)
-	return attack_hand(user)
+	else
+		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
@@ -81,17 +76,17 @@
 							var/background
 							switch(crimstat)
 								if("*Arrest*")
-									background = "'background-color:#DC143C;'"
+									background = "'background-color:#990000;'"
 								if("Incarcerated")
-									background = "'background-color:#CD853F;'"
+									background = "'background-color:#CD6500;'"
 								if("Parolled")
-									background = "'background-color:#CD853F;'"
+									background = "'background-color:#CD6500;'"
 								if("Released")
-									background = "'background-color:#3BB9FF;'"
+									background = "'background-color:#006699;'"
 								if("None")
-									background = "'background-color:#00FF7F;'"
+									background = "'background-color:#4F7529;'"
 								if("")
-									background = "'background-color:#FFFFFF;'"
+									background = "''" //"'background-color:#FFFFFF;'"
 									crimstat = "No Record."
 							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
 							dat += text("<td>[]</td>", R.fields["id"])
@@ -174,7 +169,7 @@
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
 	//user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
 	//onclose(user, "secure_rec")
-	var/datum/browser/popup = new(user, "secure_rec", "Security Records", 600, 400)
+	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -352,7 +347,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2053<BR>[]", authenticated, rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
 
 			if ("Delete Record (ALL)")
 				if (active1)
@@ -389,7 +384,7 @@ What a mess.*/
 			if ("New Record (General)")
 				var/datum/data/record/G = new /datum/data/record()
 				G.fields["name"] = "New Record"
-				G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+				G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 				G.fields["rank"] = "Unassigned"
 				G.fields["sex"] = "Male"
 				G.fields["age"] = "Unknown"

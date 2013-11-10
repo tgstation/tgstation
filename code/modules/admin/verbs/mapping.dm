@@ -42,7 +42,7 @@ var/intercom_range_display_status = 0
 		if(T.maptext)
 			on = 1
 		T.maptext = null
-	
+
 	if(!on)
 		var/list/seen = list()
 		for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -131,7 +131,6 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/count_objects_on_z_level
 	src.verbs += /client/proc/count_objects_all
 	src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
-	src.verbs += /client/proc/jump_to_dead_group
 	src.verbs += /client/proc/startSinglo
 	src.verbs += /client/proc/ticklag	//allows you to set the ticklag.
 	src.verbs += /client/proc/cmd_admin_grantfullaccess
@@ -142,16 +141,30 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/print_jobban_old
 	src.verbs += /client/proc/print_jobban_old_filter
 	src.verbs += /client/proc/forceEvent
-	src.verbs += /client/proc/break_all_air_groups
-	src.verbs += /client/proc/regroup_all_air_groups
 	src.verbs += /client/proc/kill_pipe_processing
 	src.verbs += /client/proc/kill_air_processing
 	src.verbs += /client/proc/disable_communication
 	src.verbs += /client/proc/disable_movement
 	src.verbs += /client/proc/print_pointers
+	src.verbs += /client/proc/count_movable_instances
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/count_movable_instances()
+	set category = "Debug"
+	set name = "Count Movable Instances"
+
+	var/count = 0;
+
+	// Apparently there's a BYOND limit on the number of instances for non-turfs.
+
+	for(var/thing in world)
+		if(isturf(thing))
+			continue
+		count++;
+	usr << "There are [count]/[MAX_FLAG] instances of non-turfs in the world."
+
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
@@ -222,27 +235,6 @@ var/intercom_range_display_status = 0
 
 	world << "There are [count] objects of type [type_path] in the game world"
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-var/global/prevent_airgroup_regroup = 0
-
-/client/proc/break_all_air_groups()
-	set category = "Mapping"
-	set name = "Break All Airgroups"
-
-	prevent_airgroup_regroup = 1
-	for(var/datum/air_group/AG in air_master.air_groups)
-		AG.suspend_group_processing()
-	message_admins("[src.ckey] used 'Break All Airgroups'")
-
-/client/proc/regroup_all_air_groups()
-	set category = "Mapping"
-	set name = "Regroup All Airgroups Attempt"
-
-	prevent_airgroup_regroup = 0
-	for(var/datum/air_group/AG in air_master.air_groups)
-		AG.check_regroup()
-	message_admins("[src.ckey] used 'Regroup All Airgroups Attempt'")
 
 /client/proc/kill_pipe_processing()
 	set category = "Mapping"

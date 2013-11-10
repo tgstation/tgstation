@@ -215,7 +215,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(T0C to (T20C + 20))
-			integrity = between(0, integrity, 100)
+			integrity = Clamp(integrity, 0, 100)
 		if((T20C + 20) to (T0C + 70))
 			integrity = max(0, integrity - 1)
 	if(delay)
@@ -513,7 +513,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	var/list/memory = list()	// stored memory
 	var/rawcode = ""	// the code to compile (raw text)
-	var/compiling = 0  // Are we compiling?
+
 	var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
 	var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
 
@@ -615,13 +615,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/server/proc/compile(var/mob/user)
 
-	if(Compiler && !compiling)
-		// BONUS FEATURE: REAL LIFE COMPILE TIME FOR 2556 SPACE MENS
-		compiling = 1
-		if(length(rawcode)) // Don't bother compiling if it's empty code.
-			sleep(Clamp((10 + length(rawcode)) / 5, 100, 1500)) // Max time: 2.5 minutes - Min time: 10 seconds
+	if(Compiler)
 		admin_log(user)
-		compiling = 0
 		return Compiler.Compile(rawcode)
 
 /obj/machinery/telecomms/server/proc/update_logs()

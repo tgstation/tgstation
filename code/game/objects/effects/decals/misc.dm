@@ -1,10 +1,10 @@
 /obj/effect/decal/point
 	name = "arrow"
-	desc = "It's an arrow hanging in mid-air. There may be a wizard about."
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "arrow"
-	layer = 16.0
+	layer = 16
 	anchored = 1
+	mouse_opacity = 0
 
 /obj/effect/decal/point/point()
 	set src in oview()

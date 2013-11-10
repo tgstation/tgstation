@@ -1,6 +1,6 @@
 /turf/simulated/floor/mech_bay_recharge_floor
 	name = "Mech Bay Recharge Station"
-	icon = 'icons/mecha/mech_bay.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "recharge_floor"
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
@@ -42,7 +42,11 @@
 				recharge_port.recharge_console = recharge_console
 		return
 
-
+/turf/simulated/floor/mech_bay_recharge_floor/airless
+	icon_state = "recharge_floor_asteroid"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
 
 
 /obj/machinery/mech_bay_recharge_port
@@ -156,24 +160,17 @@
 
 	power_change()
 		if(stat & BROKEN)
-			icon_state = initial(icon_state)+"_broken"
 			if(recharge_port)
 				recharge_port.stop_charge()
-		else if(powered())
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				icon_state = initial(icon_state)+"_nopower"
-				stat |= NOPOWER
-				if(recharge_port)
-					recharge_port.stop_charge()
+		else if(!(powered()))
+			if(recharge_port)
+				recharge_port.stop_charge()
+		..()
 
-	set_broken()
-		icon_state = initial(icon_state)+"_broken"
-		stat |= BROKEN
-		if(recharge_port)
-			recharge_port.stop_charge()
+	set_broken() //should never be used, but just in case anyone ever makes these buildable.
+//		if(recharge_port)
+//			recharge_port.stop_charge() Commenting out because this will probably break things.
+		..()
 
 	attack_hand(mob/user as mob)
 		if(..()) return
@@ -208,6 +205,8 @@
 
 
 	Topic(href, href_list)
+		if(..())
+			return
 		if(href_list["autostart"])
 			autostart = !autostart
 		if(href_list["voltage"])

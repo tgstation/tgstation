@@ -6,6 +6,8 @@
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
+	can_unwrench = 1
+
 	var/area/initial_loc
 	level = 1
 	var/area_uid
@@ -43,6 +45,7 @@
 			icon_state = "in"
 
 	New()
+		..()
 		initial_loc = get_area(loc)
 		if (initial_loc.master)
 			initial_loc = initial_loc.master
@@ -53,7 +56,6 @@
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
 			src.broadcast_status()
-		..()
 
 	high_volume
 		name = "Large Air Vent"
@@ -107,6 +109,7 @@
 					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 					loc.assume_air(removed)
+					air_update_turf()
 
 					if(network)
 						network.update = 1
@@ -127,6 +130,7 @@
 						return
 
 					air_contents.merge(removed)
+					air_update_turf()
 
 					if(network)
 						network.update = 1
@@ -214,30 +218,30 @@
 			pump_direction = text2num(signal.data["direction"])
 
 		if("set_internal_pressure" in signal.data)
-			internal_pressure_bound = between(
-				0,
+			internal_pressure_bound = Clamp(
 				text2num(signal.data["set_internal_pressure"]),
+				0,
 				ONE_ATMOSPHERE*50
 			)
 
 		if("set_external_pressure" in signal.data)
-			external_pressure_bound = between(
-				0,
+			external_pressure_bound = Clamp(
 				text2num(signal.data["set_external_pressure"]),
+				0,
 				ONE_ATMOSPHERE*50
 			)
 
 		if("adjust_internal_pressure" in signal.data)
-			internal_pressure_bound = between(
-				0,
+			internal_pressure_bound = Clamp(
 				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
+				0,
 				ONE_ATMOSPHERE*50
 			)
 
 		if("adjust_external_pressure" in signal.data)
-			external_pressure_bound = between(
-				0,
+			external_pressure_bound = Clamp(
 				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
+				0,
 				ONE_ATMOSPHERE*50
 			)
 
@@ -310,25 +314,7 @@
 		if (!(stat & NOPOWER) && on)
 			user << "\red You cannot unwrench this [src], turn it off first."
 			return 1
-		var/turf/T = src.loc
-		if (level==1 && isturf(T) && T.intact)
-			user << "\red You must remove the plating first."
-			return 1
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
-			add_fingerprint(user)
-			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "\blue You begin to unfasten \the [src]..."
-		if (do_after(user, 40))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"\blue You have unfastened \the [src].", \
-				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
-			del(src)
+		return ..()
 
 /obj/machinery/atmospherics/unary/vent_pump/Del()
 	if(initial_loc)
@@ -336,3 +322,16 @@
 		initial_loc.air_vent_names -= id_tag
 	..()
 	return
+
+/*
+	Alt-click to ventcrawl - Monkeys, aliens, and slimes
+	This is a little buggy but somehow that just seems to plague ventcrawl.
+	I am sorry, I don't know why.
+*/
+/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/carbon/ML)
+	if(istype(ML))
+		var/list/ventcrawl_verbs = list(/mob/living/carbon/monkey/verb/ventcrawl, /mob/living/carbon/alien/verb/ventcrawl, /mob/living/carbon/slime/verb/ventcrawl)
+		if(length(ML.verbs & ventcrawl_verbs)) // alien queens have this removed, an istype would be complicated
+			ML.handle_ventcrawl(src)
+			return
+	..()

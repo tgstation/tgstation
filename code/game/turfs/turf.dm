@@ -30,61 +30,45 @@
 			return
 	return
 
-/turf/DblClick()
-	if(istype(usr, /mob/living/silicon/ai))
-		return move_camera_by_click()
-	if(usr.stat || usr.restrained() || usr.lying)
-		return ..()
-	return ..()
+// Adds the adjacent turfs to the current atmos processing
+/turf/Del()
+	if(air_master)
+		for(var/direction in cardinal)
+			if(atmos_adjacent_turfs & direction)
+				var/turf/simulated/T = get_step(src, direction)
+				if(istype(T))
+					air_master.add_to_active(T)
+	..()
 
-/turf/Click()
-	if(!isAI(usr))
-		..()
+/turf/attack_hand(mob/user as mob)
+	user.Move_Pulled(src)
 
 /turf/ex_act(severity)
-	return 0
-
-
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		src.ex_act(2)
-	..()
-	return 0
-
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/bullet/gyro))
-		explosion(src, -1, 0, 2)
-	..()
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
 		return
-	if (!mover || !isturf(mover.loc))
+	if (!mover)
 		return 1
-
-
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover.loc)
-		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
-			if(!obstacle.CheckExit(mover, src))
+	// First, make sure it can leave its square
+	if(isturf(mover.loc))
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in mover.loc)
+			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
 				mover.Bump(obstacle, 1)
 				return 0
 
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in mover.loc)
-		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
-			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
+	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
+	for(var/atom/movable/border_obstacle in src)
+		if(border_obstacle.flags&ON_BORDER)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
+		else
+			large_dense += border_obstacle
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
@@ -92,13 +76,11 @@
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in src)
-		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
-				return 0
+	for(var/atom/movable/obstacle in large_dense)
+		if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
+			mover.Bump(obstacle, 1)
+			return 0
 	return 1 //Nothing found to block so return success!
-
 
 /turf/Entered(atom/atom as mob|obj)
 	if(movement_disabled)
@@ -139,14 +121,6 @@
 			M:inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in src)
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
-			return
-	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
@@ -212,10 +186,12 @@
 	if(path == type)	return src
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/old_opacity = opacity
+	if(air_master)
+		air_master.remove_from_active(src)
 
 	var/turf/W = new path(src)
 
-	if(istype(W, /turf/simulated/floor))
+	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
 
@@ -229,36 +205,40 @@
 			W.UpdateAffectingLights()
 
 	W.levelupdate()
+	W.CalculateAdjacentTurfs()
 	return W
 
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
-	var/aoxy = 0//Holders to assimilate air from nearby turfs
-	var/anitro = 0
-	var/aco = 0
-	var/atox = 0
-	var/atemp = 0
-	var/turf_count = 0
+	if(air)
+		var/aoxy = 0//Holders to assimilate air from nearby turfs
+		var/anitro = 0
+		var/aco = 0
+		var/atox = 0
+		var/atemp = 0
+		var/turf_count = 0
 
-	for(var/direction in cardinal)//Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))//Counted as no air
-			turf_count++//Considered a valid turf for air calcs
-			continue
-		else if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/S = T
-			if(S.air)//Add the air's contents to the holders
-				aoxy += S.air.oxygen
-				anitro += S.air.nitrogen
-				aco += S.air.carbon_dioxide
-				atox += S.air.toxins
-				atemp += S.air.temperature
-			turf_count ++
-	air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-	air.nitrogen = (anitro/max(turf_count,1))
-	air.carbon_dioxide = (aco/max(turf_count,1))
-	air.toxins = (atox/max(turf_count,1))
-	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+		for(var/direction in cardinal)//Only use cardinals to cut down on lag
+			var/turf/T = get_step(src,direction)
+			if(istype(T,/turf/space))//Counted as no air
+				turf_count++//Considered a valid turf for air calcs
+				continue
+			else if(istype(T,/turf/simulated/floor))
+				var/turf/simulated/S = T
+				if(S.air)//Add the air's contents to the holders
+					aoxy += S.air.oxygen
+					anitro += S.air.nitrogen
+					aco += S.air.carbon_dioxide
+					atox += S.air.toxins
+					atemp += S.air.temperature
+				turf_count ++
+		air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
+		air.nitrogen = (anitro/max(turf_count,1))
+		air.carbon_dioxide = (aco/max(turf_count,1))
+		air.toxins = (atox/max(turf_count,1))
+		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+		if(air_master)
+			air_master.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

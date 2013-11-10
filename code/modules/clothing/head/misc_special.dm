@@ -19,10 +19,14 @@
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
-	var/up = 0
+//	var/up = 0
+	flash_protect = 2
+	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	action_button_name = "Toggle Welding Helmet"
+	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -30,23 +34,10 @@
 
 /obj/item/clothing/head/welding/verb/toggle()
 	set category = "Object"
-	set name = "Adjust welding mask"
+	set name = "Adjust welding helmet"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
-			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
-		else
-			src.up = !src.up
-			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
-		usr.update_inv_head(0)	//so our mob-overlays update
+	weldingvisortoggle()
 
 
 /*
@@ -119,7 +110,7 @@
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
-	color = "pumpkin"
+	item_color = "pumpkin"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	var/brightness_on = 2 //luminosity when on
@@ -130,8 +121,8 @@
 			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
 			return
 		on = !on
-		icon_state = "hardhat[on]_[color]"
-		item_state = "hardhat[on]_[color]"
+		icon_state = "hardhat[on]_[item_color]"
+		item_state = "hardhat[on]_[item_color]"
 
 		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
 		else	user.SetLuminosity(user.luminosity - brightness_on)
@@ -168,8 +159,8 @@
 	if(!istype(user)) return
 	mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
 	mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
-	mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
-	mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+	mob.Blend("#[user.hair_color]", ICON_ADD)
+	mob2.Blend("#[user.hair_color]", ICON_ADD)
 
 	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
 	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")

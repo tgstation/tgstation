@@ -45,9 +45,9 @@
 		usr << "This one seems particularly lifeless. Perhaps it will regain some of it's luster later.."
 
 
-/obj/item/organ/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M, /mob))
-		return
+/obj/item/organ/brain/attack(mob/living/carbon/M, mob/user)
+	if(!istype(M))
+		return ..()
 
 	add_fingerprint(user)
 
@@ -61,7 +61,7 @@
 
 //since these people will be dead M != usr
 
-	if(!getbrain(M))
+	if(!M.getorgan(/obj/item/organ/brain))
 		user.drop_item()
 		for(var/mob/O in viewers(M, null))
 			if(O == (user || M))

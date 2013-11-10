@@ -5,8 +5,8 @@
 #define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 #define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
 #define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
@@ -21,13 +21,17 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define TINT_IMPAIR 2			//Threshold of tint level to apply weld mask overlay
+#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
+
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 	var/fire_alert = 0
 	var/pressure_alert = 0
-	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
+	var/tinttotal = 0				// Total level of visualy impairing items
+
 
 
 /mob/living/carbon/human/Life()
@@ -45,6 +49,8 @@
 	//to find it.
 	blinded = null
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
+	tinttotal = tintcheck() //here as both hud updates and status updates call it
+
 
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -76,6 +82,9 @@
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
+
+	//Check if we're on fire
+	handle_fire()
 
 	//stuff in the stomach
 	handle_stomach()
@@ -198,11 +207,11 @@
 							src << "\red You feel weak."
 							emote("collapse")
 						if(prob(15))
-							if(!(f_style == "Shaved") || !(h_style == "Bald"))
+							if(!( hair_style == "Shaved") || !(hair_style == "Bald"))
 								src << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
-									f_style = "Shaved"
-									h_style = "Bald"
+									facial_hair_style = "Shaved"
+									hair_style = "Bald"
 									update_hair()
 						updatehealth()
 
@@ -223,9 +232,9 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/air_group/breath
+		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
-		if(health < 0)
+		if(health <= config.health_threshold_crit)
 			losebreath++
 
 		if(losebreath>0) //Suffocating so do not take a breath
@@ -313,7 +322,7 @@
 				failed_last_breath = 1
 				oxygen_alert = max(oxygen_alert, 1)
 				return 0
-			if(health > 0)
+			if(health >= config.health_threshold_crit)
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
 			else
@@ -438,8 +447,8 @@
 	proc/handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
-		var/loc_temp = get_temperature(environment)
 
+		var/loc_temp = get_temperature(environment)
 		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
 		//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
@@ -447,16 +456,17 @@
 			stabilize_temperature_from_calories()
 
 		//After then, it reacts to the surrounding atmosphere based on your thermal protection
-		if(loc_temp < bodytemperature)
-			//Place is colder than we are
-			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
-		else
-			//Place is hotter than we are
-			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+		if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+			if(loc_temp < bodytemperature)
+				//Place is colder than we are
+				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+				if(thermal_protection < 1)
+					bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+			else
+				//Place is hotter than we are
+				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+				if(thermal_protection < 1)
+					bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -466,12 +476,16 @@
 				if(360 to 400)
 					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
 					fire_alert = max(fire_alert, 2)
-				if(400 to 1000)
+				if(400 to 460)
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 					fire_alert = max(fire_alert, 2)
-				if(1000 to INFINITY)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-					fire_alert = max(fire_alert, 2)
+				if(460 to INFINITY)
+					if(on_fire)
+						apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+						fire_alert = max(fire_alert, 2)
+					else
+						apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+						fire_alert = max(fire_alert, 2)
 
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			fire_alert = max(fire_alert, 1)
@@ -510,6 +524,16 @@
 					pressure_alert = -1
 
 		return
+
+///FIRE CODE
+	handle_fire()
+		if(..())
+			return
+		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
+		if((1 - thermal_protection) > 0.0001)
+			bodytemperature += BODYTEMP_HEATING_MAX
+		return
+//END FIRE CODE
 
 	/*
 	proc/adjust_body_temperature(current, loc_temp, boost)
@@ -755,17 +779,13 @@
 		if(FAT in mutations)
 			if(overeatduration < 100)
 				src << "\blue You feel fit again!"
-				mutations.Remove(FAT)
-				update_mutantrace(0)
-				update_mutations(0)
+				mutations -= FAT
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500)
 				src << "\red You suddenly feel blubbery!"
-				mutations.Add(FAT)
-				update_mutantrace(0)
-				update_mutations(0)
+				mutations |= FAT
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
 
@@ -810,7 +830,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			if(health <= config.health_threshold_dead || !getbrain(src))
+			if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 				death()
 				blinded = 1
 				silent = 0
@@ -818,7 +838,7 @@
 
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
 				Paralyse(3)
 
 				/* Done by handle_breath()
@@ -875,9 +895,9 @@
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
+			else if(tinttotal >= TINT_BLIND)		//covering your eyes heals blurry eyes faster
 				eye_blurry = max(eye_blurry-3, 0)
-				blinded = 1
+			//	blinded = 1				//now handled under /handle_regular_hud_updates()
 			else if(eye_blurry)	//blurry eyes heal slowly
 				eye_blurry = max(eye_blurry-1, 0)
 
@@ -925,7 +945,7 @@
 
 		if(stat == UNCONSCIOUS)
 			//Critical damage passage overlay
-			if(health <= 0)
+			if(health <= config.health_threshold_crit)
 				var/image/I
 				switch(health)
 					if(-20 to -10)
@@ -1019,6 +1039,12 @@
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
+
+			if(mind && mind.changeling)
+				hud_used.lingchemdisplay.invisibility = 0
+				hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
+			else
+				hud_used.lingchemdisplay.invisibility = 101
 
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
@@ -1132,6 +1158,15 @@
 					if(260 to 280)			bodytemp.icon_state = "temp-3"
 					else					bodytemp.icon_state = "temp-4"
 
+//	This checks how much the mob's eyewear impairs their vision
+			if(tinttotal >= TINT_IMPAIR)
+				if(tinted_weldhelh)
+					if(tinttotal >= TINT_BLIND)
+						blinded = 1								// You get the sudden urge to learn to play keyboard
+						client.screen += global_hud.darkMask
+					else
+						client.screen += global_hud.darkMask
+
 			if(blind)
 				if(blinded)		blind.layer = 18
 				else			blind.layer = 0
@@ -1141,18 +1176,6 @@
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
-			var/masked = 0
-
-			if( istype(head, /obj/item/clothing/head/welding) )
-				var/obj/item/clothing/head/welding/O = head
-				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
-					masked = 1
-
-			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
-				var/obj/item/clothing/glasses/welding/O = glasses
-				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
 
 			if(eye_stat > 20)
 				if(eye_stat > 30)	client.screen += global_hud.darkMask

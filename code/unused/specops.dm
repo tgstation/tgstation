@@ -108,10 +108,10 @@ var/global/sent_strike_team = 0
 		A.real_name = "[commando_leader_rank] [commando_name]"
 	else
 		A.real_name = "[commando_rank] [commando_name]"
-	A.real_name = "[!leader_selected ? commando_rank : 
+	A.real_name = "[!leader_selected ? commando_rank :
 	A.copy_to(new_commando)
 
-	new_commando.dna.ready_dna(new_commando)//Creates DNA.
+	ready_dna(new_commando)
 
 	//Creates mind stuff.
 	new_commando.mind_initialize()
@@ -140,7 +140,7 @@ var/global/sent_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), slot_in_backpack)
 
-	equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/ammo_box/a357(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)

@@ -9,9 +9,7 @@
 	plasma_rate = 10
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 	if(name == "alien sentinel")
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name

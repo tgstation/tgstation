@@ -201,7 +201,7 @@ var/global/mulebot_count = 0
 			if(5,6)
 				dat += "<span class='average'>Calculating navigation path</span>"
 			if(7)
-				dat += "<span class='bad'>Unable to locate destination</span>"
+				dat += "<span class='bad'>Unable to reach destination</span>"
 		dat += "</div>"
 
 		dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
@@ -225,7 +225,7 @@ var/global/mulebot_count = 0
 
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
-			dat += "<div class='notice'>The maintenance hatch is closed</div>"
+			dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
 	else
 		if(!ai)
@@ -447,16 +447,13 @@ var/global/mulebot_count = 0
 // called to unload the bot
 // argument is optional direction to unload
 // if zero, unload at bot's location
-/obj/machinery/bot/mulebot/proc/unload(var/dirn = 0)
+/obj/machinery/bot/mulebot/proc/unload(var/dirn)
 	if(!load)
 		return
 
 	mode = 1
 	overlays.Cut()
 
-	load.loc = src.loc
-	load.pixel_y -= 9
-	load.layer = initial(load.layer)
 	if(ismob(load))
 		var/mob/M = load
 		if(M.client)
@@ -464,13 +461,14 @@ var/global/mulebot_count = 0
 			M.client.eye = src
 
 
+	load.loc = src.loc
+	load.pixel_y -= 9
+	load.layer = initial(load.layer)
 	if(dirn)
 		var/turf/T = src.loc
-		T = get_step(T,dirn)
-		if(CanPass(load,T))//Can't get off onto anything that wouldn't let you pass normally
+		var/turf/newT = get_step(T,dirn)
+		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
 			step(load, dirn)
-		else
-			load.loc = src.loc//Drops you right there, so you shouldn't be able to get yourself stuck
 
 	load = null
 
@@ -590,7 +588,7 @@ var/global/mulebot_count = 0
 						blockcount++
 						mode = 4
 						if(blockcount == 3)
-							src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
+							src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 						if(blockcount > 5)	// attempt 5 times before recomputing
@@ -608,7 +606,7 @@ var/global/mulebot_count = 0
 							return
 						return
 				else
-					src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
+					src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					//world << "Bad turf."
 					mode = 5
@@ -730,7 +728,7 @@ var/global/mulebot_count = 0
 	return get_turf(src)
 
 
-// called from mob/living/carbon/human/HasEntered()
+// called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
 	src.visible_message("\red [src] drives over [H]!")
@@ -746,7 +744,7 @@ var/global/mulebot_count = 0
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()
-	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+	B.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 
 	bloodiness += 4
 

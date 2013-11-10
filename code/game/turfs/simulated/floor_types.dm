@@ -31,6 +31,11 @@
 	icon_state = "wood"
 	floor_tile = new/obj/item/stack/tile/wood
 
+/turf/simulated/floor/goonplaque
+	name = "Commemorative Plaque"
+	icon_state = "plaque"
+	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
+
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
@@ -77,7 +82,7 @@
 		var/datum/gas_mixture/adding = new
 		var/datum/gas/sleeping_agent/trace_gas = new
 
-		trace_gas.moles = 2000
+		trace_gas.moles = 6000
 		adding.trace_gases += trace_gas
 		adding.temperature = T20C
 

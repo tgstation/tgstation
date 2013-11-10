@@ -34,7 +34,7 @@
  */
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
-	desc = "You can be totally screwwy with this."
+	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -113,7 +113,7 @@
 		item_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if(C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		C.handcuffed.loc = null	//garbage collector awaaaaay
 		C.handcuffed = null
@@ -155,27 +155,9 @@
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(welding)
-			user << "<span class='notice'>Turn it off first.</span>"
-			return
-
-		status = !status
-		if(status)
-			user << "<span class='notice'>You resecure [src].</span>"
-		else
-			user << "<span class='notice'>[src] can now be attached and modified.</span>"
-		add_fingerprint(user)
-		return
-
-	if(!status && istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		R.use(1)
-		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-		loc = F
-		F.weldtool = src
-		add_fingerprint(user)
-		return
-
+		flamethrower_screwdriver(I, user)
+	if(istype(I, /obj/item/stack/rods))
+		flamethrower_rods(I, user)
 	..()
 
 
@@ -208,7 +190,8 @@
 		location.hotspot_expose(700, 5)
 
 
-/obj/item/weapon/weldingtool/afterattack(obj/O, mob/user)
+/obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)
+	if(!proximity) return
 	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
 		if(!welding)
 			O.reagents.trans_to(src, max_fuel)
@@ -219,7 +202,7 @@
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "<span class='warning'>That was stupid of you.</span>"
-			explosion(O.loc, -1, 0, 2)
+			explosion(O.loc, -1, 0, 2, flame_range = 2)
 			if(O)
 				del(O)
 			return
@@ -229,6 +212,9 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 
+		if(isliving(O))
+			var/mob/living/L = O
+			L.IgniteMob()
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)
@@ -339,6 +325,27 @@
 		spawn(100)
 			user.disabilities &= ~NEARSIGHTED
 
+/obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
+	if(welding)
+		user << "<span class='notice'>Turn it off first.</span>"
+		return
+	status = !status
+	if(status)
+		user << "<span class='notice'>You resecure [src].</span>"
+	else
+		user << "<span class='notice'>[src] can now be attached and modified.</span>"
+	add_fingerprint(user)
+
+/obj/item/weapon/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
+	if(!status)
+		var/obj/item/stack/rods/R = I
+		R.use(1)
+		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
+		user.drop_from_inventory(src)
+		loc = F
+		F.weldtool = src
+		add_fingerprint(user)
+		user.put_in_hands(F)
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
@@ -346,6 +353,14 @@
 	m_amt = 70
 	g_amt = 60
 	origin_tech = "engineering=2"
+
+/obj/item/weapon/weldingtool/largetank/cyborg
+
+/obj/item/weapon/weldingtool/largetank/cyborg/flamethrower_screwdriver()
+	return
+
+/obj/item/weapon/weldingtool/largetank/cyborg/flamethrower_rods()
+	return
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded welding tool"

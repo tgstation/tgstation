@@ -88,10 +88,21 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	msg = "\blue <b><font color=red>HELP: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]"
 
 	//send this msg to all admins
-	var/admin_number_afk = 0
+	var/admin_number_total = 0		//Total number of admins
+	var/admin_number_afk = 0		//Holds the number of admins who are afk
+	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
+	var/admin_number_decrease = 0	//Holds the number of admins with are afk, ignored or both
 	for(var/client/X in admins)
+		admin_number_total++;
+		var/invalid = 0
+		if(!check_rights_for(X, R_BAN))
+			admin_number_ignored++
+			invalid = 1
 		if(X.is_afk())
 			admin_number_afk++
+			invalid = 1
+		if(invalid)
+			admin_number_decrease++
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		X << msg
@@ -99,13 +110,13 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	//show it to the person adminhelping too
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
 
-	var/admin_number_present = admins.len - admin_number_afk
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
-		if(!admin_number_afk)
+		if(!admin_number_afk && !admin_number_ignored)
 			send2irc(ckey, "[original_msg] - No admins online")
 		else
-			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk])")
+			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

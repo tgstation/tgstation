@@ -127,132 +127,154 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 	var/push_dir = SOUTH
+	var/destination
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
+	destination = /area/shuttle/arrival/station
 
 /area/shuttle/arrival/station
 	icon_state = "shuttle"
+	destination = /area/shuttle/arrival/pre_game
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape/station
 	name = "\improper Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape/transit
 
 /area/shuttle/escape/centcom
 	name = "\improper Emergency Shuttle Centcom"
-	icon_state = "shuttle"
+	destination = /area/shuttle/escape/station
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
-	icon_state = "shuttle"
+	destination = /area/shuttle/escape/centcom
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod1/transit
 
 /area/shuttle/escape_pod1/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod1/station
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod1/centcom
+
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod2/transit
 
 /area/shuttle/escape_pod2/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod2/station
 
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod2/centcom
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
-	music = "music/escape.ogg"
 	push_dir = WEST
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod3/transit
 
 /area/shuttle/escape_pod3/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod3/station
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod3/centcom
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
-/area/shuttle/escape_pod5 //Pod 4 was lost to meteors
-	name = "\improper Escape Pod Five"
-	music = "music/escape.ogg"
+/area/shuttle/escape_pod4 //Renaming areas 2hard
+	name = "\improper Escape Pod Four"
 	push_dir = WEST
 
-/area/shuttle/escape_pod5/station
+/area/shuttle/escape_pod4/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/escape_pod4/transit
 
-/area/shuttle/escape_pod5/centcom
+/area/shuttle/escape_pod4/centcom
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod4/station
 
-/area/shuttle/escape_pod5/transit
+/area/shuttle/escape_pod4/transit
 	icon_state = "shuttle"
+	destination = /area/shuttle/escape_pod4/centcom
 
 	mob_activate(var/mob/living/L)
 		push_mob_back(L, push_dir)
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
+	destination = /area/shuttle/mining/outpost
 
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
+	destination = /area/shuttle/mining/station
+
+/area/shuttle/laborcamp
+	name = "\improper Labor Camp Shuttle"
+
+/area/shuttle/laborcamp/station
+	icon_state = "shuttle"
+	destination = /area/shuttle/laborcamp/outpost
+
+/area/shuttle/laborcamp/outpost
+	icon_state = "shuttle"
+	destination = /area/shuttle/laborcamp/station
 
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle Centcom"
+	destination = /area/shuttle/transport1/station
 
 /area/shuttle/transport1/station
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle"
+	destination = /area/shuttle/transport1/centcom
 
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
 
-/area/shuttle/prison/station
-	icon_state = "shuttle"
-
-/area/shuttle/prison/prison
-	icon_state = "shuttle2"
-
 /area/shuttle/specops/centcom
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered"
+	destination = /area/shuttle/specops/station
 
 /area/shuttle/specops/station
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered2"
+	destination = /area/shuttle/specops/centcom
 
 /area/shuttle/thunderdome
 	name = "honk"
@@ -275,7 +297,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 
 /area/centcom/control
-	name = "\improper Centcom Control"
+	name = "\improper Centcom Docks"
 
 /area/centcom/evac
 	name = "\improper Centcom Emergency Shuttle"
@@ -285,6 +307,9 @@ proc/process_ghost_teleport_locs()
 
 /area/centcom/ferry
 	name = "\improper Centcom Transport Shuttle"
+
+/area/centcom/prison
+	name = "\improper Admin Prison"
 
 /area/centcom/holding
 	name = "\improper Holding Facility"
@@ -337,6 +362,11 @@ proc/process_ghost_teleport_locs()
 /area/planet/clown
 	name = "\improper Clown Planet"
 	icon_state = "honk"
+	requires_power = 0
+
+/area/telesciareas
+	name = "\improper Cosmic Anomaly"
+	icon_state = "telesci"
 	requires_power = 0
 
 /area/tdome
@@ -616,7 +646,7 @@ proc/process_ghost_teleport_locs()
 
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
-	icon_state = "bridge"
+	icon_state = "meeting"
 	music = null
 
 /area/crew_quarters/captain
@@ -966,6 +996,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 
+/area/security/processing
+	name = "\improper Prisoner Processing"
+	icon_state = "sec_prison"
+
 /area/security/warden
 	name = "\improper Armory"
 	icon_state = "Warden"
@@ -1104,6 +1138,10 @@ proc/process_ghost_teleport_locs()
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
+
+/area/toxins/telesci
+	name = "\improper Telescience Lab"
+	icon_state = "toxtest"
 
 //Storage
 
@@ -1423,82 +1461,9 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Strange Station"
 	icon_state = "away"
 
-/area/awaymission/wwmines
-	name = "\improper Wild West Mines"
-	icon_state = "away1"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwgov
-	name = "\improper Wild West Mansion"
-	icon_state = "away2"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwrefine
-	name = "\improper Wild West Refinery"
-	icon_state = "away3"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwvault
-	name = "\improper Wild West Vault"
-	icon_state = "away3"
-	luminosity = 0
-
-/area/awaymission/wwvaultdoors
-	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
-	icon_state = "away2"
-	requires_power = 0
-	luminosity = 0
-
 /area/awaymission/desert
 	name = "Mars"
 	icon_state = "away"
-
-/area/awaymission/BMPship1
-	name = "\improper Aft Block"
-	icon_state = "away1"
-
-/area/awaymission/BMPship2
-	name = "\improper Midship Block"
-	icon_state = "away2"
-
-/area/awaymission/BMPship3
-	name = "\improper Fore Block"
-	icon_state = "away3"
-
-/area/awaymission/spacebattle
-	name = "\improper Space Battle"
-	icon_state = "away"
-	requires_power = 0
-
-/area/awaymission/spacebattle/cruiser
-	name = "\improper Nanotrasen Cruiser"
-
-/area/awaymission/spacebattle/syndicate1
-	name = "\improper Syndicate Assault Ship 1"
-
-/area/awaymission/spacebattle/syndicate2
-	name = "\improper Syndicate Assault Ship 2"
-
-/area/awaymission/spacebattle/syndicate3
-	name = "\improper Syndicate Assault Ship 3"
-
-/area/awaymission/spacebattle/syndicate4
-	name = "\improper Syndicate War Sphere 1"
-
-/area/awaymission/spacebattle/syndicate5
-	name = "\improper Syndicate War Sphere 2"
-
-/area/awaymission/spacebattle/syndicate6
-	name = "\improper Syndicate War Sphere 3"
-
-/area/awaymission/spacebattle/syndicate7
-	name = "\improper Syndicate Fighter"
-
-/area/awaymission/spacebattle/secret
-	name = "\improper Hidden Chamber"
 
 /area/awaymission/listeningpost
 	name = "\improper Listening Post"
@@ -1549,9 +1514,6 @@ proc/process_ghost_teleport_locs()
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.s_tone > -55)
-				H.s_tone--
-				H.update_body()
 			if(H.client)
 				mysound.status = SOUND_UPDATE
 				H << mysound
@@ -1574,7 +1536,7 @@ var/list/centcom_areas = list (
 	/area/shuttle/escape_pod1/centcom,
 	/area/shuttle/escape_pod2/centcom,
 	/area/shuttle/escape_pod3/centcom,
-	/area/shuttle/escape_pod5/centcom,
+	/area/shuttle/escape_pod4/centcom,
 	/area/shuttle/transport1/centcom,
 	/area/shuttle/specops/centcom,
 )
@@ -1586,11 +1548,10 @@ var/list/the_station_areas = list (
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod5/station,
+	/area/shuttle/escape_pod4/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 //	/area/shuttle/transport2/station,	//not present on map
-	/area/shuttle/prison/station,
 	/area/shuttle/specops/station,
 	/area/atmos,
 	/area/maintenance,
@@ -1621,63 +1582,3 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
-
-
-
-
-/area/beach
-	name = "Keelin's private beach"
-	icon_state = "null"
-	luminosity = 1
-	lighting_use_dynamic = 0
-	requires_power = 0
-	var/sound/mysound = null
-
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
-
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
-
-	proc/process()
-		set background = 1
-
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-			sound_delay = rand(0, 50)
-
-		for(var/mob/living/carbon/human/H in src)
-//			if(H.s_tone > -55)	//ugh...nice/novel idea but please no.
-//				H.s_tone--
-//				H.update_body()
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
-
-		spawn(60) .()
-

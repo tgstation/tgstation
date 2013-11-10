@@ -111,7 +111,8 @@
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
 
-/obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
+/obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob, proximity)
+	if(!proximity) return
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
 		src.access |= I.access
@@ -160,7 +161,7 @@
 		..()
 
 /obj/item/weapon/card/id/centcom
-	name = "\improper CentCom. ID"
+	name = "\improper Centcom ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
@@ -168,3 +169,44 @@
 	New()
 		access = get_all_centcom_access()
 		..()
+
+/obj/item/weapon/card/id/prisoner
+	name = "prisoner ID card"
+	desc = "You are a number, you are not a free man."
+	icon_state = "orange"
+	item_state = "orange-id"
+	assignment = "Prisoner"
+	registered_name = "Scum"
+	var/goal = 0 //How far from freedom?
+	var/points = 0
+
+/obj/item/weapon/card/id/prisoner/attack_self(mob/user as mob)
+	usr << "You have accumulated [points] out of the [goal] points you need for freedom."
+
+/obj/item/weapon/card/id/prisoner/one
+	name = "Prisoner #13-001"
+	registered_name = "Prisoner #13-001"
+
+/obj/item/weapon/card/id/prisoner/two
+	name = "Prisoner #13-002"
+	registered_name = "Prisoner #13-002"
+
+/obj/item/weapon/card/id/prisoner/three
+	name = "Prisoner #13-003"
+	registered_name = "Prisoner #13-003"
+
+/obj/item/weapon/card/id/prisoner/four
+	name = "Prisoner #13-004"
+	registered_name = "Prisoner #13-004"
+
+/obj/item/weapon/card/id/prisoner/five
+	name = "Prisoner #13-005"
+	registered_name = "Prisoner #13-005"
+
+/obj/item/weapon/card/id/prisoner/six
+	name = "Prisoner #13-006"
+	registered_name = "Prisoner #13-006"
+
+/obj/item/weapon/card/id/prisoner/seven
+	name = "Prisoner #13-007"
+	registered_name = "Prisoner #13-007"

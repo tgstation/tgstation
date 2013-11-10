@@ -1,13 +1,14 @@
-
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
 
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	antag_flag = BE_WIZARD
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
+	pre_setup_before_jobs = 1
 
 	uplink_welcome = "Wizardly Uplink Console:"
 	uplink_uses = 10
@@ -17,19 +18,13 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
 	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
 
+/datum/game_mode/wizard/pre_setup()
 
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
-	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
-	if(possible_wizards.len==0)
-		return 0
-	var/datum/mind/wizard = pick(possible_wizards)
+	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
@@ -37,18 +32,15 @@
 	if(wizardstart.len == 0)
 		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
 		return 0
-	return 1
-
-
-/datum/game_mode/wizard/pre_setup()
-	for(var/datum/mind/wizard in wizards)
-		wizard.current.loc = pick(wizardstart)
+	for(var/datum/mind/wiz in wizards)
+		wiz.current.loc = pick(wizardstart)
 
 	return 1
 
 
 /datum/game_mode/wizard/post_setup()
 	for(var/datum/mind/wizard in wizards)
+		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		forge_wizard_objectives(wizard)
 		//learn_basic_spells(wizard.current)
 		equip_wizard(wizard.current)
@@ -168,7 +160,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
 	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
 	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), slot_in_backpack)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
 //	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
@@ -182,7 +174,7 @@
 
 /datum/game_mode/wizard/check_finished()
 
-	if(config.continous_rounds)
+	if(config.continuous_round_wiz)
 		return ..()
 
 	var/wizards_alive = 0
@@ -211,18 +203,18 @@
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
 	if(wizards.len)
-		var/text = "<FONT size = 2><B>The wizards/witches were:</B></FONT>"
+		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
 
 		for(var/datum/mind/wizard in wizards)
 
-			text += "<br>[wizard.key] was [wizard.name] ("
+			text += "<br><b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 			if(wizard.current)
 				if(wizard.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(wizard.current.real_name != wizard.name)
-					text += " as [wizard.current.real_name]"
+					text += " as <b>[wizard.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
@@ -245,6 +237,15 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
+			if(wizard.current && wizard.current.spell_list)
+				text += "<br><B>[wizard.name] used the following spells: </B>"
+				var/i = 1
+				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+					text += "[S.name]"
+					if(wizard.current.spell_list.len > i)
+						text += ", "
+					i++
+			text += "<br>"
 
 		world << text
 	return 1

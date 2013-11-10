@@ -1,8 +1,8 @@
 /obj/machinery/computer/prisoner
-	name = "prisoner management console"
+	name = "Prisoner Management Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
-	req_access = list(access_armory)
+	req_access = list(access_brig)
 	circuit = "/obj/item/weapon/circuitboard/prisoner"
 	var/id = 0.0
 	var/temp = null
@@ -10,15 +10,8 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-
-
-	attack_ai(var/mob/user as mob)
-		return src.attack_hand(user)
-
-
-	attack_paw(var/mob/user as mob)
-		return
-
+	var/obj/item/weapon/card/id/prisoner/inserted_id
+	circuit = /obj/item/weapon/circuitboard/prisoner
 
 	attack_hand(var/mob/user as mob)
 		if(..())
@@ -28,6 +21,14 @@
 		if(screen == 0)
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 		else if(screen == 1)
+			dat += "<H3>Prisoner ID Management</H3>"
+			if(istype(inserted_id))
+				dat += text("<A href='?src=\ref[src];id=eject'>[inserted_id]</A><br>")
+				dat += text("Collected Points: [inserted_id.points]. <A href='?src=\ref[src];id=reset'>Reset.</A><br>")
+				dat += text("Card goal: [inserted_id.goal].  <A href='?src=\ref[src];id=setgoal'>Set </A><br>")
+			else
+				dat += text("<A href='?src=\ref[src];id=insert'>Insert Prisoner ID.</A><br>")
+			dat += "<H3>Prisoner Implant Management</H3>"
 			dat += "<HR>Chemical Implants<BR>"
 			var/turf/Tr = null
 			for(var/obj/item/weapon/implant/chem/C in world)
@@ -41,14 +42,20 @@
 				dat += "********************************<BR>"
 			dat += "<HR>Tracking Implants<BR>"
 			for(var/obj/item/weapon/implant/tracking/T in world)
+				if(!iscarbon(T.imp_in))
+					continue
+				if(!T.implanted)
+					continue
 				Tr = get_turf(T)
-				if((Tr) && (Tr.z != src.z))	continue//Out of range
-				if(!T.implanted) continue
+				if((Tr) && (Tr.z != src.z))
+					continue//Out of range
+
 				var/loc_display = "Unknown"
 				var/mob/living/carbon/M = T.imp_in
-				if(M.z == 1 && !istype(M.loc, /turf/space))
-					var/turf/mob_loc = get_turf_loc(M)
+				if(Tr.z == 1 && !istype(M.loc, /turf/space))
+					var/turf/mob_loc = get_turf(M)
 					loc_display = mob_loc.loc
+
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 				dat += "********************************<BR>"
@@ -56,12 +63,16 @@
 
 		//user << browse(dat, "window=computer;size=400x500")
 		//onclose(user, "computer")
-		var/datum/browser/popup = new(user, "computer", "Prisoner Implant Management System", 400, 500)
+		var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 		return
 
+	attackby(obj/item/I as obj, mob/user as mob)
+		if(istype(I, /obj/item/weapon/card/id))
+			return attack_hand(user)
+		..()
 
 	process()
 		if(!..())
@@ -75,10 +86,29 @@
 		if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 			usr.set_machine(src)
 
-			if(href_list["inject1"])
+			if(href_list["id"])
+				if(href_list["id"] =="insert" && !istype(inserted_id))
+					var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
+					if(istype(I))
+						usr.drop_item()
+						I.loc = src
+						inserted_id = I
+					else usr << "\red No valid ID."
+				else if(istype(inserted_id))
+					switch(href_list["id"])
+						if("eject")
+							inserted_id.loc = get_turf(src)
+							inserted_id.verb_pickup()
+							inserted_id = null
+						if("reset")
+							inserted_id.points = 0
+						if("setgoal")
+							var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
+							if(num >= 0)
+								inserted_id.goal = num
+			else if(href_list["inject1"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject1"])
 				if(I)	I.activate(1)
-
 			else if(href_list["inject5"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject5"])
 				if(I)	I.activate(5)

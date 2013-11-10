@@ -348,8 +348,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(SEC_FREQ)
 				freq_text = "Security"
-//			if(1349)
-//				freq_text = "Mining"
+			if(1349)
+				freq_text = "Service"
 			if(1347)
 				freq_text = "Supply"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
@@ -365,7 +365,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/part_b_extra = ""
 		if(data == 3) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
 		if (display_freq==SYND_FREQ)
@@ -411,8 +411,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-//				if(1349)
-//					blackbox.msg_mining += blackbox_msg
+				if(1349)
+					blackbox.msg_service += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -634,8 +634,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(SEC_FREQ)
 				freq_text = "Security"
-//			if(1349)
-//				freq_text = "Mining"
+			if(1349)
+				freq_text = "Service"
 			if(1347)
 				freq_text = "Supply"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
@@ -692,8 +692,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-//				if(1349)
-//					blackbox.msg_mining += blackbox_msg
+				if(1349)
+					blackbox.msg_service += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else

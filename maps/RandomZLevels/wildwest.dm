@@ -4,6 +4,37 @@
  *		Meat Grinder
  */
 
+//Wild West Areas
+
+/area/awaymission/wwmines
+	name = "\improper Wild West Mines"
+	icon_state = "away1"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwgov
+	name = "\improper Wild West Mansion"
+	icon_state = "away2"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwrefine
+	name = "\improper Wild West Refinery"
+	icon_state = "away3"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwvault
+	name = "\improper Wild West Vault"
+	icon_state = "away3"
+	luminosity = 0
+
+/area/awaymission/wwvaultdoors
+	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	icon_state = "away2"
+	requires_power = 0
+	luminosity = 0
+
 /*
  * Wish Granter
  */
@@ -59,19 +90,19 @@
 					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 					user << "\blue The walls suddenly disappear."
 				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.update_body()
 			if("Wealth")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				new /obj/structure/closet/syndicate/resources/everything(loc)
 				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.update_body()
 			if("Immortality")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				user.verbs += /mob/living/carbon/proc/immortality
 				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.update_body()
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
@@ -86,7 +117,7 @@
 					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 					obj_count++
 				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.update_body()
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
@@ -113,7 +144,7 @@
 /obj/effect/meatgrinder/New()
 	icon_state = "blobpod"
 
-/obj/effect/meatgrinder/HasEntered(AM as mob|obj)
+/obj/effect/meatgrinder/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(mob/M as mob|obj)

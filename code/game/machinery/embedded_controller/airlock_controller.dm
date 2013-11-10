@@ -252,33 +252,42 @@ obj/machinery/embedded_controller/radio/airlock_controller
 		var/exterior_status = "----"
 		var/interior_status = "----"
 		var/pump_status = "----"
+		var/current_status = "Inactive<BR>&nbsp;"
 		if(program)
 			state = program.state
-			sensor_pressure = program.memory["sensor_pressure"]
-			exterior_status = program.memory["exterior_status"]
-			interior_status = program.memory["interior_status"]
-			pump_status = program.memory["pump_status"]
+			sensor_pressure = program.memory["sensor_pressure"] ? program.memory["sensor_pressure"] : "----"
+			exterior_status = program.memory["exterior_status"] ? program.memory["exterior_status"] : "----"
+			interior_status = program.memory["interior_status"] ? program.memory["interior_status"] : "----"
+			pump_status = program.memory["pump_status"] ? program.memory["pump_status"] : "----"
 
 		switch(state)
 			if(AIRLOCK_STATE_INOPEN)
 				state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>
 <A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
+				current_status = "Interior Airlock Open<BR><span class='good'>Chamber Pressurized</span>"
 			if(AIRLOCK_STATE_PRESSURIZE)
 				state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+				current_status = "Cycling to Interior Airlock<BR><span class='average'>Chamber Pressurizing</span>"
 			if(AIRLOCK_STATE_CLOSED)
 				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>
 <A href='?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+				current_status = "Cycling to Exterior Airlock<BR><span class='average'>Chamber Depressurizing</span>"
 			if(AIRLOCK_STATE_OUTOPEN)
 				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
 <A href='?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
+				current_status = "Exterior Airlock Open<BR><span class='bad'>Chamber Depressurized</span>"
 
-		var/output = {"<B>Airlock Control Console</B><HR>
-[state_options]<HR>
-<B>Chamber Pressure:</B> [sensor_pressure] kPa<BR>
-<B>Exterior Door: </B> [exterior_status]<BR>
-<B>Interior Door: </B> [interior_status]<BR>
-<B>Control Pump: </B> [pump_status]<BR>"}
+		var/output = {"<h3>Airlock Status</h3>
+<div class='statusDisplay'>
+<div class='line'><div class='statusLabel'>Current Status:</div><div class='statusValue'>[current_status]</div></div>
+<div class='line'>&nbsp;</div>
+<div class='line'><div class='statusLabel'> \> Chamber Pressure:</div><div class='statusValue'>[sensor_pressure] kPa</div></div>
+<div class='line'><div class='statusLabel'> \> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
+<div class='line'><div class='statusLabel'> \> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
+<div class='line'><div class='statusLabel'> \> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
+</div>
+[state_options]"}
 
 		return output

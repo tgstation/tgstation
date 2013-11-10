@@ -1,5 +1,16 @@
 // Areas.dm
 
+// Added to fix mech fabs 05/2013 ~Sayu
+// This is necessary due to lighting subareas.  If you were to go in assuming that things in
+// the same logical /area have the parent /area object... well, you would be mistaken.  If you
+// want to find machines, mobs, etc, in the same logical area, you will need to check all the
+// related areas.  This returns a master contents list to assist in that.
+/proc/area_contents(var/area/A)
+	if(!istype(A)) return null
+	var/list/contents = list()
+	for(var/area/LSA in A.related)
+		contents += LSA.contents
+	return contents
 
 
 // ===
@@ -164,7 +175,7 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -192,6 +203,8 @@
 		return 1
 	if(master.always_unpowered)
 		return 0
+	if(src.lighting_space)
+		return 0 // Nope sorry
 	switch(chan)
 		if(EQUIP)
 			return master.power_equip

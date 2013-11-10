@@ -1,4 +1,4 @@
-/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
+/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
 	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
 /proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
@@ -53,7 +53,7 @@
 
 					gib.blood_DNA = list()
 					if(MobDNA)
-						gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.b_type
+						gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.blood_type
 					else if(istype(src, /obj/effect/gibspawner/xeno))
 						gib.blood_DNA["UNKNOWN DNA"] = "X*"
 					else if(istype(src, /obj/effect/gibspawner/human)) // Probably a monkey
