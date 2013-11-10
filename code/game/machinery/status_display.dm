@@ -263,6 +263,10 @@
 					set_picture("ai_facepalm")
 				if("Friend Computer")
 					set_picture("ai_friend")
+				if("Blue Glow")
+					set_picture("ai_sal")
+				if("Red Glow")
+					set_picture("ai_hal")
 
 			return
 
