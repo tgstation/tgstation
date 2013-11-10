@@ -258,6 +258,10 @@
 					icon_state = "space-up_glass"
 					name = "Glass of Space-up"
 					desc = "Space-up. It helps keep your cool."
+				if("lemon_lime")
+					icon_state = "glass_yellow"
+					name = "Glass of Lemon-Lime"
+					desc = "You're pretty certain a real fruit has never actually touched this."
 				if("moonshine")
 					icon_state = "glass_clear"
 					name = "Moonshine"
