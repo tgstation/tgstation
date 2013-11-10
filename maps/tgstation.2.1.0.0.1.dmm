@@ -10269,7 +10269,7 @@
 "dPy" = (/turf/simulated/floor{blocks_air = 1; icon_state = "dark"},/area/engine/engineering)
 "dPz" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/engine/engineering)
 "dPA" = (/turf/simulated/floor{tag = "icon-vault-border (EAST)"; icon_state = "vault-border"; dir = 4},/area/engine/engineering)
-"dPB" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor{dir = 8; icon_state = "vault-border"; tag = "icon-vault-border (EAST)"},/area/engine/engineering)
+"dPB" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_x = -30; pixel_y = 0},/turf/simulated/floor{dir = 8; icon_state = "vault-border"; tag = "icon-vault-border (EAST)"},/area/engine/engineering)
 "dPC" = (/turf/simulated/floor{icon_state = "dark"},/area/engine/engineering)
 "dPD" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/engine/engineering)
 "dPE" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor{icon_state = "dark"},/area/engine/engineering)
