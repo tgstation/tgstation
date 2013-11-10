@@ -15,7 +15,7 @@
 	var/obj/item/organ/limb/affecting = H.get_organ("chest")
 
 
-	if(affecting.status == ORGAN_ORGANIC) //Limb must be robotic to be healed - RR
+	if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
 		if (M.stat == 2)
 			var/t_him = "it"
 			if (M.gender == MALE)
