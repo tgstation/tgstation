@@ -139,6 +139,18 @@
 	return update_organ_icon()
 
 
+/obj/item/organ/limb/proc/heal_robotic_damage(brute, burn) //so you can heal robotic limbs but not with the original proc - RR
+	if(status == ORGAN_ORGANIC) //This is a robotic heal proc so no healing organic limbs - RR
+		brute = max(0, brute - 3)
+		burn = max(0, burn - 3)
+
+	brute_dam	= max(brute_dam - brute, 0)
+	burn_dam	= max(burn_dam - burn, 0)
+	return update_organ_icon()
+
+
+
+
 //Returns total damage...kinda pointless really
 /obj/item/organ/limb/proc/get_damage()
 	return brute_dam + burn_dam
