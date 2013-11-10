@@ -24,6 +24,8 @@ proc/cardinalrange(var/center)
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	var/coredirs = 0
+	var/dirs=0
 
 
 /obj/machinery/am_shielding/New(loc)
@@ -124,13 +126,32 @@ proc/cardinalrange(var/center)
 
 /obj/machinery/am_shielding/update_icon()
 	overlays.Cut()
+	coredirs = 0
+	dirs = 0
 	for(var/direction in alldirs)
 		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit)||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-			overlays += "shield_[direction]"
+
+		// Detect cores
+		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit && machine:processing))
+			coredirs |= direction
+
+		// Detect cores, shielding, and control boxen.
+		if(direction in cardinal)
+			if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit) ||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
+				dirs |= direction
+
+	// If we're next to a core, set the prefix.
+	var/prefix = ""
+	var/icondirs=dirs
+
+	if(coredirs)
+		prefix="core"
+
+	// Set our overlay
+	icon_state = "[prefix]shield_[icondirs]"
 
 	if(core_check())
-		overlays += "core"
+		overlays += "core[control_unit && control_unit.active]"
 		if(!processing) setup_core()
 	else if(processing) shutdown_core()
 
