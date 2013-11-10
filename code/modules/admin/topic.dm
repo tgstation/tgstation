@@ -2008,6 +2008,13 @@
 						if(!job)	continue
 						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 					usr << browse(dat, "window=jobdebug;size=600x500")
+			if("show_admins")
+				var/dat = "<B>Current admins:</B><HR>"
+				if(admin_datums)
+					for(var/ckey in admin_datums)
+						var/datum/admins/D = admin_datums[ckey]
+						dat += "[ckey] - [D.rank.name]<br>"
+					usr << browse(dat, "window=showadmins;size=600x500")
 
 	else if(href_list["secretscoder"])
 		if(!check_rights(R_DEBUG))	return
