@@ -7,7 +7,7 @@
 
 
 
-#define RECOMMENDED_VERSION 495
+#define RECOMMENDED_VERSION 500
 /world/New()
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
