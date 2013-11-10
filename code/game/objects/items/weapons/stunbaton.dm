@@ -22,6 +22,7 @@
 
 /obj/item/weapon/melee/baton/New()
 	..()
+	bcell = new(src) //I'm lazy
 	update_icon()
 	return
 
@@ -113,7 +114,7 @@
 
 	var/mob/living/L = M
 
-	if(user.a_intent == "harm")
+	if(user.a_intent == "hurt")
 		..()
 		playsound(loc, "swing_hit", 50, 1, -1)
 
