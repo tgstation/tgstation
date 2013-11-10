@@ -242,18 +242,20 @@ emp_act
 		if(I.force > 10 || I.force >= 5 && prob(33))
 			forcesay(hit_appends)	//forcesay checks stat already.
 
-/mob/living/carbon/human/emp_act(severity, mob/user) //HUMAN EMP_ACT WOO - RR
 
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting)) //Where was hit by EMP?
 
-	if(affecting.status == ORGAN_ROBOTIC) //if where we were hit was Robotic
+/mob/living/carbon/human/emp_act(severity)
 
-		//Handle EMP stuff.
-		switch(severity)
-			if(1)
-				affecting.take_damage(20, 0)
-				Stun(rand(5,10))
-			if(2)
-				affecting.take_damage(10, 0)
-				Stun(rand(1,5))
-		..()
+	for(var/obj/item/organ/limb/L in src.organs)
+		if(L.status == ORGAN_ROBOTIC)
+			switch(severity)
+				if(1)
+					L.take_damage(20)
+					src.Stun(rand(1,10))
+				if(2)
+					L.take_damage(10)
+					src.Stun(rand(1,5))
+
+
+			src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
+			..()
