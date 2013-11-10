@@ -172,10 +172,10 @@
 			user << "\red There is already a [fueljar] inside!"
 			return
 		fueljar = W
-		W.loc = src
 		if(user.client)
 			user.client.screen -= W
 		user.u_equip(W)
+		W.loc = src
 		user.update_icons()
 		message_admins("AME loaded with fuel by [user.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
@@ -227,6 +227,8 @@
 	else
 		use_power = 1
 		visible_message("The [src.name] shuts down.")
+	for(var/obj/machinery/am_shielding/AMS in linked_cores)
+		AMS.update_icon()
 	update_icon()
 	return
 
