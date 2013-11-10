@@ -84,8 +84,8 @@
 		t += "No teleport data found."
 	else
 		t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-		t += "Distance: [last_tele_data.distance]ft<BR>"
-		t += "Time: [last_tele_data.time]secs<BR>"
+		t += "Distance: [last_tele_data.distance]m<BR>"
+		t += "Time: [last_tele_data.time] secs<BR>"
 	t += "</div>"
 
 	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
