@@ -127,7 +127,7 @@ emp_act
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if (WT.remove_fuel(0))
-			if(istype(affecting, /obj/item/organ/limb/robot))
+			if(affecting.status == ORGAN_ROBOTIC)
 				if(affecting.brute_dam > 0)
 					affecting.heal_damage(30,0) //Repair Brute
 					update_damage_overlays(0)
@@ -145,7 +145,7 @@ emp_act
 
 	if(istype(I, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/coil = I
-		if(istype(affecting, /obj/item/organ/limb/robot))
+		if(affecting.status == ORGAN_ROBOTIC)
 			if(affecting.burn_dam > 0)
 				affecting.heal_damage(0,30) //Repair Burn
 				updatehealth()
@@ -178,7 +178,7 @@ emp_act
 	apply_damage(I.force, I.damtype, affecting, armor , I)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)) && !istype(affecting, /obj/item/organ/limb/robot)) //Robotic limbs don't bleed.
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)) && affecting.status == ORGAN_ORGANIC) //Organ must be Organic to bleed - RR
 		I.add_blood(src)	//Make the weapon bloody, not the person.
 		if(prob(I.force * 2))	//blood spatter!
 			bloody = 1
@@ -246,7 +246,7 @@ emp_act
 
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting)) //Where was hit by EMP?
 
-	if(istype(affecting, /obj/item/organ/limb/robot)) //if where we were hit was Robotic
+	if(affecting.status == ORGAN_ROBOTIC) //if where we were hit was Robotic
 
 		//Handle EMP stuff.
 		switch(severity)

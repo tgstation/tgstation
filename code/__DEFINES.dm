@@ -466,3 +466,5 @@ var/list/be_special_flags = list(
 #define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	64
 #define TR_KEEPSRC		128
+#define ORGAN_ORGANIC   1
+#define ORGAN_ROBOTIC   2

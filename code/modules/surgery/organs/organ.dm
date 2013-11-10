@@ -3,6 +3,7 @@
 	icon = 'icons/obj/surgery.dmi'
 
 
+
 /obj/item/organ/heart
 	name = "heart"
 	icon_state = "heart-on"
@@ -33,6 +34,7 @@
 //Old Datum Limbs:
 // code/modules/unused/limbs.dm
 
+
 /obj/item/organ/limb
 	name = "limb"
 	var/mob/owner = null
@@ -42,6 +44,7 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
+	var/status = ORGAN_ORGANIC
 
 
 /obj/item/organ/limb/chest
@@ -95,6 +98,11 @@
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 
+
+	if(status == ORGAN_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
+		brute = max(0, brute - 5)
+		burn = max(0, burn - 4)
+
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)	return 0
 
@@ -122,8 +130,10 @@
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/organ/limb/proc/heal_damage(brute, burn)
-	brute	= max(brute, 0)
-	burn	= max(burn, 0)
+	if(status == ORGAN_ROBOTIC) // This makes robolimbs not healable by chems
+		brute = max(0, brute - 3)
+		burn = max(0, burn - 3)
+
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
 	return update_organ_icon()
@@ -137,13 +147,14 @@
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/organ/limb/proc/update_organ_icon()
-	var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
-	var/tburn	= round( (burn_dam/max_damage)*3, 1 )
-	if((tbrute != brutestate) || (tburn != burnstate))
-		brutestate = tbrute
-		burnstate = tburn
-		return 1
-	return 0
+	if(!status == 2)
+		var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
+		var/tburn	= round( (burn_dam/max_damage)*3, 1 )
+		if((tbrute != brutestate) || (tburn != burnstate))
+			brutestate = tbrute
+			burnstate = tburn
+			return 1
+		return 0
 
 //Returns a display name for the organ
 /obj/item/organ/limb/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed - RR.

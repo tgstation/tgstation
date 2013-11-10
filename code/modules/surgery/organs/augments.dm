@@ -5,6 +5,7 @@
 /obj/item/organ/limb/robot
 	name = "cyberlimb"
 	desc = "You should never be seeing this!"
+	status = ORGAN_ROBOTIC
 
 /obj/item/organ/limb/robot/chest
 	name = "chest"

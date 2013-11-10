@@ -498,7 +498,7 @@
 
 			var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 
-			if(!istype(affecting, /obj/item/organ/limb/robot)) //is the hand organic? if Yes then taste the Burn - RR
+			if(affecting.status == ORGAN_ORGANIC) //is the hand organic? if Yes then taste the Burn - RR
 
 				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)

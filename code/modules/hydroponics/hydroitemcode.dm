@@ -34,7 +34,7 @@
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/obj/item/organ/limb/affecting = user.get_organ(organ)
-			if(!istype(affecting, /obj/item/organ/limb/robot)) //You don't burn your robot hands - RR
+			if(affecting.status == ORGAN_ORGANIC) //Burn your hands if they are organic - RR
 				if(affecting.take_damage(0,force))
 					user.update_damage_overlays(0)
 		else
@@ -59,7 +59,7 @@
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/obj/item/organ/limb/affecting = user.get_organ(organ)
-			if(!istype(affecting, /obj/item/organ/limb/robot)) //You don't burn your robot hands - RR
+			if(affecting.status == ORGAN_ORGANIC) //Burn your hands if they are organic - RR
 				if(affecting.take_damage(0,force))
 					user.update_damage_overlays(0)
 		else
