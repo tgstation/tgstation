@@ -53,6 +53,9 @@
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user as mob)
+	// Require consciousness
+	if(user.stat && !isAdminGhost(user))
+		return
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)

@@ -120,8 +120,9 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return 1
-	if(istype(M, /mob/living/silicon))
+	if(istype(M, /mob/living/silicon) || isAdminGhost(M))
 		//AI can do whatever he wants
+		// So can admins.
 		return 1
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M

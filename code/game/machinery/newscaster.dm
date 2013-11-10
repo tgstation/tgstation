@@ -535,6 +535,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
@@ -547,6 +548,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			src.c_locked = !src.c_locked
 			src.updateUsrDialog()
 			//src.update_icon()
@@ -557,6 +559,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			//var/list/existing_channels = list() //OBSOLETE
 			var/list/existing_authors = list()
 			for(var/datum/feed_channel/FC in news_network.network_channels)
@@ -593,6 +596,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			//var/list/datum/feed_channel/available_channels = list()
 			var/list/available_channels = list()
 			for(var/datum/feed_channel/F in news_network.network_channels)
@@ -607,6 +611,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
@@ -618,6 +623,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			AttachPhoto(usr)
 			src.updateUsrDialog()
 
@@ -627,6 +633,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
@@ -649,18 +656,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else if(href_list["create_channel"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			src.screen=2
 			src.updateUsrDialog()
 
 		else if(href_list["create_feed_story"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			src.screen=3
 			src.updateUsrDialog()
 
 		else if(href_list["menu_paper"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			src.screen=8
 			src.updateUsrDialog()
 		else if(href_list["print_paper"])
@@ -669,6 +679,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			if(!src.paper_remaining)
 				src.screen=21
 			else
@@ -679,18 +690,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else if(href_list["menu_censor_story"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			src.screen=10
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_channel"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			src.screen=11
 			src.updateUsrDialog()
 
 		else if(href_list["menu_wanted"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			var/already_wanted = 0
 			if(news_network.wanted_issue)
 				already_wanted = 1
@@ -707,6 +721,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			src.channel_name = strip_html(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
@@ -718,6 +733,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			src.msg = strip_html(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
@@ -729,6 +745,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			var/input_param = text2num(href_list["submit_wanted"])
 			if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 				src.screen = 16
@@ -781,6 +798,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			var/datum/feed_channel/FC = locate(href_list["censor_channel_author"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
@@ -798,6 +816,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 			if(MSG.is_admin_message)
 				alert("This message was created by a Nanotrasen Officer. You cannot censor its author.","Ok")
@@ -815,6 +834,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
@@ -834,6 +854,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else if(href_list["pick_d_notice"])
 			if(isobserver(usr) && !isAdminGhost(usr))
 				usr << "\red You can't do that."
+				return
 			var/datum/feed_channel/FC = locate(href_list["pick_d_notice"])
 			src.viewing_channel = FC
 			src.screen=13
@@ -845,6 +866,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				if(isobserver(usr))
 					usr << "\red You can't do that."
+					return
 			var/datum/feed_channel/FC = locate(href_list["toggle_d_notice"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it.","Ok")

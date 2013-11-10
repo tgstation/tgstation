@@ -872,11 +872,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		var/parameters = params2list(params)
 
 		if(parameters["shift"]){
-			if(!isAI(usr) && !isAdminGhost(usr))
+			if(!isAI(usr)/* && !isAdminGhost(usr)*/)
 				ShiftClick(usr)
 			else
-				if(isAdminGhost(usr))
-					log_adminghost("[key_name(usr)] shift-clicked on [src]!")
+				//if(isAdminGhost(usr))
+				//	log_adminghost("[key_name(usr)] shift-clicked on [src]!")
 				AIShiftClick(usr)
 			return
 		}
