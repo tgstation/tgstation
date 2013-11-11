@@ -12,6 +12,7 @@
 	var/z_co = 1
 	var/power_off
 	var/rotation_off
+	var/angle_off
 
 	var/rotation = 0
 	var/angle = 45
@@ -85,7 +86,7 @@
 		t += "No teleport data found."
 	else
 		t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-		t += "Distance: [last_tele_data.distance]m<BR>"
+		t += "Distance: [last_tele_data.distance * 0.5]m<BR>"
 		t += "Time: [last_tele_data.time] secs<BR>"
 	t += "</div>"
 
@@ -121,8 +122,9 @@
 
 		var/truePower = Clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
+		var/trueAngle = Clamp(angle + angle_off, 1, 90)
 
-		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, angle, truePower)
+		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
 		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
@@ -255,5 +257,6 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	teles_left = rand(30, 40)
+	angle_off = rand(-25, 25)
 	power_off = rand(-10, 10)
 	rotation_off = rand(-10, 10)
