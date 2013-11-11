@@ -29,6 +29,11 @@
 				continue
 			no_queen = 0
 
+		for(var/mob/living/simple_animal/borer/B)
+			if(istype(B.loc, /mob/living/carbon/alien/humanoid/drone))
+				src << "<span class='warning'>You are in capable of performing this host's greater purpose!</span>"
+				return
+
 		if(no_queen)
 			adjustToxLoss(-500)
 			src << "\green You begin to evolve!"
