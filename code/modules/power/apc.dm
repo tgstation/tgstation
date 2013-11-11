@@ -529,8 +529,8 @@
 		user << browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
-	user.set_machine(src)
-	var/t = "<html><head><title>[area.name] APC</title></head><body><TT><B>Area Power Controller</B> ([area.name])<HR>"
+	//user.set_machine(src)
+/*	var/t = "<html><head><title>[area.name] APC</title></head><body><TT><B>Area Power Controller</B> ([area.name])<HR>"
 
 	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
 	if ( (get_dist(src, user) > 1 ))
@@ -677,8 +677,87 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 </TT></body></html>"}
 	// END AUTOFIX
 	user << browse(t, "window=apc")
-	onclose(user, "apc")
-	return
+	onclose(user, "apc")*/
+	return ui_interact(user)
+
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main")
+	if(!user)
+		return
+
+	var/malfStatus
+	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
+		if (src.malfai == (user:parent ? user:parent : user))
+			if (src.occupant == user)
+				malfStatus = 3 // 3 = User is shunted in this APC
+			else if (istype(user.loc, /obj/machinery/power/apc))
+				malfStatus = 4 // 4 = User is shunted in another APC
+			else
+				malfStatus = 2 // 2 = APC hacked by user, and user is in its core.
+		else
+			malfStatus = 1 // 1 = APC not hacked.
+	else
+		malfStatus = 0 // 0 = User is not a Malf AI
+
+	var/list/data = list(
+		"locked" = locked,
+		"isOperating" = operating,
+		"externalPower" = main_status,
+		"powerCellStatus" = cell ? cell.percent() : null,
+		"chargeMode" = chargemode,
+		"chargingStatus" = charging,
+		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"coverLocked" = coverlocked,
+		"siliconUser" = istype(user, /mob/living/silicon),
+		"malfStatus" = malfStatus,
+
+		"powerChannels" = list(
+			list(
+				"title" = "Equipment",
+				"powerLoad" = lastused_equip,
+				"status" = equipment,
+				"topicParams" = list(
+					"auto" = list("eqp" = 3),
+					"on"   = list("eqp" = 2),
+					"off"  = list("eqp" = 1)
+				)
+			),
+			list(
+				"title" = "Lighting",
+				"powerLoad" = lastused_light,
+				"status" = lighting,
+				"topicParams" = list(
+					"auto" = list("lgt" = 3),
+					"on"   = list("lgt" = 2),
+					"off"  = list("lgt" = 1)
+				)
+			),
+			list(
+				"title" = "Environment",
+				"powerLoad" = lastused_environ,
+				"status" = environ,
+				"topicParams" = list(
+					"auto" = list("env" = 3),
+					"on"   = list("env" = 2),
+					"off"  = list("env" = 1)
+				)
+			)
+		)
+	)
+
+	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 500, data["siliconUser"] ? 465 : 390)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+	//user.set_machine(src)
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
@@ -836,7 +915,7 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 /obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
 	if(!(isrobot(usr) && (href_list["apcwires"] || href_list["pulse"])))
 		if(!can_use(usr, 1))
-			return
+			return 0
 	src.add_fingerprint(usr)
 	usr.set_machine(src)
 	if (href_list["apcwires"])
@@ -902,11 +981,11 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
 		usr.unset_machine()
-		return
+		return 0
 	else if (href_list["close2"])
 		usr << browse(null, "window=apcwires")
 		usr.unset_machine()
-		return
+		return 0
 
 	else if (href_list["overload"])
 		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
@@ -917,7 +996,7 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
 			if (malfai.malfhacking)
 				malfai << "You are already hacking an APC."
-				return
+				return 1
 			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 			malfai.malfhack = src
 			malfai.malfhacking = 1
@@ -926,6 +1005,7 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 				if (!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
+					locked = 1
 					if (ticker.mode.config_tag == "malfunction")
 						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
 							ticker.mode:apcs++
@@ -942,10 +1022,18 @@ Environmental:[add_lspace(lastused_environ, 6)] W :"}
 	else if (href_list["deoccupyapc"])
 		malfvacate()
 
+	else if (href_list["toggleaccess"])
+		if (istype(usr, /mob/living/silicon/ai) && !src.aidisabled)
+			if(emagged || (stat & (BROKEN|MAINT)))
+				usr << "The APC does not respond to the command."
+			else
+				locked = !locked
+				update_icon()
+
 	if(usingUI)
 		src.updateDialog()
 
-	return
+	return 1
 
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	if(!istype(malf))
