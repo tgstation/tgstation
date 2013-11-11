@@ -35,6 +35,7 @@
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/
 
 //Chaplain
 /obj/item/clothing/suit/nun
