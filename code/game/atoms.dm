@@ -888,9 +888,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				RobotAltClick(usr)
 			else if(isovermind(usr))
 				OvermindAltClick(usr)
-			else if(!isAI(usr))/*&& !isAdminGhost(usr))
-				if(isAdminGhost(usr))
-					log_adminghost("[key_name(usr)] alt-clicked on [src]!")*/
+			else if(!isAI(usr))
 				AltClick(usr)
 			else
 				AIAltClick(usr)
@@ -902,11 +900,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if(parameters["ctrl"]){
 			if(isovermind(usr))
 				OvermindCtrlClick(usr)
-			else if(!isAI(usr))/*&& !isAdminGhost(usr))*/
+			else if(!isAI(usr))
 				CtrlClick(usr)
-			else/*
-				if(isAdminGhost(usr))
-					log_adminghost("[key_name(usr)] ctrl-clicked on [src]!")*/
+			else
 				AICtrlClick(usr)
 			return
 		}
@@ -914,7 +910,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		// ------- MIDDLE-CLICK -------
 
 		if(parameters["middle"]){
-			if(!isAI(usr) /*&& !isAdminGhost(usr)*/)
+			if(!isAI(usr) && !isAdminGhost(usr))
 				MiddleClick(usr)
 				return
 		}
@@ -943,7 +939,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI/AGhost) -------
-	if ((((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0) && !isobserver(usr))
+	if ((((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0)/* && !isobserver(usr)*/)
 		return
 
 	// ------- CLICKING STUFF IN CONTAINERS -------
@@ -1118,7 +1114,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 						src.attack_alien(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/alien/larva))
 						src.attack_larva(usr)
-					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || isobserver(usr))
+					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)/* || isobserver(usr)*/)
 						src.attack_ai(usr, usr.hand)
 					else if(istype(usr, /mob/living/carbon/slime))
 						src.attack_slime(usr)
