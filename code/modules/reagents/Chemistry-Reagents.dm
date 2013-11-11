@@ -787,7 +787,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
 					T.clean_blood()
-					for(var/obj/effect/decal/cleanable/C in src)
+					for(var/obj/effect/decal/cleanable/C in T)
 						del(C)
 
 					for(var/mob/living/carbon/slime/M in T)

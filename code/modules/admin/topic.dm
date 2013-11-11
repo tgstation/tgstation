@@ -1920,17 +1920,17 @@
 			if("check_antagonist")
 				check_antagonists()
 			if("moveminingshuttle")
-				if(mining_shuttle_moving)
-					return
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
-				move_mining_shuttle()
+				var/datum/shuttle_manager/s = shuttles["mining"]
+				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
 				log_admin("[key_name(usr)] moved the mining shuttle")
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
-				move_ferry()
+				var/datum/shuttle_manager/s = shuttles["ferry"]
+				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")
 			if("kick_all_from_lobby")

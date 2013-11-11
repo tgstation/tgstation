@@ -190,7 +190,7 @@
 		l_hand = null
 	else if(I == r_hand)
 		r_hand = null
-	if(client) client.screen -= I //  will get put back if visible
+	I.screen_loc = null // will get moved if inventory is visible
 
 	switch(slot)
 		if(slot_back)

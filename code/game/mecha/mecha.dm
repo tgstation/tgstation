@@ -38,6 +38,7 @@
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
+	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
 	//inner atmos
 	var/use_internal_tank = 0
@@ -330,7 +331,7 @@
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
-			O.HasEntered(src)
+			O.Crossed(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
 				src.anchored = 1
 		else if(!O.anchored)
@@ -464,6 +465,9 @@
 			src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
 			visible_message("\blue The [user] rebounds off [src.name]'s armor!")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+	return
+
+/obj/mecha/attack_tk()
 	return
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
@@ -982,6 +986,10 @@
 		*/
 		H.stop_pulling()
 		H.forceMove(src)
+		if(H.hud_used)
+			last_user_hud = H.hud_used.hud_shown
+			H.hud_used.hide_hud()
+
 		src.occupant = H
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
@@ -1086,6 +1094,9 @@
 	add_fingerprint(usr)
 	return
 
+/obj/mecha/container_resist()
+	go_out()
+
 
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
@@ -1127,6 +1138,9 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
+		if(src.occupant.hud_used && src.last_user_hud)
+			src.occupant.hud_used.show_hud()
+
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)

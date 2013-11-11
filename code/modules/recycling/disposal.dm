@@ -193,11 +193,11 @@
 /obj/machinery/disposal/alter_health()
 	return get_turf(src)
 
-// attempt to move while inside
-/obj/machinery/disposal/relaymove(mob/user as mob)
-	if(user.stat || src.flushing)
+// resist to escape the bin
+/obj/machinery/disposal/container_resist()
+	if(src.flushing)
 		return
-	src.go_out(user)
+	go_out(usr)
 	return
 
 // leave the disposal

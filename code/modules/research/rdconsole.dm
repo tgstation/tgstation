@@ -326,6 +326,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
+		var/g2g = 1
 		if(linked_lathe)
 			var/datum/design/being_built = null
 			for(var/datum/design/D in files.known_designs)
@@ -345,6 +346,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					use_power(power)
 					spawn(16)
 						for(var/M in being_built.materials)
+							if(!check_mat(being_built, M))
+								src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
+								g2g = 0
+								break
 							switch(M)
 								if("$metal")
 									linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]))
@@ -365,7 +370,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								else
 									linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
 
-						if(being_built.build_path)
+						if(being_built.build_path && g2g)
 							var/obj/new_item = new being_built.build_path(src)
 							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 								new_item.investigate_log("built by [key]","singulo")
@@ -377,9 +382,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								L.name += " ([new_item.name])"
 							else
 								new_item.loc = linked_lathe.loc
-							linked_lathe.busy = 0
-							screen = 3.1
-							updateUsrDialog()
+						linked_lathe.busy = 0
+						screen = 3.1
+						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter)
@@ -518,6 +523,26 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	updateUsrDialog()
 	return
 
+/obj/machinery/computer/rdconsole/proc/check_mat(datum/design/being_built, var/M)
+	switch(M)
+		if("$metal")
+			return (linked_lathe.m_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$glass")
+			return (linked_lathe.g_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$gold")
+			return (linked_lathe.gold_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$silver")
+			return (linked_lathe.silver_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$plasma")
+			return (linked_lathe.plasma_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$uranium")
+			return (linked_lathe.uranium_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$diamond")
+			return (linked_lathe.diamond_amount - being_built.materials[M] > 0) ? 1 : 0
+		if("$clown")
+			return (linked_lathe.clown_amount - being_built.materials[M] > 0) ? 1 : 0
+		else
+			return linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(..())
 		return

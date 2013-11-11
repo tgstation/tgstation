@@ -203,4 +203,8 @@
 	igniter.secured = 0
 	status = 1
 	update_icon()
-	return
+
+/obj/item/weapon/flamethrower/full/tank/New(var/loc)
+	..()
+	ptank = new /obj/item/weapon/tank/plasma(src)
+	update_icon()

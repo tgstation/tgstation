@@ -17,13 +17,13 @@
 			I = W
 			break
 	if(I)
-		user.visible_message("<span class='notice'>[user] begins to extract [I] implant from [target]'s [target_zone].</span>")
+		user.visible_message("<span class='notice'>[user] begins to extract [I] from [target]'s [target_zone].</span>")
 	else
 		user.visible_message("<span class='notice'>[user] looks for an implant in [target]'s [target_zone].</span>")
 
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
-		user.visible_message("<span class='notice'>[user] successfully removes [I] implant from [target]'s [target_zone]!</span>")
+		user.visible_message("<span class='notice'>[user] successfully removes [I] from [target]'s [target_zone]!</span>")
 		if(istype(I, /obj/item/weapon/implant/loyalty))
 			target << "<span class='notice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
 		del(I)
