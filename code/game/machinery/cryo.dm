@@ -22,7 +22,7 @@
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
-	..() 
+	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
@@ -68,7 +68,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine()
 	..()
-	
+
 	if(in_range(usr, src))
 		usr << "You can just about make out some loose objects floating in the murk:"
 		for(var/obj/O in src)
@@ -81,81 +81,69 @@
 		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
-	ui_interact(user)
+	interact(user)
+	..()
 
+/obj/machinery/atmospherics/unary/cryo_cell/interact(mob/user)
+        var/dat = "<h3>Cryo Cell Status</h3>"
 
- /**
-  * The ui_interact proc is used to open and update Nano UIs
-  * If ui_interact is not used then the UI will not update correctly
-  * ui_interact is currently defined for /atom/movable
-  *
-  * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
-  *
-  * @return nothing
-  */
-/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || user.stat)
-		return
+        dat += "<div class='statusDisplay'>"
 
-	// this is the data which will be sent to the ui
-	var/data[0]
-	data["isOperating"] = on
-	data["hasOccupant"] = occupant ? 1 : 0
+        if(!occupant)
+                dat += "Cell Unoccupied"
+        else
+                dat += "[occupant.name] => "
+                switch(occupant.stat) // obvious, see what their status is
+                        if(0)
+                                dat += "<span class='good'>Conscious</span>"
+                        if(1)
+                                dat += "<span class='average'>Unconscious</span>"
+                        else
+                                dat += "<span class='bad'>DEAD</span>"
+                dat += "<br />"
 
-	var/occupantData[0]
-	if (!occupant)
-		occupantData["name"] = null
-		occupantData["stat"] = null
-		occupantData["health"] = null
-		occupantData["maxHealth"] = null
-		occupantData["minHealth"] = null
-		occupantData["bruteLoss"] = null
-		occupantData["oxyLoss"] = null
-		occupantData["toxLoss"] = null
-		occupantData["fireLoss"] = null
-		occupantData["bodyTemperature"] = null
-	else
-		occupantData["name"] = occupant.name
-		occupantData["stat"] = occupant.stat
-		occupantData["health"] = occupant.health
-		occupantData["maxHealth"] = occupant.maxHealth
-		occupantData["minHealth"] = config.health_threshold_dead
-		occupantData["bruteLoss"] = occupant.getBruteLoss()
-		occupantData["oxyLoss"] = occupant.getOxyLoss()
-		occupantData["toxLoss"] = occupant.getToxLoss()
-		occupantData["fireLoss"] = occupant.getFireLoss()
-		occupantData["bodyTemperature"] = occupant.bodytemperature
-	data["occupant"] = occupantData;
+                dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [round(occupant.health)]%;' class='progressFill good'></div></div><div class='statusValue'>[round(occupant.health)]%</div></div>"
+                dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [round(occupant.getBruteLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getBruteLoss())]%</div></div>"
+                dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [round(occupant.getOxyLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getOxyLoss())]%</div></div>"
+                dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [round(occupant.getToxLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getToxLoss())]%</div></div>"
+                dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [round(occupant.getFireLoss())]%;' class='progressFill bad'></div></div><div class='statusValue'>[round(occupant.getFireLoss())]%</div></div>"
+                dat +=  "<div class='line'><div class='statusLabel'>Body Temperature:</div><div class='statusValue'>[round(occupant.bodytemperature)]</div></div>"
 
-	data["cellTemperature"] = round(air_contents.temperature)
-	data["cellTemperatureStatus"] = "good"
-	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
-		data["cellTemperatureStatus"] = "bad"
-	else if(air_contents.temperature > 225)
-		data["cellTemperatureStatus"] = "average"
+        var/temp_text = ""
+        if(air_contents.temperature > T0C)
+                temp_text = "<span class='bad'>[air_contents.temperature]</span>"
+        else if(air_contents.temperature > 225)
+                temp_text = "<span class='average'>[air_contents.temperature]</span>"
+        else
+                temp_text = "<span class='good'>[air_contents.temperature]</span>"
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0
-	var beakerContents[0]
-	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker:reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
-	data["beakerContents"] = beakerContents
+        dat += "<hr>"
+        dat +=  "<div class='line'><div class='statusLabel'>Cell Temperature:</div><div class='statusValue'>[temp_text]</div></div>"
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
-	if (!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
-	//user.set_machine(src)
+        dat += "</div>" // close statusDisplay div
+
+        if(occupant)
+                dat += "<BR><A href='?src=\ref[src];ejectOccupant=1'>Eject Occupant</A>"
+        dat += "<BR><B>Cryo Status:</B> [ on ? "<A href='?src=\ref[src];toggleOn=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];toggleOn=1'>On</A>"]<BR>"
+
+        dat += "<B>Beaker:</B> "
+        if(beaker)
+                if(beaker:reagents && beaker:reagents.reagent_list.len)
+                        for(var/datum/reagent/R in beaker:reagents.reagent_list)
+                                dat += "<br><span class='highlight'>[R.volume] units of [R.name]</span>"
+                else
+                        dat += "<br><span class='highlight'>Beaker empty</span>"
+                dat += "<br><A href='?src=\ref[src];ejectBeaker=1'>Eject</A>"
+        else
+                dat += "<br><span class='highlight'><i>No beaker loaded</i></span>"
+                dat += "<br><span class='linkOff'>Eject</span>"
+
+        user.set_machine(src)
+        var/datum/browser/popup = new(user, "cryo", "Cryo Cell Control System", 520, 410) // Set up the popup browser window
+        popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+        popup.set_content(dat)
+        popup.open()
+
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
 	if(usr == occupant)
@@ -164,12 +152,8 @@
 	if(..())
 		return 0 // don't update UIs attached to this object
 
-	if(href_list["switchOn"])
-		on = 1
-		update_icon()
-		
-	if(href_list["switchOff"])
-		on = 0
+	if(href_list["toggleOn"])
+		on = !on
 		update_icon()
 
 	if(href_list["ejectBeaker"])
@@ -177,12 +161,13 @@
 			var/obj/item/weapon/reagent_containers/glass/B = beaker
 			B.loc = get_step(loc, SOUTH)
 			beaker = null
-			
+
 	if(href_list["ejectOccupant"])
 		if(!occupant || isslime(usr) || ispAI(usr))
 			return 0 // don't update UIs attached to this object
 		go_out()
-	
+
+	updateDialog()
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
@@ -208,8 +193,7 @@
 		var/mob/M = G.affecting
 		if(put_mob(M))
 			del(G)
-	nanomanager.update_uis(src)
-
+	updateDialog()
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
 	if(on)
@@ -352,6 +336,6 @@
 	for(var/obj/O in src)
 		if(O != beaker)
 			O.loc = get_step(loc, SOUTH)
-	for(var/mob/M in contents) 
+	for(var/mob/M in contents)
 		M.loc = get_step(loc, SOUTH)
 		update_icon()
