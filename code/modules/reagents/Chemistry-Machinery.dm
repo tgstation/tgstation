@@ -325,7 +325,7 @@
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
-		else if (href_list["createpill"])
+		else if (href_list["createpill"]) //Also used for condiment packs.
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/pill/P
@@ -344,10 +344,10 @@
 				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
-				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-
 				if(!name) name = reagents.get_master_reagent_name()
-				P.name = "[name] bag"
+				P.name = "[name] pack"
+				P.originaldesc = "A small condiment pack. The label says it contains [name]."
+				P.desc = P.originaldesc
 				reagents.trans_to(P,10)
 
 		else if (href_list["createbottle"])

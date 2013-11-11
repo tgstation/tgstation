@@ -13,12 +13,8 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
-	//Possible_icon_states has the reagents as key and a list of, in order, the icon_state, the name and the desc as values.
-	var/list/possible_icon_states = list("ketchup" = list("ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "enzyme" = list("enzyme", "Universal Enzyme", "Used in cooking various dishes"), "soysauce" = list("soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("coldsauce", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("saltshaker", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("pepermillsmall", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("oliveoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("emptycondiment", "Sugar", "Tasty spacey sugar!"))
-
-/obj/item/weapon/reagent_containers/food/condiment/New()
-	..()
-	
+	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
+	var/list/possible_states = list("ketchup" = list("ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "enzyme" = list("enzyme", "Universal Enzyme", "Used in cooking various dishes"), "soysauce" = list("soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("coldsauce", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("saltshaker", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("pepermillsmall", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("oliveoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("emptycondiment", "Sugar", "Tasty spacey sugar!"))
 
 /obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
@@ -98,49 +94,20 @@
 	if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
 		return
 	if(reagents.reagent_list.len > 0)
-		if(reagents.get_master_reagent_id() in possible_icon_states)
-			if("ketchup")
-				name = "Ketchup"
-				desc = "You feel more American already."
-				icon_state = "ketchup"
-			if("capsaicin")
-				name = "Hotsauce"
-				desc = "You can almost TASTE the stomach ulcers now!"
-				icon_state = "hotsauce"
-			if("enzyme")
-				name = "Universal Enzyme"
-				desc = "Used in cooking various dishes."
-				icon_state = "enzyme"
-			if("soysauce")
-				name = "Soy Sauce"
-				desc = "A salty soy-based flavoring."
-				icon_state = "soysauce"
-			if("frostoil")
-				name = "Coldsauce"
-				desc = "Leaves the tongue numb in its passage."
-				icon_state = "coldsauce"
-			if("sodiumchloride")
-				name = "Salt Shaker"
-				desc = "Salt. From space oceans, presumably."
-				icon_state = "saltshaker"
-			if("blackpepper")
-				name = "Pepper Mill"
-				desc = "Often used to flavor food or make people sneeze."
-				icon_state = "peppermillsmall"
-			if("cornoil")
-				name = "Corn Oil"
-				desc = "A delicious oil used in cooking. Made from corn."
-				icon_state = "oliveoil"
-			if("sugar")
-				name = "Sugar"
-				desc = "Tastey space sugar!"
+		var/main_reagent = reagents.get_master_reagent_id()
+		if(main_reagent in possible_states)
+			var/list/temp_list = possible_states[main_reagent]
+			icon_state = temp_list[1]
+			name = temp_list[2]
+			desc = temp_list[3]
+
+		else
+			name = "Misc Condiment Bottle"
+			if (reagents.reagent_list.len==1)
+				desc = "Looks like it is [main_reagent], but you are not sure."
 			else
-				name = "Misc Condiment Bottle"
-				if (reagents.reagent_list.len==1)
-					desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
-				else
-					desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
-				icon_state = "mixedcondiments"
+				desc = "A mixture of various condiments. [main_reagent] is one of them."
+			icon_state = "mixedcondiments"
 	else
 		icon_state = "emptycondiment"
 		name = "Condiment Bottle"
@@ -189,12 +156,18 @@
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 /obj/item/weapon/reagent_containers/food/condiment/pack
 	name = "condiment pack"
-	desc = "A small plastic bag to put on your food"
+	desc = "A small plastic pack with condiments to put on your food"
 	icon_state = "blankbag"
 	volume = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = 10
 	flags = FPRINT | TABLEPASS
+	var/originaldesc
+
+/obj/item/weapon/reagent_containers/food/condiment/pack/New()
+	..()
+	pixel_x = rand(-7, 7)
+	pixel_y = rand(-7, 7)
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/attack(mob/M as mob, mob/user as mob, def_zone) //Can't feed these to people directly.
 	return
@@ -209,7 +182,24 @@
 			Del()
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>"
+			user << "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>" //Not sure if food can ever be full, but better safe than sorry.
+			Del()
 			return
-		user << "<span class='notice'>You tear open the [src] above [target] and the condiments drip onto it.</span>"
-		src.reagents.trans_to(target, amount_per_transfer_from_this)
+		else
+			user << "<span class='notice'>You tear open the [src] above [target] and the condiments drip onto it.</span>"
+			src.reagents.trans_to(target, amount_per_transfer_from_this)
+			Del()
+
+/obj/item/weapon/reagent_containers/food/condiment/pack/on_reagent_change()
+	if(reagents.reagent_list.len > 0)
+		var/main_reagent = reagents.get_master_reagent_id()
+		if(main_reagent in possible_states)
+			var/list/temp_list = possible_states[main_reagent]
+			icon_state = temp_list[1]
+			desc = temp_list[3]
+		else
+			icon_state = pick("mixedbag")
+			desc = originaldesc
+	else
+		icon_state = "blankbag"
+		desc = "A small condiment bag. It looks empty."
