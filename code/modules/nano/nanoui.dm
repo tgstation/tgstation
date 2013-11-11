@@ -353,6 +353,7 @@ nanoui is used to open and update nano browser uis
 	fdel(f)
 	f << html
 	user << browse(html, "window=[window_id];[window_size][window_options]")
+	winset(user, "mapwindow.map", "focus=true") // Return keyboard focus to map.
 	on_close_winset()
 	//onclose(user, window_id)
 	nanomanager.ui_opened(src)

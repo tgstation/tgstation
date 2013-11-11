@@ -45,10 +45,10 @@
 /datum/nanomanager/proc/update_uis(src_object)
 	var/src_object_key = "\ref[src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
-		return 0	
+		return 0
 
 	var/update_count = 0
-	for (var/ui_key in open_uis[src_object_key])			
+	for (var/ui_key in open_uis[src_object_key])
 		for (var/datum/nanoui/ui in open_uis[src_object_key][ui_key])
 			if(ui && ui.src_object && ui.user)
 				ui.process(1)
@@ -94,7 +94,7 @@
 	ui.user.open_uis.Remove(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	return uis.Remove(ui)
-	
+
  /**
   * This is called on user logout
   * Closes/clears all uis attached to the user's /mob
@@ -104,7 +104,7 @@
   * @return nothing
   */
 
-// 
+//
 /datum/nanomanager/proc/user_logout(var/mob/user)
 	if (isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // has no open uis
@@ -112,5 +112,32 @@
 	for (var/datum/nanoui/ui in user.open_uis)
 		ui.close();
 
+/**
 
+ * This is called when a player transfers from one mob to another
 
+ * Transfers all open UIs to the new mob
+
+ *
+
+ * @param oldMob /mob The user's old mob
+
+ * @param newMob /mob The user's new mob
+
+ *
+
+ * @return nothing
+
+ */
+
+/datum/nanomanager/proc/user_transferred(var/mob/oldMob, var/mob/newMob)
+	if (isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
+		return 0 // has no open uis
+	if (isnull(newMob.open_uis) || !istype(newMob.open_uis, /list))
+		newMob.open_uis = list()
+
+	for (var/datum/nanoui/ui in oldMob.open_uis)
+		ui.user = newMob
+		newMob.open_uis.Add(ui)
+
+	oldMob.open_uis.Cut()

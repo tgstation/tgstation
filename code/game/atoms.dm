@@ -888,9 +888,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				RobotAltClick(usr)
 			else if(isovermind(usr))
 				OvermindAltClick(usr)
-			else if(!isAI(usr) && !isAdminGhost(usr))
-				if(isAdminGhost(usr))
-					log_adminghost("[key_name(usr)] alt-clicked on [src]!")
+			else if(!isAI(usr))
 				AltClick(usr)
 			else
 				AIAltClick(usr)
@@ -902,11 +900,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if(parameters["ctrl"]){
 			if(isovermind(usr))
 				OvermindCtrlClick(usr)
-			else if(!isAI(usr) && !isAdminGhost(usr))
+			else if(!isAI(usr))
 				CtrlClick(usr)
 			else
-				if(isAdminGhost(usr))
-					log_adminghost("[key_name(usr)] ctrl-clicked on [src]!")
 				AICtrlClick(usr)
 			return
 		}
