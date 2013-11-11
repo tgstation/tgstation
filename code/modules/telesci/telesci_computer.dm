@@ -96,9 +96,8 @@
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
-		var/L = get_turf(E)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, L)
+		s.set_up(5, 1, get_turf(telepad))
 		s.start()
 	else
 		return
@@ -121,7 +120,7 @@
 	if(telepad)
 
 		var/truePower = Clamp(power + power_off, 1, 1000)
-		var/trueRotation = rotation// + rotation_off
+		var/trueRotation = rotation + rotation_off
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, angle, truePower)
 		last_tele_data = proj_data
@@ -154,24 +153,27 @@
 			use_power(power * 10)
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-
-			s.set_up(5, 1, telepad)
+			s.set_up(5, 1, get_turf(telepad))
 			s.start()
+
 			temp_msg = "Teleport successful.<BR>"
 			if(teles_left < 10)
 				temp_msg += "<BR>Calibration required soon."
 			else
 				temp_msg += "Data printed below."
 			investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+
 			var/sparks = get_turf(target)
 			var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
 			y.set_up(5, 1, sparks)
 			y.start()
+
 			var/turf/source = target
 			var/turf/dest = get_turf(telepad)
 			if(sending)
 				source = dest
 				dest = target
+
 			flick("pad-beam", telepad)
 			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
 			for(var/atom/movable/ROI in source)
@@ -222,7 +224,7 @@
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(..())
 			return
-		angle = Clamp(round(new_angle, 0.01), 1, 9999)
+		angle = Clamp(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
 		var/pwr = href_list["setpower"]
