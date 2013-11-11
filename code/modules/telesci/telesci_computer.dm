@@ -11,6 +11,7 @@
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
 	var/power_off
+	var/rotation_off
 
 	var/rotation = 0
 	var/angle = 45
@@ -120,7 +121,7 @@
 	if(telepad)
 
 		var/truePower = Clamp(power + power_off, 1, 1000)
-		var/trueRotation = rotation
+		var/trueRotation = rotation// + rotation_off
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, angle, truePower)
 		last_tele_data = proj_data
@@ -141,6 +142,10 @@
 
 
 		spawn(round(proj_data.time) * 10) // in seconds
+			if(!telepad)
+				return
+			if(telepad.stat & NOPOWER)
+				return
 			teleporting = 0
 			teleport_cooldown = world.time + (power * 2)
 			teles_left -= 1
@@ -170,7 +175,14 @@
 			flick("pad-beam", telepad)
 			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
 			for(var/atom/movable/ROI in source)
-				if(!ismob(ROI) && ROI.anchored) continue
+				// if not a mob and is anchored, don't let through
+				if(!ismob(ROI))
+					if(ROI.anchored)
+						continue
+				else
+					//  If a mob, only let observers or living mobs to pass through
+					if(!isliving(ROI) && !isobserver(ROI))
+						continue
 				do_teleport(ROI, dest, 0)
 			updateDialog()
 
@@ -179,10 +191,6 @@
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
 	if(rotation == null || angle == null || z_co == null)
 		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
-		return
-	if(rotation < 0 || rotation > 360)
-		telefail()
-		temp_msg = "ERROR!<BR>Bearing is less than 0 or greater than 360."
 		return
 	if(angle < 1 || angle > 90)
 		telefail()
@@ -207,14 +215,14 @@
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = Clamp(round(new_rot, 0.1), -9999, 9999)
-		rotation = SimplifyDegrees(rotation)
+		rotation = Clamp(new_rot, -900, 900)
+		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(..())
 			return
-		angle = Clamp(round(new_angle, 0.1), 1, 9999)
+		angle = Clamp(round(new_angle, 0.01), 1, 9999)
 
 	if(href_list["setpower"])
 		var/pwr = href_list["setpower"]
@@ -226,7 +234,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(..())
 			return
-		z_co = Clamp(new_z, 1, 10)
+		z_co = Clamp(round(new_z), 1, 10)
 
 	if(href_list["send"])
 		sending = 1
@@ -244,5 +252,6 @@
 	updateDialog()
 
 /obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(40, 50)
+	teles_left = rand(30, 40)
 	power_off = rand(-10, 10)
+	rotation_off = rand(-10, 10)
