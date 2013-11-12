@@ -1317,8 +1317,8 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
-/area/toxins/misc_lab
-	name = "\improper Miscellaneous Research"
+/area/toxins/telescience
+	name = "\improper Telescience"
 	icon_state = "toxmisc"
 
 /area/toxins/server
