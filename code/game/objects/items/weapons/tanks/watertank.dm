@@ -29,7 +29,7 @@
 	set name = "Toggle Mister"
 	set category = "Object"
 	on = !on
-	
+
 	var/mob/living/carbon/human/user = usr
 	if(on)
 		//Detach the nozzle into the user's hands
@@ -74,7 +74,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	can_be_placed_into = list()
+	can_be_placed_into = list(/obj/structure/sink)
 
 	var/obj/item/weapon/watertank/tank
 
