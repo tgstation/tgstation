@@ -65,7 +65,7 @@ RobRichards's notes:
 
         ..()
         if(host)
-                if(!stat && !host.stat) //Need a brain - RR
+                if(!stat && !host.stat)
                         if(chemicals < 250)
                                 chemicals++
                         if(controlling)
@@ -301,8 +301,6 @@ mob/living/simple_animal/borer/proc/detatch()
         if(!do_after(src,50))
                 src << "As [M] moves away, you are dislodged and fall to the ground."
                 return
-
-
 
 
         if(!M || !src) return
