@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/baton
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
-	icon_state = "stunbaton"
+	icon_state = "stun baton"
 	item_state = "baton"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
