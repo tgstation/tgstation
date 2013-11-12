@@ -42,6 +42,7 @@
 	var/Ticklag = 0.9
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
+	var/wikilinks_on = 0				//allows wikilinks to be given at roundstart
 
 	var/hostedby = null
 	var/respawn = 1
@@ -268,6 +269,8 @@
 					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
+				if("wikilinks_on")
+					wikilinks_on = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

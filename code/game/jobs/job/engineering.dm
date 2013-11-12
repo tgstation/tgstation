@@ -7,6 +7,8 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffeeaa"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Chief_Engineer"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
@@ -48,6 +50,8 @@
 	spawn_positions = 5
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Station_Engineer"
 	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_tcomsat)
 
@@ -81,6 +85,8 @@
 	spawn_positions = 2
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Atmospheric_Technician"
 	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics)
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 

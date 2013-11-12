@@ -13,6 +13,8 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffdddd"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Head_of_Security"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court,
@@ -61,6 +63,8 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Warden"
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court) //But see /datum/job/warden/get_access()
 	minimal_player_age = 7
@@ -104,6 +108,8 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Detective"
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 7
@@ -150,6 +156,8 @@
 	spawn_positions = 5
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Security_Officer"
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court) //But see /datum/job/warden/get_access()
 	minimal_player_age = 7

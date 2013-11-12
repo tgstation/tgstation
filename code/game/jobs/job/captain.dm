@@ -7,6 +7,8 @@
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Captain"
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
 	access = list() 			//See get_access()
@@ -52,6 +54,8 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ddddff"
+	haswikilink = 1
+	wiki_guide = "http://wiki.ss13.eu/index.php/Head_of_Personnel"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	minimal_player_age = 10

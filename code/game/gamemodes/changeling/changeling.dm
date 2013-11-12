@@ -133,6 +133,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if (you_are)
 		changeling.current << "<b>\red You are a changeling!</b>"
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings.</b>"
+	if(config.wikilinks_on == 1)
+		changeling.current << "<b>A guide to absorbing humans can be found at</b> http://wiki.ss13.eu/index.php/Changeling"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)

@@ -102,6 +102,8 @@
 	malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
 	malf.current << "Remember that only APCs that are on the station can help you take over the station."
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
+	if(config.wikilinks_on == 1)
+		malf.current << "<b>More information can be found at</b> http://wiki.ss13.eu/index.php/Guide_to_malfunction"
 	return
 
 

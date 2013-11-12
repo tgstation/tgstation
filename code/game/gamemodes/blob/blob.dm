@@ -67,6 +67,8 @@ var/list/blob_nodes = list()
 	blob.current << "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>"
 	blob.current << "<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>"
 	blob.current << "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"
+	if(config.wikilinks_on == 1)
+		src << "More information can be found at http://wiki.ss13.eu/index.php/Blob"
 	return
 
 /datum/game_mode/blob/proc/show_message(var/message)
