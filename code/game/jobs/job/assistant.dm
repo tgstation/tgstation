@@ -7,7 +7,6 @@
 	spawn_positions = -1
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
-	haswikilink = 1
 	wiki_guide = "http://wiki.ss13.eu/index.php/Assistant"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()

@@ -38,11 +38,8 @@
 	//If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
-	//Check for if the job has a wiki guide
-	var/haswikilink
-
 	//Wiki link to a job's guide
-	var/wiki_guide
+	var/wiki_guide = ""
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
