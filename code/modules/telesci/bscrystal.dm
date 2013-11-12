@@ -6,7 +6,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
 	w_class = 1
-	origin_tech = "bluespace=6"
+	origin_tech = "bluespace=4;materials=3"
 
 /obj/item/bluespace_crystal/New()
 	..()
