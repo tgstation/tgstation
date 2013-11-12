@@ -2770,6 +2770,10 @@
  + roman_shield
  + spearglass0
  + spearglass1
+ - stun baton
+ - stun baton_active
+ - stun baton_nocell
+ + stunbaton
  + stunbaton_nocell
  + swordrainbow
  - telebaton_0
@@ -3088,6 +3092,32 @@
  + plant-23
  + plant-24
  + plant-25
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\antimatter.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
+ - control_critical
+ - core0
+ - core1
+ - coreshield_1
+ - coreshield_10
+ - coreshield_11
+ - coreshield_13
+ - coreshield_14
+ - coreshield_15
+ - coreshield_2
+ - coreshield_4
+ - coreshield_5
+ - coreshield_6
+ - coreshield_7
+ - coreshield_8
+ - coreshield_9
+ - jar-new
+ - shield_11
+ - shield_12
+ - shield_13
+ - shield_14
+ - shield_15
+ - shield_3
+ - shield_7
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\particle_accelerator.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\particle_accelerator.dmi
  + control_boxp3
@@ -3111,19 +3141,23 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 133, in compare
-    theirsDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
-    img = Image.open(self.filename)
+  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
+    theirsDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+    self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 149, in compare
-    mineDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
-    img = Image.open(self.filename)
+  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
+    mineDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+    self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
