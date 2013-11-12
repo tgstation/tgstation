@@ -142,6 +142,10 @@
 	update_icon()
 	return 0
 
+/obj/effect/blob/Crossed(var/mob/living/L)
+	..()
+	L.blob_act()
+
 
 /obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
