@@ -29,10 +29,9 @@
 				continue
 			no_queen = 0
 
-		for(var/mob/living/simple_animal/borer/B)
-			if(istype(B.loc, /mob/living/carbon/alien/humanoid/drone))
-				src << "<span class='warning'>You are in capable of performing this host's greater purpose!</span>"
-				return
+		if(src.has_brain_worms())
+			src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+			return
 
 		if(no_queen)
 			adjustToxLoss(-500)

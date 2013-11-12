@@ -65,7 +65,7 @@ RobRichards's notes:
 
         ..()
         if(host)
-                if(!stat && !host.stat)
+                if(!stat && !host.stat) //Need a brain - RR
                         if(chemicals < 250)
                                 chemicals++
                         if(controlling)
@@ -74,6 +74,8 @@ RobRichards's notes:
 
                                 if(prob(host.brainloss/20))
                                         host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
+
+
 
 
 /mob/living/simple_animal/borer/New()
@@ -150,9 +152,16 @@ RobRichards's notes:
                 src << "You are not inside a host body."
                 return
 
+
         if(src.stat)
                 src << "You cannot do that in your current state."
                 return
+
+        if(!host.getorgan(/obj/item/organ/brain)) //this should only run in admin-weirdness situations, but it's here non the less - RR
+        								src << "<span class='warning'>There is no brain here for us to command!</span>"
+        								return
+
+
 
         src << "You begin delicately adjusting your connection to the host brain..."
 
@@ -293,6 +302,9 @@ mob/living/simple_animal/borer/proc/detatch()
                 src << "As [M] moves away, you are dislodged and fall to the ground."
                 return
 
+
+
+
         if(!M || !src) return
 
         if(src.stat)
@@ -315,6 +327,7 @@ mob/living/simple_animal/borer/proc/detatch()
                 if(istype(M,/mob/living/carbon/human))
                         var/mob/living/carbon/human/H = M
                         H.contents += src
+
 
                 host_brain.name = M.name
                 host_brain.real_name = M.real_name

@@ -170,10 +170,9 @@
 	var/datum/changeling/changeling = changeling_power(5,0,3)
 	if(!changeling)	return
 
-	for(var/mob/living/simple_animal/borer/B)
-		if(istype(B.loc, /mob/living/carbon/human))
-			src << "<span class='warning'>Even you cannot force this host to use this ability!</span>"
-			return
+	if(src.has_brain_worms())
+		src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+		return
 
 	changeling.chem_charges -= 5
 	remove_changeling_powers()
