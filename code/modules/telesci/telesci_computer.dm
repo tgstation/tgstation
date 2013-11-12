@@ -221,7 +221,7 @@
 							continue
 					else
 						continue
-				do_teleport(ROI, dest, 0)
+				do_teleport(ROI, dest)
 			updateDialog()
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)

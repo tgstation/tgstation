@@ -7,6 +7,7 @@
 	icon_state = "bluespace_crystal"
 	w_class = 1
 	origin_tech = "bluespace=4;materials=3"
+	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 
 /obj/item/bluespace_crystal/New()
 	..()
@@ -19,16 +20,13 @@
 	user.visible_message("<span class='notice'>[user] crushes the [src]!</span>")
 	del(src)
 
-/obj/item/bluespace_crystal/proc/blink_mob(var/mob/living/L, var/brange = 7)
-	var/turf/T = get_turf(L)
-	var/turf/rand_turf = pick(range(L, brange) - T)
-	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-	do_teleport(L, rand_turf, 0)
+/obj/item/bluespace_crystal/proc/blink_mob(var/mob/living/L)
+	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 
 /obj/item/bluespace_crystal/throw_impact(atom/hit_atom)
 	..()
 	if(isliving(hit_atom))
-		blink_mob(hit_atom, 2)
+		blink_mob(hit_atom)
 	del(src)
 
 // Artifical bluespace crystal, doesn't give you much research.
@@ -37,3 +35,4 @@
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	origin_tech = "bluespace=2"
+	blink_range = 4 // Not as good as the organic stuff!
