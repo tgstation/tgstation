@@ -54,6 +54,14 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "Their mind is resisting your spell."
 		return
 
+	if(target.has_brain_worms())
+		user << "Their mind is already being controlled!"
+		return
+
+	if(user.has_brain_worms())
+		user << "We are incapable of using this dark magick!"
+		return
+
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
 	var/mob/caster = user//The wizard/whomever doing the body transferring.
 

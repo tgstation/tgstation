@@ -79,6 +79,8 @@
 				holder.icon_state = "huddead"
 			else if(patient.status_flags & XENO_HOST)
 				holder.icon_state = "hudxeno"
+			else if(patient.has_brain_worms())
+				holder.icon_state = "hudbrainworm"
 			else if(foundVirus)
 				holder.icon_state = "hudill"
 			else

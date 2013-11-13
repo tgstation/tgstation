@@ -27,12 +27,21 @@
 				target.gib()
 			if("gib_brain")
 				if(ishuman(target) || ismonkey(target))
-					var/obj/item/organ/brain/B = target.getorgan(/obj/item/organ/brain)
-					if(B)
-						B.loc = get_turf(target)
-						B.transfer_identity(target)
+					if(!target.has_brain_worms())	//Borer checks to make sure Host get's his body back, Well his brain atleast - RR
+						var/obj/item/organ/brain/B = target.getorgan(/obj/item/organ/brain)
+						if(B)
+							B.loc = get_turf(target)
+							B.transfer_identity(target)
+					else
+						for(var/mob/living/simple_animal/borer/B in target.contents)
+							B.detatch()
+							B << "<span class= 'warning'><B>The host body collapses around you!</B></span>"
 				target.gib()
 			if("disintegrate")
+				if(target.has_brain_worms())
+					for(var/mob/living/simple_animal/borer/B in target.contents)
+						B.detatch()
+						B << "<span class= 'warning'><B>The host body collapses around you!</B></span>"
 				target.dust()
 
 		if(!target)

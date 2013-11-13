@@ -29,6 +29,10 @@
 				continue
 			no_queen = 0
 
+		if(src.has_brain_worms())
+			src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+			return
+
 		if(no_queen)
 			adjustToxLoss(-500)
 			src << "\green You begin to evolve!"
