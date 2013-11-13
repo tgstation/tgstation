@@ -131,6 +131,14 @@
 //		organStructure.ProcessOrgans()
 	return
 
+/mob/proc/get_item_by_slot(slot_id)
+	switch(slot_id)
+		if(slot_l_hand)
+			return l_hand
+		if(slot_r_hand)
+			return r_hand
+	return null
+
 
 /mob/proc/restrained()
 	return
