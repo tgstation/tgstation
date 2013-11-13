@@ -20,6 +20,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/clothes_req = 1 //see if it requires clothes
+	var/cult_req = 0
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_type = "none" //can be none, whisper and shout
@@ -66,6 +67,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(user.stat && !stat_allowed)
 		user << "<span class='notice'>Not when you're incapacitated.</span>"
 		return 0
+		
 
 	if(ishuman(user))
 
@@ -89,6 +91,18 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(clothes_req)
 			user << "<span class='notice'>This spell can only be casted by humans!</span>"
 			return 0
+			
+	if(ishuman(user))
+
+		var/mob/living/carbon/human/H = user
+			
+		if(cult_req)
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/cult))
+				H << "<span class='notice'>I don't feel strong enough without my armor.</span>"
+				return 0
+			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/cult))
+				H << "<span class='notice'>I don't feel strong enough without my helmet.</span>"
+				return 0
 
 	if(!skipcharge)
 		switch(charge_type)
@@ -286,3 +300,5 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	perform(targets)
 
 	return
+	
+	
