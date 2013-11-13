@@ -219,7 +219,7 @@
 								continue
 						else
 							continue
-					else
+					else if(!isobserver(ROI))
 						continue
 				do_teleport(ROI, dest)
 			updateDialog()
