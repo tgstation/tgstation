@@ -38,7 +38,7 @@
 					affected_mob << pick(stage5)
 
 
-				for(var/mob/living/simple_animal/borer/B)
+				for(var/mob/living/simple_animal/borer/B in affected_mob.contents) //Only need to check Affected_mob's contents - RR
 					if(istype(B.loc, affected_mob))
 						B << "<span class='warning'>This host's body has become uninhabitable!</span>"
 						B.detatch() //Kick borers out of the affected_mob - RR

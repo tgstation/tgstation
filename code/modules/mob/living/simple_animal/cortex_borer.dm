@@ -10,6 +10,8 @@ RobRichards's notes:
 - Prevented Alien drone's "Evolve" verb from allowing Borer's to activate it - It was buggy
 - Added some has_brain_worms() stuff on mob transformations etc.
 - Renamed Cortical Borers to Cortex Borers, I see where Baystation 12 were going with it but I think Cortex handles the situation better
+- Added some more Chemicals the Borer can deliver to the Host
+- Made borer's weak to the environment
 */
 
 
@@ -55,11 +57,21 @@ RobRichards's notes:
         wander = 0
         pass_flags = PASSTABLE
 
+
+
+       	//Temperature stuff
+       	minbodytemp = 285 //35 more than usual, Weak to temperatures but not immediately fatal - RR
+       	maxbodytemp = 315 //35 less than usual.
+       	heat_damage_per_tick = 10 //2 ticks of heat and he's dead - RR
+       	cold_damage_per_tick = 8 //3 ticks of cold and he's dead - RR
+
+        //Borer unique stuff
         var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
         var/mob/living/carbon/human/host        // Human host for the brain worm.
         var/truename                            // Name used for brainworm-speak.
         var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
         var/controlling                         // Used in human death check.
+        var/attempting = 0						// Used in checking for spam
 
 /mob/living/simple_animal/borer/Life()
 
@@ -143,43 +155,53 @@ RobRichards's notes:
                 if(M.mind && (istype(M, /mob/living/simple_animal/borer) || istype(M, /mob/dead/observer)))
                         M << "<i>Cortex link, <b>[truename]:</b> [copytext(message, 2)]</i>"
 
+
+
 /mob/living/simple_animal/borer/verb/bond_brain()
-        set category = "Borer"
-        set name = "Assume Control"
-        set desc = "Fully connect to the brain of your host."
+	set category = "Borer"
+	set name = "Assume Control"
+	set desc = "Fully connect to the brain of your host."
 
-        if(!host)
-                src << "You are not inside a host body."
-                return
+	if(!host)
+		src <<"You are not inside a host body."
+		return
 
+	if(src.stat)
+		src <<"You cannot do that in your current state."
+		return
 
-        if(src.stat)
-                src << "You cannot do that in your current state."
-                return
-
-        if(!host.getorgan(/obj/item/organ/brain)) //this should only run in admin-weirdness situations, but it's here non the less - RR
-        								src << "<span class='warning'>There is no brain here for us to command!</span>"
-        								return
-
+	if(!host.getorgan(/obj/item/organ/brain))
+		src <<"<span class='warning'>There is no brain here for us to command!</span>"
+		return
 
 
-        src << "You begin delicately adjusting your connection to the host brain..."
 
-        spawn(300+(host.brainloss*5))
 
-                if(!host || !src || controlling) return
+	if(attempting == 0)
+		attempting = 1
+		src << "You begin delicately adjusting your connection to the host brain..."
 
-                else
-                        src << "\red <B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B>"
-                        host << "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>"
+		spawn(300+(host.brainloss*5))
 
-                        host_brain.ckey = host.ckey
-                        host.ckey = src.ckey
-                        controlling = 1
+			if(!src || !host || controlling)
+				attempting = 0
+				return
 
-                        host.verbs += /mob/living/carbon/proc/release_control
-                        host.verbs += /mob/living/carbon/proc/punish_host
-                        host.verbs += /mob/living/carbon/proc/spawn_larvae
+			else
+				src <<"<span class='warning'><B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B></span>"
+				host <<"<span class='warning'><B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B></span>"
+
+				host_brain.ckey = host.ckey
+				host.ckey = src.ckey
+				controlling = 1
+
+				host.verbs += /mob/living/carbon/proc/release_control
+				host.verbs += /mob/living/carbon/proc/punish_host
+				host.verbs += /mob/living/carbon/proc/spawn_larvae
+				attempting = 0
+	else
+		src <<"You are already adjusting your connection to the host brain!"
+
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
         set category = "Borer"
@@ -196,7 +218,7 @@ RobRichards's notes:
         if(chemicals < 50)
                 src << "You don't have enough chemicals!"
 
-        var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","hyperzine")
+        var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","hyperzine","sugar","alkysine")
 
         if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
                 return
