@@ -50,10 +50,11 @@
 	if(user.stat || user.restrained()) return
 
 	// this is the data which will be sent to the ui
-	var/data[0]
-	data["coordx"] = x_co
-	data["coordy"] = y_co
-	data["coordz"] = z_co
+	var/list/data=list(
+		"coordx" = x_co,
+		"coordy" = y_co,
+		"coordz" = z_co,
+	)
 
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
 	if (!ui)

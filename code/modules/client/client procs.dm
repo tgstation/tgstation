@@ -252,6 +252,7 @@
 		'nano/templates/apc.tmpl',
 		'nano/templates/cryo.tmpl',
 		'nano/templates/air_alarm.tmpl',
+		'nano/templates/telescience_console.tmpl',
 		'nano/templates/dna_modifier.tmpl',
 		'nano/images/uiBackground.png',
 		'nano/images/uiIcons16.png',
