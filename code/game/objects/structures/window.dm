@@ -171,7 +171,7 @@
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
-		/var/glass_type
+		var/glass_type
 		if(reinf)
 			glass_type = /obj/item/stack/sheet/rglass
 		else
