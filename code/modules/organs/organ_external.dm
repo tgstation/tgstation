@@ -384,7 +384,7 @@
 
 		number_wounds += W.amount
 
-	if (open && !clamped)	//things tend to bleed if they are CUT OPEN
+	if (open && !clamped && !(status & (ORGAN_ROBOT|ORGAN_PEG)))	//things tend to bleed if they are CUT OPEN
 		status |= ORGAN_BLEEDING
 
 
