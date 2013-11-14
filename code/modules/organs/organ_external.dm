@@ -631,8 +631,10 @@
 	var/baseicon=owner.race_icon
 	if (status & ORGAN_MUTATED)
 		baseicon=owner.deform_icon
-	if (status & ORGAN_PEG)
+	else if (status & ORGAN_PEG)
 		baseicon='icons/mob/human_races/o_peg.dmi'
+	else if (status & ORGAN_ROBOT)
+		baseicon='icons/mob/human_races/o_robot.dmi'
 	return new /icon(baseicon, icon_state)
 
 
@@ -751,6 +753,8 @@
 		baseicon=owner.deform_icon
 	if (status & ORGAN_PEG)
 		baseicon='icons/mob/human_races/o_peg.dmi'
+	if (status & ORGAN_ROBOT)
+		baseicon='icons/mob/human_races/o_robot.dmi'
 	return new /icon(baseicon, "[icon_name]_[g]")
 
 /datum/organ/external/head/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
