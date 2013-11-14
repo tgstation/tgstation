@@ -2,6 +2,7 @@
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
+	var/max_amount = 0
 	var/display_color = "blue"
 
 
@@ -44,6 +45,7 @@
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
 
+	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/New()
 	..()
@@ -94,6 +96,7 @@
 		R.product_name = initial(temp.name)
 		R.product_path = typepath
 		R.amount = amount
+		R.max_amount = amount
 		R.display_color = pick("red","blue","green")
 
 		if(hidden)
@@ -103,6 +106,30 @@
 		else
 			product_records += R
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
+
+/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)
+	var/total = 0
+	for(var/datum/data/vending_product/machine_content in machine)
+		//we loop through the records in the machine
+		//we only process contents that are not at maximum capacity
+		if(machine_content.amount < machine_content.max_amount)
+			for(var/datum/data/vending_product/refill_content in refill.products)
+				//if we have a type match, we transfer
+				if(machine_content.product_path == refill_content.product_path)
+					var/max_transferable =  machine_content.max_amount - machine_content.amount
+					var/transfered = 0
+					if(refill_content.amount <= max_transferable)
+						machine_content.amount += refill_content.amount
+						transfered = refill_content.amount
+						refill_content.amount = 0
+					else
+						machine_content.amount += max_transferable
+						transfered = max_transferable
+						refill_content.amount -= max_transferable
+
+					user << "<span class='notice'>[transfered] [machine_content.product_name] have been loaded into the machine.</span>"
+					total += transfered
+	return total
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
@@ -128,6 +155,22 @@
 		coin = W
 		user << "<span class='notice'>You insert [W] into [src].</span>"
 		return
+	else if(panel_open)
+		if(refill_canister == null)
+			..()
+		else if(istype(W, refill_canister) && refill_canister != null)
+			if(stat & (BROKEN|NOPOWER))
+				user << "<span class='notice'>It does nothing.</span>"
+			else
+				//we start to refill the machine
+				var/obj/item/weapon/vending_refill/canister = W
+
+				var transfered = 0
+				transfered += refill_inventory(canister,product_records,user)
+				transfered += refill_inventory(canister,coin_records,user)
+				transfered += refill_inventory(canister,hidden_records,user)
+				user << "<span class='notice'>[transfered] items transfered.</span>"
+			return;
 	else
 		..()
 
@@ -426,6 +469,7 @@
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
+	refill_canister = /obj/item/weapon/vending_refill/boozeomat
 
 /obj/machinery/vending/assist
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
