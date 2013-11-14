@@ -165,7 +165,7 @@ datum/preferences
 			else if(organ_data[name] == "cyborg")
 				o_icobase='icons/mob/human_races/o_robot.dmi'
 
-			var/icon/temp = new /icon(icobase, "[name]")
+			var/icon/temp = new /icon(o_icobase, "[name]")
 
 			preview_icon.Blend(temp, ICON_OVERLAY)
 
