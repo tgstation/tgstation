@@ -47,6 +47,7 @@ Atom,Name,biotech,bluespace,combat,engineering,magnets,materials,plasma,plasmate
 /obj/item/device/assembly/signaler/proc,"remote signaling device",,,,,1,,,,,,,
 /obj/item/device/assembly/signaler/verb,"remote signaling device",,,,,1,,,,,,,
 /obj/item/device/assembly/timer,"timer",,,,,1,,,,,,,
+/obj/item/device/assembly/voice,"voice analyzer",,,,,1,,,,,,,
 /obj/item/device/batterer,"mind batterer",,,3,,3,,,,,,,3
 /obj/item/device/chameleon,"chameleon-projector",,,,,4,,,,,,,4
 /obj/item/device/chameleon/proc,"chameleon-projector",,,,,4,,,,,,,4
@@ -57,9 +58,9 @@ Atom,Name,biotech,bluespace,combat,engineering,magnets,materials,plasma,plasmate
 /obj/item/device/flash,"flash",,,1,,2,,,,,,,
 /obj/item/device/flash/proc,"flash",,,1,,2,,,,,,,
 /obj/item/device/flash/synthetic,"synthetic flash",,,1,,2,,,,,,,
-/obj/item/device/gps,"Global Positioning System",,,,2,,,,,,,2,
-/obj/item/device/gps/engineering,"Global Positioning System",,,,2,,,,,,,2,
-/obj/item/device/gps/science,"Global Positioning System",,,,2,,,,,,,2,
+/obj/item/device/gps,"global positioning system",,,,2,,,,,,,2,
+/obj/item/device/gps/engineering,"global positioning system",,,,2,,,,,,,2,
+/obj/item/device/gps/science,"global positioning system",,,,2,,,,,,,2,
 /obj/item/device/healthanalyzer,"Health Analyzer",1,,,,1,,,,,,,
 /obj/item/device/healthanalyzer/verb,"Health Analyzer",1,,,,1,,,,,,,
 /obj/item/device/lightreplacer,"light replacer",,,,,3,2,,,,,,
@@ -86,7 +87,7 @@ Atom,Name,biotech,bluespace,combat,engineering,magnets,materials,plasma,plasmate
 /obj/item/device/radio/headset/syndicate,"radio headset",,,,,,,,,,,,3
 /obj/item/device/soulstone,"Soul Stone Shard",,4,,,,4,,,,,,
 /obj/item/device/t_scanner,"T-ray scanner",,,,1,1,,,,,,,
-/obj/item/device/telepad_beacon,"Telepad Beacon",,3,,,,,,,,,,
+/obj/item/device/telepad_beacon,"telepad beacon",,3,,,,,,,,,,
 /obj/item/mecha_parts,"mecha part",,,,,,2,,,,,2,
 /obj/item/mecha_parts/chassis,"Mecha Chassis",,,,,,2,,,,,2,
 /obj/item/mecha_parts/chassis/durand,"Durand Chassis",,,,,,2,,,,,2,
@@ -289,6 +290,8 @@ Atom,Name,biotech,bluespace,combat,engineering,magnets,materials,plasma,plasmate
 /obj/item/weapon/aiModule/syndicate,"Hacked AI Module",,,,,,6,,,,,3,7
 /obj/item/weapon/aiModule/teleporterOffline,"'TeleporterOffline' AI Module",,,,,,4,,,,,3,
 /obj/item/weapon/aiModule/tyrant,"'T.Y.R.A.N.T.' Core AI Module",,,,,,6,,,,,3,2
+/obj/item/weapon/airlock_painter,"airlock painter",,,,1,,,,,,,,
+/obj/item/weapon/airlock_painter/proc,"airlock painter",,,,1,,,,,,,,
 /obj/item/weapon/autopsy_scanner,"autopsy scanner",1,,,,,1,,,,,,
 /obj/item/weapon/autopsy_scanner/proc,"autopsy scanner",1,,,,,1,,,,,,
 /obj/item/weapon/autopsy_scanner/verb,"autopsy scanner",1,,,,,1,,,,,,
