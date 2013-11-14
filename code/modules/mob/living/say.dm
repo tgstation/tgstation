@@ -73,6 +73,7 @@ var/list/department_radio_keys = list(
 		if(!istype(dongle)) return
 		if(dongle.translate_hive) return 1
 
+
 // /vg/edit: Added forced_by for handling braindamage messages and meme stuff
 /mob/living/say(var/message, var/forced_by=null)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -385,7 +386,11 @@ var/list/department_radio_keys = list(
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message,speaking)
+		var/message_a=message
+		if(ishuman(src))
+			var/mob/living/carbon/human/H=src
+			message_a=H.species.say_filter(src,message_a)
+		message_a = say_quote(message,speaking)
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
@@ -417,7 +422,10 @@ var/list/department_radio_keys = list(
 
 	if (length(heard_b))
 		var/message_b
-		message_b = stars(message)
+		if(speaking)
+			message_b = speaking.say_misunderstood(src,message)
+		else
+			message_b = stars(message)
 		message_b = say_quote(message_b,speaking)
 
 		if (italics)

@@ -38,10 +38,12 @@
 
 	// For grays
 	var/max_hurt_damage = 5 // Max melee damage dealt + 5 if hulk
-
 	var/default_mutations = list()
 
 	var/flags = 0       // Various specific features.
+
+/datum/species/proc/say_filter(mob/M, message, datum/language/speaking)
+	return message
 
 /datum/species/proc/equip(var/mob/living/carbon/human/H)
 
@@ -63,6 +65,11 @@
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
 
+/datum/species/unathi/say_filter(mob/M, message, datum/language/speaking)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "s", stutter("ss"))
+	return message
+
 /datum/species/skellington // /vg/
 	name = "Skellington"
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
@@ -71,6 +78,7 @@
 	attack_verb = "punch"
 
 	flags = WHITELISTED | HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED
+
 
 /datum/species/tajaran
 	name = "Tajaran"
@@ -93,14 +101,11 @@
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
 
-/*
-Placeholders for now - N3X
-*/
-/datum/species/grey
+/datum/species/grey // /vg/
 	name = "Grey"
 	icobase = 'icons/mob/human_races/r_grey.dmi'
 	deform = 'icons/mob/human_races/r_def_grey.dmi'
-	language = "Galactic Standard"
+	language = "Grey"
 	attack_verb = "punch"
 	darksight = 5 // BOOSTED from 2
 	eyes = "grey_eyes_s"
