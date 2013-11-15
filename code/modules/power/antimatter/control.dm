@@ -270,7 +270,7 @@
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	user.set_machine(src)
+	/*user.set_machine(src)
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"
@@ -299,8 +299,51 @@
 
 
 	user << browse(dat, "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")
+	onclose(user, "AMcontrol")*/
+	return ui_interact(user)
 	return
+
+
+
+/obj/machinery/power/am_control_unit/ui_interact(mob/user, ui_key = "main")
+	if(!user)
+		return
+
+	check_core_stability()
+
+	var/list/fueljar_data=null
+	if(fueljar)
+		fueljar_data=list(
+			"fuel"=fueljar.fuel,
+			"fuel_max"=fueljar.fuel_max,
+			"injecting"=fuel_injection
+		)
+
+	var/list/data = list(
+		"active" = active,
+		"stability" = stability,
+		"linked_shields" = linked_shielding.len,
+		"linked_cores" = linked_cores.len,
+		"efficiency" = reported_core_efficiency,
+		"stability" = stored_core_stability,
+		"stored_power" = stored_power,
+		"fueljar" = fueljar_data,
+		"siliconUser" = istype(user, /mob/living/silicon),
+	)
+
+	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "ame.tmpl", "Antimatter Control Unit", 500, data["siliconUser"] ? 465 : 390)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
@@ -331,14 +374,13 @@
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it
 
-	if(href_list["strengthup"])
-		fuel_injection++
-		message_admins("AME injection strength increased to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-
-	if(href_list["strengthdown"])
-		fuel_injection--
-		if(fuel_injection < 0) fuel_injection = 0
-		message_admins("AME injection strength decreased to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+	if(href_list["set_strength"])
+		var/newval = input("Enter new injection strength") as num|null
+		if(isnull(newval))
+			return
+		fuel_injection=newval
+		fuel_injection=max(1,fuel_injection)
+		message_admins("AME injection strength set to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 
 	if(href_list["refreshstability"])
 		check_core_stability()
