@@ -14,13 +14,15 @@
 	var/maturation = 7
 	var/production = 7
 	var/yield = 2
-	var/potency = 1
+	var/potency = 20
 	var/plant_type = 0
-	New()
-		create_reagents(50)
+
+/obj/item/weapon/grown/New()
+	create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
+	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
 /obj/item/weapon/grown/log
 	name = "tower-cap log"

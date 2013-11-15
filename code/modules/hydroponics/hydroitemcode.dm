@@ -49,7 +49,7 @@
 		del(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
-	potency = newValue
+	..()
 	force = round((5+potency/5), 1)
 
 //Deathnettle
@@ -93,7 +93,7 @@
 		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
-	potency = newValue
+	..()
 	force = round((5+potency/2.5), 1)
 
 

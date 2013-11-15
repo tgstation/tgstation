@@ -120,6 +120,19 @@ var/const/Sqrt2	= 1.41421356
 	var/t = round((val - min) / d)
 	return val - (t * d)
 
+
+//A logarithm that converts an integer to a number scaled between 0 and 1 (can be tweaked to be higher).
+//Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
+/proc/TransformUsingVariable(var/input, var/inputmaximum, var/scaling_modifier = 0)
+
+		var/inputToDegrees = (input/inputmaximum)*180 //Converting from a 0 -> 100 scale to a 0 -> 180 scale. The 0 -> 180 scale corresponds to degrees
+		var/size_factor = ((-cos(inputToDegrees) +1) /2) //returns a value from 0 to 1
+
+		return size_factor + scaling_modifier //scale mod of 0 results in a number from 0 to 1. A scale modifier of +0.5 returns 0.5 to 1.5
+		//world<< "Transform multiplier of [src] is [size_factor + scaling_modifer]"
+
+
+
 //converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls
 //(making the cost negligble for every second call)
