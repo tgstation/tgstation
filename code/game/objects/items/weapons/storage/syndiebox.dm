@@ -19,15 +19,17 @@ By Miauw */
 /obj/item/weapon/storage/box/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity) return
 	if(!active)
-		if(istype(target,/obj/item) && target.loc != src) //It can be everything you want it to be~
-			var/obj/item/targetitem = target //Neccesary for item_state
+		if(target.loc != src) //It can be everything you want it to be~ //Now it can truely be everything you want it to be, thanks to Pete. Have fun with your dildo-filled holographic rwalls.
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "<span class='notice'>Scanned [target].</span>"
-			saved_name = targetitem.name
-			saved_desc = targetitem.desc
-			saved_icon = targetitem.icon
-			saved_icon_state = targetitem.icon_state
-			saved_item_state = targetitem.item_state
+			saved_name = target.name
+			saved_desc = target.desc
+			saved_icon = target.icon
+			saved_icon_state = target.icon_state
+			saved_opaque = target.opaque
+			if(istype(target, /obj/item))
+				var/obj/item/targetitem = target //Neccesary for item_state
+				saved_item_state = targetitem.item_state
 
 /obj/item/weapon/storage/box/chameleon/proc/toggle()
 	if(active)
@@ -48,12 +50,14 @@ By Miauw */
 		icon = saved_icon
 		icon_state = saved_icon_state
 		item_state = saved_item_state
+		opaque = saved_opaque
 
 		saved_name = null //Reset the vars.
 		saved_desc = null
 		saved_icon = null
 		saved_icon_state = null
 		saved_item_state = null
+		saved_opaque = null
 
 		//world << "activated"
 		active = 1
