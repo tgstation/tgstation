@@ -1,9 +1,10 @@
 //Mail yourself anywhere, yo.
 /obj/item/clothing/under/syndiemail
-	name = "mailman jumpsuit"
-	icon_state = "black"
-	item_state = "bl_suit"
-	item_color = "black"
+	name = "mailrider jumpsuit"
+	desc = "This state-of-the-art jumpsuit allows you to ride pneumatic disposal tubes like space horses!"
+	icon_state = "mailman"
+	item_state = "b_suit"
+	item_color = "mailman"
 	var/sortTag //Disposals code reads this.
 
 /obj/item/clothing/under/syndiemail/proc/openwindow(mob/user)
