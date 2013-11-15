@@ -145,9 +145,9 @@
 					return
 			var/obj/structure/window/WD
 			if(istype(W,/obj/item/stack/sheet/rglass))
-				WD = new/obj/structure/window(loc,1) //reinforced window
+				WD = new/obj/structure/window/reinforced(loc,1) //reinforced window
 			else
-				WD = new/obj/structure/window(loc,0) //normal window
+				WD = new/obj/structure/window/basic(loc,0) //normal window
 			WD.dir = dir_to_set
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0
