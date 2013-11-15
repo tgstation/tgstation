@@ -109,26 +109,38 @@
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)
 	var/total = 0
-	for(var/datum/data/vending_product/machine_content in machine)
-		//we loop through the records in the machine
-		//we only process contents that are not at maximum capacity
-		if(machine_content.amount < machine_content.max_amount)
-			for(var/datum/data/vending_product/refill_content in refill.products)
-				//if we have a type match, we transfer
-				if(machine_content.product_path == refill_content.product_path)
-					var/max_transferable =  machine_content.max_amount - machine_content.amount
-					var/transfered = 0
-					if(refill_content.amount <= max_transferable)
-						machine_content.amount += refill_content.amount
-						transfered = refill_content.amount
-						refill_content.amount = 0
-					else
-						machine_content.amount += max_transferable
-						transfered = max_transferable
-						refill_content.amount -= max_transferable
 
-					user << "<span class='notice'>[transfered] [machine_content.product_name] have been loaded into the machine.</span>"
-					total += transfered
+	var/to_restock = 0
+	for(var/datum/data/vending_product/machine_content in machine)
+		//first pass we count how many items are missing
+		to_restock += machine_content.max_amount - machine_content.amount
+
+
+	//we attempt to go on the "fast lane" (restock all to max)
+	if(to_restock <= refill.charges)
+		for(var/datum/data/vending_product/machine_content in machine)
+			if(machine_content.amount != machine_content.max_amount)
+				usr << "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>"
+				machine_content.amount = machine_content.max_amount
+		refill.charges -= to_restock
+		total = to_restock
+	else
+		//we need to stock items equally in each categories based on the amount of items missing.
+		var/tmp_charges = refill.charges	//we need to cache the charges to keep the equation from changing
+		for(var/datum/data/vending_product/machine_content in machine)
+			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+
+			//we cannot restock more than what we have, might happen since we are rounding up.
+			if(restock > refill.charges)
+				restock = refill.charges
+
+			machine_content.amount += restock
+			refill.charges -= restock
+			total += restock
+			if(restock)
+				usr << "<span class='notice'>[restock] of [machine_content.product_name]</span>"
+			if(refill.charges == 0)//due to rounding, we ran out of refill charges, that's normal, will happen as charges are indivisible.
+				break
 	return total
 
 
@@ -164,12 +176,14 @@
 			else
 				//we start to refill the machine
 				var/obj/item/weapon/vending_refill/canister = W
-
-				var transfered = 0
-				transfered += refill_inventory(canister,product_records,user)
-				transfered += refill_inventory(canister,coin_records,user)
-				transfered += refill_inventory(canister,hidden_records,user)
-				user << "<span class='notice'>[transfered] items transfered.</span>"
+				if(canister.charges == 0)
+					user << "<span class='notice'>This [canister.name] is empty!</span>"
+				else
+					var/transfered = refill_inventory(canister,product_records,user)
+					if(transfered)
+						user << "<span class='notice'>You loaded [transfered] items in [name].</span>"
+					else
+						user << "<span class='notice'>[name] is fully stocked.</span>"
 			return;
 	else
 		..()
@@ -486,7 +500,7 @@
 	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
-
+	refill_canister = /obj/item/weapon/vending_refill/coffee
 
 
 /obj/machinery/vending/snack
@@ -499,6 +513,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
+	refill_canister = /obj/item/weapon/vending_refill/snack
 
 
 /obj/machinery/vending/sustenance
@@ -524,6 +539,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
+	refill_canister = /obj/item/weapon/vending_refill/cola
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -547,6 +563,7 @@
 	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
+	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical
 	name = "\improper NanoMed Plus"
