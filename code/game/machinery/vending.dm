@@ -167,24 +167,27 @@
 		coin = W
 		user << "<span class='notice'>You insert [W] into [src].</span>"
 		return
-	else if(panel_open)
-		if(refill_canister == null)
-			..()
-		else if(istype(W, refill_canister) && refill_canister != null)
-			if(stat & (BROKEN|NOPOWER))
-				user << "<span class='notice'>It does nothing.</span>"
+	else if(istype(W, refill_canister) && refill_canister != null)
+		if(stat & (BROKEN|NOPOWER))
+			//we do nothing if the machine is unpowered.
+			user << "<span class='notice'>It does nothing.</span>"
+		else if(panel_open)
+			//if the panel is open
+			//we attempt to refill the machine
+			var/obj/item/weapon/vending_refill/canister = W
+			if(canister.charges == 0)
+				//there is no charge left in this canister.
+				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
-				//we start to refill the machine
-				var/obj/item/weapon/vending_refill/canister = W
-				if(canister.charges == 0)
-					user << "<span class='notice'>This [canister.name] is empty!</span>"
+				var/transfered = refill_inventory(canister,product_records,user)
+				if(transfered)
+					user << "<span class='notice'>You loaded [transfered] items in [name].</span>"
 				else
-					var/transfered = refill_inventory(canister,product_records,user)
-					if(transfered)
-						user << "<span class='notice'>You loaded [transfered] items in [name].</span>"
-					else
-						user << "<span class='notice'>[name] is fully stocked.</span>"
+					user << "<span class='notice'>[name] is fully stocked.</span>"
 			return;
+		else
+			//the service panel is closed, lets "subtly" hint at opening it.
+			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
 	else
 		..()
 
@@ -215,30 +218,31 @@
 		else
 			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 
-	dat += "<h3>Select an Item</h3>"
-	dat += "<div class='statusDisplay'>"
-	if(product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
-	else
-		var/list/display_records = product_records
-		if(extended_inventory)
-			display_records = product_records + hidden_records
-		if(coin)
-			display_records = product_records + coin_records
-		if(coin && extended_inventory)
-			display_records = product_records + hidden_records + coin_records
-		dat += "<ul>"
-		for (var/datum/data/vending_product/R in display_records)
-			dat += "<li>"
-			if(R.amount > 0)
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
-			else
-				dat += "<span class='linkOff'>Sold Out</span> "
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
-			dat += " <b>[R.amount]</b>"
-			dat += "</li>"
-		dat += "</ul>"
-	dat += "</div>"
+	if(!panel_open)	//not sure about this, it basically prevent getting items from the machine when the service panel is open.
+		dat += "<h3>Select an Item</h3>"
+		dat += "<div class='statusDisplay'>"
+		if(product_records.len == 0)
+			dat += "<font color = 'red'>No product loaded!</font>"
+		else
+			var/list/display_records = product_records
+			if(extended_inventory)
+				display_records = product_records + hidden_records
+			if(coin)
+				display_records = product_records + coin_records
+			if(coin && extended_inventory)
+				display_records = product_records + hidden_records + coin_records
+			dat += "<ul>"
+			for (var/datum/data/vending_product/R in display_records)
+				dat += "<li>"
+				if(R.amount > 0)
+					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
+				else
+					dat += "<span class='linkOff'>Sold Out</span> "
+				dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
+				dat += " <b>[R.amount]</b>"
+				dat += "</li>"
+			dat += "</ul>"
+		dat += "</div>"
 
 	if(panel_open)
 		dat += wires()

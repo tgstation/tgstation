@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "box"
-	item_state = "box"
+	item_state = "restock_unit"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 7.0
 	throwforce = 15.0
@@ -15,11 +15,11 @@
 	var/charges = 0		//how many restocking "charges" the refill has
 
 /obj/item/weapon/vending_refill/New()
-	name = "[machine_name] restocking canister"
+	name = "\improper [machine_name] restocking unit"
 
 /obj/item/weapon/vending_refill/examine()
 	set src in usr
-	var/description = "[src] \icon[src] restocking canister for a [machine_name] machine,"
+	var/description = "[name] \icon[src],"
 	if(charges)
 		usr << "[description] it can restock [charges] item(s)."
 	else
@@ -29,26 +29,31 @@
 
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
+	icon_state = "refill_booze"
 	//machine contains max 138 items
 	charges = 50
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "hot drinks"
+	icon_state = "refill_joe"
 	//machine contains max 85 items
 	charges = 30
 
 /obj/item/weapon/vending_refill/snack
-	machine_name = "\improper Getmore Chocolate Corp"
+	machine_name = "Getmore Chocolate Corp"
+	icon_state = "refill_snack"
 	//machine contains max 48 items
 	charges = 15
 
 /obj/item/weapon/vending_refill/cola
-	machine_name = "\improper Robust Softdrinks"
+	machine_name = "Robust Softdrinks"
+	icon_state = "refill_cola"
 	//machine contains max 65 items
 	charges = 20
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "cigarette"
+	icon_state = "refill_smoke"
 	//machine contains max 30 items
 	charges = 10
 
