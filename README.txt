@@ -1,13 +1,13 @@
 /tg/station 13 v1.0 - 6 October 2010
 
-Website:http://nanotrasen.com
+Website: http://ss13.eu
 Code: https://github.com/tgstation/-tg-station
 IRC: irc://irc.rizon.net/coderbus
 
 ================================================================================
 DOWNLOADING
 ================================================================================
-There are a number of ways to download the source code.
+There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://wiki.ss13.eu/index.php/Downloading_the_source_code
 
 Option 1: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/-tg-station
@@ -23,7 +23,7 @@ Then you simply search for the -tg-station repository and click the big clone
 button.
 
 Option 3:
-Follow this: http://baystation12.net/wiki/index.php?title=Installing_TortoiseGit
+Follow this: http://wiki.ss13.eu/index.php/Setting_up_git
 (It's recommended that you use git-scm, as above, rather than the git CLI
 suggested by the guide)
 
@@ -91,8 +91,7 @@ SQL SETUP
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are
-coming soon, for now ask in our IRC channel.
+schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://wiki.ss13.eu/index.php/Downloading_the_source_code#Setting_up_the_database
 
 ================================================================================
 IRC BOT SETUP

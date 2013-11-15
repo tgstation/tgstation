@@ -1178,6 +1178,7 @@
 #include "code\modules\surgery\xenomorph_removal.dm"
 #include "code\modules\surgery\organs\helpers.dm"
 #include "code\modules\surgery\organs\organ.dm"
+#include "code\modules\telesci\bscrystal.dm"
 #include "code\modules\telesci\gps.dm"
 #include "code\modules\telesci\telepad.dm"
 #include "code\modules\telesci\telesci_computer.dm"

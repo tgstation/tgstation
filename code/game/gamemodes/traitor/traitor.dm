@@ -21,6 +21,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
+	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
 /datum/game_mode/traitor/announce()
@@ -36,7 +37,7 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling_coeff)
-		num_traitors = max(1, round((num_players())/(config.traitor_scaling_coeff)))
+		num_traitors = max(1, round((num_players())/((config.traitor_scaling_coeff * scale_modifier))))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -73,14 +74,18 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	if(traitors.len >= round(joined_player_list.len / config.traitor_scaling_coeff) + 1) //Caps number of latejoin antagonists
+	if(traitors.len >= round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier)) + 1) //Caps number of latejoin antagonists
 		return
-	if (prob(100/config.traitor_scaling_coeff))
+	if (prob(100/(config.traitor_scaling_coeff * scale_modifier)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
-					character.mind.make_Traitor()
+					add_latejoin_traitor(character)
 	..()
+
+/datum/game_mode/traitor/proc/add_latejoin_traitor(var/mob/living/carbon/human/character)
+	character.mind.make_Traitor()
+
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
