@@ -74,6 +74,8 @@
 
 
 		use(1)
+	else
+		user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
 
 
 /obj/item/stack/medical/bruise_pack

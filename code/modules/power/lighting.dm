@@ -497,13 +497,10 @@
 			user << "You try to remove the light [fitting], but you burn your hand on it!"
 
 			var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-
-			if(affecting.status == ORGAN_ORGANIC) //is the hand organic? if Yes then taste the Burn - RR
-
-				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays(0)
-				H.updatehealth()
-				return				// if burned, don't remove the light
+			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+				H.update_damage_overlays(0)
+			H.updatehealth()
+			return				// if burned, don't remove the light
 	else
 		user << "You remove the light [fitting]."
 	// create a light tube/bulb item and put it in the user's hand

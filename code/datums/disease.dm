@@ -46,6 +46,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/severity = null//severity descr
 	var/longevity = 150//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 	var/list/hidden = list(0, 0)
+	var/requires = 0 //if we need to check for a required_organ limb
+	var/list/required_limb = list() //A required limb to catch a certain disease, TYPEPATHS
 	var/can_carry = 1 // If the disease allows "carriers".
 	// if hidden[1] is true, then virus is hidden from medical scanners
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
@@ -141,6 +143,15 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/proc/process()
+
+	if(requires != 0) //Only run these checks if requires is something more than 0
+		if(requires == 1)
+			if(ishuman(affected_mob))
+				var/mob/living/carbon/human/H = affected_mob
+				if(!H.getlimb(required_limb))
+					cure(1)
+					return
+
 	if(!holder)
 		active_diseases -= src
 		return

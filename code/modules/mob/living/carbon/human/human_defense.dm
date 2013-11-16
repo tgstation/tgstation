@@ -126,21 +126,21 @@ emp_act
 
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
-		if (WT.remove_fuel(0))
-			if(affecting.status == ORGAN_ROBOTIC)
+		if(affecting.status == ORGAN_ROBOTIC)
+			if (WT.remove_fuel(0))
 				if(affecting.brute_dam > 0)
 					affecting.heal_robotic_damage(30,0) //Repair Brute
 					update_damage_overlays(0)
 					updatehealth()
 					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\red [user] has fixed some of the dents on [src]'s [affecting.getDisplayName()]!"), 1) //Tell everyone [src]'s limb (by its real name) has been repaired
+						O.show_message(text("\blue [user] has fixed some of the dents on [src]'s [affecting.getDisplayName()]!"), 1) //Tell everyone [src]'s limb (by its real name) has been repaired
 					return //So we don't attack them as well
 				else
-					user << "[src]'s [affecting.getDisplayName()] is already in good condidtion"
+					user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condidtion</span>"
 					return
-		else
-			user << "Need more welding fuel!"
-			return
+			else
+				user << "<span class='warning'>Need more welding fuel!</span>"
+				return
 
 
 	if(istype(I, /obj/item/weapon/cable_coil))
@@ -151,10 +151,10 @@ emp_act
 				updatehealth()
 				coil.use(1)
 				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\red [user] has fixed some of the burnt wires on [src]'s [affecting.getDisplayName()]!"), 1)
+					O.show_message(text("\blue [user] has fixed some of the burnt wires on [src]'s [affecting.getDisplayName()]!"), 1)
 				return //So we don't attack them as well
 			else
-				user << "[src]'s [affecting.getDisplayName()] is already in good condidtion"
+				user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condidtion</span>"
 				return
 
 //-------------------- End of Cyber limb stuff ---------------------\\
@@ -178,32 +178,33 @@ emp_act
 	apply_damage(I.force, I.damtype, affecting, armor , I)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)) && affecting.status == ORGAN_ORGANIC) //Organ must be Organic to bleed - RR
-		I.add_blood(src)	//Make the weapon bloody, not the person.
-		if(prob(I.force * 2))	//blood spatter!
-			bloody = 1
-			var/turf/location = loc
-			if(istype(location, /turf/simulated))
-				location.add_blood(src)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
-					if(H.wear_suit)
-						H.wear_suit.add_blood(src)
-						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
-					else if(H.w_uniform)
-						H.w_uniform.add_blood(src)
-						H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-					if (H.gloves)
-						var/obj/item/clothing/gloves/G = H.gloves
-						G.add_blood(H)
-						G.transfer_blood = 2
-						G.bloody_hands_mob = H
-					else
-						H.add_blood(H)
-						H.bloody_hands = 2
-						H.bloody_hands_mob = H
-					H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
+		if(affecting.status == ORGAN_ORGANIC) //Organic limbs bleed - RR
+			I.add_blood(src)	//Make the weapon bloody, not the person.
+			if(prob(I.force * 2))	//blood spatter!
+				bloody = 1
+				var/turf/location = loc
+				if(istype(location, /turf/simulated))
+					location.add_blood(src)
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
+						if(H.wear_suit)
+							H.wear_suit.add_blood(src)
+							H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+						else if(H.w_uniform)
+							H.w_uniform.add_blood(src)
+							H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
+						if (H.gloves)
+							var/obj/item/clothing/gloves/G = H.gloves
+							G.add_blood(H)
+							G.transfer_blood = 2
+							G.bloody_hands_mob = H
+						else
+							H.add_blood(H)
+							H.bloody_hands = 2
+							H.bloody_hands_mob = H
+						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer

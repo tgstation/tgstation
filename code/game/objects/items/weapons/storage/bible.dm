@@ -71,10 +71,17 @@
 			ticker.mode.remove_cultist(M.mind)*/
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
-			M << "\red May the power of [src.deity_name] compel you to be healed!"
-			playsound(src.loc, "punch", 25, 1, -1)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				for(var/obj/item/organ/limb/affecting in H.organs)
+					if(affecting.status == ORGAN_ORGANIC)
+						for(var/mob/O in viewers(M, null))
+							O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
+						M << "\red May the power of [src.deity_name] compel you to be healed!"
+						playsound(src.loc, "punch", 25, 1, -1)
+					else
+						src << "<span class= 'warning'>You cannot heal someone who's body is tainted by metal!</span>"
+						return
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 				M.adjustBrainLoss(10)
