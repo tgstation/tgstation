@@ -251,6 +251,7 @@
 		'nano/templates/chem_dispenser.tmpl',
 		'nano/templates/apc.tmpl',
 		'nano/templates/ame.tmpl',
+		'nano/templates/atmos_control.tmpl',
 		'nano/templates/cryo.tmpl',
 		'nano/templates/air_alarm.tmpl',
 		'nano/templates/telescience_console.tmpl',

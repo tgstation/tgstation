@@ -52,9 +52,11 @@
 		overridden = 1
 	else if(!emagged)
 		overridden = 0
+
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
 	if(current)
-		dat += specific()
+		//dat += specific()
+		return ui_interact(user)
 	else
 		for(var/obj/machinery/alarm/alarm in sortAtom(machines))
 			if(!is_in_filter(alarm.alarm_area.type))
@@ -70,6 +72,7 @@
 			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
 
+
 /obj/machinery/computer/atmoscontrol/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		user.visible_message("\red \The [user] swipes \a [I] through \the [src], causing the screen to flash!",\
@@ -80,19 +83,49 @@
 		return
 	return ..()
 
+/obj/machinery/computer/atmoscontrol/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(user.stat && !isobserver(user))
+		return
+
+	var/list/data[0]
+	data["alarm"]=null
+	if(current)
+		data += current.get_nano_data(user,TRUE)
+		data["alarm"] = "\ref[current]"
+
+	var/list/alarms=list()
+	for(var/obj/machinery/alarm/alarm in sortAtom(machines))
+		if(!is_in_filter(alarm.alarm_area.type))
+			continue // NO ACCESS 4 U
+
+		var/list/alarm_data=list()
+		alarm_data["ID"]="\ref[alarm]"
+		alarm_data["danger"] = max(alarm.danger_level, alarm.alarm_area.atmosalm)
+		alarm_data["name"] = "[alarm]"
+		alarms+=list(alarm_data)
+	data["alarms"]=alarms
+
+	if (!ui) // no ui has been passed, so we'll search for one
+		ui = nanomanager.get_open_ui(user, src, ui_key)
+
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "atmos_control.tmpl", name, 550, 410)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		if(current)
+			ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+
 
 /obj/machinery/computer/atmoscontrol/proc/is_in_filter(var/typepath)
 	if(!filter) return 1 // YEP.  TOTALLY.
 	return typepath in filter
-
-/obj/machinery/computer/atmoscontrol/proc/specific()
-	if(!current)
-		return ""
-	var/dat = "<h3>[current.name]</h3><hr>"
-	//dat += current.return_status()
-	if(current.remote_control || overridden)
-		dat += "<hr>[return_controls()]"
-	return dat
 
 //a bunch of this is copied from atmos alarms
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
@@ -233,7 +266,7 @@
 			var/list/selected = current.TLV["temperature"]
 			var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
 			var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
-			var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
+			var/input_temperature = input("What temperature would you like the system to maintain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
 			if(input_temperature==null)
 				return
 			if(input_temperature > max_temperature || input_temperature < min_temperature)
