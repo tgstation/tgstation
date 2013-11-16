@@ -17,8 +17,17 @@
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
-/mob/living/carbon/human/RestrainedClickOn(var/atom/A)
+/*
+/mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
 	return
+*/
+
+/mob/living/carbon/RestrainedClickOn(var/atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I.abstract)
+		I.afterattack(A)
+		return 1
+	return 0
 
 /mob/living/carbon/human/RangedAttack(var/atom/A)
 	if(!gloves && !mutations.len) return
@@ -51,6 +60,7 @@
 /mob/living/RestrainedClickOn(var/atom/A)
 	return
 
+
 /*
 	Monkeys
 */
@@ -67,6 +77,8 @@
 	things considerably
 */
 /mob/living/carbon/monkey/RestrainedClickOn(var/atom/A)
+	if(..())
+		return
 	if(a_intent != "harm" || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return

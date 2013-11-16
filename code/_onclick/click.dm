@@ -78,7 +78,7 @@
 
 	var/obj/item/W = get_active_hand()
 
-	if(W == null || !W.no_redirection)
+	if(W == null || !W.abstract)
 		face_atom(A)
 
 	if(W == A)

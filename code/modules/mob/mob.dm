@@ -635,6 +635,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 	pixel_x = old_x
 	pixel_y = old_y
 
+/mob/proc/RestrainedClick(target)
+	var/obj/item/A = get_active_hand()
+	if(A.abstract)
+		A.afterattack(target)
+
 /mob/Stat()
 	..()
 

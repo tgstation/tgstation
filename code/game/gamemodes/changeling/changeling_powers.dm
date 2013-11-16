@@ -656,7 +656,6 @@ var/list/datum/dna/hivemind_bank = list()
 	layer = 20
 	abstract = 1
 	item_state = "nothing"
-	no_redirection = 1
 	var/sting_type
 	var/sting_range
 	var/sting_cost
