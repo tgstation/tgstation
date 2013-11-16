@@ -11,15 +11,18 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
+	Del(src)
+
+/obj/structure/bigDelivery/Del()
 	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(loc))
 		if(istype(wrapped, /obj/structure/closet))
 			var/obj/structure/closet/O = wrapped
 			O.welded = 0
-	if(contents.Find(user))
-		user.loc = (get_turf(loc))
-	del(src)
-
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/AM in contents)
+		AM.loc = T
+	..()
 
 /obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
