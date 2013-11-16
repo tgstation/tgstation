@@ -1434,6 +1434,15 @@ datum/design/flora_gun
 	materials = list("$metal" = 2000, "$glass" = 500, "$uranium" = 500)
 	build_path = "/obj/item/weapon/gun/energy/floragun"
 
+datum/design/mentality
+	name = "Mentality Blade"
+	desc = "A blade that is powered by the brain of it's wielder, but cannot be understood by even the smartest scientists and researchers. Only those who are mentally challenged, and unable to see, are able to wield this contraption."
+	id = "mentality"
+	req_tech = list("materials" = 5, "biotech" = 3, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000, "$glass" = 500)
+	build_path = "/obj/item/weapon/melee/swordchucks/mentality"
+
 datum/design/large_grenade
 	name = "Large Grenade"
 	desc = "A grenade that affects a larger area and use larger containers."
