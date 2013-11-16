@@ -530,59 +530,26 @@ var/list/datum/dna/hivemind_bank = list()
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
 
-/mob/proc/sting_can_reach(mob/M as mob, sting_range = 1)
-	if(M.loc == src.loc) return 1 //target and source are in the same thing
-	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
-	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, sting_range)) //If a path exists, good!
-		return 1
-	return 0
-
-//Handles the general sting code to reduce on copypasta (seeming as somebody decided to make SO MANY dumb abilities)
-/mob/proc/changeling_sting(var/required_chems=0, var/verb_path)
-	var/datum/changeling/changeling = changeling_power(required_chems)
-	if(!changeling)								return
-
-	var/list/victims = list()
-	for(var/mob/living/carbon/C in oview(changeling.sting_range))
-		victims += C
-	var/mob/living/carbon/T = input(src, "Who will we sting?") as null|anything in victims
-
-	if(!T) return
-	if(!(T in view(changeling.sting_range))) return
-	if(!sting_can_reach(T, changeling.sting_range)) return
-	if(!changeling_power(required_chems)) return
-
-	changeling.chem_charges -= required_chems
-	verbs -= verb_path
-	spawn(5)	verbs += verb_path
-
-	src << "<span class='notice'>We stealthily sting [T].</span>"
-	if(!T.mind || !T.mind.changeling)	return T	//T will be affected by the sting
-	T << "<span class='warning'>You feel a tiny prick.</span>"
-	return
-
 
 /mob/living/carbon/proc/changeling_transformation_sting()
 	set category = "Changeling"
 	set name = "Transformation Sting (40)"
 	set desc= "Transform the target to one of our stored DNAs"
 
-	var/datum/changeling/changeling = changeling_power(40)
-	if(!changeling)	return 0
-
 	var/list/names = list()
-	for(var/datum/dna/DNA in changeling.absorbed_dna)
+	for(var/datum/dna/DNA in mind.changeling.absorbed_dna)
 		names += DNA.real_name
 
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
 
-	var/datum/dna/chosen_dna = changeling.GetDNA(S)
+	var/datum/dna/chosen_dna = mind.changeling.GetDNA(S)
 	if(!chosen_dna)
 		return
 
-	var/mob/living/carbon/T = changeling_sting(40,/mob/living/carbon/proc/changeling_transformation_sting)
-	if(!T)	return 0
+	give_proboscis(/mob/living/carbon/proc/sting_effect_trasnform, 1, 40, chosen_dna)
+
+/mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T, datum/dna/chosen_dna)
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
@@ -599,19 +566,14 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Extract DNA Sting (25)"
 	set desc="Stealthily sting a target to extract their DNA."
 
-	var/datum/changeling/changeling = null
-	if(src.mind && src.mind.changeling)
-		changeling = src.mind.changeling
-	if(!changeling)
-		return 0
+	give_proboscis(/mob/living/carbon/proc/sting_effect_extract, 1, 25)
 
-	var/mob/living/carbon/T = changeling_sting(25, /mob/living/carbon/proc/changeling_extract_dna_sting)
-	if(!T)	return 0
+/mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
 
-	if(changeling.can_absorb_dna(T, usr))
-		changeling.absorb_dna(T, usr)
+	if(src.mind.changeling.can_absorb_dna(T, usr))
+		src.mind.changeling.absorb_dna(T, usr)
 	else//If the sting fails, give the guy most of his chems back.
-		changeling.chem_charges += 20
+		src.mind.changeling.chem_charges += 20
 
 	feedback_add_details("changeling_powers","ED")
 	return 1
@@ -622,8 +584,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Mute sting (20)"
 	set desc= "Temporarily mutes the target."
 
-	var/mob/living/carbon/T = changeling_sting(20,/mob/living/carbon/proc/changeling_mute_sting)
-	if(!T)	return 0
+	give_proboscis(/mob/living/carbon/proc/sting_effect_mute, 1, 20)
+
+/mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
 	T.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
@@ -634,8 +597,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Blind Sting (25)"
 	set desc= "Temporarily blinds the target."
 
-	var/mob/living/carbon/T = changeling_sting(25,/mob/living/carbon/proc/changeling_blind_sting)
-	if(!T)	return 0
+	give_proboscis(/mob/living/carbon/proc/sting_effect_blind, 1, 25)
+
+/mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
 	T.disabilities |= NEARSIGHTED
 	T.eye_blind = 20
@@ -649,8 +613,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Hallucination Sting (5)"
 	set desc = "Causes terror in the target."
 
-	var/mob/living/carbon/T = changeling_sting(5,/mob/living/carbon/proc/changeling_lsd_sting)
-	if(!T)	return 0
+	give_proboscis(/mob/living/carbon/proc/sting_effect_lsd, 1, 5)
+
+/mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
 	spawn(rand(300,600))
 		if(T)	T.hallucination += 400
 	feedback_add_details("changeling_powers","HS")
@@ -662,12 +627,67 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Cryogenic Sting (15)"
 	set desc = "Cools the target, slowing them."
 
-	var/mob/living/carbon/T = changeling_sting(15,/mob/living/carbon/proc/changeling_cryo_sting)
-	if(!T)	return 0
+	give_proboscis(/mob/living/carbon/proc/sting_effect_cryo, 1, 15)
 
+/mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
 	if(T.reagents)
 		T.reagents.add_reagent("frostoil", 30)
 		T.reagents.add_reagent("ice", 30)
 
 	feedback_add_details("changeling_powers","CS")
 	return 1
+
+/mob/living/carbon/proc/give_proboscis(sting, range, cost, dna=null)
+	var/obj/item/proboscis/P = new(src)
+	P.sting_type = sting
+	P.sting_range = range
+	P.sting_cost = cost
+	P.owner = src
+	P.dna = dna
+	src.put_in_active_hand(P)
+
+/obj/item/proboscis
+	name = "proboscis"
+	desc = "Thing chanelings use to sting people."
+	icon = 'icons/obj/magic.dmi'
+	icon_state = "2"
+	flags = NOBLUDGEON
+	w_class = 10.0
+	layer = 20
+	abstract = 1
+	item_state = "nothing"
+	no_redirection = 1
+	var/sting_type
+	var/sting_range
+	var/sting_cost
+	var/dna = null
+	var/mob/living/carbon/owner
+
+/obj/item/proboscis/dropped()
+	del(src)
+
+/obj/item/proboscis/equipped(mob/user, slot)
+	if(!((slot == slot_l_hand) || (slot== slot_r_hand)))
+		del(src)
+
+/obj/item/proboscis/attack(target)
+	return
+
+/obj/item/proboscis/afterattack(target)
+	if(!istype(target, /mob/living/carbon/) || target == owner)
+		return
+
+	var/mob/living/carbon/C = target
+
+	if(owner.mind.changeling.chem_charges < sting_cost)
+		owner << "<span class='warning'>Not enough chemicals.</span>"
+		return
+
+	var/list/A = AStar(owner.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
+	if(A.len <= sting_range + 2 || !isturf(owner.loc))
+		owner.mind.changeling.chem_charges -= sting_cost
+		owner << "<span class='notice'>We stealthily sting [C].</span>"
+		if(!C.mind || !C.mind.changeling)
+			call(owner, sting_type)(C, dna)
+		else
+			C << "<span class='warning'>You feel a tiny prick.</span>"
