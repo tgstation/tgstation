@@ -170,6 +170,16 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/old
+	name = "old beaker"
+	desc = "A older model of the Bluespace Beaker that looks like it can hold reagents."
+	icon_state = "beakerbluespace"
+	g_amt = 5000
+	volume = 1000
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,300,1000)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	New()
 		..()
