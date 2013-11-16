@@ -6,6 +6,8 @@
  *		Energy Blade
  *		Energy Axe
  *		Energy Shield
+ *		SWORD CHUCKS, YO
+ *		Mentality Sword
  */
 
 /*
@@ -192,3 +194,27 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
+
+/obj/item/weapon/melee/swordchucks
+	name = "sword-chucks"
+	desc = "Magick Wielders hate this."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "chuck_sword"
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
+	force = 3
+	origin_tech = "materials=5;bluespace=3;biotech=3"
+/obj/item/weapon/melee/swordchucks/pickup(mob/user)
+	if((CLUMSY in user.mutations) && (DEAF in user.mutations) && (BLIND in user.mutations))
+		user << "As you pick up the [src], you feel a deep mastery of using the [src]."
+		force = 30
+	else
+		user << "...How the hell does this thing even work?"
+		force = 3
+/obj/item/weapon/melee/swordchucks/dropped()
+	force = 3
+
+/obj/item/weapon/melee/swordchucks/mentality
+	name = "mentality blade"
+	desc = "A blade that is powered by the brain of it's wielder, but cannot be understood by even the smartest scientists and researchers."
+	icon_state = "mentalsword"
