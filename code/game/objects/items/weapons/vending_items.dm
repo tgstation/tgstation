@@ -2,8 +2,8 @@
 	name = "Resupply canister"
 	var/machine_name = "Generic"
 
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "box"
+	icon = 'icons/obj/venging_restock.dmi'
+	icon_state = "refill_snack"
 	item_state = "restock_unit"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 7.0
@@ -41,7 +41,6 @@
 
 /obj/item/weapon/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
-	icon_state = "refill_snack"
 	//machine contains max 48 items
 	charges = 15
 
