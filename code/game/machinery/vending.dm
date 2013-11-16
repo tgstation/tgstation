@@ -126,7 +126,7 @@
 		total = to_restock
 	else
 		//We need to stock items equally in each categories based on the amount of items missing.
-		//This algorythm will restock each category by percentage, the more items being missing, the larger the
+		//This algorithm will restock each category by percentage, the more items being missing, the larger the
 		//amount of refills it will get, keeps stocks even.
 		var/tmp_charges = refill.charges	//we need to cache the charges to keep the equation from changing
 		for(var/datum/data/vending_product/machine_content in machine)

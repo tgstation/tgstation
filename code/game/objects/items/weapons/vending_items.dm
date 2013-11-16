@@ -2,7 +2,7 @@
 	name = "Resupply canister"
 	var/machine_name = "Generic"
 
-	icon = 'icons/obj/venging_restock.dmi'
+	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -19,11 +19,11 @@
 
 /obj/item/weapon/vending_refill/examine()
 	set src in usr
-	var/description = "[name] \icon[src],"
+	..()
 	if(charges)
-		usr << "[description] it can restock [charges] item(s)."
+		usr << "It can restock [charges] item(s)."
 	else
-		usr << "[description] it is empty!"
+		usr << "it is empty!"
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 
