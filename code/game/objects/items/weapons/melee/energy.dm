@@ -164,6 +164,3 @@
 
 /obj/item/weapon/melee/energy/blade/dropped()
 	del(src)
-
-/obj/item/weapon/melee/energy/blade/proc/throw()
-	del(src)

@@ -205,9 +205,9 @@
 	force = 3
 	origin_tech = "materials=5;bluespace=3;biotech=3"
 /obj/item/weapon/melee/swordchucks/pickup(mob/user)
-	if((CLUMSY in user.mutations) && (DEAF in user.mutations) && (BLIND in user.mutations))
+	if(CLUMSY in user.mutations)
 		user << "As you pick up the [src], you feel a deep mastery of using the [src]."
-		force = 30
+		force = 20
 	else
 		user << "...How the hell does this thing even work?"
 		force = 3
