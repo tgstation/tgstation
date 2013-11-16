@@ -18,7 +18,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http://wiki.ss13.eu/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -78,7 +78,7 @@
 	</head>
 
 	<body>
-	<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Infections&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+	<iframe width='100%' height='97%' src="http://wiki.ss13.eu/index.php?title=Infections&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 	</body>
 
 	</html>
@@ -114,7 +114,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http://wiki.ss13.eu/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -651,7 +651,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http://wiki.ss13.eu/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -669,7 +669,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http://wiki.ss13.eu/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>

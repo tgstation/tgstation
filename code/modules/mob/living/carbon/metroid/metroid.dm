@@ -67,7 +67,9 @@
 	real_name = name
 	spawn (1)
 		regenerate_icons()
-		src << "\blue Your icons have been generated!"
+//		src << "\blue Your icons have been generated!" -why tell the player get this?
+		if(config.wikilinks_on == 1)
+			src << "<b>A guide to playing as a slime can be found at</b> http://wiki.ss13.eu/index.php/Slime"
 	..()
 
 /mob/living/carbon/slime/adult/New()
@@ -950,6 +952,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G.loc = src.loc
 		G.key = ghost.key
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+		if(config.wikilinks_on == 1)
+			G << "<b>A guide to playing as an admantine golem can be found at</b> http://wiki.ss13.eu/index.php/Adamantine_Golem"
 		del (src)
 
 

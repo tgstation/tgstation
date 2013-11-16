@@ -7,6 +7,7 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddff"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Research_Director"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
@@ -41,6 +42,7 @@
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Scientist"
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology)
 
@@ -67,6 +69,7 @@
 	spawn_positions = 1
 	supervisors = "research director"
 	selection_color = "#ffeeff"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Roboticist"
 	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 

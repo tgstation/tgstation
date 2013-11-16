@@ -8,6 +8,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Bartender"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_bar)
 
@@ -49,6 +50,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Chef"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_kitchen, access_morgue)
 
@@ -74,6 +76,7 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Botanist"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 
@@ -101,6 +104,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Quartermaster"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 
@@ -127,6 +131,7 @@
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Cargo_Technician"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 
@@ -151,6 +156,7 @@
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Shaft_Miner"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 
@@ -186,6 +192,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Clown"
 	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
 
@@ -219,6 +226,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Mime"
 	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
 
@@ -261,6 +269,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Janitor"
 	access = list(access_janitor, access_maint_tunnels)
 	minimal_access = list(access_janitor, access_maint_tunnels)
 
@@ -284,6 +293,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Librarian"
 	access = list(access_library, access_maint_tunnels)
 	minimal_access = list(access_library)
 
@@ -309,6 +319,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	wiki_guide = "http://wiki.ss13.eu/index.php/Lawyer"
 	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 

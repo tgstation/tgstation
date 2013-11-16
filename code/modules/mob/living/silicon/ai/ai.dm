@@ -111,6 +111,8 @@ var/list/ai_list = list()
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+			if(config.wikilinks_on == 1) //this doesn't at all work and I don't know why
+				src << "<b>A guide to playing AI can be found at</b> http://wiki.ss13.eu/index.php/Cyborg"
 
 			job = "AI"
 	ai_list += src

@@ -132,6 +132,8 @@
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
+	if(config.wikilinks_on == 1)
+		traitor.current <<"<b>A guide to accomplishing your objective can be found at</b> http://wiki.ss13.eu/index.php/Traitor"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"

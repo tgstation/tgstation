@@ -178,6 +178,8 @@
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
 		syndicate.current << "\blue You are a [syndicate_name()] agent!"
+		if(config.wikilinks_on == 1)
+			syndicate.current << "<b>A guide to nuking the station can be found at</b> http://wiki.ss13.eu/index.php/Syndicate_guide"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"

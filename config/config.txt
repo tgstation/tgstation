@@ -114,7 +114,7 @@ GUEST_BAN
 # FORUMURL http://justanotherday.example.com
 
 ## Wiki address
-# WIKIURL http://www.nanotrasen.com/wiki/index.php
+# WIKIURL http://www.ss13.eu/wiki/index.php
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
@@ -144,3 +144,6 @@ TICKCOMP 0
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
+
+##Comment this to stop wikilinks from being presented to jobs at roundstart
+WIKILINKS_ON

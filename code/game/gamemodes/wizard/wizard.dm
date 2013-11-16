@@ -122,6 +122,8 @@
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
 		wizard.current << "<B>\red You are the Space Wizard!</B>"
+		if(config.wikilinks_on == 1)
+			wizard.current << "<b>A wizardly guide to magic can be found at</b> http://wiki.ss13.eu/index.php/Wizard"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
 	var/obj_count = 1

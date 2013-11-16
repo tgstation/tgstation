@@ -101,6 +101,8 @@
 //		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "\blue You are a member of the cult!"
+		if(config.wikilinks_on == 1)
+			cult_mind.current << "<b>A guide to serving your dark masters can be found at</b> http://wiki.ss13.eu/index.php/Cult_magic"
 		memorize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
 
