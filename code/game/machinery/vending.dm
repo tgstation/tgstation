@@ -125,7 +125,9 @@
 		refill.charges -= to_restock
 		total = to_restock
 	else
-		//we need to stock items equally in each categories based on the amount of items missing.
+		//We need to stock items equally in each categories based on the amount of items missing.
+		//This algorythm will restock each category by percentage, the more items being missing, the larger the
+		//amount of refills it will get, keeps stocks even.
 		var/tmp_charges = refill.charges	//we need to cache the charges to keep the equation from changing
 		for(var/datum/data/vending_product/machine_content in machine)
 			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
@@ -139,7 +141,7 @@
 			total += restock
 			if(restock)
 				usr << "<span class='notice'>[restock] of [machine_content.product_name]</span>"
-			if(refill.charges == 0)//due to rounding, we ran out of refill charges, that's normal, will happen as charges are indivisible.
+			if(refill.charges == 0)//due to rounding, we ran out of refill charges, exit.
 				break
 	return total
 
@@ -218,7 +220,7 @@
 		else
 			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 
-	if(!panel_open)	//not sure about this, it basically prevent getting items from the machine when the service panel is open.
+	if(!panel_open)//Vending machines do not dispense items when they are unscrewed
 		dat += "<h3>Select an Item</h3>"
 		dat += "<div class='statusDisplay'>"
 		if(product_records.len == 0)
@@ -278,7 +280,9 @@
 			usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
 
-
+	if(panel_open)
+		usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
+		return
 	if(href_list["remove_coin"])
 		if(!coin)
 			usr << "<span class='notice'>There is no coin in this machine.</span>"
