@@ -1,6 +1,6 @@
 /obj/item/weapon/grenade
 	name = "grenade"
-	desc = "A hand held grenade, with an adjustable timer."
+	desc = "It has an adjustable timer."
 	w_class = 2.0
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
@@ -46,7 +46,7 @@
 
 /obj/item/weapon/grenade/examine()
 	set src in usr
-	usr << desc
+	..()
 	if(det_time > 1)
 		usr << "The timer is set to [det_time/10] seconds."
 		return

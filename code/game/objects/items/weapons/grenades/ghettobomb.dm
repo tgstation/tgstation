@@ -87,7 +87,7 @@
 
 /obj/item/weapon/grenade/iedcasing/examine()
 	set src in usr
-	usr << desc
+	..()
 	if(assembled == 3)
 		usr << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
 		return
