@@ -147,9 +147,12 @@ var/list/sacrificed = list()
 					cultist_count += 1
 			if(cultist_count >= 9)
 				var/narsie_type = /obj/machinery/singularity/narsie/large
-				// Stops people summoning nar-sie more than once if 2 groups of cultists are on different parts of the station and both summon at the same time.
-				if(locate(narsie_type, machines))
-					return fizzle()
+				// Moves narsie if he was already summoned.
+				var/obj/him = locate(narsie_type, machines)
+				if(him)
+					him.loc = get_turf(src)
+					return
+				// Otherwise...
 				new narsie_type(src.loc) // Summon he!
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
