@@ -210,6 +210,9 @@
 			return 1
 		return
 
+	container_resist()
+		go_out()
+
 /datum/global_iterator/mech_sleeper
 
 	process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)

@@ -41,6 +41,9 @@ datum/controller/game_controller/New()
 
 	createRandomZlevel()			//probably shouldn't be here!
 
+	for(var/i=0, i<max_secret_rooms, i++)
+		make_mining_asteroid_secret()
+
 	if(!events)
 		new /datum/controller/event()
 
@@ -58,6 +61,7 @@ datum/controller/game_controller/New()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	if(!ticker)						ticker = new /datum/controller/gameticker()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
+	if(!supply_shuttle)				supply_shuttle = new /datum/controller/supply_shuttle()
 
 
 datum/controller/game_controller/proc/setup()
@@ -66,9 +70,6 @@ datum/controller/game_controller/proc/setup()
 	setup_objects()
 	setupgenetics()
 	setupfactions()
-
-	for(var/i=0, i<max_secret_rooms, i++)
-		make_mining_asteroid_secret()
 
 	spawn(0)
 		if(ticker)
@@ -128,6 +129,7 @@ datum/controller/game_controller/proc/process()
 					last_thing_processed = air_master.type
 					air_master.process()
 					air_cost = (world.timeofday - timer) / 10
+					global_activeturfs = air_master.active_turfs.len
 
 				sleep(breather_ticks)
 
@@ -150,7 +152,7 @@ datum/controller/game_controller/proc/process()
 				timer = world.timeofday
 				process_diseases()
 				diseases_cost = (world.timeofday - timer) / 10
-				
+
 				sleep(breather_ticks)
 
 				//MACHINES
@@ -164,7 +166,7 @@ datum/controller/game_controller/proc/process()
 				timer = world.timeofday
 				process_objects()
 				objects_cost = (world.timeofday - timer) / 10
-				
+
 				sleep(breather_ticks)
 
 				//PIPENETS
@@ -186,8 +188,6 @@ datum/controller/game_controller/proc/process()
 				timer = world.timeofday
 				process_nano()
 				nano_cost = (world.timeofday - timer) / 10
-				
-				sleep(breather_ticks)
 
 				//EVENTS
 				timer = world.timeofday
@@ -206,7 +206,7 @@ datum/controller/game_controller/proc/process()
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
-					start_time -= 864000    //deciseconds in a day
+					start_time -= MIDNIGHT_ROLLOVER    //deciseconds in a day
 				sleep( round(minimum_ticks - (end_time - start_time),1) )
 			else
 				sleep(10)

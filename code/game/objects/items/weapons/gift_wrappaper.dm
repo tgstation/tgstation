@@ -43,7 +43,6 @@
 		/obj/item/weapon/beach_ball/holoball,
 		/obj/item/weapon/banhammer,
 		/obj/item/toy/balloon,
-		/obj/item/toy/blink,
 		/obj/item/toy/crossbow,
 		/obj/item/toy/gun,
 		/obj/item/toy/katana,

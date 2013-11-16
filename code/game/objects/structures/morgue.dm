@@ -101,9 +101,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/morgue/relaymove(mob/user as mob)
-	if (user.stat)
-		return
+/obj/structure/morgue/container_resist()
 	src.connected = new /obj/structure/m_tray( src.loc )
 	step(src.connected, EAST)
 	src.connected.layer = OBJ_LAYER
@@ -133,12 +131,7 @@
 	layer = 2.0
 	var/obj/structure/morgue/connected = null
 	anchored = 1.0
-
-/obj/structure/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover, /obj/item/weapon/dummy))
-		return 1
-	else
-		return ..()
+	throwpass = 1
 
 /obj/structure/m_tray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -276,9 +269,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/crematorium/relaymove(mob/user as mob)
-	if (user.stat || locked)
-		return
+/obj/structure/crematorium/container_resist()
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
 	src.connected.layer = OBJ_LAYER
@@ -352,12 +343,7 @@
 	layer = 2.0
 	var/obj/structure/crematorium/connected = null
 	anchored = 1.0
-
-/obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover, /obj/item/weapon/dummy))
-		return 1
-	else
-		return ..()
+	throwpass = 1
 
 /obj/structure/c_tray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

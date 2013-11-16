@@ -191,7 +191,7 @@
 			src.connected_message("Clone Rejected: Deceased.")
 			return
 
-		else if(src.occupant.health < src.heal_level)
+		else if(src.occupant.cloneloss > src.heal_level)
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
@@ -204,13 +204,10 @@
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
-			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
-			src.occupant.adjustOxyLoss(-4)
-
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.health >= src.heal_level) && (!src.eject_wait))
+		else if((src.occupant.cloneloss <= src.heal_level) && (!src.eject_wait))
 			src.connected_message("Cloning Process Complete.")
 			src.locked = 0
 			src.go_out()

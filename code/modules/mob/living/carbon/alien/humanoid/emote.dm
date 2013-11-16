@@ -74,8 +74,10 @@
 		log_emote("[name]/[key] : [message]")
 		if (act == "roar")
 			playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
+
 		if (act == "deathgasp")
 			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

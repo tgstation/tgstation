@@ -20,12 +20,14 @@ proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, 
 
 			if(x == 0 || x == x_size-1 || y == 0 || y == y_size-1)
 				var/wall = pickweight(walltypes)//totally-solid walls are pretty boring.
-				T = new wall(cur_loc)
+				T = cur_loc
+				T.ChangeTurf(wall)
 				room_turfs["walls"] += T
 
 
 			else
-				T = new floor(cur_loc)
+				T = cur_loc
+				T.ChangeTurf(floor)
 				room_turfs["floors"] += T
 
 			A.contents += T
@@ -83,7 +85,7 @@ proc/make_mining_asteroid_secret()
 		if("cavein")
 			theme = "cavein"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/plating/airless/asteroid, /turf/simulated/floor/beach/sand)
+			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/beach/sand)
 			treasureitems = list(/obj/mecha/working/ripley/mining=1,/obj/item/weapon/pickaxe/jackhammer=2,/obj/item/weapon/pickaxe/diamonddrill=2,)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/chili=1,/obj/item/weapon/tank/oxygen/red=2)
@@ -91,7 +93,7 @@ proc/make_mining_asteroid_secret()
 		if("xenoden")
 			theme = "xenoden"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/plating/airless/asteroid, /turf/simulated/floor/beach/sand)
+			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/beach/sand)
 			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
 			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
 
@@ -165,7 +167,7 @@ proc/make_mining_asteroid_secret()
 			valid = 0
 			continue
 
-		if(locate(/turf/simulated/floor/plating/airless/asteroid) in surroundings)
+		if(locate(/turf/simulated/floor/plating/asteroid/airless) in surroundings)
 			valid = 0
 			continue
 
@@ -176,6 +178,11 @@ proc/make_mining_asteroid_secret()
 
 	if(room)//time to fill it with stuff
 		var/list/emptyturfs = room["floors"]
+		for(var/turf/simulated/floor/A in emptyturfs) //remove pls doesn't fix problem
+			if(istype(A))
+				spawn(2)
+					A.fullUpdateMineralOverlays()
+
 		T = pick(emptyturfs)
 		if(T)
 

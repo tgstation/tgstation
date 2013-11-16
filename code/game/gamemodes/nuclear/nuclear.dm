@@ -8,9 +8,11 @@
 	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
+	pre_setup_before_jobs = 1
+	antag_flag = BE_OPERATIVE
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
-	uplink_uses = 40
+	uplink_uses = 10
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -20,45 +22,32 @@
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 
-
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
 	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
-/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
-
-	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
+/datum/game_mode/nuclear/pre_setup()
 	var/agent_number = 0
-
-	if(possible_syndicates.len < 1)
-		return 0
-
-	if(possible_syndicates.len > agents_possible)
+	if(antag_candidates.len > agents_possible)
 		agent_number = agents_possible
 	else
-		agent_number = possible_syndicates.len
+		agent_number = antag_candidates.len
 
 	var/n_players = num_players()
 	if(agent_number > n_players)
 		agent_number = n_players/2
 
 	while(agent_number > 0)
-		var/datum/mind/new_syndicate = pick(possible_syndicates)
+		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
-		possible_syndicates -= new_syndicate //So it doesn't pick the same guy each time.
+		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-	return 1
-
-
-/datum/game_mode/nuclear/pre_setup()
 	return 1
 
 
@@ -210,19 +199,24 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(synd_mob), slot_shoes)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(synd_mob), slot_gloves)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
 	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
 	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), slot_belt)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
+
+	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
+	U.hidden_uplink.uses = 10
+	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
+
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
+	synd_mob.faction = "syndicate"
 	synd_mob.update_icons()
 	return 1
 
@@ -309,21 +303,22 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
-		var/text = "<FONT size = 2><B>The syndicate operatives were:</B></FONT>"
+		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 
 		for(var/datum/mind/syndicate in syndicates)
 
-			text += "<br>[syndicate.key] was [syndicate.name] ("
+			text += "<br><b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("
 			if(syndicate.current)
 				if(syndicate.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(syndicate.current.real_name != syndicate.name)
-					text += " as [syndicate.current.real_name]"
+					text += " as <b>[syndicate.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
+		text += "<br>"
 
 		world << text
 	return 1

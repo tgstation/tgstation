@@ -24,7 +24,7 @@
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
-	update_freelok_sight()
+	update_freelook_sight()
 	air_update_turf(1)
 	return
 
@@ -32,7 +32,7 @@
 /obj/machinery/door/Del()
 	density = 0
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	..()
 	return
 
@@ -108,11 +108,18 @@
 	return src.attackby(user, user)
 
 
+/obj/machinery/door/attack_tk(mob/user as mob)
+	if(requiresID() && !allowed(null))
+		return
+	..()
+
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
+	if(!Adjacent(user))
+		user = null
 	if(!src.requiresID())
 		user = null
 	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
@@ -172,7 +179,7 @@
 	return
 
 
-/obj/machinery/door/proc/animate(animation)
+/obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
 		if("opening")
 			if(p_open)
@@ -195,7 +202,7 @@
 	if(!ticker)			return 0
 	if(!operating)		operating = 1
 
-	animate("opening")
+	do_animate("opening")
 	icon_state = "door0"
 	src.SetOpacity(0)
 	sleep(10)
@@ -205,7 +212,7 @@
 	update_icon()
 	SetOpacity(0)
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 
 	if(operating)	operating = 0
 
@@ -217,7 +224,7 @@
 	if(operating)	return
 	operating = 1
 
-	animate("closing")
+	do_animate("closing")
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
@@ -227,8 +234,26 @@
 		SetOpacity(1)	//caaaaarn!
 	operating = 0
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	return
+
+/obj/machinery/door/proc/crush()
+	for(var/mob/living/L in get_turf(src))
+		if(isalien(L))  //For xenos
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+			L.emote("roar")
+		else if(ishuman(L)) //For humans
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.emote("scream")
+			L.Weaken(5)
+		else if(ismonkey(L)) //For monkeys
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.Weaken(5)
+		else //for simple_animals & borgs
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+		var/turf/location = src.loc
+		if(istype(location, /turf/simulated)) //add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+			location.add_blood_floor(L)
 
 /obj/machinery/door/proc/requiresID()
 	return 1

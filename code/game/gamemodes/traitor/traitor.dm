@@ -6,6 +6,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
+	antag_flag = BE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 0
@@ -20,6 +21,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
+	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
 /datum/game_mode/traitor/announce()
@@ -32,35 +34,29 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
-
-	// stop setup if no possible traitors
-	if(!possible_traitors.len)
-		return 0
-
 	var/num_traitors = 1
 
 	if(config.traitor_scaling_coeff)
-		num_traitors = max(1, round((num_players())/(config.traitor_scaling_coeff)))
+		num_traitors = max(1, round((num_players())/((config.traitor_scaling_coeff * scale_modifier))))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	for(var/datum/mind/player in possible_traitors)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
-				possible_traitors -= player
+				antag_candidates -= player
 
 	for(var/j = 0, j < num_traitors, j++)
-		if (!possible_traitors.len)
+		if (!antag_candidates.len)
 			break
-		var/datum/mind/traitor = pick(possible_traitors)
+		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
 		traitor.special_role = traitor_name
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
-		possible_traitors.Remove(traitor)
+		antag_candidates.Remove(traitor)
 
 
-	if(!traitors.len)
+	if(traitors.len < required_enemies)
 		return 0
 	return 1
 
@@ -78,14 +74,18 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	if(traitors.len >= round(joined_player_list.len / config.traitor_scaling_coeff) + 1) //Caps number of latejoin antagonists
+	if(traitors.len >= round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier)) + 1) //Caps number of latejoin antagonists
 		return
-	if (prob(100/config.traitor_scaling_coeff))
+	if (prob(100/(config.traitor_scaling_coeff * scale_modifier)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
-					character.mind.make_Traitor()
+					add_latejoin_traitor(character)
 	..()
+
+/datum/game_mode/traitor/proc/add_latejoin_traitor(var/mob/living/carbon/human/character)
+	character.mind.make_Traitor()
+
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
@@ -177,18 +177,18 @@
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
-		var/text = "<FONT size = 2><B>The [traitor_name]s were:</B></FONT>"
+		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += "<br>[traitor.key] was [traitor.name] ("
+			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b> ("
 			if(traitor.current)
 				if(traitor.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(traitor.current.real_name != traitor.name)
-					text += " as [traitor.current.real_name]"
+					text += " as <b>[traitor.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
@@ -217,6 +217,7 @@
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
+			text += "<br>"
 
 		world << text
 	return 1

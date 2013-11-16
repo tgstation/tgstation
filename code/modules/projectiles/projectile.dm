@@ -48,6 +48,7 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/forcedodge = 0
 
 
 	proc/delete()
@@ -69,7 +70,6 @@
 			return 0 //cannot shoot yourself
 
 		if(bumped)	return 0
-		var/forcedodge = 0 // force the projectile to pass
 
 		bumped = 1
 		if(ismob(A))
@@ -96,13 +96,18 @@
 
 		spawn(0)
 			if(A)
-				var/permutation = A.bullet_act(src, def_zone) // searches for return value
-				if(permutation == -1 || forcedodge) // the bullet passes through a dense object!
+				// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
+				var/turf/new_loc = null
+				if(istype(A, /turf))
+					new_loc = A
+				else
+					new_loc = A.loc
+
+				var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
+
+				if(permutation == -1 || (forcedodge && !istype(A, /turf)))// the bullet passes through a dense object!
 					bumped = 0 // reset bumped variable!
-					if(istype(A, /turf))
-						loc = A
-					else
-						loc = A.loc
+					loc = new_loc
 					permutated.Add(A)
 					return 0
 

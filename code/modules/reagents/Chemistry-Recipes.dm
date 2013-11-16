@@ -348,10 +348,10 @@ datum
 			required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/turf/simulated/T = get_turf(src)
+				var/turf/simulated/T = get_turf(holder.my_atom)
 				if(istype(T))
-					T.atmos_spawn_air("fire", created_volume)
-				holder.del_reagent("napalm")
+					T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
+				holder.del_reagent(id)
 				return
 
 		/*
@@ -1220,9 +1220,9 @@ datum
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
-				var/turf/simulated/T = get_turf(src)
+				var/turf/simulated/T = get_turf(holder.my_atom)
 				if(istype(T))
-					T.atmos_spawn_air("fire", 50)
+					T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
 
 //Yellow
 		slimeoverload
@@ -1468,6 +1468,19 @@ datum
 									sleep(20)
 									M.client.screen -= blueeffect
 									del(blueeffect)
+		slimecrystal
+			name = "Slime Crystal"
+			id = "m_crystal"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/bluespace
+			required_other = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if(holder.my_atom)
+					var/obj/item/bluespace_crystal/BC = new(get_turf(holder.my_atom))
+					BC.visible_message("<span class='notice'>The [BC] appears out of thin air!</span>")
 
 //Cerulean
 

@@ -19,6 +19,7 @@ var/global/datum/controller/occupations/job_master
 			var/datum/job/job = new J()
 			if(!job)	continue
 			if(job.faction != faction)	continue
+			if(!job.config_check()) continue
 			occupations += job
 
 
@@ -143,30 +144,24 @@ var/global/datum/controller/occupations/job_master
 		var/ai_selected = 0
 		var/datum/job/job = GetJob("AI")
 		if(!job)	return 0
-		if((job.title == "AI") && (config) && (!config.allow_ai))	return 0
+		if(ticker.mode.name == "AI malfunction")	// malf. AIs are pre-selected before jobs
+			for (var/datum/mind/mAI in ticker.mode.malf_ai)
+				AssignRole(mAI.current, "AI")
+				ai_selected++
+			if(ai_selected)	return 1
+			return 0
 
 		for(var/i = job.total_positions, i > 0, i--)
 			for(var/level = 1 to 3)
 				var/list/candidates = list()
-				if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
-					candidates = FindOccupationCandidates(job, level, BE_MALF)
-				else
-					candidates = FindOccupationCandidates(job, level)
+				candidates = FindOccupationCandidates(job, level)
 				if(candidates.len)
 					var/mob/new_player/candidate = pick(candidates)
 					if(AssignRole(candidate, "AI"))
 						ai_selected++
 						break
-			//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-			if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
-				unassigned = shuffle(unassigned)
-				for(var/mob/new_player/player in unassigned)
-					if(jobban_isbanned(player, "AI"))	continue
-					if(AssignRole(player, "AI"))
-						ai_selected++
-						break
-			if(ai_selected)	return 1
-			return 0
+		if(ai_selected)	return 1
+		return 0
 
 
 /** Proc DivideOccupations

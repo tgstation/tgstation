@@ -59,7 +59,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	updateicon()
-
+	update_fire()
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 

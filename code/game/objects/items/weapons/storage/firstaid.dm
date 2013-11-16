@@ -93,6 +93,25 @@
 		new /obj/item/device/healthanalyzer( src )
 		return
 
+/obj/item/weapon/storage/firstaid/tactical
+	name = "first-aid kit"
+	icon_state = "bezerk"
+	desc = "I hope you've got insurance."
+	max_w_class = 3
+
+	New()
+		..()
+		if (empty) return
+		new /obj/item/clothing/tie/stethoscope( src )
+		new /obj/item/weapon/surgicaldrill ( src )
+		new /obj/item/weapon/reagent_containers/hypospray/combat( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
+		new /obj/item/clothing/glasses/hud/health( src )
+		return
+
+
 /*
  * Pill Bottles
  */

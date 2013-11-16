@@ -402,7 +402,7 @@
 	. += "<h2>Crew Manifest</h2><br><br>"
 	if(data_core.general)
 		for(var/datum/data/record/t in sortRecord(data_core.general))
-			. += "[t.fields["name"]] - [t.fields["rank"]]"
+			. += "[t.fields["name"]] - [t.fields["rank"]]<BR>"
 	. += "</body></html>"
 	return .
 
