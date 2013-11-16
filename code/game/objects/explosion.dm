@@ -37,12 +37,30 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/start = world.timeofday
 		if(!epicenter) return
 
+		var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
+
 		if(adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ")
 
-		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
-		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
+		// Play sounds; since playsound uses range() for each use, we'll try doing it through the player list.
+		// Playsound_local will also have an extra bonus of panning the sound, depending on the source. So stereo users will hear the direction of the explosion
+
+		for(var/mob/M in player_list)
+			// Double check for client
+			if(M && M.client)
+				var/turf/M_turf = get_turf(M)
+				if(M_turf.z == epicenter.z)
+					var/dist = get_dist(M_turf, epicenter)
+					// If inside the blast radius + world.view - 2
+					if(dist <= round(max_range + world.view - 2, 1))
+						M.playsound_local(epicenter, "explosion", 100, 1)
+					// You hear a far explosion if you're outside the blast radius (*5) Small bombs shouldn't be heard all over the station.
+					else if(dist <= round(max_range * 10, 1))
+						var/far_volume = Clamp(max_range * 10, 30, 60) // Volume is based on explosion size and dist
+						far_volume += (dist > max_range * 2 ? 0 : 40) // add 40 volume if the mob is pretty close to the explosion
+						M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1)
+
 
 
 		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
@@ -60,7 +78,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range, flame_range)))
+		for(var/turf/T in range(epicenter, max_range))
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 			var/flame_dist = 0
 			var/hotspot_exists
