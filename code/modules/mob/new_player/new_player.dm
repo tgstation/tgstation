@@ -5,6 +5,7 @@
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers = 0		 //Player counts for the Lobby tab
 	var/totalPlayersReady = 0
+	var/seenlog = 0
 
 	invisibility = 101
 
@@ -17,7 +18,35 @@
 	New()
 		tag = "mob_[next_mob_id++]"
 		mob_list += src
+		changelog_startup()
 
+	proc/changelog_startup()
+		client.getFiles(
+			'html/postcardsmall.jpg',
+			'html/somerights20.png',
+			'html/88x31.png',
+			'html/bug-minus.png',
+			'html/cross-circle.png',
+			'html/hard-hat-exclamation.png',
+			'html/image-minus.png',
+			'html/image-plus.png',
+			'html/music-minus.png',
+			'html/music-plus.png',
+			'html/tick-circle.png',
+			'html/wrench-screwdriver.png',
+			'html/spell-check.png',
+			'html/burn-exclamation.png',
+			'html/chevron.png',
+			'html/chevron-expand.png',
+			'html/changelog.css',
+			'html/changelog.js',
+			'html/changelog.html'
+			)
+		if(client.prefs.lastchangelog != changelog_hash)
+			client.prefs.lastchangelog = changelog_hash
+			client.prefs.save_preferences()
+			src << browse('html/changelog.html', "window=changes;size=675x650")
+			winset(src, "rpane.changelog", "background-color=none;font-style=;")
 	proc/new_player_panel()
 
 		var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
@@ -57,6 +86,7 @@
 		popup.set_window_options("can_close=0")
 		popup.set_content(output)
 		popup.open(0)
+		changelog_startup()
 		return
 
 	Stat()
