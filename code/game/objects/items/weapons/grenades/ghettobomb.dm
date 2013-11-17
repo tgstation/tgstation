@@ -28,6 +28,7 @@
 	var/assembled = 0
 	active = 1
 	det_time = 50
+	display_timer = 0
 
 
 
@@ -89,5 +90,4 @@
 	set src in usr
 	..()
 	if(assembled == 3)
-		usr << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
-		return
+		usr << "You can't tell when it will explode!"
