@@ -7,7 +7,7 @@
 	icon_closed = "securecrate"
 	var/code = null
 	var/lastattempt = null
-	var/attempts = 5
+	var/attempts = 3
 	locked = 1
 	var/min = 1
 	var/max = 10
@@ -103,24 +103,28 @@
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user as mob)
 	if(locked)
-		user << "The crate is locked with a H.O.N.K-code lock."
-		var/input = input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
-		input = Clamp(input, 1, 10)
-		if (input == code)
-			user << "\blue The crate unlocks!"
-			locked = 0
-		else if (input == null || input > max || input < min)
-			user << "You leave the crate alone."
+		if(in_range(src, user))
+			user << "The crate is locked with a deca-code lock."
+			var/input = input(user, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
+			input = Clamp(input, 1, 10)
+			if (input == code)
+				user << "\blue The crate unlocks!"
+				locked = 0
+			else if (input == null || input > max || input < min)
+				user << "You leave the crate alone."
+			else
+				user << "A red light flashes."
+				lastattempt = input
+				attempts--
+				if (attempts == 0)
+					user << "The crate's anti-tamper system activates!"
+					var/turf/T = get_turf(src.loc)
+					explosion(T, 0, 1, 2, 1)
+					del(src)
+					return
 		else
-			user << "A red light flashes."
-			lastattempt = input
-			attempts--
-			if (attempts == 0)
-				user << "The crate's anti-tamper system activates!"
-				var/turf/T = get_turf(src.loc)
-				explosion(T, 0, 1, 2, 1)
-				del(src)
-				return
+			user << "You attempt to interact with the keypad via a hand gesture, but this crate doesn't have a DECANECT installed."
+			return
 	else
 		return ..()
 
@@ -130,7 +134,7 @@
 			user << "The crate unlocks!"
 			locked = 0
 		if (istype(W, /obj/item/device/multitool))
-			user << "H.O.N.K-CODE LOCK REPORT:"
+			user << "DECA-CODE LOCK REPORT:"
 			if (attempts == 1)
 				user << "* Anti-Tamper Bomb will activate on next failed access attempt."
 			else
