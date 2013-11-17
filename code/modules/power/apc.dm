@@ -485,134 +485,87 @@
 	if(wiresexposed /*&& (!istype(user, /mob/living/silicon))*/) //Commented out the typecheck to allow engiborgs to repair damaged apcs.
 		wires.Interact(user)
 
-	user.set_machine(src)
-	var/t = "" //"<B>Area Power Controller</B> ([area.name])"
-
-	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user))
-			user.unset_machine()
-			user << browse(null, "window=apc")
-			return
-		else if (issilicon(user) && src.aidisabled && !src.malfhack)
-			user << "AI control for this APC interface has been disabled."
-			user.unset_machine()
-			user << browse(null, "window=apc")
-			return
-		else if (src.malfai && isAI(user))
-			var/mob/living/silicon/ai/AI = user
-			if ((src.malfai != AI && src.malfai != AI.parent) && !islinked(AI, malfai))
-				user << "AI control for this APC interface has been disabled."
-				user.unset_machine()
-				user << browse(null, "window=apc")
-				return
+	return ui_interact(user)
 
 
-	if(locked && (!istype(user, /mob/living/silicon)))
-		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
-		t += "<h3>Status</h3>"
-		t += "Main Breaker: <B>[operating ? "<font class='good'>On</font>" : "<font class='bad'>Off</font>"]</B><br />"
-		t += "External Power: <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
-		t += "Power Cell: <B>[cell ? "[round(cell.percent())]%" : "<font COLOR=red>Not connected.</font>"]</B>"
-		if(cell)
-			t += "<BR/>Charge Mode: [chargemode ? "Auto" : "Off"]"
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main")
+	if(!user)
+		return
 
-		t += "<h3>Power Channels</h3><PRE>"
-
-		var/list/L = list ("Off","Off (Auto)", "On", "On (Auto)")
-
-		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : <B>[L[equipment+1]]</B><br />"
-		t += "Lighting:     [add_lspace(lastused_light, 6)] W : <B>[L[lighting+1]]</B><br />"
-		t += "Environmental:[add_lspace(lastused_environ, 6)] W : <B>[L[environ+1]]</B><br />"
-
-		t += "<br />Total Load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
-		t += "<br />Cover Lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"
-
-	else
-		if (!istype(user, /mob/living/silicon))
-			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
-		t += "<h3>Status</h3>"
-		t += "Main Breaker: [operating ? "<span class='linkOn'>On</span> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <span class='linkOn'>Off</span>" ]<br />"
-		t += "External power : <B>[ main_status ? (main_status ==2 ? "<font class='good'>Good</font>" : "<font class='average'>Low</font>") : "<font class='bad'>None</font>"]</B><br />"
-		if(cell)
-			t += "Power cell: <B>[round(cell.percent())]%</B>"
-			t += "<BR/>Charge mode: [chargemode ? "<A href='?src=\ref[src];cmode=1'>Off</A> <span class='linkOn'>Auto</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];cmode=1'>Auto</A>"]"
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
+	var/malfStatus
+	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
+		if (src.malfai == (user:parent ? user:parent : user))
+			if (src.occupant == user)
+				malfStatus = 3 // 3 = User is shunted in this APC
+			else if (istype(user.loc, /obj/machinery/power/apc))
+				malfStatus = 4 // 4 = User is shunted in another APC
+			else
+				malfStatus = 2 // 2 = APC hacked by user, and user is in its core.
 		else
-			t += "Power cell: <B><font COLOR=red>Not connected.</font></B>"
+			malfStatus = 1 // 1 = APC not hacked.
+	else
+		malfStatus = 0 // 0 = User is not a Malf AI
 
-		t += "<br /><h3>Power channels</h3><PRE>"
+	var/list/data = list(
+		"locked" = locked,
+		"isOperating" = operating,
+		"externalPower" = main_status,
+		"powerCellStatus" = cell ? cell.percent() : null,
+		"chargeMode" = chargemode,
+		"chargingStatus" = charging,
+		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"coverLocked" = coverlocked,
+		"siliconUser" = istype(user, /mob/living/silicon),
+		"malfStatus" = malfStatus,
 
-		t += "Equipment:    [add_lspace(lastused_equip, 6)] W : "
-		var/key = "eqp"
-		switch(equipment)
-			if(0)
-				t += "<span class='linkOn'>Off</span> <A href='?src=\ref[src];[key]=2'>On</A> <A href='?src=\ref[src];[key]=3'>Auto</A>"
-			if(1)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (Off)</span>"
-			if(2)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <span class='linkOn'>On</span> <A href='?src=\ref[src];[key]=3'>Auto</A>"
-			if(3)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (On)</span>"
-		t +="<br />"
+		"powerChannels" = list(
+			list(
+				"title" = "Equipment",
+				"powerLoad" = lastused_equip,
+				"status" = equipment,
+				"topicParams" = list(
+					"auto" = list("eqp" = 3),
+					"on"   = list("eqp" = 2),
+					"off"  = list("eqp" = 1)
+				)
+			),
+			list(
+				"title" = "Lighting",
+				"powerLoad" = lastused_light,
+				"status" = lighting,
+				"topicParams" = list(
+					"auto" = list("lgt" = 3),
+					"on"   = list("lgt" = 2),
+					"off"  = list("lgt" = 1)
+				)
+			),
+			list(
+				"title" = "Environment",
+				"powerLoad" = lastused_environ,
+				"status" = environ,
+				"topicParams" = list(
+					"auto" = list("env" = 3),
+					"on"   = list("env" = 2),
+					"off"  = list("env" = 1)
+				)
+			)
+		)
+	)
 
-		t += "Lighting:     [add_lspace(lastused_light, 6)] W : "
-		key = "lgt"
-		switch(lighting)
-			if(0)
-				t += "<span class='linkOn'>Off</span> <A href='?src=\ref[src];[key]=2'>On</A> <A href='?src=\ref[src];[key]=3'>Auto</A>"
-			if(1)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (Off)</span>"
-			if(2)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <span class='linkOn'>On</span> <A href='?src=\ref[src];[key]=3'>Auto</A>"
-			if(3)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (On)</span>"
-		t +="<br />"
-
-
-		t += "Environmental:[add_lspace(lastused_environ, 6)] W : "
-		key = "env"
-		switch(environ)
-			if(0)
-				t += "<span class='linkOn'>Off</span> <A href='?src=\ref[src];[key]=2'>On</A> <A href='?src=\ref[src];[key]=3'>Auto</A>"
-			if(1)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (Off)</span>"
-			if(2)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <span class='linkOn'>On</span> <A href='?src=\ref[src];[key]=3'>Auto</A>"
-			if(3)
-				t += "<A href='?src=\ref[src];[key]=1'>Off</A> <A href='?src=\ref[src];[key]=2'>On</A> <span class='linkOn'>Auto (On)</span>"
-
-
-
-		t += "<br />Total Load: [lastused_light + lastused_equip + lastused_environ] W</PRE>"
-		t += "<br />Cover Lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"
-
-
-		if (istype(user, /mob/living/silicon))
-			t += "<br /><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><br />"
-		if (ticker && ticker.mode)
-//		 world << "there's a ticker"
-			if(user.mind in ticker.mode.malf_ai)
-//				world << "ticker says its malf"
-				if (!src.malfai)
-					t += "<br /><A href='?src=\ref[src];malfhack=1'><I>Override Programming</I></A><br />"
-				else
-					t += "<br /><I>APC Hacked</I><br />"
-					if(!src.occupant)
-						t += "<A href='?src=\ref[src];occupyapc=1'><I>Shunt Core Processes</I></A><br />"
-					else
-						t += "<I>Core Processes Uploaded</I><br />"
-
-	//t += "<br /><HR><A href='?src=\ref[src];close=1'>Close</A>"
-
-	//user << browse(t, "window=apc")
-	//onclose(user, "apc")
-	var/datum/browser/popup = new(user, "apc", "[area.name] APC")
-	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
+	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 500, data["siliconUser"] ? 465 : 390)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+	//user.set_machine(src)
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
@@ -691,11 +644,11 @@
 
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
-		return
+		return 0
 
 	if(!isrobot(usr))
 		if(!can_use(usr, 1))
-			return
+			return 0
 
 	usr.set_machine(src)
 
@@ -735,11 +688,11 @@
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
 		usr.unset_machine()
-		return
+		return 0
 	else if (href_list["close2"])
 		usr << browse(null, "window=apcwires")
 		usr.unset_machine()
-		return
+		return 0
 
 	else if (href_list["overload"])
 		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
@@ -747,10 +700,10 @@
 
 	else if (href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
-		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
+		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled && (ticker && ticker.mode && (malfai.mind in ticker.mode.malf_ai)) )
 			if (malfai.malfhacking)
 				malfai << "You are already hacking an APC."
-				return
+				return 1
 			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 			malfai.malfhack = src
 			malfai.malfhacking = 1
@@ -759,6 +712,7 @@
 				if (!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
+					locked = 1
 					if (ticker.mode.config_tag == "malfunction")
 						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
 							ticker.mode:apcs++
@@ -775,9 +729,17 @@
 	else if (href_list["deoccupyapc"])
 		malfvacate()
 
+	else if (href_list["toggleaccess"])
+		if (istype(usr, /mob/living/silicon/ai) && !src.aidisabled)
+			if(emagged || (stat & (BROKEN|MAINT)))
+				usr << "The APC does not respond to the command."
+			else
+				locked = !locked
+				update_icon()
+
 	src.updateDialog()
 
-	return
+	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating

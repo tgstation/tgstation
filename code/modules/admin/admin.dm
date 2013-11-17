@@ -403,6 +403,7 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=show_admins'>Show Admin List</A><BR>
 			<BR>
 			"}
 

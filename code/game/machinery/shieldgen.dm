@@ -279,7 +279,7 @@
 		if(locked)
 			user << "The bolts are covered, unlocking this would retract the covers."
 			return
-		if(!anchored && istype(get_turf(src), /turf/space))
+		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'> You secure the [src] to the floor!</span>"
 			anchored = 1

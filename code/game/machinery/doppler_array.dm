@@ -25,11 +25,11 @@ var/list/doppler_arrays = list()
 		if(!anchored && !isinspace())
 			anchored = 1
 			power_change()
-			user << "<span class='notice'>You unwrech [src].</span>"
+			user << "<span class='notice'>You fasten [src].</span>"
 		else if(anchored)
 			anchored = 0
 			power_change()
-			user << "<span class='notice'>You fasten [src].</span>"
+			user << "<span class='notice'>You unfasten [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 /obj/machinery/doppler_array/verb/rotate()
