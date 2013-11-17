@@ -10,7 +10,7 @@
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
+	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Chaplain")))	return 0
 	if(isloyal(mind.current))
 		return 0
 	return 1
