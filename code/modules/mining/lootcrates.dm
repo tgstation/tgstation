@@ -113,7 +113,7 @@
 			else if (input == null || input > max || input < min)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
-				user << "<span class='danger'>A red light flashes.</span>"
+				user << "<span class='warning'>A red light flashes.</span>"
 				lastattempt = input
 				attempts--
 				if (attempts == 0)
@@ -136,7 +136,7 @@
 		if (istype(W, /obj/item/device/multitool))
 			user << "<span class='notice'>H.O.N.K-CODE LOCK REPORT:</span>"
 			if (attempts == 1)
-				user << "<span class='danger'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
+				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
 			else
 				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
 			if (lastattempt == null)

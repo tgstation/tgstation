@@ -283,7 +283,7 @@
 	var/crate = rand(1,100)
 	switch(crate)
 		if(5)
-			usr << "<span class='notice'>You have uncovered a hidden secret!</span>"
+			visible_message("<span class='notice'>You have uncovered a hidden secret!</span>")
 			new/obj/structure/closet/crate/secure/loot(src)
 
 /*
