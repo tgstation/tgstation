@@ -8,7 +8,7 @@
 	var/sortTag //Disposals code reads this.
 	action_button_name = "Set Tag"
 
-/obj/item/clothing/under/syndiemail/openwindow(mob/user)
+/obj/item/clothing/under/syndiemail/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>MailRider 0.3</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
