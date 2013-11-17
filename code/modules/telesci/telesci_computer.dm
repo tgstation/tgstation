@@ -12,7 +12,7 @@
 	var/z_co = 1
 	var/power_off
 	var/rotation_off
-	var/angle_off
+	//var/angle_off
 
 	var/rotation = 0
 	var/angle = 45
@@ -152,7 +152,7 @@
 
 		var/truePower = Clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = Clamp(angle + angle_off, 1, 90)
+		var/trueAngle = Clamp(angle, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
@@ -304,6 +304,6 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	teles_left = rand(30, 40)
-	angle_off = rand(-25, 25)
+	//angle_off = rand(-25, 25)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)
