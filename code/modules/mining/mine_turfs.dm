@@ -280,10 +280,10 @@
 				new /obj/item/weapon/ore/clown(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	N.fullUpdateMineralOverlays()
-	var/crate = rand(1,50)
+	var/crate = rand(1,100)
 	switch(crate)
-		if(1)
-			usr << "You have uncovered a hidden secret!"
+		if(5)
+			usr << "<span class='notice'>You have uncovered a hidden secret!</span>"
 			new/obj/structure/closet/crate/secure/loot(src)
 
 /*

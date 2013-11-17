@@ -103,27 +103,27 @@
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user as mob)
 	if(locked)
-		user << "The crate is locked with a H.O.N.K-code lock."
+		user << "<span class='notice'>The crate is locked with a H.O.N.K-code lock.</span>"
 		var/input = input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
 		if(in_range(src, user))
 			input = Clamp(input, 1, 10)
 			if (input == code)
-				user << "\blue The crate unlocks!"
+				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
 			else if (input == null || input > max || input < min)
-				user << "You leave the crate alone."
+				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
-				user << "A red light flashes."
+				user << "<span class='danger'>A red light flashes.</span>"
 				lastattempt = input
 				attempts--
 				if (attempts == 0)
-					user << "The crate's anti-tamper system activates!"
+					user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
 					var/turf/T = get_turf(src.loc)
 					explosion(T, 0, 1, 2, 1)
 					del(src)
 					return
 		else
-			user << "You attempt to interact with the device using a hand gesture, but it appears this crate is from before the DECANECT came out."
+			user << "<span class='notice'>You attempt to interact with the device using a hand gesture, but it appears this crate is from before the DECANECT came out.</span>"
 			return
 	else
 		return ..()
@@ -131,21 +131,21 @@
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(locked)
 		if (istype(W, /obj/item/weapon/card/emag))
-			user << "The crate unlocks!"
+			user << "<span class='notice'>The crate unlocks!</span>"
 			locked = 0
 		if (istype(W, /obj/item/device/multitool))
-			user << "H.O.N.K-CODE LOCK REPORT:"
+			user << "<span class='notice'>H.O.N.K-CODE LOCK REPORT:</span>"
 			if (attempts == 1)
-				user << "* Anti-Tamper Bomb will activate on next failed access attempt."
+				user << "<span class='danger'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
 			else
-				user << "* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts."
+				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
 			if (lastattempt == null)
-				user << "* No attempt has been made to open the crate thus far."
+				user << "<span class='notice'> has been made to open the crate thus far.</span>"
 				return
 			// hot and cold
 			if (code > lastattempt)
-				user << "* Last access attempt lower than expected code."
+				user << "<span class='notice'>* Last access attempt lower than expected code.</span>"
 			else
-				user << "* Last access attempt higher than expected code."
+				user << "<span class='notice'>* Last access attempt higher than expected code.</span>"
 		else ..()
 	else ..()
