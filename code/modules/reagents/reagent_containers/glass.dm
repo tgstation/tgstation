@@ -172,7 +172,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/old
 	name = "old beaker"
-	desc = "A older model of the Bluespace Beaker that looks like it can hold reagents."
+	desc = "An older model of the Bluespace Beaker that looks like it can hold reagents. It was put out of production for budget cut reasons."
 	icon_state = "beakerbluespace"
 	g_amt = 5000
 	volume = 1000

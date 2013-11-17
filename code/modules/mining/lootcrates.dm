@@ -57,12 +57,8 @@
 			new/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake(src)
 			new/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake(src)
 			new/obj/item/weapon/lighter/zippo(src)
-		if(6)
-			return
 		if(7)
 			new/obj/item/weapon/reagent_containers/glass/beaker/old(src)
-		if(8)
-			return
 		if(9)
 			new/obj/item/weapon/ore/diamond(src)
 			new/obj/item/weapon/ore/diamond(src)
@@ -132,8 +128,14 @@
 			new/obj/item/clothing/under/shorts(src)
 			new/obj/item/clothing/under/shorts/red(src)
 			new/obj/item/clothing/under/shorts/blue(src)
+		//Dummy crates start here.
 		if(24 to 29)
 			return
+		if(8)
+			return
+		if(6)
+			return
+		//Dummy crates end here.
 		if(30)
 			new/obj/item/weapon/melee/baton(src)
 			new/obj/item/weapon/melee/baton(src)
