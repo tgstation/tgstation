@@ -1,7 +1,7 @@
 // this can go anywhere, probably best in the crates file i guess
 /obj/structure/closet/crate/secure/loot
+	name = "abandoned crate"
 	desc = "What could be inside?"
-	name = "Abandoned Crate"
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
