@@ -26,6 +26,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
+	var/spell_level = 0 //if a spell can be taken multiple times, this raises
+	var/level_max = 4 //The max possible level_max is 4
+	var/cooldown_min = 0 //This defines what spell quickened four timeshas as a cooldown. Make sure to set this for every spell
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -117,12 +120,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Click()
-	..()
-
-	if(!cast_check())
-		return
-
-	choose_targets()
+	if(cast_check())
+		choose_targets()
+	return 1
 
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return

@@ -59,7 +59,7 @@
 		close()
 	return
 
-/obj/machinery/door/firedoor/animate(animation)
+/obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
 			flick("door_opening", src)

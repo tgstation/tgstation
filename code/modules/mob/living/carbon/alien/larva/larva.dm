@@ -135,17 +135,6 @@
 		updatehealth()
 	return
 
-
-/mob/living/carbon/alien/larva/hand_p(mob/living/carbon/user)
-	if(user.a_intent == "harm")
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if(health > 0)
-			visible_message("<span class='danger'>[user] has bit [src]!</span>")
-			adjustBruteLoss(rand(1, 3))
-			updatehealth()
-
-
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")

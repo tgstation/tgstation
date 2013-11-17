@@ -60,7 +60,8 @@
 
 		return 0
 
-	afterattack(obj/target, mob/user , flag)
+	afterattack(obj/target, mob/user , proximity)
+		if(!proximity) return
 		if(target.is_open_container() != 0 && target.reagents)
 			if(!target.reagents.total_volume)
 				user << "<span class='notice'>[target] is empty. There's nothing to dissolve [src] in.</span>"
@@ -125,6 +126,14 @@
 	New()
 		..()
 		reagents.add_reagent("kelotane", 30)
+
+/obj/item/weapon/reagent_containers/pill/dermaline
+	name = "dermaline pill"
+	desc = "Used to treat severe burns."
+	icon_state = "pill12"
+	New()
+		..()
+		reagents.add_reagent("dermaline", 30)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "inaprovaline pill"

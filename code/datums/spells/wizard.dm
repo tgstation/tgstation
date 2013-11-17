@@ -8,6 +8,7 @@
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
+	cooldown_min = 90 //15 deciseconds reduction per rank
 
 	max_targets = 0
 
@@ -42,6 +43,7 @@
 
 	mutations = list(LASER, HULK)
 	duration = 300
+	cooldown_min = 300 //25 deciseconds reduction per rank
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
 	name = "Disintegrate"
@@ -53,6 +55,7 @@
 	invocation = "EI NATH"
 	invocation_type = "shout"
 	range = 1
+	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	destroys = "gib_brain"
 
@@ -70,6 +73,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
+	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
 	smoke_amt = 10
@@ -83,6 +87,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
+	cooldown_min = 200 //50 deciseconds reduction per rank
 
 	emp_heavy = 6
 	emp_light = 10
@@ -98,6 +103,8 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
+	cooldown_min = 5 //4 deciseconds reduction per rank
+
 
 	smoke_spread = 1
 	smoke_amt = 10
@@ -118,6 +125,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
+	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
 	smoke_amt = 5
@@ -132,6 +140,7 @@
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"
 	range = 0
+	cooldown_min = 50 //12 deciseconds reduction per rank
 
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
@@ -189,6 +198,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	message = "\blue Your eyes cry out in pain!"
+	cooldown_min = 50 //12 deciseconds reduction per rank
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
@@ -211,6 +221,7 @@
 	invocation = "STAUN EI"
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
+	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	summon_type = "/obj/structure/closet/statue"
 
@@ -224,6 +235,7 @@
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
+	cooldown_min = 20 //10 deciseconds reduction per rank
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
@@ -233,7 +245,7 @@
 	proj_step_delay = 1
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
-	explosion(T, -1, 0, 2, 3, 0)
+	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/fireball

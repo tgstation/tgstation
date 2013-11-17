@@ -160,24 +160,17 @@
 
 	power_change()
 		if(stat & BROKEN)
-			icon_state = initial(icon_state)+"_broken"
 			if(recharge_port)
 				recharge_port.stop_charge()
-		else if(powered())
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				icon_state = initial(icon_state)+"_nopower"
-				stat |= NOPOWER
-				if(recharge_port)
-					recharge_port.stop_charge()
+		else if(!(powered()))
+			if(recharge_port)
+				recharge_port.stop_charge()
+		..()
 
-	set_broken()
-		icon_state = initial(icon_state)+"_broken"
-		stat |= BROKEN
-		if(recharge_port)
-			recharge_port.stop_charge()
+	set_broken() //should never be used, but just in case anyone ever makes these buildable.
+//		if(recharge_port)
+//			recharge_port.stop_charge() Commenting out because this will probably break things.
+		..()
 
 	attack_hand(mob/user as mob)
 		if(..()) return

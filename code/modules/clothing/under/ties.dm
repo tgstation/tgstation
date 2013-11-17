@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
-	color = "bluetie"
+	item_color = "bluetie"
 	flags = FPRINT | TABLEPASS
 	slot_flags = 0
 	w_class = 2.0
@@ -12,24 +12,24 @@
 /obj/item/clothing/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	color = "bluetie"
+	item_color = "bluetie"
 
 /obj/item/clothing/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	color = "redtie"
+	item_color = "redtie"
 
 /obj/item/clothing/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	color = "horribletie"
+	item_color = "horribletie"
 
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	color = "stethoscope"
+	item_color = "stethoscope"
 
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
@@ -72,7 +72,7 @@
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	color = "bronze"
+	item_color = "bronze"
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
@@ -119,7 +119,7 @@
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
-	color = "silver"
+	item_color = "silver"
 
 /obj/item/clothing/tie/medal/silver/valor
 	name = "medal of valor"
@@ -133,7 +133,7 @@
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
-	color = "gold"
+	item_color = "gold"
 
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
@@ -151,40 +151,40 @@
 	name = "red armband"
 	desc = "An fancy red armband!"
 	icon_state = "red"
-	color = "red"
+	item_color = "red"
 
 /obj/item/clothing/tie/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
 	icon_state = "cargo"
-	color = "cargo"
+	item_color = "cargo"
 
 /obj/item/clothing/tie/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
 	icon_state = "engie"
-	color = "engie"
+	item_color = "engie"
 
 /obj/item/clothing/tie/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
 	icon_state = "rnd"
-	color = "rnd"
+	item_color = "rnd"
 
 /obj/item/clothing/tie/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
 	icon_state = "hydro"
-	color = "hydro"
+	item_color = "hydro"
 
 /obj/item/clothing/tie/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
 	icon_state = "med"
-	color = "med"
+	item_color = "med"
 
 /obj/item/clothing/tie/armband/medgreen
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
 	icon_state = "medgreen"
-	color = "medgreen"
+	item_color = "medgreen"

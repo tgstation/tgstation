@@ -54,7 +54,10 @@
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
 
 /datum/song/proc/shouldStopPlaying()
-	return !instrumentObj.anchored		// add special cases to stop in subclasses
+	if(instrumentObj)
+		return !instrumentObj.anchored		// add special cases to stop in subclasses
+	else
+		return 1
 
 /datum/song/proc/playsong(mob/user as mob)
 	while(repeat >= 0)
@@ -161,7 +164,7 @@
 
 
 /datum/song/Topic(href, href_list)
-	if(!in_range(instrumentObj, usr) || issilicon(usr) || !isliving(usr) || !usr.canmove || usr.restrained())
+	if(!in_range(instrumentObj, usr) || (issilicon(usr) && instrumentObj.loc != usr) || !isliving(usr) || !usr.canmove || usr.restrained())
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -270,11 +273,14 @@
 // subclass for handheld instruments, like violin
 /datum/song/handheld
 
-	updateDialog(mob/user as mob)
-		instrumentObj.interact(user)
+/datum/song/handheld/updateDialog(mob/user as mob)
+	instrumentObj.interact(user)
 
-	shouldStopPlaying()
+/datum/song/handheld/shouldStopPlaying()
+	if(instrumentObj)
 		return !isliving(instrumentObj.loc)
+	else
+		return 1
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -313,23 +319,23 @@
 
 /obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/wrench))
-		if (anchored)
+		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to loosen \the [src]'s casters..."
-			if (do_after(user, 40))
-				user.visible_message( \
-					"[user] loosens \the [src]'s casters.", \
-					"\blue You have loosened \the [src]. Now it can be pulled somewhere else.", \
-					"You hear ratchet.")
-				src.anchored = 0
-		else
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to tighten \the [src] to the floor..."
+			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
 			if (do_after(user, 20))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
-					"\blue You have tightened \the [src]'s casters. Now it can be played again.", \
+					"<span class='notice'> You have tightened \the [src]'s casters. Now it can be played again.</span>", \
 					"You hear ratchet.")
-				src.anchored = 1
+				anchored = 1
+		else if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
+			if (do_after(user, 40))
+				user.visible_message( \
+					"[user] loosens \the [src]'s casters.", \
+					"<span class='notice'> You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
+					"You hear ratchet.")
+				anchored = 0
 	else
 		..()

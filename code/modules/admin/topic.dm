@@ -1458,7 +1458,7 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
-			else if(ispath(path, /obj/effect/bhole))
+			else if(ispath(path, /obj/effect/anomaly/bhole))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
@@ -1673,63 +1673,31 @@
 				message_admins("\red <b> [key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</b>", 1)
 				log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
-/*				if("shockwave")
-				ok = 1
-				world << "\red <B><big>ALERT: STATION STRESS CRITICAL</big></B>"
-				sleep(60)
-				world << "\red <B><big>ALERT: STATION STRESS CRITICAL. TOLERABLE LEVELS EXCEEDED!</big></B>"
-				sleep(80)
-				world << "\red <B><big>ALERT: STATION STRUCTURAL STRESS CRITICAL. SAFETY MECHANISMS FAILED!</big></B>"
-				sleep(40)
-				for(var/mob/M in world)
-					shake_camera(M, 400, 1)
-				for(var/obj/structure/window/W in world)
-					spawn(0)
-						sleep(rand(10,400))
-						W.ex_act(rand(2,1))
-				for(var/obj/structure/grille/G in world)
-					spawn(0)
-						sleep(rand(20,400))
-						G.ex_act(rand(2,1))
-				for(var/obj/machinery/door/D in world)
-					spawn(0)
-						sleep(rand(20,400))
-						D.ex_act(rand(2,1))
-				for(var/turf/station/floor/Floor in world)
-					spawn(0)
-						sleep(rand(30,400))
-						Floor.ex_act(rand(2,1))
-				for(var/obj/structure/cable/Cable in world)
-					spawn(0)
-						sleep(rand(30,400))
-						Cable.ex_act(rand(2,1))
-				for(var/obj/structure/closet/Closet in world)
-					spawn(0)
-						sleep(rand(30,400))
-						Closet.ex_act(rand(2,1))
-				for(var/obj/machinery/Machinery in world)
-					spawn(0)
-						sleep(rand(30,400))
-						Machinery.ex_act(rand(1,3))
-				for(var/turf/station/wall/Wall in world)
-					spawn(0)
-						sleep(rand(30,400))
-						Wall.ex_act(rand(2,1)) */
 			if("wave")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","MW")
+				message_admins("[key_name_admin(usr)] has spawned meteors")
 				E = new /datum/round_event/meteor_wave()
-
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
-				E = new /datum/round_event/gravitational_anomaly()
-
+				message_admins("[key_name_admin(usr)] has spawned a gravitational anomaly")
+				E = new /datum/round_event/anomaly/anomaly_grav()
+			if("pyroanomalies")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","PYRO")
+				message_admins("[key_name_admin(usr)] has spawned a pyroclastic anomaly")
+				E = new /datum/round_event/anomaly/anomaly_pyro()
+			if("blackhole")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BH")
+				message_admins("[key_name_admin(usr)] has spawned a vortex anomaly")
+				E = new /datum/round_event/anomaly/anomaly_vortex()
 			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","STA")
+				message_admins("[key_name_admin(usr)] has made wormholes")
 				E = new /datum/round_event/wormholes()
-
 			if("goblob")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BL")
@@ -1750,7 +1718,7 @@
 				feedback_add_details("admin_secrets_fun_used","SL")
 				message_admins("[key_name_admin(usr)] has spawned spiders", 1)
 			if("bluespaceanomaly")
-				E = new /datum/round_event/bluespace_anomaly()
+				E = new /datum/round_event/anomaly/anomaly_bluespace()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BA")
 				message_admins("[key_name_admin(usr)] has triggered a bluespace anomaly", 1)
@@ -1911,7 +1879,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FLUX")
 				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
-				E = new /datum/round_event/energetic_flux()
+				E = new /datum/round_event/anomaly/anomaly_flux()
 		if(E)
 			E.processing = 0
 			if(E.announceWhen>0)
@@ -1952,17 +1920,17 @@
 			if("check_antagonist")
 				check_antagonists()
 			if("moveminingshuttle")
-				if(mining_shuttle_moving)
-					return
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
-				move_mining_shuttle()
+				var/datum/shuttle_manager/s = shuttles["mining"]
+				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
 				log_admin("[key_name(usr)] moved the mining shuttle")
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
-				move_ferry()
+				var/datum/shuttle_manager/s = shuttles["ferry"]
+				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")
 			if("kick_all_from_lobby")
@@ -2040,6 +2008,13 @@
 						if(!job)	continue
 						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 					usr << browse(dat, "window=jobdebug;size=600x500")
+			if("show_admins")
+				var/dat = "<B>Current admins:</B><HR>"
+				if(admin_datums)
+					for(var/ckey in admin_datums)
+						var/datum/admins/D = admin_datums[ckey]
+						dat += "[ckey] - [D.rank.name]<br>"
+					usr << browse(dat, "window=showadmins;size=600x500")
 
 	else if(href_list["secretscoder"])
 		if(!check_rights(R_DEBUG))	return

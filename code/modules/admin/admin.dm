@@ -403,6 +403,7 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=show_admins'>Show Admin List</A><BR>
 			<BR>
 			"}
 
@@ -428,19 +429,22 @@ var/global/floorIsLava = 0
 			<BR>
 			"}
 
-	if(check_rights(R_FUN,0))
+	if(check_rights(R_FUN,0))//TODO: Make all this hardcoded random event panel stuff its own proc so we can actually remove poor events without making the code stop compiling
 		dat += {"
 			<B>'Random' Events</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event.</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
-			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
+			<A href='?src=\ref[src];secretsfun=blackhole'>Spawn a vortex anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=pyroanomalies'>Spawn a pyroclastic anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=energeticflux'>Spawn a flux wave anomaly</A><BR>
+			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Spawn a bluespace anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
 			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
-			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Trigger a Bluespace Anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
@@ -451,7 +455,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
-			<A href='?src=\ref[src];secretsfun=energeticflux'>Trigger a hyper-energetic flux</A><BR>
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
@@ -815,6 +818,26 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
+/datum/admins/proc/list_free_slots()
+	if(!check_rights())
+		return
+	var/dat = "<html><head><title>List Free Slots</title></head><body>"
+	var/count = 0
+
+	if(job_master)
+		for(var/datum/job/job in job_master.occupations)
+			count++
+			var/J_title = html_encode(job.title)
+			var/J_totPos = html_encode(job.total_positions)
+			dat += "[J_title]: [J_totPos]<br>"
+
+	dat += "</body>"
+	var/winheight = 100 + (count * 20)
+	winheight = min(winheight, 690)
+	usr << browse(dat, "window=players;size=316x[winheight]")
+
+
+
 //
 //
 //ALL DONE
@@ -823,25 +846,7 @@ var/global/floorIsLava = 0
 //
 //
 
-
-/**********************Centcom Ferry**************************/
-
-var/ferry_location = 0 // 0 = centcom , 1 = station
-
-proc/move_ferry()
-	var/area/fromArea
-	var/area/toArea
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-	fromArea.move_contents_to(toArea)
-	if (ferry_location)
-		ferry_location = 0
-	else
-		ferry_location = 1
+//RIP ferry snowflakes
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)

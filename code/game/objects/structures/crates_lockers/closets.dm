@@ -177,6 +177,8 @@
 				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(istype(W,/obj/item/tk_grab))
+			return 0
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -192,10 +194,7 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item()
-
-		if(W)
-			W.loc = src.loc
+		user.drop_item(src)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -260,6 +259,13 @@
 	if(!src.toggle())
 		usr << "<span class='notice'>It won't budge!</span>"
 
+// tk grab then use on self
+/obj/structure/closet/attack_self_tk(mob/user as mob)
+	src.add_fingerprint(user)
+
+	if(!src.toggle())
+		usr << "<span class='notice'>It won't budge!</span>"
+
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
 	set category = "Object"
@@ -281,3 +287,39 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
+
+// Objects that try to exit a locker by stepping were doing so successfully,
+// and due to an oversight in turf/Enter() were going through walls.  That
+// should be independently resolved, but this is also an interesting twist.
+/obj/structure/closet/Exit(atom/movable/AM)
+	open()
+	if(AM.loc == src) return 0
+	return 1
+
+/obj/structure/closet/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2 //2 minutes by default
+	if(istype(user.loc, /obj/structure/closet/critter) && !welded)
+		breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
+
+	if(opened || (!welded && !locked))
+		return  //Door's open, not locked or welded, no point in resisting.
+
+	//okay, so the closet is either welded or locked... resist!!!
+	user.next_move = world.time + 100
+	user.last_special = world.time + 100
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	for(var/mob/O in viewers(src))
+		O << "<span class='warning'>[src] begins to shake violently!</span>"
+
+	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
+			return
+		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+
+		welded = 0 //applies to all lockers lockers
+		locked = 0 //applies to critter crates and secure lockers only
+		broken = 1 //applies to secure lockers only
+		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		open()

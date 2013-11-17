@@ -3,7 +3,7 @@
 	name = "Cloning Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	circuit = "/obj/item/weapon/circuitboard/cloning"
+	circuit = /obj/item/weapon/circuitboard/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
@@ -71,17 +71,11 @@
 		..()
 	return
 
-/obj/machinery/computer/cloning/attack_paw(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/cloning/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	add_fingerprint(user)
 
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	updatemodules()

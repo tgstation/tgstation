@@ -98,7 +98,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
+<<<<<<< HEAD
 		SQLquery = "SELECT author, title, category, id FROM ss13db_library WHERE "
+=======
+		SQLquery = "SELECT author, title, category, id FROM erro_library WHERE isnull(deleted) AND "
+>>>>>>> dab0bf90d7e983870a073f2cae4995f3f42842e9
 		if(category == "Any")
 			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
 		else
@@ -201,7 +205,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
+<<<<<<< HEAD
 				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM ss13db_library")
+=======
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM erro_library WHERE isnull(deleted)")
+>>>>>>> dab0bf90d7e983870a073f2cae4995f3f42842e9
 				query.Execute()
 
 				while(query.NextRow())
@@ -370,7 +378,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
+<<<<<<< HEAD
 			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM ss13db_library WHERE id=[sqlid]")
+=======
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id=[sqlid] AND isnull(deleted)")
+>>>>>>> dab0bf90d7e983870a073f2cae4995f3f42842e9
 			query.Execute()
 
 			while(query.NextRow())

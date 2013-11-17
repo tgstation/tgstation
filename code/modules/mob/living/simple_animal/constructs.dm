@@ -24,21 +24,24 @@
 	max_n2 = 0
 	minbodytemp = 0
 	faction = "cult"
+	var/list/construct_spells = list()
 
 /mob/living/simple_animal/construct/New()
+	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
+	for(var/spell in construct_spells)
+		spell_list += new spell(src)
 
-/mob/living/simple_animal/construct/Life()
+/mob/living/simple_animal/construct/Die()
 	..()
-	if(stat == 2)
-		new /obj/item/weapon/ectoplasm (src.loc)
-		for(var/mob/M in viewers(src, null))
-			if((M.client && !( M.blinded )))
-				M.show_message("\red [src] collapses in a shattered heap. ")
-				ghostize()
-		del src
-		return
+	new /obj/item/weapon/ectoplasm (src.loc)
+	for(var/mob/M in viewers(src, null))
+		if((M.client && !( M.blinded )))
+			M.show_message("\red [src] collapses in a shattered heap. ")
+	ghostize()
+	del src
+	return
 
 /mob/living/simple_animal/construct/examine()
 	set src in oview()
@@ -99,14 +102,14 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-			health -= damage
+			adjustBruteLoss(damage)
 
 /mob/living/simple_animal/construct/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
 			damage = 0
-		health -= damage
+		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
@@ -140,6 +143,7 @@
 	wall_smash = 1
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
@@ -147,7 +151,7 @@
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
-			health -= damage
+			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
@@ -209,6 +213,7 @@
 	speed = -1
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 
 
 
@@ -233,6 +238,11 @@
 	speed = 0
 	wall_smash = 1
 	attack_sound = 'sound/weapons/punch2.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
 
 /////////////////////////////Behemoth/////////////////////////
@@ -265,7 +275,7 @@
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
-			health -= damage
+			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")

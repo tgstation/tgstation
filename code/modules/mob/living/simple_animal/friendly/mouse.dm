@@ -18,20 +18,20 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
-	var/color //brown, gray and white, leave blank for random
+	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()
 	..()
-	if(!color)
-		color = pick( list("brown","gray","white") )
-	icon_state = "mouse_[color]"
-	icon_living = "mouse_[color]"
-	icon_dead = "mouse_[color]_dead"
+	if(!body_color)
+		body_color = pick( list("brown","gray","white") )
+	icon_state = "mouse_[body_color]"
+	icon_living = "mouse_[body_color]"
+	icon_dead = "mouse_[body_color]_dead"
 
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
-	src.icon_dead = "mouse_[color]_splat"
+	src.icon_dead = "mouse_[body_color]_splat"
 	Die()
 
 /mob/living/simple_animal/mouse/Die()
@@ -40,7 +40,7 @@
 	M.icon_state = src.icon_dead
 	del (src)
 
-/mob/living/simple_animal/mouse/HasEntered(AM as mob|obj)
+/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
@@ -53,15 +53,15 @@
  */
 
 /mob/living/simple_animal/mouse/white
-	color = "white"
+	body_color = "white"
 	icon_state = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
-	color = "gray"
+	body_color = "gray"
 	icon_state = "mouse_gray"
 
 /mob/living/simple_animal/mouse/brown
-	color = "brown"
+	body_color = "brown"
 	icon_state = "mouse_brown"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)

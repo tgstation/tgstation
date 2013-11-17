@@ -80,24 +80,6 @@
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
-/mob/living/carbon/monkey/hand_p(mob/M as mob)
-	if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-		if ((prob(75) && health > 0))
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 5)
-			if (HULK in mutations) damage += 10
-			adjustBruteLoss(damage)
-			updatehealth()
-
-			for(var/datum/disease/D in M.viruses)
-				if(istype(D, /datum/disease/jungle_fever))
-					contract_disease(D,1,0)
-		else
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-	return
-
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
 

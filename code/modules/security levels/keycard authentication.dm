@@ -144,10 +144,25 @@
 			make_maint_all_access()
 			feedback_inc("alert_keycard_auth_maint",1)
 
+/var/emergency_access = 0
 /proc/make_maint_all_access()
-	for(var/obj/machinery/door/airlock/A in world)
-		if(A.z == 1)
-			A.req_access.Remove(access_maint_tunnels)
+	for(var/area/maintenance/A in world)
+		for(var/obj/machinery/door/airlock/D in A)
+			if(D.doortype == 5)
+				D.req_access.Remove(access_maint_tunnels)
+			if(D.doortype == 6)
+				D.req_access.Remove(access_external_airlocks)
+	world << "<font size=4 color='red'>Attention! Station-wide emergency declared</font>"
+	world << "<font color='red'>Access restrictions on maintenance and external airlocks have been lifted.</font>"
+	emergency_access = 1
 
-	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks. All crew members are now permitted access to emergency maintenance areas.</font>"
+/proc/revoke_maint_all_access()
+	for(var/area/maintenance/A in world)
+		for(var/obj/machinery/door/airlock/D in A)
+			if(D.doortype == 5)
+				D.req_access.Add(access_maint_tunnels)
+			if(D.doortype == 6)
+				D.req_access.Add(access_external_airlocks)
+	world << "<font size=4 color='red'>Attention! Emergency maintenance access disabled</font>"
+	world << "<font color='red'>Access restrictions in maintenance areas have been restored.</font>"
+	emergency_access = 0

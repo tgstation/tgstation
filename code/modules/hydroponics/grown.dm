@@ -139,6 +139,7 @@
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "poppy"
+	slot_flags = SLOT_HEAD
 	potency = 30
 	New()
 		..()
@@ -152,6 +153,7 @@
 	name = "harebell"
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
 	icon_state = "harebell"
+	slot_flags = SLOT_HEAD
 	potency = 1
 	New()
 		..()
@@ -317,6 +319,7 @@
 	name = "ambrosia vulgaris branch"
 	desc = "This is a plant containing various healing chemicals."
 	icon_state = "ambrosiavulgaris"
+	slot_flags = SLOT_HEAD
 	potency = 10
 	New()
 		..()
@@ -333,6 +336,7 @@
 	name = "ambrosia deus branch"
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
+	slot_flags = SLOT_HEAD
 	potency = 10
 	New()
 		..()
@@ -582,6 +586,7 @@
 	name = "moonflower"
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
+	slot_flags = SLOT_HEAD
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -674,7 +679,7 @@
 	del(src)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/HasEntered(AM as mob|obj)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
@@ -921,7 +926,7 @@
 	user.SetLuminosity(round(user.luminosity + (potency/10),1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity + (potency/10),1))
+	user.SetLuminosity(round(user.luminosity - (potency/10),1))
 	SetLuminosity(round(potency/10,1))
 
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
