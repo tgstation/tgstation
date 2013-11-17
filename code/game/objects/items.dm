@@ -1,7 +1,6 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/abstract = 0
 	var/item_state = null
 	var/r_speed = 1.0
 	var/health = null

@@ -651,16 +651,21 @@ var/list/datum/dna/hivemind_bank = list()
 	desc = "Thing chanelings use to sting people."
 	icon = 'icons/obj/magic.dmi'
 	icon_state = "2"
-	flags = NOBLUDGEON
+	flags = NOBLUDGEON | ABSTRACT
 	w_class = 10.0
 	layer = 20
-	abstract = 1
 	item_state = "nothing"
 	var/sting_type
 	var/sting_range
 	var/sting_cost
 	var/dna = null
 	var/mob/living/carbon/owner
+
+/obj/item/proboscis/attack_hand(mob/user)
+	del(src)
+
+/obj/item/proboscis/attack_paw(mob/user)
+	del(src)
 
 /obj/item/proboscis/dropped()
 	del(src)
@@ -682,11 +687,12 @@ var/list/datum/dna/hivemind_bank = list()
 		owner << "<span class='warning'>Not enough chemicals.</span>"
 		return
 
-	var/list/A = AStar(owner.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
-	if(A.len <= sting_range + 2 || !isturf(owner.loc))
-		owner.mind.changeling.chem_charges -= sting_cost
-		owner << "<span class='notice'>We stealthily sting [C].</span>"
-		if(!C.mind || !C.mind.changeling)
-			call(owner, sting_type)(C, dna)
-		else
-			C << "<span class='warning'>You feel a tiny prick.</span>"
+	if(isturf(owner.loc)) //no stinging from inside of mechs, lockers and so on
+		if(get_dist(owner.loc, C.loc) <= sting_range + 1) // sanity check because AStar do some crazy shit and i have no idea how to fix it
+			if(AStar(owner.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 0)) //holy shit this thing is insane, please someone fix it!
+				owner.mind.changeling.chem_charges -= sting_cost
+				owner << "<span class='notice'>We stealthily sting [C].</span>"
+				if(!C.mind || !C.mind.changeling)
+					call(owner, sting_type)(C, dna)
+				else
+					C << "<span class='warning'>You feel a tiny prick.</span>"
