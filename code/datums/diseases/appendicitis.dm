@@ -13,8 +13,7 @@
 	longevity = 1000
 	hidden = list(0, 1)
 	requires = 1
-	required_limb = list(/obj/item/organ/limb/chest) //Appendix is in the chest
-
+	required_limb = list(/obj/item/organ/limb/chest)
 
 /datum/disease/appendicitis/stage_act()
 	..()
@@ -47,3 +46,4 @@
 					affected_mob << "<span class='warning'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
 					affected_mob.Weaken(10)
 					affected_mob.adjustToxLoss(3)
+

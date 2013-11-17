@@ -14,7 +14,6 @@
 	requires = 1
 	required_limb = list(/obj/item/organ/limb/head)
 
-
 /*
 BIRUZ BENNAR
 SCYAR NILA - teleport

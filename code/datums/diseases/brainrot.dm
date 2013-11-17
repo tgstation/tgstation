@@ -12,7 +12,7 @@
 	desc = "This disease destroys the braincells, causing brain fever, brain necrosis and general intoxication."
 	severity = "Major"
 	requires = 1
-	required_limb = list(/obj/item/organ/limb/head) //Real head needed - RR
+	required_limb = list(/obj/item/organ/limb/head)
 
 /datum/disease/brainrot/stage_act() //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
 	..()
