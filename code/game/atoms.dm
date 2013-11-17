@@ -356,3 +356,6 @@ var/list/blood_splatter_icons = list()
 		return 1
 	else
 		return 0
+
+/atom/proc/openwindow(mob/user)
+	return

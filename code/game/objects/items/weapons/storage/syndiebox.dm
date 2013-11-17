@@ -6,39 +6,53 @@ By Miauw */
 	desc = "It's just an ordinary box."
 	foldable = null
 	var/active = 0
+
 	var/saved_name //These vars contain info about the scanned object. Mostly self-explanatory.
 	var/saved_desc
 	var/saved_icon
 	var/saved_icon_state
+	var/saved_dir
 	var/saved_item_state
-	origin_tech = "syndicate=2;magnets=1"
+
+	var/list/forbidden_objs = list(/obj/item/weapon/reagent_containers/food/snacks/icecream, /obj/structure/sign, /obj/structure/cable, /obj/machinery/atmospherics/pipe, /obj/machinery/light, /obj/machinery/hologram, /obj/machinery/camera, /obj/machinery/power/apc, /obj/machinery/field/containment, /obj/machinery/shieldwall, /obj/machinery/shield, /obj/effect, /obj/screen, /obj/structure/c_tray, /obj/structure/shuttle, /obj/structure/disposalpipe) //Some things just shouldn't be scanned. This mostly has to do with overlays or things that don't make sense, like AI holograms.
+	origin_tech = "syndicate=2;magnets=2"
 
 /obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
 	toggle()
 
 /obj/item/weapon/storage/box/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity) return
+
 	if(!active)
-		if(target.loc != src) //It can be everything you want it to be~ //Now it can truely be everything you want it to be, thanks to Pete. Have fun with your dildo-filled holographic rwalls.
+		if(target.loc != src && istype(target,/obj)) //It can be everything you want it to be~ //Now it can truely be everything you want it to be, thanks to Pete. Have fun with your dildo-filled holographic doors.
+
+			for(var/checktype in forbidden_objs)
+				if(istype(target,checktype))
+					user << "<span class='warning'>You can't get a good read on [target].</span>"
+					return
+
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "<span class='notice'>Scanned [target].</span>"
+
 			saved_name = target.name
 			saved_desc = target.desc
 			saved_icon = target.icon
 			saved_icon_state = target.icon_state
-			saved_opaque = target.opaque
+			saved_dir = target.dir
 			if(istype(target, /obj/item))
 				var/obj/item/targetitem = target //Neccesary for item_state
 				saved_item_state = targetitem.item_state
 
 /obj/item/weapon/storage/box/chameleon/proc/toggle()
 	if(active)
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		name = initial(name)
 		desc = initial(desc)
 		icon_state = initial(icon_state)
 		icon = initial(icon)
 		item_state = initial(item_state)
+		dir = initial(dir)
+
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		active = 0
 		//world << "deactivated"
 
@@ -50,27 +64,41 @@ By Miauw */
 		icon = saved_icon
 		icon_state = saved_icon_state
 		item_state = saved_item_state
-		opaque = saved_opaque
+		dir = saved_dir
 
 		saved_name = null //Reset the vars.
 		saved_desc = null
 		saved_icon = null
 		saved_icon_state = null
 		saved_item_state = null
-		saved_opaque = null
+		saved_dir = null
 
 		//world << "activated"
 		active = 1
+
 	if(istype(loc, /mob/living/carbon)) //Update inhands (hopefully)
 		var/mob/living/carbon/C = loc
 		C.update_inv_l_hand()
 		C.update_inv_r_hand()
 
-/obj/item/weapon/storage/box/chameleon/handle_item_insertion(obj/item/W, prevent_warning = 0)
-	if(active) //Can't push things trough the cloaking field from the outside.
+/obj/item/weapon/storage/box/chameleon/proc/disrupt()
+	if(active)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 0, src)
 		s.start()
 		toggle()
-		return
+		return //Attention, return here. If you're changing this make sure it's on the END of the proc you're calling it in!
+
+/obj/item/weapon/storage/box/chameleon/handle_item_insertion(obj/item/W, prevent_warning = 0)
+	disrupt() //Can't push things trough from the outside if it's on.
 	..()
+
+/obj/item/weapon/storage/box/chameleon/emp_act(var/severity)
+	disrupt()
+
+/obj/item/weapon/storage/box/chameleon/ex_act(var/severity)
+	..()
+	disrupt()
+
+/obj/item/weapon/storage/box/chameleon/bullet_act(var/obj/item/projectile/Proj)
+	disrupt()

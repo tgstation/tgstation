@@ -1,13 +1,14 @@
-//Mail yourself anywhere, yo.
+//Mail yourself anywhere, yo. ~By Miauw~
 /obj/item/clothing/under/syndiemail
-	name = "mailrider jumpsuit"
-	desc = "This state-of-the-art jumpsuit allows you to ride pneumatic disposal tubes like space horses!"
+	name = "mailman's jumpsuit"
+	desc = "<i>'Special delivery!'</i>"
 	icon_state = "mailman"
 	item_state = "b_suit"
 	item_color = "mailman"
 	var/sortTag //Disposals code reads this.
+	action_button_name = "Set Tag"
 
-/obj/item/clothing/under/syndiemail/proc/openwindow(mob/user)
+/obj/item/clothing/under/syndiemail/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>MailRider 0.3</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
@@ -23,7 +24,7 @@
 	onclose(user, "destTagScreen")
 
 /obj/item/clothing/under/syndiemail/Topic(href, href_list)
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src)) //Balancing: you have to take your jumpsuit off to change the destination tags. Until somebody makes instant jumpsuit changing.
+	if (usr.restrained() || usr.stat)
 		return
 	add_fingerprint(usr)
 	if(href_list["nextTag"])
@@ -34,3 +35,11 @@
 /obj/item/clothing/under/syndiemail/attack_self(mob/user)
 	..()
 	openwindow(user)
+
+/obj/item/clothing/under/syndiemail/verb/toggle_light()
+	set name = "Set Tag"
+	set category = "Object"
+	set src in usr.contents
+
+	if(!usr.stat)
+		attack_self(usr)
