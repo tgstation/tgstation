@@ -13,13 +13,13 @@ USE `feedback`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `erro_admin`
+-- Table structure for table `ss13db_admin`
 --
 
-DROP TABLE IF EXISTS `erro_admin`;
+DROP TABLE IF EXISTS `ss13db_admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_admin` (
+CREATE TABLE `ss13db_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `rank` varchar(32) NOT NULL DEFAULT 'Administrator',
@@ -31,13 +31,13 @@ CREATE TABLE `erro_admin` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_admin_log`
+-- Table structure for table `ss13db_admin_log`
 --
 
-DROP TABLE IF EXISTS `erro_admin_log`;
+DROP TABLE IF EXISTS `ss13db_admin_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_admin_log` (
+CREATE TABLE `ss13db_admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `adminckey` varchar(32) NOT NULL,
@@ -48,13 +48,13 @@ CREATE TABLE `erro_admin_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_ban`
+-- Table structure for table `ss13db_ban`
 --
 
-DROP TABLE IF EXISTS `erro_ban`;
+DROP TABLE IF EXISTS `ss13db_ban`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_ban` (
+CREATE TABLE `ss13db_ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bantime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
@@ -83,13 +83,13 @@ CREATE TABLE `erro_ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_connection_log`
+-- Table structure for table `ss13db_connection_log`
 --
 
-DROP TABLE IF EXISTS `erro_connection_log`;
+DROP TABLE IF EXISTS `ss13db_connection_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_connection_log` (
+CREATE TABLE `ss13db_connection_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime DEFAULT NULL,
   `serverip` varchar(45) DEFAULT NULL,
@@ -101,13 +101,13 @@ CREATE TABLE `erro_connection_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_death`
+-- Table structure for table `ss13db_death`
 --
 
-DROP TABLE IF EXISTS `erro_death`;
+DROP TABLE IF EXISTS `ss13db_death`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_death` (
+CREATE TABLE `ss13db_death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` text NOT NULL COMMENT 'Place of death',
   `coord` text NOT NULL COMMENT 'X, Y, Z POD',
@@ -128,13 +128,13 @@ CREATE TABLE `erro_death` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_feedback`
+-- Table structure for table `ss13db_feedback`
 --
 
-DROP TABLE IF EXISTS `erro_feedback`;
+DROP TABLE IF EXISTS `ss13db_feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_feedback` (
+CREATE TABLE `ss13db_feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` datetime NOT NULL,
   `round_id` int(8) NOT NULL,
@@ -146,13 +146,13 @@ CREATE TABLE `erro_feedback` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_legacy_population`
+-- Table structure for table `ss13db_legacy_population`
 --
 
-DROP TABLE IF EXISTS `erro_legacy_population`;
+DROP TABLE IF EXISTS `ss13db_legacy_population`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_legacy_population` (
+CREATE TABLE `ss13db_legacy_population` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `playercount` int(11) DEFAULT NULL,
   `admincount` int(11) DEFAULT NULL,
@@ -162,11 +162,11 @@ CREATE TABLE `erro_legacy_population` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_library`
+-- Table structure for table `ss13db_library`
 --
 
-DROP TABLE IF EXISTS `erro_library`;
-CREATE TABLE `erro_library` (
+DROP TABLE IF EXISTS `ss13db_library`;
+CREATE TABLE `ss13db_library` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` varchar(45) NOT NULL,
   `title` varchar(45) NOT NULL,
@@ -178,13 +178,13 @@ CREATE TABLE `erro_library` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `erro_player`
+-- Table structure for table `ss13db_player`
 --
 
-DROP TABLE IF EXISTS `erro_player`;
+DROP TABLE IF EXISTS `ss13db_player`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_player` (
+CREATE TABLE `ss13db_player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
@@ -198,13 +198,13 @@ CREATE TABLE `erro_player` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_poll_option`
+-- Table structure for table `ss13db_poll_option`
 --
 
-DROP TABLE IF EXISTS `erro_poll_option`;
+DROP TABLE IF EXISTS `ss13db_poll_option`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_poll_option` (
+CREATE TABLE `ss13db_poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
@@ -219,13 +219,13 @@ CREATE TABLE `erro_poll_option` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_poll_question`
+-- Table structure for table `ss13db_poll_question`
 --
 
-DROP TABLE IF EXISTS `erro_poll_question`;
+DROP TABLE IF EXISTS `ss13db_poll_question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_poll_question` (
+CREATE TABLE `ss13db_poll_question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `polltype` varchar(16) NOT NULL DEFAULT 'OPTION',
   `starttime` datetime NOT NULL,
@@ -238,13 +238,13 @@ CREATE TABLE `erro_poll_question` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_poll_textreply`
+-- Table structure for table `ss13db_poll_textreply`
 --
 
-DROP TABLE IF EXISTS `erro_poll_textreply`;
+DROP TABLE IF EXISTS `ss13db_poll_textreply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_poll_textreply` (
+CREATE TABLE `ss13db_poll_textreply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
@@ -257,13 +257,13 @@ CREATE TABLE `erro_poll_textreply` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_poll_vote`
+-- Table structure for table `ss13db_poll_vote`
 --
 
-DROP TABLE IF EXISTS `erro_poll_vote`;
+DROP TABLE IF EXISTS `ss13db_poll_vote`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_poll_vote` (
+CREATE TABLE `ss13db_poll_vote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
@@ -277,13 +277,13 @@ CREATE TABLE `erro_poll_vote` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `erro_privacy`
+-- Table structure for table `ss13db_privacy`
 --
 
-DROP TABLE IF EXISTS `erro_privacy`;
+DROP TABLE IF EXISTS `ss13db_privacy`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `erro_privacy` (
+CREATE TABLE `ss13db_privacy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `ckey` varchar(32) NOT NULL,
