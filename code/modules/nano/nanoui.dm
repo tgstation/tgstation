@@ -19,7 +19,7 @@ nanoui is used to open and update nano browser uis
 	// the title of this ui
 	var/title
 	// /vg/ - Whether to write debug information to nano/debug.html
-	var/writeDebug=FALSE
+	var/writeDebug=TRUE
 	// the key of this ui, this is to allow multiple (different) uis for each src_object
 	var/ui_key
 	// window_id is used as the window name/identifier for browse and onclose
@@ -93,7 +93,11 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/add_common_assets()
-	add_script("libraries.min.js") // The jQuery library
+	//add_script("libraries.min.js") // The jQuery library
+	add_script("1-jquery.js")
+	add_script("2-jsviews.js")
+	add_script("3-jquery.timers.js")
+
 	add_script("nano_update.js") // The NanoUpdate JS, this is used to receive updates and apply them.
 	add_script("nano_config.js") // The NanoUpdate JS, this is used to receive updates and apply them.
 	add_script("nano_base_helpers.js") // The NanoBaseHelpers JS, this is used to set up template helpers which are common to all templates

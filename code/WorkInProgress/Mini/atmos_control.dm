@@ -53,10 +53,13 @@
 	else if(!emagged)
 		overridden = 0
 
+	return ui_interact(user)
+	/*
+
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
 	if(current)
 		//dat += specific()
-		return ui_interact(user)
+		//return ui_interact(user)
 	else
 		for(var/obj/machinery/alarm/alarm in sortAtom(machines))
 			if(!is_in_filter(alarm.alarm_area.type))
@@ -71,6 +74,7 @@
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
+	*/
 
 
 /obj/machinery/computer/atmoscontrol/attackby(var/obj/item/I as obj, var/mob/user as mob)
@@ -133,6 +137,7 @@
 		return
 	if(href_list["reset"])
 		current = null
+
 	if(href_list["alarm"])
 		current = locate(href_list["alarm"])
 		if(href_list["command"])
