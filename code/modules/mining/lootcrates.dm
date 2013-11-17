@@ -103,9 +103,9 @@
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user as mob)
 	if(locked)
+		user << "The crate is locked with a H.O.N.K-code lock."
+		var/input = input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
 		if(in_range(src, user))
-			user << "The crate is locked with a deca-code lock."
-			var/input = input(user, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
 			input = Clamp(input, 1, 10)
 			if (input == code)
 				user << "\blue The crate unlocks!"
@@ -123,7 +123,7 @@
 					del(src)
 					return
 		else
-			user << "You attempt to interact with the keypad via a hand gesture, but this crate doesn't have a DECANECT installed."
+			user << "You attempt to interact with the device using a hand gesture, but it appears this crate is from before the DECANECT came out."
 			return
 	else
 		return ..()
@@ -134,7 +134,7 @@
 			user << "The crate unlocks!"
 			locked = 0
 		if (istype(W, /obj/item/device/multitool))
-			user << "DECA-CODE LOCK REPORT:"
+			user << "H.O.N.K-CODE LOCK REPORT:"
 			if (attempts == 1)
 				user << "* Anti-Tamper Bomb will activate on next failed access attempt."
 			else
