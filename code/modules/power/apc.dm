@@ -18,6 +18,7 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
+	desc = "A control terminal for the area electrical systems."
 
 	icon_state = "apc0"
 	anchored = 1
@@ -133,7 +134,7 @@
 	set src in oview(1)
 
 	if(usr /*&& !usr.stat*/)
-		usr << "A control terminal for the area electrical systems."
+		..()
 		if(stat & BROKEN)
 			usr << "Looks broken."
 			return
