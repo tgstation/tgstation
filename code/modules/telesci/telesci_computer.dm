@@ -36,7 +36,7 @@
 
 /obj/machinery/computer/telescience/examine()
 	..()
-	usr << "There are [crystals.len] bluespace crystals in the crystal ports."
+	usr << "There are [crystals.len ? crystals.len : "no"] bluespace crystals in the crystal slots."
 
 /obj/machinery/computer/telescience/initialize()
 	..()
@@ -66,12 +66,12 @@
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/bluespace_crystal))
 		if(crystals.len >= power_options.len)
-			user << "<span class='warning'>There are not enough crystal ports.</span>"
+			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
 		user.drop_item()
 		crystals += W
 		W.loc = null
-		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
+		user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s crystal slot.</span>")
 	else
 		..()
 
