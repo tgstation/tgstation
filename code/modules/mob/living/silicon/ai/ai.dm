@@ -253,6 +253,19 @@ var/list/ai_list = list()
 
 	return
 
+/mob/living/silicon/ai/verb/toggle_anchor()
+        set category = "AI Commands"
+        set name = "Toggle Floor Bolts"
+        if(!isturf(loc)) // if their location isn't a turf
+                return // stop
+        anchored = !anchored // Toggles the anchor
+
+        src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
+        // the message in the [] will change depending whether or not the AI is anchored
+
+/mob/living/silicon/ai/update_canmove()
+	return 0
+
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
 	if(src.stat == 2)
