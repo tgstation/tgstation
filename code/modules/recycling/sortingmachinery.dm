@@ -11,7 +11,7 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
-	Del(src)
+	del(src)
 
 /obj/structure/bigDelivery/Del()
 	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
