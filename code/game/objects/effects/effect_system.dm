@@ -375,7 +375,7 @@ steam.start() -- spawns the effect
 	return 1
 
 
-/obj/effect/effect/bad_smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effect/effect/bad_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	if(istype(M, /mob/living/carbon))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
@@ -465,7 +465,7 @@ steam.start() -- spawns the effect
 
 	return
 
-/obj/effect/effect/chem_smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effect/effect/chem_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	reagents.reaction(M)
 
@@ -598,7 +598,7 @@ steam.start() -- spawns the effect
 					M.coughedtime = 0
 	return
 
-/obj/effect/effect/sleep_smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effect/effect/sleep_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	if(istype(M, /mob/living/carbon))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
@@ -840,7 +840,7 @@ steam.start() -- spawns the effect
 			delete()
 
 
-/obj/effect/effect/foam/HasEntered(var/atom/movable/AM)
+/obj/effect/effect/foam/Crossed(var/atom/movable/AM)
 	if(metal)
 		return
 

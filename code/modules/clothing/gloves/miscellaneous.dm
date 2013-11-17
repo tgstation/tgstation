@@ -16,26 +16,14 @@
 	item_state = "r_hands"
 	siemens_coefficient = 1.0
 
-/obj/item/clothing/gloves/swat
-	desc = "These tactical gloves are somewhat fire and impact-resistant."
-	name = "\improper SWAT Gloves"
-	icon_state = "black"
-	item_state = "swat_gl"
-	siemens_coefficient = 0
-	permeability_coefficient = 0.05
-
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-
-/obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
-	desc = "These tactical gloves are somewhat fire and impact resistant."
+/obj/item/clothing/gloves/combat
 	name = "combat gloves"
+	desc = "These tactical gloves are fire and shock resistant."
 	icon_state = "black"
 	item_state = "swat_gl"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
+
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS

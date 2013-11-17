@@ -101,9 +101,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/morgue/relaymove(mob/user as mob)
-	if (user.stat)
-		return
+/obj/structure/morgue/container_resist()
 	src.connected = new /obj/structure/m_tray( src.loc )
 	step(src.connected, EAST)
 	src.connected.layer = OBJ_LAYER
@@ -271,9 +269,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/crematorium/relaymove(mob/user as mob)
-	if (user.stat || locked)
-		return
+/obj/structure/crematorium/container_resist()
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
 	src.connected.layer = OBJ_LAYER

@@ -47,6 +47,8 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
+	var/list/cult_words = list()
+
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
@@ -72,6 +74,8 @@ datum/mind
 
 		if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 			new_character.mind.current = null
+
+		nanomanager.user_transferred(current, new_character)
 
 		current = new_character								//associate ourself with our new body
 		new_character.mind = src							//and associate our new body with ourself
@@ -1184,7 +1188,7 @@ datum/mind
 	mind.special_role = ""
 
 //BLOB
-/mob/camera/overmind/mind_initialize()
+/mob/camera/blob/mind_initialize()
 	..()
 	mind.special_role = "Blob"
 

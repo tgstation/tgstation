@@ -1,0 +1,15 @@
+4 November 2013, by Errorage
+
+The column 'deleted' was added to the erro_library table. If set to anything other than null, the book is interpreted as deleted.
+
+To update your database, execute the following code in phpmyadmin, mysql workbench or whatever program you use:
+
+ALTER TABLE erro_library ADD COLUMN deleted TINYINT(1) NULL DEFAULT NULL  AFTER datetime;
+
+If you want to 'soft delete' a book (meaning it remains in the library, but isn't viewable by players), set the value in the 'deleted' column for the row to 1. To undelete, set it back to null. If you're making an admin tool to work with this, execute the following SQL statement to soft-delete the book with id someid:
+
+UPDATE erro_library SET deleted = 1 WHERE id = someid
+
+(Replace someid with the id of the book you want to soft delete.)
+
+----------------------------------------------------

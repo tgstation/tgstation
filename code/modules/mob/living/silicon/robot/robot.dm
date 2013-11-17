@@ -56,6 +56,7 @@
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
+	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 
 
 
@@ -104,16 +105,29 @@
 			camera.status = 0
 	..()
 
+	//MMI stuff. Held togheter by magic. ~Miauw
+	mmi = new(src)
+	mmi.brain = new /obj/item/organ/brain(mmi)
+	mmi.brain.name = "[src.real_name]'s brain"
+	mmi.locked = 1
+	mmi.icon_state = "mmi_full"
+	mmi.name = "Man-Machine Interface: [src.real_name]"
+	mmi.brainmob = new(src)
+	mmi.brainmob.name = src.real_name
+	mmi.brainmob.real_name = src.real_name
+	mmi.brainmob.container = mmi
+	mmi.contents += mmi.brainmob
+
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
 /mob/living/silicon/robot/Del()
-	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
+	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		if(mind)	mind.transfer_to(mmi.brainmob)
+		mind.transfer_to(mmi.brainmob)
 		mmi = null
 	..()
 
@@ -439,7 +453,7 @@
 
 	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
-			user << "Close the panel first."
+			user << "Close the cover first."
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
@@ -468,6 +482,17 @@
 			user << "Unable to locate a radio."
 		updateicon()
 
+	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+		if(!lockcharge)
+			user << "\red <b>[src]'s bolts spark! Maybe you should lock them down first!</b>"
+			spark_system.start()
+			return
+		else
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 50) && !cell)
+				user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
+				deconstruct()
+
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
@@ -482,7 +507,7 @@
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
+				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
 				updateicon()
 			else
 				user << "\red Access denied."
@@ -504,7 +529,7 @@
 		if(opened)//Cover is open
 			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
-				user << "You must close the panel first"
+				user << "You must close the cover first"
 				return
 			else
 				sleep(6)
@@ -569,6 +594,17 @@
 	else
 		spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/verb/unlock_own_cover()
+	set category = "Robot Commands"
+	set name = "Unlock Cover"
+	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
+	if(locked)
+		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+			if("Yes")
+				locked = 0
+				updateicon()
+				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -796,11 +832,11 @@
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			overlays += "ov-opencover +w"
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			overlays += "ov-opencover +c"
 		else
-			overlays += "ov-openpanel -c"
+			overlays += "ov-opencover -c"
 
 	update_fire()
 	return
@@ -815,38 +851,42 @@
 	if(!module)
 		pick_module()
 		return
-	var/dat = "<HEAD><TITLE>Modules</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
+	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
 	<BR>
 	<BR>
 	<B>Activated Modules</B>
 	<BR>
-	Module 1: [module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
-	Module 2: [module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
-	Module 3: [module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
-	<BR>
-	<B>Installed Modules</B><BR><BR>"}
+	<table border='0'>
+	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
+	<tr><td>Module 2:</td><td>[module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]</td></tr>
+	<tr><td>Module 3:</td><td>[module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]</td></tr>
+	</table><BR>
+	<B>Installed Modules</B><BR><BR>
 
+	<table border='0'>"}
 
 	for (var/obj in module.modules)
 		if (!obj)
-			dat += text("<B>Resource depleted</B><BR>")
+			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
 		else if(activated(obj))
-			dat += text("[obj]: <B>Activated</B><BR>")
+			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
 		else
-			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
+			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
 	if (emagged)
 		if(activated(module.emag))
-			dat += text("[module.emag]: <B>Activated</B><BR>")
+			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
 		else
-			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
+			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
+	dat += "</table>"
 /*
 		if(activated(obj))
 			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
 		else
 			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
 */
-	src << browse(dat, "window=robotmod&can_close=0")
+	var/datum/browser/popup = new(src, "robotmod", "Modules")
+	popup.set_content(dat)
+	popup.open()
 
 
 /mob/living/silicon/robot/Topic(href, href_list)
@@ -1015,3 +1055,46 @@
 	set name = "State Laws"
 
 	checklaws()
+
+/mob/living/silicon/robot/proc/deconstruct()
+	var/turf/T = get_turf(src)
+	if (robot_suit)
+		robot_suit.loc = T
+		robot_suit.l_leg.loc = T
+		robot_suit.l_leg = null
+		robot_suit.r_leg.loc = T
+		robot_suit.r_leg = null
+		new /obj/item/weapon/cable_coil(T, robot_suit.chest.wires)
+		robot_suit.chest.loc = T
+		robot_suit.chest.wires = 0.0
+		robot_suit.chest = null
+		robot_suit.l_arm.loc = T
+		robot_suit.l_arm = null
+		robot_suit.r_arm.loc = T
+		robot_suit.r_arm = null
+		robot_suit.head.loc = T
+		robot_suit.head.flash1.loc = T
+		robot_suit.head.flash1.burn_out()
+		robot_suit.head.flash1 = null
+		robot_suit.head.flash2.loc = T
+		robot_suit.head.flash2.burn_out()
+		robot_suit.head.flash2 = null
+		robot_suit.head = null
+		robot_suit.updateicon()
+	else
+		new /obj/item/robot_parts/robot_suit(T)
+		new /obj/item/robot_parts/l_leg(T)
+		new /obj/item/robot_parts/r_leg(T)
+		new /obj/item/weapon/cable_coil(T, 1)
+		new /obj/item/robot_parts/chest(T)
+		new /obj/item/robot_parts/l_arm(T)
+		new /obj/item/robot_parts/r_arm(T)
+		new /obj/item/robot_parts/head(T)
+		var/b
+		for(b=0, b!=2, b++)
+			var/obj/item/device/flash/F = new /obj/item/device/flash(T)
+			F.burn_out()
+	if (cell) //Sanity check.
+		cell.loc = T
+		cell = null
+	del(src)

@@ -49,7 +49,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/Bumped(var/atom/movable/AM)
 
-	// HasEntered didn't like people lying down.
+	// Crossed didn't like people lying down.
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)

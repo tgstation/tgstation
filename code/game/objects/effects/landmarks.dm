@@ -158,6 +158,7 @@
 /obj/effect/landmark/costume/plaguedoctor/New()
 	new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(src.loc)
 	new /obj/item/clothing/head/plaguedoctorhat(src.loc)
+	new /obj/item/clothing/mask/gas/plaguedoctor(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/nightowl/New()

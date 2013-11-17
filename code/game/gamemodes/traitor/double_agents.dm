@@ -9,8 +9,10 @@
 	traitor_name = "double agent"
 
 	traitors_possible = 8 //hard limit on traitors if scaling is turned off
+	scale_modifier = 0.5 // Nearly twice as many double agents
 
 	var/list/target_list = list()
+	var/list/late_joining_list = list()
 
 /datum/game_mode/traitor/double_agents/announce()
 	world << "<B>The current game mode is - Double Agents!</B>"
@@ -45,5 +47,42 @@
 		..() // Give them standard objectives.
 	return
 
-/datum/game_mode/traitor/double_agents/make_antag_chance(var/mob/living/carbon/human/character)
-	return // TODO: Have late joining double agents.
+/datum/game_mode/traitor/double_agents/add_latejoin_traitor(var/mob/living/carbon/human/character)
+
+	check_potential_agents()
+
+	// As soon as we get 3 or 4 extra latejoin traitors, make them traitors and kill each other.
+	if(late_joining_list.len >= rand(3, 4))
+		// True randomness
+		shuffle(late_joining_list)
+		// Reset the target_list, it'll be used again in force_traitor_objectives
+		target_list = list()
+
+		// Basically setting the target_list for who is killing who
+		var/i = 0
+		for(var/mob/living/carbon/human/traitor in late_joining_list)
+			i++
+			if(i + 1 > late_joining_list.len)
+				i = 0
+			target_list[traitor] = late_joining_list[i + 1]
+
+		// Now, give them their targets
+		for(var/mob/living/carbon/human/traitor in late_joining_list)
+			..(traitor)
+
+		late_joining_list = list()
+	else
+		late_joining_list += character
+	return
+
+/datum/game_mode/traitor/double_agents/proc/check_potential_agents()
+
+	for(var/M in late_joining_list)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.stat != DEAD)
+				if(H.client)
+					continue // It all checks out.
+
+		// If any check fails, remove them from our list
+		late_joining_list -= M

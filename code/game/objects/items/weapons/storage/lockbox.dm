@@ -33,7 +33,7 @@
 					user << "\red You unlock the [src.name]!"
 					return
 			else
-				user << "\red Access Denied"
+				user << "\red Access Denied."
 				return
 		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 			broken = 1
@@ -57,13 +57,13 @@
 		if(!locked)
 			..()
 		else
-			user << "\red Its locked!"
+			user << "\red It's locked!"
 		return
 
 
 	show_to(mob/user as mob)
 		if(locked)
-			user << "\red Its locked!"
+			user << "\red It's locked!"
 		else
 			..()
 		return

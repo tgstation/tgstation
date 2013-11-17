@@ -43,3 +43,15 @@
 			log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected ([contained]) with [src.name] by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey]) with [contained]</font>")
+
+
+/obj/item/weapon/reagent_containers/hypospray/combat
+	name = "combat stimulant injector"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field."
+	amount_per_transfer_from_this = 10
+	icon_state = "combat_hypo"
+	volume = 60
+
+/obj/item/weapon/reagent_containers/hypospray/combat/New()
+	..()
+	reagents.add_reagent("synaptizine", 30)
