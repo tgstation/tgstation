@@ -1,7 +1,8 @@
 var/list/forbidden_varedit_object_types = list(
 										/datum/admins,						//Admins editing their own admin-power object? Yup, sounds like a good idea.
 										/obj/machinery/blackbox_recorder,	//Prevents people messing with feedback gathering
-										/datum/feedback_variable			//Prevents people messing with feedback gathering
+										/datum/feedback_variable,			//Prevents people messing with feedback gathering
+										/datum/admin_rank					//Admin permissions were moved to this object, shouldn't be editable.
 									)
 
 /*
