@@ -89,6 +89,16 @@
 	density = 0
 	var/obj/machinery/turret/host = null
 
+
+/obj/machinery/turretcover/ex_act(severity)  //Cover Ex_act to fix Runtimes - RR
+	if(severity < 3)
+		src.die()
+
+/obj/machinery/turretcover/proc/die() //Cover die() to assit with the Ex_act fix - RR
+	src.density = 0
+	del(src)
+
+
 /obj/machinery/turret/proc/isPopping()
 	return (popping!=0)
 
@@ -296,8 +306,6 @@
 	src.density = 0
 	src.stat |= BROKEN
 	src.icon_state = "destroyed_target_prism"
-	if (cover!=null)
-		del(cover)
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
