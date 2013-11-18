@@ -289,7 +289,8 @@
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/grass
-	name = "\proper lush grass"
+	gender = PLURAL
+	name = "lush grass"
 	icon_state = "grass1"
 	floor_tile = new/obj/item/stack/tile/grass
 
