@@ -100,9 +100,18 @@
 			size = "bulky"
 		if(5.0)
 			size = "huge"
+		if(6.0)
+			size = "gigantic"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
+
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]"
+	if(src.blood_DNA)
+		f_name = "a bloody [name]"
+
+	usr << "\icon[src]This is [f_name]. It is a [size] item."
+
 	if(src.desc)
 		usr << src.desc
 	return
@@ -501,9 +510,11 @@
 			"\red You stab yourself in the eyes with [src]!" \
 		)
 	if(istype(M, /mob/living/carbon/human))
-		var/datum/limb/affecting = M:get_organ("head")
+		var/mob/living/carbon/human/U = M
+		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
-			M:update_damage_overlays(0)
+			U.update_damage_overlays(0)
+
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)

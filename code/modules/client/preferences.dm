@@ -2,6 +2,8 @@
 
 var/list/preferences_datums = list()
 
+#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
+
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
 	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
@@ -345,6 +347,9 @@ datum/preferences
 
 			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 			HTML += "</a></td></tr>"
+
+		for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
+			HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 
 		HTML += "</td'></tr></table>"
 

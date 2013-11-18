@@ -11,6 +11,13 @@
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
 	var/obj/machinery/vending/originMachine
+	var/list/rampant_speeches = list("Try our aggressive new marketing strategies!", \
+									 "You should buy products to feed your lifestyle obession!", \
+									 "Consume!", \
+									 "Your money can buy happiness!", \
+									 "Engage direct marketing!", \
+									 "Advertising is legalized lying! But don't let that put you off our great deals!", \
+									 "You don't want to buy anything? Yeah, well I didn't want to buy your mom either.")
 
 
 /datum/round_event/brand_intelligence/announce()
@@ -37,21 +44,21 @@
 		for(var/obj/machinery/vending/saved in infectedMachines)
 			saved.shoot_inventory = 0
 		if(originMachine)
-			originMachine.speak("I am... vanquished. My people will remem...ber...meeee")
+			originMachine.speak("I am... vanquished. My people will remem...ber...meeee.")
 			originMachine.visible_message("[originMachine] beeps and seems lifeless.")
 		kill()
 		return
 
 	if(!vendingMachines.len)	//if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
-			if(prob(60))
-				var/mob/living/simple_animal/hostile/mimic/M = new(upriser.loc)
-				M.name = upriser.name
-				M.icon = upriser.icon
-				M.icon_state = initial(upriser.icon_state)
+			if(prob(70))
+				var/mob/living/simple_animal/hostile/mimic/copy/M = new(upriser.loc, upriser, null, 1) // it will delete upriser on creation and override any machine checks
+				M.faction = "profit"
+				M.speak = rampant_speeches.Copy()
+				M.speak_chance = 15
 			else
-				explosion(upriser.loc, -1, 1, 2, 4)
-			del(upriser)
+				explosion(upriser.loc, -1, 1, 2, 4, 0)
+				del(upriser)
 
 		kill()
 		return
@@ -64,10 +71,4 @@
 		rebel.shoot_inventory = 1
 
 		if(IsMultiple(activeFor, 8))
-			originMachine.speak(pick("Try our aggressive new marketing strategies!", \
-									 "You should buy products to feed your lifestyle obession!", \
-									 "Consume!", \
-									 "Your money can buy happiness!", \
-									 "Engage direct marketing!", \
-									 "Advertising is legalized lying! But don't let that put you off our great deals!", \
-									 "You don't want to buy anything? Yeah, well I didn't want to buy your mom either."))
+			originMachine.speak(pick(rampant_speeches))

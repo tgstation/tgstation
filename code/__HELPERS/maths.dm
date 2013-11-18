@@ -106,6 +106,14 @@ var/const/Sqrt2	= 1.41421356
 				  // Pi / 180
 	return degrees * 0.0174532925
 
+// Will filter out extra rotations and negative rotations
+// E.g: 540 becomes 180. -180 becomes 180.
+/proc/SimplifyDegrees(degrees)
+	degrees = degrees % 360
+	if(degrees < 0)
+		degrees += 360
+	return degrees
+
 // min is inclusive, max is exclusive
 /proc/Wrap(val, min, max)
 	var/d = max - min

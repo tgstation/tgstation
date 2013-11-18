@@ -28,6 +28,7 @@
 	var/assembled = 0
 	active = 1
 	det_time = 50
+	display_timer = 0
 
 
 
@@ -87,7 +88,6 @@
 
 /obj/item/weapon/grenade/iedcasing/examine()
 	set src in usr
-	usr << desc
+	..()
 	if(assembled == 3)
-		usr << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
-		return
+		usr << "You can't tell when it will explode!"

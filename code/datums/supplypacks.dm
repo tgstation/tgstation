@@ -247,9 +247,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/security/armory/ballistic
 	name = "Combat Shotguns crate"
-	contains = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat,
-					/obj/item/weapon/gun/projectile/shotgun/pump/combat,
-					/obj/item/weapon/gun/projectile/shotgun/pump/combat)
+	contains = list(/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/gun/projectile/shotgun/combat)
 	cost = 20
 	containername = "combat shotgun crate"
 
@@ -302,13 +302,30 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "exile implant crate"
 
 /datum/supply_packs/security/securitybarriers
-	name = "Security Barriers"
+	name = "Security barriers"
 	contains = list(/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier)
 	cost = 20
 	containername = "security barriers crate"
+
+/datum/supply_packs/security/securityclothes
+	name = "Security clothing crate"
+	contains = list(/obj/item/clothing/under/rank/security/navyblue,
+					/obj/item/clothing/under/rank/security/navyblue,
+					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/head/beret/sec/navyofficer,
+					/obj/item/clothing/head/beret/sec/navyofficer,
+					/obj/item/clothing/under/rank/warden/navyblue,
+					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/head/beret/sec/navywarden,
+					/obj/item/clothing/under/rank/head_of_security/navyblue,
+					/obj/item/clothing/suit/security/hos,
+					/obj/item/clothing/head/beret/sec/navyhos)
+	cost = 30
+	containername = "security clothing crate"
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -411,8 +428,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/engine/field_gen
 	name = "Field Generator crate"
-	contains = list(/obj/machinery/field_generator,
-					/obj/machinery/field_generator)
+	contains = list(/obj/machinery/field/generator,
+					/obj/machinery/field/generator)
 	cost = 10
 	containername = "field generator crate"
 
@@ -857,7 +874,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "janitorial supplies"
 
 /datum/supply_packs/misc/janitor/janicart
-	name = "Janitorial Cart & Galoshes crate"
+	name = "Janitorial Cart and Galoshes crate"
 	contains = list(/obj/structure/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
 	cost = 10

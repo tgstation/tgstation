@@ -15,18 +15,18 @@ emp_act
 	if(def_zone)
 		if(isorgan(def_zone))
 			return checkarmor(def_zone, type)
-		var/datum/limb/affecting = get_organ(ran_zone(def_zone))
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
 		return checkarmor(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/datum/limb/organ in organs)
+	for(var/obj/item/organ/limb/organ in organs)
 		armorval += checkarmor(organ, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(var/datum/limb/def_zone, var/type)
+/mob/living/carbon/human/proc/checkarmor(var/obj/item/organ/limb/def_zone, var/type)
 	if(!type)	return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
@@ -120,7 +120,7 @@ emp_act
 /mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
-	var/datum/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 
 	var/hit_area = parse_zone(affecting.name)
 

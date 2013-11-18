@@ -65,7 +65,7 @@
 /obj/machinery/gibber/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/relaymove(mob/user as mob)
+/obj/machinery/gibber/container_resist()
 	src.go_out()
 	return
 

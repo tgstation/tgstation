@@ -42,7 +42,7 @@ display round(lastgen) and plasmatank amount
 
 //Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen
-	name = "Portable Generator"
+	name = "portable generator"
 	desc = "A portable generator for emergency backup power"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
@@ -88,13 +88,14 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/examine()
 	set src in oview(1)
+	..()
 	if(active)
-		usr << "\blue The generator is on."
+		usr << "It is running."
 	else
-		usr << "\blue The generator is off."
+		usr << "It isn't running."
 
 /obj/machinery/power/port_gen/pacman
-	name = "P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper P.A.C.M.A.N.-type portable generator"
 	var/sheets = 0
 	var/max_sheets = 100
 	var/sheet_name = ""
@@ -218,15 +219,16 @@ display round(lastgen) and plasmatank amount
 
 		if(istype(O, /obj/item/weapon/wrench))
 
-			if(!anchored)
+			if(!anchored && !isinspace())
 				connect_to_network()
 				user << "\blue You secure the generator to the floor."
-			else
+				anchored = 1
+			else if(anchored)
 				disconnect_from_network()
 				user << "\blue You unsecure the generator from the floor."
+				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			anchored = !anchored
 
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			open = !open
@@ -315,7 +317,7 @@ display round(lastgen) and plasmatank amount
 			usr.unset_machine()
 
 /obj/machinery/power/port_gen/pacman/super
-	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
@@ -325,7 +327,7 @@ display round(lastgen) and plasmatank amount
 		explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
-	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen2"
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000

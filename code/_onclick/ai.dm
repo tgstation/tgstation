@@ -45,7 +45,7 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	
+
 	if(control_disabled || stat || world.time <= next_move) return
 	next_move = world.time + 9
 
@@ -113,11 +113,12 @@
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
 
-/obj/machinery/power/apc/AICtrlClick() // turns off APCs.
-	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
+/obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
+	toggle_breaker()
 
 
-/atom/proc/AIAltClick()
+/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
+	AltClick(user)
 	return
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
@@ -128,3 +129,10 @@
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
+
+//
+// Override TurfAdjacent for AltClicking
+//
+
+/mob/living/silicon/ai/TurfAdjacent(var/turf/T)
+	return (cameranet && cameranet.checkTurfVis(T))

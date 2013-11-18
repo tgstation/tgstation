@@ -27,6 +27,9 @@
 	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 
+		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+			return
+
 		if(over_object == M && Adjacent(M)) // this must come before the screen objects only block
 			orient2hud(M)					// dunno why it wasn't before
 			if(M.s_active)

@@ -177,18 +177,29 @@
 	name = "Circuitboard (Telecommunications Traffic Control)"
 	build_path = "/obj/machinery/computer/telecomms/traffic"
 	origin_tech = "programming=3"
-
 /obj/item/weapon/circuitboard/curefab
 	name = "Circuit board (Cure fab)"
 	build_path = "/obj/machinery/computer/curer"
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
-
-/obj/item/weapon/circuitboard/mining_shuttle
-	name = "Circuit board (Mining Shuttle)"
-	build_path = "/obj/machinery/computer/mining_shuttle"
+/obj/item/weapon/circuitboard/shuttle
+	name = "Circuit board (Shuttle)"
+	build_path = "/obj/machinery/computer/shuttle"
 	origin_tech = "programming=2"
+	id = "1"
+/obj/item/weapon/circuitboard/labor_shuttle
+	name = "Circuit Board (Labor Shuttle)"
+	build_path = "/obj/machinery/computer/shuttle/labor"
+	origin_tech = "programming 2"
+/obj/item/weapon/circuitboard/labor_shuttle/one_way
+	name = "Circuit Board (Prisoner Shuttle Console)"
+	build_path = "/obj/machinery/computer/shuttle/labor/one_way"
+	origin_tech = "programming 2"
+/obj/item/weapon/circuitboard/mining_shuttle
+	name = "Circuit Board (Mining Shuttle)"
+	build_path = "/obj/machinery/computer/shuttle/mining"
+	origin_tech = "programming 2"
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = "/obj/machinery/computer/HolodeckControl"
@@ -239,6 +250,13 @@
 			src.name = "Circuit Board (RD Console)"
 			src.build_path = "/obj/machinery/computer/rdconsole/core"
 			user << "\blue Defaulting access protocols."
+	return
+
+/obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/device/multitool))
+		var/chosen_id = round(input(usr, "Choose an ID number:", "Input an Integer", null) as num|null)
+		if(chosen_id >= 0)
+			id = chosen_id
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
@@ -344,4 +362,8 @@
 					var/obj/machinery/computer/supplycomp/SC = B
 					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
 					SC.can_order_contraband = C.contraband_enabled
+				else if(istype(circuit,/obj/item/weapon/circuitboard/shuttle))
+					var/obj/machinery/computer/shuttle/S = B
+					var/obj/item/weapon/circuitboard/shuttle/C = circuit
+					S.id = C.id
 				del(src)

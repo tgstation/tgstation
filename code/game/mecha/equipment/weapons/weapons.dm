@@ -316,7 +316,7 @@
 
 	throw_impact(atom/hit_atom)
 		if(primed)
-			explosion(hit_atom, 0, 0, 2, 4)
+			explosion(hit_atom, 0, 0, 2, 4, 0)
 			del(src)
 		else
 			..()

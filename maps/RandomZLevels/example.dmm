@@ -84,7 +84,7 @@
 "bF" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
 "bG" = (/obj/machinery/door/airlock{name = "Unisex Restrooms"; req_access_txt = "0"},/turf/simulated/floor,/area/awaymission/example)
 "bH" = (/obj/machinery/vending/boozeomat{density = 0; pixel_x = -32},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bI" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/sodawater,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
+"bI" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
 "bJ" = (/obj/structure/bookcase{density = 0; pixel_y = 32},/obj/item/weapon/book/manual/barman_recipes,/obj/item/weapon/book/manual/chef_recipes,/obj/item/weapon/book/manual/ripley_build_and_repair,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
 "bK" = (/obj/structure/stool/bed/chair/wood/normal{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
 "bL" = (/obj/structure/table/woodentable,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)

@@ -72,7 +72,7 @@
 		return
 	var/mob/living/carbon/ML = A
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/limb/affecting = null
+	var/obj/item/organ/limb/affecting = null
 	if(ishuman(ML)) // why the hell is this not more general
 		affecting = ML:get_organ(ran_zone(dam_zone))
 	var/armor = ML.run_armor_check(affecting, "melee")

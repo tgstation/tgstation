@@ -161,13 +161,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 	overlays_standing[DAMAGE_LAYER]	= standing
 	overlays_lying[DAMAGE_LAYER]	= lying
 
-	for(var/datum/limb/O in organs)
+	for(var/obj/item/organ/limb/O in organs)
 		if(O.brutestate)
-			standing.overlays	+= "[O.icon_name]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
-			lying.overlays		+= "[O.icon_name]2_[O.brutestate]0"
+			standing.overlays	+= "[O.icon_state]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays //made icon_name redundant - RR
+			lying.overlays		+= "[O.icon_state]2_[O.brutestate]0"
 		if(O.burnstate)
-			standing.overlays	+= "[O.icon_name]_0[O.burnstate]"
-			lying.overlays		+= "[O.icon_name]2_0[O.burnstate]"
+			standing.overlays	+= "[O.icon_state]_0[O.burnstate]"
+			lying.overlays		+= "[O.icon_state]2_0[O.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 

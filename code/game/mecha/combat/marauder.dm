@@ -40,7 +40,21 @@
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 
-/obj/mecha/combat/marauder/New()
+/obj/mecha/combat/marauder/mauler/loaded/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+	src.smoke_system.set_up(3, 0, src)
+	src.smoke_system.attach(src)
+	return
+
+/obj/mecha/combat/marauder/loaded/New()
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	ME.attach(src)

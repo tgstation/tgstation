@@ -787,7 +787,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
 					T.clean_blood()
-					for(var/obj/effect/decal/cleanable/C in src)
+					for(var/obj/effect/decal/cleanable/C in T)
 						del(C)
 
 					for(var/mob/living/carbon/slime/M in T)
@@ -1628,7 +1628,7 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 3)
 							var/mob/living/carbon/human/H = M
-							var/datum/limb/affecting = H.get_organ("head")
+							var/obj/item/organ/limb/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
 									H.update_damage_overlays(0)
@@ -1661,6 +1661,73 @@ datum
 			color = "#8E18A9" // rgb: 142, 24, 169
 			toxpwr = 2
 			meltprob = 30
+
+/////////////////////////Coloured Crayon Powder////////////////////////////
+//For colouring in /proc/mix_color_from_reagents
+
+
+		crayonpowder
+			name = "Crayon Powder"
+			id = "crayon powder"
+			var/colorname = "none"
+			description = "A powder made by grinding down crayons, good for colouring chemical reagents."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 207, 54, 0
+			New()
+				description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
+
+
+		crayonpowder/red
+			name = "Red Crayon Powder"
+			id = "redcrayonpowder"
+			colorname = "red"
+			color = "#DA0000" // red
+			New()
+				..()
+
+		crayonpowder/orange
+			name = "Orange Crayon Powder"
+			id = "orangecrayonpowder"
+			colorname = "orange"
+			color = "#FF9300" // orange
+			New()
+				..()
+
+
+		crayonpowder/yellow
+			name = "Yellow Crayon Powder"
+			id = "yellowcrayonpowder"
+			colorname = "yellow"
+			color = "#FFF200" // yellow
+			New()
+				..()
+
+
+		crayonpowder/green
+			name = "Green Crayon Powder"
+			id = "greencrayonpowder"
+			colorname = "green"
+			color = "#A8E61D" // green
+			New()
+				..()
+
+
+		crayonpowder/blue
+			name = "Blue Crayon Powder"
+			id = "bluecrayonpowder"
+			colorname = "blue"
+			color = "#00B7EF" // blue
+			New()
+				..()
+
+		crayonpowder/purple
+			name = "Purple Crayon Powder"
+			id = "purplecrayonpowder"
+			colorname = "purple"
+			color = "#DA00FF" // purple
+			New()
+				..()
+
 
 /////////////////////////Food Reagents////////////////////////////
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
