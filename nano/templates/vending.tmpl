@@ -1,82 +1,85 @@
 <div class="item">{^{:~link('Eject Coin', 'eject', {'remove_coin' : 1}, coin ? null : 'disabled', 'floatRight')}}
-	<div class="floatRight">
-		{^{if !coin}}
-			<div class="bad">No coin loaded.</div>
-		{{else}}
-			<div class="good">Coin Loaded.</div>
-		{{/if}}
-	</div>
-	<div class="itemLabel">
-		Select an Item:
-	</div>
-	<div class="itemContent">
-	</div>
+        <div class="floatRight">
+                {^{if !coin}}
+                        <div class="bad">No coin loaded.&nbsp;&nbsp;</div>
+                {{else}}
+                        <div class="good">Coin Loaded.&nbsp;&nbsp;</div>
+                {{/if}}
+        </div>
+        <div class="itemLabel">
+                Select an Item:
+        </div>
+        <div class="itemContent">
+        </div>
 </div>
 <hr>
 <div class="statusDisplay" style="height: auto; overflow: auto;">
-	<div class="item">
-		<div class="itemContent">
-			{^{if products}}
-				{{for productData}}
-					<div class="fixedLeft" style="width: 500px;>
-						{{if amount}}
-							{^{:~link('Vend', 'eject', {'vend':	itself}, vendReady ? 'disabled' : null)}} <font color="{{:displayColor}}"> {{:name}} </font>- <b>{{:amount}}</b>
-						{{else}}
-							{^{:~link('Vend', 'eject', {'vend':	1}, 'disabled')}}<font color="{{:displayColor}}">{{:name}} - <font color="#cd6500"><i>Sold Out.</i></font></font>
-						{{/if}}
-					</div>
-				{{/for}}
-			{{else}}
-				No products loaded.
-			{{/if}}
-		</div>
-	</div>
+        <div class="item">
+                <div class="itemContent">
+                        {^{if products}}
+                                {{for productData}}
+                                        <div class="fixedLeft" style="width: 500px;>
+                                                {{if amount}}
+                                                        {^{:~link('Vend', 'eject', {'vend': itself}, vendReady ? 'disabled' : null)}} <font color="{{:displayColor}}"> {{:name}} </font>- <b>{{:amount}}</b>
+                                                {{else}}
+                                                        {^{:~link('Vend', 'eject', {'vend': itself}, 'disabled')}}<font color="{{:displayColor}}">{{:name}} - <font color="#cd6500"><i>Sold Out.</i></font></font>
+                                                {{/if}}
+                                        </div>
+                                {{/for}}
+                        {{else}}
+                                No products loaded.
+                        {{/if}}
+                </div>
+        </div>
 </div>
 {^{if coin}}
 <hr>
-	<div class="itemLabel">
-		Premium Items:
-	</div>
-	<br>
-	<div class="statusDisplay" style="height: auto; overflow: auto;">
-		<div class="item">
-			<div class="itemContent">
-				{{if premiumItems}}
-					{{for premiumData}}
-						{{if amount}}
-							{^{:~link('Vend', 'eject', {'vend':	itself}, vendReady ? 'disabled' : null)}} <font color="{{:displayColor}}"> {{:name}} </font>- <b>{{:amount}}</b> {{:itself}}
-						{{else}}
-							{^{:~link('Vend', 'eject', {'vend':	1}, 'disabled')}}<font color="{{:displayColor}}">{{:name}} - <font color="#cd6500"><i>Sold Out.</i></font></font>
-						{{/if}}
-					{{/for}}
-				{{else}}
-					No Premium Items loaded.
-				{{/if}}
-			</div>
-		</div>
-	</div>
+<div class="itemLabel">
+	Premium Items:
+</div>
+<br>
+<div class="statusDisplay" style="height: auto; overflow: auto;">
+        <div class="item">
+                <div class="itemContent">
+                        {^{if products}}
+                                {{for premiumData}}
+                                        <div class="fixedLeft" style="width: 500px;>
+                                                {{if amount}}
+                                                        {^{:~link('Vend', 'eject', {'vend': itself}, vendReady ? 'disabled' : null)}} <font color="{{:displayColor}}"> {{:name}} </font>- <b>{{:amount}}</b>
+                                                {{else}}
+                                                        {^{:~link('Vend', 'eject', {'vend': itself}, 'disabled')}}<font color="{{:displayColor}}">{{:name}} - <font color="#cd6500"><i>Sold Out.</i></font></font>
+                                                {{/if}}
+                                        </div>
+                                {{/for}}
+                        {{else}}
+                                No products loaded.
+                        {{/if}}
+                </div>
+        </div>
+</div>
 {{/if}}
 {^{if extendedInventory}}
-<hr>
-	<div class="itemLabel">
-		Contraband Items:
-	</div>
-	<br>
+<div class="itemLabel">
+	Contraband:
+</div>
+<br>
 	<div class="statusDisplay" style="height: auto; overflow: auto;">
-		<div class="item">
-			<div class="itemContent">
-				{{if premiumItems}}
-					{{for contrabandData}}
-						{{if amount}}
-							{^{:~link('Vend', 'eject', {'vend':	itself}, vendReady ? 'disabled' : null)}} <font color="{{:displayColor}}"> {{:name}} </font>- <b>{{:amount}}</b>
-						{{else}}
-							{^{:~link('Vend', 'eject', {'vend':	1}, 'disabled')}}<font color="{{:displayColor}}">{{:name}} - <font color="#cd6500"><i>Sold Out.</i></font></font>
-						{{/if}}
-					{{/for}}
-				{{else}}
-					No Contraband Items loaded.
-				{{/if}}
+			<div class="item">
+					<div class="itemContent">
+							{^{if products}}
+									{{for contrabandData}}
+											<div class="fixedLeft" style="width: 500px;>
+													{{if amount}}
+															{^{:~link('Vend', 'eject', {'vend': itself}, vendReady ? 'disabled' : null)}} <font color="{{:displayColor}}"> {{:name}} </font>- <b>{{:amount}}</b>
+													{{else}}
+															{^{:~link('Vend', 'eject', {'vend': itself}, 'disabled')}}<font color="{{:displayColor}}">{{:name}} - <font color="#cd6500"><i>Sold Out.</i></font></font>
+													{{/if}}
+											</div>
+									{{/for}}
+							{{else}}
+									No products loaded.
+							{{/if}}
+					</div>
 			</div>
-		</div>
 	</div>
 {{/if}}
