@@ -102,7 +102,7 @@
 			coin_records += R
 		else
 			product_records += R
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
+//		world << "Added: [R.product_name] - [R.amount] - [R.product_path]"
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
@@ -140,61 +140,57 @@
 	return attack_hand(user)
 
 
-/obj/machinery/vending/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/vending/attack_hand(var/mob/user as mob)
+	if(stat & BROKEN)
 		return
-	user.set_machine(src)
-
 	if(seconds_electrified != 0)
 		if(shock(user, 100))
 			return
-
-	var/dat = ""
-
-	if(premium.len > 0)
-		dat += "<b>Coin slot:</b> "
-		if (coin)
-			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>"
-		else
-			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
-
-	dat += "<h3>Select an Item</h3>"
-	dat += "<div class='statusDisplay'>"
-	if(product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
-	else
-		var/list/display_records = product_records
-		if(extended_inventory)
-			display_records = product_records + hidden_records
-		if(coin)
-			display_records = product_records + coin_records
-		if(coin && extended_inventory)
-			display_records = product_records + hidden_records + coin_records
-		dat += "<ul>"
-		for (var/datum/data/vending_product/R in display_records)
-			dat += "<li>"
-			if(R.amount > 0)
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
-			else
-				dat += "<span class='linkOff'>Sold Out</span> "
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
-			dat += " <b>[R.amount]</b>"
-			dat += "</li>"
-		dat += "</ul>"
-	dat += "</div>"
-
-	if(panel_open)
+	if(panel_open) //NanoUI does not feature thoes wire() procs, and I don't feel like rewriting it, so this is the best option.
+		var/dat
 		dat += wires()
-
 		if(product_slogans != "")
 			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+		var/datum/browser/popup = new(user, "vending", (name))
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
+	ui_interact(user)
 
-	//user << browse(dat, "window=vending")
-	//onclose(user, "")
-	var/datum/browser/popup = new(user, "vending", (name))
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
+
+/obj/machinery/vending/ui_interact(mob/user, ui_key = "vending_machine")
+	if(stat & (BROKEN|NOPOWER)) return
+	if(user.stat || user.restrained()) return
+	var/list/productData[0]
+	var/list/premiumData[0]
+	var/list/contrabandData[0]
+	var/list/display_records = product_records
+	for(var/datum/data/vending_product/R in display_records)
+		productData.Add(list(list("amount" = R.amount, "name" = R.product_name, "displayColor" = R.display_color, "itself" = "\ref[R]", "path" = R.product_path)))
+	for(var/datum/data/vending_product/R in coin_records)
+		premiumData.Add(list(list("amount" = R.amount, "name" = R.product_name, "displayColor" = R.display_color, "itself" = "\ref[R]", "path" = R.product_path)))
+	for(var/datum/data/vending_product/R in hidden_records)
+		contrabandData.Add(list(list("amount" = R.amount, "name" = R.product_name, "displayColor" = R.display_color, "itself" = "\ref[R]", "path" = R.product_path)))
+
+	var/data[0]
+	data["premiumItems"]			= premium
+	data["contraband"]				= contraband
+	data["products"]				= products
+	data["coin"]					= coin
+	data["extendedInventory"]		= extended_inventory
+	data["panelOpen"]				= panel_open
+	data["productData"]				= productData
+	data["premiumData"]				= premiumData
+	data["contrabandData"]			= contrabandData
+	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	if (!ui)
+		ui = new(user, src, ui_key, "vending.tmpl", "Vending Machine", 600, 500)
+		ui.set_initial_data(data)
+		ui.set_auto_update(1)
+		ui.open()
+	else
+		ui.push_data(data)
+		return
 
 
 // returns the wire panel text

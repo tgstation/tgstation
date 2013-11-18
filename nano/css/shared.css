@@ -260,6 +260,13 @@ div.notice
 {
 	float: left;
 	width: 30%;
+	color: #fffff;
+}
+
+.itemLabelSmall
+{
+	float: left;
+	width: 15%;
 	color: #e9c183;
 }
 
