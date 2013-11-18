@@ -649,8 +649,8 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/item/proboscis
 	name = "proboscis"
 	desc = "Thing chanelings use to sting people."
-	icon = 'icons/obj/magic.dmi'
-	icon_state = "2"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "sord"
 	flags = NOBLUDGEON | ABSTRACT
 	w_class = 10.0
 	layer = 20
