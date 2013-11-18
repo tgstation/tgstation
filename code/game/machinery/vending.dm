@@ -112,11 +112,8 @@
 
 	var/to_restock = 0
 	for(var/datum/data/vending_product/machine_content in machine)
-		//first pass we count how many items are missing
 		to_restock += machine_content.max_amount - machine_content.amount
 
-
-	//we attempt to go on the "fast lane" (restock all to max)
 	if(to_restock <= refill.charges)
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(machine_content.amount != machine_content.max_amount)
@@ -125,23 +122,17 @@
 		refill.charges -= to_restock
 		total = to_restock
 	else
-		//We need to stock items equally in each categories based on the amount of items missing.
-		//This algorithm will restock each category by percentage, the more items being missing, the larger the
-		//amount of refills it will get, keeps stocks even.
-		var/tmp_charges = refill.charges	//we need to cache the charges to keep the equation from changing
+		var/tmp_charges = refill.charges
 		for(var/datum/data/vending_product/machine_content in machine)
 			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
-
-			//we cannot restock more than what we have, might happen since we are rounding up.
 			if(restock > refill.charges)
 				restock = refill.charges
-
 			machine_content.amount += restock
 			refill.charges -= restock
 			total += restock
 			if(restock)
 				usr << "<span class='notice'>[restock] of [machine_content.product_name]</span>"
-			if(refill.charges == 0)//due to rounding, we ran out of refill charges, exit.
+			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
 	return total
 
@@ -171,24 +162,20 @@
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
-			//we do nothing if the machine is unpowered.
 			user << "<span class='notice'>It does nothing.</span>"
 		else if(panel_open)
-			//if the panel is open
-			//we attempt to refill the machine
+			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges == 0)
-				//there is no charge left in this canister.
 				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
 				var/transfered = refill_inventory(canister,product_records,user)
 				if(transfered)
-					user << "<span class='notice'>You loaded [transfered] items in [name].</span>"
+					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
 				else
-					user << "<span class='notice'>[name] is fully stocked.</span>"
+					user << "<span class='notice'>The [name] is fully stocked.</span>"
 			return;
 		else
-			//the service panel is closed, lets "subtly" hint at opening it.
 			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
 	else
 		..()
@@ -694,6 +681,7 @@
 					/obj/item/clothing/head/rabbitears =1) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 1,/obj/item/clothing/head/cardborg = 1,/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1)
 	premium = list(/obj/item/clothing/suit/hgpirate = 1, /obj/item/clothing/head/hgpiratecap = 1, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
+	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
 	name = "dinnerware"

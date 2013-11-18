@@ -15,6 +15,7 @@
 	var/charges = 0		//how many restocking "charges" the refill has
 
 /obj/item/weapon/vending_refill/New()
+	..()
 	name = "\improper [machine_name] restocking unit"
 
 /obj/item/weapon/vending_refill/examine()
@@ -23,36 +24,35 @@
 	if(charges)
 		usr << "It can restock [charges] item(s)."
 	else
-		usr << "it is empty!"
+		usr << "It's empty!"
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	//machine contains max 138 items
-	charges = 50
+	charges = 50//of 138
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "hot drinks"
 	icon_state = "refill_joe"
-	//machine contains max 85 items
-	charges = 30
+	charges = 30//of 85
 
 /obj/item/weapon/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
-	//machine contains max 48 items
-	charges = 15
+	charges = 15//of 48
 
 /obj/item/weapon/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	//machine contains max 65 items
-	charges = 20
+	charges = 20//of 65
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "cigarette"
 	icon_state = "refill_smoke"
-	//machine contains max 30 items
-	charges = 10
+	charges = 10// of 30
 
+/obj/item/weapon/vending_refill/autodrobe
+	machine_name = "AutoDrobe"
+	icon_state = "refill_costume"
+	charges = 28// of 58
