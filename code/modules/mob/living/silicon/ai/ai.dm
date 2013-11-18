@@ -18,7 +18,7 @@ var/list/ai_list = list()
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
-	status_flags = CANSTUN|CANPARALYSE
+	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -265,6 +265,31 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/update_canmove()
 	return 0
+
+/mob/living/silicon/ai/Bump(atom/movable/AM as mob|obj, yes)
+        if ((!( yes ) || now_pushing))
+                return
+        now_pushing = 1
+        if(ismob(AM))
+                var/mob/tmob = AM
+                if(!(tmob.status_flags & CANPUSH))
+                        now_pushing = 0
+                        return
+        now_pushing = 0
+        ..()
+        if (!istype(AM, /atom/movable))
+                return
+        if (!now_pushing)
+                now_pushing = 1
+                if (!AM.anchored)
+                        var/t = get_dir(src, AM)
+                        if (istype(AM, /obj/structure/window))
+                                if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+                                        for(var/obj/structure/window/win in get_step(AM,t))
+                                                now_pushing = 0
+                                                return
+                        step(AM, t)
+                now_pushing = null
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
