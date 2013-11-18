@@ -3,7 +3,6 @@
 // can also operate on non-loc area through "otherarea" var
 /obj/machinery/light_switch
 	name = "light switch"
-	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
@@ -39,8 +38,9 @@
 
 /obj/machinery/light_switch/examine()
 	set src in oview(1)
+	..()
 	if(usr && !usr.stat)
-		usr << "A light switch. It is [on? "on" : "off"]."
+		usr << "It is [on? "on" : "off"]."
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

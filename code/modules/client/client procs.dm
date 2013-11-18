@@ -193,8 +193,8 @@ var/next_external_rsc = 0
 			return
 
 	var/admin_rank = "Player"
-	if(src.holder)
-		admin_rank = src.holder.rank
+	if(src.holder && src.holder.rank)
+		admin_rank = src.holder.rank.name
 
 	var/sql_ip = sql_sanitize_text(src.address)
 	var/sql_computerid = sql_sanitize_text(src.computer_id)

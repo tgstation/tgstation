@@ -69,6 +69,8 @@
 		// Now, give them their targets
 		for(var/mob/living/carbon/human/traitor in late_joining_list)
 			..(traitor)
+
+		late_joining_list = list()
 	else
 		late_joining_list += character
 	return
