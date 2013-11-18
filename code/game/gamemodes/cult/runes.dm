@@ -147,13 +147,13 @@ var/list/sacrificed = list()
 					cultist_count += 1
 			if(cultist_count >= 9)
 				var/narsie_type = /obj/machinery/singularity/narsie/large
-				// Moves narsie if he was already summoned.
-				var/obj/him = locate(narsie_type, machines)
-				if(him)
-					him.loc = get_turf(src)
+				// Moves narsie if she was already summoned.
+				var/obj/her = locate(narsie_type, machines)
+				if(her)
+					her.loc = get_turf(src)
 					return
 				// Otherwise...
-				new narsie_type(src.loc) // Summon he!
+				new narsie_type(src.loc) // Summon her!
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
 				del(src) // Stops cultists from spamming the rune to summon narsie more than once.
