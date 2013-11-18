@@ -107,7 +107,7 @@
 	if(full_body && ((src.l_hand && !( src.l_hand.flags&ABSTRACT )) || (src.r_hand && !( src.r_hand.flags&ABSTRACT )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
 		return 1
 
-	if( (src.l_hand && !src.l_hand.flags&ABSTRACT) || (src.r_hand && !src.r_hand.flags&ABSTRACT) )
+	if( (src.l_hand && !(src.l_hand.flags&ABSTRACT)) || (src.r_hand && !(src.r_hand.flags&ABSTRACT)) )
 		return 1
 
 	return 0
