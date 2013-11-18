@@ -62,38 +62,48 @@ span.smelting {
 	font-weight:bold;
 }
 
+span.notsmelting {
+	color:red;
+	font-weight:bold;
+}
+
 				</style>
 			</style>
 		</head>
 		<body>
-			<h1>Smelter Control</h1>
+			<h1>Smelter Control</h1>"}
+	var/nloaded=0
+	var/body={"
 			<table>
 				<tr>
 					<th>Mineral</th>
 					<th>Amount</th>
 					<th>Controls</th>
 				</tr>"}
-	//iron
-	if(machine.selected.len>0)
-		for(var/ore_id in machine.selected)
-			if(machine.ore[ore_id])
-				dat += "<tr><td class=\"clmName\">[machine.ore_names[ore_id]]:</td><td>[machine.ore[ore_id]]</td><td><A href='?src=\ref[src];toggle_select=[ore_id]'>"
-				if (machine.selected[ore_id]==1)
-					dat += "<span class=\"smelting\">Smelting</span>"
-				else
-					dat += "<span class=\"notsmelting\">Not smelting</span>"
-				dat += "</A></td></tr>"
+	for(var/ore_id in machine.ore)
+		var/datum/processable_ore/ore_info=machine.ore[ore_id]
+		if(ore_info.stored)
+			body += "<tr><td class=\"clmName\">[ore_info.name]</td><td>[ore_info.stored]</td><td><A href='?src=\ref[src];toggle_select=[ore_id]'>"
+			if (ore_info.selected)
+				body += "<span class=\"smelting\">Smelting</span>"
 			else
-				machine.selected[ore_id] = 0
+				body += "<span class=\"notsmelting\">Not smelting</span>"
+			body += "</A></td></tr>"
+			nloaded++
+		else
+			ore_info.selected=0
+			machine.ore[ore_id]=ore_info
 
+	if(nloaded)
 		dat += {"
+			[body]
 			</table>
 			<p>Machine is currently "}
 		//On or off
 		if (machine.on==1)
-			dat += text("<A href='?src=\ref[src];set_on=off'>On</A></p>")
+			dat += "<A href='?src=\ref[src];set_on=off'>On</A></p>"
 		else
-			dat += text("<A href='?src=\ref[src];set_on=on'>Off</A></p>")
+			dat += "<A href='?src=\ref[src];set_on=on'>Off</A></p>"
 	else
 		dat+="<em>No Materials Loaded</em>"
 	dat+={"
@@ -111,9 +121,12 @@ span.smelting {
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["toggle_select"])
-		if (!(href_list["toggle_select"] in machine.selected))
-			error("Unknown ore ID [href_list["toggle_select"]]!")
-		machine.selected[href_list["toggle_select"]] = !machine.selected[href_list["toggle_select"]]
+		var/ore_id=href_list["toggle_select"]
+		if (!(ore_id in machine.ore))
+			error("Unknown ore ID [ore_id]!")
+		var/datum/processable_ore/ore_info=machine.ore[ore_id]
+		ore_info.selected = !ore_info.selected
+		machine.ore[ore_id]=ore_info
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -122,10 +135,61 @@ span.smelting {
 	src.updateUsrDialog()
 	return
 
+/*************************** ORES *********************************/
+
+/datum/processable_ore
+	var/name=""
+	var/id=""
+	var/stored=0
+	var/selected=0
+	var/itemtype=null
+
+/datum/processable_ore/iron
+	name="Iron"
+	id="iron"
+	itemtype=/obj/item/weapon/ore/iron
+
+/datum/processable_ore/glass
+	name="Sand"
+	id="glass"
+	itemtype=/obj/item/weapon/ore/glass
+
+/datum/processable_ore/diamond
+	name="Diamond"
+	id="diamond"
+	itemtype=/obj/item/weapon/ore/diamond
+
+/datum/processable_ore/plasma
+	name="Plasma"
+	id="plasma"
+	itemtype=/obj/item/weapon/ore/plasma
+
+/datum/processable_ore/gold
+	name="Gold"
+	id="gold"
+	itemtype=/obj/item/weapon/ore/gold
+
+/datum/processable_ore/silver
+	name="Silver"
+	id="silver"
+	itemtype=/obj/item/weapon/ore/silver
+
+/datum/processable_ore/uranium
+	name="Uranium"
+	id="uranium"
+	itemtype=/obj/item/weapon/ore/uranium
+
+/datum/processable_ore/clown
+	name="Bananium"
+	id="clown"
+	itemtype=/obj/item/weapon/ore/clown
+
+/datum/processable_ore/phazon
+	name="Phazon"
+	id="phazon"
+	itemtype=/obj/item/weapon/ore/phazon
+
 /**********************Mineral processing unit**************************/
-
-
-
 
 /obj/machinery/mineral/processing_unit
 	name = "furnace"
@@ -137,58 +201,7 @@ span.smelting {
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/CONSOLE = null
 
-	// Can probably combine all 4 of these into a single datum store, but hindsight is 20/20. - N3X
-	var/list/ore=list(
-		"gold" = 0,
-		"silver" = 0,
-		"diamond" = 0,
-		"glass" = 0,
-		"plasma" = 0,
-		"uranium" = 0,
-		"iron" = 0,
-		"clown" = 0,
-		//"adamantine" = 0,
-		"phazon" = 0,
-	)
-
-	var/list/selected=list(
-		"gold" = 0,
-		"silver" = 0,
-		"diamond" = 0,
-		"glass" = 0,
-		"plasma" = 0,
-		"uranium" = 0,
-		"iron" = 0,
-		"clown" = 0,
-		//"adamantine" = 0,
-		"phazon" = 0,
-	)
-
-	var/list/ore_names=list(
-		"gold" = "Gold",
-		"silver" = "Silver",
-		"diamond" = "Diamond",
-		"glass" = "Sand",
-		"plasma" = "Plasma",
-		"uranium" = "Uranium",
-		"iron" = "Iron",
-		"clown" = "Bananium",
-		//"adamantine" = "Adamantine",
-		"phazon" = "Phazon",
-	)
-
-	var/list/ore_types=list(
-		"iron" = /obj/item/weapon/ore/iron,
-		"glass" = /obj/item/weapon/ore/glass,
-		"diamond" = /obj/item/weapon/ore/diamond,
-		"plasma" = /obj/item/weapon/ore/plasma,
-		"gold" = /obj/item/weapon/ore/gold,
-		"silver" = /obj/item/weapon/ore/silver,
-		"uranium" = /obj/item/weapon/ore/uranium,
-		"clown" = /obj/item/weapon/ore/clown,
-		"phazon" = /obj/item/weapon/ore/phazon,
-		//"adamantine" = /obj/item/weapon/ore/adamantine
-	)
+	var/list/ore=list()
 	var/list/recipes=list()
 	var/on = 0 //0 = off, 1 =... oh you know!
 
@@ -205,6 +218,11 @@ span.smelting {
 
 		for(var/recipetype in typesof(/datum/smelting_recipe) - /datum/smelting_recipe)
 			recipes += new recipetype
+
+		for(var/oredata in typesof(/datum/processable_ore) - /datum/processable_ore)
+			var/datum/processable_ore/ore_datum = new oredata
+			ore[ore_datum.id]=ore_datum
+
 		return
 	return
 
@@ -232,7 +250,10 @@ span.smelting {
 
 						// Take ingredients
 						for(var/ore_id in recipe.ingredients)
-							ore[ore_id]--
+							// Oh how I wish ore[ore_id].stored-- worked.
+							var/datum/processable_ore/po=ore[ore_id]
+							po.stored--
+							ore[ore_id]=po
 
 						// Spawn yield
 						new recipe.yieldtype(output.loc)
@@ -249,9 +270,11 @@ span.smelting {
 					on=0
 
 					// Take one of every ore selected
-					for(var/ore_id in selected)
-						if(ore[ore_id]>0 && selected[ore_id])
-							ore[ore_id]--
+					for(var/ore_id in ore)
+						var/datum/processable_ore/po=ore[ore_id]
+						if(po.stored>0 && po.selected)
+							po.stored--
+							ore[ore_id]=po
 					// Spawn slag
 					new /obj/item/weapon/ore/slag(output.loc)
 					break
@@ -262,8 +285,10 @@ span.smelting {
 			O = locate(/obj/item, input.loc)
 			if (O)
 				for(var/ore_id in ore)
-					if (istype(O,ore_types[ore_id]))
-						ore[ore_id]++;
+					var/datum/processable_ore/po=ore[ore_id]
+					if (istype(O,po.itemtype))
+						po.stored++
+						ore[ore_id]=po
 						O.loc = null
 						del(O)
 						break

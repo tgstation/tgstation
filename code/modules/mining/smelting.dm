@@ -7,22 +7,23 @@
 /datum/smelting_recipe/proc/checkIngredients(var/obj/machinery/mineral/processing_unit/P)
 	var/sufficient_ore=1
 	var/matching_ingredient_count=0
-	for(var/ore_id in P.selected)
+	for(var/ore_id in P.ore)
+		var/datum/processable_ore/po=P.ore[ore_id]
 		var/required=(ore_id in ingredients)
 
 		// Selected but not in ingredients
-		if(P.selected[ore_id] && !required)
+		if(po.selected&& !required)
 			return 0
 
 		// Unselected but in ingredients
-		if(!P.selected[ore_id] && required)
+		if(!po.selected && required)
 			return 0
 
 		var/min_ore_required=ingredients[ore_id]
 
 		// Selected, in ingredients, but not enough in stock.
-		if(P.selected[ore_id] && required)
-			if(P.ore[ore_id] < min_ore_required)
+		if(po.selected && required)
+			if(po.stored < min_ore_required)
 				sufficient_ore=0
 				continue
 
