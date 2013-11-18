@@ -453,7 +453,7 @@
 
 	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
-			user << "Close the panel first."
+			user << "Close the cover first."
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
@@ -489,7 +489,7 @@
 			return
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 50))
+			if(do_after(user, 50) && !cell)
 				user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
 				deconstruct()
 
@@ -507,7 +507,7 @@
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
+				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
 				updateicon()
 			else
 				user << "\red Access denied."
@@ -529,7 +529,7 @@
 		if(opened)//Cover is open
 			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
-				user << "You must close the panel first"
+				user << "You must close the cover first"
 				return
 			else
 				sleep(6)
@@ -595,16 +595,16 @@
 		spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/verb/unlock_own_panel()
+/mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
-	set name = "Unlock Panel"
-	set desc = "Unlocks your own panel if it is locked. You can not lock it again. A human will have to lock it for you."
+	set name = "Unlock Cover"
+	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
 	if(locked)
-		switch(alert("You can not lock your panel again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Panel", "Yes", "No"))
+		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
 				updateicon()
-				usr << "You unlock your access panel."
+				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -832,11 +832,11 @@
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			overlays += "ov-opencover +w"
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			overlays += "ov-opencover +c"
 		else
-			overlays += "ov-openpanel -c"
+			overlays += "ov-opencover -c"
 
 	update_fire()
 	return
@@ -1058,13 +1058,13 @@
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
-	if(robot_suit)
+	if (robot_suit)
 		robot_suit.loc = T
 		robot_suit.l_leg.loc = T
 		robot_suit.l_leg = null
 		robot_suit.r_leg.loc = T
 		robot_suit.r_leg = null
-		new /obj/item/weapon/cable_coil(T, 1) //The wires break off of the torso from the fall. I'm doing this so that they won't get confused when trying to build another cyborg.
+		new /obj/item/weapon/cable_coil(T, robot_suit.chest.wires)
 		robot_suit.chest.loc = T
 		robot_suit.chest.wires = 0.0
 		robot_suit.chest = null
@@ -1094,4 +1094,7 @@
 		for(b=0, b!=2, b++)
 			var/obj/item/device/flash/F = new /obj/item/device/flash(T)
 			F.burn_out()
+	if (cell) //Sanity check.
+		cell.loc = T
+		cell = null
 	del(src)

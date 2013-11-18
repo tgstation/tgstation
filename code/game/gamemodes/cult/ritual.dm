@@ -635,6 +635,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	examine()
 		set src in usr
+		..()
 		if(!iscultist(usr))
 			usr << "An old, dusty tome with frayed edges and a sinister looking cover."
 		else
