@@ -6,8 +6,10 @@
 // Note: Returns -1 if not enough ore!
 /datum/smelting_recipe/proc/checkIngredients(var/obj/machinery/mineral/processing_unit/P)
 	var/sufficient_ore=1
+	var/matching_ingredient_count=0
 	for(var/ore_id in P.selected)
 		var/required=(ore_id in ingredients)
+
 		// Selected but not in ingredients
 		if(P.selected[ore_id] && !required)
 			return 0
@@ -19,13 +21,17 @@
 		var/min_ore_required=ingredients[ore_id]
 
 		// Selected, in ingredients, but not enough in stock.
-		if(P.selected[ore_id] && required && P.ore[ore_id] < min_ore_required)
-			sufficient_ore=0
+		if(P.selected[ore_id] && required)
+			if(P.ore[ore_id] < min_ore_required)
+				sufficient_ore=0
+				continue
+
+			matching_ingredient_count++
 
 	if(!sufficient_ore)
 		return -1 // -1 means not enough ore. NOT A TYPO.
 
-	return 1
+	return matching_ingredient_count == ingredients.len
 
 // RECIPES BEEP BOOP
 /datum/smelting_recipe/glass

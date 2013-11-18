@@ -215,6 +215,7 @@ span.smelting {
 			for (i = 0; i < 10; i++)
 				var/located=0
 				var/insufficient_ore=0
+
 				// For every recipe
 				for(var/datum/smelting_recipe/recipe in recipes)
 					// Check if it's selected and we have the ingredients
@@ -228,6 +229,7 @@ span.smelting {
 
 					// Otherwise, if we've matched
 					else if(signal==1)
+
 						// Take ingredients
 						for(var/ore_id in recipe.ingredients)
 							ore[ore_id]--
@@ -248,7 +250,7 @@ span.smelting {
 
 					// Take one of every ore selected
 					for(var/ore_id in selected)
-						if(ore[ore_id]>0)
+						if(ore[ore_id]>0 && selected[ore_id])
 							ore[ore_id]--
 					// Spawn slag
 					new /obj/item/weapon/ore/slag(output.loc)
