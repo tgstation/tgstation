@@ -64,7 +64,7 @@
 
 
 /obj/structure/mecha_wreckage/gygax
-	name = "Gygax wreckage"
+	name = "\improper Gygax wreckage"
 	icon_state = "gygax-broken"
 
 /obj/structure/mecha_wreckage/gygax/New()
@@ -84,26 +84,26 @@
 
 
 /obj/structure/mecha_wreckage/gygax/dark
-	name = "Dark Gygax wreckage"
+	name = "\improper Dark Gygax wreckage"
 	icon_state = "darkgygax-broken"
 
 /obj/structure/mecha_wreckage/marauder
-	name = "Marauder wreckage"
+	name = "\improper Marauder wreckage"
 	icon_state = "marauder-broken"
 
 /obj/structure/mecha_wreckage/mauler
-	name = "Mauler Wreckage"
+	name = "\improper Mauler wreckage"
 	icon_state = "mauler-broken"
 	desc = "The syndicate won't be very happy about this..."
 
 /obj/structure/mecha_wreckage/seraph
-	name = "Seraph wreckage"
+	name = "\improper Seraph wreckage"
 	icon_state = "seraph-broken"
 
 
 
 /obj/structure/mecha_wreckage/ripley
-	name = "Ripley wreckage"
+	name = "\improper Ripley wreckage"
 	icon_state = "ripley-broken"
 
 /obj/structure/mecha_wreckage/ripley/New()
@@ -121,7 +121,7 @@
 
 
 /obj/structure/mecha_wreckage/ripley/firefighter
-	name = "Firefighter wreckage"
+	name = "\improper Firefighter wreckage"
 	icon_state = "firefighter-broken"
 
 /obj/structure/mecha_wreckage/ripley/firefighter/New()
@@ -140,12 +140,12 @@
 
 
 /obj/structure/mecha_wreckage/ripley/deathripley
-	name = "Death-Ripley wreckage"
+	name = "\improper Death-Ripley wreckage"
 	icon_state = "deathripley-broken"
 
 
 /obj/structure/mecha_wreckage/honker
-	name = "Honker wreckage"
+	name = "\improper H.O.N.K wreckage"
 	icon_state = "honker-broken"
 
 /obj/structure/mecha_wreckage/honker/New()
@@ -166,7 +166,7 @@
 
 
 /obj/structure/mecha_wreckage/durand
-	name = "Durand wreckage"
+	name = "\improper Durand wreckage"
 	icon_state = "durand-broken"
 
 /obj/structure/mecha_wreckage/durand/New()
@@ -186,12 +186,12 @@
 
 
 /obj/structure/mecha_wreckage/phazon
-	name = "Phazon wreckage"
+	name = "\improper Phazon wreckage"
 	icon_state = "phazon-broken"
 
 
 /obj/structure/mecha_wreckage/odysseus
-	name = "Odysseus wreckage"
+	name = "\improper Odysseus wreckage"
 	icon_state = "odysseus-broken"
 
 /obj/structure/mecha_wreckage/odysseus/New()
