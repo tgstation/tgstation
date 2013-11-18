@@ -628,6 +628,25 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
+/mob/living/carbon/proc/changeling_gib_sting()
+	set category = "Changeling"
+	set name = "Gib sting (20)"
+	set desc= "Gibs the target"
+
+	var/mob/living/carbon/T = changeling_sting(20,/mob/living/carbon/proc/changeling_gib_sting)
+	if(!T)	return 0
+	T.gib()
+	return 1
+
+/mob/living/carbon/proc/changeling_summonguns_sting()
+	set category = "Changeling"
+	set name = "Pulse rifle sting (20)"
+	set desc= "Gives the target a pulse rifle"
+
+	var/mob/living/carbon/T = changeling_sting(20,/mob/living/carbon/proc/changeling_summonguns_sting)
+	if(!T)	return 0
+	new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(T))
+	return 1
 
 /mob/living/carbon/proc/changeling_blind_sting()
 	set category = "Changeling"
