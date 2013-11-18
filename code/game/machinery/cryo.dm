@@ -35,6 +35,47 @@
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
 	..()
 
+/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The cryo cell is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the cryo cell because they have a slime latched onto their head."
+			return
+	if(put_mob(L))
+		if(L == user)
+			visible_message("[user] climbs into the cryo cell.", 3)
+		else
+			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+
+
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
 	var/node_connect = dir
@@ -344,7 +385,7 @@
 	return
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (!istype(M))
-		usr << "\red <B>The cryo cell cannot handle such liveform!</B>"
+		usr << "\red <B>The cryo cell cannot handle such lifeform!</B>"
 		return
 	if (occupant)
 		usr << "\red <B>The cryo cell is already occupied!</B>"
@@ -363,7 +404,7 @@
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
 		M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
 	occupant = M
-//	M.metabslow = 1
+	//M.metabslow = 1
 	add_fingerprint(usr)
 	update_icon()
 	M.ExtinguishMob()

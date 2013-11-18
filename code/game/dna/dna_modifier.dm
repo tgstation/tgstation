@@ -90,6 +90,45 @@
 	src.add_fingerprint(usr)
 	return
 
+/obj/machinery/dna_scannernew/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The DNA Scanner is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the DNA Scanner because they have a slime latched onto their head."
+			return
+	if(L == user)
+		return
+	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
+	put_in(L)
+
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if (istype(item, /obj/item/weapon/screwdriver))
 		if (!opened)
@@ -137,15 +176,18 @@
 	if (G.affecting.abiotic())
 		user << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
-	var/mob/M = G.affecting
+	put_in(G.affecting)
+	src.add_fingerprint(user)
+	del(G)
+	return
+
+/obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
 	M.loc = src
 	src.occupant = M
 	src.icon_state = "scanner_1"
-
-	src.add_fingerprint(user)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
@@ -158,7 +200,6 @@
 				if(ghost.mind == M.mind)
 					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 					break
-	del(G)
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out()
