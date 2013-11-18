@@ -3,7 +3,7 @@ obj/machinery/atmospherics/trinary/mixer
 	icon_state = "intact_off"
 	density = 1
 
-	name = "Gas mixer"
+	name = "gas mixer"
 
 	req_access = list(access_atmospherics)
 

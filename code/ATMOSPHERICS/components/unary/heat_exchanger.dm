@@ -4,7 +4,7 @@
 	icon_state = "intact"
 	density = 1
 
-	name = "Heat Exchanger"
+	name = "heat exchanger"
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
 
 	can_unwrench = 1
