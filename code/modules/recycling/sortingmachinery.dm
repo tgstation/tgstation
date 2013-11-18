@@ -490,7 +490,7 @@ table {
 				</style>
 			</head>
 			<body>
-				<h1>SortMaster 5000</h1><br>
+				<h1>MinerX SortMaster 5000</h1><br>
 				<p>Select the desired items to sort from the line.</p>"}
 	dat += "<ul>"
 	for (var/n in types)
