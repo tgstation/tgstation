@@ -103,7 +103,7 @@
 						"<span class='warning'>You hear shredding and ripping.</span>")
 			unbuckle()
 		else
-			var/text = pick("rips","tears","pulls")
+			var/text = pick("rip","tear","pull")
 			user.visible_message(\
 				"<span class='notice'>[user.name] [text] at the vines.</span>",\
 				"<span class='notice'>You [text] at the vines.</span>",\
