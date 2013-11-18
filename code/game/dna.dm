@@ -483,7 +483,7 @@
 
 
 /obj/machinery/computer/scan_consolenew
-	name = "DNA Scanner Access Console"
+	name = "\improper DNA Scanner Access Console"
 	desc = "Scan DNA."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
