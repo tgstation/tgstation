@@ -179,7 +179,8 @@
 		new glass_type(user.loc)
 		if(is_fulltile())//fulltiles drop two panes
 			new glass_type(user.loc)
-		del(src)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.Del(1)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			hit(I.force)
@@ -291,12 +292,13 @@
 	return
 
 
-/obj/structure/window/Del()
+/obj/structure/window/Del(quiet)
 	density = 0
 	air_update_turf(1)
-	playsound(src, "shatter", 70, 1)
+	if(!quiet)playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	loc = null //garbage collect
+	..()
 
 
 /obj/structure/window/Move()
