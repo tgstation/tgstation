@@ -38,6 +38,8 @@ var/next_mob_id = 0
 
 	if(!client)	return
 
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+
 	if (type)
 		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
 			if (!( alt ))
@@ -636,9 +638,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/Stat()
 	..()
 
-	if(statpanel("Status"))	//not looking at that panel
+	if(client && client.holder)
 
-		if(client && client.holder)
+		if(statpanel("Status"))	//not looking at that panel
 			stat(null,"Location:\t([x], [y], [z])")
 			stat(null,"CPU:\t[world.cpu]")
 			stat(null,"Instances:\t[world.contents.len]")

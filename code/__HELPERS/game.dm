@@ -280,12 +280,16 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
-/proc/get_candidates(be_special_flag=0)
-	. = list()
-	for(var/mob/dead/observer/G in player_list)
-		if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-			if(!G.client.is_afk() && (G.client.prefs.be_special & be_special_flag))
-				. += G.client
+/proc/get_candidates(be_special_flag=0, afk_bracket=3000)
+	var/list/candidates = list()
+	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
+	while(!candidates.len && afk_bracket < 6000)
+		for(var/mob/dead/observer/G in player_list)
+			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+				if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+					candidates += G.client
+		afk_bracket += 600 // Add a minute to the bracket, for every attempt
+	return candidates
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()
@@ -311,3 +315,56 @@ proc/isInSight(var/atom/A, var/atom/B)
 	sleep(duration)
 	for(var/client/C in show_to)
 		C.images -= I
+
+/proc/get_active_player_count()
+	// Get active players who are playing in the round
+	var/active_players = 0
+	for(var/i = 1; i <= player_list.len; i++)
+		var/mob/M = player_list[i]
+		if(M && M.client)
+			if(istype(M, /mob/new_player)) // exclude people in the lobby
+				continue
+			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
+				var/mob/dead/observer/O = M
+				if(O.started_as_observer) // Exclude people who started as observers
+					continue
+			active_players++
+	return active_players
+
+/datum/projectile_data
+	var/src_x
+	var/src_y
+	var/time
+	var/distance
+	var/power_x
+	var/power_y
+	var/dest_x
+	var/dest_y
+
+/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
+						   var/power_x, var/power_y, var/dest_x, var/dest_y)
+	src.src_x = src_x
+	src.src_y = src_y
+	src.time = time
+	src.distance = distance
+	src.power_x = power_x
+	src.power_y = power_y
+	src.dest_x = dest_x
+	src.dest_y = dest_y
+
+/proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
+
+	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
+	// rotated at [rotation] and with the power of [power]
+	// Thanks to VistaPOWA for this function
+
+	var/power_x = power * cos(angle)
+	var/power_y = power * sin(angle)
+	var/time = 2* power_y / 10 //10 = g
+
+	var/distance = time * power_x
+
+	var/dest_x = src_x + distance*sin(rotation);
+	var/dest_y = src_y + distance*cos(rotation);
+
+	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)

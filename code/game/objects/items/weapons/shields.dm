@@ -37,7 +37,7 @@
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
-	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
+	desc = "A shield capable of stopping most projectile and melee attacks. Energy projectiles are reflected. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -49,6 +49,36 @@
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
+
+/obj/item/weapon/shield/energy/IsShield()
+	return (active)
+
+/obj/item/weapon/shield/energy/IsReflect()
+	return (active)
+
+/obj/item/weapon/shield/energy/attack_self(mob/living/user)
+	if((CLUMSY in user.mutations) && prob(50))
+		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
+		user.take_organ_damage(5)
+	active = !active
+
+	if(active)
+		force = 10
+		icon_state = "eshield[active]"
+		w_class = 4
+		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		user << "<span class='notice'>[src] is now active.</span>"
+		reflect_chance = 40
+	else
+		force = 3
+		icon_state = "eshield[active]"
+		w_class = 1
+		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		user << "<span class='notice'>[src] can now be concealed.</span>"
+		reflect_chance = 0
+	add_fingerprint(user)
+
+
 
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"
@@ -74,6 +104,7 @@
 		user << "\blue The cloaking device is now inactive."
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
+	user.update_icons()
 	return
 
 /obj/item/weapon/cloaking_device/emp_act(severity)

@@ -11,9 +11,14 @@
 	throw_range = 15
 	attack_verb = list("banned")
 
-	suicide_act(mob/user)
+/obj/item/weapon/banhammer/suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+
+/obj/item/weapon/banhammer/attack(mob/M, mob/user)
+	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
+	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
+
 
 /obj/item/weapon/nullrod
 	name = "null rod"

@@ -28,7 +28,7 @@
 	spore_delay = world.time + 100 // 10 seconds
 	PulseAnimation(1)
 	new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
-	return 1
+	return 0
 
 
 /mob/living/simple_animal/hostile/blobspore

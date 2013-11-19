@@ -192,12 +192,18 @@
 // can breath normally in the disposal
 /obj/machinery/disposal/alter_health()
 	return get_turf(src)
-
-// attempt to move while inside
+	
 /obj/machinery/disposal/relaymove(mob/user as mob)
-	if(user.stat || src.flushing)
+	attempt_escape(user)
+
+// resist to escape the bin
+/obj/machinery/disposal/container_resist()
+	attempt_escape(usr)
+
+/obj/machinery/disposal/proc/attempt_escape(mob/user as mob)
+	if(src.flushing)
 		return
-	src.go_out(user)
+	go_out(user)
 	return
 
 // leave the disposal

@@ -214,7 +214,7 @@ its easier to just keep the beam vertical.
 
 	if (!( usr ))
 		return
-	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
+	usr << "\icon[src]That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	if(desc)
 		usr << desc
 	// *****RM
@@ -350,3 +350,9 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
+
+/atom/proc/isinspace()
+	if(istype(get_turf(src), /turf/space))
+		return 1
+	else
+		return 0

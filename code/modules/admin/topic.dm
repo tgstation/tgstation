@@ -1920,17 +1920,17 @@
 			if("check_antagonist")
 				check_antagonists()
 			if("moveminingshuttle")
-				if(mining_shuttle_moving)
-					return
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
-				move_mining_shuttle()
+				var/datum/shuttle_manager/s = shuttles["mining"]
+				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
 				log_admin("[key_name(usr)] moved the mining shuttle")
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
-				move_ferry()
+				var/datum/shuttle_manager/s = shuttles["ferry"]
+				if(istype(s)) s.move_shuttle()
 				message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")
 			if("kick_all_from_lobby")
@@ -2008,6 +2008,13 @@
 						if(!job)	continue
 						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 					usr << browse(dat, "window=jobdebug;size=600x500")
+			if("show_admins")
+				var/dat = "<B>Current admins:</B><HR>"
+				if(admin_datums)
+					for(var/ckey in admin_datums)
+						var/datum/admins/D = admin_datums[ckey]
+						dat += "[ckey] - [D.rank.name]<br>"
+					usr << browse(dat, "window=showadmins;size=600x500")
 
 	else if(href_list["secretscoder"])
 		if(!check_rights(R_DEBUG))	return

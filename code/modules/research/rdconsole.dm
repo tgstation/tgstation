@@ -526,23 +526,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/proc/check_mat(datum/design/being_built, var/M)
 	switch(M)
 		if("$metal")
-			return (linked_lathe.m_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.m_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$glass")
-			return (linked_lathe.g_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.g_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$gold")
-			return (linked_lathe.gold_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.gold_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$silver")
-			return (linked_lathe.silver_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.silver_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$plasma")
-			return (linked_lathe.plasma_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.plasma_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$uranium")
-			return (linked_lathe.uranium_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.uranium_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$diamond")
-			return (linked_lathe.diamond_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.diamond_amount - being_built.materials[M] >= 0) ? 1 : 0
 		if("$clown")
-			return (linked_lathe.clown_amount - being_built.materials[M] > 0) ? 1 : 0
+			return (linked_lathe.clown_amount - being_built.materials[M] >= 0) ? 1 : 0
 		else
 			return linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
+
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(..())
 		return

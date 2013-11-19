@@ -467,6 +467,9 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
+/obj/mecha/attack_tk()
+	return
+
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
 	src.log_message("Hit by [A].",1)
 	call((proc_res["dynhitby"]||src), "dynhitby")(A)
@@ -1090,6 +1093,9 @@
 	src.go_out()
 	add_fingerprint(usr)
 	return
+
+/obj/mecha/container_resist()
+	go_out()
 
 
 /obj/mecha/proc/go_out()

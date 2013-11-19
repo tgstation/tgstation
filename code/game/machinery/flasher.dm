@@ -128,17 +128,19 @@
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		anchored = !anchored
 
-		if (!anchored)
-			user.show_message(text("\red [src] can now be moved."))
+		if (!anchored && !isinspace())
+			user << "<span class='notice'>[src] is now secured.</span>"
 			overlays.Cut()
 			power_change()
+			anchored = 1
 
-		else if (anchored)
-			user.show_message(text("\red [src] is now secured."))
+		else
+			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays += "[base_state]-s"
 			power_change()
+			anchored = 0
+
 	else
 		..()
 

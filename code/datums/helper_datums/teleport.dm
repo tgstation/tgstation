@@ -180,6 +180,6 @@
 				return 0
 
 
-		if(destination.z > 7) //Away mission z-levels
+		if(destination.z == 7) //Away mission z-levels
 			return 0
 		return 1

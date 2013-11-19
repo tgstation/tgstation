@@ -275,6 +275,9 @@
 		return
 
 	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
+			user << "\red You cannot unwrench this [src], turn it off first."
+			return 1
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if (WT.remove_fuel(0,user))
@@ -295,6 +298,9 @@
 			else
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
+		else
+			return ..()
+
 	examine()
 		set src in oview(1)
 		..()
@@ -307,14 +313,6 @@
 		else
 			stat |= NOPOWER
 		update_icon()
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
-			return ..()
-		if (!(stat & NOPOWER) && on)
-			user << "\red You cannot unwrench this [src], turn it off first."
-			return 1
-		return ..()
 
 /obj/machinery/atmospherics/unary/vent_pump/Del()
 	if(initial_loc)
