@@ -31,7 +31,7 @@
 	//Triumvirate?
 	if (ticker.triai == 1)
 		required_enemies = 3
-	//required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
+		required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
 	return ..()
 
 /datum/game_mode/malfunction/get_players_for_role(var/role = BE_MALF)
