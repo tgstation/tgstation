@@ -547,7 +547,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	give_proboscis(/mob/living/carbon/proc/sting_effect_trasnform, 1, 40, chosen_dna)
+	give_stinger(/mob/living/carbon/proc/sting_effect_trasnform, 1, 40, chosen_dna)
 
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T, datum/dna/chosen_dna)
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
@@ -566,7 +566,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Extract DNA Sting (25)"
 	set desc="Stealthily sting a target to extract their DNA."
 
-	give_proboscis(/mob/living/carbon/proc/sting_effect_extract, 1, 25)
+	give_stinger(/mob/living/carbon/proc/sting_effect_extract, 1, 25)
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
 
@@ -584,11 +584,27 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Mute sting (20)"
 	set desc= "Temporarily mutes the target."
 
-	give_proboscis(/mob/living/carbon/proc/sting_effect_mute, 1, 20)
+	give_stinger(/mob/living/carbon/proc/sting_effect_mute, 1, 20)
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
 	T.silent += 30
 	feedback_add_details("changeling_powers","MS")
+	return 1
+
+/mob/living/carbon/proc/changeling_poison_sting()
+	set category = "Changeling"
+	set name = "Poison sting (15)"
+	set desc= "Poisons target and gives them brain damage."
+
+	give_stinger(/mob/living/carbon/proc/sting_effect_poison, 1, 15)
+
+/mob/living/carbon/proc/sting_effect_poison(mob/living/carbon/T)
+	if(T.reagents)
+		T.reagents.add_reagent("plantbgone", 10)
+		T.reagents.add_reagent("changelingsting", 15)
+		T.reagents.add_reagent("impedrezene", 25)
+
+	feedback_add_details("changeling_powers","PS")
 	return 1
 
 
@@ -597,7 +613,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Blind Sting (25)"
 	set desc= "Temporarily blinds the target."
 
-	give_proboscis(/mob/living/carbon/proc/sting_effect_blind, 1, 25)
+	give_stinger("blinding stinger", "sting_blind", /mob/living/carbon/proc/sting_effect_blind, 1, 25)
 
 /mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
@@ -613,7 +629,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Hallucination Sting (5)"
 	set desc = "Causes terror in the target."
 
-	give_proboscis(/mob/living/carbon/proc/sting_effect_lsd, 1, 5)
+	give_stinger(/mob/living/carbon/proc/sting_effect_lsd, 1, 5)
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
 	spawn(rand(300,600))
@@ -627,7 +643,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Cryogenic Sting (15)"
 	set desc = "Cools the target, slowing them."
 
-	give_proboscis(/mob/living/carbon/proc/sting_effect_cryo, 1, 15)
+	give_stinger(/mob/living/carbon/proc/sting_effect_cryo, 1, 15)
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
 	if(T.reagents)
@@ -637,8 +653,8 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","CS")
 	return 1
 
-/mob/living/carbon/proc/give_proboscis(sting, range, cost, dna=null)
-	var/obj/item/proboscis/P = new(src)
+/mob/living/carbon/proc/give_stinger(sting, range, cost, dna=null)
+	var/obj/item/stinger/P = new(src)
 	P.sting_type = sting
 	P.sting_range = range
 	P.sting_cost = cost
@@ -646,8 +662,8 @@ var/list/datum/dna/hivemind_bank = list()
 	P.dna = dna
 	src.put_in_active_hand(P)
 
-/obj/item/proboscis
-	name = "proboscis"
+/obj/item/stinger
+	name = "stinger"
 	desc = "Thing chanelings use to sting people."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sord"
@@ -661,23 +677,23 @@ var/list/datum/dna/hivemind_bank = list()
 	var/dna = null
 	var/mob/living/carbon/owner
 
-/obj/item/proboscis/attack_hand(mob/user)
+/obj/item/stinger/attack_hand(mob/user)
 	del(src)
 
-/obj/item/proboscis/attack_paw(mob/user)
+/obj/item/stinger/attack_paw(mob/user)
 	del(src)
 
-/obj/item/proboscis/dropped()
+/obj/item/stinger/dropped()
 	del(src)
 
-/obj/item/proboscis/equipped(mob/user, slot)
+/obj/item/stinger/equipped(mob/user, slot)
 	if(!((slot == slot_l_hand) || (slot== slot_r_hand)))
 		del(src)
 
-/obj/item/proboscis/attack(target)
+/obj/item/stinger/attack(target)
 	return
 
-/obj/item/proboscis/afterattack(target)
+/obj/item/stinger/afterattack(target)
 	if(!istype(target, /mob/living/carbon/) || target == owner)
 		return
 

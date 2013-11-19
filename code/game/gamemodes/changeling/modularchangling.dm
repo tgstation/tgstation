@@ -138,6 +138,13 @@ var/list/powerinstances
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_lsd_sting
 
+/datum/power/changeling/poison_sting
+	name = "Poison sting"
+	desc = "We evolve the ability to sting a target with a poisonous chemical, causing toxic and brain damage."
+	genomecost = 1
+	allowduringlesserform = 1
+	verbpath = /mob/living/carbon/proc/changeling_poison_sting
+
 /datum/power/changeling/blind_sting
 	name = "Blind Sting"
 	desc = "We silently sting a human, completely blinding them for a short time."
