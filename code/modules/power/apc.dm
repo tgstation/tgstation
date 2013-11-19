@@ -647,8 +647,8 @@
 			return 0
 	return 1
 
-/obj/machinery/power/apc/proc/validation(mob/user)
-	return (!locked && !istype(usr, /mob/living/silicon/ai)) || (istype(usr, /mob/living/silicon/ai) && !src.aidisabled)
+/obj/machinery/power/apc/proc/validation()
+	return (!locked && !istype(user, /mob/living/silicon/ai)) || (istype(user, /mob/living/silicon/ai) && !src.aidisabled)
 
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
@@ -661,36 +661,36 @@
 	usr.set_machine(src)
 
 	if (href_list["lock"])
-		if(validation(usr))
+		if(validation())
 			coverlocked = !coverlocked
 
 	else if (href_list["breaker"])
-		if(validation(usr))
+		if(validation())
 			toggle_breaker()
 
 	else if (href_list["cmode"])
-		if(validation(usr))
+		if(validation())
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0
 				update_icon()
 
 	else if (href_list["eqp"])
-		if(validation(usr))
+		if(validation())
 			var/val = text2num(href_list["eqp"])
 			equipment = setsubsystem(val)
 			update_icon()
 			update()
 
 	else if (href_list["lgt"])
-		if(validation(usr))
+		if(validation())
 			var/val = text2num(href_list["lgt"])
 			lighting = setsubsystem(val)
 			update_icon()
 			update()
 
 	else if (href_list["env"])
-		if(validation(usr))
+		if(validation())
 			var/val = text2num(href_list["env"])
 			environ = setsubsystem(val)
 			update_icon()
