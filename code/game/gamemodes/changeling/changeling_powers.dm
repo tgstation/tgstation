@@ -547,7 +547,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	give_stinger(/mob/living/carbon/proc/sting_effect_trasnform, 1, 40, chosen_dna)
+	give_stinger("transformation stinger", "sting_transform", /mob/living/carbon/proc/sting_effect_trasnform, 1, 40, chosen_dna)
 
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T, datum/dna/chosen_dna)
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
@@ -566,7 +566,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Extract DNA Sting (25)"
 	set desc="Stealthily sting a target to extract their DNA."
 
-	give_stinger(/mob/living/carbon/proc/sting_effect_extract, 1, 25)
+	give_stinger("extraction stinger", "sting_extract", /mob/living/carbon/proc/sting_effect_extract, 1, 25)
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
 
@@ -584,7 +584,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Mute sting (20)"
 	set desc= "Temporarily mutes the target."
 
-	give_stinger(/mob/living/carbon/proc/sting_effect_mute, 1, 20)
+	give_stinger("muting stinger", "sting_mute", /mob/living/carbon/proc/sting_effect_mute, 1, 20)
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
 	T.silent += 30
@@ -596,7 +596,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Poison sting (15)"
 	set desc= "Poisons target and gives them brain damage."
 
-	give_stinger(/mob/living/carbon/proc/sting_effect_poison, 1, 15)
+	give_stinger("poisoning stinger", "sting_poison", /mob/living/carbon/proc/sting_effect_poison, 1, 15)
 
 /mob/living/carbon/proc/sting_effect_poison(mob/living/carbon/T)
 	if(T.reagents)
@@ -629,7 +629,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Hallucination Sting (5)"
 	set desc = "Causes terror in the target."
 
-	give_stinger(/mob/living/carbon/proc/sting_effect_lsd, 1, 5)
+	give_stinger("hallucinogenic stinger", "sting_lsd", /mob/living/carbon/proc/sting_effect_lsd, 1, 5)
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
 	spawn(rand(300,600))
@@ -643,7 +643,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Cryogenic Sting (15)"
 	set desc = "Cools the target, slowing them."
 
-	give_stinger(/mob/living/carbon/proc/sting_effect_cryo, 1, 15)
+	give_stinger("cryogenic stinger", "sting_cryo", /mob/living/carbon/proc/sting_effect_cryo, 1, 15)
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
 	if(T.reagents)
@@ -653,13 +653,15 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","CS")
 	return 1
 
-/mob/living/carbon/proc/give_stinger(sting, range, cost, dna=null)
+/mob/living/carbon/proc/give_stinger(name, icon, sting, range, cost, dna=null)
 	var/obj/item/stinger/P = new(src)
 	P.sting_type = sting
 	P.sting_range = range
 	P.sting_cost = cost
 	P.owner = src
 	P.dna = dna
+	P.name = name
+	P.icon_state = icon
 	src.put_in_active_hand(P)
 
 /obj/item/stinger
