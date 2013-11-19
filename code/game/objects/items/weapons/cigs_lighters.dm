@@ -262,8 +262,25 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigar butt"
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
-
-/////////////////
+// Smoke Ambrosia Erryshift - Iamgoofball
+/obj/item/clothing/mask/cigarette/ambrosia
+	name = "cigarette"
+	desc = "Smoke Ambrosia Erryshift."
+	icon_state = "cigoff"
+	throw_speed = 0.5
+	item_state = "cigoff"
+	w_class = 1
+	body_parts_covered = null
+	attack_verb = list("burnt", "singed")
+	chem_volume = 31
+/obj/item/clothing/mask/cigarette/New()
+	..()
+	name = pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")
+	reagents.add_reagent("space_drugs", 10)
+	reagents.add_reagent("kelotane", 10)
+	reagents.add_reagent("bicaridine", 10)
+	reagents.add_reagent("toxin", 1)
+////////////////
 //SMOKING PIPES//
 /////////////////
 /obj/item/clothing/mask/cigarette/pipe

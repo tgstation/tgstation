@@ -156,3 +156,11 @@
 	src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
 	del(src)
 	return
+// Smoke Ambrosia Erryshift - Iamgoofball
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
+	if(istype(O, /obj/item/weapon/paper))
+		user << "<span class='notice'>You roll the [src] up in the [O]."
+		new/obj/item/clothing/mask/cigarette/ambrosia(user.loc)
+		del(O)
+		del(src)
