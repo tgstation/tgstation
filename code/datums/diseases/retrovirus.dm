@@ -1,9 +1,9 @@
 /datum/disease/dna_retrovirus
 	name = "Retrovirus"
 	max_stages = 4
-	spread = "Contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Rest or an injection of ryetalyn"
+	spread = "Airborne"
+	cure = "An injection of Plasma"
+	cure_id = list("plasma")
 	cure_chance = 6
 	agent = ""
 	affected_species = list("Human")
@@ -13,15 +13,9 @@
 	stage_prob = 2
 	var/SE
 	var/UI
-	var/restcure = 0
 	New()
 		..()
 		agent = "Virus class [pick("A","B","C","D","E","F")][pick("A","B","C","D","E","F")]-[rand(50,300)]"
-		if(prob(40))
-			cure_id = list("ryetalyn")
-			cure_list = list("ryetalyn")
-		else
-			restcure = 1
 
 
 
@@ -30,17 +24,6 @@
 	..()
 	switch(stage)
 		if(1)
-			if(restcure)
-/*
-				if(affected_mob.sleeping && prob(30))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
-*/
-				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
 			if (prob(8))
 				affected_mob << "\red Your head hurts."
 			if (prob(9))
@@ -48,17 +31,6 @@
 			if (prob(9))
 				affected_mob << "\red You feel angry."
 		if(2)
-			if(restcure)
-/*
-				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
-*/
-				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
 			if (prob(8))
 				affected_mob << "\red Your skin feels loose."
 			if (prob(10))
@@ -69,17 +41,6 @@
 			if (prob(4))
 				affected_mob << "\red Your stomach churns."
 		if(3)
-			if(restcure)
-/*
-				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
-*/
-				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
 			if (prob(10))
 				affected_mob << "\red Your entire body vibrates."
 
@@ -88,17 +49,6 @@
 				else			scramble_dna(affected_mob, 0, 1, rand(15,45))
 
 		if(4)
-			if(restcure)
-/*
-				if(affected_mob.sleeping && prob(10))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
-*/
-				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
-					affected_mob << "\blue You feel better."
-					cure()
-					return
 			if (prob(60))
 				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(50,75))
 				else			scramble_dna(affected_mob, 0, 1, rand(50,75))
