@@ -161,6 +161,21 @@ var/list/powerinstances
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_mute_sting
 
+/datum/power/changeling/gib_sting
+	name = "Gib Sting"
+	desc = "We silently sting a human, blowing them up"
+	helptext = "Does not provide a warning to a victim that they have been stung, until they gib instantly."
+	genomecost = 1
+	allowduringlesserform = 1
+	verbpath = /mob/living/carbon/proc/changeling_gib_sting
+
+/datum/power/changeling/summonguns_sting
+	name = "Pulse Rifle Sting"
+	desc = "We silently sting a human, giving them a pulse rifle."
+	helptext = "Does not provide a warning to a victim that they have been stung, until they get a pulse rifle."
+	genomecost = 1
+	allowduringlesserform = 1
+	verbpath = /mob/living/carbon/proc/changeling_summonguns_sting
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one
