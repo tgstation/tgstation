@@ -7,7 +7,7 @@
 	charge_counter = 0
 	clothes_req = 0
 	stat_allowed = 0
-	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
+	invocation = "Reason with confusion, judge with recklessness! Curse of the Horseman!"
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 30 //30 deciseconds reduction per rank

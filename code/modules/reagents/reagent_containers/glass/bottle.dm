@@ -217,7 +217,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/gbs
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/fake_gbs

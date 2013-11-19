@@ -230,6 +230,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/gbs
+	name = "Gravitokinetic Bipotential SADS+(GBS) syringe"
+	desc = "A syringe with Gravitokinetic Bipotential SADS+ cultures. Disguised as a Inaprovaline syringe."
+	item = /obj/item/weapon/reagent_containers/syringe/gbs
+	cost = 10
+
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \

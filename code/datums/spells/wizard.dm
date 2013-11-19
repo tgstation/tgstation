@@ -5,7 +5,7 @@
 	school = "evocation"
 	charge_max = 150
 	clothes_req = 1
-	invocation = "FORTI GY AMA"
+	invocation = "Swirling bolts, gather and strike with power!  Magic Missile!"
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 90 //15 deciseconds reduction per rank
@@ -35,7 +35,7 @@
 	school = "transmutation"
 	charge_max = 400
 	clothes_req = 1
-	invocation = "BIRUZ BENNAR"
+	invocation = "Earth's anger running through my arms!  Mutate!"
 	invocation_type = "shout"
 	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
@@ -52,7 +52,7 @@
 	school = "evocation"
 	charge_max = 600
 	clothes_req = 1
-	invocation = "EI NATH"
+	invocation = "Death gods carving life, take their souls!  Disintegrate!"
 	invocation_type = "shout"
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -83,7 +83,7 @@
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
 	clothes_req = 1
-	invocation = "NEC CANTIO"
+	invocation = "Gods of thunders, strip devices of their power! Disable Tech!"
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
@@ -121,7 +121,7 @@
 	school = "abjuration"
 	charge_max = 600
 	clothes_req = 1
-	invocation = "SCYAR NILA"
+	invocation = "Pattern of space and time, move my body! TELEPORT"
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
@@ -137,7 +137,7 @@
 	school = "transmutation"
 	charge_max = 100
 	clothes_req = 0
-	invocation = "TARCOL MINTI ZHERI"
+	invocation = "Stop those who follow my tracks! Forcewall!"
 	invocation_type = "whisper"
 	range = 0
 	cooldown_min = 50 //12 deciseconds reduction per rank
@@ -195,7 +195,7 @@
 	school = "transmutation"
 	charge_max = 300
 	clothes_req = 0
-	invocation = "STI KALY"
+	invocation = "All light, fall into darkness!  Blind!"
 	invocation_type = "whisper"
 	message = "\blue Your eyes cry out in pain!"
 	cooldown_min = 50 //12 deciseconds reduction per rank
@@ -218,7 +218,7 @@
 	charge_max = 600
 	clothes_req = 1
 	range = 2
-	invocation = "STAUN EI"
+	invocation = "Suffering spirits, stand still for eternity!  Flesh to Stone!"
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -232,7 +232,7 @@
 	school = "evocation"
 	charge_max = 60
 	clothes_req = 0
-	invocation = "ONI SOMA"
+	invocation = "Smouldering flames far below, punish the wicked!  Fireball!"
 	invocation_type = "shout"
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
