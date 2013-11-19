@@ -13,7 +13,7 @@
 	required_enemies = 1
 	recommended_enemies = 4
 	secondary_antag = "changeling"
-	secondary_chance = 100
+	secondary_chance = 75
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
