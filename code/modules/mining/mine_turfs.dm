@@ -280,7 +280,11 @@
 				new /obj/item/weapon/ore/clown(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	N.fullUpdateMineralOverlays()
-	return
+	var/crate = rand(1,100)
+	switch(crate)
+		if(5)
+			visible_message("<span class='notice'>You have uncovered a hidden secret!</span>")
+			new/obj/structure/closet/crate/secure/loot(src)
 
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
