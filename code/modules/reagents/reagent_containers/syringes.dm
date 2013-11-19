@@ -213,13 +213,13 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/gbs // Traitor Item, disguised as Inaprovaline.
+/obj/item/weapon/reagent_containers/syringe/retrovirus // Traitor Item, disguised as Inaprovaline.
 	name = "syringe (inaprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
 	New()
 		..()
 		mode = SYRINGE_INJECT
-		var/datum/disease/F = new /datum/disease/gbs
+		var/datum/disease/F = new /datum/disease/dna_retrovirus
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 15, data)
 /obj/item/weapon/reagent_containers/syringe/antitoxin
