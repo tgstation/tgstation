@@ -31,6 +31,9 @@
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
+	var/secondary_antag = null 	//keeps track of what additional antag(s) can spawn in a given mode (if any)
+	var/secondary_chance = 0 	//the probability of there being a secondary antag
+	var/secondary_amount = 1 	//the number of secondary antags that will be spawned if they spawn at all
 
 
 /datum/game_mode/proc/announce() //to be calles when round starts
@@ -53,14 +56,47 @@
 
 
 ///pre_setup()
-///Attempts to select players for special roles the mode might have.
+///Attempts to select players for special roles the mode might have. Generic Secondary Antags are delt with here
 /datum/game_mode/proc/pre_setup()
-	return 1
 
+	if(secondary_antag && prob(secondary_chance))
+		var/list/secondary_candidates = list()
+		switch(secondary_antag)
+			if("changeling")
+				var/datum/game_mode/changeling/temp = new
+				if(config.protect_roles_from_antagonist)
+					temp.restricted_jobs += temp.protected_jobs
+
+				secondary_candidates = get_players_for_role(BE_CHANGELING)
+				for(var/datum/mind/player in secondary_candidates)
+					for(var/job in temp.restricted_jobs)
+						if(player.assigned_role == job)
+							secondary_candidates -= player
+
+		if(secondary_candidates.len)
+			var/datum/mind/secondary = null
+			if(secondary_candidates.len < secondary_amount)
+				secondary_amount = secondary_candidates.len
+			switch(secondary_antag)
+				if("changeling")
+					for(var/i = 0, i<secondary_amount, i++)
+						secondary = pick(secondary_candidates)
+						changelings += secondary
+						modePlayer += changelings
+						secondary_candidates.Remove(secondary)
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
+
+	if(changelings && name != "changeling" && name != "traitor+changeling")
+		for(var/datum/mind/changeling in changelings)
+			log_game("[changeling.key] (ckey) has been selected as a changeling")
+			changeling.current.make_changeling()
+			changeling.special_role = "Changeling"
+			forge_changeling_objectives(changeling)
+			greet_changeling(changeling)
+
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 

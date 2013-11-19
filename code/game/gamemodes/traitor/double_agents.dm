@@ -5,6 +5,8 @@
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
+	secondary_antag = "changeling"
+	secondary_chance = 75
 
 	traitor_name = "double agent"
 

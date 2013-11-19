@@ -12,7 +12,8 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
-
+	secondary_antag = "changeling"
+	secondary_chance = 100
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
@@ -55,11 +56,10 @@
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-
 	if(traitors.len < required_enemies)
 		return 0
+	..()
 	return 1
-
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)

@@ -9,6 +9,8 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
+	secondary_antag = "changeling"
+	secondary_chance = 50
 
 	uplink_welcome = "Wizardly Uplink Console:"
 	uplink_uses = 10
@@ -34,7 +36,7 @@
 		return 0
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(wizardstart)
-
+	..()
 	return 1
 
 

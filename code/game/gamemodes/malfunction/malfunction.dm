@@ -9,6 +9,8 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
+	secondary_antag = "changeling"
+	secondary_chance = 25
 
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 10
@@ -56,6 +58,7 @@
 		ai_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		ai_mind.special_role = "malfunctioning AI"//So they actually have a special role/N
 		log_game("[ai_mind.key] (ckey) has been selected as a malf AI")
+	..()
 	return 1
 
 
