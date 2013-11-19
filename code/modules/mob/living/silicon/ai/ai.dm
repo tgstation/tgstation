@@ -263,10 +263,10 @@ var/list/ai_list = list()
         src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
         // the message in the [] will change depending whether or not the AI is anchored
 
-/mob/living/silicon/ai/update_canmove()
+/mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
 	return 0
 
-/mob/living/silicon/ai/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/silicon/ai/Bump(atom/movable/AM as mob|obj, yes)  //Allows the AI to bump into mobs if it's itself pushed
         if ((!( yes ) || now_pushing))
                 return
         now_pushing = 1
