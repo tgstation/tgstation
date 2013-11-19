@@ -230,6 +230,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/retrovirus
+	name = "Retrovirus syringe"
+	desc = "A syringe with Retrovirus cultures. Disguised as a Inaprovaline syringe."
+	item = /obj/item/weapon/reagent_containers/syringe/retrovirus
+	cost = 5
+
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \
