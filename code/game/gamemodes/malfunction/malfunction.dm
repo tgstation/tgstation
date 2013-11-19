@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	antag_flag = BE_MALF
-	required_players = 0
+	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
@@ -188,10 +188,10 @@
 	set_security_level("delta")
 
 	for(var/obj/item/weapon/pinpointer/point in world)
-		for(var/datum/mind/AI_mind in malf_ai)
+		for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
 			var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
 			if(A.stat != DEAD)
-				point.the_disk = A
+				point.the_disk = A //The pinpointer now tracks the AI core.
 
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)

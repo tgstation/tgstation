@@ -791,6 +791,11 @@
 		src.occupant.parent.adjustOxyLoss(src.occupant.getOxyLoss())
 		src.occupant.parent.cancel_camera()
 		del(src.occupant)
+		for(var/obj/item/weapon/pinpointer/point in world)
+			for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
+				var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
+				if(A.stat != DEAD)
+					point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
 		src.occupant << "\red Primary core damaged, unable to return core processes."
@@ -798,9 +803,8 @@
 			src.occupant.loc = src.loc
 			src.occupant.death()
 			src.occupant.gib()
-
-	for(var/obj/item/weapon/pinpointer/point in world)
-		point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
+			for(var/obj/item/weapon/pinpointer/point in world)
+				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
 
 
 /obj/machinery/power/apc/proc/ion_act()
