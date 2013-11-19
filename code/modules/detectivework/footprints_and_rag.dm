@@ -60,10 +60,3 @@
 			user.visible_message("[user] finishes wiping off the [A]!")
 			A.clean_blood()
 	return
-
-/obj/item/weapon/reagent_containers/glass/rag/examine()
-	if (!usr)
-		return
-	usr << "That's \a [src]."
-	usr << desc
-	return

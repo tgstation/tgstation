@@ -115,6 +115,7 @@
 
 /obj/item/weapon/virusdish
 	name = "Virus containment/growth dish"
+	desc = "This is a virus containment dish"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 	var/datum/disease2/disease/virus2 = null
@@ -148,7 +149,7 @@
 		del src
 
 /obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish"
+	..()
 	if(src.info)
 		usr << "It has the following information about its contents"
 		usr << src.info

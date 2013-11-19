@@ -154,7 +154,7 @@ LINEN BINS
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
-	desc = "A linen bin. It looks rather cosy."
+	desc = "It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
@@ -164,7 +164,7 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/examine()
-	usr << desc
+	..()
 	if(amount < 1)
 		usr << "There are no bed sheets in the bin."
 		return

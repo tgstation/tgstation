@@ -21,8 +21,8 @@
 
 /obj/structure/janitorialcart/examine()
 	set src in usr
-	usr << "[src] \icon[src] contains [reagents.total_volume] unit\s of liquid!"
 	..()
+	usr << "It contains [reagents.total_volume] unit\s of liquid!"
 	//everything else is visible, so doesn't need to be mentioned
 
 
@@ -177,7 +177,8 @@
 
 /obj/structure/stool/bed/chair/janicart/examine()
 	set src in usr
-	usr << "\icon[src] This [callme] contains [reagents.total_volume] unit\s of water!"
+	..()
+	usr << "It contains [reagents.total_volume] unit\s of water!"
 	if(mybag)
 		usr << "\A [mybag] is hanging on the [callme]."
 
